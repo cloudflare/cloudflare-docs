@@ -5,12 +5,15 @@ sidebar:
   order: 8
 ---
 
+import { DashButton } from "~/components";
+
 If your domain has content that has been blocked, Blocked Content on the dashboard gives you the ability to request the Trust and Safety team to remove a block.
 
 To view Blocked Content on the dashboard:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security Center** > **Blocked Content**.
+1. In the Cloudflare dashboard, go to the **Blocked Content** page.
+
+<DashButton url="/?to=/:account/blocked-content" />
 
 :::note
 You must have Admin, Super Admin, or Trust and Safety [role](/fundamentals/manage-members/roles/) to access Blocked Content.

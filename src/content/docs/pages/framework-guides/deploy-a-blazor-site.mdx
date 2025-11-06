@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Blazor
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import { Render } from "~/components";
@@ -41,7 +36,7 @@ chmod +x dotnet-install.sh
 
 Your `build.sh` file needs to be executable for the build command to work. You can make it so by running `chmod +x build.sh`.
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
 ## Create a `.gitignore` file
 
@@ -51,11 +46,11 @@ Creating a `.gitignore` file ensures that only what is needed gets pushed onto y
 dotnet new gitignore
 ```
 
-<Render file="framework-guides/create-github-repository" />
+<Render file="framework-guides/create-github-repository" product="pages" />
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-to-pages-steps-no-preset" />
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <div>
 
@@ -90,4 +85,8 @@ Or
 
 2. Remove the `*.wasm` files from the output (`rm output/wwwroot/_framework/*.wasm`) and modify your Blazor application to [load the Brotli compressed files](https://docs.microsoft.com/en-us/aspnet/core/blazor/host-and-deploy/webassembly?view=aspnetcore-6.0#compression) instead.
 
-<Render file="framework-guides/learn-more" params={{ one: "Blazor" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Blazor" }}
+/>

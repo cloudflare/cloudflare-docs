@@ -9,6 +9,7 @@ sidebar:
 import {
 	Steps,
 	LinkCard,
+	DashButton,
 } from "~/components";
 
 Learn how to:
@@ -24,7 +25,10 @@ Creating a subscription allows your queue to receive messages when events occur 
 ### Dashboard
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and go to **Compute & AI** > **Queues**.
+1. In the Cloudflare dashboard, go to the **Queues** page.
+
+	 <DashButton url="/?to=/:account/workers/queues" />
+
 2. Select the queue you want to add a subscription to.
 3. Switch to the **Subscriptions** tab.
 4. Select **Subscribe to events**.
@@ -49,7 +53,10 @@ You can view all subscriptions configured for a queue to see what events it is c
 ### Dashboard
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and go to **Compute & AI** > **Queues**.
+1. In the Cloudflare dashboard, go to the **Queues** page.
+
+	 <DashButton url="/?to=/:account/workers/queues" />
+
 2. Select the queue you want to view subscriptions for.
 3. Switch to the **Subscriptions** tab.
 </Steps>
@@ -69,7 +76,10 @@ When you delete a subscription, your queue will stop receiving messages for thos
 ### Dashboard
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and go to **Compute & AI** > **Queues**.
+1. In the Cloudflare dashboard, go to the **Queues** page.
+
+	 <DashButton url="/?to=/:account/workers/queues" />
+
 2. Select the queue containing the subscription you want to delete.
 3. Switch to the **Subscriptions** tab.
 4. Select **...** for the subscription you want to delete.

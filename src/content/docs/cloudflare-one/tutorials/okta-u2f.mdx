@@ -4,7 +4,8 @@ category: 🔐 Zero Trust
 difficulty: Medium
 pcx_content_type: tutorial
 title: Require U2F with Okta
-
+description: >-
+  This tutorial covers how to Integrate Cloudflare Access with Okta. It also covers the steps to set up Cloudflare Access and integrate Okta with Zero Trust.
 ---
 
 Many identity providers, like Okta, support multiple multifactor authentication (MFA) options simultaneously. For example, Okta will allow you to login with your password and a temporary code generated in an app or a U2F hard key like a Yubikey.
@@ -13,10 +14,10 @@ Some second factor methods are more resistant to phishing. U2F options require y
 
 **This tutorial covers how to:**
 
-* Integrate Cloudflare Access with Okta
-* Configure Okta for U2F enrollment
-* Build an [Access policy](/cloudflare-one/policies/access/) that require users login with a hardware key
-* Specify that policy to apply to certain Access applications
+- Integrate Cloudflare Access with Okta
+- Configure Okta for U2F enrollment
+- Build an [Access policy](/cloudflare-one/access-controls/policies/) that require users login with a hardware key
+- Specify that policy to apply to certain Access applications
 
 The first two sections of this tutorial link to guides to set up Cloudflare Access and integrate Okta. If you already use Cloudflare Access with Okta, you can skip ahead to the fourth section.
 
@@ -24,7 +25,7 @@ The first two sections of this tutorial link to guides to set up Cloudflare Acce
 
 20 minutes
 
-***
+---
 
 ## Configure Cloudflare Access
 
@@ -32,7 +33,7 @@ Before you begin, you'll need to follow [these instructions](/cloudflare-one/set
 
 ## Integrate Okta
 
-Follow [these instructions](/cloudflare-one/identity/idp-integration/okta/) to integrate Okta with your Cloudflare Access account. Once integrated, Access will be able to apply rules using identity, group membership, and multifactor method from Okta.
+Follow [these instructions](/cloudflare-one/integrations/identity-providers/okta/) to integrate Okta with your Cloudflare Access account. Once integrated, Access will be able to apply rules using identity, group membership, and multifactor method from Okta.
 
 ## Configure Okta for U2F
 

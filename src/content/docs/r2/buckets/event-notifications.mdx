@@ -3,6 +3,8 @@ title: Event notifications
 pcx_content_type: how-to
 ---
 
+import { DashButton } from "~/components";
+
 Event notifications send messages to your [queue](/queues/) when data in your R2 bucket changes. You can consume these messages with a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [pull over HTTP](/queues/configuration/pull-consumers/) from outside of Cloudflare Workers.
 
 ## Get started with event notifications
@@ -17,7 +19,9 @@ Before getting started, you will need:
 
 ### Enable event notifications via Dashboard
 
-1. From the Cloudflare dashboard, select **R2** from the sidebar.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Select the bucket you'd like to add an event notification rule to.
 3. Switch to the **Settings** tab, then scroll down to the **Event notifications** card.
 4. Select **Add notification** and choose the queue you'd like to receive notifications and the [type of events](/r2/buckets/event-notifications/#event-types) that will trigger them.
@@ -58,51 +62,10 @@ Event notification rules determine the [event types](/r2/buckets/event-notificat
 
 ## Event types
 
-<table>
-	<tbody>
-		<th style="width:25%">Event type</th>
-		<th style="width:50%">Description</th>
-		<th style="width:25%">Trigger actions</th>
-		<tr>
-			<td>
-				<code>object-create</code>
-			</td>
-			<td>
-				Triggered when new objects are created or existing objects are
-				overwritten.
-			</td>
-			<td>
-				<ul>
-					<li>
-						<code>PutObject</code>
-					</li>
-					<li>
-						<code>CopyObject</code>
-					</li>
-					<li>
-						<code>CompleteMultipartUpload</code>
-					</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<code>object-delete</code>
-			</td>
-			<td>Triggered when an object is explicitly removed from the bucket.</td>
-			<td>
-				<ul>
-					<li>
-						<code>DeleteObject</code>
-					</li>
-					<li>
-						<code>LifecycleDeletion</code>
-					</li>
-				</ul>
-			</td>
-		</tr>
-	</tbody>
-</table>
+| Event type | Description | Trigger actions |
+|------------|-------------|----------------|
+| `object-create` | Triggered when new objects are created or existing objects are overwritten. | <ul><li>`PutObject`</li><li>`CopyObject`</li><li>`CompleteMultipartUpload`</li></ul> |
+| `object-delete` | Triggered when an object is explicitly removed from the bucket. | <ul><li>`DeleteObject`</li><li>`LifecycleDeletion`</li></ul> |
 
 ## Message format
 
@@ -128,106 +91,19 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
 
 ### Properties
 
-<table>
-	<tbody>
-		<th style="width:22%">Property</th>
-		<th style="width:18%">Type</th>
-		<th style="width:60%">Description</th>
-		<tr>
-			<td>
-				<code>account</code>
-			</td>
-			<td>String</td>
-			<td>The Cloudflare account ID that the event is associated with.</td>
-		</tr>
-		<tr>
-			<td>
-				<code>action</code>
-			</td>
-			<td>String</td>
-			<td>
-				The type of action that triggered the event notification. Example
-				actions include: <code>PutObject</code>, <code>CopyObject</code>,{" "}
-				<code>CompleteMultipartUpload</code>, <code>DeleteObject</code>.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<code>bucket</code>
-			</td>
-			<td>String</td>
-			<td>The name of the bucket where the event occurred.</td>
-		</tr>
-		<tr>
-			<td>
-				<code>object</code>
-			</td>
-			<td>Object</td>
-			<td>
-				A nested object containing details about the object involved in the
-				event.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<code>object.key</code>
-			</td>
-			<td>String</td>
-			<td>The key (or name) of the object within the bucket.</td>
-		</tr>
-		<tr>
-			<td>
-				<code>object.size</code>
-			</td>
-			<td>Number</td>
-			<td>
-				The size of the object in bytes. Note: not present for object-delete
-				events.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<code>object.eTag</code>
-			</td>
-			<td>String</td>
-			<td>
-				The entity tag (eTag) of the object. Note: not present for object-delete
-				events.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<code>eventTime</code>
-			</td>
-			<td>String</td>
-			<td>The time when the action that triggered the event occurred.</td>
-		</tr>
-		<tr>
-			<td>
-				<code>copySource</code>
-			</td>
-			<td>Object</td>
-			<td>
-				A nested object containing details about the source of a copied object.
-				Note: only present for events triggered by <code>CopyObject</code>.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<code>copySource.bucket</code>
-			</td>
-			<td>String</td>
-			<td>The bucket that contained the source object.</td>
-		</tr>
-		<tr>
-			<td>
-				<code>copySource.object</code>
-			</td>
-			<td>String</td>
-			<td>The name of the source object.</td>
-		</tr>
-	</tbody>
-</table>
+| Property | Type | Description |
+|----------|------|-------------|
+| `account` | String | The Cloudflare account ID that the event is associated with. |
+| `action` | String | The type of action that triggered the event notification. Example actions include: `PutObject`, `CopyObject`, `CompleteMultipartUpload`, `DeleteObject`. |
+| `bucket` | String | The name of the bucket where the event occurred. |
+| `object` | Object | A nested object containing details about the object involved in the event. |
+| `object.key` | String | The key (or name) of the object within the bucket. |
+| `object.size` | Number | The size of the object in bytes. Note: not present for object-delete events. |
+| `object.eTag` | String | The entity tag (eTag) of the object. Note: not present for object-delete events. |
+| `eventTime` | String | The time when the action that triggered the event occurred. |
+| `copySource` | Object | A nested object containing details about the source of a copied object. Note: only present for events triggered by `CopyObject`. |
+| `copySource.bucket` | String | The bucket that contained the source object. |
+| `copySource.object` | String | The name of the source object. |
 
 ## Notes
 

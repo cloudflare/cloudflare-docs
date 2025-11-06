@@ -217,9 +217,9 @@ from pyodide.ffi import create_proxy
 from js import HTMLRewriter, fetch
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env):
-        site_key = env.SITE_KEY
-        attr_name = env.TURNSTILE_ATTR_NAME
+    async def fetch(self, request):
+        site_key = self.env.SITE_KEY
+        attr_name = self.env.TURNSTILE_ATTR_NAME
         res = await fetch(request)
 
         class Append:
@@ -264,7 +264,7 @@ async function handlePost(request, env) {
     let formData = new FormData();
 
     // `secret_key` here is the Turnstile Secret key, which should be set using Wrangler secrets
-    formData.append('secret', env.SECRET_KEY);
+    formData.append('secret', self.env.SECRET_KEY);
     formData.append('response', token);
     formData.append('remoteip', ip); //This is optional.
 

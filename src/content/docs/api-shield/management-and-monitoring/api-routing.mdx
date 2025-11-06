@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { Markdown, Render, Steps, Tabs, TabItem } from "~/components"
+import { Markdown, Render, Steps, Tabs, TabItem, DashButton } from "~/components"
 
 API Shield Routing enables customers to create a unified external-facing API that routes requests to different back-end services that may have different paths and hosts than the existing zone and DNS configuration.
 
@@ -35,11 +35,12 @@ To create a route, you will need the operation ID of the Source Endpoint. To fin
     </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-            2. Select **Security** > **Web assets**.
-            3. Filter the endpoints to find your **Source Endpoint**.
-            4. Expand the row for your Source Endpoint and note the **operation ID** field.
-            5. Select the copy icon to copy the operation ID to your clipboard.
+            1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+                <DashButton url="/?to=/:account/:zone/security/web-assets" />
+            2. Filter the endpoints to find your **Source Endpoint**.
+            3. Expand the row for your Source Endpoint and note the **operation ID** field.
+            4. Select the copy icon to copy the operation ID to your clipboard.
         </Steps>
     </TabItem>
 </Tabs>
@@ -61,12 +62,13 @@ Once your Source Endpoints are added to Endpoint Management, use the following s
     </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-            2. Go to **Security** > **Web assets**.
-            3. In **Endpoints**, select an existing endpoint and expand its details.
-            4. Under **Routing**, select **Create route**.
-            5. Enter the target URL or IP address to route your endpoint to.
-            6. Select **Deploy route**.
+            1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+                <DashButton url="/?to=/:account/:zone/security/web-assets" />
+            2. In **Endpoints**, select an existing endpoint and expand its details.
+            3. Under **Routing**, select **Create route**.
+            4. Enter the target URL or IP address to route your endpoint to.
+            5. Select **Deploy route**.
         </Steps>
     </TabItem>
 </Tabs>

@@ -1,5 +1,4 @@
 ---
-
 summary: Return JSON directly from a Worker script, useful for building APIs and
   middleware.
 demo: https://returning-json.workers-sites-examples.workers.dev
@@ -30,7 +29,7 @@ import { Render, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
-<Render file="return-json-example-js" />
+<Render file="return-json-example-js" product="workers" />
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
@@ -82,16 +81,16 @@ async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 const app = new Hono();
 
-app.get('*', (c) => {
-  const data = {
-    hello: "world",
-  };
+app.get("*", (c) => {
+	const data = {
+		hello: "world",
+	};
 
-  return c.json(data);
+	return c.json(data);
 });
 
 export default app;

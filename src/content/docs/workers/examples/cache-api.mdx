@@ -111,7 +111,7 @@ from pyodide.ffi import create_proxy
 from js import Response, Request, URL, caches, fetch
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, _env, ctx):
+    async def fetch(self, request):
         cache_url = request.url
 
         # Construct the cache key from the cache URL
@@ -133,7 +133,7 @@ class Default(WorkerEntrypoint):
             # will limit the response to be in cache for 10 seconds s-maxage
             # Any changes made to the response here will be reflected in the cached value
             response.headers.append("Cache-Control", "s-maxage=10")
-            ctx.waitUntil(create_proxy(cache.put(cache_key, response.clone())))
+            self.ctx.waitUntil(create_proxy(cache.put(cache_key, response.clone())))
         else:
             print(f"Cache hit for: {request.url}.")
         return response

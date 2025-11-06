@@ -9,6 +9,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
+	product="cloudflare-one"
 	params={{
 		integrationName: props.integrationName,
 		integrationAccountType: props.environmentName,
@@ -17,12 +18,13 @@ import { Render } from "~/components";
 
 ## Integration prerequisites
 
-<Render file="casb/google/google-prereqs" />
+<Render file="casb/google/google-prereqs" product="cloudflare-one" />
 
 ## Integration permissions
 
 <Render
 	file="casb/integration-perms"
+	product="cloudflare-one"
 	params={{
 		parentIntegration: "Google Workspace",
 		parentSlug: "google-workspace",
@@ -33,6 +35,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/security-findings"
+	product="cloudflare-one"
 	params={{
 		integrationName: props.integrationName,
 		slugRelativePath: props.slugifiedName,
@@ -41,12 +44,12 @@ import { Render } from "~/components";
 
 ### User account settings
 
-<Render file="casb/google/user-account-settings" />
+<Render file="casb/google/user-account-settings" product="cloudflare-one" />
 
 ### Inactive or suspended users
 
-<Render file="casb/google/inactive-suspended-users" />
+<Render file="casb/google/inactive-suspended-users" product="cloudflare-one" />
 
 ### Third-party apps
 
-<Render file="casb/google/third-party-apps" />
+<Render file="casb/google/third-party-apps" product="cloudflare-one" />

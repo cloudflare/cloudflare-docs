@@ -35,10 +35,10 @@ from fastapi import FastAPI, Request
 from pydantic import BaseModel
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env):
+    async def fetch(self, request):
         import asgi
 
-        return await asgi.fetch(app, request, env)
+        return await asgi.fetch(app, request, self.env)
 
 app = FastAPI()
 

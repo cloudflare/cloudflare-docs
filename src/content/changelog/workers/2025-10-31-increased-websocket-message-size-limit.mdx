@@ -1,0 +1,15 @@
+---
+title: Workers WebSocket message size limit increased from 1 MiB to 32 MiB
+description: The maximum WebSocket message size limit for all Workers has been increased from 1 MiB to 32 MiB.
+products:
+  - workers
+  - durable-objects
+  - browser-rendering
+date: 2025-10-31
+---
+
+Workers, including those using [Durable Objects](/durable-objects/) and [Browser Rendering](/browser-rendering/workers-bindings/), may now process WebSocket messages up to 32 MiB in size. Previously, this limit was 1 MiB.
+
+This change allows Workers to handle use cases requiring large message sizes, such as processing Chrome Devtools Protocol messages.
+
+For more information, please see the [Durable Objects startup limits](/durable-objects/platform/limits/#SQLite-backed-Durable-Objects-general-limits).

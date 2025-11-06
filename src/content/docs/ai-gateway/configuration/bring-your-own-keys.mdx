@@ -12,7 +12,7 @@ import { CardGrid, LinkTitleCard } from "~/components";
 
 Bring your own keys (BYOK) is a feature in Cloudflare AI Gateway that allows you to securely store your AI provider API keys directly in the Cloudflare dashboard. Instead of including API keys in every request to your AI models, you can configure them once in the dashboard, and reference them in your gateway configuration.
 
-The keys are stored securely with [Secret Store](/secrets-store/) and allows for:
+The keys are stored securely with [Secrets Store](/secrets-store/) and allows for:
 
 - Secure storage and limit exposure
 - Easier key rotation
@@ -23,7 +23,7 @@ The keys are stored securely with [Secret Store](/secrets-store/) and allows for
 ### Prerequisites
 
 - Ensure your gateway is [authenticated](/ai-gateway/configuration/authentication/).
-- Ensure you have appropriate permissions to create and deploy secrets on Secret Store.
+- Ensure you have appropriate [permissions](/secrets-store/access-control/) to create and deploy secrets on Secrets Store.
 
 ### Configure API keys
 

@@ -6,18 +6,10 @@ sidebar:
 head:
   - tag: title
     content: Cloudflare Pipelines - Pricing
-
 ---
 
-:::note
-Pipelines requires a [Workers paid](/workers/platform/pricing/#workers) plan to use.
-:::
+Cloudflare Pipelines is in open beta and available to any developer with a [Workers Paid plan](/workers/platform/pricing/).
 
-During the first phase of the Pipelines open beta, you will not be billed for Pipelines usage. You will be billed only for [R2 usage](/r2/pricing).
+We are not currently billing for Pipelines during open beta. However, you will be billed for standard [R2 storage and operations](/r2/pricing/) for data written by sinks to R2 buckets.
 
-We plan to price based on the volume of data ingested into and delivered from Pipelines. We expect to begin charging by September 15, 2025, and will provide at least 30 days' notice beforehand.
-
-|                                    | Workers Paid Users
-| ---------------------------------- | ------------------------
-| Ingestion                          | 50 GB / month included + $0.02 / additional GB
-| Delivery to R2                     | 50 GB / month included + $0.02 / additional GB
+We plan to bill based on the volume of data processed by pipelines, transformed by pipelines, and delivered to sinks. We'll provide at least 30 days notice before we make any changes or start charging for Pipelines usage.

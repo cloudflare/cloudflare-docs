@@ -13,7 +13,7 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
 <Tabs>
   <TabItem label="Watch this episode">
 
-  Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using cron triggers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
+Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using cron triggers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
 
     <Card>
          <YouTube id="L6gR4Yr3UW8" />
@@ -27,20 +27,21 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
     - [Cloudflare Workers AI](/workers-ai/)
 
     </Card>
+
   </TabItem>
-  
+
   <TabItem label="Step-by-step tutorial">
 
       Workflows allow you to kick off asynchronous processes without blocking the user. This is demonstrated in the `addInteraction` function, which creates a new instance of the `INTERACTION` workflow.
 
       Locate the `addInteraction` function in `src/index.tsx`:
-      
+
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/index.tsx#L237)
 
       This function is called when a user interacts with a pun (for example, likes it). Instead of performing the interaction logic directly, it offloads the work to a workflow.
 
       Examine the `InteractionWorkflow` definition in `src/workflows/interaction.ts`. This workflow performs tasks like checking if the user/session exists and recording the interaction in the database.
-      
+
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/interaction.ts)
 
       ### Leaderboard Code
@@ -48,7 +49,7 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
       A common use case for background processes is crunching data and caching results, such as building a leaderboard.
 
       Examine the `LeaderboardWorkflow` in `src/workflows/leaderboard.ts`. This workflow performs a database query to find trending puns and then stores the results in Cloudflare KV (Key-Value Store).
-      
+
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/leaderboard.ts)
 
       This workflow can be scheduled to run periodically to update the leaderboard data.
@@ -58,7 +59,7 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
       The `wrangler.toml` file is used to configure your Worker and Workflows. This includes defining bindings to resources like KV namespaces and setting up triggers for workflows.
 
       Open `wrangler.toml` and find the `[triggers]` section.
-      
+
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/wrangler.toml#L68)
 
       The `crons` array allows you to define scheduled triggers for your main Worker. The example shows a cron job configured to run every 30 minutes.
@@ -74,7 +75,7 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
       Workflows can also be used for more complex, multi-step processes, including interacting with AI models. The `PuntificatorWorkflow` is an example that leverages AI to generate and evaluate new puns.
 
       Examine the `PuntificatorWorkflow` definition in `src/workflows/puntificator.ts`.
-      
+
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts)
 
       This workflow includes steps to:
@@ -95,7 +96,7 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
       Workflows can initiate other workflows, allowing you to compose complex processes from smaller, modular units.
 
       In the `PuntificatorWorkflow`, find where it calls the `PUBLISH` workflow.
-      
+
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts#L115)
 
       This demonstrates how one workflow can trigger another, enabling the separation of concerns and modular design.
@@ -128,6 +129,6 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
 
   </TabItem>
   <TabItem label="Series overview">
-    <Render file="workflows-series-navigation" />
+    <Render file="workflows-series-navigation" product="learning-paths" />
   </TabItem>
 </Tabs>

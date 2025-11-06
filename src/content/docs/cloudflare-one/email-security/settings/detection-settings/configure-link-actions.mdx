@@ -1,0 +1,42 @@
+---
+title: Configure link actions
+pcx_content_type: how-to
+sidebar:
+  order: 6
+---
+
+You can configure how Email security handles links in emails.
+
+:::note
+You can only configure link actions if you deploy Email security via [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/).
+:::
+
+To configure link actions:
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
+2. Select **Email security**.
+3. Select **Settings**, then go to **Detection settings** > **Link actions** > **View**.
+
+You can configure **Link actions settings**, or **URL rewrite ignore patterns**.
+
+## Link actions settings
+
+To configure link actions, select **Configure**.
+
+The dashboard will display **Open links evaluated as suspicious in a remote browser (Recommended)**. This option is turned on by default. Email security will also allow you to select message dispositions to open all the links for dispositioned emails in a remote browser.
+
+Select one or more disposition, then select **Save**.
+
+If **Open links evaluated as suspicious in a remote browser (Recommended)** is turned off, you can select **URL defang** or **No action** on each disposition. Select **Save** once you have completed the configuration.
+
+## Add patterns for URLs
+
+You can add patterns for URLs that should be rewritten.
+
+1. Under **URL rewrite ignore patterns**, select **Add a pattern**.
+2. Enter a valid IP, URL, or regular expression. You can enter up to 512 characters.
+3. Select **Save**.
+
+To edit a pattern, go to the pattern you want to edit, select the three dots, then **Edit**. Once you have finished modifying the URL patter, select **Save**.
+
+To delete a pattern, go to the pattern you want to delete, select the three dots, then **Delete**.

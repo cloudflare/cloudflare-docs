@@ -9,6 +9,8 @@ head:
     content: Troubleshooting client certificates
 ---
 
+import { DashButton } from "~/components";
+
 If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
 
 ---
@@ -33,9 +35,11 @@ Check whether [mTLS has been enabled](/ssl/client-certificates/enable-mtls/) for
 
 ## Review mTLS rules
 
-To review mTLS rules:
+To review mTLS rules, consider the steps below. For further guidance refer to [Custom rules](/waf/custom-rules/create-dashboard/).
 
-1. Select **Security** > **WAF** > **Custom rules**.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
 2. On a specific rule, select **Edit**.
 

@@ -6,12 +6,12 @@ source: null
 
 ## Error 524: a timeout occurred
 
-Error `524` indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 seconds [Proxy Read Timeout](/fundamentals/reference/connection-limits/).
+Error `524` indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 120 seconds [Proxy Read Timeout](/fundamentals/reference/connection-limits/).
 
 ### Common causes
 
 This can happen if the origin server is taking too long because it has too much work to do, for example, a large data query, or because the server is struggling for resources and cannot return any data in time.
-The error `524` occurs if the origin web server acknowledges (ACK) the resource request after the connection has been established, but does not send a timely response (within the [Proxy Read Timeout](/fundamentals/reference/connection-limits/) delay, 100 seconds by default).
+The error `524` occurs if the origin web server acknowledges (ACK) the resource request after the connection has been established, but does not send a timely response (within the [Proxy Read Timeout](/fundamentals/reference/connection-limits/) delay, 120 seconds by default).
 
 Error `524` can also indicate that Cloudflare successfully connected to the origin web server to write data, but the write did not complete before the 30 seconds [Proxy Write Timeout](/fundamentals/reference/connection-limits/) (or 6.5 seconds in the case of [Cloudflare Images](/images/)). This timeout cannot be adjusted.
 

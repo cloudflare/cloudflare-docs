@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Angular
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import { PagesBuildPreset, Render, PackageManagers } from "~/components";
@@ -34,11 +29,11 @@ The initial deployment created via C3 is referred to as a [Direct Upload](/pages
 
 :::
 
-<Render file="framework-guides/git-integration" />
+<Render file="framework-guides/git-integration" product="pages" />
 
 ### Create a GitHub repository
 
-<Render file="framework-guides/create-gh-repo" /> <br />
+<Render file="framework-guides/create-gh-repo" product="pages" /> <br />
 
 ```sh
 # Skip the following three commands if you have built your application
@@ -54,10 +49,13 @@ git push -u origin main
 
 ### Create a Pages project
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Angular" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ name: "Angular" }}
+/>
 
 <PagesBuildPreset framework="angular" />
-
 
 :::caution[On some versions of Angular, you may need to:]
 Change the `Build command` to `npx ng build --output-path dist/cloudflare`\
@@ -72,4 +70,8 @@ Review your first deploy pipeline in progress. Pages installs all dependencies a
 
 Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying your changes to production.
 
-<Render file="framework-guides/learn-more" params={{ one: "Angular" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Angular" }}
+/>

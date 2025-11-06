@@ -5,26 +5,26 @@ sidebar:
   order: 2
 ---
 
-With pre-delivery deployment, also known as Inline deployment, Email Security evaluates email messages before they reach a user's inbox.
+With pre-delivery deployment, also known as Inline deployment, Email security evaluates email messages before they reach a user's inbox.
 
 ![Inline deployment diagram](~/assets/images/email-security/deployment/inline-setup/CF_A1S_Deployment_Inline_Diagrams.png)
 
-Before you change your MX records, you will have to set up the [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/) on your DNS records. If you do not set up the TTL, the DNS propagation will take longer to happen. 
+Before you change your MX records, you will have to set up the [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/) on your DNS records. If you do not set up the TTL, the DNS propagation will take longer to happen.
 
 Cloudflare recommends to decrease the TTL to five minutes (also known as [Auto](/dns/manage-dns-records/reference/ttl/#proxied-records)) 3 to 5 days prior to the planned MX record change. Reducing the TTL allows the DNS record to propagate ahead of time, so changes take effect rapidly. Once you have completed your onboarding process, you can choose to increase the TTL.
 
-When you have configured your TTL, you can deploy Email Security via MX/Inline. An MX record is a [DNS record](/dns/manage-dns-records/). 
+When you have configured your TTL, you can deploy Email security via MX/Inline. An MX record is a [DNS record](/dns/manage-dns-records/).
 
 If your DNS records are hosted by Cloudflare (or any other provider, except for Google), you can [edit your DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) via the dashboard or the API to point your MX records to Cloudflare.
 
-By changing your MX records, Email Security will be positioned between your incoming emails and Microsoft 0365 or Gmail.
+By changing your MX records, Email security will be positioned between your incoming emails and Microsoft 0365 or Gmail.
 
-Email Security becomes a hop in the [SMTP](https://www.cloudflare.com/en-gb/learning/email-security/what-is-smtp/) processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
+Email security becomes a hop in the [SMTP](https://www.cloudflare.com/en-gb/learning/email-security/what-is-smtp/) processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
 
 When you choose an inline deployment, you get the following benefits:
 
 - Messages are processed and physically blocked before arriving in a user's mailbox.
 - Your deployment is simpler, because any complex processing can happen downstream and without modification.
-- Email Security can modify delivered messages, adding subject or body mark-ups.
-- Email Security can offer high availability and adaptive message pooling.
+- Email security can modify delivered messages, adding subject or body mark-ups.
+- Email security can offer high availability and adaptive message pooling.
 - You can set up advanced handling downstream for non-quarantined messages with added X-headers.

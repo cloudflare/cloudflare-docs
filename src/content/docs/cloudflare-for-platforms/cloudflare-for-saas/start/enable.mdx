@@ -9,13 +9,16 @@ head:
 
 ---
 
+import { DashButton } from "~/components";
+
 To enable Cloudflare for SaaS for your account:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **SSL/TLS** > **Custom Hostnames**.
-4. Select **Enable**.
-5. The next step depends on the zone's plan:
+1. In the Cloudflare dashboard, go to the **Custom Hostnames** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/custom-hostnames" />
+
+2. Select **Enable**.
+3. The next step depends on the zone's plan:
    * **Enterprise**: Can preview this product as a [non-contract service](/billing/preview-services/), which provide full access, free of metered usage fees, limits, and certain other restrictions.
    * **Non-enterprise**: Will have to enter payment information.
 

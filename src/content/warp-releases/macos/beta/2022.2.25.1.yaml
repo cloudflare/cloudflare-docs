@@ -2,7 +2,7 @@ releaseNotes: |-
   This release contains new features and improvements from the last beta release. In particular this build now supports the ability to configure settings via the Dashboard and not just with a .plist. Note that settings in your .plist always overrule what comes from the dashboard.
 
   **Notable updates**
-  - The "enabled" .plist property has now been completely deprecated and is no longer read. Please see https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters#switch_locked for the mechanism announced in April 2021
+  - The "enabled" .plist property has now been completely deprecated and is no longer read. Please see https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters#switch_locked for the mechanism announced in April 2021
   - Now that settings exist in the Zero Trust Dashboard the Client UI should behave the same regardless of if you manually joined to a Team or if you were forced to by local .plist policy
   - Updated Teams logo in app to Zero Trust
   - Fixed issue where the WARP Client might not get updated settings when it initial starts

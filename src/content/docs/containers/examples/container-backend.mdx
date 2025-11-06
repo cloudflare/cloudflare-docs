@@ -1,5 +1,4 @@
 ---
-
 summary: A simple frontend app with a containerized backend
 pcx_content_type: example
 title: Static Frontend, Container Backend
@@ -33,6 +32,7 @@ For a full example, see the [Static Frontend + Container Backend Template](https
     {
       "class_name": "Backend",
       "image": "./Dockerfile",
+			"max_instances": 3
     }
   ],
   "durable_objects": {
@@ -166,7 +166,7 @@ select of of N instances of a Container to route requests to.
 In the future, we will provide improved latency-aware load balancing and autoscaling.
 
 This will make scaling stateless instances simple and routing more efficient. See the
-[autoscaling documentation](/containers/scaling-and-routing) for more details.
+[autoscaling documentation](/containers/platform-details/scaling-and-routing) for more details.
 :::
 
 ## Define a backend container
@@ -176,6 +176,7 @@ Your container should be able to handle requests to `/api/widgets`.
 In this case, we'll use a simple Golang backend that returns a hard-coded list of widgets.
 
 <Details header="server.go">
+
 ```go
 package main
 
@@ -186,22 +187,23 @@ import (
 )
 
 func handler(w http.ResponseWriter, r \*http.Request) {
-    widgets := []map[string]interface{}{
-        {"id": 1, "name": "Widget A"},
-        {"id": 2, "name": "Sprocket B"},
-        {"id": 3, "name": "Gear C"},
-    }
+	widgets := []map[string]interface{}{
+		{"id": 1, "name": "Widget A"},
+		{"id": 2, "name": "Sprocket B"},
+		{"id": 3, "name": "Gear C"},
+	}
 
-    w.Header().Set("Content-Type", "application/json")
-    w.Header().Set("Access-Control-Allow-Origin", "*")
-    json.NewEncoder(w).Encode(widgets)
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	json.NewEncoder(w).Encode(widgets)
 
 }
 
 func main() {
-    http.HandleFunc("/api/widgets", handler)
-    log.Fatal(http.ListenAndServe(":8080", nil))
+	http.HandleFunc("/api/widgets", handler)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 ```
+
 </Details>

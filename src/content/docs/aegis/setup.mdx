@@ -7,7 +7,7 @@ sidebar:
     hideIndex: true
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, Render } from "~/components";
 
 You can control Aegis enablement on your zones [via API](/api/resources/zones/subresources/settings/methods/edit/). If you are not familiar with how Cloudflare API works, refer to [Fundamentals](/fundamentals/api/).
 
@@ -20,7 +20,7 @@ Cloudflare Aegis is available in early access to Enterprise customers. Contact y
 - The Aegis zone setting endpoint is only available within Cloudflare accounts that own leased IPs, or accounts to which a [BYOIP prefix](/byoip/) has been delegated. If you wish to use Aegis for zones that do not meet this criteria, contact your account team.
 - Each Aegis pool can consist of either IPs from a BYOIP prefix or Cloudflare-leased IPs. A single dedicated egress pool cannot contain both BYOIPs and leased IPs.
 
-## Steps
+## Turn on Aegis for a zone
 
 1. Contact your account team to get the ID for your dedicated egress pool.
 2. Make a `PATCH` request to the [Edit Zone Setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint:
@@ -41,3 +41,15 @@ Cloudflare Aegis is available in early access to Enterprise customers. Contact y
     setting_id: "aegis",
   }}
 />
+
+## Check your Aegis IPs
+
+<Render
+  file="check-leased-ips"
+	product="byoip"
+	params={{
+		product: "Aegis IPs (dedicated IPs for CDN egress)"
+	}}
+/>
+
+If you are using BYOIP, refer to [**IP addresses** > **BYOIP prefixes**](https://dash.cloudflare.com/?to=/:account/ip-addresses/ip-prefixes) instead.

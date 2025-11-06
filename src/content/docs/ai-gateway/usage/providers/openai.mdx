@@ -71,7 +71,7 @@ const openai = new OpenAI({
 });
 
 try {
-	const model = "gpt-3.5-turbo-0613";
+	const model = "gpt-5-mini";
 	const messages = [{ role: "user", content: "What is a neuron?" }];
 	const maxTokens = 100;
 	const chatCompletion = await openai.chat.completions.create({

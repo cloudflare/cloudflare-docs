@@ -13,23 +13,23 @@ import { Code, Type, MetaInfo, Details, Render } from "~/components";
 
 For these reasons, document conversion plays an important role when designing and developing AI applications. Workers AI provides the `toMarkdown` utility method that developers can use from the [`env.AI`](/workers-ai/configuration/bindings/) binding or the REST APIs for quick, easy, and convenient conversion and summary of documents in multiple formats to Markdown language.
 
-## Methods and definitions
+## Methods
 
 ### async env.AI.toMarkdown()
 
-Takes a list of documents in different formats and converts them to Markdown.
+Takes a document or list of documents in different formats and converts them to Markdown.
 
 #### Parameter
 
-- <code>documents</code>: <Type text="array" />- An array of
-  `toMarkdownDocument`s.
+- <code>files</code>: <Type text="MarkdownDocument | MarkdownDocument[]" />- an instance of or an array of
+  `MarkdownDocument`s.
 
 #### Return values
 
-- <code>results</code>: <Type text="array" />- An array of
-  `toMarkdownDocumentResult`s.
+- <code>results</code>: <Type text="Promise<ConversionResult | ConversionResult[]>" />- An instance of or an array of
+  `ConversionResult`s.
 
-### `toMarkdownDocument` definition
+#### `MarkdownDocument` definition
 
 - `name` <Type text="string" />
 
@@ -39,11 +39,15 @@ Takes a list of documents in different formats and converts them to Markdown.
 
   - A new [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob) object with the document content.
 
-### `toMarkdownDocumentResult` definition
+#### `ConversionResult` definition
 
 - `name` <Type text="string" />
 
   - Name of the converted document. Matches the input name.
+
+- `format` <Type text="'markdown' | 'error'" />
+
+  - The format of this `ConversionResult` object
 
 - `mimetype` <Type text="string" />
 
@@ -51,11 +55,38 @@ Takes a list of documents in different formats and converts them to Markdown.
 
 - `tokens` <Type text="number" />
 
-  - The estimated number of tokens of the converted document.
+  - The estimated number of tokens of the converted document. Only present if `format` is equal to `markdown`.
 
 - `data` <Type text="string" />
 
-  - The content of the converted document in Markdown format.
+  - The content of the converted document in Markdown format. Only present if `format` is equal to `markdown`.
+
+- `error` <Type text="string" />
+
+  - The error message explaining why this conversion failed. Only present if `format` is equal to `error`.
+
+### async env.AI.toMarkdown().transform()
+
+This method is similar to `env.AI.toMarkdown` except that it is exposed through a new handle. It takes the same arguments and returns the same values.
+
+### async env.AI.toMarkdown().supported()
+
+Returns a list of file formats that are currently supported for markdown conversion. See [Supported formats](#supported-formats) for the full list of file formats that can be converted into Markdown.
+
+#### Return values
+
+- <code>results</code>: <Type text="SupportedFormat[]" />- An array of all formats supported for markdown conversion.
+
+#### `SupportedFormat` definition
+
+- `extension` <Type text="string" />
+
+  - Extension of files in this format.
+
+- `mimeType` <Type text="string" />
+
+  - The [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of files of this format
+
 
 ## Supported formats
 
@@ -64,6 +95,8 @@ This is the list of support formats. We are constantly adding new formats and up
 <Render file="markdown-conversion-support" product="workers-ai" />
 
 ## Example
+
+### Converting files
 
 In this example, we fetch a PDF document and an image from R2 and feed them both to `env.AI.toMarkdown`. The result is a list of converted documents. Workers AI models are used automatically to detect and summarize the image.
 
@@ -79,6 +112,7 @@ export default {
 		const cat = await env.R2.get("cat.jpeg");
 
 		return Response.json(
+			// env.AI.toMarkdown().transform(...) would return the same result
 			await env.AI.toMarkdown([
 				{
 					name: "somatosensory.pdf",
@@ -119,15 +153,54 @@ This is the result:
 ]
 ```
 
+### Getting supported file formats
+
+```typescript
+import { Env } from "./env";
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		return Response.json(
+			await env.AI.toMarkdown().supported(),
+		);
+	},
+};
+```
+
+results in
+
+```json
+[
+	{
+		"extension": ".pdf",
+		"mimeType": "application/pdf",
+	},
+	{
+		"extension": ".jpeg",
+		"mimeType": "image/jpeg",
+	},
+	...
+]
+```
+
 ## REST API
 
 In addition to the Workers AI [binding](/workers-ai/configuration/bindings/), you can use the [REST API](/workers-ai/get-started/rest-api/):
+
+### Conversion
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
   -H 'Authorization: Bearer {API_TOKEN}' \
 	-F "files=@cat.jpeg" \
 	-F "files=@somatosensory.pdf"
+```
+
+### Supported formats
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown/supported \
+  -H 'Authorization: Bearer {API_TOKEN}' \
 ```
 
 ## Pricing

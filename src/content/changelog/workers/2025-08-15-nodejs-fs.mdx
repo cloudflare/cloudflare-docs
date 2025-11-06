@@ -1,0 +1,60 @@
+---
+title: The Node.js and Web File System APIs in Workers
+description: The node:fs and Web File System APIs are now available in Workers.
+products:
+  - workers
+date: 2025-08-15
+---
+
+Implementations of the [`node:fs` module](https://nodejs.org/docs/latest/api/fs.html) and the [Web File System API](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API) are now available in Workers.
+
+## Using the `node:fs` module
+
+The `node:fs` module provides access to a virtual file system in Workers. You can use it to read and write files, create directories, and perform other file system operations.
+
+The virtual file system is ephemeral with each individual request havig its own isolated temporary file space. Files written to the file system will not persist across requests and will not be shared across requests or across different Workers.
+
+Workers running with the `nodejs_compat` compatibility flag will have access to the `node:fs` module by default when the compatibility date is set to `2025-09-01` or later. Support for the API can also be enabled using the `enable_nodejs_fs_module` compatibility flag together with the `nodejs_compat` flag. The `node:fs` module can be disabled using the `disable_nodejs_fs_module` compatibility flag.
+
+```js
+import fs from "node:fs";
+
+const config = JSON.parse(fs.readFileSync("/bundle/config.json", "utf-8"));
+
+export default {
+	async fetch(request) {
+		return new Response(`Config value: ${config.value}`);
+	},
+};
+```
+
+There are a number of initial limitations to the `node:fs` implementation:
+
+- The glob APIs (e.g. `fs.globSync(...)`) are not implemented.
+- The file watching APIs (e.g. `fs.watch(...)`) are not implemented.
+- The file timestamps (modified time, access time, etc) are only partially supported. For now, these will always return the Unix epoch.
+
+Refer to the [Node.js documentation](https://nodejs.org/docs/latest/api/fs.html) for more information on the `node:fs` module and its APIs.
+
+## The Web File System API
+
+The Web File System API provides access to the same virtual file system as the `node:fs` module, but with a different API surface. The Web File System API is only available in Workers running with the `enable_web_file_system` compatibility flag. The `nodejs_compat` compatibility flag is not required to use the Web File System API.
+
+```js
+const root = navigator.storage.getDirectory();
+
+export default {
+	async fetch(request) {
+		const tmp = await root.getDirectoryHandle("/tmp");
+		const file = await tmp.getFileHandle("data.txt", { create: true });
+		const writable = await file.createWritable();
+		const writer = writable.getWriter();
+		await writer.write("Hello, World!");
+		await writer.close();
+
+		return new Response("File written successfully!");
+	},
+};
+```
+
+As there are still some parts of the Web File System API tht are not fully standardized, there may be some differences between the Workers implementation and the implementations in browsers.

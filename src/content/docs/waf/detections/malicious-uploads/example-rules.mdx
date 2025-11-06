@@ -36,11 +36,11 @@ This custom rule example blocks requests addressed at `/upload` with uploaded co
 - Expression: `any(cf.waf.content_scan.obj_sizes[*] > 512000) and http.request.uri.path eq "/upload"`
 - Action: _Block_
 
-## Block requests with uploaded files over the content scanning limit (30 MB)
+## Block requests with uploaded files over the content scanning limit (50 MB)
 
-This custom rule example blocks requests with uploaded content objects over 30 MB in size (the current content scanning limit):
+This custom rule example blocks requests with uploaded content objects over 50 MB in size (the current content scanning limit):
 
-- Expression: `any(cf.waf.content_scan.obj_sizes[*] >= 31457280)`
+- Expression: `any(cf.waf.content_scan.obj_sizes[*] >= 52428800)`
 - Action: _Block_
 
-In this example, you must also test for equality because currently any file over 30 MB will be handled internally as if it had a size of 30 MB (31,457,280 bytes). This means that using the `>` (greater than) [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) would not work for this particular rule — you should use `>=` (greater than or equal) instead.
+In this example, you must also test for equality because currently any file over 50 MB will be handled internally as if it had a size of 50 MB (52,428,800 bytes). This means that using the `>` (greater than) [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) would not work for this particular rule — you should use `>=` (greater than or equal) instead.
