@@ -111,18 +111,19 @@ When your domain is **Active**:
 - Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Websites** page of your account.
 - Online tools such as [https://www.whatsmydns.net/](https://www.whatsmydns.net/) will show your Cloudflare-assigned nameservers (most of these tools use cached query results, so it may take longer for them to show the updated nameservers).
 - CLI commands will show your Cloudflare-assigned nameservers
-*macOS / Linux*
-```txt
-whois s.uk.com
-whois uk.com
-dig NS uk.com +short
-dig NS s.uk.com +short
-dig +trace s.uk.com
 
+```txt
+*macOS/Linux*
+
+whois <DOMAIN_NAME>
+dig ns <DOMAIN_NAME> @1.1.1.1
+dig ns <DOMAIN_NAME> @8.8.8.8
+dig <DOMAIN_NAME> +trace
 
 *Windows*
-nslookup <DOMAIN_NAME> 1.1.1.1
-nslookup <DOMAIN_NAME> 8.8.8.8
+
+nslookup -type=ns <DOMAIN_NAME> 1.1.1.1
+nslookup -type=ns <DOMAIN_NAME> 8.8.8.8
 ```
 
 :::note
