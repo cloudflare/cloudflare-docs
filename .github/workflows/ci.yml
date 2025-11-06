@@ -66,6 +66,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_LINK_CHECK: true
+          ENABLE_LAST_MOD_IN_SITEMAP: true
 
       - run: npm run check:worker
 

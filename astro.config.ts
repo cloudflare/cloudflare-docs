@@ -6,7 +6,7 @@ import liveCode from "astro-live-code";
 import starlightLinksValidator from "starlight-links-validator";
 import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
-import sitemap from "@astrojs/sitemap";
+import sitemap, { type SitemapItem } from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
 import { readdir } from "fs/promises";
@@ -59,7 +59,10 @@ async function autogenStyles() {
 const sidebar = await autogenSections();
 const customCss = await autogenStyles();
 
-const runLinkCheck = process.env.RUN_LINK_CHECK || false;
+const runLinkCheck =
+	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
+const ENABLE_LAST_MOD_IN_SITEMAP =
+	process.env.ENABLE_LAST_MOD_IN_SITEMAP?.toLowerCase() === "true";
 
 /**
  * Get the last Git modification date for a file
@@ -105,6 +108,22 @@ function urlToFilePath(url: string): string | null {
 	} catch (_error) {
 		return null;
 	}
+}
+
+function addLastModDate(item: SitemapItem) {
+	const filePath = urlToFilePath(item.url);
+	if (filePath) {
+		const gitDate = getGitLastModified(filePath);
+		if (gitDate) {
+			item.lastmod = gitDate;
+		}
+	} else {
+		console.warn(
+			`[sitemap] Could not find last modified for ${item.url} - setting to now`,
+		);
+		item.lastmod = new Date().toISOString();
+	}
+	return item;
 }
 
 // https://astro.build/config
@@ -242,19 +261,7 @@ export default defineConfig({
 				return true;
 			},
 			serialize(item) {
-				const filePath = urlToFilePath(item.url);
-				if (filePath) {
-					const gitDate = getGitLastModified(filePath);
-					if (gitDate) {
-						item.lastmod = gitDate;
-					}
-				} else {
-					console.warn(
-						`[sitemap] Could not find last modified for ${item.url} - setting to now`,
-					);
-					item.lastmod = new Date().toISOString();
-				}
-				return item;
+				return ENABLE_LAST_MOD_IN_SITEMAP ? addLastModDate(item) : item;
 			},
 		}),
 		react(),
