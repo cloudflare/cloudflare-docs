@@ -48,7 +48,7 @@ Many limits are inherited from those applied to Workers scripts and as documente
 
 ### `waiting` instances do not count towards instance concurrency limits
 
-Instances that are on a `waiting` state - either sleeping, waiting for a retry or waiting for an event - do **not** count towards concurrency limits. It means that other `queued` instances will be scheduled when an instance goes from a `running` state to a `waiting` one, usually the oldest instance queued, on a best-effort basis. This state transition - `running` to `waiting` - may not occur if the wait duration is too short.
+Instances that are on a `waiting` state - either sleeping, waiting for a retry, or waiting for an event - do **not** count towards concurrency limits. This means that other `queued` instances will be scheduled when an instance goes from a `running` state to a `waiting` one, usually the oldest instance queued, on a best-effort basis. This state transition - `running` to `waiting` - may not occur if the wait duration is too short.
 
 For example, consider a Workflow that does some work, waits for 30 days, and then continues with more work:
 
