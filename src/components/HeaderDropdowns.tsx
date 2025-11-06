@@ -11,7 +11,7 @@ import { useState } from "react";
 import { PiCaretDownBold } from "react-icons/pi";
 
 const links = [
-	{ label: "Docs Directory", href: "/products/" },
+	{ label: "Docs Directory", href: "/directory/" },
 	{
 		label: "APIs",
 		href: "https://developers.cloudflare.com/api/",

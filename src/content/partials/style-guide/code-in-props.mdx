@@ -13,7 +13,9 @@ import { Code } from "~/components";
 
 **Do this!**
 
-<p><code>{props.code}</code></p>
+<p>
+	<code>{props.code}</code>
+</p>
 
 <hr />
 
@@ -22,7 +24,9 @@ import { Code } from "~/components";
 **Don't do this!**
 
 ```js
-{props.code}
+{
+	props.code;
+}
 ```
 
 **Do this!**

@@ -96,7 +96,14 @@ import * as codeOwnersUtils from "codeowners-utils";
 			}
 		}
 
-		console.log(newLabels);
+		// Add "date labels to issues"
+
+		const formattedDate: string = new Date().toLocaleDateString("en-US", {
+			month: "long",
+			year: "numeric",
+		});
+
+		newLabels.add(formattedDate);
 
 		if (newLabels.size > 0) {
 			await client.rest.issues.addLabels({

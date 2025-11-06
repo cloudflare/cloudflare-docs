@@ -4,7 +4,6 @@ title: Playwright
 description: Learn how to use Playwright with Cloudflare Workers for browser automation. Access Playwright API, manage sessions, and optimize browser rendering.
 sidebar:
   order: 5
-  badge: Beta
 ---
 
 import {
@@ -24,12 +23,22 @@ Our version is open sourced and can be found in [Cloudflare's fork of Playwright
 <PackageManagers pkg="@cloudflare/playwright" dev />
 
 :::note
-The current version of the Playwright is **v1.54.0**.
+The current version of the Playwright is [**v1.55.0**](https://github.com/cloudflare/playwright/pull/67).
 :::
 
 ## Use Playwright in a Worker
 
+In this [example](https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/todomvc), you will run Playwright tests in a Cloudflare Worker using the [todomvc](https://demo.playwright.dev/todomvc) application.
+
+If you want to skip the steps and get started quickly, select **Deploy to Cloudflare** below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/todomvc)
+
 Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#bindings) configured in your `wrangler.toml` file:
+
+:::note
+To use the latest version of `@cloudflare/playwright`, your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later. This change is necessary because the library's functionality requires the native `node.fs` API.
+:::
 
 <WranglerConfig>
 
@@ -37,12 +46,9 @@ Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#b
 name = "cloudflare-playwright-example"
 main = "src/index.ts"
 workers_dev = true
-compatibility_flags = ["nodejs_compat_v2"]
-compatibility_date = "2025-03-05"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2025-09-17"
 upload_source_maps = true
-
-[dev]
-port = 9000
 
 [browser]
 binding = "MYBROWSER"
@@ -61,11 +67,7 @@ Let's look at some examples of how to use Playwright:
 Using browser automation to take screenshots of web pages is a common use case. This script tells the browser to navigate to https://demo.playwright.dev/todomvc, create some items, take a screenshot of the page, and return the image in the response.
 
 ```ts
-import { launch, type BrowserWorker } from "@cloudflare/playwright";
-
-interface Env {
-	MYBROWSER: BrowserWorker;
-}
+import { launch } from "@cloudflare/playwright";
 
 export default {
 	async fetch(request: Request, env: Env) {
@@ -105,12 +107,8 @@ A Playwright trace is a detailed log of your workflow execution that captures in
 Here's an example of a worker generating a trace file:
 
 ```ts
-import { launch, type BrowserWorker } from "@cloudflare/playwright";
-import fs from "@cloudflare/playwright/fs";
-
-interface Env {
-	MYBROWSER: BrowserWorker;
-}
+import fs from "fs";
+import { launch } from "@cloudflare/playwright";
 
 export default {
 	async fetch(request: Request, env: Env) {
@@ -154,12 +152,8 @@ export default {
 One of the most common use cases for using Playwright is software testing. Playwright includes test assertion features in its APIs; refer to [Assertions](https://playwright.dev/docs/test-assertions) in the Playwright documentation for details. Here's an example of a Worker doing `expect()` test assertions of the [todomvc](https://demo.playwright.dev/todomvc) demo page:
 
 ```ts
-import { launch, type BrowserWorker } from "@cloudflare/playwright";
+import { launch } from "@cloudflare/playwright";
 import { expect } from "@cloudflare/playwright/test";
-
-interface Env {
-	MYBROWSER: BrowserWorker;
-}
 
 export default {
 	async fetch(request: Request, env: Env) {
@@ -191,6 +185,63 @@ export default {
 };
 ```
 
+### Storage state
+
+Playwright supports [storage state](https://playwright.dev/docs/api/class-browsercontext#browsercontext-storage-state) to obtain and persist cookies and other storage data. In this example, you will use storage state to persist cookies and other storage data in [Workers KV](/kv).
+
+
+First, ensure you have a KV namespace. You can create a new one with:
+
+```bash
+npx wrangler kv namespace create KV
+```
+
+Then, add the KV namespace to your `wrangler.toml` file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "storage-state-examples",
+	"main": "src/index.ts",
+	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_date": "2025-09-17",
+	"browser": {
+		"binding": "MYBROWSER"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "KV",
+			"id": "<YOUR-KV-NAMESPACE-ID>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Now, you can use the storage state to persist cookies and other storage data in KV:
+
+```ts title="src/index.ts"
+// gets persisted storage state from KV or undefined if it does not exist
+const storageStateJson = await env.KV.get('storageState');
+const storageState = storageStateJson ? await JSON.parse(storageStateJson) as BrowserContextOptions['storageState'] : undefined;
+
+await using browser = await launch(env.MYBROWSER);
+// creates a new context with storage state persisted in KV
+await using context = await browser.newContext({ storageState });
+
+await using page = await context.newPage();
+
+// do some actions on the page that may update client-side storage
+
+// gets updated storage state: cookies, localStorage, and IndexedDB
+const updatedStorageState = await context.storageState({ indexedDB: true });
+
+// persists updated storage state in KV
+await env.KV.put('storageState', JSON.stringify(updatedStorageState));
+```
+
 ### Keep Alive
 
 If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-bindings/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
@@ -200,6 +251,46 @@ const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
 ```
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
+
+### Session Reuse
+
+The best way to improve the performance of your browser rendering Worker is to reuse sessions by keeping the browser open after you've finished with it, and connecting to that session each time you have a new request. Playwright handles [`browser.close`](https://playwright.dev/docs/api/class-browser#browser-close) differently from Puppeteer. In Playwright, if the browser was obtained using a `connect` session, the session will disconnect. If the browser was obtained using a `launch` session, the session will close. 
+
+```js
+import { env } from "cloudflare:workers";
+import { acquire, connect } from "@cloudflare/playwright";
+
+async function reuseSameSession() {
+	// acquires a new session
+	const { sessionId } = await acquire(env.BROWSER);
+
+	for (let i = 0; i < 5; i++) {
+		// connects to the session that was previously acquired  
+		const browser = await connect(env.BROWSER, sessionId);
+
+		// ...
+
+		// this will disconnect the browser from the session, but the session will be kept alive
+		await browser.close();
+	}
+}
+```
+
+### Set a custom user agent
+
+To specify a custom user agent in Playwright, set it in the options when creating a new browser context with `browser.newContext()`. All pages subsequently created from this context will use the new user agent. This is useful if the target website serves different content based on the user agent.
+
+```js
+const context = await browser.newContext({
+  userAgent:
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+});
+```
+
+:::note
+The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot. 
+:::
+
 
 ## Session management
 
@@ -278,13 +369,11 @@ You should also be able to access this information in the dashboard, albeit with
 
 The full Playwright API can be found at the [Playwright API documentation](https://playwright.dev/docs/api/class-playwright).
 
-Note that `@cloudflare/playwright` is in beta. The following capabilities are not yet fully supported, but we’re actively working on them:
+The following capabilities are not yet fully supported, but we’re actively working on them:
 
-- [API Testing](https://playwright.dev/docs/api-testing)
 - [Playwright Test](https://playwright.dev/docs/test-configuration) except [Assertions](https://playwright.dev/docs/test-assertions)
 - [Components](https://playwright.dev/docs/test-components)
 - [Firefox](https://playwright.dev/docs/api/class-playwright#playwright-firefox), [Android](https://playwright.dev/docs/api/class-android) and [Electron](https://playwright.dev/docs/api/class-electron), as well as different versions of Chrome
-- [Network](https://playwright.dev/docs/next/network#network)
 - [Videos](https://playwright.dev/docs/next/videos)
 
 This is **not an exhaustive list** — expect rapid changes as we work toward broader parity with the original feature set. You can also check [latest test results](https://playwright-full-test-report.pages.dev/) for a granular up to date list of the features that are fully supported.

@@ -1,5 +1,5 @@
 ---
-type: example
+
 summary: Protect against timing attacks by safely comparing values using
   `timingSafeEqual`.
 tags:
@@ -77,9 +77,9 @@ from workers import WorkerEntrypoint, Response
 from js import TextEncoder, crypto
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env):
+    async def fetch(self, request):
         auth_token = request.headers["Authorization"] or ""
-        secret = env.MY_SECRET_VALUE
+        secret = self.env.MY_SECRET_VALUE
 
         if secret is None:
             return Response("Missing secret binding", status=500)

@@ -1,0 +1,25 @@
+---
+title: Faster indexing and new Jobs view in AutoRAG
+description: Track your indexing pipeline in real time with 3–5× faster indexing and a new Jobs dashboard.
+products:
+  - ai-search
+date: 2025-07-08
+---
+
+You can now expect **3-5× faster indexing** in AutoRAG, and with it, a brand new **Jobs view** to help you monitor indexing progress.
+
+With each AutoRAG, indexing jobs are automatically triggered to sync your data source (i.e. R2 bucket) with your Vectorize index, ensuring new or updated files are reflected in your query results. You can also trigger jobs manually via the [Sync API](/api/resources/ai-search/subresources/rags/) or by clicking “Sync index” in the dashboard.
+
+With the new jobs observability, you can now:
+
+- View the status, job ID, source, start time, duration and last sync time for each indexing job
+- Inspect real-time logs of job events (e.g. `Starting indexing data source...`)
+- See a history of past indexing jobs under the Jobs tab of your AutoRAG
+
+![AutoRAG jobs](~/assets/images/changelog/ai-search/autorag-jobs-view.gif)
+
+This makes it easier to understand what’s happening behind the scenes.
+
+**Coming soon:** We’re adding APIs to programmatically check indexing status, making it even easier to integrate AutoRAG into your workflows.
+
+Try it out today on the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/autorag).

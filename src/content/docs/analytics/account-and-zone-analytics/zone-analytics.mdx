@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { Badge } from "~/components";
+import { Badge, DashButton  } from "~/components";
 
 
 The Cloudflare zone analytics is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
@@ -24,11 +24,9 @@ captures and processes.
 
 ## View your website analytics
 
-To view metrics for your website:
+To view metrics for your website, in the Cloudflare dashboard, go to the **Analytis & Logs** page.
 
-1. Log in to the Cloudflare dashboard.
-2. Select the appropriate Cloudflare **account** for your site, then pick the **domain**.
-3. Next, select **Analytics & Logs**.
+   <DashButton url="/?to=/:account/:zone/analytics" />
 
 Once it loads, you can find tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to *Review your website metrics* below.
 

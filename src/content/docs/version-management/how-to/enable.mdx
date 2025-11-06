@@ -6,19 +6,17 @@ sidebar:
 head:
   - tag: title
     content: Enable version management
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="enable-versioning" />
+<Render file="enable-versioning" product="version-management" />
 
-<Render file="enable-default-creation" />
+<Render file="enable-default-creation" product="version-management" />
 
 ## Disable Version Management
 
 :::caution
-
 
 When you disable Zone Versioning, all your zone configurations will revert to those in your **Version Zero**.
 
@@ -29,7 +27,6 @@ When deleting the production environment, all traffic will default to Version 0.
 To disable Zone Versioning:
 
 1. Confirm that **Version Zero** has the correct configurations for your zone:
-
    1. Use the [comparison feature](/version-management/how-to/compare-versions/) to view the differences between your current **Production** version and **Version Zero**.
 
    2. If there are differences, make changes to **Version Zero** so it matches your current **Production** version.
@@ -47,8 +44,7 @@ To disable Zone Versioning:
    ```
 
    In the response, save the following values:
-
-   * The environment `ref` of every rule
+   - The environment `ref` of every rule
 
 3. Using the `ref` of those environments, send a `DELETE` request to the `/zones/{zone_id}/environments/{ref}` endpoint for each environment.
 

@@ -54,11 +54,11 @@ For more information on how Magic WAN integrates with Zero Trust, refer to [Zero
 
 ### WARP Connector <Badge text="Beta" variant="caution" size="small" />
 
-[WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/), a software agent similar to our device client, functions as a virtual device to establish a connection between your network and the Cloudflare global network. You can install WARP Connector on a dedicated Linux server or virtual machine.
+[WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), a software agent similar to our device client, functions as a virtual device to establish a connection between your network and the Cloudflare global network. You can install WARP Connector on a dedicated Linux server or virtual machine.
 
 WARP Connector supports egressing traffic from your private network to the Internet as a gateway. This means it can allow traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations. You can use WARP Connector to establish a secure egress path for servers or users on a network which may not each be able to run the WARP client and still apply Gateway network and HTTP inspection policies. This connection is most analogous to proxy server connectivity or site-to-site VPN.
 
-For more information on setting up Cloudflare Tunnel via WARP Connector, refer to [Set up WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/).
+For more information on setting up Cloudflare Tunnel via WARP Connector, refer to [Set up WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
 
 ### DNS filtering locations
 
@@ -66,7 +66,7 @@ For more information on setting up Cloudflare Tunnel via WARP Connector, refer t
 
 The fastest way to start filtering DNS queries from a location is by changing the DNS resolvers at the router or updating the upstream resolution to Cloudflare DNS resolution endpoints. This can also be accomplished from individual devices, or an network or subnet which sets resolver IPs for clients via DHCP.
 
-For more information on setting up DNS locations, refer to [Add locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/).
+For more information on setting up DNS locations, refer to [Add locations](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/).
 
 |                                | Magic WAN             | WARP Connector        | DNS Locations |
 | ------------------------------ | --------------------- | --------------------- | ------------- |

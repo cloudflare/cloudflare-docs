@@ -3,6 +3,8 @@ on:
   schedule:
     - cron: "0 4 * * *"
 name: Semgrep config
+permissions:
+  contents: read
 jobs:
   semgrep:
     name: semgrep/ci
