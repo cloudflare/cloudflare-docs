@@ -1,7 +1,7 @@
 ---
 title: Cloudflare Workflows
 order: 0
-type: overview
+
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -10,7 +10,7 @@ head:
     content: Overview
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, Tabs, TabItem, LinkButton } from "~/components"
 
 <Description>
 
@@ -20,9 +20,57 @@ Build durable multi-step applications on Cloudflare Workers with Workflows.
 
 <Plan type="workers-all" />
 
-Workflows is a durable execution engine built on Cloudflare Workers. Workflows allow you to build multi-step applications that can automatically retry, persist state and run for minutes, hours, days, or weeks. Workflows introduces a programming model that makes it easier to build reliable, long-running tasks, observe as they progress, and programatically trigger instances based on events across your services.
+With Workflows, you can build applications that chain together multiple steps, automatically retry failed tasks,
+and persist state for minutes, hours, or even weeks - with no infrastructure to manage.
 
-Refer to the [get started guide](/workflows/get-started/guide/) to start building with Workflows.
+Workflows give you:
+
+- Reliable multi-step operations without worrying about timeouts
+- Automatic retries and error handling
+- Built-in observability for long running operations
+- Simple and expressive code for complex processes
+
+<Tabs>
+<TabItem label="Workflow Code">
+```ts
+export class CheckoutWorkflow extends WorkflowEntrypoint {
+	async run (event, step) {
+		const processorResponse = await step.do( 'submit payment', async () => {
+			let resp = await submitToPaymentProcessor(event.params.payment) ;
+			return await resp.json<any>();
+		}) ;
+
+		const textResponse = await step.do( 'send confirmation text', sendConfirmation);
+		await step.sleep('wait for feedback', '2 days');
+		await step.do('send feedback email', sendFeedbackEmail);
+		await step.sleep('delay before marketing', '30 days');
+		await step.do( 'send marketing follow up', sendFollowUp);
+	}
+}
+```
+</TabItem>
+<TabItem label="Workflow Config">
+
+```json
+{
+	"name": "my-worker-with-workflow",
+	"main": "src/index.js",
+	"compatibility_date": "2025-02-27",
+	"workflows": [
+		{
+			"name": "checkout-workflow",
+			"binding": "CHECKOUT",
+			"class_name": "CheckoutWorkflow"
+		}
+	]
+}
+```
+</TabItem>
+</Tabs>
+
+<LinkButton href="/workflows/get-started/guide/">
+  Start building with Workflows
+</LinkButton>
 
 ***
 

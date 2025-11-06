@@ -1,0 +1,136 @@
+---
+title: VPC Services
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import {
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	Example,
+	Render,
+	WranglerConfig,
+} from "~/components";
+
+VPC Services are the core building block of Workers VPC. They represent specific resources in your private network that Workers can access through Cloudflare Tunnel.
+
+You can use bindings to connect to VPC Services from Workers. Every request made to a VPC Service using its `fetch` function will be securely routed to the configured service in the private network.
+
+VPC Services enforce that requests are routed to their intended service without exposing the entire network, securing your workloads and preventing server-side request forgery (SSRF).
+
+:::note
+
+Workers VPC is currently in beta. Features and APIs may change before general availability. While in beta, Workers VPC is available for free to all Workers plans.
+
+:::
+
+## VPC Service configuration
+
+A VPC Service consists of:
+
+- **Type**: Currently only `http` is supported (support for `tcp` coming soon)
+- **Tunnel ID**: The Cloudflare Tunnel that provides network connectivity
+- **Hostname or IPv4/IPv6 addresses**: The hostname, or IPv4 and/or IPv6 addresses to use to route to your service from the tunnel in your private network
+- **Ports**: HTTP and/or HTTPS port configuration (optional, defaults to 80/443)
+
+:::note
+The [VPC Service configurations](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your services in external networks, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
+
+The host provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI), when the `https` scheme is specified.
+
+The port provided in the `fetch()` operation is ignored — the port specified in the VPC Service configuration will be used.
+:::
+
+## Configuration example
+
+The following is an example of a VPC Service for a service using custom HTTP and HTTPS ports, and both IPv4 and IPv6 addresses. These configurations represent the expected contract of the [REST API for creating a VPC Service](https://developers.cloudflare.com/api/resources/zero_trust/subresources/connectivity/subresources/directory/subresources/services/), a type of service within the broader connectivity directory.
+
+```json
+{
+	"type": "http",
+	"name": "human-readable-name",
+
+	// Port configuration (optional - defaults to 80/443)
+	"http_port": 80,
+	"https_port": 443,
+
+	// Host configuration
+	"host": {
+		"ipv4": "10.0.0.1",
+		"ipv6": "fe80::",
+		"network": {
+			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da"
+		}
+	}
+}
+```
+
+The following is an example of a VPC Service for a service using custom HTTP and HTTPS ports as well, using a hostname. Note that since we are using a hostname, we must provide our service with a `resolver_network` that optionally has `resolver_ips`.
+
+```json
+{
+	"type": "http",
+	"name": "human-readable-name",
+
+	// Port configuration (optional - defaults to 80/443)
+	"http_port": 80,
+	"https_port": 443,
+
+	// Hostname Host (with DNS resolver)
+	"host": {
+		"hostname": "example.com",
+		"resolver_network": {
+			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da",
+			"resolver_ips": ["10.0.0.1"]
+		}
+	}
+}
+```
+
+## Workers binding configuration
+
+Once you have created a VPC Service, you can bind it to your Worker:
+
+<WranglerConfig>
+```toml
+name = "my-worker"
+main = "src/index.js"
+
+[[vpc_services]]
+binding = "PRIVATE_API"
+service_id = "5634563546"
+remote = true
+
+```
+</WranglerConfig>
+
+You can have multiple service bindings:
+
+<WranglerConfig>
+```toml
+[[vpc_services]]
+binding = "PRIVATE_API"
+service_id = "5634563546"
+remote = true
+
+[[vpc_services]]
+binding = "PRIVATE_DATABASE"
+service_id = "7856789012"
+remote = true
+
+[[vpc_services]]
+binding = "INTERNAL_CACHE"
+service_id = "3412345678"
+remote = true
+
+```
+
+</WranglerConfig>
+
+## Next steps
+
+- Set up [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) for your environment
+- Learn about the [Service Binding API](/workers-vpc/api/)
+- Refer to [examples](/workers-vpc/examples/) of common use cases

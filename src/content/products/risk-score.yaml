@@ -5,3 +5,6 @@ product:
   group: Cloudflare One
   url: /cloudflare-one/insights/risk-score/
   show: false
+
+meta:
+  title: Cloudflare Risk Score docs

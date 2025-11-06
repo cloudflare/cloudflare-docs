@@ -7,9 +7,5 @@ product:
 
 meta:
   title: Cloudflare Email Routing docs
-  description:
-    Simplify the way you create and manage email addresses. Create any
-    number of custom email addresses to use in situations where you do not want
-    to share your primary email address, and Email Routing will forward your
-    email messages for you.
+  description:  Create and manage email addresses and route to your preferred inbox
   author: "@cloudflare"

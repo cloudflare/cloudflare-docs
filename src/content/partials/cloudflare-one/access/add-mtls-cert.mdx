@@ -1,0 +1,24 @@
+---
+params:
+  - product
+---
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Service credentials** > **Mutual TLS**.
+
+2. Select **Add mTLS Certificate**.
+
+3. Enter any name for the root CA.
+
+4. In **Certificate content**, paste the contents of your root CA.
+
+	If the client certificate is directly signed by the root CA, you only need to upload the root. If the client certificate is signed by an intermediate certificate, you must upload the entire CA chain (intermediate and root). For example:
+	```txt
+	-----BEGIN CERTIFICATE-----
+	<intermediate.pem>
+	-----END CERTIFICATE-----
+	-----BEGIN CERTIFICATE-----
+	<rootCA.pem>
+	-----END CERTIFICATE-----
+	```
+
+	{ props.product === "access" && (<> Do not include any SSL/TLS server certificates; Access only uses the CA chain to verify the connection between the user's device and Cloudflare. </>)}

@@ -1,0 +1,17 @@
+---
+title: Magic Transit and Magic WAN health check data is fully compatible with the CMB EU setting.
+description: Magic Transit and Magic WAN customers that enable the CMB EU setting can access their health check data in the Cloudflare dashboard.
+date: 2025-07-30
+preview_image: ~/assets/images/changelog/magic-transit/2025-07-30-mt-mwan-health-checks-cmb-eu.png
+products:
+  - magic-transit
+  - magic-wan
+---
+
+Today, we are excited to announce that all Magic Transit and Magic WAN customers with CMB EU ([Customer Metadata Boundary - Europe](/data-localization/metadata-boundary/)) enabled in their account will be able to access GRE, IPsec, and CNI health check and traffic volume data in the Cloudflare dashboard and via API.
+
+This ensures that all Magic Transit and Magic WAN customers with CMB EU enabled will be able to access all Magic Transit and Magic WAN features.
+
+Specifically, these two GraphQL endpoints are now compatible with CMB EU:
+- `magicTransitTunnelHealthChecksAdaptiveGroups`
+- `magicTransitTunnelTrafficAdaptiveGroups`

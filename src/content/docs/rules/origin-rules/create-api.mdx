@@ -22,6 +22,7 @@ When creating an origin rule via API, make sure you:
 
 <Render
 	file="rules-creation-workflow"
+	product="rules"
 	params={{ ruleName: "an origin rule", phaseName: "http_request_origin" }}
 />
 
@@ -31,13 +32,13 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 <Details header="Example: Add a rule that overrides the `Host` header of incoming requests and the resolved DNS record">
 
-<Render file="origin-rules-api-change-host-header-dns-record" />
+<Render file="origin-rules-api-change-host-header-dns-record" product="rules" />
 
 </Details>
 
 <Details header="Example: Add a rule that overrides the port of incoming requests">
 
-<Render file="origin-rules-api-change-port" />
+<Render file="origin-rules-api-change-port" product="rules" />
 
 </Details>
 
@@ -65,7 +66,11 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	}}
 />
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 </Details>
 

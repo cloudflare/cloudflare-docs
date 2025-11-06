@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Network settings docs
-  description: Manage the Cloudflare network settings for your website.
+  description: Manage Cloudflare network settings for your website
   author: "@cloudflare"

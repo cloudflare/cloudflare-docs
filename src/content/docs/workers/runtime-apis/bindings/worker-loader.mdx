@@ -1,0 +1,233 @@
+---
+pcx_content_type: configuration
+title: Dynamic Worker Loaders
+head: []
+description: The Dynamic Worker Loader API, which allows dynamically spawning isolates that run arbitrary code.
+
+---
+
+import {
+	Type,
+  MetaInfo,
+  WranglerConfig
+} from "~/components";
+
+:::note[Dynamic Worker Loading is in closed beta]
+
+The Worker Loader API is available in local development with Wrangler and workerd. But, to use it in production, you must [sign up for the closed beta](https://forms.gle/MoeDxE9wNiqdf8ri9).
+
+:::
+
+A Worker Loader binding allows you to load additional Workers containing arbitrary code at runtime.
+
+An isolate is like a lightweight container. [The Workers platform uses isolates instead of containers or VMs](/workers/reference/how-workers-works/), so every Worker runs in an isolate already. But, a Worker Loader binding allows your Worker to create additional isolates that load arbitrary code on-demand.
+
+Isolates are much cheaper than containers. You can start an isolate in milliseconds, and it's fine to start one just to run a snippet of code and immediately throw away. There's no need to worry about pooling isolates or trying to reuse already-warm isolates, as you would need to do with containers.
+
+Worker Loaders also enable **sandboxing** of code, meaning that you can strictly limit what the code is allowed to do. In particular:
+* You can arrange to intercept or simply block all network requests made by the Worker within.
+* You can supply the sandboxed Worker with custom bindings to represent specific resources which it should be allowed to access.
+
+With proper sandboxing configured, you can safely run code you do not trust in a dynamic isolate.
+
+A Worker Loader is a binding with just one method, `get()`, which loads an isolate. Example usage:
+
+```js
+let id = "foo";
+
+// Get the isolate with the given ID, creating it if no such isolate exists yet.
+let worker = env.LOADER.get(id, async () => {
+  // If the isolate does not already exist, this callback is invoked to fetch
+  // the isolate's Worker code.
+
+  return {
+    compatibilityDate: "2025-06-01",
+
+    // Specify the worker's code (module files).
+    mainModule: "foo.js",
+    modules: {
+      "foo.js":
+        "export default {\n" +
+        "  fetch(req, env, ctx) { return new Response('Hello'); }\n" +
+        "}\n",
+    },
+
+    // Specify the dynamic Worker's environment (`env`). This is specified
+    // as a JavaScript object, exactly as you want it to appear to the
+    // child Worker. It can contain basic serializable types as well as
+    // Service Bindings (see below).
+    env: {
+      SOME_ENV_VAR: 123
+    },
+
+    // To block the worker from talking to the internet using `fetch()` or
+    // `connect()`, set `globalOutbound` to `null`. You can also set this
+    // to any service binding, to have calls be intercepted and redirected
+    // to that binding.
+    globalOutbound: null,
+  };
+});
+
+// Now you can get the Worker's entrypoint and send requests to it.
+let defaultEntrypoint = worker.getEntrypoint();
+await defaultEntrypoint.fetch("http://example.com");
+
+// You can get non-default entrypoints as well, and specify the
+// `ctx.props` value to be delivered to the entrypoint.
+let someEntrypoint = worker.getEntrypoint("SomeEntrypointClass", {
+  props: {someProp: 123}
+});
+```
+
+## Configuration
+
+To add a dynamic worker loader binding to your worker, add it to your Wrangler config like so:
+
+<WranglerConfig>
+
+```toml
+[[worker_loaders]]
+binding = "LOADER"
+```
+
+</WranglerConfig>
+
+## API Reference
+
+### `get`
+
+<code>get(id <Type text="string" />, getCodeCallback <Type text="() => Promise<WorkerCode>" />): <Type text="WorkerStub" /></code>
+
+Loads a Worker with the given ID, returning a `WorkerStub` which may be used to invoke the Worker.
+
+As a convenience, the loader implements caching of isolates. When a new ID is seen the first time, a new isolate is loaded. But, the isolate may be kept warm in memory for a while. If later invocations of the loader request the same ID, the existing isolate may be returned again, rather than create a new one. But there is no guarantee: a later call with the same ID may instead start a new isolate from scratch.
+
+Whenever the system determines it needs to start a new isolate, and it does not already have a copy of the code cached, it will invoke `codeCallback` to get the Worker's code. This is an async callback, so the application can load the code from remote storage if desired. The callback returns a `WorkerCode` object (described below).
+
+Because of the caching, you should ensure that the callback always returns exactly the same content, when called for the same ID. If anything about the content changes, you must use a new ID. But if the content hasn't changed, it's best to reuse the same ID in order to take advantage of caching. If the `WorkerCode` is different every time, you can pass a random ID.
+
+You could, for example, use IDs of the form `<worker-name>:<version-number>`, where the version number increments every time the code changes. Or, you could compute IDs based on a hash of the code and config, so that any change results in a new ID.
+
+`get()` returns a `WorkerStub`, which can be used to send requests to the loaded Worker. Note that the stub is returned synchronously&mdash;you do not have to await it. If the Worker is not loaded yet, requests made to the stub will wait for the Worker to load before being delivered. If loading fails, the request will throw an exception.
+
+It is never guaranteed that two requests will go to the same isolate. Even if you use the same `WorkerStub` to make multiple requests, they could execute in different isolates. The callback passed to `loader.get()` could be called any number of times (although it is unusual for it to be called more than once).
+
+### `WorkerCode`
+
+This is the structure returned by `getCodeCallback` to represent a worker.
+
+#### <code>compatibilityDate <Type text="string" /></code>
+
+The [compatibility date](/workers/configuration/compatibility-dates/) for the Worker. This has the same meaning as the `compatibility_date` setting in a Wrangler config file.
+
+#### <code>compatibilityFlags <Type text="string[]" /> <MetaInfo text='Optional' /></code>
+
+An optional list of [compatibility flags](/workers/configuration/compatibility-flags) augmenting the compatibility date. This has the same meaning as the `compatibility_flags` setting in a Wrangler config file.
+
+#### <code>allowExperimental <Type text="boolean" /> <MetaInfo text='Optional' /></code>
+
+If true, then experimental compatibility flags will be permitted in `compatibilityFlags`. In order to set this, the worker calling the loader must itself have the compatibility flag `"experimental"` set. Experimental flags cannot be enabled in production.
+
+#### <code>mainModule <Type text="string" /></code>
+
+The name of the Worker's main module. This must be one of the modules listed in `modules`.
+
+#### <code>modules <Type text="Record<string, string | Module>"/></code>
+
+A dictionary object mapping module names to their string contents. If the module content is a plain string, then the module name must have a file extension indicating its type: either `.js` or `.py`.
+
+A module's content can also be specified as an object, in order to specify its type independent from the name. The allowed objects are:
+
+* `{js: string}`: A JavaScript module, using ES modules syntax for imports and exports.
+* `{cjs: string}`: A CommonJS module, using `require()` syntax for imports.
+* `{py: string}`: A [Python module](/workers/languages/python/), but see the warning below.
+* `{text: string}`: An importable string value.
+* `{data: ArrayBuffer}`: An importable `ArrayBuffer` value.
+* `{json: object}`: An importable object. The value must be JSON-serializable. However, note that value is provided as a parsed object, and is delivered as a parsed object; neither side actually sees the JSON serialization.
+
+:::caution[Warning]
+
+While Dynamic Isolates support Python, please note that at this time, Python Workers are much slower to start than JavaScript Workers, which may defeat some of the benefits of dynamic isolate loading. They may also be priced differently, when Worker Loaders become generally available.
+
+:::
+
+#### <code>globalOutbound <Type text="ServiceStub | null" /> Optional</code>
+
+Controls whether the dynamic Worker has access to the network. The global `fetch()` and `connect()` functions (for making HTTP requests and TCP connections, respectively) can be blocked or redirected to isolate the Worker.
+
+If `globalOutbound` is not specified, the default is to inherit the parent's network access, which usually means the dynamic Worker will have full access to the public Internet.
+
+If `globalOutbound` is `null`, then the dynamic Worker will be totally cut off from the network. Both `fetch()` and `connect()` will throw exceptions.
+
+`globalOutbound` can also be set to any service binding, including service bindings in the parent worker's `env` as well as [loopback bindings from `ctx.exports`](/workers/runtime-apis/context/#exports).
+
+Using `ctx.exports` is particularly useful as it allows you to customize the binding further for the specific sandbox, by setting the value of `ctx.props` that should be passed back to it. The `props` can contain information to identify the specific dynamic Worker that made the request.
+
+For example:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class Greeter extends WorkerEntrypoint {
+  fetch(request) {
+    return new Response(`Hello, ${this.ctx.props.name}!`);
+  }
+}
+
+export default {
+  async fetch(request, env, ctx) {
+    let worker = env.LOADER.get("alice", () => {
+      return {
+        // Redirect the worker's global outbound to send all requests
+        // to the `Greeter` class, filling in `ctx.props.name` with
+        // the name "Alice", so that it always responds "Hello, Alice!".
+        globalOutbound: ctx.exports.Greeter({props: {name: "Alice"}})
+
+        // ... code ...
+      }
+    });
+  }
+}
+```
+
+#### <code>env <Type text="object" /></code>
+
+The environment object to provide to the dynamic Worker.
+
+Using this, you can provide custom bindings to the Worker.
+
+`env` is serialized and transferred into the dynamic Worker, where it is used directly as the value of `env` there. It may contain:
+
+* [Structured clonable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+* [Service Bindings](/workers/runtime-apis/bindings/service-bindings), including [loopback bindings from `ctx.exports`](/workers/runtime-apis/context/#exports).
+
+The second point is the key to creating custom bindings: you can define a binding with any arbitrary API, by defining a [`WorkerEntrypoint` class](/workers/runtime-apis/bindings/service-bindings/rpc) implementing an RPC API, and then giving it to the dynamic Worker as a Service Binding.
+
+Moreover, by using `ctx.exports` loopback bindings, you can further customize the bindings for the specific dynamic Worker by setting `ctx.props`, just as described for `globalOutbound`, above.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+// Implement a binding which can be called by the dynamic Worker.
+export class Greeter extends WorkerEntrypoint {
+  greet() {
+    return `Hello, ${this.ctx.props.name}!`;
+  }
+}
+
+export default {
+  async fetch(request, env, ctx) {
+    let worker = env.LOADER.get("alice", () => {
+      return {
+        env: {
+          // Provide a binding which has a method greet() which can be called
+          // to receive a greeting. The binding knows the Worker's name.
+          GREETER: ctx.exports.Greeter({props: {name: "Alice"}})
+        }
+
+        // ... code ...
+      }
+    });
+  }
+}
+```

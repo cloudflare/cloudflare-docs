@@ -9,28 +9,23 @@ import { Details } from "~/components"
 * In the certificate `Basic Constraints`, the attribute `CA` must be set to `TRUE`.
 * The certificate must use one of the signature algorithms listed below:
 
+	<Details header="Allowed signature algorithms">
 
-<Details header="Allowed signature algorithms">
+	`x509.SHA1WithRSA`
 
-`x509.SHA1WithRSA`
+	`x509.SHA256WithRSA`
 
-`x509.SHA256WithRSA`
+	`x509.SHA384WithRSA`
 
-`x509.SHA384WithRSA`
+	`x509.SHA512WithRSA`
 
-`x509.SHA512WithRSA`
+	`x509.ECDSAWithSHA1`
 
-`x509.ECDSAWithSHA1`
+	`x509.ECDSAWithSHA256`
 
-`x509.ECDSAWithSHA256`
+	`x509.ECDSAWithSHA384`
 
-`x509.ECDSAWithSHA384`
-
-`x509.ECDSAWithSHA512`
+	`x509.ECDSAWithSHA512`
 
 
-</Details>
-
-:::note
-Uploading the CA private key is only required if you wish to use [Zero Trust's block page](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). For more context on how mTLS works, refer to our [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
-:::
+	</Details>

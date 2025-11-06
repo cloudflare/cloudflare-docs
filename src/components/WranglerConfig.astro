@@ -38,7 +38,10 @@ let toml, json;
 
 if (language === "toml") {
 	toml = code;
-	json = JSON.stringify(TOML.parse(code), null, 2);
+	json = JSON.stringify({
+		"$schema": "./node_modules/wrangler/config-schema.json",
+		...TOML.parse(code),
+	}, null, 2);
 } else {
 	json = code;
 	toml = TOML.stringify(jsoncParse(code));

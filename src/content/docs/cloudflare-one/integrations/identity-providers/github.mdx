@@ -1,0 +1,62 @@
+---
+pcx_content_type: how-to
+title: GitHub
+---
+
+Cloudflare One allows your team to connect to your applications using their GitHub login. You do not need to have a GitHub organization to use the integration.
+
+## Set up GitHub Access
+
+To configure GitHub access in both GitHub and Cloudflare One:
+
+1. Log in to [GitHub](https://github.com/).
+
+2. Go to your account **Settings** > **Developer Settings**.
+
+3. In **Developer Settings**, select **OAuth Apps** and select **New OAuth app**.
+
+4. On the **Register a new OAuth application** page, enter an **Application name**. Your users will see this application name on the login page.
+
+5. In the **Homepage URL** field, enter your team domain:
+
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com
+   ```
+
+   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) by going to **Settings** > **Team name**.
+
+6. In the GitHub **Authorization callback URL** field, enter the following URL:
+
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```
+
+7. Select **Register application**.
+
+8. Find the **Client ID** and **Client Secret**.
+
+9. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+
+10. Select **Add new identity provider** and select **GitHub**.
+
+11. Choose **GitHub** on the next page.
+
+12. In the **App ID** field, copy and paste the **Client ID** you found in step 8. In the **Client secret** field, copy and paste the **Client secret** you found in step 8. You will need to select **Generate a new client secret** if one is not already displayed.
+
+13. Select **Save**.
+
+To test that your connection is working, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Integrations** > **Identity providers** and select **Test** next to your GitHub login method.
+If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
+
+## Example API Configuration
+
+```json
+{
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>"
+	},
+	"type": "github",
+	"name": "my example idp"
+}
+```

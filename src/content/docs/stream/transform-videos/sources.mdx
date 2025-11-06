@@ -2,17 +2,21 @@
 pcx_content_type: how-to
 title: Define source origin
 sidebar:
-  order: 4
-  badge:
-    text: Beta
+  order: 2
 ---
+
+:::note[Media Transformations is now GA:]
+
+Billing for Media Transformations will begin on November 1st, 2025.
+
+:::
 
 When optimizing remote videos, you can specify which origins can be used as the source for transformed videos. By default, Cloudflare accepts only source videos from the zone where your transformations are served.
 
 On this page, you will learn how to define and manage the origins for the source videos that you want to optimize.
 
 :::note
-The allowed origins setting applies to requests from Cloudflare Workers. 
+The allowed origins setting applies to requests from Cloudflare Workers.
 
 If you use a Worker to optimize remote videos via a `fetch()` subrequest, then this setting may conflict with existing logic that handles source videos.
 :::

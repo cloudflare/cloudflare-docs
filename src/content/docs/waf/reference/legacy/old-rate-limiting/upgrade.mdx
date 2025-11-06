@@ -64,7 +64,7 @@ Rate limiting rules created in the previous version are tagged with `Previous ve
 
 ![Rate limiting rules user interface showing two rules created in the previous version.](~/assets/images/waf/reference/rate-limiting-rules-upgrade-ui.png)
 
-If you are using the new [application security dashboard](/security/) (currently in beta), only the rate limiting rules that have been upgraded to the new version will be shown at **Security** > **Security rules**.
+If you are using the new [application security dashboard](/security/), only the rate limiting rules that have been upgraded to the new version will be shown at **Security** > **Security rules**.
 
 If you edit a rule with this tag in the dashboard, you will no longer be able to edit the rule using the API and Terraform resource for the previous version of rate limiting rules. In this case, you will need to start using the [Rulesets API](/ruleset-engine/rulesets-api/) or the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource for this purpose. Refer to [Relevant changes for API users](#relevant-changes-for-api-users) and [Relevant changes for Terraform users](#relevant-changes-for-terraform-users) for more information.
 

@@ -57,6 +57,45 @@ const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
 
+### Set a custom user agent
+
+To specify a custom user agent in Puppeteer, use the `page.setUserAgent()` method. This is useful if the target website serves different content based on the user agent.
+
+```js
+await page.setUserAgent(
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+);
+```
+
+:::note
+The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot.
+:::
+
+## Element selection
+
+Puppeteer provides multiple methods for selecting elements on a page. While CSS selectors work as expected, XPath selectors are not supported due to security constraints in the Workers runtime.
+
+Instead of using Xpath selectors, you can use CSS selectors or `page.evaluate()` to run XPath queries in the browser context:
+
+```ts
+const innerHtml = await page.evaluate(() => {
+	return (
+		// @ts-ignore this runs on browser context
+		new XPathEvaluator()
+			.createExpression("/html/body/div/h1")
+			// @ts-ignore this runs on browser context
+			.evaluate(document, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
+			.innerHTML
+	);
+});
+```
+
+:::note
+
+`page.evaluate()` can only return primitive types like strings, numbers, and booleans. Returning complex objects like `HTMLElement` will not work.
+
+:::
+
 ## Session management
 
 In order to facilitate browser session management, we've added new methods to `puppeteer`:
@@ -115,13 +154,13 @@ You should also be able to access this information in the dashboard, albeit with
 
 ```json
 {
-	"activeSessions": [
-		"478f4d7d-e943-40f6-a414-837d3736a1dc",
-		"565e05fb-4d2a-402b-869b-5b65b1381db7"
-	],
-	"allowedBrowserAcquisitions": 1,
-	"maxConcurrentSessions": 2,
-	"timeUntilNextAllowedBrowserAcquisition": 0
+  "activeSessions": [
+    { "id": "478f4d7d-e943-40f6-a414-837d3736a1dc" },
+    { "id": "565e05fb-4d2a-402b-869b-5b65b1381db7" }
+  ],
+  "allowedBrowserAcquisitions": 1,
+  "maxConcurrentSessions": 2,
+  "timeUntilNextAllowedBrowserAcquisition": 0
 }
 ```
 

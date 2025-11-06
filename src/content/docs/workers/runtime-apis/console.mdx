@@ -18,7 +18,7 @@ All methods noted as "✅ supported" have the following behavior:
 
 * They will be written to the console in local dev (`npx wrangler@latest dev`)
 * They will appear in live logs, when tailing logs in the dashboard or running [`wrangler tail`](https://developers.cloudflare.com/workers/observability/log-from-workers/#use-wrangler-tail)
-* They will create entries in the `logs` field of [Tail Worker](https://developers.cloudflare.com/workers/observability/tail-workers/) events and [Workers Trace Events](https://developers.cloudflare.com/logs/reference/log-fields/account/workers_trace_events/), which can be pushed to a destination of your choice via [Logpush](https://developers.cloudflare.com/workers/observability/logpush/).
+* They will create entries in the `logs` field of [Tail Worker](https://developers.cloudflare.com/workers/observability/tail-workers/) events and [Workers Trace Events](https://developers.cloudflare.com/logs/logpush/logpush-job/datasets/account/workers_trace_events/), which can be pushed to a destination of your choice via [Logpush](https://developers.cloudflare.com/workers/observability/logpush/).
 
 All methods noted as "🟡 partial support" have the following behavior:
 

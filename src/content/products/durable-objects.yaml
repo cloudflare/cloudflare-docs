@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Durable Objects docs
-  description: A special kind of Cloudflare Worker which uniquely combines compute with storage.
+  description: A special kind of Cloudflare Worker combining compute with storage
   author: "@cloudflare"

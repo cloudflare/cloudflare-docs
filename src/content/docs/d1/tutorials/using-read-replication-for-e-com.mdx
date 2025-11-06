@@ -1,0 +1,904 @@
+---
+reviewed: 2025-04-09
+difficulty: Beginner
+content_type: Tutorial
+pcx_content_type: tutorial
+title: Using D1 Read Replication for your e-commerce website
+tags:
+  - JavaScript
+  - TypeScript
+  - SQL
+description: >-
+  D1 Read Replication is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website, as it reduces read latencies and improves read throughput.
+---
+
+import {
+	Render,
+	Steps,
+	PackageManagers,
+	WranglerConfig,
+	Details,
+} from "~/components";
+
+[D1 Read Replication](/d1/best-practices/read-replication/) is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website, as it reduces read latencies and improves read throughput. In this tutorial, you will learn how to use D1 read replication for your e-commerce website.
+
+While this tutorial uses a fictional e-commerce website, the principles can be applied to any use-case that requires low read latencies and scaling reads, such as a news website, a social media platform, or a marketing website.
+
+## Quick start
+
+If you want to skip the steps and get started quickly, click on the below button:
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/harshil1712/e-com-d1-hono)
+
+This will create a repository in your GitHub account and deploy the application to Cloudflare Workers. It will also create and bind a D1 database, create the required tables, add some sample data. During deployment, tick the `Enable read replication` box to activate read replication.
+
+You can then visit the deployed application.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## Step 1: Create a Workers project
+
+Create a new Workers project by running the following command:
+
+<PackageManagers type="create" pkg="cloudflare@latest" args={"fast-commerce"} />
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "SSR / full-stack app",
+		lang: "TypeScript",
+	}}
+/>
+
+For creating the API routes, you will use [Hono](https://hono.dev/). You need to install Hono by running the following command:
+
+<PackageManagers pkg="hono" />
+
+## Step 2: Update the frontend
+
+The above step creates a new Workers project with a default frontend and installs Hono. You will update the frontend to list the products. You will also add a new page to the frontend to display a single product.
+
+Navigate to the newly created Worker project folder.
+
+```sh
+cd fast-commerce
+```
+
+Update the `public/index.html` file to list the products. Use the below code as a reference.
+
+<Details open={false} header="public/index.html">
+```html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>E-commerce Store</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: Arial, sans-serif;
+			}
+
+    		body {
+    			background-color: #f9fafb;
+    			min-height: 100vh;
+    			display: flex;
+    			flex-direction: column;
+    		}
+
+    		header {
+    			background-color: white;
+    			padding: 1rem 2rem;
+    			display: flex;
+    			justify-content: space-between;
+    			align-items: center;
+    			border-bottom: 1px solid #e5e7eb;
+    		}
+
+    		.store-title {
+    			font-weight: bold;
+    			font-size: 1.25rem;
+    		}
+
+    		.cart-button {
+    			padding: 0.5rem 1rem;
+    			cursor: pointer;
+    			background: none;
+    			border: none;
+    		}
+
+    		.products-grid {
+    			display: grid;
+    			grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    			gap: 1.5rem;
+    			padding: 2rem;
+    		}
+
+    		.product-card {
+    			background-color: white;
+    			border-radius: 0.5rem;
+    			overflow: hidden;
+    			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    		}
+
+    		.product-info {
+    			padding: 1rem;
+    		}
+
+    		.product-title {
+    			font-size: 1.125rem;
+    			font-weight: 600;
+    			margin-bottom: 0.5rem;
+    		}
+
+    		.product-description {
+    			color: #4b5563;
+    			font-size: 0.875rem;
+    			margin-bottom: 1rem;
+    		}
+
+    		.product-price {
+    			font-size: 1.25rem;
+    			font-weight: bold;
+    			margin-bottom: 0.5rem;
+    		}
+
+    		.product-stock {
+    			color: #4b5563;
+    			font-size: 0.875rem;
+    			margin-bottom: 1rem;
+    		}
+
+    		.view-details-btn {
+    			display: block;
+    			width: 100%;
+    			padding: 0.5rem 0;
+    			background-color: #2563eb;
+    			color: white;
+    			border: none;
+    			border-radius: 0.375rem;
+    			cursor: pointer;
+    			text-align: center;
+    			text-decoration: none;
+    			font-size: 0.875rem;
+    		}
+
+    		.view-details-btn:hover {
+    			background-color: #1d4ed8;
+    		}
+
+    		footer {
+    			background-color: white;
+    			padding: 1rem 2rem;
+    			text-align: center;
+    			border-top: 1px solid #e5e7eb;
+    			color: #4b5563;
+    			font-size: 0.875rem;
+    		}
+
+    		/* Basic Responsiveness */
+    		@media (max-width: 768px) {
+    			.products-grid {
+    				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    			}
+    		}
+
+    		@media (max-width: 480px) {
+    			.products-grid {
+    				grid-template-columns: 1fr;
+    			}
+    		}
+    	</style>
+    </head>
+    <body>
+    	<header>
+    		<h1 class="store-title">E-commerce Store</h1>
+    		<button class="cart-button">Cart</button>
+    	</header>
+
+    	<main class="products-grid" id="products-container">
+    		<!-- Products will be loaded here by JavaScript -->
+    	</main>
+
+    	<footer>
+    		<p>© 2025 E-commerce Store. All rights reserved.</p>
+    	</footer>
+
+    	<script>
+    		document.addEventListener('DOMContentLoaded', () => {
+    			let products = [];
+    			let d1Duration,
+    				queryDuration = 0;
+    			let dbLocation;
+    			let isPrimary = true;
+
+    			// Function to create product HTML
+    			function createProductCard(product) {
+    				return `
+                <div class="product-card" data-category="${product.category}">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <p class="product-stock">${product.inventory} in stock</p>
+                        <a href="product-details.html?id=${product.id}" class="view-details-btn">View Details</a>
+                    </div>
+                </div>
+            `;
+    			}
+
+    			// Function to render content
+    			function renderContent() {
+    				try {
+    					const productsContainer = document.getElementById('products-container');
+    					if (!productsContainer) return;
+    					productsContainer.innerHTML = '';
+
+    					products.forEach((product) => {
+    						productsContainer.innerHTML += createProductCard(product);
+    					});
+    				} catch (error) {
+    					console.error('Error rendering content:', error);
+    				}
+    			}
+
+    			// Fetch products
+    			fetch('/api/products')
+    				.then((response) => response.json())
+    				.then((data) => {
+    					products = data;
+    					renderContent();
+    				})
+    				.catch((error) => console.error('Error fetching products:', error));
+    		});
+    	</script>
+    </body>
+
+</html>
+```
+</Details>
+
+Create a new `public/product-details.html` file to display a single product.
+
+<Details open={false} header="public/product-details.html">
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Product Details - E-commerce Store</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: Arial, sans-serif;
+			}
+
+			body {
+				background-color: #f9fafb;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+
+			header {
+				background-color: white;
+				padding: 1rem 2rem;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-bottom: 1px solid #e5e7eb;
+			}
+
+			.store-title {
+				font-weight: bold;
+				font-size: 1.25rem;
+				text-decoration: none;
+				color: black;
+			}
+
+			.cart-button {
+				padding: 0.5rem 1rem;
+				cursor: pointer;
+				background: none;
+				border: none;
+			}
+
+			.product-container {
+				max-width: 800px;
+				margin: 2rem auto;
+				background-color: white;
+				border-radius: 0.5rem;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+				padding: 2rem;
+			}
+
+			.product-title {
+				font-size: 1.875rem;
+				font-weight: bold;
+				margin-bottom: 0.5rem;
+			}
+
+			.product-description {
+				color: #4b5563;
+				margin-bottom: 1.5rem;
+			}
+
+			.product-price {
+				font-size: 1.875rem;
+				font-weight: bold;
+				margin-bottom: 0.5rem;
+			}
+
+			.product-stock {
+				font-size: 0.875rem;
+				color: #4b5563;
+				text-align: right;
+			}
+
+			.add-to-cart-btn {
+				display: block;
+				width: 100%;
+				padding: 0.75rem;
+				background-color: #2563eb;
+				color: white;
+				border: none;
+				border-radius: 0.375rem;
+				cursor: pointer;
+				text-align: center;
+				font-size: 1rem;
+				margin-top: 1.5rem;
+			}
+
+			.add-to-cart-btn:hover {
+				background-color: #1d4ed8;
+			}
+
+			.price-stock-container {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 1rem;
+			}
+
+			footer {
+				background-color: white;
+				padding: 1rem 2rem;
+				text-align: center;
+				border-top: 1px solid #e5e7eb;
+				color: #4b5563;
+				font-size: 0.875rem;
+				margin-top: auto;
+			}
+
+			/* Back button */
+			.back-button {
+				display: inline-block;
+				margin-bottom: 1.5rem;
+				color: #2563eb;
+				text-decoration: none;
+				font-size: 0.875rem;
+			}
+
+			.back-button:hover {
+				text-decoration: underline;
+			}
+
+			/* Notification */
+			.notification {
+				position: fixed;
+				top: 1rem;
+				right: 1rem;
+				background-color: #10b981;
+				color: white;
+				padding: 0.75rem 1rem;
+				border-radius: 0.375rem;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+				transform: translateX(150%);
+				transition: transform 0.3s ease;
+			}
+
+			.notification.show {
+				transform: translateX(0);
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<a href="index.html" class="store-title">E-commerce Store</a>
+			<button class="cart-button">Cart</button>
+		</header>
+
+		<main class="product-container">
+			<a href="index.html" class="back-button">← Back to products</a>
+			<h1 class="product-title" id="product-title">Product Name</h1>
+			<p class="product-description" id="product-description">
+				Product description goes here.
+			</p>
+
+			<div class="price-stock-container">
+				<p class="product-price" id="product-price">$0.00</p>
+				<p class="product-stock" id="product-stock">0 in stock</p>
+			</div>
+
+			<button class="add-to-cart-btn" id="add-to-cart">Add to Cart</button>
+		</main>
+
+		<div class="notification" id="notification">Added to cart!</div>
+
+		<footer>
+			<p>© 2025 E-commerce Store. All rights reserved.</p>
+		</footer>
+
+		<script>
+			// Get query parameter from URL
+			const url = new URL(window.location.href);
+			const searchParams = new URLSearchParams(url.search);
+			const productId = searchParams.get("id");
+
+			// Fetch product details
+			fetch(`/api/products/${productId}`)
+				.then((response) => response.json())
+				.then((product) => displayContent(product))
+				.catch((error) =>
+					console.error("Error fetching product details:", error),
+				);
+
+			// Function to display product details
+			function displayContent(product) {
+				document.title = `${product[0].name} - E-commerce Store`;
+				document.getElementById("product-title").textContent = product[0].name;
+				document.getElementById("product-description").textContent =
+					product[0].description;
+				document.getElementById("product-price").textContent =
+					`$${product[0].price.toFixed(2)}`;
+				document.getElementById("product-stock").textContent =
+					`${product[0].inventory} in stock`;
+			}
+		</script>
+	</body>
+</html>
+```
+
+</Details>
+
+You now have a frontend that lists products and displays a single product. However, the frontend is not yet connected to the D1 database. If you start the development server now, you will see no products. In the next steps, you will create a D1 database and create APIs to fetch products and display them on the frontend.
+
+## Step 3: Create a D1 database and enable read replication
+
+Create a new D1 database by running the following command:
+
+```sh
+npx wrangler d1 create fast-commerce
+```
+
+Add the D1 bindings returned in the terminal to the `wrangler` file:
+
+<WranglerConfig>
+
+```toml
+[[d1_databases]]
+binding = "DB"
+database_name = "fast-commerce"
+database_id = "YOUR_DATABASE_ID"
+```
+
+</WranglerConfig>
+
+Run the following command to update the `Env` interface in the `worker-configuration.d.ts` file.
+
+```sh
+npm run cf-typegen
+```
+
+Next, enable read replication for the D1 database. Navigate to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1), then select an existing database > **Settings** > **Enable Read Replication**.
+
+## Step 4: Create the API routes
+
+Update the `src/index.ts` file to import the Hono library and create the API routes.
+
+```ts
+import { Hono } from "hono";
+// Set db session bookmark in the cookie
+import { getCookie, setCookie } from "hono/cookie";
+
+const app = new Hono<{ Bindings: Env }>();
+
+// Get all products
+app.get("/api/products", async (c) => {
+	return c.json({ message: "get list of products" });
+});
+
+// Get a single product
+app.get("/api/products/:id", async (c) => {
+	return c.json({ message: "get a single product" });
+});
+
+// Upsert a product
+app.post("/api/product", async (c) => {
+	return c.json({ message: "create or update a product" });
+});
+
+export default app;
+```
+
+The above code creates three API routes:
+
+- `GET /api/products`: Returns a list of products.
+- `GET /api/products/:id`: Returns a single product.
+- `POST /api/product`: Creates or updates a product.
+
+However, the API routes are not connected to the D1 database yet. In the next steps, you will create a products table in the D1 database, and update the API routes to connect to the D1 database.
+
+## Step 5: Create local D1 database schema
+
+Create a products table in the D1 database by running the following command:
+
+```sh
+npx wrangler d1 execute fast-commerce --command "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT, price DECIMAL(10, 2) NOT NULL, inventory INTEGER NOT NULL DEFAULT 0, category TEXT NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)"
+```
+
+Next, create an index on the products table by running the following command:
+
+```sh
+npx wrangler d1 execute fast-commerce --command "CREATE INDEX IF NOT EXISTS idx_products_id ON products (id)"
+```
+
+For development purposes, you can also execute the insert statements on the local D1 database by running the following command:
+
+```sh
+npx wrangler d1 execute fast-commerce --command "INSERT INTO products (id, name, description, price, inventory, category) VALUES (1, 'Fast Ergonomic Chair', 'A comfortable chair for your home or office', 100.00, 10, 'Furniture'), (2, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing'), (3, 'Fast Wooden Desk', 'A wooden desk for your home or office', 150.00, 5, 'Furniture'), (4, 'Fast Leather Sofa', 'A leather sofa for your home or office', 300.00, 3, 'Furniture'), (5, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing')"
+```
+
+## Step 6: Add retry logic
+
+To make the application more resilient, you can add retry logic to the API routes. Create a new file called `retry.ts` in the `src` directory.
+
+```ts
+export interface RetryConfig {
+	maxRetries: number;
+	initialDelay: number;
+	maxDelay: number;
+	backoffFactor: number;
+}
+
+const shouldRetry = (error: unknown): boolean => {
+	const errMsg = error instanceof Error ? error.message : String(error);
+	return (
+		errMsg.includes("Network connection lost") ||
+		errMsg.includes("storage caused object to be reset") ||
+		errMsg.includes("reset because its code was updated")
+	);
+};
+
+// Helper function for sleeping
+const sleep = (ms: number): Promise<void> => {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const defaultRetryConfig: RetryConfig = {
+	maxRetries: 3,
+	initialDelay: 100,
+	maxDelay: 1000,
+	backoffFactor: 2,
+};
+
+export async function withRetry<T>(
+	operation: () => Promise<T>,
+	config: Partial<RetryConfig> = defaultRetryConfig,
+): Promise<T> {
+	const maxRetries = config.maxRetries ?? defaultRetryConfig.maxRetries;
+	const initialDelay = config.initialDelay ?? defaultRetryConfig.initialDelay;
+	const maxDelay = config.maxDelay ?? defaultRetryConfig.maxDelay;
+	const backoffFactor =
+		config.backoffFactor ?? defaultRetryConfig.backoffFactor;
+
+	let lastError: Error | unknown;
+	let delay = initialDelay;
+
+	for (let attempt = 0; attempt <= maxRetries; attempt++) {
+		try {
+			const result = await operation();
+			return result;
+		} catch (error) {
+			lastError = error;
+
+			if (!shouldRetry(error) || attempt === maxRetries) {
+				throw error;
+			}
+
+			// Add randomness to avoid synchronizing retries
+			// Wait for a random delay between delay and delay*2
+			await sleep(delay * (1 + Math.random()));
+
+			// Calculate next delay with exponential backoff
+			delay = Math.min(delay * backoffFactor, maxDelay);
+		}
+	}
+
+	throw lastError;
+}
+```
+
+The `withRetry` function is a utility function that retries a given operation with exponential backoff. It takes a configuration object as an argument, which allows you to customize the number of retries, initial delay, maximum delay, and backoff factor. It will only retry the operation if the error is due to a network connection loss, storage reset, or code update.
+
+:::caution
+
+In a distrubed system, retry mechanisms can have certain risks. Read the article [Retry Strategies in Distributed Systems: Identifying and Addressing Key Pitfalls](https://www.computer.org/publications/tech-news/trends/retry-strategies-avoiding-pitfalls) to learn more about the risks of retry mechanisms and how to avoid them.
+
+Retries can sometimes lead to data inconsistency. Make sure to handle the retry logic carefully.
+
+:::
+
+Next, update the `src/index.ts` file to import the `withRetry` function and use it in the API routes.
+
+```ts
+import { withRetry } from "./retry";
+```
+
+## Step 7: Update the API routes
+
+Update the API routes to connect to the D1 database.
+
+### 1. POST /api/product
+
+```ts
+app.post("/api/product", async (c) => {
+	const product = await c.req.json();
+
+	if (!product) {
+		return c.json({ message: "No data passed" }, 400);
+	}
+
+	const db = c.env.DB;
+	const session = db.withSession("first-primary");
+
+	const { id } = product;
+
+	try {
+		return await withRetry(async () => {
+			// Check if the product exists
+			const { results } = await session
+				.prepare("SELECT * FROM products where id = ?")
+				.bind(id)
+				.run();
+			if (results.length === 0) {
+				const fields = [...Object.keys(product)];
+				const values = [...Object.values(product)];
+				// Insert the product
+				await session
+					.prepare(
+						`INSERT INTO products (${fields.join(", ")}) VALUES (${fields.map(() => "?").join(", ")})`,
+					)
+					.bind(...values)
+					.run();
+				const latestBookmark = session.getBookmark();
+				latestBookmark &&
+					setCookie(c, "product_bookmark", latestBookmark, {
+						maxAge: 60 * 60, // 1 hour
+					});
+				return c.json({ message: "Product inserted" });
+			}
+
+			// Update the product
+			const updates = Object.entries(product)
+				.filter(([_, value]) => value !== undefined)
+				.map(([key, _]) => `${key} = ?`)
+				.join(", ");
+
+			if (!updates) {
+				throw new Error("No valid fields to update");
+			}
+
+			const values = Object.entries(product)
+				.filter(([_, value]) => value !== undefined)
+				.map(([_, value]) => value);
+
+			await session
+				.prepare(`UPDATE products SET ${updates} WHERE id = ?`)
+				.bind(...[...values, id])
+				.run();
+			const latestBookmark = session.getBookmark();
+			latestBookmark &&
+				setCookie(c, "product_bookmark", latestBookmark, {
+					maxAge: 60 * 60, // 1 hour
+				});
+			return c.json({ message: "Product updated" });
+		});
+	} catch (e) {
+		console.error(e);
+		return c.json({ message: "Error upserting product" }, 500);
+	}
+});
+```
+
+In the above code:
+
+- You get the product data from the request body.
+- You then check if the product exists in the database.
+  - If it does, you update the product.
+  - If it doesn't, you insert the product.
+- You then set the bookmark in the cookie.
+- Finally, you return the response.
+
+Since you want to start the session with the latest data, you use the `first-primary` constraint. Even if you use the `first-unconstrained` constraint or pass a bookmark, the write request will always be routed to the primary database.
+
+The bookmark set in the cookie can be used to guarantee that a new session reads a database version that is at least as up-to-date as the provided bookmark.
+
+If you are using an external platform to manage your products, you can connect this API to the external platform, such that, when a product is created or updated in the external platform, the D1 database automatically updates the product details.
+
+### 2. GET /api/products
+
+```ts
+app.get("/api/products", async (c) => {
+	const db = c.env.DB;
+
+	// Get bookmark from the cookie
+	const bookmark = getCookie(c, "product_bookmark") || "first-unconstrained";
+
+	const session = db.withSession(bookmark);
+
+	try {
+		return await withRetry(async () => {
+			const { results } = await session.prepare("SELECT * FROM products").run();
+
+			const latestBookmark = session.getBookmark();
+
+			// Set the bookmark in the cookie
+			latestBookmark &&
+				setCookie(c, "product_bookmark", latestBookmark, {
+					maxAge: 60 * 60, // 1 hour
+				});
+
+			return c.json(results);
+		});
+	} catch (e) {
+		console.error(e);
+		return c.json([]);
+	}
+});
+```
+
+In the above code:
+
+- You get the database session bookmark from the cookie.
+  - If the bookmark is not set, you use the `first-unconstrained` constraint.
+- You then create a database session with the bookmark.
+- You fetch all the products from the database and get the latest bookmark.
+- You then set this bookmark in the cookie.
+- Finally, you return the results.
+
+### 3. GET /api/products/:id
+
+```ts
+app.get("/api/products/:id", async (c) => {
+	const id = c.req.param("id");
+
+	if (!id) {
+		return c.json({ message: "Invalid id" }, 400);
+	}
+
+	const db = c.env.DB;
+
+	// Get bookmark from the cookie
+	const bookmark = getCookie(c, "product_bookmark") || "first-unconstrained";
+
+	const session = db.withSession(bookmark);
+
+	try {
+		return await withRetry(async () => {
+			const { results } = await session
+				.prepare("SELECT * FROM products where id = ?")
+				.bind(id)
+				.run();
+
+			const latestBookmark = session.getBookmark();
+
+			// Set the bookmark in the cookie
+			latestBookmark &&
+				setCookie(c, "product_bookmark", latestBookmark, {
+					maxAge: 60 * 60, // 1 hour
+				});
+
+			console.log(results);
+
+			return c.json(results);
+		});
+	} catch (e) {
+		console.error(e);
+		return c.json([]);
+	}
+});
+```
+
+In the above code:
+
+- You get the product ID from the request parameters.
+- You then create a database session with the bookmark.
+- You fetch the product from the database and get the latest bookmark.
+- You then set this bookmark in the cookie.
+- Finally, you return the results.
+
+## Step 8: Test the application
+
+You have now updated the API routes to connect to the D1 database. You can now test the application by starting the development server and navigating to the frontend.
+
+```sh
+npm run dev
+```
+
+Navigate to `http://localhost:8787. You should see the products listed. Click on a product to view the product details.
+
+To insert a new product, use the following command (while the development server is running):
+
+```sh
+curl -X POST http://localhost:8787/api/product \
+     -H "Content-Type: application/json" \
+     -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1000.00, "inventory": 10, "category": "Electronics"}'
+```
+
+Navigate to `http://localhost:8787/product-details?id=6`. You should see the new product.
+
+Update the product using the following command, and navigate to `http://localhost:8787/product-details?id=6` again. You will see the updated product.
+
+```sh
+curl -X POST http://localhost:8787/api/product \
+     -H "Content-Type: application/json" \
+     -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1050.00, "inventory": 10, "category": "Electronics"}'
+```
+
+:::note
+
+Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-9-deploy-the-application). D1 does not create read replicas when you develop locally.
+
+To test it locally, you can set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
+
+:::
+
+## Step 9: Deploy the application
+
+Since the database you used in the previous steps is local, you need to create the products table in the remote database. Execute the following D1 commands to create the products table in the remote database.
+
+```sh
+npx wrangler d1 execute fast-commerce --remote --command "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT, price DECIMAL(10, 2) NOT NULL, inventory INTEGER NOT NULL DEFAULT 0, category TEXT NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)"
+```
+
+Next, create an index on the products table by running the following command:
+
+```sh
+npx wrangler d1 execute fast-commerce --remote --command "CREATE INDEX IF NOT EXISTS idx_products_id ON products (id)"
+```
+
+Optionally, you can insert the products into the remote database by running the following command:
+
+```sh
+npx wrangler d1 execute fast-commerce --remote --command "INSERT INTO products (id, name, description, price, inventory, category) VALUES (1, 'Fast Ergonomic Chair', 'A comfortable chair for your home or office', 100.00, 10, 'Furniture'), (2, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing'), (3, 'Fast Wooden Desk', 'A wooden desk for your home or office', 150.00, 5, 'Furniture'), (4, 'Fast Leather Sofa', 'A leather sofa for your home or office', 300.00, 3, 'Furniture'), (5, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing')"
+```
+
+Now, you can deploy the application with the following command:
+
+```sh
+npm run deploy
+```
+
+This will deploy the application to Workers and the D1 database will be replicated to the remote regions. If a user requests the application from any region, the request will be redirected to the nearest region where the database is replicated.
+
+## Conclusion
+
+In this tutorial, you learned how to use D1 Read Replication for your e-commerce website. You created a D1 database and enabled read replication for it. You then created an API to create and update products in the database. You also learned how to use the bookmark to get the latest data from the database.
+
+You then created the products table in the remote database and deployed the application.
+
+You can use the same approach for your existing read heavy application to reduce read latencies and improve read throughput. If you are using an external platform to manage the content, you can connect the external platform to the D1 database, so that the content is automatically updated in the database.
+
+You can find the complete code for this tutorial in the [GitHub repository](https://github.com/harshil1712/e-com-d1-hono).
