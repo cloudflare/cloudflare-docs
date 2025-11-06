@@ -7,9 +7,11 @@ sidebar:
 
 ## Traffic limitations
 
-The agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
+IP endpoints do not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
 
 To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/traffic-policies/http-policies/http3/#enable-http3-inspection).
+
+Authorization endpoints, do not support anything that is not HTTP/HTTPS. That means no other TCP or UDP protocol is supported, including HTTP3.
 
 ## Gateway DNS and resolver policies
 

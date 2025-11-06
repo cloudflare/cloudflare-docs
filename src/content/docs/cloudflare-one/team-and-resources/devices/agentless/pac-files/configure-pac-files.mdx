@@ -29,7 +29,9 @@ Install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/us
 
 ## 1. Generate a proxy endpoint
 
-You can generate a proxy endpoint in Cloudflare One or through the Cloudflare API.
+You can generate two types of proxy endpoint in Cloudflare One or through the Cloudflare API: IP and Authorization. 
+
+Authorization endpoints require users to pass [Access policies](/cloudflare-one/access-controls/policies/policy-management/) to use the endpoint. Source IP endpoints only proxy traffic originating from a specific source IP.
 
 :::caution
 All devices you add to the proxy endpoint will be able to access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, you can build a network policy that blocks those source IPs from connecting to your internal resources.
@@ -43,9 +45,43 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 
 2. Select **Create proxy endpoint**.
 
-3. Give your endpoint any name.
+3. Select between **Add an authorization endpoint** or **Add a source IP endpoint**.
 
-4. Enter the public source IP address of your device(s) in CIDR notation. For example:
+:::note
+Once you choose a type of proxy endpoint, you cannot revert this decision.
+:::
+
+## Authorization endpoint
+
+If you select **Add an authorization endpoint**:
+
+1. Enter your basic information.
+
+2. Add an existing policy, or [create a new policy](/cloudflare-one/access-controls/policies/).
+
+3. Add your login method.
+
+4. Once you filled all the information, select **Save**.
+
+### Edit authorization
+
+To edit an authorization endpoint:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Authorization** under **Type**. 
+3. Select the three dots, then select **Configure**.
+4. Choose the information you want to edit:
+    - **Basic info**: Enter your basic info, then select **Save**.
+    - **Access policies**: Here, you can:
+        - Select existing policies or create a new policy.
+        - Select the three dots that allow you to 
+    - **Login methods**: Select the [identity providers](/cloudflare-one/integrations/identity-providers/) you want to use to log in to this application.
+
+## Source IP endpoint
+
+If you select **Add a source IP endpoint**:
+
+1. Enter the public source IP address of your device(s) in CIDR notation. For example:
    - **IPv4**: `192.0.2.0/8`
    - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
 
@@ -53,7 +89,7 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
    Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
    :::
 
-5. Select **Save endpoint** and confirm the endpoint creation.
+2. Select **Save endpoint** and confirm the endpoint creation.
 
 Your Cloudflare proxy server domain is of the form:
 
@@ -61,18 +97,15 @@ Your Cloudflare proxy server domain is of the form:
 https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 ```
 
-Once you create an endpoint, the dashboard will display an option to add additional endpoints:
+### Edit source IP endpoint
 
-1. Go to **Networks** > **Resolves & Proxies** > **Proxy endpoints**.
-2. Select **Add an endpoint**.
-3. Select the type of proxy endpoint you want to create. Choose between **Authorization** for an authorization endpoint, or **Source IP address**.
+To edit a source IP endpoint:
 
-If you select **Authorization**:
-
-1. Enter your basic information.
-2. Add an existing policy, or [create a new policy](/cloudflare-one/access-controls/policies/).
-3. Add your login method.
-4. Once you filled all the information, select **Save**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Source IP** under **Type**. 
+3. Select the three dots, then select **Configure**.
+4. Edit the name and/or configure the source IPs that are allowed.
+5. Select **Save**.
 
 </TabItem>
 
@@ -127,18 +160,6 @@ If you select **Authorization**:
 
 </Tabs>
 
-### Edit an existing proxy endpoint
-
-To edit an existing proxy endpoint:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
-2. Select **Proxy endpoints**, then select the three dots.
-3. Select **Configure**, and choose the information you want to edit:
-    - **Basic info**: Enter your basic info, then select **Save**.
-    - **Access policies**: Here, you can:
-        - Select existing policies or create a new policy.
-        - Select the three dots that allow you to 
-    - **Login methods**:
 
 ## 2. Test your proxy server
 
@@ -190,19 +211,24 @@ function FindProxyForURL(url, host) {
 - Use a proper text editor such as VS Code to avoid added characters.
   :::
 
-### Add additional PAC files
+To create a PAC file:
 
-To add additional PAC files:
-
-1. Go to **Networks** > **Resolves & Proxies** > **Proxy endpoints**.
-2. Select **Add PAC files**.
-3. Here, you can add **PAC file details** and **Setup instructions**. 
-    In **PAC files details:**
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Create a proxy endpoint.
+3. Once you create a proxy endpoint, select **Add PAC files**.
+4. Here, you can add **PAC file details** and **Setup instructions**. 
+    In **PAC files details**:
         - Enter the **Basic Information**.
         - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** is going to be populated with a template.
     In **Setup instructions:**
         - Choose a browser and follow the instructions.
 4. Select **Create**.
+
+Your PAC file is of the form:
+
+```txt
+https://<SUBDOMAIN>/test/test
+```
 
 ### Edit your PAC files
 
