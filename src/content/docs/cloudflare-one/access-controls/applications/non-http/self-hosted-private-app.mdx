@@ -6,7 +6,7 @@ sidebar:
   label: Add a self-hosted private application
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip, } from "~/components";
 
 You can configure a self-hosted Access application to manage access to specific IPs or hostnames on your private network.
 
@@ -29,36 +29,50 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 	params={{ private: true }}
 />
 
-6.  Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/access-controls/policies/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
+6.  To add an application using its private IP:
+		1. Select **Add private IP**.
+		2. In **IP address**, enter the private IP or CIDR range that represents the application (for example, `10.0.0.1` or `172.16.0.0/12`).
+		3. In **Port**, enter a single port or a port range used by your application (for example, `22` or `8000-8099`).
 
-    :::note
-    Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI). If you are configuring a private IP on any port other than `443` and plan to use Browser Isolation, note that this [will result in a Gateway block page](/cloudflare-one/remote-browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).
-    :::
+			Comma-separated lists of ports (such as `80, 443`) are not supported. To add multiple ports for a specific IP, you can select **Add private IP** and repeat the IP address with the other port. Alternatively, create a new Access application for the other port.
 
-7.  <Render file="access/add-access-policies" product="cloudflare-one" />
+7. To add an application using its private hostname:
+	1. Select **Add private hostname**.
+	2. In **Hostname**, enter the private hostname of the application (for example, `wiki.internal.local`). You can use [wildcards](/cloudflare-one/access-controls/policies/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
+	3. In **Port**, enter a single port or a port range used by your application (for example, `22` or `8000-8099`).
 
-8.  Configure how users will authenticate:
+	:::note
+	- **HTTPS applications**: Private hostnames explicitly set to port `443` (not including port ranges such as `441-444`) must have a valid Server Name Indicator (SNI).
+	- **Non-HTTPS applications**:  Private hostnames on non-`443` ports do not require a valid SNI value will be assigned an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>  in the CGNAT space. Ensure that the following IP addresses are not blocked by any firewalls or excluded from Gateway traffic:
+
+		<Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one"/>
+
+		For more details on private hostname routing, refer to [Connect a private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#prerequisites)
+
+8.  <Render file="access/add-access-policies" product="cloudflare-one" />
+
+9.  Configure how users will authenticate:
 
         1. Select the [**Identity providers**](/cloudflare-one/integrations/identity-providers/) you want to enable for your application.
         2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
         3. (Recommended) Turn on **WARP authentication identity** to allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
 
-9.  Select **Next**.
+10.  Select **Next**.
 
-10. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
+11. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
 
-11. <Render file="access/access-block-page" product="cloudflare-one" />
+12. <Render file="access/access-block-page" product="cloudflare-one" />
 
-12. Select **Next**.
+13. Select **Next**.
 
-13. <Render
+14. <Render
     	file="access/self-hosted-app/advanced-settings"
     	product="cloudflare-one"
     />
 
         These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
 
-14. Select **Save**.
+15. Select **Save**.
 
 Users can now connect to your private application after authenticating with Cloudflare Access.
 
@@ -89,3 +103,7 @@ The WARP client manages sessions for all non-HTTPS applications. Users will rece
 ### Private hostname vs private IP
 
 An Access application defined by a private hostname takes precedence over an Access application defined by a private IP. For example, assume App-1 points to `wiki.internal.local` and App-2 points to `10.0.0.1`, but `wiki.internal.local` resolves to `10.0.0.1`. Users who go to `wiki.internal.local` will never match App-2; they will be allowed or blocked strictly based on App-1 Access policies (and [Gateway policies](#access-vs-gateway-policies)).
+
+## Limitations
+
+- Browser Isolation is only compatible with self-hosted applications on port `443`. For more information, refer to the [Browser Isolation documentation](/cloudflare-one/remote-browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).

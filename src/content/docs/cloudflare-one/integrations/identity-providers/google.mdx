@@ -7,7 +7,7 @@ import { GlossaryTooltip, Render } from "~/components";
 
 You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration allows any user with a Google account to log in (if the [Access policy](/cloudflare-one/access-controls/policies/) allows them to reach the resource). Unlike the instructions for [Google Workspace](/cloudflare-one/integrations/identity-providers/google-workspace/), the steps below will not allow you to pull group membership information from a Google Workspace account.
 
-You do not need to be a Google Cloud Platform user to integrate Google as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to configure IdP integration settings.
+You do not need to be a Google Cloud Platform user to integrate Google as an identity provider with Cloudflare One. You will only need to open the Google Cloud Platform to configure IdP integration settings.
 
 ## Set up Google as an identity provider
 
@@ -39,7 +39,7 @@ You do not need to be a Google Cloud Platform user to integrate Google as an ide
    https://<your-team-name>.cloudflareaccess.com
    ```
 
-   You can find your team name in [Zero Trust](https://one.dash.cloudflare.com/) under **Settings** > **Custom Pages**.
+   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
 
 8. Under **Authorized redirect URIs**, in the **URIs** field, enter the following URL:
 
@@ -49,9 +49,9 @@ You do not need to be a Google Cloud Platform user to integrate Google as an ide
 
 9. After creating the OAuth client, select the OAuth client that you just created. Google will present the **OAuth Client ID** value and **Client secret** value. The client secret field functions like a password and should not be shared. Copy both the **OAuth Client ID** value and **Client secret** value.
 
-10. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+10. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
 
-11. Under **Login methods**, select **Add new**. Choose **Google** on the next page.
+11. Under **Your identity providers**, select **Add new identity provider**. Choose **Google** on the next page.
 
 12. Input the Client ID (**App ID** in the Cloudflare dashboard) and Client Secret fields generated previously.
 
@@ -61,7 +61,7 @@ You do not need to be a Google Cloud Platform user to integrate Google as an ide
 
 ## Test your connection
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to Google.
+To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to Google.
 
 ## Example API Config
 

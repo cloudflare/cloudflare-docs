@@ -7,6 +7,6 @@ import { Render } from "~/components";
 
 A `1033` error indicates your tunnel is not connected to Cloudflare's network because Cloudflare's network cannot find a healthy `cloudflared` instance to receive the traffic.
 
-First, review whether your tunnel is listed as `Active` on the [Zero Trust](https://one.dash.cloudflare.com/) dashboard by going to **Networks** > **Tunnels** or run `cloudflared tunnel list`. If the tunnel is not `Active`, review the following and take the action necessary for your tunnel status:
+First, review whether your tunnel is listed as `Active` on the [Cloudflare One](https://one.dash.cloudflare.com/) dashboard by going to **Networks** > **Connectors** > **Cloudflare Tunnels** or run `cloudflared tunnel list`. If the tunnel is not `Active`, review the following and take the action necessary for your tunnel status:
 
 <Render file="tunnel/tunnel-status" product="cloudflare-one" />

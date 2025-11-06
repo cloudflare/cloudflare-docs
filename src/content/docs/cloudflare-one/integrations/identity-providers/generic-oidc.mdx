@@ -19,7 +19,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
 
 3. Copy the content of these fields:
    - Client ID
@@ -30,13 +30,13 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
    You can find these values on your identity provider's **OIDC discovery endpoint**. Some providers call this the "well-known URL".
 
-## 2. Add an OIDC provider to Zero Trust
+## 2. Add an OIDC provider to Cloudflare One
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new**.
+2. Under **Your identity providers**, select **Add new identity provider**.
 
 3. Choose **OpenID Connect**.
 
@@ -114,7 +114,7 @@ The generic OIDC integration allows you to synchronize user groups and automatic
 
 Your identity provider must support SCIM version 2.0.
 
-### 1. Enable SCIM in Zero Trust
+### 1. Enable SCIM in Cloudflare One
 
 <Render
 	file="access/enable-scim-on-dashboard"
@@ -146,8 +146,8 @@ All OIDC IdP integrations support the use of custom OIDC claims. Once configured
 To add a custom OIDC claim to an IdP integration:
 
 1.  In your identity provider, ensure that the custom claim is included in your OIDC ID token.
-2.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
-3.  Under **Login methods**, find your identity provider and select **Edit**.
+2.  In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+3.  Under **Your identity providers**, find your identity provider and select **Edit**.
 4.  Under **OIDC Claims**, enter the name of your custom claim (for example, `oid`).
 5.  Select **Save**.
 6.  Select **Test** and verify that the custom claim appears in `oidc_fields`. For example,

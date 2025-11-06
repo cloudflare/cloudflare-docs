@@ -11,7 +11,7 @@ This section covers the most common errors you might encounter when connecting r
 
 ## Tunnel status
 
-You can check your tunnel’s connection status either from the Zero Trust dashboard (by going to **Networks** > **Tunnels**) or by running the `cloudflared tunnel list` command. Each tunnel displays a status that reflects its current connection state:
+You can check your tunnel's connection status either from Cloudflare One (by going to **Networks** > **Connectors** > **Cloudflare Tunnels**) or by running the `cloudflared tunnel list` command. Each tunnel displays a status that reflects its current connection state:
 
 <Render file="tunnel/tunnel-status" product="cloudflare-one" />
 
@@ -104,7 +104,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
 
 ## My tunnel randomly disconnects.
 
-Long-lived connections initiated through the Cloudflare Zero Trust platform, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/) and [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) and contact Support.
+Long-lived connections initiated through Cloudflare One, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/) and [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) and contact Support.
 
 ## Tunnel connections fail with SSL error.
 

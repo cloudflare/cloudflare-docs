@@ -32,7 +32,7 @@ To create a load balancer for Cloudflare Tunnel published applications:
 7. Enter a descriptive name for the pool. For example, if you are configuring one pool per tunnel, the pool name can match your tunnel name.
 8. To add a tunnel endpoint to the pool, configure the following fields:
 			- **Endpoint Name**: Name of the server that is running the application
-			- **Endpoint Address**: `<UUID>.cfargotunnel.com`, where `<UUID>` is replaced by your Tunnel ID. You can find the **Tunnel ID** in [Zero Trust](https://one.dash.cloudflare.com) under **Networks** > **Tunnels**.
+			- **Endpoint Address**: `<UUID>.cfargotunnel.com`, where `<UUID>` is replaced by your Tunnel ID. You can find the **Tunnel ID** in [Cloudflare One](https://one.dash.cloudflare.com) under **Networks** > **Connectors** > **Cloudflare Tunnels**.
 			- **Header value**: Hostname of your published application route (such as `app.example.com`). To find the hostname value, open your Cloudflare Tunnel configuration and go to the **Published application routes** tab.
 			- **Weight**: Assign a [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) to the endpoint. If you only have one endpoint, enter `1`.
 	:::note

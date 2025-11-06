@@ -22,7 +22,7 @@ Note that:
 - Updating the cipher suites will result in certificates being redeployed.
 - Cipher suites are used in combination with other [SSL/TLS settings](/ssl/edge-certificates/additional-options/cipher-suites/#related-ssltls-settings).
 - You cannot set specific TLS 1.3 ciphers. Instead, you can [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) for your entire zone and Cloudflare will use all applicable [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
-- Each cipher suite also supports a specific algorithm (RSA or ECDSA) so you should consider the algorithms in use by your edge certificates when making your ciphers selection. You can find this information under each certificate listed in [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
+- Each cipher suite also supports a specific algorithm (RSA or ECDSA) so you should consider the algorithms in use by your edge certificates when making your ciphers selection. You can find this information under each certificate listed on the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) page.
 - It is not possible to configure minimum TLS version nor cipher suites for [Cloudflare Pages](/pages/) hostnames.
 - If you use Windows you might need to adjust the `curl` syntax, refer to [Making API calls on Windows](/fundamentals/api/how-to/make-api-calls/#making-api-calls-on-windows) for further guidance.
 

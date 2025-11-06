@@ -7,7 +7,7 @@ sidebar:
 
 import { Tabs, TabItem, Render } from "~/components";
 
-Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods in Zero Trust, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
+Cloudflare One integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods in Cloudflare One, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ The typical setup requirements are:
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
-   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
 3. Set the **Name ID/Email format** to `emailAddress`.
 4. (Optional) Set the signature policy to _Always Sign_.
 
@@ -41,12 +41,12 @@ If your identity provider supports metadata file configuration, you can use the 
 
 To download the SAML metadata file, copy-paste the metadata endpoint into a web browser and save the page as an `.xml` file. Upload this XML file to the identity provider.
 
-## 2. Add a SAML identity provider to Zero Trust
+## 2. Add a SAML identity provider to Cloudflare One
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication** > **Login methods**.
-2. Select **Add new** and select **SAML**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+2. Select **Add new identity provider** and select **SAML**.
 3. Choose a descriptive name for your identity provider.
 4. Enter the **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing certificate** obtained from your identity provider.
 5. (Optional) To enable SCIM, refer to [Synchronize users and groups](#synchronize-users-and-groups).
@@ -86,7 +86,7 @@ Set a reminder for the expiry date of the signing certificate obtained from your
 
 ## 3. Test the connection
 
-You can now [test the IdP integration](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust). A success response should return the configured SAML attributes.
+You can now [test the IdP integration](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one). A success response should return the configured SAML attributes.
 
 ## Synchronize users and groups
 
@@ -96,7 +96,7 @@ The generic SAML integration allows you to synchronize user groups and automatic
 
 Your identity provider must support SCIM version 2.0.
 
-### 1. Enable SCIM in Zero Trust
+### 1. Enable SCIM in Cloudflare One
 
 <Render
 	file="access/enable-scim-on-dashboard"

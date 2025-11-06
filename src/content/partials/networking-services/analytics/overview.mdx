@@ -17,13 +17,9 @@ import { AnchorHeading, Markdown } from "~/components";
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-	{/* Generate dynamic anchor link: converts product name to lowercase and replaces spaces with hyphens
-	    e.g., "Magic WAN" becomes "#magic-wan-site-analytics", "WAN Tunnels" becomes "#wan-tunnels-site-analytics" */}
 	<Markdown
-	text={`
-	- Overview in [${props.productName} Site Analytics](#${props.productName.toLowerCase().replace(/ /g, '-')}-site-analytics)
-	`}
-	inline={false}
+		text="- Overview in [Magic WAN Site Analytics](#magic-wan-site-analytics)"
+		inline={false}
 	/>
   </>
   )
@@ -35,7 +31,7 @@ import { AnchorHeading, Markdown } from "~/components";
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-    <AnchorHeading title={`${props.productName} Site Analytics`} depth={2} />
+    <AnchorHeading title="Magic WAN Site Analytics" depth={2} />
 		<Markdown
 		text={`
 		${props.productName} Site Analytics provides an overview of the connectivity status and traffic analytics of all ${props.productName} sites. This is a great place to start if you receive an alert, need to begin the ${props.productName} troubleshooting process, or are performing routine monitoring.

@@ -6,11 +6,11 @@ sidebar:
   order: 18
 ---
 
-This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Single_Sign-On.html) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Single_Sign-On.html) as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to a Jamf Pro account
 
 ## 1. Collect Jamf Pro information
@@ -20,9 +20,9 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 3. Paste the URL in a web browser to download the Jamf metadata file.
 4. Open the `metadata.xml` file in a text editor, and copy the values for **Entity ID** and **Assertion Consumer Service**.
 
-## 2. Add a SaaS application to Cloudflare Zero Trust
+## 2. Add a SaaS application to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 2. Select **Add an application** > **SaaS**.
 3. For **Application**, enter `Jamf` or `Jamf Pro` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
@@ -37,7 +37,7 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 
 ## 3. Edit Access SAML Metadata
 
-1. Paste the **SAML Metadata endpoint** from application configuration in Cloudflare Zero Trust into a browser.
+1. Paste the **SAML Metadata endpoint** from application configuration in Cloudflare One into a browser.
 2. Copy the file and paste it into a text editor.
 3. Change `WantAuthnRequestsSigned="true"` to `WantAuthnRequestsSigned="false"`.
 4. Set the file extension as `.xml` and save.
@@ -49,7 +49,7 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 3. Label **Other provider** as `Cloudflare`.
 4. Fill in the following fields:
    - **Entity ID**: Entity ID from Jamf Pro metadata file.
-   - **Identity Provider Metadata Source**: Select **Metadata File** and upload the `.xml` file from step [2. Edit Access SAML Metadata](#2-add-a-saas-application-to-cloudflare-zero-trust).
+   - **Identity Provider Metadata Source**: Select **Metadata File** and upload the `.xml` file from step [2. Edit Access SAML Metadata](#2-add-a-saas-application-to-cloudflare-one).
    - **Identity Provider User Mapping**: _Name ID_
    - **Jamf Pro User Mapping**: _Email_
 5. Turn on **Single Sign On**.

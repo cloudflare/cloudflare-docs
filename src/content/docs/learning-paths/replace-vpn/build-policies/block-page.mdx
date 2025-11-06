@@ -55,7 +55,7 @@ For DNS policies, you will need to enable the block page on a per-policy basis.
 
 2.  Choose a DNS policy with a Block action.
 
-3.  In the policy's [`rule_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_policy), turn on `block_page_enabled`. If you have configured a [custom Gateway block page](/cloudflare-one/traffic-policies/block-page/#customize-the-block-page), you can optionally show an additional `block_reason` when traffic is blocked by this policy.
+3.  In the policy's [`rule_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_policy), turn on `block_page_enabled`. If you have configured a [custom Gateway block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#customize-the-block-page), you can optionally show an additional `block_reason` when traffic is blocked by this policy.
 
         ```tf
         resource "cloudflare_zero_trust_gateway_policy" "dns_block_security_categories" {

@@ -52,7 +52,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/rags/{
 	"rewrite_query": false,
 	"max_num_results": 10,
 	"ranking_options": {
-		"score_threshold": 0.3
+		"score_threshold": 0.3,
+	},
+	"reranking": {
+		"enabled": true,
+    	"model": "@cf/baai/bge-reranker-base"
 	},
 	"stream": true,
 }'
@@ -89,9 +93,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/rags/{
 	"rewrite_query": true,
 	"max_num_results": 10,
 	"ranking_options": {
-		"score_threshold": 0.3
+		"score_threshold": 0.3,
 	},
-}'
+	"reranking": {
+		"enabled": true,
+    	"model": "@cf/baai/bge-reranker-base"
+	}'
 
 ```
 

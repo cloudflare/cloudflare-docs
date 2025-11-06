@@ -8,7 +8,7 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-This guide covers how to configure [Google Workspace](https://support.google.com/a/topic/7579248?ref_topic=7556686&sjid=14539485562330725560-NA) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Google Workspace](https://support.google.com/a/topic/7579248?ref_topic=7556686&sjid=14539485562330725560-NA) as a SAML application in Cloudflare One.
 
 :::note
 
@@ -18,16 +18,18 @@ The integration of Access as a single sign-on provider for your Google Workspace
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to a Google Workspace account
 
-## 1. Create an application in Zero Trust
+## 1. Create an application in Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
 
-2. Select **SaaS application**.
+2. Select **Add an application**.
 
-3. Fill in the following information:
+3. Select **SaaS**.
+
+4. Fill in the following information:
    - **Application**: _Google_.
    - **Entity ID**: Use the value provided to you by Google when [configuring your SAML SSO provider](https://saml-doc.okta.com/SAML_Docs/How-to-Enable-SAML-2.0-in-Google-Apps.html).
    - **Assertion Consumer Service URL**: `https://www.google.com/a/<your_domain.com>/acs`, where `<your_domain.com>` is your Google Workspace domain.
@@ -38,11 +40,11 @@ The integration of Access as a single sign-on provider for your Google Workspace
 When you put your Google Workspace behind Access, users will not be able to log in using [Google](/cloudflare-one/integrations/identity-providers/google/) or [Google Workspace](/cloudflare-one/integrations/identity-providers/google-workspace/) as an identity provider. To secure Google Workspace behind Access and avoid an [authentication loop](/cloudflare-one/faq/troubleshooting/#after-putting-google-workspace-behind-access-i-cant-log-in-it-keeps-redirecting-between-access-and-google-without-ever-completing-authentication), you must configure a different identity provider (not Google or Google Workspace) for authentication.
 :::
 
-4. [Create an Access policy](/cloudflare-one/access-controls/policies/) for your application. For example, you could allow users with an `@your_domain.com` email address.
+5. [Create an Access policy](/cloudflare-one/access-controls/policies/) for your application. For example, you could allow users with an `@your_domain.com` email address.
 
-5. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**. These values will be used to configure Google Workspace.
+6. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**. These values will be used to configure Google Workspace.
 
-6. Save the application.
+7. Save the application.
 
 ## 2. Create a certificate from your public key
 
@@ -65,8 +67,8 @@ When you put your Google Workspace behind Access, users will not be able to log 
 3. Select **Third-party SSO profile for your organization**.
 4. Enable **Set up SSO with third-party identity provider**.
 5. Fill in the following information:
-   - **Sign-in page URL**: Copy and then paste your **SSO endpoint** from Zero Trust.
-   - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+   - **Sign-in page URL**: Copy and then paste your **SSO endpoint** from Cloudflare One.
+   - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Cloudflare One <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
    - **Verification certificate**: Upload the certificate file containing your public key.
 6. (Optional) Enable **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your Google Workspace domain (`google.com/a/<your_domain.com>` instead of the standard `google.com`).
 

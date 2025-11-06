@@ -14,11 +14,17 @@ import {
 	InlineBadge,
 	Render,
 	PackageManagers,
+	Steps,
+	WranglerConfig,
 } from "~/components";
 
-In this guide, you will create a new [TanStack Start](https://tanstack.com/start) application and deploy it to Cloudflare Workers.
+[TanStack Start](https://tanstack.com/start) is a full-stack framework for building web applications. It comes with features like server-side rendering, streaming, server functions, bundling, and more. In this guide, you learn to deploy a TanStack Start application to Cloudflare Workers.
 
-## 1. Set up a new project
+## 1. Set up a TanStack Start project
+
+If you have an existing TanStack Start application, skip to the [Configuring an existing TanStack Start application](#configuring-an-existing-tanstack-start-application) section.
+
+### Creating a new TanStack Start application
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate TanStack Start's official setup tool, and provide the option to deploy instantly.
 
@@ -35,6 +41,57 @@ After setting up your project, change your directory by running the following co
 ```sh
 cd my-tanstack-start-app
 ```
+
+### Configuring an existing TanStack Start application
+
+If you have an existing TanStack Start application, you can configure it to run on Cloudflare Workers by following these steps:
+
+<Steps>
+1. Add the `wrangler.jsonc` configuration file to the root of your project with the following content:
+		<WranglerConfig>
+    ```toml
+    	name = "<YOUR_PROJECT_NAME>"
+    	compatibility_date = "2025-09-02"
+    	compatibility_flags = ["nodejs_compat"]
+    	main = "@tanstack/react-start/server-entry"
+    	[observability]
+    	enabled = true
+    ```
+		</WranglerConfig>
+
+2. Install `wrangler` as a development dependency:
+
+   <PackageManagers dev pkg="wrangler@latest" />
+
+3. Install the `@cloudflare/vite-plugin` package as a dependency:
+
+   <PackageManagers type="add" pkg="@cloudflare/vite-plugin@latest" />
+
+4. Update your `vite.config.ts` file to include the Cloudflare Vite plugin:
+
+   ```ts title="vite.config.ts"
+   import { defineConfig } from "vite";
+   import { cloudflare } from "@cloudflare/vite-plugin";
+   ...
+
+   export default defineConfig({
+   	plugins: [cloudflare({ viteEnvironment: { name: 'ssr' } }), ...],
+   	// ... other configurations
+   });
+   ```
+
+5. Update the `scripts` section of your `package.json` file to include the following commands:
+
+   ```jsonc title="package.json"
+   "scripts": {
+   	...
+   	"deploy": "npm run build && wrangler deploy",
+   	"preview": "npm run build && vite preview",
+   	"cf-typegen": "wrangler types"
+   }
+   ```
+
+</Steps>
 
 ## 2. Develop locally
 

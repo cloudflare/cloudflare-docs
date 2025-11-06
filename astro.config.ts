@@ -11,6 +11,8 @@ import react from "@astrojs/react";
 
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
+import { execSync } from "child_process";
+import { existsSync } from "fs";
 
 import remarkValidateImages from "./src/plugins/remark/validate-images";
 
@@ -58,6 +60,52 @@ const sidebar = await autogenSections();
 const customCss = await autogenStyles();
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
+
+/**
+ * Get the last Git modification date for a file
+ * @param filePath - Absolute path to the file
+ * @returns ISO date string or null if not available
+ */
+function getGitLastModified(filePath: string): string | null {
+	try {
+		const result = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
+			encoding: "utf-8",
+		}).trim();
+		return result || null;
+	} catch (_error) {
+		return null;
+	}
+}
+
+/**
+ * Convert a sitemap URL to the corresponding source file path
+ * @param url - The full URL from the sitemap
+ * @returns Absolute file path or null if not found
+ */
+function urlToFilePath(url: string): string | null {
+	try {
+		const urlObj = new URL(url);
+		const pathname = urlObj.pathname.replace(/\/$/, ""); // Remove trailing slash
+
+		// Try different file extensions and paths
+		const possiblePaths = [
+			`./src/content/docs${pathname}.md`,
+			`./src/content/docs${pathname}.mdx`,
+			`./src/content/docs${pathname}/index.md`,
+			`./src/content/docs${pathname}/index.mdx`,
+		];
+
+		for (const path of possiblePaths) {
+			if (existsSync(path)) {
+				return path;
+			}
+		}
+
+		return null;
+	} catch (_error) {
+		return null;
+	}
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -194,7 +242,18 @@ export default defineConfig({
 				return true;
 			},
 			serialize(item) {
-				item.lastmod = new Date().toISOString();
+				const filePath = urlToFilePath(item.url);
+				if (filePath) {
+					const gitDate = getGitLastModified(filePath);
+					if (gitDate) {
+						item.lastmod = gitDate;
+					}
+				} else {
+					console.warn(
+						`[sitemap] Could not find last modified for ${item.url} - setting to now`,
+					);
+					item.lastmod = new Date().toISOString();
+				}
 				return item;
 			},
 		}),

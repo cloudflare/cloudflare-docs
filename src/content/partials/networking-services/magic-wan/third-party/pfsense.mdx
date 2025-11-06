@@ -1,12 +1,11 @@
 ---
 params:
-  - productName
   - configureTwoIpsecTunnelsUrl
   - addTunnelsUrl
   - staticRouteUrl
 ---
 
-This tutorial includes the steps required to configure IPsec tunnels to connect a pfSense firewall to Cloudflare {props.productName}.
+This tutorial includes the steps required to configure IPsec tunnels to connect a pfSense firewall to Cloudflare Magic WAN.
 
 ## Software tested
 
@@ -34,10 +33,10 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 | Cloudflare endpoint                | `<YOUR_ANYCAST_IP_ADDRESS_1>` | `<YOUR_ANYCAST_IP_ADDRESS_2>` |
 | Pfsense IPsec Phase 2 Local IP     | `10.252.2.27`                 | `10.252.2.29`                 |
 | Pfsense IPsec Phase 2 Remote IP    | `10.252.2.26`                 | `10.252.2.28`                 |
-| {props.productName} static routes - Prefix   | `10.1.100.0/24`               | `10.1.100.0/24`               |
-| {props.productName} static routes - Next hop | `PF_TUNNEL_01`                | `PF_TUNNEL_02`                |
+| Magic WAN static routes - Prefix   | `10.1.100.0/24`               | `10.1.100.0/24`               |
+| Magic WAN static routes - Next hop | `PF_TUNNEL_01`                | `PF_TUNNEL_02`                |
 
-## 1. Configure {props.productName} IPsec tunnels
+## 1. Configure Magic WAN IPsec tunnels
 
 Use the Cloudflare dashboard or API to <a href={props.configureTwoIpsecTunnelsUrl}>configure two IPsec tunnels</a>. The settings mentioned below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
@@ -84,14 +83,14 @@ Take note of your pre-shared keys, and keep them in a safe place to use later in
 
 After creating your IPsec tunnels, the Cloudflare dashboard will list them under **Tunnels**. To retrieve your IPsec tunnel's user ID:
 
-1. Go to **{props.productName}** > **Configuration**.
+1. Go to **Magic WAN** > **Configuration**.
 2. Select **Tunnels**.
 3. Select the IPsec tunnel.
 4. Scroll to **User ID** and copy the string. For example, `ipsec@long_string_of_letters_and_numbers`.
 
 The User ID will be required when configuring IKE Phase 1 on the pfSense firewall.
 
-## 2. Create {props.productName} static routes
+## 2. Create Magic WAN static routes
 
 Create a <a href={props.staticRouteUrl}>static route</a> for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default values):
 

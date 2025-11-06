@@ -6,11 +6,11 @@ sidebar:
   order: 6
 ---
 
-This guide covers how to configure [AWS](https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source-idp.html) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [AWS](https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source-idp.html) as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to an AWS account
 
 ## 1. Get AWS URLs
@@ -19,14 +19,14 @@ This guide covers how to configure [AWS](https://docs.aws.amazon.com/singlesigno
 2. Go to **IAM Identity Center** > **Settings**.
 3. In the **Identity source** tab, select the **Actions** dropdown and select _Change identity source_.
 4. Change the identity source to **External identity provider**.
-5. Copy the values shown in **Service provider metadata**. You will need these values when configuring the SaaS application in Zero Trust.
+5. Copy the values shown in **Service provider metadata**. You will need these values when configuring the SaaS application in Cloudflare One.
 
-Next, we will obtain **Identity provider metadata** from Zero Trust.
+Next, we will obtain **Identity provider metadata** from Cloudflare One.
 
-## 2. Add a SaaS application to Cloudflare Zero Trust
+## 2. Add a SaaS application to Cloudflare One
 
-1. In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com) and go to **Access** > **Applications**.
-2. Select **SaaS**.
+1. In a separate tab or window, open [Cloudflare One](https://one.dash.cloudflare.com) and go to **Access controls** > **Applications**.
+2. Select **Add an application** > **SaaS**.
 3. For **Application**, select _Amazon AWS_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.

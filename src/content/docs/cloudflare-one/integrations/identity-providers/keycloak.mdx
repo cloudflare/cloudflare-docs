@@ -17,7 +17,7 @@ To set up Keycloak (SAML) as your identity provider:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
 
    ![SAML Client interface with team domain and callback in Client ID](~/assets/images/cloudflare-one/identity/keycloak/configure-client.png)
 
@@ -39,9 +39,9 @@ To set up Keycloak (SAML) as your identity provider:
 
    Next, you will need to integrate with Cloudflare Access.
 
-8. In [Zero Trust](https://dash.cloudflare.com), go to **Settings** > **Authentication**.
+8. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
 
-9. Under **Login methods**, select **Add new**.
+9. Under **Your identity providers**, select **Add new identity provider**.
 
 10. Choose **SAML** on the next page.
 
@@ -55,4 +55,4 @@ To set up Keycloak (SAML) as your identity provider:
 
 11. Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
+To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to the login method you want to test.

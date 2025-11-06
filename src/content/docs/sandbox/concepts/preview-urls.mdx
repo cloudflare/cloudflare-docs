@@ -71,6 +71,7 @@ const admin = await sandbox.exposePort(3001, { name: "admin" });
 ## What Works
 
 - HTTP/HTTPS requests
+- WebSocket connections
 - Server-Sent Events
 - All HTTP methods (GET, POST, PUT, DELETE, etc.)
 - Request and response headers
@@ -79,9 +80,30 @@ const admin = await sandbox.exposePort(3001, { name: "admin" });
 
 - Raw TCP/UDP connections
 - Custom protocols (must wrap in HTTP)
-- WebSocket connections
 - Ports outside range 1024-65535
 - Port 3000 (used internally by the SDK)
+
+## WebSocket Support
+
+Preview URLs support WebSocket connections. When a WebSocket upgrade request hits an exposed port, the routing layer automatically handles the connection handshake.
+
+```typescript
+// Start a WebSocket server
+await sandbox.startProcess("bun run ws-server.ts 8080");
+const { exposedAt } = await sandbox.exposePort(8080);
+
+// Clients connect using WebSocket protocol
+// Browser: new WebSocket('wss://8080-abc123.example.com')
+
+// Your Worker routes automatically
+export default {
+	async fetch(request, env) {
+		return proxyToSandbox(request, env.Sandbox, "sandbox-id");
+	},
+};
+```
+
+For custom routing scenarios where your Worker needs to control which sandbox or port to connect to based on request properties, see `wsConnect()` in the [Ports API](/sandbox/api/ports/#wsconnect).
 
 ## Security
 

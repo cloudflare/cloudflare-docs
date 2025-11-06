@@ -2,19 +2,19 @@
 {}
 ---
 
-First, configure Zero Trust to send user risk scores to Okta.
+First, configure Cloudflare One to send user risk scores to Okta.
 
 1. Set up the [Okta SSO integration](/cloudflare-one/integrations/identity-providers/okta/).
-2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
-3. In **Login methods**, locate your Okta integration and select **Edit**.
+2. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+3. In **Your identity providers**, locate your Okta integration and select **Edit**.
 4. Turn on **Send risk score to Okta**.
 5. Select **Save**.
-6. Upon saving, Zero Trust will display the well-known URL for your organization. Copy the value.
+6. Upon saving, Cloudflare One will display the well-known URL for your organization. Copy the value.
 
 Next, configure Okta to receive your risk scores.
 
 1. On your Okta admin dashboard, go to **Security** > **Device Integrations**.
 2. Go to **Receive shared signals**, then select **Create stream**.
 3. Name your integration. In **Set up integration with**, choose _Well-known URL_.
-4. In **Well-known URL**, enter the well-known URL value provided by Zero Trust.
+4. In **Well-known URL**, enter the well-known URL value provided by Cloudflare One.
 5. Select **Create**.

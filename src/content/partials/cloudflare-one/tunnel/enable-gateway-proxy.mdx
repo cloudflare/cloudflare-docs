@@ -8,8 +8,8 @@ To start logging and filtering network traffic, turn on the Gateway proxy:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Settings** > **Network**.
-2. In **Firewall**, turn on **Proxy**.
+1. Go to **Traffic policies** > **Traffic settings**.
+2. In **Proxy and inspection**, turn on **Allow Secure Web Gateway to proxy traffic**.
 3. Select **TCP**.
 4. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
 5. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`, select **ICMP**. You may also need to [update your system](/cloudflare-one/traffic-policies/proxy/#icmp) to allow ICMP traffic through `cloudflared`.

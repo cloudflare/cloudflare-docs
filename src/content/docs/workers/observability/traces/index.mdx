@@ -1,0 +1,127 @@
+---
+pcx_content_type: navigation
+title: Traces
+sidebar:
+  order: 3
+  badge:
+    text: Beta
+---
+
+import { WranglerConfig } from "~/components";
+
+### What is Workers tracing?
+
+Tracing gives you end-to-end visibility into the life of a request as it travels through your Workers application and connected services. This helps you identify performance bottlenecks, debug issues, and understand complex request flows. With tracing you can answer questions such as:
+
+- What is the cause of a long-running request?
+- How long do subrequests from my Worker take?
+- How long are my calls to my KV Namespace or R2 bucket taking?
+
+![Example trace showing a POST request to a cake shop with multiple spans including fetch requests and durable object operations](~/assets/images/workers-observability/trace-waterfall-example.png)
+
+### Automatic instrumentation
+
+Cloudflare Workers provides tracing instrumentation **out of the box** - no code changes or SDK are required. Simply enable tracing on your Worker and Cloudflare automatically captures telemetry data for:
+
+- **Fetch calls** - All outbound HTTP requests, capturing timing, status codes, and request metadata. This enables you to quickly identify how external dependencies affect your application's performance.
+- **Binding calls** - Interactions with various Worker bindings such as KV reads and writes, R2 object storage operations and Durable Object invocations.
+- **Handler calls** - The complete lifecycle of each Worker invocation, including triggers such as [fetch handlers](/workers/runtime-apis/handlers/fetch/),
+  [scheduled handlers](/workers/runtime-apis/handlers/scheduled/), and [queue handlers](/queues/configuration/javascript-apis/#consumer).
+
+For a full list of instrumented operations , see the [spans and attributes documentation](/workers/observability/traces/spans-and-attributes).
+
+### How to enable tracing
+
+If you have already set `observability.enabled = true` in your [wrangler configuration file](/workers/wrangler/configuration/#observability), tracing **and** logs will be automatically enabled.
+
+<WranglerConfig>
+
+```json
+{
+	"observability": {
+		"enabled": true
+	}
+}
+```
+
+</WranglerConfig>
+
+You can also configure tracing independently by setting `observability.traces.enabled = true` in your [wrangler configuration file](/workers/wrangler/configuration/#observability).
+
+<WranglerConfig>
+
+```json
+{
+	"observability": {
+		"traces": {
+			"enabled": true,
+			// optional sampling rate (recommended for high-traffic workloads)
+			"head_sampling_rate": 0.05
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+
+
+### Exporting OpenTelemetry traces to a 3rd party destination
+
+Workers tracing follows [OpenTelemetry (OTel) standards](https://opentelemetry.io/). This makes it compatible with popular observability platforms,
+such as [Honeycomb](/workers/observability/exporting-opentelemetry-data/honeycomb/), [Grafana Cloud](/workers/observability/exporting-opentelemetry-data/grafana-cloud/), and
+[Axiom](/workers/observability/exporting-opentelemetry-data/axiom/), while requiring zero development effort from you. If your observability provider has an available OpenTelemetry endpoint, you can export traces (and logs)!
+
+Learn more about exporting OpenTelemetry data from Workers [here](/workers/observability/exporting-opentelemetry-data/).
+
+### Sampling
+
+:::note[Default Sampling Rate]
+
+The default sampling rate is `1`, meaning 100% of requests will be traced if tracing is enabled. Set `head_sampling_rate` if you want to trace fewer requests.
+
+:::
+
+With sampling, you can trace a percentage of incoming requests in your Cloudflare Worker.
+This allows you to manage volume and costs, while still providing meaningful insights into your application.
+
+The valid sampling range is from `0` to `1`, where `0` indicates zero out of one hundred invocations will be traced, and `1` indicates every requests will be traced,
+and a number such a `0.05` indicates five out of one hundred requests will be traced.
+
+If you have not specified a sampling rate, it defaults to `1`, meaning 100% of requests will be traced.
+
+<WranglerConfig>
+
+```json
+{
+	"observability": {
+		"traces": {
+			"enabled": true,
+			// set tracing sampling rate to 5%
+			"head_sampling_rate": 0.05
+		},
+		"logs": {
+			"enabled": true,
+			// set logging sampling rate to 60%
+			"head_sampling_rate": 0.6
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+If you have `head_sampling_rate` configured for logs, you can also create a separate rate for traces.
+
+Sampling is [head-based](https://opentelemetry.io/docs/concepts/sampling/#head-sampling), meaning that non-traced requests do not incur any tracing overhead.
+
+### Limits & Pricing
+
+Workers tracing is currently **free** during the initial beta period. This includes all tracing functionality such as collecting traces, storing them, and viewing them in the Cloudflare dashboard.
+
+Starting on January 15, 2026, tracing will be billed as part of your usage on the Workers Free Paid and Enterprise plans. Each span in a trace represents one observability event, sharing the same monthly quota and pricing as [Workers logs](/workers/platform/pricing/#workers-logs):
+
+|                  | Events (trace spans or log events)                                 | Retention |
+| ---------------- | ------------------------------------------------------------------ | --------- |
+| **Workers Free** | 200,000 per day                                                    | 3 Days    |
+| **Workers Paid** | 10 million included per month +$0.60 per additional million events | 7 Days    |

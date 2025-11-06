@@ -6,20 +6,22 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
 
 You can enable mutual Transport Layer Security (mTLS) for any hostname.
 
 To enable mTLS for a host from the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **SSL/TLS** > **Client Certificates**.
-3. On the **Hosts** section of the **Client Certificates** card, select **Edit**.
-4. Enter the name of a host in your current domain.
+1. In the Cloudflare dashboard, go to the **Client Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/client-certificates" />
+
+2. On the **Hosts** section of the **Client Certificates** card, select **Edit**.
+3. Enter the name of a host in your current domain.
 :::note
 The domain (`example.com`) is automatically appended for you. This means that, if you want to enable mTLS for `abc.example.com`, you only need to type `abc`.
 :::
-5. Select **Save** to confirm.
+4. Select **Save** to confirm.
 
 ## CAs in use
 

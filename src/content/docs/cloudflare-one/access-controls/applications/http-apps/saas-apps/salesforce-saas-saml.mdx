@@ -4,22 +4,22 @@ title: Salesforce (SAML)
 reviewed: 2024-07-29
 sidebar:
   order: 22
-description: Learn to configure Salesforce as a SAML app in Cloudflare Zero Trust. Follow step-by-step instructions for adding SaaS apps and enabling SSO.
+description: Learn to configure Salesforce as a SAML app in Cloudflare One. Follow step-by-step instructions for adding SaaS apps and enabling SSO.
 ---
 
 import { Details, Render } from "~/components";
 
-This guide covers how to configure [Salesforce](https://help.salesforce.com/s/articleView?id=sf.sso_saml.htm&type=5) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Salesforce](https://help.salesforce.com/s/articleView?id=sf.sso_saml.htm&type=5) as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to a Salesforce account
 
-## 1. Add a SaaS application to Cloudflare Zero Trust
+## 1. Add a SaaS application to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Select **SaaS**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+2. Select **Add an application** > **SaaS**.
 3. For **Application**, select _Salesforce_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
@@ -50,7 +50,7 @@ If you are unsure of which URL to use in the **Entity ID** and **Assertion Consu
 4. Fill in the following fields:
    - **Name:** Name of the SSO provider (for example, `Cloudflare Access`). Users will select this name when signing in to Salesforce.
    - **API name:** (this will pre-populate)
-   - **Issuer:** Paste the Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+   - **Issuer:** Paste the Access Entity ID or Issuer from application configuration in Cloudflare One.
    - **Identity Provider Certificate**: Upload the `.crt` certificate file from [2. Create a certificate file](#2-create-a-certificate-file).
    - **Entity ID**: `https://<your-domain>.my.salesforce.com`
    - **SAML Identity type:** If the user's Salesforce username is their email address, select _Assertion contains the User's Salesforce username_. Otherwise, select _Assertion contains the Federation ID from the User object_ and make sure the user's Federation ID matches their email address.
@@ -60,8 +60,8 @@ If you are unsure of which URL to use in the **Entity ID** and **Assertion Consu
    	the user. 3. Verify that the user's **Federation ID** matches the email
    	address used to authenticate to Cloudflare Access.
    </Details>
-   - **Identity Provider Login URL**: SSO endpoint provided in Cloudflare Zero
-   Trust for this application.
+   - **Identity Provider Login URL**: SSO endpoint provided in Cloudflare One
+   for this application.
 
 5. Select **Save**.
 

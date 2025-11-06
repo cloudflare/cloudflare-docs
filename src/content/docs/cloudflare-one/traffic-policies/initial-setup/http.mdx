@@ -25,14 +25,14 @@ To filter HTTP requests from a device:
 
 1. [Install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
 2. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device.
-3. In the WARP client Settings, log in to your organization's <GlossaryTooltip term="team name">Zero Trust instance</GlossaryTooltip>.
+3. In the WARP client Settings, log in to your organization's <GlossaryTooltip term="team name">Cloudflare One instance</GlossaryTooltip>.
 4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP. Optionally, you can enable the UDP proxy to inspect all port 443 UDP traffic.
 5. To inspect HTTPS traffic, [enable TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#turn-on-tls-decryption).
 6. (Optional) To scan file uploads and downloads for malware, [enable anti-virus scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/).
 
 ## 2. Verify device connectivity
 
-To verify your device is connected to Zero Trust:
+To verify your device is connected to Cloudflare One:
 
 <Render
 	file="gateway/verify-connectivity"

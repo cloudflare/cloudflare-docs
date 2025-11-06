@@ -86,3 +86,11 @@ export default {
 	},
 };
 ```
+
+## Response Metadata
+
+The response from a dynamic route is the same as the response from a model. There is additional metadata used to notify the model and provider used, you can check the following headers 
+
+- `cf-aig-model` - The model used
+- `cf-aig-provider` - The slug of provider used
+

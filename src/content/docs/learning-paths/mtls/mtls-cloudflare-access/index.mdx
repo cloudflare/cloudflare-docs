@@ -9,7 +9,7 @@ sidebar:
 This requires an active Enterprise [Account](/fundamentals/concepts/accounts-and-zones/) with Cloudflare Access enabled.
 :::
 
-Setting up [mTLS](/cloudflare-one/reusable-components/posture-checks/access-integrations/mutual-tls-authentication/) with [Cloudflare Access](/cloudflare-one/access-controls/policies/) can help in cases where the customer:
+Setting up [mTLS](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) with [Cloudflare Access](/cloudflare-one/access-controls/policies/) can help in cases where the customer:
 
 - Already has existing Client Certificates on devices.
 - Needs to protect Access applications with [Bring Your Own CA (BYOCA)](/ssl/client-certificates/byo-ca/).
@@ -19,7 +19,7 @@ Setting up [mTLS](/cloudflare-one/reusable-components/posture-checks/access-inte
 
 The CA certificate can be from a publicly trusted CA or self-signed.
 
-In case you want to [create your own CA](/cloudflare-one/reusable-components/posture-checks/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) from scratch, you can follow these example steps and adapt the information to your own needs:
+In case you want to [create your own CA](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) from scratch, you can follow these example steps and adapt the information to your own needs:
 
 1. Create a JSON file called `ca-csr.json`:
 
@@ -64,7 +64,7 @@ In case you want to [create your own CA](/cloudflare-one/reusable-components/pos
 }
 ```
 
-3. Run the following [cfssl](/cloudflare-one/reusable-components/posture-checks/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) command to generate the CA certificate `ca.pem`:
+3. Run the following [cfssl](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#test-mtls-using-cloudflare-pki) command to generate the CA certificate `ca.pem`:
 
 ```txt
 cfssl gencert -initca ca-csr.json | cfssljson -bare ca
@@ -102,13 +102,13 @@ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=clie
 
 ## 3. Add mTLS CA certificate to Cloudflare Access
 
-Follow the steps outlined in the [developer documentation](/cloudflare-one/reusable-components/posture-checks/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
+Follow the steps outlined in the [developer documentation](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
 
-Using the example from Step 2: upload the `ca.pem` to your Cloudflare Access account via the [dashboard](/cloudflare-one/reusable-components/posture-checks/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) or [Cloudflare API](/api/resources/zero_trust/subresources/access/subresources/certificates/methods/create/).
+Using the example from Step 2: upload the `ca.pem` to your Cloudflare Access account via the [dashboard](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) or [Cloudflare API](/api/resources/zero_trust/subresources/access/subresources/certificates/methods/create/).
 
 Do not forget to enter the fully-qualified domain names (FQDN / associated hostnames) that will use this CA certificate.
 
-Customers can identify which client sends the Client Certificates by [forwarding client certificate headers](/cloudflare-one/reusable-components/posture-checks/access-integrations/mutual-tls-authentication/#forward-a-client-certificate) to the origin server. Customers can then store and use the certificate information such as Common Name (CN), Serial number, and other fields along with the device number to perform additional checks or logics.
+Customers can identify which client sends the Client Certificates by [forwarding client certificate headers](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#forward-a-client-certificate) to the origin server. Customers can then store and use the certificate information such as Common Name (CN), Serial number, and other fields along with the device number to perform additional checks or logics.
 
 Additionally, authenticated requests also send the `Cf-Access-Jwt-Assertion\` JWT header to the origin server. To decode the header value, you can use [jwt.io](https://jwt.io/).
 

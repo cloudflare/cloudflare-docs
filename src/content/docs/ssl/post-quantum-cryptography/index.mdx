@@ -30,7 +30,7 @@ Before TLS can protect your communications, three cryptographic algorithms have 
 - **Key agreement:** A cryptographic protocol that allows client and server to safely agree on a shared key (such as `ECDH`).
 - **Signature algorithms:** Cryptographic algorithms used to generate the digital signatures in TLS certificates (such as `RSA` and `ECDSA`).
 
-As explained in our [blog post](https://blog.cloudflare.com/pq-2024/#two-migrations), symmetric ciphers are already post-quantum secure, which means there are two migrations left to occur.
+As explained in our [blog post](https://blog.cloudflare.com/pq-2025/#already-post-quantum-secure-symmetric-cryptography), symmetric ciphers are already post-quantum secure, which means there are two migrations left to occur.
 
 ### Hybrid key agreement
 
@@ -38,7 +38,7 @@ With TLS 1.3, [X25519](https://en.wikipedia.org/wiki/Curve25519) - an Elliptic C
 
 It is urgent to migrate key agreement to post-quantum algorithms as soon as possible. The objective is to protect against an adversary capable of harvesting today's encrypted communications and storing it until some time in the future when they can gain access to a sufficiently powerful quantum computer to decrypt it.
 
-In response to this, Cloudflare is an early adopter of ML-KEM, the post-quantum key agreement selected by the US National Institute of Standards and Technology (NIST). For a detailed timeline and more background information refer to [The state of the post-quantum Internet](https://blog.cloudflare.com/pq-2024/).
+In response to this, Cloudflare is an early adopter of ML-KEM, the post-quantum key agreement selected by the US National Institute of Standards and Technology (NIST). For a detailed timeline and more background information refer to [State of the post-quantum Internet in 2025](https://blog.cloudflare.com/pq-2025/).
 
 Cloudflare has deployed the following hybrid key agreements:
 

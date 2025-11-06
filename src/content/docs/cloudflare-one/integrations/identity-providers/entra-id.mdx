@@ -5,7 +5,7 @@ title: Microsoft Entra ID
 
 import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
-You can integrate Microsoft Entra ID (formerly Azure Active Directory) with Cloudflare Zero Trust and build policies based on user identity and group membership. Users will authenticate to Zero Trust using their Entra ID credentials.
+You can integrate Microsoft Entra ID (formerly Azure Active Directory) with Cloudflare One and build policies based on user identity and group membership. Users will authenticate to Cloudflare One using their Entra ID credentials.
 
 ## Set up Entra ID as an identity provider
 
@@ -35,7 +35,7 @@ To retrieve those values:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Custom Pages** to find your team name.
+    In [Cloudflare One](https://one.dash.cloudflare.com), go to **Settings** > **Team name** to find your team name.
 
     ![Registering an application in Azure](~/assets/images/cloudflare-one/identity/azure/name-app.png)
 
@@ -90,9 +90,9 @@ More narrow permissions may be used, however this is the set of permissions that
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new**.
+2. Under **Your identity providers**, select **Add new identity provider**.
 
 3. Select **Azure AD**.
 
@@ -100,7 +100,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 5. Select **Save**.
 
-6. To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust) that your connection is working, select **Test**.
+6. To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one) that your connection is working, select **Test**.
 
 7. (Optional) Configure the following settings:
    - **Proof Key for Code Exchange**: Perform [PKCE](https://www.oauth.com/oauth2-servers/pkce/) on all login attempts.
@@ -148,7 +148,7 @@ The following example requires Cloudflare provider version `4.40.0` or greater.
 
 If your organization's UPNs do not match users' email addresses, you must add a custom claim for email. For example, if your organization's email format is `user@domain.com` but the UPN is `u908080@domain.com`, you must create an email claim if you are configuring email-based policies.
 
-By default, Cloudflare will first look for the unique claim name you created and configured in Zero Trust to represent email (for example, `email_identifier`) in the `id_token` JSON response. If you did not configure a unique claim name, Cloudflare will then look for an `email` claim. Last, if neither claim exists, Cloudflare will look for the UPN claim.
+By default, Cloudflare will first look for the unique claim name you created and configured in Cloudflare One to represent email (for example, `email_identifier`) in the `id_token` JSON response. If you did not configure a unique claim name, Cloudflare will then look for an `email` claim. Last, if neither claim exists, Cloudflare will look for the UPN claim.
 
 To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
@@ -159,9 +159,9 @@ To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
    The example above includes both a UPN claim and an email claim. Because an email claim was created in the Microsoft Entra configuration, Cloudflare will look for the `email` key-value pair in the JSON response.
 
-3. If you gave your email claim another name than `email`, you must update your configuration in Zero Trust:
+3. If you gave your email claim another name than `email`, you must update your configuration in Cloudflare One:
 
-		a. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication** > **Azure AD** > **Edit**.
+		a. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers** > **Azure AD** > **Edit**.
 
 		b. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
 
@@ -177,7 +177,7 @@ The Microsoft Entra ID integration allows you to synchronize IdP groups and auto
 
 - Microsoft Entra ID P1 or P2 license
 
-### 1. Enable SCIM in Zero Trust
+### 1. Enable SCIM in Cloudflare One
 
 <Render
 	file="access/enable-scim-on-dashboard"
@@ -201,11 +201,11 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 5. After you have created the application, go to **Provisioning** > select **New Configuration**.
 
-6. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from your Entra ID integration in Zero Trust [in the previous step](/cloudflare-one/integrations/identity-providers/entra-id/#1-enable-scim-in-zero-trust).
+6. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from your Entra ID integration in Cloudflare One [in the previous step](/cloudflare-one/integrations/identity-providers/entra-id/#1-enable-scim-in-zero-trust).
 
-7. In the **Secret token** field, enter the **SCIM Secret** obtained from your Entra ID integration in Zero Trust [in the previous step](/cloudflare-one/integrations/identity-providers/entra-id/#1-enable-scim-in-zero-trust).
+7. In the **Secret token** field, enter the **SCIM Secret** obtained from your Entra ID integration in Cloudflare One [in the previous step](/cloudflare-one/integrations/identity-providers/entra-id/#1-enable-scim-in-zero-trust).
 
-8. Select **Test Connection** to ensure that the credentials were entered correctly. If the test fails, go to your Entra ID integration in Zero Trust, select **Regenerate Secret**, select **Save**, and enter your new **SCIM Secret** in the **Secret token** field.
+8. Select **Test Connection** to ensure that the credentials were entered correctly. If the test fails, go to your Entra ID integration in Cloudflare One, select **Regenerate Secret**, select **Save**, and enter your new **SCIM Secret** in the **Secret token** field.
 
 9. Select **Create**.
 
@@ -225,7 +225,7 @@ To check which users and groups were synchronized, select **Provisioning logs**.
 
 <Render file="access/verify-scim-provisioning" product="cloudflare-one" />
 
-To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go to [Zero Trust](https://one.dash.cloudflare.com) > **Logs** > **SCIM provisioning** and view the [SCIM activity logs](/cloudflare-one/insights/logs/scim-logs/).
+To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Insights** > **Logs** > **SCIM provisioning logs** and view the [SCIM activity logs](/cloudflare-one/insights/logs/scim-logs/).
 
 ### Provisioning attributes
 
@@ -235,8 +235,8 @@ If not already configured, Cloudflare recommends enabling the following user att
 
 | customappsso Attribute         | Entra ID Attribute | Recommendation |
 | ------------------------------ | ------------------ | -------------- |
-| `userName`  									 | `userPrincipalName` or `mail` | Required. Must match the user's email address in Zero Trust.  |
-| `emails[type eq "work"].value` | `mail`             | Required. Must match the user's email address in Zero Trust.      |
+| `userName`  									 | `userPrincipalName` or `mail` | Required. Must match the user's email address in Cloudflare One.  |
+| `emails[type eq "work"].value` | `mail`             | Required. Must match the user's email address in Cloudflare One.      |
 | `name.givenName`               | `givenName`        | Recommended    |
 | `name.familyName`              | `surname`          | Recommended    |
 
@@ -255,7 +255,7 @@ If building a Gateway policy, choose the [_User Group Names_](/cloudflare-one/tr
 
 You can create Access and Gateway policies for groups that are not synchronized with SCIM. Entra ID exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`.
 
-1. Make sure you enable **Support groups** as you set up Microsoft Entra ID in Zero Trust.
+1. Make sure you enable **Support groups** as you set up Microsoft Entra ID in Cloudflare One.
 
 2. In your Microsoft Entra dashboard, note the `Object Id` for the Entra group. In the example below, the group named Admins has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 
@@ -265,7 +265,7 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
 4. In the **Value** field, enter the `Object Id` for the Entra group.
 
-   ![Entering an Azure group ID in Zero Trust](~/assets/images/cloudflare-one/identity/azure/configure-group-n.png)
+   ![Entering an Azure group ID in Cloudflare One](~/assets/images/cloudflare-one/identity/azure/configure-group-n.png)
 
 ### Nested groups
 

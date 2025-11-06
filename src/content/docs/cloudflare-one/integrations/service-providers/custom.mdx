@@ -5,12 +5,12 @@ sidebar:
   label: Custom integration
   order: 1
 
-description: Configure custom device posture checks in Cloudflare Zero Trust using a service-to-service integration.
+description: Configure custom device posture checks in Cloudflare One using a service-to-service integration.
 ---
 
 import { Render } from "~/components";
 
-Cloudflare Zero Trust allows you to enforce custom device posture checks on your applications. This involves configuring a WARP service-to-service integration that periodically calls the external API of your choice, whether it is a third-party endpoint provider or a home built solution. When called, the API will receive device identifying information from Cloudflare and be expected to return a value between `0` to `100`. You can then set up a device posture check that determines if the returned value counts as a pass or fail; for example, you could allow access to a user only if their device has a posture value greater than `60`.
+Cloudflare One allows you to enforce custom device posture checks on your applications. This involves configuring a WARP service-to-service integration that periodically calls the external API of your choice, whether it is a third-party endpoint provider or a home built solution. When called, the API will receive device identifying information from Cloudflare and be expected to return a value between `0` to `100`. You can then set up a device posture check that determines if the returned value counts as a pass or fail; for example, you could allow access to a user only if their device has a posture value greater than `60`.
 
 ```mermaid
 sequenceDiagram
@@ -124,7 +124,7 @@ To create a custom service-to-service integration:
 
 5. In **Access client ID** and **Access client secret**, enter the Access service token used to authenticate to your external API.
 6. In **Rest API URL**, enter the external API endpoint that Cloudflare will query for posture information (for example, `https://api.example.com`). For more information, refer to [External API requirements](#external-api-requirements).
-7. In **Polling frequency**, choose how often Cloudflare Zero Trust should query the external API for information.
+7. In **Polling frequency**, choose how often Cloudflare One should query the external API for information.
 8. Select **Test and save**. The test checks if Cloudflare can authenticate to the API URL using the provided Access credentials.
 
 Next, [configure a device posture check](#4-configure-the-posture-check) to determine if a given posture score constitutes a pass or fail.

@@ -50,7 +50,7 @@ There are three ways you can resolve this error:
 
 You can configure Cloudflare to send OPTIONS requests directly to your origin server. To bypass Access for OPTIONS requests:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 2. Locate the origin that will be receiving OPTIONS requests and select **Configure**.
 3. Go to **Advanced settings** > **Cross-Origin Resource Sharing (CORS) settings**.
 4. Turn on **Bypass options requests to origin**. This will remove all existing CORS settings for this application.
@@ -63,7 +63,7 @@ You can configure Cloudflare to respond to the OPTIONS request on your behalf. T
 
 To configure how Cloudflare responds to preflight requests:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 
 2. Locate the origin that will be receiving OPTIONS requests and select **Configure**.
 
@@ -84,7 +84,7 @@ To configure how Cloudflare responds to preflight requests:
    ```
 
    then go to `api.mysite.com` in Access and configure **Access-Control-Allow-Origin**, **Access-Control-Allow-Credentials**, **Access-Control-Allow-Methods**, and **Access-Control-Allow-Headers**.
-   ![Example CORS settings configuration in Zero Trust](~/assets/images/cloudflare-one/policies/CORS-settings.png)
+   ![Example CORS settings configuration in Cloudflare One](~/assets/images/cloudflare-one/policies/CORS-settings.png)
 
 5. Select **Save application**.
 
@@ -130,9 +130,9 @@ Follow [these instructions](/cloudflare-one/access-controls/service-credentials/
 
 ### 2. Add a Service Auth policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
 
-2. Find your `api.mysite.com` application and select **Edit**.
+2. Find your `api.mysite.com` application and select **Configure**.
 
 3. Select the **Policies** tab.
 

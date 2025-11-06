@@ -5,7 +5,7 @@ sidebar:
   order: 13
 ---
 
-import { FeatureTable, TabItem, Tabs, APIRequest, Render } from "~/components";
+import { FeatureTable, TabItem, Tabs, APIRequest, Render, DashButton } from "~/components";
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
@@ -43,10 +43,11 @@ To manage the TLS version applied to your whole zone when proxied through Cloudf
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select your website.
-3. Go to **SSL/TLS** > **Edge Certificates**.
-4. For **Minimum TLS Version**, select an option.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Minimum TLS Version**, select an option.
 
 </TabItem> <TabItem label="API">
 

@@ -18,7 +18,7 @@ As part of [DNS Firewall](/dns/dns-firewall/), Cloudflare can protect your upstr
 
 ## Limitations
 
-To reduce the impact of false positives, Cloudflare does not block domains on or directly under any zone on the [Public Suffix List](https://publicsuffix.org/). For example, this means that queries only to a domain like `example.com` or `example.co.uk` will not be blocked by the automatic random prefix attack mitigation (though other internal mitigations might catch and block an attack with significant volume).
+To reduce the impact of false positives, Cloudflare does not block entire [public suffixes](https://publicsuffix.org/) (such as `com`). However, it can block domains directly under them (such as `example.com`).
 
 In addition, the default setting for the automatic mitigation ensures that it will only be deployed if upstream authoritative nameservers are determined to be unresponsive (and likely overloaded by an attack). This means that, as long as your authoritative nameservers can handle the traffic during a random prefix attack, Cloudflare will not actively block queries in order to avoid false positives. This setting is called `"only_when_upstream_unhealthy"` and is always true if not explicitly disabled during [Setup](/dns/dns-firewall/random-prefix-attacks/setup/).
 

@@ -39,7 +39,7 @@ Here are some other actions you can take on the Cloudflare side:
 - If you regularly run HTTP requests that take over 100 seconds to complete (for example, large data exports), move those processes behind a [subdomain not proxied (DNS-only, grey clouded)](/dns/proxy-status/#dns-only-records) in the Cloudflare **DNS** app.
 - Enterprise customers can increase the `524` timeout up to 6,000 seconds:
   - If your content can be cached, you can create a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting.
-  - You can increase the `proxy_read_timeout` setting for the whole zone using the using the [Edit zone setting API endpoint](/api/resources/zones/subresources/settings/methods/edit/). 
+  - You can increase the `proxy_read_timeout` setting for the whole zone using the [Edit zone setting API endpoint](/api/resources/zones/subresources/settings/methods/edit/). 
 
 :::note
 

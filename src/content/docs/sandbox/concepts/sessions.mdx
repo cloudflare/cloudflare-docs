@@ -27,19 +27,50 @@ await sandbox.exec("echo $MY_VAR");  // Output: hello
 
 Working directory, environment variables, and exported variables carry over between commands. This state resets if the container restarts due to inactivity.
 
+### Automatic session creation
+
+The container automatically creates sessions on first use. If you reference a non-existent session ID, the container creates it with default settings:
+
+```typescript
+// This session doesn't exist yet
+const result = await sandbox.exec('echo hello', { sessionId: 'new-session' });
+// Container automatically creates 'new-session' with defaults:
+// - cwd: '/workspace'
+// - env: {} (empty)
+```
+
+This behavior is particularly relevant after deleting a session:
+
+```typescript
+// Create and configure a session
+const session = await sandbox.createSession({
+  id: 'temp',
+  env: { MY_VAR: 'value' }
+});
+
+// Delete the session
+await sandbox.deleteSession('temp');
+
+// Using the same session ID again works - auto-created with defaults
+const result = await sandbox.exec('echo $MY_VAR', { sessionId: 'temp' });
+// Output: (empty) - MY_VAR is not set in the freshly created session
+```
+
+This auto-creation means you can't "break" commands by referencing non-existent sessions. However, custom configuration (environment variables, working directory) is lost after deletion.
+
 ## Creating sessions
 
 Create additional sessions for isolated shell contexts:
 
 ```typescript
 const buildSession = await sandbox.createSession({
-  name: "build",
+  id: "build",
   env: { NODE_ENV: "production" },
   cwd: "/build"
 });
 
 const testSession = await sandbox.createSession({
-  name: "test",
+  id: "test",
   env: { NODE_ENV: "test" },
   cwd: "/test"
 });
@@ -108,14 +139,14 @@ await session2.getExposedPorts();  // Sees port 3000
 ```typescript
 // Phase 1: AI agent writes code (with API keys)
 const devSession = await sandbox.createSession({
-  name: "dev",
+  id: "dev",
   env: { ANTHROPIC_API_KEY: env.ANTHROPIC_API_KEY }
 });
 await devSession.exec('ai-tool "build a web server"');
 
 // Phase 2: Run the code (without API keys)
 const appSession = await sandbox.createSession({
-  name: "app",
+  id: "app",
   env: { PORT: "3000" }
 });
 await appSession.exec("node server.js");
@@ -128,22 +159,33 @@ await appSession.exec("node server.js");
 
 ## Best practices
 
-**Clean up temporary sessions**:
+### Session cleanup
+
+**Clean up temporary sessions** to free resources while keeping the sandbox running:
 ```typescript
 try {
-  const session = await sandbox.createSession({ name: 'temp' });
+  const session = await sandbox.createSession({ id: 'temp' });
   await session.exec('command');
 } finally {
   await sandbox.deleteSession('temp');
 }
 ```
 
-**Sessions share filesystem**:
+**Default session cannot be deleted**:
+```typescript
+// This throws an error
+await sandbox.deleteSession('default');
+// Error: Cannot delete default session. Use sandbox.destroy() instead.
+```
+
+### Filesystem isolation
+
+**Sessions share filesystem** - file operations affect all sessions:
 ```typescript
 // Bad - affects all sessions
 await session.exec('rm -rf /workspace/*');
 
-// Use separate sandboxes for untrusted isolation
+// For untrusted code isolation, use separate sandboxes
 const userSandbox = getSandbox(env.Sandbox, userId);
 ```
 

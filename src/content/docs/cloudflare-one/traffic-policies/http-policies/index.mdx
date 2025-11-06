@@ -56,7 +56,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Option       | Action                                                                                                                                                                                                                                               |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                               |
-| Block        | Display [block page](/cloudflare-one/traffic-policies/block-page/) as set in Zero Trust.                                                                                                                                                             |
+| Block        | Display [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) as set in Zero Trust.                                                                                                                                                             |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
@@ -130,7 +130,7 @@ API value: `redirect`
 
 The Redirect action allows you to redirect matched HTTP requests to a different URL you specify. For example, if your users browse to the public web page of a SaaS app, you can redirect them to your own self-hosted instance, a single sign-on page, or an internal policy page.
 
-To redirect URLs with a Block action and the block page, refer to [Redirect to a block page](/cloudflare-one/traffic-policies/block-page/#redirect-to-a-block-page).
+To redirect URLs with a Block action and the block page, refer to [Redirect to a block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#redirect-to-a-block-page).
 
 #### Policy settings
 

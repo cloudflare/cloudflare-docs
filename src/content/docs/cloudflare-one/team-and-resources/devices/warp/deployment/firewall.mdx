@@ -5,23 +5,27 @@ sidebar:
   order: 9
 ---
 
-import { Render } from "~/components";
+import { Render, Details } from "~/components";
 
 If your organization uses a firewall or other policies to restrict or intercept Internet traffic, you may need to exempt the following IP addresses and domains to allow the WARP client to connect.
 
 ## Client orchestration API
 
-The WARP client connects to Cloudflare via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow `zero-trust-client.cloudflareclient.com` which will lookup the following IP addresses:
+The WARP client connects to Cloudflare via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow the following IPs and domains:
 
 <Render file="warp/client-orchestration-ips" product="cloudflare-one" />
 
-<Render
-	file="warp/firewall"
-	product="cloudflare-one"
-	params={{
-		domain: "zero-trust-client.cloudflareclient.com",
-	}}
-/>
+Even though `zero-trust-client.cloudflareclient.com` and `notifications.cloudflareclient.com` may resolve to different IP addresses, WARP overrides the resolved IPs with the IPs listed above. To avoid connectivity issues, ensure that the above IPs are permitted through your firewall.
+
+<Details header="FedRAMP High requirements">
+
+To deploy WARP in FedRAMP High environments, you will need to allow a different set of IPs and domains through your firewall:
+
+- IPv4 API endpoints: `162.159.213.1` and `172.64.98.1`
+- IPv6 API endpoints: `2606:54c1:11::` and `2a06:98c1:4b::`
+- SNIs: `api.devices.fed.cloudflare.com` and `notifications.devices.fed.cloudflare.com`
+
+</Details>
 
 ## DoH IP
 
@@ -29,18 +33,21 @@ The WARP client connects to Cloudflare via a standard HTTPS connection outside t
 Only required for [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode.
 :::
 
-In [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection. For DNS to work correctly, you must allow `<ACCOUNT_ID>.cloudflare-gateway.com` which will lookup the following IPs:
+In [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection. For DNS to work correctly, you must allow the following IPs and domains:
 
-- IPv4 DoH Addresses: `162.159.36.1` and `162.159.46.1`
-- IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
+- IPv4 DoH addresses: `162.159.36.1` and `162.159.46.1`
+- IPv6 DoH addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
+- SNIs: `<ACCOUNT_ID>.cloudflare-gateway.com`
 
-<Render
-	file="warp/firewall"
-	product="cloudflare-one"
-	params={{
-		domain: "<ACCOUNT_ID>.cloudflare-gateway.com",
-	}}
-/>
+Even though `<ACCOUNT_ID>.cloudflare-gateway.com` may resolve to different IP addresses, WARP overrides the resolved IPs with the IPs listed above. To avoid connectivity issues, ensure that the above IPs are permitted through your firewall.
+
+<Details header="FedRAMP High requirements">
+To deploy WARP in FedRAMP High environments, you will need to allow a different set of IPs and domains through your firewall:
+
+- IPv4 DoH addresses: `172.64.100.3` and `172.64.101.3`
+- IPv6 DoH addresses: `2606:54c1:13::2`
+- SNIs: `<ACCOUNT_ID>.fed.cloudflare-gateway.com`
+</Details>
 
 ### Android devices
 
@@ -48,10 +55,18 @@ If you are deploying the Cloudflare One Agent on Android/ChromeOS, you must also
 
 ## Client authentication endpoint
 
-When you [log in to your Zero Trust organization](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/), you will have to complete the authentication steps required by your organization in the browser window that opens. To perform these operations, you must allow the following domains:
+When you [log in to your Cloudflare One organization](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/), you will have to complete the authentication steps required by your organization in the browser window that opens. To perform these operations, you must allow the following domains:
 
-- The IdP used to authenticate to Cloudflare Zero Trust
+- The IdP used to authenticate to Cloudflare One
 - `<your-team-name>.cloudflareaccess.com`
+
+<Details header="FedRAMP High requirements">
+To deploy WARP in FedRAMP High environments, you will need to allow different domains through your firewall:
+
+- FedRAMP High IdP used to authenticate to Cloudflare One
+- `<your-team-name>.fed.cloudflareaccess.com`.
+
+</Details>
 
 ## WARP ingress IP
 
@@ -79,8 +94,23 @@ WARP connects to the following IP addresses, depending on which [tunnel protocol
 
 :::note
 
-Before you [log in to your Zero Trust organization](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for consumer WARP services ([1.1.1.1 w/ WARP](/warp-client/)) and is not required for Zero Trust deployments.
+Before you [log in to your Cloudflare One organization](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for consumer WARP ([1.1.1.1 w/ WARP](/warp-client/)) and is not required for Zero Trust services.
 :::
+
+<Details header="FedRAMP High requirements">
+
+Devices will use the MASQUE protocol in FedRAMP High environments. To deploy WARP for FedRAMP High, you will need to allow the following IPs and ports:
+
+|                |                                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| IPv4 address   | `162.159.239.0/24`                                                                                |
+| IPv6 address   | `2606:4700:105::/48`                                                                               |
+| Default port   | `UDP 443`                                                                                                           |
+| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` <br/> `TCP 443` [^1] |
+
+[^1]: Required for HTTP/2 fallback
+
+</Details>
 
 ## Captive portal
 
@@ -101,34 +131,21 @@ As part of establishing the WARP connection, the client runs connectivity checks
 
 The client connects to the following destinations to verify general Internet connectivity outside of the WARP tunnel. Make sure that these IPs and domains are on your firewall allowlist.
 
-- `engage.cloudflareclient.com`: The client will always send requests directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
 - `162.159.197.3`
 - `2606:4700:102::3`
+- `engage.cloudflareclient.com`: The client will always send requests directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
 
-<Render
-	file="warp/firewall"
-	product="cloudflare-one"
-	params={{
-		domain: "engage.cloudflareclient.com",
-	}}
-/>
+Even though `engage.cloudflareclient.com` may resolve to different IP addresses, WARP overrides the resolved IPs with the IPs listed above. To avoid connectivity issues, ensure that the above IPs are permitted through your firewall.
 
 ### Inside tunnel
 
-The WARP client connects to the following IPs to verify connectivity inside of the WARP tunnel:
+The WARP client connects to the following destinations to verify connectivity inside of the WARP tunnel:
 
 - `162.159.197.4`
 - `2606:4700:102::4`
+- `connectivity.cloudflareclient.com`
 
-Because this check happens inside of the tunnel, you do not need to add these IPs to your firewall allowlist. However, since the requests go through Gateway, ensure that they are not blocked by a Gateway HTTP or Network policy.
-
-<Render
-	file="warp/firewall"
-	product="cloudflare-one"
-	params={{
-		domain: "connectivity.cloudflareclient.com",
-	}}
-/>
+Because this check happens inside of the tunnel, you do not need to add these IPs and domains to your firewall allowlist. However, since the requests go through Gateway, ensure that they are not blocked by a Gateway HTTP or Network policy.
 
 ## NEL reporting (optional)
 

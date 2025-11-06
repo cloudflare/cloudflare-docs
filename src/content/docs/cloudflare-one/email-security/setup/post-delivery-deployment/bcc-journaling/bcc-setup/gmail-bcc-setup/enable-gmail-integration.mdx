@@ -9,7 +9,7 @@ import { Render } from "~/components";
 
 ## Prerequisites
 
-To use Email Security, you will need to have:
+To use Email security, you will need to have:
 
 <Render
 	file="email-security/onboarding-prerequisites"
@@ -19,10 +19,10 @@ To use Email Security, you will need to have:
 ## Enable Gmail BCC integration:
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email Security**.
+2. Select **Email security**.
 3. Select **Overview**. Select one of the following options:
 
-- If you have not purchased Email Security, select **Contact sales**.
+- If you have not purchased Email security, select **Contact sales**.
 - If you have not associated any integration:
   - Select **Set up**, then choose **BCC/Journaling**.
   - Select **Integrate with Google** > **Authorize**.
@@ -49,8 +49,8 @@ To use Email Security, you will need to have:
 On the [Google Cloud Console](https://console.cloud.google.com/welcome/new):
 
 1. On the sidebar, select **IAM & Admim** > **Service Accounts**.
-2. Locate your email, select the three dots, then select **Manage keys**. 
-3. Select **Add key** > **Create new key**. 
+2. Locate your email, select the three dots, then select **Manage keys**.
+3. Select **Add key** > **Create new key**.
 4. Select **JSON** > Select **CREATE**. This downloads a `.json` file which you will use when [uploading a JSON key](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#3-upload-json-key).
 
 ### 3. Upload JSON Key
@@ -59,11 +59,12 @@ On the [Cloudflare One dashboard](https://one.dash.cloudflare.com/), upload the 
 
 ### 4. Enable Necessary Google Workspace APIs in GCP
 
-Enable the following APIs on the Google Cloud Console: 
-- [Google Calendar API](https://console.cloud.google.com/apis/library/calendar-json.googleapis.com?project=winter-surf-439414-h1) 
-- [Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com?project=winter-surf-439414-h1) 
+Enable the following APIs on the Google Cloud Console:
+
+- [Google Calendar API](https://console.cloud.google.com/apis/library/calendar-json.googleapis.com?project=winter-surf-439414-h1)
+- [Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com?project=winter-surf-439414-h1)
 - [Google Admin SDK API](https://console.cloud.google.com/apis/library/admin.googleapis.com?project=winter-surf-439414-h1)
-- [Gmail API](https://console.cloud.google.com/apis/library/gmail.googleapis.com?project=winter-surf-439414-h1) 
+- [Gmail API](https://console.cloud.google.com/apis/library/gmail.googleapis.com?project=winter-surf-439414-h1)
 - [Google Service Usage API](https://console.cloud.google.com/apis/library/serviceusage.googleapis.com?project=winter-surf-439414-h1)
 
 ### 5. Log in to Google Workspace Admin Console
@@ -85,7 +86,7 @@ Enter the email associated with the Google Workspace Administrator account. Your
 
 1. Select **Create integration**.
 2. Once you created your integration, you will be redirected to the **Review details** page, where you will be able to review **Integration details**.
-3. Review your details, then select **Complete Email Security set up** > **Continue to Email Security**.
+3. Review your details, then select **Complete Email security set up** > **Continue to Email security**.
 
 ## Verify integration
 
@@ -95,7 +96,7 @@ To verify that the integration has been successful:
 2. Under **Your integrations**, locate your integration, and ensure that the integration displays **CASB+EMAIL** under **Type**.
 
 :::note
-If you do not reach the step to complete the Email Security set up:
+If you do not reach the step to complete the Email security set up:
 
 1. Go to **Integrations** > **Cloud & SaaS Integrations** > **Integrations**.
 2. Delete the integration, if present. Locate your integration, select **Configure**, then select **Delete**.
@@ -106,5 +107,5 @@ If you do not reach the step to complete the Email Security set up:
 
 Now that you have created an integration:
 
-- [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/connect-domains/) for Email Security to start scanning your inbox.
+- [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/connect-domains/) for Email security to start scanning your inbox.
 - [Enable logs](/cloudflare-one/insights/logs/enable-logs/) to send detection data to an endpoint of your choice.

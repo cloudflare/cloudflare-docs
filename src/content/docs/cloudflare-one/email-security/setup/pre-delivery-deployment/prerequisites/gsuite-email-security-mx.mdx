@@ -7,9 +7,9 @@ sidebar:
 
 import { Render, GlossaryTooltip } from "~/components";
 
-![A schematic showing where Email Security is in the life cycle of an email received](src/assets/email-security/Email_Security_Gmail_MX_Inline.png)
+![A schematic showing where Email security is in the life cycle of an email received](src/assets/email-security/Email_Security_Gmail_MX_Inline.png)
 
-In this tutorial, you will learn how to configure Google Workspace with Email Security as MX record.
+In this tutorial, you will learn how to configure Google Workspace with Email security as MX record.
 
 <Render
 	file="email-security/deployment/mx-deployment-prereq"
@@ -18,9 +18,9 @@ In this tutorial, you will learn how to configure Google Workspace with Email Se
 
 ## Requirements
 
-- Provisioned Email Security account.
+- Provisioned Email security account.
 - Access to the Google administrator console ([Google administrator console](https://admin.google.com/) > **Apps** > **Google Workspace** > **Gmail**).
-- Access to the domain nameserver hosting the MX records for the domains that will be processed by Email Security.
+- Access to the domain nameserver hosting the MX records for the domains that will be processed by Email security.
 
 ## 1. Set up Inbound Email Configuration
 
@@ -36,8 +36,8 @@ Set up [Inbound Email Configuration](https://support.google.com/a/answer/60730?h
 
 [Set up an email quarantine](https://support.google.com/a/answer/6104172?hl=en#add-new-quarantine) with the following details:
 
-- **Name**: Email Security Malicious.
-- **Description**: Email Security Malicious.
+- **Name**: Email security Malicious.
+- **Description**: Email security Malicious.
 - For the **Inbound denial consequence**, select **Drop message**.
 - For the **Outbound denial consequence**, select **Drop message**.
 - Select **SAVE**.
@@ -48,7 +48,7 @@ To access the newly created quarantine, select **GO TO ADMIN QUARANTINE** or acc
 
 Go to **Compliance**, and create a [content compliance filter](https://support.google.com/a/answer/1346934?hl=en#zippy=%2Cstep-go-to-gmail-compliance-settings-in-the-google-admin-console%2Cstep-enter-email-messages-to-affect) to send malicious messages to quarantine. Enter the following details:
 
-- **Content compliance**: Add `Quarantine Email Security Malicious`.
+- **Content compliance**: Add `Quarantine Email security Malicious`.
 - **Email messages to affect**: Select **Inbound**.
 - **Add expressions that describe the content you want to search for in each message**:
   - Select **Add** to add the condition.
@@ -57,7 +57,7 @@ Go to **Compliance**, and create a [content compliance filter](https://support.g
   - In **Match type**, select **Contains text**.
   - In **Content**, enter `X-CFEmailSecurity-Disposition: MALICIOUS`.
   - Select **SAVE** to save the condition.
-- If the above expression match, do the following, select **Quarantine message** and the **Email Security Malicious** quarantine that was created in the previous step.
+- If the above expression match, do the following, select **Quarantine message** and the **Email security Malicious** quarantine that was created in the previous step.
 - Select **SAVE**.
 
 If you would like to quarantine the other dispositions, repeat the above steps and use the following strings for the other dispositions:
@@ -77,13 +77,13 @@ If desired, you can create a separate quarantine for each of the dispositions.
 
 ## 5. (Recommended) Secure Google Workspace from MX records bypass
 
-One method of a DNS attack is to search for old MX records and send <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> emails directly to the mail server. To secure the email flow, you should enforce an email flow where inbound messages are accepted by Google Workspace only when they originate from Email Security. This can be done by adding a connector to only allow email from Email Security with TLS encryption. This step is optional but recommended.
+One method of a DNS attack is to search for old MX records and send <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> emails directly to the mail server. To secure the email flow, you should enforce an email flow where inbound messages are accepted by Google Workspace only when they originate from Email security. This can be done by adding a connector to only allow email from Email security with TLS encryption. This step is optional but recommended.
 
 :::caution[Important]
-This step should not be performed until 72 hours after all domains in your Google Workspace have been onboarded to Email Security, and Email Security is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
+This step should not be performed until 72 hours after all domains in your Google Workspace have been onboarded to Email security, and Email security is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
 :::
 
-After 72 hours, the MX record DNS update will have sufficiently propagated across the Internet. It is now safe to secure your email flow. This will ensure that Google Workspace only accepts messages that are first received by Email Security. This step is highly recommended to prevent threat actors from using cached MX entries to bypass Email Security by injecting messages directly into Google Workspace.
+After 72 hours, the MX record DNS update will have sufficiently propagated across the Internet. It is now safe to secure your email flow. This will ensure that Google Workspace only accepts messages that are first received by Email security. This step is highly recommended to prevent threat actors from using cached MX entries to bypass Email security by injecting messages directly into Google Workspace.
 
 1. Access the [Google Administrative Console](https://admin.google.com/), then select **Apps** > **Google Workspace** > **Gmail**.
 

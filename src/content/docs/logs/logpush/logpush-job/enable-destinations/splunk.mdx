@@ -21,7 +21,7 @@ The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools
 5. Enter or select the following destination information:
    - **Splunk HEC URL**
    - **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](https://guidgenerator.com/).
-   - **Auth Token** - Event Collector token.
+   - **Auth Token** - Event Collector token prefixed with the word `Splunk`. For example: `Splunk 1234EXAMPLEKEY`.
    - **Source Type** - For example, `cloudflare:json`. If you are using the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501), refer to the appropriate source type for the corresponding datasets under the **Details** section. For instance, for Zero Trust Access requests logs, the source type is `cloudflare:access`.
    - **Use insecure skip verify option** (not recommended).
 
@@ -69,12 +69,12 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
     - Using the command line. For example: `python -c 'import uuid; print(uuid.uuid4())'`.
   - **\<INSECURE_SKIP_VERIFY>**: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
-:::note
-Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the [Logpush FAQ](/logs/faq/logpush/) for more information.
-:::
+  :::note
+  Cloudflare highly recommends setting this value to `false`. Refer to the [Logpush FAQ](/logs/faq/logpush/) for more information.
+  :::
 
-- `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
-- `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. For example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
+  - **\<SOURCE_TYPE>**: The Splunk source type. For example: `cloudflare:json`.
+  - **\<SPLUNK_AUTH_TOKEN>**: The Splunk authorization token that is URL-encoded and must be prefixed with the word `Splunk`. For example: `Splunk e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
 
 ```bash
 "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>"

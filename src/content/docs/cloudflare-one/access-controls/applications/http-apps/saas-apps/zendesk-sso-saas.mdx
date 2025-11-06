@@ -6,24 +6,24 @@ sidebar:
   order: 29
 ---
 
-This guide covers how to configure [Zendesk](https://support.zendesk.com/hc/en-us/articles/4408887505690-Enabling-SAML-single-sign-on#topic_u54_wc3_z2b) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Zendesk](https://support.zendesk.com/hc/en-us/articles/4408887505690-Enabling-SAML-single-sign-on#topic_u54_wc3_z2b) as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to your Zendesk account
 
 ## Configure Zendesk and Cloudflare
 
 1. Go to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
 
-2. In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com), select your account, and go to **Access** > **Applications**.
+2. In a separate tab or window, open [Cloudflare One](https://one.dash.cloudflare.com), select your account, and go to **Access controls** > **Applications**.
 
 3. Select **Add an application**, then choose _SaaS_.
 
-4. Input the following values in the Zero Trust application configuration:
+4. Input the following values in the Cloudflare One application configuration:
 
-   | Zero Trust field                   | Value                                           |
+   | Cloudflare One field               | Value                                           |
    | ---------------------------------- | ----------------------------------------------- |
    | **Entity ID**                      | `https://<yoursubdomain>.zendesk.com`           |
    | **Assertion Consumer Service URL** | contents of **SAML SSO URL** in Zendesk account |

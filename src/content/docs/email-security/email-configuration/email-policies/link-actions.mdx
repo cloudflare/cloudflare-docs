@@ -3,10 +3,9 @@ title: Link actions
 pcx_content_type: concept
 sidebar:
   order: 2
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 ## Disposition actions
 
@@ -14,7 +13,7 @@ Create actions for emails with specific <GlossaryTooltip term="disposition" link
 
 To update or create a new disposition action:
 
-1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Email Policies** > **Link Actions**.
 4. In **Disposition Actions** select **Edit**.
@@ -40,13 +39,13 @@ Link rewriting applies to all email dispositions. If you have link actions set f
 If you use Microsoft Office 365, you need to allowlist the URL `https://linkdefender.cloudflare.com` before enabling Email Link Isolation. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/tenant-allow-block-list-urls-configure) to learn how to allowlist a URL.
 :::
 
-To enable Email Link Isolation you must have an [inline deployment](/email-security/deployment/inline/) for your Email Security setup. Email Link Isolation is not available if Email Security is deployed through [journaling or BCC](/email-security/deployment/api/setup/) setups.
+To enable Email Link Isolation you must have an [inline deployment](/email-security/deployment/inline/) for your Email security setup. Email Link Isolation is not available if Email security is deployed through [journaling or BCC](/email-security/deployment/api/setup/) setups.
 
 Email Link Isolation can only be used when there are no other security applications doing URL rewrites. Double link rewrites are not supported.
 
 To enable Email Link Isolation:
 
-1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Email Policies** > **Link Actions**.
 4. Scroll to **Email Link Isolation** and enable it.
@@ -62,7 +61,7 @@ Email Link Isolation does not have advanced configuration options. If you need m
 
 Use this option to ignore rewrites on URLs matching specific patterns. This feature allows you to ensure that internal corporate services never have links rewritten for them.
 
-1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Email Policies** > **Link Actions**.
 4. Scroll to **URL Rewrite Ignore Patterns**.

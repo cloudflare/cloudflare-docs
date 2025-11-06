@@ -98,8 +98,9 @@ EOF
 
 [Private network routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) allow users to connect to your virtual private cloud (VPC) using the WARP client. To add a private network route for your Cloudflare Tunnel:
 
-1. In the **CIDR** tab, enter the **Private IPv4 address** of your AWS instance (for example, `172.31.19.0`). You can expand the IP range later if necessary.
-2. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through WARP. For example, if you are using Split Tunnels in **Exclude** mode, delete `172.16.0.0/12`. We recommend re-adding the IPs that are not explicitly used by your AWS instance.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Networks** > **Routes**.
+2. In the **CIDR** tab, enter the **Private IPv4 address** of your AWS instance (for example, `172.31.19.0`). You can expand the IP range later if necessary.
+3. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through WARP. For example, if you are using Split Tunnels in **Exclude** mode, delete `172.16.0.0/12`. We recommend re-adding the IPs that are not explicitly used by your AWS instance.
 
         To determine which IP addresses to re-add, subtract your AWS instance IPs from `172.16.0.0/12`:
 
@@ -113,7 +114,7 @@ EOF
 
         Add the results back to your Split Tunnel Exclude mode list.
 
-3.  To test on a user device:
+4.  To test on a user device:
     1. [Log in to the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/).
     2. Open a terminal window and connect to the service using its private IP:
 

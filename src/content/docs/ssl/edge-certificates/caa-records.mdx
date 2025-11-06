@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, DashButton } from "~/components";
 
 <Render file="caa-records-definition" product="ssl" /> <br />
 
@@ -38,15 +38,17 @@ Create a CAA record for each Certificate Authority (CA) that you plan to use for
 
 To add a CAA record in the dashboard,
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-2. Go to **DNS** > **Records**.
-3. Select **Add record**.
-4. For **Type**, select **CAA**.
-5. For **Name**, type your domain.
-6. Choose a **Tag**, which specifies the behavior associated with the record.
-7. For **CA domain name**, enter the CA name.
-8. Select **Save**.
-9. Repeat for each CA associated with your domain.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record**.
+3. For **Type**, select **CAA**.
+4. For **Name**, type your domain.
+5. Choose a **Tag**, which specifies the behavior associated with the record.
+6. For **CA domain name**, enter the CA name.
+7. Select **Save**.
+8. Repeat for each CA associated with your domain.
 
 </TabItem> <TabItem label="API">
 

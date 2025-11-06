@@ -5,22 +5,22 @@ sidebar:
   order: 3
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
-To connect your domains, you will need to [enable your Gmail BCC integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#enable-gmail-bcc-integration). Once you have enabled your Gmail BCC integration, the Cloudflare dashboard will redirect you to the **Set up Email Security** page.
+To connect your domains, you will need to [enable your Gmail BCC integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#enable-gmail-bcc-integration). Once you have enabled your Gmail BCC integration, the Cloudflare dashboard will redirect you to the **Set up Email security** page.
 
-On the **Set up Email Security** page:
+On the **Set up Email security** page:
 
 1. **Connect domains**: Select at least one domain. Then, select **Continue**.
 2. (**Optional**) **Add manual domains**: Select **Add domain name** to manually enter additional domains. Then, select **Continue**.
 3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>. Then, select **Continue**.
 4. (**Optional**, select **Skip for now** to skip this step) **Move messages**: Refer to [Auto-moves](/cloudflare-one/email-security/settings/auto-moves/) to configure auto-moves. Then, select **Continue**.
-5. **Select your processing location**: Configure where you want Cloudflare to process your email. **Global** will be the default option.  If you choose **Global**, `<account tag>@CF-emailsecurity.com` will be your regional service address. Once you have chosen your processing location, select **Continue**.
+5. **Select your processing location**: Configure where you want Cloudflare to process your email. **Global** will be the default option. If you choose **Global**, `<account tag>@CF-emailsecurity.com` will be your regional service address. Once you have chosen your processing location, select **Continue**.
 6. **Review details**: Review your connected domains and service addresses. Then, select **Go to domains.**
 
 Your domains are now added successfully.
 
-On the **Domains** page, select the three dots > **View integration**. The dashboard will display your [domain information](/cloudflare-one/email-security/reference/domain-information/).
+On the **Domains** page, select the three dots > **View integration**. The dashboard will display your [domain information](/cloudflare-one/email-security/settings/domain-management/domain/).
 
 Under **Source**, the dashboard will display **Google integration**, along with the **Integration name**.
 
@@ -28,15 +28,18 @@ Under **Source**, the dashboard will display **Google integration**, along with 
 
 To add additional domains:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** > **Settings**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** > **Settings**.
 2. Select **Connect an integration** > **BCC/Journaling** > **Integrate with Google** > **Authorize**.
 3. **Connect domains**: Select the domains you want to add, then select **Next**.
 4. (Optional) Select **Add manual domains**: Enter additional domains manually, then select **Next**.
 5. (Optional) Select **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>.
 6. **Review details**: Review your selected domains, then use the following email to configure the service address with your third-party email provider:
-      ```txt
-      <account tag>@CF-emailsecurity.com
-      ```
+   ```txt
+   <account tag>@CF-emailsecurity.com
+   ```
 7. Select **Save**.
 
-<Render file="email-security/post-verification-setup" product="cloudflare-one" />
+<Render
+	file="email-security/post-verification-setup"
+	product="cloudflare-one"
+/>

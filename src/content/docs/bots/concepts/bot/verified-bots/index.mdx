@@ -59,30 +59,179 @@ You can segment your verified bot traffic by its type and purpose by adding the 
 The Verified Bot Categories field is not compatible with legacy Firewall rules.
 :::
 
-:::note
+:::note[Availability]
 Verified Bot Categories is available on all plans.
 :::
 
-| Name                       | String value                 | Example                                                                 |
-| -------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
-| Academic research          | `Academic Research`          | Library of Congress, TurnItInBot, Bibliothèque nationale de France      |
-| Accessibility              | `Accessibility`              | Accessible Web Bot                                                      |
-| Advertising or marketing   | `Advertising & Marketing`    | Google Adsbot                                                           |
-| Aggregators                | `Aggregator`                 | Pinterest, Indeed Jobsbot                                               |
-| AI Assistant               | `AI Assistant`               | Perplexity-User, DuckAssistBot                                          |
-| AI Crawler                 | `AI Crawler`                 | Google Bard, ChatGPT bot                                                |
-| AI Search                  | `AI Search`                  | OAI-SearchBot                                                           |
-| Archiver                   | `Archiver`                   | Internet Archive, CommonCrawl                                           |
-| Feed fetcher               | `Feed Fetcher`               | RSS or Podcast feed updaters                                            |
-| Monitoring or analytics    | `Monitoring & Analytics`     | Uptime Monitors                                                         |
-| Page preview               | `Page Preview`               | Facebook, Slack, Twitter, or Discord Link Preview tools                 |
-| Search engine crawler      | `Search Engine Crawler`      | Googlebot, Bingbot, Yandexbot, Baidubot                                 |
-| Search engine optimization | `Search Engine Optimization` | Google Lighthouse, GT Metrix, Pingdom, AddThis                          |
-| Security                   | `Security`                   | Vulnerability Scanners, SSL Domain Control Validation (DCV) Check Tools |
-| Social media marketing     | `Social Media Marketing`     | Brandwatch                                                              |
-| Webhooks                   | `Webhooks`                   | Payment processors, WordPress Integration tools                         |
-| Other                      | `Other`                      |                                                                         |
+<details>
+<summary>Academic research</summary>
 
+**String value**: `Academic Research`
+
+**Definition**: Gathers data for scholarly research or academic purposes.
+
+**Example**: Library of Congress, TurnItInBot, Bibliothèque nationale de France
+</details>
+
+<details>
+<summary>Accessibility</summary>
+
+**String value**: `Accessibility`
+
+**Definition**: Scans websites to identify their accessibility.
+
+**Example**: Accessible Web Bot
+</details>
+
+<details>
+<summary>Advertising or marketing</summary>
+
+**String value**: `Advertising & Marketing`
+
+**Definition**: Automates marketing tasks including, but not limited to, ad placement and performance tracking.
+
+**Example**: Google Adsbot
+</details>
+
+<details>
+<summary>Aggregators</summary>
+
+**String value**: `Aggregator`
+
+**Definition**: Collects content from various online sources and consolidates it in one place.
+
+**Example**: Pinterest, Indeed Jobsbot
+</details>
+
+<details>
+<summary>AI Assistant</summary>
+
+**String value**: `AI Assistant`
+
+**Definition**: Automated AI bot driven by user action.
+
+**Example**: Perplexity-User, DuckAssistBot
+</details>
+
+<details>
+<summary>AI Crawler</summary>
+
+**String value**: `AI Crawler`
+
+**Definition**: Crawls websites for content that is used for training AI models.
+
+**Example**: Google Bard, ChatGPT bot
+</details>
+
+<details>
+<summary>AI Search</summary>
+
+**String value**: `AI Search`
+
+**Definition**: Powers AI-driven search experiences.
+
+**Example**: OAI-SearchBot
+</details>
+
+<details>
+<summary>Archiver</summary>
+
+**String value**: `Archiver`
+
+**Definition**: Saves snapshots of websites to preserve digital content for historical records.
+
+**Example**: Internet Archive, CommonCrawl
+</details>
+
+<details>
+<summary>Feed fetcher</summary>
+
+**String value**: `Feed Fetcher`
+
+**Definition**: Retrieves updates from feeds to power readers or other applications.
+
+**Example**: RSS or Podcast feed updaters
+</details>
+
+<details>
+<summary>Monitoring or analytics</summary>
+
+**String value**: `Monitoring & Analytics`
+
+**Definition**: Tracks a website's uptime, performance, and user traffic to gather key monitoring metrics.
+
+**Example**: Uptime Monitors
+</details>
+
+<details>
+<summary>Page preview</summary>
+
+**String value**: `Page Preview`
+
+**Definition**: Generates previews for links shared on social media or in messaging apps.
+
+**Example**: Facebook, Slack, Twitter, or Discord Link Preview tools
+</details>
+
+<details>
+<summary>Search engine crawler</summary>
+
+**String value**: `Search Engine Crawler`
+
+**Definition**: A bot that discovers and indexes web pages for search results.
+
+**Example**: Googlebot, Bingbot, Yandexbot, Baidubot
+</details>
+
+<details>
+<summary>Search engine optimization</summary>
+
+**String value**: `Search Engine Optimization`
+
+**Definition**: Analyzes websites to improve their standing in search engine results pages.
+
+**Example**: Google Lighthouse, GT Metrix, Pingdom, AddThis
+</details>
+
+<details>
+<summary>Security</summary>
+
+**String value**: `Security`
+
+**Definition**: Scans websites to detect security vulnerabilities and potential threats.
+
+**Example**: Vulnerability Scanners, SSL Domain Control Validation (DCV) Check Tools
+</details>
+
+<details>
+<summary>Social media marketing</summary>
+
+**String value**: `Social Media Marketing`
+
+**Definition**: Manages and automates activities on social platforms.
+
+**Example**: Brandwatch
+</details>
+
+<details>
+<summary>Webhooks</summary>
+
+**String value**: `Webhooks`
+
+**Definition**: An automated messenger that sends data from one application to another for specific events.
+
+**Example**: Payment processors, WordPress Integration tools
+</details>
+
+<details>
+<summary>Other</summary>
+
+**String value**: `Other`
+
+**Definition**: A dedicated category for bots that do not fit into the other classifications.
+</details>
+
+Cloudflare reserves the right to re-assign verified bot categories if the bot's public documentation and observed behavior differ from the category listed in the bot submission form.
 
 ### Known issues
 

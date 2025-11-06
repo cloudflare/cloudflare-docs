@@ -1,0 +1,50 @@
+---
+{}
+---
+
+import { CURL, Render } from "~/components";
+
+## NetFlow exports from Magic WAN Connector to Magic Network Monitoring
+
+You can configure your Magic WAN Connector to export Netflow statistics for local breakout traffic to [Magic Network Monitoring](/magic-network-monitoring). This provides visibility into traffic that leaves your site directly, bypassing the Cloudflare network.
+
+The Magic WAN Connector appliance uses NetFlow v9 to export flow data for breakout traffic only. You can enable and configure this export by setting the Netflow configuration for the associated site via the Cloudflare API.
+
+### Enable NetFlow exports
+
+<Render file="account-id-api-key" product="networking-services" params={{ showSiteId: true }} />
+
+1. Send a `PUT` request to the Netflow configuration endpoint for your site.
+2. In the JSON body request, you must include the `collector_ip` parameter. To export traffic statistics to Magic Network Monitoring, use the IP address `162.159.65.1`. This is the only field required to enable the feature.
+
+Minimal configuration example:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/sites/$SITE_ID/netflow_config"
+	method="PUT"
+	json={{
+		"collector_ip": "162.159.65.1"
+	}}
+/>
+
+3. You can customize the configuration by adding optional fields to the JSON payload. These fields include:
+- `collector_port`: The UDP port for the collector. The default is `2055`.
+- `sampling_rate`: The rate at which packets are sampled.
+- `active_timeout`: The timeout for active flows in seconds.
+- `inactive_timeout`: The timeout for inactive flows in seconds.
+
+Full configuration example:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/sites/$SITE_ID/netflow_config"
+	method="PUT"
+	json={{
+		"collector_ip": "162.159.65.1",
+		"collector_port": 2055,
+		"sampling_rate": 100,
+		"active_timeout": 60,
+		"inactive_timeout": 30
+	}}
+/>
+
+Your Magic WAN Connector will now begin exporting Netflow data for its breakout traffic, which will be ingested and visualized within your Magic Network Monitoring dashboard. You can retrieve the current settings by sending a `GET` request, or disable the export by sending a `DELETE` request to the same endpoint.

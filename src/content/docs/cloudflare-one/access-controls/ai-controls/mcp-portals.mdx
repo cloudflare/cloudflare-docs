@@ -32,8 +32,8 @@ Add individual MCP servers to Cloudflare Access to bring them under centralized 
 
 To add an MCP server:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > **AI controls**.
-2. Select the **MCP servers** tab.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Go to the **MCP servers** tab.
 3. Select **Add an MCP server**.
 4. Enter any name for the server.
 5. (Optional) Enter a custom string for the **Server ID**.
@@ -63,8 +63,8 @@ The MCP server status indicates the synchronization status of the MCP server to 
 
 To reauthenticate an MCP server in Cloudflare Access:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > **AI controls**.
-2. Select the **MCP servers** tab.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Go to the **MCP servers** tab.
 3. Select the server that you want to reauthenticate, then select **Edit**.
 4. Select **Authenticate server**.
 
@@ -74,8 +74,8 @@ You will be redirected to log in to your OAuth provider. The account used to aut
 
 Cloudflare Access automatically synchronizes with your MCP server every 24 hours. To manually refresh the MCP server in Zero Trust:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > **AI controls**.
-2. Select the **MCP servers** tab and find the server that you want to refresh.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Go to the **MCP servers** tab and find the server that you want to refresh.
 3. Select the three dots > **Sync capabilities**.
 
 The MCP server page will show the updated list of tools and prompts. New tools and prompts are automatically enabled in the MCP server portal.
@@ -84,8 +84,8 @@ The MCP server page will show the updated list of tools and prompts. New tools a
 
 To create an MCP server portal:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > **AI controls**.
-2. Select **Add an MCP server portal**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Select **Add MCP server portal**.
 3. Enter any name for the portal.
 4. Under **Custom domain**, select a domain for the portal URL. Domains must belong to an active zone in your Cloudflare account. You can optionally specify a subdomain.
 5. [Add MCP servers](#add-an-mcp-server) to the portal.
@@ -102,14 +102,14 @@ Users can now [connect to the portal](#connect-to-a-portal) at `https://<subdoma
 
 Cloudflare Access automatically creates an Access application for each MCP server portal. You can customize the portal login experience by updating Access application settings:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
 2. Find the portal that you want to configure, then select the three dots > **Edit**.
 3. To configure identity providers for the portal:
-   1. Select the **Login methods** tab.
+   1. Go to the **Login methods** tab.
    2. Select the [identity providers](/cloudflare-one/integrations/identity-providers/) that you want to enable for your application.
    3. (Recommended) If you plan to only allow access via a single identity provider, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
 4. To customize the block page:
-   1. Select the **Experience settings** tab.
+   1. Go to the **Experience settings** tab.
    2. <Render file="access/access-block-page" product="cloudflare-one" />
 5. Select **Save application**.
 
@@ -161,7 +161,7 @@ rm -rf ~/.mcp-auth
 
 Portal logs allow you to monitor user activity through an MCP server portal. You can view logs on a per-portal or per-server basis.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > **AI controls**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
 2. Find the portal or server that you want to view logs for, then select the three dots > **Edit**.
 3. Select **Logs**.
 

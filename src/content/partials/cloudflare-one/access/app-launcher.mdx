@@ -18,25 +18,25 @@ By default, the App Launcher is disabled. To enable it, you must configure a pol
 
 To enable the App Launcher:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Access settings**.
 
-2. Under the **App Launcher** card, select **Manage**.
+2. Under the **Manage your App Launcher** card, select **Manage**.
 
-3. On the **Rules** tab, [build a rule](/cloudflare-one/access-controls/policies/) to define who can access your App Launcher portal. These rules do not impact permissions for the applications secured behind Access.
+3. On the **Policies** tab, [build a policy](/cloudflare-one/access-controls/policies/) to define who can access your App Launcher portal. These rules do not impact permissions for the applications secured behind Access.
 
 4. On the **Authentication** tab, choose the identity providers users can authenticate with.
 
 5. Select **Save**.
 
-The App Launcher is now available at `<your-team-name>.cloudflareaccess.com`. You can always edit your App Launcher rules by going to **Settings** > **Authentication**.
+The App Launcher is now available at `<your-team-name>.cloudflareaccess.com`. You can always edit your App Launcher rules by going to **Access controls** > **Access settings**.
 
 ## Add a tile to the App Launcher
 
-Tiles have a one-to-one relationship with each application you create in Access. The tile names displayed in the Access App Launcher portal correspond to the application names listed under **Access** > **Applications**. For example, if you create one application for general access to your Jira deployment and a separate application that restricts requests to a particular Jira path, a user authorized for both will see separate tiles for each. If you add multiple hostnames to a single application, the user will only see the domain selected in the application's **App Launcher** settings.
+Tiles have a one-to-one relationship with each application you create in Access. The tile names displayed in the Access App Launcher portal correspond to the application names listed under **Access controls** > **Applications**. For example, if you create one application for general access to your Jira deployment and a separate application that restricts requests to a particular Jira path, a user authorized for both will see separate tiles for each. If you add multiple hostnames to a single application, the user will only see the domain selected in the application's **App Launcher** settings.
 
 To show an Access application in the App Launcher:
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1.  In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
 2.  Select an application and select **Configure**.
 3.  Go to **Experience settings**.
 4.  Select **Show application in App Launcher**. The App Launcher link will only appear for users who are allowed by your Access policies. Blocked users will not see the app in their App Launcher.
@@ -58,38 +58,4 @@ To show an Access application in the App Launcher:
 
 ## Customize App Launcher appearance
 
-:::note
-
-Only available on Pay-as-you-go and Enterprise plans.
-:::
-
-You can display your own branding, messages, and links to users when they open the App Launcher.
-
-To customize the App Launcher appearance:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
-2. Find the **Customize App Launcher** setting and select **Customize**.
-3. Give the App Launcher the look and feel of your organization by adding:
-   - Your organization's name
-   - A logo
-   - A preferred background color for the header
-   - A preferred background color for the page
-   - A custom footer with links to your organization's help desk or other internal resources.
-
-:::note
-
-We recommend lighter background colors because the font defaults to black.
-:::
-
-4. Next, customize the landing page that users will see when they login to the App Launcher. Available properties include:
-   - A custom title
-   - A custom subtitle
-   - An image
-   - A preferred color for the **Log in** button
-   - A preferred color for the **Log in** button text
-
-   All of the properties configured in Step 3 will also apply to the landing page.
-
-5. Once you are satisfied with your customization, select **Save**.
-
-The App Launcher screens are now updated. To view your changes, select **Preview**.
+To customize the App Launcher with your own branding, messages, and links, refer to the [Custom pages documentation](/cloudflare-one/reusable-components/custom-pages/app-launcher-customization/).
