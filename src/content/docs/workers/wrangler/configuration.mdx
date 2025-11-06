@@ -100,7 +100,7 @@ The `main` key is optional for assets-only Workers.
 :::
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of your Worker. Alphanumeric characters (`a`,`b`,`c`, etc.) and dashes (`-`) only. Do not use underscores (`_`).
+  - The name of your Worker. Alphanumeric characters (`a`,`b`,`c`, etc.) and dashes (`-`) only. Do not use underscores (`_`). Worker names can be up to 255 characters. If you plan to use a [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/), the name must be 63 characters or less and cannot start or end with a dash.
 
 - `main` <Type text="string" /> <MetaInfo text="required" />
   - The path to the entrypoint of your Worker that will be executed. For example: `./src/index.ts`.
