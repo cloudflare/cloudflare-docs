@@ -5,9 +5,34 @@ sidebar:
   order: 2
 ---
 
-import { Details, DashButton, Steps } from "~/components";
+import { Details, DashButton, Steps, Tabs, TabItem } from "~/components";
 
-## Before you start
+You can define custom [Error Pages](/rules/custom-errors/#error-pages) for the following errors and challenges:
+
+- WAF block
+- IP/Country block
+- IP/Country challenge
+- 500 class errors
+- 1000 class errors
+- Managed challenge / I'm Under Attack Mode
+- Rate limiting block
+
+<Details header="Older error page types">
+
+You can only customize the error pages for the following error page types if you have customized their error pages in the past:
+
+- Interactive Challenge
+- JavaScript Challenge
+
+These types of challenges are being discouraged in favor of managed challenges.
+
+</Details>
+
+For more information on the different types of Error Pages, refer to [Error page types](/rules/custom-errors/reference/error-page-types/).
+
+To return custom error responses for requests that match specific conditions, use [Custom Error Rules](/rules/custom-errors/#custom-error-rules) instead.
+
+## 1. Design your custom error page
 
 Before defining a custom error page in your Cloudflare account, you will need to design and code that page. It can be hosted on your own web server or using a Cloudflare product like [Snippets](/rules/snippets/).
 
@@ -55,27 +80,11 @@ The following HTML code is an example error page for 5XX errors without styling:
 
 ---
 
-## Update an error page in the dashboard
+## 2. Update an error page in the dashboard
 
-### Account-level custom error page
+You can define an error page at the zone level or for your entire account. Zone-level error pages have priority over account-level error pages.
 
-To update an account-level custom error page:
-
-<Steps>
-
-1. In the Cloudflare dashboard, go to the **Settings** page.
-
-   <DashButton url="/?to=/:account/configurations" />
-
-2. Go to **Error Pages** and identify your desired custom error page type.
-3. (Optional) To preview the current error page (default or custom), select the link in the **Show** column.
-4. To edit the error page, select the three dots > **Edit** next to the page type you previously identified.
-5. To use Cloudflare's default page, select **Cloudflare default page.** To provide a custom error page, select **Custom page** and enter the URL of the custom error page you created.
-6. Select **Confirm**.
-
-</Steps>
-
-### Zone-level custom error page
+<Tabs> <TabItem label="Zone level">
 
 To edit a zone-level custom error page:
 
@@ -93,7 +102,27 @@ To edit a zone-level custom error page:
 
 </Steps>
 
-### Fetch custom error page again
+</TabItem> <TabItem label="Account level">
+
+To update an account-level custom error page:
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **Error Pages** and identify your desired custom error page type.
+3. (Optional) To preview the current error page (default or custom), select the link in the **Show** column.
+4. To edit the error page, select the three dots > **Edit** next to the page type you previously identified.
+5. To use Cloudflare's default page, select **Cloudflare default page.** To provide a custom error page, select **Custom page** and enter the URL of the custom error page you created.
+6. Select **Confirm**.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+## Fetch custom error page again
 
 After successfully setting the content of the custom error page in **Error Pages**, you can remove the page from your origin server.
 
