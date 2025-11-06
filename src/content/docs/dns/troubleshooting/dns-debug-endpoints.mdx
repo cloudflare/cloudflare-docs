@@ -8,18 +8,36 @@ sidebar:
 
 The following debug endpoints are available via `dig` or other DNS query tools.
 
-```sh
-$ dig @<YOUR_DOMAIN> chaos txt myip.cloudflare +short
-```
+:::note
+For all commands, you can replace `alex.ns.cloudflare.com` with your Cloudflare assigned nameservers.
+:::
 
 ```sh
-$ dig @<YOUR_DOMAIN> chaos txt id.server +short
+$ dig @alex.ns.cloudflare.com chaos txt myip.cloudflare +short
 ```
 
-```sh
-$ dig @<YOUR_DOMAIN> chaos txt version.bind +short
-```
+This command gives you your IP address, meaning the public IP address that Cloudflare receives this DNS query from. This is useful for debugging when you need to know your own IP.
+
+---
 
 ```sh
-$ dig @<YOUR_DOMAIN> txt whoami.cloudflare.net +short
+$ dig @alex.ns.cloudflare.com chaos txt id.server +short
 ```
+
+This command gives you the Cloudflare data center you are connecting to, for DNS queries sent from where you execute this command.
+
+---
+
+```sh
+$ dig @alex.ns.cloudflare.com chaos txt version.bind +short
+```
+
+This command gives you the version of Cloudflare's authoritative DNS software that is running on the data center you are connected to. Usually, the same version would always be present on all of our data centers. But, since we do staged releases, technically there can be different versions on different data centers.
+
+---
+
+```sh
+$ dig @alex.ns.cloudflare.com txt whoami.cloudflare.net +short
+```
+
+This command gives you your public IP (same as the first command above), your ASN, and the associated country code, all indicating where you are sending this query from.
