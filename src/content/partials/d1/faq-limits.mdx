@@ -21,8 +21,8 @@ Each individual D1 database is inherently single-threaded, and processes queries
 
 Your maximum throughput is directly related to the duration of your queries.
 
-- If your average query takes 1ms, you can run approximately 1,000 queries per second.
-- If your average query takes 100ms, you can run 10 queries per second.
+- If your average query takes 1 ms, you can run approximately 1,000 queries per second.
+- If your average query takes 100 ms, you can run 10 queries per second.
 
 A database that receives too many concurrent requests will first attempt to queue them. If the queue becomes full, the database will return an ["overloaded" error](/d1/observability/debug-d1/#error-list).
 
@@ -33,10 +33,10 @@ Each individual D1 database is backed by a single [Durable Object](/durable-obje
 Query performance is the most important factor for throughput. As a rough guideline:
 
 - Read queries like `SELECT name FROM users WHERE id = ?` with an appropriate index on `id` will take less than a millisecond.
-- Write queries like `INSERT` or `UPDATE` can take several milliseconds, and depend on the number of rows written. Writes need to be durably persisted across several locations, [read how D1 persists data under the hood](https://blog.cloudflare.com/d1-read-replication-beta/#under-the-hood-how-d1-read-replication-is-implemented).
+- Write queries like `INSERT` or `UPDATE` can take several milliseconds, and depend on the number of rows written. Writes need to be durably persisted across several locations - learn more on [how D1 persists data under the hood](https://blog.cloudflare.com/d1-read-replication-beta/#under-the-hood-how-d1-read-replication-is-implemented).
 - Data migrations like a large `UPDATE` or `DELETE` affecting millions of rows must be run in batches. A single query that attempts to modify multiple gigabytes of data at once will exceed execution limits. Break the work into smaller chunks (e.g., processing 1,000 rows at a time) to stay within platform limits.
 
-To ensure your queries are fast and efficient, [use appropriate indexes in your SQL schema](https://developers.cloudflare.com/d1/best-practices/use-indexes/).
+To ensure your queries are fast and efficient, [use appropriate indexes in your SQL schema](/d1/best-practices/use-indexes/).
 
 #### CPU and memory
 
