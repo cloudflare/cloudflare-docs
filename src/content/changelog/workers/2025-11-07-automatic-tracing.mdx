@@ -1,0 +1,44 @@
+---
+title: Workers automatic tracing, now in open beta
+description: Gain instant visibility into Workers execution with automatic tracing and OpenTelemetry exports
+products:
+  - workers
+date: 2025-11-07
+---
+
+import { Render } from "~/components";
+
+Enable automatic tracing on your Workers, giving you detailed metadata and timing information for every operation your Worker performs.
+
+![Tracing example](~/assets/images/workers-observability/R2_Screenshot.png)
+
+Tracing helps you identify performance bottlenecks, resolve errors, and understand how your Worker interacts with other services on the Workers platform. You can now answer questions like:
+
+- Which calls are slowing down my application?
+- Which queries to my database take the longest?
+- What happened within a request that resulted in an error?
+
+**You can now:**
+
+- View traces alongside your logs in the Workers Observability dashboard
+- Export traces (and correlated logs) to any [OTLP-compatible destination](https://opentelemetry.io/docs/specs/otel/protocol/), such as [Honeycomb](/workers/observability/exporting-opentelemetry-data/honeycomb/), [Sentry](/workers/observability/exporting-opentelemetry-data/sentry/) or [Grafana](/workers/observability/exporting-opentelemetry-data/grafana-cloud/), by configuring a tracing destination in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/destinations)
+- Analyze and query across span attributes (operation type, status, duration, errors)
+
+## To get started, set:
+
+```jsonc
+{
+	"observability": {
+		"tracing": {
+			"enabled": true,
+		},
+	},
+}
+```
+
+<Render file="tracing-beta-config-note" product="workers" />
+
+## Want to learn more?
+
+- [Read the announcement](https://blog.cloudflare.com/workers-tracing-now-in-open-beta/)
+- [Check out the documentation](/workers/observability/traces/)

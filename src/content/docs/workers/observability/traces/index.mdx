@@ -7,7 +7,7 @@ sidebar:
     text: Beta
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
 
 ### What is Workers tracing?
 
@@ -50,21 +50,7 @@ You can configure tracing by setting `observability.traces.enabled = true` in yo
 
 </WranglerConfig>
 
-Starting with the [compatibility date of 2025-11-19](/workers/configuration/compatibility-flags/#automatic-tracing), the following will also enable tracing **in addition to** logs. 
-
-<WranglerConfig>
-
-```json
-{
-	"observability": {
-		"enabled": true
-	}
-}
-```
-
-</WranglerConfig>
-
-
+<Render file="tracing-beta-config-note" product="workers" />
 
 ### Exporting OpenTelemetry traces to a 3rd party destination
 

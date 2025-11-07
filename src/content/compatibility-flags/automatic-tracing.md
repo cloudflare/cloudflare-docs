@@ -6,7 +6,6 @@ _build:
 
 name: "Automatic tracing"
 sort_date: "2025-11-05"
-enable_date: "2025-11-19"
 enable_flag: "enable_workers_observability_tracing"
 ---
 
@@ -15,20 +14,18 @@ This flag will enable [Workers Tracing](/workers/observability/traces/) by defau
 ```json
 {
 	"observability": {
-			"enabled": true
-		}
+		"enabled": true
+	}
 }
 ```
 
-
-You can also explictly turn on automatic tracing without the flag and with older compatibility dates by setting the following: 
-
+You can also explictly turn on automatic tracing without the flag and with older compatibility dates by setting the following:
 
 ```json
 {
 	"observability": {
 		"traces": {
-			"enabled": true,
+			"enabled": true
 		}
 	}
 }
