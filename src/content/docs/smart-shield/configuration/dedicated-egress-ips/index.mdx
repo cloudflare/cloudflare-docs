@@ -9,7 +9,7 @@ sidebar:
 
 import { GlossaryTooltip, DirectoryListing } from "~/components";
 
-Enterprise customers can leverage dedicated egress IPs (from Cloudflare to your origin) for layer 7 [WAF](/waf/) and <GlossaryTooltip term="content delivery network (CDN)">CDN</GlossaryTooltip> services, as well as [Spectrum](/spectrum/). The egress IPs are reserved exclusively for your account so that you can increase your origin security by only allowing traffic from a small list of IP addresses.
+Enterprise customers can leverage dedicated egress[^1] IPs for layer 7 [WAF](/waf/) and <GlossaryTooltip term="content delivery network (CDN)">CDN</GlossaryTooltip> services, as well as [Spectrum](/spectrum/). The egress IPs are reserved exclusively for your account so that you can increase your origin security by only allowing traffic from a small list of IP addresses.
 
 :::note
 If you are interested in using Smart Shield Advanced with Dedicated CDN Egress IPs, reach out to your account team.
@@ -34,3 +34,5 @@ Each dedicated egress pool can consist of either IPs from a [BYOIP prefix](/byoi
 ## Resources
 
 <DirectoryListing />
+
+[^1]: From Cloudflare to your origin. Refer to [how it works](/smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/) for details.
