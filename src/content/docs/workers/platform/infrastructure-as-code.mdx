@@ -136,7 +136,7 @@ Bind to a [Durable Object](/durable-objects/api/) class:
 
 ```tf
 bindings = [{
-  type = "durable_object_namespace"
+  type = "durable_object"
   name = "MY_DURABLE_OBJECT"
   class_name = "MyDurableObjectClass"
   script_name = "my-worker"
@@ -144,7 +144,7 @@ bindings = [{
 ```
 
 **Properties:**
-- `type`: `"durable_object_namespace"`
+- `type`: `"durable_object"`
 - `name`: The binding name to access via `env.MY_DURABLE_OBJECT`
 - `class_name`: The exported class name of the Durable Object
 - `script_name`: (Optional) The Worker script that exports this Durable Object class. Omit if the class is defined in the same Worker.
@@ -159,7 +159,6 @@ bindings = [{
   type = "service"
   name = "MY_SERVICE"
   service = "other-worker-name"
-  environment = "production"
 }]
 ```
 
@@ -168,6 +167,7 @@ bindings = [{
 - `name`: The binding name to access via `env.MY_SERVICE`
 - `service`: The name of the target Worker
 - `environment`: (Optional) The environment of the target Worker
+- `entrypoint`: (Optional) The named [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to
 
 ### Queue Binding
 
@@ -272,6 +272,23 @@ bindings = [{
 - `type`: `"plain_text"`
 - `name`: The binding name to access via `env.MY_VARIABLE`
 - `text`: The value of the environment variable
+
+### Secret Text Binding
+
+For encrypted secrets, use the `secret_text` binding type:
+
+```tf
+bindings = [{
+  type = "secret_text"
+  name = "API_KEY"
+  text = var.api_key
+}]
+```
+
+**Properties:**
+- `type`: `"secret_text"`
+- `name`: The binding name to access via `env.API_KEY`
+- `text`: The secret value (will be encrypted)
 
 ### Complete Example
 
