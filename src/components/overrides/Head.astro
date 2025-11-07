@@ -6,7 +6,7 @@ import "tippy.js/dist/tippy.css";
 import { getEntry, getEntries } from "astro:content";
 import { getOgImage } from "~/util/og";
 import { formatContentType } from "~/util/content-type";
-import { getDarkModeInlineScript as _getDarkModeInlineScript } from "~/plugins/dark-mode";
+import { getDarkModeInlineScript } from "~/plugins/dark-mode";
 import type { CollectionEntry } from "astro:content";
 
 const DEFAULT_TITLE_DELIMITER = "|";
@@ -114,11 +114,11 @@ if (shouldChatbotDeprioritize) {
 if (
 	frontmatter.description &&
 	head.findIndex(
-		({ tag, attrs }) => tag === "meta" && attrs?.name === "description",
+		({ tag, attrs }) => tag === "meta" && attrs?.name === "description"
 	) === -1
 ) {
 	const existingOpenGraphTag = head.findIndex(
-		({ tag, attrs }) => tag === "meta" && attrs?.property === "og:description",
+		({ tag, attrs }) => tag === "meta" && attrs?.property === "og:description"
 	);
 
 	if (existingOpenGraphTag !== -1) {
@@ -145,7 +145,7 @@ if (frontmatter.pcx_content_type) {
 if (frontmatter.products) {
 	const additionalProducts = await getEntries(frontmatter.products);
 	const additionalProductsNames = additionalProducts.map(
-		(product) => product.data.name,
+		(product) => product.data.name
 	);
 
 	metaTags.push({
@@ -173,7 +173,7 @@ if (lastUpdated) {
 if (frontmatter.reviewed) {
 	const daysBetween = differenceInCalendarDays(
 		new Date(),
-		frontmatter.reviewed,
+		frontmatter.reviewed
 	);
 
 	metaTags.push({
@@ -204,7 +204,7 @@ if (frontmatter.pcx_content_type === "changelog") {
 
 const ogImagePath = await getOgImage(
 	(Astro.locals.starlightRoute.originalEntry as CollectionEntry<"changelog">) ??
-		Astro.locals.starlightRoute.entry,
+		Astro.locals.starlightRoute.entry
 );
 const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
 
@@ -235,6 +235,6 @@ metaTags.map((attrs) => {
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
-<script is:inline>{_getDarkModeInlineScript()}</script>
+<script is:inline>{getDarkModeInlineScript()}</script>
 <script src="src/scripts/dark-mode.ts"></script>
 <Default><slot /></Default>
