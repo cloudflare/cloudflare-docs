@@ -160,7 +160,7 @@ class List(DurableObject):
         await self.ctx.storage.put("messages", to_js(messages))
         return
 
-		async def say_hello(self):
+    async def say_hello(self):
         result = self.ctx.storage.sql.exec(
             "SELECT 'Hello, World!' as greeting"
         ).one()
@@ -180,7 +180,7 @@ class Default(WorkerEntrypoint):
   			print("cron processed")
 ```
 
-    Refer to [Cron Triggers documentation](/workers/configuration/cron-triggers/) for more information.
+Refer to [Cron Triggers documentation](/workers/configuration/cron-triggers/) for more information.
 
 ## Workflows
 

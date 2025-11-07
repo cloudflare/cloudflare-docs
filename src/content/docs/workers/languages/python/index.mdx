@@ -15,7 +15,6 @@ import { WranglerConfig } from "~/components";
 
 Cloudflare Workers provides a first-class Python experience, including support for:
 
-- The majority of Python's [Standard library](/workers/languages/python/stdlib/)
 - Easy to install and fast-booting [Packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [httpx](https://www.python-httpx.org/), [Pydantic](https://docs.pydantic.dev/latest/) and more.
 - A robust [foreign function interface (FFI)](/workers/languages/python/ffi) that lets you use JavaScript objects and functions directly from Python — including all [Runtime APIs](/workers/runtime-apis/)
 - An ecosystem of services on the Workers Platform accessible via [bindings](/workers/runtime-apis/bindings/), including:
@@ -24,15 +23,6 @@ Cloudflare Workers provides a first-class Python experience, including support f
   - AI capabilities with [Workers AI](/workers-ai/), [Vectorize](/vectorize)
   - File storage with [R2](/r2)
   - [Durable Workflows](/workflows/), [Queues](/queues/), and [ more](/workers/runtime-apis/bindings/)
-
-:::caution[Python Workers are in beta.]
-
-You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta. Packages are supported using the [pywrangler](/workers/languages/python/packages) tool.
-
-We also recommend using the `python_dedicated_snapshot` for improved performance when using packages.
-
-We'd love your feedback. Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
-:::
 
 ## Introduction
 
@@ -50,6 +40,13 @@ Similar to other Workers, the main entry point for a Python worker is the [`fetc
 sent to the Worker.
 
 In a Python Worker, this handler is placed in a `Default` class that extends the `WorkerEntrypoint` class (which you can import from the `workers` SDK module).
+
+:::caution[Python Workers are in beta.]
+
+You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta. Packages are supported using the [pywrangler](/workers/languages/python/packages) tool.
+
+We'd love your feedback. Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
+:::
 
 ### The `pywrangler` CLI tool
 
@@ -80,7 +77,7 @@ To deploy a Python Worker to Cloudflare, run `pywrangler deploy`:
 uv run pywrangler deploy
 ```
 
-### Python Worker Templaes
+### Python Worker Templates
 
 When you initialize a new Python Worker project and select from one of many templates:
 

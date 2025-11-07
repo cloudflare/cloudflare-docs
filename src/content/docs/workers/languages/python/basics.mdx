@@ -149,15 +149,21 @@ and compatibility_flags in your config file.
 
 ## Upgrading `pywrangler`
 
-To upgrade to the latest version of `pywrangler`, run the following command:
+To upgrade to the latest version of `pywrangler` globally, run the following command:
 
 ```bash
 uv tool upgrade workers-py
 ```
 
+To upgrade to the latest version of `pywrangler` in a specific project, run the following command:
+
+```bash
+uv lock --upgrade-package workers-py
+```
+
 ## Next Up
 
-- Learn details about local development, deployment, and [how to Python Workers work](/workers/languages/python/how-python-workers-work).
+- Learn details about local development, deployment, and [how Python Workers work](/workers/languages/python/how-python-workers-work).
 - Explore the [package](/workers/languages/python/packages) docs for instructions on how to use packages with Python Workers.
 - Understand which parts of the [Python Standard Library](/workers/languages/python/stdlib) are supported in Python Workers.
 - Learn about Python Workers' [foreign function interface (FFI)](/workers/languages/python/ffi), and how to use it to work with [bindings](/workers/runtime-apis/bindings) and [Runtime APIs](/workers/runtime-apis/).
