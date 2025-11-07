@@ -6,7 +6,6 @@ import "tippy.js/dist/tippy.css";
 import { getEntry, getEntries } from "astro:content";
 import { getOgImage } from "~/util/og";
 import { formatContentType } from "~/util/content-type";
-import { getDarkModeInlineScript } from "~/plugins/dark-mode";
 import type { CollectionEntry } from "astro:content";
 
 const DEFAULT_TITLE_DELIMITER = "|";
@@ -235,6 +234,6 @@ metaTags.map((attrs) => {
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
-<script is:inline>{getDarkModeInlineScript()}</script>
+<script is:inline>(function(){try{var c=document.cookie.match(/cf_dark_mode=([^;]*)/);var cv=c?decodeURIComponent(c[1]):'off';var v=cv.split(':')[0];var t=v==='on'?'dark':v==='off'?'light':'auto';var dt=t;if(t==='auto'){dt=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',dt);}catch(e){}})();</script>
 <script src="src/scripts/dark-mode.ts"></script>
 <Default><slot /></Default>

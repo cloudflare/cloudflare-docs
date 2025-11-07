@@ -46,11 +46,10 @@ async function autogenStyles() {
 	const styles = (
 		await readdir("./src/styles/", {
 			withFileTypes: true,
-			recursive: true,
 		})
 	)
 		.filter((x) => x.isFile())
-		.map((x) => x.parentPath + x.name)
+		.map((x) => `./src/styles/${x.name}`)
 		.sort((a) => (a === "./src/styles/tailwind.css" ? -1 : 1));
 
 	return styles;
@@ -268,6 +267,15 @@ export default defineConfig({
 				"../components/Page.astro": fileURLToPath(
 					new URL("./src/components/overrides/Page.astro", import.meta.url),
 				),
+			},
+		},
+		server: {
+			cors: true,
+			origin: 'http://localhost:7445',
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+				'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
 			},
 		},
 	},
