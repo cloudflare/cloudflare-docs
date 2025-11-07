@@ -900,6 +900,23 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 wrangler workflows trigger my-workflow '{"hello":"world"}'
 ```
 
+### restart
+
+### `restart`
+
+Restart a Workflow instance
+
+```sh
+wrangler workflows instances restart <WORKFLOW_NAME> <ID>
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+- `ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of a Workflow instance.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 <WranglerCommand command="tail" />
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
