@@ -55,7 +55,7 @@ The origin is connected directly to the Internet and traffic is routed to the or
 
 In this model, when Cloudflare DNS receives a query for the A record, a Cloudflare anycast IP address is returned, so all traffic is routed through Cloudflare. However, unless additional precautions are taken, it’s possible for the origin to be reached directly bypassing Cloudflare if someone knows the IP address of the origin(s).
 
-Additionally, in this model, the customer has to open firewall rules for the origin(s) or web server(s) so they can be accessible on the respective http/https ports. However, customers can choose to leverage [Cloudflare Aegis](/aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access.
+Additionally, in this model, the customer has to open firewall rules for the origin(s) or web server(s) so they can be accessible on the respective http/https ports. However, customers can choose to leverage [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access.
 
 In addition to IP blocking at the origin-side firewall, we also strongly recommend additional verification of traffic via either the ["Full (Strict)" SSL setting](/ssl/origin-configuration/ssl-modes/full-strict/) or [mTLS auth](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all traffic is sourced from requests passing through the customer configured zones.
 
