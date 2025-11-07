@@ -228,7 +228,9 @@ const stagehand = new Stagehand({
 
 [AI Gateway](/ai-gateway/) is a service that adds observability to your AI applications. By routing your requests through AI Gateway, you can monitor and debug your AI applications.
 
-To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we are using [OpenAI with AI Gateway](https://developers.cloudflare.com/ai-gateway/usage/providers/openai/). Make sure to add the `baseURL` as shown below, with your own Account ID and Gateway ID.
+To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we are using [OpenAI with AI Gateway](/ai-gateway/usage/providers/openai/). Make sure to add the `baseURL` as shown below, with your own Account ID and Gateway ID.
+
+You must specify the `apiKey` in the `modelClientOptions`:
 
 ```typescript
 const stagehand = new Stagehand({
@@ -241,6 +243,8 @@ const stagehand = new Stagehand({
   },
 });
 ```
+
+If you are using an authenticated AI Gateway, follow the instructions in [AI Gateway authentication](/ai-gateway/configuration/authentication/) and include `cf-aig-authorization` as a header.
 
 ## Stagehand API
 For the full list of Stagehand methods and capabilities, refer to the official [Stagehand API documentation](https://docs.stagehand.dev/first-steps/introduction).
