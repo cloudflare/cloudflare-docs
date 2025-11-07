@@ -1,7 +1,7 @@
 ---
 # Code generator. DO NOT EDIT.
 
-title: Audit logs
+title: Audit Logs
 pcx_content_type: configuration
 sidebar:
   order: 21

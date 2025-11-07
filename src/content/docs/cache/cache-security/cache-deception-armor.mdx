@@ -4,6 +4,8 @@ title: Cache Deception Armor
 
 ---
 
+import { DashButton } from "~/components";
+
 Before learning about Cache Deception Armor, you should first understand how Web Cache Deception attacks work.
 
 ## Web Cache Deception attacks
@@ -30,10 +32,12 @@ In the newsfeed example above, if `http://www.example.com/newsfeed` is a script 
 
 To enable Cache Deception Armor, you need to start by creating a [cache rule](/cache/how-to/cache-rules/). Follow the steps below for guidance:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Caching** > **Cache Rules**.
-3. Select **Create rule**.
-4. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
-5. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
-6. Add the **Cache Key** setting to the rule and turn on **Cache deception armor**.
-7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+1. In the Cloudflare dashboard, go to the **Cache Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+
+2. Select **Create rule**.
+3. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
+4. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
+5. Add the **Cache Key** setting to the rule and turn on **Cache deception armor**.
+6. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.

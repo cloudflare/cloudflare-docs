@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { DashButton } from "~/components"
+
 ## Select the appropriate tab
 
 To perform a broad analysis of layer 3/4 traffic and DDoS attacks, use the **All traffic** tab.
@@ -74,8 +76,11 @@ Enable the **Show annotations** toggle to show or hide annotations for advertise
 
 To filter for these traffic events:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Analytics & Logs** > **Network Analytics** > **DDoS managed rules**.
+1. In the Cloudflare dashboard, go to the **Network Analytics** page.
+
+   <DashButton url="/?to=/:account/network-analytics" />
+
+2. Go to **DDoS managed rules** tab.
 3. Select **Add filter**.
     - Set `Verdict equals drop`.
     - Set `Action equals pass`.

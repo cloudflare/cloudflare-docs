@@ -1,14 +1,13 @@
 ---
 title: Enhancing security posture with SentinelOne and Cloudflare One
 pcx_content_type: reference-architecture
-products:
-  - Access
-  - Gateway
-  - Zero Trust WARP Client
+products: [access, gateway, zero-trust-warp]
 sidebar:
   order: 1
   label: Cloudflare SASE with SentinelOne
-updated: 2025-04-30
+reviewed: 2025-04-30
+description: >-
+  The integration between Cloudflare One and SentinelOne provides organizations with a comprehensive security solution. The integration works through a service-to-service posture check that identifies devices based on their serial numbers.
 ---
 
 import { Render } from "~/components";
@@ -23,7 +22,7 @@ This reference architecture is designed for IT and security professionals who ar
 
 Recommended resources for a stronger understanding of Cloudflare's SentinelOne integration:
 
-- [SentinelOne device posture integration](/cloudflare-one/identity/devices/service-providers/sentinelone/)
+- [SentinelOne device posture integration](/cloudflare-one/integrations/service-providers/sentinelone/)
 
 ## Integration overview
 
@@ -83,7 +82,7 @@ Next, SentinelOne must be configured as a service provider in the Cloudflare Zer
 - Setting an appropriate polling frequency
 - Testing the connection to ensure proper communication
 
-Finally, device posture checks must be configured to define the security requirements for access. For detailed setup instructions, refer to [SentinelOne device posture integration](/cloudflare-one/identity/devices/service-providers/sentinelone/).
+Finally, device posture checks must be configured to define the security requirements for access. For detailed setup instructions, refer to [SentinelOne device posture integration](/cloudflare-one/integrations/service-providers/sentinelone/).
 
 ## Security capabilities
 

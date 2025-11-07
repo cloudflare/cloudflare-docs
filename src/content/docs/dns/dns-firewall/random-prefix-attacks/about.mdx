@@ -10,9 +10,9 @@ head:
 description: Learn about random prefix attacks. As part of DNS Firewall, Cloudflare can protect your upstream authoritative nameservers from these attacks.
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="random-prefix-attack-definition" /> <br/>
+<Render file="random-prefix-attack-definition" product="dns" /> <br />
 
 ## Attack characteristics
 
@@ -30,7 +30,7 @@ If the request only involved nonexistent domains, the `NXDOMAIN` errors would on
       D[Authoritative NS]
 ```
 
-<br/>
+<br />
 
 ### Queries for nonexistent subdomains
 
@@ -47,7 +47,7 @@ These attacks are successful because they target subdomains, which require a res
       B --"6)" <code>NXDOMAIN error</code>--> A
 ```
 
-<br/>
+<br />
 
 With an attack against a subdomain of an existing domain, the resolver is forced to fully resolve it against the authoritative nameservers since these random subdomains are likely not cached by the resolver or any other proxy. If an attacker sends enough of these queries, and the authoritative nameservers cannot handle the query load, it will become unresponsive or even fall over, taking all zones it is hosting down, not just the attacked zone.
 

@@ -1,0 +1,35 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements including enhancements to [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode) for even faster resolution. The MASQUE protocol is now the only protocol that can use Proxy mode. If you previously configured a device profile to use Proxy mode with Wireguard, you will need to select a new [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) or all devices matching the profile will lose connectivity.
+
+  **Changes and improvements**
+  - Enhancements to [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode) for even faster resolution. The MASQUE protocol is now the only protocol that can use Proxy mode. If you previously configured a device profile to use Proxy mode with Wireguard, you will need to select a new [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) or all devices matching the profile will lose connectivity.
+  - The [MASQUE protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) is now the default protocol for all new WARP device profiles.
+  - Improvement to limit idle connections in DoH mode to avoid unnecessary resource usage that can lead to DoH requests not resolving.
+  - Improvements to maintain Global WARP Override settings when switching between organization configurations.
+
+  **Known issues**
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.7.106.1
+releaseDate: 2025-09-09T20:01:40.692Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-intel/version/2025.7.106.1
+packageSize: 53741930
+platformName: Linux
+linuxPlatforms:
+  fedora35-intel: 53741930
+  focal-arm: 50363802
+  fedora35-arm: 52641707
+  noble-intel: 50989152
+  bullseye-intel: 51431994
+  noble-arm: 50442052
+  jammy-arm: 50044180
+  fedora34-arm: 53075839
+  bullseye-arm: 50286022
+  centos8-arm: 52851285
+  bookworm-arm: 50029060
+  trixie-intel: 50988156
+  jammy-intel: 51211400
+  focal-intel: 51526076
+  bookworm-intel: 51200956
+  centos8-intel: 53636322
+  fedora34-intel: 54085217
+  trixie-arm: 50254630

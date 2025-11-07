@@ -1,0 +1,19 @@
+---
+title: Access private hostname applications support all ports/protocols
+description: Cloudflare Access for private hostname applications can now secure traffic on all ports and protocols. 🔒
+date: 2025-10-28
+products:
+  - access
+---
+
+[Cloudflare Access for private hostname applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) can now secure traffic on all ports and protocols.
+
+Previously, applying Zero Trust policies to private applications required the application to use HTTPS on port `443` and support Server Name Indicator (SNI).
+
+This update removes that limitation. As long as the application is reachable via a Cloudflare off-ramp, you can now enforce your critical security controls — like single sign-on (SSO), MFA, device posture, and variable session lengths — to any private application. This allows you to extend Zero Trust security to services like SSH, RDP, internal databases, and other non-HTTPS applications.
+
+![Example private application on non-443 port](~/assets/images/changelog/access/internal_private_app_any_port.png)
+
+For example, you can now create a self-hosted application in Access for `ssh.testapp.local` running on port `22`. You can then build a policy that only allows engineers in your organization to connect after they pass an SSO/MFA check and are using a corporate device.
+
+This feature is generally available across all plans.

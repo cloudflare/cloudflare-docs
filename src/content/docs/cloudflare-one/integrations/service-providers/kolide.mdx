@@ -1,0 +1,64 @@
+---
+pcx_content_type: how-to
+title: Kolide
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="posture/service-provider-intro"
+	params={{ one: "Kolide" }}
+	product="cloudflare-one"
+/>
+
+## Prerequisites
+
+- Kolide agent is deployed on the device.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "Service providers",
+  		link: "/cloudflare-one/integrations/service-providers/",
+  	}}
+  />
+
+## Set up Kolide as a service provider
+
+### 1. Create a Client Secret in Kolide
+
+1. Log in to your Kolide dashboard.
+2. Select your profile and go to **Settings** > **Developers**.
+3. Select **Create New Key**.
+4. Enter a **Key Name** and select **Save**.
+5. Copy the **Secret token** to a safe place. This will be your Client Secret.
+
+### 2. Add Kolide as a service provider
+
+<Render
+	file="posture/add-service-provider"
+	product="cloudflare-one"
+	params={{ provider: "Kolide" }}
+/>
+
+5. Enter the **Client secret** you noted down above.
+6. Choose a **Polling frequency** for how often Cloudflare One should query Kolide for information.
+7. Select **Test and save**.
+
+### 3. Configure the posture check
+
+<Render
+	file="posture/configure-posture-check"
+	product="cloudflare-one"
+	params={{ one: "Kolide" }}
+/>
+
+## Device posture attributes
+
+Device posture data is gathered from the [Kolide K2 API](https://kolidek2.readme.io/reference/get_issues).
+
+| Selector    | Description                                   |
+| ----------- | --------------------------------------------- |
+| Issue count | Total number of issues detected on the device |

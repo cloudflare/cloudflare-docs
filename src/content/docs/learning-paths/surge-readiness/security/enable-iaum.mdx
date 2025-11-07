@@ -1,0 +1,32 @@
+---
+title: What to do when under attack
+pcx_content_type: overview
+sidebar: 
+  order: 9
+---
+
+## Enable "I'm Under Attack" mode (IAUM)
+
+If you are under attack and have this feature enabled during the attack, visitors will receive an interstitial page for about five seconds while the traffic is analyzed to make sure it is a legitimate human visitor. The vast majority of Layer 7 attack scripts are defeated by IUAM and can be honed via Page Rules.
+
+Refer to [I'm Under Attack Mode](https://developers.cloudflare.com/fundamentals/reference/under-attack-mode/) for more information.
+
+
+## Change Access Control List (ACL)
+
+An ACL refers to rules that are applied to port numbers or IP addresses that are available on a host permitting use of the service. When you only allow Cloudflare IPs, you eliminate threats attempting to attack your origin IP range.
+
+Refer to [Cloudflare IP Ranges](https://www.cloudflare.com/ips) for more information.
+
+
+## Change Origin IPs and update Cloudflare DNS records
+
+If your origin is still being attacked, consider moving your Origin IPs and updating your Cloudflare DNS records.
+
+Refer to [Prevent DDoS attacks](/learning-paths/prevent-ddos-attacks/concepts/) for detailed guidance.
+
+:::note
+
+To learn about best practices for DDoS protection, review [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/).
+
+:::

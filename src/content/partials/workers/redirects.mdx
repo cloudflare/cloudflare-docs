@@ -77,15 +77,15 @@ Cloudflare currently offers limited support for advanced redirects.
 
 | Feature                             | Support | Example                                                         | Notes                                   |
 | ----------------------------------- | ------- | --------------------------------------------------------------- | --------------------------------------- |
-| Redirects (301, 302, 303, 307, 308) | Yes     | `/home / 301`                                                   | 302 is used as the default status code. |
-| Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                         |
-| Splats                              | Yes     | `/blog/* /posts/:splat`                                         | Refer to [Splats](#splats).             |
-| Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders). |
-| Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                         |
-| Proxying                            | Yes     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).         |
-| Domain-level redirects              | No      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                         |
-| Redirect by country or language     | No      | `/ /us 302 Country=us`                                          |                                         |
-| Redirect by cookie                  | No      | `/\* /preview/:splat 302 Cookie=preview`                        |                                         |
+| Redirects (301, 302, 303, 307, 308) | ✅     | `/home / 301`                                                   | 302 is used as the default status code. |
+| Rewrites (other status codes)       | ❌      | `/blog/* /blog/404.html 404`                                    |                                         |
+| Splats                              | ✅     | `/blog/* /posts/:splat`                                         | Refer to [Splats](#splats).             |
+| Placeholders                        | ✅     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders). |
+| Query Parameters                    | ❌      | `/shop id=:id /blog/:id 301`                                    |                                         |
+| Proxying                            | ✅     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).         |
+| Domain-level redirects              | ❌      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                         |
+| Redirect by country or language     | ❌      | `/ /us 302 Country=us`                                          |                                         |
+| Redirect by cookie                  | ❌      | `/\* /preview/:splat 302 Cookie=preview`                        |                                         |
 
 ## Redirects and header matching
 

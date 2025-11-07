@@ -1,0 +1,109 @@
+---
+pcx_content_type: how-to
+title: Secure a private IP or hostname
+sidebar:
+  order: 3
+  label: Add a self-hosted private application
+---
+
+import { Render, GlossaryTooltip, } from "~/components";
+
+You can configure a self-hosted Access application to manage access to specific IPs or hostnames on your private network.
+
+:::note
+This feature replaces the legacy [private network app type](/cloudflare-one/access-controls/applications/non-http/legacy-private-network-app/).
+:::
+
+## Prerequisites
+
+- Private IPs and hostnames are reachable over Cloudflare WARP, Magic WAN or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
+- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+- Public IPs and hostnames can be used to define a private application, however the IP or hostname must route through Cloudflare via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/magic-wan/configuration/manually/how-to/configure-routes/).
+- (Optional) Turn on [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) if you want to use Access JWTs to manage [HTTPS application sessions](#https-applications).
+
+## Add your application to Access
+
+<Render
+	file="access/self-hosted-app/create-app"
+	product="cloudflare-one"
+	params={{ private: true }}
+/>
+
+6.  To add an application using its private IP:
+		1. Select **Add private IP**.
+		2. In **IP address**, enter the private IP or CIDR range that represents the application (for example, `10.0.0.1` or `172.16.0.0/12`).
+		3. In **Port**, enter a single port or a port range used by your application (for example, `22` or `8000-8099`).
+
+			Comma-separated lists of ports (such as `80, 443`) are not supported. To add multiple ports for a specific IP, you can select **Add private IP** and repeat the IP address with the other port. Alternatively, create a new Access application for the other port.
+
+7. To add an application using its private hostname:
+	1. Select **Add private hostname**.
+	2. In **Hostname**, enter the private hostname of the application (for example, `wiki.internal.local`). You can use [wildcards](/cloudflare-one/access-controls/policies/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
+	3. In **Port**, enter a single port or a port range used by your application (for example, `22` or `8000-8099`).
+
+	:::note
+	- **HTTPS applications**: Private hostnames explicitly set to port `443` (not including port ranges such as `441-444`) must have a valid Server Name Indicator (SNI).
+	- **Non-HTTPS applications**:  Private hostnames on non-`443` ports do not require a valid SNI value will be assigned an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>  in the CGNAT space. Ensure that the following IP addresses are not blocked by any firewalls or excluded from Gateway traffic:
+
+		<Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one"/>
+
+		For more details on private hostname routing, refer to [Connect a private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#prerequisites)
+
+8.  <Render file="access/add-access-policies" product="cloudflare-one" />
+
+9.  Configure how users will authenticate:
+
+        1. Select the [**Identity providers**](/cloudflare-one/integrations/identity-providers/) you want to enable for your application.
+        2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+        3. (Recommended) Turn on **WARP authentication identity** to allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
+
+10.  Select **Next**.
+
+11. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
+
+12. <Render file="access/access-block-page" product="cloudflare-one" />
+
+13. Select **Next**.
+
+14. <Render
+    	file="access/self-hosted-app/advanced-settings"
+    	product="cloudflare-one"
+    />
+
+        These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+
+15. Select **Save**.
+
+Users can now connect to your private application after authenticating with Cloudflare Access.
+
+## Authentication flow
+
+### HTTPS applications
+
+If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on and a user is accessing an HTTPS application on port `443`, Cloudflare Access will present a login page in the browser and issue an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) to your origin. This is the same cookie-based authentication flow used by [self-hosted public apps](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
+
+If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned off, session management is [handled in the WARP client](#non-https-applications) instead of in the browser.
+
+### Non-HTTPS applications
+
+The WARP client manages sessions for all non-HTTPS applications. Users will receive an `Authentication required` pop-up notification from the WARP client. When the user selects the notification, WARP will open a browser window with your Access login page.
+
+<Render file="gateway/client-notifications-os" product="cloudflare-one" />
+
+## Order of precedence
+
+### Access vs Gateway policies
+
+<Render
+	file="access/modify-gateway-policy-precedence"
+	product="cloudflare-one"
+	params={{ selector: "Access Private App", protocol: "private" }}
+/>
+
+### Private hostname vs private IP
+
+An Access application defined by a private hostname takes precedence over an Access application defined by a private IP. For example, assume App-1 points to `wiki.internal.local` and App-2 points to `10.0.0.1`, but `wiki.internal.local` resolves to `10.0.0.1`. Users who go to `wiki.internal.local` will never match App-2; they will be allowed or blocked strictly based on App-1 Access policies (and [Gateway policies](#access-vs-gateway-policies)).
+
+## Limitations
+
+- Browser Isolation is only compatible with self-hosted applications on port `443`. For more information, refer to the [Browser Isolation documentation](/cloudflare-one/remote-browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).

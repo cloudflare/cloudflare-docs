@@ -1,0 +1,37 @@
+---
+params:
+  - dashName
+---
+
+import { DashButton } from "~/components";
+
+To set up and use the hardware version of Magic WAN Connector, you first need to register it with your account. This is not applicable to Virtual Magic WAN Connector.
+
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.dashName === "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
+		<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong>, and select <strong>Register an appliance</strong>.</li>
+	</ol>
+	</>
+)
+}
+
+{/* Dashboard steps for Magic WAN (standalone dashboard) */}
+{ props.dashName !== "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>In the Cloudflare dashboard, go to Magic WAN's <strong>Configuration</strong> page.
+			<DashButton url="/?to=/:account/magic-wan/configuration" />
+		</li>
+		<li>Under <strong>Connectors</strong>, select <strong>Register your appliance</strong>.</li>
+	</ol>
+	</>
+)
+}
+3. In **Appliance details** > **Serial number**, insert the serial number for your device. You can optionally add notes about the Magic WAN Connector you are adding to the dashboard.
+4. (Optional) Select **Add** below **Serial number** to add multiple Magic WAN Connectors at once to your account.
+5. Select **Register appliance**.
+
+Your device is now registered with your account.

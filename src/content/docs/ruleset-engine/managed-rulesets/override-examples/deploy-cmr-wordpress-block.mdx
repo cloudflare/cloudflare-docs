@@ -8,19 +8,19 @@ head:
     content: Use tag overrides to set WordPress rules to Block
 ---
 
-import { Details, APIRequest } from "~/components";
+import { Details, APIRequest, Render } from "~/components";
 
 Follow the steps below to create a rule that executes a managed ruleset and defines an override for rules with a specific tag.
 
 1. [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a managed ruleset.
 2. [Configure a tag override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets a specified action for all rules with a given tag.
 
-The example below uses the [Update a zone entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to perform the two steps in a single `PUT` request.
+## Zone-level example
+
+This example uses the [Update a zone entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to perform the following two steps in a single `PUT` request:
 
 - Set the list of rules in the `http_request_firewall_managed` phase entry point ruleset to a single rule that executes the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/).
 - Override rules with the `wordpress` tag to set the action to `block`. All other rules use the default action provided by the ruleset issuer.
-
-<Details header="Example: Use tag overrides to set WordPress rules to Block at the zone level">
 
 <APIRequest
 	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
@@ -49,9 +49,14 @@ The example below uses the [Update a zone entry point ruleset](/ruleset-engine/r
 	}}
 />
 
-</Details>
+## Account-level example
 
-<Details header="Example: Use tag overrides to set WordPress rules to Block at the account level">
+This example uses the [Update an account entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to perform the following two steps in a single `PUT` request:
+
+- Set the list of rules in the `http_request_firewall_managed` phase entry point ruleset to a single rule that executes the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) for the zone `example.com`.
+- Override rules with the `wordpress` tag to set the action to `block`. All other rules use the default action provided by the ruleset issuer.
+
+<Render file="deploy-account-ruleset-requirement" product="ruleset-engine" />
 
 <APIRequest
 	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
@@ -79,5 +84,3 @@ The example below uses the [Update a zone entry point ruleset](/ruleset-engine/r
 		],
 	}}
 />
-
-</Details>

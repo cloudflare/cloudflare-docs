@@ -66,10 +66,8 @@ export default {
     let userIdParam = url.searchParams.get("userId")
 
     if (userIdParam) {
-      // Create (or get) a Durable Object based on that userId.
-      let durableObjectId = env.YOUR_DO_CLASS.idFromName(userIdParam);
-      // Get a "stub" that allows you to call that Durable Object
-      let durableObjectStub = env.YOUR_DO_CLASS.get(durableObjectId);
+      // Get a stub that allows you to call that Durable Object
+      let durableObjectStub = env.YOUR_DO_CLASS.getByName(userIdParam);
 
       // Pass the request to that Durable Object and await the response
       // This invokes the constructor once on your Durable Object class (defined further down)

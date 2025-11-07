@@ -1,0 +1,70 @@
+---
+title: Cloudflare Tunnel
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { GlossaryTooltip, Tabs, TabItem, Example } from "~/components";
+
+Cloudflare Tunnel creates secure connections from your infrastructure to Cloudflare's global network, providing the network connectivity that allows Workers to access your private resources.
+
+When you create a VPC Service, you specify a tunnel ID and target service. Workers VPC then routes requests from your Worker to the appropriate tunnel, forwards traffic to your private network, connects to the specified hostname or IP address, and returns responses back to your Worker.
+
+The tunnel maintains persistent connections to Cloudflare, eliminating the need for inbound firewall rules or public IP addresses.
+
+:::note
+This section provides tunnel configuration specific to Workers VPC use cases. For comprehensive tunnel documentation including monitoring and advanced configurations, refer to the [full Cloudflare Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+:::
+
+## Create and run tunnel (`cloudflared`)
+
+Cloudflare Tunnel requires the installation of a lightweight and highly scalable server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare.
+
+Cloudflare Tunnels can be created one of two ways:
+
+1. **Remotely-managed tunnels (recommended):** Remotely-managed configurations are stored on Cloudflare, allowing you to manage the tunnel from any machine using the dashboard, API, or Terraform.
+2. **Locally-managed tunnels:** A locally-managed tunnel is created by running `cloudflared tunnel create <NAME>` on the command line. Tunnel configuration is stored in your local cloudflared directory.
+
+For Workers VPC, we recommend creating a remotely-managed tunnel through the dashboard. Follow the [Tunnels for Workers VPC dashboard setup guide](/workers-vpc/get-started/) to create your tunnel with provided installation commands shown in the dashboard.
+
+For locally-managed tunnels, refer to the [`cloudflared` locally-managed tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/) guide. For manual installation, refer to the [`cloudflared` downloads page](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) for platform-specific installation instructions.
+
+:::note[Important Note]
+Cloudflare Tunnels can either be configured for usage with [Cloudflare Zero Trust](/cloudflare-one/) or [Workers VPC](/workers-vpc/).
+
+Use Tunnels with Zero Trust when you are exposing internal applications securely to your employees with Cloudflare Access and hostnames.
+
+Use Tunnels with Workers VPC when you want to access private APIs, private databases, internal services or other HTTP services within your cloud or on-premise private network from Workers.
+
+The same `cloudflared` instance can be used to cover both Zero Trust and Workers VPC use cases simultaneously.
+
+:::
+
+:::note
+
+[Ingress configurations](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/) for locally-managed tunnels are only relevant when using tunnels to expose services to the public internet, and are not required for Workers VPC as routing is handled by the VPC Service configuration.
+
+:::
+
+## Cloud platform setup guides
+
+For platform-specific tunnel deployment instructions for production workloads:
+
+- [AWS](/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/aws/) - Deploy tunnels in Amazon Web Services
+- [Azure](/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/azure/) - Deploy tunnels in Microsoft Azure
+- [Google Cloud](/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/google-cloud-platform/) - Deploy tunnels in Google Cloud Platform
+- [Kubernetes](/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/kubernetes/) - Deploy tunnels in Kubernetes clusters
+- [Terraform](/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/terraform/) - Deploy tunnels using Infrastructure as Code
+
+Refer to the full Cloudflare Tunnel documentation on [how to setup Tunnels for high availability and failover with replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/).
+
+:::note
+We do not recommend using `cloudflared` in autoscaling setups because downscaling (removing replicas) will break existing user connections to that replica. Additionally, `cloudflared` does not load balance across replicas; replicas are strictly for high availability and requests are routed to the nearest replica.
+:::
+
+## Next steps
+
+- Configure [VPC Services](/workers-vpc/configuration/vpc-services/) to connect your tunnels to Workers
+- Review [hardware requirements](/workers-vpc/configuration/tunnel/hardware-requirements/) for capacity planning
+- Review the [complete Cloudflare Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/) for advanced features

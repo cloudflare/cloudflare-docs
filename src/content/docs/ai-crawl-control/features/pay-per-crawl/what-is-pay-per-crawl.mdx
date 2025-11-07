@@ -1,0 +1,46 @@
+---
+title: What is Pay Per Crawl?
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { Steps, GlossaryTooltip } from "~/components";
+
+:::note[Pay per crawl closed beta]
+Pay per crawl is currently in closed beta.
+
+To find out how to join the beta program, reach out to us at [Pay per crawl signup](http://www.cloudflare.com/paypercrawl-signup/), or contact your account executive if you are an existing Enterprise customer.
+
+To learn more about pay per crawl, refer to Cloudflare blog: [Introducing pay per crawl: enabling content owners to charge AI crawlers for access](https://blog.cloudflare.com/introducing-pay-per-crawl/).
+:::
+
+AI crawlers often consume vast amounts of web content. Some provide mutual benefit to content owners by indexing content for search engines, but others engage in activities such as content scraping without permission.
+
+The resulting landscape leaves content owners with limited options for managing AI crawlers or receiving compensation for automated access to their intellectual property.
+
+## What is Pay Per Crawl?
+
+Pay per crawl is a feature of AI Crawl Control that enables site owners to control and monetize AI crawler access to content by setting a price per zone.
+
+Each time an AI crawler requests content, they either present payment intent via request headers for successful `HTTP 200` access, or receive an `HTTP 402 Payment Required` response with pricing. Cloudflare acts as the <GlossaryTooltip term="Merchant of Record">Merchant of Record</GlossaryTooltip> for pay per crawl and also provides the underlying technical infrastructure.
+
+:::note
+If you block an AI crawler from a zone via either of Cloudflare's [WAF](/waf/) or [Bot Management](/bots/get-started/bot-management/) products, those products' rulesets will override pay per crawl's "charge" feature, and the blocked crawler will not have access to the zone.
+:::
+
+Ultimately, pay per crawl enables:
+
+- Site owners to take control of their content, and charge a fee every time an AI crawler accesses a page in their [Cloudflare zone](/fundamentals/concepts/accounts-and-zones/#zones). For more details, refer to [use pay per crawl as a site owner](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/).
+- AI crawler owners to pay to access content on sites protected by pay per crawl. For more details, refer to [use pay per crawl as an AI owner](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-ai-owner/).
+
+![Pay per crawl components](~/assets/images/ai-crawl-control/ai-crawl-control-pay-per-crawl-diagram.png)
+
+## Additional resources
+
+Refer to the following resources.
+
+- [Use pay per crawl as a site owner](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/enable-in-account-settings/).
+- [Use pay per crawl as an AI owner](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-ai-owner/set-up-cloudflare-account/).
+- [AI Crawl Control with Cloudflare WAF](/ai-crawl-control/configuration/ai-crawl-control-with-waf/).
+- [AI Crawl Control with Cloudflare Bots](/ai-crawl-control/configuration/ai-crawl-control-with-bots/).

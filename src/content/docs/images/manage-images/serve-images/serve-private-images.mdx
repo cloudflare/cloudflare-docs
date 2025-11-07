@@ -5,13 +5,15 @@ sidebar:
   order: 23
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample,DashButton } from "~/components";
 
 You can serve private images by using signed URL tokens. When an image requires a signed URL, the image cannot be accessed without a token unless it is being requested for a variant set to always allow public access.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Select **Images** > **Keys**.
-3. Copy your key and use it to generate an expiring tokenized URL.
+1. In the Cloudflare dashboard, go to the **Keys** page. 
+
+   <DashButton url="/?to=/:account/images/keys" />
+
+2. Copy your key and use it to generate an expiring tokenized URL.
 
 :::note
 

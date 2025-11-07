@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components"
+
 Cache-tag purging makes multi-file purging easier because you can instantly bulk purge by adding cache-tags to your assets, such as webpages, image files, and more.
 
 ## General workflow for cache-tags
@@ -46,12 +48,14 @@ When your content reaches our edge network, Cloudflare:
 
 ## Purge using cache-tags
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select **Caching** > **Configuration**.
-3. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
-4. Under **Purge by**, select **Tag**.
-5. In the text box, enter your tags to use to purge the cached resources. To purge multiple cache-tagged resources, separate each tag with a comma or have one tag per line.
-6. Select **Purge**.
+1. In the Cloudflare dashboard, go to the **Configuration** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
+3. Under **Purge by**, select **Tag**.
+4. In the text box, enter your tags to use to purge the cached resources. To purge multiple cache-tagged resources, separate each tag with a comma or have one tag per line.
+5. Select **Purge**.
 
 For information on rate limits, refer to the [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits) section.
 

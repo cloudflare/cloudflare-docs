@@ -1,0 +1,59 @@
+---
+title: Dedicated Egress IP for Logpush
+pcx_content_type: how-to
+sidebar:
+  order: 101
+head:
+  - tag: title
+    content: Dedicated Egress IP for Logpush
+---
+
+This guide covers [Aegis](/aegis/) and Logpush configuration and testing instructions to enable log delivery with a fixed, dedicated egress IP.
+
+## Prerequisites 
+
+To use Logpush with a dedicated egress IP, you will need to have Aegis IPs. Note that the Aegis IP pool is associated with a zone, not with an account. To use Logpush with dedicated IPs, traffic must be routed to a single zone.  
+
+The general approach is to have your Logpush job proxying Logpush data through a Cloudflare zone with Aegis enabled to send data to your desired destination. This way your destination will only need to allowlist the provisioned Aegis IPs of your proxy zone.
+
+As a prerequisite, you need to create a dedicated zone or use an existing zone. If using an existing zone, be aware that the zone's egress will be restricted to Aegis IPs. Make sure all services using that zone will not be impacted. 
+
+It is recommended to use a separate, dedicated zone as a proxy to avoid impacting production systems. If you choose to create a new zone, follow the [steps](/registrar/get-started/register-domain/) to register a new domain with Cloudflare.
+
+The following example shows how to set up logpush and Aegis to proxy an HTTPS destination, but the proxying should work for any supported Logpush destination as all destinations use the HTTP protocol underneath.
+
+## 1. Provision Aegis IP Pool
+
+1. Work with your Cloudflare account team to purchase [Aegis](/aegis/) IPs for your zone.
+
+2. (Optional but recommended) Request two IPs — one in PDX-B and one in SJC-A — to ensure coverage across regions.
+
+3. Confirm Pool ID once provisioned.
+
+## 2. Configure a zone for Aegis
+
+1. Register or use an existing zone for the Aegis pool.
+
+2. Associate the Pool ID with the selected zone using the API. For more details, refer to the [Aegis Setup documentation](/aegis/setup/).
+  
+## 3. Proxy zone setup
+
+1. In your zone, add a DNS record (CNAME or A/AAAA) with **Target** as HTTP destination endpoint. 
+
+![Create a DNS record in the Cloudflare dashboard to define the HTTP destination endpoint](~/assets/images/logs/endpoint.png)
+
+2. If needed, configure [origin rules](/rules/origin-rules/) to specify a custom port. This is useful if your destination only accepts traffic on a non standard port, for example `12345`. You can configure `logpush.yourdestinationendpoint.com` (without specifying a port, as Cloudflare by default only proxies traffic on HTTP/HTTPS ports) to proxy to `yourdestinationendpoint.com:12345`.
+
+
+## 4. Configure Logpush
+
+1. Create a Logpush job with the following details:
+
+- Destination: HTTP
+- Endpoint: Use the domain/path set up (the Cloudflare dashboard will auto-validate the destination). Use the server name specified in the **Name** section in the DNS record. In this case, `logpush.yourdestionationendpoint.com`.
+
+![Enter destination details when creating a Logpush job in the Cloudflare dashboard](~/assets/images/logs/destination-details.png)
+
+- Configuration: Select dataset, job name, filters, and fields. Refer to the [Logpush documentation](/logs/logpush/) for more details.
+
+2. Check destination to confirm if the logs are received.

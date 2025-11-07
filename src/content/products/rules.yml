@@ -10,5 +10,5 @@ product:
 
 meta:
   title: Cloudflare Rules docs
-  description: Create rules that adjust incoming requests, change Cloudflare settings, or trigger actions.
+  description: Modify incoming requests, change Cloudflare settings, or trigger actions
   author: "@cloudflare"

@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Subdomain delegation and available setups
-
 ---
 
-import { DirectoryListing, GlossaryTooltip, Render } from "~/components"
+import { DirectoryListing, GlossaryTooltip, Render } from "~/components";
 
 :::caution
 
@@ -33,7 +32,7 @@ Subdomain setup is only available for Enterprise accounts. If you only want to c
 
 ```
 
-***
+---
 
 ## Available setups
 
@@ -55,7 +54,7 @@ Subdomains using a partial setup represent an exception in the sense that delega
 
 This table assumes zones that are in an [active status](/dns/zone-setups/reference/domain-status/). For example, if you need to add the parent zone to Cloudflare when its child zone already exists in a partial setup, you can [convert the parent zone to partial](/dns/zone-setups/partial-setup/setup/#1-convert-your-zone-and-review-dns-records) while it is still in pending status.
 
-***
+---
 
 ## How to
 
@@ -65,7 +64,7 @@ Refer to the following guides to learn how to configure a subdomain setup depend
 
 Although the how-to guides in this documentation are focused on both parent domains and subdomains existing in Cloudflare, it is also possible to achieve a subdomain setup in Cloudflare while the parent domain exists in a different DNS provider.
 
-***
+---
 
 ## SSL/TLS certificates
 
@@ -75,4 +74,4 @@ For instance, if `example.com` [creates an advanced certificate](/ssl/edge-certi
 
 ## Access applications
 
-<Render file="subdomain-setup-access-apps" />
+<Render file="subdomain-setup-access-apps" product="dns" />

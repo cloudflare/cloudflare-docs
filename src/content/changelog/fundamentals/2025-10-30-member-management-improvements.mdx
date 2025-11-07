@@ -1,0 +1,46 @@
+---
+title: Revamped Member Management UI 
+description: Simplifying the management of users, groups, and permissions within Cloudflare.
+products:
+  - fundamentals
+date: 2025-10-30
+---
+
+As Cloudflare's platform has grown, so has the need for precise, role-based access control. We’ve redesigned the Member Management experience in the Dashboard to help administrators more easily discover, assign, and refine permissions for specific principals.
+
+
+### What's New
+
+**Refreshed member invite flow**
+
+We overhauled the Invite Members UI to simplify inviting users and assigning permissions.
+
+![Updated Invite Flow UX](~/assets/images/changelog/fundamentals/2025-10-30-invite-experience.gif)
+
+
+**Refreshed Members Overview Page**
+ 
+We've updated the Members Overview Page to clearly display:
+- Member 2FA status
+- Which members hold Super Admin privileges
+- API access settings per member
+- Member onboarding state (accepted vs pending invite)
+
+![Updated Member Management Overview](~/assets/images/changelog/fundamentals/2025-10-30-member-management-screen.png)
+
+**New Member Permission Policies Details View**
+
+We've created a new member details screen that shows all permission policies associated with a member; including policies inherited from group associations to make it easier for members to understand the effective permissions they have. 
+
+![Updated Permission Policies Details Screen](~/assets/images/changelog/fundamentals/2025-10-30-permission-policies-screen.gif)
+
+
+**Improved Member Permission Workflow** 
+
+We redesigned the permission management experience to make it faster and easier for administrators to review roles and grant access.
+
+![Updated Member Permission Management UX](~/assets/images/changelog/fundamentals/2025-10-30-permission-policies-screen.gif)
+
+**Account-scoped Policies Restrictions Relaxed**
+
+Previously, customers could only associate a single account-scoped policy with a member. We've relaxed this restriction, and now Administrators can now assign multiple account-scoped policies to the same member; bringing policy assignment behavior in-line with user-groups and providing greater flexibility in managing member permissions. 

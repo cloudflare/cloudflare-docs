@@ -5,7 +5,7 @@ sidebar:
   order: 7
 
 ---
-import { Type, MetaInfo, WranglerConfig } from "~/components";
+import { Type, MetaInfo, WranglerConfig, DashButton } from "~/components";
 
 A KV namespace is a key-value database replicated to Cloudflare’s global network.
 
@@ -49,12 +49,13 @@ kv_namespaces = [
 
 To bind the namespace to your Worker in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Workers & Pages**.
-3. Select your **Worker**.
-4. Select **Settings** > **Bindings**.
-5. Select **Add**.
-6. Select **KV Namespace**.
-7. Enter your desired variable name (the name of the binding).
-8. Select the KV namespace you wish to bind the Worker to.
-9. Select **Deploy**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your **Worker**.
+3. Select **Settings** > **Bindings**.
+4. Select **Add**.
+5. Select **KV Namespace**.
+6. Enter your desired variable name (the name of the binding).
+7. Select the KV namespace you wish to bind the Worker to.
+8. Select **Deploy**.

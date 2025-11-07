@@ -41,7 +41,7 @@ To support non-SNI requests, you can:
 
 [HTTPS Service (HTTPS) records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
 
-If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/) and [proxied DNS records](/dns/proxy-status/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
+If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), [proxied DNS records](/dns/proxy-status/), and is also using [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
 :::caution
 Both HTTP/2 and HTTP/3 configurations also require that you have an SSL/TLS certificate served by Cloudflare. This means that disabling Universal SSL, for example, could impact this behavior.

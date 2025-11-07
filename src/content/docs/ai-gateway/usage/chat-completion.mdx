@@ -1,0 +1,82 @@
+---
+title: Unified API (OpenAI compat)
+pcx_content_type: reference
+tags:
+  - AI
+sidebar:
+  order: 2
+---
+
+Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.
+
+## Endpoint URL
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
+```
+
+Replace `{account_id}` and `{gateway_id}` with your Cloudflare account and gateway IDs.
+
+## Parameters
+
+Switch providers by changing the `model` and `apiKey` parameters.
+
+Specify the model using `{provider}/{model}` format. For example:
+
+- `openai/gpt-5-mini`
+- `google-ai-studio/gemini-2.5-flash`
+- `anthropic/claude-sonnet-4-5`
+
+## Examples
+
+### OpenAI SDK
+
+```js
+import OpenAI from "openai";
+const client = new OpenAI({
+	apiKey: "YOUR_PROVIDER_API_KEY", // Provider API key
+	// NOTE: the OpenAI client automatically adds /chat/completions to the end of the URL, you should not add it yourself.
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+});
+
+const response = await client.chat.completions.create({
+	model: "google-ai-studio/gemini-2.5-flash",
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
+
+console.log(response.choices[0].message.content);
+```
+
+### cURL
+
+```bash
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
+  --header 'Authorization: Bearer {GOOGLE_GENERATIVE_AI_API_KEY}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "google-ai-studio/gemini-2.5-flash",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+## Supported Providers
+
+The OpenAI-compatible endpoint supports models from the following providers:
+
+- [Anthropic](/ai-gateway/usage/providers/anthropic/)
+- [OpenAI](/ai-gateway/usage/providers/openai/)
+- [Groq](/ai-gateway/usage/providers/groq/)
+- [Mistral](/ai-gateway/usage/providers/mistral/)
+- [Cohere](/ai-gateway/usage/providers/cohere/)
+- [Perplexity](/ai-gateway/usage/providers/perplexity/)
+- [Workers AI](/ai-gateway/usage/providers/workersai/)
+- [Google-AI-Studio](/ai-gateway/usage/providers/google-ai-studio/)
+- [Grok](/ai-gateway/usage/providers/grok/)
+- [DeepSeek](/ai-gateway/usage/providers/deepseek/)
+- [Cerebras](/ai-gateway/usage/providers/cerebras/)

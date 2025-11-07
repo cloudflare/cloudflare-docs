@@ -1,0 +1,25 @@
+---
+pcx_content_type: troubleshooting
+title: Handle False Positives from Bot Fight Mode or Super Bot Fight Mode
+sidebar:
+  order: 3
+  label: False positives
+
+---
+
+import { Render } from "~/components";
+
+[Bot Fight Mode (BFM)](/bots/get-started/bot-fight-mode/) and [Super Bot Fight Mode (SBFM)](/bots/get-started/bot-fight-mode/) are designed to stop active attacks quickly. Due to their aggressive nature, false positives can occur where legitimate human or automated traffic is incorrectly challenged or blocked.
+
+When dealing with false positives, consider the following key differences and solutions:
+
+- Bot Fight Mode has limited control. You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. Bot Fight Mode will be disabled if there are any IP Access rules present. If you turned on BFM during an attack, and the attack has subsided, we recommend either disabling the feature using IP Access rules to bypass BFM, or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+- Super Bot Fight Mode can be bypassed with IP Access _Allow_ action rules. You can use the _Skip_ action in [WAF custom rules](/waf/custom-rules/skip/) to specify where Super Bot Fight Mode should not run.
+
+<Render file="flexible-sbfm" product="bots" />
+
+You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
+
+Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trigger if an IP Access rule matches the request. For example, the IP Access rule matches the connecting IP.
+
+If you encounter persistent false positives, you can [disable the feature in the Cloudflare dashboard](/bots/get-started/bot-fight-mode/#disable-bot-fight-mode).

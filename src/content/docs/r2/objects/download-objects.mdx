@@ -5,15 +5,17 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 You can download objects from your bucket from the Cloudflare dashboard or using the Wrangler.
 
 ## Download objects via the Cloudflare dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **R2**.
-2. From the **R2** page in the dashboard, locate and select your bucket.
-3. From your bucket's page, locate the object you want to download.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+2. Locate and select your bucket.
+3. Locate the object you want to download.
 4. At the end of the object's row, select the menu button and click **Download**.
 
 ## Download objects via Wrangler

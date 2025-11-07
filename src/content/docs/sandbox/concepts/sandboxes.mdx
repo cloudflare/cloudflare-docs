@@ -1,0 +1,148 @@
+---
+title: Sandbox lifecycle
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+A sandbox is an isolated execution environment where your code runs. Each sandbox:
+
+- Has a unique identifier (sandbox ID)
+- Contains an isolated filesystem
+- Runs in a dedicated Linux container
+- Maintains state while the container is active
+- Exists as a Cloudflare Durable Object
+
+## Lifecycle states
+
+### Creation
+
+A sandbox is created the first time you reference its ID:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, "user-123");
+await sandbox.exec('echo "Hello"'); // First request creates sandbox
+```
+
+### Active
+
+The sandbox container is running and processing requests. All state remains available: files, running processes, shell sessions, and environment variables.
+
+### Idle
+
+After a period of inactivity (10 minutes by default), the container stops to free resources. When the next request arrives, a fresh container starts. All previous state is lost and the environment resets to its initial state.
+
+### Destruction
+
+Sandboxes are explicitly destroyed or automatically cleaned up:
+
+```typescript
+await sandbox.destroy();
+// All files, processes, and state deleted permanently
+```
+
+## Container lifetime and state
+
+Sandbox state exists only while the container is active. Understanding this is critical for building reliable applications.
+
+**While the container is active** (typically minutes to hours of activity):
+
+- Files written to `/workspace`, `/tmp`, `/home` remain available
+- Background processes continue running
+- Shell sessions maintain their working directory and environment
+- Code interpreter contexts retain variables and imports
+
+**When the container stops** (due to inactivity or explicit destruction):
+
+- All files are deleted
+- All processes terminate
+- All shell state resets
+- All code interpreter contexts are cleared
+
+The next request creates a fresh container with a clean environment.
+
+## Naming strategies
+
+### Per-user sandboxes
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
+```
+
+User's work persists while actively using the sandbox. Good for interactive environments, playgrounds, and notebooks where users work continuously.
+
+### Per-session sandboxes
+
+```typescript
+const sessionId = `session-${Date.now()}-${Math.random()}`;
+const sandbox = getSandbox(env.Sandbox, sessionId);
+// Later:
+await sandbox.destroy();
+```
+
+Fresh environment each time. Good for one-time execution, CI/CD, and isolated tests.
+
+### Per-task sandboxes
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, `build-${repoName}-${commit}`);
+```
+
+Idempotent operations with clear task-to-sandbox mapping. Good for builds, pipelines, and background jobs.
+
+## Request routing
+
+The first request to a sandbox determines its geographic location. Subsequent requests route to the same location.
+
+**For global apps**:
+
+- Option 1: Multiple sandboxes per user with region suffix (`user-123-us`, `user-123-eu`)
+- Option 2: Single sandbox per user (simpler, but some users see higher latency)
+
+## Lifecycle management
+
+### When to destroy
+
+```typescript
+try {
+	const sandbox = getSandbox(env.Sandbox, sessionId);
+	await sandbox.exec("npm run build");
+} finally {
+	await sandbox.destroy(); // Clean up temporary sandboxes
+}
+```
+
+**Destroy when**: Session ends, task completes, resources no longer needed
+
+**Don't destroy**: Personal environments, long-running services
+
+### Handling container restarts
+
+Containers restart after inactivity or failures. Design your application to handle state loss:
+
+```typescript
+// Check if required files exist before using them
+const files = await sandbox.listFiles("/workspace");
+if (!files.includes("data.json")) {
+	// Reinitialize: container restarted and lost previous state
+	await sandbox.writeFile("/workspace/data.json", initialData);
+}
+
+await sandbox.exec("python process.py");
+```
+
+## Best practices
+
+- **Name consistently** - Use clear, predictable naming schemes
+- **Clean up temporary sandboxes** - Always destroy when done
+- **Reuse long-lived sandboxes** - One per user is often sufficient
+- **Batch operations** - Combine commands: `npm install && npm test && npm build`
+- **Design for ephemeral state** - Containers restart after inactivity, losing all state
+
+## Related resources
+
+- [Architecture](/sandbox/concepts/architecture/) - How sandboxes fit in the system
+- [Container runtime](/sandbox/concepts/containers/) - What runs inside sandboxes
+- [Session management](/sandbox/concepts/sessions/) - Advanced state isolation
+- [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes
+- [Sessions API](/sandbox/api/sessions/) - Create and manage execution sessions

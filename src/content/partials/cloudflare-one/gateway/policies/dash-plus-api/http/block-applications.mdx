@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, APIRequest } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -13,24 +13,22 @@ import { Tabs, TabItem } from "~/components";
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-HTTP-Application-Blocklist",
-  "description": "Limit access to shadow IT by blocking web-based tools and applications",
-  "precedence": 60,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(app.type.ids[*] in {25})",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-HTTP-Application-Blocklist",
+		description:
+			"Limit access to shadow IT by blocking web-based tools and applications",
+		precedence: 60,
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: "any(app.type.ids[*] in {25})",
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
