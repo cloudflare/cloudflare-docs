@@ -88,7 +88,7 @@ This will output an image registry URI that you can then use in your Wrangler co
 To use container images stored in [Amazon ECR](https://aws.amazon.com/ecr/), you will need to configure the ECR registry domain with credentials.
 These credentials get stored in [Secrets Store](/secrets-store) under the `containers` scope.
 When we prepare your container, these credentials will be used to generate an ephemeral token that can pull your image.
-At this time, we don't support public ECR images.
+We do not currently support public ECR images.
 To generate the necessary credentials for ECR, you will need to create an IAM user with a read-only policy.
 The following example grants access to all image repositories under AWS account `123456789012` in `us-east-1`.
 
