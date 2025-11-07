@@ -85,7 +85,7 @@ A typical use case of rate limiting is to protect a login endpoint against attac
 | Matching criteria        | Hostname equals `example.com` and URI Path equals `/login` and Request Method equals `POST`               |
 | Expression               | `http.host eq "example.com" and http.request.uri.path eq "/login" and http.request.method eq "POST"`      |
 | Counting characteristics | IP                                                                                                        |
-| Counting criteria        | URI Path equals `/login` and Method equals `POST` and Response code is in (401, 403)                      |
+| Increment counter when   | URI Path equals `/login` and Method equals `POST` and Response code is in (401, 403)                      |
 | Counting expression      | `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}` |
 | Rate (Requests / Period) | 4 requests / 1 minute                                                                                     |
 | Action                   | Managed Challenge                                                                                         |
@@ -97,7 +97,7 @@ A typical use case of rate limiting is to protect a login endpoint against attac
 | Matching criteria        | Hostname equals `example.com` and URI Path equals `/login` and Request Method equals `POST`               |
 | Expression               | `http.host eq "example.com" and http.request.uri.path eq "/login" and http.request.method eq "POST"`      |
 | Counting characteristics | IP                                                                                                        |
-| Counting criteria        | URI Path equals `/login` and Request Method equals `POST` and Response Status Code is in (401, 403)       |
+| Increment counter when   | URI Path equals `/login` and Request Method equals `POST` and Response Status Code is in (401, 403)       |
 | Counting expression      | `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}` |
 | Rate (Requests / Period) | 10 requests / 10 minutes                                                                                  |
 | Action                   | Managed Challenge                                                                                         |
@@ -109,10 +109,12 @@ A typical use case of rate limiting is to protect a login endpoint against attac
 | Matching criteria        | Host equals `example.com`                                                                                 |
 | Expression               | `http.host eq "example.com"`                                                                              |
 | Counting characteristics | IP                                                                                                        |
-| Counting criteria        | URI Path equals `/login` and Request Method equals `POST` and Response Status Code is in (401, 403)       |
+| Increment counter when   | URI Path equals `/login` and Request Method equals `POST` and Response Status Code is in (401, 403)       |
 | Counting expression      | `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}` |
 | Rate (Requests / Period) | 20 requests / 1 hour                                                                                      |
 | Action                   | Block for 1 day                                                                                           |
+
+_These example rules require a Business plan or above._
 
 Rule #1 allows up to four requests per minute, after which a Managed Challenge is triggered. This configuration allows legitimate customers a few attempts to remember their password. If an automated actor makes several requests, that client will likely be blocked by an unsolved Managed Challenge. On the other hand, if a human gets and passes the challenge when reaching rule #1's rate limit, rule #2 will provide the next level of protection, allowing for up to 10 requests over the next 10 minutes. For clients exceeding this second threshold, rule #3 (the most severe) will apply, blocking the client for one day.
 
@@ -240,6 +242,8 @@ In this situation, you could configure a rule similar to the following:
 | Counting expression      | `http.response.code in {401 403}`     |
 | Rate (Requests / Period) | 5 requests / 3 minutes                |
 | Action                   | Managed Challenge                     |
+
+_This example rule requires a Business plan or above._
 
 To control the rate of actions performed by automated sources, consider use rate limiting rules together with [Bot Management](/bots/get-started/bot-management/). With Bot Management, you can use the [bot score](/bots/concepts/bot-score/) as part of the matching criteria to apply the rule only to automated or likely automated traffic. For example, you can use a maximum score (or threshold) of `30` for likely automated traffic and `10` for automated traffic.
 

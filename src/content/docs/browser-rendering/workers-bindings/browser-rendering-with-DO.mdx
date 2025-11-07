@@ -1,16 +1,15 @@
 ---
 pcx_content_type: tutorial
 title: Deploy a Browser Rendering Worker with Durable Objects
-products:
-  - Workers
-  - Durable Objects
-  - R2
+products: [workers, durable-objects, r2]
 difficulty: Beginner
-updated: 2023-09-28
-languages:
+reviewed: 2023-09-28
+tags:
   - JavaScript
 sidebar:
   order: 2
+description: >-
+  Use the Browser Rendering API along with Durable Objects to take screenshots from web pages and store them in R2.
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
@@ -35,7 +34,7 @@ Create a new Worker project named `browser-worker` by running:
 
 ## 2. Install Puppeteer
 
-In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
+In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/puppeteer/):
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
@@ -107,8 +106,7 @@ import puppeteer from "@cloudflare/puppeteer";
 
 export default {
 	async fetch(request, env) {
-		let id = env.BROWSER.idFromName("browser");
-		let obj = env.BROWSER.get(id);
+		let obj = env.BROWSER.getByName("browser");
 
 		// Send a request to the Durable Object, then await its response.
 		let resp = await obj.fetch(request.url);
@@ -211,7 +209,9 @@ export class Browser {
 
 ## 6. Test
 
-Run `npx wrangler dev` to test your Worker locally or run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker remotely before deploying to Cloudflare's global network.
+Run `npx wrangler dev` to test your Worker locally.
+
+<Render file="remote-binding-note" product="workers" />
 
 ## 7. Deploy
 

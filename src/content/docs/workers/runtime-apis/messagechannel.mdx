@@ -1,0 +1,41 @@
+---
+pcx_content_type: configuration
+title: MessageChannel
+head: []
+description: Channel messaging with MessageChannel and MessagePort
+
+---
+
+## Background
+
+The [MessageChannel API](https://developer.mozilla.org/en-US/docs/Web/API/MessageChannel) provides a way to create a communication channel between different parts of your application.
+
+The Workers runtime provides a minimal implementation of the `MessageChannel` API that is
+currently limited to uses with a single Worker instance. This means that you can use `MessageChannel` to send messages between different parts of your Worker, but not across different Workers.
+
+```js
+const { port1, port2 } = new MessageChannel();
+
+port2.onmessage = (event) => {
+	console.log('Received message:', event.data);
+};
+
+port2.postMessage('Hello from port2!');
+```
+
+Any value that can be used with the `structuredClone(...)` API can be sent over the port.
+
+## Differences
+
+There are a number of key limitations to the `MessageChannel` API in Workers:
+
+* Transfer lists are currently not supported. This means that you will not be able to transfer
+  ownership of objects like `ArrayBuffer` or `MessagePort` between ports.
+* The `MessagePort` is not yet serializable. This means that you cannot send a `MessagePort` object
+  through the `postMessage` method or via JSRPC calls.
+* The `'messageerror'` event is only partially supported. If the `'onmessage'` handler throws an
+  error, the `'messageerror'` event will be triggered, however, it will not be triggered when there
+	are errors serializing or deserializing the message data. Instead, the error will be thrown when
+	the `postMessage` method is called on the sending port.
+* The `'close'` event will be emitted on both ports when one of the ports is closed, however it
+  will not be emitted when the Worker is terminated or when one of the ports is garbage collected.

@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Details, Example } from "~/components"
+import { Details, Example, DashButton } from "~/components"
 
 If you control your own IP prefix(es), you can set up reverse zones with PTR records to allow reverse DNS lookups.
 
@@ -71,7 +71,9 @@ To set up a reverse zone, you need to create a reverse DNS zone and add PTR reco
 
 ### 2. Add PTR records
 
-1. Go to **DNS** > **Records**.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
 
 2. For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
 

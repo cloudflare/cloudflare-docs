@@ -11,7 +11,7 @@ import { Render, Tabs, TabItem, Details, APIRequest } from "~/components";
 This feature requires an Enterprise plan with a paid add-on.
 :::
 
-<Render file="waf-managed-rules-intro" />
+<Render file="waf-managed-rules-intro" product="waf" />
 
 ## Account-level deployment
 
@@ -109,6 +109,7 @@ The following `POST` request for the [Create an account ruleset](/api/resources/
 
 <Render
 	file="managed-ruleset-config-options"
+	product="waf"
 	params={{
 		overridesUrl:
 			"/waf/account/managed-rulesets/deploy-dashboard/#configure-a-managed-ruleset",

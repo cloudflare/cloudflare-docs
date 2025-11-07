@@ -68,7 +68,7 @@ It is required to configure Endpoint Management if you want to set up Schema val
 Refer to the example configuration below to manage [Schema validation 2.0](/api-shield/security/schema-validation/api/) on your zone.
 
 ```tf title="Example configuration"
-# Schema that should be used for schema validation 2.0
+# Schema that should be used for Schema validation 2.0
 resource "cloudflare_api_shield_schema" "example_schema" {
   zone_id                   = var.zone_id
   name                      = "example-schema"

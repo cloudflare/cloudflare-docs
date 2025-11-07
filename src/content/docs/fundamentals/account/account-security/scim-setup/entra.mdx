@@ -7,7 +7,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="idp-group-deprecation" />
+<Render file="idp-group-deprecation" product="fundamentals" />
 
 Once you have [gathered the required data](/fundamentals/account/account-security/scim-setup/#gather-the-required-data), the following steps will be required to finish the provisioning with Entra.
 
@@ -32,7 +32,7 @@ Once you have [gathered the required data](/fundamentals/account/account-securit
 3. After the users are assigned, navigate to **Provisioning** on the sidebar menu and select **Start Provisioning**.
 
 :::note
-To successfully synchronize the group details into Cloudflare the `User Principal Name` (of `Identity`) and `Email` (of `Contact Information`) fields of each user must be identical. Values are case-sensitive, and the User Principal Name can only contain alphanumeric characters. Learn more about [how to create, invite, and delete users](https://learn.microsoft.com/entra/fundamentals/how-to-create-delete-users). 
+To successfully synchronize the group details into Cloudflare the `User Principal Name` (of `Identity`) and `Email` (of `Contact Information`) fields of each user must be identical. Values are case-sensitive, and the User Principal Name can only contain alphanumeric characters. Learn more about [how to create, invite, and delete users](https://learn.microsoft.com/entra/fundamentals/how-to-create-delete-users).
 :::
 
 4. To validate which users and groups have been synchronized, navigate to **Provisioning logs** on the sidebar menu. You can also [review the Cloudflare Audit Logs](/fundamentals/account/account-security/review-audit-logs/).
@@ -60,6 +60,7 @@ az account get-access-token --resource https://graph.microsoft.com
 
 (payload with accessToken returned)
 ```
+
 **2. Create a new application via template.**
 
 The template ID 8adf8e6e-67b2-4cf2-a259-e3dc5476c621 is the suggested template to create non-gallery apps in the Entra docs. Replace `<accessToken>` and `displayName` with your values.
@@ -87,7 +88,7 @@ curl -X POST 'https://graph.microsoft.com/v1.0/applicationTemplates/8adf8e6e-67b
     // ... snipped rest of large application payload
   },
   "servicePrincipal": {
-    "id": "a8cb133d-f841-4eb9-8bc9-c8e9e8c0d417", // Note this ID for the subsequent request 
+    "id": "a8cb133d-f841-4eb9-8bc9-c8e9e8c0d417", // Note this ID for the subsequent request
     "deletedDateTime": null,
     "accountEnabled": true,
     "appId": "03d8207b-e837-4be9-b4e6-180492eb3b61",
@@ -106,7 +107,7 @@ To enable provisioning, you will also need to create a job. Note the SERVICE_PRI
 curl -X POST 'https://graph.microsoft.com/v1.0/servicePrincipals/<SERVICE_PRINCIPAL_ID>/synchronization/jobs' \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Bearer <accessToken>' \
-  --data-raw '{ 
+  --data-raw '{
     "templateId": "scim"
 }'
 ```
@@ -127,7 +128,7 @@ curl -X POST 'https://graph.microsoft.com/v1.0/servicePrincipals/<SERVICE_PRINCI
 
 **4. Configure the SCIM provisioning URL and API token**
 
-Next, configure the Tenant URL (Cloudflare SCIM endpoint) and API token (SCIM Provisioning API Token). 
+Next, configure the Tenant URL (Cloudflare SCIM endpoint) and API token (SCIM Provisioning API Token).
 
 Replace `<accessToken>`, `<ACCOUNT_ID>`, `<SCIM_PROVISIONING_API_TOKEN_VALUE>` with your values.
 

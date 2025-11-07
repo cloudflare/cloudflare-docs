@@ -16,6 +16,10 @@ Cloudflare maintains intermediate and root certificates used for bundling on a [
 
 Expiration values for these certificates may appear in the `expires_on` field when you use the [Analyze Certificate endpoint](/api/resources/ssl/subresources/analyze/methods/create/) - often when the methodology you specify is [Compatible](#compatible). However, these expiration values reflect intermediate and root certificates - which are handled by Cloudflare -, not the leaf certificate you would have previously uploaded to Cloudflare.
 
+:::note
+When using `compatible` or `modern`, a selection might be done on the intermediates you provide at upload time, meaning it is not guaranteed all of them will make it to the final chain. If you must ensure the chain you upload is the one used, select `user-defined`.
+:::
+
 ## Methodologies
 
 ### Compatible

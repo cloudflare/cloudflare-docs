@@ -7,7 +7,7 @@ sidebar:
     text: Beta
 ---
 
-import { TabItem, Tabs, Render, WranglerConfig } from "~/components";
+import { TabItem, Tabs, Render, WranglerConfig, DashButton } from "~/components";
 
 Hyperdrive provides additional ways to secure connectivity to your database. Hyperdrive supports:
 
@@ -77,10 +77,13 @@ npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="
 
 From the dashboard, follow these steps to create a Hyperdrive configuration with server certificates:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive), navigate to **Storage & Databases > Hyperdrive** and click **Create configuration**.
-2. Select **Server certificates**.
-3. Specify a SSL mode of **Verify CA** or **Verify full**
-4. Select the SSL certificate of the certificate authority (CA) of your database that you have previously uploaded with Wrangler.
+1. In the Cloudflare dashboard, go to the **Hyperdrive** page.
+
+   <DashButton url="/?to=/:account/workers/hyperdrive" />
+2. Select **Create configuration**.
+3. Select **Server certificates**.
+4. Specify a SSL mode of **Verify CA** or **Verify full**.
+5. Select the SSL certificate of the certificate authority (CA) of your database that you have previously uploaded with Wrangler.
 
 </TabItem>
 
@@ -138,9 +141,12 @@ npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="
 
 From the dashboard, follow these steps to create a Hyperdrive configuration with server certificates:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive), navigate to **Storage & Databases > Hyperdrive** and click **Create configuration**.
-2. Select **Client certificates**.
-3. Select the SSL client certificate and private key pair for Hyperdrive to use during the connection setup with your database server.
+1. In the Cloudflare dashboard, go to the **Hyperdrive** page.
+
+   <DashButton url="/?to=/:account/workers/hyperdrive" />
+2. Select **Create configuration**.
+3. Select **Client certificates**.
+4. Select the SSL client certificate and private key pair for Hyperdrive to use during the connection setup with your database server.
 
 </TabItem>
 

@@ -1,0 +1,26 @@
+---
+{}
+---
+
+import { Render } from "~/components";
+
+To organize applications into their approval status for your organization, you can mark them as **Unreviewed** (default), **In review**, **Approved**, and **Unapproved**.
+
+| Status     | API value    | Description                                                                                            |
+| ---------- | ------------ | ------------------------------------------------------------------------------------------------------ |
+| Approved   | `approved`   | Applications that have been marked as sanctioned by your organization.                                 |
+| Unapproved | `unapproved` | Applications that have been marked as unsanctioned by your organization.                               |
+| In review  | `in review`  | Applications in the process of being reviewed by your organization.                                    |
+| Unreviewed | `unreviewed` | Unknown applications that are neither sanctioned nor being reviewed by your organization at this time. |
+
+To set the status of an application:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Applications**.
+2. Locate the card for the application.
+3. In the three-dot menu, select the option to mark your desired status.
+
+Once you mark the status of an application, its badge will change. You can filter applications by their status to review each application in the list for your organization. The review status for an application in the App Library and Shadow IT Discovery will update within one hour.
+
+:::note
+Approval status does not impact a user's ability to access an application. Users are allowed or blocked according to your [Access](/cloudflare-one/access-controls/policies/) and [Gateway policies](/cloudflare-one/traffic-policies/). To filter traffic based on approval status, use the [_Application Status_](/cloudflare-one/traffic-policies/http-policies/#application-approval-status) selector.
+:::

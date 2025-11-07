@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, DashButton } from "~/components";
 
 Environments provide isolated spaces where your code runs with specific dependencies and configurations. This can be useful for a number of reasons, such as compatibility testing or version management. Using different environments can help with code consistency, testing, and production segregation, which reduces the risk of errors when deploying code.
 
@@ -81,7 +81,9 @@ KV-backed Durable Objects support remote development using the dashboard playgro
 
 To start remote development:
 
-1. Log in to your Cloudflare dashboard, and go to [**Workers & Pages** > **Overview**](https://dash.cloudflare.com/?to=/:account/workers-and-pages).
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select an existing Worker.
 3. Select the **Edit code** icon located on the upper-right of the screen.
 

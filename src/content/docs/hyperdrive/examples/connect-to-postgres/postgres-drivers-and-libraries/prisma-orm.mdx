@@ -1,0 +1,160 @@
+---
+pcx_content_type: example
+title: Prisma ORM
+sidebar:
+  order: 4
+meta:
+  title: Using Prisma ORM with Hyperdrive for PostgreSQL
+---
+
+import { Render, Steps, PackageManagers } from "~/components";
+
+[Prisma ORM](https://www.prisma.io/docs) is a Node.js and TypeScript ORM with a focus on type safety and developer experience. This example demonstrates how to use Prisma ORM with PostgreSQL via Cloudflare Hyperdrive in a Workers application.
+
+## Prerequisites
+
+- A Cloudflare account with Workers access
+- A PostgreSQL database (such as [Prisma Postgres](https://www.prisma.io/postgres))
+- A [Hyperdrive configuration to your PostgreSQL database](/hyperdrive/get-started/#3-connect-hyperdrive-to-a-database)
+- An existing [Worker project](/workers/get-started/guide/)
+
+## 1. Install Prisma ORM
+
+Install Prisma CLI as a dev dependency:
+
+<PackageManagers pkg="prisma" dev />
+
+Install the `pg` driver and Prisma driver adapter for use with Hyperdrive:
+
+<PackageManagers pkg="pg@>8.13.0 @prisma/adapter-pg" />
+
+If using TypeScript, install the types package:
+
+<PackageManagers pkg="@types/pg" dev />
+
+Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.toml` file:
+
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
+
+## 2. Configure Prisma ORM
+
+### 2.1. Initialize Prisma
+
+Initialize Prisma in your application:
+
+```sh
+npx prisma init
+```
+
+This creates a `prisma` folder with a `schema.prisma` file and an `.env` file.
+
+### 2.2. Define a schema
+
+Define your database schema in the `prisma/schema.prisma` file:
+
+```prisma title="prisma/schema.prisma"
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+```
+
+### 2.3. Set up environment variables
+
+Add your database connection string to the `.env` file created by Prisma:
+
+```txt title=".env"
+DATABASE_URL="postgres://user:password@host:port/database"
+```
+
+Add helper scripts to your `package.json`:
+
+```json title="package.json"
+"scripts": {
+  "migrate": "npx prisma migrate dev",
+  "generate": "npx prisma generate --no-engine",
+  "studio": "npx prisma studio"
+}
+```
+
+### 2.4. Generate Prisma Client
+
+Generate the Prisma client with driver adapter support:
+
+```sh
+npm run generate
+```
+
+### 2.5. Run migrations
+
+Generate and apply the database schema:
+
+```sh
+npm run migrate
+```
+
+When prompted, provide a name for the migration (for example, `init`).
+
+## 3. Connect Prisma ORM to Hyperdrive
+
+Use your Hyperdrive configuration when using Prisma ORM. Update your `src/index.ts` file:
+
+```ts title="src/index.ts"
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
+
+export interface Env {
+	HYPERDRIVE: Hyperdrive;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Create Prisma client using driver adapter with Hyperdrive connection string
+		const adapter = new PrismaPg({ connectionString: env.HYPERDRIVE.connectionString });
+		const prisma = new PrismaClient({ adapter });
+
+		// Sample query to create and fetch users
+		const user = await prisma.user.create({
+			data: {
+				name: "John Doe",
+				email: `john.doe.${Date.now()}@example.com`,
+			},
+		});
+
+		const allUsers = await prisma.user.findMany();
+
+		return Response.json({
+			newUser: user,
+			allUsers: allUsers,
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+:::note
+
+When using Prisma ORM with Hyperdrive, you must use driver adapters to properly utilize the Hyperdrive connection string. The `@prisma/adapter-pg` driver adapter allows Prisma ORM to work with the `pg` driver and Hyperdrive's connection pooling. This approach provides connection pooling at the network level through Hyperdrive, so you don't need Prisma-specific connection pooling extensions like Prisma Accelerate.
+
+:::
+
+## 4. Deploy your Worker
+
+Deploy your Worker:
+
+```bash
+npx wrangler deploy
+```
+
+<Render file="create-hyperdrive-config-next-steps" product="hyperdrive" />

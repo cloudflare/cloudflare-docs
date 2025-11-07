@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Turnstile docs
-  description: Turnstile is Cloudflare's smart CAPTCHA alternative.
+  description: Turnstile is Cloudflare's smart CAPTCHA alternative
   author: "@cloudflare"

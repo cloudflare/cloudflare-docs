@@ -7,6 +7,5 @@ product:
 
 meta:
   title: Cloudflare Pages docs
-  description: Documentation for Cloudflare Pages, the best way to deploy your
-    static and JAMstack sites
+  description: Build full-stack, serverless applications globally with minimal configuration
   author: "@cloudflare"

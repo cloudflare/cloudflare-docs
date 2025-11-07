@@ -3,6 +3,8 @@ pcx_content_type: tutorial
 title: Splunk
 sidebar:
   order: 104
+description: >-
+  This tutorial explains how to analyze Cloudflare Logs using the Cloudflare App for Splunk.
 ---
 
 import { Render } from "~/components";
@@ -30,20 +32,17 @@ To install the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/450
 4. Restart and reopen your Splunk instance.
 
 5. Edit the `cloudflare:json` source type in the Cloudflare App for Splunk. To edit the source type:
-
    1. Click the **Settings** dropdown and select **Source types**.
    2. Uncheck **Show only popular** and search for _cloudflare_.
    3. Click **Edit** and change the Regex expression to `([\r\n]+)`.
    4. Save your edits.
 
 6. Create an index on Splunk to store the HTTP Event logs. To create an index:
-
    1. Open the setup screen by clicking the **Settings** dropdown, then click **Indexes**.
    2. Select **New Index**. Note that the **Indexes** page also gives you the status of all your existing indexes so that you can see whether you're about to use up your licensed amount of space.
    3. Name the index **cloudflare**, which is the default index that the Cloudflare App will use.
 
 7. Set up the HTTP Event Collector (HEC) on Splunk. To create an HEC:
-
    1. Click the **Settings** dropdown and select **Data inputs**.
    2. Click **+Add new** and follow the wizard. When prompted, submit the following responses:
       - Name: Cloudflare

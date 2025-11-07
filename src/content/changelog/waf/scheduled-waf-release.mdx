@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2025-08-04
-description: WAF managed ruleset changes scheduled for 2025-08-04
-date: 2025-07-28
+title: WAF Release - Scheduled changes for 2025-11-10
+description: WAF managed ruleset changes scheduled for 2025-11-10
+date: 2025-11-03
 scheduled: true
 ---
 
@@ -9,104 +9,60 @@ import { RuleID } from "~/components";
 
 <table style="width: 100%">
 	<thead>
-		<tr>
-			<th>Announcement Date</th>
-			<th>Release Date</th>
-			<th>Release Behavior</th>
-			<th>Legacy Rule ID</th>
-			<th>Rule ID</th>
-			<th>Description</th>
-			<th>Comments</th>
-		</tr>
+	<tr>
+		<th>Announcement Date</th>
+		<th>Release Date</th>
+		<th>Release Behavior</th>
+		<th>Legacy Rule ID</th>
+		<th>Rule ID</th>
+		<th>Description</th>
+		<th>Comments</th>
+	</tr>
 	</thead>
 	<tbody>
-	  <tr>
-	    <td>2025-07-28</td>
-	    <td>2025-08-04</td>
-	    <td>Log</td>
-	    <td>100535A</td>
-	    <td>
-	        <RuleID id="b8ab4644f8044f3485441ee052f30a13" />
-	    </td>
-	    <td>Sitecore - Dangerous File Upload - CVE:CVE-2025-34510, CVE:CVE-2025-34511</td>
-	    <td>This is a New Detection</td>
-	  </tr>
-	  <tr>
-	    <td>2025-07-28</td>
-	    <td>2025-08-04</td>
-	    <td>Log</td>
-	    <td>100535</td>
-	    <td>
-	        <RuleID id="06d1fe0bd6e44d868e6b910b5045a97f" />
-	    </td>
-	    <td>Sitecore - Information Disclosure - CVE:CVE-2025-34509</td>
-	    <td>This is a New Detection</td>
-	  </tr>
-  	  <tr>
-	    <td>2025-07-28</td>
-	    <td>2025-08-04</td>
-	    <td>Log</td>
-	    <td>100543</td>
-	    <td>
-	        <RuleID id="f71ce87ea6e54eab999223df579cd3e0" />
-	    </td>
-	    <td>Grafana - Directory Traversal - CVE:CVE-2025-4123</td>
-	    <td>This is a New Detection</td>
-	  </tr>
-  	  <tr>
-	    <td>2025-07-28</td>
-	    <td>2025-08-04</td>
-	    <td>Log</td>
-	    <td>100545</td>
-	    <td>
-	        <RuleID id="bba3d37891a440fb8bc95b970cbd9abc" />
-	    </td>
-	    <td>WordPress - Information Disclosure - CVE:CVE-2023-5561</td>
-	    <td>This is a New Detection</td>
-	  </tr>
-	  <tr>
-	    <td>2025-07-28</td>
-	    <td>2025-08-04</td>
-	    <td>Log</td>
-	    <td>100820</td>
-	    <td>
-	        <RuleID id="28108d25f1cf470c8e7648938f634977" />
-	    </td>
-	    <td>CentOS WebPanel - Remote Code Execution - CVE:CVE-2025-48703</td>
-	    <td>This is a New Detection</td>
-	  </tr>
-	  <tr>
-	    <td>2025-07-28</td>
-	    <td>2025-08-04</td>
-	    <td>Log</td>
-	    <td>100821</td>
-	    <td>
-	        <RuleID id="9d69c796a61444a3aca33dc282ae64c1" />
-	    </td>
-	    <td>LaRecipe - SSTI - CVE:CVE-2025-53833</td>
-	    <td>This is a New Detection</td>
-	  </tr>
-	  <tr>
-	    <td>2025-07-28</td>
-	    <td>2025-08-04</td>
-	    <td>Log</td>
-	    <td>100822</td>
-	    <td>
-	        <RuleID id="9b5c5e13d2ca4253a89769f2194f7b2d" />
-	    </td>
-	    <td>WordPress:Plugin:WPBookit - Remote Code Execution - CVE:CVE-2025-6058</td>
-	    <td>This is a New Detection</td>
-	  </tr>
-	  <tr>
-	    <td>2025-07-28</td>
-	    <td>2025-08-04</td>
-	    <td>Log</td>
-	    <td>100823</td>
-	    <td>
-	        <RuleID id="69d43d704b0641898141a4300bf1b661" />
-	    </td>
-	    <td>WordPress:Theme:Motors - Privilege Escalation - CVE:CVE-2025-4322</td>
-	    <td>This is a New Detection</td>
-	  </tr>
+	<tr>
+		<td>2025-10-27</td>
+		<td>2025-11-10</td>
+		<td>Log</td>
+		<td>N/A</td>
+		<td>
+			<RuleID id="32405a50728746dd8caa057b606285e6" />
+		</td>
+		<td>Generic Rules - Prototype Pollution - URI</td>
+		<td>This is a new detection</td>
+	</tr>
+	<tr>
+		<td>2025-10-27</td>
+		<td>2025-11-10</td>
+		<td>Log</td>
+		<td>N/A</td>
+		<td>
+			<RuleID id="a7da00c63c4243d2a72456fe4f59ff26" />
+		</td>
+		<td>Generic Rules - Prototype Pollution - Body</td>
+		<td>This is a new detection</td>
+	</tr>
+	<tr>
+		<td>2025-10-27</td>
+		<td>2025-11-10</td>
+		<td>Log</td>
+		<td>N/A</td>
+		<td>
+			<RuleID id="833078bdcfa04bb7aa7b8fb67efbeb39" />
+		</td>
+		<td>Generic Rules - Prototype Pollution - Header - Form</td>
+		<td>This is a new detection</td>
+	</tr>
+	<tr>
+		<td>2025-10-27</td>
+		<td>2025-11-10</td>
+		<td>Log</td>
+		<td>N/A</td>
+		<td>
+			<RuleID id="818d92d370654c3d8f1adc7c9029cd61" />
+		</td>
+		<td>HTTP Truncated Beta</td>
+		<td>This is a beta detection and will replace the action on original detection (ID: <RuleID id="646bccf7e9dc46918a4150d6c22b51d3" />)  </td>
+	</tr>
 	</tbody>
 </table>

@@ -59,6 +59,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
 1.  <Render
     	file="rulesets/api-account/step1-get-entrypoint"
+    	product="waf"
     	params={{ phaseName: "http_request_firewall_custom" }}
     />
 
@@ -93,6 +94,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
 2.  <Render
     	file="rulesets/api-account/step2-create-rule"
+    	product="waf"
     	params={{
     		deploymentItem: "custom ruleset",
     	}}
@@ -121,6 +123,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
 3.  <Render
     	file="rulesets/api-account/step3-create-ruleset"
+    	product="waf"
     	params={{
     		deploymentItem: "custom ruleset",
     		scope: "all incoming requests of Enterprise zones in your account",
@@ -169,5 +172,7 @@ Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/
 [8]: /ruleset-engine/rulesets-api/delete-rule/
 
 ## More resources
+
+For instructions on creating a custom rule at the zone level via API, refer to [Create a custom rule via API](/waf/custom-rules/create-api/).
 
 For more information on working with custom rulesets, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/) in the Ruleset Engine documentation.

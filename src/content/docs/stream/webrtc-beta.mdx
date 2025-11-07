@@ -7,7 +7,7 @@ sidebar:
   order: 9
 ---
 
-import { Badge, InlineBadge } from '~/components';
+import { Badge, InlineBadge, DashButton } from '~/components';
 
 Sub-second latency live streaming (using WHIP) and playback (using WHEP) to unlimited concurrent viewers.
 
@@ -25,7 +25,13 @@ WebRTC streaming is currently in beta, and we'd love to hear what you think. Joi
 
 ## Step 1: Create a live input
 
-[Use the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create), or make a POST request to the [`/live_inputs` API endpoint](/api/resources/stream/subresources/live_inputs/methods/create/)
+Create a live input using one of the two options:
+
+- Use the **Live inputs** page of the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/stream/inputs" />
+
+- Make a POST request to the [`/live_inputs` API endpoint](/api/resources/stream/subresources/live_inputs/methods/create/)
 
 ```json title="API response from a POST request to /live_inputs" {5}
 {
@@ -45,7 +51,11 @@ WebRTC streaming is currently in beta, and we'd love to hear what you think. Joi
 
 Every live input has a unique URL that one creator can be stream to. This URL should *only* be shared with the creator — anyone with this URL has the ability to stream live video to this live input.
 
-Copy the URL from the `webRTC` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs).
+Copy the URL from either:
+- The **Live inputs** page of the Cloudflare dashboard.
+   <DashButton url="/?to=/:account/stream/inputs" />
+
+- The `webRTC` key in the API response (see above).
 
 Paste this URL into the example code.
 
@@ -66,7 +76,13 @@ You can also use this URL with any client that supports the [WebRTC-HTTP ingesti
 
 ## Step 3: Play live video using WHEP
 
-Copy the URL from the `webRTCPlayback` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs). There are no limits on the number of concurrent viewers.
+Copy the URL from either:
+- The **Live inputs** page of the Cloudflare dashboard.
+   <DashButton url="/?to=/:account/stream/inputs" />
+
+- The `webRTCPlayback` key in the API response (see above)
+
+There are no limits on the number of concurrent viewers.
 
 Paste this URL into the example code.
 

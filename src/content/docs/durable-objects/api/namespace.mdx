@@ -28,11 +28,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
   async fetch(request, env) {
-    // Every unique ID refers to an individual instance of the Durable Object class
-    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
     // A stub is a client Object used to invoke methods defined by the Durable Object
-    const stub = env.MY_DURABLE_OBJECT.get(id);
+    const stub = env.MY_DURABLE_OBJECT.getByName("foo");
     ...
   }
 }
@@ -55,11 +52,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
   async fetch(request, env) {
-    // Every unique ID refers to an individual instance of the Durable Object class
-    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
     // A stub is a client Object used to invoke methods defined by the Durable Object
-    const stub = env.MY_DURABLE_OBJECT.get(id);
+    const stub = env.MY_DURABLE_OBJECT.getByName("foo");
     ...
   }
 } satisfies ExportedHandler<Env>;
@@ -115,7 +109,7 @@ After this first use, the location of the Durable Object will be cached around t
 
 `idFromString` creates a [`DurableObjectId`](/durable-objects/api/id) from a previously generated ID that has been converted to a string. This method throws an exception if the ID is invalid, for example, if the ID was not created from the same `DurableObjectNamespace`.
 
-<Render file="example-id-from-string" />
+<Render file="example-id-from-string" product="durable-objects" />
 
 #### Parameters
 
@@ -145,13 +139,32 @@ const stub = env.MY_DURABLE_OBJECT.get(id);
 
 - A [`DurableObjectStub`](/durable-objects/api/stub) referring to an instance of a Durable Object class.
 
+### `getByName`
+
+`getByName` obtains a [`DurableObjectStub`](/durable-objects/api/stub) from a provided name, which can be used to invoke methods on a Durable Object.
+
+This method returns the <GlossaryTooltip term="stub">stub</GlossaryTooltip> immediately, often before a connection has been established to the Durable Object. This allows requests to be sent to the instance right away, without waiting for a network round trip.
+
+```js
+const fooStub = env.MY_DURABLE_OBJECT.getByName("foo");
+const barStub = env.MY_DURABLE_OBJECT.getByName("bar");
+```
+
+#### Parameters
+
+- A required string to be used to generate a [`DurableObjectStub`](/durable-objects/api/stub) corresponding to an instance of the Durable Object class with the provided name.
+
+#### Return values
+
+- A [`DurableObjectStub`](/durable-objects/api/stub) referring to an instance of a Durable Object class.
+
 ### `jurisdiction`
 
 `jurisdiction` creates a subnamespace from a namespace where all Durable Object IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
 
 ```js
 const subnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
-const euId = subnamespace.idFromName("foo");
+const euStub = subnamespace.getByName("foo");
 ```
 
 #### Parameters
@@ -160,7 +173,7 @@ const euId = subnamespace.idFromName("foo");
 
 #### Return values
 
-- A `DurableObjectNamespace` scoped to a particular geographic jurisdiction.
+- A `DurableObjectNamespace` scoped to a particular regulatory or geographic jurisdiction. Additional geographic jurisdictions are continuously evaluated, so share requests in the [Durable Objects Discord channel](https://discord.com/channels/595317990191398933/773219443911819284).
 
 ## Related resources
 

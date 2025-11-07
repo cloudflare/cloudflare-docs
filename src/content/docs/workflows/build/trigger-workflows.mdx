@@ -1,6 +1,8 @@
 ---
 title: Trigger Workflows
 pcx_content_type: concept
+tags:
+  - Bindings
 sidebar:
   order: 3
 
@@ -88,8 +90,6 @@ export default {
 			id: instance.id,
 			details: await instance.status(),
 		});
-
-		return Response.json({ result });
 	},
 };
 ```
@@ -154,12 +154,6 @@ await instance.terminate() // Returns Promise<void>
 Once stopped/terminated, the Workflow instance *cannot* be resumed.
 
 ### Restart a Workflow
-
-:::caution
-
-**Known issue**: Restarting a Workflow via the `restart()` method is not currently supported and will throw an exception (error).
-
-:::
 
 ```ts
 let instance = await env.MY_WORKFLOW.get("abc-123")

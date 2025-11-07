@@ -41,7 +41,7 @@ An Agent can have many (millions of) instances: each instance is a separate micr
 
 Instances of an Agent are addressed by a unique identifier: that identifier (ID) can be the user ID, an email address, GitHub username, a flight ticket number, an invoice ID, or any other identifier that helps to uniquely identify the instance and for whom it is acting on behalf of.
 
-<Render file="unique-agents" />
+<Render file="unique-agents" product="agents" />
 
 ### Agent class API
 
@@ -580,6 +580,40 @@ Visit the [state management API documentation](/agents/api-reference/store-and-s
 
 :::
 
+### MCP Client API
+
+The Agents SDK allows your Agent to act as an MCP (Model Context Protocol) client, connecting to remote MCP servers and using their tools, resources, and prompts.
+
+<TypeScriptExample>
+
+```ts
+class Agent<Env, State = unknown> {
+  // Connect to an MCP server
+  async addMcpServer(
+    serverName: string,
+    url: string,
+    callbackHost?: string,
+    agentsPrefix?: string,
+    options?: MCPClientOptions
+  ): Promise<{ id: string; authUrl: string | undefined }>;
+
+  // Disconnect from an MCP server
+  async removeMcpServer(id: string): Promise<void>;
+
+  // Get state of all connected MCP servers
+  getMcpServers(): MCPServersState;
+}
+```
+
+</TypeScriptExample>
+
+When your Agent connects to MCP servers, it can dynamically discover and use tools provided by those servers, enabling powerful integrations with external services.
+
+:::note
+
+For complete MCP client API documentation, including OAuth configuration and advanced usage, refer to the [Agent — MCP Client API](/agents/model-context-protocol/mcp-client-api/).
+
+:::
 
 ### Client API
 
