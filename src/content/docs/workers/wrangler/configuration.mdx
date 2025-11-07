@@ -1422,57 +1422,63 @@ This is because such a file, when required, should be created as part of a build
 
 A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
 
-1. First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
+- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
   <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-main = "src/index.ts"
+  ```toml title="wrangler.toml"
+  name = "my-worker"
+  main = "src/index.ts"
 
-[vars]
-MY_VARIABLE = "production variable"
+  [vars]
+  MY_VARIABLE = "production variable"
 
-[env.staging.vars]
-MY_VARIABLE = "staging variable"
-```
+  [env.staging.vars]
+  MY_VARIABLE = "staging variable"
+  ```
 
   </WranglerConfig>
 
-This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
+  This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
 
-2. Then, the user runs a custom build for a given environment (for example `staging`). This will read the user's Wrangler configuration file to find the source code entry-point and environment specific settings:
+- Then, the user runs a custom build for a given environment (for example `staging`). This will read the user's Wrangler configuration file to find the source code entry-point and environment specific settings:
 
-```bash
-> my-tool build --env=staging
-```
+  ```bash
+  > my-tool build --env=staging
+  ```
 
-3. `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file, containing only the settings for the given environment.
-   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
+- `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file, containing only the settings for the given environment.
+  It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
-   <FileTree>
-   	- dist - index.js - wrangler.jsonc - .wrangler - deploy - config.json
-   </FileTree>
+  <FileTree>
+- dist
+  - index.js
+  - wrangler.jsonc
+- .wrangler
+  - deploy
+    - config.json
 
-The generated `dist/wrangler.jsonc` might contain:
+  </FileTree>
 
-```json
-{
-	"name": "my-worker",
-	"main": "./index.js",
-	"vars": {
-		"MY_VARIABLE": "staging variable"
-	}
-}
-```
+  The generated `dist/wrangler.jsonc` might contain:
 
-Now, the `main` property points to the generated code entry-point, no environment is defined,
-and the `MY_VARIABLE` variable is resolved to the staging environment value.
+  ```json
+  {
+  	"name": "my-worker",
+  	"main": "./index.js",
+  	"vars": {
+  		"MY_VARIABLE": "staging variable"
+  	}
+  }
+  ```
 
-And the `.wrangler/deploy/config.json` contains the path to the generated configuration file:
+  Now, the `main` property points to the generated code entry-point, no environment is defined,
+  and the `MY_VARIABLE` variable is resolved to the staging environment value.
 
-```json
-{
-	"configPath": "../../dist/wrangler.jsonc"
-}
-```
+  And the `.wrangler/deploy/config.json` contains the path to the generated configuration file:
+
+  ```json
+  {
+  	"configPath": "../../dist/wrangler.jsonc"
+  }
+  ```
