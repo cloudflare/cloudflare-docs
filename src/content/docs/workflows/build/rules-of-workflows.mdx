@@ -478,3 +478,7 @@ export default {
 ```
 
 </TypeScriptExample>
+
+### Limit timeouts to 30 minutes or less
+
+When setting a [WorkflowStep timeout](/workflows/build/workers-api/#workflowstep), ensure that its duration is 30 minutes or less. If your use case requires a timeout greater than 30 minutes, consider using `step.waitForEvent()` instead.
