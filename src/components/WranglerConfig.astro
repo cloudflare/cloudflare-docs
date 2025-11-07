@@ -3,6 +3,13 @@ import { parse } from "node-html-parser";
 import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
 import TOML from "@iarna/toml";
 import { parse as jsoncParse } from "jsonc-parser";
+import { z } from "astro:schema";
+
+const props = z.object({
+	removeSchema: z.boolean().optional().default(false),
+});
+
+const { removeSchema } = props.parse(Astro.props);
 
 const slot = await Astro.slots.render("default");
 
@@ -12,7 +19,7 @@ const copy = html.querySelector("div.copy > button");
 
 if (!copy) {
 	throw new Error(
-		`[WranglerConfig] Unable to find copy button in rendered code block HTML.`,
+		`[WranglerConfig] Unable to find copy button in rendered code block HTML.`
 	);
 }
 
@@ -20,7 +27,7 @@ let code = copy.attributes["data-code"];
 
 if (!code) {
 	throw new Error(
-		`[WranglerConfig] Unable to find data-code attribute on copy button.`,
+		`[WranglerConfig] Unable to find data-code attribute on copy button.`
 	);
 }
 
@@ -38,10 +45,11 @@ let toml, json;
 
 if (language === "toml") {
 	toml = code;
-	json = JSON.stringify({
-		"$schema": "./node_modules/wrangler/config-schema.json",
-		...TOML.parse(code),
-	}, null, 2);
+	const parsedToml = TOML.parse(code);
+	const jsonObj = removeSchema
+		? parsedToml
+		: { $schema: "./node_modules/wrangler/config-schema.json", ...parsedToml };
+	json = JSON.stringify(jsonObj, null, 2);
 } else {
 	json = code;
 	toml = TOML.stringify(jsoncParse(code));
