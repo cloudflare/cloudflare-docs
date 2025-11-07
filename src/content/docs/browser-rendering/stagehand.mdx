@@ -236,6 +236,7 @@ const stagehand = new Stagehand({
   localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
   modelName: "openai/gpt-4.1",
   modelClientOptions: {
+    apiKey: env.OPENAI_API_KEY,
     baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`,
   },
 });
