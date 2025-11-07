@@ -31,7 +31,7 @@ Not yet. Local development currently has the following limitation(s):
 
 No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection.
 
-If you are attempting to scan your **own zone** and need Browser Rendering to access areas protected by Cloudflare’s Bot Protection, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
+If you are attempting to scan your **own zone** and need Browser Rendering to access areas protected by Cloudflare’s Bot Protection, you can create a [WAF skip rule](/waf/custom-rules/skip/) that matches Browser Rendering's Web Bot Auth signature headers. See [Allowlist Browser Rendering with Web Bot Auth](/browser-rendering/reference/automatic-request-headers/#allowlist-browser-rendering-with-web-bot-auth) for steps.
 
 ### Does Browser Rendering rotate IP addresses for outbound requests?
 
