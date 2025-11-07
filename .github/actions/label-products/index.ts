@@ -25,6 +25,8 @@ function getChangedSubFolders(files: any[]): string[] {
 		if (topLevelFolder === "docs") {
 			const subFolder = getSubFolder(path);
 			changedFolders.add(subFolder);
+		} else if (topLevelFolder === "changelog") {
+			changedFolders.add("changelog");
 		}
 	}
 
