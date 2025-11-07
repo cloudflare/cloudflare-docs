@@ -7,7 +7,7 @@ products:
 date: 2025-11-07
 ---
 
-You can now restart a [Cloudflare Workflow](/workflows/) instance via the [API](/api/resources/workflows/methods/list/), Wrangler using `wrangler workflows instances restart <name> <id>` or Workers:
+You can now restart a [Cloudflare Workflow](/workflows/) instance via the [API](/api/resources/workflows/methods/list/), [Wrangler](/workers/wrangler/commands/#workflows), or [Workers](/workflows/build/workers-api/):
 
 ```typescript
 let instance = await env.MY_WORKFLOW.get("abc-123");
@@ -16,6 +16,6 @@ await instance.restart(); // Returns Promise<void>
 
 You may want to [restart an instance](/workflows/build/trigger-workflows/#restart-a-workflow) if the Workflow has been updated, the parameters have changed, or the Workflow has reached its step limit. Restarting an instance will immediately cancel any in-progress steps, erase any intermediate state, and treat the Workflow as if it was run for the first time.
 
-If the instance is already running, the restart will not lose its concurrency slot (limit of 10,000 concurrent instances). However, the restarted instance will count towards the creation rate limit (100 instances per 1 second).
+If the instance is already running, the restart will not lose its concurrency slot (limit of 10,000 concurrent instances). However, the restarted instance will count towards the creation rate limit (100 instances per second).
 
 For more information on concurrency and creation limits, refer to [Workflow limits](/workflows/reference/limits/).
