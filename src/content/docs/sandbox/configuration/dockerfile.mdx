@@ -75,6 +75,7 @@ FROM docker.io/cloudflare/sandbox:0.3.3
 
 COPY my-app.js /workspace/my-app.js
 COPY startup.sh /workspace/startup.sh
+RUN chmod +x /workspace/startup.sh
 CMD ["/workspace/startup.sh"]
 ```
 
