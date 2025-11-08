@@ -122,12 +122,6 @@ await session1.startProcess('node server.js');
 await session2.listProcesses();  // Sees the server
 ```
 
-**Ports**:
-```typescript
-await session1.exposePort(3000);
-await session2.getExposedPorts();  // Sees port 3000
-```
-
 ## When to use sessions
 
 **Use sessions when**:

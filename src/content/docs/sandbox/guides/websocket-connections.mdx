@@ -108,21 +108,27 @@ Get a public URL for your WebSocket server:
 ```ts
 import { getSandbox, proxyToSandbox } from '@cloudflare/sandbox';
 
+export { Sandbox } from '@cloudflare/sandbox';
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    // Auto-route all requests via proxyToSandbox first
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+
+    // Extract hostname from request
+    const { hostname } = new URL(request.url);
     const sandbox = getSandbox(env.Sandbox, 'echo-service');
 
     // Expose the port to get preview URL
-    const { exposedAt } = await sandbox.exposePort(8080);
+    const { exposedAt } = await sandbox.exposePort(8080, { hostname });
 
     // Return URL to clients
     if (request.url.includes('/ws-url')) {
       return Response.json({ url: exposedAt.replace('https', 'wss') });
     }
 
-    // Auto-route all requests via proxyToSandbox
-    return proxyToSandbox(request, env.Sandbox, 'echo-service');
-
+    return new Response('Not found', { status: 404 });
 }
 };
 
@@ -148,6 +154,10 @@ Your Worker can connect to a WebSocket service to get real-time data, even when 
 
 <TypeScriptExample>
 ```ts
+import { getSandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const sandbox = getSandbox(env.Sandbox, 'data-processor');

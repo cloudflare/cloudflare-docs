@@ -81,7 +81,13 @@ export default {
 
 ### Preview URLs
 
-Preview URLs are public. Add authentication in your service:
+Preview URLs include randomly generated tokens. Anyone with the URL can access the service.
+
+To revoke access, unexpose the port:
+
+```typescript
+await sandbox.unexposePort(8080);
+```
 
 ```python
 from flask import Flask, request, abort

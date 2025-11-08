@@ -12,11 +12,14 @@ Preview URLs work in local development without configuration. For production, yo
 Preview URLs provide public HTTPS access to services running inside sandboxes. When you expose a port, you get a unique URL that proxies requests to your service.
 
 ```typescript
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 await sandbox.startProcess("python -m http.server 8000");
-const exposed = await sandbox.exposePort(8000);
+const exposed = await sandbox.exposePort(8000, { hostname });
 
 console.log(exposed.exposedAt);
-// Production: https://8000-abc123.example.com
+// Production: https://8000-abc123.yourdomain.com
 // Local dev: http://localhost:8787/...
 ```
 
@@ -24,8 +27,8 @@ console.log(exposed.exposedAt);
 
 **Production**: `https://{port}-{sandbox-id}.yourdomain.com`
 
-- Port 8080: `https://8080-abc123.example.com`
-- Port 3000: `https://3000-abc123.example.com`
+- Port 8080: `https://8080-abc123.yourdomain.com`
+- Port 3000: `https://3000-abc123.yourdomain.com`
 
 **Local development**: `http://localhost:8787/...`
 
@@ -37,6 +40,8 @@ You must call `proxyToSandbox()` first in your Worker's fetch handler to route p
 
 ```typescript
 import { proxyToSandbox, getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
 
 export default {
 	async fetch(request, env) {
@@ -57,15 +62,18 @@ Requests flow: Browser → Your Worker → Durable Object (sandbox) → Your Ser
 Expose multiple services simultaneously:
 
 ```typescript
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 await sandbox.startProcess("node api.js"); // Port 3000
 await sandbox.startProcess("node admin.js"); // Port 3001
 
-const api = await sandbox.exposePort(3000, { name: "api" });
-const admin = await sandbox.exposePort(3001, { name: "admin" });
+const api = await sandbox.exposePort(3000, { hostname, name: "api" });
+const admin = await sandbox.exposePort(3001, { hostname, name: "admin" });
 
 // Each gets its own URL:
-// https://3000-abc123.example.com
-// https://3001-abc123.example.com
+// https://3000-abc123.yourdomain.com
+// https://3001-abc123.yourdomain.com
 ```
 
 ## What Works
@@ -88,17 +96,21 @@ const admin = await sandbox.exposePort(3001, { name: "admin" });
 Preview URLs support WebSocket connections. When a WebSocket upgrade request hits an exposed port, the routing layer automatically handles the connection handshake.
 
 ```typescript
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 // Start a WebSocket server
 await sandbox.startProcess("bun run ws-server.ts 8080");
-const { exposedAt } = await sandbox.exposePort(8080);
+const { exposedAt } = await sandbox.exposePort(8080, { hostname });
 
 // Clients connect using WebSocket protocol
-// Browser: new WebSocket('wss://8080-abc123.example.com')
+// Browser: new WebSocket('wss://8080-abc123.yourdomain.com')
 
 // Your Worker routes automatically
 export default {
 	async fetch(request, env) {
-		return proxyToSandbox(request, env.Sandbox, "sandbox-id");
+		const proxyResponse = await proxyToSandbox(request, env);
+		if (proxyResponse) return proxyResponse;
 	},
 };
 ```
@@ -113,7 +125,7 @@ Preview URLs are publicly accessible by default, but require a valid access toke
 
 **Built-in security**:
 
-- **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token.example.com`)
+- **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token.yourdomain.com`)
 - **HTTPS in production** - All traffic is encrypted with automatic TLS
 - **Unpredictable URLs** - Tokens are randomly generated and difficult to guess
 

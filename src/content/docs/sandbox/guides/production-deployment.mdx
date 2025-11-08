@@ -66,9 +66,12 @@ npx wrangler deploy
 Test that preview URLs work:
 
 ```typescript
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 const sandbox = getSandbox(env.Sandbox, 'test-sandbox');
 await sandbox.startProcess('python -m http.server 8080');
-const exposed = await sandbox.exposePort(8080);
+const exposed = await sandbox.exposePort(8080, { hostname });
 
 console.log(exposed.exposedAt);
 // https://8080-test-sandbox.yourdomain.com
