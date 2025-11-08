@@ -56,7 +56,10 @@ export default {
     		return Response.json(results);
     	} catch (e) {
     		return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
-    	}
+    	} finally {
+				// Connection must have be closed manually to avoid error from next invocation
+				await sql.end();
+			}
     },
 
 } satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
