@@ -48,6 +48,8 @@ Review the following environments flow:
 
 4.  Environments are used with the `--env` or `-e` flag on Wrangler commands. For example, you can develop the Worker in the `dev` environment by running `npx wrangler dev -e=dev`, and deploy it with `npx wrangler deploy -e=dev`.
 
+    Alternatively, you can use the [`CLOUDFLARE_ENV` environment variable](/workers/wrangler/system-environment-variables/#supported-environment-variables) to select the active environment. For example, `CLOUDFLARE_ENV=dev npx wrangler deploy` will deploy to the `dev` environment. The `--env` command line argument takes precedence over the `CLOUDFLARE_ENV` environment variable.
+
         <Render file="vite-environments" product="workers" />
 
 </Steps>
