@@ -47,11 +47,10 @@ export default function cloudflareLoader({
     if (quality) {
       params.push(`quality=${quality}`);
     }
-    const paramsString = params.join(",");
     if (process.env.NODE_ENV === "development") {
-      return `${src}?${paramsString}`;
+      return `${src}?${params.join("&")}`;
     }
-    return `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`;
+    return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
 }
 ```
 
@@ -71,11 +70,10 @@ const cloudflareLoader = ({ src, width, quality }) => {
   if (quality) {
     params.push(`quality=${quality}`);
   }
-  const paramsString = params.join(',');
   if (process.env.NODE_ENV === "development") {
-    return `${src}?${paramsString}`;
+    return `${src}?${params.join("&")}`;
   }
-  return `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`;
+  return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
 };
 
 const MyImage = (props) => {
