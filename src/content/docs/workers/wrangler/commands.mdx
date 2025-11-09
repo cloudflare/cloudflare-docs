@@ -258,7 +258,7 @@ None of the options for this command are required. Many of these options can be 
 Deploy your Worker to Cloudflare.
 
 ```txt
-wrangler deploy [<SCRIPT>] [OPTIONS]
+wrangler deploy [<PATH>] [OPTIONS]
 ```
 
 :::note
@@ -267,8 +267,16 @@ None of the options for this command are required. Also, many can be set in your
 
 :::
 
-- `SCRIPT` <Type text="string" />
-  - The path to an entry point for your Worker. Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
+- `PATH` <Type text="string" />
+  - A path specific what needs to be deployed, this can either be:
+    - The path to an entry point for your Worker.
+      - Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
+
+    - Or the path to an assets directory for the deployment of a static site.
+      - Visit [assets](/workers/static-assets/) for more information.
+      - This overrides the eventual `assets` configuration in your [Wrangler configuration file](/workers/wrangler/configuration/).
+      - This is equivalent to the `--assets` option listed below.
+
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
