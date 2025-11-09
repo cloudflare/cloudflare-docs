@@ -34,6 +34,8 @@ module.exports = {
 Next, create the `imageLoader.ts` file in the specified path (relative to the root of your Next.js application).
 
 ```ts
+import type { ImageLoaderProps } from "next/image";
+
 const normalizeSrc = (src: string) => {
     return src.startsWith("/") ? src.slice(1) : src;
 };
@@ -42,7 +44,7 @@ export default function cloudflareLoader({
     src,
     width,
     quality,
-}: { src: string; width: number; quality?: number }) {
+}: ImageLoaderProps) {
     const params = [`width=${width}`];
     if (quality) {
       params.push(`quality=${quality}`);
