@@ -35,8 +35,7 @@ The `CLOUDFLARE_ENV` environment variable is particularly useful when working wi
 
 ```bash
 # Set the environment for both build and deploy
-CLOUDFLARE_ENV=production npm run build
-CLOUDFLARE_ENV=production wrangler deploy
+CLOUDFLARE_ENV=production npm run build & wrangler deploy
 ```
 
 When using `@cloudflare/vite-plugin`, the build process generates a "redirected deploy config" that is flattened to only contain the active environment. Wrangler will validate that the environment specified matches the environment used during the build to prevent accidentally deploying a Worker built for one environment to a different environment.
