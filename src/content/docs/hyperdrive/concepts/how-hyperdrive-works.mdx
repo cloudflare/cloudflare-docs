@@ -2,12 +2,14 @@
 pcx_content_type: concept
 title: How Hyperdrive works
 sidebar:
-  order: 2
+  order: 1
 ---
+
+import { Render } from "~/components";
 
 Connecting to traditional centralized databases from Cloudflare's global network which consists of over [300 data center locations](https://www.cloudflare.com/network/) presents a few challenges as queries can originate from any of these locations.
 
-If your database is centrally located, queries can take a long time to get to the database and back. Queries can take even longer in situations where you have to establish a connection and make multiple round trips.
+If your database is centrally located, queries can take a long time to get to the database and back. Queries can take even longer in situations where you have to establish new connections from stateless environments like Workers, requiring multiple round trips for each Worker invocation.
 
 Traditional databases usually handle a maximum number of connections. With any reasonably large amount of distributed traffic, it becomes easy to exhaust these connections.
 
@@ -31,6 +33,8 @@ When a database driver connects to a database from a Cloudflare Worker **directl
 
 **With Hyperdrive**, this connection setup occurs between your Cloudflare Worker and Hyperdrive on the edge, as close to your Worker as possible (see diagram, label _1. Connection setup_). This incurs significantly less latency, since the connection setup is completed within the same location.
 
+Learn more about how connections work between Workers and Hyperdrive in [Connection lifecycle](/hyperdrive/concepts/connection-lifecycle/).
+
 ### 2. Connection Pooling
 
 Hyperdrive creates a pool of connections to your database that can be reused as your application executes queries against your database.
@@ -45,6 +49,8 @@ If the connection pool does not have pre-existing connections, it will establish
 Hyperdrive automatically manages the connection pool properties for you, including limiting the total number of connections to your origin database. Refer to [Limits](/hyperdrive/platform/limits/) to learn more.
 :::
 
+Learn more about connection pooling behavior and configuration in [Connection pooling](/hyperdrive/concepts/connection-pooling/).
+
 ### 3. Query Caching
 
 Hyperdrive supports caching of non-mutating (read) queries to your database.
@@ -55,16 +61,14 @@ For non-mutating queries, Hyperdrive will cache the response for the configured 
 
 Caching reduces the burden on your origin database and accelerates the response times for your queries.
 
+Learn more about query caching behavior and configuration in [Query caching](/hyperdrive/concepts/query-caching/).
+
 ## Pooling mode
 
-The Hyperdrive connection pooler operates in transaction mode, where the client that executes the query communicates through a single connection for the duration of a transaction. When that transaction has completed, the connection is returned to the pool.
-
-Hyperdrive supports [`SET` statements](https://www.postgresql.org/docs/current/sql-set.html) for the duration of a transaction or a query. For instance, if you manually create a transaction with `BEGIN`/`COMMIT`, `SET` statements within the transaction will take effect. Moreover, a query that includes a `SET` command (`SET X; SELECT foo FROM bar;`) will also apply the `SET` command. When a connection is returned to the pool, the connection is `RESET` such that the `SET` commands will not take effect on subsequent queries.
-
-This implies that a single Worker invocation may obtain multiple connections to perform its database operations and may need to `SET` any configurations for every query or transaction. It is not recommended to wrap multiple database operations with a single transaction to maintain the `SET` state. Doing so will affect the performance and scaling of Hyperdrive as the connection cannot be reused by other Worker isolates for the duration of the transaction.
-
-Hyperdrive supports named prepared statements as implemented in the `postgres.js` and `node-postgres` drivers. Named prepared statements in other drivers may have worse performance or may not be supported.
+<Render file="pooling-mode" product="hyperdrive" />
 
 ## Related resources
 
-- [Query caching](/hyperdrive/configuration/query-caching/)
+- [Connection lifecycle](/hyperdrive/concepts/connection-lifecycle/)
+- [Query caching](/hyperdrive/concepts/query-caching/)
+- [Connection pooling](/hyperdrive/concepts/connection-pooling/)

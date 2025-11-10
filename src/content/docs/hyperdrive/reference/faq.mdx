@@ -22,7 +22,7 @@ Hyperdrive does not support [D1](/d1) because D1 provides fast connectivity from
 Hyperdrive is designed to speed up connectivity to traditional, regional SQL databases such as PostgreSQL. These databases are typically accessed using database drivers that communicate over TCP/IP.
 Unlike D1, creating a secure database connection to a traditional SQL database
 involves multiple round trips between the client (your Worker) and your database server.
-See [How Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/) for more detail on why round trips are needed
+See [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/) for more detail on why round trips are needed
 and how Hyperdrive solves this.
 
 D1 does not require round trips to create database connections. D1 is designed to be performant for access from Workers by default, without needing Hyperdrive.
