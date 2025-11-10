@@ -1282,7 +1282,7 @@
 					"ent": "Yes"
 				},
 				"z_origin_error_pages": {
-					"title": "Enable Origin Error Pages",
+					"title": "Origin Error Pages",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
