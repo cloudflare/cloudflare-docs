@@ -20,6 +20,8 @@ You can use bindings to connect to VPC Services from Workers. Every request made
 
 VPC Services enforce that requests are routed to their intended service without exposing the entire network, securing your workloads and preventing server-side request forgery (SSRF).
 
+Members must possess **Connectivity Directory Bind** role to bind to existing VPC Services from Workers. Creating VPC Services requires members to possess the **Connectivity Directory Admin** role.
+
 :::note
 
 Workers VPC is currently in beta. Features and APIs may change before general availability. While in beta, Workers VPC is available for free to all Workers plans.
@@ -34,13 +36,24 @@ A VPC Service consists of:
 - **Tunnel ID**: The Cloudflare Tunnel that provides network connectivity
 - **Hostname or IPv4/IPv6 addresses**: The hostname, or IPv4 and/or IPv6 addresses to use to route to your service from the tunnel in your private network
 - **Ports**: HTTP and/or HTTPS port configuration (optional, defaults to 80/443)
+- **Resolver IPs**: Optionally, a specific resolver IP can be provided -- when not provided, `cloudflared` will direct DNS traffic to the currently configured default system resolver.
+
+Requests are encrypted in flight until they reach your network via a tunnel, regardless of the scheme used in the URL provided to `fetch`. If the `http` scheme is used, a plaintext connection is established to the service from the tunnel.
+
+The `https` scheme can be used for an encrypted connection within your network, between the tunnel and your service. When the `https` scheme is specified, a hostname provided to the `fetch()` operation is utilized as the Server Name Indication (SNI) value.
+
+VPC Services default to allowing both `http` and `https` schemes to be used. You can provide values for only one of `http_port` or `https_port` to enforce the use of a particular scheme.
+
+When Workers VPC is unable to establish a connection to your service, `fetch()` will throw an exception.
 
 :::note
-The [VPC Service configurations](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your services in external networks, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
 
-The host provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI), when the `https` scheme is specified.
+The [VPC Service configuration](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) host and port(s) will always be used to connect and route requests to your services, even if a different host or port is present in the URL provided to the `fetch()` operation in the Worker code.
 
-The port provided in the `fetch()` operation is ignored — the port specified in the VPC Service configuration will be used.
+The host provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request, or `Host` and the Server Name Indication (SNI) value presented to your service for a HTTPS request.
+
+The port provided in the `fetch()` operation is ignored — the port specified in the VPC Service configuration for the provided scheme will be used.
+
 :::
 
 ## Configuration example
@@ -83,7 +96,7 @@ The following is an example of a VPC Service for a service using custom HTTP and
 		"hostname": "example.com",
 		"resolver_network": {
 			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da",
-			"resolver_ips": ["10.0.0.1"]
+			"resolver_ips": ["10.0.0.1"] // Optional
 		}
 	}
 }
@@ -100,29 +113,29 @@ main = "src/index.js"
 
 [[vpc_services]]
 binding = "PRIVATE_API"
-service_id = "5634563546"
-remote = true
+service_id = "e6a0817c-79c5-40ca-9776-a1c019defe70"
+remote = true # When true, utilizes [remote bindings](/workers/development-testing/#remote-bindings) to allow access to the VPC Service during local development.
 
 ```
 </WranglerConfig>
 
-You can have multiple service bindings:
+You can have multiple VPC service bindings:
 
 <WranglerConfig>
 ```toml
 [[vpc_services]]
 binding = "PRIVATE_API"
-service_id = "5634563546"
+service_id = "daf43e8c-a81a-4242-9912-4a2ebe4fdd79"
 remote = true
 
 [[vpc_services]]
 binding = "PRIVATE_DATABASE"
-service_id = "7856789012"
+service_id = "453b6067-1327-420d-89b3-2b6ad16e6551"
 remote = true
 
 [[vpc_services]]
 binding = "INTERNAL_CACHE"
-service_id = "3412345678"
+service_id = "6c39b574-237e-49f4-852a-cea5a93ed8f9"
 remote = true
 
 ```
