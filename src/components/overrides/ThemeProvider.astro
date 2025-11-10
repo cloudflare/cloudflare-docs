@@ -1,0 +1,14 @@
+---
+import Default from "@astrojs/starlight/components/ThemeProvider.astro";
+---
+
+<script is:inline>
+	const params = new URL(location.href).searchParams;
+	const theme = params.get("preferred-color-scheme");
+	if (theme === "dark" || theme === "light") {
+		document.documentElement.dataset.theme = theme;
+		localStorage.setItem("starlight-theme", theme);
+	}
+</script>
+
+<Default><slot /></Default>

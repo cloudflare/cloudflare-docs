@@ -190,6 +190,7 @@ export default defineConfig({
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
+				ThemeProvider: "./src/components/overrides/ThemeProvider.astro",
 			},
 			sidebar,
 			customCss,
