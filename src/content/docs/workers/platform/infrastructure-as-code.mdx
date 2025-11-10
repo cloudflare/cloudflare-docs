@@ -121,14 +121,14 @@ Bind to a [D1 database](/d1/worker-api/) for SQL storage:
 bindings = [{
   type = "d1"
   name = "DB"
-  database_id = "your-database-id"
+  id = "your-database-id"
 }]
 ```
 
 **Properties:**
 - `type`: `"d1"`
 - `name`: The binding name to access via `env.DB`
-- `database_id`: The ID of your D1 database
+- `id`: The ID of your D1 database
 
 ### Durable Object Binding
 
@@ -136,7 +136,7 @@ Bind to a [Durable Object](/durable-objects/api/) class:
 
 ```tf
 bindings = [{
-  type = "durable_object"
+  type = "durable_object_namespace"
   name = "MY_DURABLE_OBJECT"
   class_name = "MyDurableObjectClass"
   script_name = "my-worker"
@@ -144,7 +144,7 @@ bindings = [{
 ```
 
 **Properties:**
-- `type`: `"durable_object"`
+- `type`: `"durable_object_namespace"`
 - `name`: The binding name to access via `env.MY_DURABLE_OBJECT`
 - `class_name`: The exported class name of the Durable Object
 - `script_name`: (Optional) The Worker script that exports this Durable Object class. Omit if the class is defined in the same Worker.
@@ -321,7 +321,7 @@ resource "cloudflare_worker_version" "my_worker_version" {
     {
       type = "d1"
       name = "DB"
-      database_id = var.d1_database_id
+      id = var.d1_database_id
     },
     {
       type = "service"
@@ -667,7 +667,7 @@ resource "cloudflare_worker_version" "my_worker_version" {
   worker_id = cloudflare_worker.my_worker.id
   bindings = [
     {
-      type = "durable_object"
+      type = "durable_object_namespace"
       name = "my_durable_object"
       class_name = "MyDurableObjectClass"
     }
