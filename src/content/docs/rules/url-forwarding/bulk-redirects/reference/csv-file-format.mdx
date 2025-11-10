@@ -1,12 +1,9 @@
 ---
-title: CSV file format
+title: CSV file format for Bulk Redirects
 pcx_content_type: reference
 sidebar:
   order: 6
-head:
-  - tag: title
-    content: CSV file format to import URL redirects
-
+  label: CSV file format
 ---
 
 You can use a CSV file to import URL redirects into a Bulk Redirect List [using the Cloudflare dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/#1-create-a-bulk-redirect-list). Each line in the CSV file must follow this format:
@@ -31,7 +28,7 @@ example.com/docs,https://example.com/draft-docs,302,,TRUE
 
 ## Important remarks
 
-* The CSV file must not include a header row with column names.
-* A source/target URL must be enclosed in quotes (`"`) when it includes a comma (`,`). You can always enclose URL values in quotes, but it is not required.
-* You can skip an optional value by immediately entering a comma (the delimiter) without entering any value.
-* You do not need to include trailing commas.
+- The CSV file must not include a header row with column names.
+- A source/target URL must be enclosed in quotes (`"`) when it includes a comma (`,`). You can always enclose URL values in quotes, but it is not required.
+- You can skip an optional value by immediately entering a comma (the delimiter) without entering any value.
+- You do not need to include trailing commas.
