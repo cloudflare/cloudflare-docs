@@ -9,9 +9,9 @@ sidebar:
 
 IP endpoints do not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
 
-To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/traffic-policies/http-policies/http3/#enable-http3-inspection).
+Both HTTP proxy endpoints only support proxying and filtering TCP traffic.
 
-Authorization endpoints, do not support anything that is not HTTP/HTTPS. That means no other TCP or UDP protocol is supported, including HTTP3.
+Authorization endpoints do not support anything that is not HTTP/HTTPS. That means no other TCP or UDP protocol is supported, including HTTP3.
 
 ## Gateway DNS and resolver policies
 
