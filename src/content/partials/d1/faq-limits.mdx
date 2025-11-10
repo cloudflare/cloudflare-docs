@@ -32,7 +32,7 @@ Each individual D1 database is backed by a single [Durable Object](/durable-obje
 
 Query performance is the most important factor for throughput. As a rough guideline:
 
-- Read queries like `SELECT name FROM users WHERE id = ?` with an appropriate index on `id` will take less than a millisecond.
+- Read queries like `SELECT name FROM users WHERE id = ?` with an appropriate index on `id` will take less than a millisecond for SQL duration.
 - Write queries like `INSERT` or `UPDATE` can take several milliseconds for SQL duration, and depend on the number of rows written. Writes need to be durably persisted across several locations - learn more on [how D1 persists data under the hood](https://blog.cloudflare.com/d1-read-replication-beta/#under-the-hood-how-d1-read-replication-is-implemented).
 - Data migrations like a large `UPDATE` or `DELETE` affecting millions of rows must be run in batches. A single query that attempts to modify hundreds of thousands of rows or hundreds of MBs of data at once will exceed execution limits. Break the work into smaller chunks (e.g., processing 1,000 rows at a time) to stay within platform limits.
 
