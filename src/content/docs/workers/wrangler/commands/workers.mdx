@@ -130,7 +130,9 @@ None of the options for this command are required. Many of these options can be 
 - `--types` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Generate types from your Worker configuration.
 - `--local` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Develop against all local resources, this includes both the worker's logic and [remote bindings](/workers/development-testing/#remote-bindings) which will be disabled (behaving exactly as if there were configured with `remote: false`).
+  - Run in local mode. In this mode:
+    - the Worker code is running locally on your machine
+    - all [remote bindings](/workers/development-testing/#remote-bindings) are disabled, which behaves exactly as if there were configured with `remote: false`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
