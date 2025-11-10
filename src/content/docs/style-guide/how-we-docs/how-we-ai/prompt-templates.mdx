@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Prompt templates | How we AI
+title: Prompt templates
 sidebar:
   order: 3
 ---
@@ -18,13 +18,13 @@ Key benefits of using prompt templates include:
 
 Essentially, a prompt is the direct instruction you give to an AI, while a prompt template is a blueprint for creating those instructions in a structured and reusable way.
 
-# Example use case
+## Example use case
 
 Let’s say a product manager wants to create a how-to topic for a new feature. Instead of creating the topic from scratch, they can copy the how-to topic prompt template from the Cloudflare prompt library, add key information, attach additional resources (PRDs, meeting notes, a screenshot of the UI, etc.), and ask AI to draft it for them. They should get a response that is in the style, format, and structure of our [how-to content type](https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/how-to/) (in fact, we leverage our content types to help build the documentation prompts).
 
 Now, this does not mean the output is perfect or technically accurate. The AI can and likely will hallucinate something. This is where reviewing the output is necessary. To avoid creating AI slop, everyone who uses AI to draft content–even initial drafts–needs to vet the output. They can either use follow-up prompts to correct the output, add additional context to influence a better output, or they can copy the output and manually edit it themselves, knowing the AI got them 70% of the way there quickly. In short, review the output and avoid creating more AI slop. If you are not certain if something is true and you can’t validate it through testing, ask a subject matter expert.
 
-## Example: The prompt template for how-to content
+### Example: The prompt template for how-to content
 
 This is the prompt template stakeholders use to quickly get started with initial how-to drafts. They can add more information and instructions to it, if they want. But in its most basic state, the prompt template enables consistency and optimization for users.
 
@@ -58,7 +58,7 @@ Context for procedure (optional)
 Next steps sentence - what users should see as the end result and/or actionable next steps.
 ```
 
-## The anatomy of the how-to prompt template
+### The anatomy of the how-to prompt template
 
 1. The persona and its mission
 

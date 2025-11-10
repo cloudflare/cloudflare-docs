@@ -11,7 +11,7 @@ Individually, these posts are anecdotes. Collectively, they are a strategic asse
 
 To solve this, we built CloudSpeaker, an internal tool created to amplify the voice of the user. Its purpose is to save time, increase efficiency , and consolidate public feedback from all these external communities into a single, unified view.
 
-# The goal: Turning unstructured noise into actionable insight
+## The goal: Turning unstructured noise into actionable insight
 
 CloudSpeaker was designed to give any stakeholder at Cloudflare—from product managers and engineers to our user experience teams—a quick way to "check the pulse" of the products and features they own.
 
@@ -23,7 +23,7 @@ The tool allows anyone to see:
 
 This consolidated view is now a key part of our planning cycles, informing everything from user research and persona creation to feature requests and quarterly backlog prioritization.
 
-# How it's built: An AI-powered data pipeline
+## How it's built: An AI-powered data pipeline
 
 CloudSpeaker is built entirely on our own products, including [Cloudflare Pages](/pages/) for the application, [D1](/d1/) for the database, and more. The real power, however, comes from its AI-driven data pipeline, managed by our Data Intelligence team.
 
@@ -36,7 +36,7 @@ Here’s how it works:
    - **Post type:** It categorizes the intent of the post, such as a `help request`, `feature request`, or `bug report`.
 3. **Storage and display:** Once the AI completes its inference, these new classifications are stored in our D1 database and become viewable in the CloudSpeaker UI.
 
-# The workflow: On-demand AI analysis
+## The workflow: On-demand AI analysis
 
 The backend classification pipeline solves the problem of manual processing. The frontend application solves the problem of accessibility.
 

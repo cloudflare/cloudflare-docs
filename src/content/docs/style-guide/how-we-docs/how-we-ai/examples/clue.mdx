@@ -11,7 +11,7 @@ To solve this, we built CLUE: Content Legibility for User Ease. CLUE is an inter
 
 When a stakeholder shares content with CLUE, it provides a score and actionable recommendations. This simple feedback loop is a powerful mechanism for measuring and improving our content over time.
 
-# The goal: Quantifying "good content"
+## The goal: Quantifying "good content"
 
 The core challenge CLUE addresses is that "good" content is easy to recognize but hard to measure. We know that effective copy uses an active voice, has an action-led structure, and removes unnecessary words , but how do you quantify that improvement at scale?
 
@@ -24,7 +24,7 @@ The user flow is designed to be straightforward: you select your content type, e
 - API endpoint and parameter descriptions
 - Customer-facing emails
 
-# How it's built: A hybrid, model-driven approach
+## How it's built: A hybrid, model-driven approach
 
 CLUE was truly built by Cloudflare, for Cloudflare, on Cloudflare. The application itself is built on Cloudflare Pages and protected by Cloudflare Access.
 
@@ -35,7 +35,7 @@ Critically, CLUE is not just one thing, it's a hybrid solution:
 1. **AI-powered checks:** For criteria that require evaluating overall context and tone, CLUE uses [Workers AI](https://developers.cloudflare.com/workers-ai/). This helps us check for things like an empathetic tone in an email or ensuring an error message suggests a path forward for the user.
 2. **Traditional checks:** For common grammar "no-nos" or specific terminology, we use regular expressions and indexed lists. This helps catch passive voice, missing Oxford commas, or ensure a term like "Internet" is always capitalized, all based on our internal glossary, style guide, and UX best practices.
 
-# The workflow: Using CLUE as an LLM copy editor
+## The workflow: Using CLUE as an LLM copy editor
 
 The rise of Generative AI and LLMs, like Gemini, has been a boon for generating text quickly. However, an LLM doesn't inherently understand or apply Cloudflare's specific content guidelines, voice, and tone.
 
