@@ -53,6 +53,10 @@ Once you choose a type of proxy endpoint, you cannot revert this decision.
 
 ## Authorization endpoint
 
+Authorization endpoints support being associated with [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide full authorization capabilities. Authorization endpoint allows you yo configure authorization methods (for example, with Google), before traffic is sent for processing.
+
+Authorization endpoints offer a more flexible way to authorize traffic by leveraging Cloudflare Access.
+
 If you select **Add an authorization endpoint**:
 
 1. Enter your basic information.
@@ -78,6 +82,8 @@ To edit an authorization endpoint:
     - **Login methods**: Select the [identity providers](/cloudflare-one/integrations/identity-providers/) you want to use to log in to this application.
 
 ## Source IP endpoint
+
+When you configure a source IP endpoint, traffic authorization is determined by the source IP address of the incoming traffic. You configure the endpoint to allow traffic processing only from a specific pre-defined set of source IP addresses.
 
 If you select **Add a source IP endpoint**:
 
@@ -227,7 +233,7 @@ To create a PAC file:
 Your PAC file is of the form:
 
 ```txt
-https://<SUBDOMAIN>/test/test
+https://pac.cloudflare-gateway.com/<account-tag>/<slug>
 ```
 
 ### Edit your PAC files
