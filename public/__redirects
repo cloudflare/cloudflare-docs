@@ -2393,6 +2393,7 @@
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/* /cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/:splat 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/install-and-setup/* /cloudflare-one/networks/connectors/cloudflare-tunnel/ 301
 /cloudflare-one/analytics/logs/* /cloudflare-one/insights/logs/:splat 301
 /cloudflare-one/applications/scan-apps/* /cloudflare-one/applications/casb/:splat 301
 /cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-networks/use-cases/:splat 301

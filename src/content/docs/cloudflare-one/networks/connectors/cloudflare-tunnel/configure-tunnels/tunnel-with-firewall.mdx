@@ -126,6 +126,14 @@ Allows `cloudflared` to report [post-quantum key exchange](https://blog.cloudfla
 | --------------------------- | ------------------------------------------- | ---- | ----------- |
 | `104.18.4.64` `104.18.5.64` | `2606:4700::6812:540` `2606:4700::6812:440` | 443  | TCP (HTTPS) |
 
+#### `cfd-features.argotunnel.com`
+
+| IPv4           | IPv6           | Port | Protocols    |
+| -------------- | -------------- | ---- | ------------ |
+| Not applicable | Not applicable | Not applicable | Not applicable |
+
+Performing a DNS query for a `TXT` record to this hostname allows `cloudflared` to determine which version of [UDP datagram](/changelog/2025-07-15-udp-improvements/) to use when connecting via the `quic` protocol. If your firewall filters egress DNS queries by FQDN, you may need to allow queries for this domain to ensure optimal `quic` performance.
+
 ## Firewall configuration
 
 ### Cloud VM firewall
