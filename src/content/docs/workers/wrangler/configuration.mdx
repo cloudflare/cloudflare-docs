@@ -81,7 +81,7 @@ Further, there are a few keys that can _only_ appear at the top-level.
 
 Wrangler can automatically provision resources for you when you deploy your Worker without you having to create them ahead of time.
 
-This currently works for KV, R2 and D1 bindings.
+This currently works for KV, R2, and D1 bindings.
 
 To use this feature, add bindings to your configuration file _without_ adding resource IDs, or in the case of R2, a bucket name. Resources will be created with the name of your worker as the prefix.
 
@@ -95,9 +95,9 @@ kv_namespaces = [
 
 </WranglerConfig>
 
-When you run `wrangler dev` local resources will automatically be created which persist between runs. When you run `wrangler deploy` resources will be created for you, and their IDs will be written back to your configuration file.
+When you run `wrangler dev`, local resources will automatically be created which persist between runs. When you run `wrangler deploy`, resources will be created for you, and their IDs will be written back to your configuration file.
 
-If you deploy a worker with resources and no resource IDs from the dashboard (e.g. via GitHub), resources will be created, but their IDs will only be accessible via the dashboard. Currently these resource IDs will not be written back to your repository.
+If you deploy a worker with resources and no resource IDs from the dashboard (for example, via GitHub), resources will be created, but their IDs will only be accessible via the dashboard. Currently, these resource IDs will not be written back to your repository.
 
 ## Top-level only keys
 
