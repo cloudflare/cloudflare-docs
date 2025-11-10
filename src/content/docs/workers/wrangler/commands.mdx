@@ -321,7 +321,7 @@ None of the options for this command are required. Also, many can be set in your
   - Specify the [rollout strategy](/containers/faq#how-do-container-updates-and-rollouts-work) for [Containers](/containers) associated with the Worker. If set to `immediate`, 100% of container instances will be updated in one rollout step, overriding any configuration in `rollout_step_percentage`. Note that `rollout_active_grace_period`, if configured, still applies.
   - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
 - `--strict` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Turns on strict mode for the deployment command, meaning that the command will be more defensive and prevent deployments which could introduce potential issues. In particular this mode makes sure that in non-interactive environments, if a deployment would potentially override remote settings then the deployment is prevented.
+  - Turns on strict mode for the deployment command, meaning that the command will be more defensive and prevent deployments which could introduce potential issues. In particular, this mode prevents deployments if the deployment would potentially override remote settings in non-interactive environments.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
