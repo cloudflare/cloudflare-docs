@@ -35,6 +35,9 @@ export default {
 			max: 5,
 			// If you are not using array types in your Postgres schema, disable `fetch_types` to avoid an additional round-trip (unnecessary latency)
 			fetch_types: false,
+
+			// This is set to true by default, but certain query generators such as Kysely or queries using sql.unsafe() will set this to false. Hyperdrive will not cache prepared statements when this option is set to false and will require additional round-trips.  
+			prepare: true,
 		});
 
 		try {
