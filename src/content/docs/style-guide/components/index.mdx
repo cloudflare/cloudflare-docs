@@ -3,7 +3,7 @@ title: Components
 sidebar:
     order: 2
 ---
-import { Details } from "~/components";
+import { Details, Example } from "~/components";
 
 When you are [contributing to the Cloudflare Docs](/style-guide/contributions/), you can use our custom components to add additional formatting, such as buttons, tabs, and collapsible sections.
 
@@ -57,13 +57,27 @@ To add a component to a page:
 
 ## Choose the right component
 
-| Component | Description & use cases | Example |
-| :---- | :----   | :---- |
-| [`APIRequest`](/style-guide/components/api-request/) | Styled API request block — Generate executable cURL API commands with the required API token permissions. | ![APIRequest example](~/assets/images/style-guide/ui-elements/apirequest-example.png)  |
-| [`DashButton`](/style-guide/components/dash-button/) | Dashboard deep-link button — Directly link users from documentation into a specific, relevant section of the Cloudflare Dashboard. | ![DashButton component example](~/assets/images/style-guide/ui-elements/dashbutton-example-sm.png) |
-| [`Details`](/style-guide/components/details/) | Click-to-expand content block — Hide non-essential, complex, or advanced technical content, allowing users to expand the section when needed. |  ![Details example](~/assets/images/style-guide/ui-elements/details-example.png) |
-| [`GlossaryTooltip`](/style-guide/components/glossary-tooltip/) | Hover-activated glossary popup — Provide non-disruptive, hover-activated definitions for technical terms pulled from the documentation glossary. | ![Glossary tooltip example](~/assets/images/style-guide/ui-elements/glossary-tooltip-example.png) |
-| [`Tabs` and `TabItem`](/style-guide/components/tabs/) | Switchable content tabs — Tabs switch between content views for different code languages (e.g., JavaScript/Python) or configuration methods (e.g., API/Dashboard). | ![Tabs example](~/assets/images/style-guide/ui-elements/tabs-example.png) |
-| [`Type` and `MetaInfo`](/style-guide/components/type-highlighting/) | Pill-shaped data type badge — Indicates API parameter data types (`String`, `Integer`) and metadata constraints (`Required`, `Optional`, `Read-only`). | ![Type example](~/assets/images/style-guide/ui-elements/type-example.png)  |
-| [`WranglerConfig`](/style-guide/components/wrangler-config/) | Tabbed Wrangler config display — Show Wrangler configuration files (JSONC and TOML) and bindings with automatic format switching. | ![WranglerConfig example](~/assets/images/style-guide/ui-elements/wranglerconfig-example.png)  |
+To choose the right component for your use case, browse this table which contains our most commonly used components. For full documentation on all available components and their use cases, browse the individual component pages in this Style Guide.
+
+| Component | Description & visual example |
+| :---- | :----   |
+| [`APIRequest`](/style-guide/components/api-request/) | Styled API request block. Generate executable cURL API commands with the required API token permissions. <Example>![APIRequest component example](~/assets/images/style-guide/ui-elements/apirequest-example.png) </Example> |
+| [`Badge`](/style-guide/components/badges/) | Small descriptive pill. Used inline or in lists to label content with status (for example, beta), version, category, or other short metadata. <Example> ![Badge component example](~/assets/images/style-guide/ui-elements/badge-example.png) </Example>|
+| [`DashButton`](/style-guide/components/dash-button/) | Dashboard deep-link button. Directly link users from documentation into a specific, relevant section of the Cloudflare Dashboard. <Example> ![DashButton component example](~/assets/images/style-guide/ui-elements/dashbutton-example-2.png) </Example>|
+| [`Details`](/style-guide/components/details/) | Click-to-expand content block. Hide non-essential, complex, or advanced technical content, allowing users to expand the section when needed. <Example> ![Details example](~/assets/images/style-guide/ui-elements/details-example.png) </Example>|
+| [`DirectoryListing`](/style-guide/components/directory-listing) | Auto-generated sub-page list. Automatically generate a navigable list of links to sub-pages within a specified documentation folder path. <Example> ![DirectoryListing component example](~/assets/images/style-guide/ui-elements/directorylisting-example.png) </Example>|
+| [`Feature`](/style-guide/components/feature/) | Product feature list item. Lists available product features with a description and a direct link button to use the feature. <Example> ![Feature component example](~/assets/images/style-guide/ui-elements/feature-example.png) </Example>|
+| [`FeatureTable`](/style-guide/components/feature-table/) | Product plan comparison table. Display detailed feature information, often including availability across different Cloudflare pricing plans. <Example> ![FeatureTable component example](~/assets/images/style-guide/ui-elements/featuretable-example.png) </Example>|
+| [`GlossaryTooltip`](/style-guide/components/glossary-tooltip/) | Hover-activated glossary popup. Provide non-disruptive, hover-activated definitions for technical terms pulled from the documentation glossary. <Example> ![Glossary tooltip example](~/assets/images/style-guide/ui-elements/glossarytooltip-example.png) </Example>|
+| [`LinkCard`](/style-guide/components/link-cards/) | Grid of navigation cards. Presents related tutorials, concepts, or guides in a visually engaging grid format. |
+| [`PackageManagers`](/style-guide/components/package-managers) | Command switcher tabs. Display equivalent installation or execution commands for different package managers (npm, yarn, pnpm). <Example> ![DirectoryListing component example](~/assets/images/style-guide/ui-elements/packagemanagers-example.png) </Example>|
+| [`Plan`](/style-guide/components/plan/) | Product plan availability badge. Show the plan required for a product or specific feature (for example, "Business and above"). |
+| [`RelatedProduct`](/style-guide/components/related-product/) | Link card to product. Suggests other Cloudflare products by showing a linked card with a product description. |
+| [`ResourcesBySelector`](/style-guide/components/resources-by-selector/) | Filterable code example library. Dynamically pulls and displays lists of code examples and resources based on tags and content type. |
+| [`Stream`](/style-guide/components/stream/) | Embeddable video player. Displays a video player optimized for Cloudflare Stream content directly within the documentation. |
+| [`Tabs` and `TabItem`](/style-guide/components/tabs/) | Switchable content tabs. Tabs switch between content views for different code languages (for example, JavaScript/Python) or configuration methods (for example, API/Dashboard). <Example> ![Tabs example](~/assets/images/style-guide/ui-elements/tabs-example.png) </Example>|
+| [`Type` and `MetaInfo`](/style-guide/components/type-highlighting/) | Pill-shaped data type badge. Indicates API parameter data types (`String`, `Integer`) and metadata constraints (`Required`, `Optional`, `Read-only`). <Example> ![Type example](~/assets/images/style-guide/ui-elements/type-example.png)  </Example>|
+| [`WranglerConfig`](/style-guide/components/wrangler-config/) | Tabbed Wrangler config display. Show Wrangler configuration files (JSONC and TOML) and bindings with automatic format switching. <Example> ![WranglerConfig example](~/assets/images/style-guide/ui-elements/wranglerconfig-example.png)  </Example>|
+| [`YouTube`](/style-guide/components/youtube/) | Embeddable video player. Embeds a YouTube video player with a specified video ID directly into the documentation page. |
+
 
