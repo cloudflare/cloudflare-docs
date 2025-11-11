@@ -15,7 +15,7 @@ When you use a database client in a Cloudflare Worker, the connection lifecycle 
 
 ![Hyperdrive connection](~/assets/images/hyperdrive/configuration/hyperdrive-connection-lifecycle.svg)
 
-Without Hyperdrive, every Worker invocation would need to establish a new connection directly to your origin database. This connection setup process requires multiple roundtrips across the Internet to complete the TCP handshake, TLS negotiation, and database authentication—that's 7x round trips and added latency before your query can even execute.
+Without Hyperdrive, every Worker invocation would need to establish a new connection directly to your origin database. This connection setup process requires multiple roundtrips across the Internet to complete the TCP handshake, TLS negotiation, and database authentication — that's 7x round trips and added latency before your query can even execute.
 
 Hyperdrive solves this by splitting the connection setup into two parts: a fast edge connection and an optimized path to your database.
 
@@ -53,7 +53,7 @@ Be careful when maintaining persistent database connections in Durable Objects. 
 
 Hyperdrive operates in [transaction pooling mode](/hyperdrive/concepts/how-hyperdrive-works/#pooling-mode), where a connection is held for the duration of a transaction. Long-running transactions that contain multiple queries can exhaust Hyperdrive's available connections more quickly because each transaction holds a connection from the pool until it completes.
 
-:::note
+:::tip
 
 Keep transactions as short as possible. Perform only the essential queries within a transaction, and avoid including non-database operations (like external API calls or complex computations) inside transaction blocks.
 
