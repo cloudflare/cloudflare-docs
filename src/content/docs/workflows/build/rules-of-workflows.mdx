@@ -207,9 +207,9 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Avoid doing side effects outside of a `step.do`
 
-The Workflow engine may restart, it is not recommended to write code with any side effects outside of steps, unless you would like it to be repeated. If the engine restarts, the step logic will be preserved, but logic outside of the steps may be duplicated.
+It is not recommended to write code with any side effects outside of steps, unless you would like it to be repeated, because the Workflow engine may restart while an instance is running. If the engine restarts, the step logic will be preserved, but logic outside of the steps may be duplicated.
 
-For example, a console.log() outside of workflow steps may cause the logs to print twice when the engine restarts.
+For example, a `console.log()` outside of workflow steps may cause the logs to print twice when the engine restarts.
 
 However, logic involving non-serializable resources, like a database connection, should be executed outside of steps. Operations ouside of a `step.do` might be repeated more than once, due to the nature of the Workflows' instance lifecycle.
 
