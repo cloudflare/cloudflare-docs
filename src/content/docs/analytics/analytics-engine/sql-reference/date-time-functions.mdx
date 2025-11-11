@@ -120,6 +120,31 @@ Examples:
 toMonth(toDateTime('2025-10-27 00:00:00'))
 ```
 
+## toDayOfWeek <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toDayOfWeek(<datetime>)
+```
+
+`toDayOfWeek` takes a datetime and returns its numerical day of the week.
+
+Returns `1` to indicate Monday, `2` to indicate Tuesday, and so on.
+
+Examples:
+
+```sql
+-- returns the number 1 for Monday 27th October 2025
+toDayOfWeek(toDateTime('2025-10-27 00:00:00'))
+
+-- returns the number 2 for Tuesday 28th October 2025
+toDayOfWeek(toDateTime('2025-10-28 00:00:00'))
+
+-- returns the number 7 for Sunday 2nd November 2025
+toDayOfWeek(toDateTime('2025-11-02 00:00:00'))
+```
+
 ## toDayOfMonth <Badge text="New" variant="tip" size="small" />
 
 Usage:
@@ -270,6 +295,29 @@ Examples:
 toStartOfMonth(toDateTime('2025-10-27 00:00:00'))
 ```
 
+## toStartOfWeek <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfWeek(<datetime>)
+```
+
+`toStartOfWeek` rounds down a datetime to the start of the week. This can be useful
+for grouping data into equal-sized time ranges.
+
+Treats Monday as the first day of the week.
+
+Examples:
+
+```sql
+-- round a time on a Monday down to Monday 2025-10-27 00:00:00
+toStartOfWeek(toDateTime('2025-10-27 00:00:00'))
+
+-- round a time on a Wednesday down to Monday 2025-10-27 00:00:00
+toStartOfWeek(toDateTime('2025-10-29 00:00:00'))
+```
+
 ## toStartOfDay <Badge text="New" variant="tip" size="small" />
 
 Usage:
@@ -324,6 +372,42 @@ Examples:
 toStartOfFifteenMinutes(toDateTime('2025-10-27 16:55:25'))
 ```
 
+## toStartOfTenMinutes <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfTenMinutes(<datetime>)
+```
+
+`toStartOfTenMinutes` rounds down a datetime to the nearest ten minutes. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-27 16:50:00
+toStartOfTenMinutes(toDateTime('2025-10-27 16:55:25'))
+```
+
+## toStartOfFiveMinutes <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfFiveMinutes(<datetime>)
+```
+
+`toStartOfFiveMinutes` rounds down a datetime to the nearest five minutes. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-27 16:55:00
+toStartOfFiveMinutes(toDateTime('2025-10-27 16:55:25'))
+```
+
 ## toStartOfMinute <Badge text="New" variant="tip" size="small" />
 
 Usage:
@@ -340,4 +424,22 @@ Examples:
 ```sql
 -- round a timestamp down to 2025-10-27 16:55:00
 toStartOfMinute(toDateTime('2025-10-27 16:55:25'))
+```
+
+## toYYYYMM <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toYYYYMM(<datetime>)
+```
+
+`toYYYYMM` returns a number representing year and month of a datetime.
+For instance a datetime on `2025-05-03` would return the number `202505`.
+
+Examples:
+
+```sql
+-- returns the number 202510
+toYYYYMM(toDateTime('2025-10-27 16:55:25'))
 ```
