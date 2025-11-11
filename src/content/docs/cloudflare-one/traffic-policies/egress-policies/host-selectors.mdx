@@ -113,3 +113,14 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 The WARP client must be set to _Gateway with WARP_ mode for traffic affected by these selectors to route correctly.
 
 {/* prettier-ignore-end */}
+
+## Known issues
+
+### Google Chrome restricts local network access
+
+From Chrome 142, the browser may block requests to domains covered by a Host selector. Chrome now restricts requests from a website to local IP addresses, including the CGNAT range used by the Host selector feature. Users will see a prompt that states the website wants to "Look for and connect to any device on your local network".
+
+To workaround this issue, you can do one of the following:
+
+- Disable the feature flag in Chrome by visiting `chrome://flags` and switching the `#local-network-access-check` flag to 'Disabled'.
+- Use the LocalNetworkAccessAllowedForUrls Chrome Enterprise policy as [documented by Google](https://chromeenterprise.google/policies/#LocalNetworkAccessAllowedForUrls) to allow specific websites to make requests to domains covered by Host selectors.
