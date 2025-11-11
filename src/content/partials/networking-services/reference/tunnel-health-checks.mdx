@@ -61,7 +61,7 @@ The target defaults to the publicly routable origin specified as the `customer_e
 
 #### Bidirectional
 
-A bidirectional probe stays encapsulated in both directions, that is, the probe comes in via the tunnel and the response also leaves encapsulated via the tunnel.
+A bidirectional probe stays encapsulated in both directions, that is, the probe comes in via the tunnel and the response also leaves encapsulated via the tunnel. The ICMP reply from the customer's router destined for the anycast IP address on Cloudflare's network will be delivered to the closest Cloudflare data center and land on one of the servers using ECMP, ensuring the response takes the most efficient path.
 
 By default, these packets are destined for the Cloudflare side of the interface address field set on the tunnel, and are sourced from the client of the tunnel. For example, if the interface address is `10.100.0.8/31`, then the packet will be destined for `10.100.0.9` and sourced from `10.100.0.8`.
 
