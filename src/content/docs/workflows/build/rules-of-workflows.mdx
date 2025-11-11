@@ -216,46 +216,46 @@ However, logic involving non-serializable resources, like a database connection,
 <TypeScriptExample filename="index.ts">
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
-	async run(event: WorkflowEvent<MyEvent>, step: WorkflowStep) {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: creating instances outside of steps
 		// This might get called more than once creating more instances than expected
-		const myNewInstance = this.env.ANOTHER_WORKFLOW.create({params})
+		const myNewInstance = this.env.ANOTHER_WORKFLOW.create();
 
 		// 🔴 Bad: using non-deterministic functions outside of steps
 		// this will produce different results if the instance has to restart, different runs of the same instance
 	  // might go through different paths
-		const myRandom = Math.random()
+		const myRandom = Math.random();
 
 		if(myRandom > 0) {
 			// do some stuff
 		}
 
 		// ⚠️ Warning: This log can happen many times if the engine restarts
-		console.log("This might be logged more than once")
+		console.log("This might be logged more than once");
 
 		await step.do("do some stuff and have a log for when it runs", async () => {
 			// do some stuff
 
 			// this log will only appear once
-			console.log('successfully did stuff')
+			console.log("successfully did stuff");
 		})
 
 
 		// ✅ Good: wrap non-deterministic function in a step
 		// after running successfully will not run again
 		const myRandom = await step.do("create a random number", async () => {
-	    return Math.random()
+	    return Math.random();
 		})
 
 		// ✅ Good: calls that have no side effects can be done outside of steps
-		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN)
+		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
 
 		// ✅ Good: run funtions with side effects inside of a step
 		// after running successfully will not run again
 		const myNewInstance = await step.do("good step that returns state", async () => {
-			const myNewInstance = this.env.ANOTHER_WORKFLOW.create({params})
+			const myNewInstance = this.env.ANOTHER_WORKFLOW.create();
 
-	    return myNewInstance
+	    return myNewInstance;
 		})
 	}
 }
