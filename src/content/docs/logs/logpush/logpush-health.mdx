@@ -23,8 +23,7 @@ Logpush Health Dashboards give you a clear view into the performance and reliabi
 ### Data Availability and API Access
 
 - The **Health Dashboard** displays up to **30 days** of health metrics for each Logpush job in the Cloudflare dashboard.  
-- These same metrics are also available programmatically through the **GraphQL API**.
-- To query this data, use the `logpushHealthAdaptiveGroups` dataset.  
+- The raw health metrics can be queried via the `logpushHealthAdaptiveGroups` dataset in the GraphQL API.
 - You can explore or test queries using the [Cloudflare GraphQL Explorer](https://graphql.cloudflare.com/explorer).
 
 ## Key Concepts in Job Health
@@ -54,7 +53,7 @@ Additional upload attempts made after an initial failure. The count includes the
 
 Indicates that all upload attempts for a batch were exhausted without success. When a batch fails, Cloudflare cannot deliver its logs to your destination, and all logs in that batch are dropped. These logs are permanently lost.
 
-## Dashboard Flow
+## Health dashboard flow
 
 The **Logpush Health Dashboard** provides two complementary views that help you monitor and troubleshoot log delivery: **Upload Health** and **Upload Reliability**.  
 
