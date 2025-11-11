@@ -1,6 +1,6 @@
 ---
-trigger: glob
-globs: *.mdx
+trigger: always_on
+globs: **/*.mdx*
 ---
 
 # General styling
