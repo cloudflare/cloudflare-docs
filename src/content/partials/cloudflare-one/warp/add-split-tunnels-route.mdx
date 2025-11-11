@@ -21,7 +21,17 @@ import { GlossaryTooltip, TabItem, Tabs, Render } from "~/components";
 		3. Select **Save destination**.
 
 		Traffic to this IP address is now excluded or included from the WARP tunnel.
+    
+    If you would like to exclude a certain specific IP range from a larger IP range, you can use this calculator:
 
+			<SubtractIPCalculator
+				client:load
+				defaults={{
+					base: "172.16.0.0/12",
+					exclude: ["172.31.0.0/16"]
+				}}
+			/>
+    
 		</TabItem> <TabItem label="Add a domain">
 
 		To add a domain to Split Tunnels:
