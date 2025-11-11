@@ -118,7 +118,7 @@ The WARP client must be set to _Gateway with WARP_ mode for traffic affected by 
 
 ### Google Chrome restricts local network access
 
-Starting with [Chrome 142](https://developer.chrome.com/release-notes/142), the browser may restrict requests from websites to local IP addresses, including the CGNAT range (`100.80.0.0/16`) used by the Host selector. When a website attempts to access a domain covered by a Gateway policy with a Host selector, the browser will display a prompt from the website asking to look for and connect to devices on the local network. Accepting this prompt may block requests to domains covered by Host selectors.
+Starting with [Chrome 142](https://developer.chrome.com/release-notes/142), the browser restricts requests from websites to local IP addresses, including the CGNAT range (`100.80.0.0/16`) used by the Host selector. When a website attempts to access a domain covered by a Gateway policy with a Host selector, the browser will display a prompt from the website asking to look for and connect to devices on the local network. Accepting this prompt may block requests to domains covered by Host selectors.
 
 To resolve this issue, choose one of the following options:
 
