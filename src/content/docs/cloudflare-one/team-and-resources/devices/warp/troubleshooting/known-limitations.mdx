@@ -14,6 +14,21 @@ Below, you will find information on devices, software, and configurations that a
 
 The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/) for a list of supported operating systems.
 
+## WARP disconnected on Windows ARM
+
+On Windows devices with ARM-based processors, the WARP client can sometimes get [stuck in a disconnected state](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/common-issues/#unable-to-connect-warp) when you toggle on WARP (such as when installing WARP for the first time).
+
+To work around this issue, you can temporarily remove the WARP network adapter:
+
+1. Open the WARP client GUI and toggle WARP off.
+2. In Windows, open Device Manager.
+3. Select **View** > **Show hidden devices**.
+4. Under **Network adapters**, find **Cloudflare WARP Interface Tunnel** and select **Uninstall device**.
+5. Select **Attempt to remove the drive for this device**, then select **Uninstall**.
+6. Toggle WARP back on.
+
+WARP will now reinstall its network adapter, and the WARP client GUI should now show **Connected**.
+
 ## Managed network on legacy Windows Server
 
 [Managed network detection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) will not work when the TLS certificate is served from IIS 8.5 on Windows Server 2012 R2. To work around the limitation, move the certificate to a different host.
@@ -159,7 +174,7 @@ Name:   connectivity-check.warp-svc
 Address: 127.0.2.3
 ```
 
-## Windows App connection issue with WARP
+## Windows App connection issue
 
 When the WARP client is active on a local machine, users may be unable to connect to a Windows 365 PC using the [Windows App](https://aka.ms/WindowsApp). This issue does not affect browser-based connections to Windows 365.
 

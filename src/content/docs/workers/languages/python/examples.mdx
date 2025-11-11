@@ -4,7 +4,6 @@ title: Examples
 head:
   - tag: title
     content: Python Worker Examples
-
 ---
 
 Cloudflare has a wide range of Python examples in the [Workers Example gallery](/workers/examples/?languages=Python).
@@ -144,8 +143,77 @@ class Default(WorkerEntrypoint):
 
 Refer to [Query D1 from Python Workers](/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.
 
-## Next steps
+## Durable Object
 
-* If you're new to Workers and Python, refer to the [get started](/workers/languages/python/) guide
-* Learn more about [calling JavaScript methods and accessing JavaScript objects](/workers/languages/python/ffi/) from Python
-* Understand the [supported packages and versions](/workers/languages/python/packages/) currently available to Python Workers.
+```python
+from workers import WorkerEntrypoint, Response, DurableObject
+from pyodide.ffi import to_js
+
+class List(DurableObject):
+    async def get_messages(self):
+        messages = await self.ctx.storage.get("messages")
+        return messages if messages else []
+
+    async def add_message(self, message):
+        messages = await self.get_messages()
+        messages.append(message)
+        await self.ctx.storage.put("messages", to_js(messages))
+        return
+
+    async def say_hello(self):
+        result = self.ctx.storage.sql.exec(
+            "SELECT 'Hello, World!' as greeting"
+        ).one()
+
+        return result.greeting
+```
+
+Refer to [Durable Objects documentation](/durable-objects/get-started/) for more information.
+
+## Cron Trigger
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+  			print("cron processed")
+```
+
+Refer to [Cron Triggers documentation](/workers/configuration/cron-triggers/) for more information.
+
+## Workflows
+
+```python
+from workers import WorkflowEntrypoint
+
+class MyWorkflow(WorkflowEntrypoint):
+    async def run(self, event, step):
+        @step.do("dependency a")
+        async def step_a():
+            # do some work
+            return 10
+
+        @step.do("dependency b")
+        async def step_b():
+            # do some work
+            return 20
+
+        @step.do("my final step", depends=[step_a, step_b], concurrent=True)
+        async def my_final_step(result_a=0, result_b=0):
+            # should return 30
+            return result_a + result_b
+
+        await my_final_step()
+```
+
+Refer to the [Python Workflows documentation](/workflows/python/) for more information.
+
+## More Examples
+
+Or you can clone [the examples repository](https://github.com/cloudflare/python-workers-examples) to explore
+even more examples:
+
+```bash
+git clone https://github.com/cloudflare/python-workers-examples
+```

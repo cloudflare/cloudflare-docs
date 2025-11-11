@@ -83,6 +83,10 @@ To improve traffic resilience, assign your dedicated egress IPs to different Clo
 
 When creating egress policies with dedicated egress IPs, set your secondary IPv4 address to either _Default Cloudflare egress_ or a Cloudflare location different from your primary IPv4 address. If the physical location of your primary IPv4 address is not available, traffic will be routed to either the location closest to the user (_Default Cloudflare egress_ option) or another location of your choice.
 
+:::tip[Fallback egress IPs]
+If the location for your primary egress IPs goes down and there is no secondary backup IP address configured in the egress policy, Gateway will not properly route your traffic. Cloudflare recommends you always configure a fallback egress IP for every egress policy.
+:::
+
 ### IP geolocation
 
 :::note
