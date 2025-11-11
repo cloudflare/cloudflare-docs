@@ -32,8 +32,8 @@ We adopted a model-driven approach for content evaluation, which provides a syst
 
 Critically, CLUE is not just one thing, it is a hybrid solution:
 
-1. **AI-powered checks:** For criteria that require evaluating overall context and tone, CLUE uses [Workers AI](https://developers.cloudflare.com/workers-ai/). This helps us check for things like an empathetic tone in an email or ensuring an error message suggests a path forward for the user.
-2. **Traditional checks:** For common grammar "no-nos" or specific terminology, we use regular expressions and indexed lists. This helps catch passive voice, missing Oxford commas, or ensure a term like "Internet" is always capitalized, all based on our internal glossary, style guide, and UX best practices.
+- **AI-powered checks:** For criteria that require evaluating overall context and tone, CLUE uses [Workers AI](/workers-ai/). This helps us check for things like an empathetic tone in an email or ensuring an error message suggests a path forward for the user.
+- **Traditional checks:** For common grammar "no-nos" or specific terminology, we use regular expressions and indexed lists. This helps catch passive voice, missing Oxford commas, or ensure a term like "Internet" is always capitalized, all based on our internal glossary, style guide, and UX best practices.
 
 ## The workflow: Using CLUE as an LLM copy editor
 
