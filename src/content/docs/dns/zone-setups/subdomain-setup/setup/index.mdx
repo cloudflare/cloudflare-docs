@@ -72,8 +72,6 @@ When using subdomain setup, you should consider possible interactions between pa
 
 If a certificate is already active on the child zone for a specific hostname (`subdomain.example.com`), any certificate pack containing that exact hostname in the parent zone (`example.com`) will fail validation.
 
-Also, if a wildcard DNS record exists in the parent zone (`*.example.com`) that covers a hostname in the child zone (`subdomain.example.com`), the [domain control validation (DCV) process](/ssl/edge-certificates/changing-dcv-method/) for a certificate in the child zone will fail.
-
 ## Access applications
 
 <Render file="subdomain-setup-access-apps" product="dns" />
