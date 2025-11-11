@@ -30,7 +30,7 @@ CLUE was truly built by Cloudflare, for Cloudflare, on Cloudflare. The applicati
 
 We adopted a model-driven approach for content evaluation, which provides a systematic, data-driven, and consistent assessment, removing the subjectivity of manual reviews. This model allows us to assess content in seconds, handle complex criteria like readability, and weight criteria based on what we find to be most critical for users.
 
-Critically, CLUE is not just one thing, it's a hybrid solution:
+Critically, CLUE is not just one thing, it is a hybrid solution:
 
 1. **AI-powered checks:** For criteria that require evaluating overall context and tone, CLUE uses [Workers AI](https://developers.cloudflare.com/workers-ai/). This helps us check for things like an empathetic tone in an email or ensuring an error message suggests a path forward for the user.
 2. **Traditional checks:** For common grammar "no-nos" or specific terminology, we use regular expressions and indexed lists. This helps catch passive voice, missing Oxford commas, or ensure a term like "Internet" is always capitalized, all based on our internal glossary, style guide, and UX best practices.
