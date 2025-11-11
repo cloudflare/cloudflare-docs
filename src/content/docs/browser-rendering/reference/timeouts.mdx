@@ -14,51 +14,16 @@ Each timer controls a specific part of the rendering lifecycle — from page loa
 | Timer                                | Scope           |Default           |Max           |
 | -------------------------------------- | --------------- | --------------- | --------------- |
 |  `goToOptions.timeout`     | Time to wait for the page to load before timeout.  |   30 s       |   60 s        |
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 |  `goToOptions.waitUntil`    |  Time until page load considered complete: <br />`load` = full page load, including resources, like images and stylesheets. <br />`Event.domcontentloaded` = waits until the DOM content has been fully loaded, fires before the page `load` event. <br />`Event.networkidle0` = there are no active network connections for at least 500 ms. <br />`Event.networkidle2` = there are no more than two active network connections for at least 500 ms.         |     —      |     —      |
-=======
-|  `goToOptions.waitUntil`    |  Time until page load considered complete: <br />`load` = full page load. <br />`Event.domcontentloaded` = the `DOMContentLoaded` event has fired. <br />`Event.networkidle0` = there are no active network connections for at least 500 ms. <br />`Event.networkidle2` = there are no more than two active network connections for at least 500 ms.         |     —      |     —      |
->>>>>>> f348e39d36 (Fixing table cell format)
 |  `waitForSelector`   | Time to wait for a specific element (any CSS selector) to appear on the page.  |    null      |     60 s      |
 |  `waitForTimeout`     | Additional amount of time to wait after the page has loaded to proceed with actions.  |     null     |      5 min     |
 |  `actionTimeout`     |  Time to wait for the action itself (for example: a screenshot, PDF, or scrape) to complete after the page has loaded.  |    null      |      5 min     |
-=======
-|  `goToOptions.waitUntil`    |  Waits for an event to fire. load (default) — waits for the full load event.domcontentloaded — waits for the DOMContentLoaded event.networkidle0 — waits until there are no more than 0 network connections for at least 500 ms.networkidle2 — waits until there are no more than 2 network connections for at least 500 ms. |  Load is the default        |     —      |
-=======
-|  `goToOptions.waitUntil`    |  Time to consider page load complete: <br/>*`load`—Full load<br/>*`Event.domcontentloaded`—`DOMContentLoaded` loads<br/>*`Event.networkidle0`—No active network connections for at least 500 ms<br/>*`networkidle2`—No more than 2 network connections for at least 500 ms         |     —      |
->>>>>>> d796847136 (Update src/content/docs/browser-rendering/reference/timeouts.mdx)
-|  `waitForSelector`   | Time to wait for a specific element (any CSS selector) to appear on the page.  |    null      |     60 s      |
-<<<<<<< HEAD
-|  `waitForTimeout`     | After the page has loaded, waits an additional fixed time before proceeding.  |     null     |      60 s     |
-<<<<<<< HEAD
-|  `actionTimeout`     |  How long to wait for the action itself (screenshot, PDF, scrape, etc.) to complete after loading finishes. |    null      |      5 min     |
->>>>>>> a31db85d46 (Update src/content/docs/browser-rendering/reference/timeouts.mdx)
-=======
-=======
-|  `waitForTimeout`     | Additional amount of time to wait after the page has loaded to proceed with actions.  |     null     |      60 s     |
->>>>>>> 3d28667ec6 (Update src/content/docs/browser-rendering/reference/timeouts.mdx)
-|  `actionTimeout`     |  Time to wait for the action itself (for example: a screenshot, PDF, or scrape) to complete after the page has loaded.  |    null      |      5 min     |
->>>>>>> 30fa3df094 (Update src/content/docs/browser-rendering/reference/timeouts.mdx)
 |  `PDFOptions.timeout`     |  Same as `actionTimeout`, but only applies to the [/pdf endpoint](/browser-rendering/rest-api/pdf-endpoint/). |     30 s     |     5 min      |
 
 ## Notes and recommendations
 You can set multiple timers — as long as one is complete, the request will fire.
 
 If you are not getting the expected output:
-<<<<<<< HEAD
-<<<<<<< HEAD
 - Try increasing `goToOptions.timeout` (up to 60 s).
 - If waiting for a specific element, use `waitForSelector`. Otherwise, use `goToOptions.waitUntil` set to `networkidle2` to ensure the page has finished loading dynamic content.
-<<<<<<< HEAD
 - If you are getting a `422`, it may be the action itself (ex: taking a screenshot, extracting the html content) that takes a long time. Try increasing the `actionTimeout` instead.
-=======
-— Try increasing `goToOptions.timeout` (up to 60 s).
-=======
-- Try increasing `goToOptions.timeout` (up to 60 s).
->>>>>>> 7cc285c1fa (Update src/content/docs/browser-rendering/reference/timeouts.mdx)
-— If waiting for a specific element, use `waitForSelector`. Otherwise, use `goToOptions.waitUntil` set to `networkidle2` to ensure the page has finished loading dynamic content.
->>>>>>> fde19d8556 (Update src/content/docs/browser-rendering/reference/timeouts.mdx)
-=======
->>>>>>> ebc24be3fc (Update src/content/docs/browser-rendering/reference/timeouts.mdx)
