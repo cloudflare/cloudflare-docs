@@ -29,7 +29,7 @@ Hyperdrive solves this by splitting the connection setup into two parts: a fast 
 
 5. **Run query**: Your query is executed against the database and results are returned to your Worker through Hyperdrive.
 
-6. **Connection teardown**: When your Worker finishes processing the request, the database client connection in your Worker is automatically garbage collected. However, Hyperdrive keeps the connection to your origin database open in the pool, ready to be reused by the next Worker invocation. This means subsequent requests can skip connection setup entirely.
+6. **Connection teardown**: When your Worker finishes processing the request, the database client connection in your Worker is automatically garbage collected. However, Hyperdrive keeps the connection to your origin database open in the pool, ready to be reused by the next Worker invocation. This means subsequent requests will still perform the fast edge connection setup, but will reuse one of the existing connections from Hyperdrive's pool near your database.
 
 :::note
 
