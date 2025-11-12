@@ -13,7 +13,7 @@ By default, hostname validation is a security feature that prevents unauthorized
 
 When enabled, widgets can be created without the required hostname specification and used on any domain without pre-configuration. Hostname validation protection is also removed.
 
-### Implementation
+## Implementation
 
 To reduce security risks when using Any Hostname, monitor widget usage through [Turnstile Analytics](/turnstile/turnstile-analytics/) to identify unexpected patterns, implement server-side validation with hostname checking in your application code, and use `action` and `cData` parameters to track widget usage sources and identify where widgets are being deployed.
 
@@ -61,9 +61,11 @@ Use `action` and `cData` parameters to track widget usage sources.
      data-cdata="tenant-123"></div>
 ```
 
-#### Use cases
+---
 
-This feature is particularly valuable for customers with:
+## Use cases
+
+The Any Hostname feature is particularly valuable for customers with:
 
 - Large domain portfolios with many domains to manage individually.
 - Dynamic subdomain creation and frequently create subdomains or customer-specific domains.
