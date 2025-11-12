@@ -1,0 +1,16 @@
+---
+title: FAQ
+pcx_content_type: faq
+sidebar:
+  order: 10
+---
+
+## Why am I seeing a "OneOf constraint error" schema violation in the Security Events?
+
+This error means an API request failed schema validation because its body didn't match exactly one of the options defined in a [oneOf](https://swagger.io/docs/specification/v3_0/data-models/oneof-anyof-allof-not/) list.
+
+The request was invalid for one of two reasons:
+- Matches Zero: The payload didn't correctly match any of the available subschemas. This is common when a discriminator field is set, but the payload is missing other required fields for that type.
+- Matches Multiple: The payload was ambiguous and matched more than one subschema. This happens with generic schemas (e.g., if a payload includes both an email and a phone field, it might match both Email and Phone schemas, violating the "exactly one" rule).
+
+To fix this, check the failing request body. It will either be missing required fields for the type it's claiming to be, or it will include properties from multiple different types, making it ambiguous.
