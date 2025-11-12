@@ -20,7 +20,6 @@ The following products are are under FedRAMP High "In-Process" status. Any excep
 - Bots, aka Bot Management
 - Browser Isolation
 - CDN Cache
-  - **Exception:** Smart Tiered Cache is not supported.
 - Cache Reserve
 - Cloudflare for SaaS
 - Cloudflare Images
@@ -29,21 +28,23 @@ The following products are are under FedRAMP High "In-Process" status. Any excep
 - Zero Trust Infrastructure Access
 - Cloudflare Queues
 - Cloudflare Spectrum
+  - **Exception:** BYOIP (Bring Your Own IP) service bindings and related CDN configurations are not supported; customers must use Spectrum HTTP/HTTPS applications to route FedRAMP traffic via the CDN.
 - Cloudflare Stream
 - Cloudflare Tunnel
 - Cloudflare Turnstile
 - Cloudflare WARP client
-  - **Exception:** Directly route Microsoft 365 traffic is not supported.
-  - **Note:** Users will need to exempt a new of of IPs in their firewall.
+  - **Exception:** When using the [Directly route Microsoft 365 traffic](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) feature, customers must independently verify that the excluded IPs are FedRAMP Authorized.
+  - **Note:** Customers will need to exempt a new set of IPs in their firewall. Refer to the FedRAMP High requirements listed in the [WARP with firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/) documentation.
 - Cloudflare Workers
 - Cloudflare Workers KV
 - Cloudflare Zero Trust
-  - **Note:** Third-party integrations will appear in the FedRAMP Zero Trust dashboard, but users will need to indpendently verify their integrations are FedRAMP High compliant.
+  - **Note:** Third-party integrations will appear in the Cloudflare One dashboard, but users will need to indpendently verify their integrations are FedRAMP High compliant.
 - CASB, aka Cloud Access Security Broker
 - Customer Metadata Boundary
 - Data Loss Prevention (DLP)
 - Data Localization Suite
 - DDoS Protection
+  - **Exception:** Adaptive rules from HTTP and Network-layer DDoS Protection Managed Ruleset are not supported.
 - DNS
 - Cloudflare Durable Objects
 - Cloudflare Gateway
@@ -60,7 +61,17 @@ The following products are are under FedRAMP High "In-Process" status. Any excep
 - Rate Limiting
 - SSL/TLS
 - Tiered Cache
+  - **Exception:** Smart Tiered Cache is not supported.
 - Video Stream Delivery
 - WAF
+  - **Exception:** Only the following WAF components are under FedRAMP High "In-Process" status:
+    - Malicious uploads detection
+    - Leaked credentials detection
+    - The following managed rulesets:
+      - Cloudflare Managed Ruleset
+      - Sensitive Data Detection
+      - OWASP Core Ruleset
+      - Free Managed Ruleset
 - Waiting Room
+  - **Exception:** Custom hostnames are not supported by FedRAMP High.
 - Web Analytics
