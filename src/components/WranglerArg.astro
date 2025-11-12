@@ -14,6 +14,9 @@ const { key, definition } = props.parse(Astro.props);
 
 const type = definition.type ?? definition.choices;
 const description = definition.description ?? definition.describe;
+const sanitizedDescription = description
+	.replace(/</g, "&lt;")
+	.replace(/>/g, "&gt;");
 const required = definition.demandOption;
 const defaultValue = definition.default;
 const alias = definition.alias;
@@ -44,5 +47,5 @@ if (alias) {
 	{aliasText && <MetaInfo text={aliasText} />}
 	{required && <MetaInfo text="required" />}
 	{defaultValue !== undefined && <MetaInfo text={`default: ${defaultValue}`} />}
-	<Fragment set:html={marked.parse(description)} />
+	<Fragment set:html={marked.parse(sanitizedDescription)} />
 </li>
