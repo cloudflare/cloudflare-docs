@@ -36,7 +36,7 @@ import { AnchorHeading, Markdown } from "~/components";
 		text={`
 		${props.productName} Network overview (beta) provides an overview of the connectivity status and traffic analytics of all ${props.productName} sites. This is a great place to start if you receive an alert, need to begin the ${props.productName} troubleshooting process, or are performing routine monitoring.
 
-		Refer to [${props.productName} Network overview (beta)](${props.siteAnalyticsURL}) to learn more.
+		Refer to [${props.magicWord === "WAN Tunnels" ? "Network visibility" : "Network overview (beta)"}](${props.siteAnalyticsURL}) to learn more.
 		`}
 		inline={false}
 		/>
