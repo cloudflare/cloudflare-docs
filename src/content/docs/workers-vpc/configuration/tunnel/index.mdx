@@ -23,6 +23,10 @@ This section provides tunnel configuration specific to Workers VPC use cases. Fo
 
 Cloudflare Tunnel requires the installation of a lightweight and highly scalable server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare.
 
+:::note[Version requirement]
+Ensure you are running `cloudflared` version 2025.7.0 or later (latest version recommended) to ensure proper DNS resolution and connectivity. Older versions are not supported.
+:::
+
 Cloudflare Tunnels can be created one of two ways:
 
 1. **Remotely-managed tunnels (recommended):** Remotely-managed configurations are stored on Cloudflare, allowing you to manage the tunnel from any machine using the dashboard, API, or Terraform.
