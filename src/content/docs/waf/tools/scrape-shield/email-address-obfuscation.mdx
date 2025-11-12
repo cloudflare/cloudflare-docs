@@ -74,12 +74,12 @@ To prevent unexpected website behavior, email addresses are not obfuscated when 
   - `<xmp></xmp>`
   - `<head></head>`
 - Any page that does not have a MIME type of `text/html` or `application/xhtml+xml`.
-
+-
 :::note[Notes]
 
 - Email Obfuscation will not apply in the following cases:
   - You are using the `Cache-Control: no-transform` header.
   - The HTML/JavaScript code is specifically added by a [Worker](/workers/).
 - Email Obfuscation might not work as expected when the HTML page includes `<template></template>` tags.
-
+- A configuration rule to override the zone-level email obfuscation setting will not be applied if the request is served by a worker which makes a fetch request to a URL not proxied through Cloudflare
 :::
