@@ -67,8 +67,8 @@ You can choose between two different scopes:
 - Account-level: uses the address map for all proxied DNS records across all of the zones within an account.
 - Zone-level: uses the address map for all proxied DNS records within a zone.
 
-:::note
-If you need to map only specific subdomains (and not all proxied DNS records) to specific IP addresses, you can use a [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+:::tip
+If you need to map only specific subdomains (and not all proxied DNS records) to specific IP addresses, you can use a zone on [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 :::
 
 <Tabs syncKey="dashPlusAPI">
@@ -118,7 +118,7 @@ To create records with the API, use a [POST request](/api/resources/dns/subresou
 </TabItem>
 </Tabs>
 
-:::note
+:::tip
 As you create the necessary DNS records, [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) can help making sure that you have SSL/TLS certificates in place for all your hostnames.
 :::
 
