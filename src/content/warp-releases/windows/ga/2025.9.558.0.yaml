@@ -1,5 +1,5 @@
 releaseNotes: |-
-  This release contains minor fixes, improvements, and new features including [Path Maximum Transmission Unit Discovery (PMTUD)]((/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/#enable-path-mtu-discovery). When PMTUD is enabled, the client will dynamically adjust packet sizing to optimize connection performance. There is also a new connection status message in the GUI to inform users that the local network connection may be unstable. This will make it easier to diagnose connectivity issues.
+  This release contains minor fixes, improvements, and new features including [Path Maximum Transmission Unit Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/#enable-path-mtu-discovery). When PMTUD is enabled, the client will dynamically adjust packet sizing to optimize connection performance. There is also a new connection status message in the GUI to inform users that the local network connection may be unstable. This will make it easier to diagnose connectivity issues.
 
   **Changes and improvements**
   - Fixed an inconsistency with [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-warp-override) settings in multi-user environments when switching between users.
