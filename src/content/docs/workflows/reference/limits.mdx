@@ -27,12 +27,12 @@ Many limits are inherited from those applied to Workers scripts and as documente
 | Concurrent Workflow instances (executions) per account [^7]   | 25 | 10,000 |
 | Maximum Workflow instance creation rate [^8] | 100 per second [^6] | 100 per second [^6] |
 | Maximum number of [queued instances](/workflows/observability/metrics-analytics/#event-types) | 10,000 | 100,000 |
-| Retention limit for completed Workflow state | 3 days | 30 days [^2] |
+| Retention limit for completed Workflow instance state | 3 days | 30 days [^2] |
 | Maximum length of a Workflow name [^4]         | 64 characters | 64 characters |
 | Maximum length of a Workflow instance ID [^4]         | 100 characters | 100 characters |
 | Maximum number of subrequests per Workflow instance | 50/request | 1000/request |
 
-[^2]: Workflow state and logs will be retained for 3 days on the Workers Free plan and for 7 days on the Workers Paid plan.
+[^2]: Workflow instance state and logs will be retained for 3 days on the Workers Free plan and for 30 days on the Workers Paid plan.
 
 [^3]: A Workflow instance can run forever, as long as each step does not take more than the CPU time limit and the maximum number of steps per Workflow is not reached.
 
