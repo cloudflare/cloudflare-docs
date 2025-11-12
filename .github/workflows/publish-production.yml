@@ -51,7 +51,7 @@ jobs:
           cd ..
 
           cd distllms
-          rclone copy \
+          rclone copy --max-depth 2 \
             --config ../bin/rclone.conf \
             . \
             devdocs:vendored-markdown
