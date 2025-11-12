@@ -2045,9 +2045,12 @@
 /version-management/reference/available-settings/ /version-management/reference/available-configurations/ 301
 
 # hyperdrive
-/hyperdrive/learning/how-hyperdrive-works/ /hyperdrive/configuration/how-hyperdrive-works/ 301
+/hyperdrive/configuration/how-hyperdrive-works/ /hyperdrive/concepts/how-hyperdrive-works/ 301
+/hyperdrive/configuration/query-caching/ /hyperdrive/concepts/query-caching/ 301
+/hyperdrive/configuration/connection-pooling/ /hyperdrive/concepts/connection-pooling/ 301
+/hyperdrive/learning/how-hyperdrive-works/ /hyperdrive/concepts/how-hyperdrive-works/ 301
 /hyperdrive/learning/connect-to-postgres/ /hyperdrive/examples/connect-to-postgres/ 301
-/hyperdrive/learning/query-caching/ /hyperdrive/configuration/query-caching/ 301
+/hyperdrive/learning/query-caching/ /hyperdrive/concepts/query-caching/ 301
 /hyperdrive/learning/troubleshooting/ /hyperdrive/observability/troubleshooting/ 301
 /hyperdrive/changelog/ /hyperdrive/platform/release-notes/ 301
 /hyperdrive/platform/changelog/ /hyperdrive/platform/release-notes/ 301
