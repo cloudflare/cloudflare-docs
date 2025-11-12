@@ -22,7 +22,8 @@ import { Container } from "@cloudflare/containers";
 
 class MyContainer extends Container {
 	defaultPort = 8080;
-	sleepAfter = "5m";
+	sleepAfter = "5m";        // Inactivity timeout - container sleeps after 5 minutes of no activity
+	timeout = "30m";          // Hard timeout - container terminates after 30 minutes regardless of activity
 }
 
 export default {
@@ -38,10 +39,44 @@ It also provides additional functionality and a nice interface for common contai
 such as:
 
 - sleeping instances after an inactivity timeout
+- hard timeouts for absolute container lifecycle limits
 - making requests to specific ports
 - running status hooks on startup, stop, or error
 - awaiting specific ports before making requests
 - setting environment variables and secrets
+
+## Timeout Configuration
+
+### Inactivity Timeout (`sleepAfter`)
+
+Puts containers to sleep after no activity. Resets on each request.
+
+### Hard Timeout (`timeout`)  
+
+Absolute container lifetime limit. Never resets, regardless of activity.
+
+```javascript
+class MyContainer extends Container {
+	// Inactivity timeout - container sleeps after 10 minutes of no requests
+	sleepAfter = "10m";
+	
+	// Hard timeout - container terminates after 1 hour regardless of activity
+	timeout = "1h";
+	
+	// Override lifecycle hooks for custom behavior
+	async onActivityExpired() {
+		console.log("Container going to sleep due to inactivity");
+		await super.onActivityExpired();
+	}
+	
+	async onHardTimeoutExpired() {
+		console.log("Container terminated due to hard timeout");
+		await super.onHardTimeoutExpired();
+	}
+}
+```
+
+Both timeout types use time expressions like `"30s"`, `"5m"`, `"2h"`, or numeric values in seconds.
 
 See the [Containers GitHub repo](https://github.com/cloudflare/containers) for more details
 and the complete API.
