@@ -1,0 +1,101 @@
+---
+title: Building Consistent, Globally Scalable Real-Time Applications
+pcx_content_type: reference-architecture-diagram
+products: [durable-objects]
+sidebar:
+  order: 1
+  label: Consistent, Globally Scalable Real-Time Applications
+reviewed: 2025-11-12
+description: Build globally scalable, real-time, stateful applications with strong consistency using Cloudflare Durable Objects. This architecture combines compute and persistent storage into a single entity to simplify complex many-to-many use cases like chatrooms and collaborative editing.
+---
+
+Building real-time, stateful applications that can scale globally and maintain strong consistency for individual entities often presents significant architectural challenges. Developers frequently grapple with managing shared state across distributed systems, a task made especially difficult in serverless workflows which are traditionally stateless, while also ensuring data integrity and achieving low-latency connections for users worldwide. Cloudflare Durable Objects address these complexities by combining both compute and storage into an addressable entity, making them a powerful solution for developing real-time, stateful applications at the edge.
+
+Here's a breakdown of what that means:
+
+-   **Compute:** Each Durable Object instance runs as a single-threaded, isolated JavaScript environment. This means it can execute code, perform calculations, and handle requests just like a traditional server or a serverless function. When a request comes in for a specific Durable Object, the system ensures that all requests for that Durable Object are routed to the same instance, allowing it to maintain its state.
+
+-   **Storage:** Durable Objects come with built-in, persistent key-value or SQLite storage, which is local to the instance. This means the object can store its internal state (e.g., game scores, chat messages) directly within itself. A key benefit of this co-located storage is that accessing data, via SQLite, requires no additional network calls. This state persists even if the object is idle, with a 10 GB limit per Durable Object. For use cases requiring bulk or long-term data persistence, you should use an external store like R2 or D1.
+
+## Understanding Namespaces
+
+So, how does your code create and manage these individual instances? This is done through a Durable Object Namespace.
+
+Think of a namespace as the class defining your Durable Object. It defines the compute logic and storage structure for your application.
+
+This namespace is bound to your Worker. Your main routing Worker then uses this namespace to get a unique, addressable ID for any specific entity it needs to manage. This ID (e.g., a unique string or number) is the key: it allows Cloudflare to find, or create on-demand, that single, unique instance and route all future requests for that specific ID to it.
+
+Why this combination is powerful:
+
+1.  **Stateful Serverless:** Traditional serverless functions are stateless, requiring external databases for persistence. Durable Objects bring in-memory state directly to the compute, simplifying application logic for stateful services.
+
+2.  **Strong Consistency:** All storage operations on a Durable Object are single-threaded, guaranteeing strong consistency for its internal state. This eliminates the need for complex distributed locking or eventual consistency patterns for data within a single object.
+
+3.  **Edge Performance:** By combining compute and storage, Durable Objects can process requests and access their state with extremely low latency.
+
+4.  **Simplified Architecture:** For many use cases, Durable Objects can replace complex architectures involving separate compute services and databases, leading to simpler, more maintainable code.
+
+
+## Visualizing Compute & Storage:
+
+Imagine a Durable Object as a self-contained "brain" with its own "persistent storage."
+This diagram illustrates how the compute and the storage are encapsulated within a single Durable Object, highlighting their integrated nature.
+
+![Cloudflare Durable Object](~/assets/images/reference-architecture/realtime-applications-with-durable-objects/durable-object.png)
+
+## Durable Object Many-to-Many Use Case: Building Highly Scalable and Globally Distributed Applications
+
+Because Durable Objects provide a single-point-of-coordination between Cloudflare Workers, a single Durable Object instance can be used in parallel with WebSockets to coordinate between multiple clients, such as participants in a chat room or a multiplayer game.
+
+Taking that chatroom example, let's visualize how this scales to a true many-to-many relationship. Durable Objects enable massive scalability by allowing millions of independent chatrooms to exist, each managed by its own dedicated Durable Object instance. This architecture allows any user to access multiple chatrooms simultaneously, simply by connecting to the dedicated Durable Object instance via WebSockets.
+
+This capability extends beyond chatrooms to any scenario requiring a highly scalable and consistent state for numerous, independent entities that interact with multiple users or other entities. Consider use cases like:
+
+-   **Collaborative Document Editing:** Each document could be a Durable Object, with multiple users simultaneously editing its state.
+-   **Live Event Management:** A Durable Object for each event, managing attendees, scores, or real-time polls.
+-   **IoT Device Management:** Each device or group of devices could be a Durable Object, maintaining its state and interacting with many users or other systems.
+
+
+In this scenario, each Durable Object represents a unique chatroom. Multiple users (clients) connect to a single Durable Object instance corresponding to the chatroom they wish to join. The Durable Object handles all incoming messages for its chatroom, maintains that chatroom's history (in its persistent storage), and broadcasts messages to all connected participants within that specific chatroom.
+
+![Highly scalable globally distributed application](~/assets/images/reference-architecture/realtime-applications-with-durable-objects/highly-scalable-globally-distributed-app.png)
+
+**Explanation of the Chatroom Scenario, Scalability, and Routing:**
+
+1.  **User Clients:** Multiple users interact with various chatrooms from multiple device types. For instance, User 1 and User 2 might join "Chatroom 1," while User 3 joins “Chatroom 1” and "Chatroom 2." Each user's interaction involves sending messages to, and receiving messages from, their chosen chatroom.
+
+2.  **Cloudflare Workers (The Global Routing Layer):** This is the critical entry point. When a user's request arrives at the Cloudflare Network Edge, it first hits a Cloudflare Worker. The Worker's primary function here is intelligent request routing. It inspects the incoming request (e.g., a URL path like /chatroom/123 or a query parameter indicating the chatroom ID) to determine which specific Durable Object instance the user intends to interact with. It then transparently establishes a WebSocket connection or forwards HTTP requests directly to that single, specific, and authoritative Durable Object instance. In our case of the chatroom, the WebSocket connection makes the most sense.
+
+			Crucially, this routing happens globally. Cloudflare's network ensures that once a Durable Object is created on-demand, close to where it was first accessed, all subsequent requests for that specific object are consistently directed to that same instance, regardless of the user's geographic location. This ensures strong consistency for the object's state across all interactions.
+
+3.  **Durable Object: 'ChatRoom N' (The Scalable State Units):** Each unique chatroom (e.g., 'ChatRoom 1', 'ChatRoom 2', up to 'ChatRoom N') is represented by its own independent Durable Object instance. These are created from a single ChatRoom namespace bound to a Worker. The Worker uses this namespace to get a unique, addressable ID for each specific chatroom, allowing the system to manage millions of them.
+
+	-   Each Durable Object is a self-contained unit that encapsulates both its compute logic (to manage connected users, process messages, and broadcast) and its persistent storage (to maintain chat history and other state for its specific chatroom).
+	-   When a user sends a message, it is routed to the correct Durable Object, which then handles the message and broadcasts it only to the users connected to that same chatroom.
+
+### The Power of Unconstrained Scalability and Global Routing with Durable Objects:
+
+The core benefit highlighted here is horizontal scalability through unique addressing and routing.
+
+-   **Massive Concurrency through Isolation:** Instead of a single, monolithic server trying to manage all chatrooms, Durable Objects allow the system to distribute the load across potentially millions of isolated, single-threaded instances. Each chatroom operates independently within its own Durable Object, meaning a high-traffic chatroom does not impact the performance or availability of other chatrooms.
+
+	This model inherently scales horizontally by simply creating new Durable Object instances as needed, rather than relying on complex sharding or partitioning schemes common in traditional architectures.
+
+-   **Efficient Routing:** Cloudflare Workers act as a highly efficient, global routing mesh. They ensure that all requests for a specific chatroom are consistently directed to the same Durable Object instance, no matter where the user is located. This guarantees strong consistency for each chatroom's state without complex distributed coordination.
+
+	The unique ID of each Durable Object serves as its global address, allowing Cloudflare's network to efficiently route traffic to the instance.
+
+-   **On-Demand Resource Usage:** Durable Objects are only "awake" and consuming compute resources when they are actively processing requests for their specific chatroom. If a chatroom becomes idle, its Durable Object can be seamlessly evicted from memory, with its state safely persisted. When a new request for that chatroom arrives, the Durable Object is “spun up” quickly, minimizing overall resource consumption at scale.
+
+	This on-demand model is extended by the WebSocket Hibernation API, which is critical for cost-effective, real-time applications. When hibernation is enabled, an idle Durable Object can be evicted from memory, stopping all billable Duration (GB-s) compute charges, while the Cloudflare network itself maintains the active client WebSocket connections. When a new message arrives, the Durable Object is re-initialized, the connections are seamlessly re-attached, and processing continues.
+
+	This "pay-for-what-you-use" model, made even more efficient by WebSocket hibernation, combined with the ability to create millions of independent objects, delivers a nearly unlimited scale-out capability for distinct stateful entities without the overhead of maintaining constantly active servers for every potential entity.
+
+This many to many setup showcases how Durable Objects, combined with Cloudflare Workers for intelligent routing, provide a highly scalable and consistent architecture for real-time, stateful applications by allowing millions of independent, stateful entities to exist and operate concurrently across Cloudflare’s network.
+
+## Related resources
+
+- [Durable Objects Overview](/durable-objects/)
+- [What are Durable Objects?](/durable-objects/concepts/what-are-durable-objects/)
+- [Using Durable Objects as Web Socket servers](/durable-objects/best-practices/websockets/)
+- [Deploy a real-time chat application](/workers/tutorials/deploy-a-realtime-chat-app/)
