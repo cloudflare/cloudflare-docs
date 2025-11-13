@@ -1459,74 +1459,20 @@ wrangler rollback [<VERSION_ID>] [OPTIONS]
 
 ## dispatch namespace
 
-### `list`
+<WranglerCommand command="dispatch-namespace list" headingLevel={3}/>
 
-List all dispatch namespaces.
+<WranglerCommand command="dispatch-namespace get" headingLevel={3}/>
 
-```txt
-wrangler dispatch-namespace list
-```
+<WranglerCommand command="dispatch-namespace create" headingLevel={3}/>
 
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `get`
-
-Get information about a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace get <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the dispatch namespace to get details about.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `create`
-
-Create a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace create <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the dispatch namespace to create.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace get <NAME>
-```
+<WranglerCommand command="dispatch-namespace delete" headingLevel={3}/>
 
 :::note
 
 You must delete all user Workers in the dispatch namespace before it can be deleted.
 :::
 
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the dispatch namespace to delete.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `rename`
-
-Rename a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
-```
-
-- `OLD_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The previous name of the dispatch namespace.
-- `NEW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The new name of the dispatch namespace.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="dispatch-namespace rename" headingLevel={3}/>
 
 ---
 
