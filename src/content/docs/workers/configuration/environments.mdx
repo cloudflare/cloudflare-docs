@@ -628,6 +628,11 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/
           "type": "kv_namespace",
           "name": "MY_KV",
           "namespace_id": "abc123preview"
+        },
+        {
+          "type": "secret_text",
+          "name": "API_SECRET",
+          "text": "your-preview-secret"
         }
       ],
       "compatibility_date": "$today"
@@ -635,9 +640,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/
   }'
 ```
 
-Now any preview you create will automatically use these **Preview** environment variables.
+Now any preview you create will automatically use these **Preview** environment variables, including the secret.
 
-##### Deploy to Production
+#### Deploy to Production
 
 Now let's deploy your code to **Production**. A [version](/workers/configuration/versions-and-deployments/) is a snapshot of your Worker's code and settings at a specific point in time. A [deployment](/workers/configuration/versions-and-deployments/#deployments) controls which version(s) receive traffic and how much. This is a two-step process:
 
@@ -673,6 +678,11 @@ VERSION_ID=$(curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/wor
         "type": "kv_namespace",
         "name": "MY_KV",
         "namespace_id": "xyz789production"
+      },
+      {
+        "type": "secret_text",
+        "name": "API_SECRET",
+        "text": "your-production-secret"
       }
     ]
   }' \
@@ -696,25 +706,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/
   }'
 ```
 
-Your Worker is now live in **Production**! Notice how we included the environment variables in the `bindings` array - the `ENVIRONMENT` variable set to "production" and the production KV namespace (`xyz789production`).
+Your Worker is now live in **Production**! Notice how we included all the environment variables in the `bindings` array - the `ENVIRONMENT` variable set to "production", the production KV namespace (`xyz789production`), and the production secret (`API_SECRET`).
 
-#### Set secrets
-
-[Secrets](/workers/configuration/secrets/) (like API keys) should be managed separately to keep them secure - never include them directly in bindings. Here's how to set them for each environment using [Wrangler CLI](/workers/wrangler/commands/#secret):
-
-**For Production:**
-
-```bash
-wrangler secret put API_SECRET --name $WORKER_NAME
-```
-
-**For Preview:**
-
-```bash
-wrangler secret put API_SECRET --name $WORKER_NAME --preview
-```
-
-##### Deploy a Preview
+#### Deploy a Preview
 
 **PR Previews** are temporary, fully-featured Workers that are automatically cleaned up when your pull request is merged or closed. They're created as sub-resources nested under your main Production Worker (notice the `/workers/$WORKER_ID/previews` endpoint). When you create a preview, it automatically uses the `preview_settings` you configured earlier. Here's how you create one:
 
@@ -754,7 +748,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/
   }'
 ```
 
-The preview automatically uses the environment variables from your `preview_settings` - `ENVIRONMENT` is set to "preview" and it connects to the preview KV namespace (`abc123preview`). This keeps your test data separate from production! Secrets you set with `wrangler secret put --preview` will be available to all previews.
+The preview automatically uses the environment variables from your `preview_settings` - `ENVIRONMENT` is set to "preview", it connects to the preview KV namespace (`abc123preview`), and includes the preview secret (`API_SECRET`). This keeps your test data and secrets separate from production!
 
 Notice the `?deploy=true` parameter - this creates the version and deploys it in one step.
 
