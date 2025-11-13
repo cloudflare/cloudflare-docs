@@ -10,8 +10,7 @@ Until now, if a Worker had been previously deployed via the [Cloudflare Dashboar
 [`wrangler deploy`](https://developers.cloudflare.com/workers/wrangler/commands/#deploy) invocations would require the user to forcefully override the remote worker settings.
 
 Now instead `wrangler deploy` presents a helpful representation of the differences between the
-[local configuration](https://developers.cloudflare.com/workers/wrangler/configuration/) and the remote settings. On top of that Wrangler
-will also make an effort to avoid such step when possible (when a deployment doesn't modify or remove settings updated from the Dashboard) and
-it'll even offer to update your local configuration file when appropriate.
+Now `wrangler deploy` presents a helpful representation of the differences between the
+[local configuration](https://developers.cloudflare.com/workers/wrangler/configuration/) and the remote settings, and offers to update your local configuration file for you. If instead Wrangler detects that a deployment won't modify or remove settings updated from the Dashboard, it will simply proceed with deployment without requesting any user interaction.
 
 Update to [Wrangler](/workers/wrangler/) v<version number> or greater to take advantage of this improved deploy flow. 
