@@ -1,0 +1,297 @@
+---
+import {
+	SchemaTree,
+	type SchemaNode,
+	type RegularNode,
+	type SchemaTreeRefDereferenceFn,
+} from "@stoplight/json-schema-tree";
+import { type Dictionary } from "@stoplight/types";
+import { resolveInlineRef } from "@stoplight/json";
+import SchemaRow from "~/components/models/SchemaRow.astro";
+import { Tabs, TabItem, Code, Details } from "~/components";
+
+const { schema, type = "input", modelName } = Astro.props;
+
+type ReferenceInfo = {
+	source: string | null;
+	pointer: string | null;
+};
+type ReferenceResolver = (
+	ref: ReferenceInfo,
+	propertyPath: string[] | null,
+	currentObject?: object,
+) => any;
+
+const defaultResolver: SchemaTreeRefDereferenceFn =
+	(contextObject: object): ReferenceResolver =>
+	({ pointer }, _, currentObject) => {
+		const activeObject = contextObject ?? currentObject;
+
+		if (pointer === null) {
+			return null;
+		}
+
+		if (pointer === "#") {
+			return activeObject;
+		}
+
+		const resolved = resolveInlineRef(
+			activeObject as Dictionary<string>,
+			pointer,
+		);
+
+		if (resolved) return resolved;
+
+		throw new ReferenceError(`Could not resolve '${pointer}`);
+	};
+
+// Helper function to create a human-readable label from title or contentType
+function formatLabel(option: any): string {
+	// Try to use the title first
+	if (option.title) {
+		// Remove model-specific prefixes by taking only the last part after the last known format keyword
+		// Examples:
+		// "Ai_Cf_Meta_Llama_4_Prompt" -> "Prompt"
+		// "GPT_OSS_120B_Responses" -> "Responses"
+		// "Ai_Cf_Meta_Llama_4_Messages" -> "Messages"
+
+		const parts = option.title.split("_");
+
+		// Common format keywords that indicate where the actual format name starts
+		// Order matters: Messages should be checked before Prompt
+		const formatKeywords = ["Messages", "Prompt", "Async", "Responses", "Batch", "Inner"];
+
+		// Find the first occurrence of a format keyword
+		let startIndex = parts.findIndex((part: string) =>
+			formatKeywords.some(keyword => part.toLowerCase() === keyword.toLowerCase())
+		);
+
+		// If no keyword found, just take the last 1-2 parts
+		if (startIndex === -1) {
+			startIndex = Math.max(0, parts.length - 2);
+		}
+
+		// Get the relevant parts and convert to Title Case
+		const relevantParts = parts.slice(startIndex);
+		return relevantParts
+			.map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+			.join(" ");
+	}
+
+	// For outputs, use contentType if available
+	if (option.contentType) {
+		if (option.contentType === "application/json") {
+			return "JSON Response";
+		} else if (option.contentType === "text/event-stream") {
+			return "Streaming Response";
+		}
+	}
+
+	// For outputs without title/contentType, infer from structure
+	if (option.type === "object" && option.properties) {
+		return "JSON Response";
+	} else if (option.type === "string" && option.format === "binary") {
+		return "Streaming Response";
+	}
+
+	return "Response";
+}
+
+// Helper function to generate a JSON example for a format
+function generateJSONExample(option: any): string {
+	const title = option.title || "";
+	const properties = option.properties || {};
+
+	// Detect format type from the title and generate appropriate example
+	if (title.toLowerCase().includes("prompt")) {
+		return `{
+  "prompt": "Tell me about Cloudflare Workers"
+}`;
+	} else if (title.toLowerCase().includes("messages")) {
+		return `{
+  "messages": [
+    { "role": "system", "content": "You are a helpful assistant" },
+    { "role": "user", "content": "Tell me about Cloudflare Workers" }
+  ]
+}`;
+	} else if (title.toLowerCase().includes("async") || title.toLowerCase().includes("batch")) {
+		return `{
+  "requests": [
+    { "prompt": "First request" },
+    { "prompt": "Second request" }
+  ]
+}`;
+	} else if (title.toLowerCase().includes("responses")) {
+		// OpenAI Responses API format - can be string or array
+		return `{
+  "input": [
+    { "role": "system", "content": "You are a helpful assistant" },
+    { "role": "user", "content": "Tell me about Cloudflare Workers" }
+  ]
+}`;
+	}
+
+	// Generic fallback - show the required fields
+	const requiredFields = option.required || [];
+	if (requiredFields.length > 0) {
+		const exampleObj: any = {};
+		requiredFields.forEach((field: string) => {
+			exampleObj[field] = `<${field}>`;
+		});
+		return JSON.stringify(exampleObj, null, 2);
+	}
+
+	return `{
+  // Input parameters
+}`;
+}
+
+// Helper function to generate a JSON example for output formats
+function generateOutputJSONExample(option: any, schemaTitle?: string): string {
+	const contentType = option.contentType || "";
+	const title = schemaTitle || "";
+
+	// Check for streaming format
+	if (contentType === "text/event-stream") {
+		return `data: {"response":"Hello","p":"user"}
+
+data: {"response":" there","p":"user"}
+
+data: {"response":"","usage":{"prompt_tokens":10,"completion_tokens":50,"total_tokens":60}}
+
+data: [DONE]`;
+	}
+
+	// Special case for GPT-OSS models (OpenAI Responses API)
+	if (title.toLowerCase().includes("responses")) {
+		return `{
+  "id": "id-1754425632201",
+  "created_at": 1754425632,
+  "model": "@cf/openai/gpt-oss-120b",
+  "object": "response",
+  "output": [
+    {
+      "id": "msg_1b723cbad80e4b4990f9eedff924db12",
+      "content": [
+        {
+          "text": "Generated text response from the model",
+          "type": "output_text"
+        }
+      ],
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "status": "completed",
+  "usage": {
+    "input_tokens": 10,
+    "output_tokens": 50,
+    "total_tokens": 60
+  }
+}`;
+	}
+
+	// JSON response format - use actual Workers AI response structure
+	if (contentType === "application/json" || option.type === "object") {
+		return `{
+  "result": {
+    "response": "Generated text response from the model",
+    "tool_calls": [],
+    "usage": {
+      "prompt_tokens": 10,
+      "completion_tokens": 50,
+      "total_tokens": 60
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}`;
+	}
+
+	return `{
+  // Output response
+}`;
+}
+
+// Check if the schema has oneOf at the root level
+const hasOneOf = schema.oneOf && Array.isArray(schema.oneOf);
+
+// Process the schema based on whether it has oneOf
+let options: any[] = [];
+let singleTree: SchemaTree | null = null;
+
+if (hasOneOf) {
+	// Process each oneOf option
+	options = schema.oneOf.map((option: any, index: number) => {
+		const tree = new SchemaTree(option, {
+			mergeAllOf: true,
+			refResolver: defaultResolver,
+			maxRefDepth: 1,
+		});
+		tree.populate();
+
+		return {
+			label: formatLabel(option) || `Format ${index + 1}`,
+			title: option.title,
+			tree: tree,
+			description: option.description,
+			jsonExample: type === "input" ? generateJSONExample(option) : generateOutputJSONExample(option, option.title),
+		};
+	});
+
+	// Sort options to prioritize Messages format first, then Prompt, then others
+	options.sort((a, b) => {
+		const aTitle = (a.title || "").toLowerCase();
+		const bTitle = (b.title || "").toLowerCase();
+
+		// Define priority order
+		const getPriority = (title: string) => {
+			if (title.includes("messages")) return 1;
+			if (title.includes("prompt")) return 2;
+			// Check for "responses async" or "async" before plain "responses"
+			if (title.includes("async") || title.includes("batch")) return 4;
+			if (title.includes("responses")) return 3;
+			return 5;
+		};
+
+		return getPriority(aTitle) - getPriority(bTitle);
+	});
+} else {
+	// If there's no oneOf, use the standard single schema view
+	singleTree = new SchemaTree(schema, {
+		mergeAllOf: true,
+		refResolver: defaultResolver,
+		maxRefDepth: 1,
+	});
+	singleTree.populate();
+}
+---
+
+{hasOneOf ? (
+	<Tabs>
+		{options.map((option) => (
+			<TabItem label={option.label}>
+				{option.jsonExample && (
+					<div class="mb-4">
+						<Code code={option.jsonExample} lang="json" />
+					</div>
+				)}
+				<ul class="pl-0">
+					{(option.tree.root.children[0] as RegularNode).children?.map(
+						(node: SchemaNode) => <SchemaRow node={node} />
+					)}
+				</ul>
+			</TabItem>
+		))}
+	</Tabs>
+) : (
+	<ul class="pl-0">
+		{
+			singleTree && (singleTree.root.children[0] as RegularNode).children?.map(
+				(node: SchemaNode) => <SchemaRow node={node} />
+			)
+		}
+	</ul>
+)}
