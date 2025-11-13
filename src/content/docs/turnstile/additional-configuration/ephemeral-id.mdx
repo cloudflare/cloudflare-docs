@@ -10,12 +10,11 @@ Ephemeral IDs provide device fingerprinting capabilities to enhance bot detectio
 
 ## Process
 
-Ephemeral IDs use advanced analysis techniques to create unique identifiers that help identify patterns of behavior across multiple interactions. These identifiers are generated dynamically for each visitor interaction with Turnstile widgets.
+Ephemeral IDs use advanced analysis techniques to create unique identifiers that help find patterns of behavior across multiple interactions. These identifiers are generated dynamically for each visitor interaction with Turnstile widgets.
 
-- **No persistent storage**: No cookies or local storage required
-- **Scoped to Cloudflare account**: Ephemeral IDs cannot be shared across accounts 
-- **Short lifespan**: IDs expire within a few days
-- **Non-reversible**: Cannot be used to identify individual users
+No cookies or local storage is required. 
+
+Ephemeral IDs are scoped to your Cloudflare account and cannot be shared across accounts. IDs have a short lifespan and expire within a few days. They cannot be used to identify individual users
 
 Ephemeral IDs provide more accurate abuse detection than IP-based methods by linking behavior to individual clients rather than network addresses. This is particularly effective against acute attacks where bad actors try to evade detection, such as credential stuffing and fake account creation attacks.
 
@@ -39,6 +38,7 @@ Refer to the [blog post](https://blog.cloudflare.com/turnstile-ephemeral-ids-for
       }'
     ```
 3. Confirm Ephemeral IDs are active by checking your widget configuration.
+
     ```bash title="cURL command" wrap
     curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$WIDGET_ID" \
       -H "Authorization: Bearer $API_TOKEN"
@@ -61,10 +61,9 @@ Once enabled, Ephemeral IDs are included in Siteverify API responses.
   }
 }
 ```
+
 ---
 
 ## Availability
 
 Ephemeral IDs are available to Enterprise Bot Management customers with the Enterprise Turnstile add-on or standalone Enterprise Turnstile customers. Contact your account team for access to Ephemeral IDs.
-
----
