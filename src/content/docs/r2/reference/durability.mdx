@@ -12,7 +12,7 @@ R2 is designed to provide 99.999999999% (eleven 9s) of annual durability.  This 
 
 R2's durability is built on multiple layers of redundancy and data protection:
 
-- **Replication**: When you upload an object, stores multiple "copies" of that object through either full replication and/or erasure coding. This ensures that the full or partial failure of any individual disk does not result in data loss. Erasure coding distributes parts of the object across multiple disks, ensuring that even if some disks fail, the object can still be reconstructed from a subset of the available parts, preventing hardware failure or physical impacts to data centers (such as fire or floods) from causing data loss.
+- **Replication**: When you upload an object, R2 stores multiple "copies" of that object through either full replication and/or erasure coding. This ensures that the full or partial failure of any individual disk does not result in data loss. Erasure coding distributes parts of the object across multiple disks, ensuring that even if some disks fail, the object can still be reconstructed from a subset of the available parts, preventing hardware failure or physical impacts to data centers (such as fire or floods) from causing data loss.
 
 - **Hardware redundancy**: Storage clusters are comprised of hardware distributed across several data centers within a geographic region. This physical distribution ensures that localized failures—such as power outages, network disruptions, or hardware malfunctions at a single facility—do not result in data loss.
 
