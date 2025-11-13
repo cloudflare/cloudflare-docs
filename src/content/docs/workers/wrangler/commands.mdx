@@ -382,22 +382,7 @@ Manage the secret variables for a Worker.
 
 This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
 
-### `put`
-
-Create or replace a secret for a Worker.
-
-```txt
-wrangler secret put <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Worker.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from a [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="secret put" headingLevel={3}/>
 
 When running this command, you will be prompted to input the secret's value:
 
@@ -406,7 +391,7 @@ npx wrangler secret put FOO
 ```
 
 ```sh output
-? Enter a secret value: › ***
+? Enter a secret value: > ***
 🌀 Creating the secret for script worker-app
 ✨ Success! Uploaded secret FOO
 ```
@@ -417,37 +402,9 @@ The `put` command can also receive piped input. For example:
 echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangler secret put PRIVATE_KEY
 ```
 
-### `delete`
+<WranglerCommand command="secret delete" headingLevel={3}/>
 
-Delete a secret for a Worker.
-
-```txt
-wrangler secret delete <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Worker.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list`
-
-List the names of all the secrets for a Worker.
-
-```txt
-wrangler secret list [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="secret list" headingLevel={3}/>
 
 The following is an example of listing the secrets for the current Worker.
 
@@ -466,25 +423,7 @@ npx wrangler secret list
 
 ---
 
-## `secret bulk`
-
-Upload multiple secrets for a Worker at once.
-
-```txt
-wrangler secret bulk [<FILENAME>] [OPTIONS]
-```
-
-- `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
-  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
-  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
-  - The `.env` file containing [key-value pairs to upload as secrets](/workers/configuration/secrets/#local-development-with-secrets), in the form `SECRET_NAME=secret value`.
-  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="secret bulk" headingLevel={3}/>
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
