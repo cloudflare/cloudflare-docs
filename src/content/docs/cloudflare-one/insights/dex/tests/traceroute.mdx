@@ -55,6 +55,10 @@ A traceroute test measures the following data:
 | Availability    | Percentage of tests where at least one packet reached the destination.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Last seen ISP   | The Internet Service Provider that is managing the connection from the device to Cloudflare. (Only available on macOS and Windows.) <br/> <br/> DEX looks up the IP address of the ISP in a geolocation database and returns the corresponding [ASO and ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/). If the ASO and ASN are `Unknown`, it means this information is unavailable in the geolocation data provider. |
 
+## Export DEX traceroute test logs
+
+The log data for all [DEX application tests](/logs/logpush/logpush-job/datasets/account/dex_application_tests/) can be exported to R2, a cloud bucket, or a SIEM via [Logpush](/cloudflare-one/insights/logs/logpush/). 
+
 ## Related resources
 
 - [DEX rules](/cloudflare-one/insights/dex/rules/) - Specify the target group of a test.
