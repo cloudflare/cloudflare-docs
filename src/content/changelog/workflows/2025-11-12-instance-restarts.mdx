@@ -16,6 +16,6 @@ await instance.restart(); // Returns Promise<void>
 
 You may want to [restart an instance](/workflows/build/trigger-workflows/#restart-a-workflow) if the Workflow has been updated, the parameters have changed, or the Workflow has reached its step limit. This allows you to make changes without waiting until the instance is complete or preserve a long-running instance through restart. Restarting an instance will immediately cancel any in-progress steps, erase any intermediate state, and treat the Workflow as if it was run for the first time.
 
-If the instance is already running, the restart will not lose its concurrency slot (limit of 10,000 concurrent instances). For example, say you have 10,000 instances running and 2,000 instances queued. If you restart a runnning instance, it will maintain its spot in the 10,000 rather than slotting into the back of the queue.
+If the instance is already running, the restart will not lose its concurrency slot (limit of 10,000 concurrent instances). For example, say you have 10,000 instances running and 2,000 instances queue. If you restart an instance currently running in the 300th spot, it will maintain that 300th spot in the 10,000 rather than slotting into the back of the queue.
 
 For more information on concurrency and creation limits, refer to [Workflow limits](/workflows/reference/limits/).
