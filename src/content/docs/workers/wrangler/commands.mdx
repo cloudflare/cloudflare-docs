@@ -1540,22 +1540,7 @@ Manage client certificates used for mTLS connections in subrequests.
 
 These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
 
-### `upload`
-
-Upload a client certificate.
-
-```txt
-wrangler mtls-certificate upload --cert <PATH> --key <PATH> [OPTIONS]
-```
-
-- `--cert` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the TLS certificate to upload. Certificate chains are supported.
-- `--key` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the private key to upload.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name assigned to the mTLS certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate upload" headingLevel={3}/>
 
 The following is an example of using the `upload` command to upload an mTLS certificate.
 
@@ -1585,15 +1570,7 @@ mtls_certificates = [
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 
-### `list`
-
-List mTLS certificates associated with the current account ID.
-
-```txt
-wrangler mtls-certificate list
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate list" headingLevel={3}/>
 
 The following is an example of using the `list` command to upload an mTLS certificate.
 
@@ -1614,20 +1591,7 @@ Created on: 1/01/2023
 Expires: 1/01/2025
 ```
 
-### `delete`
-
-Delete a client certificate.
-
-```txt
-wrangler mtls-certificate delete {--id <ID|--name <NAME>}
-```
-
-- `--id` <Type text="string" />
-  - The ID of the mTLS certificate.
-- `--name` <Type text="string" />
-  - The name assigned to the mTLS certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate delete" headingLevel={3}/>
 
 The following is an example of using the `delete` command to delete an mTLS certificate.
 
