@@ -7,10 +7,12 @@ const RETRY_DELAY = 2000; // 2 seconds
  * Check if a model has a valid schema
  */
 function hasValidSchema(model) {
-	return model.schema &&
-		   typeof model.schema === 'object' &&
-		   Object.keys(model.schema).length > 0 &&
-		   model.schema.input;
+	return (
+		model.schema &&
+		typeof model.schema === "object" &&
+		Object.keys(model.schema).length > 0 &&
+		model.schema.input
+	);
 }
 
 /**
@@ -20,7 +22,11 @@ function deepMerge(target, source) {
 	const result = { ...target };
 
 	for (const key in source) {
-		if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+		if (
+			source[key] &&
+			typeof source[key] === "object" &&
+			!Array.isArray(source[key])
+		) {
 			result[key] = deepMerge(result[key] || {}, source[key]);
 		} else {
 			result[key] = source[key];
@@ -32,7 +38,9 @@ function deepMerge(target, source) {
 
 async function fetchModels(retryCount = 0, accumulatedModels = new Map()) {
 	try {
-		console.log(`Fetching models from API... (attempt ${retryCount + 1}/${MAX_RETRIES})`);
+		console.log(
+			`Fetching models from API... (attempt ${retryCount + 1}/${MAX_RETRIES})`,
+		);
 
 		const res = await fetch("https://ai-cloudflare-com.pages.dev/api/models");
 
@@ -64,21 +72,25 @@ async function fetchModels(retryCount = 0, accumulatedModels = new Map()) {
 
 		// Check which models are still missing valid schemas
 		const modelsWithoutSchema = Array.from(accumulatedModels.values()).filter(
-			model => !hasValidSchema(model)
+			(model) => !hasValidSchema(model),
 		);
 
 		if (modelsWithoutSchema.length > 0) {
-			console.warn(`\nModels still missing valid schemas (${modelsWithoutSchema.length}/${accumulatedModels.size}):`);
-			modelsWithoutSchema.forEach(model => console.warn(`  - ${model.name}`));
+			console.warn(
+				`\nModels still missing valid schemas (${modelsWithoutSchema.length}/${accumulatedModels.size}):`,
+			);
+			modelsWithoutSchema.forEach((model) => console.warn(`  - ${model.name}`));
 
 			// Retry if we haven't exhausted attempts
 			if (retryCount < MAX_RETRIES - 1) {
-				console.log(`\nRetrying in ${RETRY_DELAY/1000} seconds...`);
-				await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+				console.log(`\nRetrying in ${RETRY_DELAY / 1000} seconds...`);
+				await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
 				return fetchModels(retryCount + 1, accumulatedModels);
 			} else {
 				// After max retries, fail completely - don't write anything
-				throw new Error(`Failed to get valid schemas for all models after ${MAX_RETRIES} attempts`);
+				throw new Error(
+					`Failed to get valid schemas for all models after ${MAX_RETRIES} attempts`,
+				);
 			}
 		}
 
@@ -114,13 +126,12 @@ async function fetchModels(retryCount = 0, accumulatedModels = new Map()) {
 		if (errorCount > 0) {
 			console.error(`Failed to write ${errorCount} model files`);
 		}
-
 	} catch (error) {
 		console.error(`Error fetching models: ${error.message}`);
 
 		if (retryCount < MAX_RETRIES - 1) {
-			console.log(`Retrying in ${RETRY_DELAY/1000} seconds...`);
-			await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+			console.log(`Retrying in ${RETRY_DELAY / 1000} seconds...`);
+			await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
 			return fetchModels(retryCount + 1);
 		} else {
 			console.error(`Failed after ${MAX_RETRIES} attempts`);
