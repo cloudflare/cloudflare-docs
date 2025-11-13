@@ -1096,20 +1096,6 @@
 				}
 			}
 		},
-		"response_buffering": {
-			"title": "Response buffering",
-			"link": "/network/response-buffering/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Enterprise-only",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "Yes"
-				}
-			}
-		},
 		"true_client_ip_header": {
 			"title": "True Client IP Header",
 			"link": "/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only",
