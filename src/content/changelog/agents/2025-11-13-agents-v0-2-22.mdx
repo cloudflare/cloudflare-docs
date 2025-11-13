@@ -1,0 +1,154 @@
+---
+title: Agents SDK v0.2.22 - MCP client transport deprecation and stateful MCP handler support
+description: This release deprecates client edge transports in favor of the official MCP TypeScript SDK transports, adds support for stateful createMcpHandler usage, and includes a new elicitation example demonstrating interactive input collection in MCP servers.
+products:
+  - agents
+  - workers
+date: 2025-11-13
+---
+
+We've shipped a new release for the [Agents SDK](https://github.com/cloudflare/agents) that streamlines MCP client transport usage, enhances MCP server capabilities with stateful handlers, and demonstrates best practices for interactive user input.
+
+## MCP Client Transport Deprecation
+
+The custom edge transport implementations (`SSEEdgeClientTransport` and `StreamableHTTPEdgeClientTransport`) have been deprecated in favor of the official transports from the MCP TypeScript SDK.
+
+### Migration Guide
+
+If you're using the deprecated transports, update your imports:
+
+**Before:**
+```ts
+import { SSEEdgeClientTransport } from "agents/mcp";
+import { StreamableHTTPEdgeClientTransport } from "agents/mcp";
+```
+
+**After:**
+```ts
+import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+```
+
+The deprecated classes will continue to work with deprecation warnings until the next major version, giving you time to migrate. The official MCP SDK transports provide the same functionality with better compatibility and ongoing support from the MCP community.
+
+## Stateful MCP Handler Support
+
+The `createMcpHandler` function now supports stateful usage patterns, allowing you to build MCP servers that persist state across requests using Durable Objects storage.
+
+This is particularly useful when:
+- Building MCP servers with the raw `@modelcontextprotocol/sdk` instead of the `McpAgent` class
+- Implementing custom session management
+- Supporting MCP features that require persistent state, such as elicitation
+
+### Example: Stateful MCP Server
+
+```ts
+import { createMcpHandler, WorkerTransport, type TransportState } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { Agent } from "agents";
+
+const STATE_KEY = "mcp_transport_state";
+
+export class MyAgent extends Agent<Env, State> {
+  server = new McpServer({
+    name: "stateful-server",
+    version: "1.0.0"
+  });
+
+  transport = new WorkerTransport({
+    sessionIdGenerator: () => this.name,
+    storage: {
+      get: () => {
+        return this.ctx.storage.kv.get<TransportState>(STATE_KEY);
+      },
+      set: (state: TransportState) => {
+        this.ctx.storage.kv.put<TransportState>(STATE_KEY, state);
+      }
+    }
+  });
+
+  async onMcpRequest(request: Request) {
+    return createMcpHandler(this.server, {
+      transport: this.transport
+    })(request, this.env, {} as ExecutionContext);
+  }
+}
+```
+
+The `WorkerTransport` integrates with Durable Objects storage to maintain session state, enabling features like elicitation that require bidirectional communication.
+
+## MCP Elicitation Example
+
+This release includes a new [elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) demonstrating how to build interactive MCP tools that collect additional input from users during tool execution.
+
+Elicitation is useful for:
+- Collecting user confirmation before performing actions
+- Gathering additional parameters not included in the initial request
+- Building multi-step workflows with user interaction
+- Implementing "human-in-the-loop" patterns
+
+### Example: Interactive Counter Tool
+
+```ts
+this.server.registerTool(
+  "increase-counter",
+  {
+    description: "Increase the counter",
+    inputSchema: {
+      confirm: z.boolean().describe("Do you want to increase the counter?")
+    }
+  },
+  async ({ confirm }) => {
+    if (!confirm) {
+      return {
+        content: [{ type: "text", text: "Counter increase cancelled." }]
+      };
+    }
+
+    // Use elicitation to ask for the amount
+    const basicInfo = await this.server.server.elicitInput({
+      message: "By how much do you want to increase the counter?",
+      requestedSchema: {
+        type: "object",
+        properties: {
+          amount: {
+            type: "number",
+            title: "Amount",
+            description: "The amount to increase the counter by",
+            minLength: 1
+          }
+        },
+        required: ["amount"]
+      }
+    });
+
+    if (basicInfo.action !== "accept" || !basicInfo.content) {
+      return {
+        content: [{ type: "text", text: "Counter increase cancelled." }]
+      };
+    }
+
+    // Update state with the elicited amount
+    this.setState({
+      ...this.state,
+      counter: this.state.counter + Number(basicInfo.content.amount)
+    });
+
+    return {
+      content: [{
+        type: "text",
+        text: `Counter increased by ${basicInfo.content.amount}, current value is ${this.state.counter}`
+      }]
+    };
+  }
+);
+```
+
+The elicitation example demonstrates how to combine stateful storage with interactive input collection to build sophisticated MCP tools.
+
+## Additional Updates
+
+- Updated dependencies to their latest versions
+- Improved compatibility with the MCP TypeScript SDK ecosystem
+
+For more details on these changes, see the [Agents SDK changelog](https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md#0222).

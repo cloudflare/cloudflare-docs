@@ -272,6 +272,27 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
+## Migration from Deprecated Transports
+
+:::note[Deprecated in v0.2.22]
+The `SSEEdgeClientTransport` and `StreamableHTTPEdgeClientTransport` classes have been deprecated in favor of the official MCP TypeScript SDK transports. They will be removed in the next major version.
+:::
+
+If you're using custom transport classes from `agents/mcp`, update your imports to use the official MCP SDK transports:
+
+**Before:**
+```ts
+import { SSEEdgeClientTransport, StreamableHTTPEdgeClientTransport } from "agents/mcp";
+```
+
+**After:**
+```ts
+import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+```
+
+The official transports provide the same functionality with better compatibility and ongoing support. When using `addMcpServer()`, the transport type is handled automatically, so most applications won't need to specify transports explicitly.
+
 ## Next Steps
 
 - [Connect your first MCP server](/agents/guides/connect-mcp-client) — Tutorial to get started

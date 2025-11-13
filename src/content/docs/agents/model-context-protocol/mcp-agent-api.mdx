@@ -133,6 +133,67 @@ export class MyMCP extends McpAgent<Env, State, {}> {
 
 </TypeScriptExample>
 
+### Alternative: Stateful MCP Servers with createMcpHandler
+
+If you need more control over your MCP server implementation or want to use the raw `@modelcontextprotocol/sdk` without extending `McpAgent`, you can use `createMcpHandler` with stateful storage.
+
+This approach is useful when:
+- You want to use the MCP SDK directly without the `McpAgent` abstraction
+- You need custom session management
+- You're implementing MCP features that require persistent state (like elicitation)
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { createMcpHandler, WorkerTransport, type TransportState } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { Agent } from "agents";
+
+const STATE_KEY = "mcp_transport_state";
+
+export class MyAgent extends Agent<Env, State> {
+  server = new McpServer({
+    name: "stateful-server",
+    version: "1.0.0"
+  });
+
+  transport = new WorkerTransport({
+    sessionIdGenerator: () => this.name,
+    storage: {
+      get: () => {
+        return this.ctx.storage.kv.get<TransportState>(STATE_KEY);
+      },
+      set: (state: TransportState) => {
+        this.ctx.storage.kv.put<TransportState>(STATE_KEY, state);
+      }
+    }
+  });
+
+  onStart() {
+    // Register your tools
+    this.server.registerTool(
+      "example-tool",
+      { description: "An example tool" },
+      async () => ({
+        content: [{ type: "text", text: "Hello from stateful MCP!" }]
+      })
+    );
+  }
+
+  async onMcpRequest(request: Request) {
+    return createMcpHandler(this.server, {
+      transport: this.transport
+    })(request, this.env, {} as ExecutionContext);
+  }
+}
+```
+
+</TypeScriptExample>
+
+The `WorkerTransport` integrates with Durable Objects storage to maintain session state across requests. This enables advanced MCP features like elicitation and persistent tool state.
+
+For a complete example with elicitation support, see the [MCP elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation).
+
 ### Not yet supported APIs
 
 The following APIs from the Agents SDK are not yet available on `McpAgent`:
