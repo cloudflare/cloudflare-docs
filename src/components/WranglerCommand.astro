@@ -28,6 +28,8 @@ const { globalFlags } = commands;
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)
 	.join(" ");
+
+const positionalSet = new Set(definition.positionalArgs);
 ---
 
 <AnchorHeading depth={headingLevel} title={`\`${command}\``} />
@@ -45,7 +47,12 @@ const positionals = definition.positionalArgs
 		Object.entries(definition.args)
 			.filter(([_, value]) => !value.hidden)
 			.map(([key, value]) => {
-				return <WranglerArg key={key} definition={value} />;
+				return (
+					<WranglerArg
+						key={key}
+						definition={{ ...value, positional: positionalSet.has(key) }}
+					/>
+				);
 			})
 	}
 </ul>
