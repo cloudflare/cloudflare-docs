@@ -8,6 +8,7 @@ import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
 import ModelFeatures from "~/components/models/ModelFeatures.tsx";
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
+import SchemaViewerWithTabs from "~/components/models/SchemaViewerWithTabs.astro";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
 import AutomaticSpeechRecognitionCode from "~/components/models/code/AutomaticSpeechRecognitionCode.astro";
@@ -290,7 +291,7 @@ const starlightPageProps = {
 	<h2 id="Parameters">Parameters</h2>
 	<p><span class="text-red-500">*</span> indicates a required field</p>
 	<h3 id="Input">Input</h3>
-	<SchemaViewer schema={model.schema.input} />
+	<SchemaViewerWithTabs schema={model.schema.input} type="input" />
 
 	<h3 id="Output">Output</h3>
 	{
@@ -302,7 +303,7 @@ const starlightPageProps = {
 				</p>
 			</>
 		) : (
-			<SchemaViewer schema={model.schema.output} />
+			<SchemaViewerWithTabs schema={model.schema.output} type="output" />
 		)
 	}
 
