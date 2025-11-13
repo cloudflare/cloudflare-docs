@@ -222,6 +222,18 @@ export class MyAgent extends Agent<Env, never> {
 
 Connection states: `authenticating` (needs OAuth) > `connecting` (completing setup) > `ready` (available for use)
 
+## OAuth persistence across reconnections
+
+After a user successfully completes the OAuth flow, the Agent automatically clears the OAuth requirement. If the connection is lost and the Agent reconnects (for example, after a deployment or network interruption), the Agent will re-establish the connection without requiring the user to authenticate again.
+
+This automatic behavior means:
+
+- **First connection**: User authenticates via OAuth if the MCP server requires it
+- **Reconnections**: Agent reuses the existing authorization automatically
+- **No re-authentication needed**: Users only authenticate once per MCP server
+
+The Agent stores the OAuth tokens securely in SQL storage and uses them for all future connections to that MCP server. You do not need to implement any special logic to handle reconnections - the SDK manages this automatically.
+
 ## Handle authentication failures
 
 When OAuth fails, the connection `state` becomes `"failed"`. Detect this in your UI and allow users to retry or clean up:

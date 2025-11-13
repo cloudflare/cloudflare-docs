@@ -224,6 +224,43 @@ export class MyAgent extends Agent<Env, never> {
 
 The `state` field can be: `authenticating`, `connecting`, `ready`, `discovering`, or `failed`. Use this method to monitor connection status, list available tools, or build UI for connected servers.
 
+### List tools from a specific server
+
+You can filter the tools list to show only tools from a specific MCP server. This is useful for building UI that shows which capabilities each connected server provides:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+export class MyAgent extends Agent<Env, never> {
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/get-tools" && request.method === "POST") {
+			const { serverId } = (await request.json()) as { serverId: string };
+
+			// Get all tools and filter by server ID
+			const allTools = this.mcp.listTools();
+			const serverTools = allTools.filter((tool) => tool.serverId === serverId);
+
+			return new Response(JSON.stringify({ tools: serverTools }), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+Each tool in the returned array includes:
+
+- **`name`** — Tool identifier
+- **`description`** — What the tool does
+- **`inputSchema`** — JSON Schema for tool parameters
+- **`serverId`** — ID of the MCP server providing this tool
+
+This allows you to show users exactly what capabilities each connected MCP server provides, helping them understand which tools are available from which sources.
+
 ## OAuth Configuration
 
 Customize OAuth callback behavior using `this.mcp.configureOAuthCallback()`:
