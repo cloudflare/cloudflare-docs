@@ -1221,6 +1221,7 @@
 
 # pipelines
 /pipelines/concepts/how-pipelines-work/ /pipelines/ 301
+/pipelines/platform/wrangler-commands/ /pipelines/reference/wrangler-commands/ 301
 
 # queues
 /queues/configuration/ /queues/configuration/configure-queues/ 301
