@@ -51,12 +51,10 @@ jobs:
           cd ..
 
           cd distllms
-          for file in $(find . -type f); do
-            rclone copy \
-              --config ../bin/rclone.conf \
-              $file \
-              devdocs:vendored-markdown
-          done
+          rclone copy --max-depth 2 \
+            --config ../bin/rclone.conf \
+            . \
+            devdocs:vendored-markdown
           cd ..
       - name: Upload vendored Markdown files to ZT DevDocs bucket
         env:

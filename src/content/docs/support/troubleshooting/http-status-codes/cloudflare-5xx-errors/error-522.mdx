@@ -29,6 +29,8 @@ Two different timeouts cause HTTP error `522` depending on when they occur betwe
 
 - If you are using [Workers with a Custom Domain](/workers/configuration/routing/custom-domains/), performing a `fetch` to its own hostname will cause a `522` error. Consider using a [Route](/workers/configuration/routing/), targeting another hostname, or enabling the [`global_fetch_strictly_public` compatibility flag](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) instead.
 
+- If you are using [Origin Rules](/rules/origin-rules/), make sure the resulting hostname can be resolved. For example, if your Origin Rule point to a Worker route, a `522` error will be returned if the hostname for this route is an A record pointing to a reserved address such as `100::` or `192.0.2.0`. 
+
 - If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 
   - An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.

@@ -49,7 +49,7 @@ graph LR
 The components in the diagram include:
 
 - **cloudflared**: Each data center is connected to Cloudflare with its own Cloudflare Tunnel. `cloudflared` installs on one or [more](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) host machines in the network.
-- **Private load balancer IP**: End users connect to the application using the load balancer's IP address. This can either be a Cloudflare-assigned CGNAT IP (`100.64.0.0/10`) or a custom [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IP.
+- **Private load balancer IP**: End users connect to the application using the load balancer's IP address. This can either be a Cloudflare-assigned IP in `100.112.0.0/16` or a custom `/32` IP in an [RFC 1918 range](https://datatracker.ietf.org/doc/html/rfc1918).
 - **Load balancer pool**: The load balancer is configured with one [pool](/load-balancing/understand-basics/load-balancing-components/#pools) per tunnel.
 - **Load balancer endpoint**: A pool contains one or more endpoints, where each endpoint is a server behind `cloudflared` that is running the application. If your servers have overlapping IPs, you can assign a distinct [virtual network (VNET)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) per tunnel so that Load Balancer can deterministically route requests to the correct endpoint.
 
@@ -116,7 +116,9 @@ The following example adds a Cloudflare Tunnel endpoint to an existing Load Bala
 
 2. Select **Create a Load Balancer**.
 3. Select **Private Load Balancer**.
-4. On the next step you can choose to associate this load balancer with either: - A Cloudflare-assigned IP from the `100.64.0.0/10` range - A custom [RFC 1918 address](https://datatracker.ietf.org/doc/html/rfc1918)
+4. On the next step you can choose to associate this load balancer with either:
+	- A Cloudflare-assigned IP from the `100.112.0.0/16` range
+	- A custom `/32` IP in an [RFC 1918 range](https://datatracker.ietf.org/doc/html/rfc1918)
 5. Add a descriptive name to identify your load balancer.
 6. Proceed through the setup.
 

@@ -2,8 +2,10 @@
 pcx_content_type: concept
 title: Connection pooling
 sidebar:
-  order: 5
+  order: 4
 ---
+
+import { Render } from "~/components";
 
 Hyperdrive maintains a pool of connections to your database. These are optimally placed to minimize the latency for your applications. You can configure
 the amount of connections your Hyperdrive configuration uses to connect to your origin database. This enables you to right-size your connection pool based on your database capacity and application requirements.
@@ -19,6 +21,10 @@ Hyperdrive will automatically scale the amount of database connections held open
 
 The `max_size` parameter acts as a soft limit - Hyperdrive may temporarily create additional connections during network issues or high traffic periods to ensure high availability and resiliency.
 
+## Pooling mode
+
+<Render file="pooling-mode" product="hyperdrive" />
+
 ## Best practices
 
 You can configure connection counts using the Cloudflare dashboard or the Cloudflare API. Consider the following best practices to determine the right limit for your use-case:
@@ -30,6 +36,6 @@ You can configure connection counts using the Cloudflare dashboard or the Cloudf
 
 ## Next steps
 
-- Learn more about [How Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
+- Learn more about [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/).
 - Review [Hyperdrive limits](/hyperdrive/platform/limits/) for your Workers plan.
 - Learn how to [Connect to PostgreSQL](/hyperdrive/examples/connect-to-postgres/) from Hyperdrive.

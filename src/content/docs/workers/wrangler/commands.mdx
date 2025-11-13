@@ -155,7 +155,7 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
-<Render product="workers" file="wrangler-commands/vectorize" />
+<WranglerNamespace namespace="vectorize" headingLevel={3} />
 
 ---
 
@@ -258,7 +258,7 @@ None of the options for this command are required. Many of these options can be 
 Deploy your Worker to Cloudflare.
 
 ```txt
-wrangler deploy [<SCRIPT>] [OPTIONS]
+wrangler deploy [<PATH>] [OPTIONS]
 ```
 
 :::note
@@ -267,8 +267,17 @@ None of the options for this command are required. Also, many can be set in your
 
 :::
 
-- `SCRIPT` <Type text="string" />
-  - The path to an entry point for your Worker. Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
+- `PATH` <Type text="string" />
+  - A path specific what needs to be deployed, this can either be:
+    - The path to an entry point for your Worker.
+      - Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
+
+    - Or the path to an assets directory for the deployment of a static site.
+      - Visit [assets](/workers/static-assets/) for more information.
+      - This overrides the eventual `assets` configuration in your [Wrangler configuration file](/workers/wrangler/configuration/).
+      - This is equivalent to the `--assets` option listed below.
+      - Note: this option currently only works only in interactive mode (so not in CI systems).
+
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
@@ -360,6 +369,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 <Render file="wrangler-commands/r2" product="workers" />
 
 ---
+
 ## r2 SQL
 
 <Render file="wrangler-commands/r2-sql" product="workers" />
@@ -1189,7 +1199,7 @@ wrangler pages functions build [<DIRECTORY>] [OPTIONS]
 
 Manage your [Pipelines](/pipelines/).
 
-<Render file="wrangler-commands/pipelines" product="workers" />
+<WranglerNamespace namespace="pipelines" headingLevel={3}/>
 
 ---
 
@@ -1290,16 +1300,14 @@ The minimum required wrangler version to use these commands is 3.40.0. For versi
 
 <WranglerCommand
 	command="versions upload"
-	description="
-Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
+	description="Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
 	headingLevel={3}
 />
 
 <WranglerCommand
 	command="versions deploy"
-description="Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
-    headingLevel={3}
-
+	description="Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
+	headingLevel={3}
 />
 
 :::note
@@ -1313,16 +1321,13 @@ For example:
 
 <WranglerCommand
 	command="versions list"
-description="Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`."
-    headingLevel={3}
-
+	description="Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`."
+	headingLevel={3}
 />
 
 <WranglerCommand
 	command="versions view"
-
-    headingLevel={3}
-
+	headingLevel={3}
 />
 
 ### `secret put`
@@ -1406,35 +1411,13 @@ wrangler triggers deploy [OPTIONS]
 
 [Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
 
-### `list`
-
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
-Retrieve details for the 10 most recent [deployments](/workers/configuration/versions-and-deployments/#deployments). Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
+<WranglerCommand command="deployments list" headingLevel={3} />
 
-```txt
-wrangler deployments list [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `status`
-
-Retrieve details for the most recent deployment. Details include `Created on`, `Author`, `Source`, an optional `Message`, and metadata about the `Version(s)` in the deployment.
-
-```txt
-wrangler deployments status
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="deployments status" headingLevel={3} />
 
 ## `rollback`
 
