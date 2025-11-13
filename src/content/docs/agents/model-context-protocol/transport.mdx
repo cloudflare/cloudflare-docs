@@ -109,3 +109,194 @@ With these few changes, your MCP server will support both transport methods, mak
 While most MCP clients have not yet adopted the new Streamable HTTP transport, you can start testing it today using [`mcp-remote`](https://www.npmjs.com/package/mcp-remote), an adapter that lets MCP clients that otherwise only support local connections work with remote MCP servers.
 
 Follow [this guide](/agents/guides/test-remote-mcp-server/) for instructions on how to connect to your remote MCP server from Claude Desktop, Cursor, Windsurf, and other local MCP clients, using the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote).
+
+## Advanced Transport Configuration
+
+For more control over MCP transport behavior, you can use the `createMcpHandler` function with custom options. This is useful when building MCP servers with regular `Agent` classes (not `McpAgent`) or when you need advanced features like state persistence.
+
+### Custom Transport Handler
+
+<Tabs syncKey="workersExamples"> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { Agent } from "agents";
+import { createMcpHandler } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+type Env = {
+  MyAgent: DurableObjectNamespace<MyAgent>;
+};
+
+export class MyAgent extends Agent<Env, State> {
+  server = new McpServer({
+    name: "My Server",
+    version: "1.0.0"
+  });
+
+  async onMcpRequest(request: Request) {
+    return createMcpHandler(this.server, {
+      route: "/mcp",
+      sessionIdGenerator: () => this.name
+    })(request, this.env, {} as ExecutionContext);
+  }
+}
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    const sessionId = request.headers.get("mcp-session-id") ?? crypto.randomUUID();
+    const agentId = env.MyAgent.idFromName(sessionId);
+    const agent = env.MyAgent.get(agentId);
+
+    return await agent.fetch(request);
+  }
+};
+```
+
+</TabItem> </Tabs>
+
+### Transport Options
+
+The `createMcpHandler` function accepts the following options:
+
+#### `route`
+
+Specify which URL path the handler should respond to:
+
+```ts
+createMcpHandler(server, {
+  route: "/mcp"  // Only handle requests to /mcp
+})
+```
+
+#### `sessionIdGenerator`
+
+Provide a custom function to generate session IDs:
+
+```ts
+createMcpHandler(server, {
+  sessionIdGenerator: () => `session-${Date.now()}`
+})
+```
+
+#### `storage`
+
+Persist transport state to survive [Durable Object hibernation](/durable-objects/best-practices/websockets/#websocket-hibernation-api). This is essential for features like [elicitation](/agents/guides/mcp-elicitation/) that require maintaining session state:
+
+```ts
+import { type TransportState } from "agents/mcp";
+
+const STATE_KEY = "mcp_transport_state";
+
+createMcpHandler(server, {
+  storage: {
+    get: () => {
+      return this.ctx.storage.kv.get<TransportState>(STATE_KEY);
+    },
+    set: (state: TransportState) => {
+      this.ctx.storage.kv.put<TransportState>(STATE_KEY, state);
+    }
+  }
+})
+```
+
+#### `authContext`
+
+Provide authentication context when not using the Workers OAuth Provider:
+
+```ts
+createMcpHandler(server, {
+  authContext: {
+    props: {
+      userId: "user-123",
+      role: "admin"
+    }
+  }
+})
+```
+
+#### `transport`
+
+Use a custom `WorkerTransport` instance for full control:
+
+```ts
+import { WorkerTransport } from "agents/mcp";
+
+const customTransport = new WorkerTransport({
+  sessionIdGenerator: () => crypto.randomUUID(),
+  storage: { /* storage config */ }
+});
+
+// Pre-configure transport
+await server.connect(customTransport);
+
+createMcpHandler(server, {
+  transport: customTransport
+})
+```
+
+#### `corsOptions`
+
+Customize CORS headers for cross-origin requests:
+
+```ts
+createMcpHandler(server, {
+  corsOptions: {
+    origin: "https://example.com",
+    methods: "GET, POST, OPTIONS",
+    headers: "Content-Type, Authorization",
+    maxAge: 3600
+  }
+})
+```
+
+### State Persistence Example
+
+Here's a complete example showing how to persist transport state for use with elicitation:
+
+```ts
+import { Agent } from "agents";
+import { createMcpHandler, type TransportState } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+const STATE_KEY = "mcp_transport_state";
+
+export class MyAgent extends Agent<Env, State> {
+  server = new McpServer({
+    name: "Persistent Server",
+    version: "1.0.0"
+  });
+
+  onStart(): void {
+    this.server.registerTool(
+      "my-tool",
+      {
+        description: "Tool with elicitation",
+        inputSchema: { /* schema */ }
+      },
+      async (args) => {
+        // Elicitation works across hibernation
+        const result = await this.server.server.elicitInput({
+          message: "Please confirm:",
+          requestedSchema: { /* schema */ }
+        });
+
+        // Process result...
+      }
+    );
+  }
+
+  async onMcpRequest(request: Request) {
+    return createMcpHandler(this.server, {
+      sessionIdGenerator: () => this.name,
+      storage: {
+        get: () => this.ctx.storage.kv.get<TransportState>(STATE_KEY),
+        set: (state: TransportState) => {
+          this.ctx.storage.kv.put<TransportState>(STATE_KEY, state);
+        }
+      }
+    })(request, this.env, {} as ExecutionContext);
+  }
+}
+```
+
+This configuration ensures that MCP session state persists even when the Durable Object hibernates, allowing long-running elicitation requests to complete successfully.
