@@ -224,7 +224,7 @@ Connection states: `authenticating` (needs OAuth) > `connecting` (completing set
 
 ## OAuth persistence across reconnections
 
-After a user successfully completes the OAuth flow, the Agent automatically clears the OAuth requirement. If the connection is lost and the Agent reconnects (for example, after a deployment or network interruption), the Agent will re-establish the connection without requiring the user to authenticate again.
+After a user successfully completes the OAuth flow, the Agent automatically clears the OAuth requirement and stores the authentication tokens. If the connection is lost and the Agent reconnects (for example, after a deployment or network interruption), the Agent will re-establish the connection without requiring the user to authenticate again.
 
 This automatic behavior means:
 
@@ -232,7 +232,9 @@ This automatic behavior means:
 - **Reconnections**: Agent reuses the existing authorization automatically
 - **No re-authentication needed**: Users only authenticate once per MCP server
 
-The Agent stores the OAuth tokens securely in SQL storage and uses them for all future connections to that MCP server. You do not need to implement any special logic to handle reconnections - the SDK manages this automatically.
+The Agent stores the OAuth tokens securely in [SQL storage](/agents/api-reference/store-and-sync-state/) and uses them for all future connections to that MCP server. This includes reconnections after Agent restarts, Durable Object hibernation, network interruptions, and temporary connection failures.
+
+If the OAuth tokens expire or become invalid, the server state will return to `authenticating` and present a new `auth_url` for re-authorization. You do not need to implement any special logic to handle reconnections - the SDK manages this automatically.
 
 ## Handle authentication failures
 

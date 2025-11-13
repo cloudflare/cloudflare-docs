@@ -113,7 +113,7 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-If the MCP server requires OAuth authentication, `authUrl` will be returned for user authentication. Connections persist across requests and the Agent will automatically reconnect if the connection is lost.
+If the MCP server requires OAuth authentication, `authUrl` will be returned for user authentication. After the user successfully completes OAuth, the Agent clears this `authUrl` and stores the authentication tokens. Connections persist across requests, and the Agent will automatically reconnect using stored tokens if the connection is lost - without requiring users to repeat the OAuth flow.
 
 **Related:**
 
