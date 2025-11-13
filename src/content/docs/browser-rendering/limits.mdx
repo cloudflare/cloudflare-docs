@@ -27,7 +27,7 @@ To increase this limit, go to the **Compute (Workers) > Workers plans** page in 
 | Browser timeout                        | 60 seconds |
 | Total requests per min (REST API only) | 6 per minute  [^1]  |
 
-[^1]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of 6 requests per minute translates to 1 request every 10 seconds. This means you cannot send all 6 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
+[^1]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of six requests per minute translates to one request every 10 seconds. This means you cannot send all six requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
 
 :::note[Note on browser timeout]
 By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
