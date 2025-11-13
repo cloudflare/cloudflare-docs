@@ -1,0 +1,331 @@
+---
+pcx_content_type: concept
+title: Elicitation
+tags:
+  - MCP
+sidebar:
+  order: 7
+---
+
+import { Render, TypeScriptExample } from "~/components";
+
+[Elicitation](https://spec.modelcontextprotocol.io/specification/draft/client/elicitation/) is an MCP feature that allows servers to request user input during tool execution. This enables interactive workflows where tools can ask for confirmation, collect form data, or gather additional information before completing their operations.
+
+## How elicitation works
+
+When a tool needs user input, it calls `server.elicitInput()` with a message and a [JSON Schema](https://json-schema.org/) describing the expected input format. The MCP client presents this to the user (typically as a form or dialog), and returns the user's response to the server.
+
+The user can respond in three ways:
+- **Accept**: Provide the requested information and continue
+- **Decline**: Explicitly reject the request
+- **Cancel**: Dismiss without making a choice
+
+## Basic example
+
+Here's a simple tool that asks for user confirmation before incrementing a counter:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { Agent } from "agents";
+import { createMcpHandler } from "agents/mcp";
+import { z } from "zod";
+
+type Env = {
+  MyAgent: DurableObjectNamespace<MyAgent>;
+};
+
+interface State {
+  counter: number;
+}
+
+export class MyAgent extends Agent<Env, State> {
+  server = new McpServer({
+    name: "Elicitation Demo",
+    version: "1.0.0"
+  });
+
+  initialState = {
+    counter: 0
+  };
+
+  onStart() {
+    this.server.registerTool(
+      "increase-counter",
+      {
+        description: "Increase the counter",
+        inputSchema: {
+          confirm: z.boolean().describe("Do you want to increase the counter?")
+        }
+      },
+      async ({ confirm }) => {
+        if (!confirm) {
+          return {
+            content: [{ type: "text", text: "Counter increase cancelled." }]
+          };
+        }
+
+        // Request additional input via elicitation
+        const result = await this.server.server.elicitInput({
+          message: "By how much do you want to increase the counter?",
+          requestedSchema: {
+            type: "object",
+            properties: {
+              amount: {
+                type: "number",
+                title: "Amount",
+                description: "The amount to increase the counter by",
+                minimum: 1
+              }
+            },
+            required: ["amount"]
+          }
+        });
+
+        if (result.action !== "accept" || !result.content) {
+          return {
+            content: [{ type: "text", text: "Counter increase cancelled." }]
+          };
+        }
+
+        const amount = Number(result.content.amount);
+        this.setState({
+          counter: this.state.counter + amount
+        });
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Counter increased by ${amount}, current value is ${this.state.counter}`
+            }
+          ]
+        };
+      }
+    );
+  }
+
+  async onMcpRequest(request: Request) {
+    return createMcpHandler(this.server)(request, this.env, {} as ExecutionContext);
+  }
+}
+```
+
+</TypeScriptExample>
+
+## Elicitation response types
+
+The `elicitInput()` method returns an `ElicitResult` with one of three action types:
+
+```ts
+type ElicitResult = {
+  action: "accept" | "decline" | "cancel";
+  content?: Record<string, unknown>;
+};
+```
+
+- **accept**: User provided the requested information (available in `content`)
+- **decline**: User explicitly rejected the request
+- **cancel**: User dismissed without making a choice
+
+Always check the `action` before using `content`:
+
+```ts
+const result = await this.server.server.elicitInput({
+  message: "Enter your email",
+  requestedSchema: {
+    type: "object",
+    properties: {
+      email: { type: "string", format: "email" }
+    },
+    required: ["email"]
+  }
+});
+
+if (result.action === "accept" && result.content?.email) {
+  // Use result.content.email
+} else {
+  // Handle decline or cancel
+}
+```
+
+## Schema types
+
+Elicitation supports various input types through JSON Schema:
+
+### Boolean (confirmation)
+
+```ts
+requestedSchema: {
+  type: "object",
+  properties: {
+    confirmed: {
+      type: "boolean",
+      title: "Confirm action",
+      description: "Check to confirm"
+    }
+  }
+}
+```
+
+### Text input
+
+```ts
+requestedSchema: {
+  type: "object",
+  properties: {
+    name: {
+      type: "string",
+      title: "Name",
+      description: "Enter your name"
+    }
+  },
+  required: ["name"]
+}
+```
+
+### Email input
+
+```ts
+requestedSchema: {
+  type: "object",
+  properties: {
+    email: {
+      type: "string",
+      format: "email",
+      title: "Email Address"
+    }
+  }
+}
+```
+
+### Number input
+
+```ts
+requestedSchema: {
+  type: "object",
+  properties: {
+    amount: {
+      type: "number",
+      title: "Amount",
+      minimum: 1,
+      maximum: 100
+    }
+  }
+}
+```
+
+### Select/dropdown
+
+```ts
+requestedSchema: {
+  type: "object",
+  properties: {
+    role: {
+      type: "string",
+      title: "Role",
+      enum: ["viewer", "editor", "admin"],
+      enumNames: ["Viewer", "Editor", "Administrator"]
+    }
+  }
+}
+```
+
+### Multiple fields
+
+```ts
+requestedSchema: {
+  type: "object",
+  properties: {
+    username: { type: "string", title: "Username" },
+    email: { type: "string", format: "email", title: "Email" },
+    role: {
+      type: "string",
+      enum: ["viewer", "editor"],
+      title: "Role"
+    },
+    sendWelcome: {
+      type: "boolean",
+      title: "Send welcome email"
+    }
+  },
+  required: ["username", "email", "role"]
+}
+```
+
+## Best practices
+
+### Keep messages clear
+
+Use clear, action-oriented messages that explain what you're asking for:
+
+```ts
+// Good
+message: "Enter the email address for the new user account"
+
+// Less clear
+message: "Email"
+```
+
+### Provide helpful descriptions
+
+Use the `description` field to guide users:
+
+```ts
+properties: {
+  apiKey: {
+    type: "string",
+    title: "API Key",
+    description: "Your API key from the dashboard (Settings > API)"
+  }
+}
+```
+
+### Handle all response types
+
+Always handle `accept`, `decline`, and `cancel` appropriately:
+
+```ts
+const result = await this.server.server.elicitInput({...});
+
+switch (result.action) {
+  case "accept":
+    if (result.content) {
+      // Process the input
+      return { content: [{ type: "text", text: "Success!" }] };
+    }
+    break;
+  case "decline":
+    return { content: [{ type: "text", text: "Action declined." }] };
+  case "cancel":
+    return { content: [{ type: "text", text: "Action cancelled." }] };
+}
+```
+
+### Use required fields appropriately
+
+Mark fields as `required` when they're essential for the operation:
+
+```ts
+requestedSchema: {
+  type: "object",
+  properties: {
+    username: { type: "string", title: "Username" },
+    email: { type: "string", format: "email", title: "Email" }
+  },
+  required: ["username", "email"] // Both are mandatory
+}
+```
+
+## Limitations
+
+- Elicitation is currently only supported in direct MCP connections between clients and servers
+- Complex nested schemas may not be supported by all MCP clients
+- The visual presentation of elicitation forms depends on the MCP client implementation
+
+## Related resources
+
+- [MCP Elicitation Specification](https://spec.modelcontextprotocol.io/specification/draft/client/elicitation/)
+- [MCP Tools Documentation](/agents/model-context-protocol/tools/)
+- [JSON Schema Reference](https://json-schema.org/understanding-json-schema/)

@@ -105,6 +105,177 @@ To use apiHandlers, update to @cloudflare/workers-oauth-provider v0.0.4 or later
 
 With these few changes, your MCP server will support both transport methods, making it compatible with both existing and new clients.
 
+## Advanced configuration with `createMcpHandler`
+
+For more control over your MCP server's transport layer, you can use the `createMcpHandler` function directly. This is useful when building MCP servers with Agents (not McpAgent) or when you need advanced features like state persistence.
+
+### Basic usage
+
+```ts
+import { createMcpHandler } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { Agent } from "agents";
+
+export class MyAgent extends Agent<Env, State> {
+  server = new McpServer({ name: "My Server", version: "1.0.0" });
+
+  async onMcpRequest(request: Request) {
+    return createMcpHandler(this.server)(
+      request,
+      this.env,
+      {} as ExecutionContext
+    );
+  }
+}
+```
+
+### Configuration options
+
+`createMcpHandler` accepts an options object with the following properties:
+
+#### `route` (optional)
+
+Specify a path prefix for the MCP endpoint. Requests to other paths will return a 404.
+
+```ts
+createMcpHandler(this.server, {
+  route: "/mcp"
+})(request, env, ctx);
+```
+
+#### `sessionIdGenerator` (optional)
+
+Provide a custom function to generate session IDs:
+
+```ts
+createMcpHandler(this.server, {
+  sessionIdGenerator: () => crypto.randomUUID()
+})(request, env, ctx);
+```
+
+#### `storage` (optional)
+
+Persist transport state across requests. This is particularly useful for [Durable Objects with hibernation](/durable-objects/best-practices/websockets/#websocket-hibernation-api), allowing your MCP server to maintain session state even when the Durable Object hibernates:
+
+```ts
+createMcpHandler(this.server, {
+  storage: {
+    get: () => this.ctx.storage.kv.get("mcp_transport_state"),
+    set: (state) => this.ctx.storage.kv.put("mcp_transport_state", state)
+  }
+})(request, env, ctx);
+```
+
+The storage API must implement:
+- `get()`: Returns the stored state or `undefined`
+- `set(state)`: Stores the transport state
+
+Both methods can be synchronous or return Promises.
+
+#### `authContext` (optional)
+
+Provide authentication context from your OAuth flow:
+
+```ts
+createMcpHandler(this.server, {
+  authContext: {
+    props: {
+      userId: "user-123",
+      email: "user@example.com"
+    }
+  }
+})(request, env, ctx);
+```
+
+If not provided, the handler will automatically use `ctx.props` when available (e.g., from OAuth Provider).
+
+#### `transport` (optional)
+
+Provide a pre-configured `WorkerTransport` instance for advanced use cases:
+
+```ts
+import { WorkerTransport } from "agents/mcp";
+
+const transport = new WorkerTransport({
+  sessionIdGenerator: () => "custom-session",
+  storage: { /* ... */ }
+});
+
+// Pre-connect if needed
+await this.server.connect(transport);
+
+createMcpHandler(this.server, {
+  transport
+})(request, env, ctx);
+```
+
+#### `corsOptions` (optional)
+
+Configure CORS headers for cross-origin requests:
+
+```ts
+createMcpHandler(this.server, {
+  corsOptions: {
+    origin: "https://example.com",
+    methods: "GET, POST, OPTIONS",
+    headers: "Content-Type, Authorization"
+  }
+})(request, env, ctx);
+```
+
+Default CORS settings:
+- `origin`: `*`
+- `headers`: `Content-Type, Accept, Authorization, mcp-session-id, MCP-Protocol-Version`
+- `methods`: `GET, POST, DELETE, OPTIONS`
+- `exposeHeaders`: `mcp-session-id`
+- `maxAge`: `86400`
+
+### Complete example with state persistence
+
+```ts
+import { Agent } from "agents";
+import { createMcpHandler } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+const STATE_KEY = "mcp_transport_state";
+
+export class MyAgent extends Agent<Env, State> {
+  server = new McpServer({
+    name: "Stateful MCP Server",
+    version: "1.0.0"
+  });
+
+  initialState = { counter: 0 };
+
+  onStart() {
+    this.server.registerTool(
+      "increment",
+      { description: "Increment counter" },
+      async () => {
+        this.setState({ counter: this.state.counter + 1 });
+        return {
+          content: [{
+            type: "text",
+            text: `Counter: ${this.state.counter}`
+          }]
+        };
+      }
+    );
+  }
+
+  async onMcpRequest(request: Request) {
+    return createMcpHandler(this.server, {
+      route: "/mcp",
+      sessionIdGenerator: () => this.name,
+      storage: {
+        get: () => this.ctx.storage.kv.get(STATE_KEY),
+        set: (state) => this.ctx.storage.kv.put(STATE_KEY, state)
+      }
+    })(request, this.env, {} as ExecutionContext);
+  }
+}
+```
+
 ### Testing with MCP clients
 While most MCP clients have not yet adopted the new Streamable HTTP transport, you can start testing it today using [`mcp-remote`](https://www.npmjs.com/package/mcp-remote), an adapter that lets MCP clients that otherwise only support local connections work with remote MCP servers.
 
