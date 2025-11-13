@@ -1,9 +1,7 @@
 import fs from "fs";
-import path from "path";
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 2000; // 2 seconds
-const MODELS_DIR = "./src/content/workers-ai-models";
 
 /**
  * Check if a model has a valid schema
