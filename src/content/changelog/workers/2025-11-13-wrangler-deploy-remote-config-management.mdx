@@ -3,7 +3,7 @@ title: Wrangler deploy - Better remote configuration conflict management
 description: Wrangler now provides a better user experience when deploying a worker that was previously deployed via the Cloudflare dashboard.
 products:
   - workers
-date: 2025-11-xx
+date: 2025-11-13
 ---
 
 Until now, if a Worker had been previously deployed via the [Cloudflare Dashboard](https://dash.cloudflare.com), subsequent
@@ -13,4 +13,4 @@ Now instead `wrangler deploy` presents a helpful representation of the differenc
 Now `wrangler deploy` presents a helpful representation of the differences between the
 [local configuration](https://developers.cloudflare.com/workers/wrangler/configuration/) and the remote settings, and offers to update your local configuration file for you. If instead Wrangler detects that a deployment won't modify or remove settings updated from the Dashboard, it will simply proceed with deployment without requesting any user interaction.
 
-Update to [Wrangler](/workers/wrangler/) v<version number> or greater to take advantage of this improved deploy flow. 
+Update to [Wrangler](/workers/wrangler/) v4.48.0 or greater to take advantage of this improved deploy flow.
