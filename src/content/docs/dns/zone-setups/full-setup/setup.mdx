@@ -10,7 +10,7 @@ description: >-
   If you want to use Cloudflare as your primary DNS provider and manage your DNS records, your domain should be using a full setup.
 ---
 
-import { Render, DashButton, Tabs, TabItem } from "~/components";
+import { Render, DashButton, Tabs, TabItem, APIRequest } from "~/components";
 
 <Render file="full-setup-definition" product="dns" />
 
@@ -41,7 +41,16 @@ In the Cloudflare dashboard, [add your domain](/fundamentals/manage-domains/add-
 
 </TabItem> <TabItem label="API">
 
-(placeholder)
+<APIRequest
+  path="/zones"
+  method="POST"
+  json={{
+    "name": "<YOUR_DOMAIN>",
+    "account": {
+      "id": "<YOUR_ACCOUNT_ID>"
+    }
+  }}
+/>
 
 </TabItem> </Tabs>
 
@@ -87,7 +96,10 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 </TabItem> <TabItem label="API">
 
-(placeholder)
+<APIRequest
+  path="/zones/{zone_id}"
+  method="GET"
+/>
 
 </TabItem> </Tabs>
 

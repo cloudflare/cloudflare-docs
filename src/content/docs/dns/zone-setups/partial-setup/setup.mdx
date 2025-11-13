@@ -10,7 +10,7 @@ description: >-
   A partial (CNAME) setup allows you to use Cloudflare's reverse proxy while maintaining your primary and authoritative DNS provider.
 ---
 
-import { Details, Render, GlossaryTooltip, Steps, Tabs, TabItem } from "~/components";
+import { Details, Render, GlossaryTooltip, Steps, Tabs, TabItem, APIRequest } from "~/components";
 
 <Render file="partial-setup-definition" product="dns" />
 
@@ -54,7 +54,19 @@ Make sure your zone is on the Business or Enterprise plan. If you have Free or P
 
 </TabItem> <TabItem label="API">
 
-(placeholder)
+If you are adding a zone for the first time via API you can add it directly with a `type` of `partial`, without converting it.
+
+<APIRequest
+  path="/zones"
+  method="POST"
+  json={{
+    "name": "example.com",
+    "account": {
+      "id": "YOUR_ACCOUNT_ID"
+    },
+    "type": "partial"
+  }}
+/>
 
 </TabItem> </Tabs>
 
@@ -86,8 +98,6 @@ If your organization has multiple Cloudflare accounts, also consider using zone 
 
 ## 3. Add DNS records
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
 <Steps>
 
 1. At your authoritative DNS provider:
@@ -107,12 +117,6 @@ If your organization has multiple Cloudflare accounts, also consider using zone 
 2. Repeat this process for each subdomain that should be proxied to Cloudflare.
 
 </Steps>
-
-</TabItem> <TabItem label="API">
-
-(placeholder)
-
-</TabItem> </Tabs>
 
 ---
 
