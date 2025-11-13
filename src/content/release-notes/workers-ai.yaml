@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-11-13"
+    title: Qwen3 LLM and Embeddings available on Workers AI
+    description: |-
+      - [`@cf/qwen/qwen3-30b-a3b-fp8`](/workers-ai/models/qwen3-30b-a3b-fp8/) and [`@cf/qwen/qwen3-embedding-0.6b`](/workers-ai/models/qwen3-embedding-0.6b) now available on Workers AI
   - publish_date: "2025-10-21"
     title: New voice and LLM models on Workers AI
     description: |-
