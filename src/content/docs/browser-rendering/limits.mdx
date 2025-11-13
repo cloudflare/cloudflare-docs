@@ -47,7 +47,7 @@ The limits for Browser Rendering will continue to be raised over time. In the me
 | Total requests per min (REST API only) | 180 per minute [^3]       |
 
 [^2]: Contact our team to request increases to this limit.
-[^3]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of 180 requests per minute translates to 3 requests per second. This means you cannot send all 180 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
+[^3]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of 180 requests per minute translates to three requests per second. This means you cannot send all 180 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
 
 :::note[Note on browser timeout]
 By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
