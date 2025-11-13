@@ -2,21 +2,15 @@
 {}
 ---
 
-import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
+import {
+	Render,
+	AnchorHeading,
+	Type,
+	MetaInfo,
+	WranglerCommand,
+} from "~/components";
 
-<AnchorHeading title="`create`" slug="d1-create" depth={3} />
-
-Creates a new D1 database, and provides the binding and UUID that you will put in your Wrangler file.
-
-```txt
-wrangler d1 create <DATABASE_NAME> [OPTIONS]
-```
-
-- `DATABASE_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the new D1 database.
-- `--location` <Type text="string" /> <MetaInfo text="optional" />
-  - Provide an optional [location hint](/d1/configuration/data-location/) for your database leader.
-  - Available options include `weur` (Western Europe), `eeur` (Eastern Europe), `apac` (Asia Pacific), `oc` (Oceania), `wnam` (Western North America), and `enam` (Eastern North America).
+<WranglerCommand command="d1 create" />
 
 <AnchorHeading title="`info`" slug="d1-info" depth={3} />
 
@@ -30,6 +24,8 @@ wrangler d1 info <DATABASE_NAME> [OPTIONS]
   - The name of the D1 database to get information about.
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON rather than a table.
+
+<WranglerCommand command="cert list" />
 
 <AnchorHeading title="`list`" slug="d1-list" depth={3} />
 
