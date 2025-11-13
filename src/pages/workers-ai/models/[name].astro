@@ -291,6 +291,9 @@ const starlightPageProps = {
 	<h2 id="Parameters">Parameters</h2>
 	<p><span class="text-red-500">*</span> indicates a required field</p>
 	<h3 id="Input">Input</h3>
+	{model.schema.input.oneOf && model.schema.input.oneOf.length > 1 && (
+		<p class="text-sm text-gray-600 mb-3">This model accepts multiple input formats. Click on the tabs below to view the parameters for each format.</p>
+	)}
 	<SchemaViewerWithTabs schema={model.schema.input} type="input" />
 
 	<h3 id="Output">Output</h3>
@@ -303,7 +306,12 @@ const starlightPageProps = {
 				</p>
 			</>
 		) : (
-			<SchemaViewerWithTabs schema={model.schema.output} type="output" />
+			<>
+				{model.schema.output.oneOf && model.schema.output.oneOf.length > 1 && (
+					<p class="text-sm text-gray-600 mb-3">This model returns different output formats depending on the request. Click on the tabs below to view the response structure for each format.</p>
+				)}
+				<SchemaViewerWithTabs schema={model.schema.output} type="output" />
+			</>
 		)
 	}
 
