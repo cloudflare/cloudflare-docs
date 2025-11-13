@@ -567,18 +567,7 @@ Use the following commands to manage your store.
 [Secrets Store](/secrets-store/) is in open beta. Currently, you can only have one store per Cloudflare account.
 :::
 
-### `create`
-
-Create a store within Secrets Store.
-
-```txt
-wrangler secrets-store store create <name>
-```
-
-- `name` <Type text="string" /> <MetaInfo text="required" />
-  - A descriptive name for the account-level secret. Cannot contain spaces.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
-  - Execute the command against the remote Secrets Store.
+<WranglerCommand command="secrets-store store create" headingLevel={3}/>
 
 The following is an example of using the `create` command to create a store.
 
@@ -591,18 +580,7 @@ npx wrangler secrets-store store create default --remote
 ✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
 ```
 
-### `delete`
-
-Delete a store within Secrets Store.
-
-```txt
-wrangler secrets-store store delete <STORE_ID>
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
-  - Execute the command against the remote Secrets Store.
+<WranglerCommand command="secrets-store store delete" headingLevel={3}/>
 
 The following is an example of using the `delete` command to delete a store.
 
@@ -615,16 +593,7 @@ npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211 --remot
 ✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
 ```
 
-### `list`
-
-List the stores within an account.
-
-```txt
-wrangler secrets-store store list
-```
-
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
-  - Execute the command against the remote Secrets Store.
+<WranglerCommand command="secrets-store store list" headingLevel={3}/>
 
 The following is an example of using the `list` command to list stores.
 
