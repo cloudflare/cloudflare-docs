@@ -42,6 +42,7 @@ const positionalSet = new Set(definition.positionalArgs);
 	args={positionals ? command.concat(` ${positionals}`) : command}
 />
 
+<!-- CED-181 - Not all commands have specific arguments as part of the payload -->
 {
 	definition.args && (
 		<ul>
