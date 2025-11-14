@@ -43,22 +43,22 @@ With Sandbox, you can execute Python scripts, run Node.js applications, analyze 
     ```typescript
     import { getSandbox } from '@cloudflare/sandbox';
 
-      export { Sandbox } from '@cloudflare/sandbox';
+		export { Sandbox } from '@cloudflare/sandbox';
 
-        export default {
-          async fetch(request: Request, env: Env): Promise<Response> {
-            const sandbox = getSandbox(env.Sandbox, 'user-123');
+		export default {
+			async fetch(request: Request, env: Env): Promise<Response> {
+				const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-            // Execute a command and get the result
-            const result = await sandbox.exec('python --version');
+				// Execute a command and get the result
+				const result = await sandbox.exec('python --version');
 
-            return Response.json({
-              output: result.stdout,
-              exitCode: result.exitCode,
-              success: result.success
-            });
-          }
-        };
+				return Response.json({
+					output: result.stdout,
+					exitCode: result.exitCode,
+					success: result.success
+				});
+			}
+		};
         ```
       </TabItem>
       <TabItem label="Code Interpreter">
@@ -76,7 +76,6 @@ With Sandbox, you can execute Python scripts, run Node.js applications, analyze 
 
             // Execute Python code with automatic result capture
             const result = await sandbox.runCode(`
-
 import pandas as pd
 data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
 df = pd.DataFrame(data)
