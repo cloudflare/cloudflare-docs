@@ -755,5 +755,37 @@
 	{
 		"name": "Web3",
 		"deeplink": "/?to=/:account/:zone/web3"
+	},
+	{
+		"name": "Configurations",
+		"deeplink": "/profile/managed-profile"
+	},
+	{
+		"name": "API Tokens",
+		"deeplink": "/profile/api-tokens"
+	},
+	{
+		"name": "Active sessions",
+		"deeplink": "/profile/sessions"
+	},
+	{
+		"name": "Organizations",
+		"deeplink": "/organizations"
+	},
+	{
+		"name": "Accounts",
+		"deeplink": "/"
+	},
+	{
+		"name": "Websites",
+		"deeplink": "/zones"
+	},
+	{
+		"name": "My Profile",
+		"deeplink": "/profile"
+	},
+	{
+		"name": "Tenants",
+		"deeplink": "/partners/tenant"
 	}
 ]

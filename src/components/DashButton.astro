@@ -2,6 +2,7 @@
 import { z } from "astro:schema";
 import { LinkButton } from "@astrojs/starlight/components";
 import CoreRoutes from "~/content/dash-routes/core.json";
+import CoreManuallyDefinedRoutes from "~/content/dash-routes/core-manually-defined.json";
 import ZeroTrustRoutes from "~/content/dash-routes/zero-trust.json";
 
 const props = z
@@ -14,12 +15,18 @@ const props = z
 
 const { url, zeroTrust, buttonName } = props.parse(Astro.props);
 
-const routes = zeroTrust ? ZeroTrustRoutes : CoreRoutes;
+const allCoreRoutes = CoreRoutes.concat(CoreManuallyDefinedRoutes);
 
-const route = routes.find((route) => route.deeplink === url);
+const routes = zeroTrust ? ZeroTrustRoutes : allCoreRoutes;
+
+let route = routes.find((route) => route.deeplink === url);
 
 if (!route) {
-	throw new Error(`[DashButton] No route found for ${url}`);
+	console.warn(`[DashButton] No route found for ${url}`);
+	route = {
+		name: "Account home",
+		deeplink: "/?to=/:account/home",
+	};
 }
 
 const name = buttonName ?? route.name;
