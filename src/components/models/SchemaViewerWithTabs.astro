@@ -112,18 +112,6 @@ function formatLabel(option: any): string {
 			.join(" ");
 	}
 
-	// Check for async formats early
-	if (option.properties) {
-		// Async batch format (has requests array)
-		if (option.properties.requests) {
-			return "Async Batch";
-		}
-		// Async response format (has request_id for outputs)
-		if (option.properties.request_id && option.title && option.title.toLowerCase().includes("async")) {
-			return "Async Batch";
-		}
-	}
-
 	// For outputs, use contentType if available
 	if (option.contentType) {
 		if (option.contentType === "application/json") {
@@ -133,11 +121,15 @@ function formatLabel(option: any): string {
 		}
 	}
 
-	// For outputs without title/contentType, infer from structure
+	// For inputs/outputs without title/contentType, infer from structure
 	if (option.type === "object" && option.properties) {
+		// Check if it's an audio array format
+		if (option.properties.audio && option.properties.audio.items) {
+			return "JSON";
+		}
 		return "JSON Response";
 	} else if (option.type === "string" && option.format === "binary") {
-		return "Streaming Response";
+		return "Binary";
 	}
 
 	return "Response";
@@ -147,6 +139,11 @@ function formatLabel(option: any): string {
 function generateJSONExample(option: any, modelName?: string, taskName?: string): string {
 	const title = option.title || "";
 	const properties = option.properties || {};
+
+	// Handle binary format - return descriptive text instead of JSON
+	if (option.type === "string" && option.format === "binary") {
+		return "Raw binary audio data sent as request body";
+	}
 
 	// Detect format type from the title and generate appropriate example
 	if (title.toLowerCase().includes("prompt")) {
@@ -206,7 +203,16 @@ function generateJSONExample(option: any, modelName?: string, taskName?: string)
 
 	// Check for Automatic Speech Recognition models by task name
 	if (taskName === "Automatic Speech Recognition") {
-		// Check if this format has an 'audio' array property
+		// Check for nova-3 style (audio object with body and contentType)
+		if (properties.audio && properties.audio.properties && properties.audio.properties.body) {
+			return `{
+  "audio": {
+    "body": "<base64 encoded audio data>",
+    "contentType": "audio/wav"
+  }
+}`;
+		}
+		// Check if this format has an 'audio' array property (whisper-style)
 		if (properties.audio && properties.audio.items) {
 			return `{
   "audio": [0, 1, 2, 3, ...]
@@ -263,7 +269,12 @@ function generateJSONExample(option: any, modelName?: string, taskName?: string)
 						} else {
 							exampleObj[field] = "1000";
 						}
-					} else {
+					}
+					// Use description if available and looks like example text
+					else if (fieldSchema.description && fieldSchema.description.length < 100) {
+						exampleObj[field] = fieldSchema.description;
+					}
+					else {
 						exampleObj[field] = `<${field}>`;
 					}
 				}
@@ -447,10 +458,80 @@ data: [DONE]`;
 		}
 
 		// Check for Automatic Speech Recognition output
+		// Nova-3 style (has results.channels structure)
+		if (option.properties && option.properties.results && option.properties.results.properties && option.properties.results.properties.channels) {
+			return `{
+  "results": {
+    "channels": [
+      {
+        "alternatives": [
+          {
+            "transcript": "The transcribed text from the audio",
+            "confidence": 0.98,
+            "words": [
+              {
+                "word": "The",
+                "start": 0.0,
+                "end": 0.2,
+                "confidence": 0.99
+              },
+              {
+                "word": "transcribed",
+                "start": 0.2,
+                "end": 0.6,
+                "confidence": 0.97
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "result": "success",
+      "short": "Audio transcription completed"
+    }
+  }
+}`;
+		}
+
+		// Whisper-large-v3-turbo style (has text, segments with nested words)
+		if (option.properties && option.properties.text && option.properties.segments) {
+			return `{
+  "text": "The transcribed text from the audio",
+  "word_count": 6,
+  "transcription_info": {
+    "language": "en",
+    "language_probability": 0.99,
+    "duration": 2.5,
+    "duration_after_vad": 2.3
+  },
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 2.5,
+      "text": "The transcribed text from the audio",
+      "words": [
+        {
+          "word": "The",
+          "start": 0.0,
+          "end": 0.2
+        },
+        {
+          "word": "transcribed",
+          "start": 0.2,
+          "end": 0.6
+        }
+      ]
+    }
+  ],
+  "vtt": "WEBVTT\\n\\n00:00:00.000 --> 00:00:02.500\\nThe transcribed text from the audio"
+}`;
+		}
+
 		if (option.properties && option.properties.words && option.properties.words.items) {
 			const wordProps = option.properties.words.items.properties || {};
 
-			// Whisper-style output (has text, words with start/end, vtt)
+			// Whisper-style output (has text, words at root with start/end, vtt)
 			if (option.properties.text && wordProps.start && wordProps.end) {
 				return `{
   "text": "The transcribed text from the audio",
@@ -510,25 +591,10 @@ data: [DONE]`;
 }`;
 		}
 
-		return `{
-  "result": {
-    "response": "Generated text response from the model",
-    "tool_calls": [],
-    "usage": {
-      "prompt_tokens": 10,
-      "completion_tokens": 50,
-      "total_tokens": 60
-    }
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}`;
+		return `{}`;
 	}
 
-	return `{
-  // Output response
-}`;
+	return `{}`;
 }
 
 // Check if the schema has oneOf at the root level
@@ -577,13 +643,15 @@ if (hasOneOf) {
 				if (title.includes("async") || label.toLowerCase().includes("async")) return 99;
 				return 5;
 			} else {
-				// Input priority: Embedding, Query and Contexts, Messages, Prompt, Responses, Async Batch
-				if (label.toLowerCase().includes("embedding")) return 1;
-				if (label.toLowerCase().includes("query") || label.toLowerCase().includes("context")) return 2;
-				if (title.includes("messages")) return 3;
-				if (title.includes("prompt")) return 4;
-				if (title.includes("responses")) return 5;
-				if (title.includes("async") || title.includes("batch")) return 6;
+				// Input priority: JSON, Embedding, Query and Contexts, Messages, Prompt, Responses, Binary, Async Batch
+				if (label.toLowerCase() === "json") return 1;
+				if (label.toLowerCase().includes("embedding")) return 2;
+				if (label.toLowerCase().includes("query") || label.toLowerCase().includes("context")) return 3;
+				if (title.includes("messages")) return 4;
+				if (title.includes("prompt")) return 5;
+				if (title.includes("responses")) return 6;
+				if (label.toLowerCase() === "binary") return 8;
+				if (title.includes("async") || title.includes("batch")) return 9;
 				return 7;
 			}
 		};
