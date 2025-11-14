@@ -205,6 +205,64 @@ export class MyWorkflow extends WorkflowEntrypoint {
 ```
 </TypeScriptExample>
 
+### Avoid doing side effects outside of a `step.do`
+
+It is not recommended to write code with any side effects outside of steps, unless you would like it to be repeated, because the Workflow engine may restart while an instance is running. If the engine restarts, the step logic will be preserved, but logic outside of the steps may be duplicated.
+
+For example, a `console.log()` outside of workflow steps may cause the logs to print twice when the engine restarts.
+
+However, logic involving non-serializable resources, like a database connection, should be executed outside of steps. Operations ouside of a `step.do` might be repeated more than once, due to the nature of the Workflows' instance lifecycle.
+
+<TypeScriptExample filename="index.ts">
+```ts
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// 🔴 Bad: creating instances outside of steps
+		// This might get called more than once creating more instances than expected
+		const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
+
+		// 🔴 Bad: using non-deterministic functions outside of steps
+		// this will produce different results if the instance has to restart, different runs of the same instance
+	  // might go through different paths
+		const myRandom = Math.random();
+
+		if(myRandom > 0) {
+			// do some stuff
+		}
+
+		// ⚠️ Warning: This log may happen many times
+		console.log("This might be logged more than once");
+
+		await step.do("do some stuff and have a log for when it runs", async () => {
+			// do some stuff
+
+			// this log will only appear once
+			console.log("successfully did stuff");
+		})
+
+
+		// ✅ Good: wrap non-deterministic function in a step
+		// after running successfully will not run again
+		const myRandom = await step.do("create a random number", async () => {
+	    return Math.random();
+		})
+
+		// ✅ Good: calls that have no side effects can be done outside of steps
+		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
+
+		// ✅ Good: run funtions with side effects inside of a step
+		// after running successfully will not run again
+		const myNewInstance = await step.do("good step that returns state", async () => {
+			const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
+
+	    return myNewInstance;
+		})
+	}
+}
+```
+</TypeScriptExample>
+
+
 ### Do not mutate your incoming events
 
 The `event` passed to your Workflow's `run` method is immutable: changes you make to the event are not persisted across steps and/or Workflow restarts.

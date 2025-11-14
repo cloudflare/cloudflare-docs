@@ -20,7 +20,7 @@ const definition = getCommand(command);
 description ??= definition.metadata.description;
 
 if (!definition.args) {
-	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
+	console.warn(`[WranglerCommand] "${command}" has no arguments`);
 }
 
 const { globalFlags } = commands;
@@ -28,6 +28,8 @@ const { globalFlags } = commands;
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)
 	.join(" ");
+
+const positionalSet = new Set(definition.positionalArgs);
 ---
 
 <AnchorHeading depth={headingLevel} title={`\`${command}\``} />
@@ -40,15 +42,23 @@ const positionals = definition.positionalArgs
 	args={positionals ? command.concat(` ${positionals}`) : command}
 />
 
-<ul>
-	{
-		Object.entries(definition.args)
-			.filter(([_, value]) => !value.hidden)
-			.map(([key, value]) => {
-				return <WranglerArg key={key} definition={value} />;
-			})
-	}
-</ul>
+<!-- CED-181 - Not all commands have specific arguments as part of the payload -->
+{
+	definition.args && (
+		<ul>
+			{Object.entries(definition.args)
+				.filter(([_, value]) => !value.hidden)
+				.map(([key, value]) => {
+					return (
+						<WranglerArg
+							key={key}
+							definition={{ ...value, positional: positionalSet.has(key) }}
+						/>
+					);
+				})}
+		</ul>
+	)
+}
 
 <Details header="Global flags">
 	<ul>

@@ -304,3 +304,11 @@ The response returns an array that includes up to 50 sent requests, which includ
 ```
 
 </TabItem> </Tabs>
+
+## Best practices
+
+Due to the nature of Cloudflare network, your traffic may traverse various physical machines within a single Cloudflare location.
+
+- Multiple PCAP Files: A single full PCAP capture may produce many small PCAP files, as a capture is taken for each physical server your traffic traverses in a Cloudflare location. 
+	- You can get more granular by applying packet-specific filters like protocol, port (and more) to target the traffic you need.
+- Merging for Analysis: To view the traffic as a single flow, you can use a tool like mergecap to combine the individual files into one larger file for analysis in Wireshark. Refer to the [Wireshark mergecap documentation](https://www.wireshark.org/docs/wsug_html_chunked/AppToolsmergecap.html) for instructions.
