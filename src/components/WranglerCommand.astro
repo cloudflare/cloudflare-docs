@@ -19,6 +19,19 @@ const definition = getCommand(command);
 
 description ??= definition.metadata.description;
 
+// some commands are present but marked as "hidden" and shouldn't be shown
+let hidden = false;
+
+if (definition.metadata.hidden) {
+	hidden = true;
+}
+
+if (hidden) {
+	throw new Error(
+		`[WranglerCommand] "${command}" is marked as hidden. If you want to publish, fix upstream in workers-sdk repo.`
+	);
+}
+
 if (!definition.args) {
 	console.warn(`[WranglerCommand] "${command}" has no arguments`);
 }
