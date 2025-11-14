@@ -1628,6 +1628,7 @@
 /turnstile/troubleshooting/troubleshooting-faqs/ /turnstile/frequently-asked-questions/#troubleshooting 301
 /turnstile/tutorials/protecting-your-payment-form-from-attackers-bots-using-turnstile/ /developer-spotlight/ 301
 /turnstile/frequently-asked-questions/ /turnstile/ 301
+/turnstile/tutorials/implicit-vs-explicit-rendering/ /turnstile/get-started/client-side-rendering/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
