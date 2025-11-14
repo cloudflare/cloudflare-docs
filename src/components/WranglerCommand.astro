@@ -6,6 +6,7 @@ import WranglerArg from "./WranglerArg.astro";
 import Details from "./Details.astro";
 import { marked } from "marked";
 import { commands, getCommand } from "~/util/wrangler";
+import { parse } from "node-html-parser";
 
 const props = z.object({
 	command: z.string(),
@@ -30,6 +31,27 @@ const positionals = definition.positionalArgs
 	.join(" ");
 
 const positionalSet = new Set(definition.positionalArgs);
+
+// Extract ExtraFlagDetails from slot
+const slotContent = await Astro.slots.render("default");
+const extraFlagDetailsMap = new Map<string, { content: string; mode: "append" | "replace" }>();
+
+if (slotContent) {
+	const html = parse(slotContent);
+	const extraFlagElements = html.querySelectorAll("div[data-extra-flag-key]");
+
+	for (const element of extraFlagElements) {
+		const key = element.getAttribute("data-extra-flag-key");
+		const mode = element.getAttribute("data-extra-flag-mode") || "append";
+
+		if (key) {
+			extraFlagDetailsMap.set(key, {
+				content: element.innerHTML.trim(),
+				mode: mode as "append" | "replace"
+			});
+		}
+	}
+}
 ---
 
 <AnchorHeading depth={headingLevel} title={`\`${command}\``} />
@@ -53,6 +75,7 @@ const positionalSet = new Set(definition.positionalArgs);
 						<WranglerArg
 							key={key}
 							definition={{ ...value, positional: positionalSet.has(key) }}
+							extraDetails={extraFlagDetailsMap.get(key)}
 						/>
 					);
 				})}
