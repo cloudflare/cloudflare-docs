@@ -6,7 +6,6 @@ import {
 	type SchemaTreeRefDereferenceFn,
 } from "@stoplight/json-schema-tree";
 import { type Dictionary } from "@stoplight/types";
-import { resolveInlineRef } from "@stoplight/json";
 import SchemaRow from "~/components/models/SchemaRow.astro";
 import { Tabs, TabItem, Code } from "~/components";
 
@@ -30,7 +29,7 @@ type ReferenceInfo = {
 	pointer: string | null;
 };
 
-type ReferenceResolver = (
+type _ReferenceResolver = (
 	ref: ReferenceInfo,
 	propertyPath: string[] | null,
 	parent: SchemaNode | null,
