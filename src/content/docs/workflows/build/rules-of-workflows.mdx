@@ -34,29 +34,27 @@ export class MyWorkflow extends WorkflowEntrypoint {
 					`https://payment.processor/subscriptions/${customer_id}`,
 				).then((res) => res.json());
 
-    			// return early if the customer was already charged, this can happen if the destination service dies
-    			// in the middle of the request but still commits it, or if the Workflows Engine restarts.
-    			if (subscription.charged) {
-    				return;
-    			}
+				// return early if the customer was already charged, this can happen if the destination service dies
+				// in the middle of the request but still commits it, or if the Workflows Engine restarts.
+				if (subscription.charged) {
+					return;
+				}
 
-    			// non-idempotent call, this operation can fail and retry but still commit in the payment
-    			// processor - which means that, on retry, it would mischarge the customer again if the above checks
-    			// were not in place.
-    			return await fetch(
-    				`https://payment.processor/subscriptions/${customer_id}`,
-    				{
-    					method: "POST",
-    					body: JSON.stringify({ amount: 10.0 }),
-    				},
-    			);
-    		},
-    	);
-    }
-
+				// non-idempotent call, this operation can fail and retry but still commit in the payment
+				// processor - which means that, on retry, it would mischarge the customer again if the above checks
+				// were not in place.
+				return await fetch(
+					`https://payment.processor/subscriptions/${customer_id}`,
+					{
+						method: "POST",
+						body: JSON.stringify({ amount: 10.0 }),
+					},
+				);
+			},
+		);
+	}
 }
-
-````
+```
 </TypeScriptExample>
 
 :::note
@@ -90,8 +88,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		});
 	}
 }
-````
-
+```
 </TypeScriptExample>
 
 Otherwise, your entire Workflow might not be as durable as you might think, and you may encounter some undefined behaviour. You can avoid them by following the rules below:
@@ -100,7 +97,6 @@ Otherwise, your entire Workflow might not be as durable as you might think, and 
 - 🔴 Do not call separate services in the same step (unless you need it to prove idempotency).
 - 🔴 Do not make too many service calls in the same step (unless you need it to prove idempotency).
 - 🔴 Do not do too much CPU-intensive work inside a single step - sometimes the engine may have to restart, and it will start over from the beginning of that step.
-- 🔴 Avoid nested steps, particulary `step.sleep()` or `step.waitForEvent()` within a `step.do()`.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -138,35 +134,33 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// `imageList` will be empty again, even though the following two steps have already ran.
 		const imageList: string[] = [];
 
-    	await step.do("get first cutest cat from KV", async () => {
-    		const httpCat = await env.KV.get("cutest-http-cat-1");
+		await step.do("get first cutest cat from KV", async () => {
+			const httpCat = await env.KV.get("cutest-http-cat-1");
 
-    		imageList.append(httpCat);
-    	});
+			imageList.append(httpCat);
+		});
 
-    	await step.do("get second cutest cat from KV", async () => {
-    		const httpCat = await env.KV.get("cutest-http-cat-2");
+		await step.do("get second cutest cat from KV", async () => {
+			const httpCat = await env.KV.get("cutest-http-cat-2");
 
-    		imageList.append(httpCat);
-    	});
+			imageList.append(httpCat);
+		});
 
-    	// A long sleep can (and probably will) hibernate the engine which means that the first engine lifetime ends here
-    	await step.sleep("💤💤💤💤", "3 hours");
+		// A long sleep can (and probably will) hibernate the engine which means that the first engine lifetime ends here
+		await step.sleep("💤💤💤💤", "3 hours");
 
-    	// When this runs, it will be on the second engine lifetime - which means `imageList` will be empty.
-    	await step.do(
-    		"choose a random cat from the list and download it",
-    		async () => {
-    			const randomCat = imageList.at(getRandomInt(0, imageList.length));
-    			// this will fail since `randomCat` is undefined because `imageList` is empty
-    			return await fetch(`https://http.cat/${randomCat}`);
-    		},
-    	);
-    }
-
+		// When this runs, it will be on the second engine lifetime - which means `imageList` will be empty.
+		await step.do(
+			"choose a random cat from the list and download it",
+			async () => {
+				const randomCat = imageList.at(getRandomInt(0, imageList.length));
+				// this will fail since `randomCat` is undefined because `imageList` is empty
+				return await fetch(`https://http.cat/${randomCat}`);
+			},
+		);
+	}
 }
-
-````
+```
 </TypeScriptExample>
 
 Instead, you should build top-level state exclusively comprised of `step.do` returns:
@@ -208,8 +202,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		);
 	}
 }
-````
-
+```
 </TypeScriptExample>
 
 ### Avoid doing side effects outside of a `step.do`
@@ -228,47 +221,45 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// This might get called more than once creating more instances than expected
 		const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
 
-    	// 🔴 Bad: using non-deterministic functions outside of steps
-    	// this will produce different results if the instance has to restart, different runs of the same instance
-      // might go through different paths
-    	const myRandom = Math.random();
+		// 🔴 Bad: using non-deterministic functions outside of steps
+		// this will produce different results if the instance has to restart, different runs of the same instance
+	  // might go through different paths
+		const myRandom = Math.random();
 
-    	if(myRandom > 0) {
-    		// do some stuff
-    	}
+		if(myRandom > 0) {
+			// do some stuff
+		}
 
-    	// ⚠️ Warning: This log may happen many times
-    	console.log("This might be logged more than once");
+		// ⚠️ Warning: This log may happen many times
+		console.log("This might be logged more than once");
 
-    	await step.do("do some stuff and have a log for when it runs", async () => {
-    		// do some stuff
+		await step.do("do some stuff and have a log for when it runs", async () => {
+			// do some stuff
 
-    		// this log will only appear once
-    		console.log("successfully did stuff");
-    	})
+			// this log will only appear once
+			console.log("successfully did stuff");
+		})
 
 
-    	// ✅ Good: wrap non-deterministic function in a step
-    	// after running successfully will not run again
-    	const myRandom = await step.do("create a random number", async () => {
-        return Math.random();
-    	})
+		// ✅ Good: wrap non-deterministic function in a step
+		// after running successfully will not run again
+		const myRandom = await step.do("create a random number", async () => {
+	    return Math.random();
+		})
 
-    	// ✅ Good: calls that have no side effects can be done outside of steps
-    	const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
+		// ✅ Good: calls that have no side effects can be done outside of steps
+		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
 
-    	// ✅ Good: run funtions with side effects inside of a step
-    	// after running successfully will not run again
-    	const myNewInstance = await step.do("good step that returns state", async () => {
-    		const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
+		// ✅ Good: run funtions with side effects inside of a step
+		// after running successfully will not run again
+		const myNewInstance = await step.do("good step that returns state", async () => {
+			const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
 
-        return myNewInstance;
-    	})
-    }
-
+	    return myNewInstance;
+		})
+	}
 }
-
-````
+```
 </TypeScriptExample>
 
 
@@ -305,8 +296,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		})
 	}
 }
-````
-
+```
 </TypeScriptExample>
 
 ### Name steps deterministically
@@ -325,32 +315,30 @@ export class MyWorkflow extends WorkflowEntrypoint {
 				event.payload = userData
 		})
 
-    	// ✅ Good: give steps a deterministic name.
-    	// Return dynamic values in your state, or log them instead.
-    	let state = await step.do("fetch user data from KV", async () => {
-    	    let userData = await env.KV.get(event.payload.user)
-    			console.log(`fetched at ${Date.now}`)
-    			return userData
-    	})
+		// ✅ Good: give steps a deterministic name.
+		// Return dynamic values in your state, or log them instead.
+		let state = await step.do("fetch user data from KV", async () => {
+		    let userData = await env.KV.get(event.payload.user)
+				console.log(`fetched at ${Date.now}`)
+				return userData
+		})
 
-    	// ✅ Good: steps that are dynamically named are constructed in a deterministic way.
-    	// In this case, `catList` is a step output, which is stable, and `catList` is
-    	// traversed in a deterministic fashion (no shuffles or random accesses) so,
-    	// it's fine to dynamically name steps (e.g: create a step per list entry).
-    	let catList = await step.do("get cat list from KV", async () => {
-    		return await env.KV.get("cat-list")
-    	})
+		// ✅ Good: steps that are dynamically named are constructed in a deterministic way.
+		// In this case, `catList` is a step output, which is stable, and `catList` is
+		// traversed in a deterministic fashion (no shuffles or random accesses) so,
+		// it's fine to dynamically name steps (e.g: create a step per list entry).
+		let catList = await step.do("get cat list from KV", async () => {
+			return await env.KV.get("cat-list")
+		})
 
-    	for(const cat of catList) {
-    		await step.do(`get cat: ${cat}`, async () => {
-    			return await env.KV.get(cat)
-    		})
-    	}
-    }
-
+		for(const cat of catList) {
+			await step.do(`get cat: ${cat}`, async () => {
+				return await env.KV.get(cat)
+			})
+		}
+	}
 }
-
-````
+```
 </TypeScriptExample>
 
 ### Take care with `Promise.race()` and `Promise.any()`
@@ -397,8 +385,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		);
 	}
 }
-````
-
+```
 </TypeScriptExample>
 
 To ensure consistency, we suggest to surround the `Promise.race()` or `Promise.any()` within a `step.do()`, as this will ensure caching consistency across multiple passages.
@@ -435,20 +422,18 @@ export class MyWorkflow extends WorkflowEntrypoint {
 			}
 		);
 
-    	await step.sleep("Sleep step", "2 hours");
+		await step.sleep("Sleep step", "2 hours");
 
-    	return await step.do(
-    		'Another step',
-    		async () => {
-    			// This step will return `second` because the `Promise.race` was surround by the `step.do` method.
-    			return race_return;
-    		},
-    	);
-    }
-
+		return await step.do(
+			'Another step',
+			async () => {
+				// This step will return `second` because the `Promise.race` was surround by the `step.do` method.
+				return race_return;
+			},
+		);
+	}
 }
-
-````
+```
 </TypeScriptExample>
 
 ### Instance IDs are unique
@@ -489,8 +474,7 @@ export default {
     });
   },
 };
-````
-
+```
 </TypeScriptExample>
 
 ### `await` your steps
@@ -512,18 +496,16 @@ export class MyWorkflow extends WorkflowEntrypoint {
 				return issues
 		})
 
-    	// ✅ Good: The step is correctly await'ed.
-      const issues = await step.do(`fetch issues from GitHub`, async () => {
-    	    let issues = await getIssues(event.payload.repoName)
-    			return issues
-    	})
+		// ✅ Good: The step is correctly await'ed.
+	  const issues = await step.do(`fetch issues from GitHub`, async () => {
+		    let issues = await getIssues(event.payload.repoName)
+				return issues
+		})
 
-    	// Rest of your Workflow goes here!
-    }
-
+		// Rest of your Workflow goes here!
+	}
 }
-
-````
+```
 </TypeScriptExample>
 
 ### Batch multiple Workflow invocations
@@ -551,6 +533,6 @@ export default {
     return Response.json({ instances })
   },
 };
-````
+```
 
 </TypeScriptExample>
