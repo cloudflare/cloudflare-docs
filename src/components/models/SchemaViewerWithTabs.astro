@@ -47,6 +47,18 @@ const defaultResolver: SchemaTreeRefDereferenceFn =
 
 // Helper function to create a human-readable label from title or contentType
 function formatLabel(option: any): string {
+	// Check for async formats first (before any title processing)
+	if (option.properties) {
+		// Async batch format (has requests array)
+		if (option.properties.requests) {
+			return "Async Batch";
+		}
+		// Async response format (has request_id for outputs)
+		if (option.properties.request_id && option.title && option.title.toLowerCase().includes("async")) {
+			return "Async Batch";
+		}
+	}
+
 	// Try to use the title first
 	if (option.title) {
 		// Special case for GPT_OSS models - always show "Responses"
@@ -60,6 +72,14 @@ function formatLabel(option: any): string {
 		if (label.includes(" ")) {
 			// Remove "Response" suffix if present (e.g., "Chat Completion Response" -> "Chat Completion")
 			label = label.replace(/\s+Response$/i, "");
+
+			// Fix common typos
+			label = label.replace(/\bOuput\b/g, "Output");
+
+			// Remove model-specific prefix (e.g., "BGE M3 Input Query and Contexts" -> "Query and Contexts")
+			// Match patterns like "Model Name Input/Output ..." and extract the rest
+			label = label.replace(/^[A-Z0-9\s]+\s+(Input|Output|Ouput)\s+/i, "");
+
 			return label;
 		}
 
@@ -90,6 +110,18 @@ function formatLabel(option: any): string {
 		return relevantParts
 			.map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
 			.join(" ");
+	}
+
+	// Check for async formats early
+	if (option.properties) {
+		// Async batch format (has requests array)
+		if (option.properties.requests) {
+			return "Async Batch";
+		}
+		// Async response format (has request_id for outputs)
+		if (option.properties.request_id && option.title && option.title.toLowerCase().includes("async")) {
+			return "Async Batch";
+		}
 	}
 
 	// For outputs, use contentType if available
@@ -128,7 +160,21 @@ function generateJSONExample(option: any, modelName?: string, taskName?: string)
     { "role": "user", "content": "Tell me about Cloudflare Workers" }
   ]
 }`;
-	} else if (title.toLowerCase().includes("async") || title.toLowerCase().includes("batch")) {
+	} else if (title.toLowerCase().includes("async") || title.toLowerCase().includes("batch") || properties.requests) {
+		// Check if this is an embeddings async batch (has requests with query/contexts or text)
+		if (taskName === "Text Embeddings") {
+			return `{
+  "requests": [
+    {
+      "text": "First text to embed"
+    },
+    {
+      "text": "Second text to embed"
+    }
+  ]
+}`;
+		}
+		// Default LLM async batch format
 		return `{
   "requests": [
     { "prompt": "First request" },
@@ -164,6 +210,30 @@ function generateJSONExample(option: any, modelName?: string, taskName?: string)
 		if (properties.audio && properties.audio.items) {
 			return `{
   "audio": [0, 1, 2, 3, ...]
+}`;
+		}
+	}
+
+	// Check for Text Embeddings models by task name
+	if (taskName === "Text Embeddings") {
+		// Check for Query and Contexts format
+		if (properties.query && properties.contexts) {
+			return `{
+  "query": "What is Cloudflare Workers?",
+  "contexts": [
+    {
+      "text": "Cloudflare Workers is a serverless platform for building applications."
+    },
+    {
+      "text": "Workers runs on Cloudflare's global network across 300+ cities."
+    }
+  ]
+}`;
+		}
+		// Standard embedding format
+		if (properties.text) {
+			return `{
+  "text": "Input text to embed"
 }`;
 		}
 	}
@@ -278,6 +348,47 @@ data: {"response":"","usage":{"prompt_tokens":10,"completion_tokens":50,"total_t
 data: [DONE]`;
 	}
 
+	// Check for Text Embeddings output formats (check before generic JSON)
+	if (option.properties) {
+		// BGE M3 Query output (has response array with id and score)
+		if (option.properties.response && title.toLowerCase().includes("query")) {
+			return `{
+  "response": [
+    {
+      "id": 0,
+      "score": 0.95
+    },
+    {
+      "id": 1,
+      "score": 0.87
+    }
+  ]
+}`;
+		}
+
+		// BGE M3 Embedding for Contexts output (has response with embeddings and shape)
+		if (option.properties.response && option.properties.shape && title.toLowerCase().includes("context")) {
+			return `{
+  "response": [
+    [0.123, -0.456, 0.789, ...],
+    [0.234, -0.567, 0.890, ...]
+  ],
+  "shape": [2, 1024],
+  "pooling": "mean"
+}`;
+		}
+
+		// Standard embedding output (has data array and shape)
+		if (option.properties.data && option.properties.shape) {
+			return `{
+  "data": [
+    [0.123, -0.456, 0.789, ...]
+  ],
+  "shape": [1, 768]
+}`;
+		}
+	}
+
 	// JSON response format - use actual Workers AI response structure
 	if (contentType === "application/json" || option.type === "object") {
 		// Check if this is a melotts-style output with base64 audio
@@ -385,6 +496,20 @@ data: [DONE]`;
 			}
 		}
 
+		// Check for Async response format
+		if (title.toLowerCase().includes("async") && option.properties && option.properties.request_id) {
+			const modelField = modelName ? `\n    "model": "${modelName}",` : '';
+			return `{
+  "result": {
+    "status": "queued",
+    "request_id": "768f15b7-4fd6-4498-906e-ad94ffc7f8d2",${modelField}
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}`;
+		}
+
 		return `{
   "result": {
     "response": "Generated text response from the model",
@@ -443,25 +568,27 @@ if (hasOneOf) {
 		const bTitle = (b.title || "").toLowerCase();
 
 		// Define priority order
-		const getPriority = (title: string) => {
+		const getPriority = (title: string, label: string) => {
 			if (type === "output") {
-				// Output priority: Chat Completion, Text Completion, Streaming, Async
+				// Output priority: Chat Completion, Text Completion, Streaming, others, then Async last
 				if (title.includes("chat completion")) return 1;
 				if (title.includes("text completion")) return 2;
 				if (title.includes("stream")) return 3;
-				if (title.includes("async") || title.includes("batch")) return 4;
+				if (title.includes("async") || label.toLowerCase().includes("async")) return 99;
 				return 5;
 			} else {
-				// Input priority: Messages, Prompt, Async Batch, Responses
-				if (title.includes("messages")) return 1;
-				if (title.includes("prompt")) return 2;
-				if (title.includes("async") || title.includes("batch")) return 4;
-				if (title.includes("responses")) return 3;
-				return 5;
+				// Input priority: Embedding, Query and Contexts, Messages, Prompt, Responses, Async Batch
+				if (label.toLowerCase().includes("embedding")) return 1;
+				if (label.toLowerCase().includes("query") || label.toLowerCase().includes("context")) return 2;
+				if (title.includes("messages")) return 3;
+				if (title.includes("prompt")) return 4;
+				if (title.includes("responses")) return 5;
+				if (title.includes("async") || title.includes("batch")) return 6;
+				return 7;
 			}
 		};
 
-		return getPriority(aTitle) - getPriority(bTitle);
+		return getPriority(aTitle, a.label) - getPriority(bTitle, b.label);
 	});
 } else if (isGptOssResponses) {
 	// Treat gpt-oss Responses schema as a single-tab format
