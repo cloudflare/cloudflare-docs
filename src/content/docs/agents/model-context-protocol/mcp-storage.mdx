@@ -1,0 +1,179 @@
+---
+title: MCP storage architecture
+pcx_content_type: concept
+tags:
+  - MCP
+sidebar:
+  order: 9
+---
+
+import { TypeScriptExample } from "~/components";
+
+The MCP client manager uses a storage adapter interface to persist server configurations and OAuth credentials. This architecture allows for flexible storage implementations while maintaining security best practices.
+
+## Storage adapter interface
+
+The `MCPStorageAdapter` interface defines how MCP server configurations are persisted:
+
+<TypeScriptExample>
+
+```ts
+interface MCPStorageAdapter {
+  // Create storage schema
+  create(): void | Promise<void>;
+
+  // Destroy storage schema
+  destroy(): void | Promise<void>;
+
+  // Save or update server configuration
+  saveServer(server: MCPServerRow): void | Promise<void>;
+
+  // Remove server from storage
+  removeServer(serverId: string): void | Promise<void>;
+
+  // List all servers
+  listServers(): MCPServerRow[] | Promise<MCPServerRow[]>;
+
+  // Get server by callback URL (for OAuth)
+  getServerByCallbackUrl(callbackUrl: string): MCPServerRow | null | Promise<MCPServerRow | null>;
+
+  // Clear OAuth credentials after successful auth
+  clearOAuthCredentials(serverId: string): void | Promise<void>;
+}
+```
+
+</TypeScriptExample>
+
+### Server configuration structure
+
+Each MCP server configuration includes:
+
+```ts
+type MCPServerRow = {
+  id: string;                      // Unique server identifier
+  name: string;                    // Display name
+  server_url: string;              // MCP server endpoint
+  client_id: string | null;        // OAuth client ID (if applicable)
+  auth_url: string | null;         // OAuth authorization URL (cleared after auth)
+  callback_url: string;            // OAuth callback endpoint
+  server_options: string | null;   // JSON-stringified connection options
+};
+```
+
+## Default SQL storage
+
+Agents use the `AgentMCPStorageAdapter` by default, which stores MCP configurations in the Agent's SQL database:
+
+- **Table**: `cf_agents_mcp_servers`
+- **Persistence**: Configurations survive Agent hibernation
+- **Security**: OAuth credentials automatically cleared after authentication
+
+The storage adapter is automatically initialized when you create an Agent:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+export class MyAgent extends Agent<Env, never> {
+  // Storage adapter is automatically configured
+  // No setup required for default SQL storage
+}
+```
+
+</TypeScriptExample>
+
+## Security considerations
+
+### Automatic credential cleanup
+
+After successful OAuth authentication, the storage adapter automatically clears sensitive credentials:
+
+- **`callback_url`**: Cleared to prevent malicious second callbacks
+- **`auth_url`**: Cleared to prevent re-authentication loops
+
+This ensures:
+- OAuth tokens cannot be replayed
+- Completed authentications cannot be hijacked
+- Storage contains only necessary persistent data
+
+### Callback URL validation
+
+The MCP client manager validates OAuth callbacks by:
+
+1. Checking callback URLs against the database
+2. Matching the exact callback URL prefix
+3. Rejecting callbacks after credentials are cleared
+
+This prevents unauthorized callback requests from being processed.
+
+## Connection restoration
+
+When an Agent wakes from hibernation, the MCP client manager automatically:
+
+1. Reads server configurations from storage
+2. Recreates OAuth-protected connections in `authenticating` state
+3. Reconnects to non-OAuth servers
+4. Preserves connection state across Agent lifecycles
+
+You don't need to manually restore connections - the Agent handles this automatically.
+
+## Advanced: Custom storage adapters
+
+For advanced use cases, you can implement a custom storage adapter. This is typically only needed for:
+
+- Non-SQL storage backends
+- Custom encryption requirements
+- Multi-tenant isolation patterns
+- External configuration management
+
+:::note
+
+Most users should use the default SQL storage adapter. Custom storage adapters are an advanced feature.
+
+:::
+
+To implement a custom adapter:
+
+<TypeScriptExample>
+
+```ts
+import {
+  Agent,
+  type MCPStorageAdapter,
+  type MCPServerRow
+} from "agents";
+
+class CustomStorageAdapter implements MCPStorageAdapter {
+  async create(): Promise<void> {
+    // Initialize your storage
+  }
+
+  async saveServer(server: MCPServerRow): Promise<void> {
+    // Persist server configuration
+  }
+
+  async listServers(): Promise<MCPServerRow[]> {
+    // Retrieve all servers
+  }
+
+  // Implement remaining methods...
+}
+
+export class MyAgent extends Agent<Env, never> {
+  constructor(ctx: AgentContext, env: Env) {
+    super(ctx, env);
+
+    // Custom storage adapter must be configured in constructor
+    // This is an advanced pattern - most users should use default storage
+  }
+}
+```
+
+</TypeScriptExample>
+
+## Related
+
+- [McpClient — API reference](/agents/model-context-protocol/mcp-client-api/) — MCP client methods
+- [Handle OAuth with MCP servers](/agents/guides/oauth-mcp-client/) — OAuth integration guide
+- [Store and sync state](/agents/api-reference/store-and-sync-state/) — Agent SQL storage

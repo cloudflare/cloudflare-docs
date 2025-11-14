@@ -20,7 +20,13 @@ When your Agent connects to an OAuth-protected MCP server, here's what happens:
 3. **Your application presents** the `authUrl` to your user
 4. **Your user authenticates** on the provider's site (Slack, etc.)
 5. **The provider redirects** back to your Agent's callback URL with an authorization code
-6. **Your Agent completes** the connection automatically
+6. **Your Agent completes** the connection automatically and clears OAuth credentials for security
+
+:::note[Security]
+
+After successful OAuth completion, the Agent automatically clears the `auth_url` and `callback_url` from storage. This security measure prevents replay attacks and ensures completed authentications cannot be hijacked by malicious actors.
+
+:::
 
 ## Connect and initiate OAuth
 

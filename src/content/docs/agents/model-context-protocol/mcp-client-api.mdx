@@ -44,7 +44,7 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and-sync-state), and when an Agent connects to an MCP server, all tools from that server become available automatically.
+Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and-sync-state), and when an Agent connects to an MCP server, all tools from that server become available automatically. The Agent automatically restores MCP connections after hibernation without requiring manual reconnection.
 
 ## Agent MCP Client Methods
 
@@ -115,10 +115,17 @@ export class MyAgent extends Agent<Env, never> {
 
 If the MCP server requires OAuth authentication, `authUrl` will be returned for user authentication. Connections persist across requests and the Agent will automatically reconnect if the connection is lost.
 
+:::note[Security]
+
+After successful OAuth authentication, the Agent automatically clears sensitive OAuth credentials (`auth_url` and `callback_url`) from storage. This prevents replay attacks and ensures completed authentications cannot be hijacked. Learn more in [MCP storage architecture](/agents/model-context-protocol/mcp-storage/).
+
+:::
+
 **Related:**
 
 - [OAuth handling guide](/agents/guides/oauth-mcp-client)
 - [Transport options](/agents/model-context-protocol/transport)
+- [MCP storage architecture](/agents/model-context-protocol/mcp-storage/)
 - [removeMcpServer()](#removemcpserver)
 
 ### `removeMcpServer()`
