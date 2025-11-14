@@ -4,3 +4,51 @@ title: Best practices for writing PAC files
 sidebar:
   order: 3
 ---
+
+A PAC file is a text file that specifies which traffic should redirect to the proxy server.
+
+Below is the default PAC file. You can [customize the file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access, such as on an internal web server or on [Cloudflare Workers](/workers/).
+
+```js
+function FindProxyForURL(url, host) {
+	// No proxy for private (RFC 1918) IP addresses (intranet sites)
+	if (
+		isInNet(dnsResolve(host), "10.0.0.0", "255.0.0.0") ||
+		isInNet(dnsResolve(host), "172.16.0.0", "255.240.0.0") ||
+		isInNet(dnsResolve(host), "192.168.0.0", "255.255.0.0")
+	) {
+		return "DIRECT";
+	}
+
+	// No proxy for localhost
+	if (isInNet(dnsResolve(host), "127.0.0.0", "255.0.0.0")) {
+		return "DIRECT";
+	}
+
+	// Proxy all
+	return "HTTPS 3ele0ss56t.proxy.cloudflare-gateway.com:443";
+}
+```
+
+:::note
+
+- Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`.
+- You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
+- Use a proper text editor such as VS Code to avoid added characters.
+  :::
+
+To create a PAC file:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Create a proxy endpoint.
+3. Once you create a proxy endpoint, select **Add PAC files**.
+4. Here, you can add **PAC file details** and **Setup instructions**.
+   In **PAC files details**: - Enter the **Basic Information**. - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** is going to be populated with a template.
+   In **Setup instructions:** - Choose a browser and follow the instructions.
+5. Select **Create**.
+
+Your PAC file is of the form:
+
+```txt
+https://pac.cloudflare-gateway.com/<account-tag>/<slug>
+```

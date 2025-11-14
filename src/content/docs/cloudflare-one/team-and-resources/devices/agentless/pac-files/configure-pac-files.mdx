@@ -23,13 +23,11 @@ You can apply Gateway HTTP and DNS policies at the browser level by configuring 
 
 When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. Note that Gateway [cannot filter every type of HTTP traffic](#limitations) proxied using PAC files.
 
-## Prerequisites
-
-Install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
+If you want to use Gateway inspection policies, install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
 
 ## 1. Generate a proxy endpoint
 
-You can generate two types of proxy endpoint in Cloudflare One or through the Cloudflare API: IP and Authorization. 
+You can generate two types of proxy endpoint in Cloudflare One or through the Cloudflare API: IP and Authorization.
 
 Authorization endpoints require users to pass [Access policies](/cloudflare-one/access-controls/policies/policy-management/) to use the endpoint. Source IP endpoints only proxy traffic originating from a specific source IP.
 
@@ -72,14 +70,14 @@ If you select **Add an authorization endpoint**:
 To edit an authorization endpoint:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
-2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Authorization** under **Type**. 
+2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Authorization** under **Type**.
 3. Select the three dots, then select **Configure**.
 4. Choose the information you want to edit:
-    - **Basic info**: Enter your basic info, then select **Save**.
-    - **Access policies**: Here, you can:
-        - Select existing policies or create a new policy.
-        - Select the three dots that allow you to 
-    - **Login methods**: Select the [identity providers](/cloudflare-one/integrations/identity-providers/) you want to use to log in to this application.
+   - **Basic info**: Enter your basic info, then select **Save**.
+   - **Access policies**: Here, you can:
+     - Select existing policies or create a new policy.
+     - Select the three dots that allow you to
+   - **Login methods**: Select the [identity providers](/cloudflare-one/integrations/identity-providers/) you want to use to log in to this application.
 
 ## Source IP endpoint
 
@@ -108,7 +106,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 To edit a source IP endpoint:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
-2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Source IP** under **Type**. 
+2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Source IP** under **Type**.
 3. Select the three dots, then select **Configure**.
 4. Edit the name and/or configure the source IPs that are allowed.
 5. Select **Save**.
@@ -166,7 +164,6 @@ To edit a source IP endpoint:
 
 </Tabs>
 
-
 ## 2. Test your proxy server
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) for testing purposes. For example:
@@ -222,13 +219,10 @@ To create a PAC file:
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
 2. Create a proxy endpoint.
 3. Once you create a proxy endpoint, select **Add PAC files**.
-4. Here, you can add **PAC file details** and **Setup instructions**. 
-    In **PAC files details**:
-        - Enter the **Basic Information**.
-        - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** is going to be populated with a template.
-    In **Setup instructions:**
-        - Choose a browser and follow the instructions.
-4. Select **Create**.
+4. Here, you can add **PAC file details** and **Setup instructions**.
+   In **PAC files details**: - Enter the **Basic Information**. - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** is going to be populated with a template.
+   In **Setup instructions:** - Choose a browser and follow the instructions.
+5. Select **Create**.
 
 Your PAC file is of the form:
 
