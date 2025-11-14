@@ -158,12 +158,60 @@ function generateJSONExample(option: any, modelName?: string, taskName?: string)
 		}
 	}
 
-	// Generic fallback - show the required fields
+	// Check for Automatic Speech Recognition models by task name
+	if (taskName === "Automatic Speech Recognition") {
+		// Check if this format has an 'audio' array property
+		if (properties.audio && properties.audio.items) {
+			return `{
+  "audio": [0, 1, 2, 3, ...]
+}`;
+		}
+	}
+
+	// Generic fallback - show the required fields with intelligent values from schema
 	const requiredFields = option.required || [];
 	if (requiredFields.length > 0) {
 		const exampleObj: any = {};
 		requiredFields.forEach((field: string) => {
-			exampleObj[field] = `<${field}>`;
+			const fieldSchema = properties[field];
+			if (fieldSchema) {
+				// Use enum first value if available
+				if (fieldSchema.enum && fieldSchema.enum.length > 0) {
+					exampleObj[field] = fieldSchema.enum[0];
+				}
+				// Use default value if available
+				else if (fieldSchema.default !== undefined) {
+					exampleObj[field] = fieldSchema.default;
+				}
+				// Use type-appropriate example values
+				else if (fieldSchema.type === "string") {
+					// Check if pattern suggests a numeric string
+					if (fieldSchema.pattern === "^[0-9]+$") {
+						// Use a reasonable example value based on description
+						if (field.toLowerCase().includes("rate")) {
+							exampleObj[field] = "16000";
+						} else {
+							exampleObj[field] = "1000";
+						}
+					} else {
+						exampleObj[field] = `<${field}>`;
+					}
+				}
+				else if (fieldSchema.type === "number" || fieldSchema.type === "integer") {
+					exampleObj[field] = 0;
+				}
+				else if (fieldSchema.type === "boolean") {
+					exampleObj[field] = false;
+				}
+				else if (fieldSchema.type === "array") {
+					exampleObj[field] = [];
+				}
+				else {
+					exampleObj[field] = `<${field}>`;
+				}
+			} else {
+				exampleObj[field] = `<${field}>`;
+			}
 		});
 		return JSON.stringify(exampleObj, null, 2);
 	}
@@ -285,6 +333,56 @@ data: [DONE]`;
     "total_tokens": 30
   }
 }`;
+		}
+
+		// Check for Automatic Speech Recognition output
+		if (option.properties && option.properties.words && option.properties.words.items) {
+			const wordProps = option.properties.words.items.properties || {};
+
+			// Whisper-style output (has text, words with start/end, vtt)
+			if (option.properties.text && wordProps.start && wordProps.end) {
+				return `{
+  "text": "The transcribed text from the audio",
+  "word_count": 6,
+  "words": [
+    {
+      "word": "The",
+      "start": 0.0,
+      "end": 0.2
+    },
+    {
+      "word": "transcribed",
+      "start": 0.2,
+      "end": 0.6
+    }
+  ],
+  "vtt": "WEBVTT\\n\\n00:00:00.000 --> 00:00:00.200\\nThe\\n\\n00:00:00.200 --> 00:00:00.600\\ntranscribed"
+}`;
+			}
+
+			// Deepgram flux-style output (has transcript, words with confidence)
+			if (option.properties.transcript && wordProps.confidence) {
+				return `{
+  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+  "sequence_id": 0,
+  "event": "Update",
+  "turn_index": 0,
+  "audio_window_start": 0.0,
+  "audio_window_end": 2.5,
+  "transcript": "The transcribed text from the audio",
+  "words": [
+    {
+      "word": "The",
+      "confidence": 0.99
+    },
+    {
+      "word": "transcribed",
+      "confidence": 0.95
+    }
+  ],
+  "end_of_turn_confidence": 0.85
+}`;
+			}
 		}
 
 		return `{

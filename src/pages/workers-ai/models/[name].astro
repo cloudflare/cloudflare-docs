@@ -294,7 +294,7 @@ const starlightPageProps = {
 	{model.schema.input.oneOf && model.schema.input.oneOf.length > 1 && (
 		<p class="text-sm text-gray-600 mb-3">This model accepts multiple input formats. Click on the tabs below to view the parameters for each format. You can use these JSON inputs with the Workers Binding or through a fetch API call.</p>
 	)}
-	<SchemaViewerWithTabs schema={model.schema.input} type="input" modelName={model.name} />
+	<SchemaViewerWithTabs schema={model.schema.input} type="input" modelName={model.name} taskName={model.task.name} />
 
 	<h3 id="Output">Output</h3>
 	{
