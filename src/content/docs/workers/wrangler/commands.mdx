@@ -382,22 +382,7 @@ Manage the secret variables for a Worker.
 
 This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
 
-### `put`
-
-Create or replace a secret for a Worker.
-
-```txt
-wrangler secret put <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Worker.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from a [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="secret put" headingLevel={3}/>
 
 When running this command, you will be prompted to input the secret's value:
 
@@ -406,7 +391,7 @@ npx wrangler secret put FOO
 ```
 
 ```sh output
-? Enter a secret value: › ***
+? Enter a secret value: > ***
 🌀 Creating the secret for script worker-app
 ✨ Success! Uploaded secret FOO
 ```
@@ -417,37 +402,9 @@ The `put` command can also receive piped input. For example:
 echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangler secret put PRIVATE_KEY
 ```
 
-### `delete`
+<WranglerCommand command="secret delete" headingLevel={3}/>
 
-Delete a secret for a Worker.
-
-```txt
-wrangler secret delete <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Worker.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list`
-
-List the names of all the secrets for a Worker.
-
-```txt
-wrangler secret list [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="secret list" headingLevel={3}/>
 
 The following is an example of listing the secrets for the current Worker.
 
@@ -466,25 +423,7 @@ npx wrangler secret list
 
 ---
 
-## `secret bulk`
-
-Upload multiple secrets for a Worker at once.
-
-```txt
-wrangler secret bulk [<FILENAME>] [OPTIONS]
-```
-
-- `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
-  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
-  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
-  - The `.env` file containing [key-value pairs to upload as secrets](/workers/configuration/secrets/#local-development-with-secrets), in the form `SECRET_NAME=secret value`.
-  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="secret bulk" headingLevel={3}/>
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
@@ -1442,74 +1381,20 @@ wrangler rollback [<VERSION_ID>] [OPTIONS]
 
 ## dispatch namespace
 
-### `list`
+<WranglerCommand command="dispatch-namespace list" headingLevel={3}/>
 
-List all dispatch namespaces.
+<WranglerCommand command="dispatch-namespace get" headingLevel={3}/>
 
-```txt
-wrangler dispatch-namespace list
-```
+<WranglerCommand command="dispatch-namespace create" headingLevel={3}/>
 
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `get`
-
-Get information about a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace get <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the dispatch namespace to get details about.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `create`
-
-Create a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace create <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the dispatch namespace to create.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace get <NAME>
-```
+<WranglerCommand command="dispatch-namespace delete" headingLevel={3}/>
 
 :::note
 
 You must delete all user Workers in the dispatch namespace before it can be deleted.
 :::
 
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the dispatch namespace to delete.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `rename`
-
-Rename a dispatch namespace.
-
-```txt
-wrangler dispatch-namespace get <OLD_NAME> <NEW_NAME>
-```
-
-- `OLD_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The previous name of the dispatch namespace.
-- `NEW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The new name of the dispatch namespace.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="dispatch-namespace rename" headingLevel={3}/>
 
 ---
 
@@ -1519,22 +1404,7 @@ Manage client certificates used for mTLS connections in subrequests.
 
 These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
 
-### `upload`
-
-Upload a client certificate.
-
-```txt
-wrangler mtls-certificate upload --cert <PATH> --key <PATH> [OPTIONS]
-```
-
-- `--cert` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the TLS certificate to upload. Certificate chains are supported.
-- `--key` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the private key to upload.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name assigned to the mTLS certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate upload" headingLevel={3}/>
 
 The following is an example of using the `upload` command to upload an mTLS certificate.
 
@@ -1564,15 +1434,7 @@ mtls_certificates = [
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 
-### `list`
-
-List mTLS certificates associated with the current account ID.
-
-```txt
-wrangler mtls-certificate list
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate list" headingLevel={3}/>
 
 The following is an example of using the `list` command to upload an mTLS certificate.
 
@@ -1593,20 +1455,7 @@ Created on: 1/01/2023
 Expires: 1/01/2025
 ```
 
-### `delete`
-
-Delete a client certificate.
-
-```txt
-wrangler mtls-certificate delete {--id <ID|--name <NAME>}
-```
-
-- `--id` <Type text="string" />
-  - The ID of the mTLS certificate.
-- `--name` <Type text="string" />
-  - The name assigned to the mTLS certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate delete" headingLevel={3}/>
 
 The following is an example of using the `delete` command to delete an mTLS certificate.
 
@@ -1629,22 +1478,7 @@ Manage mTLS client certificates and Certificate Authority (CA) chain certificate
 
 These certificates can be used in Hyperdrive configurations, enabling them to present the certificate when connecting to an origin database that requires client authentication (mTLS) or a custom Certificate Authority (CA).
 
-### `upload mtls-certificate`
-
-Upload a client certificate.
-
-```txt
-wrangler cert upload mtls-certificate --cert <PATH> --key <PATH> [OPTIONS]
-```
-
-- `--cert` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the TLS certificate to upload. Certificate chains are supported.
-- `--key` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the private key to upload.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name assigned to the mTLS certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="cert upload mtls-certificate" headingLevel={3}/>
 
 The following is an example of using the `upload` command to upload an mTLS certificate.
 
@@ -1662,21 +1496,7 @@ Expires: 1/01/2025
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 
-### `upload certificate-authority`
-
-Upload a client certificate.
-
-```txt
-wrangler cert upload certificate-authority --ca-cert <PATH> [OPTIONS]
-```
-
-- `--ca-cert` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the Certificate Authority (CA) chain certificate to upload.
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name assigned to the mTLS certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="cert upload certificate-authority" headingLevel={3}/>
 
 The following is an example of using the `upload` command to upload an CA certificate.
 
@@ -1693,15 +1513,7 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-### `list`
-
-List mTLS certificates associated with the current account ID. This will display both mTLS certificates and CA certificates.
-
-```txt
-wrangler cert list
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="cert list" headingLevel={3}/>
 
 The following is an example of using the `list` command to upload an mTLS or CA certificate.
 
@@ -1722,20 +1534,7 @@ Created on: 1/01/2023
 Expires: 1/01/2025
 ```
 
-### `delete`
-
-Delete a client certificate.
-
-```txt
-wrangler cert delete {--id <ID|--name <NAME>}
-```
-
-- `--id` <Type text="string" />
-  - The ID of the mTLS or CA certificate.
-- `--name` <Type text="string" />
-  - The name assigned to the mTLS or CA certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="cert delete" headingLevel={3}/>
 
 The following is an example of using the `delete` command to delete an mTLS or CA certificate.
 
