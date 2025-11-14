@@ -101,7 +101,6 @@ Once a challenge has been solved, a token is passed to the success callback. Thi
 
 ### Complete implicit rendering examples by use case
 
-
 <Details header="Basic login form">
 Turnstile is often used to protect forms on websites such as login forms or contact forms. You can embed the widget within your `<form>` tag.
 ```html title="Example"
@@ -286,6 +285,8 @@ const widgetId = turnstile.render("#turnstile-container", {
 ```
 
 ### Optional calls
+
+After rendering the Turnstile widget explicitly, you may need to interact with it based on your application's requirements. Refer to the sections below to manage the widget's state.
 
 #### Reset a widget
 
