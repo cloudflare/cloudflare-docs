@@ -197,7 +197,7 @@ Your **Preview** environment lets you test changes in isolated **PR Previews** b
 
 Cloudflare creates a **PR Preview** with its own unique URL using your **Preview** settings when you:
 
-- Push a commit to a branch that's not your **Production** branch when you've connected your [Git repository](/workers/ci-cd/git-integration/). Cloudflare automatically posts a comment on your PR with a link to your **PR Preview**.
+- Push a commit to a branch that's not your **Production** branch when you've connected your [Git repository](/workers/ci-cd/builds/git-integration/). Cloudflare automatically posts a comment on your PR with a link to your **PR Preview**.
 - Run [`wrangler deploy --preview`](/workers/wrangler/commands/#deploy) using the Wrangler CLI.
 
 ### Configuration
@@ -454,7 +454,7 @@ If you look at your `wrangler.jsonc` file, you'll see that resource IDs have bee
 
 Your Worker is now live! In the [Cloudflare dashboard](https://dash.cloudflare.com), you'll see your **Production** deployment in the **Overview** tab, available on your [`workers.dev` domain](/workers/configuration/routing/workers-dev/).
 
-You can automate **Production** and **Preview** deployments by [connecting your Git repository](/workers/ci-cd/git-integration/) to Cloudflare, making it easy to create **PR Previews** for your pull requests.
+You can automate **Production** and **Preview** deployments by [connecting your Git repository](/workers/ci-cd/builds/git-integration/) to Cloudflare, making it easy to create **PR Previews** for your pull requests.
 
 #### Set up local development
 
@@ -1226,4 +1226,4 @@ When you deploy with `wrangler deploy --env staging`, you're deploying to the **
 - [Bindings](/workers/runtime-apis/bindings/) - Explore the powerful live objects you can bind to your Worker
 - [Secrets](/workers/configuration/secrets/) - Securely store sensitive data
 - [Routing](/workers/configuration/routing/) - Configure how traffic reaches your Worker
-- [Git integration](/workers/ci-cd/git-integration/) - Automate deployments from your Git repository
+- [Git integration](/workers/ci-cd/builds/git-integration/) - Automate deployments from your Git repository
