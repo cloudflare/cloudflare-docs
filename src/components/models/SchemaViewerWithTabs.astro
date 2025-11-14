@@ -54,13 +54,22 @@ function formatLabel(option: any): string {
 			return "Responses";
 		}
 
+		let label = option.title;
+
+		// If title contains spaces, it's likely already human-readable
+		if (label.includes(" ")) {
+			// Remove "Response" suffix if present (e.g., "Chat Completion Response" -> "Chat Completion")
+			label = label.replace(/\s+Response$/i, "");
+			return label;
+		}
+
 		// Remove model-specific prefixes by taking only the last part after the last known format keyword
 		// Examples:
 		// "Ai_Cf_Meta_Llama_4_Prompt" -> "Prompt"
 		// "GPT_OSS_120B_Responses" -> "Responses"
 		// "Ai_Cf_Meta_Llama_4_Messages" -> "Messages"
 
-		const parts = option.title.split("_");
+		const parts = label.split("_");
 
 		// Common format keywords that indicate where the actual format name starts
 		// Order matters: Messages should be checked before Prompt
@@ -231,6 +240,53 @@ data: [DONE]`;
 }`;
 		}
 
+		// Check for Chat Completion Response format
+		if (title.toLowerCase().includes("chat completion")) {
+			return `{
+  "id": "chatcmpl-123",
+  "object": "chat.completion",
+  "created": 1677652288,
+  "model": "@cf/ibm-granite/granite-4.0-h-micro",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Generated response from the model"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 10,
+    "completion_tokens": 20,
+    "total_tokens": 30
+  }
+}`;
+		}
+
+		// Check for Text Completion Response format
+		if (title.toLowerCase().includes("text completion")) {
+			return `{
+  "id": "cmpl-123",
+  "object": "text_completion",
+  "created": 1677652288,
+  "model": "@cf/ibm-granite/granite-4.0-h-micro",
+  "choices": [
+    {
+      "index": 0,
+      "text": "Generated text from the model",
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 10,
+    "completion_tokens": 20,
+    "total_tokens": 30
+  }
+}`;
+		}
+
 		return `{
   "result": {
     "response": "Generated text response from the model",
@@ -283,19 +339,28 @@ if (hasOneOf) {
 		};
 	});
 
-	// Sort options to prioritize Messages format first, then Prompt, then others
+	// Sort options based on type (input vs output)
 	options.sort((a, b) => {
 		const aTitle = (a.title || "").toLowerCase();
 		const bTitle = (b.title || "").toLowerCase();
 
 		// Define priority order
 		const getPriority = (title: string) => {
-			if (title.includes("messages")) return 1;
-			if (title.includes("prompt")) return 2;
-			// Check for "responses async" or "async" before plain "responses"
-			if (title.includes("async") || title.includes("batch")) return 4;
-			if (title.includes("responses")) return 3;
-			return 5;
+			if (type === "output") {
+				// Output priority: Chat Completion, Text Completion, Streaming, Async
+				if (title.includes("chat completion")) return 1;
+				if (title.includes("text completion")) return 2;
+				if (title.includes("stream")) return 3;
+				if (title.includes("async") || title.includes("batch")) return 4;
+				return 5;
+			} else {
+				// Input priority: Messages, Prompt, Async Batch, Responses
+				if (title.includes("messages")) return 1;
+				if (title.includes("prompt")) return 2;
+				if (title.includes("async") || title.includes("batch")) return 4;
+				if (title.includes("responses")) return 3;
+				return 5;
+			}
 		};
 
 		return getPriority(aTitle) - getPriority(bTitle);
