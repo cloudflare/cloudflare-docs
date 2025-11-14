@@ -38,7 +38,7 @@ You can configure a built-in authenticator such as Apple Touch ID, Android finge
 
 ### Security keys
 
-You can configure a security key, such as a Yubikey, to use with your account. Before you begin, ensure your hardware security key is configured and plugged in. 
+You can configure a security key, such as a Yubikey, to use with your account. Before you begin, ensure your hardware security key is configured and plugged in.
 
 On a Windows device, you may need to set up Windows Hello or register your security key to your Microsoft account. Review the Windows documentation for more details.
 
@@ -55,7 +55,7 @@ On a Windows device, you may need to set up Windows Hello or register your secur
 
 ## Configure TOTP mobile application authentication
 
-Time-based one-time password (TOTP) authentication works by using an authenticatior app, such as Google Authenticator or Microsoft Authenticator, which generates a secret code shared between the app and a website. When you log in to the website, you enter your username, password, and the secret code generated from the authenticator app. The secret code is only valid for a short period of time, about 30 to 60 seconds, before a new code is generated. 
+Time-based one-time password (TOTP) authentication works by using an authenticatior app, such as Google Authenticator or Microsoft Authenticator, which generates a secret code shared between the app and a website. When you log in to the website, you enter your username, password, and the secret code generated from the authenticator app. The secret code is only valid for a short period of time, about 30 to 60 seconds, before a new code is generated.
 
 1. Once your security key is plugged in, go to **Profile** > **Authentication**.
 2. From **Two-Factor Authentication**, select **Set up**.
@@ -71,7 +71,7 @@ Time-based one-time password (TOTP) authentication works by using an authenticat
 
 :::note
 
-To avoid being locked out of your account, be sure to generate and save your recovery codes. If you forget your password and cannot receive the reset code or lose access to your phone with the authenticator app, you can use the recovery codes to access your account. 
+To avoid being locked out of your account, be sure to generate and save your recovery codes. If you forget your password and cannot receive the reset code or lose access to your phone with the authenticator app, you can use the recovery codes to access your account.
 
 You can regenerate your backup codes at any time using the Cloudflare dashboard.
 :::
@@ -88,6 +88,15 @@ Reconfiguring TOTP mobile application authentication does not turn off 2FA.
 :::
 
 To reconfigure, follow [Steps 1-7](/fundamentals/user-profiles/2fa/#configure-totp-mobile-application-authentication) as detailed above.
+
+## Configure email two factor authentication
+
+Email 2FA works by sending you a TOTP code to your email address. This is a good option particularly if you are concerned about losing a hardware based key.
+
+1. Navigate to **User Profile**, then **Authentication**.
+2. Under **Two-Factor Authentication**, select **Set up**.
+3. Under **Email Authentication**, select **Enable**.
+4. You will be prompted to enter your password twice, and then be shown recovery codes. Save these somewhere safe like a password manager.
 
 ## Regenerate backup codes
 
