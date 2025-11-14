@@ -1586,6 +1586,9 @@
 /r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
 /r2/sql/platform/troubleshooting/ /r2-sql/troubleshooting/ 301
 
+# r2 sql
+/r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
+
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 
