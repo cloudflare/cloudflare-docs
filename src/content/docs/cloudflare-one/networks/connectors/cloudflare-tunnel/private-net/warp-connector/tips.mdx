@@ -44,20 +44,20 @@ To ensure reliable network performance, it is important to understand the requir
 
 WARP Connector uses [encapsulation](/magic-wan/reference/mtu-mss/#encapsulation) to route traffic, which adds extra headers and bytes to each [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/). This is especially critical for traffic from your private network (on-ramped via WARP Connector) to a remote WARP client. This traffic flow is encapsulated twice:
 1. By the WARP Connector on your Linux host.
-2. Again by the Cloudflare edge before being delivered to the off-ramp.
+2. Again by Cloudflare before being delivered to the off-ramp.
 
 This final encapsulation adds overhead. If a device on your private network sends a packet that is already near the maximum size (1,460 bytes or more), this final encapsulation will create a packet larger than 1,500 bytes, which will be dropped.
 
-Generally, this doesn't cause issues for TCP traffic and modern applications that use [Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/). When they send a large packet with the `do not fragment` (DF) bit set, the WARP Connector's Linux host will correctly send an ICMP `Fragmentation Needed` message back to the source device. The source device then learns to send smaller packets.
+Generally, this does not cause issues for TCP traffic and modern applications that use [Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/). When they send a large packet with the `do not fragment` (DF) bit set, the WARP Connector's Linux host will correctly send an ICMP `Fragmentation Needed` message back to the source device. The source device then learns to send smaller packets.
 
 However, this may cause issues for legacy applications (like some video streaming or monitoring tools) that may not perform [Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/). Instead, they send large packets (e.g., more than 1,280 bytes) with the `do not fragment` (DF) bit unset (`DF=0`).
 
-In this situation, WARP Connector host receives this large packet (e.g., 1,460 bytes), then fragments the packet to fit its [tunnel MTU](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface). These fragments are then reassembled at the Cloudflare edge back into the original 1,460-byte packet.
-The edge then tries to encapsulate this 1,460-byte packet to send to the WARP client, pushing it over 1,500 bytes and causing it to be dropped. Our edge does not currently support fragmenting these outgoing encapsulated packets.
+In this situation, WARP Connector host receives this large packet (for example, 1,460 bytes), then fragments the packet to fit its [tunnel MTU](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface). These fragments are then reassembled at the Cloudflare edge back into the original 1,460-byte packet.
+Cloudflare then tries to encapsulate this 1,460-byte packet to send to the WARP client, pushing it over 1,500 bytes and causing it to be dropped. Cloudflare does not currently support fragmenting these outgoing encapsulated packets.
 
 ### Recommendations
 
-To ensure reliable connectivity for all traffic types, especially legacy UDP applications, the most effective solution is to configure the MTU on your source devices (e.g., servers, cameras, or other devices on your private network) to 1,280 bytes. 
+To ensure reliable connectivity for all traffic types, especially legacy UDP applications, the most effective solution is to configure the MTU on your source devices (such as servers, cameras, or other devices on your private network) to 1,280 bytes. 
 
 This ensures the original packet is small enough to be encapsulated and delivered without being fragmented or dropped.
 
