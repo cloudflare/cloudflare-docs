@@ -44,7 +44,7 @@ The limits for Browser Rendering will continue to be raised over time. In the me
 | Concurrent browsers per account (Workers Bindings only)        | 30 per account [^2] |
 | New browser instances per minute (Workers Bindings only)       | 30 per minute [^2]  |
 | Browser timeout                        | 60 seconds |
-| Total requests per min (REST API only) | 180 per minute [^3]       |
+| Total requests per min (REST API only) | 180 per minute [^2][^3]       |
 
 [^2]: Contact our team to request increases to this limit.
 [^3]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of 180 requests per minute translates to three requests per second. This means you cannot send all 180 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
