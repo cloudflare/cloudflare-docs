@@ -14,7 +14,6 @@ Hyperdrive does not have a limit on the number of concurrent _client_ connection
 
 Hyperdrive does have a limit of _origin_ connections that can be made from Hyperdrive to your database. These are shared across Workers, with each Worker using one of these connections over the course of a database transaction. Refer to [transaction pooling mode](/hyperdrive/concepts/connection-pooling/#pooling-mode) for more information.
 
-The Hyperdrive connection pool limit is a "soft limit". This means that it is possible for Hyperdrive to make more connections to your database than this limit in the event of network failure to ensure high availability. Cloudflare recommends that you send the Hyperdrive connection limit to be lower than the limit of your origin database.
 :::
 
 ## Configure connection pool size
@@ -33,7 +32,7 @@ To configure connection pool size via the dashboard:
 
 3. Select your Hyperdrive configuration.
 4. Select **Settings**.
-5. In the **Connection pool** section, adjust the **Maximum connections** value.
+5. In the **Origin connection limit** section, adjust the **Maximum connections** value.
 6. Select **Save**.
 
 </TabItem>
@@ -58,9 +57,7 @@ curl --request PATCH \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Bearer <API_TOKEN>' \
   --data '{
-    "origin": {
-      "max_size": <MAX_CONNECTIONS>
-    }
+    "origin_connection_limit": <MAX_CONNECTIONS>
   }'
 ```
 
@@ -68,6 +65,11 @@ curl --request PATCH \
 </Tabs>
 
 All Hyperdrive configurations have a minimum of 5 connections. The maximum connection count depends on your [Workers plan](/hyperdrive/platform/limits/).
+
+:::note
+The Hyperdrive connection pool limit is a "soft limit". This means that it is possible for Hyperdrive to make more connections to your database than this limit in the event of network failure to ensure high availability. We recommend that you set the Hyperdrive connection limit to be lower than the limit of your origin database to account for occasions where Hyperdrive needs to create more connections for resiliency.
+
+:::
 
 :::note
 You can request adjustments to Hyperdrive's origin connection limits. To request an increase, submit a [Limit Increase Request](https://forms.gle/ukpeZVLWLnKeixDu7) and Cloudflare will contact you with next steps. Cloudflare also regularly monitors the Hyperdrive channel in [Cloudflare's Discord community](https://discord.cloudflare.com/) and can answer questions regarding limits and requests.
