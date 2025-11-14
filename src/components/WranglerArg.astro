@@ -8,9 +8,13 @@ import MetaInfo from "./MetaInfo.astro";
 const props = z.object({
 	key: z.string(),
 	definition: z.custom<any>(),
+	extraDetails: z.object({
+		content: z.string(),
+		mode: z.enum(["append", "replace"])
+	}).optional(),
 });
 
-const { key, definition } = props.parse(Astro.props);
+const { key, definition, extraDetails } = props.parse(Astro.props);
 
 const type = definition.type ?? definition.choices;
 const description = definition.description ?? definition.describe;
@@ -46,5 +50,12 @@ if (alias) {
 	{aliasText && <MetaInfo text={aliasText} />}
 	{required && <MetaInfo text="required" />}
 	{defaultValue !== undefined && <MetaInfo text={`default: ${defaultValue}`} />}
-	<Fragment set:html={marked.parse(sanitizedDescription)} />
+	{extraDetails?.mode === "replace" ? (
+		<Fragment set:html={marked.parse(extraDetails.content)} />
+	) : (
+		<>
+			<Fragment set:html={marked.parse(sanitizedDescription)} />
+			{extraDetails && <Fragment set:html={marked.parse(extraDetails.content)} />}
+		</>
+	)}
 </li>

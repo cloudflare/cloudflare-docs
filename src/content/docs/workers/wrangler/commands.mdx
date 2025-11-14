@@ -380,7 +380,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 
 Manage the secret variables for a Worker.
 
-This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
+This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#versions-secret-put) commands.
 
 <WranglerCommand command="secret put" headingLevel={3}/>
 
@@ -1112,59 +1112,11 @@ For example:
 	headingLevel={3}
 />
 
-### `secret put`
+<WranglerCommand command="versions secret put" headingLevel={3} />
 
-Create or replace a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+<WranglerCommand command="versions secret delete" headingLevel={3} />
 
-```txt
-wrangler versions secret put <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Worker.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `secret delete`
-
-Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
-
-```txt
-wrangler versions secret delete <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Worker.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `secret bulk`
-
-Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
-
-```txt
-wrangler versions secret bulk <FILENAME> [OPTIONS]
-```
-
-- `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
-  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
-  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
-  - The `.env` file containing key-value pairs to upload as secrets, in the form `SECRET_NAME=secret value`.
-  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="versions secret bulk" headingLevel={3} />
 
 ---
 
@@ -1174,18 +1126,7 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
-### `deploy`
-
-Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload).
-
-```txt
-wrangler triggers deploy [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="triggers deploy" headingLevel={3} />
 
 ---
 
@@ -1247,22 +1188,7 @@ Manage client certificates used for mTLS connections in subrequests.
 
 These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
 
-### `upload`
-
-Upload a client certificate.
-
-```txt
-wrangler mtls-certificate upload --cert <PATH> --key <PATH> [OPTIONS]
-```
-
-- `--cert` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the TLS certificate to upload. Certificate chains are supported.
-- `--key` <Type text="string" /> <MetaInfo text="required" />
-  - A path to the private key to upload.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name assigned to the mTLS certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate upload" headingLevel={3}/>
 
 The following is an example of using the `upload` command to upload an mTLS certificate.
 
@@ -1292,15 +1218,7 @@ mtls_certificates = [
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 
-### `list`
-
-List mTLS certificates associated with the current account ID.
-
-```txt
-wrangler mtls-certificate list
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate list" headingLevel={3}/>
 
 The following is an example of using the `list` command to upload an mTLS certificate.
 
@@ -1321,20 +1239,7 @@ Created on: 1/01/2023
 Expires: 1/01/2025
 ```
 
-### `delete`
-
-Delete a client certificate.
-
-```txt
-wrangler mtls-certificate delete {--id <ID|--name <NAME>}
-```
-
-- `--id` <Type text="string" />
-  - The ID of the mTLS certificate.
-- `--name` <Type text="string" />
-  - The name assigned to the mTLS certificate at upload.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="mtls-certificate delete" headingLevel={3}/>
 
 The following is an example of using the `delete` command to delete an mTLS certificate.
 
