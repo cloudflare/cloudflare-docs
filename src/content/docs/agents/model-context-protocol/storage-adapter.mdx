@@ -1,0 +1,198 @@
+---
+title: MCP Storage Adapter
+pcx_content_type: concept
+tags:
+  - MCP
+sidebar:
+  order: 8
+---
+
+import { TypeScriptExample } from "~/components";
+
+The MCP storage adapter pattern provides a flexible way to persist MCP server configurations and connection state. By default, Agents use SQL storage, but you can implement custom storage backends for specialized use cases.
+
+## Overview
+
+MCP server configurations are stored persistently so that connections can be restored after Agent restarts or during OAuth flows. The storage adapter interface abstracts these storage operations, making it possible to:
+
+- Use different storage backends (SQL, KV, external databases)
+- Test MCP functionality with mock storage
+- Implement custom persistence strategies
+
+## Default Behavior
+
+When you use `this.addMcpServer()` in an Agent class, storage is handled automatically using the Agent's built-in SQL storage. No additional configuration is required:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+export class MyAgent extends Agent<Env, never> {
+	async onRequest(request: Request): Promise<Response> {
+		// Storage is handled automatically
+		const { id } = await this.addMcpServer(
+			"Weather API",
+			"https://weather-mcp.example.com/mcp",
+		);
+
+		return new Response(`Connected: ${id}`);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Storage Adapter Interface
+
+For advanced use cases, you can implement the `MCPStorageAdapter` interface:
+
+```ts
+interface MCPStorageAdapter {
+	create(): void | Promise<void>;
+	destroy(): void | Promise<void>;
+	saveServer(server: MCPServerRow): void | Promise<void>;
+	removeServer(serverId: string): void | Promise<void>;
+	listServers(): MCPServerRow[] | Promise<MCPServerRow[]>;
+	getServerByCallbackUrl(
+		callbackUrl: string,
+	): MCPServerRow | null | Promise<MCPServerRow | null>;
+	clearOAuthCredentials(serverId: string): void | Promise<void>;
+}
+```
+
+### MCPServerRow Type
+
+The storage adapter works with server configuration objects:
+
+```ts
+type MCPServerRow = {
+	id: string;
+	name: string;
+	server_url: string;
+	client_id: string | null;
+	auth_url: string | null;
+	callback_url: string;
+	server_options: string | null;
+};
+```
+
+## Built-in Storage Adapter
+
+The `AgentMCPStorageAdapter` class wraps Agent SQL storage and is used automatically by the Agent class:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { AgentMCPStorageAdapter } from "agents/mcp";
+
+// This is done automatically inside the Agent class
+const storage = new AgentMCPStorageAdapter(this.sql.bind(this));
+```
+
+</TypeScriptExample>
+
+## Custom Storage Implementation
+
+If you need to use `MCPClientManager` directly (outside of an Agent), you must provide a storage adapter:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { MCPClientManager, type MCPStorageAdapter, type MCPServerRow } from "agents/mcp";
+
+class CustomStorageAdapter implements MCPStorageAdapter {
+	private servers = new Map<string, MCPServerRow>();
+
+	create(): void {
+		// Initialize storage
+	}
+
+	destroy(): void {
+		// Clean up storage
+		this.servers.clear();
+	}
+
+	saveServer(server: MCPServerRow): void {
+		this.servers.set(server.id, server);
+	}
+
+	removeServer(serverId: string): void {
+		this.servers.delete(serverId);
+	}
+
+	listServers(): MCPServerRow[] {
+		return Array.from(this.servers.values());
+	}
+
+	getServerByCallbackUrl(callbackUrl: string): MCPServerRow | null {
+		for (const server of this.servers.values()) {
+			if (server.callback_url === callbackUrl) {
+				return server;
+			}
+		}
+		return null;
+	}
+
+	clearOAuthCredentials(serverId: string): void {
+		const server = this.servers.get(serverId);
+		if (server) {
+			server.callback_url = "";
+			server.auth_url = null;
+			this.servers.set(serverId, server);
+		}
+	}
+}
+
+// Use custom storage with MCPClientManager
+const manager = new MCPClientManager("my-client", "1.0.0", {
+	storage: new CustomStorageAdapter(),
+});
+```
+
+</TypeScriptExample>
+
+## Storage Operations
+
+### Server Lifecycle
+
+The storage adapter manages server configuration throughout its lifecycle:
+
+1. **Creation**: `saveServer()` is called when connecting to a new server via `addMcpServer()`
+2. **OAuth Flow**: `clearOAuthCredentials()` is called after successful authentication to prevent replay attacks
+3. **Restoration**: `listServers()` is called on Agent initialization to restore connections
+4. **Removal**: `removeServer()` is called when disconnecting via `removeMcpServer()`
+
+### Security Considerations
+
+The `clearOAuthCredentials()` method is called after successful OAuth authentication to clear both `callback_url` and `auth_url`. This prevents:
+
+- Malicious second callback attempts from being processed
+- Unnecessary re-authentication prompts on reconnection
+- OAuth tokens from being exposed in storage
+
+## Migration Notes
+
+If you are using `MCPClientManager` directly (not through the Agent class), you must update your code to provide a storage adapter:
+
+**Before:**
+
+```ts
+const manager = new MCPClientManager("client-name", "1.0.0");
+```
+
+**After:**
+
+```ts
+import { MCPClientManager, AgentMCPStorageAdapter } from "agents/mcp";
+
+const manager = new MCPClientManager("client-name", "1.0.0", {
+	storage: new AgentMCPStorageAdapter(sqlFunction),
+});
+```
+
+This change does not affect normal Agent usage - storage is handled automatically when using `this.addMcpServer()`.
+
+## Next Steps
+
+- [MCP Client API reference](/agents/model-context-protocol/mcp-client-api/) — Full API documentation
+- [OAuth handling guide](/agents/guides/oauth-mcp-client/) — Complete OAuth integration guide
+- [Connect your first MCP server](/agents/guides/connect-mcp-client/) — Tutorial to get started

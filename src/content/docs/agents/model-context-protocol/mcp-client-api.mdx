@@ -44,7 +44,7 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and-sync-state), and when an Agent connects to an MCP server, all tools from that server become available automatically. The Agent automatically restores MCP connections after hibernation without requiring manual reconnection.
+Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and-sync-state/) using a [storage adapter pattern](/agents/model-context-protocol/storage-adapter/), and when an Agent connects to an MCP server, all tools from that server become available automatically. The Agent automatically restores MCP connections after hibernation without requiring manual reconnection.
 
 ## Agent MCP Client Methods
 
@@ -279,7 +279,12 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
+## Advanced Configuration
+
+For advanced use cases, you can implement custom storage backends for MCP server configurations. Refer to the [Storage Adapter documentation](/agents/model-context-protocol/storage-adapter/) to learn about the storage adapter pattern and how to implement custom storage solutions.
+
 ## Next Steps
 
-- [Connect your first MCP server](/agents/guides/connect-mcp-client) — Tutorial to get started
-- [Handle OAuth flows](/agents/guides/oauth-mcp-client) — Complete OAuth integration guide
+- [Connect your first MCP server](/agents/guides/connect-mcp-client/) — Tutorial to get started
+- [Handle OAuth flows](/agents/guides/oauth-mcp-client/) — Complete OAuth integration guide
+- [Storage Adapter](/agents/model-context-protocol/storage-adapter/) — Custom storage backends for MCP
