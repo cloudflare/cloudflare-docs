@@ -8,56 +8,66 @@ export interface FormatMatcher {
 }
 
 export interface FormatContext {
-	type: 'input' | 'output';
+	type: "input" | "output";
 	taskName?: string;
 	modelName?: string;
 }
 
 // Helper functions for schema matching
 export const schemaMatchers = {
-	hasProperty: (path: string) => (schema: any): boolean => {
-		const parts = path.split('.');
-		let current = schema;
-		for (const part of parts) {
-			if (!current || typeof current !== 'object') return false;
-			current = current[part];
-		}
-		return current !== undefined;
-	},
+	hasProperty:
+		(path: string) =>
+		(schema: any): boolean => {
+			const parts = path.split(".");
+			let current = schema;
+			for (const part of parts) {
+				if (!current || typeof current !== "object") return false;
+				current = current[part];
+			}
+			return current !== undefined;
+		},
 
-	propertyEquals: (path: string, value: any) => (schema: any): boolean => {
-		const parts = path.split('.');
-		let current = schema;
-		for (const part of parts) {
-			if (!current || typeof current !== 'object') return false;
-			current = current[part];
-		}
-		return current === value;
-	},
+	propertyEquals:
+		(path: string, value: any) =>
+		(schema: any): boolean => {
+			const parts = path.split(".");
+			let current = schema;
+			for (const part of parts) {
+				if (!current || typeof current !== "object") return false;
+				current = current[part];
+			}
+			return current === value;
+		},
 
-	propertyIncludes: (path: string, substring: string) => (schema: any): boolean => {
-		const parts = path.split('.');
-		let current = schema;
-		for (const part of parts) {
-			if (!current || typeof current !== 'object') return false;
-			current = current[part];
-		}
-		return typeof current === 'string' && current.toLowerCase().includes(substring.toLowerCase());
-	},
+	propertyIncludes:
+		(path: string, substring: string) =>
+		(schema: any): boolean => {
+			const parts = path.split(".");
+			let current = schema;
+			for (const part of parts) {
+				if (!current || typeof current !== "object") return false;
+				current = current[part];
+			}
+			return (
+				typeof current === "string" &&
+				current.toLowerCase().includes(substring.toLowerCase())
+			);
+		},
 
 	isBinary: (schema: any): boolean =>
-		schema.type === 'string' && schema.format === 'binary',
+		schema.type === "string" && schema.format === "binary",
 
 	isObject: (schema: any): boolean =>
-		schema.type === 'object' || (schema.properties && typeof schema.properties === 'object'),
+		schema.type === "object" ||
+		(schema.properties && typeof schema.properties === "object"),
 };
 
 // Helper to get nested property safely
 export function getNestedProperty(obj: any, path: string): any {
-	const parts = path.split('.');
+	const parts = path.split(".");
 	let current = obj;
 	for (const part of parts) {
-		if (!current || typeof current !== 'object') return undefined;
+		if (!current || typeof current !== "object") return undefined;
 		current = current[part];
 	}
 	return current;
@@ -98,26 +108,26 @@ function inferExampleValue(fieldName: string, propSchema: any): any {
 	}
 
 	// Type-based defaults
-	if (propSchema.type === 'string') {
+	if (propSchema.type === "string") {
 		// Check if pattern suggests a numeric string
-		if (propSchema.pattern === '^[0-9]+$') {
-			if (fieldName.toLowerCase().includes('rate')) {
-				return '16000';
+		if (propSchema.pattern === "^[0-9]+$") {
+			if (fieldName.toLowerCase().includes("rate")) {
+				return "16000";
 			}
-			return '1000';
+			return "1000";
 		}
 		return `<${fieldName}>`;
 	}
 
-	if (propSchema.type === 'number' || propSchema.type === 'integer') {
+	if (propSchema.type === "number" || propSchema.type === "integer") {
 		return 0;
 	}
 
-	if (propSchema.type === 'boolean') {
+	if (propSchema.type === "boolean") {
 		return false;
 	}
 
-	if (propSchema.type === 'array') {
+	if (propSchema.type === "array") {
 		return [];
 	}
 
@@ -128,10 +138,12 @@ function inferExampleValue(fieldName: string, propSchema: any): any {
 export function detectFormat(
 	schema: any,
 	context: FormatContext,
-	formatRegistry: FormatMatcher[]
+	formatRegistry: FormatMatcher[],
 ): FormatMatcher | null {
 	// Sort by priority (lower number = higher priority)
-	const sortedFormats = [...formatRegistry].sort((a, b) => a.priority - b.priority);
+	const sortedFormats = [...formatRegistry].sort(
+		(a, b) => a.priority - b.priority,
+	);
 
 	for (const format of sortedFormats) {
 		if (format.matches(schema, context)) {

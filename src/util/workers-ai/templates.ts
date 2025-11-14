@@ -1,8 +1,9 @@
 // Input Templates
 
-export const binaryAudio = () => 'Raw binary audio data sent as request body';
+export const binaryAudio = () => "Raw binary audio data sent as request body";
 
-export const binaryImage = () => 'The binding returns a ReadableStream with the image in JPEG or PNG format. Process the stream to access the binary image data.';
+export const binaryImage = () =>
+	"The binding returns a ReadableStream with the image in JPEG or PNG format. Process the stream to access the binary image data.";
 
 export const llmMessages = () => `{
   "messages": [
@@ -16,7 +17,7 @@ export const llmPrompt = () => `{
 }`;
 
 export const gptOssResponses = (modelName?: string) => {
-	const model = modelName || '@cf/openai/gpt-oss-*';
+	const model = modelName || "@cf/openai/gpt-oss-*";
 	return `{
   "model": "${model}",
   "input": "Tell me about Cloudflare Workers"
@@ -93,7 +94,7 @@ export const textToImageImg2Img = () => `{
 // Output Templates
 
 export const gptOssResponsesOutput = (modelName?: string) => {
-	const model = modelName || '@cf/openai/gpt-oss-*';
+	const model = modelName || "@cf/openai/gpt-oss-*";
 	return `{
   "id": "id-1763094420786",
   "created_at": 1763094420,
@@ -148,7 +149,7 @@ export const workersAIOutput = () => `{
 }`;
 
 export const chatCompletionOutput = (modelName?: string) => {
-	const model = modelName || '@cf/ibm-granite/granite-4.0-h-micro';
+	const model = modelName || "@cf/ibm-granite/granite-4.0-h-micro";
 	return `{
   "id": "chatcmpl-123",
   "object": "chat.completion",
@@ -173,7 +174,7 @@ export const chatCompletionOutput = (modelName?: string) => {
 };
 
 export const textCompletionOutput = (modelName?: string) => {
-	const model = modelName || '@cf/ibm-granite/granite-4.0-h-micro';
+	const model = modelName || "@cf/ibm-granite/granite-4.0-h-micro";
 	return `{
   "id": "cmpl-123",
   "object": "text_completion",
@@ -203,7 +204,7 @@ data: {"response":"","usage":{"prompt_tokens":10,"completion_tokens":50,"total_t
 data: [DONE]`;
 
 export const asyncBatchResponse = (modelName?: string) => {
-	const modelField = modelName ? `\n    "model": "${modelName}",` : '';
+	const modelField = modelName ? `\n    "model": "${modelName}",` : "";
 	return `{
   "result": {
     "status": "queued",

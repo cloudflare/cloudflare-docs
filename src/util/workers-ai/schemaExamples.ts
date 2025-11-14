@@ -93,11 +93,9 @@ function generateExampleValue(
 
 	// Use task-specific examples if available
 	if (taskName && TASK_EXAMPLES[taskName as keyof typeof TASK_EXAMPLES]) {
-		const taskExample =
-			TASK_EXAMPLES[taskName as keyof typeof TASK_EXAMPLES] as Record<
-				string,
-				any
-			>;
+		const taskExample = TASK_EXAMPLES[
+			taskName as keyof typeof TASK_EXAMPLES
+		] as Record<string, any>;
 		if (propertyName in taskExample) {
 			return taskExample[propertyName];
 		}
@@ -181,8 +179,7 @@ export function generateExampleFromSchema(
 		// Find the option with the most meaningful title or the first one
 		const selectedOption =
 			schema.oneOf.find(
-				(option) =>
-					option.title === "Messages" || option.title === "Prompt",
+				(option) => option.title === "Messages" || option.title === "Prompt",
 			) || schema.oneOf[0];
 		// Don't recurse - directly process this option
 		schema = selectedOption;
