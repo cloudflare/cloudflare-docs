@@ -1331,18 +1331,7 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
-### `deploy`
-
-Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload).
-
-```txt
-wrangler triggers deploy [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="triggers deploy" headingLevel={3} />
 
 ---
 
