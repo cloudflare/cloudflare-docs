@@ -20,9 +20,8 @@ const sanitizedDescription = description
 const required = definition.demandOption;
 const defaultValue = definition.default;
 const alias = definition.alias;
-const positional = definition.positionalArgs?.includes(key);
 
-const name = positional ? `[${key.toUpperCase()}]` : `--${key}`;
+const name = definition.positional ? `[${key.toUpperCase()}]` : `--${key}`;
 
 let typeText;
 if (Array.isArray(type)) {

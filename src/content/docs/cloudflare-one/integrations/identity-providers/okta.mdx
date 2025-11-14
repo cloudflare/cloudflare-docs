@@ -22,6 +22,10 @@ Additionally, you can configure Okta to use risk information from Cloudflare One
 
 ## Set up Okta as an OIDC provider (Okta App Catalog)
 
+:::note[Active Directory limitation]
+The Okta App Catalog template does not support synchronizing [Active Directory groups](https://help.okta.com/en-us/Content/Topics/Directory/ad-agent-import-groups.htm). If you would like to build policies using AD groups, use the Okta [OIDC app integration](#set-up-okta-as-an-oidc-provider-custom-app-integration) or [SAML app integration](/cloudflare-one/integrations/identity-providers/okta-saml/).
+:::
+
 To set up the Okta integration using the Okta Integration Network (OIN) App Catalog:
 
 1. Log in to your Okta admin dashboard.

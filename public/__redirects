@@ -1126,6 +1126,9 @@
 /magic-wan/reference/tunnels/ /magic-wan/reference/gre-ipsec-tunnels/ 301
 /magic-wan/reference/magic-tunnels/ /magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ 301
 
+# network
+/network/response-buffering/ /network/ 301
+
 # notifications
 /fundamentals/notifications/ /notifications/ 301
 /notifications/create-notifications/ /notifications/get-started/ 301
@@ -1221,6 +1224,7 @@
 
 # pipelines
 /pipelines/concepts/how-pipelines-work/ /pipelines/ 301
+/pipelines/platform/wrangler-commands/ /pipelines/reference/wrangler-commands/ 301
 
 # queues
 /queues/configuration/ /queues/configuration/configure-queues/ 301
@@ -1436,7 +1440,7 @@
 /support/more-dashboard-apps/cloudflare-stream/delivering-videos-with-cloudflare/ /fundamentals/reference/policies-compliances/delivering-videos-with-cloudflare/ 301
 /support/network/ /network/ 301
 /support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
-/support/network/setting-up-response-buffering/ /network/response-buffering/ 301
+/support/network/setting-up-response-buffering/ /network/ 301
 /support/network/using-cloudflare-with-websockets/ /network/websockets/ 301
 /support/network/understanding-and-configuring-cloudflares-ipv6-support/ /network/ipv6-compatibility/ 301
 /support/network/understanding-cloudflare-http2-and-http3-support/ /speed/optimization/protocol/ 301

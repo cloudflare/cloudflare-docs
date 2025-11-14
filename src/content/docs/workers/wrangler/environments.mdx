@@ -114,7 +114,7 @@ env.staging.service ={ binding = "<BINDING_NAME>", service = "worker-a-staging" 
 
 ### Secrets for production
 
-You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put). You can also create `dotenv` type files named `.dev.vars.<environment-name>`.
+You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#secret-put). You can also create `dotenv` type files named `.dev.vars.<environment-name>`.
 
 Like other environment variables, secrets are [non-inheritable](/workers/wrangler/configuration/#non-inheritable-keys) and must be defined per environment.
 
