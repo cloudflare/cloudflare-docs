@@ -7,7 +7,6 @@ import StarlightPage, {
 import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
 import ModelFeatures from "~/components/models/ModelFeatures.tsx";
-import SchemaViewer from "~/components/models/SchemaViewer.astro";
 import SchemaViewerWithTabs from "~/components/models/SchemaViewerWithTabs.astro";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
@@ -290,6 +289,7 @@ const starlightPageProps = {
 
 	<h2 id="Parameters">Parameters</h2>
 	<p><span class="text-red-500">*</span> indicates a required field</p>
+
 	<h3 id="Input">Input</h3>
 	{model.schema.input.oneOf && model.schema.input.oneOf.length > 1 && (
 		<p class="text-sm text-gray-600 mb-3">This model accepts multiple input formats. Click on the tabs below to view the parameters for each format. You can use these JSON inputs with the Workers Binding or through a fetch API call.</p>
@@ -310,7 +310,7 @@ const starlightPageProps = {
 				{model.schema.output.oneOf && model.schema.output.oneOf.length > 1 && (
 					<p class="text-sm text-gray-600 mb-3">This model returns different output formats depending on the request. Click on the tabs below to view the response structure for each format.</p>
 				)}
-				<SchemaViewerWithTabs schema={model.schema.output} type="output" />
+				<SchemaViewerWithTabs schema={model.schema.output} type="output" modelName={model.name} />
 			</>
 		)
 	}
