@@ -4,7 +4,7 @@ pcx_content_type: concept
 
 ---
 
-import { Details, FeatureTable, APIRequest, Render } from "~/components";
+import { Details, FeatureTable, APIRequest, Render, DashButton } from "~/components";
 
 Tiered Cache uses the size of Cloudflare’s network to reduce requests to customer origins by dramatically increasing cache hit ratios. With data centers around the world, Cloudflare caches content very close to end users. However, if a piece of content is not in cache, the Cloudflare edge data centers must contact the origin server to receive the cacheable content.
 
@@ -54,10 +54,12 @@ You can enable Tiered Cache in the dashboard or via API.
 
 ### Enable Tiered Cache in the dashboard
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
-2. Select **Caching** > **Tiered Cache**.
-3. From **Tiered Cache**, toggle the button to **enabled**.
-4. In **Tiered Cache Topology**, you can control how your origin connects to Cloudflare’s data centers. You can select:
+1. In the Cloudflare dashboard, go to the **Tiered Cache** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/tiered-cache" />
+
+2. From **Tiered Cache**, toggle the button to **enabled**.
+3. In **Tiered Cache Topology**, you can control how your origin connects to Cloudflare’s data centers. You can select:
    * **Upper Tier Cache** - You have the option to choose between Smart or Generic Global Tiered Cache Topology.
    * **Middle Tier Cache** -  If you have selected Smart or Custom Tiered Cache Topology, you can now enable Regional Tiered Cache.
    * **Custom Tiered Cache** - Allows you to work with Cloudflare’s support team to set a custom topology that fits your specific needs.

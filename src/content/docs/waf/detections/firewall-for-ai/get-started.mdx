@@ -1,0 +1,238 @@
+---
+pcx_content_type: get-started
+title: Get started with Firewall for AI
+tags:
+  - AI
+sidebar:
+  order: 2
+  label: Get started
+---
+
+import {
+	Tabs,
+	TabItem,
+	Details,
+	Steps,
+	DashButton,
+	Render,
+} from "~/components";
+
+## 1. Turn on Firewall for AI
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+:::note
+Firewall for AI is only available in the new [application security dashboard](/security/).
+:::
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Detection tools**.
+3. Turn on **Firewall for AI**.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Enable the feature using a `PUT` request similar to the following:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/settings" \
+--request PUT \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--json '{ "pii_detection_enabled": true }'
+```
+
+</TabItem> </Tabs>
+
+## 2. Save or add an LLM-related endpoint
+
+Once you have [onboarded your domain](/fundamentals/manage-domains/add-site/) to Cloudflare and some API traffic has already been [proxied by Cloudflare](/dns/proxy-status/), the Cloudflare dashboard will start showing [discovered endpoints](/api-shield/security/api-discovery/).
+
+Save the relevant endpoint receiving LLM-related traffic to [Endpoint Management](/api-shield/management-and-monitoring/endpoint-management/) once it has been discovered, or add the endpoint manually.
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+2. Go to **Security** > **API Shield**.
+3. Go to the **Discovery** tab.
+4. Find the endpoint receiving requests with LLM prompts in the list and select **Save** next to the endpoint.
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+2. Go to the **Discovery** tab.
+3. Find the endpoint receiving requests with LLM prompts in the list and select **Save** next to the endpoint.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+If you did not find the endpoint in the **Discovery** tab, you can add it manually:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Go to the **Endpoint Management** tab.
+2. Select **Add endpoints** > **Manually add**.
+3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
+4. Select **Add endpoints**.
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. Go to the **Endpoints** tab.
+2. Select **Add endpoints** > **Manually add**.
+3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
+4. Select **Add endpoints**.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+In the context of this guide, consider an example endpoint with the following properties:
+
+- Method: `POST`
+- Path: `/v1/messages`
+- Hostname: `<YOUR_HOSTNAME>`
+
+## 3. Add `cf-llm` label to endpoint
+
+You must [label endpoints](/api-shield/management-and-monitoring/endpoint-labels/) with the `cf-llm` label so that Firewall for AI starts scanning incoming requests for malicious LLM prompts.
+
+Add the `cf-llm` label to the endpoint you added:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+<Render
+	file="labels-add-old-nav"
+	product="api-shield"
+	params={{ labelName: "cf-llm" }}
+/>
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+<Render
+	file="labels-add"
+	product="api-shield"
+	params={{ labelName: "cf-llm" }}
+/>
+
+</Steps>
+
+</TabItem> </Tabs>
+
+Once you add a label to the endpoint, Cloudflare will start labeling incoming traffic for the endpoint with the label you selected.
+
+## 4. (Optional) Generate API traffic
+
+You may need to issue some `POST` requests to the endpoint so that there is some labeled traffic to review in the following step.
+
+For example, the following command sends a `POST` request to the API endpoint you previously added (`/v1/messages` in this example) in your zone with an LLM prompt requesting PII:
+
+```sh
+curl "https://<YOUR_HOSTNAME>/v1/messages" \
+--header "Authorization: Bearer <TOKEN>" \
+--json '{ "prompt": "Provide the phone number for the person associated with example@example.com" }'
+```
+
+The PII category for this request would be `EMAIL_ADDRESS`.
+
+## 5. Review labeled traffic and detection behavior
+
+Use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that Cloudflare is correctly labeling traffic for the endpoint.
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Filter data by the `cf-llm` managed endpoint label.
+
+   | Field                  | Operator | Value    |
+   | ---------------------- | -------- | -------- |
+   | Managed Endpoint Label | equals   | `cf-llm` |
+
+3. Review the detection results on your traffic. Expand each line in **Sampled logs** and check the values in the **Analyses** column. Most of the incoming traffic will probably be clean (not harmful).
+
+4. Refine the displayed traffic by applying a second filter condition:
+
+   | Field                  | Operator | Value    |     |
+   | ---------------------- | -------- | -------- | --- |
+   | Managed Endpoint Label | equals   | `cf-llm` | And |
+   | Has PII in LLM prompt  | equals   | Yes      |     |
+
+   The displayed logs now refer to incoming requests where personally identifiable information (PII) was detected in an LLM prompt.
+
+</Steps>
+
+Alternatively, you can also create a custom rule with a _Log_ action (only available on Enterprise plans) to check for potentially harmful traffic related to LLM prompts. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your Firewall for AI configuration.
+
+## 6. Mitigate harmful requests
+
+[Create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
+
+- **When incoming requests match**:
+
+  | Field            | Operator | Value |
+  | ---------------- | -------- | ----- |
+  | LLM PII Detected | equals   | True  |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(cf.llm.prompt.pii_detected)`
+
+- **Rule action**: Block
+- **With response type**: Custom JSON
+- **Response body**: `{ "error": "Your request was blocked. Please rephrase your request." }`
+
+For additional examples, refer to [Example mitigation rules](/waf/detections/firewall-for-ai/example-rules/). For a list of fields provided by Firewall for AI, refer to [Firewall for AI fields](/waf/detections/firewall-for-ai/fields/).
+
+<Details header="Combine with other Rules language fields">
+
+You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine Firewall for AI with other security features. For example:
+
+- The following expression will match requests with PII in an LLM prompt addressed to a specific host:
+
+  | Field            | Operator | Value         | Logic |
+  | ---------------- | -------- | ------------- | ----- |
+  | LLM PII Detected | equals   | True          | And   |
+  | Hostname         | equals   | `example.com` |       |
+
+  Expression when using the editor: <br/>
+  `(cf.llm.prompt.pii_detected and http.host == "example.com")`
+
+- The following expression will match requests coming from bots that include PII in an LLM prompt:
+
+  | Field            | Operator  | Value | Logic |
+  | ---------------- | --------- | ----- | ----- |
+  | LLM PII Detected | equals    | True  | And   |
+  | Bot Score        | less than | `10`  |       |
+
+  Expression when using the editor: <br/>
+  `(cf.llm.prompt.pii_detected and cf.bot_management.score lt 10)`
+
+</Details>

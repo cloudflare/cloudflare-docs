@@ -112,18 +112,32 @@ wrangler r2 bucket catalog get <NAME> [OPTIONS]
 	depth={3}
 />
 
-Enable compaction on a [R2 Data Catalog](/r2/data-catalog/).
+Enable compaction on a [R2 Data Catalog](/r2/data-catalog/) or a specific table.
 
 ```txt
-wrangler r2 bucket catalog compaction enable <BUCKET> [OPTIONS]
+wrangler r2 bucket catalog compaction enable <BUCKET> [NAMESPACE] [TABLE] [OPTIONS]
 ```
 
 - `BUCKET` <Type text="string" /> <MetaInfo text="required" />
   - The name of the bucket to enable R2 Data Catalog compaction for.
-- `--token` <Type text="string" /> <MetaInfo text="required" />
-  - The R2 API token with R2 Data Catalog edit permissions
-- `--target-size` <Type text="number" /> <MetaInfo text="required" />
-  - The target file size (in MB) compaction will attempt to generate. Default: 128.
+- `NAMESPACE` <Type text="string" /> <MetaInfo text="optional" />
+  - The namespace containing the table (for table-level compaction). Must be provided together with `TABLE`.
+- `TABLE` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the table (for table-level compaction). Must be provided together with `NAMESPACE`.
+- `--token` <Type text="string" /> <MetaInfo text="optional" />
+  - The R2 API token with R2 Data Catalog edit permissions. Required for catalog-level compaction only.
+- `--target-size` <Type text="number" /> <MetaInfo text="optional" />
+  - The target file size (in MB) compaction will attempt to generate. Default: 128. Allowed values: 64, 128, 256, 512.
+
+Examples:
+
+```bash
+# Enable catalog-level compaction (requires token)
+npx wrangler r2 bucket catalog compaction enable my-bucket --token <TOKEN>
+
+# Enable table-level compaction
+npx wrangler r2 bucket catalog compaction enable my-bucket my-namespace my-table --target-size 256
+```
 
 <AnchorHeading
 	title="`catalog compaction disable`"
@@ -131,14 +145,28 @@ wrangler r2 bucket catalog compaction enable <BUCKET> [OPTIONS]
 	depth={3}
 />
 
-Disable compaction on a [R2 Data Catalog](/r2/data-catalog/).
+Disable compaction on a [R2 Data Catalog](/r2/data-catalog/) or a specific table.
 
 ```txt
-wrangler r2 bucket catalog compaction disable <BUCKET> [OPTIONS]
+wrangler r2 bucket catalog compaction disable <BUCKET> [NAMESPACE] [TABLE] [OPTIONS]
 ```
 
 - `BUCKET` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the bucket to enable R2 Data Catalog compaction for.
+  - The name of the bucket to disable R2 Data Catalog compaction for.
+- `NAMESPACE` <Type text="string" /> <MetaInfo text="optional" />
+  - The namespace containing the table (for table-level compaction). Must be provided together with `TABLE`.
+- `TABLE` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the table (for table-level compaction). Must be provided together with `NAMESPACE`.
+
+Examples:
+
+```bash
+# Disable catalog-level compaction
+npx wrangler r2 bucket catalog compaction disable my-bucket
+
+# Disable table-level compaction
+npx wrangler r2 bucket catalog compaction disable my-bucket my-namespace my-table
+```
 
 <AnchorHeading title="`cors set`" slug="r2-bucket-cors-set" depth={3} />
 

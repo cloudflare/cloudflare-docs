@@ -1,0 +1,82 @@
+---
+pcx_content_type: concept
+title: Account takeover detections
+sidebar:
+  order: 3
+---
+
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components"
+
+Using the detection IDs below, you can detect and mitigate account takeover attacks. You can monitor the number of login requests for a given software and network combination, as well as the percentage of login errors. When it reaches a suspicious level, you can prevent these attacks by using [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and [Workers](/workers/).
+
+| <div style="width:100px">Detection ID</div> | Description                              |
+| ------------------------------------------- | ---------------------------------------- |
+| `201326592`                                 | Observes all login failures to the zone. |
+| `201326593`                                 | Observes all login traffic to the zone.  |
+| `201326598`                                 | Sets a dynamic threshold based on the normal traffic that is unique to the zone.<br /><br /> When the ID matches a login failure, Bot Management sets the [bot score](/bots/concepts/bot-score/) to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
+
+## Challenges for account takeover detections
+
+Cloudflare's [Managed Challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge-recommended) can limit brute-force attacks on your login endpoints.
+
+To access account takeover detections:
+
+<Tabs syncKey="dashNewNav"> 
+	<TabItem label="Old dashboard">
+		<Steps>
+            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+            2. Go to **Security** > **WAF**.
+            3. Under **Custom rules**, select **Create rule**.
+            4. Fill out the form using **Bot Detection IDs** along with other necessary information.
+            5. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
+        </Steps>
+    </TabItem> 
+    <TabItem label="New dashboard" icon="rocket">
+		<Steps>
+            1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+                <DashButton url="/?to=/:account/:zone/security/security-rules" />
+            2. Select **Create rule** and choose **Custom rule**.
+            3. Fill out the form using **Bot Detection IDs** along with other necessary information.
+            4. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
+        </Steps>
+	</TabItem> 
+</Tabs>
+
+```js title="Rule example"
+
+(any(cf.bot_management.detection_ids[*] eq 201326593))
+```
+
+## Limit logins with account takeover detections
+
+Rate limiting rules can limit the number of logins from a particular IP, JA4 fingerprint, or country.
+
+To use rate limiting rules with account takeover detections:
+
+<Tabs syncKey="dashNewNav"> 
+	<TabItem label="Old dashboard">
+		<Steps>
+            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+            2. Go to **Security** > **WAF**.
+            3. Under **Rate limiting rules**, select **Create rule**.
+            4. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
+            5. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
+        </Steps>
+  </TabItem> 
+  <TabItem label="New dashboard" icon="rocket">
+		<Steps>
+            1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+                <DashButton url="/?to=/:account/:zone/security/security-rules" />
+            2. Select **Create rule** and choose **Rate limiting rule**.
+            3. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
+            4. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
+        </Steps>
+    </TabItem> 
+</Tabs>
+
+:::tip[Enhanced with leaked credential detections]
+The rule can be enhanced with Leaked Credential Checks. Refer to the [WAF documentation](/waf/detections/leaked-credentials/) for more information on how to include leaked credentials and account takeover detections in a rate limiting rule. 
+
+:::

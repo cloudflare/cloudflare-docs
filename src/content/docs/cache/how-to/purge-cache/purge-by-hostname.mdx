@@ -6,18 +6,22 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components"
+
 Purging by hostname means that all assets at URLs with a host that matches one of the provided values will be instantly purged from the cache.
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select **Caching** > **Configuration**.
-3. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
-4. Under **Purge by**, select **Hostname**.
-5. Follow the syntax instructions:
+1. In the Cloudflare dashboard, go to the **Configuration** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
+3. Under **Purge by**, select **Hostname**.
+4. Follow the syntax instructions:
    * One hostname per line.
    * Separated by commas.
    * You can purge up to 30 hostnames at a time.
-6. Enter the appropriate value(s) in the text field using the format shown in the example.
-7. Select **Purge**.
+5. Enter the appropriate value(s) in the text field using the format shown in the example.
+6. Select **Purge**.
 
 For information on rate limits, refer to the [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits) section.
 

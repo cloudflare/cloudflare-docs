@@ -21,6 +21,12 @@ Every write operation in [Apache Iceberg](https://iceberg.apache.org/), no matte
 
 R2 Data Catalog can now [manage compaction](/r2/data-catalog/manage-catalogs) for Apache Iceberg tables stored in R2. When enabled, compaction runs automatically and combines new files that have not been compacted yet.
 
+You can enable compaction at two levels:
+- **Catalog-level**: Applies to all tables in your R2 bucket
+- **Table-level**: Fine-grained control for specific tables
+
+Table-level settings allow you to customize compaction behavior for different workloads within the same bucket.
+
 Compacted files are prefixed with `compacted-` in the `/data/` directory.
 
 ### Choosing the right target file size

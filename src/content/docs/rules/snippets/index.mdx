@@ -41,8 +41,6 @@ If you have used the Cloudflare API to create a code snippet that is not associa
 
 ## Availability
 
-<Render file="rules-new-limits" product="rules" />
-
 <FeatureTable id="rules.snippets" />
 
 Each <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subrequest</GlossaryTooltip> in a redirect chain counts against the subrequest limit. This means that if a subrequest was redirected it would count as two subrequests. To avoid issues, ensure that you make a subrequest to the end location of the redirect chain.

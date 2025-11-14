@@ -65,7 +65,7 @@ Refer to <a href={props.magicTunnelHealthCheckCalculation}>How Cloudflare calcul
 	 <DashButton url="/?to=/:account/notifications" />
 
 2. Select **Add**.
-3. From the **Product** drop-down menu, select **{props.productName}**.
+3. From the **Product** drop-down menu, select **{props.magicWord === "Magic Transit" ? "Magic Transit" : "Magic WAN"}**.
 4. Select **Magic Tunnel Health Check Alert** > **Select** to add a notification. You can add alerts by tunnel or by data center (beta).
 
 <Details header="Alert by tunnel">
@@ -177,7 +177,7 @@ Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/cr
   )
 }
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
 	<APIRequest
 		path="/accounts/{account_id}/alerting/v3/policies"

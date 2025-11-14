@@ -3,40 +3,54 @@ title: Components
 sidebar:
     order: 2
 ---
+import { Details } from "~/components";
 
-All of the components available to contributors writing content on Cloudflare's developer documentation
-are documented in this section.
+When you are [contributing to the Cloudflare Docs](/style-guide/contributions/), you can use our custom components to add additional formatting, such as buttons, tabs, and collapsible sections.
 
-## What is a component?
+This guide shows you the basics of importing and adding a component to a page. Refer to each component page in this Style Guide to learn the specific props and requirements for each.
 
-[Astro components](https://docs.astro.build/en/basics/astro-components/) are re-usable HTML templates which
-we use to reduce maintenance burden & duplicated code by returning frequently used layouts or snippets into
-a component that can be imported and used across various pages.
+Our components are based on [Astro components](https://docs.astro.build/en/basics/astro-components/) and are written in [MDX](https://docs.astro.build/en/guides/markdown-content/), an extended version of Markdown. [Learn more about the Cloudflare Docs framework](/style-guide/how-we-docs/our-site/#site-framework).
 
-## Using components
+## Add a component to a page
 
-Content is authored in [MDX](https://docs.astro.build/en/guides/markdown-content/), which allows JavaScript
-expressions and components to be used. They are like HTML elements, which can be self-closing.
+To add a component to a page:
 
-```mdx live
-import { Details, RuleID } from "~/components"
+1. Import the component to the page by adding this text directly below the [frontmatter](/style-guide/frontmatter/):
 
-{/* Self-closing component */}
-<RuleID id="abcdefghijklmnopqrstuvwxyz" />
+   ```mdx
+   import { COMPONENT_NAME } from "~/components";
+   ```
 
-<br/> {/* Line break to separate rendered components */}
+   For example, if you were to add [the `DashButton` component](/style-guide/components/dash-button/) to the [Images getting started page](/images/get-started/), the top of the MDX file corresponding to that page would look like the following:
 
-{/* Component with inside content */}
-<Details header="Open me!">
-    Hello, world!
-</Details>
-```
+   ```mdx
+   ---
+   pcx_content_type: get-started
+   title: Getting started
+   sidebar:
+     order: 2
 
-### Importing
+   ---
 
-Components need to be imported to be made available inside a MDX file. All of our components are exported from
-`"~/components"`, so they would be imported like this:
+   import { DashButton } from "~/components";
+   ```
 
-```mdx
-import { Card, Render } from "~/components"
-```
+2. Add the component to the page by adding this text anywhere on the page you want the component to appear:
+
+   ```mdx
+	 <COMPONENT_NAME PROP_NAME="PROP_VALUE" />
+   ```
+
+   For example, if you were to add the `DashButton` component to some steps in the [Images getting started page](/images/get-started/), here is how the MDX file would look:
+
+	 ```mdx
+   1. In the Cloudflare dashboard, go to the **Transformations** page.
+
+      <DashButton url="/?to=/:account/images/delivery-zones" />
+
+   2. Go to the specific zone where you want to enable transformations.
+
+   ```
+  <Details header="This is how this example would display after it is published:">
+  ![DashButton component example](~/assets/images/style-guide/ui-elements/dashbutton-example.png)
+  </Details>

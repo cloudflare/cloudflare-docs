@@ -1,5 +1,5 @@
 import { z } from "astro:schema";
-import type { SchemaContext } from "astro:content";
+import { reference, type SchemaContext } from "astro:content";
 
 import { sidebar, SidebarIconSchema } from "./types/sidebar";
 
@@ -89,11 +89,10 @@ export const baseSchema = ({ image }: SchemaContext) =>
 				"Required for the [`ProductReleaseNotes`](/style-guide/components/usage/#productreleasenotes) component.",
 			),
 		products: z
-			.string()
-			.array()
-			.optional()
+			.array(reference("products"))
+			.default([])
 			.describe(
-				"The names of related products, which show on some grids for Examples, [Tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/), and [Reference Architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/)",
+				"The names of related products (according to their file name in `src/content/products`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
 			),
 		summary: z
 			.string()

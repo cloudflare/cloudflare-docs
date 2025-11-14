@@ -1,0 +1,377 @@
+---
+pcx_content_type: how-to
+title: Validate JWTs
+sidebar:
+  order: 1
+---
+
+import { GlossaryTooltip } from "~/components";
+
+When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) as a `Cf-Access-Jwt-Assertion` request header. Requests made through a browser will also pass the token as a `CF_Authorization` cookie.
+
+Cloudflare signs the token with a key pair unique to your account. You should validate the token with your public key to ensure that the request came from Access and not a malicious third party. We recommend validating the `Cf-Access-Jwt-Assertion` header instead of the `CF_Authorization` cookie, since the cookie is not guaranteed to be passed.
+
+## Access signing keys
+
+The public key for the signing key pair is located at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`, where `<your-team-name>` is your Cloudflare One <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+
+By default, Access rotates the signing key every 6 weeks. This means you will need to programmatically or manually update your keys as they rotate. Previous keys remain valid for 7 days after rotation to allow time for you to make the update.
+
+You can also manually rotate the key using the [API](/api/resources/zero_trust/subresources/access/subresources/keys/methods/rotate/). This can be done for testing or security purposes.
+
+As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs` contains two public keys: the current key used to sign all new tokens, and the previous key that has been rotated out.
+
+- `keys`: both keys in JWK format
+- `public_cert`: current key in PEM format
+- `public_certs`: both keys in PEM format
+
+```txt
+{
+  "keys": [
+    {
+      "kid": "1a1c3986a44ce6390be42ec772b031df8f433fdc71716db821dc0c39af3bce49",
+      "kty": "RSA",
+      "alg": "RS256",
+      "use": "sig",
+      "e": "AQAB",
+      "n": "5PKw-...-AG7MyQ"
+    },
+    {
+      "kid": "6c3bffef71bb0a90c9cbef3b7c0d4a1c7b4b8b76b80292a623afd9dac45d1c65",
+      "kty": "RSA",
+      "alg": "RS256",
+      "use": "sig",
+      "e": "AQAB",
+      "n": "pwVn...AA6Hw"
+    }
+  ],
+  "public_cert": {
+    "kid": "6c3bffef71bb0a90c9cbef3b7c0d4a1c7b4b8b76b80292a623afd9dac45d1c65",
+    "cert": "-----BEGIN CERTIFICATE----- ... -----END CERTIFICATE----- "
+  },
+  "public_certs": [
+    {
+      "kid": "1a1c3986a44ce6390be42ec772b031df8f433fdc71716db821dc0c39af3bce49",
+      "cert": "-----BEGIN CERTIFICATE----- ... -----END CERTIFICATE----- "
+    },
+    {
+      "kid": "6c3bffef71bb0a90c9cbef3b7c0d4a1c7b4b8b76b80292a623afd9dac45d1c65",
+      "cert": "-----BEGIN CERTIFICATE----- ... -----END CERTIFICATE----- "
+    }
+  ]
+}
+```
+
+:::note[Avoid key rotation issues]
+
+- Validate tokens using the external endpoint rather than saving the public key as a hard-coded value.
+- Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired value from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
+  :::
+
+## Verify the JWT manually
+
+To verify the token manually:
+
+1. Copy the JWT from the `Cf-Access-Jwt-Assertion` request header.
+
+2. Go to [jwt.io](https://jwt.io/).
+
+3. Select the RS256 algorithm.
+
+4. Paste the JWT into the **Encoded** box.
+
+5. In the **Payload** box, ensure that the `iss` field points to your team domain (`https://<your-team-name>.cloudflareaccess.com`). `jwt.io` uses the `iss` value to fetch the public key for token validation.
+
+6. Ensure that the page says **Signature Verified**.
+
+You can now trust that this request was sent by Access.
+
+## Programmatic verification
+
+You can run an automated script on your origin server to validate incoming requests. The provided sample code gets the application token from a request and checks its signature against your public key. You will need to insert your own team domain and Application Audience (AUD) tag into the sample code.
+
+### Get your AUD tag
+
+Cloudflare Access assigns a unique AUD tag to each application. The `aud` claim in the token payload specifies which application the JWT is valid for.
+
+To get the AUD tag:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+2. Select **Configure** for your application.
+3. From the **Basic information** tab, copy the **Application Audience (AUD) Tag**.
+
+You can now paste the AUD tag into your token validation script. The AUD tag will never change unless you delete or recreate the Access application.
+
+### Cloudflare Workers example
+
+When Cloudflare Access is in front of your [Worker](/workers), your Worker still needs to validate the JWT that Cloudflare Access adds to the `Cf-Access-Jwt-Assertion` header on the incoming request.
+
+The following code will validate the JWT using the [jose NPM package](https://www.npmjs.com/package/jose):
+
+```javascript
+import { jwtVerify, createRemoteJWKSet } from 'jose';
+
+export default {
+	async fetch(request, env, ctx) {
+		// Verify the POLICY_AUD environment variable is set
+		if (!env.POLICY_AUD) {
+			return new Response('Missing required audience', {
+				status: 403,
+				headers: { 'Content-Type': 'text/plain' }
+			});
+		}
+
+		// Get the JWT from the request headers
+		const token = request.headers.get('cf-access-jwt-assertion');
+
+		// Check if token exists
+		if (!token) {
+			return new Response('Missing required CF Access JWT', {
+				status: 403,
+				headers: { 'Content-Type': 'text/plain' }
+			});
+		}
+
+		try {
+			// Create JWKS from your team domain
+			const JWKS = createRemoteJWKSet(new URL(`${env.TEAM_DOMAIN}/cdn-cgi/access/certs`));
+
+			// Verify the JWT
+			const { payload } = await jwtVerify(token, JWKS, {
+				issuer: env.TEAM_DOMAIN,
+				audience: env.POLICY_AUD,
+			});
+
+			// Token is valid, proceed with your application logic
+			return new Response(`Hello ${payload.email || 'authenticated user'}!`, {
+				headers: { 'Content-Type': 'text/plain' }
+			});
+
+		} catch (error) {
+			// Token verification failed
+			return new Response(`Invalid token: ${error.message}`, {
+				status: 403,
+				headers: { 'Content-Type': 'text/plain' }
+			});
+		}
+	},
+};
+```
+
+#### Required environment variables
+
+Add these [environment variables](/workers/configuration/environment-variables/) to your Worker:
+	- `POLICY_AUD`: Your application's [AUD tag](#get-your-aud-tag)
+	- `TEAM_DOMAIN`: `https://<your-team-name>.cloudflareaccess.com`, where `<your-team-name>` is replaced with your actual <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+
+You can set these variables by adding them to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/), or via the Cloudflare dashboard under **Workers & Pages** > **your-worker** > **Settings** > **Environment Variables**.
+
+### Golang example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "net/http"
+
+    "github.com/coreos/go-oidc/v3/oidc"
+)
+
+var (
+    ctx        = context.TODO()
+    teamDomain = "https://test.cloudflareaccess.com"
+    certsURL   = fmt.Sprintf("%s/cdn-cgi/access/certs", teamDomain)
+
+    // The Application Audience (AUD) tag for your application
+    policyAUD = "4714c1358e65fe4b408ad6d432a5f878f08194bdb4752441fd56faefa9b2b6f2"
+
+    config = &oidc.Config{
+        ClientID: policyAUD,
+    }
+    keySet   = oidc.NewRemoteKeySet(ctx, certsURL)
+    verifier = oidc.NewVerifier(teamDomain, keySet, config)
+)
+
+// VerifyToken is a middleware to verify a CF Access token
+func VerifyToken(next http.Handler) http.Handler {
+    fn := func(w http.ResponseWriter, r *http.Request) {
+        headers := r.Header
+
+        // Make sure that the incoming request has our token header
+        //  Could also look in the cookies for CF_AUTHORIZATION
+        accessJWT := headers.Get("Cf-Access-Jwt-Assertion")
+        if accessJWT == "" {
+            w.WriteHeader(http.StatusUnauthorized)
+            w.Write([]byte("No token on the request"))
+            return
+        }
+
+        // Verify the access token
+        ctx := r.Context()
+        _, err := verifier.Verify(ctx, accessJWT)
+        if err != nil {
+            w.WriteHeader(http.StatusUnauthorized)
+            w.Write([]byte(fmt.Sprintf("Invalid token: %s", err.Error())))
+            return
+        }
+        next.ServeHTTP(w, r)
+    }
+    return http.HandlerFunc(fn)
+}
+
+func MainHandler() http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        w.Write([]byte("welcome"))
+    })
+}
+
+func main() {
+    http.Handle("/", VerifyToken(MainHandler()))
+    http.ListenAndServe(":3000", nil)
+}
+```
+
+### Python example
+
+`pip` install the following:
+
+- flask
+- requests
+- PyJWT
+- cryptography
+
+```python
+from flask import Flask, request
+import requests
+import jwt
+import json
+import os
+app = Flask(__name__)
+
+
+# The Application Audience (AUD) tag for your application
+POLICY_AUD = os.getenv("POLICY_AUD")
+
+# Your CF Access team domain
+TEAM_DOMAIN = os.getenv("TEAM_DOMAIN")
+CERTS_URL = "{}/cdn-cgi/access/certs".format(TEAM_DOMAIN)
+
+def _get_public_keys():
+    """
+    Returns:
+        List of RSA public keys usable by PyJWT.
+    """
+    r = requests.get(CERTS_URL)
+    public_keys = []
+    jwk_set = r.json()
+    for key_dict in jwk_set['keys']:
+        public_key = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(key_dict))
+        public_keys.append(public_key)
+    return public_keys
+
+def verify_token(f):
+    """
+    Decorator that wraps a Flask API call to verify the CF Access JWT
+    """
+    def wrapper():
+				# Check for the POLICY_AUD environment variable
+				if not POLICY_AUD:
+					return "missing required audience", 403
+
+        token = ''
+        if 'CF_Authorization' in request.cookies:
+            token = request.cookies['CF_Authorization']
+        else:
+            return "missing required cf authorization token", 403
+        keys = _get_public_keys()
+
+        # Loop through the keys since we can't pass the key set to the decoder
+        valid_token = False
+        for key in keys:
+            try:
+                # decode returns the claims that has the email when needed
+                jwt.decode(token, key=key, audience=POLICY_AUD, algorithms=['RS256'])
+                valid_token = True
+                break
+            except:
+                pass
+        if not valid_token:
+            return "invalid token", 403
+
+        return f()
+    return wrapper
+
+
+@app.route('/')
+@verify_token
+def hello_world():
+    return 'Hello, World!'
+
+
+if __name__ == '__main__':
+    app.run()
+```
+
+### JavaScript (Node.js) example
+
+```javascript
+const express = require("express");
+const jose = require("jose");
+
+// The Application Audience (AUD) tag for your application
+const AUD = process.env.POLICY_AUD;
+
+// Your CF Access team domain
+const TEAM_DOMAIN = process.env.TEAM_DOMAIN;
+const CERTS_URL = `${TEAM_DOMAIN}/cdn-cgi/access/certs`;
+
+const JWKS = jose.createRemoteJWKSet(new URL(CERTS_URL));
+
+// verifyToken is a middleware to verify a CF authorization token
+const verifyToken = async (req, res, next) => {
+	// Check for the AUD environment variable
+	if (!AUD) {
+		return res.status(403).send({
+			status: false,
+			message: "missing required audience",
+		});
+	}
+
+	const token = req.headers["cf-access-jwt-assertion"];
+
+	// Make sure that the incoming request has our token header
+	if (!token) {
+		return res.status(403).send({
+			status: false,
+			message: "missing required cf authorization token",
+		});
+	}
+
+	try {
+		const result = await jose.jwtVerify(token, JWKS, {
+			issuer: TEAM_DOMAIN,
+			audience: AUD,
+		});
+
+		req.user = result.payload;
+		next();
+	} catch (err) {
+		return res.status(403).send({
+			status: false,
+			message: "invalid token",
+		});
+	}
+};
+
+const app = express();
+
+app.use(verifyToken);
+
+app.get("/", (req, res) => {
+	res.send("Hello World!");
+});
+
+app.listen(3333);
+```

@@ -11,7 +11,15 @@ head:
 description: Monitor and control how AI services access your website content.
 ---
 
-import { Description, Feature, FeatureTable, Plan, LinkButton, RelatedProduct, Card } from "~/components";
+import {
+	Description,
+	Feature,
+	FeatureTable,
+	Plan,
+	LinkButton,
+	RelatedProduct,
+	Card,
+} from "~/components";
 
 <Plan type="all" />
 
@@ -54,6 +62,15 @@ With AI Crawl Control, you can:
 </Feature>
 
 <Feature
+	header="Track robots.txt"
+	href="/ai-crawl-control/features/track-robots-txt/"
+	cta="Track robots.txt"
+>
+	Track the health of `robots.txt` files and identify which crawlers are
+	violating your directives.
+</Feature>
+
+<Feature
 	header="Pay Per Crawl"
 	href="/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/"
 	cta="Pay per crawl"
@@ -66,41 +83,35 @@ With AI Crawl Control, you can:
 ## Use cases
 
 <Card title="Publishers and content creators">
-Publishers and content creators can monitor which AI crawlers are accessing their articles and educational content. Set policies to allow beneficial crawlers while blocking others.
+	Publishers and content creators can monitor which AI crawlers are accessing
+	their articles and educational content. Set policies to allow beneficial
+	crawlers while blocking others.
 </Card>
 
 <Card title="E-commerce and business sites">
-E-commerce and business sites can identify AI crawler activity on product pages and business information. Control access to sensitive data like pricing and inventory.
+	E-commerce and business sites can identify AI crawler activity on product
+	pages and business information. Control access to sensitive data like pricing
+	and inventory.
 </Card>
 
 <Card title="Documentation sites">
-Documentation sites can track how AI crawlers are accessing their technical documentation. Gain insight into how AI crawlers are engaging with your site.
+	Documentation sites can track how AI crawlers are accessing their technical
+	documentation. Gain insight into how AI crawlers are engaging with your site.
 </Card>
 
 ---
 
 ## Related Products
 
-<RelatedProduct
-	header="Bots"
-	href="/bots/"
-	product="bots"
->
-Identify and mitigate automated traffic to protect your domain from bad bots.
+<RelatedProduct header="Bots" href="/bots/" product="bots">
+	Identify and mitigate automated traffic to protect your domain from bad bots.
 </RelatedProduct>
 
-<RelatedProduct
-	header="Web Application Firewall"
-	href="/waf/"
-	product="waf"
->
-Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+<RelatedProduct header="Web Application Firewall" href="/waf/" product="waf">
+	Get automatic protection from vulnerabilities and the flexibility to create
+	custom rules.
 </RelatedProduct>
 
-<RelatedProduct
-	header="Analytics"
-	href="/analytics/"
-	product="analytics"
->
-View and analyze traffic on your domain.
+<RelatedProduct header="Analytics" href="/analytics/" product="analytics">
+	View and analyze traffic on your domain.
 </RelatedProduct>

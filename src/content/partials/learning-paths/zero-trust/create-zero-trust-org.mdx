@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { Render} from "~/components"
+import { Render } from "~/components";
 
 To start using Zero Trust features, create a Zero Trust organization in your Cloudflare account.
 
@@ -22,18 +21,19 @@ To add Zero Trust to your Terraform configuration:
 1. [Sign up for Zero Trust](#sign-up-for-zero-trust) on the Cloudflare dashboard.
 
 2. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Access: Organizations, Identity Providers, and Groups Write`
+   - `Access: Organizations, Identity Providers, and Groups Write`
 
 3. Add the [`cloudflare_zero_trust_organization`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_organization) resource:
 
-	```terraform
-	resource "cloudflare_zero_trust_organization" "<your-team-name>" {
-		account_id                         = var.cloudflare_account_id
-		name                               = "Acme Corporation"
-		auth_domain                        = "<your-team-name>.cloudflareaccess.com"
-	}
-	```
-	Replace `<your-team-name` with the Zero Trust organization name selected during [onboarding](#sign-up-for-zero-trust). You can also view your team name on [Zero Trust](https://one.dash.cloudflare.com) under **Settings** > **Custom Pages**.
+   ```terraform
+   resource "cloudflare_zero_trust_organization" "<your-team-name>" {
+   	account_id                         = var.cloudflare_account_id
+   	name                               = "Acme Corporation"
+   	auth_domain                        = "<your-team-name>.cloudflareaccess.com"
+   }
+   ```
+
+   Replace `<your-team-name` with the Zero Trust organization name selected during [onboarding](#sign-up-for-zero-trust). You can also view your team name on [Zero Trust](https://one.dash.cloudflare.com) under **Settings** > **Custom Pages**.
 
 You can now update Zero Trust organization settings using Terraform.
 

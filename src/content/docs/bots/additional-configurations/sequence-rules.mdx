@@ -9,7 +9,9 @@ import { Render, Steps } from "~/components"
 
 <Render file="sequence-rules" product="bots" params={{ one: "Sequence rules", two: "/bots/additional-configurations/sequence-rules/" }} />
 
-Sequence rules is currently in private beta. If you would like to be included in the beta, contact your account team.
+:::caution[`431` error]
+Too many concurrent requests to your zone may add cookies that create a header that is too large, causing a `431` error.
+:::
 
 ## Prerequisites
 
@@ -128,3 +130,9 @@ not cf.sequence.msec_since_op["aaaaaaaa"] ge 1000
 ## Limitations
 
 Cloudflare only supports HTTPS requests since our cookies set the `Secure` attribute.
+
+---
+
+## Availability
+
+Sequence rules is currently in private beta. If you would like to be included in the beta, contact your account team.

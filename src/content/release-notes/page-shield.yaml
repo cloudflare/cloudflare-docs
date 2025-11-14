@@ -3,6 +3,11 @@ link: /page-shield/changelog/
 productName: Page Shield
 productLink: "/page-shield/"
 entries:
+  - publish_date: "2025-10-08"
+    title: Updated machine learning (ML) model
+    description: |-
+      The latest ML model has been deployed to all Page Shield add-on customers with better classification precision. Scripts with false positive classification may have a different pattern than the previous model deployment.
+
   - publish_date: "2025-09-12"
     title: Scoped alerts now support policies in log mode
     description: |-

@@ -3,20 +3,19 @@ title: Best practices
 pcx_content_type: overview
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Learn best practices for building scalable Access applications and policies.
 
 ## Create reusable policy components
 
-If you have many policies that contain duplicate rules, we recommend [building a rule group](/cloudflare-one/policies/access/groups/) and referencing it across multiple policies. For example, you could define a rule group for "corporate users", which has both device posture check requirements and specific emails, or just “developers”, which references a group in your identity provider.
+If you have many policies that contain duplicate rules, we recommend [building a rule group](/cloudflare-one/access-controls/policies/groups/) and referencing it across multiple policies. For example, you could define a rule group for "corporate users", which has both device posture check requirements and specific emails, or just “developers”, which references a group in your identity provider.
 
 ## Define your domain structure
 
-Access applications have an inherently flexible and powerful domain structure capability. Your domain structure should achieve your application security goals without being overly permissive or overly restrictive. Before designing applications for production, review the [Application paths documentation](/cloudflare-one/policies/access/app-paths/) to understand how path definitions work and how to use wildcards.
+Access applications have an inherently flexible and powerful domain structure capability. Your domain structure should achieve your application security goals without being overly permissive or overly restrictive. Before designing applications for production, review the [Application paths documentation](/cloudflare-one/access-controls/policies/app-paths/) to understand how path definitions work and how to use wildcards.
 
 ### Multiple domains in an application
 

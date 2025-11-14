@@ -68,9 +68,9 @@ Although the how-to guides in this documentation are focused on both parent doma
 
 ## SSL/TLS certificates
 
-If the parent domain's SSL/TLS certificate explicitly lists the delegated subdomain and is created after the subdomain's SSL/TLS own certificate, the parent domain's certificate will take precedence over the subdomain's certificate.
+When using subdomain setup, you should consider possible interactions between parent zone and child zone configurations that could impact [SSL/TLS certificates](/ssl/) provisioning.
 
-For instance, if `example.com` [creates an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) that directly lists `docs.example.com`, visitors to `docs.example.com` might see the SSL/TLS certificate for `example.com`.
+If a certificate is already active on the child zone for a specific hostname (`subdomain.example.com`), any certificate pack containing that exact hostname in the parent zone (`example.com`) will fail validation.
 
 ## Access applications
 

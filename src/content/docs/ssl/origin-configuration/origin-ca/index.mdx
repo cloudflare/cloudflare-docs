@@ -8,7 +8,7 @@ head: []
 description: Encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.
 ---
 
-import { FeatureTable, GlossaryTooltip, Render } from "~/components";
+import { Details, FeatureTable, Render, TabItem, Tabs, DashButton, GlossaryTooltip } from "~/components";
 
 If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
@@ -31,24 +31,25 @@ Using Cloudflare origin CA certificates does not prevent you from using [delegat
 
 To create an Origin CA certificate in the dashboard:
 
-1. Log in to the Cloudflare dashboard and select an account.
-2. Choose a domain.
-3. Go to **SSL/TLS** > **Origin Server**.
-4. Select **Create Certificate**.
+1. In the Cloudflare dashboard, go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. Select **Create Certificate**.
    :::note[API Access required]
    Users who do not have [**API Access**](https://dash.cloudflare.com/?to=/:account/members) will receive an error while trying to perform this action. Refer to [Troubleshooting](/ssl/origin-configuration/origin-ca/troubleshooting/#this-zone-is-either-not-part-of-your-account-or-you-do-not-have-access-to-it) for guidance.
    :::
-5. Choose either:
+3. Choose either:
    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
    - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
-6. List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone apex and first level wildcard hostname are included by default.
-7. Choose a **Certificate Validity** period.
-8. Select **Create**.
-9. Choose the **Key Format**:
+4. List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone apex and first level wildcard hostname are included by default.
+5. Choose a **Certificate Validity** period.
+6. Select **Create**.
+7. Choose the **Key Format**:
    - Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
    - Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
-10. Copy the signed **Origin Certificate** and **Private Key** into separate files. For security reasons, you cannot see the **Private Key** after you exit this screen.
-11. Select **OK**.
+8. Copy the signed **Origin Certificate** and **Private Key** into separate files. For security reasons, you cannot see the **Private Key** after you exit this screen.
+9. Select **OK**.
 
 :::note
 For details about working with certificates programmatically, refer to [API calls](#api-calls).
@@ -103,11 +104,12 @@ To prevent visitors from seeing warnings about an insecure certificate, you may 
 
 To revoke a certificate:
 
-1. Log in to the Cloudflare dashboard and select an account.
-2. Choose a domain.
-3. Go to **SSL/TLS** > **Origin Server**.
-4. In **Origin Certificates**, choose a certificate.
-5. Select **Revoke**.
+1. In the Cloudflare dashboard, go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. In **Origin Certificates**, choose a certificate.
+3. Select **Revoke**.
 
 ## Additional details
 

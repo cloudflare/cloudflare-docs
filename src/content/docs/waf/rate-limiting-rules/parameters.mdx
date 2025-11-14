@@ -13,7 +13,7 @@ For more information on the current rule configuration restrictions, refer to [C
 
 ## Parameter reference
 
-### If incoming requests match
+### When incoming requests match
 
 - Data type: <Type text="String" />
 - Field name in the API: `expression` (rule field)
@@ -73,7 +73,7 @@ For important details about these characteristics, refer to [Notes about rate li
 
 Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
 
-Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule matching expression (defined in **If incoming requests match**). This default is also applied when you set this field to an empty string (`""`).
+Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule matching expression (defined in **When incoming requests match**). This default is also applied when you set this field to an empty string (`""`).
 
 The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response). When there are response fields in the counting expression, the counting will happen after the response is sent.
 

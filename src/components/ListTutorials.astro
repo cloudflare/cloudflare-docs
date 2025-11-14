@@ -18,7 +18,7 @@ if (!currentProduct) {
 	);
 }
 
-const productTitle = currentProduct.data.product.title;
+const productID = currentProduct.id;
 
 const docs = await getCollection("docs", (entry) => {
 	return (
@@ -27,9 +27,7 @@ const docs = await getCollection("docs", (entry) => {
 		// /src/content/r2/**/*.mdx
 		(entry.id.startsWith(`${currentSection}/`) ||
 			// products: [R2]
-			entry.data.products?.some(
-				(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
-			))
+			entry.data.products?.some((product) => product.id === productID))
 	);
 });
 

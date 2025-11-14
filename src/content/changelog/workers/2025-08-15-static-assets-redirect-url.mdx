@@ -1,0 +1,9 @@
+---
+title: 'Workers Static Assets: Corrected handling of double slashes in redirect rule paths'
+description: Corrected handling of double slashes in redirect rule paths
+date: 2025-08-15
+---
+ 
+[Static Assets](/workers/static-assets/): Fixed a bug in how [redirect rules](https://developers.cloudflare.com/workers/static-assets/redirects/) defined in your Worker's `_redirects` file are processed. 
+
+If you're serving Static Assets with a `_redirects` file containing a rule like `/ja/* /:splat`, paths with double slashes were previously misinterpreted as external URLs. For example, visiting `/ja//example.com` would incorrectly redirect to `https://example.com` instead of `/example.com` on your domain. This has been fixed and double slashes now correctly resolve as local paths. Note: [Cloudflare Pages](/pages/) was not affected by this issue.

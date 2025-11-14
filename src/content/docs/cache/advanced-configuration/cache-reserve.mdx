@@ -3,7 +3,7 @@ title: Cache Reserve
 pcx_content_type: concept
 ---
 
-import { Render, TabItem, Tabs, APIRequest } from "~/components";
+import { Render, TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 <Render file="smart-shield-callout" product="smart-shield" />
 
@@ -25,9 +25,11 @@ A paid Cache Reserve Plan is required for the enablement.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
-2. Go to **Caching** > **Cache Reserve**.
-3. Select **Enable storage sync**.
+1. In the Cloudflare dashboard, go to the **Cache Reserve** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-reserve" />
+
+2. Select **Enable storage sync**.
 
 </TabItem> <TabItem label="API">
 
@@ -51,7 +53,7 @@ If you are an Enterprise customer and are interested in Cache Reserve, contact y
 
 ## Usage
 
-Like the standard CDN, Cache Reserve also uses the `cf-cache-status` header to indicate cache statuses like `MISS`, `HIT`, and `REVALIDATED`. Cache Reserve cache misses and hits are factored into the dashboard's cache hit ratio.
+Like the standard CDN, Cache Reserve also uses the `cf-cache-status` header to indicate [cache response statuses](/cache/concepts/cache-responses/) like `MISS`, `HIT`, and `REVALIDATED`. Cache Reserve cache misses and hits are factored into the dashboard's cache hit ratio.
 
 Individual sampled requests that filled or were served by Cache Reserve are viewable via the [CacheReserveUsed](/logs/logpush/logpush-job/datasets/zone/http_requests/) Logpush field.
 
@@ -165,9 +167,12 @@ Be aware that the deletion may take up to 24 hours to complete.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
-2. Go to **Caching** > **Cache Reserve**.
-3. In **Delete Cache Reserve Data**, select **Delete Storage**.
+
+1. In the Cloudflare dashboard, go to the **Cache Reserve** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-reserve" />
+
+2. In **Delete Cache Reserve Data**, select **Delete Storage**.
 
 </TabItem> <TabItem label="API">
 

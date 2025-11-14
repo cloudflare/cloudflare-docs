@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, DashButton } from "~/components";
 
 The HTTP requests dataset includes most standard log information by default. However, if you need to capture additional request or response headers or cookies, you can use custom fields to tailor the logs to your specific needs
 
@@ -262,12 +262,14 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 ## Enable custom fields via dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select the domain you want to use.
-2. Go to **Analytics & Logs** > **Logpush**.
-3. In the **Custom log fields** section, select **Edit Custom Fields**.
-4. Select **Set new Custom Field**.
-5. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**.
-6. When you are done, select **Save**.
+1. In the Cloudflare dashboard, go to the **Logpush** page.
+
+   <DashButton url="/?to=/:account/:zone/analytics/logs" />
+
+2. In the **Custom log fields** section, select **Edit Custom Fields**.
+3. Select **Set new Custom Field**.
+4. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**.
+5. When you are done, select **Save**.
 
 ## Limitations
 

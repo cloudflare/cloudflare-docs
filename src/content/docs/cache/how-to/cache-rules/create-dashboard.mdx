@@ -8,15 +8,17 @@ head:
     content: Create a cache rule in the dashboard
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2.  Go to **Rules** > **Overview**.
-3.  Next to **Cache Rules**, select **Create rule**.
-4.  (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
-5.  Enter a descriptive name for the rule in **Rule name**.
-6.  Under **When incoming requests match**, select **All incoming requests** if you want the rule to apply to all traffic or **Custom filter expression** if you want the rule to only apply to traffic matching the custom expression.
-7.  If you selected **Custom filter expression**, under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property and select an **Operator**. Refer to [Available settings](/cache/how-to/cache-rules/settings/) for the list of available fields and operators.
+1. In the Cloudflare dashboard, go to the **Cache Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+
+2.  Select **Create rule**.
+3.  (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
+4.  Enter a descriptive name for the rule in **Rule name**.
+5.  Under **When incoming requests match**, select **All incoming requests** if you want the rule to apply to all traffic or **Custom filter expression** if you want the rule to only apply to traffic matching the custom expression.
+6.  If you selected **Custom filter expression**, under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property and select an **Operator**. Refer to [Available settings](/cache/how-to/cache-rules/settings/) for the list of available fields and operators.
 
     <div class="medium-img">
 
