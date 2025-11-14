@@ -34,26 +34,21 @@ You can also easily set up your **[local development environment](#local-develop
 
 ## Configuration
 
-You configure environments in the `envVars` object in your [Wrangler configuration file](/workers/wrangler/configuration/). The `envVars` object contains your [environment variables](/workers/configuration/environment-variables/) — including plain text values and [bindings](/workers/runtime-apis/bindings/). Each setting includes a `targetEnv` array that specifies which environments it applies to.
+You configure environments in the `env` object in your [Wrangler configuration file](/workers/wrangler/configuration/). The `env` object contains your [environment variables](/workers/configuration/environment-variables/) — including plain text values and [bindings](/workers/runtime-apis/bindings/). Each environment variable includes an `environments` object that specifies its value for each environment.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
   "name": "my-worker",
   "compatibility_date": "$today",
-  "envVars": {
-    "API_BASE": [
-      {
-        "type": "text",
-        "value": "https://api.cloudflare.com/client/v4",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "text",
-        "value": "https://api.staging.cloudflare.com/client/v4",
-        "targetEnv": ["preview"]
+  "env": {
+    "API_BASE": {
+      "type": "text",
+      "environments": {
+        "production": { "value": "https://api.cloudflare.com/client/v4" },
+        "preview": { "value": "https://api.staging.cloudflare.com/client/v4" }
       }
-    ]
+    }
   }
 }
 ```
@@ -74,65 +69,59 @@ An environment variable can have one of the following types:
 {
   "name": "my-worker",
   "compatibility_date": "$today",
-  "envVars": {
+  "env": {
     // Plain text
-    "API_BASE": [
-      {
-        "type": "text",
-        "value": "https://api.cloudflare.com/client/v4",
-        "targetEnv": ["production"]
+    "API_BASE": {
+      "type": "text",
+      "environments": {
+        "production": { "value": "https://api.cloudflare.com/client/v4" }
       }
-    ],
+    },
     // KV namespace binding
-    "MY_KV": [
-      {
-        "type": "kv_namespace",
-        "id": "abc123prod",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "kv_namespace",
-        "id": "def456staging",
-        "targetEnv": ["preview"]
+    "MY_KV": {
+      "type": "kv_namespace",
+      "environments": {
+        "production": { "id": "abc123prod" },
+        "preview": { "id": "def456staging" }
       }
-    ],
+    },
     // D1 database binding
-    "DB": [
-      {
-        "type": "d1",
-        "database_id": "prod-db-id-123",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "d1",
-        "database_id": "staging-db-id-456",
-        "targetEnv": ["preview"]
+    "DB": {
+      "type": "d1",
+      "environments": {
+        "production": { "database_id": "prod-db-id-123" },
+        "preview": { "database_id": "staging-db-id-456" }
       }
-    ]
+    }
   }
 }
 ```
 </WranglerConfig>
 
-### Targeting multiple environments
+### Accessing environment variables in your Worker
 
-You can target multiple environments with a single configuration. If **Production** and **Preview** should use the same value, include both in the `targetEnv` array:
+All environment variables you configure — including plain text values, secrets, and bindings — are accessible in your Worker code via the `env` object. Access them using `env.<VARIABLE_NAME>`:
 
-<WranglerConfig>
-```jsonc title="wrangler.jsonc"
-{
-  "envVars": {
-    "LOG_LEVEL": [
-      {
-        "type": "text",
-        "value": "info",
-        "targetEnv": ["production", "preview"]
-      }
-    ]
+<TypeScriptExample>
+```ts
+export default {
+  async fetch(request, env, ctx) {
+    // Access plain text environment variable
+    const apiBase = env.API_BASE;
+
+    // Access KV namespace binding
+    await env.MY_KV.put("key", "value");
+
+    // Access D1 database binding
+    const results = await env.DB.prepare("SELECT * FROM users").all();
+
+    return new Response("Hello!");
   }
 }
 ```
-</WranglerConfig>
+</TypeScriptExample>
+
+The `env` parameter is automatically passed to your Worker's `fetch` handler and contains all the environment variables specific to the environment (Production or Preview) your Worker is running in.
 
 ### Secrets
 
@@ -171,35 +160,32 @@ Your Worker uses **Production** settings when you:
 
 ### Configuration
 
-You define your **Production** environment by setting `"targetEnv": ["production"]` for each environment variable that should be available in **Production**.
+You define your **Production** environment by specifying values in the `"production"` key within each environment variable's `environments` object.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
   "name": "my-worker",
   "compatibility_date": "$today",
-  "envVars": {
-    "ENVIRONMENT": [
-      {
-        "type": "text",
-        "value": "production",
-        "targetEnv": ["production"]
+  "env": {
+    "ENVIRONMENT": {
+      "type": "text",
+      "environments": {
+        "production": { "value": "production" }
       }
-    ],
-    "MY_KV": [
-      {
-        "type": "kv_namespace",
-        "id": "xyz789production",
-        "targetEnv": ["production"]
+    },
+    "MY_KV": {
+      "type": "kv_namespace",
+      "environments": {
+        "production": { "id": "xyz789production" }
       }
-    ],
-    "DB": [
-      {
-        "type": "d1",
-        "database_id": "prod-db-id-123",
-        "targetEnv": ["production"]
+    },
+    "DB": {
+      "type": "d1",
+      "environments": {
+        "production": { "database_id": "prod-db-id-123" }
       }
-    ]
+    }
   }
 }
 ```
@@ -216,50 +202,35 @@ Cloudflare creates a **PR Preview** with its own unique URL using your **Preview
 
 ### Configuration
 
-You define your **Preview** environment by setting `"targetEnv": ["preview"]` for each environment variable.
+You define your **Preview** environment by specifying values in the `"preview"` key within each environment variable's `environments` object.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
   "name": "my-worker",
   "compatibility_date": "$today",
-  "envVars": {
-    "ENVIRONMENT": [
-      {
-        "type": "text",
-        "value": "production",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "text",
-        "value": "preview",
-        "targetEnv": ["preview"]
+  "env": {
+    "ENVIRONMENT": {
+      "type": "text",
+      "environments": {
+        "production": { "value": "production" },
+        "preview": { "value": "preview" }
       }
-    ],
-    "MY_KV": [
-      {
-        "type": "kv_namespace",
-        "id": "xyz789production",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "kv_namespace",
-        "id": "abc123preview",  // Use test KV namespace
-        "targetEnv": ["preview"]
+    },
+    "MY_KV": {
+      "type": "kv_namespace",
+      "environments": {
+        "production": { "id": "xyz789production" },
+        "preview": { "id": "abc123preview" }  // Use test KV namespace
       }
-    ],
-    "DB": [
-      {
-        "type": "d1",
-        "database_id": "prod-db-id-123",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "d1",
-        "database_id": "staging-db-id-456",  // Use test database
-        "targetEnv": ["preview"]
+    },
+    "DB": {
+      "type": "d1",
+      "environments": {
+        "production": { "database_id": "prod-db-id-123" },
+        "preview": { "database_id": "staging-db-id-456" }  // Use test database
       }
-    ]
+    }
   }
 }
 ```
@@ -386,46 +357,35 @@ Next, let's look at our [Wrangler configuration file](/workers/wrangler/configur
 
 #### Add environment variables
 
-Now add **[environment variables](/workers/configuration/environment-variables/)** to your configuration. Remember: explicitly specify which environment each setting targets using the `targetEnv` array.
+Now add **[environment variables](/workers/configuration/environment-variables/)** to your configuration. Remember: explicitly specify which environment each setting targets in the `environments` object.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
   "name": "my-worker",
   "compatibility_date": "$today",
-  "envVars": {
-    "ENVIRONMENT": [
-      {
-        "type": "text",
-        "value": "production",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "text",
-        "value": "preview",
-        "targetEnv": ["preview"]
+  "env": {
+    "ENVIRONMENT": {
+      "type": "text",
+      "environments": {
+        "production": { "value": "production" },
+        "preview": { "value": "preview" }
       }
-    ],
-    "MY_KV": [
-      {
-        "type": "kv_namespace",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "kv_namespace",
-        "targetEnv": ["preview"]
+    },
+    "MY_KV": {
+      "type": "kv_namespace",
+      "environments": {
+        "production": {},
+        "preview": {}
       }
-    ],
-    "DB": [
-      {
-        "type": "d1",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "d1",
-        "targetEnv": ["preview"]
+    },
+    "DB": {
+      "type": "d1",
+      "environments": {
+        "production": {},
+        "preview": {}
       }
-    ]
+    }
   }
 }
 ```
@@ -465,43 +425,28 @@ If you look at your `wrangler.jsonc` file, you'll see that resource IDs have bee
 {
   "name": "my-worker",
   "compatibility_date": "$today",
-  "envVars": {
-    "ENVIRONMENT": [
-      {
-        "type": "text",
-        "value": "production",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "text",
-        "value": "preview",
-        "targetEnv": ["preview"]
+  "env": {
+    "ENVIRONMENT": {
+      "type": "text",
+      "environments": {
+        "production": { "value": "production" },
+        "preview": { "value": "preview" }
       }
-    ],
-    "MY_KV": [
-      {
-        "type": "kv_namespace",
-        "id": "<production-kv-namespace-id>",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "kv_namespace",
-        "id": "<preview-kv-namespace-id>",
-        "targetEnv": ["preview"]
+    },
+    "MY_KV": {
+      "type": "kv_namespace",
+      "environments": {
+        "production": { "id": "<production-kv-namespace-id>" },
+        "preview": { "id": "<preview-kv-namespace-id>" }
       }
-    ],
-    "DB": [
-      {
-        "type": "d1",
-        "database_id": "<production-db-id>",
-        "targetEnv": ["production"]
-      },
-      {
-        "type": "d1",
-        "database_id": "<preview-db-id>",
-        "targetEnv": ["preview"]
+    },
+    "DB": {
+      "type": "d1",
+      "environments": {
+        "production": { "database_id": "<production-db-id>" },
+        "preview": { "database_id": "<preview-db-id>" }
       }
-    ]
+    }
   }
 }
 ```
@@ -890,21 +835,30 @@ Your Worker is now live in **Production**! Notice how we included the environmen
 
 #### Set secrets
 
-[Secrets](/workers/configuration/secrets/) (like API keys) should be managed separately to keep them secure - never include them directly in bindings. Use [Wrangler CLI](/workers/wrangler/commands/#secret) to set them:
+[Secrets](/workers/configuration/secrets/) contain sensitive data like API keys and should be managed separately. Use the TypeScript SDK's secrets API to set them:
 
 **For Production:**
 
-```bash
-wrangler secret put API_SECRET --name my-worker
+```typescript
+await client.workers.scripts.secrets.update(WORKER_NAME, {
+	account_id: ACCOUNT_ID,
+	name: "API_SECRET",
+	text: "your-production-secret",
+	type: "secret_text",
+});
+
+console.log("Production secret set");
 ```
 
 **For Preview:**
+
+Preview secrets are set on the Worker itself (not via `preview_settings`). Use the Wrangler CLI:
 
 ```bash
 wrangler secret put API_SECRET --name my-worker --preview
 ```
 
-##### Deploy a Preview
+#### Deploy a Preview
 
 **PR Previews** are temporary, fully-featured Workers that are automatically cleaned up when your pull request is merged or closed. They're created as sub-resources nested under your main Production Worker. When you create a preview, it automatically uses the `preview_settings` you configured earlier. Here's how you create one:
 
@@ -960,7 +914,7 @@ Notice a few important things here:
 
 2. **`{ params: { deploy: true } }`** - This creates the version and deploys it in one step, like adding `?deploy=true` to the API URL.
 
-This keeps your test data separate from production while making it easy to deploy previews - you set up the template once, then every preview automatically uses those settings! Secrets you set with `wrangler secret put --preview` will be available to all previews.
+This keeps your test data separate from production while making it easy to deploy previews - you set up the template once, then every preview automatically uses those settings! Secrets are managed separately using the Wrangler CLI as shown in the [Set secrets](#set-secrets-1) section above.
 
 </TabItem>
 
@@ -1113,6 +1067,158 @@ That's it! Your **Production** Worker is deployed, and the **Preview** settings 
 
 </TabItem>
 </Tabs>
+
+## Legacy
+
+If you have an existing Wrangler configuration, you can still use default environments without migrating to the new `env` structure.
+
+### Using with legacy configuration
+
+If you have an existing Wrangler configuration using the legacy format and don't want to migrate to the new `env` structure, you can still use default environments. Your top-level configuration becomes **Production**, and you can add a `preview` block with the same structure to define **Preview** environment settings.
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "compatibility_date": "$today",
+  // Production (top-level configuration)
+  "vars": {
+    "ENVIRONMENT": "production"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "MY_KV",
+      "id": "xyz789production"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "production-db",
+      "database_id": "prod-db-id-123"
+    }
+  ],
+  // Preview environment (applies to all PR Previews)
+  "preview": {
+    "vars": {
+      "ENVIRONMENT": "preview"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "abc123preview"
+      }
+    ],
+    "d1_databases": [
+      {
+        "binding": "DB",
+        "database_name": "preview-db",
+        "database_id": "staging-db-id-456"
+      }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+This format is valid and will work with default environments. You can keep your existing configuration structure and simply add the `preview` block to define different values for **Preview**.
+
+### Using with Wrangler Environments
+
+If you're using [Wrangler Environments](/workers/wrangler/environments/), each environment creates a separate Worker with the name `<worker-name>-<environment-name>`. You can add a `preview` block within each Wrangler environment to give each Worker its own **Production** and **Preview** configurations with separate **PR Previews**. For example:
+
+- `env.staging` creates `my-worker-staging` with its own PR Previews
+- `env.production` creates `my-worker-production` with its own PR Previews
+
+Here's an example configuration:
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "compatibility_date": "$today",
+  // Top-level configuration for my-worker
+  "vars": {
+    "ENVIRONMENT": "dev"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "MY_KV",
+      "id": "dev-kv-id"
+    }
+  ],
+  // Preview for top-level Worker
+  "preview": {
+    "vars": {
+      "ENVIRONMENT": "dev-preview"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "dev-preview-kv-id"
+      }
+    ]
+  },
+  "env": {
+    // Staging environment - creates "my-worker-staging" Worker
+    "staging": {
+      "vars": {
+        "ENVIRONMENT": "staging"
+      },
+      "kv_namespaces": [
+        {
+          "binding": "MY_KV",
+          "id": "staging-kv-id"
+        }
+      ],
+      // Preview for staging Worker
+      "preview": {
+        "vars": {
+          "ENVIRONMENT": "staging-preview"
+        },
+        "kv_namespaces": [
+          {
+            "binding": "MY_KV",
+            "id": "staging-preview-kv-id"
+          }
+        ]
+      }
+    },
+    // Production environment - creates "my-worker-production" Worker
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production"
+      },
+      "kv_namespaces": [
+        {
+          "binding": "MY_KV",
+          "id": "production-kv-id"
+        }
+      ],
+      // Preview for production Worker
+      "preview": {
+        "vars": {
+          "ENVIRONMENT": "production-preview"
+        },
+        "kv_namespaces": [
+          {
+            "binding": "MY_KV",
+            "id": "production-preview-kv-id"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+</WranglerConfig>
+
+In this example:
+- **`my-worker`** (top-level) has Production deployment and PR Previews using `dev-preview-kv-id`
+- **`my-worker-staging`** has Production deployment and PR Previews using `staging-preview-kv-id`
+- **`my-worker-production`** has Production deployment and PR Previews using `production-preview-kv-id`
+
+When you deploy with `wrangler deploy --env staging`, you're deploying to the **Production** environment of the `my-worker-staging` Worker. When you push a PR to a non-main branch, Cloudflare will create **PR Previews** for each Worker using their respective `preview` configurations.
 
 ## Related resources
 
