@@ -138,4 +138,26 @@ export const INPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty('properties.text')(schema),
 		generateExample: () => templates.ttsText(),
 	},
+
+	// Text-to-Image
+	{
+		id: 'text-to-image-img2img',
+		label: 'Image-to-Image',
+		priority: 2,
+		matches: (schema, ctx) =>
+			ctx.taskName === 'Text-to-Image' &&
+			(schemaMatchers.hasProperty('properties.image')(schema) ||
+			schemaMatchers.hasProperty('properties.image_b64')(schema)),
+		generateExample: () => templates.textToImageImg2Img(),
+	},
+
+	{
+		id: 'text-to-image-prompt',
+		label: 'Text-to-Image',
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === 'Text-to-Image' &&
+			schemaMatchers.hasProperty('properties.prompt')(schema),
+		generateExample: () => templates.textToImagePrompt(),
+	},
 ];

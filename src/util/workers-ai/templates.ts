@@ -2,6 +2,8 @@
 
 export const binaryAudio = () => 'Raw binary audio data sent as request body';
 
+export const binaryImage = () => 'The binding returns a ReadableStream with the image in JPEG or PNG format. Process the stream to access the binary image data.';
+
 export const llmMessages = () => `{
   "messages": [
     { "role": "system", "content": "You are a helpful assistant" },
@@ -77,6 +79,15 @@ export const ttsPrompt = () => `{
 
 export const ttsText = () => `{
   "text": "The text content to be converted to speech"
+}`;
+
+export const textToImagePrompt = () => `{
+  "prompt": "A serene landscape with mountains at sunset"
+}`;
+
+export const textToImageImg2Img = () => `{
+  "prompt": "A serene landscape with mountains at sunset",
+  "image": [255, 255, 255, ...]
 }`;
 
 // Output Templates
@@ -338,4 +349,8 @@ export const asrFluxOutput = () => `{
 
 export const ttsMelottsOutput = () => `{
   "audio": "base64-encoded audio data..."
+}`;
+
+export const textToImageOutput = () => `{
+  "image": "base64-encoded image data..."
 }`;

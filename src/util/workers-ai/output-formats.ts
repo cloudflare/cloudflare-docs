@@ -15,6 +15,28 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		generateExample: (schema, ctx) => templates.gptOssResponsesOutput(ctx.modelName),
 	},
 
+	// Text-to-Image Binary Output
+	{
+		id: 'text-to-image-binary',
+		label: 'Binary',
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === 'Text-to-Image' &&
+			schemaMatchers.isBinary(schema),
+		generateExample: () => templates.binaryImage(),
+	},
+
+	// Text-to-Image Output (check before generic Workers AI format)
+	{
+		id: 'text-to-image-output',
+		label: 'JSON',
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === 'Text-to-Image' &&
+			schemaMatchers.hasProperty('properties.image')(schema),
+		generateExample: () => templates.textToImageOutput(),
+	},
+
 	// Workers AI Format (standard response with result wrapper)
 	{
 		id: 'workers-ai',

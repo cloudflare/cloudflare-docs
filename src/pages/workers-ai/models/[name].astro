@@ -301,16 +301,37 @@ const starlightPageProps = {
 		model.schema.output.format === "binary" ? (
 			<>
 				<p>
-					The binding returns a <code>ReadableStream</code> with the image in
-					JPEG or PNG format (check the model's output schema).
+					The binding returns a <code>ReadableStream</code> with the {model.task.name === "Text-to-Image" ? "image" : "audio"}
+					{
+						model.schema.output.contentType
+							? ` in ${model.schema.output.contentType.split('/')[1].toUpperCase()} format`
+							: " (check the model's output schema for format details)"
+					}.
 				</p>
+				<div class="mb-4">
+					<Code
+						code={`const response = await env.AI.run("${model.name}", { prompt: "..." });
+
+// Convert ReadableStream to blob
+const blob = await response.blob();
+
+// Or convert to array buffer
+const arrayBuffer = await response.arrayBuffer();
+
+// Or return directly in Response
+return new Response(response, {
+  headers: { "content-type": "${model.schema.output.contentType || 'application/octet-stream'}" }
+});`}
+						lang="js"
+					/>
+				</div>
 			</>
 		) : (
 			<>
 				{model.schema.output.oneOf && model.schema.output.oneOf.length > 1 && (
 					<p class="text-sm text-gray-600 mb-3">This model returns different output formats depending on the request. Click on the tabs below to view the response structure for each format.</p>
 				)}
-				<SchemaViewerWithTabs schema={model.schema.output} type="output" modelName={model.name} />
+				<SchemaViewerWithTabs schema={model.schema.output} type="output" modelName={model.name} taskName={model.task.name} />
 			</>
 		)
 	}
