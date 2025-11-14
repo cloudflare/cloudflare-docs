@@ -230,7 +230,9 @@ const starlightPageProps = {
 		model.name === "@cf/deepgram/flux" && (
 			<Aside>
 				<p>
-					For the month of October 2025, Deepgram's Flux model will be free to use on Workers AI. Official pricing will be announced soon and charged after the promotional pricing period ends on October 31, 2025.
+					For the month of October 2025, Deepgram's Flux model will be free to
+					use on Workers AI. Official pricing will be announced soon and charged
+					after the promotional pricing period ends on October 31, 2025.
 				</p>
 			</Aside>
 		)
@@ -242,7 +244,8 @@ const starlightPageProps = {
 			<Aside>
 				<p>
 					The <a href="/workers-ai/platform/pricing">pricing of this model</a>{" "}
-					is different based on transport. Transport-based pricing does not apply to all models.
+					is different based on transport. Transport-based pricing does not
+					apply to all models.
 				</p>
 				<p>
 					<ul>
@@ -291,22 +294,36 @@ const starlightPageProps = {
 	<p><span class="text-red-500">*</span> indicates a required field</p>
 
 	<h3 id="Input">Input</h3>
-	{model.schema.input.oneOf && model.schema.input.oneOf.length > 1 && (
-		<p class="text-sm text-gray-600 mb-3">This model accepts multiple input formats. Click on the tabs below to view the parameters for each format. You can use these JSON inputs with the Workers Binding or through a fetch API call.</p>
-	)}
-	<SchemaViewerWithTabs schema={model.schema.input} type="input" modelName={model.name} taskName={model.task.name} />
+	{
+		model.schema.input.oneOf &&
+			Array.isArray(model.schema.input.oneOf) &&
+			model.schema.input.oneOf.length > 1 && (
+				<p class="mb-3 text-sm text-gray-600">
+					This model accepts multiple input formats. Click on the tabs below to
+					view the parameters for each format. You can use these JSON inputs
+					with the Workers Binding or through a fetch API call.
+				</p>
+			)
+	}
+	<SchemaViewerWithTabs
+		schema={model.schema.input}
+		type="input"
+		modelName={model.name}
+		taskName={model.task.name}
+	/>
 
 	<h3 id="Output">Output</h3>
 	{
 		model.schema.output.format === "binary" ? (
 			<>
 				<p>
-					The binding returns a <code>ReadableStream</code> with the {model.task.name === "Text-to-Image" ? "image" : "audio"}
-					{
-						model.schema.output.contentType
-							? ` in ${model.schema.output.contentType.split('/')[1].toUpperCase()} format`
-							: " (check the model's output schema for format details)"
-					}.
+					The binding returns a <code>ReadableStream</code> with the{" "}
+					{model.task.name === "Text-to-Image" ? "image" : "audio"}
+					{model.schema.output.contentType &&
+					typeof model.schema.output.contentType === "string"
+						? ` in ${model.schema.output.contentType.split("/")[1].toUpperCase()} format`
+						: " (check the model's output schema for format details)"}
+					.
 				</p>
 				<div class="mb-4">
 					<Code
@@ -320,7 +337,7 @@ const arrayBuffer = await response.arrayBuffer();
 
 // Or return directly in Response
 return new Response(response, {
-  headers: { "content-type": "${model.schema.output.contentType || 'application/octet-stream'}" }
+  headers: { "content-type": "${model.schema.output.contentType || "application/octet-stream"}" }
 });`}
 						lang="js"
 					/>
@@ -328,10 +345,21 @@ return new Response(response, {
 			</>
 		) : (
 			<>
-				{model.schema.output.oneOf && model.schema.output.oneOf.length > 1 && (
-					<p class="text-sm text-gray-600 mb-3">This model returns different output formats depending on the request. Click on the tabs below to view the response structure for each format.</p>
-				)}
-				<SchemaViewerWithTabs schema={model.schema.output} type="output" modelName={model.name} taskName={model.task.name} />
+				{model.schema.output.oneOf &&
+					Array.isArray(model.schema.output.oneOf) &&
+					model.schema.output.oneOf.length > 1 && (
+						<p class="mb-3 text-sm text-gray-600">
+							This model returns different output formats depending on the
+							request. Click on the tabs below to view the response structure
+							for each format.
+						</p>
+					)}
+				<SchemaViewerWithTabs
+					schema={model.schema.output}
+					type="output"
+					modelName={model.name}
+					taskName={model.task.name}
+				/>
 			</>
 		)
 	}

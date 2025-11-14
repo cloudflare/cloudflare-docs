@@ -12,10 +12,16 @@ import { Tabs, TabItem, Code } from "~/components";
 
 // Import the new format system
 import type { FormatContext } from "~/util/workers-ai/schema-formats";
-import { detectFormat, generateFromSchema } from "~/util/workers-ai/schema-formats";
+import {
+	detectFormat,
+	generateFromSchema,
+} from "~/util/workers-ai/schema-formats";
 import { INPUT_FORMATS } from "~/util/workers-ai/input-formats";
 import { OUTPUT_FORMATS } from "~/util/workers-ai/output-formats";
-import { formatLabel, getFormatPriority } from "~/util/workers-ai/format-labels";
+import {
+	formatLabel,
+	getFormatPriority,
+} from "~/util/workers-ai/format-labels";
 
 const { schema, type = "input", modelName, taskName } = Astro.props;
 
@@ -27,7 +33,7 @@ type ReferenceInfo = {
 type ReferenceResolver = (
 	ref: ReferenceInfo,
 	propertyPath: string[] | null,
-	parent: SchemaNode | null
+	parent: SchemaNode | null,
 ) => any;
 
 // Reference resolver for schema processing
@@ -59,7 +65,11 @@ const hasOneOf = schema.oneOf && Array.isArray(schema.oneOf);
 
 // Check if this is a gpt-oss Responses schema that should be shown as a tab
 const isGptOssModel = modelName && modelName.includes("gpt-oss");
-const isGptOssResponses = (schema.title && schema.title.toLowerCase().includes("gpt_oss") && schema.title.toLowerCase().includes("responses")) || isGptOssModel;
+const isGptOssResponses =
+	(schema.title &&
+		schema.title.toLowerCase().includes("gpt_oss") &&
+		schema.title.toLowerCase().includes("responses")) ||
+	isGptOssModel;
 
 // Process the schema based on whether it has oneOf
 let options: any[] = [];
@@ -70,8 +80,8 @@ if (hasOneOf) {
 	// Filter out streaming for gpt-oss models before processing
 	let oneOfOptions = schema.oneOf;
 	if (isGptOssModel && type === "output") {
-		oneOfOptions = oneOfOptions.filter((option: any) =>
-			option.contentType !== 'text/event-stream'
+		oneOfOptions = oneOfOptions.filter(
+			(option: any) => option.contentType !== "text/event-stream",
 		);
 	}
 
@@ -132,13 +142,17 @@ if (hasOneOf) {
 	const formatRegistry = type === "input" ? INPUT_FORMATS : OUTPUT_FORMATS;
 	const detectedFormat = detectFormat(schema, context, formatRegistry);
 
-	options = [{
-		label: "Responses",
-		title: schema.title || "GPT_OSS_Responses",
-		tree: tree,
-		description: schema.description,
-		jsonExample: detectedFormat ? detectedFormat.generateExample(schema, context) : "{}",
-	}];
+	options = [
+		{
+			label: "Responses",
+			title: schema.title || "GPT_OSS_Responses",
+			tree: tree,
+			description: schema.description,
+			jsonExample: detectedFormat
+				? detectedFormat.generateExample(schema, context)
+				: "{}",
+		},
+	];
 } else {
 	// If there's no oneOf, use the standard single schema view
 	singleTree = new SchemaTree(schema, {
@@ -167,52 +181,77 @@ if (hasOneOf) {
 }
 ---
 
-{options.length > 0 ? (
-	<Tabs>
-		{options.map((option) => {
-			const children = (option.tree.root.children[0] as RegularNode).children || [];
-			const requiredChildren = children.filter((node: SchemaNode) =>
-				node.parent.fragment?.required?.includes(node.subpath[node.subpath.length - 1])
-			);
-			const optionalChildren = children.filter((node: SchemaNode) =>
-				!node.parent.fragment?.required?.includes(node.subpath[node.subpath.length - 1])
-			);
+{
+	options.length > 0 ? (
+		<Tabs>
+			{options.map((option) => {
+				const children =
+					(option.tree.root.children[0] as RegularNode).children || [];
+				const requiredChildren = children.filter((node: SchemaNode) => {
+					const required = node.parent?.fragment?.required;
+					return (
+						Array.isArray(required) &&
+						required.includes(node.subpath[node.subpath.length - 1])
+					);
+				});
+				const optionalChildren = children.filter((node: SchemaNode) => {
+					const required = node.parent?.fragment?.required;
+					return (
+						!Array.isArray(required) ||
+						!required.includes(node.subpath[node.subpath.length - 1])
+					);
+				});
 
-			return (
-				<TabItem label={option.label}>
-					{option.jsonExample && (
-						<div class="mb-4">
-							<Code code={option.jsonExample} lang="json" />
-						</div>
-					)}
-					<ul class="pl-0">
-						{requiredChildren.map((node: SchemaNode) => <SchemaRow node={node} />)}
-						{optionalChildren.map((node: SchemaNode) => <SchemaRow node={node} />)}
-					</ul>
-				</TabItem>
-			);
-		})}
-	</Tabs>
-) : (
-	<>
-		{singleJsonExample && (
-			<div class="mb-4">
-				<Code code={singleJsonExample} lang="json" />
-			</div>
-		)}
-		<ul class="pl-0">
-			{
-				singleTree && (() => {
-					const children = (singleTree.root.children[0] as RegularNode).children || [];
-					const requiredChildren = children.filter((node: SchemaNode) =>
-						node.parent.fragment?.required?.includes(node.subpath[node.subpath.length - 1])
-					);
-					const optionalChildren = children.filter((node: SchemaNode) =>
-						!node.parent.fragment?.required?.includes(node.subpath[node.subpath.length - 1])
-					);
-					return [...requiredChildren, ...optionalChildren].map((node: SchemaNode) => <SchemaRow node={node} />);
-				})()
-			}
-		</ul>
-	</>
-)}
+				return (
+					<TabItem label={option.label}>
+						{option.jsonExample && (
+							<div class="mb-4">
+								<Code code={option.jsonExample} lang="json" />
+							</div>
+						)}
+						<ul class="pl-0">
+							{requiredChildren.map((node: SchemaNode) => (
+								<SchemaRow node={node} />
+							))}
+							{optionalChildren.map((node: SchemaNode) => (
+								<SchemaRow node={node} />
+							))}
+						</ul>
+					</TabItem>
+				);
+			})}
+		</Tabs>
+	) : (
+		<>
+			{singleJsonExample && (
+				<div class="mb-4">
+					<Code code={singleJsonExample} lang="json" />
+				</div>
+			)}
+			<ul class="pl-0">
+				{singleTree &&
+					(() => {
+						const children =
+							(singleTree.root.children[0] as RegularNode).children || [];
+						const requiredChildren = children.filter((node: SchemaNode) => {
+							const required = node.parent?.fragment?.required;
+							return (
+								Array.isArray(required) &&
+								required.includes(node.subpath[node.subpath.length - 1])
+							);
+						});
+						const optionalChildren = children.filter((node: SchemaNode) => {
+							const required = node.parent?.fragment?.required;
+							return (
+								!Array.isArray(required) ||
+								!required.includes(node.subpath[node.subpath.length - 1])
+							);
+						});
+						return [...requiredChildren, ...optionalChildren].map(
+							(node: SchemaNode) => <SchemaRow node={node} />,
+						);
+					})()}
+			</ul>
+		</>
+	)
+}
