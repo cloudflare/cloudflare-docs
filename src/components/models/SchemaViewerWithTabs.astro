@@ -10,7 +10,7 @@ import { resolveInlineRef } from "@stoplight/json";
 import SchemaRow from "~/components/models/SchemaRow.astro";
 import { Tabs, TabItem, Code, Details } from "~/components";
 
-const { schema, type = "input", modelName } = Astro.props;
+const { schema, type = "input", modelName, taskName } = Astro.props;
 
 type ReferenceInfo = {
 	source: string | null;
@@ -103,7 +103,7 @@ function formatLabel(option: any): string {
 }
 
 // Helper function to generate a JSON example for a format
-function generateJSONExample(option: any, modelName?: string): string {
+function generateJSONExample(option: any, modelName?: string, taskName?: string): string {
 	const title = option.title || "";
 	const properties = option.properties || {};
 
@@ -133,6 +133,20 @@ function generateJSONExample(option: any, modelName?: string): string {
   "model": "${model}",
   "input": "Tell me about Cloudflare Workers"
 }`;
+	}
+
+	// Check for Text-to-Speech models by task name
+	if (taskName === "Text-to-Speech") {
+		// Check if model uses 'prompt' or 'text' field
+		if (properties.prompt) {
+			return `{
+  "prompt": "The text content to be converted to speech"
+}`;
+		} else {
+			return `{
+  "text": "The text content to be converted to speech"
+}`;
+		}
 	}
 
 	// Generic fallback - show the required fields
@@ -209,6 +223,14 @@ data: [DONE]`;
 
 	// JSON response format - use actual Workers AI response structure
 	if (contentType === "application/json" || option.type === "object") {
+		// Check if this is a melotts-style output with base64 audio
+		if (option.properties && option.properties.audio && option.properties.audio.description &&
+		    option.properties.audio.description.includes("base64-encoded")) {
+			return `{
+  "audio": "base64-encoded audio data..."
+}`;
+		}
+
 		return `{
   "result": {
     "response": "Generated text response from the model",
@@ -257,7 +279,7 @@ if (hasOneOf) {
 			title: option.title,
 			tree: tree,
 			description: option.description,
-			jsonExample: type === "input" ? generateJSONExample(option, modelName) : generateOutputJSONExample(option, option.title, modelName),
+			jsonExample: type === "input" ? generateJSONExample(option, modelName, taskName) : generateOutputJSONExample(option, option.title, modelName),
 		};
 	});
 
@@ -292,7 +314,7 @@ if (hasOneOf) {
 		title: schema.title || "GPT_OSS_Responses",
 		tree: tree,
 		description: schema.description,
-		jsonExample: type === "input" ? generateJSONExample(schema, modelName) : generateOutputJSONExample(schema, "GPT_OSS_Responses", modelName),
+		jsonExample: type === "input" ? generateJSONExample(schema, modelName, taskName) : generateOutputJSONExample(schema, "GPT_OSS_Responses", modelName),
 	}];
 } else {
 	// If there's no oneOf, use the standard single schema view
@@ -304,26 +326,35 @@ if (hasOneOf) {
 	singleTree.populate();
 
 	// Generate JSON example for single schema
-	singleJsonExample = type === "input" ? generateJSONExample(schema, modelName) : generateOutputJSONExample(schema, schema.title, modelName);
+	singleJsonExample = type === "input" ? generateJSONExample(schema, modelName, taskName) : generateOutputJSONExample(schema, schema.title, modelName);
 }
 ---
 
 {options.length > 0 ? (
 	<Tabs>
-		{options.map((option) => (
-			<TabItem label={option.label}>
-				{option.jsonExample && (
-					<div class="mb-4">
-						<Code code={option.jsonExample} lang="json" />
-					</div>
-				)}
-				<ul class="pl-0">
-					{(option.tree.root.children[0] as RegularNode).children?.map(
-						(node: SchemaNode) => <SchemaRow node={node} />
+		{options.map((option) => {
+			const children = (option.tree.root.children[0] as RegularNode).children || [];
+			const requiredChildren = children.filter((node: SchemaNode) =>
+				node.parent.fragment?.required?.includes(node.subpath[node.subpath.length - 1])
+			);
+			const optionalChildren = children.filter((node: SchemaNode) =>
+				!node.parent.fragment?.required?.includes(node.subpath[node.subpath.length - 1])
+			);
+
+			return (
+				<TabItem label={option.label}>
+					{option.jsonExample && (
+						<div class="mb-4">
+							<Code code={option.jsonExample} lang="json" />
+						</div>
 					)}
-				</ul>
-			</TabItem>
-		))}
+					<ul class="pl-0">
+						{requiredChildren.map((node: SchemaNode) => <SchemaRow node={node} />)}
+						{optionalChildren.map((node: SchemaNode) => <SchemaRow node={node} />)}
+					</ul>
+				</TabItem>
+			);
+		})}
 	</Tabs>
 ) : (
 	<>
@@ -334,9 +365,16 @@ if (hasOneOf) {
 		)}
 		<ul class="pl-0">
 			{
-				singleTree && (singleTree.root.children[0] as RegularNode).children?.map(
-					(node: SchemaNode) => <SchemaRow node={node} />
-				)
+				singleTree && (() => {
+					const children = (singleTree.root.children[0] as RegularNode).children || [];
+					const requiredChildren = children.filter((node: SchemaNode) =>
+						node.parent.fragment?.required?.includes(node.subpath[node.subpath.length - 1])
+					);
+					const optionalChildren = children.filter((node: SchemaNode) =>
+						!node.parent.fragment?.required?.includes(node.subpath[node.subpath.length - 1])
+					);
+					return [...requiredChildren, ...optionalChildren].map((node: SchemaNode) => <SchemaRow node={node} />);
+				})()
 			}
 		</ul>
 	</>

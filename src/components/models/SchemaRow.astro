@@ -7,6 +7,11 @@ const { node } = Astro.props;
 
 <li>
 	<code title={node.title}>{node.subpath[node.subpath.length - 1]}</code>
+	{
+		node.parent.fragment?.required?.includes(
+			node.subpath[node.subpath.length - 1],
+		) && <span class="text-red-500">*</span>
+	}
 
 	{node.primaryType && <Type text={node.primaryType} />}
 
