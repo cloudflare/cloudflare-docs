@@ -19,6 +19,15 @@ const allCoreRoutes = CoreRoutes.concat(CoreManuallyDefinedRoutes);
 
 const routes = zeroTrust ? ZeroTrustRoutes : allCoreRoutes;
 
+const route = routes.find((route) => route.deeplink === url);
+
+if (!route) {
+	throw new Error(`[DashButton] No route found for ${url}`);
+}
+
+/*
+If working locally and wanting to catch multiple missing routes, update above to the following
+
 let route = routes.find((route) => route.deeplink === url);
 
 if (!route) {
@@ -28,6 +37,7 @@ if (!route) {
 		deeplink: "/?to=/:account/home",
 	};
 }
+*/
 
 const name = buttonName ?? route.name;
 const baseUrl = zeroTrust
