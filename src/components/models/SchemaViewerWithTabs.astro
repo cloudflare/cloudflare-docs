@@ -8,7 +8,14 @@ import {
 import { type Dictionary } from "@stoplight/types";
 import { resolveInlineRef } from "@stoplight/json";
 import SchemaRow from "~/components/models/SchemaRow.astro";
-import { Tabs, TabItem, Code, Details } from "~/components";
+import { Tabs, TabItem, Code } from "~/components";
+
+// Import the new format system
+import type { FormatContext } from "~/util/workers-ai/schema-formats";
+import { detectFormat, generateFromSchema } from "~/util/workers-ai/schema-formats";
+import { INPUT_FORMATS } from "~/util/workers-ai/input-formats";
+import { OUTPUT_FORMATS } from "~/util/workers-ai/output-formats";
+import { formatLabel, getFormatPriority } from "~/util/workers-ai/format-labels";
 
 const { schema, type = "input", modelName, taskName } = Astro.props;
 
@@ -16,586 +23,36 @@ type ReferenceInfo = {
 	source: string | null;
 	pointer: string | null;
 };
+
 type ReferenceResolver = (
 	ref: ReferenceInfo,
 	propertyPath: string[] | null,
-	currentObject?: object,
+	parent: SchemaNode | null
 ) => any;
 
-const defaultResolver: SchemaTreeRefDereferenceFn =
-	(contextObject: object): ReferenceResolver =>
-	({ pointer }, _, currentObject) => {
-		const activeObject = contextObject ?? currentObject;
+// Reference resolver for schema processing
+const defaultResolver: SchemaTreeRefDereferenceFn = (dereferencedNode: any) => {
+	const ref = dereferencedNode?.$ref || dereferencedNode?.value?.$ref;
 
-		if (pointer === null) {
-			return null;
-		}
-
-		if (pointer === "#") {
-			return activeObject;
-		}
-
-		const resolved = resolveInlineRef(
-			activeObject as Dictionary<string>,
-			pointer,
-		);
-
-		if (resolved) return resolved;
-
-		throw new ReferenceError(`Could not resolve '${pointer}`);
-	};
-
-// Helper function to create a human-readable label from title or contentType
-function formatLabel(option: any): string {
-	// Check for async formats first (before any title processing)
-	if (option.properties) {
-		// Async batch format (has requests array)
-		if (option.properties.requests) {
-			return "Async Batch";
-		}
-		// Async response format (has request_id for outputs)
-		if (option.properties.request_id && option.title && option.title.toLowerCase().includes("async")) {
-			return "Async Batch";
-		}
+	if (!ref) {
+		return dereferencedNode;
 	}
 
-	// Try to use the title first
-	if (option.title) {
-		// Special case for GPT_OSS models - always show "Responses"
-		if (option.title.toLowerCase().includes("gpt_oss")) {
-			return "Responses";
-		}
+	const pointer = typeof ref === "string" ? ref : null;
 
-		let label = option.title;
-
-		// If title contains spaces, it's likely already human-readable
-		if (label.includes(" ")) {
-			// Remove "Response" suffix if present (e.g., "Chat Completion Response" -> "Chat Completion")
-			label = label.replace(/\s+Response$/i, "");
-
-			// Fix common typos
-			label = label.replace(/\bOuput\b/g, "Output");
-
-			// Remove model-specific prefix (e.g., "BGE M3 Input Query and Contexts" -> "Query and Contexts")
-			// Match patterns like "Model Name Input/Output ..." and extract the rest
-			label = label.replace(/^[A-Z0-9\s]+\s+(Input|Output|Ouput)\s+/i, "");
-
-			return label;
-		}
-
-		// Remove model-specific prefixes by taking only the last part after the last known format keyword
-		// Examples:
-		// "Ai_Cf_Meta_Llama_4_Prompt" -> "Prompt"
-		// "GPT_OSS_120B_Responses" -> "Responses"
-		// "Ai_Cf_Meta_Llama_4_Messages" -> "Messages"
-
-		const parts = label.split("_");
-
-		// Common format keywords that indicate where the actual format name starts
-		// Order matters: Messages should be checked before Prompt
-		const formatKeywords = ["Messages", "Prompt", "Async", "Responses", "Batch", "Inner"];
-
-		// Find the first occurrence of a format keyword
-		let startIndex = parts.findIndex((part: string) =>
-			formatKeywords.some(keyword => part.toLowerCase() === keyword.toLowerCase())
-		);
-
-		// If no keyword found, just take the last 1-2 parts
-		if (startIndex === -1) {
-			startIndex = Math.max(0, parts.length - 2);
-		}
-
-		// Get the relevant parts and convert to Title Case
-		const relevantParts = parts.slice(startIndex);
-		return relevantParts
-			.map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-			.join(" ");
+	if (!pointer) {
+		throw new ReferenceError(`Could not resolve reference`);
 	}
 
-	// For outputs, use contentType if available
-	if (option.contentType) {
-		if (option.contentType === "application/json") {
-			return "JSON Response";
-		} else if (option.contentType === "text/event-stream") {
-			return "Streaming Response";
-		}
-	}
+	throw new ReferenceError(`Could not resolve '${pointer}`);
+};
 
-	// For inputs/outputs without title/contentType, infer from structure
-	if (option.type === "object" && option.properties) {
-		// Check if it's an audio array format
-		if (option.properties.audio && option.properties.audio.items) {
-			return "JSON";
-		}
-		return "JSON Response";
-	} else if (option.type === "string" && option.format === "binary") {
-		return "Binary";
-	}
-
-	return "Response";
-}
-
-// Helper function to generate a JSON example for a format
-function generateJSONExample(option: any, modelName?: string, taskName?: string): string {
-	const title = option.title || "";
-	const properties = option.properties || {};
-
-	// Handle binary format - return descriptive text instead of JSON
-	if (option.type === "string" && option.format === "binary") {
-		return "Raw binary audio data sent as request body";
-	}
-
-	// Detect format type from the title and generate appropriate example
-	if (title.toLowerCase().includes("prompt")) {
-		return `{
-  "prompt": "Tell me about Cloudflare Workers"
-}`;
-	} else if (title.toLowerCase().includes("messages")) {
-		return `{
-  "messages": [
-    { "role": "system", "content": "You are a helpful assistant" },
-    { "role": "user", "content": "Tell me about Cloudflare Workers" }
-  ]
-}`;
-	} else if (title.toLowerCase().includes("async") || title.toLowerCase().includes("batch") || properties.requests) {
-		// Check if this is an embeddings async batch (has requests with query/contexts or text)
-		if (taskName === "Text Embeddings") {
-			return `{
-  "requests": [
-    {
-      "text": "First text to embed"
-    },
-    {
-      "text": "Second text to embed"
-    }
-  ]
-}`;
-		}
-		// Default LLM async batch format
-		return `{
-  "requests": [
-    { "prompt": "First request" },
-    { "prompt": "Second request" }
-  ]
-}`;
-	} else if (title.toLowerCase().includes("responses")) {
-		// OpenAI Responses API format - includes model field
-		const model = modelName || "@cf/openai/gpt-oss-*";
-		return `{
-  "model": "${model}",
-  "input": "Tell me about Cloudflare Workers"
-}`;
-	}
-
-	// Check for Text-to-Speech models by task name
-	if (taskName === "Text-to-Speech") {
-		// Check if model uses 'prompt' or 'text' field
-		if (properties.prompt) {
-			return `{
-  "prompt": "The text content to be converted to speech"
-}`;
-		} else {
-			return `{
-  "text": "The text content to be converted to speech"
-}`;
-		}
-	}
-
-	// Check for Automatic Speech Recognition models by task name
-	if (taskName === "Automatic Speech Recognition") {
-		// Check for nova-3 style (audio object with body and contentType)
-		if (properties.audio && properties.audio.properties && properties.audio.properties.body) {
-			return `{
-  "audio": {
-    "body": "<base64 encoded audio data>",
-    "contentType": "audio/wav"
-  }
-}`;
-		}
-		// Check if this format has an 'audio' array property (whisper-style)
-		if (properties.audio && properties.audio.items) {
-			return `{
-  "audio": [0, 1, 2, 3, ...]
-}`;
-		}
-	}
-
-	// Check for Text Embeddings models by task name
-	if (taskName === "Text Embeddings") {
-		// Check for Query and Contexts format
-		if (properties.query && properties.contexts) {
-			return `{
-  "query": "What is Cloudflare Workers?",
-  "contexts": [
-    {
-      "text": "Cloudflare Workers is a serverless platform for building applications."
-    },
-    {
-      "text": "Workers runs on Cloudflare's global network across 300+ cities."
-    }
-  ]
-}`;
-		}
-		// Standard embedding format
-		if (properties.text) {
-			return `{
-  "text": "Input text to embed"
-}`;
-		}
-	}
-
-	// Generic fallback - show the required fields with intelligent values from schema
-	const requiredFields = option.required || [];
-	if (requiredFields.length > 0) {
-		const exampleObj: any = {};
-		requiredFields.forEach((field: string) => {
-			const fieldSchema = properties[field];
-			if (fieldSchema) {
-				// Use enum first value if available
-				if (fieldSchema.enum && fieldSchema.enum.length > 0) {
-					exampleObj[field] = fieldSchema.enum[0];
-				}
-				// Use default value if available
-				else if (fieldSchema.default !== undefined) {
-					exampleObj[field] = fieldSchema.default;
-				}
-				// Use type-appropriate example values
-				else if (fieldSchema.type === "string") {
-					// Check if pattern suggests a numeric string
-					if (fieldSchema.pattern === "^[0-9]+$") {
-						// Use a reasonable example value based on description
-						if (field.toLowerCase().includes("rate")) {
-							exampleObj[field] = "16000";
-						} else {
-							exampleObj[field] = "1000";
-						}
-					}
-					// Use description if available and looks like example text
-					else if (fieldSchema.description && fieldSchema.description.length < 100) {
-						exampleObj[field] = fieldSchema.description;
-					}
-					else {
-						exampleObj[field] = `<${field}>`;
-					}
-				}
-				else if (fieldSchema.type === "number" || fieldSchema.type === "integer") {
-					exampleObj[field] = 0;
-				}
-				else if (fieldSchema.type === "boolean") {
-					exampleObj[field] = false;
-				}
-				else if (fieldSchema.type === "array") {
-					exampleObj[field] = [];
-				}
-				else {
-					exampleObj[field] = `<${field}>`;
-				}
-			} else {
-				exampleObj[field] = `<${field}>`;
-			}
-		});
-		return JSON.stringify(exampleObj, null, 2);
-	}
-
-	return `{
-  // Input parameters
-}`;
-}
-
-// Helper function to generate a JSON example for output formats
-function generateOutputJSONExample(option: any, schemaTitle?: string, modelName?: string): string {
-	const contentType = option.contentType || "";
-	const title = schemaTitle || "";
-
-	// Special case for GPT-OSS models (OpenAI Responses API) - check this FIRST
-	if (title.toLowerCase().includes("responses") || title.toLowerCase().includes("gpt_oss")) {
-		const model = modelName || "@cf/openai/gpt-oss-*";
-		return `{
-  "id": "id-1763094420786",
-  "created_at": 1763094420,
-  "model": "${model}",
-  "object": "response",
-  "output": [
-    {
-      "id": "rs_07ad32c779f7439e9e3e891c6aded66a",
-      "content": [
-        {
-          "text": "Reasoning process and analysis...",
-          "type": "reasoning_text"
-        }
-      ],
-      "type": "reasoning"
-    },
-    {
-      "id": "msg_f0c991ab24084f62b445c54f882190a3",
-      "content": [
-        {
-          "text": "Generated text response from the model",
-          "type": "output_text"
-        }
-      ],
-      "role": "assistant",
-      "status": "completed",
-      "type": "message"
-    }
-  ],
-  "status": "completed",
-  "usage": {
-    "input_tokens": 7,
-    "output_tokens": 1231,
-    "total_tokens": 1238
-  }
-}`;
-	}
-
-	// Check for streaming format
-	if (contentType === "text/event-stream") {
-		return `data: {"response":"Hello","p":"user"}
-
-data: {"response":" there","p":"user"}
-
-data: {"response":"","usage":{"prompt_tokens":10,"completion_tokens":50,"total_tokens":60}}
-
-data: [DONE]`;
-	}
-
-	// Check for Text Embeddings output formats (check before generic JSON)
-	if (option.properties) {
-		// BGE M3 Query output (has response array with id and score)
-		if (option.properties.response && title.toLowerCase().includes("query")) {
-			return `{
-  "response": [
-    {
-      "id": 0,
-      "score": 0.95
-    },
-    {
-      "id": 1,
-      "score": 0.87
-    }
-  ]
-}`;
-		}
-
-		// BGE M3 Embedding for Contexts output (has response with embeddings and shape)
-		if (option.properties.response && option.properties.shape && title.toLowerCase().includes("context")) {
-			return `{
-  "response": [
-    [0.123, -0.456, 0.789, ...],
-    [0.234, -0.567, 0.890, ...]
-  ],
-  "shape": [2, 1024],
-  "pooling": "mean"
-}`;
-		}
-
-		// Standard embedding output (has data array and shape)
-		if (option.properties.data && option.properties.shape) {
-			return `{
-  "data": [
-    [0.123, -0.456, 0.789, ...]
-  ],
-  "shape": [1, 768]
-}`;
-		}
-	}
-
-	// JSON response format - use actual Workers AI response structure
-	if (contentType === "application/json" || option.type === "object") {
-		// Check if this is a melotts-style output with base64 audio
-		if (option.properties && option.properties.audio && option.properties.audio.description &&
-		    option.properties.audio.description.includes("base64-encoded")) {
-			return `{
-  "audio": "base64-encoded audio data..."
-}`;
-		}
-
-		// Check for Chat Completion Response format
-		if (title.toLowerCase().includes("chat completion")) {
-			return `{
-  "id": "chatcmpl-123",
-  "object": "chat.completion",
-  "created": 1677652288,
-  "model": "@cf/ibm-granite/granite-4.0-h-micro",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-        "content": "Generated response from the model"
-      },
-      "finish_reason": "stop"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 10,
-    "completion_tokens": 20,
-    "total_tokens": 30
-  }
-}`;
-		}
-
-		// Check for Text Completion Response format
-		if (title.toLowerCase().includes("text completion")) {
-			return `{
-  "id": "cmpl-123",
-  "object": "text_completion",
-  "created": 1677652288,
-  "model": "@cf/ibm-granite/granite-4.0-h-micro",
-  "choices": [
-    {
-      "index": 0,
-      "text": "Generated text from the model",
-      "finish_reason": "stop"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 10,
-    "completion_tokens": 20,
-    "total_tokens": 30
-  }
-}`;
-		}
-
-		// Check for Automatic Speech Recognition output
-		// Nova-3 style (has results.channels structure)
-		if (option.properties && option.properties.results && option.properties.results.properties && option.properties.results.properties.channels) {
-			return `{
-  "results": {
-    "channels": [
-      {
-        "alternatives": [
-          {
-            "transcript": "The transcribed text from the audio",
-            "confidence": 0.98,
-            "words": [
-              {
-                "word": "The",
-                "start": 0.0,
-                "end": 0.2,
-                "confidence": 0.99
-              },
-              {
-                "word": "transcribed",
-                "start": 0.2,
-                "end": 0.6,
-                "confidence": 0.97
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "summary": {
-      "result": "success",
-      "short": "Audio transcription completed"
-    }
-  }
-}`;
-		}
-
-		// Whisper-large-v3-turbo style (has text, segments with nested words)
-		if (option.properties && option.properties.text && option.properties.segments) {
-			return `{
-  "text": "The transcribed text from the audio",
-  "word_count": 6,
-  "transcription_info": {
-    "language": "en",
-    "language_probability": 0.99,
-    "duration": 2.5,
-    "duration_after_vad": 2.3
-  },
-  "segments": [
-    {
-      "start": 0.0,
-      "end": 2.5,
-      "text": "The transcribed text from the audio",
-      "words": [
-        {
-          "word": "The",
-          "start": 0.0,
-          "end": 0.2
-        },
-        {
-          "word": "transcribed",
-          "start": 0.2,
-          "end": 0.6
-        }
-      ]
-    }
-  ],
-  "vtt": "WEBVTT\\n\\n00:00:00.000 --> 00:00:02.500\\nThe transcribed text from the audio"
-}`;
-		}
-
-		if (option.properties && option.properties.words && option.properties.words.items) {
-			const wordProps = option.properties.words.items.properties || {};
-
-			// Whisper-style output (has text, words at root with start/end, vtt)
-			if (option.properties.text && wordProps.start && wordProps.end) {
-				return `{
-  "text": "The transcribed text from the audio",
-  "word_count": 6,
-  "words": [
-    {
-      "word": "The",
-      "start": 0.0,
-      "end": 0.2
-    },
-    {
-      "word": "transcribed",
-      "start": 0.2,
-      "end": 0.6
-    }
-  ],
-  "vtt": "WEBVTT\\n\\n00:00:00.000 --> 00:00:00.200\\nThe\\n\\n00:00:00.200 --> 00:00:00.600\\ntranscribed"
-}`;
-			}
-
-			// Deepgram flux-style output (has transcript, words with confidence)
-			if (option.properties.transcript && wordProps.confidence) {
-				return `{
-  "request_id": "550e8400-e29b-41d4-a716-446655440000",
-  "sequence_id": 0,
-  "event": "Update",
-  "turn_index": 0,
-  "audio_window_start": 0.0,
-  "audio_window_end": 2.5,
-  "transcript": "The transcribed text from the audio",
-  "words": [
-    {
-      "word": "The",
-      "confidence": 0.99
-    },
-    {
-      "word": "transcribed",
-      "confidence": 0.95
-    }
-  ],
-  "end_of_turn_confidence": 0.85
-}`;
-			}
-		}
-
-		// Check for Async response format
-		if (title.toLowerCase().includes("async") && option.properties && option.properties.request_id) {
-			const modelField = modelName ? `\n    "model": "${modelName}",` : '';
-			return `{
-  "result": {
-    "status": "queued",
-    "request_id": "768f15b7-4fd6-4498-906e-ad94ffc7f8d2",${modelField}
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}`;
-		}
-
-		return `{}`;
-	}
-
-	return `{}`;
-}
+// Create format context
+const context: FormatContext = {
+	type,
+	taskName,
+	modelName,
+};
 
 // Check if the schema has oneOf at the root level
 const hasOneOf = schema.oneOf && Array.isArray(schema.oneOf);
@@ -610,8 +67,16 @@ let singleTree: SchemaTree | null = null;
 let singleJsonExample: string | null = null;
 
 if (hasOneOf) {
+	// Filter out streaming for gpt-oss models before processing
+	let oneOfOptions = schema.oneOf;
+	if (isGptOssModel && type === "output") {
+		oneOfOptions = oneOfOptions.filter((option: any) =>
+			option.contentType !== 'text/event-stream'
+		);
+	}
+
 	// Process each oneOf option
-	options = schema.oneOf.map((option: any, index: number) => {
+	options = oneOfOptions.map((option: any, index: number) => {
 		const tree = new SchemaTree(option, {
 			mergeAllOf: true,
 			refResolver: defaultResolver,
@@ -619,12 +84,30 @@ if (hasOneOf) {
 		});
 		tree.populate();
 
+		// Use the new format detection system
+		const formatRegistry = type === "input" ? INPUT_FORMATS : OUTPUT_FORMATS;
+		const detectedFormat = detectFormat(option, context, formatRegistry);
+
+		let jsonExample = "";
+		if (detectedFormat) {
+			jsonExample = detectedFormat.generateExample(option, context);
+		} else {
+			// Fallback to schema-based generation
+			if (option.type === "string" && option.format === "binary") {
+				jsonExample = "Raw binary audio data sent as request body";
+			} else if (option.type === "object" || option.properties) {
+				jsonExample = generateFromSchema(option);
+			} else {
+				jsonExample = "{}";
+			}
+		}
+
 		return {
 			label: formatLabel(option) || `Format ${index + 1}`,
 			title: option.title,
 			tree: tree,
 			description: option.description,
-			jsonExample: type === "input" ? generateJSONExample(option, modelName, taskName) : generateOutputJSONExample(option, option.title, modelName),
+			jsonExample: jsonExample,
 		};
 	});
 
@@ -632,31 +115,9 @@ if (hasOneOf) {
 	options.sort((a, b) => {
 		const aTitle = (a.title || "").toLowerCase();
 		const bTitle = (b.title || "").toLowerCase();
-
-		// Define priority order
-		const getPriority = (title: string, label: string) => {
-			if (type === "output") {
-				// Output priority: Chat Completion, Text Completion, Streaming, others, then Async last
-				if (title.includes("chat completion")) return 1;
-				if (title.includes("text completion")) return 2;
-				if (title.includes("stream")) return 3;
-				if (title.includes("async") || label.toLowerCase().includes("async")) return 99;
-				return 5;
-			} else {
-				// Input priority: JSON, Embedding, Query and Contexts, Messages, Prompt, Responses, Binary, Async Batch
-				if (label.toLowerCase() === "json") return 1;
-				if (label.toLowerCase().includes("embedding")) return 2;
-				if (label.toLowerCase().includes("query") || label.toLowerCase().includes("context")) return 3;
-				if (title.includes("messages")) return 4;
-				if (title.includes("prompt")) return 5;
-				if (title.includes("responses")) return 6;
-				if (label.toLowerCase() === "binary") return 8;
-				if (title.includes("async") || title.includes("batch")) return 9;
-				return 7;
-			}
-		};
-
-		return getPriority(aTitle, a.label) - getPriority(bTitle, b.label);
+		const aPriority = getFormatPriority(aTitle, a.label, type);
+		const bPriority = getFormatPriority(bTitle, b.label, type);
+		return aPriority - bPriority;
 	});
 } else if (isGptOssResponses) {
 	// Treat gpt-oss Responses schema as a single-tab format
@@ -667,12 +128,16 @@ if (hasOneOf) {
 	});
 	tree.populate();
 
+	// Use the new format detection system
+	const formatRegistry = type === "input" ? INPUT_FORMATS : OUTPUT_FORMATS;
+	const detectedFormat = detectFormat(schema, context, formatRegistry);
+
 	options = [{
 		label: "Responses",
 		title: schema.title || "GPT_OSS_Responses",
 		tree: tree,
 		description: schema.description,
-		jsonExample: type === "input" ? generateJSONExample(schema, modelName, taskName) : generateOutputJSONExample(schema, "GPT_OSS_Responses", modelName),
+		jsonExample: detectedFormat ? detectedFormat.generateExample(schema, context) : "{}",
 	}];
 } else {
 	// If there's no oneOf, use the standard single schema view
@@ -683,8 +148,22 @@ if (hasOneOf) {
 	});
 	singleTree.populate();
 
-	// Generate JSON example for single schema
-	singleJsonExample = type === "input" ? generateJSONExample(schema, modelName, taskName) : generateOutputJSONExample(schema, schema.title, modelName);
+	// Use the new format detection system
+	const formatRegistry = type === "input" ? INPUT_FORMATS : OUTPUT_FORMATS;
+	const detectedFormat = detectFormat(schema, context, formatRegistry);
+
+	if (detectedFormat) {
+		singleJsonExample = detectedFormat.generateExample(schema, context);
+	} else {
+		// Fallback to schema-based generation
+		if (schema.type === "string" && schema.format === "binary") {
+			singleJsonExample = "Raw binary audio data sent as request body";
+		} else if (schema.type === "object" || schema.properties) {
+			singleJsonExample = generateFromSchema(schema);
+		} else {
+			singleJsonExample = "{}";
+		}
+	}
 }
 ---
 
