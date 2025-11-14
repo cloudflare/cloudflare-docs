@@ -1,13 +1,39 @@
 ---
 pcx_content_type: how-to
-title: Best practices for writing PAC files
+title: PAC file best practices
 sidebar:
   order: 3
 ---
 
 A PAC file is a text file that specifies which traffic should redirect to the proxy server.
 
-Below is the default PAC file. You can [customize the file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access, such as on an internal web server or on [Cloudflare Workers](/workers/).
+## Create a PAC file
+
+To create a PAC file:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Create a proxy endpoint.
+3. Once you create a proxy endpoint, select **Add PAC files**.
+4. Here, you can add **PAC file details** and **Setup instructions**.
+
+   In **PAC file details**:
+   - Enter the **Basic Information**.
+   - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** will be populated with the selected template.
+
+   In **Setup instructions:**
+   - Choose a browser and follow the instructions.
+
+5. Select **Create**.
+
+Your PAC file is of the form:
+
+```txt
+https://pac.cloudflare-gateway.com/<account-tag>/<slug>
+```
+
+## PAC file format
+
+Below is the default Zero Trust PAC file. You can [customize the file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access, such as on an internal web server or on [Cloudflare Workers](/workers/).
 
 ```js
 function FindProxyForURL(url, host) {
@@ -34,21 +60,142 @@ function FindProxyForURL(url, host) {
 
 - Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`.
 - You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
-- Use a proper text editor such as VS Code to avoid added characters.
-  :::
+- Use a proper text editor such as VS Code to avoid extra characters.
 
-To create a PAC file:
+:::
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
-2. Create a proxy endpoint.
-3. Once you create a proxy endpoint, select **Add PAC files**.
-4. Here, you can add **PAC file details** and **Setup instructions**.
-   In **PAC files details**: - Enter the **Basic Information**. - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** is going to be populated with a template.
-   In **Setup instructions:** - Choose a browser and follow the instructions.
-5. Select **Create**.
+## Performance optimization
 
-Your PAC file is of the form:
+PAC files are evaluated for every request, so optimizing their performance is critical to avoid delays in web browsing.
 
-```txt
-https://pac.cloudflare-gateway.com/<account-tag>/<slug>
+### Minimize DNS lookups
+
+Avoid or minimize the use of `isInNet()`, `isResolvable()`, and `dnsResolve()` functions, as these send queries to the DNS subsystem and can significantly slow down request processing.
+
+Instead of using `isInNet()` for IP range checks, use `shExpMatch()` for faster string comparison:
+
+```js
+// Slower - requires DNS lookup
+if (isInNet(hostIP, "10.0.0.0", "255.0.0.0")) return "DIRECT";
+
+// Faster - string comparison only
+if (shExpMatch(hostIP, "10.*")) return "DIRECT";
 ```
+
+### Use variables to cache DNS results
+
+If you must perform DNS resolution, store the result in a variable to avoid multiple lookups:
+
+```js
+function FindProxyForURL(url, host) {
+	// Resolve once and reuse
+	var hostIP = dnsResolve(host);
+
+	if (isInNet(hostIP, "10.0.0.0", "255.0.0.0")) {
+		return "DIRECT";
+	}
+
+	// Reuse hostIP for additional checks
+	if (isInNet(hostIP, "172.16.0.0", "255.240.0.0")) {
+		return "DIRECT";
+	}
+
+	return "HTTPS proxy.example.com:443";
+}
+```
+
+### Use string matching for domain checks
+
+For internal domain checks, use `shExpMatch()` instead of `dnsDomainIs()` when possible:
+
+```js
+// Using shExpMatch for faster performance
+if (shExpMatch(host, "*.internal.company.com")) return "DIRECT";
+
+// Equivalent but slower
+if (dnsDomainIs(host, ".internal.company.com")) return "DIRECT";
+```
+
+### Check for plain hostnames first
+
+NetBIOS names (hostnames without periods) are typically internal and should bypass the proxy. Check for these first:
+
+```js
+if (isPlainHostName(host)) return "DIRECT";
+```
+
+## Advanced techniques
+
+### Protocol-based routing
+
+You can route traffic to different proxies based on the protocol:
+
+```js
+function FindProxyForURL(url, host) {
+	// Extract protocol from URL
+	var protocol = url.substring(0, url.indexOf(":"));
+
+	if (protocol === "https") {
+		return "HTTPS secure-proxy.example.com:443";
+	} else if (protocol === "http") {
+		return "HTTPS proxy.example.com:443";
+	}
+
+	return "DIRECT";
+}
+```
+
+### Failover configuration
+
+Provide fallback proxies for high availability:
+
+```js
+// Try primary proxy, then secondary, then direct connection
+return "HTTPS primary.proxy.cloudflare-gateway.com:443; HTTPS secondary.proxy.cloudflare-gateway.com:443; DIRECT";
+```
+
+### Case sensitivity handling
+
+JavaScript is case-sensitive. Convert hostnames to lowercase for consistent matching:
+
+```js
+function FindProxyForURL(url, host) {
+	// Normalize to lowercase
+	host = host.toLowerCase();
+	url = url.toLowerCase();
+
+	if (shExpMatch(host, "*.example.com")) {
+		return "DIRECT";
+	}
+
+	return "HTTPS proxy.cloudflare-gateway.com:443";
+}
+```
+
+## Troubleshooting
+
+### Validate syntax
+
+PAC files use JavaScript syntax. A single syntax error (such as a missing closing parenthesis or bracket) will cause the entire PAC file to fail. Use a JavaScript-aware text editor to catch syntax errors before deployment.
+
+### Test return values
+
+The `FindProxyForURL` function must return one of these formats:
+
+- `DIRECT`: Connect directly to the destination
+- `HTTPS host:port`: Use an HTTPS proxy (required for Gateway)
+- `PROXY host:port`: Use an HTTP proxy (not supported by Gateway)
+
+Multiple return values can be separated by semicolons for fallback:
+
+```js
+return "HTTPS proxy1.example.com:443; HTTPS proxy2.example.com:443; DIRECT";
+```
+
+### Common issues
+
+**PAC file not loading**: Ensure the PAC file is hosted on an accessible web server with the correct MIME type (`application/x-ns-proxy-autoconfig`). File-based PAC files (using `file://` protocol) are not supported in modern browsers.
+
+**Slow browsing**: Excessive DNS lookups in the PAC file can cause delays. Review your PAC file and optimize DNS-related functions.
+
+**Inconsistent behavior**: Different browsers may cache PAC files differently. Clear your browser cache and restart the browser after updating the PAC file.

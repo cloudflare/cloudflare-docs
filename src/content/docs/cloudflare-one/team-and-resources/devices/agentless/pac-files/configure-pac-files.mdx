@@ -21,9 +21,17 @@ PAC files are only available on Enterprise plans.
 
 You can apply Gateway HTTP and DNS policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file to connect to a proxy endpoint.
 
-When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. Note that Gateway [cannot filter every type of HTTP traffic](#limitations) proxied using PAC files.
+When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. PAC files are evaluated by the browser for every request, determining whether traffic should go through the proxy or connect directly. Note that Gateway [cannot filter every type of HTTP traffic](#traffic-limitations) proxied using PAC files. If you want to use Gateway inspection policies, you will need to install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices.
 
-If you want to use Gateway inspection policies, install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
+PAC files offer several advantages:
+
+- **Centralized management**: Update routing rules in one location without reconfiguring individual devices
+- **Flexible routing**: Route different traffic types to different proxies or direct connections based on domain, IP range, or protocol
+- **Load balancing**: Distribute traffic across multiple proxy servers with automatic failover
+
+:::note
+PAC files require user interaction. Authorization endpoints require users to log in through [Cloudflare Access](/cloudflare-one/access-controls/policies/). PAC files do not support username/password or mTLS authorization.
+:::
 
 ## 1. Generate a proxy endpoint
 
@@ -39,7 +47,7 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolves & Proxies** > **Proxy endpoints**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
 
 2. Select **Create proxy endpoint**.
 
@@ -49,9 +57,9 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 Once you choose a type of proxy endpoint, you cannot revert this decision.
 :::
 
-## Authorization endpoint
+### Authorization endpoint
 
-Authorization endpoints support being associated with [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide full authorization capabilities. Authorization endpoints give you a comprehensive control of access policies to authorize traffic before it is sent for processing.
+Authorization endpoints support being associated with [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide full Zero Trust authorization capabilities. Authorization endpoints give you a comprehensive control of access policies to authorize traffic before it is sent for processing.
 
 Authorization endpoints offer a more flexible way to authorize traffic by leveraging Cloudflare Access. Authorization endpoints support associating a user identity with the connection.
 
@@ -63,9 +71,9 @@ If you select **Add an authorization endpoint**:
 
 3. Add your login method.
 
-4. Once you filled all the information, select **Save**.
+4. Once you have filled all the information, select **Save**.
 
-### Edit authorization
+#### Edit authorization
 
 To edit an authorization endpoint:
 
@@ -79,7 +87,7 @@ To edit an authorization endpoint:
      - Select the three dots that allow you to
    - **Login methods**: Select the [identity providers](/cloudflare-one/integrations/identity-providers/) you want to use to log in to this application.
 
-## Source IP endpoint
+### Source IP endpoint
 
 When you configure a source IP endpoint, traffic authorization is determined by the source IP address of the incoming traffic. You configure the endpoint to allow traffic processing only from a specific pre-defined set of source IP addresses.
 
@@ -101,7 +109,7 @@ Your Cloudflare proxy server domain is of the form:
 https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 ```
 
-### Edit source IP endpoint
+#### Edit source IP endpoint
 
 To edit a source IP endpoint:
 
@@ -114,6 +122,8 @@ To edit a source IP endpoint:
 </TabItem>
 
 <TabItem label="API">
+
+### Source IP endpoint
 
 1. [Create a proxy endpoint](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/create/) with the following call:
 
@@ -164,82 +174,19 @@ To edit a source IP endpoint:
 
 </Tabs>
 
-## 2. Test your proxy server
+## 2. Create a PAC file
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) for testing purposes. For example:
+A PAC file is a text file that specifies which traffic should redirect to the proxy server. You can create a PAC file in the Cloudflare dashboard or write your own custom PAC file.
 
-   | Selector | Operator | Value         | Action |
-   | -------- | -------- | ------------- | ------ |
-   | Domain   | in       | `example.com` | Block  |
+For detailed instructions and examples for creating a PAC file, refer to [PAC file best practices](/cloudflare-one/team-and-resources/devices/agentless/pac-files/best-practices/).
 
-2. Verify that nothing is returned by a `curl` command:
+## 3. Configure your devices
 
-   ```sh
-   curl --ipv4 --proxytunnel --proxy https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
-   ```
+### 3a. (Optional) Install Cloudflare certificate
 
-If `curl` returns a `403` code, it means the public IP of your device does not match the one used to generate the proxy server. Make sure that WARP is turned off on your device and double-check that `curl` is not using IPv6 (use the `-4` option to force IPv4).
+If you want to apply Gateway inspection policies or use features like the block page, [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices.
 
-## 3. Create a PAC file
-
-A PAC file is a text file that specifies which traffic should redirect to the proxy server.
-
-Below is the default PAC file. You can [customize the file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access, such as on an internal web server or on [Cloudflare Workers](/workers/).
-
-```js
-function FindProxyForURL(url, host) {
-	// No proxy for private (RFC 1918) IP addresses (intranet sites)
-	if (
-		isInNet(dnsResolve(host), "10.0.0.0", "255.0.0.0") ||
-		isInNet(dnsResolve(host), "172.16.0.0", "255.240.0.0") ||
-		isInNet(dnsResolve(host), "192.168.0.0", "255.255.0.0")
-	) {
-		return "DIRECT";
-	}
-
-	// No proxy for localhost
-	if (isInNet(dnsResolve(host), "127.0.0.0", "255.0.0.0")) {
-		return "DIRECT";
-	}
-
-	// Proxy all
-	return "HTTPS 3ele0ss56t.proxy.cloudflare-gateway.com:443";
-}
-```
-
-:::note
-
-- Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`.
-- You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
-- Use a proper text editor such as VS Code to avoid added characters.
-  :::
-
-To create a PAC file:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
-2. Create a proxy endpoint.
-3. Once you create a proxy endpoint, select **Add PAC files**.
-4. Here, you can add **PAC file details** and **Setup instructions**.
-   In **PAC files details**: - Enter the **Basic Information**. - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** is going to be populated with a template.
-   In **Setup instructions:** - Choose a browser and follow the instructions.
-5. Select **Create**.
-
-Your PAC file is of the form:
-
-```txt
-https://pac.cloudflare-gateway.com/<account-tag>/<slug>
-```
-
-### Edit your PAC files
-
-To edit your PAC files:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints** > **PAC files**.
-2. Locate the PAC file you want to edit, select the three dots, then select **Configure**.
-3. Edit **PAC files details** and/or **Setup instructions**.
-4. Select **Save**.
-
-## 4. Configure your devices
+### 3b. Configure browser to use PAC file
 
 All major browsers support PAC files. You can configure individual browsers, or you can configure system settings that apply to all browsers on the device. Multiple devices can call the same PAC file as long as their source IP addresses were included in the proxy endpoint configuration.
 
@@ -265,13 +212,13 @@ Safari relies on your operating system's proxy server settings. To configure you
 
 </Details>
 
-## 5. Test your HTTP policy
+## 4. Test your HTTP policy
 
-To test your configuration, you can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
+To test your configuration, create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block a test domain. When you visit the blocked domain in your browser, you should see the Gateway block page (if you installed the Cloudflare certificate in Step 3a) or receive a connection error.
 
 You can now use the Proxy Endpoint selector in [network](/cloudflare-one/traffic-policies/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/traffic-policies/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
 
-## Configure firewall
+## 5. (Optional) Configure firewall
 
 You may need to configure your organization's firewall to allow your users to connect to a proxy endpoint. Depending on your firewall, you will need to create a rule using either your proxy endpoint's domain or IP addresses.
 
@@ -281,7 +228,7 @@ To get the domain of a proxy endpoint:
 
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolves & Proxies** > **Proxy endpoints**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
 2. Choose the proxy endpoint. Select **Edit**.
 3. In **Proxy Endpoint**, copy the domain.
 
@@ -382,3 +329,17 @@ Using your proxy endpoint's domain, you can get the IP addresses assigned to the
 </Tabs>
 
 To ensure responses are allowed through your firewall, add an inbound rule to allow the static IPv4 address for Cloudflare proxy endpoints, `162.159.193.21`.
+
+## Limitations
+
+### Traffic limitations
+
+IP endpoints do not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
+
+Both HTTP proxy endpoints only support proxying and filtering TCP traffic.
+
+Authorization endpoints do not support anything that is not HTTP/HTTPS. That means no other TCP or UDP protocol is supported, including [HTTP3](/cloudflare-one/traffic-policies/http-policies/http3/).
+
+### Gateway DNS and resolver policies
+
+Gateway DNS and resolver policies will always apply to traffic proxied with PAC files, regardless of device configuration.
