@@ -1,17 +1,33 @@
 ---
-title: Markdown Conversion
+title: Workers Binding
 pcx_content_type: how-to
 sidebar:
-  order: 5
-  badge:
-    text: Beta
+  order: 2
 ---
 
-import { Code, Type, MetaInfo, Details, Render } from "~/components";
+import {
+	Badge,
+	Description,
+	Render,
+	TabItem,
+	Tabs,
+	WranglerConfig,
+	MetaInfo,
+	Type,
+} from "~/components";
 
-[Markdown](https://en.wikipedia.org/wiki/Markdown) is essential for text generation and large language models (LLMs) in training and inference because it can provide structured, semantic, human, and machine-readable input. Likewise, Markdown facilitates chunking and structuring input data for better retrieval and synthesis in the context of RAGs, and its simplicity and ease of parsing and rendering make it ideal for AI Agents.
+Cloudflare’s serverless platform allows you to run code at the edge to build full-stack applications with [Workers](/workers/). A [binding](/workers/runtime-apis/bindings/) enables your Worker or Pages Function to interact with resources on the Cloudflare Developer Platform.
 
-For these reasons, document conversion plays an important role when designing and developing AI applications. Workers AI provides the `toMarkdown` utility method that developers can use from the [`env.AI`](/workers-ai/configuration/bindings/) binding or the REST APIs for quick, easy, and convenient conversion and summary of documents in multiple formats to Markdown language.
+To use our Markdown Conversion service directly from your Workers, create an AI binding either in the Cloudflare dashboard (refer to [AI bindings](/pages/functions/bindings/#workers-ai) for instructions), or you can update your [Wrangler file](/workers/wrangler/configuration/). Add the following to your Wrangler file:
+
+<WranglerConfig>
+
+```toml
+[ai]
+binding = "AI" # i.e. available in your Worker on env.AI
+```
+
+</WranglerConfig>
 
 ## Methods
 
@@ -23,6 +39,8 @@ Takes a document or list of documents in different formats and converts them to 
 
 - <code>files</code>: <Type text="MarkdownDocument | MarkdownDocument[]" />- an instance of or an array of
   `MarkdownDocument`s.
+
+- <code>conversionOptions</code>: <Type text="ConversionOptions" />- options that control how conversion happens. See [Conversion Options](/workers-ai/features/markdown-conversion/conversion-options/) for further details.
 
 #### Return values
 
@@ -71,7 +89,7 @@ This method is similar to `env.AI.toMarkdown` except that it is exposed through 
 
 ### async env.AI.toMarkdown().supported()
 
-Returns a list of file formats that are currently supported for markdown conversion. See [Supported formats](#supported-formats) for the full list of file formats that can be converted into Markdown.
+Returns a list of file formats that are currently supported for markdown conversion. See [Supported formats](/workers-ai/features/markdown-conversion/supported-formats/) for the full list of file formats that can be converted into Markdown.
 
 #### Return values
 
@@ -87,12 +105,6 @@ Returns a list of file formats that are currently supported for markdown convers
 
   - The [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of files of this format
 
-
-## Supported formats
-
-This is the list of support formats. We are constantly adding new formats and updating this table.
-
-<Render file="markdown-conversion-support" product="workers-ai" />
 
 ## Example
 
