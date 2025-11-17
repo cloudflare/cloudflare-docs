@@ -169,21 +169,25 @@ The following example shows how you can use the `restart` method to maintain a d
 - The workflow retrieves 100 chunks at a time, processes the chunks, and updates their prefix
 - Then, if there are remaining objects with the original prefix, the Workflow instance restarts
 
-```TypeScriptExample
+```ts
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
   async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-    // Step 1: List first 500 files from R2 with prefix "chunk/"
     const listResult = await step.do("list files from R2", async () => {
+      // Restarts delete all state with the exception of search params.
+     // So we will need a cursor to keep track of progress
       const maybeCursor = await this.env.CHUNKS_BUCKET.get(
         `cursor/${event.instanceId}`,
       );
 
+      const cursor = maybeCursor
+        ? (await maybeCursor.json<{ cursor: string }>()).cursor
+        : undefined;
+
+      // Get the first 100 chunks to process
       const listed = await this.env.CHUNKS_BUCKET.list({
         prefix: "chunked/",
         limit: 100,
-        cursor: maybeCursor
-          ? (await maybeCursor.json<{ cursor: string }>()).cursor
-          : undefined,
+        cursor,
       });
 
       if (listed.truncated) {
@@ -197,8 +201,6 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
             },
           },
         );
-      } else {
-        await this.env.CHUNKS_BUCKET.delete(`cursor/${event.instanceId}`);
       }
 
       return {
@@ -215,26 +217,14 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
     await step.do("restart workflow", async () => {
       if (listResult.truncated) {
-        const counterKey = `stats/${event.instanceId}/processed-count`;
-        const existing = await this.env.CHUNKS_BUCKET.get(counterKey);
-        const currentCount = existing
-          ? (await existing.json<{ count: number }>()).count
-          : 0;
-        const newCount = currentCount + listResult.keys.length;
-
-        await this.env.CHUNKS_BUCKET.put(
-          counterKey,
-          JSON.stringify({ count: newCount }),
-          {
-            httpMetadata: {
-              contentType: "application/json",
-            },
-          },
-        );
-
+        // There are still chunks to process, restarting the workflow to continue processing
         const instance = await this.env.CHUNK_PROCESSOR.get(event.instanceId);
         await instance.restart();
       } else {
+        // If the workflow has ended we reset the cursor, so that we can preserve determinism
+        // if/when we re-run this workflow we will still process all the files
+        await this.env.CHUNKS_BUCKET.delete(`cursor/${event.instanceId}`);
+
         return "was not truncated, done";
       }
     });
