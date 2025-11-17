@@ -1,0 +1,103 @@
+---
+pcx_content_type: concept
+title: Editor 
+sidebar:
+  order: 9
+---
+
+import { LinkButton } from "~/components";
+
+The Workers Editor is a browser-based development environment for building and deploying Workers from templates. It runs a containerized instance of VS Code for the Web on Cloudflare's platform, giving you a complete development environment without any local setup.
+
+### Getting Started with Templates
+Currently, the Workers Editor is available for templates in the Workers & Pages gallery. This means you can explore and customize any template—whether it's a full-stack application or a static site—directly in your browser before deploying.
+When you open a template in the editor, you get instant access to:
+
+- A full code editor 
+- Real-time preview of your Worker
+- The complete template file structure
+- One-click deployment to Cloudflare's global network
+
+No local environment setup, no dependencies to install, no configuration required. Just click, edit, and deploy.
+
+<LinkButton 
+  href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/templates" 
+  icon="external"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Browse Templates
+</LinkButton>
+
+### Opening a Template in the Editor
+
+![templates page](src/assets/images/changelog/workers/templates.png)
+
+#### From the Template Gallery:
+
+1. Navigate to Workers & Pages in your Cloudflare dashboard
+2. Click Create application
+3. Browse the template gallery and find a template you want to use
+4. Click Edit Code on the template card
+
+The editor opens with your template loaded, showing you the main worker file and a live preview of your application.
+What you'll see:
+
+- Code editor on the left with the template's worker code
+- Live preview on the right showing your Worker in action
+- File explorer with all template files
+- Deploy button to publish your Worker when ready
+
+### Making Changes
+#### Editing Your Code
+The editor opens the main Worker file by default—this is typically index.js or worker.js, depending on the template. This is the file that controls what your Worker does.
+
+
+You can:
+
+- Edit any file in the template
+- Add new files using the file explorer
+- Delete files you don't need
+- Navigate between files to understand the template structure
+
+#### Real-Time Preview
+As you make changes, your preview updates automatically:
+
+#### Make an edit to your worker code
+- The editor auto-saves after a brief pause in typing
+- Your preview refreshes to show the updated behavior
+
+Example: In the "Astro Blog Starter" template, you might edit the welcome message in src/pages/index.astro. When you save, the preview updates instantly to show your new message.
+![editor](src/assets/images/changelog/workers/editor.png)
+
+### Starting Fresh
+#### Resetting to the Original Template
+If you want to discard your changes and start over with the original template:
+
+- Click the menu icon (⋮) in the top-right
+- Select Reset to Template
+- Confirm the reset
+
+All your edits will be discarded, and the editor will reload with the unmodified template. This is useful when you want to experiment freely without worrying about breaking things.
+
+
+### Deploying Your Worker
+When you're ready to deploy your customized template, click the Deploy button in the top-right corner.
+
+![templates page](src/assets/images/changelog/workers/setupapp.png)
+
+You'll be taken to the deployment configuration page where you can:
+
+- Choose your Git account and repository name
+- Decide whether to make the repository private or public
+- Set a custom project name
+- Review build and deployment commands
+
+
+After configuring, click Create and Deploy to publish your Worker.
+
+
+### Read More
+
+Workers Templates Gallery - Browse all available templates
+
