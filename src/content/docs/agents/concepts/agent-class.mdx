@@ -430,7 +430,9 @@ class MyAgent extends Agent {
 
 ### `this.destroy`
 
-`this.destroy()` drops all tables, deletes alarms, clears storage, and aborts the context. To ensure that the Durable Object is fully evicted, `this.ctx.abort()` is called, which throws an uncatchable error that will show up in your logs (read more about it in [abort()](/durable-objects/api/state/#abort)).
+`this.destroy()` drops all tables, deletes alarms, clears storage, and aborts the context. To ensure that the Durable Object is fully evicted, `this.ctx.abort()` is called asynchronously using `setTimeout()` to allow any currently executing handlers (like scheduled tasks) to complete their cleanup operations before the context is aborted.
+
+This means `this.ctx.abort()` throws an uncatchable error that will show up in your logs, but it does so after yielding to the event loop (read more about it in [abort()](/durable-objects/api/state/#abort)).
 
 The `destroy()` method can be safely called within scheduled tasks. When called from within a schedule callback, the Agent sets an internal flag to skip any remaining database updates, and yields `ctx.abort()` to the event loop to ensure the alarm handler completes cleanly before the Agent is evicted.
 
@@ -458,6 +460,12 @@ class MyAgent extends Agent {
   }
 }
 ```
+
+:::note[Using destroy() in scheduled tasks]
+
+You can safely call `this.destroy()` from within a scheduled task callback. The Agent SDK sets an internal flag to prevent database updates after destruction and defers the context abort to ensure the alarm handler completes cleanly.
+
+:::
 
 ### Routing
 

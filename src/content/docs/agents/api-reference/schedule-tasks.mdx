@@ -80,6 +80,12 @@ Each task is mapped to a row in the Agent's underlying [SQLite database](/durabl
 
 :::
 
+:::note[Destroying an Agent from a scheduled task]
+
+You can safely call `this.destroy()` from within a scheduled task callback. The Agent SDK handles this scenario by setting an internal flag to prevent database updates after destruction and deferring the context abort to allow the alarm handler to complete cleanly. This prevents errors that would otherwise occur when the alarm handler attempts to update the schedule table after storage has been cleared.
+
+:::
+
 ### Managing scheduled tasks
 
 You can get, cancel and filter across scheduled tasks within an Agent using the scheduling API:
