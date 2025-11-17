@@ -32,7 +32,7 @@ In a tiered policy configuration, a top-level source account can share Gateway p
 
 Gateway will automatically [generate a unique root CA](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) for each recipient account in an Organization. Each recipient account is subject to the default Zero Trust [account limits](/cloudflare-one/account-limits/).
 
-Gateway evaluates source account policies before any recipient account policies. In a Cloudflare Organization, recipient accounts cannot bypass or modify source account policies. All traffic and corresponding policies, logs, and configurations for a recipient account will be contained to that recipient account. Organization owners can view logs for recipient accounts on a per-account basis, and [Logpush jobs](/logs/logpush/) must be configured separately. When using DLP policies with [payload logging](/cloudflare-one/reusable-components/dlp-engine/logging-options/#log-the-payload-of-matched-rules), each recipient account must configure its own [encryption public key](/cloudflare-one/reusable-components/dlp-engine/logging-options/#set-a-dlp-payload-encryption-public-key).
+Gateway evaluates source account policies before any recipient account policies. In a Cloudflare Organization, recipient accounts cannot bypass or modify source account policies. All traffic and corresponding policies, logs, and configurations for a recipient account will be contained to that recipient account. Organization owners can view logs for recipient accounts on a per-account basis, and [Logpush jobs](/logs/logpush/) must be configured separately. When using DLP policies with [payload logging](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules), each recipient account must configure its own [encryption public key](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#set-a-dlp-payload-encryption-public-key).
 
 ```mermaid
 flowchart TD
@@ -80,7 +80,7 @@ flowchart TD
 
 ### Limitations
 
-Tiered policies do not support [egress policies](/cloudflare-one/traffic-policies/egress-policies/). Source accounts cannot share policies with selectors that target [device posture checks](/cloudflare-one/identity/devices/), [Access private apps](/cloudflare-one/applications/non-http/self-hosted-private-app/), or [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/). Source and recipient accounts can still create and apply policies with these selectors separately from the Organization share.
+Tiered policies do not support [egress policies](/cloudflare-one/traffic-policies/egress-policies/). Source accounts cannot share policies with selectors that target [device posture checks](/cloudflare-one/reusable-components/posture-checks/), [Access private apps](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/), or [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/). Source and recipient accounts can still create and apply policies with these selectors separately from the Organization share.
 
 ## Manage policies
 
@@ -153,7 +153,7 @@ To modify share recipients or unshare the setting, select the three-dot menu and
 
 ### Share extended email address matching
 
-To share your [extended email address matching](/cloudflare-one/identity/users/#extended-email-addresses) settings from a source account to a recipient account:
+To share your [extended email address matching](/cloudflare-one/traffic-policies/identity-selectors/#extended-email-addresses) settings from a source account to a recipient account:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
 2. In **Firewall** > **Matched extended email address**, select the three-dot menu and choose **Share**.
