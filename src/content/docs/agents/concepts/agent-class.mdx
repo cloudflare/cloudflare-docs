@@ -432,6 +432,8 @@ class MyAgent extends Agent {
 
 `this.destroy()` drops all tables, deletes alarms, clears storage, and aborts the context. To ensure that the Durable Object is fully evicted, `this.ctx.abort()` is called, which throws an uncatchable error that will show up in your logs (read more about it in [abort()](/durable-objects/api/state/#abort)).
 
+The `destroy()` method can be safely called within scheduled tasks. When called from within a schedule callback, the Agent sets an internal flag to skip any remaining database updates, and yields `ctx.abort()` to the event loop to ensure the alarm handler completes cleanly before the Agent is evicted.
+
 ```ts
 class MyAgent extends Agent {
   async onStart() {
@@ -441,6 +443,17 @@ class MyAgent extends Agent {
 
   async cleanup() {
     // This wipes everything!
+    await this.destroy();
+  }
+
+  async selfDestruct() {
+    // Safe to call from within a scheduled task
+    await this.schedule(60, "destroyAfterDelay", {});
+  }
+
+  async destroyAfterDelay() {
+    // This will safely destroy the Agent even when
+    // called from within the alarm handler
     await this.destroy();
   }
 }

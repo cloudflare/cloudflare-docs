@@ -11,6 +11,12 @@ An Agent can schedule tasks to be run in the future by calling `this.schedule(wh
 
 Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read+write state: scheduled tasks can invoke any regular method on your Agent.
 
+:::note[Calling destroy() in scheduled tasks]
+
+You can safely call `this.destroy()` within a scheduled task callback. The Agent will properly handle cleanup and eviction, skipping any remaining database updates after the destroy flag is set.
+
+:::
+
 ### Scheduling tasks
 
 You can call `this.schedule` within any method on an Agent, and schedule tens-of-thousands of tasks per individual Agent:
