@@ -62,6 +62,18 @@ Cloudflare’s CDN provides several cache customization options:
 * Customize caching with [Cloudflare Workers](/workers/reference/how-the-cache-works/)
 * Adjust caching level, cache TTL, and more via the Cloudflare Caching app
 
+### Edge TTL
+
+By default, Cloudflare caches certain HTTP response codes with the following Edge Cache TTL when a `cache-control` directive or `expires` response header are not present.
+
+| HTTP status code | Default TTL |
+| ---------------- | ----------- |
+| 200, 206, 301    | 120m        |
+| 302, 303         | 20m         |
+| 404, 410         | 3m          |
+
+All other status codes are not cached by default.
+
 ### Upload limits
 
 <FeatureTable id="network.max_upload_size" />
