@@ -1,0 +1,404 @@
+---
+summary: Mount R2 buckets as filesystems using FUSE in Containers
+pcx_content_type: example
+title: Mount R2 buckets with FUSE
+sidebar:
+  order: 8
+description: Mount R2 buckets as filesystems using FUSE in Containers
+---
+
+import { WranglerConfig, Details, TypeScriptExample, PackageManagers } from "~/components";
+
+You can mount R2 buckets as FUSE (Filesystem in Userspace) mounts within Containers, allowing applications to interact with R2 as if it were a local filesystem. This is useful for applications without native object storage support or when you want to simplify operations by treating object storage as a standard filesystem.
+
+:::note[Performance considerations]
+
+Object storage is not a POSIX-compatible filesystem, nor is it local storage. While FUSE mounts provide a familiar interface, you should not expect native SSD-like performance.
+
+Common use cases where this tradeoff is acceptable include:
+
+- Reading shared assets or configuration files
+- Bootstrapping agents or sandboxes with initial data
+- Persisting user state or application data
+- Applications that require filesystem APIs but don't need high-performance I/O (hundreds of ops/sec)
+
+:::
+
+For a complete working example, see the [fuse-on-r2 repository](https://github.com/cloudflare/containers/tree/main/examples/r2-fuse-mount).
+
+## Setup
+
+This example demonstrates mounting an R2 bucket using [tigrisfs](https://github.com/tigrisdata/tigrisfs) within a Container and serving file listings via a Go application.
+
+### Prerequisites
+
+You will need:
+
+- An R2 bucket with files in it
+- [R2 API credentials](/r2/api/tokens/) (Access Key ID and Secret Access Key)
+- Your Cloudflare account ID
+
+### Create R2 API credentials
+
+First, create API credentials for accessing your R2 bucket:
+
+1. Navigate to [R2 API tokens](https://dash.cloudflare.com/?to=/:account/r2/api-tokens) in the Cloudflare dashboard
+2. Create a new API token with permissions to read from your bucket
+3. Save the **Access Key ID** and **Secret Access Key** - you'll need these in the next step
+
+## Configure the Worker
+
+Define your Container configuration in `wrangler.jsonc`:
+
+<WranglerConfig>
+```json
+{
+  "name": "fuse-on-r2",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-10-08",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "R2_BUCKET_NAME": "my-bucket",
+    "R2_ACCOUNT_ID": "your-account-id"
+  },
+  "containers": [
+    {
+      "class_name": "FUSEDemo",
+      "image": "./Dockerfile",
+      "max_instances": 10
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "FUSEDemo",
+        "name": "FUSEDemo"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": ["FUSEDemo"],
+      "tag": "v1"
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+Replace `my-bucket` with your R2 bucket name and `your-account-id` with your Cloudflare account ID.
+
+### Add R2 credentials as secrets
+
+Store your R2 API credentials as Worker secrets:
+
+<PackageManagers type="exec" pkg="wrangler" args="secret put AWS_ACCESS_KEY_ID" />
+
+<PackageManagers type="exec" pkg="wrangler" args="secret put AWS_SECRET_ACCESS_KEY" />
+
+These secrets will be passed to the Container as environment variables.
+
+## Define the Worker
+
+Create `src/index.ts` to define the Container class and Worker entry point:
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { Container, getContainer } from "@cloudflare/containers";
+import { Hono } from "hono";
+
+interface Env {
+  FUSEDemo: DurableObjectNamespace<FUSEDemo>;
+  AWS_ACCESS_KEY_ID: string;
+  AWS_SECRET_ACCESS_KEY: string;
+  R2_BUCKET_NAME: string;
+  R2_ACCOUNT_ID: string;
+}
+
+export class FUSEDemo extends Container<Env> {
+  defaultPort = 8080;
+  sleepAfter = "10m";
+  envVars = {
+    AWS_ACCESS_KEY_ID: this.env.AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY: this.env.AWS_SECRET_ACCESS_KEY,
+    BUCKET_NAME: this.env.R2_BUCKET_NAME,
+    R2_ACCOUNT_ID: this.env.R2_ACCOUNT_ID,
+  };
+}
+
+const app = new Hono<{
+  Bindings: Env;
+}>();
+
+app.get("/", async (c) => {
+  const container = getContainer(c.env.FUSEDemo);
+  return await container.fetch(c.req.raw);
+});
+
+export default app;
+```
+</TypeScriptExample>
+
+The `envVars` property passes Worker secrets and environment variables into the Container at startup. The Container will mount the R2 bucket and make it available to the application running inside.
+
+## Create the Dockerfile
+
+The Dockerfile installs FUSE, downloads tigrisfs, and sets up the mount on container startup:
+
+<Details header="Dockerfile">
+```dockerfile
+# syntax=docker/dockerfile:1
+
+FROM golang:1.24-alpine AS build
+
+WORKDIR /app
+
+COPY container_src/go.mod ./
+RUN go mod download
+
+COPY container_src/*.go ./
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o /server
+
+FROM alpine:3.20
+
+# Install ca-certificates first to fix SSL verification, then install other packages
+RUN apk update && \
+    apk add --no-cache ca-certificates && \
+    apk add --no-cache fuse fuse-dev curl bash
+
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then ARCH="amd64"; fi && \
+    if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
+    VERSION=$(curl -s https://api.github.com/repos/tigrisdata/tigrisfs/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4) && \
+    curl -L "https://github.com/tigrisdata/tigrisfs/releases/download/${VERSION}/tigrisfs_${VERSION#v}_linux_${ARCH}.tar.gz" -o /tmp/tigrisfs.tar.gz && \
+    tar -xzf /tmp/tigrisfs.tar.gz -C /usr/local/bin/ && \
+    rm /tmp/tigrisfs.tar.gz && \
+    chmod +x /usr/local/bin/tigrisfs
+
+COPY --from=build /server /server
+
+RUN printf '#!/bin/sh\n\
+    set -e\n\
+    \n\
+    mkdir -p "$HOME/mnt/r2/${BUCKET_NAME}"\n\
+    \n\
+    R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
+    echo "Mounting bucket ${BUCKET_NAME}..."\n\
+    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${BUCKET_NAME}" "$HOME/mnt/r2/${BUCKET_NAME}" &\n\
+    sleep 3\n\
+    \n\
+    echo "Starting server on :8080"\n\
+    exec /server\n\
+    ' > /startup.sh && chmod +x /startup.sh
+
+EXPOSE 8080
+
+CMD ["/startup.sh"]
+```
+</Details>
+
+The startup script:
+1. Creates the mount point directory
+2. Constructs the R2 endpoint URL using the account ID
+3. Starts tigrisfs in the background to mount the bucket
+4. Waits briefly for the mount to complete
+5. Starts the application server
+
+## Build the application
+
+Create a simple Go application in `container_src/main.go` that reads from the mounted filesystem:
+
+<Details header="container_src/main.go">
+```go
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"path/filepath"
+	"syscall"
+	"time"
+)
+
+type FileInfo struct {
+	Name  string `json:"name"`
+	IsDir bool   `json:"is_dir"`
+	Size  int64  `json:"size"`
+}
+
+type FileListResponse struct {
+	BucketName string     `json:"bucket_name"`
+	MountPath  string     `json:"mount_path"`
+	Files      []FileInfo `json:"files"`
+	Total      int        `json:"total"`
+}
+
+func listFilesHandler(w http.ResponseWriter, r *http.Request) {
+	bucketName := os.Getenv("BUCKET_NAME")
+	if bucketName == "" {
+		http.Error(w, "BUCKET_NAME environment variable not set", http.StatusInternalServerError)
+		return
+	}
+
+	home, err := os.UserHomeDir()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to get home directory: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	mountPath := filepath.Join(home, "mnt", "r2", bucketName)
+
+	entries, err := os.ReadDir(mountPath)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to read directory %s: %v", mountPath, err), http.StatusInternalServerError)
+		return
+	}
+
+	files := make([]FileInfo, 0, 10)
+	for i, entry := range entries {
+		if i >= 10 {
+			break
+		}
+
+		info, err := entry.Info()
+		if err != nil {
+			log.Printf("Warning: could not get info for %s: %v", entry.Name(), err)
+			continue
+		}
+
+		files = append(files, FileInfo{
+			Name:  entry.Name(),
+			IsDir: entry.IsDir(),
+			Size:  info.Size(),
+		})
+	}
+
+	response := FileListResponse{
+		BucketName: bucketName,
+		MountPath:  mountPath,
+		Files:      files,
+		Total:      len(entries),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		log.Printf("Failed to encode JSON: %v", err)
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+		return
+	}
+}
+
+func main() {
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
+
+	router := http.NewServeMux()
+	router.HandleFunc("/", listFilesHandler)
+
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: router,
+	}
+
+	go func() {
+		log.Printf("Server listening on %s\n", server.Addr)
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatal(err)
+		}
+	}()
+
+	sig := <-stop
+	log.Printf("Received signal (%s), shutting down server...", sig)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Server shutdown successfully")
+}
+```
+</Details>
+
+The application uses Go's standard `os.ReadDir()` to read files from the mounted R2 bucket at `$HOME/mnt/r2/<bucket_name>`. It returns a JSON response with the first 10 files and the total count.
+
+You'll also need a `container_src/go.mod` file:
+
+<Details header="container_src/go.mod">
+```go
+module github.com/cloudflare/containers/examples/r2-fuse-mount
+
+go 1.24
+```
+</Details>
+
+## Deploy
+
+Ensure Docker is running locally, then deploy:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Once deployed, visiting your Worker URL will return a JSON response listing the files in your mounted R2 bucket.
+
+## Advanced usage
+
+### Mount multiple buckets
+
+You can mount multiple R2 buckets by modifying the startup script in the Dockerfile to mount each bucket to a different path:
+
+```dockerfile
+RUN printf '#!/bin/sh\n\
+    set -e\n\
+    \n\
+    # Mount first bucket\n\
+    mkdir -p "$HOME/mnt/r2/${BUCKET_NAME_1}"\n\
+    /usr/local/bin/tigrisfs --endpoint "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com" \
+      -f "${BUCKET_NAME_1}" "$HOME/mnt/r2/${BUCKET_NAME_1}" &\n\
+    \n\
+    # Mount second bucket\n\
+    mkdir -p "$HOME/mnt/r2/${BUCKET_NAME_2}"\n\
+    /usr/local/bin/tigrisfs --endpoint "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com" \
+      -f "${BUCKET_NAME_2}" "$HOME/mnt/r2/${BUCKET_NAME_2}" &\n\
+    \n\
+    sleep 5\n\
+    exec /server\n\
+    ' > /startup.sh && chmod +x /startup.sh
+```
+
+You would need to pass `BUCKET_NAME_1` and `BUCKET_NAME_2` as environment variables through the `envVars` property.
+
+### Reading and writing files
+
+Applications running in the Container can read and write files using standard filesystem operations:
+
+```go
+// Read a file
+content, err := os.ReadFile(filepath.Join(mountPath, "config.json"))
+
+// Write a file
+err := os.WriteFile(filepath.Join(mountPath, "output.txt"), data, 0644)
+
+// Create directories
+err := os.MkdirAll(filepath.Join(mountPath, "logs"), 0755)
+```
+
+Changes are written directly to R2. Keep in mind that object storage operations have different performance characteristics than local disk I/O.
+
+### Using with other languages
+
+While this example uses Go, you can use FUSE-mounted R2 buckets with any language that supports filesystem operations. The mount is accessible to all processes in the Container, so Python, Node.js, Rust, or any other runtime can read and write files through the standard filesystem APIs.
+
+## Related resources
+
+- [tigrisfs](https://github.com/tigrisdata/tigrisfs) - FUSE adapter for S3-compatible storage
+- [R2 documentation](/r2/)
+- [R2 API tokens](/r2/api/tokens/)
+- [Container environment variables](/containers/examples/env-vars-and-secrets/)
