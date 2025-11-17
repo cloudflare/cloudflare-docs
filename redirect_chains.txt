@@ -1,0 +1,23 @@
+# Redirect chains found in __redirects file
+# Total: 2 chains
+
+Chain 1 (3 redirects):
+  /fundamentals/reference/developer-spotlight/
+  /developer-spotlight/
+  /resources/
+
+Should be simplified to:
+  /fundamentals/reference/developer-spotlight/ -> /resources/
+
+--------------------------------------------------------------------------------
+
+Chain 2 (3 redirects):
+  /turnstile/tutorials/protecting-your-payment-form-from-attackers-bots-using-turnstile/
+  /developer-spotlight/
+  /resources/
+
+Should be simplified to:
+  /turnstile/tutorials/protecting-your-payment-form-from-attackers-bots-using-turnstile/ -> /resources/
+
+--------------------------------------------------------------------------------
+

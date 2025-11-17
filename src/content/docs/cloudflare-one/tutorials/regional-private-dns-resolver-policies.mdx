@@ -23,7 +23,7 @@ Before you begin, make sure you have:
 
 - An Enterprise Zero Trust account
 - Private DNS servers deployed in multiple regions (for example, US, EU, and APAC)
-- A [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) connecting your private DNS servers to Cloudflare
+- A [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connecting your private DNS servers to Cloudflare
 - Internal domains that need to be resolved (for example, `internal.example.com`)
 
 ## Connect private DNS servers with Cloudflare Tunnel
@@ -149,12 +149,12 @@ Gateway evaluates policies from top to bottom and applies the first matching pol
 - **Use backup resolvers**: Configure secondary DNS resolvers for each region to ensure high availability.
 - **Monitor DNS performance**: Use [Gateway Analytics](/cloudflare-one/insights/analytics/gateway/) to track DNS query performance and identify any issues with regional routing.
 - **Implement network policies**: Combine resolver policies with [network policies](/cloudflare-one/traffic-policies/network-policies/) to control access to internal resources based on user identity and device posture.
-- **Consider virtual networks**: If you have overlapping IP address spaces across regions, use [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) to isolate traffic.
+- **Consider virtual networks**: If you have overlapping IP address spaces across regions, use [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) to isolate traffic.
 - **Test failover scenarios**: Regularly test what happens when a regional DNS server becomes unavailable to ensure your backup resolvers work as expected.
 
 ## Related resources
 
 - [Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/)
-- [Connect private networks](/cloudflare-one/connections/connect-networks/)
+- [Connect private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [Gateway Analytics](/cloudflare-one/insights/analytics/gateway/)
-- [Virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/)
+- [Virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/)

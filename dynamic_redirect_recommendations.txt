@@ -1,0 +1,45 @@
+# Dynamic Redirect Recommendations
+
+## Cloudflare One Nav Revamp
+
+### Recommendation 1
+Dynamic redirect: /cloudflare-one/applications/configure-apps/mcp-servers/* -> /cloudflare-one/access-controls/ai-controls/:splat
+Replaces: 3 static redirects
+
+Static redirects to remove:
+  /cloudflare-one/applications/configure-apps/mcp-servers/linked-apps/ /cloudflare-one/access-controls/ai-controls/linked-apps/ 301
+  /cloudflare-one/applications/configure-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
+  /cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/ /cloudflare-one/access-controls/ai-controls/saas-mcp/ 301
+
+### Recommendation 2
+Dynamic redirect: /cloudflare-one/identity/* -> /cloudflare-one/access-controls/applications/http-apps/:splat
+Replaces: 3 static redirects
+
+Static redirects to remove:
+  /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
+  /cloudflare-one/identity/authorization-cookie/application-token/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/ 301
+  /cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
+
+### Recommendation 3
+Dynamic redirect: /cloudflare-one/identity/* -> /cloudflare-one/team-and-resources/:splat
+Replaces: 3 static redirects
+
+Static redirects to remove:
+  /cloudflare-one/identity/users/ /cloudflare-one/team-and-resources/users/ 301
+  /cloudflare-one/identity/users/scim/ /cloudflare-one/team-and-resources/users/scim/ 301
+  /cloudflare-one/identity/users/seat-management/ /cloudflare-one/team-and-resources/users/seat-management/ 301
+
+## Email Security New Revamp
+
+### Recommendation 1
+Dynamic redirect: /cloudflare-one/email-security/* -> /cloudflare-one/email-security/settings/:splat
+Replaces: 6 static redirects
+
+Static redirects to remove:
+  /cloudflare-one/email-security/detection-settings/additional-detections/ /cloudflare-one/email-security/settings/detection-settings/additional-detections/ 301
+  /cloudflare-one/email-security/detection-settings/allow-policies/ /cloudflare-one/email-security/settings/detection-settings/allow-policies/ 301
+  /cloudflare-one/email-security/detection-settings/blocked-senders/ /cloudflare-one/email-security/settings/detection-settings/blocked-senders/ 301
+  /cloudflare-one/email-security/detection-settings/configure-link-actions/ /cloudflare-one/email-security/settings/detection-settings/configure-link-actions/ 301
+  /cloudflare-one/email-security/detection-settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
+  /cloudflare-one/email-security/detection-settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
+
