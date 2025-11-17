@@ -1,0 +1,184 @@
+---
+reviewed: 2025-11-17
+category: 🔐 Zero Trust
+difficulty: Advanced
+pcx_content_type: tutorial
+title: Implement regional private DNS servers with Gateway Resolver policies
+description: >-
+  Configure Gateway Resolver policies to route DNS queries to region-specific private DNS servers, enabling geo-steering for internal resources across multiple locations.
+---
+
+import { Render } from "~/components";
+
+Gateway Resolver policies allow you to route DNS queries to custom DNS resolvers based on various criteria. This tutorial demonstrates how to configure region-specific private DNS servers to ensure users are directed to the closest internal resources based on their geographic location.
+
+This approach is particularly useful for organizations with internal networks spanning multiple geolocations, where DNS plays a critical role in routing and managing access to private network resources.
+
+By the end of this tutorial, you will have configured Gateway Resolver policies that automatically route DNS queries to region-specific private DNS servers based on user location, providing optimal performance and access to internal resources.
+
+## Before you begin
+
+Make sure you have:
+
+- An Enterprise account with [Gateway](/cloudflare-one/gateway/) enabled
+- [Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) enabled on your account
+- Private DNS servers deployed in multiple regions (for example, US, EU, APAC)
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) connecting your private DNS servers to Cloudflare
+- Internal domains that need to be resolved (for example, `internal.example.com`)
+
+## Connect private DNS servers via Cloudflare Tunnel
+
+First, establish connectivity between your regional private DNS servers and Cloudflare using Cloudflare Tunnel.
+
+### Create tunnels for each region
+
+For each region where you have a private DNS server:
+
+<Render file="tunnel/create-tunnel" product="cloudflare-one" />
+
+### Add private network routes
+
+For each tunnel, add the private IP addresses of your DNS servers:
+
+1. In the **CIDR** tab, add the private IP/CIDR of your DNS server (for example, `10.0.1.53/32` for US, `10.1.1.53/32` for EU).
+
+2. Select **Save tunnel**.
+
+Repeat this process for all regional DNS servers.
+
+## Create Gateway Resolver policies for each region
+
+Now configure Gateway Resolver policies to route DNS queries to the appropriate regional DNS server based on user location.
+
+### Create a resolver policy for US users
+
+1. Go to **Gateway** > **Resolver policies**.
+
+2. Select **Add a policy**.
+
+3. Name your policy (for example, `US Internal DNS`).
+
+4. Create an expression to match internal domains and US-based users:
+
+   | Selector      | Operator | Value                  | Logic |
+   | ------------- | -------- | ---------------------- | ----- |
+   | Domain        | in       | `internal.example.com` | And   |
+   | User Location | in       | `United States`        |       |
+
+5. In **Select DNS resolver**, select _Configure custom DNS resolvers_.
+
+6. Enter the private IP address of your US DNS server (for example, `10.0.1.53`).
+
+7. In the dropdown menu, select _`<IP-address> - Private`_.
+
+8. (Optional) Add a backup DNS resolver by selecting **Add DNS resolver** and entering a secondary IP address.
+
+9. Select **Create policy**.
+
+### Create a resolver policy for EU users
+
+1. Go to **Gateway** > **Resolver policies**.
+
+2. Select **Add a policy**.
+
+3. Name your policy (for example, `EU Internal DNS`).
+
+4. Create an expression to match internal domains and EU-based users:
+
+   | Selector      | Operator | Value                                            | Logic |
+   | ------------- | -------- | ------------------------------------------------ | ----- |
+   | Domain        | in       | `internal.example.com`                           | And   |
+   | User Location | in list  | `Austria, Belgium, France, Germany, Netherlands` |       |
+
+5. In **Select DNS resolver**, select _Configure custom DNS resolvers_.
+
+6. Enter the private IP address of your EU DNS server (for example, `10.1.1.53`).
+
+7. In the dropdown menu, select _`<IP-address> - Private`_.
+
+8. (Optional) Add a backup DNS resolver.
+
+9. Select **Create policy**.
+
+### Create additional regional policies
+
+Repeat the process above for any additional regions (for example, APAC, LATAM) where you have private DNS servers.
+
+### Create a fallback resolver policy
+
+Create a catch-all policy for users in regions without a dedicated DNS server:
+
+1. Go to **Gateway** > **Resolver policies**.
+
+2. Select **Add a policy**.
+
+3. Name your policy (for example, `Internal DNS Fallback`).
+
+4. Create an expression to match internal domains:
+
+   | Selector | Operator | Value                  |
+   | -------- | -------- | ---------------------- |
+   | Domain   | in       | `internal.example.com` |
+
+5. In **Select DNS resolver**, select _Configure custom DNS resolvers_.
+
+6. Enter the private IP address of your primary DNS server.
+
+7. Select **Create policy**.
+
+8. Move this policy to the bottom of your resolver policy list to ensure it only matches when no regional policy applies.
+
+## Configure policy order
+
+The order of your resolver policies matters. Ensure your policies are ordered from most specific to least specific:
+
+1. Go to **Gateway** > **Resolver policies**.
+
+2. Use the drag handle to reorder policies:
+   - Regional policies (US, EU, APAC, etc.) at the top
+   - Fallback policy at the bottom
+
+Gateway evaluates policies from top to bottom and applies the first matching policy.
+
+## Test your configuration
+
+### Test from different regions
+
+1. Connect to WARP from a device in the US region.
+
+2. Open a terminal and run:
+
+   ```sh
+   nslookup internal.example.com
+   ```
+
+3. Verify that the DNS query is resolved by your US DNS server by checking the response.
+
+4. Repeat the test from devices in other regions (EU, APAC) to confirm they receive responses from their respective regional DNS servers.
+
+### Verify in Gateway logs
+
+1. Go to **Logs** > **Gateway** > **DNS**.
+
+2. Filter for queries to `internal.example.com`.
+
+3. Check the **Resolver IP** field to confirm queries are being routed to the correct regional DNS servers based on user location.
+
+## Best practices
+
+- **Use backup resolvers**: Configure secondary DNS resolvers for each region to ensure high availability.
+
+- **Monitor DNS performance**: Use [Gateway Analytics](/cloudflare-one/insights/analytics/gateway/) to track DNS query performance and identify any issues with regional routing.
+
+- **Implement network policies**: Combine resolver policies with [network policies](/cloudflare-one/traffic-policies/network-policies/) to control access to internal resources based on user identity and device posture.
+
+- **Consider virtual networks**: If you have overlapping IP address spaces across regions, use [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) to isolate traffic.
+
+- **Test failover scenarios**: Regularly test what happens when a regional DNS server becomes unavailable to ensure your backup resolvers work as expected.
+
+## Related resources
+
+- [Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/)
+- [Connect private networks](/cloudflare-one/connections/connect-networks/)
+- [Gateway Analytics](/cloudflare-one/insights/analytics/gateway/)
+- [Virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/)
