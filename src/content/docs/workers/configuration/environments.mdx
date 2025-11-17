@@ -34,26 +34,35 @@ You can also easily set up your **[local development environment](#local-develop
 
 ## Configuration
 
-You configure environments as top-level keys in your [Wrangler configuration file](/workers/wrangler/configuration/). The `production` and `preview` keys each contain their own `env` object with [environment variables](/workers/configuration/environment-variables/) — including plain text values and [bindings](/workers/runtime-apis/bindings/).
+When you write a Worker, you need to tell Cloudflare two things:
+
+1. **What your Worker is** - Its name, which code file to run, and how it should behave
+2. **What your Worker connects to** - Which databases, API keys, and resources to use
+
+The second part is different for **Production** (your live site) and **Preview** (testing changes). You configure these separately so your tests don't accidentally mess with real user data.
+
+Here's what a configuration file looks like:
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
   "name": "my-worker",
   "compatibility_date": "$today",
+  "main": "src/index.ts",
   "production": {
+    "domains": ["app.example.com"],
     "env": {
-      "API_BASE": {
-        "type": "text",
-        "value": "https://api.cloudflare.com/client/v4"
+      "DB": {
+        "type": "d1",
+        "database_id": "prod-db-123"
       }
     }
   },
   "preview": {
     "env": {
-      "API_BASE": {
-        "type": "text",
-        "value": "https://api.staging.cloudflare.com/client/v4"
+      "DB": {
+        "type": "d1",
+        "database_id": "preview-db-456"
       }
     }
   }
@@ -61,7 +70,227 @@ You configure environments as top-level keys in your [Wrangler configuration fil
 ```
 </WranglerConfig>
 
-In this example, the `API_BASE` environment variable has different values in **Production** and **Preview**.
+Notice how `production` and `preview` have different values for `database_id`? Your Worker runs the same code in both environments, but connects to different databases.
+
+The settings outside of `production` and `preview` - like `name` and `main` - describe your Worker itself. These stay the same everywhere because you want to test the exact same Worker that your users will see. For the complete list of these settings, refer to [Global settings](#global-settings).
+
+<Details header="View complete configuration example">
+
+Here's a comprehensive example showing all available configuration options:
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  // ============================================================================
+  // GLOBAL SETTINGS - Apply to all environments
+  // ============================================================================
+  // These describe your Worker's code and can't differ between environments
+
+  "name": "my-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "$today",
+  "compatibility_flags": ["nodejs_compat_v2"],
+
+  // Durable Object migrations - Global because they're part of your code
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["Counter"]
+    }
+  ],
+
+  // Build configuration - Global because it affects how your code is built
+  "tsconfig": "tsconfig.json",
+  "minify": true,
+  "no_bundle": false,
+
+  // ============================================================================
+  // PRODUCTION ENVIRONMENT
+  // ============================================================================
+  "production": {
+    // Where your production Worker is accessible
+    "domains": ["app.example.com"],
+
+    // Environment variables
+    "env": {
+      // Plain text variable - separated by "value"
+      "ENVIRONMENT": {
+        "type": "text",
+        "value": "production"
+      },
+
+      // KV namespace - separated by "id"
+      // Each environment connects to a different KV namespace
+      "MY_KV": {
+        "type": "kv_namespace",
+        "id": "abc123prod"
+      },
+
+      // D1 database - separated by "database_id"
+      // Production uses the real database
+      "DB": {
+        "type": "d1",
+        "database_id": "prod-db-id-123"
+      },
+
+      // R2 bucket - separated by "bucket_name"
+      // Production uses the real bucket
+      "MY_BUCKET": {
+        "type": "r2_bucket",
+        "bucket_name": "production-bucket"
+      },
+
+      // Durable Object - separated by "class_name" and optionally "script_name"
+      // Both environments use the same class from your code
+      "COUNTER": {
+        "type": "durable_object_namespace",
+        "class_name": "Counter"
+      },
+
+      // Service binding - separated by "service" name
+      // NOTE: Preview environments always connect to the PRODUCTION version
+      // of the bound Worker, not its preview version
+      "AUTH_SERVICE": {
+        "type": "service",
+        "service": "auth-worker"
+      },
+
+      // Vectorize index - separated by "index_name"
+      "EMBEDDINGS": {
+        "type": "vectorize",
+        "index_name": "production-embeddings"
+      },
+
+      // Hyperdrive - separated by "id"
+      "POSTGRES": {
+        "type": "hyperdrive",
+        "id": "hyperdrive-prod-id"
+      },
+
+      // Analytics Engine - separated by "dataset"
+      "ANALYTICS": {
+        "type": "analytics_engine",
+        "dataset": "production-analytics"
+      },
+
+      // Workers AI - No separation needed (same for all environments)
+      "AI": {
+        "type": "ai"
+      },
+
+      // Browser rendering - No separation needed
+      "BROWSER": {
+        "type": "browser"
+      },
+
+      // Queue producer - separated by "queue" name
+      "MY_QUEUE": {
+        "type": "queue_producer",
+        "queue": "production-queue"
+      },
+
+      // mTLS certificate - separated by "certificate_id"
+      "CLIENT_CERT": {
+        "type": "mtls_certificate",
+        "certificate_id": "cert-prod-123"
+      }
+    }
+  },
+
+  // ============================================================================
+  // PREVIEW ENVIRONMENT
+  // ============================================================================
+  "preview": {
+    // Preview domains are auto-generated per PR
+    // By default: pr-123-my-worker.workers.dev
+    // Or specify a custom template:
+    "domain_template": "{pr}-{branch}.preview.example.com",
+
+    // Environment variables
+    "env": {
+      // Plain text - different value for preview
+      "ENVIRONMENT": {
+        "type": "text",
+        "value": "preview"
+      },
+
+      // KV namespace - different namespace for testing
+      "MY_KV": {
+        "type": "kv_namespace",
+        "id": "def456preview"
+      },
+
+      // D1 database - test database with safe data
+      "DB": {
+        "type": "d1",
+        "database_id": "preview-db-id-456"
+      },
+
+      // R2 bucket - test bucket
+      "MY_BUCKET": {
+        "type": "r2_bucket",
+        "bucket_name": "preview-bucket"
+      },
+
+      // Durable Object - same class, different instances
+      "COUNTER": {
+        "type": "durable_object_namespace",
+        "class_name": "Counter"
+      },
+
+      // Service binding - IMPORTANT: This connects to production "auth-worker"
+      // Preview cannot bind to preview versions of other Workers
+      "AUTH_SERVICE": {
+        "type": "service",
+        "service": "auth-worker"
+      },
+
+      // Vectorize - test index
+      "EMBEDDINGS": {
+        "type": "vectorize",
+        "index_name": "preview-embeddings"
+      },
+
+      // Hyperdrive - test database config
+      "POSTGRES": {
+        "type": "hyperdrive",
+        "id": "hyperdrive-preview-id"
+      },
+
+      // Analytics Engine - test dataset
+      "ANALYTICS": {
+        "type": "analytics_engine",
+        "dataset": "preview-analytics"
+      },
+
+      // Workers AI - Same as production
+      "AI": {
+        "type": "ai"
+      },
+
+      // Browser rendering - Same as production
+      "BROWSER": {
+        "type": "browser"
+      },
+
+      // Queue - test queue
+      "MY_QUEUE": {
+        "type": "queue_producer",
+        "queue": "preview-queue"
+      },
+
+      // mTLS certificate - can be same or different
+      "CLIENT_CERT": {
+        "type": "mtls_certificate",
+        "certificate_id": "cert-preview-123"
+      }
+    }
+  }
+}
+```
+</WranglerConfig>
+
+</Details>
 
 ### Types
 
@@ -69,7 +298,7 @@ An environment variable can have one of the following types:
 
 - **Plain text** (`type: "text"`) - String values
 - **Secret** (`type: "secret"`) - Sensitive data like API keys (managed via [`wrangler secret put`](/workers/configuration/secrets/), not in the configuration file)
-- **Binding** (`type: "kv_namespace"`, `type: "d1"`, `type: "r2_bucket"`, etc.) - Live objects that let you interact with Cloudflare resources
+- **Resource bindings** (`type: "kv_namespace"`, `type: "d1"`, `type: "r2_bucket"`, etc.) - Live objects that let you interact with Cloudflare resources
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -77,18 +306,19 @@ An environment variable can have one of the following types:
   "name": "my-worker",
   "compatibility_date": "$today",
   "production": {
+    "domains": ["app.example.com"],
     "env": {
       // Plain text
       "API_BASE": {
         "type": "text",
         "value": "https://api.cloudflare.com/client/v4"
       },
-      // KV namespace binding
+      // KV namespace
       "MY_KV": {
         "type": "kv_namespace",
         "id": "abc123prod"
       },
-      // D1 database binding
+      // D1 database
       "DB": {
         "type": "d1",
         "database_id": "prod-db-id-123"
@@ -117,7 +347,7 @@ An environment variable can have one of the following types:
 
 ### Accessing environment variables in your Worker
 
-All environment variables you configure — including plain text values, secrets, and bindings — are accessible in your Worker code via the `env` object. Access them using `env.<VARIABLE_NAME>`:
+All environment variables you configure are accessible in your Worker code via the `env` object. Access them using `env.<VARIABLE_NAME>`:
 
 <TypeScriptExample>
 ```ts
@@ -168,7 +398,7 @@ Go to **Settings** > **Environments** > **Preview** > **Secrets**
 
 ## Production
 
-Your **Production** environment defines the configuration your Worker uses to serve live traffic. This includes which resources it connects to (via [bindings](/workers/runtime-apis/bindings/)) and what [environment variables](/workers/configuration/environment-variables/) it has access to.
+Your **Production** environment defines the configuration your Worker uses to serve live traffic. This includes what [environment variables](/workers/configuration/environment-variables/) it has access to and which resources it connects to.
 
 Your Worker uses **Production** settings when you:
 
@@ -177,7 +407,7 @@ Your Worker uses **Production** settings when you:
 
 ### Configuration
 
-You define your **Production** environment using the `production` key at the top level of your configuration file.
+You define your **Production** environment using the `production` section in your configuration file.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -185,6 +415,7 @@ You define your **Production** environment using the `production` key at the top
   "name": "my-worker",
   "compatibility_date": "$today",
   "production": {
+    "domains": ["app.example.com"],
     "env": {
       "ENVIRONMENT": {
         "type": "text",
@@ -204,6 +435,52 @@ You define your **Production** environment using the `production` key at the top
 ```
 </WranglerConfig>
 
+### Domains
+
+You can configure which domains your Worker is available on by setting the `domains` field. Every Worker gets a free `workers.dev` subdomain automatically, and you can also add your own custom domains.
+
+When you add `"workers.dev"`, your Worker becomes available at `<worker-name>.<account-subdomain>.workers.dev` at no cost. You can also list custom domains you manage in Cloudflare. If you want your Worker to only handle certain paths (like `/api/*`), use the object format with a `path` field.
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+// Use the free workers.dev subdomain
+{
+  "name": "my-worker",
+  "production": {
+    "domains": ["workers.dev"]
+  }
+}
+
+// Use your own custom domain
+{
+  "name": "my-worker",
+  "production": {
+    "domains": ["app.example.com"]
+  }
+}
+
+// Use both workers.dev and a custom domain
+{
+  "name": "my-worker",
+  "production": {
+    "domains": ["workers.dev", "app.example.com"]
+  }
+}
+
+// Route only specific URL paths to your Worker
+{
+  "name": "my-worker",
+  "production": {
+    "domains": [
+      "workers.dev",
+      "app.example.com",
+      { "name": "www.example.com", "path": "/api/*" }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
 ## Preview
 
 Your **Preview** environment lets you test changes in isolated **PR Previews** before they reach **Production**. For example, if your **Production** environment uses your real customer [D1 database](/d1/), you can configure **Preview** to use a test database instead - keeping your **Production** data safe while you test changes.
@@ -215,7 +492,7 @@ Cloudflare creates a **PR Preview** with its own unique URL using your **Preview
 
 ### Configuration
 
-You define your **Preview** environment using the `preview` key at the top level of your configuration file.
+You define your **Preview** environment using the `preview` section in your configuration file.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -223,6 +500,7 @@ You define your **Preview** environment using the `preview` key at the top level
   "name": "my-worker",
   "compatibility_date": "$today",
   "production": {
+    "domains": ["app.example.com"],
     "env": {
       "ENVIRONMENT": {
         "type": "text",
@@ -263,6 +541,25 @@ In this example, **PR Previews** will use:
 - The `abc123preview` [KV namespace](/kv/) (not the **Production** namespace)
 - The `staging-db-id-456` test database (not the **Production** database)
 - The environment variable `ENVIRONMENT` set to `"preview"`
+
+### Domains
+
+Preview domains work differently than Production. Instead of picking specific domains, Cloudflare automatically generates a unique URL for each pull request so you can test multiple changes at the same time without them interfering with each other.
+
+By default, each PR Preview gets a URL like `pr-123-my-worker.my-account.workers.dev` where `123` is the pull request number. If you want to customize this pattern, you can set a `domain_template`:
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "preview": {
+    "domain_template": "{pr}-{branch}.preview.example.com"
+  }
+}
+```
+</WranglerConfig>
+
+The template can use `{pr}` for the pull request number, `{branch}` for the branch name, `{commit}` for the commit hash, and `{worker}` for the Worker name. So a pull request #123 from the `new-feature` branch would become `123-new-feature.preview.example.com`.
 
 ### Override settings for a specific PR Preview
 
@@ -379,7 +676,7 @@ Next, let's look at our [Wrangler configuration file](/workers/wrangler/configur
 
 #### Add environment variables
 
-Now add **[environment variables](/workers/configuration/environment-variables/)** to your configuration. Define `production` and `preview` environments at the top level, each with their own `env` object.
+Now add **[environment variables](/workers/configuration/environment-variables/)** to your configuration. Define `production` and `preview` sections, each with their own `env` object.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -387,6 +684,7 @@ Now add **[environment variables](/workers/configuration/environment-variables/)
   "name": "my-worker",
   "compatibility_date": "$today",
   "production": {
+    "domains": ["app.example.com"],
     "env": {
       "ENVIRONMENT": {
         "type": "text",
@@ -421,7 +719,7 @@ Now add **[environment variables](/workers/configuration/environment-variables/)
 In this example:
 
 - `ENVIRONMENT` is a plain text environment variable with different values for **Production** and **Preview**, making it easy to detect which environment your code is running in.
-- `MY_KV` and `DB` are bindings to a [KV namespace](/kv/) and [D1 database](/d1/) for both **Production** and **Preview**. Notice that these bindings don't have IDs yet - Wrangler will automatically provision these resources when you deploy.
+- `MY_KV` and `DB` are environment variables that connect to a [KV namespace](/kv/) and [D1 database](/d1/) for both **Production** and **Preview**. Notice that these don't have IDs yet - Wrangler will automatically provision these resources when you deploy.
 
 #### Set up secrets
 
@@ -453,6 +751,7 @@ If you look at your `wrangler.jsonc` file, you'll see that resource IDs have bee
   "name": "my-worker",
   "compatibility_date": "$today",
   "production": {
+    "domains": ["app.example.com"],
     "env": {
       "ENVIRONMENT": {
         "type": "text",
@@ -1104,6 +1403,18 @@ That's it! Your **Production** Worker is deployed, and the **Preview** settings 
 </TabItem>
 </Tabs>
 
+## Global settings
+
+Some settings apply to your Worker as a whole and cannot be configured separately per environment. These are **global settings** - they're tied to your code, not to where your code runs.
+
+### Which settings are global?
+
+- `name` - Your Worker's name
+- `compatibility_date` - Which API behaviors your code uses
+- `compatibility_flags` - Specific feature flags
+- `main` - Your code's entry point file
+- `migrations` - Durable Object migration definitions
+
 ## Legacy
 
 If you have an existing Wrangler configuration, you can still use default environments without migrating to the new `env` structure.
@@ -1258,8 +1569,8 @@ When you deploy with `wrangler deploy --env staging`, you're deploying to the **
 
 ## Related resources
 
-- [Environment variables](/workers/configuration/environment-variables/) - Learn about plain text environment variables
-- [Bindings](/workers/runtime-apis/bindings/) - Explore the powerful live objects you can bind to your Worker
+- [Environment variables](/workers/configuration/environment-variables/) - Learn about configuring environment variables
+- [Bindings](/workers/runtime-apis/bindings/) - Explore the different types of resources you can connect to
 - [Secrets](/workers/configuration/secrets/) - Securely store sensitive data
 - [Routing](/workers/configuration/routing/) - Configure how traffic reaches your Worker
 - [Git integration](/workers/ci-cd/builds/git-integration/) - Automate deployments from your Git repository
