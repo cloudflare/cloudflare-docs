@@ -2250,6 +2250,7 @@
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 /support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /support/traffic/argo-tunnel/exposing-applications-running-on-microsoft-azure-with-cloudflare-argo-tunnel/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
+/cloudflare-one/traffic-policies/managed-service-providers/ /cloudflare-one/traffic-policies/tiered-policies/managed-service-providers/ 301
 /cloudflare-one/tutorials/zendesk-sso-saas/ /cloudflare-one/applications/configure-apps/saas-apps/zendesk-sso-saas/ 301
 /cloudflare-one/tutorials/hubspot-saas/ /cloudflare-one/applications/configure-apps/saas-apps/hubspot-saas/ 301
 /cloudflare-one/tutorials/aws-sso-saas/ /cloudflare-one/applications/configure-apps/saas-apps/aws-sso-saas/ 301

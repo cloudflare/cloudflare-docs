@@ -2,16 +2,20 @@
 pcx_content_type: how-to
 title: Managed service providers (MSPs)
 sidebar:
-  order: 15
+  order: 3
 ---
 
-:::note
-Only available on Enterprise plans. For more information, contact your account team.
+:::caution[Tiered account availability]
+Only available for [Cloudflare Partners](https://www.cloudflare.com/partners/) on Enterprise plans. Cloudflare recommends users on Enterprise plans configure a [Cloudflare Organization](/fundamentals/organizations/) for use with [tiered policies](/cloudflare-one/traffic-policies/tiered-policies/). Tiered policies allows for additional configurations, logging options, and policy types.
+
+For more information, contact your account team.
 :::
 
 Gateway supports the [Cloudflare Tenant API](/tenant/), which allows Cloudflare-partnered managed service providers (MSPs) to set up and manage Cloudflare accounts and services for their customers. With the Tenant API, MSPs can create Zero Trust deployments with global Gateway policy control. Policies can be customized or overridden at a group or individual account level.
 
 The Tenant platform only supports [DNS policies](/cloudflare-one/traffic-policies/dns-policies/). For more information, refer to the [Cloudflare Zero Trust for managed service providers](https://blog.cloudflare.com/gateway-managed-service-provider/) blog post.
+
+For a more comprehensive solution with additional policy types, consider using [tiered policies](/cloudflare-one/traffic-policies/tiered-policies/) with Cloudflare Organizations.
 
 ## Get started
 
@@ -28,7 +32,9 @@ The Gateway Tenant platform supports tiered and siloed account configurations.
 In a tiered account configuration, a top-level parent account enforces global security policies that apply to all of its child accounts. Child accounts can override or add policies as needed while still being managed by the parent account. MSPs can also configure child accounts independently from the parent account, including:
 
 - Configuring a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/)
+  - Child accounts will use the block page setting used by the parent account unless you configure separate block settings for the child account. This applies to both redirects and custom block pages. The block page uses the account certificate for each child account.
 - Generating or uploading [root certificates](/cloudflare-one/team-and-resources/devices/user-side-certificates/)
+  - If Gateway cannot attribute an incoming DNS query to a child account, it will use the parent account's certificate. This happens when the source IP address of the DNS query does not match a child account or if a custom DNS resolver endpoint is not configured.
 - Mapping [DNS locations](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/)
 - Creating [lists](/cloudflare-one/reusable-components/lists/)
 
@@ -81,7 +87,7 @@ flowchart TD
         n1["Block social media"]
   end
  subgraph s2["Siloed account C"]
-        n2["Block instant messaing"]
+        n2["Block instant messaging"]
   end
  subgraph s3["Siloed account B"]
         n3["Block news"]
