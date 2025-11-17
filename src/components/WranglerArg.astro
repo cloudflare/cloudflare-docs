@@ -22,6 +22,7 @@ const type = definition.type ?? definition.choices;
 const description = definition.description ?? definition.describe;
 let sanitizedDescription;
 
+// CED-191 and CED-137 for context. We can't assume that descriptions exist, but if they do we want replace unsanitized characters
 if (description) {
 	sanitizedDescription = description
 		.replace(/</g, "&lt;")
