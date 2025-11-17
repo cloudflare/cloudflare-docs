@@ -12,18 +12,6 @@ Setting cache TTL based on response status overrides the [default cache behavior
 
 The maximum caching limit for Free, Pro, and Business customers is 512 MB per file, and the maximum caching limit for Enterprise customers is 5 GB per file. If you need to raise the limits, contact your Customer Success Manager.
 
-## Edge TTL
-
-By default, Cloudflare caches certain HTTP response codes with the following Edge Cache TTL when a `cache-control` directive or `expires` response header are not present.
-
-| HTTP status code | Default TTL |
-| ---------------- | ----------- |
-| 200, 206, 301    | 120m        |
-| 302, 303         | 20m         |
-| 404, 410         | 3m          |
-
-All other status codes are not cached by default.
-
 ## Set cache TTL by response status via the Cloudflare dashboard
 
 To set cache TTL by response status, [create a Cache Rule](/cache/how-to/cache-rules/) for [**Cache TTL by status code**](/cache/how-to/cache-rules/settings/#edge-ttl).
