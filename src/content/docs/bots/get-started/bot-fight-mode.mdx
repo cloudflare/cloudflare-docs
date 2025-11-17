@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Tabs, TabItem, Steps, Render, DashButton } from '~/components';
+import { Tabs, TabItem, Steps, Render, DashButton, GlossaryTooltip } from '~/components';
 
 Bot Fight Mode is a simple, free product that helps detect and mitigate bot traffic on your domain. When enabled, the product:
 
@@ -98,6 +98,21 @@ You can see bot-related actions by going to **Security** > **Events**. Any reque
 
 ## Limitations
 
+### Rules
+
 You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
 
 Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trigger if an IP Access rule matches the request. For example, the IP Access rule matches the connecting IP.
+
+### JavaScript Detections
+
+<Render 
+  file="jsd-availability" 
+  product="bots" 
+  params={{ 
+    planType: "Bot Fight Mode",
+    enablement: "automatically enabled and cannot be disabled" 
+    }} 
+/>
+
+<Render file="content-security-policy-limitation" product="bots" />

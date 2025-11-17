@@ -29,6 +29,26 @@ import { WranglerCommand } from "~/components";
 <WranglerCommand command="d1 execute" />
 ```
 
+## With ExtraFlagDetails
+
+You can add or replace help text for specific flags using the `ExtraFlagDetails` component:
+
+```mdx live
+import { WranglerCommand, ExtraFlagDetails } from "~/components";
+
+<WranglerCommand command="deploy">
+	<ExtraFlagDetails key="dry-run">
+		Additional details about the dry-run flag that will be appended to the
+		original help text. Here is a [link](https://cloudflare.com) for more
+		information.
+	</ExtraFlagDetails>
+	<ExtraFlagDetails key="compatibility-date" mode="replace">
+		Custom help text that completely replaces the original description for this
+		flag.
+	</ExtraFlagDetails>
+</WranglerCommand>
+```
+
 ## Arguments
 
 - `command` <Type text="string" /> <MetaInfo text="required" />

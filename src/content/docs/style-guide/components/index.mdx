@@ -1,8 +1,9 @@
 ---
 title: Components
 sidebar:
-    order: 2
+  order: 2
 ---
+
 import { Details } from "~/components";
 
 When you are [contributing to the Cloudflare Docs](/style-guide/contributions/), you can use our custom components to add additional formatting, such as buttons, tabs, and collapsible sections.
@@ -19,6 +20,8 @@ To add a component to a page:
 
    ```mdx
    import { COMPONENT_NAME } from "~/components";
+
+   ;
    ```
 
    For example, if you were to add [the `DashButton` component](/style-guide/components/dash-button/) to the [Images getting started page](/images/get-started/), the top of the MDX file corresponding to that page would look like the following:
@@ -29,28 +32,30 @@ To add a component to a page:
    title: Getting started
    sidebar:
      order: 2
-
    ---
 
    import { DashButton } from "~/components";
+
+   ;
    ```
 
 2. Add the component to the page by adding this text anywhere on the page you want the component to appear:
 
    ```mdx
-	 <COMPONENT_NAME PROP_NAME="PROP_VALUE" />
+   <COMPONENT_NAME PROP_NAME="PROP_VALUE" />
    ```
 
    For example, if you were to add the `DashButton` component to some steps in the [Images getting started page](/images/get-started/), here is how the MDX file would look:
 
-	 ```mdx
+   ```mdx
    1. In the Cloudflare dashboard, go to the **Transformations** page.
 
-      <DashButton url="/?to=/:account/images/delivery-zones" />
+      <DashButton url="/?to=/:account/images/transformations" />
 
    2. Go to the specific zone where you want to enable transformations.
-
    ```
-  <Details header="This is how this example would display after it is published:">
-  ![DashButton component example](~/assets/images/style-guide/ui-elements/dashbutton-example.png)
-  </Details>
+
+   <Details header="This is how this example would display after it is published:">
+   	![DashButton component
+   	example](~/assets/images/style-guide/ui-elements/dashbutton-example.png)
+   </Details>

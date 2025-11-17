@@ -47,7 +47,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`pipelines`](#pipelines) - Configure Cloudflare Pipelines.
 - [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
-- [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
+- [`logout`](#logout) - Remove Wrangler's authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`versions`](#versions) - Retrieve details for recent versions.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
@@ -380,7 +380,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 
 Manage the secret variables for a Worker.
 
-This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#secret-put) commands.
+This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#versions-secret-put) commands.
 
 <WranglerCommand command="secret put" headingLevel={3}/>
 
@@ -692,164 +692,7 @@ The `wrangler workflows` command requires Wrangler version `3.83.0` or greater. 
 
 Manage and configure [Workflows](/workflows/).
 
-### `list`
-
-Lists the registered Workflows for this account.
-
-```sh
-wrangler workflows list
-```
-
-- `--page` <Type text="number" /> <MetaInfo text="optional" />
-  - Show a specific page from the listing. You can configure page size using "per-page".
-- `--per-page` <Type text="number" /> <MetaInfo text="optional" />
-  - Configure the maximum number of Workflows to show per page.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `instances`
-
-Manage and interact with specific instances of a Workflow.
-
-### `instances list`
-
-List Workflow instances.
-
-```sh
-wrangler workflows instances list <WORKFLOW_NAME> [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `instances describe`
-
-Describe a specific instance of a Workflow, including its current status, any persisted state, and per-step outputs.
-
-```sh
-wrangler workflows instances describe <WORKFLOW_NAME> [ID] [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-- `ID` <Type text="string" /> <MetaInfo text="(default: latest) optional" />
-  - The ID of a Workflow instance. You can optionally provide `latest` to refer to the most recently created instance of a Workflow. Defaults to `latest` if no ID is provided.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-```sh
-# Passing `latest` instead of an explicit ID will describe the most recently queued instance
-wrangler workflows instances describe my-workflow latest
-```
-
-```sh output
-Workflow Name:         my-workflow
-Instance Id:           51c73fc8-7fd5-47d9-bd82-9e301506ee72
-Version Id:            cedc33a0-11fa-4c26-8a8e-7d28d381a291
-Status:                ✅ Completed
-Trigger:               🌎 API
-Queued:                10/16/2024, 2:00:39 PM
-Success:               ✅ Yes
-Start:                 10/16/2024, 2:00:39 PM
-End:                   10/16/2024, 2:01:40 PM
-Duration:              1 minute
-# Remaining output truncated
-```
-
-### `instances terminate`
-
-Terminate (permanently stop) a Workflow instance.
-
-```sh
-wrangler workflows instances terminate <WORKFLOW_NAME> <ID> [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-- `ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of a Workflow instance.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `instances pause`
-
-Pause (until resumed) a Workflow instance.
-
-```sh
-wrangler workflows instances pause <WORKFLOW_NAME> <ID> [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-- `ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of a Workflow instance.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `instances resume`
-
-Resume a paused Workflow instance.
-
-```sh
-wrangler workflows instances resume <WORKFLOW_NAME> <ID> [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-- `ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of a Workflow instance.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `describe`
-
-```sh
-wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete a Workflow and all its instances.
-
-```sh
-wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-```sh
-wrangler workflows instances delete my-workflow
-```
-
-### `trigger`
-
-Trigger (create) a Workflow instance.
-
-```sh
-wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-- `PARAMS` <Type text="string" /> <MetaInfo text="optional" />
-  - The parameters to pass to the Workflow as an event. Must be a JSON-encoded string.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-```sh
-# Pass optional params to the Workflow.
-wrangler workflows trigger my-workflow '{"hello":"world"}'
-```
+<WranglerNamespace namespace="workflows" headingLevel={3}/>
 
 <WranglerCommand command="tail" />
 
@@ -1146,7 +989,7 @@ Manage your [Pipelines](/pipelines/).
 
 Manage your Workers [Queues](/queues/) configurations.
 
-<Render file="wrangler-commands/queues" product="workers" />
+<WranglerNamespace namespace="queues" headingLevel={3}/>
 
 ---
 
@@ -1269,59 +1112,11 @@ For example:
 	headingLevel={3}
 />
 
-### `secret put`
+<WranglerCommand command="versions secret put" headingLevel={3} />
 
-Create or replace a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
+<WranglerCommand command="versions secret delete" headingLevel={3} />
 
-```txt
-wrangler versions secret put <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Worker.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `secret delete`
-
-Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
-
-```txt
-wrangler versions secret delete <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Worker.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `secret bulk`
-
-Upload multiple secrets for a Worker at once. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
-
-```txt
-wrangler versions secret bulk <FILENAME> [OPTIONS]
-```
-
-- `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
-  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
-  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
-  - The `.env` file containing key-value pairs to upload as secrets, in the form `SECRET_NAME=secret value`.
-  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="versions secret bulk" headingLevel={3} />
 
 ---
 
@@ -1331,18 +1126,7 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
-### `deploy`
-
-Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload).
-
-```txt
-wrangler triggers deploy [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="triggers deploy" headingLevel={3} />
 
 ---
 

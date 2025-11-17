@@ -23,6 +23,12 @@ This section provides tunnel configuration specific to Workers VPC use cases. Fo
 
 Cloudflare Tunnel requires the installation of a lightweight and highly scalable server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare.
 
+:::note[Version and Configuration]
+Ensure you are running `cloudflared` version 2025.7.0 or later (latest version recommended) to ensure proper DNS resolution and connectivity. Older versions are not supported.
+
+Workers VPC also requires Cloudflare Tunnel to connect using the [QUIC transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol) using `auto` or `quic`. Ensure outbound UDP traffic on port 7844 is allowed through your firewall for QUIC connections.
+:::
+
 Cloudflare Tunnels can be created one of two ways:
 
 1. **Remotely-managed tunnels (recommended):** Remotely-managed configurations are stored on Cloudflare, allowing you to manage the tunnel from any machine using the dashboard, API, or Terraform.
@@ -32,7 +38,7 @@ For Workers VPC, we recommend creating a remotely-managed tunnel through the das
 
 For locally-managed tunnels, refer to the [`cloudflared` locally-managed tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/) guide. For manual installation, refer to the [`cloudflared` downloads page](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) for platform-specific installation instructions.
 
-:::note[Important Note]
+:::note[Note]
 Cloudflare Tunnels can either be configured for usage with [Cloudflare Zero Trust](/cloudflare-one/) or [Workers VPC](/workers-vpc/).
 
 Use Tunnels with Zero Trust when you are exposing internal applications securely to your employees with Cloudflare Access and hostnames.
