@@ -54,6 +54,9 @@ You can schedule tasks in multiple ways:
 <TypeScriptExample>
 
 ```ts
+// schedule a task to run immediately
+let task = await this.schedule(0, "someTask", { message: "hello" });
+
 // schedule a task to run in 10 seconds
 let task = await this.schedule(10, "someTask", { message: "hello" });
 
@@ -116,3 +119,40 @@ let tasks = this.getSchedules({
 ```
 
 </TypeScriptExample>
+
+### Lifecycle management with scheduled tasks
+
+When working with scheduled tasks, you can safely call `this.destroy()` from within a scheduled callback to terminate the Agent instance after completing a task. The Agent SDK properly handles the cleanup process to ensure scheduled tasks complete successfully before the Agent is evicted.
+
+<TypeScriptExample>
+
+```ts
+export class SchedulingAgent extends Agent {
+	async onRequest(request) {
+		// Schedule a self-destructing task
+		await this.schedule(60, "cleanupAndDestroy");
+		return new Response("Agent will self-destruct in 60 seconds");
+	}
+
+	async cleanupAndDestroy(data) {
+		// Perform final cleanup operations
+		await this.sendEmail({
+			to: "admin@example.com",
+			subject: "Task completed",
+			body: "Agent task finished, shutting down"
+		});
+
+		// Safely destroy the Agent instance
+		// The destroy operation will complete after this callback finishes
+		await this.destroy();
+	}
+}
+```
+
+</TypeScriptExample>
+
+:::note
+
+When `destroy()` is called from within a scheduled task, the Agent SDK defers the destruction to ensure the scheduled callback completes successfully. The Agent instance will be evicted immediately after the callback finishes executing.
+
+:::
