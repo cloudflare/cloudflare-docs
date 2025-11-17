@@ -266,6 +266,8 @@ return Response.json({
 
 Returns a `WorkflowInstance`.
 
+Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance. 
+
 <Render file="workflows-type-parameters" product="workflows" />
 
 To provide an optional type parameter to the `Workflow`, pass a type argument with your type when defining your Workflow bindings:
@@ -325,6 +327,8 @@ let instances = await env.MY_WORKFLOW.createBatch(listOfInstances);
 ```
 
 Returns an array of `WorkflowInstance`.
+
+Unlike [`create`](/workflows/build/workers-api/#create), this operation is idempotent and will not fail if an ID is already in use. If an existing instance with the same ID is still within its [retention limit](/workflows/reference/limits/), it will be skipped and excluded from the returned array.
 
 ### get
 

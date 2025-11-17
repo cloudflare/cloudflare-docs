@@ -118,7 +118,7 @@
 /src/content/release-notes/kv.yaml @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/kv/ @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/pub-sub/ @elithrar @dcpena @cloudflare/pcx-technical-writing
-/src/content/docs/queues/ @elithrar @jonesphillip @harshil1712 @cloudflare/pcx-technical-writing
+/src/content/docs/queues/ @elithrar @jonesphillip @harshil1712 @mia303 @cloudflare/pcx-technical-writing
 /src/content/release-notes/queues.yaml @elithrar @jonesphillip @cloudflare/pcx-technical-writing
 /src/content/docs/r2/ @oxyjun @elithrar @jonesphillip @aninibread @harshil1712 @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /src/content/release-notes/r2.yaml @oxyjun @elithrar @aninibread @cloudflare/workers-docs @cloudflare/pcx-technical-writing
@@ -142,7 +142,7 @@
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @kodster28 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
-/src/content/docs/workflows/ @elithrar @celso @cloudflare/pcx-technical-writing
+/src/content/docs/workflows/ @elithrar @celso @mia303 @cloudflare/pcx-technical-writing 
 /src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents
 
 # DDoS Protection
