@@ -1,8 +1,21 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: tutorial
 title: Convert full setup to partial setup
-external_link: /dns/zone-setups/partial-setup/setup/
 sidebar:
   order: 1
   label: Full to partial
 ---
+
+import { Tabs, TabItem, Render, GlossaryTooltip, DashButton } from "~/components";
+
+If you initially configured a [full setup](/dns/zone-setups/full-setup/), you can later convert your zone to use a partial setup (also known as CNAME setup).
+
+A partial setup allows you to use [Cloudflare's reverse proxy](/fundamentals/concepts/how-cloudflare-works/) on individual subdomains while using a different authoritative DNS provider.
+
+## Before you begin
+
+Make sure you consider the following:
+
+- It will not be possible to use proxy for the zone apex (`example.com`), only for subdomains.
+- On the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
+- Plan for SSL/TLS certificates. If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are. If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
