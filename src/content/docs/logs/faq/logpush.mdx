@@ -82,3 +82,9 @@ No. Cloudflare expects the HEC network port to be configured to `:443` or `:8088
 ## Does Logpush integrate with the Cloudflare Splunk App?
 
 Yes. Refer to [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
+
+
+## What are the error about `signedResourceTypes`?
+
+When the destination is Azure, the SAS (Shared access signature) token must be blob container with write permission only: service is Blob-only `ss=b` and resource type is Object-only `srt=o`.
+If the type of SAS is different, the error `signedResourceTypes must be Object only (srt=o)` will be returned.
