@@ -52,8 +52,6 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
   }'
 ```
 
-The API will respond immediately with a job `id` that you will use to retrieve the status and results of the crawl job.
-
 Example response:
 
 ```json output
@@ -77,7 +75,7 @@ You can also use optional query parameters to filter and paginate results:
 - `limit` — Maximum number of records to return.
 - `status` — Filter by URL status (`pending`, `completed`, `disallowed`, or `failed`).
 
-Example with query parameters:
+Example with optional query parameters:
 
 ```bash
 curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e?cursor=10&limit=10&status=completed' \
