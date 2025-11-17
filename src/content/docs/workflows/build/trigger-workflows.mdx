@@ -166,7 +166,7 @@ The following example shows how you can use the `restart` method to maintain a d
 
 - Chunks of a document are stored in, and retrieved from, R2 with an identifiable object [prefix](/r2/api/workers/workers-api-reference/#r2listoptions)
 - Each [R2 object key](/r2/api/workers/workers-api-reference/#r2object-definition) is used as the `instanceId` for processing that chunk
-- The workflow retrieves 500 chunks at a time, processes the chunks, and updates their prefix
+- The workflow retrieves 100 chunks at a time, processes the chunks, and updates their prefix
 - Then, if there are remaining objects with the original prefix, the Workflow instance restarts
 
 ```TypeScriptExample
