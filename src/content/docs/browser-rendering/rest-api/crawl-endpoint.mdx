@@ -9,7 +9,7 @@ import { MetaInfo, Render } from "~/components";
 
 The `/crawl` endpoint automates the process of scraping content from webpages starting with a single URL and crawling to a specified number of links or depth of links. The response can be returned in either HTML, Markdown, or JSON.
 
-The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay` and [`content-signal`](https://contentsignals.org/). All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`.
+The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay`. All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`.
 
 ## Endpoint
 
@@ -32,14 +32,16 @@ Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optio
 There are two separate steps to using the `/crawl` endpoint:
 1. [Initiate the crawl job](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) — A `POST` request where you initiate the crawl and receive a response with a job `id`.
 2. [Request results of the crawl job](/browser-rendering/rest-api/crawl-endpoint/#request-results-of-the-crawl-job) — A `GET` request where you request the status or results of the crawl.
+ 
+Crawl jobs have a maximum run time of 7 days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
 
 :::note[Free plan limitation]
-If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 10 minutes per day](/browser-rendering/platform/pricing/). To avoid this, either [upgrade to a Workers Paid plan](/workers/platform/pricing/) or [put limitations on timeouts](/browser-rendering/reference/timeouts/) to get the most out of the 10 minutes of your crawl request.
+If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 10 minutes per day](/browser-rendering/platform/pricing/). To avoid this, you can either [upgrade to a Workers Paid plan](/workers/platform/pricing/) or you can [put limitations on timeouts](/browser-rendering/reference/timeouts/) to get the most out of the 10 minutes of your crawl request.
 :::
 
 ### Initiate the crawl job
 
-The only required parameter is `url`. Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optional-parameters) for additional customization options.
+The only required parameter is `url`. Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optional-parameters) for additional customization options. The API will respond immediately with a job `id` you will use to retrieve the status and results of the crawl job.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
@@ -56,10 +58,8 @@ Example response:
 
 ```json output
 {
-  "result": {
-    "id": "c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e"
-  },
-  "success": true
+  "success": true,
+  "result": "97da8bb7-4d46-4d9e-b979-e7e1afa2cb29"
 }
 ```
 
@@ -68,7 +68,19 @@ Example response:
 To check the status or request the results of your crawl job, use the job `id` you received:
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/result/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN'
+```
+
+You can also use optional query parameters to filter and paginate results:
+- `cursor` — Cursor for pagination.
+- `limit` — Maximum number of records to return.
+- `status` — Filter by URL status (`pending`, `completed`, `disallowed`, or `failed`).
+
+Example with query parameters:
+
+```bash
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e?cursor=10&limit=10&status=completed' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -79,47 +91,54 @@ Example response:
   "result": {
     "id": "c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e",
     "status": "complete",
-    "browserTimeSpent": 134.7,
+    "browserSecondsUsed": 134.7,
     "total": 50,
-    "completed": 50,
-    "entries": [
+    "finished": 50,
+    "records": [
       {
-        "url": "[https://developers.cloudflare.com/workers/](https://developers.cloudflare.com/workers/)",
+        "url": "https://developers.cloudflare.com/workers/",
         "status": "completed",
         "markdown": "# Cloudflare Workers\nBuild and deploy serverless applications...",
-        "html": null,
         "metadata": {
+          "status": 200,
           "title": "Cloudflare Workers · Cloudflare Workers docs",
-          "language": "en-US"
+          "url": "https://developers.cloudflare.com/workers/"
         }
       },
       {
-        "url": "[https://developers.cloudflare.com/workers/get-started/quickstarts/](https://developers.cloudflare.com/workers/get-started/quickstarts/)",
+        "url": "https://developers.cloudflare.com/workers/get-started/quickstarts/",
         "status": "completed",
         "markdown": "## Quickstarts\nGet up and running with a simple Hello World...",
-        "html": null,
         "metadata": {
+          "status": 200,
           "title": "Quickstarts · Cloudflare Workers docs",
-          "language": "en-US"
+          "url": "https://developers.cloudflare.com/workers/get-started/quickstarts/"
         }
       }
       // ... 48 more entries omitted for brevity
-    ]
+    ],
+    "cursor": 10
   },
   "success": true
 }
 ```
+
+:::note[Pagination]
+If the response contains more records than can be returned in a single request (maximum 10 MB), a `cursor` property will be included. Use this cursor value in your next request to retrieve additional records by including it as the `cursor` query parameter. For example:
+
+`https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e?cursor=10`
+:::
 
 ### Cancel a crawl job
 
 To cancel a crawl job that is currently in progress, use the job `id` you received:
 
 ```bash
-curl -X DELETE 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/result/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
+curl -X DELETE 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
-A successful cancellation will return a `200 OK` status code. The job status will be updated to cancelled, and all urls that have been queued to be crawled will be cancelled.
+A successful cancellation will return a `200 OK` status code. The job status will be updated to cancelled, and all URLs that have been queued to be crawled will be cancelled.
 
 ## Advanced usage
 
@@ -133,7 +152,8 @@ The following optional parameters can be used in your crawl request, in addition
 | `depth` | Number | Maximum link depth to crawl from the starting URL |
 | `formats` | Array of strings | Response format (default is HTML, other options are Markdown and JSON) |
 | `render` | Boolean | If false, does a fast HTML fetch without executing Javascript (default is true, [learn more about `render`](#render-parameter)) |
-| `maxAge` | Number | The maximum age of a cached resource that can be returned (in seconds) |
+| `maxAge` | Number | The maximum age of a cached resource that can be returned in seconds (default is 86,400 – 1 day, maximum is 604,800 – 7 days)|
+| `jsonOptions` | Object | Only required if `formats` includes `json`. Contains `prompt`, `response_format`, and `custom_ai` properties (same types as the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/)) |
 | `options.includeExternalLinks` | Boolean | If true, follows links to external domains (default is false) |
 | `options.includeSubdomains` | Boolean | If true, follows links to subdomains of the starting URL (default is false) |
 | `options.includePatterns` | Array of strings | Only visits URLs that match one of these patterns |
@@ -156,10 +176,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
       "includeExternalLinks": true,
       "includeSubdomains": true,
       "includePatterns": [
-        ".*/api/v1/.*"
+        "/api/v1/*"
       ],
       "excludePatterns": [
-        ".*/learning-paths/.*"
+         "\/learning-paths\/"
       ]
     }
 }'
