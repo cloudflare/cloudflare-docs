@@ -1,0 +1,44 @@
+---
+title: "WAF Release - 2025-10-30 - Emergency"
+description: Cloudflare WAF managed rulesets 2025-10-30 emergency release
+date: 2025-10-30
+---
+
+import { RuleID } from "~/components";
+
+This week’s release introduces a new detection signature that enhances coverage for a critical vulnerability in Oracle E-Business Suite, tracked as CVE-2025-61884.
+
+**Key Findings**
+
+The flaw is easily exploitable and allows an unauthenticated attacker with network access to compromise Oracle Configurator, which can grant access to sensitive resources and configuration data. The affected versions include 12.2.3 through 12.2.14.
+
+**Impact**
+
+Successful exploitation of CVE-2025-61884 may result in unauthorized access to critical business data or full exposure of information accessible through Oracle Configurator. Administrators are strongly advised to apply vendor's patches and recommended mitigations to reduce this exposure.
+
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th>Ruleset</th>
+      <th>Rule ID</th>
+      <th>Legacy Rule ID</th>
+      <th>Description</th>
+      <th>Previous Action</th>
+      <th>New Action</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="2749f13f8cb34a3dbd49c8c48827402f" />
+      </td>
+      <td>N/A</td>
+      <td>Oracle E-Business Suite - SSRF - CVE:CVE-2025-61884</td>
+      <td>N/A</td>
+      <td>Block</td>
+      <td>This is a New Detection</td>
+    </tr>
+  </tbody>
+</table>

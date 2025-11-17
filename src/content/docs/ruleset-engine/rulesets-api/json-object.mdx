@@ -39,33 +39,27 @@ A fully populated ruleset object has the following JSON structure.
 The ruleset object has the following properties:
 
 - `id` <Type text="String" />
-
   - A 32-character UUIDv4 string that represents the unique Cloudflare-generated identifier for a given version of a ruleset.
   - Unique, read-only.
 
 - `name` <Type text="String" />
-
   - A human-readable name for the ruleset.
   - The name is immutable. You cannot change the name over the lifetime of the ruleset.
 
 - `description` <Type text="String" />
-
   - Optional description for the ruleset.
   - You can change the description over the lifetime of the ruleset.
 
 - `kind` <Type text="String" />
-
   - The kind of ruleset the JSON object represents.
   - One of `root`, `zone`, `managed`, `custom`.
   - `kind` is immutable.
 
 - `version` <Type text="Integer" />
-
   - The version of the ruleset.
   - Read-only value starting at `1` and incremented by `1` each time the ruleset is modified.
 
 - `rules` <Type text="Array<Rule>" />
-
   - A list of rules to include in the ruleset. Refer to [Rule object structure and properties](/ruleset-engine/rulesets-api/json-object/#rule-object-structure-and-properties) for details.
 
 - `last_updated` <Type text="Timestamp" />
@@ -80,10 +74,15 @@ A fully populated rule JSON object has the following structure:
 {
 	"id": "fdb0dd271f3f40b19679cc5d91396024",
 	"version": "2",
+	"ref": "<REF>",
+	"description": "<DESCRIPTION>",
 	"action": "block",
-	"categories": ["wordpress"],
+	"action_parameters": [
+		// action parameters vary according to the action
+	],
+	"categories": ["<CATEGORY_1>", "<CATEGORY_2>"],
 	"expression": "cf.zone.name eq \"example.com\"",
-	"last_updated": "2022-07-20T10:44:29.124515Z",
+	"last_updated": "2025-07-20T10:44:29.124515Z",
 	"enabled": true
 }
 ```
@@ -91,33 +90,38 @@ A fully populated rule JSON object has the following structure:
 The JSON object properties for a rule are defined as follows:
 
 - `id` <Type text="String" />
-
   - A 32-character UUIDv4 string that represents the unique Cloudflare-generated identifier for a given version of a rule.
   - Unique, read-only.
 
 - `version` <Type text="Integer" />
-
   - The version of the rule.
   - Read-only value starting at `1` and incremented by `1` each time the rule is modified.
   - Changing the order of a rule in a ruleset does not change its version.
 
-- `action` <Type text="String" />
+- `ref` <Type text="String" />
+  - A user-defined external identifier that must be unique for each rule in a ruleset.
+  - Use this field in your Terraform configuration to prevent Terraform from recreating the rule on changes. Refer to [How to keep the same rule ID between modifications](/terraform/troubleshooting/rule-id-changes/#how-to-keep-the-same-rule-id-between-modifications) for more information.
 
+- `description` <Type text="String" />
+  - A descriptive name of the rule.
+
+- `action` <Type text="String" />
   - Defines what happens when there is a match for the rule expression.
-  - The available actions depend on the [phase](/ruleset-engine/about/phases/) where the rule's ruleset is executed.
+  - The available [actions](/ruleset-engine/rules-language/actions/) depend on the [phase](/ruleset-engine/about/phases/) where the rule's ruleset is executed.
+
+- `action_parameters` <Type text="Object" />
+  - One or more parameters configuring the rule action.
+  - The exact properties vary according to the action. Refer to each Cloudflare product's API instructions for more information.
 
 - `categories` <Type text="Array<String>" />
-
   - Tags associated with the current rule. You can define overrides that affect rules with a given tag.
   - Read-only. Only available in [WAF Managed Rules](/waf/managed-rules/) and [DDoS managed rulesets](/ddos-protection/managed-rulesets/).
 
 - `expression` <Type text="String" />
-
   - Criteria defining when there is a match for the current rule.
   - The fields and functions you can use in a rule expression depend on the phase where the rule's ruleset is executed.
 
 - `last_updated` <Type text="Timestamp" />
-
   - The time (UTC) when the rule was last updated in ISO 8601 format: `YYYY-MM-DDThh:mm:ss.TZD`.
   - Read-only.
 

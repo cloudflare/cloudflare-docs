@@ -1,0 +1,186 @@
+---
+pcx_content_type: how-to
+title: Okta
+description: Integrate Okta as an identity provider for Cloudflare One.
+---
+
+import { Render } from "~/components";
+
+Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. You can integrate Okta with Cloudflare One and build rules based on user identity and group membership. Cloudflare One supports Okta integrations using either the OIDC (default) or [SAML](/cloudflare-one/integrations/identity-providers/okta-saml/) protocol.
+
+Additionally, you can configure Okta to use risk information from Cloudflare One [user risk scores](/cloudflare-one/team-and-resources/users/risk-score/) to create SSO-level policies. For more information, refer to [Send risk score to Okta](/cloudflare-one/team-and-resources/users/risk-score/#send-risk-score-to-okta).
+
+## Prerequisites
+
+- A [Zero Trust Organization](/cloudflare-one/setup/) with any subscription tier (including Free)
+- A [Cloudflare One administrator role](/cloudflare-one/roles-permissions/) with `Access Edit` permissions
+
+## Supported features
+
+- **SP-initiated SSO**: When a user goes to an Access application, Access redirects them to sign in with Okta.
+- **SCIM provisioning**: Synchronize Okta groups and automatically deprovision users. SCIM currently requires a separate [custom OIDC application](#synchronize-users-and-groups).
+
+## Set up Okta as an OIDC provider (Okta App Catalog)
+
+:::note[Active Directory limitation]
+The Okta App Catalog template does not support synchronizing [Active Directory groups](https://help.okta.com/en-us/Content/Topics/Directory/ad-agent-import-groups.htm). If you would like to build policies using AD groups, use the Okta [OIDC app integration](#set-up-okta-as-an-oidc-provider-custom-app-integration) or [SAML app integration](/cloudflare-one/integrations/identity-providers/okta-saml/).
+:::
+
+To set up the Okta integration using the Okta Integration Network (OIN) App Catalog:
+
+1. Log in to your Okta admin dashboard.
+2. Go to **Applications** > **Applications**.
+3. Select **Browse App Catalog**.
+4. Search for `Cloudflare` and select the **Cloudflare One** app.
+5. Select **Add integration**.
+6. In **Application label**, enter a name for the application (for example, `Cloudflare Access`).
+7. In **Team domain**, enter your Cloudflare Zero Trust team domain:
+
+   ```txt
+   <your-team-name>.cloudflareaccess.com
+   ```
+
+   You can find your team domain in Cloudflare One under **Settings** > **Team name**.
+
+8. In the **Sign On** tab, copy the **Client ID** and **Client secret**.
+9. Scroll down to **OpenID ConnectID Token** and select **Edit**.
+
+   ![Configuring the Groups claim filter in Okta](~/assets/images/cloudflare-one/identity/okta/okta-2.png)
+
+10. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
+
+<Render file="access/okta-zt-steps" product="cloudflare-one" />
+
+## Set up Okta as an OIDC provider (Custom App Integration)
+
+1. Log in to your Okta admin dashboard and go to **Applications** > **Applications**.
+
+2. Select **Create App Integration**.
+
+3. For the **Sign-in method**, select **OIDC - OpenID Connect**.
+
+   ![Creating an OIDC application in Okta](~/assets/images/cloudflare-one/identity/okta/okta-1.png)
+
+4. For the **Application type**, select **Web Application**. Select **Next**.
+
+5. Enter any name for the application. In the **Sign-in redirect URIs** field, enter the following URL:
+
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```
+
+   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+
+6. Choose the desired **Assignment** option and select **Save**.
+
+7. From the application view, go to the **Sign On** tab.
+
+8. Scroll down to **OpenID ConnectID Token** and select **Edit**.
+
+   ![Configuring the Groups claim filter in Okta](~/assets/images/cloudflare-one/identity/okta/okta-2.png)
+
+9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
+
+   :::note
+   Groups managed outside of Okta (for example, Microsoft Entra ID or Google groups) may require different regex values. For more information, refer to the Okta documentation on [Groups Claims](https://support.okta.com/help/s/article/Why-isnt-my-Groups-claim-returning-Active-Directory-groups) and [OpenID Connect Claims](https://support.okta.com/help/s/article/Can-we-retrieve-both-Active-Directory-and-Okta-groups-in-OpenID-Connect-claims).
+   :::
+
+10. In the **General** tab, copy the **Client ID** and **Client secret**.
+
+    ![Finding your Client credentials in Okta](~/assets/images/cloudflare-one/identity/okta/okta-3.png)
+
+<Render file="access/okta-zt-steps" product="cloudflare-one" />
+
+## Synchronize users and groups
+
+The Okta integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/team-and-resources/users/scim/). To enable SCIM provisioning between Access and Okta, you need two separate app integrations in Okta:
+
+- The OIDC application you created when adding Okta as an identity provider. You can create this application via the [Okta App Catalog](#set-up-okta-as-an-oidc-provider-okta-app-catalog) or via a [Custom App Integration](#set-up-okta-as-an-oidc-provider-custom-app-integration).
+- A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM.
+
+:::note
+If you would like to only maintain one Okta app instance, Okta does support SAML and SCIM within the same application. Create a [generic SAML integration](/cloudflare-one/integrations/identity-providers/generic-saml/) and configure those values in the **Sign-On** field of your Okta SCIM application.
+:::
+
+### 1. Enable SCIM in Cloudflare One
+
+<Render
+	file="access/enable-scim-on-dashboard"
+	product="cloudflare-one"
+	params={{ idp: "Okta" }}
+/>
+
+### 2. Configure SCIM in Okta
+
+1. On your Okta admin dashboard, go to **Applications** > **Applications**.
+
+2. Select **Browse App Catalog**.
+
+3. Search for `SCIM Header Auth` and select **SCIM 2.0 Test App (Header Auth)**.
+
+4. Select **Add Integration**.
+
+5. On the **General Settings** tab, name your application and select **Next**.
+
+6. On the **Sign-on Options** tab, ensure that **SAML 2.0** is selected.
+
+7. Under **Credential Details**, set **Application username format** to either _Okta Username_ or _Email_. This value will be used for the SCIM `userName` attribute.
+	:::note
+	The `userName` attribute must match the user's email address in Cloudflare One.
+	:::
+
+8. Select **Done** to create the integration.
+
+9. On the **Provisioning** tab, select **Configure API Integration**.
+
+10. Select **Enable API integration**.
+
+11. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Cloudflare One.
+
+12. In the **API Token** field, enter the **SCIM Secret** obtained from Cloudflare One.
+
+    ![Enter SCIM values into Okta](~/assets/images/cloudflare-one/identity/okta/enter-scim-values.png)
+
+13. Select **Test API Credentials** to ensure that the credentials were entered correctly. Select **Save**.
+
+14. On the **Provisioning** tab, select **Edit** and enable:
+    - **Create Users**
+    - **Update User Attributes**
+    - **Deactivate Users**
+
+    ![Configure provisioning settings in Okta](~/assets/images/cloudflare-one/identity/okta/enable-provisioning.png)
+
+15. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group. If a user is removed from the application assignment via a either direct user assignment or removed from the group that was assigned to the app, this will trigger a deprovisioning event from Okta to Cloudflare.
+
+15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder and are the group memberships that will be added and removed upon membership change in Okta.
+
+    :::note
+    Groups in this SCIM app Push Groups integration should match the groups in your base [OIDC app integration](/cloudflare-one/integrations/identity-providers/okta/#set-up-okta-as-an-oidc-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+    :::
+
+To verify the integration, select **View Logs** in the Okta SCIM application.
+
+<Render file="access/verify-scim-provisioning" product="cloudflare-one" />
+
+## Example API Configuration
+
+```json
+{
+	"config": {
+		"client_id": "<your client id>",
+		"client_secret": "<your client secret>",
+		"okta_account": "https://dev-abc123.oktapreview.com"
+	},
+	"type": "okta",
+	"name": "my example idp"
+}
+```
+
+## Troubleshooting
+
+### Failed to fetch user/group information from the identity
+
+If you see the error `Failed to fetch user/group information from the identity`, double-check your Okta configuration:
+
+- If you have more than 100 Okta groups, ensure you include the API token.
+- The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.

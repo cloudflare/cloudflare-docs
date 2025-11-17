@@ -8,7 +8,7 @@ sidebar:
   order: 15
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, DashButton } from "~/components";
 
 Always Use HTTPS redirects all your visitor requests from `http` to `https`, for all subdomains and hosts in your application.
 
@@ -36,10 +36,13 @@ If only some parts of your application can support HTTPS traffic, do not enable 
 
 To enable **Always Use HTTPS** in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. In **SSL/TLS** > **Overview**, make sure that your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/off/) **is not** set to **Off**. When you set your encryption mode to **Off**, the **Always Use HTTPS** option will not be visible in your Cloudflare dashboard.
-3. Go to **SSL/TLS** > **Edge Certificates**.
-4. For **Always Use HTTPS**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **SSL/TLS Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls" />
+
+2. Make sure that your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/off/) is not set to **Off**. When you set your encryption mode to **Off**, the **Always Use HTTPS** option will not be visible in your Cloudflare dashboard.
+3. Go to the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) page.
+4. Turn on **Always Use HTTPS**.
 
 </TabItem> <TabItem label="API">
 

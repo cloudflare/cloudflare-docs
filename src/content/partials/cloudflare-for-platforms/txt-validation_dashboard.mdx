@@ -5,13 +5,11 @@
 
 import { DashButton } from "~/components";
 
-1. In the Cloudflare dashboard, go to the **Account home** page and select your account.
+1. In the Cloudflare dashboard, go to the **Custom Hostnames** page.
 
-    <DashButton url="/?to=/:account/home" />
+   <DashButton url="/?to=/:account/:zone/ssl-tls/custom-hostnames" />
 
-2. Select your Cloudflare for SaaS application.
-3. Navigate to **SSL/TLS** > **Custom Hostnames**.
-4. Select a hostname.
-5. Copy the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
+2. Select a hostname.
+3. Copy the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
 
 If you had previously created a **wildcard** custom hostname, you would need to copy the values for two different validation TXT records.

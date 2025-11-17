@@ -7,7 +7,13 @@ sidebar:
 description: Configure different Cloudflare security features that protect your web applications, APIs, and resources.
 ---
 
-This page describes the settings available in **Security** > **Settings** for a given domain.
+import { DashButton } from "~/components";
+
+This page describes the security settings available in the new security dashboard for a given domain.
+
+To access security settings in the new security dashboard, go to the **Settings** page.
+
+<DashButton url="/?to=/:account/:zone/security/settings" />
 
 ## Security setting categories
 
@@ -53,7 +59,7 @@ Additionally, you can manage the following settings:
 - [Block AI Bots](/bots/concepts/bot/#ai-bots)
 - [Bot Management](/bots/get-started/bot-management/) (depending on your Enterprise subscriptions)
 - [Browser Integrity Check](/waf/tools/browser-integrity-check/)
-- [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage)
+- [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/)
 - [Cloudflare managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)
 - [Firewall for AI](/waf/detections/firewall-for-ai/)
 - [Schema learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/)

@@ -26,11 +26,11 @@ import { DurableObject } from 'cloudflare:workers';
 
 // Send incremented counter value every second
 async function* dataSource(signal: AbortSignal) {
-let counter = 0;
-while (!signal.aborted) {
-yield counter++;
-await new Promise((resolve) => setTimeout(resolve, 1_000));
-}
+    let counter = 0;
+    while (!signal.aborted) {
+        yield counter++;
+        await new Promise((resolve) => setTimeout(resolve, 1_000));
+    }
 
     console.log('Data source cancelled');
 }

@@ -27,3 +27,5 @@ Each operation (create, edit, or delete) on a list item counts as a modification
 
 - You can make a maximum of 1,000,000 list item modifications in API requests over 12 hours.
 - You can make a maximum of 30,000 API requests over 12 hours doing list item modifications.
+
+If a write operation is still being processed — which happens asynchronously — and you submit a new request, you will receive a `429` HTTP status code. When this happens, submit your request again later.

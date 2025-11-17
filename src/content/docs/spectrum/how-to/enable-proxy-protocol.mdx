@@ -5,6 +5,8 @@ weight: 0
 
 ---
 
+import { DashButton } from "~/components";
+
 Because Cloudflare intercepts packets before forwarding them to your server, if you were to look up the client IP, you would see Cloudflare's IP rather than the true client IP.
 
 Some services you run may require knowledge of the true client IP. In those cases, you can use a proxy protocol for Cloudflare to pass on the client IP to your service. Sending proxy information along is dependent on whether TCP or UDP is used. For TCP, Spectrum supports adding [Proxy Protocol v1](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt), which is the human readable version supported by Amazon ELB and [NGINX](https://docs.nginx.com/nginx/admin-guide/load-balancer/using-proxy-protocol/). For UDP applications, Cloudflare has developed a custom proxy protocol called Simple Proxy Protocol. Be aware that Proxy Protocol is not supported for Spectrum egresses to Magic WAN.
@@ -19,10 +21,12 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 
 ## Enable Proxy Protocol v1 for TCP
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Spectrum**.
-3. Locate the application that will use the PROXY protocol and select **Configure**.
-4. From the dropdown, select **PROXY Protocol v1**.
+1. In the Cloudflare dashboard, go to the **Spectrum** page.
+
+   <DashButton url="/?to=/:account/:zone/spectrum" />
+
+2. Locate the application that will use the PROXY protocol and select **Configure**.
+3. From the dropdown, select **PROXY Protocol v1**.
 
 When TCP applications are configured to use **PROXY Protocol v1**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol plain-text header.
 
@@ -48,10 +52,12 @@ PROXY TCP6 2001:db8:: 2001:db8:ffff:ffff:ffff:ffff:ffff:ffff 42300 443\r\n
 
 ## Enable Proxy Protocol v2 for TCP/UDP
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Spectrum**.
-3. Locate the application that will use the PROXY protocol and select **Configure**.
-4. From the dropdown, select **PROXY Protocol v2**.
+1. In the Cloudflare dashboard, go to the **Spectrum** page.
+
+   <DashButton url="/?to=/:account/:zone/spectrum" />
+
+2. Locate the application that will use the PROXY protocol and select **Configure**.
+3. From the dropdown, select **PROXY Protocol v2**.
 
 When TCP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol binary header.
 

@@ -8,7 +8,7 @@ head:
     content: Set up CNAME flattening
 ---
 
-import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components";
+import { Render, TabItem, Tabs, GlossaryTooltip, DashButton } from "~/components";
 
 :::note
 
@@ -26,9 +26,11 @@ For zones on paid plans, you can choose to flatten all CNAME records. This optio
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **DNS** > **Settings**.
-3. Turn on the option **CNAME flattening for all CNAME records**.
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
+
+2. Turn on the option **CNAME flattening for all CNAME records**.
 
 </TabItem> <TabItem label="API">
 
@@ -49,11 +51,10 @@ If you use this option, a special [tag](/dns/manage-dns-records/reference/record
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. In **DNS** > **Settings**, make sure that **CNAME flattening for all CNAME records** is turned off.
-3. Go to **DNS** > **Records** and find the CNAME record you would like to flatten.
-4. Select **Edit** and turn on the **Flatten** option.
-5. Select **Save** to confirm.
+1. On the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, make sure that **CNAME flattening for all CNAME records** is turned off.
+2. Go to the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page and find the CNAME record you would like to flatten.
+3. Select **Edit** and turn on the **Flatten** option.
+4. Select **Save** to confirm.
 
 :::note[Unavailable flatten option]
 For the following cases, **Flatten** will not be available:

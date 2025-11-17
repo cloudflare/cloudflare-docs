@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Opportunistic Encryption
 ---
 
-import { FeatureTable, Render, TabItem, Tabs } from "~/components";
+import { FeatureTable, Render, TabItem, Tabs, DashButton } from "~/components";
 
 Opportunistic Encryption allows browsers to access HTTP URIs over an encrypted TLS channel. It's not a substitute for HTTPS, but provides additional security for otherwise vulnerable requests.
 
@@ -21,9 +21,11 @@ You do not need to configure your origin web server to support Opportunistic Enc
 
 To enable Opportunistic Encryption in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **SSL/TLS** > **Edge Certificates**.
-3. For **Opportunistic Encryption**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Opportunistic Encryption**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 

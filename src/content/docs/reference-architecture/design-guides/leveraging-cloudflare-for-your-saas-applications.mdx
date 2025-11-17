@@ -1,16 +1,13 @@
 ---
 title: Leveraging Cloudflare for your SaaS applications
 pcx_content_type: design-guide
-products:
-  - Cloudflare for SaaS
-  - Cloudflare Tunnel
-  - Load Balancing
-  - Data Localization Suite
-weight: null
+products: [cloudflare-for-saas, cloudflare-tunnel, load-balancing, data-localization]
 sidebar:
   order: 1
   label: Leveraging Cloudflare for your SaaS applications
 reviewed: 2024-12-19
+description: >-
+  This document provides a reference and guidance for using Cloudflare for Platforms. It is designed for SaaS application owners, engineers, or architects who want to learn how to make their application more scalable and secure.
 ---
 
 ## Introduction
@@ -112,7 +109,7 @@ In this common design, Cloudflare enables your platform to issue SSL certificate
 3. Just set up a [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) zone and [order a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/) for each client hostname. The system will take you through an easy flow to point each client's traffic to your platform, and order their certificate.
    1. You can almost always use our default settings through this process, but bespoke SSL customization is also possible.
    2. Origin traffic routing is also handled through the SSL for SaaS process. Our default configuration is secure for most needs.
-      - For highly secure use cases, you can use [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/), [dedicated egress IPs via Aegis](/aegis/), or an advanced design with [Tunnels](/cloudflare-one/connections/connect-networks/).
+      - For highly secure use cases, you can use [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/), [dedicated egress IPs via Aegis](/aegis/), or an advanced design with [Tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 
 ![Figure 5](~/assets/images/reference-architecture/leveraging-cloudflare-for-your-saas-applications/figure5.svg)
 

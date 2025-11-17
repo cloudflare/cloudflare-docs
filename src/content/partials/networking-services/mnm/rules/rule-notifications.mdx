@@ -1,0 +1,74 @@
+---
+params:
+  - productName
+  - shortProdName
+---
+
+import { Render, DashButton } from "~/components"
+
+After configuring one or multiple rule types in {props.productName}, customers can also choose to receive notifications via email, webhook, or PagerDuty when a rule is triggered.
+
+Customers can configure multiple rule types and alerts together to create layers of DDoS protection based on their network environment and their security needs.
+
+You can read [Cloudflare's Notifications documentation](/notifications/) for more information on our notification platform including:
+
+- [Configure Cloudflare notifications](/notifications/get-started/)
+- [Configure PagerDuty](/notifications/get-started/configure-pagerduty/)
+- [Configure webhooks](/notifications/get-started/configure-webhooks/)
+- [Test a notification](/notifications/get-started/#test-a-notification)
+- [Notification History](/notifications/notification-history/)
+
+## {props.productName} notification configuration fields
+
+| Field | Description |
+| :---- | :---- |
+| **Notification name** | The name of the {props.productName} notification ({props.shortProdName}) for the rule type that was selected. |
+| **Description (optional)** | The description of the {props.shortProdName} notification. |
+| **Webhooks** | The webhook(s) that will receive the {props.shortProdName} notification. |
+| **Notification email** | The email(s) that will receive the {props.shortProdName} notification. |
+
+## Rule Auto-Advertisement notifications
+
+<Render file="mnm-auto-advertisement-notifications" product="networking-services" />
+
+## Configure static threshold notifications
+
+To configure static threshold notifications:
+
+1. In the Cloudflare dash, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
+3. Select **Magic Transit** from the product dropdown menu.
+4. Find the **Magic Network Monitoring: Volumetric Attack** alert, and select **Select**.
+5. Fill in the notification configuration details.
+6. Select **Save**.
+
+## Configure dynamic threshold notifications
+
+To configure dynamic threshold notifications:
+
+1. In the Cloudflare dash, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
+3. Select **Magic Transit** from the product dropdown menu.
+4. Find the **Magic Network Monitoring: Volumetric Attack** alert, and select **Select**.
+5. Fill in the notification configuration details.
+6. Select **Save**.
+
+## Configure sFlow DDoS attack notifications
+
+To configure sFlow DDoS attack notifications:
+
+1. In the Cloudflare dash, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
+3. Select **Magic Transit** from the product dropdown menu.
+4. Find the **Magic Network Monitoring: DDoS Attack** alert, and select **Select**.
+5. Fill in the notification configuration details.
+6. Select **Save**.

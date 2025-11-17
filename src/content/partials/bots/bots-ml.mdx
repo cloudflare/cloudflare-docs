@@ -3,6 +3,13 @@
 
 ---
 
-The **Machine Learning (ML)** engine accounts for the majority of all detections, human and bot.
+The **Machine Learning (ML)** engine accounts for the majority of all detections, distinguishing between human and bot traffic. This approach leverages our global network, which proxies billions of requests daily, to identify both automated and human traffic.
 
-This approach leverages our global network, which proxies billions of requests daily, to identify both automated and human traffic. We constantly train the ML engine to become more accurate and adapt to new threats. Most importantly, this engine learns from traffic across all Cloudflare domains and uses these insights to score traffic while honoring our [strict privacy standards](https://www.cloudflare.com/privacypolicy/).
+The ML system uses a supervised machine learning methodology to determine the final Bot Score (1–99). 
+
+The core model relies on the following process:
+
+- Input Variables (X): Various request features (headers, session characteristics, and browser signals) collected from traffic across the Cloudflare network.
+- Output Variable (Y): The predicted probability that a client is human (such as the probability of successfully solving a Challenge). This probability is mapped to the final 1–99 Bot Score.
+
+We constantly train the ML engine on a periodic basis using vast, anonymized data to ensure it remains accurate and adapts to new threats. Customers can analyze the request features used by these models via their own logs, such as Cloudflare [Logpull](/logs/logpull/) or [Logpush](/logs/logpush/).

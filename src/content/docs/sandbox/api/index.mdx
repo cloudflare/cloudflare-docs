@@ -1,0 +1,62 @@
+---
+title: API Reference
+pcx_content_type: navigation
+sidebar:
+  order: 4
+---
+
+import { LinkTitleCard, CardGrid } from "~/components";
+
+The Sandbox SDK provides a comprehensive API for executing code, managing files, running processes, and exposing services in isolated sandboxes.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Lifecycle"
+	href="/sandbox/api/lifecycle/"
+	icon="rocket"
+>
+	Create and manage sandbox containers. Get sandbox instances, configure options, and clean up resources.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Commands"
+	href="/sandbox/api/commands/"
+	icon="seti:shell"
+>
+	Execute commands and stream output. Run scripts, manage background processes, and capture execution results.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Files"
+	href="/sandbox/api/files/"
+	icon="document"
+>
+	Read, write, and manage files in the sandbox filesystem. Includes directory operations and file metadata.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Code Interpreter"
+	href="/sandbox/api/interpreter/"
+	icon="laptop"
+>
+	Execute Python and JavaScript code with rich outputs including charts, tables, and formatted data.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Ports"
+	href="/sandbox/api/ports/"
+	icon="download"
+>
+	Expose services running in the sandbox via preview URLs. Access web servers and APIs from the internet.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Sessions"
+	href="/sandbox/api/sessions/"
+	icon="seti:plan"
+>
+	Create isolated execution contexts within a sandbox. Each session maintains its own shell state, environment variables, and working directory.
+</LinkTitleCard>
+
+</CardGrid>

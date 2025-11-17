@@ -6,9 +6,13 @@ sidebar:
 description: Security rules perform security actions on incoming requests that match specified filters.
 ---
 
+import { DashButton } from "~/components";
+
 Security rules perform security-related actions on incoming requests that match specified filters. Rules are evaluated and executed in order, from first to last.
 
-Security rules are available in the new security dashboard in **Security** > **Security rules**.
+To access security rules in the new security dashboard, go to the **Security rules** page.
+
+<DashButton url="/?to=/:account/:zone/security/security-rules" />
 
 ## Security rules
 
@@ -16,10 +20,13 @@ The **Security rules** tab includes a list of different types of rules configure
 
 To create a security rule:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Security rules**.
-3. (Optional) Select **Templates**, and then select a template from the list. You can customize the default configuration of the template before deploying the new rule. Refer to the resources listed in the next step.
-4. Select **Create rule** > select the type of rule you want to create. Refer to the following resources about each rule type:
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. (Optional) Select **Templates**, and then select a template from the list. You can customize the default configuration of the template before deploying the new rule. Refer to the resources listed in the next step.
+
+3. Select **Create rule** > select the type of rule you want to create. Refer to the following resources about each rule type:
    - [Custom rules](/waf/custom-rules/create-dashboard/#rule-form)
    - [Rate limiting rules](/waf/rate-limiting-rules/create-zone-dashboard/#rule-form)
    - [API sequence rules](/api-shield/security/sequence-mitigation/#rule-form)
@@ -29,7 +36,7 @@ To create a security rule:
 
 :::note[Notes]
 
-To deploy a managed ruleset, go to **Security** > **Settings** and filter by **Web application exploits**. For more information, refer to [Deploy a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset).
+To deploy a managed ruleset, go to the Security **Settings** page. For more information, refer to [Deploy a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset).
 
 The **Security rules** tab includes functionality available in different products in the previous dashboard navigation structure, such as the [WAF](/waf/), [API Shield](/api-shield/), and [Page Shield](/page-shield/).
 

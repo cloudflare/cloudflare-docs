@@ -101,14 +101,14 @@ Identity-based authentication logs contain the following fields:
 
 ##### Infrastructure applications
 
-Cloudflare Access logs the following information when the user authenticates to an [infrastructure application](/cloudflare-one/applications/non-http/infrastructure-apps/):
+Cloudflare Access logs the following information when the user authenticates to an [infrastructure application](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/):
 
 | Field         | Description                                                                                                                                                                                                                   |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Hostname**  | Hostname of the infrastructure target.                                                                                                                                                                                        |
 | **Target ID** | UUID of the infrastructure target.                                                                                                                                                                                            |
 | **SSH user**  | The UNIX user, such as `root`, that the authenticating user specified when connecting to the infrastructure target.                                                                                                           |
-| **SSH logs**  | SSH commands that the user ran on the target. Requires configuring an [SSH encryption key](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs) before the session begins. |
+| **SSH logs**  | SSH commands that the user ran on the target. Requires configuring an [SSH encryption key](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs) before the session begins. |
 
 ### Non-identity authentication
 

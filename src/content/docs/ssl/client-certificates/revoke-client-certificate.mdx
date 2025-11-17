@@ -6,16 +6,20 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 You can revoke a client certificate you previously generated with the default [Cloudflare Managed CA](/ssl/client-certificates/).
 
-It is not possible to permanently delete client certificates generated with the default Cloudflare Managed CA. Once revoked, these client certificates will still be listed in **SSL/TLS > Client Certificates**, and can be restored at any time.
+It is not possible to permanently delete client certificates generated with the default Cloudflare Managed CA. Once revoked, these client certificates will still be listed on the [**Client Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates) page, and can be restored at any time.
 
 ## Steps
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-2. Go to **SSL** > **Client Certificates**.
-3. Select the certificate you want to revoke.
-4. Select **Revoke** and confirm the operation.
+1. In the Cloudflare dashboard, go to the **Client Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/client-certificates" />
+
+2. Select the certificate you want to revoke.
+3. Select **Revoke** and confirm the operation.
 
 :::caution[Important]
 

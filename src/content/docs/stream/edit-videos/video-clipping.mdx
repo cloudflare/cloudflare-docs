@@ -1,8 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Clip videos
-
 ---
+
 import { DashButton } from "~/components";
 
 With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video but only want to share a five minute clip from the middle of the video, you can clip the video to remove the content before and after the five minute clip.
@@ -11,9 +11,7 @@ Refer to the [Video clipping API documentation](/api/resources/stream/subresourc
 
 :::note[Note:]
 
-
 Clipping works differently for live streams and recordings. For more information, refer to [Live instant clipping](/stream/stream-live/live-instant-clipping/).
-
 
 :::
 
@@ -27,23 +25,21 @@ To clip your video, determine the start and end times you want to use from the e
 
 :::note
 
-
 Clipped videos will not inherit the `scheduledDeletion` date. To set the deletion date, you must clip the video first and then set the deletion date.
-
 
 :::
 
 ```json title="Required parameters"
 {
-    "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
-    "startTimeSeconds": 20,
-    "endTimeSeconds": 40
+	"clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
+	"startTimeSeconds": 20,
+	"endTimeSeconds": 40
 }
 ```
 
-* **`clippedFromVideoUID`**: The unique identifier for the video used to create the new, clipped video.
-* **`startTimeSeconds`**: The timestamp from the existing video that indicates when the new video begins.
-* **`endTimeSeconds`**: The timestamp from the existing video that indicates when the new video ends. <br/><br/>
+- **`clippedFromVideoUID`**: The unique identifier for the video used to create the new, clipped video.
+- **`startTimeSeconds`**: The timestamp from the existing video that indicates when the new video begins.
+- **`endTimeSeconds`**: The timestamp from the existing video that indicates when the new video ends. <br/><br/>
 
 ```bash title="Example: Clip a video" {5,6,7}
 curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<YOUR_ACCOUND_ID_HERE>/stream/clip' \
@@ -58,7 +54,7 @@ curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<Y
 
 You can check whether your video is ready to play on the **Stream** page of the Cloudflare dashboard.
 
-<DashButton url="/?to=/:account/stream" />
+<DashButton url="/?to=/:account/stream/videos" />
 
 While the clipped video processes, the video status response displays **Queued**. When the clipping process is complete, the video status changes to **Ready** and displays the new name of the clipped video and the new duration.
 
@@ -70,12 +66,12 @@ When you clip a video, you can also specify a new name for the clipped video. In
 
 ```json title="Example: Specify a custom name" {6}
 {
-    "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
-    "startTimeSeconds": 10,
-    "endTimeSeconds": 15,
-    "meta": {
-      "name": "overriding-filename-clip.mp4"
-    }
+	"clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
+	"startTimeSeconds": 10,
+	"endTimeSeconds": 15,
+	"meta": {
+		"name": "overriding-filename-clip.mp4"
+	}
 }
 ```
 
@@ -87,15 +83,15 @@ You can also add a custom watermark to your video. For more information on water
 
 ```json title="Example: Clip a video, set a new video name, and apply a watermark" {5,6,9}
 {
-    "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
-    "startTimeSeconds": 10,
-    "endTimeSeconds": 15,
-    "watermark": {
-        "uid": "4babd675387c3d927f58c41c761978fe"
-    },
-    "meta": {
-      "name": "overriding-filename-clip.mp4"
-    }
+	"clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
+	"startTimeSeconds": 10,
+	"endTimeSeconds": 15,
+	"watermark": {
+		"uid": "4babd675387c3d927f58c41c761978fe"
+	},
+	"meta": {
+		"name": "overriding-filename-clip.mp4"
+	}
 }
 ```
 
@@ -105,13 +101,13 @@ When clipping a video, you can make a video private and accessible only to certa
 
 ```json title="Example: Clip a video and require signed URLs" {5}
 {
-    "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
-    "startTimeSeconds": 10,
-    "endTimeSeconds": 15,
-    "requireSignedURLs": true,
-    "meta": {
-      "name": "signed-urls-demo.mp4"
-    }
+	"clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
+	"startTimeSeconds": 10,
+	"endTimeSeconds": 15,
+	"requireSignedURLs": true,
+	"meta": {
+		"name": "signed-urls-demo.mp4"
+	}
 }
 ```
 
@@ -123,12 +119,12 @@ You can also specify a thumbnail image for your video using a percentage value. 
 
 ```json title="Example: Clip a video with a thumbnail generated at the 50% mark" {5}
 {
-    "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
-    "startTimeSeconds": 10,
-    "endTimeSeconds": 15,
-    "thumbnailTimestampPct": 0.5,
-    "meta": {
-      "name": "thumbnail_percentage.mp4"
-    }
+	"clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
+	"startTimeSeconds": 10,
+	"endTimeSeconds": 15,
+	"thumbnailTimestampPct": 0.5,
+	"meta": {
+		"name": "thumbnail_percentage.mp4"
+	}
 }
 ```

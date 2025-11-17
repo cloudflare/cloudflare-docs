@@ -105,6 +105,21 @@ The above example:
 - Uses a TypeScript [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html) to type the return value of `step.waitForEvent` as our `IncomingStripeWebhook`.
 - Continues on with the rest of the Workflow.
 
+The default timeout for a `waitForEvent` call is 24 hours, which can be changed by passing `{ timeout: WorkflowTimeoutDuration }` as the second argument to your `waitForEvent` call.
+
+<TypeScriptExample>
+
+```ts
+let event = await step.waitForEvent(
+		"wait for human approval",
+		{ type: "approval-flow", timeout: "15 minutes" },
+	);
+```
+
+</TypeScriptExample>
+
+You can specify a timeout between 1 second and up to 365 days.
+
 ### Send events to running workflows
 
 Workflow instances that are waiting on events using the `waitForEvent` API can be sent events using the `instance.sendEvent` API:

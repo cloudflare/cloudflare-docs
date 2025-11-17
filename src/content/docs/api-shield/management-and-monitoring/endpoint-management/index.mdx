@@ -183,6 +183,10 @@ You can delete endpoints one at a time or in bulk.
   </TabItem>
 </Tabs>
 
+:::caution
+When you delete an endpoint from Endpoint Management, Cloudflare immediately stops tracking all associated performance and analytics data. The endpoint's previous historical metrics are permanently removed and cannot be restored. If you later save this endpoint again, metric tracking will resume, starting from the point the endpoint is re-saved.
+:::
+
 ## Endpoint Analysis
 
 For each saved endpoint, customers can view:
@@ -218,3 +222,14 @@ Once Sensitive Data Detection is enabled for your zone, API Shield queries firew
 API Shield displays the types of sensitive data found if you expand the Endpoint Management table row to view further details. Select **Explore Events** to view the matched events in Security Events.
 
 After Sensitive Data Detection is enabled for your zone, you can [browse the Sensitive Data Detection ruleset](https://dash.cloudflare.com/?to=/:account/:zone/security/data/ruleset/e22d83c647c64a3eae91b71b499d988e/rules). The link will not work if Sensitive Data Detection is not enabled.
+
+## Limitations
+
+Certain performance metrics, such as latency, are not supported when a request is handled by a Cloudflare service in a way that prevents it from being passed directly to your origin server.
+
+This limitation is specifically observed when:
+
+- A Cloudflare Worker is running on the URL path.
+- Other products built on top of Workers, such as [Waiting Room](/waiting-room/), are active on the application.
+
+In these scenarios, the system is unable to accurately measure the origin response time, and the metric will not be populated in the dashboard.

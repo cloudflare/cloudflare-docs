@@ -28,7 +28,7 @@ jobs:
         name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_OPTIONS: --max-old-space-size=4096
+          ENABLE_LAST_MOD_IN_SITEMAP: true
       - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
         env:
@@ -51,12 +51,10 @@ jobs:
           cd ..
 
           cd distllms
-          for file in $(find . -type f); do
-            rclone copy \
-              --config ../bin/rclone.conf \
-              $file \
-              devdocs:vendored-markdown
-          done
+          rclone copy --max-depth 2 \
+            --config ../bin/rclone.conf \
+            . \
+            devdocs:vendored-markdown
           cd ..
       - name: Upload vendored Markdown files to ZT DevDocs bucket
         env:

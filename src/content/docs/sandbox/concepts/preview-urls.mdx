@@ -1,0 +1,200 @@
+---
+title: Preview URLs
+pcx_content_type: concept
+sidebar:
+  order: 5
+---
+
+:::note[Production requires custom domain]
+Preview URLs work in local development without configuration. For production, you need a custom domain with wildcard DNS routing. See [Production Deployment](/sandbox/guides/production-deployment/).
+:::
+
+Preview URLs provide public HTTPS access to services running inside sandboxes. When you expose a port, you get a unique URL that proxies requests to your service.
+
+```typescript
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
+await sandbox.startProcess("python -m http.server 8000");
+const exposed = await sandbox.exposePort(8000, { hostname });
+
+console.log(exposed.exposedAt);
+// Production: https://8000-abc123.yourdomain.com
+// Local dev: http://localhost:8787/...
+```
+
+## URL Format
+
+**Production**: `https://{port}-{sandbox-id}.yourdomain.com`
+
+- Port 8080: `https://8080-abc123.yourdomain.com`
+- Port 3000: `https://3000-abc123.yourdomain.com`
+
+**Local development**: `http://localhost:8787/...`
+
+Preview URLs remain stable while a port is exposed and can be shared during that time. However, if you unexpose and re-expose a port, a new random token is generated and the URL changes. For persistent URLs, keep ports exposed for the duration you need them accessible.
+
+## Request Routing
+
+You must call `proxyToSandbox()` first in your Worker's fetch handler to route preview URL requests:
+
+```typescript
+import { proxyToSandbox, getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+export default {
+	async fetch(request, env) {
+		// Handle preview URL routing first
+		const proxyResponse = await proxyToSandbox(request, env);
+		if (proxyResponse) return proxyResponse;
+
+		// Your application routes
+		// ...
+	},
+};
+```
+
+Requests flow: Browser → Your Worker → Durable Object (sandbox) → Your Service.
+
+## Multiple Ports
+
+Expose multiple services simultaneously:
+
+```typescript
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
+await sandbox.startProcess("node api.js"); // Port 3000
+await sandbox.startProcess("node admin.js"); // Port 3001
+
+const api = await sandbox.exposePort(3000, { hostname, name: "api" });
+const admin = await sandbox.exposePort(3001, { hostname, name: "admin" });
+
+// Each gets its own URL:
+// https://3000-abc123.yourdomain.com
+// https://3001-abc123.yourdomain.com
+```
+
+## What Works
+
+- HTTP/HTTPS requests
+- WebSocket connections
+- Server-Sent Events
+- All HTTP methods (GET, POST, PUT, DELETE, etc.)
+- Request and response headers
+
+## What Does Not Work
+
+- Raw TCP/UDP connections
+- Custom protocols (must wrap in HTTP)
+- Ports outside range 1024-65535
+- Port 3000 (used internally by the SDK)
+
+## WebSocket Support
+
+Preview URLs support WebSocket connections. When a WebSocket upgrade request hits an exposed port, the routing layer automatically handles the connection handshake.
+
+```typescript
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
+// Start a WebSocket server
+await sandbox.startProcess("bun run ws-server.ts 8080");
+const { exposedAt } = await sandbox.exposePort(8080, { hostname });
+
+// Clients connect using WebSocket protocol
+// Browser: new WebSocket('wss://8080-abc123.yourdomain.com')
+
+// Your Worker routes automatically
+export default {
+	async fetch(request, env) {
+		const proxyResponse = await proxyToSandbox(request, env);
+		if (proxyResponse) return proxyResponse;
+	},
+};
+```
+
+For custom routing scenarios where your Worker needs to control which sandbox or port to connect to based on request properties, see `wsConnect()` in the [Ports API](/sandbox/api/ports/#wsconnect).
+
+## Security
+
+:::caution
+Preview URLs are publicly accessible by default, but require a valid access token that is generated when you expose a port.
+:::
+
+**Built-in security**:
+
+- **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token.yourdomain.com`)
+- **HTTPS in production** - All traffic is encrypted with automatic TLS
+- **Unpredictable URLs** - Tokens are randomly generated and difficult to guess
+
+**Add application-level authentication**:
+
+For additional security, implement authentication within your application:
+
+```python
+from flask import Flask, request, abort
+
+app = Flask(__name__)
+
+@app.route('/data')
+def get_data():
+    # Check for your own authentication token
+    auth_token = request.headers.get('Authorization')
+    if auth_token != 'Bearer your-secret-token':
+        abort(401)
+    return {'data': 'protected'}
+```
+
+This adds a second layer of security on top of the URL token.
+
+## Troubleshooting
+
+### URL Not Accessible
+
+Check if service is running and listening:
+
+```typescript
+// 1. Is service running?
+const processes = await sandbox.listProcesses();
+
+// 2. Is port exposed?
+const ports = await sandbox.getExposedPorts();
+
+// 3. Is service binding to 0.0.0.0 (not 127.0.0.1)?
+// Good:
+app.run((host = "0.0.0.0"), (port = 3000));
+
+// Bad (localhost only):
+app.run((host = "127.0.0.1"), (port = 3000));
+```
+
+### Production Errors
+
+For custom domain issues, see [Production Deployment troubleshooting](/sandbox/guides/production-deployment/#troubleshooting).
+
+### Local Development
+
+:::caution[Local development limitation]
+When using `wrangler dev`, you must expose ports in your Dockerfile:
+
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.3.3
+
+# Required for local development
+EXPOSE 3000
+EXPOSE 8080
+```
+
+Without `EXPOSE`, you'll see: `connect(): Connection refused: container port not found`
+
+This is **only required for local development**. In production, all container ports are automatically accessible.
+:::
+
+## Related Resources
+
+- [Production Deployment](/sandbox/guides/production-deployment/) - Set up custom domains for production
+- [Expose Services](/sandbox/guides/expose-services/) - Practical patterns for exposing ports
+- [Ports API](/sandbox/api/ports/) - Complete API reference
+- [Security Model](/sandbox/concepts/security/) - Security best practices

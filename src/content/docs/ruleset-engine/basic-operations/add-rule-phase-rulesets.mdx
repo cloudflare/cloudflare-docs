@@ -18,7 +18,7 @@ If you are adding a **single** rule to a ruleset, consider using one of the [rul
 Instead of relying on the automatic creation of an entry point ruleset, you can also create this ruleset explicitly using one of the [ruleset creation operations](/ruleset-engine/rulesets-api/create/).
 :::
 
-<Details header="Example: Set the rules of a phase entry point ruleset at the zone level">
+## Example: Set the rules of a phase entry point ruleset at the zone level
 
 The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation.
 
@@ -87,9 +87,7 @@ The following example sets the rules of a phase entry point ruleset at the zone 
 }
 ```
 
-</Details>
-
-<Details header="Example: Add a single rule to a phase entry point ruleset at the zone level">
+## Example: Add a single rule to a phase entry point ruleset at the zone level
 
 The following example adds a single rule to a phase entry point ruleset (with ID `$RULESET_ID`) at the zone level using the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation.
 
@@ -143,5 +141,3 @@ The following example adds a single rule to a phase entry point ruleset (with ID
 	"messages": []
 }
 ```
-
-</Details>

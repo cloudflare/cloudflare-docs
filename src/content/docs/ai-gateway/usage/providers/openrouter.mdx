@@ -33,7 +33,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/open
  --header 'content-type: application/json' \
  --header 'Authorization: Bearer OPENROUTER_TOKEN' \
  --data '{
-    "model": "openai/gpt-3.5-turbo",
+    "model": "openai/gpt-5-mini",
     "messages": [
         {
             "role": "user",
@@ -59,7 +59,7 @@ const openai = new OpenAI({
 
 try {
 	const chatCompletion = await openai.chat.completions.create({
-		model: "openai/gpt-3.5-turbo",
+		model: "openai/gpt-5-mini",
 		messages: [{ role: "user", content: "What is Cloudflare?" }],
 	});
 

@@ -3,10 +3,10 @@
 
 ---
 
-Cloudflare adds CAA records automatically in two situations:
+Cloudflare adds CAA records automatically in the following situations:
 
-* When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) and add any CAA records to your zone.
-* When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) enabled and enable [AMP Real URL](/speed/optimization/other/amp-real-url/) or [SXG Signed Exchanges](/speed/optimization/other/signed-exchanges/).
+- When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) and add any CAA records to your zone.
+- When you have [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) and add any CAA records to your zone.
 
 These records make sure Cloudflare can still issue Universal certificates on your behalf.
 
@@ -31,3 +31,7 @@ If Cloudflare has automatically added CAA records on your behalf, these records 
 0 issue "sectigo.com"
 0 issuewild "sectigo.com"
 ```
+
+:::note
+This list is not exhaustive, and other CAs might be added or removed for operational reasons.
+:::

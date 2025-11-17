@@ -1,0 +1,176 @@
+---
+pcx_content_type: how-to
+title: MCP server portals
+tags:
+  - MCP
+sidebar:
+  order: 1
+  label: MCP server portals
+  badge:
+    text: Beta
+---
+
+import { Render, GlossaryTooltip } from "~/components";
+
+An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) onto a single HTTP endpoint. Key benefits include:
+
+- **Streamlined access to multiple MCP servers**: MCP server portals support both unauthenticated MCP servers (such as the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize)) as well as MCP servers secured using any [third-party or custom OAuth provider](/agents/model-context-protocol/authorization/). Users log in to the portal URL through Cloudflare Access and are prompted to authenticate separately to each server that requires OAuth.
+
+- **Customized tools per portal**: Admins can tailor an MCP portal to a particular use case by choosing the specific tools and prompt templates that they want to make available to users through the portal. This allows users to access a curated set of tools and prompts — the less external context exposed to the AI model, the better the AI responses tend to be.
+
+- **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal.
+
+## Prerequisites
+
+- An [active domain on Cloudflare](/fundamentals/manage-domains/add-site/)
+- Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured on Cloudflare Zero Trust
+
+## Add an MCP server
+
+Add individual MCP servers to Cloudflare Access to bring them under centralized management.
+
+To add an MCP server:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Go to the **MCP servers** tab.
+3. Select **Add an MCP server**.
+4. Enter any name for the server.
+5. (Optional) Enter a custom string for the **Server ID**.
+6. In **HTTP URL**, enter the full URL of your MCP server. For example, if you want to add the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize), enter `https://docs.mcp.cloudflare.com/sse`.
+7. Add [Access policies](/cloudflare-one/access-controls/policies/) to show or hide the server in an [MCP server portal](#create-a-portal). The MCP server link will only appear in the portal for users who match an Allow policy. Users who do not pass an Allow policy will not see this server through any portals.
+
+   :::caution
+   Blocked users can still connect to the server (and bypass your Access policies) by using its direct URL. If you want to enforce authentication through Cloudflare Access, [configure Access as the server's OAuth provider](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
+   :::
+
+8. Select **Save and connect server**.
+9. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server. The account used to authenticate will serve as the admin credential for that MCP server. You can [configure an MCP portal](#create-a-portal) to use this admin credential to make requests.
+
+Cloudflare Access will validate the server connection and fetch a list of tools and prompts. Once the server is successfully connected, the [server status](#server-status) will change to **Ready**. You can now add the MCP server to an [MCP server portal](#create-a-portal).
+
+### Server status
+
+The MCP server status indicates the synchronization status of the MCP server to Cloudflare Access.
+
+| Status  | Description                                                                                                                                                |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error   | The server's authentication failed due to expired or incorrect credentials. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
+| Waiting | The server's tools, prompts, and resources are being synchronized.                                                                                         |
+| Ready   | The server was successfully synchronized and all tools, prompts, and resources are available.                                                              |
+
+### Reauthenticate the MCP server
+
+To reauthenticate an MCP server in Cloudflare Access:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Go to the **MCP servers** tab.
+3. Select the server that you want to reauthenticate, then select **Edit**.
+4. Select **Authenticate server**.
+
+You will be redirected to log in to your OAuth provider. The account used to authenticate will serve as the new admin credential for this MCP server.
+
+### Synchronize the MCP server
+
+Cloudflare Access automatically synchronizes with your MCP server every 24 hours. To manually refresh the MCP server in Zero Trust:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Go to the **MCP servers** tab and find the server that you want to refresh.
+3. Select the three dots > **Sync capabilities**.
+
+The MCP server page will show the updated list of tools and prompts. New tools and prompts are automatically enabled in the MCP server portal.
+
+## Create a portal
+
+To create an MCP server portal:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Select **Add MCP server portal**.
+3. Enter any name for the portal.
+4. Under **Custom domain**, select a domain for the portal URL. Domains must belong to an active zone in your Cloudflare account. You can optionally specify a subdomain.
+5. [Add MCP servers](#add-an-mcp-server) to the portal.
+6. (Optional) Under **MCP servers**, configure the tools and prompts available through the portal.
+7. (Optional) Configure **Require user auth** for servers that support OAuth: - `Enabled`: (default) User will be prompted to utilize their own login credentials to establish a connection with the MCP server. - `Disabled`: Users who are connected to the portal will automatically have access to the MCP server via its [admin credential](#reauthenticate-the-mcp-server).
+
+8. Add [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can connect to the portal URL.
+9. Select **Add an MCP server portal**.
+10. (Optional) [Customize the login experience](#customize-login-settings) for the portal.
+
+Users can now [connect to the portal](#connect-to-a-portal) at `https://<subdomain>.<domain>/mcp` using an MCP client.
+
+### Customize login settings
+
+Cloudflare Access automatically creates an Access application for each MCP server portal. You can customize the portal login experience by updating Access application settings:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+2. Find the portal that you want to configure, then select the three dots > **Edit**.
+3. To configure identity providers for the portal:
+   1. Go to the **Login methods** tab.
+   2. Select the [identity providers](/cloudflare-one/integrations/identity-providers/) that you want to enable for your application.
+   3. (Recommended) If you plan to only allow access via a single identity provider, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+4. To customize the block page:
+   1. Go to the **Experience settings** tab.
+   2. <Render file="access/access-block-page" product="cloudflare-one" />
+5. Select **Save application**.
+
+## Connect to a portal
+
+Users can connect to your MCP server running at `https://<subdomain>.<domain>/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+
+To test in Workers AI Playground:
+
+1. Go to [Workers AI Playground](https://playground.ai.cloudflare.com/).
+2. Under **MCP Servers**, enter `https://<subdomain>.<domain>/mcp` for the portal URL.
+3. Select **Connect**.
+4. In the popup window, log in to your Cloudflare Access identity provider.
+5. The popup window will list the MCP servers in the portal that require authentication. For each of these MCP servers, select **Connect** and follow the login prompts.
+6. Select **Done** to complete the portal authentication process.
+
+Workers AI Playground will show a **Connected** status and list the available tools. You can now ask the AI model to complete a task using an available tool. Requests made to an MCP server will appear in your [portal logs](#view-portal-logs).
+
+For MCP clients with server configuration files, we recommend using the `npx` command with the `mcp-remote@latest` argument:
+
+```json title= "MCP client configuration for MCP portals"
+{
+	"mcpServers": {
+		"example-mcp-server": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote@latest",
+				"https://<subdomain>.<domain>.com/mcp"
+			]
+		}
+	}
+}
+```
+
+We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.
+
+If you want to force your MCP client to reauthenticate, most MCP clients will refresh a session after removing the existing MCP OAuth sessions. To clear authentication credentials used by your MCP client, open a terminal and run the following command:
+
+:::note
+This command will trigger all MCP servers using `mcp-remote@latest` to force reauthenticate, not just MCP portals.
+:::
+
+```sh
+rm -rf ~/.mcp-auth
+```
+
+## View portal logs
+
+Portal logs allow you to monitor user activity through an MCP server portal. You can view logs on a per-portal or per-server basis.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Find the portal or server that you want to view logs for, then select the three dots > **Edit**.
+3. Select **Logs**.
+
+### Log fields
+
+| Field      | Description                                         |
+| ---------- | --------------------------------------------------- |
+| Time       | Date and time of the request                        |
+| Status     | Whether the server successfully returned a response |
+| Server     | Name of the MCP server that handled the request     |
+| Capability | The tool used to process the request                |
+| Duration   | Processing time for the request in milliseconds     |

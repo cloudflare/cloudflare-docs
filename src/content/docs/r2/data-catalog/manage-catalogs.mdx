@@ -49,9 +49,9 @@ npx wrangler r2 bucket catalog enable <BUCKET_NAME>
 ```
 
 After enabling, Wrangler will return your catalog URI and warehouse name.
+
 </TabItem>
 </Tabs>
-
 
 ## Disable R2 Data Catalog on a bucket
 
@@ -74,11 +74,14 @@ To disable the catalog on your bucket, run the [`r2 bucket catalog disable comma
 ```bash
 npx wrangler r2 bucket catalog disable <BUCKET_NAME>
 ```
+
 </TabItem>
 </Tabs>
 
 ## Enable compaction
+
 Compaction improves query performance by combining the many small files created during data ingestion into fewer, larger files according to the set `target file size`. For more information about compaction and why it's valuable, refer to [About compaction](/r2/data-catalog/about-compaction/).
+
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
 
@@ -96,11 +99,23 @@ Compaction improves query performance by combining the many small files created 
 </TabItem>
 <TabItem label='Wrangler CLI'>
 
-To enable the compaction on your catalog, run the [`r2 bucket catalog enable command`](/workers/wrangler/commands/#r2-bucket-catalog-compaction-enable):
+To enable the compaction on your catalog, run the [`r2 bucket catalog compaction enable` command](/workers/wrangler/commands/#r2-bucket-catalog-compaction-enable):
 
 ```bash
-npx wrangler r2 bucket catalog compaction enable <BUCKET_NAME>  --target-size 128 --token <API_TOKEN>
+# Enable catalog-level compaction (all tables)
+npx wrangler r2 bucket catalog compaction enable <BUCKET_NAME> --target-size 128 --token <API_TOKEN>
+
+# Enable compaction for a specific table
+npx wrangler r2 bucket catalog compaction enable <BUCKET_NAME> <NAMESPACE> <TABLE> --target-size 128
 ```
+
+:::note[Table-level vs Catalog-level compaction]
+
+- **Catalog-level**: Applies to all tables in the bucket; requires an API token as a service credential.
+- **Table-level**: Applies to a specific table only.
+
+:::
+
 </TabItem>
 </Tabs>
 
@@ -108,11 +123,13 @@ npx wrangler r2 bucket catalog compaction enable <BUCKET_NAME>  --target-size 12
 Compaction requires a Cloudflare API token with both R2 storage and R2 Data Catalog read/write permissions to act as a service credential. The compaction process uses this token to read files, combine them, and update table metadata.
 
 Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) for details on creating a token with the required permissions.
+:::
 
-Once enabled, compaction applies retroactively to all existing tables and automatically to newly created tables. During open beta, we currently compact up to 2 GB worth of files once per hour for each table.
+Once enabled, compaction applies retroactively to all existing tables (for catalog-level compaction) or the specified table (for table-level compaction). During open beta, we currently compact up to 2 GB worth of files once per hour for each table.
 
 ## Disable compaction
-Disabling compaction will prevent the process from running for all tables managed by the catalog. You can re-enable it at any time.
+
+Disabling compaction will prevent the process from running for all tables (catalog level) or a specific table (table level). You can re-enable it at any time.
 
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
@@ -130,11 +147,16 @@ Disabling compaction will prevent the process from running for all tables manage
 </TabItem>
 <TabItem label='Wrangler CLI'>
 
-To disable the compaction on your catalog, run the [`r2 bucket catalog disable command`](/workers/wrangler/commands/#r2-bucket-catalog-compaction-disable):
+To disable the compaction on your catalog, run the [`r2 bucket catalog compaction disable` command](/workers/wrangler/commands/#r2-bucket-catalog-compaction-disable):
 
 ```bash
+# Disable catalog-level compaction (all tables)
 npx wrangler r2 bucket catalog compaction disable <BUCKET_NAME>
+
+# Disable compaction for a specific table
+npx wrangler r2 bucket catalog compaction disable <BUCKET_NAME> <NAMESPACE> <TABLE>
 ```
+
 </TabItem>
 </Tabs>
 

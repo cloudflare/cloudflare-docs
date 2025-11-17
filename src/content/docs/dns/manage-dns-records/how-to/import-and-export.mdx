@@ -5,7 +5,7 @@ sidebar:
   order: 9
 ---
 
-import { Render, TabItem, Tabs, APIRequest } from "~/components";
+import { Render, TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 Use import and export to have more control over your DNS records and make processes like migrating a domain or bulk editing [record comments](/dns/manage-dns-records/reference/record-attributes/) easier.
 
@@ -28,11 +28,13 @@ If you are using certain record types — for example, `CNAME`, `DNAME`, `MX`, `
 
 To import a zone file using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **DNS** > **Records**.
-3. Select **Import and Export**.
-4. For **Import DNS records**, select your [formatted file](#format-your-zone-file).
-5. If you do not want [applicable records](/dns/proxy-status/) proxied, unselect **Proxy imported DNS records**.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Import and Export**.
+3. For **Import DNS records**, select your [formatted file](#format-your-zone-file).
+4. If you do not want [applicable records](/dns/proxy-status/) proxied, unselect **Proxy imported DNS records**.
 
 </TabItem> <TabItem label="API">
 
@@ -58,10 +60,12 @@ You can also bulk export records from Cloudflare.
 
 To export records using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **DNS** > **Records**.
-3. Select **Import and Export**.
-4. Select **Export**.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Import and Export**.
+3. Select **Export**.
 
 </TabItem> <TabItem label="API">
 

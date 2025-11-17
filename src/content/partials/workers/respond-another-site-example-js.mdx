@@ -6,7 +6,7 @@
 ```js playground
 export default {
   async fetch(request) {
-    async function MethodNotAllowed(request) {
+    function MethodNotAllowed(request) {
       return new Response(`Method ${request.method} not allowed.`, {
         status: 405,
         headers: {

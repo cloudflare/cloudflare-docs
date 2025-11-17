@@ -32,7 +32,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1
  --header 'anthropic-version: 2023-06-01' \
  --header 'Content-Type: application/json' \
  --data  '{
-    "model": "claude-3-opus-20240229",
+    "model": "claude-sonnet-4-5",
     "max_tokens": 1024,
     "messages": [
       {"role": "user", "content": "What is Cloudflare?"}
@@ -57,7 +57,7 @@ const anthropic = new Anthropic({
 	baseURL,
 });
 
-const model = "claude-3-opus-20240229";
+const model = "claude-sonnet-4-5";
 const messages = [{ role: "user", content: "What is Cloudflare?" }];
 const maxTokens = 1024;
 

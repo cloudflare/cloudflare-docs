@@ -1,16 +1,34 @@
 ---
 import { Code } from "@astrojs/starlight/components";
-import Routes from "~/content/dash-routes/index.json";
+import AnchorHeading from "./AnchorHeading.astro";
+import CoreRoutes from "~/content/dash-routes/core.json";
+import ZeroTrustRoutes from "~/content/dash-routes/zero-trust.json";
 ---
 
-<ul>
-	{
-		Routes.map((route) => (
-			<li>
-				<strong>{(route.parent ?? []).concat(route.name).join(" > ")}</strong>
-				<br />
-				<Code lang="mdx" code={`<DashButton url="${route.deeplink}" />`} />
-			</li>
-		))
-	}
-</ul>
+<div>
+	<AnchorHeading depth={3} title="Core Routes" />
+	<ul>
+		{
+			CoreRoutes.map((route) => (
+				<li>
+					<strong>{(route.parent ?? []).concat(route.name).join(" > ")}</strong>
+					<br />
+					<Code lang="mdx" code={`<DashButton url="${route.deeplink}" />`} />
+				</li>
+			))
+		}
+	</ul>
+
+	<AnchorHeading depth={3} title="Zero Trust Routes" />
+	<ul>
+		{
+			ZeroTrustRoutes.map((route) => (
+				<li>
+					<strong>{route.name}</strong>
+					<br />
+					<Code lang="mdx" code={`<DashButton url="${route.deeplink}" />`} />
+				</li>
+			))
+		}
+	</ul>
+</div>
