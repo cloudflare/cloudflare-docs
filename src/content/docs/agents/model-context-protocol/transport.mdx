@@ -7,7 +7,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, TypeScriptExample } from "~/components";
 
 The Model Context Protocol (MCP) specification defines three standard [transport mechanisms](https://spec.modelcontextprotocol.io/specification/draft/basic/transports/) for communication between clients and servers:
 
@@ -104,6 +104,80 @@ To use apiHandlers, update to @cloudflare/workers-oauth-provider v0.0.4 or later
 :::
 
 With these few changes, your MCP server will support both transport methods, making it compatible with both existing and new clients.
+
+## Bidirectional stream routing
+
+When using Streamable HTTP transport, your MCP server can send requests back to the client (for example, when using [elicitation](https://spec.modelcontextprotocol.io/specification/draft/server/utilities/elicitation/) to ask for user input). The Agents SDK automatically routes these server-to-client requests through the correct HTTP stream using the `relatedRequestId` parameter.
+
+### How it works
+
+The transport layer maintains a mapping between client request IDs and their associated HTTP streams. When your server needs to send a request back to the client (like an elicitation prompt), it can specify which client request triggered it using `relatedRequestId`. This ensures the server's request goes through the same bidirectional stream as the original client request.
+
+#### Routing behavior
+
+The transport follows this priority when determining which stream to use:
+
+1. **Response routing**: Messages with an `id` field that matches a previous request are routed to that request's stream
+2. **Related request routing**: Server-to-client requests with `relatedRequestId` are routed to the stream of the related client request
+3. **Standalone stream routing**: Other messages use the dedicated GET stream for server-initiated messages
+
+### Using relatedRequestId with elicitation
+
+When using the MCP SDK's `elicitInput` method, you can ensure the elicitation request goes through the correct stream by passing the original request ID:
+
+<TypeScriptExample>
+
+```ts
+this.server.tool(
+  "confirm_action",
+  "Ask user to confirm an action",
+  {
+    confirm: z.boolean().describe("Do you want to proceed?")
+  },
+  async ({ confirm }, extra) => {
+    if (!confirm) {
+      return {
+        content: [{ type: "text", text: "Action cancelled." }]
+      };
+    }
+
+    // Get additional input from the user
+    const result = await this.server.server.elicitInput(
+      {
+        message: "Please provide additional details",
+        requestedSchema: {
+          type: "object",
+          properties: {
+            details: {
+              type: "string",
+              description: "Additional information"
+            }
+          },
+          required: ["details"]
+        }
+      },
+      { relatedRequestId: extra.requestId }
+    );
+
+    if (result.action !== "accept" || !result.content) {
+      return {
+        content: [{ type: "text", text: "No details provided." }]
+      };
+    }
+
+    return {
+      content: [{
+        type: "text",
+        text: `Processing with details: ${result.content.details}`
+      }]
+    };
+  }
+);
+```
+
+</TypeScriptExample>
+
+The `extra` parameter in tool handlers provides the `requestId` of the client's original tool call. By passing this as `relatedRequestId`, you ensure the elicitation request and its response flow through the same HTTP stream as the tool call, maintaining proper request-response pairing.
 
 ### Testing with MCP clients
 While most MCP clients have not yet adopted the new Streamable HTTP transport, you can start testing it today using [`mcp-remote`](https://www.npmjs.com/package/mcp-remote), an adapter that lets MCP clients that otherwise only support local connections work with remote MCP servers.
