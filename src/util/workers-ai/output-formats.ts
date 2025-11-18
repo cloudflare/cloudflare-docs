@@ -23,7 +23,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		priority: 1,
 		matches: (schema, ctx) =>
 			ctx.taskName === "Text-to-Image" && schemaMatchers.isBinary(schema),
-		generateExample: () => templates.binaryImage(),
+		generateExample: () => templates.binaryImageOutput(),
 	},
 
 	// Text-to-Image Output (check before generic Workers AI format)
@@ -273,4 +273,4 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.probability")(schema),
 		generateExample: () => templates.voiceActivityDetectionOutput(),
 	},
-];
+].sort((a, b) => a.priority - b.priority);

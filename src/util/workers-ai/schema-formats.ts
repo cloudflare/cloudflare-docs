@@ -1,10 +1,28 @@
 // Type definitions for format matching system
+export interface Schema {
+	type?: string;
+	properties?: Record<string, any>;
+	items?: any;
+	oneOf?: any[];
+	required?: string[];
+	default?: any;
+	description?: string;
+	format?: string;
+	enum?: any[];
+	minLength?: number;
+	maxLength?: number;
+	minimum?: number;
+	maximum?: number;
+	title?: string;
+	contentType?: string;
+}
+
 export interface FormatMatcher {
 	id: string;
 	label: string;
 	priority: number;
-	matches: (schema: any, context: FormatContext) => boolean;
-	generateExample: (schema: any, context: FormatContext) => string;
+	matches: (schema: Schema, context: FormatContext) => boolean;
+	generateExample: (schema: Schema, context: FormatContext) => string;
 }
 
 export interface FormatContext {
@@ -17,7 +35,7 @@ export interface FormatContext {
 export const schemaMatchers = {
 	hasProperty:
 		(path: string) =>
-		(schema: any): boolean => {
+		(schema: Schema): boolean => {
 			const parts = path.split(".");
 			let current = schema;
 			for (const part of parts) {
@@ -29,9 +47,9 @@ export const schemaMatchers = {
 
 	propertyEquals:
 		(path: string, value: any) =>
-		(schema: any): boolean => {
+		(schema: Schema): boolean => {
 			const parts = path.split(".");
-			let current = schema;
+			let current: any = schema;
 			for (const part of parts) {
 				if (!current || typeof current !== "object") return false;
 				current = current[part];
@@ -41,9 +59,9 @@ export const schemaMatchers = {
 
 	propertyIncludes:
 		(path: string, substring: string) =>
-		(schema: any): boolean => {
+		(schema: Schema): boolean => {
 			const parts = path.split(".");
-			let current = schema;
+			let current: any = schema;
 			for (const part of parts) {
 				if (!current || typeof current !== "object") return false;
 				current = current[part];
@@ -54,16 +72,16 @@ export const schemaMatchers = {
 			);
 		},
 
-	isBinary: (schema: any): boolean =>
+	isBinary: (schema: Schema): boolean =>
 		schema.type === "string" && schema.format === "binary",
 
-	isObject: (schema: any): boolean =>
+	isObject: (schema: Schema): boolean =>
 		schema.type === "object" ||
 		(schema.properties && typeof schema.properties === "object"),
 };
 
 // Smart fallback that generates examples from schema
-export function generateFromSchema(schema: any): string {
+export function generateFromSchema(schema: Schema): string {
 	const properties = schema.properties || {};
 	const required = schema.required || [];
 	const exampleObj: any = {};
@@ -80,7 +98,7 @@ export function generateFromSchema(schema: any): string {
 	return JSON.stringify(exampleObj, null, 2);
 }
 
-function inferExampleValue(fieldName: string, propSchema: any): any {
+function inferExampleValue(fieldName: string, propSchema: Schema): any {
 	// Use enum first value if available
 	if (propSchema.enum && propSchema.enum.length > 0) {
 		return propSchema.enum[0];
@@ -124,17 +142,13 @@ function inferExampleValue(fieldName: string, propSchema: any): any {
 }
 
 // Format detection - finds the best matching format
+// Registry is pre-sorted by priority (lower number = higher priority)
 export function detectFormat(
-	schema: any,
+	schema: Schema,
 	context: FormatContext,
 	formatRegistry: FormatMatcher[],
 ): FormatMatcher | null {
-	// Sort by priority (lower number = higher priority)
-	const sortedFormats = [...formatRegistry].sort(
-		(a, b) => a.priority - b.priority,
-	);
-
-	for (const format of sortedFormats) {
+	for (const format of formatRegistry) {
 		if (format.matches(schema, context)) {
 			return format;
 		}

@@ -2,9 +2,6 @@
 
 export const binaryAudio = () => "Raw binary audio data sent as request body";
 
-export const binaryImage = () =>
-	"The binding returns a ReadableStream with the image in JPEG or PNG format. Process the stream to access the binary image data.";
-
 export const llmMessages = () => `{
   "messages": [
     { "role": "system", "content": "You are a helpful assistant" },
@@ -92,6 +89,9 @@ export const textToImageImg2Img = () => `{
 }`;
 
 // Output Templates
+
+export const binaryImageOutput = () =>
+	"The binding returns a ReadableStream with the image in JPEG or PNG format. Process the stream to access the binary image data.";
 
 export const gptOssResponsesOutput = (modelName?: string) => {
 	const model = modelName || "@cf/openai/gpt-oss-*";

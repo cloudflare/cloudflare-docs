@@ -1,6 +1,7 @@
 // Label formatting utilities
+import type { Schema } from "./schema-formats";
 
-export function formatLabel(option: any): string {
+export function formatLabel(option: Schema): string {
 	// Check for async formats first (before any title processing)
 	if (option.properties) {
 		// Async batch format (has requests array)

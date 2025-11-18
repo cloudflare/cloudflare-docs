@@ -283,4 +283,4 @@ export const INPUT_FORMATS: FormatMatcher[] = [
 			schema.properties?.audio?.type === "string",
 		generateExample: () => templates.voiceActivityDetectionBase64(),
 	},
-];
+].sort((a, b) => a.priority - b.priority);
