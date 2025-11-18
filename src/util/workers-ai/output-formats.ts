@@ -226,4 +226,15 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("items.properties.box")(schema),
 		generateExample: () => templates.objectDetectionOutput(),
 	},
+
+	// Translation Output
+	{
+		id: "translation-output",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Translation" &&
+			schemaMatchers.hasProperty("properties.translated_text")(schema),
+		generateExample: () => templates.translationOutput(),
+	},
 ];

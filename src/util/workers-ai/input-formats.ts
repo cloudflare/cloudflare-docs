@@ -204,4 +204,17 @@ export const INPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.image.items")(schema),
 		generateExample: () => templates.objectDetectionImage(),
 	},
+
+	// Translation
+	{
+		id: "translation-input",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Translation" &&
+			schemaMatchers.hasProperty("properties.text")(schema) &&
+			schemaMatchers.hasProperty("properties.target_lang")(schema) &&
+			!schemaMatchers.hasProperty("properties.requests")(schema),
+		generateExample: () => templates.translationInput(),
+	},
 ];

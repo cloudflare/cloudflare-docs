@@ -409,3 +409,13 @@ export const objectDetectionOutput = () => `[
     }
   }
 ]`;
+
+export const translationInput = () => `{
+  "text": "Hello, how are you?",
+  "source_lang": "en",
+  "target_lang": "es"
+}`;
+
+export const translationOutput = () => `{
+  "translated_text": "Hola, ¿cómo estás?"
+}`;
