@@ -68,9 +68,9 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
 
 3. [Add an `MX` record](/dns/manage-dns-records/how-to/create-dns-records/) that points to that subdomain.
 
-   | **Type** | **Name** | **Mail server**    | **TTL** |
-   | -------- | -------- | ------------------ | ------- |
-   | MX       | `@`      | `mail.example.com` | Auto    |
+   | **Type** | **Name** | **Mail server**    | **TTL** | **Priority** |
+   | -------- | -------- | ------------------ | ------- | ------------ |
+   | MX       | `@`      | `mail.example.com` | Auto    | 5            |
 
       <details>
       <summary>API example</summary>
@@ -82,7 +82,7 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
    	json={{
       "type":"MX",
       "name":"example.com",
-      "content":"john.mx.example-server.test",
+      "content":"mail.example.com",
 			"priority": 5,
       "ttl":3600
     }}
@@ -96,7 +96,7 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
        "zone_name": "example.com",
        "name": "example.com",
        "type": "MX",
-       "content": "john.mx.example-server.test",
+       "content": "mail.example.com",
        "priority": 5,
        "proxiable": false,
        "proxied": false,
