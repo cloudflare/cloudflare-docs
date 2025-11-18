@@ -101,31 +101,32 @@ Go to Settings > VPN, and make sure the status is **Connected**.
 ## Troubleshooting
 
 **Tunnel down:**
-- Verify Peer IP, preshared key, and IPsec settings match on both sides
-- Check that the ISP is not blocking UDP ports 500/4500
+- Verify Peer IP, pres-hared key, and IPsec settings match on both sides
+- Check that the ISP is not blocking UDP ports `500`/`4500`
 
 **Traffic not routing:**
 - Verify Remote Subnets setting in UniFi VPN config
-- Check firewall rules aren't blocking VPN traffic
+- Check firewall rules are not blocking VPN traffic
 
 **Health check fails:**
 - Allow ICMP from Cloudflare to the customer-side tunnel IP
 - Target should be the `/31` interface IP, not your LAN gateway
 
-## Policy-Based Routing
+## Policy-based routing
 
 To route only specific devices through Cloudflare (UniFi Network Application):
 
 1. Remove necessary routes from Remote Subnets in your VPN config
-2. Go to **Settings** > **Policy Table** under Policy Engine > **Create New Policy**:
+2. Go to **Settings** > **Policy Table**
+3. Under **Policy Engine** select **Create New Policy** >
    - Select `Route`
-   - Name: Provide a name for the policy
-   - Type: Policy-Based
-   - Interface/VPN Tunnel: Select the VPN Tunnel (e.g., `Cloudflare-MagicWAN`)
-   - Kill Switch: Enabled (recommended)
-   - Source: Select `Device/Network` and then choose the Device(s) or Network(s)
-   - Destination: Any
-   - Interface: Your VPN tunnel
+   - **Name**: Provide a name for the policy
+   - **Type**: Policy-Based
+   - **Interface/VPN Tunnel**: Select the VPN Tunnel (for example, `Cloudflare-Magic-WAN`)
+   - **Kill Switch**: Enabled (recommended)
+   - **Source**: Select `Device/Network` and then choose the Device(s) or Network(s)
+   - **Destination**: Any
+   - **Interface**: Your VPN tunnel
 
 ## Next Steps
 
