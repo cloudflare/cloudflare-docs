@@ -10,20 +10,20 @@ Cloudflare Snippets are executed based on rules defined within your zone. Here i
 
 ![Diagram of the snippets execution workflow](~/assets/images/rules/snippets/snippets-execution.png)
 
-## 1. Evaluate request
+## 1. Evaluate snippet rules
 
-For each incoming request, Cloudflare evaluates the expression of every Snippet Rule defined in the zone. The evaluation checks for a match based on various request properties (such as bot score, WAF attack score, country of origin, and cookies).
+For each incoming request, Cloudflare evaluates the expression of every snippet rule defined in the zone. The evaluation checks for a match based on various request properties (such as bot score, WAF attack score, country of origin, and cookies).
 
 ## 2. Build Snippets table
 
-For every Snippet Rule in a zone that matches an incoming request, Cloudflare adds the corresponding unique Snippet ID to a Snippets table.
+For every snippet rule in a zone that matches an incoming request, Cloudflare adds the corresponding unique snippet ID to a Snippets table.
 
-## 3. Execute Snippets code
+## 3. Execute snippets code
 
 Once all the rules have been evaluated and the full table has been compiled, the Snippets Internal Worker Service starts processing all the information in the table.
 
-This Worker receives all the Snippet IDs stored in the table that are to be sequentially executed. Each Snippet receives the modified request from the previous Snippet and applies new modifications to it.
+This Worker receives all the snippet IDs stored in the table that are to be sequentially executed. Each snippet receives the modified request from the previous snippet and applies new modifications to it.
 
 ## 4. Continue with the request execution workflow
 
-After executing the final Snippet IDs, the resulting modified request is passed back to the request execution workflow. Refer to [Execution order](/rules/snippets/#execution-order) for more information on the Rules features evaluated before and after Cloudflare Snippets.
+After executing the final snippet IDs, the resulting modified request is passed back to the request execution workflow. Refer to [Execution order](/rules/snippets/#execution-order) for more information on the Rules features evaluated before and after Cloudflare Snippets.
