@@ -184,4 +184,24 @@ export const INPUT_FORMATS: FormatMatcher[] = [
 			!schemaMatchers.hasProperty("properties.query")(schema),
 		generateExample: () => templates.textClassificationInput(),
 	},
+
+	// Object Detection
+	{
+		id: "object-detection-binary",
+		label: "Binary",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Object Detection" && schemaMatchers.isBinary(schema),
+		generateExample: () => templates.objectDetectionBinary(),
+	},
+
+	{
+		id: "object-detection-image",
+		label: "JSON",
+		priority: 2,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Object Detection" &&
+			schemaMatchers.hasProperty("properties.image.items")(schema),
+		generateExample: () => templates.objectDetectionImage(),
+	},
 ];

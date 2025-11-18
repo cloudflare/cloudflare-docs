@@ -214,4 +214,16 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("items.properties.score")(schema),
 		generateExample: () => templates.textClassificationOutput(),
 	},
+
+	// Object Detection Output
+	{
+		id: "object-detection-output",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Object Detection" &&
+			schema.type === "array" &&
+			schemaMatchers.hasProperty("items.properties.box")(schema),
+		generateExample: () => templates.objectDetectionOutput(),
+	},
 ];

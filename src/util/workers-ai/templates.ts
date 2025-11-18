@@ -379,3 +379,33 @@ export const textClassificationOutput = () => `[
     "score": 0.0002
   }
 ]`;
+
+export const objectDetectionBinary = () =>
+	"Raw binary image data sent as request body";
+
+export const objectDetectionImage = () => `{
+  "image": [255, 255, 255, ...]
+}`;
+
+export const objectDetectionOutput = () => `[
+  {
+    "score": 0.9983,
+    "label": "person",
+    "box": {
+      "xmin": 120,
+      "ymin": 80,
+      "xmax": 450,
+      "ymax": 620
+    }
+  },
+  {
+    "score": 0.9564,
+    "label": "car",
+    "box": {
+      "xmin": 550,
+      "ymin": 300,
+      "xmax": 890,
+      "ymax": 580
+    }
+  }
+]`;
