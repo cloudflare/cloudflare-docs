@@ -1,0 +1,95 @@
+---
+pcx_content_type: how-to
+title: Connectivity pre-checks
+---
+
+This guide helps you validate connectivity between your environment and Cloudflare's network before deploying [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). You will run DNS and network checks from the same host machine that will run `cloudflared`. These checks focus on the environment, not on `cloudflared` itself, to help you identify issues that may prevent `cloudflared` from connecting to Cloudflare's network.
+
+These tests help you:
+
+- Confirm that DNS resolves Cloudflare Tunnel endpoints to the expected IPs.
+- Verify that your firewall allows outbound traffic on port `7844` (TCP and UDP).
+- Detect issues caused by DNS resolvers, firewalls, or other network controls.
+
+Running these checks sets your deployment up for success and narrows down the cause of any later connectivity issues.
+
+This guide is structured as follows:
+
+1. Before you start: Prerequisites and terminology.
+
+2. DNS test with dig: Resolve Tunnel endpoints and compare with documented IPs.
+
+3. DNS fallback with 1.1.1.1: Check whether local DNS is the problem.
+
+4. Send packets to Cloudflare's network: Test UDP and TCP connectivity over port 7844.
+
+5. Get help: What to collect and who to contact if tests fail.
+
+## 1. Before you start
+
+### Prerequisites
+
+You must have:
+
+- A host machine connected to the Internet where you plan to run `cloudflared`. The tests must run from the same environment where `cloudflared` will run (same network, same firewall path).  
+
+- A terminal session with permission to run `dig` and `nc` (netcat), or the ability to install them.
+
+`cloudflared` is platform-agnostic and supports a wide range of operating systems. For details, refer to [Tunnel system requirements](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/).
+
+### Terminology
+
+When troubleshooting connectivity to Cloudflare, it is important to distinguish between:
+
+- Host machine: The server or virtual machine (VM) where you will run `cloudflared`.
+
+- Environment: The broader setup containing the host machine (network and firewall configuration).
+
+Cloudflare Tunnel errors can originate from the environment (for example, DNS or firewall policies), even though they surface as `cloudflared` errors on the host machine. This guide focuses on the environment, not on `cloudflared` itself.
+
+`cloudflared` establishes [outbound-only connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/#outbound-only-connection) to Cloudflare's global network over port `7844`. The specific destinations and ports are documented in [Tunnel with firewall](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/).
+
+Key points:
+
+- Cloudflare Tunnel requires outbound connectivity to `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` (or to the equivalent `us-region1` and `us-region2` endpoints when using the US region).  
+- For basic connectivity, `cloudflared` only needs **one reachable IP in one region**.  
+- For high availability and four active replicas, Cloudflare recommends allowing connectivity to both regions.
+
+## 2. DNS test with dig
+
+Cloudflare Tunnel requires outbound connectivity to `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` (or to the equivalent `us-region1` and `us-region2` endpoints when using only the US region).  
+
+For basic connectivity, `cloudflared` only needs one reachable IP in one region. For high availability and [four active replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/), Cloudflare recommends allowing connectivity to both regions (that is, both `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` or both `us-region1` and `us-region2`).
+
+First, verify that your DNS resolver returns the expected IPv4 addresses for Cloudflare Tunnel endpoints.
+
+### 2.1. Test DNS with your current resolver
+
+Depending on whether you are testing a global region or the US region, run one of the following commands:
+
+- For a global region:
+
+```sh
+dig A region1.v2.argotunnel.com
+```
+
+- For the US region:
+
+```sh
+dig A us-region1.v2.argotunnel.com
+```
+
+The `ANSWER SECTION` should include the expected IPv4 addresses for Cloudflare Tunnel endpoints.
+
+If you receive:
+
+- 
+
+
+
+
+
+
+
+
+
