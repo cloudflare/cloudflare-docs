@@ -364,3 +364,18 @@ export const summarizationInput = () => `{
 export const summarizationOutput = () => `{
   "summary": "A concise summary of the input text highlighting the main points and key information."
 }`;
+
+export const textClassificationInput = () => `{
+  "text": "I love this product! It exceeded all my expectations."
+}`;
+
+export const textClassificationOutput = () => `[
+  {
+    "label": "POSITIVE",
+    "score": 0.9998
+  },
+  {
+    "label": "NEGATIVE",
+    "score": 0.0002
+  }
+]`;

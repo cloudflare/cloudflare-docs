@@ -201,4 +201,17 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.summary")(schema),
 		generateExample: () => templates.summarizationOutput(),
 	},
+
+	// Text Classification Output
+	{
+		id: "text-classification-output",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Text Classification" &&
+			schema.type === "array" &&
+			schemaMatchers.hasProperty("items.properties.label")(schema) &&
+			schemaMatchers.hasProperty("items.properties.score")(schema),
+		generateExample: () => templates.textClassificationOutput(),
+	},
 ];

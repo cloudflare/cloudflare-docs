@@ -172,4 +172,16 @@ export const INPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.input_text")(schema),
 		generateExample: () => templates.summarizationInput(),
 	},
+
+	// Text Classification
+	{
+		id: "text-classification-input",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Text Classification" &&
+			schemaMatchers.hasProperty("properties.text")(schema) &&
+			!schemaMatchers.hasProperty("properties.query")(schema),
+		generateExample: () => templates.textClassificationInput(),
+	},
 ];
