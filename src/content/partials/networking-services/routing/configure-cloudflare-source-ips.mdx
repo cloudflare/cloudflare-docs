@@ -1,0 +1,40 @@
+---
+{}
+---
+
+import { APIRequest } from "~/components";
+
+Traffic that originates from a Cloudflare service (such as Load Balancer) to a private network will have a source IP address that by default is in a Cloudflare allocated network range:
+- IPv4 traffic will be sourced from `100.64.0.0/12`. This range is configurable.
+- IPv6 traffic will be sourced from `2606:4700:cf1:5000::/64`. This range is not configurable.
+
+You will need to add routes in your network to send response traffic back to Cloudflare over your Cloudflare One connections.
+
+## Prerequisites
+
+Before you begin, ensure that:
+- You have `Cloudflare One Networks Write` permission.
+- Your desired new network range meets the following requirements:
+  - It must be defined as a single CIDR with a prefix length of `/12`.
+  - Cloudflare One subnets in the same account cannot overlap. For example, the default source range used by WARP Clients (`100.96.0.0/12`) and the destination range used by Private Load Balancers (`100.112.0.0/16`).
+  - The source subnet cannot match or contain any existing route in your Cloudflare One routing table. The source subnet can be within a supernet route.
+
+## Configure source IPs via API
+
+Currently, you must use the Cloudflare API to configure this setting. To set up your source IPs:
+
+Send a `PATCH` request to the [`cloudflare_source` resource](/api/resources/zero_trust/subresources/networks/subresources/subnets/subresources/cloudflare_source/) with your desired network range. The payload must include the network (your new `/12` range), and may include a name and comment.
+
+Example:
+
+<APIRequest
+	path="/accounts/{account_id}/zerotrust/subnets/cloudflare_source/$ADDRESS_FAMILY"
+	method="PATCH"
+	json={{
+		"comment": "example_comment",
+		"name": "IPv4 Cloudflare Source IPs",
+		"network": "100.64.0.0/12"
+	}}
+/>
+
+
