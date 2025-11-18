@@ -2,7 +2,7 @@
 {}
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Details } from "~/components";
 
 Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These steps use the Cloud Gateway Max (UCG-Max) but work with other UniFi gateways supporting route-based IPsec VPNs, like the Dream Machine series.
 
@@ -83,11 +83,20 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
    - **Priority**: `100`.
 4. Select **Add routes** to add your static route.
 
-## Verification
+## Verify connections
 
-Wait a few minutes, then check:
-- **Cloudflare:** Magic WAN > Tunnels shows **Healthy**
-- **UniFi:** Settings > VPN shows connected status
+To check your connections are working correctly, wait a few minutes, and then access both Cloudflare and UniFi to verify the tunnel's status:
+
+<Details header="Cloudflare">
+1. Go to Magic WAN's **Network Health** page.
+	<DashButton url="/?to=/:account/magic-wan/tunnel-healthchecks" />
+2. On the banner in the top of the page, select **Magic Tunnel Health Dashboard** to enable the new health checks experience.
+3. Find the tunnel you have just created and make sure its status shows **Up**. Refer to [Check tunnel health in the dashboard](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information.
+</Details>
+
+<Details header="UniFi">
+Go to Settings > VPN, and make sure the status is **Connected**.
+</Details>
 
 ## Troubleshooting
 
