@@ -73,7 +73,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-
 You can also use optional query parameters to filter and paginate results:
 - `cursor` — Cursor for pagination.
 - `limit` — Maximum number of records to return.
-- `status` — Filter by URL status (`pending`, `completed`, `disallowed`, or `failed`).
+- `status` — Filter by URL status (`queued`, `completed`, `disallowed`, `errored` or `cancelled`).
 
 Example with optional query parameters:
 
