@@ -62,17 +62,6 @@ export const schemaMatchers = {
 		(schema.properties && typeof schema.properties === "object"),
 };
 
-// Helper to get nested property safely
-export function getNestedProperty(obj: any, path: string): any {
-	const parts = path.split(".");
-	let current = obj;
-	for (const part of parts) {
-		if (!current || typeof current !== "object") return undefined;
-		current = current[part];
-	}
-	return current;
-}
-
 // Smart fallback that generates examples from schema
 export function generateFromSchema(schema: any): string {
 	const properties = schema.properties || {};
