@@ -8,14 +8,14 @@ date: 2025-11-18
 
 import { Example } from "~/components";
 
-Until now, if a Worker had been previously deployed via the [Cloudflare Dashboard](https://dash.cloudflare.com), a subsequent deployment done via the Cloudflare Workers CLI [**Wrangler**](/workers/wrangler/)
-(through the [`deploy` command](https://developers.cloudflare.com/workers/wrangler/commands/#deploy)) would allow the user to override the Worker's dashboard settings but would not provide details on
+Until now, if a Worker had been previously deployed via the [Cloudflare Dashboard](https://dash.cloudflare.com), a subsequent deployment done via the Cloudflare Workers CLI, [**Wrangler**](/workers/wrangler/)
+(through the [`deploy` command](https://developers.cloudflare.com/workers/wrangler/commands/#deploy)), would allow the user to override the Worker's dashboard settings without providing details on
 what dashboard settings would be lost.
 
 Now instead, `wrangler deploy` presents a helpful representation of the differences between the [local configuration](https://developers.cloudflare.com/workers/wrangler/configuration/)
 and the remote dashboard settings, and offers to update your local configuration file for you.
 
-You can see a simple example below which shows the before and after on how `wrangler deploy` behaves when the local configuration would override the Worker's dashboard settings:
+See example below showing a before and after for `wrangler deploy` when a local configuration is expected to override a Worker's dashboard settings:
 
 <Example title="Before">
 
