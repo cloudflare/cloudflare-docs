@@ -8,7 +8,7 @@ Traffic that originates from a Cloudflare service, such as Cloudflare Load Balan
 - IPv4 traffic is sourced from `100.64.0.0/12`. This range is configurable.
 - IPv6 traffic is sourced from `2606:4700:cf1:5000::/64`. This range is not configurable.
 
-Customers using any Cloudflare product with their private network offramps can configure which IP address range Cloudflare uses for all traffic sent to the private network. This allows customers to reliably and securely route their trusted traffic flows after Cloudflare has enforced application and user security rules.
+Customers using Cloudflare products, such as Load Balancing, with their private network offramps can configure which IP address range Cloudflare uses for all traffic sent to the private network. This allows customers to reliably and securely route their trusted traffic flows after Cloudflare has enforced application and user security rules.
 
 You must configure routes in your network so that response traffic for these source ranges is sent back to Cloudflare over your Cloudflare One connections.
 
@@ -41,7 +41,7 @@ Send a `PATCH` request to the [`cloudflare_source` resource](/api/resources/zero
 Example:
 
 <APIRequest
-	path="/accounts/{account_id}/zerotrust/subnets/cloudflare_source/$ADDRESS_FAMILY"
+	path="/accounts/{account_id}/zerotrust/subnets/cloudflare_source/{address_family}"
 	method="PATCH"
 	json={{
 		"comment": "example_comment",
