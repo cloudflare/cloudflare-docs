@@ -52,7 +52,7 @@ You will receive a confirmation message after a successful upload.
 
 :::note
 
-Wrangler only supports uploading files up to 300MiB in size. To upload large files, we recommend [rclone](/r2/examples/rclone/) or an [S3-compatible](/r2/api/s3/) tool of your choice.
+Wrangler only supports uploading files up to 300 MiB in size. To upload large files, we recommend [rclone](/r2/examples/rclone/) or an [S3-compatible](/r2/api/s3/) tool of your choice.
 
 :::
 
@@ -95,7 +95,7 @@ wrangler r2 bulk put test-bucket --filename=files-to-upload.json
 :::note
 `r2 bulk put` does not currently support setting custom metadata for each object. All objects will be uploaded with the metadata passed via the command line.
 
-Each object has a size limit of 300MiB when using `r2 bulk put`, use `rclone` or other S3-compatible tools to upload larger files.
+Each object has a size limit of 300 MiB when using `r2 bulk put`, use `rclone` or other S3-compatible tools to upload larger files.
 
 :::
 
