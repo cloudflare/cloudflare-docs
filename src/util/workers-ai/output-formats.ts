@@ -248,4 +248,17 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.description")(schema),
 		generateExample: () => templates.imageToTextOutput(),
 	},
+
+	// Image Classification Output
+	{
+		id: "image-classification-output",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Image Classification" &&
+			schema.type === "array" &&
+			schemaMatchers.hasProperty("items.properties.label")(schema) &&
+			schemaMatchers.hasProperty("items.properties.score")(schema),
+		generateExample: () => templates.imageClassificationOutput(),
+	},
 ];

@@ -237,4 +237,25 @@ export const INPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.image")(schema),
 		generateExample: () => templates.imageToTextImage(),
 	},
+
+	// Image Classification
+	{
+		id: "image-classification-binary",
+		label: "Binary",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Image Classification" &&
+			schemaMatchers.isBinary(schema),
+		generateExample: () => templates.imageClassificationBinary(),
+	},
+
+	{
+		id: "image-classification-image",
+		label: "JSON",
+		priority: 2,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Image Classification" &&
+			schemaMatchers.hasProperty("properties.image.items")(schema),
+		generateExample: () => templates.imageClassificationImage(),
+	},
 ];
