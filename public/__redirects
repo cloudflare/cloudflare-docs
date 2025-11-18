@@ -2000,51 +2000,62 @@
 /zaraz/advanced/worker-variables/ /zaraz/variables/worker-variables/ 301
 /zaraz/history/history/ /zaraz/history/versions/ 301
 
-# cloudflare-one / zero-trust
-/support/traffic/argo-tunnel/exposing-applications-running-on-microsoft-azure-with-cloudflare-argo-tunnel/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
-/gateway/locations/setup-instructions/android/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
-/gateway/locations/setup-instructions/router/ /cloudflare-one/policies/gateway/dns-policies/ 301
-/gateway/connecting-to-gateway/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
+
+# ============================================================================
+# CLOUDFLARE ONE / ZERO TRUST
+# ============================================================================
+
+# access
 /access/authentication/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/access/policy-management/ 301
 /access/common-access-configurations/common-bypass/ /cloudflare-one/policies/access/#bypass 301
-/gateway/getting-started-new/onboarding-gateway/ /cloudflare-one/policies/gateway/ 301
 /access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
-/gateway/connecting-to-gateway/with-client/ /cloudflare-one/connections/connect-devices/warp/ 301
-/zero-trust-web-access/concepts/zero-trust/ https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/ 301
-/argo-tunnel/getting-started/installation/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /access/setting-up-access/access-groups/ /cloudflare-one/policies/access/groups/ 301
-/magic-wan/tutorials/secure-web-gateway/ /magic-wan/zero-trust/cloudflare-gateway/ 301
-/argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/ 301
 /access/getting-started/access-setup/ /cloudflare-one/integrations/identity-providers/ 301
 /access/setting-up-access/audit-logs/ /cloudflare-one/insights/ 301
 /access/service-auth/service-token/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/ 301
-/argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/ 301
 /access/other-protocols/tcp-guide/ /cloudflare-one/applications/non-http/cloudflared-authentication/arbitrary-tcp/ 301
-/warp-client/warp-for-teams/teams/ /cloudflare-one/connections/connect-devices/warp/deployment/ 301
-/argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /access/cli/installing-cli-tool/ /cloudflare-one/connections/connect-networks/downloads/ 301
-/argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
-/support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /access/service-auth/mtls/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
-/magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
 /access/rdp/connect-rdp/ /cloudflare-one/connections/connect-networks/use-cases/rdp/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /access/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
-/argo-tunnel/create-tunnel/ /cloudflare-one/connections/connect-networks/get-started/ 301
-/argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
 /access/setting-up-access/ /cloudflare-one/integrations/identity-providers/ 301
-/argo-tunnel/quickstart/ /cloudflare-one/connections/connect-networks/get-started/ 301
-/argo-tunnel/downloads/ /cloudflare-one/connections/connect-networks/downloads/ 301
-/warp-client/teams/ /cloudflare-one/connections/connect-devices/warp/ 301
-/argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
-/gateway/about/ /cloudflare-one/policies/gateway/ 301
 /access/about/ /cloudflare-one/integrations/identity-providers/ 301
 /access/rdp/ /cloudflare-one/connections/connect-networks/use-cases/rdp/ 301
 /access/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
-/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /access/ /cloudflare-one/integrations/identity-providers/ 301
+
+# argo-tunnel
+/argo-tunnel/getting-started/installation/ /cloudflare-one/connections/connect-networks/get-started/ 301
+/argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/ 301
+/argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/ 301
+/argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
+/argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
+/argo-tunnel/create-tunnel/ /cloudflare-one/connections/connect-networks/get-started/ 301
+/argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
+/argo-tunnel/quickstart/ /cloudflare-one/connections/connect-networks/get-started/ 301
+/argo-tunnel/downloads/ /cloudflare-one/connections/connect-networks/downloads/ 301
+/argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
+/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
+
+# gateway
+/gateway/locations/setup-instructions/android/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
+/gateway/locations/setup-instructions/router/ /cloudflare-one/policies/gateway/dns-policies/ 301
+/gateway/connecting-to-gateway/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
+/gateway/getting-started-new/onboarding-gateway/ /cloudflare-one/policies/gateway/ 301
+/gateway/connecting-to-gateway/with-client/ /cloudflare-one/connections/connect-devices/warp/ 301
+/gateway/about/ /cloudflare-one/policies/gateway/ 301
+
+# email-security
+/email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
+/email-security/reporting/search/detection-search/available-parameters/ /email-security/reporting/search/available-parameters/ 301
+/email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
+/email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
+/email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
+
+# cloudflare-one
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/ /cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/ 301
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/manage-domains/ /cloudflare-one/email-security/setup/manage-domains/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/ 301
@@ -2088,6 +2099,7 @@
 /cloudflare-one/policies/filtering/dns-policies/dns-categories/ /cloudflare-one/policies/gateway/domain-categories/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/ 301
 /cloudflare-one/identity/devices/access-integrations/azure-ad/ /cloudflare-one/tutorials/azuread-conditional-access/ 301
+/support/traffic/argo-tunnel/exposing-applications-running-on-microsoft-azure-with-cloudflare-argo-tunnel/ /cloudflare-one/connections/connect-apps/deployment-guides/azure/ 301
 /cloudflare-one/email-security/email-monitoring/download-disposition-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
 /cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
 /cloudflare-one/api-terraform/gateway-api-examples/network-policy/ /cloudflare-one/policies/gateway/network-policies/common-policies/ 301
@@ -2126,9 +2138,11 @@
 /cloudflare-one/tutorials/credentials-only/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/user-diagnostics/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
 /cloudflare-one/tutorials/zendesk-sso-saas/ /cloudflare-one/applications/configure-apps/saas-apps/zendesk-sso-saas/ 301
+/zero-trust-web-access/concepts/zero-trust/ https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/ 301
 /cloudflare-one/insights/email-monitoring/ /cloudflare-one/email-security/email-monitoring/ 301
 /cloudflare-one/tutorials/block-football/ /cloudflare-one/policies/gateway/http-policies/common-policies/#block-sites 301
 /cloudflare-one/tutorials/warp-to-tunnel/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/ 301
+/magic-wan/tutorials/secure-web-gateway/ /magic-wan/zero-trust/cloudflare-gateway/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
@@ -2136,23 +2150,31 @@
 /cloudflare-one/insights/analytics/ /cloudflare-one/insights/analytics-overview/ 301
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
 /cloudflare-one/identity/entra-id/ /cloudflare-one/identity/idp-integration/entra-id/ 301
+/warp-client/warp-for-teams/teams/ /cloudflare-one/connections/connect-devices/warp/deployment/ 301
 /cloudflare-one/analytics/access/ /cloudflare-one/insights/analytics/access/ 301
 /cloudflare-one/analytics/users/ /cloudflare-one/team-and-resources/users/users/ 301
 /cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
+/support/traffic/argo-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
+/magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
 /cloudflare-one/analytics/ /cloudflare-one/insights/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
+/warp-client/teams/ /cloudflare-one/connections/connect-devices/warp/ 301
 
 # Cloudflare One nav revamp (statics)
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
 /cloudflare-one/team-and-resources/devices/warp/user-side-certificates/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
+/email-security/reporting/search/detection-search/available-parameters/ /email-security/reporting/search/available-parameters/ 301
 /cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/tanium/ 301
+/email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
 /cloudflare-one/identity/authorization-cookie/application-token/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/ 301
 /cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
 /cloudflare-one/insights/analytics/analytics-overview/ /cloudflare-one/insights/analytics-overview/ 301
+/email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/identity/users/session-management/ /cloudflare-one/access-controls/access-settings/session-management/ 301
+/email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
 /cloudflare-one/identity/users/seat-management/ /cloudflare-one/team-and-resources/users/seat-management/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/identity/users/scim/ /cloudflare-one/team-and-resources/users/scim/ 301
@@ -2168,18 +2190,12 @@
 /cloudflare-one/traffic-policies/lists/ /cloudflare-one/reusable-components/lists/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
 /cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
+/email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
 /cloudflare-one/identity/users/ /cloudflare-one/team-and-resources/users/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/connections/ /cloudflare-one/ 301
 
-# email-security
-/email-security/reporting/search/detection-search/available-parameters/ /email-security/reporting/search/available-parameters/ 301
-/email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
-/email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
-/email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
-/email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
-
-# Email Security new revamp (statics)
+# Email Security nav revamp (statics)
 /cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
 /cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
 /cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/reclassifications/invalid-submissions/ 301
@@ -2194,17 +2210,16 @@
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
 /ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
 /ai-gateway/websockets-api/* /ai-gateway/usage/websockets-api/:splat 301
+
 # pages
 /pages/framework-guides/nextjs/resources/* /workers/framework-guides/web-apps/nextjs 301
 /pages/framework-guides/nextjs/ssr/* /workers/framework-guides/web-apps/nextjs 301
-# Email Security new revamp (statics)
 /*/index.html.md /:splat/index.md 301
 /1.1.1.1/other-ways-to-use-1.1.1.1/* /1.1.1.1/additional-options/:splat 301
 /api-next/* /api/:splat 301
 /changelog-next/* /changelog/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
-/access/configuring-identity-providers/* /cloudflare-one/integrations/identity-providers/:splat 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
 /distributed-web/* /web3/:splat 301
@@ -2241,9 +2256,12 @@
 
 # AI Crawl Control
 /ai-audit/* /ai-crawl-control/:splat 301
+
 # AutoRAG to AI search
 /autorag/* /ai-search/:splat 301
+
 # Cloudflare One / Zero Trust
+/access/configuring-identity-providers/* /cloudflare-one/integrations/identity-providers/:splat 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
@@ -2281,12 +2299,13 @@
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
 /cloudflare-one/api-terraform/access-api-examples/* /api/resources/zero_trust/subresources/access/subresources/policies/ 301
 
-# Email Security new revamp (dynamics)
+# Email Security nav revamp (dynamics)
 /cloudflare-one/email-security/detection-settings/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/email-monitoring/* /cloudflare-one/email-security/monitoring/:splat 301
 /cloudflare-one/email-security/phish-guard/* /cloudflare-one/email-security/phishguard/:splat 301
 /cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/phish-submissions/:splat 301
+
 # Learning paths
 /learning-paths/modules/get-started/onboarding/* /learning-paths/get-started-free/onboarding/:splat 301
 /learning-paths/modules/get-started/other-features-free/* /learning-paths/get-started-free/other-features/:splat 301
