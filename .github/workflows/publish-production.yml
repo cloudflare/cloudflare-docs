@@ -29,6 +29,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ENABLE_LAST_MOD_IN_SITEMAP: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-html
+          path: dist
       - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
         env:
