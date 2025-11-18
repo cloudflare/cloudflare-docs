@@ -18,14 +18,14 @@ The following resources are available to configure through Terraform:
 
 - [`api_shield_operation`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation) for configuring <GlossaryTooltip term="API endpoint">endpoints</GlossaryTooltip> in Endpoint Management.
 
-**Schema Validation**
+**Schema validation**
 
-- [`cloudflare_schema_validation_schemas`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/schema_validation_schemas) for configuring a schema in [Schema Validation](/api-shield/security/schema-validation/).
+- [`cloudflare_schema_validation_schemas`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/schema_validation_schemas) for configuring a schema in [Schema validation](/api-shield/security/schema-validation/).
   ~~[`api_shield_schema`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_schema)~~ has been deprecated and will be removed in a future version of the terraform provider.
-- [`cloudflare_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/schema_validation_settings) for configuring zone-level Schema Validation settings.
-  ~~[`api_shield_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_schema_validation_settings)~~ has been deprecated and will be removed in afuture version of the terraform provider.
-- [`cloudflare_schema_validation_operation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/schema_validation_operation_settings) for configuring operation-level Schema Validation settings.
-  ~~[`api_shield_operation_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation_schema_validation_settings)~~ has been deprected and will be removed in a future version of the terraform provider.
+- [`cloudflare_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/schema_validation_settings) for configuring zone-level Schema validation settings.
+  ~~[`api_shield_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_schema_validation_settings)~~ has been deprecated and will be removed in a future version of the terraform provider.
+- [`cloudflare_schema_validation_operation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/schema_validation_operation_settings) for configuring operation-level Schema validation settings.
+  ~~[`api_shield_operation_schema_validation_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation_schema_validation_settings)~~ has been deprecated and will be removed in a future version of the terraform provider.
 
 **JWT Validation**
 
@@ -70,13 +70,13 @@ resource "cloudflare_api_shield_operation" "post_image" {
 
 :::note
 
-It is required to configure Endpoint Management if you want to set up Schema Validation using Terraform. 
+It is required to configure Endpoint Management if you want to set up Schema validation using Terraform. 
 :::
 
-Refer to the example configuration below to manage [Schema Validation](/api-shield/security/schema-validation/api/) on your zone.
+Refer to the example configuration below to manage [Schema validation](/api-shield/security/schema-validation/api/) on your zone.
 
 ```tf title="Example configuration"
-# Schema that should be used for Schema Validation
+# Schema that should be used for Schema validation
 resource "cloudflare_schema_validation_schemas" "example_schema" {
   zone_id            = var.zone_id
   kind               = "openapi_v3"
@@ -99,7 +99,7 @@ resource "cloudflare_schema_validation_operation_settings" "post_image_log_only"
 }
 ```
 
-## Validating JWTs
+## Validate JWTs
 
 Refer to the example configuration below to perform [JWT Validation](/api-shield/security/jwt-validation/) on your zone.
 
