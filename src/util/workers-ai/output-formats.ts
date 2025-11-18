@@ -237,4 +237,15 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.translated_text")(schema),
 		generateExample: () => templates.translationOutput(),
 	},
+
+	// Image-to-Text Output
+	{
+		id: "image-to-text-output",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Image-to-Text" &&
+			schemaMatchers.hasProperty("properties.description")(schema),
+		generateExample: () => templates.imageToTextOutput(),
+	},
 ];
