@@ -61,26 +61,17 @@ Refer to [Widget configurations](/turnstile/get-started/client-side-rendering/wi
 
 ### Normal operation states
 
-- **Loading**: Widget is processing the challenge.
-- **Interaction**: Visitor needs to check the box (Managed mode only).
-- **Success**: The Challenge was completed successfully.
+```mermaid
+flowchart LR
+    A[<b>Loading</b><br /><small>Widget is processing the challenge.</small> ] --> B[<b>Interaction*</b><br /><small>Visitor needs to check the box. <br />*Managed mode only.</small>] 
+    B --> C[<b>Success</b><br /><small>The Challenge was completed successfully.</small>]
+```
 
 ### Error states
 
-#### Unknown error
-
-When an unknown error occurs during the challenge, visitors will encounter this widget state. Visitors can follow the troubleshooting guidelines from the widget or refresh the page to retry the challenge.
-
-#### Interaction timed out
-
-When the visitor is presented with a checkbox but does not interact with it for an extended period of time. The challenge must be reissued by reloading the page or the widget.
-
-#### Challenge timed out
-
-When the verification was completed but no further action has been taken, the challenge outcome will no longer be valid. For example, if a Turnstile widget is on a login page and the Turnstile successfully ran, but the visitor did not log in for an extended period of time, the challenge must be reissued by reloading the page or the widget.
-
-#### Outdated or unsupported browser
-
-Visitors with outdated browsers or unsupported browsers will encounter this widget state.
-
-Refer to [Supported browsers](/cloudflare-challenges/reference/supported-browsers/) for more information regarding supported browsers.
+| <div style="width:200px">Type</div> | Description |
+| ---- | ----------- |
+| Unknown error | When an unknown error occurs during the challenge, visitors will encounter this widget state. Visitors can follow the troubleshooting guidelines from the widget or refresh the page to retry the challenge. |
+| Interaction timed out | When the visitor is presented with a checkbox but does not interact with it for an extended period of time. The challenge must be reissued by reloading the page or the widget. |
+| Challenge timed out | When the verification was completed but no further action has been taken, the challenge outcome will no longer be valid. For example, if a Turnstile widget is on a login page and the Turnstile successfully ran, but the visitor did not log in for an extended period of time, the challenge must be reissued by reloading the page or the widget. |
+| Outdated or unsupported browser | Visitors with outdated browsers or unsupported browsers will encounter this widget state. Refer to [Supported browsers](/cloudflare-challenges/reference/supported-browsers/) for more information regarding supported browsers. |

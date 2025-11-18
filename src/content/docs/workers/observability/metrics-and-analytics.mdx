@@ -6,10 +6,9 @@ sidebar:
 head: []
 description: Diagnose issues with Workers metrics, and review request data for a
   zone with Workers analytics.
-
 ---
 
-import { GlossaryTooltip, DashButton, Steps } from "~/components"
+import { GlossaryTooltip, DashButton, Steps } from "~/components";
 
 There are two graphical sources of information about your Workers traffic at a given time: Workers metrics and zone-based Workers analytics.
 
@@ -24,9 +23,10 @@ Workers metrics aggregate request data for an individual Worker (if your Worker 
 <Steps>
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-   <DashButton url="/?to=/:account/workers-and-pages" />
+    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. In **Overview**, select your Worker to view its metrics.
+
 </Steps>
 
 There are two metrics that can help you understand the health of your Worker in a given moment: requests success and error metrics, and invocation statuses.
@@ -35,9 +35,9 @@ There are two metrics that can help you understand the health of your Worker in 
 
 The first graph shows historical request counts from the Workers runtime broken down into successful requests, errored requests, and subrequests.
 
-* **Total**: All incoming requests registered by a Worker. Requests blocked by [WAF](https://www.cloudflare.com/waf/) or other security features will not count.
-* **Success**: Requests that returned a Success or Client Disconnected invocation status.
-* **Errors**: Requests that returned a Script Threw Exception, Exceeded Resources, or Internal Error invocation status — refer to [Invocation Statuses](/workers/observability/metrics-and-analytics/#invocation-statuses) for a breakdown of where your errors are coming from.
+- **Total**: All incoming requests registered by a Worker. Requests blocked by [WAF](https://www.cloudflare.com/waf/) or other security features will not count.
+- **Success**: Requests that returned a Success or Client Disconnected invocation status.
+- **Errors**: Requests that returned a Script Threw Exception, Exceeded Resources, or Internal Error invocation status — refer to [Invocation Statuses](/workers/observability/metrics-and-analytics/#invocation-statuses) for a breakdown of where your errors are coming from.
 
 Request traffic data may display a drop off near the last few minutes displayed in the graph for time ranges less than six hours. This does not reflect a drop in traffic, but a slight delay in aggregation and metrics delivery.
 
@@ -45,13 +45,26 @@ Request traffic data may display a drop off near the last few minutes displayed 
 
 Subrequests are requests triggered by calling `fetch` from within a Worker. A subrequest that throws an uncaught error will not be counted.
 
-* **Total**: All subrequests triggered by calling `fetch` from within a Worker.
-* **Cached**: The number of cached responses returned.
-* **Uncached**: The number of uncached responses returned.
+- **Total**: All subrequests triggered by calling `fetch` from within a Worker.
+- **Cached**: The number of cached responses returned.
+- **Uncached**: The number of uncached responses returned.
 
 ### Wall time per execution
 
-<GlossaryTooltip term="wall-clock time">Wall time</GlossaryTooltip> represents the elapsed time in milliseconds between the start of a Worker invocation, and when the Workers runtime determines that no more JavaScript needs to run. Specifically, wall time per execution chart measures the wall time that the JavaScript context remained open — including time spent waiting on I/O, and time spent executing in your Worker's [`waitUntil()`](/workers/runtime-apis/context/#waituntil) handler. Wall time is not the same as the time it takes your Worker to send the final byte of a response back to the client - wall time can be higher, if tasks within `waitUntil()` are still running after the response has been sent, or it can be lower. For example, when returning a response with a large body, the Workers runtime can, in some cases, determine that no more JavaScript needs to run, and closes the JavaScript context before all the bytes have passed through and been sent.
+<GlossaryTooltip term="wall-clock time">Wall time</GlossaryTooltip> represents
+the elapsed time in milliseconds between the start of a Worker invocation, and
+when the Workers runtime determines that no more JavaScript needs to run.
+Specifically, wall time per execution chart measures the wall time that the
+JavaScript context remained open — including time spent waiting on I/O, and time
+spent executing in your Worker's
+[`waitUntil()`](/workers/runtime-apis/context/#waituntil) handler. Wall time is
+not the same as the time it takes your Worker to send the final byte of a
+response back to the client - wall time can be higher, if tasks within
+`waitUntil()` are still running after the response has been sent, or it can be
+lower. For example, when returning a response with a large body, the Workers
+runtime can, in some cases, determine that no more JavaScript needs to run, and
+closes the JavaScript context before all the bytes have passed through and been
+sent.
 
 The Wall Time per execution chart shows historical wall time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/).
 
@@ -70,16 +83,15 @@ To review invocation statuses:
 <Steps>
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-   <DashButton url="/?to=/:account/workers-and-pages" />
+    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select your Worker.
-4. Find the **Summary** graph in **Metrics**.
-5. Select **Errors**.
+3. Find the **Summary** graph in **Metrics**.
+4. Select **Errors**.
+
 </Steps>
 
 Worker invocation statuses indicate whether a Worker executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/observability/errors/#error-pages-generated-by-workers) being returned to the client.
-
-
 
 | Invocation status      | Definition                                                                   | Workers error code | GraphQL field          |
 | ---------------------- | ---------------------------------------------------------------------------- | ------------------ | ---------------------- |
@@ -88,8 +100,6 @@ Worker invocation statuses indicate whether a Worker executed successfully or fa
 | Worker threw exception | Worker threw an unhandled JavaScript exception                               | 1101               | `scriptThrewException` |
 | Exceeded resources¹    | Worker exceeded runtime limits                                               | 1102, 1027         | `exceededResources`    |
 | Internal error²        | Workers runtime encountered an error                                         |                    | `internalError`        |
-
-
 
 ¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-limits). The most common cause is excessive CPU time, but is also caused by a Worker exceeding startup time or free tier limits.
 
@@ -115,13 +125,9 @@ Zone analytics aggregate request data for all Workers assigned to any [routes](/
 
 To review zone metrics:
 
-<Steps>
-1. In the Cloudflare dashboard, go to the **Analytics & Logs** page for your zone.
+In the Cloudflare dashboard, go to the **Workers Analytics** page for your zone.
 
-   <DashButton url="/?to=/:account/:zone/analytics" />
-
-2. Select **Workers**.
-</Steps>
+<DashButton url="/?to=/:account/:zone/analytics/workers" />
 
 Zone data can be scoped by time range within the last 30 days. The dashboard includes charts and information described below.
 
@@ -129,8 +135,8 @@ Zone data can be scoped by time range within the last 30 days. The dashboard inc
 
 This chart shows subrequests — requests triggered by calling `fetch` from within a Worker — broken down by cache status.
 
-* **Uncached**: Requests answered directly by your origin server or other servers responding to subrequests.
-* **Cached**: Requests answered by Cloudflare’s [cache](https://www.cloudflare.com/learning/cdn/what-is-caching/). As Cloudflare caches more of your content, it accelerates content delivery and reduces load on your origin.
+- **Uncached**: Requests answered directly by your origin server or other servers responding to subrequests.
+- **Cached**: Requests answered by Cloudflare’s [cache](https://www.cloudflare.com/learning/cdn/what-is-caching/). As Cloudflare caches more of your content, it accelerates content delivery and reduces load on your origin.
 
 ### Bandwidth
 

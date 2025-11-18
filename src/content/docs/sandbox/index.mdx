@@ -40,105 +40,107 @@ With Sandbox, you can execute Python scripts, run Node.js applications, analyze 
 
 <Tabs>
   <TabItem label="Execute Commands">
-    ```typescript
-    import { getSandbox } from '@cloudflare/sandbox';
+	```typescript
+	import { getSandbox } from '@cloudflare/sandbox';
 
-      export { Sandbox } from '@cloudflare/sandbox';
+	export { Sandbox } from '@cloudflare/sandbox';
 
-        export default {
-          async fetch(request: Request, env: Env): Promise<Response> {
-            const sandbox = getSandbox(env.Sandbox, 'user-123');
+	export default {
+		async fetch(request: Request, env: Env): Promise<Response> {
+			const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-            // Execute a command and get the result
-            const result = await sandbox.exec('python --version');
+			// Execute a command and get the result
+			const result = await sandbox.exec('python --version');
 
-            return Response.json({
-              output: result.stdout,
-              exitCode: result.exitCode,
-              success: result.success
-            });
-          }
-        };
-        ```
-      </TabItem>
-      <TabItem label="Code Interpreter">
-        ```typescript
-        import { getSandbox } from '@cloudflare/sandbox';
+			return Response.json({
+				output: result.stdout,
+				exitCode: result.exitCode,
+				success: result.success
+			});
+		}
+	};
+	```
+  </TabItem>
 
-        export { Sandbox } from '@cloudflare/sandbox';
+	<TabItem label="Code Interpreter">
+	```typescript
+	import { getSandbox } from '@cloudflare/sandbox';
 
-        export default {
-          async fetch(request: Request, env: Env): Promise<Response> {
-            const sandbox = getSandbox(env.Sandbox, 'user-123');
+	export { Sandbox } from '@cloudflare/sandbox';
 
-            // Create a Python execution context
-            const ctx = await sandbox.createCodeContext({ language: 'python' });
+	export default {
+		async fetch(request: Request, env: Env): Promise<Response> {
+			const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-            // Execute Python code with automatic result capture
-            const result = await sandbox.runCode(`
+			// Create a Python execution context
+			const ctx = await sandbox.createCodeContext({ language: 'python' });
 
-import pandas as pd
-data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
-df = pd.DataFrame(data)
-df['sales'].sum()  # Last expression is automatically returned
-        `, { context: ctx });
+			// Execute Python code with automatic result capture
+			const result = await sandbox.runCode(`
+	import pandas as pd
+	data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
+	df = pd.DataFrame(data)
+	df['sales'].sum()  # Last expression is automatically returned
+		`, { context: ctx });
 
-            return Response.json({
-              result: result.results?.[0]?.text,
-              logs: result.logs
-            });
-          }
-        };
-        ```
-      </TabItem>
-      <TabItem label="File Operations">
-        ```typescript
-        import { getSandbox } from '@cloudflare/sandbox';
+				return Response.json({
+					result: result.results?.[0]?.text,
+					logs: result.logs
+				});
+			}
+		};
+		```
+	</TabItem>
 
-        export { Sandbox } from '@cloudflare/sandbox';
+	<TabItem label="File Operations">
+		```typescript
+		import { getSandbox } from '@cloudflare/sandbox';
 
-        export default {
-          async fetch(request: Request, env: Env): Promise<Response> {
-            const sandbox = getSandbox(env.Sandbox, 'user-123');
+		export { Sandbox } from '@cloudflare/sandbox';
 
-            // Create a project structure
-            await sandbox.mkdir('/workspace/project/src', { recursive: true });
+		export default {
+			async fetch(request: Request, env: Env): Promise<Response> {
+				const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-            // Write files
-            await sandbox.writeFile(
-              '/workspace/project/package.json',
-              JSON.stringify({ name: 'my-app', version: '1.0.0' })
-            );
+				// Create a project structure
+				await sandbox.mkdir('/workspace/project/src', { recursive: true });
 
-            // Read a file back
-            const content = await sandbox.readFile('/workspace/project/package.json');
+				// Write files
+				await sandbox.writeFile(
+					'/workspace/project/package.json',
+					JSON.stringify({ name: 'my-app', version: '1.0.0' })
+				);
 
-            return Response.json({ content });
-          }
-        };
-        ```
-      </TabItem>
-      <TabItem label="WebSocket Connections">
-        ```typescript
-        import { getSandbox } from '@cloudflare/sandbox';
+				// Read a file back
+				const content = await sandbox.readFile('/workspace/project/package.json');
 
-        export { Sandbox } from '@cloudflare/sandbox';
+				return Response.json({ content });
+			}
+		};
+		```
+	</TabItem>
 
-        export default {
-          async fetch(request: Request, env: Env): Promise<Response> {
-            // Connect to WebSocket services in sandbox
-            if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
-              const sandbox = getSandbox(env.Sandbox, 'user-123');
-              return await sandbox.wsConnect(request, 8080);
-            }
+	<TabItem label="WebSocket Connections">
+		```typescript
+		import { getSandbox } from '@cloudflare/sandbox';
 
-            return Response.json({ message: 'WebSocket endpoint' });
-          }
-        };
-        ```
+		export { Sandbox } from '@cloudflare/sandbox';
 
-        Connect to WebSocket servers running in sandboxes. Learn more: [WebSocket Connections](/sandbox/guides/websocket-connections/).
-      </TabItem>
+		export default {
+			async fetch(request: Request, env: Env): Promise<Response> {
+				// Connect to WebSocket services in sandbox
+				if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
+					const sandbox = getSandbox(env.Sandbox, 'user-123');
+					return await sandbox.wsConnect(request, 8080);
+				}
+
+				return Response.json({ message: 'WebSocket endpoint' });
+			}
+		};
+		```
+
+		Connect to WebSocket servers running in sandboxes. Learn more: [WebSocket Connections](/sandbox/guides/websocket-connections/).
+	</TabItem>
 
 </Tabs>
 
