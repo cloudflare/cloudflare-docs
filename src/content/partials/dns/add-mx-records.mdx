@@ -47,7 +47,7 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
        "content": "192.0.2.1",
        "proxiable": true,
        "proxied": false,
-       "ttl": 1,
+       "ttl": 3600,
        "locked": false,
        "meta": {
          "source": "primary"
@@ -82,7 +82,8 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
    	json={{
       "type":"MX",
       "name":"example.com",
-      "content":"mail.example.com",
+      "content":"john.mx.example-server.test",
+			"priority": 5,
       "ttl":3600
     }}
    />
@@ -95,8 +96,8 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
        "zone_name": "example.com",
        "name": "example.com",
        "type": "MX",
-       "content": "mail.example.com",
-       "priority": 10,
+       "content": "john.mx.example-server.test",
+       "priority": 5,
        "proxiable": false,
        "proxied": false,
        "ttl": 3600,
