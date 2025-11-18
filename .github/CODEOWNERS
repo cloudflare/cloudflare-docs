@@ -80,7 +80,6 @@
 
 # Core platform
 
-/src/content/docs/aegis/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/byoip/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/china-network/ @pedrosousa @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
