@@ -69,11 +69,11 @@ Service tokens bypass user authentication, so ensure your Access policies are co
     ```
 
 2. [Create a policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) with the following configuration:
-    - Add an **Include** rule with **Selector** set to **Service token**
-    - In **Value**, select the Service Token you created in step 1
+    - Add an **Include** rule with **Selector** set to **Service token**.
+    - In **Value**, select the Service Token you created in step 1.
 3. [Add your self-hosted application to Access](/access-controls/applications/http-apps/self-hosted-public-app) and with the following configuration:
-    - In Access policies, click **Select existing policies**
-    - Select the policy that you have just created and select **Confirm**
+    - In Access policies, click **Select existing policies**.
+    - Select the policy that you have just created and select **Confirm**.
 4. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **AI Search** and select **Create**.
 5. Select **Website** as your data source.
 6. Under **Parse options**, locate **Extra headers** and add the following two headers using your saved credentials:
