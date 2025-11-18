@@ -16,9 +16,9 @@ Eligibility for CNI and port availability is determined in coordination with you
 - CNI ports are currently offered at no charge to Enterprise customers.
 	- Non-Enterprise customers (and any third party) may peer with Cloudflare via Internet Exchange according to our [open peering policy](https://www.cloudflare.com/peering-policy/).
 - CNI is available at select Cloudflare data centers:
-  - The type of dataplane offered in that location (v1 or v1.1) will determine specifications of the supported connection, such as the MTU.
+  - The type of dataplane offered in that location will determine specifications of the supported connection, such as the MTU.
   - The diversity offered in the location will vary.
-- Customers must have a BGP session established for CNI v1/1.1 to be operational.
+- Customers must have a BGP session established for CNI v1 to be operational.
 
 ### Product use cases
 
@@ -27,22 +27,21 @@ Eligibility for CNI and port availability is determined in coordination with you
 ### Technical specifications
 
 - **Supported port types (Direct CNI)**:
-	- **Dataplane v1 & v1.1**: 10GBASE-LR (single-mode fiber) and 100GBASE-LR (single-mode fiber).
+	- **Dataplane v1**: 10GBASE-LR (single-mode fiber) and 100GBASE-LR (single-mode fiber).
 	- **Dataplane v2 (beta)**: 10GBASE-LR (single-mode fiber) and 100GBASE-LR4 (single-mode fiber) optics are supported.
 - **Distance limitations:** Cloudflare does not support optical links longer than 10 km. For longer distances, you must use intermediate hardware or a third-party provider to extend the connection.
 - **IP addressing:** All Direct and Partner CNI connections use a `/31` subnet for point-to-point IP connectivity between your router and Cloudflare.
 - **VLAN support:**
-	- **Dataplane v1 & v1.1**: CNI ports may be assigned a single 802.1Q VLAN tag.
+	- **Dataplane v1**: CNI ports may be assigned a single 802.1Q VLAN tag.
 	- **Dataplane v2 (beta)**: VLAN tagging (802.1Q) and QinQ are not yet supported.
 - **MTU considerations:**
-  - **Dataplane v1**: Requires GRE tunneling for Magic Transit / WAN traffic, limiting the MTU to 1,476 bytes.
-  - **Dataplane v1.1**: Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
+	- **Dataplane v1**: Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
 	- **Dataplane v2 (beta)**: Supports a maximum MTU of 1,500 bytes bidirectionally with no GRE requirement.
 - **Bidirectional Forwarding Detection (BFD):**
-	- **Dataplane v1 & v1.1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for Magic Transit / WAN tunnels, which rely on separate health checks.
+	- **Dataplane v1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for Magic Transit / WAN tunnels, which rely on separate health checks.
 	- **Dataplane v2 (beta)**: Not yet supported.
 - **Link Aggregation Control Protocol (LACP)**:
-	- **Dataplane v1 & v1.1**: To increase bandwidth and provide link resiliency, Cloudflare supports combining multiple physical CNI ports into a single logical channel using Link Aggregation Control Protocol (LACP). You can bundle multiple connections to increase total throughput and add redundancy to your private connection with Cloudflare.
+	- **Dataplane v1**: To increase bandwidth and provide link resiliency, Cloudflare supports combining multiple physical CNI ports into a single logical channel using Link Aggregation Control Protocol (LACP). You can bundle multiple connections to increase total throughput and add redundancy to your private connection with Cloudflare.
 	- **Dataplane v2 (beta)**: Not yet supported. Use ECMP instead.
 
 ### Performance characteristics
@@ -53,7 +52,7 @@ The following are the maximum throughput rates supported by the CNI connection. 
 |----------------------|-------------|--------------|
 | From Cloudflare to Customer (all use cases) | Up to 10 Gbps | Up to 100 Gbps |
 | From Customer to Cloudflare (peering use case) | Up to 10 Gbps | Up to 100 Gbps |
-| From Customer to Cloudflare (Magic Transit/WAN) | &#x2022; **v1 & v1.1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2 (beta)**: Up to 1 Gbps per CNI connection | &#x2022; **v1 & v1.1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2 (beta)**: Up to 1 Gbps per CNI connection  |
+| From Customer to Cloudflare (Magic Transit/WAN) | &#x2022; **v1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2 (beta)**: Up to 1 Gbps per CNI connection | &#x2022; **v1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2 (beta)**: Up to 1 Gbps per CNI connection  |
 
 ### Service expectations
 

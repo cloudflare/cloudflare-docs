@@ -6,6 +6,7 @@ import WranglerArg from "./WranglerArg.astro";
 import Details from "./Details.astro";
 import { marked } from "marked";
 import { commands, getCommand } from "~/util/wrangler";
+import { parse } from "node-html-parser";
 
 const props = z.object({
 	command: z.string(),
@@ -19,8 +20,21 @@ const definition = getCommand(command);
 
 description ??= definition.metadata.description;
 
+// some commands are present but marked as "hidden" and shouldn't be shown
+let hidden = false;
+
+if (definition.metadata.hidden) {
+	hidden = true;
+}
+
+if (hidden) {
+	throw new Error(
+		`[WranglerCommand] "${command}" is marked as hidden. If you want to publish, fix upstream in workers-sdk repo.`
+	);
+}
+
 if (!definition.args) {
-	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
+	console.warn(`[WranglerCommand] "${command}" has no arguments`);
 }
 
 const { globalFlags } = commands;
@@ -28,6 +42,29 @@ const { globalFlags } = commands;
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)
 	.join(" ");
+
+const positionalSet = new Set(definition.positionalArgs);
+
+// Extract ExtraFlagDetails from slot
+const slotContent = await Astro.slots.render("default");
+const extraFlagDetailsMap = new Map<string, { content: string; mode: "append" | "replace" }>();
+
+if (slotContent) {
+	const html = parse(slotContent);
+	const extraFlagElements = html.querySelectorAll("div[data-extra-flag-key]");
+
+	for (const element of extraFlagElements) {
+		const key = element.getAttribute("data-extra-flag-key");
+		const mode = element.getAttribute("data-extra-flag-mode") || "append";
+
+		if (key) {
+			extraFlagDetailsMap.set(key, {
+				content: element.innerHTML.trim(),
+				mode: mode as "append" | "replace"
+			});
+		}
+	}
+}
 ---
 
 <AnchorHeading depth={headingLevel} title={`\`${command}\``} />
@@ -40,15 +77,24 @@ const positionals = definition.positionalArgs
 	args={positionals ? command.concat(` ${positionals}`) : command}
 />
 
-<ul>
-	{
-		Object.entries(definition.args)
-			.filter(([_, value]) => !value.hidden)
-			.map(([key, value]) => {
-				return <WranglerArg key={key} definition={value} />;
-			})
-	}
-</ul>
+<!-- CED-181 - Not all commands have specific arguments as part of the payload -->
+{
+	definition.args && (
+		<ul>
+			{Object.entries(definition.args)
+				.filter(([_, value]) => !value.hidden)
+				.map(([key, value]) => {
+					return (
+						<WranglerArg
+							key={key}
+							definition={{ ...value, positional: positionalSet.has(key) }}
+							extraDetails={extraFlagDetailsMap.get(key)}
+						/>
+					);
+				})}
+		</ul>
+	)
+}
 
 <Details header="Global flags">
 	<ul>

@@ -91,7 +91,7 @@ To use the ICMP proxy with Cloudflare Tunnel, you may need to configure the `clo
     echo 0 10001 | sudo tee /proc/sys/net/ipv4/ping_group_range
     ```
 
-    e. To make the change persist on reboot, update your `systcl` parameters:
+    e. If you need to make the change apply to an already running process, you need to restart `cloudflared`. To make the change persist on reboot, update your `systcl` parameters:
 
     ```sh
     echo "net.ipv4.ping_group_range = 0 10001" | sudo tee -a /etc/sysctl.d/99-cloudflared.conf

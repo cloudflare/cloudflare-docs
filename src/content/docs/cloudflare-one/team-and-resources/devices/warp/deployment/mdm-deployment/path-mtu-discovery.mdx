@@ -1,0 +1,120 @@
+---
+pcx_content_type: concept
+title: Path MTU Discovery (PMTUD)
+sidebar:
+  order: 5
+  label: Path MTU Discovery
+---
+
+import { Details, Render } from "~/components";
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)                                               | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul> | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.9.173.1         |
+| macOS    | ✅           | 2025.9.173.1         |
+| Linux    | ✅           | 2025.9.173.1         |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+The [Maximum Transmission Unit (MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) is the largest data packet size that a device can send over a network without fragmentation. When you connect to services through WARP, your data is encapsulated, which adds extra headers and increases the overall packet size. On some networks, especially cellular or guest Wi-Fi networks, the network's MTU may be smaller than WARP's [default packet size](#recommended-mtu). This mismatch forces packets to be fragmented or dropped entirely, leading to connection instability or complete connection failures.
+
+WARP's Path MTU Discovery (PMTUD) feature solves this problem by actively probing for the minimum MTU along the entire network path between the device and Cloudflare. WARP will then dynamically adjust its [tunnel interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface) MTU based on the probe results. This allows WARP to maintain a stable connection on low MTU networks and take advantage of higher MTUs when available.
+
+:::note
+Certain features may be disabled or degraded at low MTU thresholds. For details, refer to [Minimum MTUs](#minimum-mtus).
+:::
+
+## Prerequisites
+
+- WARP must be configured to use the [MASQUE tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol).
+
+## Enable Path MTU Discovery
+
+To enable Path MTU Discovery on your devices, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#windows) with the `enable_pmtud` key set to `true`. For example:
+
+```xml
+<dict>
+	<key>organization</key>
+	<string>your-team-name</string>
+	<key>warp_tunnel_protocol</key>
+  <string>masque</string>
+	<key>enable_pmtud</key>
+  <true/>
+</dict>
+```
+
+This configuration enables the PMTUD feature and explicitly configures the MASQUE tunnel protocol.
+
+WARP will now send active probes to detect the network path MTU and will update its tunnel interface MTU accordingly. You can expect PMTUD probes to generate an extra 25 Mb/day of traffic coming from the device.
+
+## Minimum MTUs
+
+### Recommended MTU
+
+WARP requires the following MTUs for full functionality and performance:
+
+| Device tunnel protocol| IPv4 | IPv6 |
+| --- | --- | --- |
+| WireGuard | 1340 bytes | 1360 bytes |
+| MASQUE    | 1361 bytes | 1381 bytes |
+
+### Path MTU Discovery
+
+For the PMTUD feature to work, the network path must support an MTU of at least 1281 bytes. The 1281 bytes consists of:
+
+- 1200 bytes: Minimum QUIC datagram
+- 53 bytes: WARP MASQUE encapsulation
+- 28 bytes: WARP PMTUD probe
+
+### IPv6
+
+To send IPv6 traffic through WARP, the network path must support an MTU of at least 1333 bytes. The 1333 bytes consists of:
+
+- 1280 bytes: Minimum IPv6 packet size
+- 53 bytes: WARP MASQUE encapsulation
+
+If PMTUD is enabled and the MTU is less than 1333 bytes, then WARP will automatically disable IPv6 on the tunnel interface.
+
+### WebRTC
+
+To send WebRTC traffic through WARP, the network path must support an MTU of at least 1333 bytes. Below 1333 bytes, WebRTC connections will experience progressively degraded performance. This minimum MTU impacts [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) and any other website that uses WebRTC (such as video conferencing and media streaming services).
+
+## Check your MTU
+
+You can check your current network path MTU by collecting [WARP diagnostic logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/).
+
+1. Run the `warp-diag` command on the device or [collect logs via the the dashboard](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#collect-logs-via-the-dashboard).
+2. Open the resulting `warp-debugging-info-<date>-<time>.zip` file.
+3. Open `connectivity.txt` and search for `PMTU`.
+
+	```txt title="connectivity.txt" {16-17}
+	====================================================================
+	H3 Quic Connect
+	====================================================================
+
+	Testing H3 QUIC connectivity to 'https://cloudflare-quic.com/cdn-cgi/l4-stats' result: Successful
+	IPv4:
+	"
+	Headers:
+		server address=104.18.26.14:443
+		...
+
+	Body:
+		transport=TCP
+		...
+
+	PMTU:
+		1500 bytes
+	"
+	```
+
+The example above shows an MTU of 1500 bytes, which meets the [recommended MTU requirements](#recommended-mtu) for WARP. If your MTU falls below the recommended threshold, consider [enabling Path MTU Discovery](#enable-path-mtu-discovery) to optimize connection performance.

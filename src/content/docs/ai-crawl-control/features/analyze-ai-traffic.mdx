@@ -44,17 +44,28 @@ Identify traffic sources with referrer analytics to understand discovery pattern
 - View top referrers driving traffic to your site.
 - Understand discovery patterns and content popularity from AI operators.
 
-### Track crawler requests over time
+### Track successful crawler requests over time
 
-Visualize crawler activity patterns over time using the **Requests over time** chart. You can group data by different dimensions to get more specific insights:
+Visualize successful crawler activity patterns over time using the **Successful requests over time** chart, which shows requests with status codes 200-300. You can group data by different dimensions to get more specific insights:
 
-| Dimension       | Description                                                                                 |
-| --------------- | ------------------------------------------------------------------------------------------- |
-| **Crawler**     | Track activity from individual AI crawlers (like GPTBot, ClaudeBot, and Bytespider).        |
-| **Category**    | Analyze crawlers by their purpose or type.                                                  |
-| **Operator**    | Discover which companies (such as OpenAI, Anthropic, and ByteDance) are crawling your site. |
-| **Host**        | Break down activity across multiple subdomains.                                             |
-| **Status Code** | Monitor HTTP response codes (200s, 300s, 400s, 500s) to crawlers.                           |
+| Dimension    | Description                                                                                 |
+| ------------ | ------------------------------------------------------------------------------------------- |
+| **Crawler**  | Track activity from individual AI crawlers (like GPTBot, ClaudeBot, and Bytespider).        |
+| **Category** | Analyze crawlers by their purpose or type.                                                  |
+| **Operator** | Discover which companies (such as OpenAI, Anthropic, and ByteDance) are crawling your site. |
+| **Host**     | Break down activity across multiple subdomains.                                             |
+
+### Monitor status code distribution
+
+The **Status code distribution** chart shows HTTP response codes (2xx, 3xx, 4xx, 5xx) for AI crawler requests over time. This provides detailed visibility beyond the sparkline charts shown in the **Crawlers** tab.
+
+The chart displays:
+
+- Total request counts for each status code category (2xx, 3xx, 4xx, 5xx)
+- Time series visualization showing status code trends over your selected time period
+- Filtering by crawler, category, operator, and time range
+
+Use this chart to identify patterns in how your site responds to AI crawlers in areas such as the distribution of error codes or the volume of redirects.
 
 ### Understand what content is crawled
 
@@ -94,3 +105,15 @@ Filter options:
 </Tabs>
 
 The values of the AI Crawl Control metrics will update according to your filter.
+
+## Per-crawler drilldowns
+
+The **Crawlers** tab includes an actions menu for each crawler with the following options:
+
+| Action                         | Description                                                                                                                               |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **View Metrics**               | Filter the **Metrics** tab to the selected crawler.                                                                                           |
+| **View on Cloudflare Radar**   | Learn more about each verified crawler on Cloudflare Radar.                                                                               |
+| **View in Security Analytics** | Filter Security Analytics by detection IDs ([Bot Management](/bots/get-started/bot-management/) customers).                              |
+| **Copy User Agent**            | Copy user agent strings for use in [WAF custom rules](/waf/custom-rules/), [Redirect Rules](/rules/url-forwarding/), or robots.txt files. |
+| **Copy Detection ID**          | Copy detection IDs for use in [WAF custom rules](/waf/custom-rules/) ([Bot Management](/bots/get-started/bot-management/) customers).    |

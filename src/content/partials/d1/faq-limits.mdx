@@ -4,14 +4,45 @@
 
 ### How much work can a D1 database do?
 
-D1 is designed for horizontal scale out across multiple, smaller (10 GB) databases, such as per-user, per-tenant or per-entity databases. D1 allows you to build applications with thousands of databases at no extra cost for isolating with multiple databases, as the pricing is based only on query and storage costs.
+D1 is designed for horizontal scale out across multiple, smaller (10 GB) databases, such as per-user, per-tenant or per-entity databases.
+D1 allows you to build applications with thousands of databases at no extra cost, as the pricing is based only on query and storage costs.
 
-- Each D1 database can store up to 10 GB of data, and you can create up to thousands of separate D1 databases. This allows you to split a single monolithic database into multiple, smaller databases, thereby isolating application data by user, customer, or tenant.
-- SQL queries over a smaller working data set can be more efficient and performant while improving data isolation.
+#### Storage
+
+Each D1 database can store up to 10 GB of data.
 
 :::caution
 Note that the 10 GB limit of a D1 database cannot be further increased.
 :::
+
+#### Concurrency and throughput
+
+Each individual D1 database is inherently single-threaded, and processes queries one at a time.
+
+Your maximum throughput is directly related to the duration of your queries.
+
+- If your average query takes 1 ms, you can run approximately 1,000 queries per second.
+- If your average query takes 100 ms, you can run 10 queries per second.
+
+A database that receives too many concurrent requests will first attempt to queue them. If the queue becomes full, the database will return an ["overloaded" error](/d1/observability/debug-d1/#error-list).
+
+Each individual D1 database is backed by a single [Durable Object](/durable-objects/concepts/what-are-durable-objects/). When using [D1 read replication](https://developers.cloudflare.com/d1/best-practices/read-replication/#primary-database-instance-vs-read-replicas) each replica instance is a different Durable Object and the guidelines apply to each replica instance independently.
+
+#### Query performance
+
+Query performance is the most important factor for throughput. As a rough guideline:
+
+- Read queries like `SELECT name FROM users WHERE id = ?` with an appropriate index on `id` will take less than a millisecond for SQL duration.
+- Write queries like `INSERT` or `UPDATE` can take several milliseconds for SQL duration, and depend on the number of rows written. Writes need to be durably persisted across several locations - learn more on [how D1 persists data under the hood](https://blog.cloudflare.com/d1-read-replication-beta/#under-the-hood-how-d1-read-replication-is-implemented).
+- Data migrations like a large `UPDATE` or `DELETE` affecting millions of rows must be run in batches. A single query that attempts to modify hundreds of thousands of rows or hundreds of MBs of data at once will exceed execution limits. Break the work into smaller chunks (e.g., processing 1,000 rows at a time) to stay within platform limits.
+
+To ensure your queries are fast and efficient, [use appropriate indexes in your SQL schema](/d1/best-practices/use-indexes/).
+
+#### CPU and memory
+
+Operations on a D1 database, including query execution and result serialization, run within the [Workers platform CPU and memory limits](/workers/platform/limits/#memory).
+
+Exceeding these limits, or hitting other platform limits, will generate errors. Refer to the [D1 error list for more details](/d1/observability/debug-d1/#error-list).
 
 ### How many simultaneous connections can a Worker open to D1?
 

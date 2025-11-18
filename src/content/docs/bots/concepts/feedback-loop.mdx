@@ -76,7 +76,7 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/bot_management/feedba
 --data '{
   "type": "false_positive",
   "description": "Legitimate customers having low score",
-  "expression": "(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
+  "expression": "(cf.bot_management.score le 46 and ip.src.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
   "first_request_seen_at": "2022-08-01T00:00:00Z",
   "last_request_seen_at": "2022-08-10T00:00:00Z",
   "requests": 100,
@@ -119,7 +119,7 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/bot_management/feedba
     "created_at": "2022-08-19T00:05:24.749712Z",
     "type": "false_positive",
     "description": "Legitimate customers having low score",
-    "expression": "(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
+    "expression": "(cf.bot_management.score le 46 and ip.src.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
     "first_request_seen_at": "2022-08-01T00:00:00Z",
     "last_request_seen_at": "2022-08-10T00:00:00Z",
     "requests": 100,
@@ -155,7 +155,7 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/bot_management/feedba
 | ----------------------- | ------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type`                  | string  | The feedback report type.                                                   | `false_positive`                                                                                                                                                       |
 | `description`           | string  | The feedback report description with  more details on the issue.            | Legitimate customers having low scores.                                                                                                                                |
-| `expression`            | string  | The wirefilter expression matching reported requests.                       | `(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` |
+| `expression`            | string  | The wirefilter expression matching reported requests.                       | `(cf.bot_management.score le 46 and ip.src.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` |
 | `first_request_seen_at` | string  | The time range start when the first request has been seen, RFC 3339 format. | `2022-08-01T00:00:00Z`                                                                                                                                                 |
 | `last_request_seen_at`  | string  | The time range end when the last request has been seen, RFC 3339 format.    | `2022-08-10T00:00:00Z`                                                                                                                                                 |
 | `requests`              | integer | The total number of reported requests.                                      | `100`                                                                                                                                                                  |
@@ -209,8 +209,8 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/bot_management/feedba
 | `http.host`                  | string  | This represents the hostname used in the full request URI.                                                                                                                  |
 | `http.request.uri.path`      | string  | This represents the URI path of the request.                                                                                                                                |
 | `http.user_agent`            | string  | This represents the HTTP user agent which is a request header that contains a characteristic string to allow identification of the client operating system and web browser. |
-| `ip.geoip.asnum`             | integer | This represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.                                                 |
-| `ip.geoip.country`           | string  | This represents the 2-letter country code in ISO 3166-1 Alpha 2 format.                                                                                                     |
+| `ip.src.asnum`               | integer | This represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.                                                 |
+| `ip.src.country`             | string  | This represents the 2-letter country code in ISO 3166-1 Alpha 2 format.                                                                                                     |
 | `ip.src`                     | string  | The source address of the IP.                                                                                                                                               |
 
 ## Recommendations when submitting a report

@@ -261,7 +261,7 @@ The device is not connected to a Wi-Fi network or LAN that has connectivity to t
 
 ### Cause
 
-The device is not authenticated to a Zero Trust organization because:
+The device is not authenticated to an [organization](/cloudflare-one/setup/#create-a-zero-trust-organization) because:
 
 * The device was revoked in Zero Trust.
 * The registration was corrupted or deleted for an unknown reason.
@@ -273,6 +273,17 @@ The device is not authenticated to a Zero Trust organization because:
 3. Select **Re-Authenticate Session**.
 4. Complete the authentication steps required by your organization.
 5. If this does not resolve the error, select **Logout from Cloudflare Zero Trust** and then log back in. Logging out is only possible if [Allow device to leave organization](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) is enabled for your device.
+6. If the issue persists, contact your administrator for assistance.
+
+### CF\_REGISTRATION\_MISSING (Revoked)
+
+#### Cause
+
+Your device was unenrolled from your company's [organization](/cloudflare-one/setup/#create-a-zero-trust-organization) by an administrator on your account.
+
+#### Resolution
+
+Contact your company or team administrator for assistance.
 
 ## CF\_TLS\_INTERCEPTION\_BLOCKING\_DOH
 

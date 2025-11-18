@@ -1,30 +1,29 @@
 ---
 params:
-  - productName
   - dashName
 ---
 
 import { DashButton, Markdown } from '~/components';
 
-{props.productName} communicates periodically with Cloudflare via HTTPS. This is also known as a heartbeat, and lets Cloudflare know that the {props.productName} in question is connected to the Internet and reachable.
+Magic WAN Connector communicates periodically with Cloudflare via HTTPS. This is also known as a heartbeat, and lets Cloudflare know that the Magic WAN Connector in question is connected to the Internet and reachable.
 
-The heartbeat calls are made to `api.cloudflare.com`. Each {props.productName} has a heartbeat frequency of 10 seconds, independently of the number of WAN interfaces you have running on your device.
+The heartbeat calls are made to `api.cloudflare.com`. Each Magic WAN Connector has a heartbeat frequency of 10 seconds, independently of the number of WAN interfaces you have running on your device.
 
-There are three symbols for the heartbeat signal that allow you to quickly check the status of {props.productName}:
+There are three symbols for the heartbeat signal that allow you to quickly check the status of Magic WAN Connector:
 
-- **Blue `i`**: {props.productName} is contacting Cloudflare as expected.
-- **Yellow triangle**: {props.productName} has not yet connected to Cloudflare.
-- **Red triangle**: There is a potential problem with {props.productName}.
+- **Blue `i`**: Magic WAN Connector is contacting Cloudflare as expected.
+- **Yellow triangle**: Magic WAN Connector has not yet connected to Cloudflare.
+- **Red triangle**: There is a potential problem with Magic WAN Connector.
 
-### Access {props.productName}'s heartbeat
+### Access Magic WAN Connector's heartbeat
 
 { props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
-		2. Go to **Connectors** > **Appliances** > **Profiles**.
-		3. Find your ${props.productName}, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp shows you the last time ${props.productName} successfully contacted Cloudflare.
+		2. Go to **Connectors** > **Appliances** > **Appliances**.
+		3. Find your Magic WAN Connector, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp shows you the last time Magic WAN Connector successfully contacted Cloudflare.
 	`}
 	inline={false}
 	/>
@@ -40,7 +39,7 @@ There are three symbols for the heartbeat signal that allow you to quickly check
 		<DashButton url="/?to=/:account/magic-wan/configuration" />
 		<Markdown
 	text={`
-		2. In the **${props.productName}** tab, find your ${props.productName}, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp shows you the last time ${props.productName} successfully contacted Cloudflare.
+		2. In the **Magic WAN Connector** tab, find your Magic WAN Connector, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp shows you the last time Magic WAN Connector successfully contacted Cloudflare.
 	`}
 	inline={false}
 	/>

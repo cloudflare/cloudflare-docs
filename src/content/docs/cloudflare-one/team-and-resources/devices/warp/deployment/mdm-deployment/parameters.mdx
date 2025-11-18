@@ -101,6 +101,17 @@ Identifies a Zero Trust organization in the WARP GUI when WARP is deployed with 
 
 **Value:** Organization nickname shown to users in the WARP GUI (for example, `Test environment`).
 
+### `enable_pmtud`
+
+[Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/) allows WARP to discover the largest packet size that can be sent over the current network and optimize connection performance.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+* `false` — (default) Disables PMTUD.
+* `true` — Enables PMTUD on the WARP tunnel interface.
+
 ### `enable_post_quantum`
 
 <Details header="Feature availability">
@@ -120,14 +131,14 @@ Identifies a Zero Trust organization in the WARP GUI when WARP is deployed with 
 
 </Details>
 
-Use [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure connections from the device to Cloudflare's network.
+WARP uses [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure connections from the device to Cloudflare's network. Post-quantum cryptography requires the [MASQUE protocol](#warp_tunnel_protocol) and is enabled by default on all devices using MASQUE.
 
 **Value Type:** `boolean`
 
 **Value:**
 
-* `false` — (default) Disables post-quantum key agreement.
-* `true` — Enables post-quantum key agreement for all traffic through the WARP tunnel.
+* `false` — Disables post-quantum key agreement.
+* `true` —  Enables post-quantum key agreement for all traffic through the WARP tunnel.
 
 ### `onboarding`
 
@@ -200,9 +211,7 @@ Allows you to choose the operational mode of the client.
   <integer>44444</integer>
   ```
 * `postureonly` — [Device Information Only](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#device-information-only).
-
-The service mode [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) is not currently supported as a value and must be configured in Zero Trust.
-
+* `tunnelonly` - [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering).
 
 ### `support_url`
 
@@ -244,6 +253,17 @@ Assigns a unique identifier to the device for the [device UUID posture check](/c
 **Value Type:** `string`
 
 **Value:** UUID for the device (for example, `496c6124-db89-4735-bc4e-7f759109a6f1`).
+
+### `warp_tunnel_protocol`
+
+Configures the protocol used to route IP traffic from the device to Cloudflare Gateway. For more information, refer to [Device tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol).
+
+**Value Type:** `string`
+
+**Value:**
+
+* `masque` — (default) [MASQUE](https://datatracker.ietf.org/wg/masque/about/) protocol
+* `wireguard` — [WireGuard](https://www.wireguard.com/) protocol
 
 ## Top-level parameters
 

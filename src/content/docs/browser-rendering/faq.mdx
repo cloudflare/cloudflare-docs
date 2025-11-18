@@ -2,7 +2,7 @@
 title: FAQ
 pcx_content_type: faq
 sidebar:
-  order: 8
+  order: 11
 head:
   - tag: title
     content: Frequently asked questions about Cloudflare Browser Rendering
@@ -12,8 +12,8 @@ import { GlossaryTooltip, Render } from "~/components";
 
 Below you will find answers to our most commonly asked questions about Browser Rendering.
 
-For pricing questions, visit the [pricing FAQ](/browser-rendering/platform/pricing/#faq).
-For usage limits questions, visit the [limits FAQ](/browser-rendering/platform/limits/#faq).
+For pricing questions, visit the [pricing FAQ](/browser-rendering/pricing/#faq).
+For usage limits questions, visit the [limits FAQ](/browser-rendering/limits/#faq).
 If you cannot find the answer you are looking for, join us on [Discord](https://discord.cloudflare.com).
 
 ---
@@ -56,9 +56,9 @@ This error typically occurs because your Puppeteer launch is not receiving the B
 
 ### `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today`
 
-This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are capped at free plan limit is 10 minutes of browser use a day](/browser-rendering/platform/limits/#workers-free) once you exceed those, further creation attempts return a 429 until the next UTC day.
+This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are capped at free plan limit is 10 minutes of browser use a day](/browser-rendering/limits/#workers-free) once you exceed those, further creation attempts return a 429 until the next UTC day.
 
-To resolve: [Upgrade to a Workers Paid plan](/workers/platform/pricing/) which allows for more than 10 minutes of usage a day and has higher [limits](/browser-rendering/platform/limits/#workers-paid). If you recently upgraded but still see this error, try redeploying your Worker to ensure your usage is correctly associated with your new plan.
+To resolve: [Upgrade to a Workers Paid plan](/workers/platform/pricing/) which allows for more than 10 minutes of usage a day and has higher [limits](/browser-rendering/limits/#workers-paid). If you recently upgraded but still see this error, try redeploying your Worker to ensure your usage is correctly associated with your new plan.
 
 ### `422 Unprocessable Entity`
 

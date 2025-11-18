@@ -49,4 +49,4 @@ The 102 Processing status code is commonly used in scenarios requiring long-runn
 
 ### Cloudflare-specific information
 
-If Cloudflare receives a 102 Processing response, it expects a final response within 100 seconds. Failure to receive this response results in an [Error 522: Connection Timed Out](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/). However, sending interim 102 Processing responses can help prevent [Error 524: A timeout occurred](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/), ensuring that the connection remains active while the server processes the request.
+If Cloudflare receives a 102 Processing response, it expects a final response within 120 seconds. Failure to receive this response results in an [Error 522: Connection Timed Out](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/). However, sending interim 102 Processing responses can help prevent [Error 524: A timeout occurred](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/), ensuring that the connection remains active while the server processes the request.

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Python
+title: Python Workers
 sidebar:
   order: 3
   badge:
@@ -13,32 +13,20 @@ description: Write Workers in 100% Python
 
 import { WranglerConfig } from "~/components";
 
-Cloudflare Workers provides first-class support for Python, including support for:
+Cloudflare Workers provides a first-class Python experience, including support for:
 
-- The majority of Python's [Standard library](/workers/languages/python/stdlib/)
-- All [bindings](/workers/runtime-apis/bindings/), including [Workers AI](/workers-ai/), [Vectorize](/vectorize), [R2](/r2), [KV](/kv), [D1](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
-- [Environment Variables](/workers/configuration/environment-variables/), and [Secrets](/workers/configuration/secrets/)
+- Easy to install and fast-booting [Packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [httpx](https://www.python-httpx.org/), [Pydantic](https://docs.pydantic.dev/latest/) and more.
 - A robust [foreign function interface (FFI)](/workers/languages/python/ffi) that lets you use JavaScript objects and functions directly from Python — including all [Runtime APIs](/workers/runtime-apis/)
-- [Built-in packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [httpx](https://www.python-httpx.org/) and more.
+- An ecosystem of services on the Workers Platform accessible via [bindings](/workers/runtime-apis/bindings/), including:
+  - State storage and databases like [KV](/kv), [D1](/d1), [Durable Objects](/durable-objects/)
+  - Access to [Environment Variables](/workers/configuration/environment-variables/), [Secrets](/workers/configuration/secrets/), and other Workers using [Service Bindings](/workers/runtime-apis/bindings/service-bindings/)
+  - AI capabilities with [Workers AI](/workers-ai/), [Vectorize](/vectorize)
+  - File storage with [R2](/r2)
+  - [Durable Workflows](/workflows/), [Queues](/queues/), and [ more](/workers/runtime-apis/bindings/)
 
-:::caution[Python Workers are in beta.]
+## Introduction
 
-You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta. Packages are supported using the [pywrangler](/workers/languages/python/packages) tool.
-
-We'd love your feedback. Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
-:::
-
-## Get started
-
-You need [uv](https://docs.astral.sh/uv/#installation) and Node.
-
-```bash
-git clone https://github.com/cloudflare/python-workers-examples
-cd python-workers-examples/01-hello
-uv run pywrangler dev
-```
-
-A Python Worker can be as simple as three lines of code:
+A Python Worker can be as simple as four lines of code:
 
 ```python
 from workers import WorkerEntrypoint, Response
@@ -48,15 +36,33 @@ class Default(WorkerEntrypoint):
         return Response("Hello World!")
 ```
 
-Similar to Workers written in [JavaScript](/workers/languages/javascript), [TypeScript](/workers/languages/typescript), or [Rust](/workers/languages/rust/), the main entry point for a Python worker is the [`fetch` handler](/workers/runtime-apis/handlers/fetch). In a Python Worker, this handler is placed in a `Default` class that extends the `WorkerEntrypoint` class (which you can import from the `workers` SDK module).
+Similar to other Workers, the main entry point for a Python worker is the [`fetch` handler](/workers/runtime-apis/handlers/fetch) which handles incoming requests
+sent to the Worker.
 
-To run a Python Worker locally, you use pywrangler, the CLI for Python Workers.
-To set it up, first you need to set up your development environment:
+In a Python Worker, this handler is placed in a `Default` class that extends the `WorkerEntrypoint` class (which you can import from the `workers` SDK module).
+
+:::caution[Python Workers are in beta.]
+
+You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta. Packages are supported using the [pywrangler](/workers/languages/python/packages) tool.
+
+We'd love your feedback. Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
+:::
+
+### The `pywrangler` CLI tool
+
+To run a Python Worker locally, install packages, and deploy it to Cloudflare, you use [pywrangler](https://github.com/cloudflare/workers-py),
+the CLI for Python Workers.
+
+To set it up, first, ensure [uv](https://docs.astral.sh/uv/#installation) and [Node](https://nodejs.org/en) are installed.
+
+Then set up your development environment:
+
 ```
 uv init
 uv tool install workers-py
 uv run pywrangler init
 ```
+
 This will create a `pyproject.toml` file with `workers-py` as a development
 dependency. `pywrangler init` will create a wrangler config file. You can then
 run `pywrangler` with:
@@ -71,97 +77,25 @@ To deploy a Python Worker to Cloudflare, run `pywrangler deploy`:
 uv run pywrangler deploy
 ```
 
-## Modules
+### Python Worker Templates
 
-Python workers can be split across multiple files. Let's create a new Python file, called `src/hello.py`:
-
-```python
-def hello(name):
-    return "Hello, " + name + "!"
-```
-
-Now, we can modify `src/entry.py` to make use of the new module.
-
-```python
-from hello import hello
-from workers import WorkerEntrypoint, Response
-
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        return Response(hello("World"))
-```
-
-Once you edit `src/entry.py`, Wrangler will automatically detect the change and
-reload your Worker.
-
-## The `Request` Interface
-
-The `request` parameter passed to your `fetch` handler is a JavaScript Request object, exposed via the foreign function interface, allowing you to access it directly from your Python code.
-
-Let's try editing the worker to accept a POST request. We know from the
-[documentation for `Request`](/workers/runtime-apis/request) that we can call
-`await request.json()` within an `async` function to parse the request body as
-JSON. In a Python Worker, you would write:
-
-```python
-from workers import WorkerEntrypoint, Response
-from hello import hello
-
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        name = (await request.json()).name
-        return Response(hello(name))
-```
-
-Once you edit the `src/entry.py`, Wrangler should automatically restart the local
-development server. Now, if you send a POST request with the appropriate body,
-your Worker should respond with a personalized message.
+When you initialize a new Python Worker project and select from one of many templates:
 
 ```bash
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"name": "Python"}' http://localhost:8787
+uv run pywrangler init
 ```
 
-```bash output
-Hello, Python!
+Or you can clone the examples repository to explore more options:
+
+```bash
+git clone https://github.com/cloudflare/python-workers-examples
+cd python-workers-examples/01-hello
 ```
 
-## The `env` Attribute
+## Next Up
 
-The `env` attribute on the ``WorkerEntrypoint`` can be used to access
-[environment variables](/workers/configuration/environment-variables/),
-[secrets](/workers/configuration/secrets/),and
-[bindings](/workers/runtime-apis/bindings/).
-
-For example, let us try setting and using an environment variable in a Python Worker. First, add the environment variable to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/):
-
-<WranglerConfig>
-
-```toml
-name = "hello-python-worker"
-main = "src/entry.py"
-compatibility_flags = ["python_workers"]
-compatibility_date = "2024-03-20"
-
-[vars]
-API_HOST = "example.com"
-```
-
-</WranglerConfig>
-
-Then, you can access the `API_HOST` environment variable via the `env` parameter:
-
-```python
-from workers import WorkerEntrypoint, Response
-
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        return Response(self.env.API_HOST)
-```
-
-## Further Reading
-
+- Learn more about [the basics of Python Workers](/workers/languages/python/basics)
+- Learn details about local development, deployment, and [how to Python Workers work](/workers/languages/python/how-python-workers-work).
+- Explore the [package](/workers/languages/python/packages) docs for instructions on how to use packages with Python Workers.
 - Understand which parts of the [Python Standard Library](/workers/languages/python/stdlib) are supported in Python Workers.
 - Learn about Python Workers' [foreign function interface (FFI)](/workers/languages/python/ffi), and how to use it to work with [bindings](/workers/runtime-apis/bindings) and [Runtime APIs](/workers/runtime-apis/).
-- Explore the [packages](/workers/languages/python/packages) docs for instructions on how to use packages with Python Workers.

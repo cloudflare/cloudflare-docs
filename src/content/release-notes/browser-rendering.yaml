@@ -7,13 +7,13 @@ entries:
     title: Added guidance on REST API timeouts and custom fonts
     description: |-
       * Added [REST API timeouts](/browser-rendering/reference/timeouts/) page explaining how Browser Rendering uses independent timers (for page load, selectors, and actions) and how to configure them.
-      * Updated [Supported fonts](/browser-rendering/reference/supported-fonts/) guide with instructions on using your own custom fonts via `addStyleTag()` in [Playwright](/browser-rendering/platform/playwright/) or [Puppeteer](/browser-rendering/platform/puppeteer/).
+      * Updated [Supported fonts](/browser-rendering/reference/supported-fonts/) guide with instructions on using your own custom fonts via `addStyleTag()` in [Playwright](/browser-rendering/playwright/) or [Puppeteer](/browser-rendering/puppeteer/).
   - publish_date: "2025-09-25"
     title: Updates to Playwright, new support for Stagehand, and increased limits
     description: |-
-      * [Playwright](/browser-rendering/platform/playwright/) support in Browser Rendering is now GA. We've upgraded to [Playwright v1.55](https://playwright.dev/docs/release-notes#version-155).
-      * Added support for [Stagehand](/browser-rendering/platform/stagehand/), an open source browser automation framework, powered by [Workers AI](/workers-ai). Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions.
-      * Increased [limits](/browser-rendering/platform/limits/#workers-paid) for paid plans on both the [REST API](https://developers.cloudflare.com/browser-rendering/rest-api/) and [Workers Bindings](https://developers.cloudflare.com/browser-rendering/workers-bindings/). 
+      * [Playwright](/browser-rendering/playwright/) support in Browser Rendering is now GA. We've upgraded to [Playwright v1.55](https://playwright.dev/docs/release-notes#version-155).
+      * Added support for [Stagehand](/browser-rendering/stagehand/), an open source browser automation framework, powered by [Workers AI](/workers-ai). Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions.
+      * Increased [limits](/browser-rendering/limits/#workers-paid) for paid plans on both the [REST API](https://developers.cloudflare.com/browser-rendering/rest-api/) and [Workers Bindings](https://developers.cloudflare.com/browser-rendering/workers-bindings/).
   - publish_date: "2025-09-22"
     title: Added `excludeExternalLinks` parameter to `/links` REST endpoint
     description: |-
@@ -21,11 +21,11 @@ entries:
   - publish_date: "2025-09-02"
     title: Added `X-Browser-Ms-Used` response header
     description: |-
-      * Each REST API response now includes the `X-Browser-Ms-Used` response header, which reports the browser time (in milliseconds) used by the request. 
+      * Each REST API response now includes the `X-Browser-Ms-Used` response header, which reports the browser time (in milliseconds) used by the request.
   - publish_date: "2025-08-20"
     title: Browser Rendering billing goes live
     description: |-
-      * Billing for Browser Rendering begins today, August 20th, 2025. See [pricing page](/browser-rendering/platform/pricing/) for full details. You can monitor usage via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-rendering).
+      * Billing for Browser Rendering begins today, August 20th, 2025. See [pricing page](/browser-rendering/pricing/) for full details. You can monitor usage via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-rendering).
   - publish_date: "2025-08-18"
     title: Wrangler updates to local dev
     description: |-
@@ -33,8 +33,8 @@ entries:
   - publish_date: "2025-07-29"
     title: Updates to Playwright, local dev support, and REST API
     description: |-
-      * [Playwright](/browser-rendering/platform/playwright/) upgraded to [Playwright v1.54.1](https://github.com/microsoft/playwright/releases/tag/v1.54.1) and [Playwright MCP](/browser-rendering/platform/playwright-mcp/) upgraded to be in sync with upstream Playwright MCP v0.0.30.
-      * Local development with `npx wrangler dev` now supports [Playwright](/browser-rendering/platform/playwright/) when using Browser Rendering. Upgrade to the latest version of wrangler to get started.
+      * [Playwright](/browser-rendering/playwright/) upgraded to [Playwright v1.54.1](https://github.com/microsoft/playwright/releases/tag/v1.54.1) and [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) upgraded to be in sync with upstream Playwright MCP v0.0.30.
+      * Local development with `npx wrangler dev` now supports [Playwright](/browser-rendering/playwright/) when using Browser Rendering. Upgrade to the latest version of wrangler to get started.
       * The [`/content` endpoint](/browser-rendering/rest-api/content-endpoint/) now returns the page's title, making it easier to identify pages.
       * The [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) now allows you to specify your own AI model for the extraction, using the `custom_ai` parameter.
       * The default viewport size on the [`/screenshot` endpoint](/browser-rendering/rest-api/screenshot-endpoint/) has been increased from 800x600 to 1920x1080. You can still override the viewport via request options.
@@ -49,7 +49,7 @@ entries:
   - publish_date: "2025-07-16"
     title: Pricing update to Browser Rendering
     description: |-
-      * Billing for Browser Rendering starts on August 20, 2025, with usage beyond the included [limits](/browser-rendering/platform/limits/) charged according to the new [pricing rates](/browser-rendering/platform/pricing/).
+      * Billing for Browser Rendering starts on August 20, 2025, with usage beyond the included [limits](/browser-rendering/limits/) charged according to the new [pricing rates](/browser-rendering/pricing/).
   - publish_date: "2025-07-03"
     title: Local development support
     description: |-
@@ -65,7 +65,7 @@ entries:
   - publish_date: "2025-05-26"
     title: Playwright MCP
     description: |-
-      * You can now deploy [Playwright MCP](/browser-rendering/platform/playwright-mcp/) and use any MCP client to get AI models to interact with Browser Rendering.
+      * You can now deploy [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) and use any MCP client to get AI models to interact with Browser Rendering.
   - publish_date: "2025-04-30"
     title: Automatic Request Headers
     description: |-
@@ -79,7 +79,7 @@ entries:
   - publish_date: "2025-04-04"
     title: Playwright support
     description: |-
-      * You can now use [Playwright's](/browser-rendering/platform/playwright/) browser automation capabilities from Cloudflare Workers.
+      * You can now use [Playwright's](/browser-rendering/playwright/) browser automation capabilities from Cloudflare Workers.
   - publish_date: "2025-02-27"
     title: New Browser Rendering REST API
     description: |-

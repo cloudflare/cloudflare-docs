@@ -18,6 +18,16 @@ Origin configuration parameters determine how `cloudflared` proxies traffic to y
 
 Hostname that `cloudflared` should expect from your origin server certificate. If null, the expected hostname is the service URL, for example `localhost` if the service is `https://localhost:443`.
 
+### matchSNItoHost
+
+| Default | UI name           |
+| ------- | ----------------- |
+| `false` | Match SNI to Host |
+
+When `true`, `cloudflared` will automatically set the Server Name Indication (SNI) during the TLS handshake to the hostname of the incoming request. 
+
+This setting is useful when directing traffic to entry points that host multiple services and rely on SNI to route requests or present the correct certificate. It eliminates the need to explicitly configure [`originServerName`](#originservername) for individual services when using wildcard routing.
+
 ### caPool
 
 | Default | UI name                    |

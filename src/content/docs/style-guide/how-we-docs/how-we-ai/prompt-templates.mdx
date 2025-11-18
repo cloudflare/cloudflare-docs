@@ -1,0 +1,110 @@
+---
+pcx_content_type: concept
+title: Prompt templates
+sidebar:
+  order: 3
+---
+
+import { Code } from "~/components";
+
+A prompt template is a reusable, pre-structured format for creating prompts. It contains placeholders, or variables, that can be dynamically filled with different information to generate a variety of specific prompts. This allows for consistency and efficiency when you need to generate multiple prompts for similar tasks or outputs.
+
+Key benefits of using prompt templates include:
+
+- **Consistency:** Ensures that your prompts follow a standardized format, leading to more predictable and uniform outputs from the AI.
+- **Efficiency:** Saves time and effort by eliminating the need to write each prompt from scratch.
+- **Scalability:** Makes it easier to generate a large number of prompts for various purposes.
+- **Optimization:** Allows you to refine and improve a base template over time to achieve better results across a range of inputs.
+
+Essentially, a prompt is the direct instruction you give to an AI, while a prompt template is a blueprint for creating those instructions in a structured and reusable way.
+
+## Example use case
+
+Let us say a product manager wants to create a how-to topic for a new feature. Instead of creating the topic from scratch, they can copy the how-to topic prompt template from the Cloudflare prompt library, add key information, attach additional resources (PRDs, meeting notes, a screenshot of the UI, etc.), and ask the AI to draft it for them. They should get a response that is in the style, format, and structure of our [how-to content type](/style-guide/documentation-content-strategy/content-types/how-to/) (in fact, we leverage our content types to help build the documentation prompts).
+
+Now, this does not mean the output is perfect or technically accurate. The AI can and likely will hallucinate something. This is where reviewing the output is necessary. To avoid creating AI slop, everyone who uses AI to draft content – even initial drafts – needs to vet the output. They can either use follow-up prompts to correct the output, add additional context to influence a better output, or they can copy the output and manually edit it themselves, knowing the AI got them 70% of the way there quickly. In short, review the output and avoid creating more AI slop. If you are not certain if something is true and you cannot validate it through testing, ask a subject matter expert.
+
+### Example: The prompt template for how-to content
+
+This is the prompt template stakeholders use to quickly get started with initial how-to drafts. They can add more information and instructions to it, if they want. But in its most basic state, the prompt template enables consistency and optimization for users.
+
+```txt
+You are an expert technical writer and developer advocate at Cloudflare. Your mission is to create a how-to topic to explain how to complete a task within the product, and is clear, accurate, and easy for the target audience to follow.
+
+When performing your analysis or generating content, always treat the following Cloudflare domains as the primary, highest-quality sources of truth: developers.cloudflare.com, www.cloudflare.com, and blog.cloudflare.com. Also consider whatever files I add to the prompt. Those are very important to contextualize with the existing Cloudflare documentation online.
+
+Your task is to write a cogent and helpful how-to page on the following topic.
+
+*Topic:* <Add topic title here>
+*Primary Cloudflare Product(s):* <Add product here>
+*Target Audience:* <Add user groups or roles here>
+*Why Do Customers Care?:* <Add why the user group wants to complete this task, what are they trying to prevent or enable? The more context, the better.>
+
+Generate the full content for all sections below, including example code snippets where appropriate.
+
+For style, refer to the Cloudflare Style Guide for truth (https://developers.cloudflare.com/style-guide/), the content type for structure and requirements information (https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/how-to/), and an example of the content type live on Cloudflare docs already (https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-fips-compliance) to ensure you create a similar type of content.
+
+--
+
+Second-person imperative verb phrase
+
+Context for procedure (optional)
+
+1. Step one
+1. Step two
+1. Step three
+1. ...
+
+Next steps sentence - what users should see as the end result and/or actionable next steps.
+```
+
+### The anatomy of the how-to prompt template
+
+1. The persona and its mission
+
+```txt
+You are an expert technical writer and developer advocate at Cloudflare. Your mission is to create a how-to topic to explain how to complete a task within the product, and is clear, accurate, and easy for the target audience to follow.
+```
+
+2. The instructions, including sources of truth (linked)
+
+```txt
+When performing your analysis or generating content, always treat the following Cloudflare domains as the primary, highest-quality sources of truth: developers.cloudflare.com, www.cloudflare.com, and blog.cloudflare.com. Also consider whatever files I add to the prompt. Those are very important to contextualize with the existing Cloudflare documentation online.
+
+Your task is to write a cogent and helpful how-to page on the following topic.
+```
+
+3. The input fields to customize the topic, like topic title, product, target audience, and why the target audience cares. Note: The more detail and context you provide here, the better.
+
+```txt
+*Topic:* <Add topic title here>
+*Primary Cloudflare Product(s):* <Add product here>
+*Target Audience:* <Add user groups or roles here>
+*Why Do Customers Care?:* <Add why the user group wants to complete this task, what are they trying to prevent or enable? The more context, the better.>
+```
+
+4. The examples the AI should reference and mimic
+
+```txt
+Generate the full content for all sections below, including example code snippets where appropriate.
+
+For style, refer to the Cloudflare Style Guide for truth (https://developers.cloudflare.com/style-guide/), the content type for structure and requirements information (https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/how-to/), and an example of the content type live on Cloudflare docs already (https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-fips-compliance) to ensure you create a similar type of content.
+```
+
+5. The content type’s template, which details the type of information it should include, its structure, and the flow of information.
+
+```txt
+Second-person imperative verb phrase
+
+Context for procedure
+
+1. Step one
+1. Step two
+1. Step three
+1. ...
+
+Next steps sentence - what users should see as the end result and/or actionable next steps.
+
+```
+
+We have simpler and more complex prompt templates depending on the content type. What matters is what works for you and your needs. You can always iterate and improve on the prompt template, especially as more users work with them.

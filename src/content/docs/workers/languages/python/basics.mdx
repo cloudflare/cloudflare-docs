@@ -1,0 +1,169 @@
+---
+pcx_content_type: concept
+title: The Basics
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Learn the basics of Python Workers
+description: Learn the basics of Python Workers
+---
+
+import { WranglerConfig } from "~/components";
+
+## Fetch Handler
+
+As mentioned in the [introduction to Python Workers](/workers/languages/python/), a Python Worker can be as simple as four lines of code:
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello World!")
+```
+
+Similar to other Workers, the main entry point for a Python worker is the [`fetch` handler](/workers/runtime-apis/handlers/fetch) which handles incoming requests
+sent to the Worker.
+
+In a Python Worker, this handler is placed in a `Default` class that extends the `WorkerEntrypoint` class (which you can import from the `workers` SDK module).
+
+## The `Request` Interface
+
+The `request` parameter passed to your `fetch` handler is a JavaScript Request object, exposed via the [foreign function interface (FFI)](/workers/languages/python/ffi),
+allowing you to access it directly from your Python code.
+
+Let's try editing the worker to accept a POST request. We know from the
+[documentation for `Request`](/workers/runtime-apis/request) that we can call
+`await request.json()` within an `async` function to parse the request body as
+JSON.
+
+In a Python Worker, you would write:
+
+```python
+from workers import WorkerEntrypoint, Response
+from hello import hello
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        name = (await request.json()).name
+        return Response(hello(name))
+```
+
+Many other JavaScript APIs are available in Python Workers via the FFI, so you can
+call other methods in a similar way.
+
+Once you edit the `src/entry.py`, Wrangler will automatically restart the local
+development server.
+
+Now, if you send a POST request with the appropriate body,
+your Worker will respond with a personalized message.
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"name": "Python"}' http://localhost:8787
+```
+
+```bash output
+Hello, Python!
+```
+
+## The `env` Attribute
+
+The `env` attribute on the `WorkerEntrypoint` can be used to access
+[environment variables](/workers/configuration/environment-variables/),
+[secrets](/workers/configuration/secrets/),and
+[bindings](/workers/runtime-apis/bindings/).
+
+For example, let us try setting and using an environment variable in a Python Worker. First, add the environment variable to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
+
+```toml
+name = "hello-python-worker"
+main = "src/entry.py"
+compatibility_flags = ["python_workers"]
+compatibility_date = "2025-11-02"
+
+[vars]
+API_HOST = "example.com"
+```
+
+</WranglerConfig>
+
+Then, you can access the `API_HOST` environment variable via the `env` parameter:
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response(self.env.API_HOST)
+```
+
+## Modules
+
+Python workers can be split across multiple files.
+
+Let's create a new Python file, called `src/hello.py`:
+
+```python
+def hello(name):
+    return "Hello, " + name + "!"
+```
+
+Now, we can modify `src/entry.py` to make use of the new module.
+
+```python
+from hello import hello
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response(hello("World"))
+```
+
+Once you edit `src/entry.py`, [`pywrangler`](/workers/languages/python/#the-pywrangler-cli-tool) will automatically detect the change and
+reload your Worker.
+
+## Types and Autocompletion
+
+When developing Python Workers, you can take advantage of type hints and autocompletion
+in your IDE.
+
+To enable them, install the `workers-runtime-sdk` package in your `pyproject.toml` file.
+
+```toml
+[dependency-groups]
+dev = [
+    "workers-py",
+    "workers-runtime-sdk"
+]
+```
+
+Additionally, you can generate types based on your Worker configuration using `uv run pywrangler types`
+
+This includes Env types based on your bindings, module rules, and runtime types based on the compatibility_date
+and compatibility_flags in your config file.
+
+## Upgrading `pywrangler`
+
+To upgrade to the latest version of [`pywrangler`](/workers/languages/python/#the-pywrangler-cli-tool) globally, run the following command:
+
+```bash
+uv tool upgrade workers-py
+```
+
+To upgrade to the latest version of `pywrangler` in a specific project, run the following command:
+
+```bash
+uv lock --upgrade-package workers-py
+```
+
+## Next Up
+
+- Learn details about local development, deployment, and [how Python Workers work](/workers/languages/python/how-python-workers-work).
+- Explore the [package](/workers/languages/python/packages) docs for instructions on how to use packages with Python Workers.
+- Understand which parts of the [Python Standard Library](/workers/languages/python/stdlib) are supported in Python Workers.
+- Learn about Python Workers' [foreign function interface (FFI)](/workers/languages/python/ffi), and how to use it to work with [bindings](/workers/runtime-apis/bindings) and [Runtime APIs](/workers/runtime-apis/).

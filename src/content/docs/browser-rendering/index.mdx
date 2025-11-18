@@ -25,7 +25,7 @@ Run headless Chrome on [Cloudflare's global network](/workers/) for browser auto
 
 <Plan type="workers-all" />
 
-Browser Rendering enables developers to programmatically control and interact with headless browser instances running on Cloudflare’s global network. 
+Browser Rendering enables developers to programmatically control and interact with headless browser instances running on Cloudflare’s global network.
 
 ## Use Cases
 
@@ -37,15 +37,15 @@ Browser Rendering supports a wide range of use cases, including:
 - Build web scrapers that target specific elements or extract all links using the [scrape endpoint](/browser-rendering/rest-api/scrape-endpoint/) and [links endpoint](/browser-rendering/rest-api/links-endpoint/)
 - Parse and structure webpage data into JSON format using the [json endpoint](/browser-rendering/rest-api/json-endpoint/)
 
-Browser Rendering is also ideal for agentic workflows. Use [Puppeteer](/browser-rendering/platform/puppeteer/), [Playwright](/browser-rendering/platform/playwright/), [Playwright MCP](/browser-rendering/platform/playwright-mcp/), or [Stagehand](/browser-rendering/platform/stagehand/) to power AI agents that interact with web pages and extract data where APIs do not exist.
+Browser Rendering is also ideal for agentic workflows. Use [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), [Playwright MCP](/browser-rendering/playwright/playwright-mcp/), or [Stagehand](/browser-rendering/stagehand/) to power AI agents that interact with web pages and extract data where APIs do not exist.
 
 ## Key features
 
 - **Scale to thousands of browsers**: Instant access to a global pool of browsers with low cold-start time, ideal for high-volume screenshot generation, data extraction, or automation at scale
 - **Global by default**: Browser sessions run on Cloudflare's edge network, opening close to your users for better speed and availability worldwide
-- **Easy to integrate**: [REST APIs](/browser-rendering/rest-api/) for common actions, while [Puppeteer](/browser-rendering/platform/puppeteer/) and [Playwright](/browser-rendering/platform/playwright/) provide familiar automation libraries for complex workflows
+- **Easy to integrate**: [REST APIs](/browser-rendering/rest-api/) for common actions, while [Puppeteer](/browser-rendering/puppeteer/) and [Playwright](/browser-rendering/playwright/) provide familiar automation libraries for complex workflows
 - **Session management**: [Reuse browser sessions](/browser-rendering/workers-bindings/reuse-sessions/) across requests to improve performance and reduce cold-start overhead
-- **Flexible pricing**: Pay only for browser time used with generous free tier ([view pricing](/browser-rendering/platform/pricing/))
+- **Flexible pricing**: Pay only for browser time used with generous free tier ([view pricing](/browser-rendering/pricing/))
 
 ## Integration Methods
 
@@ -72,7 +72,7 @@ A globally distributed coordination API with strongly consistent storage. Using 
 
 <RelatedProduct header="Agents" href="/agents/" product="agents">
 
-Build AI-powered agents that autonomously navigate websites and perform tasks using [Playwright MCP](/browser-rendering/platform/playwright-mcp/) or [Stagehand](/browser-rendering/platform/stagehand/).
+Build AI-powered agents that autonomously navigate websites and perform tasks using [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) or [Stagehand](/browser-rendering/stagehand/).
 
 </RelatedProduct>
 
@@ -90,7 +90,7 @@ Build AI-powered agents that autonomously navigate websites and perform tasks us
 
 <LinkTitleCard
 	title="Limits"
-	href="/browser-rendering/platform/limits/"
+	href="/browser-rendering/limits/"
 	icon="document"
 >
 	Learn about Browser Rendering limits.
@@ -99,14 +99,14 @@ Build AI-powered agents that autonomously navigate websites and perform tasks us
 <LinkTitleCard
   title="Pricing"
   icon="seti:shell"
-  href="/browser-rendering/platform/pricing/"
+  href="/browser-rendering/pricing/"
 >
   Learn about Browser Rendering pricing.
 </LinkTitleCard>
 
 <LinkTitleCard
 	title="Playwright API"
-	href="/browser-rendering/platform/playwright/"
+	href="/browser-rendering/playwright/"
 	icon="pen"
 >
 	Use Cloudflare's fork of Playwright for testing and automation.

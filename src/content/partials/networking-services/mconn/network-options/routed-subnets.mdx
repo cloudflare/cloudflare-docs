@@ -1,16 +1,13 @@
 ---
 params:
-  - productName
   - netSubnetURL
   - hardConnectorURL
   - virtualConnectorURL
-  - configHardProductName
-  - configVirtualProductName
 ---
 
-Each LAN interface (physical port + VLAN tag) on {props.productName} is part of a _directly-attached subnet_. When you specify a static address for the LAN interface, you indicate both the interface's address as well as the subnet it attaches to. For example, `192.168.100.13/24` means the LAN interface has the IP address `192.168.100.13`, and is part of the subnet `192.168.100.0/24`.
+Each LAN interface (physical port + VLAN tag) on Magic WAN Connector is part of a _directly-attached subnet_. When you specify a static address for the LAN interface, you indicate both the interface's address as well as the subnet it attaches to. For example, `192.168.100.13/24` means the LAN interface has the IP address `192.168.100.13`, and is part of the subnet `192.168.100.0/24`.
 
-Some LANs are more complex. In addition to the directly-attached subnet, they might have additional subnets sitting behind L3 routers south of the {props.productName}. We call these _routed subnets_.
+Some LANs are more complex. In addition to the directly-attached subnet, they might have additional subnets sitting behind L3 routers south of the Magic WAN Connector. We call these _routed subnets_.
 
 Refer to the diagram below for an example of how this might work:
 
@@ -26,7 +23,7 @@ Blue represents directly-attached subnets, and red represents routed subnets.
 
 		a((WAN)) --> b
 
-		subgraph b [${props.productName}]
+		subgraph b [Magic WAN Connector]
 		direction TB
 		c(LAN 1)
 		d(LAN n)
@@ -51,11 +48,11 @@ Blue represents directly-attached subnets, and red represents routed subnets.
 
 To add a routed subnet to your LAN, you need:
 
-- **A prefix**: The subnet's CIDR prefix; Cloudflare will automatically install static routes to this prefix in our global network (to forward [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) for this subnet to the right {props.productName}), and in your {props.productName} (to forward packets for this subnet to the right LAN interface). In the figure above, the routed subnet in the center has the prefix `192.168.200.0/24`.
-- **A next-hop address**: The address of the L3 router to which the {props.productName} should forward packets for this subnet. In the figure, the routed subnet in the center has the next-hop address `192.168.100.10`.
+- **A prefix**: The subnet's CIDR prefix; Cloudflare will automatically install static routes to this prefix in our global network (to forward [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) for this subnet to the right Magic WAN Connector), and in your Magic WAN Connector (to forward packets for this subnet to the right LAN interface). In the figure above, the routed subnet in the center has the prefix `192.168.200.0/24`.
+- **A next-hop address**: The address of the L3 router to which the Magic WAN Connector should forward packets for this subnet. In the figure, the routed subnet in the center has the next-hop address `192.168.100.10`.
 
 Optionally, you can also <a href={props.netSubnetURL}>enable NAT for a subnet</a> by providing a static overlay prefix.
 
 ## Create routed subnets
 
-For more information on how to create routed subnets, refer to **Create a LAN**, either in either in <a href={props.hardConnectorURL}>{props.configHardProductName}</a> or in <a href={props.virtualConnectorURL}>{props.configVirtualProductName}</a>.
+For more information on how to create routed subnets, refer to **Create a LAN**, either in either in <a href={props.hardConnectorURL}>Configure hardware Connector</a> or in <a href={props.virtualConnectorURL}>Configure Virtual Connector</a>.

@@ -66,6 +66,44 @@ Update `wrangler.jsonc` to reference your Dockerfile:
 
 When you run `wrangler dev` or `wrangler deploy`, Wrangler automatically builds your Docker image and pushes it to Cloudflare's container registry. You don't need to manually build or publish images.
 
+## Custom startup scripts
+
+Run services automatically when the container starts by creating a custom startup script:
+
+```dockerfile title="Dockerfile"
+FROM docker.io/cloudflare/sandbox:0.3.3
+
+COPY my-app.js /workspace/my-app.js
+COPY startup.sh /workspace/startup.sh
+RUN chmod +x /workspace/startup.sh
+CMD ["/workspace/startup.sh"]
+```
+
+```bash title="startup.sh"
+#!/bin/bash
+
+# Start your services in the background
+node /workspace/my-app.js &
+
+# Must end with this command
+exec bun /container-server/dist/index.js
+```
+
+Your startup script must end with `exec bun /container-server/dist/index.js` to start the SDK's control plane.
+
+### Multiple services
+
+```bash title="startup.sh"
+#!/bin/bash
+
+redis-server --daemonize yes
+until redis-cli ping; do sleep 1; done
+
+node /workspace/api-server.js &
+
+exec bun /container-server/dist/index.js
+```
+
 ## Related resources
 
 - [Image Management](/containers/platform-details/image-management/) - Building and pushing images to Cloudflare\'s registry

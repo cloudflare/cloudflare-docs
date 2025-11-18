@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - dashName
 ---
 
@@ -11,8 +10,8 @@ import { DashButton, Markdown } from '~/components';
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
-		2. Go to **Connectors** > **Appliances** > **Profiles**.
-		3. Find the ${props.productName} you want to deactivate, select the three dots next to it > **Edit**.
+		2. Go to **Connectors** > **Appliances** > **Appliances**.
+		3. Find the Magic WAN Connector you want to deactivate, select the three dots next to it > **Edit**.
 	`}
 	inline={false}
 	/>
@@ -28,7 +27,7 @@ import { DashButton, Markdown } from '~/components';
 		<DashButton url="/?to=/:account/magic-wan/configuration" />
 		<Markdown
 	text={`
-		3. In the **${props.productName}** tab, find the ${props.productName} you want to deactivate, select the three dots next to it > **Edit**.
+		3. In the **Magic WAN Connector** tab, find the Magic WAN Connector you want to deactivate, select the three dots next to it > **Edit**.
 	`}
 	inline={false}
 	/>

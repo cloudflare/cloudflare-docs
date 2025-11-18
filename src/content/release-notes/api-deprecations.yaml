@@ -3,6 +3,39 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2025-11-03"
+    title: "Cloudflare Mirage"
+    description: |-
+      Deprecation date: November 2025
+
+      End of life date: January 2026
+
+      Following on from the [deprecation of Cloudflare Mirage](/speed/optimization/images/mirage/), the following API endpoints that manage Mirage settings are now deprecated and will be sunsetted in January 2026.
+
+      Deprecated APIs:
+
+      - `GET /zones/{zone_id}/settings/mirage`
+      - `PATCH /zones/{zone_id}/settings/mirage`
+
+      Affected APIs:
+
+      - `GET /zones/{zone_id}/pagerules/settings` - Mirage will be removed from available settings.
+      - `POST /zones/{zone_id}/pagerules` - Mirage parameter will be removed.
+      - `PATCH /zones/{zone_id}/pagerules/{rule_id}` - Mirage parameter will be removed.
+      - `PUT /zones/{zone_id}/pagerules/{rule_id}` - Mirage parameter will be removed.
+      - `GET /zones/{zone_id}/rulesets/{ruleset_id}` - Mirage parameter in `set_config` action will be removed.
+      - `GET /zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_id}` - Mirage parameter in `set_config` action will be removed.
+      - `POST /zones/{zone_id}/rulesets` - Mirage parameter in `set_config` action will be removed.
+      - `PUT /zones/{zone_id}/rulesets/{ruleset_id}` - Mirage parameter in `set_config` action will be removed.
+      - `POST /zones/{zone_id}/rulesets/{ruleset_id}/rules` - Mirage parameter in `set_config` action will be removed.
+      - `PATCH /zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}` - Mirage parameter in `set_config` action will be removed.
+      - `GET /accounts/{account_id}/rulesets/{ruleset_id}` - Mirage parameter in `set_config` action will be removed.
+      - `GET /accounts/{account_id}/rulesets/{ruleset_id}/versions/{version_id}` - Mirage parameter in `set_config` action will be removed.
+      - `POST /accounts/{account_id}/rulesets` - Mirage parameter in `set_config` action will be removed.
+      - `PUT /accounts/{account_id}/rulesets/{ruleset_id}` - Mirage parameter in `set_config` action will be removed.
+      - `POST /accounts/{account_id}/rulesets/{ruleset_id}/rules` - Mirage parameter in `set_config` action will be removed.
+      - `PATCH /accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}` - Mirage parameter in `set_config` action will be removed.
+
   - publish_date: "2025-10-15"
     title: "Cloudflare Radar: Summary and Timeseries Groups Endpoints"
     description: |-
