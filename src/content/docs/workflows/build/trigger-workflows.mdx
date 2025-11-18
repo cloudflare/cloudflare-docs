@@ -162,7 +162,8 @@ await instance.restart() // Returns Promise<void>
 
 Restarting an instance will immediately cancel any in-progress steps, erase any intermediate state, and treat the Workflow as if it was run for the first time. However, the restarted instance will maintain the concurrency slot of the previous instance. 
 
-:::caution[Exercise caution when using the `restart()` method to avoid concurrency slot deprivation. If you call the `restart()` method recursively without a conditional, that instance will run indefinitely, effectively eliminating a concurrency slot from your queue.]
+:::caution[Exercise caution when using the `restart()` method to avoid concurrency slot deprivation. If you call the `restart()` method recursively without a conditional, that instance will run indefinitely, effectively eliminating a concurrency slot from your queue.] 
+
 
 The following example shows how you can use the `restart` method to maintain a document processing pipeline:
 
