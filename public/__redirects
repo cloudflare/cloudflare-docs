@@ -2330,9 +2330,8 @@
 /cloudflare-one/api-terraform/access-api-examples/* /api/resources/zero_trust/subresources/access/subresources/policies/ 301
 
 # Email Security new revamp (dynamics)
-/cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/detection-settings/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
-/cloudflare-one/email-security/detection-settings/impersonation-registry/* /cloudflare-one/email-security/settings/detection-settings/impersonation-registry/:splat 301
+/cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/email-monitoring/* /cloudflare-one/email-security/monitoring/:splat 301
 /cloudflare-one/email-security/phish-guard/* /cloudflare-one/email-security/phishguard/:splat 301
 /cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/phish-submissions/:splat 301
