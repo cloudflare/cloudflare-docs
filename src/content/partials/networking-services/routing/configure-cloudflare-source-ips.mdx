@@ -15,7 +15,7 @@ You must configure routes in your network so that response traffic for these sou
 ## Prerequisites
 
 Before you begin, ensure that:
-- You have `Cloudflare One Networks Write` permission.
+- You have [Cloudflare One Networks Write](/fundamentals/api/reference/permissions/) permission.
 - Your desired new network range meets the following requirements:
   - It must be defined as a single CIDR with a prefix length of `/12`.
   - Cloudflare One subnets in the same account cannot overlap. For example, the default source range used by WARP Clients (`100.96.0.0/12`) and the destination range used by Private Load Balancers (`100.112.0.0/16`).
@@ -34,9 +34,7 @@ The following Connectors are affected:
 
 ## Configure source IPs via API
 
-Currently, you must use the Cloudflare API to configure this setting. To set up your source IPs:
-
-Send a `PATCH` request to the [`cloudflare_source` resource](/api/resources/zero_trust/subresources/networks/subresources/subnets/subresources/cloudflare_source/) with your desired network range. The payload must include the network (your new `/12` range), and may include a name and comment.
+Currently, you must use the Cloudflare API to configure this setting. To set up your source IPs, send a `PATCH` request to the [Update Cloudflare Source Subnet endpoint](/api/resources/zero_trust/subresources/networks/subresources/subnets/subresources/cloudflare_source/) with your desired network range. The payload must include the network (your new `/12` range), and may include a name and comment.
 
 Example:
 
