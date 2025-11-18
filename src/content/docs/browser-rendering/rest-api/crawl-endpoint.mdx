@@ -147,7 +147,7 @@ The following optional parameters can be used in your crawl request, in addition
 | Optional parameter | Type | Description |
 | --- | --- | --- |
 | `limit` | Number | Maximum number of pages to crawl (default is 10, maximum is 100,000) |
-| `depth` | Number | Maximum link depth to crawl from the starting URL |
+| `depth` | Number | Maximum link depth to crawl from the starting URL (default is 100000, maximum is 100000) |
 | `formats` | Array of strings | Response format (default is HTML, other options are Markdown and JSON) |
 | `render` | Boolean | If false, does a fast HTML fetch without executing Javascript (default is true, [learn more about `render`](#render-parameter)) |
 | `maxAge` | Number | The maximum age of a cached resource that can be returned in seconds (default is 86,400 – 1 day, maximum is 604,800 – 7 days)|
