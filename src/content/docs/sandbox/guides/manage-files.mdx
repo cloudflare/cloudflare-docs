@@ -70,6 +70,10 @@ const imageFile = await sandbox.readFile('/workspace/image.png', { encoding: 'ba
 return new Response(atob(imageFile.content), {
   headers: { 'Content-Type': 'image/png' }
 });
+
+// Force encoding for transmission (text → base64)
+const textAsBase64 = await sandbox.readFile('/workspace/data.txt', { encoding: 'base64' });
+// Useful for transmitting text files without encoding issues
 ```
 </TypeScriptExample>
 
@@ -116,15 +120,20 @@ await Promise.all(
 
 <TypeScriptExample>
 ```
-try {
-  await sandbox.readFile('/workspace/config.json');
-  console.log('File exists');
-} catch (error) {
-  if (error.code === 'FILE_NOT_FOUND') {
-    // Create default config
-    await sandbox.writeFile('/workspace/config.json', '{}');
-  }
+const result = await sandbox.exists('/workspace/config.json');
+if (!result.exists) {
+  // Create default config
+  await sandbox.writeFile('/workspace/config.json', '{}');
 }
+
+// Check directory
+const dirResult = await sandbox.exists('/workspace/data');
+if (!dirResult.exists) {
+  await sandbox.mkdir('/workspace/data');
+}
+
+// Also available on sessions
+const sessionResult = await session.exists('/workspace/temp.txt');
 ```
 </TypeScriptExample>
 
@@ -165,6 +174,26 @@ await sandbox.writeFile('/workspace/image.png', base64Data, {
 const file = await sandbox.readFile('/workspace/image.png', {
   encoding: 'base64'
 });
+```
+</TypeScriptExample>
+
+### Base64 validation errors
+
+When writing with `encoding: 'base64'`, content must contain only valid base64 characters:
+
+<TypeScriptExample>
+```
+try {
+  // Invalid: contains invalid base64 characters
+  await sandbox.writeFile('/workspace/data.bin', 'invalid!@#$', {
+    encoding: 'base64'
+  });
+} catch (error) {
+  if (error.code === 'VALIDATION_FAILED') {
+    // Content contains invalid base64 characters
+    console.error('Invalid base64 content');
+  }
+}
 ```
 </TypeScriptExample>
 
