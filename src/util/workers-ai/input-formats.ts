@@ -161,4 +161,15 @@ export const INPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.prompt")(schema),
 		generateExample: () => templates.textToImagePrompt(),
 	},
+
+	// Summarization
+	{
+		id: "summarization-input",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Summarization" &&
+			schemaMatchers.hasProperty("properties.input_text")(schema),
+		generateExample: () => templates.summarizationInput(),
+	},
 ];

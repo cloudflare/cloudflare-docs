@@ -355,3 +355,12 @@ export const ttsMelottsOutput = () => `{
 export const textToImageOutput = () => `{
   "image": "base64-encoded image data..."
 }`;
+
+export const summarizationInput = () => `{
+  "input_text": "Your long article or text to summarize goes here. This text can be several paragraphs or even pages long, and the model will generate a concise summary of the key points.",
+  "max_length": 1024
+}`;
+
+export const summarizationOutput = () => `{
+  "summary": "A concise summary of the input text highlighting the main points and key information."
+}`;

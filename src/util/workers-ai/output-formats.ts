@@ -190,4 +190,15 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 			schema.properties.audio.description?.includes("base64-encoded"),
 		generateExample: () => templates.ttsMelottsOutput(),
 	},
+
+	// Summarization Output
+	{
+		id: "summarization-output",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Summarization" &&
+			schemaMatchers.hasProperty("properties.summary")(schema),
+		generateExample: () => templates.summarizationOutput(),
+	},
 ];
