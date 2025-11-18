@@ -157,28 +157,6 @@
                                                         }
                                                     }
                                                 }
-                                            },
-                                            {
-                                                "type": "object",
-                                                "properties": {
-                                                    "type": {
-                                                        "type": "string",
-                                                        "description": "Type of the content provided"
-                                                    },
-                                                    "text": {
-                                                        "type": "string"
-                                                    },
-                                                    "image_url": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "url": {
-                                                                "type": "string",
-                                                                "pattern": "^data:*",
-                                                                "description": "image uri with data (e.g. data:image/jpeg;base64,/9j/...). HTTP URL will not be accepted"
-                                                            }
-                                                        }
-                                                    }
-                                                }
                                             }
                                         ]
                                     }
