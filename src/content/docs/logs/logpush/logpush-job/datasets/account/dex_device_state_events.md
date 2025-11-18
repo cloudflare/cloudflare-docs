@@ -57,7 +57,7 @@ Type: `array[object]`
 
 The top applications by percentage of CPU used, for example `[{"name": "app0", "percentage": 0.55}, {"name": "app1", "percentage": 0.45}]`.
 
-## ClientPlatform
+#client platform2413
 
 Type: `string`
 
@@ -145,7 +145,8 @@ Whether the system-level firewall is enabled or disabled.
 
 Type: `string`
 
-The private IPv4 address of the gateway/router the device is connected to.
+The private ip54
+address of the gateway/router the device is connected to.
 
 ## GatewayIPv4Netmask
 
