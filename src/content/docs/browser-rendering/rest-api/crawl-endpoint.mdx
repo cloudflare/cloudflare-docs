@@ -70,6 +70,15 @@ curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
+The response includes a `status` field indicating the current state of the crawl job. The possible job statuses are:
+
+- `running` — The crawl job is currently in progress.
+- `cancelled_due_to_timeout` — The crawl job exceeded the maximum run time of 7 days.
+- `cancelled_due_to_limits` — The crawl job was cancelled because it hit [account limits](/browser-rendering/platform/limits/).
+- `cancelled_by_user` — The crawl job was manually cancelled by the user.
+- `errored` — The crawl job encountered an error.
+- `completed` — The crawl job finished successfully.
+
 You can also use optional query parameters to filter and paginate results:
 - `cursor` — Cursor for pagination.
 - `limit` — Maximum number of records to return.
