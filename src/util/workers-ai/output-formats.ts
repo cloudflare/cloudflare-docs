@@ -261,4 +261,16 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("items.properties.score")(schema),
 		generateExample: () => templates.imageClassificationOutput(),
 	},
+
+	// Voice Activity Detection Output
+	{
+		id: "voice-activity-detection-output",
+		label: "JSON",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Voice Activity Detection" &&
+			schemaMatchers.hasProperty("properties.is_complete")(schema) &&
+			schemaMatchers.hasProperty("properties.probability")(schema),
+		generateExample: () => templates.voiceActivityDetectionOutput(),
+	},
 ];

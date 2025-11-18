@@ -453,3 +453,21 @@ export const imageClassificationOutput = () => `[
     "label": "dog"
   }
 ]`;
+
+export const voiceActivityDetectionStream = () => `{
+  "audio": {
+    "body": "<readable stream with audio data>",
+    "contentType": "audio/wav"
+  },
+  "dtype": "float32"
+}`;
+
+export const voiceActivityDetectionBase64 = () => `{
+  "audio": "<base64 encoded audio data>",
+  "dtype": "float32"
+}`;
+
+export const voiceActivityDetectionOutput = () => `{
+  "is_complete": true,
+  "probability": 0.95
+}`;

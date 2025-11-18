@@ -258,4 +258,29 @@ export const INPUT_FORMATS: FormatMatcher[] = [
 			schemaMatchers.hasProperty("properties.image.items")(schema),
 		generateExample: () => templates.imageClassificationImage(),
 	},
+
+	// Voice Activity Detection
+	{
+		id: "voice-activity-detection-stream",
+		label: "Stream",
+		priority: 1,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Voice Activity Detection" &&
+			schemaMatchers.hasProperty("properties.audio.properties.body")(schema) &&
+			schemaMatchers.hasProperty("properties.audio.properties.contentType")(
+				schema,
+			),
+		generateExample: () => templates.voiceActivityDetectionStream(),
+	},
+
+	{
+		id: "voice-activity-detection-base64",
+		label: "Base64",
+		priority: 2,
+		matches: (schema, ctx) =>
+			ctx.taskName === "Voice Activity Detection" &&
+			schemaMatchers.hasProperty("properties.audio")(schema) &&
+			schema.properties?.audio?.type === "string",
+		generateExample: () => templates.voiceActivityDetectionBase64(),
+	},
 ];
