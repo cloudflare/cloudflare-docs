@@ -2331,8 +2331,10 @@
 /ssl/ssl-for-saas/reference/* /cloudflare-for-platforms/cloudflare-for-saas/reference/ 301
 /ssl/ssl-for-saas/* /cloudflare-for-platforms/cloudflare-for-saas/:splat 301
 /cloudflare-for-saas/* /cloudflare-for-platforms/cloudflare-for-saas/:splat 301
+
 # CNI cloudflare Network Interconnect
 /network-interconnect/partners/* /network-interconnect/classic-cni/set-up/partners/:splat 301
+
 # Magic WAN
 /magic-wan/how-to/* /magic-wan/configuration/manually/how-to/:splat 301
 /magic-wan/third-party/* /magic-wan/configuration/manually/third-party/:splat 301
