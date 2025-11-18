@@ -1,22 +1,14 @@
-releaseNotes: >-
+releaseNotes: |-
   This release contains minor fixes and improvements including an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025. Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com/).
 
-
   **Changes and improvements**
-
   - MASQUE is now the default [tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) for all new WARP device profiles.
-
   - Improvement to limit idle connections in [Gateway with DoH mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) to avoid unnecessary resource usage that can lead to DoH requests not resolving.
-
   - Improvements to maintain [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-warp-override) settings when [switching between organizations](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/#switch-organizations-in-warp).
-
   - Improvements to maintain client connectivity during network changes.
 
-
   **Known issues**
-
   - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
-
 version: 2025.7.176.0
 releaseDate: 2025-09-30T20:20:30.460Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-arm/version/2025.7.176.0

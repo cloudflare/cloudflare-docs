@@ -188,7 +188,7 @@ entries:
     otherFilters: |-
       Available filters include:
 
-      * You can search for and add pools from your list of pools.
+      * You can search for and add pools from your list of pools. If no pools are selected, the alert will apply to all pools in the account.
       * You can also choose the trigger that fires the notification when the Load Balancing pool is **enabled**, **disabled**, and **either enabled or disabled**.
 
   - name: Load Balancing Health Alert

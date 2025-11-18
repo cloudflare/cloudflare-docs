@@ -1,0 +1,545 @@
+---
+pcx_content_type: navigation
+title: Build Your Own UI
+sidebar:
+  order: 5
+---
+import { Tabs, TabItem, Steps, Render } from '~/components';
+
+This guide explains how to use Cloudflare RealtimeKit SDKs to build fully custom real-time video UIs. It covers SDK architecture, integration patterns for various frameworks, and provides practical code Examples for both default and custom UI implementations.
+
+### Build Your Own UI - Code Examples
+
+If you’d like a head start, please feel free to explore our example code repositories, which can serve as a helpful foundation for your own UI projects.
+
+#### Web Examples
+- [Web Components](https://github.com/cloudflare/realtimekit-web-examples/tree/main/html-examples/examples/create-your-own-ui)
+- [React](https://github.com/cloudflare/realtimekit-web-examples/tree/main/react-examples/examples/create-your-own-ui)
+- [Angular](https://github.com/cloudflare/realtimekit-web-examples/tree/main/angular-examples/examples/create-your-own-ui)
+
+We’ll discuss the available SDKs, how they relate to each other, and how the provided code examples were built. We’ll also look at parts of the examples to better understand how the SDKs map to different features.
+
+### Core SDK vs UI Kit
+
+Before you start building your own UI, it’s helpful to understand how the SDKs are structured and how you can use them for different levels of customization.
+
+Most RealtimeKit platforms offer two main SDKs:
+
+1. **Core SDK**: Handles the core business logic, including all low-level WebRTC operations. The Core SDK gives you direct APIs for features like live video, audio, and streaming, abstracting away complex details. Use this if you want to build your UI from scratch or need maximum flexibility. 
+2. **UI Kit**: Sits on top of the Core SDK and provides a set of ready-made, customizable UI components. The UI Kit is the fastest way to get a polished real-time video and voice interface in your app, and is recommended for most users.
+
+Here’s a quick reference for the available SDKs, with links to their npm packages:
+
+| Framework/Library | Core SDK | UI Kit |
+| --- | --- | --- |
+| Web Components | [@cloudflare/realtimekit](https://www.npmjs.com/package/@cloudflare/realtimekit) | [@cloudflare/realtimekit-ui](https://www.npmjs.com/package/@cloudflare/realtimekit-ui) |
+| Angular | [@cloudflare/realtimekit](https://www.npmjs.com/package/@cloudflare/realtimekit) | [@cloudflare/realtimekit-angular-ui](https://www.npmjs.com/package/@cloudflare/realtimekit-angular-ui) |
+| React | [@cloudflare/realtimekit-react](https://www.npmjs.com/package/@cloudflare/realtimekit-react) | [@cloudflare/realtimekit-react-ui](https://www.npmjs.com/package/@cloudflare/realtimekit-react-ui) |
+| React Native | [@cloudflare/realtimekit-react-native](https://www.npmjs.com/package/@cloudflare/realtimekit-react-native) | [@cloudflare/realtimekit-react-native-ui](https://www.npmjs.com/package/@cloudflare/realtimekit-react-native-ui) |
+
+If you’re just getting started, the UI Kit is usually the best choice. If you need more control or want to build something completely custom, you can use the Core SDK directly.
+
+**Wrapper Packages**
+
+Some SDKs are "wrappers". They are built on top of the base SDKs to make integration easier in specific frameworks.
+
+For Web, the base Core SDK is `@cloudflare/realtimekit` and the base UI Kit is `@cloudflare/realtimekit-ui`. The UI Kit is based on [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) and built using [Stencil](https://stenciljs.com/). You can learn more in our open source [UI Kit Repo](https://github.com/cloudflare/realtimekit-ui).
+
+- **React:**
+  - `@cloudflare/realtimekit-react` wraps the core SDK `@cloudflare/realtimekit` to provide React hooks.
+  - `@cloudflare/realtimekit-react-ui` wraps the UI Kit `@cloudflare/realtimekit-ui` to provide React components.
+- **Angular:**
+  - `@cloudflare/realtimekit-angular-ui` wraps the UI Kit `@cloudflare/realtimekit-ui` to provide Angular components. The Core SDK for Angular is `@cloudflare/realtimekit`.
+  - It is to be noted that the Angular currently uses `@cloudflare/realtimekit` as the Core SDK and doesn't have its own wrapper, unlike React.
+
+### Lifecycle of a Peer in a Session
+
+Before you start integrating the SDK, it’s important to understand what happens to a peer as they move through a session. This helps you know which UI components to show at each stage.
+
+![Peer Lifecycle In a Session](~/assets/images/realtime/realtimekit/peer-lifecycle.svg)
+
+Here’s how the peer lifecycle works:
+
+1. **Initialization state**: When the SDK is initialized, the peer first sees a Setup Screen, where they can preview their audio and video before joining.
+2. **Join intent**: When the peer decides to join, one of two things happens:
+   - If waitlisting is enabled, they are moved to a Waitlist and see a Waitlist screen.
+   - If not waitlisted, they join the session and see the main Meeting screen (Stage), where they can interact with others.
+3. **During the session**: The peer can see and interact with others in the main Meeting screen (Stage).
+4. **Session transitions**:
+   - If the peer is rejected from the waitlist, they see a dedicated Rejected screen.
+   - If the peer is kicked out, they see an Ended screen and the session ends for them.
+   - If the peer leaves voluntarily, or if the meeting ends, they see an Ended screen, and the session ends for them.
+
+Each of these screens is built with UI Kit components, which you can fully customize to match your app’s design and requirements.
+
+The UI Kit SDKs automatically handle which notifications or screens to show at each state, so you don’t have to manage these transitions manually.
+
+### Initializing Core SDK
+
+To integrate the Core SDK, you will need to initialize it with a participant's auth token, and then use the provided SDK APIs to control the peer in the session.
+
+Initialization might differ slightly based on your tech stack. Please choose your preferred tech stack below.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+For Web Components, use `@cloudflare/realtimekit` as the Core SDK and `@cloudflare/realtimekit-ui` as the UI Kit.
+
+To get started, use the `RealtimeKitClient` class from the Core SDK to initialize your session.
+
+```html
+<script type="module">
+    import RealtimeKitClient from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js';
+    const meeting = await RealtimeKitClient.init({
+        authToken: '<participant_auth_token>'
+    });
+
+    await meeting.join();
+</script>
+```
+
+Alternatively, if you are supporting older browsers, you can use the UMD version of the SDK. This is a browser bundle that includes all dependencies.
+UMD version provides a global `RealtimeKitClient` object, on window, that you can use to initialize your session.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/browser.js"></script>
+<script>
+    const meeting = await RealtimeKitClient.init({
+        authToken: '<participant_auth_token>'
+    });
+
+    await meeting.join();
+</script>
+```
+
+After initialization, you can use the `meeting` object to join the session and control peer actions.
+
+To access the user's media tracks, use `meeting.self.videoTrack` and `meeting.self.audioTrack`. If not enabled, you can enable audio and video with `meeting.self.enableAudio()` and `meeting.self.enableVideo()`.
+
+For more details, see the [Core SDK API reference](https://docs.realtime.cloudflare.com/web-core/reference/RealtimeKitClient).
+
+</TabItem>
+<TabItem label="React">
+
+For React, use `@cloudflare/realtimekit-react` as the Core SDK (a React wrapper around `@cloudflare/realtimekit`) and `@cloudflare/realtimekit-react-ui` as the UI Kit.
+
+The React SDK provides hooks for reactivity and a provider component to wrap your app.
+
+```jsx
+import { RealtimeKitProvider, useRealtimeKitClient, useRealtimeKitSelector } from '@cloudflare/realtimekit-react';
+import { useEffect } from 'react';
+
+function App() {
+    const [meeting, initMeeting] = useRealtimeKitClient();
+    const [authToken, setAuthToken] = useState('<participant_auth_token>');
+    const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+    const videoTrack = useRealtimeKitSelector((m) => m.self.videoTrack);
+
+    useEffect(() => {
+        if(authToken) {
+            initMeeting({
+                authToken: authToken
+            });
+        }
+    }, [authToken]);
+
+    return (
+        <RealtimeKitProvider value={meeting}>
+            {/* Your app will be here, you can use videoEnabled and videoTrack to render the video */}
+            {/* Do not forget to call `meeting.join()` to see other participants, if any. */}
+        </RealtimeKitProvider>
+    );
+}
+```
+
+After initialization, you can use the `meeting` object to join the session and control peer actions.
+
+To access the user's media tracks, use `meeting.self.videoTrack` and `meeting.self.audioTrack`. If not enabled, you can enable audio and video with `meeting.self.enableAudio()` and `meeting.self.enableVideo()`.
+
+For (react)ivity, please use `useRealtimeKitSelector` hook.
+
+For more details, see the [Core SDK API reference](https://docs.realtime.cloudflare.com/web-core/reference/RealtimeKitClient).
+
+</TabItem>
+</Tabs>
+
+:::note
+See the [Getting Started guide](/realtime/realtimekit/getting-started/) for how to obtain a participant auth token.
+:::
+
+### Default Meeting UI Component
+
+In the previous example, you enabled audio and video, but you had to build your own buttons and connect everything manually, which can be a lot of work.
+
+The default RealtimeKit Meeting UI component gives you a complete meeting experience out of the box, with all the essential features built in. Just drop it into your app and you’re ready to go.
+
+If you need more control or want to customize things at a deeper level, you can use medium or low-level UI Kit components to build your own experience. For details, check out the [Building Your Own UI, With UI Kit](#building-your-own-ui-with-ui-kit) section below.
+
+Now, let’s update the example to use the UI Kit for a full-featured meeting with minimal effort.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+To use the custom HTML elements provided by the UI Kit, you need to import the UI Kit library.
+
+Add this import script to your HTML, ideally within the `head` tag.
+
+```html
+<script type="module">
+    import { defineCustomElements } from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui@latest/loader/index.es2017.js';
+    defineCustomElements();
+</script>
+```
+
+Place the rtk-meeting component in your HTML file.
+```html
+<body>
+    <rtk-meeting></rtk-meeting>
+</body>
+```
+
+Place the script tag in your HTML file.
+
+```html
+<script type="module">
+    import RealtimeKitClient from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js';
+    
+    const meeting = await RealtimeKitClient.init({
+        authToken: '<participant_auth_token>'
+    });
+
+    document.querySelector('rtk-meeting').showSetupScreen = true;
+    document.querySelector('rtk-meeting').meeting = meeting;
+</script>
+```
+`showSetupScreen` is a property that controls whether the setup screen should be shown or not. It is the screen where you can preview your audio video before joining the session.
+
+:::note
+Default Meeting UI (rtk-meeting component) auto joins the session therefore you don't have to call `meeting.join()`.
+:::
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import { RealtimeKitProvider, useRealtimeKitClient, useRealtimeKitSelector } from '@cloudflare/realtimekit-react';
+import { RtkMeeting } from '@cloudflare/realtimekit-react-ui';
+import { useEffect } from 'react';
+
+function App() {
+    const [meeting, initMeeting] = useRealtimeKitClient();
+    const [authToken, setAuthToken] = useState('<participant_auth_token>');
+
+    useEffect(() => {
+        if(authToken) {
+            initMeeting({
+                authToken: authToken
+            });
+        }
+    }, [authToken]);
+
+    return (
+        <RealtimeKitProvider value={meeting}>
+            <RtkMeeting showSetupScreen={true} meeting={meeting}/>
+        </RealtimeKitProvider>
+    );
+}
+```
+
+`showSetupScreen` is a property that controls whether the setup screen should be shown or not. It is the screen where you can preview your audio video before joining the session.
+
+:::note
+Default Meeting UI (RtkMeeting component) auto joins the session therefore you don't have to call `meeting.join()`.
+:::
+</TabItem>
+</Tabs>
+
+### Building Your Own UI, With UI Kit
+
+Sometimes, the default meeting UI component isn’t the perfect fit, especially if you want more control over the layout or behavior. In these cases, you can use medium or low-level UI Kit components to build a custom interface that matches your needs.
+
+The UI Kit provides a range of pre-built components (from low to high level) that sit on top of the Core SDK. This means you can mix and match pieces to create a unique meeting experience, while still saving time compared to building everything from scratch.
+
+Keep in mind, building a custom UI does require more effort than using the default meeting component. You’ll be responsible for things like managing participant audio, notifications, dialogs, component layout, and when to show or hide different screens.
+
+Let’s update our example to show how you can use the UI Kit to quickly assemble a simple, in-meeting (post joined) view, for your custom meeting UI.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+Place the rtk-ui-provider component in your HTML file, as well as the components that might be needed.
+
+```html
+<body style="margin: 0;">
+    <rtk-ui-provider style="display: flex; flex-direction: column; height: 100vh;">
+        <rtk-header></rtk-header>
+        <rtk-stage style="flex: 1; flex-grow: 1; flex-shrink: 1;">
+            <rtk-grid></rtk-grid>
+            <rtk-sidebar></rtk-sidebar>
+        </rtk-stage>
+        <rtk-controlbar></rtk-controlbar>
+        <rtk-notifications></rtk-notifications>
+        <rtk-participants-audio></rtk-participants-audio>
+        <rtk-dialog-manager></rtk-dialog-manager>
+    </rtk-ui-provider>
+</body>
+```
+
+`rtk-ui-provider` is just another UI Kit Component but it is special in nature, as it provides the meeting and many more props, to child UI components.
+
+Without `rtk-ui-provider`, you will have to set props, such as `meeting`, to all the UI Kit components manually.
+
+`rtk-ui-provider` helps you go from
+
+```html
+<rtk-header/>
+<!-- Later do document.querySelector('rtk-header').meeting = meeting; -->
+```
+
+to just
+
+```html
+<rtk-header/>
+```
+
+`rtk-header` is the header component that shows the session name and the session controls.<br/>
+`rtk-grid` is the grid component that shows the participants in the session.<br/>
+`rtk-controlbar` is the controlbar component that shows the controls, such as camera, microphone, etc.<br/>
+`rtk-notifications` is the notifications component that shows the notifications for the session.<br/>
+`rtk-participants-audio` is the audio component that helps you listen other participants in the session.<br/>
+`rtk-dialog-manager` is the dialog-manager component that shows the dialogs for the session.<br/>
+`rtk-sidebar` is the sidebar component that shows the sidebar, in which chat, polls content shows up.<br/>
+
+You can split all of these components further. To see more such components, refer to our [components library](https://docs.realtime.cloudflare.com/react-ui-kit/components) or [UI Kit repo](https://github.com/cloudflare/realtimekit-ui).
+
+Please note that you will need to manage the CSS for aligning these components, yourself. This was previously handled entirely by `rtk-meeting`.
+We will be providing a code example soon to make it easier for you.
+
+:::note
+You must include `rtk-notifications`, `rtk-participants-audio`, and `rtk-dialog-manager`. If you leave them out, features like settings toggles and notifications won’t work, and you won’t hear other participants in the session.
+:::
+
+Place the script tag in your HTML file.
+
+```html
+<script type="module">
+    import RealtimeKitClient from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js';
+    
+    const meeting = await RealtimeKitClient.init({
+        authToken: '<participant_auth_token>'
+    });
+
+    await meeting.join();
+    document.querySelector('rtk-ui-provider').meeting = meeting;
+</script>
+```
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import { RealtimeKitProvider, useRealtimeKitClient, useRealtimeKitSelector } from '@cloudflare/realtimekit-react';
+import { RtkUIProvider, RtkHeader, RtkGrid, RtkControlbar, RtkNotifications, RtkParticipantsAudio, RtkDialogManager } from '@cloudflare/realtimekit-react-ui';
+import { useEffect } from 'react';
+
+function App() {
+    const [meeting, initMeeting] = useRealtimeKitClient();
+    const [authToken, setAuthToken] = useState('<participant_auth_token>');
+
+    useEffect(() => {
+        if(authToken) {
+            initMeeting({
+                authToken: authToken
+            });
+        }
+    }, [authToken]);
+
+    useEffect(() => {
+        if(!meeting){
+            return;
+        }
+        meeting.join(); // Join method returns a promise.
+    }, [meeting]);
+
+    return (
+        <RealtimeKitProvider value={meeting}>
+            <RtkUiProvider meeting={meeting} style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
+                <RtkHeader style={{display: 'flex', justifyContent: 'space-between'}}/>
+                <RtkStage style={{flex: 1, flexGrow: 1, flexShrink: 1}}>
+                    <RtkGrid/>
+                    <RtkSidebar/>
+                </RtkStage>
+                <RtkControlbar style={{display: 'flex', justifyContent: 'space-between'}}/>
+                <RtkNotifications/>
+                <RtkParticipantsAudio/>
+                <RtkDialogManager/>
+            </RtkUiProvider>
+        </RealtimeKitProvider>
+    );
+}
+```
+
+`RtkUIProvider` is just another UI Kit Component but it works like a provider component, that provides the meeting and many more props, to child UI components.
+
+Without `RtkUIProvider`, you will have to set props, such as `meeting`, to all the UI Kit components manually.
+
+`RtkUIProvider` helps you go from
+
+```jsx
+<RtkHeader meeting={meeting}/>
+```
+
+to just
+
+```jsx
+<RtkHeader/>
+```
+
+`RtkHeader` is the header component that shows the session name and the session controls.<br/>
+`RtkGrid` is the grid component that shows the participants in the session.<br/>
+`RtkControlbar` is the controlbar component that shows the controls for the session.<br/>
+`RtkNotifications` is the notifications component that shows the notifications for the session.<br/>
+`RtkParticipantsAudio` is the audio component that helps you listen other participants in the session.<br/>
+`RtkDialogManager` is the dialog-manager component that shows the dialogs for the session.<br/>
+`RtkSidebar` is the sidebar component that shows the sidebar, in which chat, polls content shows up.<br/>
+
+You can split all of these components further. To see more such components, refer to our [components library](https://docs.realtime.cloudflare.com/react-ui-kit/components) and [UI Kit repo](https://github.com/cloudflare/realtimekit-ui).
+
+To not bloat this page, we have kept the code simple here. You can see a complete example [here](https://github.com/cloudflare/realtimekit-web-examples/tree/main/react-examples/examples/create-your-own-ui).
+
+:::note
+You must include `RtkNotifications`, `RtkParticipantsAudio`, and `RtkDialogManager`. If you leave them out, features like settings toggles and notifications won’t work, and you won’t hear other participants in the session.
+:::
+</TabItem>
+</Tabs>
+
+### Conditional Rendering of Components
+
+In your custom UI, you may have noticed that the setup screen, waiting screen, and "session ended" screen are not at all visible. The setup screen should appear before a peer joins the meeting, but disappear once they've joined. Similarly, the waiting screen should only be shown if the peer is waitlisted, and the ended screen should only be displayed after the peer leaves or is removed from the session.
+
+To achieve this, you need to conditionally render the setup screen, waiting screen, and ended screen based on the peer's state.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+`rtk-setup-screen` component is the setup screen component that shows the setup screen for the peer.<br/>
+`rtk-waiting-screen` component is the waiting screen component that shows the waiting screen for the peer.<br/>
+`rtk-ended-screen` component is the ended screen component that shows the ended screen for the peer.<br/>
+
+To take away peer lifecycle complexities, we are managing the lifecycle internally.
+
+You can plug into the lifecycle states by listing to `rtkStatesUpdate` events.
+
+:::note
+Be sure to add the event listener before calling `RealtimeKitClient.init()` to ensure you don't miss any events.
+:::
+
+```html
+<script type="module">
+    // ... Code from previous examples
+
+    document.querySelector('rtk-ui-provider').addEventListener('rtkStatesUpdate', (event) => {
+            console.log(event);
+    });
+</script>
+```
+
+`rtkStatesUpdate` event is emitted when the peer's state changes. The event detail contains the current state of the peer.
+
+Peer States: `idle`, `setup`, `joined`, `ended`, `waiting`.
+
+You can use this event to conditionally render setup screen, waiting screen and ended screen.
+
+```html
+<script type="module">
+    // ... Code from previous examples
+
+    document.querySelector('rtk-ui-provider').addEventListener('rtkStatesUpdate', (event) => {
+        if(event.detail.meeting === 'setup') {
+            document.querySelector('rtk-setup-screen').style.display = 'block';
+        } else {
+            document.querySelector('rtk-setup-screen').style.display = 'none';
+        }
+    });
+</script>
+```
+
+Make sure to add components too. Make sure to hide/show or attach/remove them based on the state.
+
+```html
+<body>
+    <rtk-ui-provider>
+        <!-- other components from ui-kit -->
+        <rtk-setup-screen></rtk-setup-screen>
+        <rtk-waiting-screen></rtk-waiting-screen>
+        <rtk-ended-screen></rtk-ended-screen>
+    </rtk-ui-provider>
+</body>
+```
+
+Remember to comment out `meeting.join();` in your code. The `rtk-setup-screen` component will automatically call the join method when the peer clicks the join button.
+
+</TabItem>
+<TabItem label="React">
+
+`RtkSetupScreen` component is the setup screen component that shows the setup screen for the peer.<br/>
+`RtkWaitingScreen` component is the waiting screen component that shows the waiting screen for the peer.<br/>
+`RtkEndedScreen` component is the ended screen component that shows the ended screen for the peer.<br/>
+
+To take away peer lifecycle complexities, we are managing the lifecycle internally. You can plug into the lifecycle states by listing to `rtkStateUpdate` events.
+
+Comment out the join method call and add the event listener for `rtkStateUpdate` event.
+```jsx
+useEffect(() => {
+    if(!meeting){
+        return;
+    }
+    // meeting.join();
+}, [meeting]);
+```
+You can listen to the `rtkStatesUpdate` on `RtkUIProvider` component.
+
+```jsx
+<RtkUIProvider
+    meeting={meeting}
+    onRtkStatesUpdate={(state) => {
+        console.log(state);
+    }}>
+    {/*...*/}
+</RtkUIProvider>
+```
+
+You can store the state using a useState hook and can add/remove components based on the state.
+
+```jsx
+return (
+    <>
+        {state === 'setup' && <RtkSetupScreen />}
+        {state === 'waiting' && <RtkWaitingScreen />}
+        {state === 'joined' && <RtkEndedScreen />}
+    </>
+);
+```
+
+To not bloat this page, we have kept the code simple here. You can see a complete example [here](https://github.com/cloudflare/realtimekit-web-examples/tree/main/react-examples/examples/create-your-own-ui).
+
+</TabItem>
+</Tabs>
+
+### Want to use just the Core SDK?
+
+If the UI Kit is more than you need—for example, if you only require basic features like toggling audio or video, recording, keeping your bundle size small, or integrating with multiple vendors, our Core SDKs are a great fit.
+
+The Core SDK gives you full control to design your own UI, manage state and events, and build components to suit your specific requirements.
+
+While building with just the Core SDK is entirely possible, it is a more advanced approach, not generally recommended, and requires significant ongoing maintenance.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+    Please refer to [Core SDK](https://docs.realtime.cloudflare.com/web-core) for more details.
+</TabItem>
+<TabItem label="React">
+    Please refer to [Core SDK](https://docs.realtime.cloudflare.com/web-core) for more details.
+</TabItem>
+</Tabs>
+
+
+

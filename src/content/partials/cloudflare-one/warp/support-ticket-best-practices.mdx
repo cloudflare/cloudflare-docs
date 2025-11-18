@@ -1,0 +1,72 @@
+---
+params:
+  - sshMode?
+---
+
+For the fastest possible troubleshooting, ensure your support ticket includes comprehensive details. The more context you provide, the faster your issue can be identified and resolved.
+
+To ensure efficient resolution when [contacting support](/support/contacting-cloudflare-support/), include as much relevant detail as possible in your ticket:
+
+<ul>
+  <li>
+    <label>
+      <input type="checkbox" /> Context: Briefly describe the scenario or use case (for example, where the user was, what they were trying to do).
+    </label>
+  </li>
+  <li>
+    <label>
+      <input type="checkbox" /> Reproduction steps: Describe the steps you took to reproduce the issue during troubleshhooting.
+    </label>
+  </li>
+  <li>
+    <label>
+      <input type="checkbox" /> Timestamps: Be specific and include the exact time and time zone when the issue occurred.
+    </label>
+  </li>
+  <li>
+    <label>
+      <input type="checkbox" /> Troubleshooting attempts: Outline any troubleshooting steps or changes already attempted to resolve the issue.
+    </label>
+  </li>
+  {props.sshMode ? (
+    <>
+      <li>
+        <label>
+          <input type="checkbox" /> <code>sshd</code> debug-level logs: Attach the <code>sshd</code> logs you collected in <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd-logs">step 4: Debug <code>sshd_config</code> file misconfiguration</a>.
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" /> <code>sshd_config</code> file: Include a copy of your server's <code>sshd_config</code> to help identify any misconfigurations or conflicting directives.
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" /> Client-side SSH output: Run the failing SSH command with verbose flags (<code>-vvv</code>) and include the full terminal output to show connection and authentication attempts from the client side.
+        </label>
+      </li>
+    </>
+  ) : (
+    <li>
+      <label>
+        <input type="checkbox" /> WARP diagnostics logs: Include the WARP diag you downloaded from the dashboard or through the CLI.
+      </label>
+    </li>
+  )}
+</ul>
+
+:::tip[Write a detailed ticket to resolve your issue faster]
+Avoid vague descriptions and include scenario, timestamps, and steps taken to troubleshoot the issue. Refer to the following example:
+
+{props.sshMode ? (
+  <>
+    <p>On October 30, 2025, at approximately 3:45 PM UTC, Alice attempted to SSH into 10.116.0.3 (target hostname: prod-db-01) using Access for Infrastructure. The SSH client returned <code>Permission denied (none)</code> despite her email being included in the Access policy.</p>
+
+    <p>The <code>sshd</code> logs (captured with LogLevel DEBUG3) are attached and show the connection reaching the server but failing at the certificate validation step. The user exists on the server (<code>id alice</code> verified).</p>
+
+    <p>The <code>sshd_config</code> file and <code>ssh -vvv alice@10.116.0.3</code> output are attached. The tunnel status is Healthy in the Cloudflare dashboard, and Access authentication logs show a successful <code>Access granted</code> decision.</p>
+  </>
+) : (
+  <p>Karen was on a train on July 17, 2025, at approximately 1:00 PM Central Time. She attempted to connect to a captive portal but received the following error message in Chrome: <code>ERR_CONNECTION_RESET</code>. A warp diag was collected immediately after and is attached.</p>
+)}
+:::

@@ -7,6 +7,8 @@ async function main() {
 	let numUrlsWithFragment = 0;
 	let numDuplicateRedirects = 0;
 	let numNonSlashedRedirects = 0;
+	let seenDynamicRedirects = false;
+	let numStaticRedirectsAfterDynamicRedirect = 0;
 
 	const validEndings = ["/", "*", ".xml", ".md", ".json", ".html", ".pdf"];
 
@@ -16,6 +18,17 @@ async function main() {
 		if (line.startsWith("#") || line.trim() === "") continue;
 
 		const [from, to] = line.split(" ");
+
+		if (from.includes("*")) {
+			seenDynamicRedirects = true;
+		}
+
+		if (seenDynamicRedirects && !from.includes("*")) {
+			console.log(
+				`✘ Found static redirect after dynamic redirect:\n    ${from}`,
+			);
+			numStaticRedirectsAfterDynamicRedirect++;
+		}
 
 		if (from === to) {
 			console.log(`✘ Found infinite redirect:\n    ${from} -> ${to}`);
@@ -49,7 +62,8 @@ async function main() {
 		numInfiniteRedirects ||
 		numUrlsWithFragment ||
 		numDuplicateRedirects ||
-		numNonSlashedRedirects
+		numNonSlashedRedirects ||
+		numStaticRedirectsAfterDynamicRedirect
 	) {
 		console.log("\nDetected errors:");
 
@@ -68,6 +82,12 @@ async function main() {
 		if (numNonSlashedRedirects > 0) {
 			console.log(
 				`- ${numNonSlashedRedirects} need slashes at the end of the source URL`,
+			);
+		}
+
+		if (numStaticRedirectsAfterDynamicRedirect > 0) {
+			console.log(
+				`- ${numStaticRedirectsAfterDynamicRedirect} static redirect(s) after dynamic redirect(s)`,
 			);
 		}
 

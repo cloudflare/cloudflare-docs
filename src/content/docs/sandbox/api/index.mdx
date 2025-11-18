@@ -7,30 +7,24 @@ sidebar:
 
 import { LinkTitleCard, CardGrid } from "~/components";
 
-The Sandbox SDK provides a comprehensive API for executing code, managing files, running processes, and exposing services in isolated sandboxes. All operations are performed through the `Sandbox` instance you obtain via `getSandbox()`.
-
-## Getting a sandbox instance
-
-```typescript
-import { getSandbox } from '@cloudflare/sandbox';
-
-const sandbox = getSandbox(env.Sandbox, 'user-123');
-```
-
-The same sandbox ID will always return the same sandbox instance. You can architect your application to use a single sandbox ID for multiple users, or use unique IDs per user or session. Using unique sandbox IDs per user is recommended if you are providing code generation or execution capabilities directly to your users.
-
-## API organization
-
-The Sandbox SDK is organized into focused APIs:
+The Sandbox SDK provides a comprehensive API for executing code, managing files, running processes, and exposing services in isolated sandboxes.
 
 <CardGrid>
+
+<LinkTitleCard
+	title="Lifecycle"
+	href="/sandbox/api/lifecycle/"
+	icon="rocket"
+>
+	Create and manage sandbox containers. Get sandbox instances, configure options, and clean up resources.
+</LinkTitleCard>
 
 <LinkTitleCard
 	title="Commands"
 	href="/sandbox/api/commands/"
 	icon="seti:shell"
 >
-	Execute commands and stream output. Includes `exec()`, `execStream()`, and background process management.
+	Execute commands and stream output. Run scripts, manage background processes, and capture execution results.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -62,7 +56,7 @@ The Sandbox SDK is organized into focused APIs:
 	href="/sandbox/api/sessions/"
 	icon="seti:plan"
 >
-	Advanced: Create isolated execution contexts with persistent shell state. Configure environment variables and manage container lifecycle.
+	Create isolated execution contexts within a sandbox. Each session maintains its own shell state, environment variables, and working directory.
 </LinkTitleCard>
 
 </CardGrid>

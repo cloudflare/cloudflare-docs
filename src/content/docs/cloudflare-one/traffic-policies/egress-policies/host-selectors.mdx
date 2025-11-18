@@ -92,26 +92,35 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 
 {/* prettier-ignore-start */}
 
-2.  In your WARP [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/), configure your [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) depending on the mode:
+2.  In your WARP [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/), configure [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) depending on the mode:
 
     <Tabs> <TabItem label="Exclude IPs and domains">
-		1.  [Remove the route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel exclude list.
-		2.  [Add routes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to exclude the following IP addresses:
+		1. [Remove the route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel exclude list.
+		2. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not being used for Zero Trust services. For example, if you are using Gateway host selectors alongside [WARP-to-WARP connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) add routes to exclude the following IP addresses:
 			- `100.64.0.0/12`
 			- `100.81.0.0/16`
 			- `100.82.0.0/15`
 			- `100.84.0.0/14`
 			- `100.88.0.0/13`
 			- `100.112.0.0/12`
-			
-			And remove `100.64.0.0/10` IP address.
 
     </TabItem> <TabItem label="Include IPs and domains">
-		1.  Add the required [Zero Trust domains](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
-		2.  [Add a route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include `100.80.0.0/16` and `100.96.0.0/12` IP addresses.
+		1. Add the required [Zero Trust domains](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
+		2. [Add a route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include `100.80.0.0/16`.
 
     </TabItem> </Tabs>
 
 The WARP client must be set to _Gateway with WARP_ mode for traffic affected by these selectors to route correctly.
 
 {/* prettier-ignore-end */}
+
+## Known issues
+
+### Google Chrome restricts local network access
+
+Starting with [Chrome 142](https://developer.chrome.com/release-notes/142), the browser restricts requests from websites to local IP addresses, including the CGNAT range (`100.80.0.0/16`) used by the Host selector. When a website attempts to access a domain covered by a Gateway policy with a Host selector, the browser will display a prompt from the website asking to look for and connect to devices on the local network. Chrome will block requests to domains covered by Host selectors until the user accepts this prompt.
+
+To avoid this issue, choose one of the following options:
+
+- Disable the Chrome feature flag: Go to `chrome://flags` and set the **Local Network Access Checks** flag to _Disabled_.
+- Configure Chrome Enterprise policy: Use the **LocalNetworkAccessAllowedForUrls** policy to allow specific websites to make requests to domains covered by Host selectors. For more information, refer to the [Chrome Enterprise documentation](https://chromeenterprise.google/policies/#LocalNetworkAccessAllowedForUrls).

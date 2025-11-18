@@ -1,0 +1,98 @@
+---
+title: Lifecycle
+pcx_content_type: configuration
+sidebar:
+  order: 1
+---
+
+import { TypeScriptExample } from "~/components";
+
+Create and manage sandbox containers. Get sandbox instances, configure options, and clean up resources.
+
+## Methods
+
+### `getSandbox()`
+
+Get or create a sandbox instance by ID.
+
+```ts
+const sandbox = getSandbox(
+  binding: DurableObjectNamespace<Sandbox>,
+  sandboxId: string,
+  options?: SandboxOptions
+): Sandbox
+```
+
+**Parameters**:
+- `binding` - The Durable Object namespace binding from your Worker environment
+- `sandboxId` - Unique identifier for this sandbox. The same ID always returns the same sandbox instance
+- `options` (optional):
+  - `keepAlive` - Set to `true` to prevent automatic container timeout after 10 minutes of inactivity
+
+**Returns**: `Sandbox` instance
+
+:::note
+The container starts lazily on first operation. Calling `getSandbox()` returns immediately—the container only spins up when you execute a command, write a file, or perform other operations. See [Sandbox lifecycle](/sandbox/concepts/sandboxes/) for details.
+:::
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, 'user-123');
+    const result = await sandbox.exec('python script.py');
+    return Response.json(result);
+  }
+};
+```
+</TypeScriptExample>
+
+:::caution
+When using `keepAlive: true`, you **must** call `destroy()` when finished to prevent containers running indefinitely.
+:::
+
+---
+
+### `destroy()`
+
+Destroy the sandbox container and free up resources.
+
+```ts
+await sandbox.destroy(): Promise<void>
+```
+
+Immediately terminates the container and permanently deletes all state:
+- All files in `/workspace`, `/tmp`, and `/home`
+- All running processes
+- All sessions (including the default session)
+- Network connections and exposed ports
+
+<TypeScriptExample>
+```
+async function executeCode(code: string): Promise<string> {
+  const sandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
+
+  try {
+    await sandbox.writeFile('/tmp/code.py', code);
+    const result = await sandbox.exec('python /tmp/code.py');
+    return result.stdout;
+  } finally {
+    await sandbox.destroy();
+  }
+}
+```
+</TypeScriptExample>
+
+:::note
+Containers automatically sleep after 10 minutes of inactivity but still count toward account limits. Use `destroy()` to immediately free up resources.
+:::
+
+---
+
+## Related resources
+
+- [Sandbox lifecycle concept](/sandbox/concepts/sandboxes/) - Understanding container lifecycle and state
+- [Sandbox options configuration](/sandbox/configuration/sandbox-options/) - Configure `keepAlive` and other options
+- [Sessions API](/sandbox/api/sessions/) - Create isolated execution contexts within a sandbox

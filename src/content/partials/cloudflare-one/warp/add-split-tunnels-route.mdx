@@ -3,6 +3,7 @@
 ---
 
 import { GlossaryTooltip, TabItem, Tabs, Render } from "~/components";
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -22,6 +23,18 @@ import { GlossaryTooltip, TabItem, Tabs, Render } from "~/components";
 
 		Traffic to this IP address is now excluded or included from the WARP tunnel.
 
+		:::note
+    If you would like to exclude a specific IP range from a larger IP range, you can use this calculator:
+
+			<SubtractIPCalculator
+				client:load
+				defaults={{
+					base: "172.16.0.0/12",
+					exclude: ["172.31.0.0/16"]
+				}}
+			/>
+		:::
+    
 		</TabItem> <TabItem label="Add a domain">
 
 		To add a domain to Split Tunnels:

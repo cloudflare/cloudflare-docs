@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - dashName
 ---
 
@@ -11,7 +10,8 @@ import { DashButton, Markdown } from "~/components";
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks** > **Connectors**.
-		2. Go to **Appliances** > **Profiles** > **View analytics**.
+		2. Go to **Appliances** > **Profiles**.
+		3. Select your Connector > **View analytics**.
 	`}
 	inline={false}
 	/>
@@ -27,7 +27,8 @@ import { DashButton, Markdown } from "~/components";
 		<DashButton url="/?to=/:account/magic-wan/configuration" />
 		<Markdown
 	text={`
-		2. In the **${props.productName}** tab, select the ${props.productName} > **View analytics**.
+		2. In the **Magic WAN Connector** tab, select the Magic WAN Connector want to check analytics for.
+		3. Select **View analytics**.
 	`}
 	inline={false}
 	/>

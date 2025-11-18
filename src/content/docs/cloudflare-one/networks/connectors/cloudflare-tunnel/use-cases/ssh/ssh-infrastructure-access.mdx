@@ -278,7 +278,7 @@ After you have verified that there are no issues with your tunnel's health, conf
 
 ### 3. Confirm user existence on the server
 
-To verify the existence of the end user on the server, run the `id <USERNAME>` command on the server to verify that the end user's username exists. If the username does not exist, you must add the user to the server.
+To verify the existence of a user on a UNIX server, run the `id <USERNAME>` command on the server to verify that the username exists. If the username does not exist, you must add the user to the server.
 
 If the user exists on the server, debug your `sshd_config` file in the following step.
 
@@ -472,3 +472,7 @@ These troubleshooting steps could result in you being locked out of your SSH ser
    <Render file="ssh/restart-server" product="cloudflare-one" />
 
 By completing all four troubleshooting steps, you should have resolved any connection issues caused by misconfiguration of the SSH server. If issues persist, [recheck `sshd` logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd-logs). The example [`sshd_config` shared above](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd_config-file-for-misconfigurations) enables debug logging and may expose more specific issues.
+
+### 5. Get help
+
+<Render file="warp/support-ticket-best-practices" product="cloudflare-one" params={{ sshMode: true }} />

@@ -304,6 +304,15 @@
 /browser-rendering/workers-binding-api/screenshots/ /browser-rendering/workers-bindings/screenshots/ 301
 /browser-rendering/workers-binding-api/browser-rendering-with-do/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
 /browser-rendering/workers-binding-api/reuse-sessions/ /browser-rendering/workers-bindings/reuse-sessions/ 301
+/browser-rendering/platform/ /browser-rendering/ 301
+/browser-rendering/platform/puppeteer/ /browser-rendering/puppeteer/ 301
+/browser-rendering/platform/playwright/ /browser-rendering/playwright/ 301
+/browser-rendering/platform/playwright-mcp/ /browser-rendering/playwright/playwright-mcp/ 301
+/browser-rendering/platform/wrangler/ /browser-rendering/reference/wrangler/ 301
+/browser-rendering/platform/limits/ /browser-rendering/limits/ 301
+/browser-rendering/platform/pricing/ /browser-rendering/pricing/ 301
+/browser-rendering/platform/browser-close-reasons/ /browser-rendering/reference/browser-close-reasons/ 301
+/browser-rendering/platform/stagehand/ /browser-rendering/stagehand/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -540,6 +549,7 @@
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
 /dns/zone-setups/partial-setup/convert-partial-to-full/ /dns/zone-setups/conversions/convert-partial-to-full/ 301
 /dns/zone-setups/partial-setup/convert-partial-to-secondary/ /dns/zone-setups/conversions/convert-partial-to-secondary/ 301
+/dns/zone-setups/reference/nameserver-assignment/ /dns/nameservers/nameserver-options/#assignment-method 301
 /dns/zone-setups/troubleshooting/dns-probe-finished-nxdomain/ /dns/troubleshooting/dns-probe-finished-nxdomain/ 301
 /dns/zone-setups/troubleshooting/nameservers/ /dns/zone-setups/full-setup/troubleshooting/ 301
 /support/dns/ /dns/ 301
@@ -1116,6 +1126,9 @@
 /magic-wan/reference/tunnels/ /magic-wan/reference/gre-ipsec-tunnels/ 301
 /magic-wan/reference/magic-tunnels/ /magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ 301
 
+# network
+/network/response-buffering/ /network/ 301
+
 # notifications
 /fundamentals/notifications/ /notifications/ 301
 /notifications/create-notifications/ /notifications/get-started/ 301
@@ -1211,6 +1224,7 @@
 
 # pipelines
 /pipelines/concepts/how-pipelines-work/ /pipelines/ 301
+/pipelines/platform/wrangler-commands/ /pipelines/reference/wrangler-commands/ 301
 
 # queues
 /queues/configuration/ /queues/configuration/configure-queues/ 301
@@ -1426,7 +1440,7 @@
 /support/more-dashboard-apps/cloudflare-stream/delivering-videos-with-cloudflare/ /fundamentals/reference/policies-compliances/delivering-videos-with-cloudflare/ 301
 /support/network/ /network/ 301
 /support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
-/support/network/setting-up-response-buffering/ /network/response-buffering/ 301
+/support/network/setting-up-response-buffering/ /network/ 301
 /support/network/using-cloudflare-with-websockets/ /network/websockets/ 301
 /support/network/understanding-and-configuring-cloudflares-ipv6-support/ /network/ipv6-compatibility/ 301
 /support/network/understanding-cloudflare-http2-and-http3-support/ /speed/optimization/protocol/ 301
@@ -1572,6 +1586,9 @@
 /r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
 /r2/sql/platform/troubleshooting/ /r2-sql/troubleshooting/ 301
 
+# r2 sql
+/r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
+
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 
@@ -1614,6 +1631,7 @@
 /turnstile/troubleshooting/troubleshooting-faqs/ /turnstile/frequently-asked-questions/#troubleshooting 301
 /turnstile/tutorials/protecting-your-payment-form-from-attackers-bots-using-turnstile/ /developer-spotlight/ 301
 /turnstile/frequently-asked-questions/ /turnstile/ 301
+/turnstile/tutorials/implicit-vs-explicit-rendering/ /turnstile/get-started/client-side-rendering/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -2035,9 +2053,12 @@
 /version-management/reference/available-settings/ /version-management/reference/available-configurations/ 301
 
 # hyperdrive
-/hyperdrive/learning/how-hyperdrive-works/ /hyperdrive/configuration/how-hyperdrive-works/ 301
+/hyperdrive/configuration/how-hyperdrive-works/ /hyperdrive/concepts/how-hyperdrive-works/ 301
+/hyperdrive/configuration/query-caching/ /hyperdrive/concepts/query-caching/ 301
+/hyperdrive/configuration/connection-pooling/ /hyperdrive/concepts/connection-pooling/ 301
+/hyperdrive/learning/how-hyperdrive-works/ /hyperdrive/concepts/how-hyperdrive-works/ 301
 /hyperdrive/learning/connect-to-postgres/ /hyperdrive/examples/connect-to-postgres/ 301
-/hyperdrive/learning/query-caching/ /hyperdrive/configuration/query-caching/ 301
+/hyperdrive/learning/query-caching/ /hyperdrive/concepts/query-caching/ 301
 /hyperdrive/learning/troubleshooting/ /hyperdrive/observability/troubleshooting/ 301
 /hyperdrive/changelog/ /hyperdrive/platform/release-notes/ 301
 /hyperdrive/platform/changelog/ /hyperdrive/platform/release-notes/ 301
@@ -2314,6 +2335,8 @@
 /cloudflare-one/email-security/reference/domain-information/ /cloudflare-one/email-security/settings/domain-management/domain/ 301
 /cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
 /cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
+/cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
+/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/reclassifications/invalid-submissions/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
@@ -2382,6 +2405,7 @@
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/* /cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/:splat 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/install-and-setup/* /cloudflare-one/networks/connectors/cloudflare-tunnel/ 301
 /cloudflare-one/analytics/logs/* /cloudflare-one/insights/logs/:splat 301
 /cloudflare-one/applications/scan-apps/* /cloudflare-one/applications/casb/:splat 301
 /cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-networks/use-cases/:splat 301

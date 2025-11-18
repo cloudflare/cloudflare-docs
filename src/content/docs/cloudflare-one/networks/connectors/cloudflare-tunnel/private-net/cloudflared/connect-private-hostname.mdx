@@ -160,13 +160,13 @@ Gateway will automatically resolve DNS queries using your internal DNS server as
 
 <Render file="tunnel/catch-all-policy" product="cloudflare-one"/>
 
-##### HTTPS applications
+##### Option 1: Access application (recommended)
 
-If your private hostname points to an HTTPS application on port `443`, you can secure it using either Access or Gateway policies:
+You can create an [Access self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) for your private hostname and configure [Access policies](/cloudflare-one/access-controls/policies/) within that application. This option allows you to manage user access alongside your SaaS and other web apps.
 
-	- **Option 1 (Recommended)**: Create an [Access self-hosted private app](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) to manage user access alongside your SaaS and other web apps.
+##### Option 2: Gateway firewall policies
 
-	- **Option 2**: If you prefer to secure the application using a traditional firewall model, build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/network-policies/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
+If you prefer to secure the application using a traditional firewall model, you can build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/network-policies/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
 
 		<Details header="Example network policies">
 		The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic.
@@ -185,27 +185,15 @@ If your private hostname points to an HTTPS application on port `443`, you can s
 			<Render file="gateway/policies/restrict-access-to-private-networks-dns" product="cloudflare-one" />
 		</Details>
 
+:::note[SNI selector limitations]
 
-##### Non-HTTPS applications
+<Render
+	file="gateway/selectors/sni-443"
+	product="cloudflare-one"
+/>
 
-Access policies and Gateway network policies only support hostname-based filtering for applications on port `443`. If your application runs on a non-`443` port, you will need to allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector. Then, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
-		<Details header="Example network policies">
-		The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic.
-
-		1. Allow company employees
-
-			<Render file="gateway/policies/restrict-access-to-private-networks-allow" product="cloudflare-one" params={{ selector: "Destination IP", value: "10.0.0.0/8" }} />
-
-		2. Catch-all block policy
-
-			<Render file="gateway/policies/restrict-access-to-private-networks-block" product="cloudflare-one" />
-
-		</Details>
-
-		<Details header="Example DNS policy">
-
-			<Render file="gateway/policies/restrict-access-to-private-networks-dns" product="cloudflare-one" />
-		</Details>
+Additionally, SNI selectors will only apply to WARP client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector instead of SNI.
+:::
 
 ### 5. Test the connection
 

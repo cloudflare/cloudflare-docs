@@ -1,19 +1,18 @@
 ---
 params:
-  - productName
   - gatewayPoliciesURL
   - appTypesGatewayURL
 ---
 
 import { DirectoryListing } from "~/components"
 
-In addition to traffic policies based on network-layer attributes like IP and port ranges, {props.productName} supports the ability to classify traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
+In addition to traffic policies based on network-layer attributes like IP and port ranges, Magic WAN Connector supports the ability to classify traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
 
 Cloudflare's implementation of application awareness leverages the intelligence of our global network, using the same categorization/classification already shared across security tools like our <a href={props.gatewayPoliciesURL}>Secure Web Gateway</a>, so IT and security teams can expect consistent behavior across routing and inspection decisions.
 
 For more information, refer to <a href={props.appTypesGatewayURL}>Applications and app types</a>.
 
-{props.productName}'s ability to classify traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. You can also give some applications a higher priority, and Connector will process them first. This is useful when your network is at capacity, for example.
+Magic WAN Connector's ability to classify traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. You can also give some applications a higher priority, and Connector will process them first. This is useful when your network is at capacity, for example.
 
 Refer to the following pages for more information.
 

@@ -32,27 +32,33 @@ The typical workflow is: start service → wait for ready → expose port → ha
 ```
 import { getSandbox, proxyToSandbox } from '@cloudflare/sandbox';
 
-const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+export { Sandbox } from '@cloudflare/sandbox';
 
-// 1. Start a web server
-await sandbox.startProcess('python -m http.server 8000');
-
-// 2. Wait for service to start
-await new Promise(resolve => setTimeout(resolve, 2000));
-
-// 3. Expose the port
-const exposed = await sandbox.exposePort(8000);
-
-// 4. Preview URL is now available (public by default)
-console.log('Server accessible at:', exposed.exposedAt);
-// Production: https://8000-abc123.example.com
-// Local dev: http://localhost:8787/...
-
-// 5. Handle preview URL requests in your Worker
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    // Proxy requests to the exposed port
-    return proxyToSandbox(request, env.Sandbox, 'my-sandbox');
+    // Proxy requests to exposed ports first
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+
+    // Extract hostname from request
+    const { hostname } = new URL(request.url);
+    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+    // 1. Start a web server
+    await sandbox.startProcess('python -m http.server 8000');
+
+    // 2. Wait for service to start
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // 3. Expose the port
+    const exposed = await sandbox.exposePort(8000, { hostname });
+
+    // 4. Preview URL is now available (public by default)
+    console.log('Server accessible at:', exposed.exposedAt);
+    // Production: https://8000-abc123.yourdomain.com
+    // Local dev: http://localhost:8787/...
+
+    return Response.json({ url: exposed.exposedAt });
   }
 };
 ```
@@ -62,21 +68,28 @@ export default {
 **Preview URLs are public by default.** Anyone with the URL can access your service. Add authentication if needed.
 :::
 
+:::note[Local development requirement]
+When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile for each port you plan to expose. Without this, you'll see "Connection refused: container port not found". See [Local development](#local-development) section below for setup details.
+:::
+
 ## Name your exposed ports
 
 When exposing multiple ports, use names to stay organized:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 // Start and expose API server
 await sandbox.startProcess('node api.js', { env: { PORT: '8080' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
-const api = await sandbox.exposePort(8080, { name: 'api' });
+const api = await sandbox.exposePort(8080, { hostname, name: 'api' });
 
 // Start and expose frontend
 await sandbox.startProcess('npm run dev', { env: { PORT: '5173' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
-const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
+const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
 
 console.log('Services:');
 console.log('- API:', api.exposedAt);
@@ -90,6 +103,9 @@ Always verify a service is ready before exposing. Use a simple delay for most ca
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 // Start service
 await sandbox.startProcess('npm run dev', { env: { PORT: '8080' } });
 
@@ -97,7 +113,7 @@ await sandbox.startProcess('npm run dev', { env: { PORT: '8080' } });
 await new Promise(resolve => setTimeout(resolve, 2000));
 
 // Now expose
-await sandbox.exposePort(8080);
+await sandbox.exposePort(8080, { hostname });
 ```
 </TypeScriptExample>
 
@@ -105,6 +121,9 @@ For critical services, poll the health endpoint:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 await sandbox.startProcess('node api-server.js', { env: { PORT: '8080' } });
 
 // Wait for health check
@@ -117,7 +136,7 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
-await sandbox.exposePort(8080);
+await sandbox.exposePort(8080, { hostname });
 ```
 </TypeScriptExample>
 
@@ -127,6 +146,9 @@ Expose multiple ports for full-stack applications:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 // Start backend
 await sandbox.startProcess('node api/server.js', {
   env: { PORT: '8080' }
@@ -141,8 +163,8 @@ await sandbox.startProcess('npm run dev', {
 await new Promise(resolve => setTimeout(resolve, 3000));
 
 // Expose both
-const api = await sandbox.exposePort(8080, { name: 'api' });
-const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
+const api = await sandbox.exposePort(8080, { hostname, name: 'api' });
+const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
 
 return Response.json({
   api: api.exposedAt,
@@ -227,12 +249,15 @@ Port 3000 is used by the internal Bun server and cannot be exposed:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 // ❌ This will fail
-await sandbox.exposePort(3000);  // Error: Port 3000 is reserved
+await sandbox.exposePort(3000, { hostname });  // Error: Port 3000 is reserved
 
 // ✅ Use a different port
 await sandbox.startProcess('node server.js', { env: { PORT: '8080' } });
-await sandbox.exposePort(8080);
+await sandbox.exposePort(8080, { hostname });
 ```
 </TypeScriptExample>
 
@@ -242,9 +267,12 @@ Wait for the service to start before exposing:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 await sandbox.startProcess('npm run dev');
 await new Promise(resolve => setTimeout(resolve, 3000));
-await sandbox.exposePort(8080);
+await sandbox.exposePort(8080, { hostname });
 ```
 </TypeScriptExample>
 
@@ -254,9 +282,12 @@ Check before exposing to avoid errors:
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 const { ports } = await sandbox.getExposedPorts();
 if (!ports.some(p => p.port === 8080)) {
-  await sandbox.exposePort(8080);
+  await sandbox.exposePort(8080, { hostname });
 }
 ```
 </TypeScriptExample>
@@ -265,8 +296,8 @@ if (!ports.some(p => p.port === 8080)) {
 
 **Production**: `https://{port}-{sandbox-id}.yourdomain.com`
 
-- Port 8080: `https://8080-abc123.example.com`
-- Port 5173: `https://5173-abc123.example.com`
+- Port 8080: `https://8080-abc123.yourdomain.com`
+- Port 5173: `https://5173-abc123.yourdomain.com`
 
 **Local development**: `http://localhost:8787/...`
 
