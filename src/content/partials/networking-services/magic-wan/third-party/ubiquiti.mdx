@@ -20,7 +20,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 2. Under **Select tunnel type**, select **IPsec Tunnel** and click **Next**
 3. Under **Tunnels**, click **Create**:
    - Name: `unifi-gw-primary`
-   - IPv4 Interface Addess: `10.252.2.28/31` or referer to the [Tunnel endpoints Documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
+   - IPv4 Interface Address: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
    - Customer Endpoint: Your UniFi Gateway's WAN IP (e.g., `203.0.113.10`)
    - Cloudflare Endpoint: `One of the IPv4 addresses gathered from Leased IPs`
 4. Under **Tunnel Health checks**:
@@ -38,11 +38,11 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 3. Configure:
    - **VPN Type:** `IPsec`
    - **Name:** `Cloudflare-MagicWAN`
-   - **Preshared Key:** Copy this key for use in the Magic Wan Tunnel Configuration created in `Step 1`.
+   - **Pre-shared key:** Copy this key for use in the Magic WAN tunnel configuration created in `Step 1`.
    - **Local IP:** Select the WAN interface (e.g., `WAN1`)
    - **Remote IP:** Cloudflare endpoint IP from `Step 1`
    - **VPN Method:** Route Based
-   - **Tunnel IP:** `10.252.2.29/31` or referer to the [Tunnel endpoints Documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
+   - **Tunnel IP:** `10.252.2.29/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
    - **Remote Networks:** Inside Cloudflare tunnel address (e.g., 10.252.2.28/31) and other remote subnets to access through Magic WAN
 4. Set Advanced settings:
    - Key Exchange Version: IKEv2
@@ -89,7 +89,7 @@ Wait a few minutes, then check:
 
 **Tunnel down:**
 - Verify Peer IP, preshared key, and IPsec settings match on both sides
-- Check ISP isn't blocking UDP ports 500/4500
+- Check that the ISP is not blocking UDP ports 500/4500
 
 **Traffic not routing:**
 - Verify Remote Subnets setting in UniFi VPN config
@@ -110,16 +110,16 @@ To route only specific devices through Cloudflare (UniFi Network Application):
    - Type: Policy-Based
    - Interface/VPN Tunnel: Select the VPN Tunnel (e.g., `Cloudflare-MagicWAN`)
    - Kill Switch: Enabled (recommended)
-   - Source: Select `Device/Network` and then choose the Device(s) or Networks(s)
+   - Source: Select `Device/Network` and then choose the Device(s) or Network(s)
    - Destination: Any
    - Interface: Your VPN tunnel
 
 ## Next Steps
 
-- Use [Magic Firewall](https://developers.cloudflare.com/magic-firewall/) for network policies
+- Use [Magic Firewall](/magic-firewall/) for network policies
 - Configure a second tunnel for redundancy
 - Monitor traffic in the Magic WAN dashboard
 
 ---
 
-You're now routing traffic through Cloudflare's global network with enterprise-grade security and performance.
+You are now routing traffic through Cloudflare's network using Magic WAN.
