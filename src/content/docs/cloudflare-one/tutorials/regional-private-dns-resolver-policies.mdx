@@ -1,5 +1,5 @@
 ---
-reviewed: 2025-11-17
+reviewed: 2025-11-19
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
@@ -26,28 +26,17 @@ Before you begin, make sure you have:
 - A [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connecting your private DNS servers to Cloudflare
 - Internal domains that need to be resolved (for example, `internal.example.com`)
 
-## Connect private DNS servers with Cloudflare Tunnel
+## 1. Connect private DNS servers with Cloudflare Tunnel
 
 First, connect your regional private DNS servers to Cloudflare using Cloudflare Tunnel.
 
-### Create tunnels for each region
-
-For each region where you have a private DNS server:
-
-<Render file="tunnel/create-tunnel" product="cloudflare-one" />
-
-### Add private network routes
-
-For each tunnel, add the private IP addresses of your DNS servers:
-
-1. In the **CIDR** tab, add the private IP/CIDR of your DNS server (for example, `10.0.1.53/32` for US, `10.1.1.53/32` for EU).
-2. Select **Save tunnel**.
+For each region where you have a private DNS server, [create a tunnel](cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#1-create-a-tunnel). For each tunnel, [add the private IP addresses](cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2-add-private-network-routes) of your DNS servers. For example, `10.0.1.53/32` for the US region and `10.1.1.53/32` for the EU region.
 
 Repeat this process for all regional DNS servers.
 
-## Create Gateway resolver policies for each region
+## 2. Create Gateway resolver policies for each region
 
-Now configure Gateway resolver policies to route DNS queries to the appropriate regional DNS server based on user location.
+Once your private DNS servers are connected to Cloudflare, configure Gateway resolver policies to route DNS queries to the appropriate regional DNS server based on user location.
 
 ### Create a resolver policy for US users
 
@@ -113,7 +102,7 @@ Create a catch-all policy for users in regions without a dedicated DNS server:
 
 8. Move this policy to the bottom of your resolver policy list to ensure it only matches when no regional policy applies.
 
-## Configure policy order
+## 3. Configure policy order
 
 The order of your resolver policies matters. Ensure your policies are ordered from most specific to least specific:
 
@@ -124,7 +113,7 @@ The order of your resolver policies matters. Ensure your policies are ordered fr
 
 Gateway evaluates policies from top to bottom and applies the first matching policy.
 
-## Test your configuration
+## 4. Test your configuration
 
 ### Test from different regions
 
