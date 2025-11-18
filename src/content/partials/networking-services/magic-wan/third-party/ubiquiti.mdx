@@ -2,6 +2,8 @@
 {}
 ---
 
+import { DashButton } from "~/components";
+
 Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These steps use the Cloud Gateway Max (UCG-Max) but work with other UniFi gateways supporting route-based IPsec VPNs, like the Dream Machine series.
 
 
@@ -12,72 +14,79 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 - UniFi Network Application (self-hosted or cloud)
 - Static public IP from your ISP
 - Admin access to both Cloudflare and UniFi
-- Gather a **Magic Anycast IPv4** address from the **Leased IPs** section in the dashboard **IP addresses** > **Leased IPs** (Contact your account team if you do not see any IPs listed)
+- Gather a **Magic Anycast IPv4** address from the **Leased IPs** section in the dashboard (<DashButton url="/?to=/:account/ip-addresses/leased-ips" />). Contact your account team if you do not see any IPs listed.
 
-## Step 1: Configure Magic WAN
+## 1. Configure Magic WAN
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to **Magic WAN** > **Configuration**
-2. Under **Select tunnel type**, select **IPsec Tunnel** and click **Next**
-3. Under **Tunnels**, click **Create**:
-   - Name: `unifi-gw-primary`
-   - IPv4 Interface Address: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
-   - Customer Endpoint: Your UniFi Gateway's WAN IP (e.g., `203.0.113.10`)
-   - Cloudflare Endpoint: `One of the IPv4 addresses gathered from Leased IPs`
-4. Under **Tunnel Health checks**:
-   - Health check rate: `set to desired level`
-   - Health check type: `Request`
-   - Health check direction: `Bidirectional`
-   - Health check target: `Default`
-5. Under **Pre-shared key**:
-   - Leave **Add pre-shared key later** selected (this key will be given during the Unfi site-to-site VPN configuration)
+1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+	<DashButton url="/?to=/:account/magic-wan/configuration" />
+2. Go to **Tunnels**, and select **Create**.
+3. Select **IPsec Tunnel** > **Next**, and fill in the following settings:
+   - **Name**: `unifi-gw-primary`
+   - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
+   - **Customer Endpoint**: This should be your UniFi Gateway's WAN IP (for example, `203.0.113.10`)
+   - **Cloudflare Endpoint**: This should be one of the IPv4 addresses gathered from Leased IPs.
+   - Under **Tunnel Health checks**, select:
+      - **Health check rate**: Set to desired level
+      - **Health check type**: _Request_
+      - **Health check direction**: _Bidirectional_
+      - **Health check target**: _Default_
+   - Under **Pre-shared key**:
+      - Select **Add pre-shared key later**. This key will be given during the UniFi site-to-site VPN configuration.
 
-## Step 2: Configure Site-to-Site VPN on UniFi
+## 2. Configure site-to-site VPN on UniFi
 
-1. In UniFi Network, go to **Settings** > **VPN** > **Site-to-Site VPN**
-2. Click **Create New**
-3. Configure:
-   - **VPN Type:** `IPsec`
-   - **Name:** `Cloudflare-MagicWAN`
-   - **Pre-shared key:** Copy this key for use in the Magic WAN tunnel configuration created in `Step 1`.
-   - **Local IP:** Select the WAN interface (e.g., `WAN1`)
-   - **Remote IP:** Cloudflare endpoint IP from `Step 1`
-   - **VPN Method:** Route Based
-   - **Tunnel IP:** `10.252.2.29/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
-   - **Remote Networks:** Inside Cloudflare tunnel address (e.g., 10.252.2.28/31) and other remote subnets to access through Magic WAN
+1. In UniFi Network, go to **Settings** > **VPN** > **Site-to-Site VPN**.
+2. Select **Create New**.
+3. Configure the following settings:
+   - **VPN Type:** `IPsec`.
+   - **Name:** `Cloudflare-Magic-WAN`.
+   - **Pre-shared key:** Copy this key. You need it for the Magic WAN tunnel configured in the [previous step](#1-configure-magic-wan).
+   - **Local IP:** Select the WAN interface (for example, `WAN1`).
+   - **Remote IP:** Enter the Cloudflare endpoint IP from [Step 1](#1-configure-magic-wan).
+   - **VPN Method:** Route Based.
+   - **Tunnel IP:** `10.252.2.29/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/).
+   - **Remote Networks:** Inside Cloudflare tunnel address (for example, `10.252.2.28/31`) and other remote subnets to access through Magic WAN.
 4. Set Advanced settings:
-   - Key Exchange Version: IKEv2
-   - IKE Encryption: AES-256
-   - IKE Hash: SHA256
-   - IKE DH Group: 14
-   - IKE Lifetime: 28800
-   - ESP Encryption: AES-256
-   - ESP Hash: SHA256
-   - ESP DH Group: 14
-   - ESP Lifetime: 28800
-   - PFS: Enabled
-   - Local Authentication ID: `Auto`
-   - Remote Authentication ID: Uncheck `Auto`, enter the Cloudflare endpoint IP from `Step 1`
-   - MTU: 1436
-5. Click **Apply**
+   - **Key Exchange Version**: IKEv2.
+   - **IKE Encryption**: AES-256.
+   - **IKE Hash**: SHA256.
+   - **IKE DH Group**: 14.
+   - **IKE Lifetime**: 28800.
+   - **ESP Encryption**: AES-256.
+   - **ESP Hash**: SHA256.
+   - **ESP DH Group**: 14.
+   - **ESP Lifetime**: 28800.
+   - **PFS**: Enabled.
+   - **Local Authentication ID**: `Auto`.
+   - **Remote Authentication ID**: Uncheck `Auto`, and enter the Cloudflare Endpoint IP from [Step 1](#1-configure-magic-wan).
+   - **MTU**: 1436.
+5. Select **Apply**
 
-## Step 3: Add Preshared Key to Cloudflare
+## 3. Add pre-shared key to Cloudflare
 
-1. Go to **Magic WAN** > **Tunnels** and edit your tunnel
-2. Paste the preshared key from Step 2
-3. Click **Save**
+1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+	<DashButton url="/?to=/:account/magic-wan/configuration" />
+2. In Tunnels, find the IPsec tunnel you have just created.
+3. Select your tunnel > **Edit**.
+4. Paste the preshared key from [Step 2](#2-configure-site-to-site-vpn-on-ubiquiti).
+5. Select **Save**.
 
-## Step 4: Configure Routes and Health Checks
+## 4. Configure Routes and health checks
 
-1. Go to **Magic WAN** > **Static Routes** > **Create**:
-   - Prefix: Your local network (e.g., `192.168.1.0/24`)
-   - Tunnel: Select your tunnel
-   - Priority: `100`
-2. Go to **Health Checks** > **Create**:
-   - Name: `UniFi-Health-Check`
-   - Type: `ICMP Ping`
-   - Endpoint: Customer endpoint address from Step 1
-   - Rate: Low frequency
-3. Edit your tunnel and enable the health check
+1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+	<DashButton url="/?to=/:account/magic-wan/configuration" />
+2. Go to **Routes** > **Create static route**:
+3. Enter the following settings:
+   - **Prefix**: Your local network (for example, `192.168.1.0/24`).
+   - **Tunnel/Next hop**: Select your tunnel.
+   - **Priority**: `100`.
+4. Go to **Health Checks** > **Create**:
+   - **Name**: `UniFi-Health-Check`.
+   - **Type**: `ICMP Ping`.
+   - **Endpoint**: Customer Endpoint address from [Step 1](#1-configure-magic-wan).
+   - **Rate**: Low frequency.
+5. Edit your tunnel and enable the health check.
 
 ## Verification
 
