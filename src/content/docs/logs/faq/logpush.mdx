@@ -88,3 +88,10 @@ Yes. Refer to [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501
 
 When the destination is Azure, the SAS (Shared access signature) token must be blob container with write permission only: service is Blob-only `ss=b` and resource type is Object-only `srt=o`.
 If the type of SAS is different, the error `signedResourceTypes must be Object only (srt=o)` will be returned.
+
+
+## What is the error `reading job for product '<product>' is not allowed (1004)`
+
+This error means that the API token you're using to access your Logpush job does not have the required permissions.
+For Zero Trust datasets users or tokens must now have both of the following permissions: `Logs Edit` and `Zero Trust: PII Read`, see the [Logpush Permission Update for Zero Trust Datasets](https://developers.cloudflare.com/changelog/2025-11-05-logpush-permissions-update/).
+
