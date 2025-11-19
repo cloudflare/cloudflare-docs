@@ -64,11 +64,18 @@ Make sure you consider the following:
 
 <Tabs syncKey="dashPlusAPI">
   <TabItem label="Dashboard">
-    (placeholder)
-  </TabItem>
+
+	  1. On the Cloudflare dashboard, go to the zone **Overview** page.
+		2. Select **Convert to CNAME DNS Setup** and then **Convert** to confirm.
+		3. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, under **Verification TXT Record**.
+
+	</TabItem>
   <TabItem label="API">
-    (placeholder)
-  </TabItem>
+
+	  1. Use the [Edit Zone endpoint](/api/resources/zones/methods/edit/) with `type` set to `partial` to convert the zone type.
+		2. Take note of the value returned under `verification_key` in the API response. This will be used in the next step.
+
+	</TabItem>
 </Tabs>
 
 ## 3. Verify ownership
