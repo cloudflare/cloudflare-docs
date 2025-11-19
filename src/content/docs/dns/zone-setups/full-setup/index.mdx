@@ -12,7 +12,45 @@ import { FeatureTable, Render } from "~/components";
 
 ## How to
 
-For more details, refer to [Set up a full domain](/dns/zone-setups/full-setup/setup/).
+If you want to use Cloudflare as your primary DNS provider and manage your DNS records on Cloudflare, your domain should be using a full setup. This means that Cloudflare is authoritative for your DNS and you manage records from the Cloudflare dashboard.
+
+Follow these steps to complete a full setup:
+
+1. Add your domain to Cloudflare and start the setup wizard.
+2. Review the DNS records Cloudflare imports. If any required records (for email, subdomains, or services) are missing, add them now.
+3. Make sure DNSSEC is turned **off** at your registrar before changing nameservers. DNSSEC must be disabled at the registrar to avoid propagation issues; you can enable it later from Cloudflare if desired.
+4. Replace your current nameservers at your registrar with the Cloudflare-assigned nameservers shown in the dashboard (for example: `adele.ns.cloudflare.com`, `clyde.ns.cloudflare.com`).
+5. Save the changes at your registrar and wait for propagation. Cloudflare will periodically check for nameserver updates; this usually takes minutes to a few hours but can take up to 24–48 hours in some cases.
+6. Back in the Cloudflare dashboard, click **Check nameservers now** (or wait for automatic detection). When Cloudflare detects your nameservers, the zone will move from *Pending* to *Active*.
+7. After activation, re-check all DNS records in Cloudflare → DNS:
+   - Keep MX/TXT records (email) as **DNS only** (do not proxy) unless you understand the consequences.
+   - For API or backend hosts (e.g. `api.example.com`), create an A or CNAME record pointing to the backend and set **Proxy status: DNS only** (grey cloud) initially.
+   - For sites served via Workers + R2 or Cloudflare Pages, configure routes and bindings instead of proxying the origin A record.
+
+### Example: Namecheap (quick steps)
+
+- Log in to Namecheap → Domain List → click your domain → Manage.
+- In the **Nameservers** section choose **Custom DNS**, paste the two Cloudflare nameservers, and save.
+- If DNSSEC is enabled in Namecheap, go to **Advanced DNS** → **DNSSEC** and disable it before updating nameservers.
+- Return to the Cloudflare dashboard and click **Check nameservers now**.
+
+### Commands and quick checks
+
+You can verify propagation and what nameservers are currently authoritative using these commands:
+
+```bash
+# Check authoritative nameservers (public view)
+dig +short NS chatsaigpt.com
+
+# Check nameservers reported by the registrar (whois)
+whois chatsaigpt.com
+
+# Query a Cloudflare nameserver directly (replace with your actual NS)
+dig @adele.ns.cloudflare.com chatsaigpt.com NS +short
+
+# After activation, check A record resolution
+dig +short A chatsaigpt.com
+```
 
 ## Availability
 
