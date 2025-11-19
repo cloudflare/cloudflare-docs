@@ -526,7 +526,7 @@ Each deployment you create can run different code but uses the same **Preview** 
 
 If a specific PR needs to use different resources, [environment variables](/workers/configuration/environment-variables/), or [secrets](/workers/configuration/secrets/) than what's configured for the **Preview** environment, you can override them for that specific **Preview deployment**.
 
-For example, one PR might be debugging a complex issue and needs `DEBUG_MODE=true` with verbose logging enabled, while other PRs use normal logging levels.
+For example, you can use this to set the environment variable `DEBUG_MODE=true` for **only** your preview deployment in order to enable verbose logging, without affecting preview deployments from other pull requests, which will still use normal logging levels.
 
 **To set overrides for a specific Preview deployment:**
 
