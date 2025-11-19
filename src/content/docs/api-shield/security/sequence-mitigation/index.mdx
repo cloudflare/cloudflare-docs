@@ -38,7 +38,7 @@ Sequence rules built via the Cloudflare dashboard using API Shield rules utilize
 
 :::note
 
-Talk to your account executive if the default lookback window is not sufficient for you.
+Contact your account team if the default lookback window is not sufficient for you.
 :::
 
 If you want to add multiple endpoints, ignore the lookback window, and configure time-based constraints, refer to [Sequence mitigation custom rules](/api-shield/security/sequence-mitigation/custom-rules/).
@@ -62,7 +62,7 @@ API Shield uses your configured <GlossaryTooltip term="session identifier">sessi
 
 ### Request limitations
 
-API Shield, by default, stores the current and the previous 9 requested endpoints by each individual API user identified through the session identifier. Please reach out to your account executive if the default lookback window of 9 requests is not sufficient for you.
+By default, API Shield stores the current and previous nine requested endpoints by each individual API user identified through the session identifier. Contact your account team if the default lookback window is not sufficient for you.
 
 Sequence mitigation further de-duplicates requests to the same endpoint while building the sequence.
 
@@ -76,7 +76,7 @@ Sequence mitigation de-duplicated the two requests to `GET /api/v1/accounts/{acc
 
 ### Time limitations
 
-Sequence mitigation rules have a lookback period of 10 minutes. That means that any two requests using the same session identifier will extend the sequence if they happen no further than 10 minutes apart. A request happening 10 minutes after the last one for a session identifier will start recording a new sequence. Thus, if you create a rule that one endpoint must be requested before another endpoint and more than 10 minutes elapses between a user requesting each endpoint, the rule will not match.
+Sequence mitigation rules have a lookback period of 10 minutes, which means that any two requests using the same session identifier will extend the sequence if they happen no further than 10 minutes apart. A request for a session identifier that happens 10 minutes after the last one will start recording a new sequence. For example, if you create a rule that one endpoint must be requested before another endpoint, and more than 10 minutes elapses between a user requesting each endpoint, the rule will not match.
 
 ## Availability
 

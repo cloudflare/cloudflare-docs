@@ -15,11 +15,11 @@ These rules are similar to [cookie sequence rules](/bots/additional-configuratio
 
 - They also need the `fraud_acct_ent` entitlement on a Cloudflare account.
 - They require [session identifiers](/api-shield/get-started/#session-identifiers) to be set in API Shield.
-- Because they require session identifiers, they can only be used on traffic that can be clearly attributed to individual users through session identifiers, that is, usually authenticated traffic.
+- Because they require session identifiers, they can only be used on traffic that can be clearly attributed to individual users through session identifiers (authenticated traffic).
 - Because Cloudflare stores the user state in memory and not in a cookie, a session's sequence lifetime is limited to 10 minutes.
-- Currently, at least 1 [API sequence rule](pi-shield/security/sequence-mitigation/manage-sequence-rules/) must be setup to activate the sequence system.
+- You must set up at least one [API sequence rule](/api-shield/security/sequence-mitigation/manage-sequence-rules/) to activate the sequence system.
 
-Rules built using these custom rules are similar to the sequence rules that can be configured [via the API or the Cloudflare dashboard](/api-shield/security/sequence-mitigation/) as they make use of the same underlying technology. However, these custom rules allow for greater flexibility by enabling to use free-form logic on top of the recorded sequence and provide access to the full response options that rulesets offers.
+Rules built using these custom rules are similar to the sequence rules that can be configured [via the API or the Cloudflare dashboard](/api-shield/security/sequence-mitigation/) as they make use of the same underlying technology. However, these custom rules allow for greater flexibility by using free-form logic on top of the recorded sequence and providing access to the full response options that rulesets offers.
 
 ## Availability
 
