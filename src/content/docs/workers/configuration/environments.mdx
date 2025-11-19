@@ -28,7 +28,7 @@ Every Worker has two **environments**:
 
 - **[Production](#production)**: For serving your live application to real users.
 
-- **[Preview](#preview)**: For reviewing, testing, and sharing changes before they go live. When you create a preview deployment (by pushing to a pull request or running `wrangler deploy --preview`), the deployment uses your Preview environment settings.
+- **[Preview](#preview)**: For reviewing, testing, and sharing changes before they go live. When you create a [preview deployment](#using-preview-deployments) (by pushing to a pull request or running `wrangler deploy --preview`), the deployment uses your Preview environment settings.
 
 You can also easily set up your **[local development environment](#local-development)** by pulling down your **Preview** settings with `wrangler env pull` to develop and test changes on your local machine.
 
@@ -41,7 +41,7 @@ When you write a Worker, you need to tell Cloudflare two things:
 
 The second part is different for **Production** (your live site) and **Preview** (testing changes). You configure these separately so your tests don't accidentally mess with real user data.
 
-Here's what a configuration file looks like:
+Here's what a [configuration file](/workers/wrangler/configuration/) looks like:
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -70,19 +70,11 @@ Here's what a configuration file looks like:
 ```
 </WranglerConfig>
 
-Notice how `production` and `preview` have different values for `database_id`? Your Worker code always uses `env.DB` - it never references a specific database ID. The configuration file tells Cloudflare what `env.DB` actually points to.
+Notice how `production` and `preview` have different values for `database_id`? Your Worker code always uses `env.DB` - it never references a specific database ID. The [configuration file](/workers/wrangler/configuration/) tells Cloudflare what `env.DB` actually points to.
 
 **What can differ between environments:**
 
-You can configure environment variables, secrets, resource connections, and observability settings differently between **Production** and **Preview**. Everything else stays the same - like your Worker's name, which code file to run, and build settings.
-
-**How it works in practice:**
-
-When you're developing a new feature, you push your code to a feature branch and open a pull request. Cloudflare automatically creates a preview deployment at a unique URL where you can test your changes. This preview deployment runs your new code and uses your **Preview** environment settings - so `env.DB` connects to your test database, `env.API_SECRET` uses your test API key, and so on. You and your team can click the URL and try out the feature without affecting your live site.
-
-If someone else on your team is working on a different feature in a separate pull request, they get their own preview deployment with their own unique URL. Each preview deployment runs different code (your feature vs their feature), but they all share the same **Preview** environment settings - they all connect to the same test database, use the same test API keys, and so on. This way multiple people can test their changes at the same time without their code clashing.
-
-When you're ready to go live, you merge your pull request. Cloudflare deploys your code to **Production**, and now the exact same code that you just tested runs with your **Production** environment settings instead - `env.DB` now connects to your real database with actual user data, `env.API_SECRET` uses your live API key, and your Worker serves traffic to your users.
+You can configure environment variables, secrets, resource connections, and [observability settings](/workers/observability/) differently between **Production** and **Preview**. Everything else stays the same - like your Worker's name, which code file to run, and build settings.
 
 <Details header="View complete configuration example">
 
@@ -367,7 +359,7 @@ The `env` parameter, available from your Worker's `fetch` handler or from [`impo
 
 Secrets are **not shared** between environments. You must set them separately for each environment ([Production](#production), [Preview](#preview)).
 
-#### Set secrets for your Production environment
+#### Set secrets for your [Production](#production) environment
 
 **CLI**
 
@@ -377,7 +369,7 @@ Secrets are **not shared** between environments. You must set them separately fo
 
 Go to **Settings** > **Environments** > **Production** > **Secrets**
 
-#### Set secrets for your Preview environment
+#### Set secrets for your [Preview](#preview) environment
 
 **CLI**
 
@@ -386,6 +378,18 @@ Go to **Settings** > **Environments** > **Production** > **Secrets**
 **Dashboard**
 
 Go to **Settings** > **Environments** > **Preview** > **Secrets**
+
+## How environments work together
+
+**Production** and **Preview** environments work together to keep your live application safe while you develop new features. Here's how they interact in a typical development workflow:
+
+- **Develop locally**: You can easily set up [local development](#local-development) with `wrangler env pull`, which pulls down your **Preview** environment settings and saves them to a `.env.local` file on your machine. Then run `wrangler dev` to test your code locally. By default, resources like databases are simulated on your computer so you can develop offline. If you need to test with real data, you can [connect to remote **Preview** resources](#local-vs-remote-bindings) instead.
+
+- **Review your changes**: When you're ready for your team to review, push your code to a feature branch and open a pull request. Cloudflare automatically creates a [preview deployment](#using-preview-deployments) at a unique URL where you and your team can test your changes. This preview deployment runs your new code and uses your **[Preview](#preview)** environment settings - so `env.DB` connects to your test database, `env.API_SECRET` uses your test API key, and so on.
+
+- **Collaborate**: If someone else on your team is working on a different feature in a separate pull request, they get their own [preview deployment](#using-preview-deployments) with their own unique URL. Each preview deployment can run different code, which lets your team develop features independently and test their changes at the same time.
+
+- **Deploy to production**: When you're ready to go live, you merge your pull request. Cloudflare deploys your code to **[Production](#production)**, and now the exact same code that you just tested runs with your **[Production](#production)** environment settings instead - `env.DB` now connects to your real database with actual user data, `env.API_SECRET` uses your live API key, and your Worker serves traffic to your users.
 
 ## Production
 
@@ -511,7 +515,7 @@ Define your **Preview** environment using the `preview` section:
 ```
 </WranglerConfig>
 
-**Preview deployments** will use the separate database (`preview-db-id-456`).
+**[Preview deployments](#using-preview-deployments)** will use the separate database (`preview-db-id-456`).
 
 ### Using Preview deployments
 
@@ -540,8 +544,7 @@ All future commits to that branch will automatically use these overrides. When t
 
 ## Local Development
 
-**Local Development** is where you develop and test changes on your local machine. When you run your Worker in local development, using either [`wrangler dev`](/workers/wrangler/commands/#dev) or `vite dev` with the [Cloudflare Vite Plugin](/workers/vite-plugin/), your code runs in the open-source Workers Runtime, called [workerd](https://github.com/cloudflare/workerd)
-
+**Local Development** is where you develop and test changes on your local machine. When you run your Worker in local development, using either [`wrangler dev`](/workers/wrangler/commands/#dev) or `vite dev` with the [Cloudflare Vite Plugin](/workers/vite-plugin/), your code runs in the open-source Workers Runtime, called [workerd](https://github.com/cloudflare/workerd).
 
 You can set up your local development environment by pulling down settings from your **Preview environment**:
 
@@ -552,9 +555,13 @@ By default, `wrangler env pull` pulls from your **Preview** environment:
 This creates a `.env.local` file in your project's root directory that contains:
 
 ```ini title=".env.local"
-# Environment variables from Preview environment
-API_KEY=your-preview-api-key
+# Environment variables and secrets from Preview environment
+
+# Plain text environment variables
 ENVIRONMENT=preview
+
+# Secrets
+MY_API_KEY=your-preview-api-key
 
 # Bindings (commented out by default - simulated locally)
 # Uncomment to connect to the remote resource
@@ -563,20 +570,24 @@ ENVIRONMENT=preview
 # MY_BUCKET=@r2_bucket:preview-bucket
 ```
 
+This `.env.local` file is gitignored by default, which means each developer on your team can configure their own local setup without committing it to source code. For example, one developer might uncomment `DB` to connect to the remote Preview database, while another keeps it commented to use a local simulation. This gives everyone flexibility to work in the way that works best for them.
+
 You can also pull from **Production**:
 
 <PackageManagers type="exec" pkg="wrangler" args="env pull --prod" />
 
 ### Local vs Remote bindings
 
-By default, all bindings in your `.env.local` file are commented out. This means [Miniflare](https://miniflare.dev/) will create local simulations of your resources (like [KV namespaces](/kv/) or [D1 databases](/d1/)). This lets you develop offline without costs or needing to connect to deployed resources.
+By default, all bindings in your `.env.local` file are commented out. When you run [`wrangler dev`](/workers/wrangler/commands/#dev) or [`vite dev`](/workers/vite-plugin/), local simulations of your resources (like [KV namespaces](/kv/) or [D1 databases](/d1/)) will be created automatically. This lets you develop offline without costs or needing to connect to deployed resources.
 
 To connect a binding to its remote resource in **Preview** or **Production**, uncomment the line in your `.env.local` file:
 
 ```ini title=".env.local"
-# Environment variables
-API_KEY=your-preview-api-key
+# Plain text environment variables
 ENVIRONMENT=preview
+
+# Secrets
+MY_API_KEY=your-preview-api-key
 
 # Simulated locally (commented out)
 # MY_KV=@kv_namespace:abc123preview
@@ -593,10 +604,10 @@ The syntax is: `BINDING_NAME=@resource_type:resource_id`
 - `resource_type` - The type of resource (`kv_namespace`, `d1`, `r2_bucket`, etc.)
 - `resource_id` - The ID of the specific resource to connect to
 
-When you run [`wrangler dev`](/workers/wrangler/commands/#dev) or `vite dev`, Wrangler will:
+When you run [`wrangler dev`](/workers/wrangler/commands/#dev) or [`vite dev`](/workers/vite-plugin/), Wrangler will:
 - Simulate `MY_KV` locally (commented out)
 - Connect `DB` and `MY_BUCKET` to their remote **Preview** resources (uncommented)
-- Use the environment variables from **Preview** (`API_KEY`, `ENVIRONMENT`)
+- Use the environment variables from **Preview** (`MY_API_KEY`, `ENVIRONMENT`)
 
 ## Guides
 
@@ -759,7 +770,7 @@ This creates a `.env.local` file with your **Preview** environment variables (co
 
 <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-By default, Miniflare will create local simulations of your bindings. To connect to remote **Preview** resources, uncomment the corresponding bindings in your `.env.local` file.
+By default, local simulations of your bindings will be created automatically. To connect to remote **Preview** resources, uncomment the corresponding bindings in your `.env.local` file.
 
 </TabItem>
 
@@ -1414,6 +1425,12 @@ If you have an existing Wrangler configuration using the legacy format and don't
 ```
 </WranglerConfig>
 
+:::note
+
+Settings like `name` and `compatibility_date` at the top level apply to both **Production** and **Preview**. However, bindings and environment variables (like `vars`, `kv_namespaces`, `d1_databases`) must be specified separately for **Preview** - they are not inherited from the top-level configuration.
+
+:::
+
 This format is valid and will work with default environments. You can keep your existing configuration structure and simply add the `preview` block to define different values for **Preview**.
 
 ### Using with Wrangler Environments
@@ -1511,7 +1528,7 @@ In this example:
 - **`my-worker-staging`** has Production deployment and Preview deployments using `staging-preview-kv-id`
 - **`my-worker-production`** has Production deployment and Preview deployments using `production-preview-kv-id`
 
-When you deploy with `wrangler deploy --env staging`, you're deploying to the **Production** environment of the `my-worker-staging` Worker. When you push a PR to a non-main branch, Cloudflare will create **Preview deployments** for each Worker using their respective `preview` configurations.
+When you deploy with `wrangler deploy --env staging`, you're deploying to the **[Production](#production)** environment of the `my-worker-staging` Worker. When you push a PR to a non-main branch, Cloudflare will create **[Preview deployments](#using-preview-deployments)** for each Worker using their respective `preview` configurations.
 
 ## Related resources
 
