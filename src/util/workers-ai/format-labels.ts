@@ -16,7 +16,7 @@ export function formatLabel(option: Schema): string {
 		const lower = option.title.toLowerCase();
 		if (lower.includes("gpt_oss")) return "Responses";
 
-		let label = option.title
+		const label = option.title
 			.replace(/\s+Response$/i, "")
 			.replace(/\bOuput\b/g, "Output")
 			.replace(/^[A-Z0-9\s]+\s+(Input|Output)\s+/i, "");
