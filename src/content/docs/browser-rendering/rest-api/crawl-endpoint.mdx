@@ -33,7 +33,7 @@ There are two separate steps to using the `/crawl` endpoint:
 1. [Initiate the crawl job](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) — A `POST` request where you initiate the crawl and receive a response with a job `id`.
 2. [Request results of the crawl job](/browser-rendering/rest-api/crawl-endpoint/#request-results-of-the-crawl-job) — A `GET` request where you request the status or results of the crawl.
  
-Crawl jobs have a maximum run time of 7 days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
+Crawl jobs have a maximum run time of seven days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
 
 :::note[Free plan limitation]
 If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 10 minutes per day](/browser-rendering/pricing/). To avoid this, you can either [upgrade to a Workers Paid plan](/workers/pricing/) or you can [put limitations on timeouts](/browser-rendering/reference/timeouts/) to get the most out of the 10 minutes of your crawl request.
@@ -41,7 +41,7 @@ If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 
 
 ### Initiate the crawl job
 
-The only required parameter is `url`. Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optional-parameters) for additional customization options. The API will respond immediately with a job `id` you will use to retrieve the status and results of the crawl job.
+The only required parameter is `url`. Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optional-parameters) for additional customization options. The API will respond immediately with a job `id` that you will use to retrieve the status and results of the crawl job.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
@@ -73,7 +73,7 @@ curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-
 The response includes a `status` field indicating the current state of the crawl job. The possible job statuses are:
 
 - `running` — The crawl job is currently in progress.
-- `cancelled_due_to_timeout` — The crawl job exceeded the maximum run time of 7 days.
+- `cancelled_due_to_timeout` — The crawl job exceeded the maximum run time of seven days.
 - `cancelled_due_to_limits` — The crawl job was cancelled because it hit [account limits](/browser-rendering/platform/limits/).
 - `cancelled_by_user` — The crawl job was manually cancelled by the user.
 - `errored` — The crawl job encountered an error.
@@ -82,7 +82,7 @@ The response includes a `status` field indicating the current state of the crawl
 You can also use optional query parameters to filter and paginate results:
 - `cursor` — Cursor for pagination.
 - `limit` — Maximum number of records to return.
-- `status` — Filter by URL status (`queued`, `completed`, `disallowed`, `errored` or `cancelled`).
+- `status` — Filter by URL status (`queued`, `completed`, `disallowed`, `errored`, or `cancelled`).
 
 Example with optional query parameters:
 
@@ -156,7 +156,7 @@ The following optional parameters can be used in your crawl request, in addition
 | Optional parameter | Type | Description |
 | --- | --- | --- |
 | `limit` | Number | Maximum number of pages to crawl (default is 10, maximum is 100,000) |
-| `depth` | Number | Maximum link depth to crawl from the starting URL (default is 100000, maximum is 100000) |
+| `depth` | Number | Maximum link depth to crawl from the starting URL (default is 100,000, maximum is 100,000) |
 | `formats` | Array of strings | Response format (default is HTML, other options are Markdown and JSON) |
 | `render` | Boolean | If false, does a fast HTML fetch without executing Javascript (default is true, [learn more about `render`](#render-parameter)) |
 | `maxAge` | Number | The maximum age of a cached resource that can be returned in seconds (default is 86,400 – 1 day, maximum is 604,800 – 7 days)|
