@@ -290,6 +290,7 @@ The [`env` object](/workers/runtime-apis/bindings/) provides:
 - [**Environment variables**](/workers/configuration/environment-variables/) — as text strings or JSON values
 - [**Secrets**](/workers/configuration/secrets/) - Sensitive data like API keys (managed via [`wrangler secret put`](/workers/configuration/secrets/), not in the configuration file)
 - [**Bindings**](/workers/runtime-apis/bindings/) APIs that let you interact with Cloudflare resources, without the need for API tokens or keys
+You configure your Worker's `env` object by declaring keys on `env`, and specifying their type and value, as shown below:
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
