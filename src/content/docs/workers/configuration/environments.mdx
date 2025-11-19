@@ -287,7 +287,7 @@ Here's a comprehensive example showing all available configuration options:
 
 An environment variable can have one of the following types:
 
-- **Plain text** (`type: "text"`) - String values
+- [**Environment variables**](/workers/configuration/environment-variables/) — as text strings or JSON values
 - [**Secrets**](/workers/configuration/secrets/) - Sensitive data like API keys (managed via [`wrangler secret put`](/workers/configuration/secrets/), not in the configuration file)
 - **Resource bindings** (`type: "kv_namespace"`, `type: "d1"`, `type: "r2_bucket"`, etc.) - Live objects that let you interact with Cloudflare resources
 
