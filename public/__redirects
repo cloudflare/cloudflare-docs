@@ -136,6 +136,22 @@
 /access/ssh/short-live-cert-server/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 
+# aegis
+/aegis/ /smart-shield/configuration/dedicated-egress-ips/ 301
+/aegis/about/ /smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/ 301
+/aegis/about/ips-allocation/ /smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/#ips-allocation 301
+/aegis/about/connection-forwarding/ /smart-shield/configuration/dedicated-egress-ips/how-it-works/connection-forwarding/ 301
+/aegis/about/reuse-and-coalescing/ /smart-shield/concepts/connection-reuse/ 301
+/aegis/setup/ /smart-shield/configuration/dedicated-egress-ips/ 301
+/aegis/configuration-options/ /smart-shield/configuration/dedicated-egress-ips/other-products/ 301
+/aegis/configuration-options/network-firewall/ /smart-shield/configuration/dedicated-egress-ips/ 301
+/aegis/configuration-options/access-cni/ /smart-shield/configuration/dedicated-egress-ips/other-products/#access-and-cni 301
+/aegis/configuration-options/data-localization/ /smart-shield/configuration/dedicated-egress-ips/other-products/#data-localization-suite 301
+/aegis/configuration-options/load-balancing/ /smart-shield/configuration/dedicated-egress-ips/other-products/#load-balancing 301
+/aegis/configuration-options/spectrum/ /smart-shield/configuration/dedicated-egress-ips/other-products/#spectrum 301
+/aegis/configuration-options/workers/ /smart-shield/configuration/dedicated-egress-ips/other-products/#workers
+/aegis/analytics/ /smart-shield/configuration/dedicated-egress-ips/ips-utilization/ 301
+
 # agents
 /agents/build/prompts/ /workers/get-started/prompting/ 301
 /agents/examples/browse-the-web/ /agents/api-reference/browse-the-web/ 301
