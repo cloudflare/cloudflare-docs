@@ -1,0 +1,30 @@
+---
+{}
+
+---
+
+import { Details } from "~/components";
+
+Add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
+
+<Details header="Example verification record">
+
+A verification record for `example.com` might be:
+
+| Type | Name                            | Content             |
+| ---- | ------------------------------- | ------------------- |
+| TXT  | `cloudflare-verify.example.com` | 966215192-518620144 |
+
+</Details>
+
+:::note
+
+If your authoritative DNS provider automatically appends DNS record `name` fields with your domain, make sure to only insert `cloudflare-verify` as the record name. Otherwise, it may result in an incorrect record name, such as `cloudflare-verify.example.com.example.com`.
+
+After creating the record, you can use this [Dig Web Interface link](https://digwebinterface.com/?type=TXT&ns=auth&nameservers=) to search (`dig`) for `cloudflare-verify.<YOUR DOMAIN>` and validate if it is working.
+
+:::
+
+The verification record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
+
+If your organization has multiple Cloudflare accounts, also consider using zone holds to have more control over [domain ownership](/dns/zone-setups/partial-setup/#domain-ownership).
