@@ -23,11 +23,6 @@ import {
 
 const { schema, type = "input", modelName, taskName } = Astro.props;
 
-type ReferenceInfo = {
-	source: string | null;
-	pointer: string | null;
-};
-
 // Reference resolver for schema processing
 const defaultResolver: SchemaTreeRefDereferenceFn = (dereferencedNode: any) => {
 	const ref = dereferencedNode?.$ref || dereferencedNode?.value?.$ref;
