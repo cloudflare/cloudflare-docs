@@ -84,9 +84,26 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 
 ## 3. Add pre-shared key to Cloudflare
 
-1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
-	<DashButton url="/?to=/:account/magic-wan/configuration" />
-2. In **Tunnels**, find the IPsec tunnel you have just created.
+<Markdown
+	text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
+	inline={false}
+/>
+
+{props.magicWord === "Magic WAN" ? (
+	<>
+		<DashButton url="/?to=/:account/magic-wan/configuration" />
+		<Markdown
+			text={`2. In **Tunnels**, find the IPsec tunnel you have just created.`}
+			inline={false}
+		/>
+	</>
+) : (
+	<Markdown
+		text={`2. In **WAN tunnels**, find the IPsec tunnel you have just created.`}
+		inline={false}
+	/>
+)}
+
 3. Select your tunnel > **Edit**.
 4. Paste the preshared key from [Step 2](#2-configure-site-to-site-vpn-on-unifi).
 5. Select **Save**.
