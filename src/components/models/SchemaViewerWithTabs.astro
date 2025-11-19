@@ -23,21 +23,10 @@ import {
 
 const { schema, type = "input", modelName, taskName } = Astro.props;
 
-// Reference resolver for schema processing
-const defaultResolver: SchemaTreeRefDereferenceFn = (dereferencedNode: any) => {
-	const ref = dereferencedNode?.$ref || dereferencedNode?.value?.$ref;
-
-	if (!ref) {
-		return dereferencedNode;
-	}
-
-	const pointer = typeof ref === "string" ? ref : null;
-
-	if (!pointer) {
-		throw new ReferenceError(`Could not resolve reference`);
-	}
-
-	throw new ReferenceError(`Could not resolve '${pointer}`);
+const defaultResolver: SchemaTreeRefDereferenceFn = (node: any) => {
+	const ref = node?.$ref || node?.value?.$ref;
+	if (!ref) return node;
+	throw new ReferenceError(`Could not resolve '${ref}'`);
 };
 
 // Create format context
