@@ -29,6 +29,10 @@
         {
             "property_id": "partner",
             "value": "true"
+        },
+        {
+            "property_id": "terms",
+            "value": "https://leonardo.ai/terms-of-service/"
         }
     ],
     "schema": {

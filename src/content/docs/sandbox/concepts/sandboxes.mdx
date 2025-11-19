@@ -30,7 +30,7 @@ The sandbox container is running and processing requests. All state remains avai
 
 ### Idle
 
-After a period of inactivity (10 minutes by default), the container stops to free resources. When the next request arrives, a fresh container starts. All previous state is lost and the environment resets to its initial state.
+After a period of inactivity (10 minutes by default, configurable via [`sleepAfter`](/sandbox/configuration/sandbox-options/)), the container stops to free resources. When the next request arrives, a fresh container starts. All previous state is lost and the environment resets to its initial state.
 
 ### Destruction
 
@@ -130,6 +130,27 @@ if (!files.includes("data.json")) {
 
 await sandbox.exec("python process.py");
 ```
+
+## Version compatibility
+
+The SDK automatically checks that your npm package version matches the Docker container image version. **Version mismatches can cause features to break or behave unexpectedly.**
+
+**What happens**:
+- On sandbox startup, the SDK queries the container's version
+- If versions don't match, a warning is logged
+- Some features may not work correctly if versions are incompatible
+
+**When you might see warnings**:
+- You updated the npm package (`npm install @cloudflare/sandbox@latest`) but forgot to update the `FROM` line in your Dockerfile
+
+**How to fix**:
+Update your Dockerfile to match your npm package version. For example, if using `@cloudflare/sandbox@0.3.3`:
+
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.3.3  # Match your npm version
+```
+
+See [Dockerfile reference](/sandbox/configuration/dockerfile/) for details on extending the base image.
 
 ## Best practices
 

@@ -34,6 +34,36 @@ console.log(exposed.exposedAt);
 
 Preview URLs remain stable while a port is exposed and can be shared during that time. However, if you unexpose and re-expose a port, a new random token is generated and the URL changes. For persistent URLs, keep ports exposed for the duration you need them accessible.
 
+## ID Case Sensitivity
+
+Preview URLs extract the sandbox ID from the hostname to route requests. Since hostnames are case-insensitive (per RFC 3986), they're always lowercased: `8080-MyProject-123.yourdomain.com` becomes `8080-myproject-123.yourdomain.com`.
+
+**The problem**: If you create a sandbox with `"MyProject-123"`, it exists as a Durable Object with that exact ID. But the preview URL routes to `"myproject-123"` (lowercased from the hostname). These are different Durable Objects, so your sandbox is unreachable via preview URL.
+
+```typescript
+// Problem scenario
+const sandbox = getSandbox(env.Sandbox, 'MyProject-123');
+// Durable Object ID: "MyProject-123"
+await sandbox.exposePort(8080, { hostname });
+// Preview URL: 8000-myproject-123.yourdomain.com
+// Routes to: "myproject-123" (different DO - doesn't exist!)
+```
+
+**The solution**: Use `normalizeId: true` to lowercase IDs when creating sandboxes:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, 'MyProject-123', {
+  normalizeId: true
+});
+// Durable Object ID: "myproject-123" (lowercased)
+// Preview URL: 8000-myproject-123.yourdomain.com
+// Routes to: "myproject-123" (same DO - works!)
+```
+
+Without `normalizeId: true`, `exposePort()` throws an error when the ID contains uppercase letters.
+
+**Best practice**: Use lowercase IDs from the start (`'my-project-123'`). See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#normalizeid) for details.
+
 ## Request Routing
 
 You must call `proxyToSandbox()` first in your Worker's fetch handler to route preview URL requests:

@@ -47,6 +47,122 @@ try {
 When `keepAlive: true` is set, containers will not automatically timeout. They must be explicitly destroyed using `destroy()` to prevent containers running indefinitely and counting toward your account limits.
 :::
 
+### sleepAfter
+
+**Type**: `string | number`
+**Default**: `"10m"` (10 minutes)
+
+Duration of inactivity before the sandbox automatically sleeps. Accepts duration strings (`"30s"`, `"5m"`, `"1h"`) or numbers (seconds).
+
+<TypeScriptExample>
+```ts
+// Sleep after 30 seconds of inactivity
+const sandbox = getSandbox(env.Sandbox, 'user-123', {
+  sleepAfter: '30s'
+});
+
+// Sleep after 5 minutes (using number)
+const sandbox2 = getSandbox(env.Sandbox, 'user-456', {
+  sleepAfter: 300  // 300 seconds = 5 minutes
+});
+```
+</TypeScriptExample>
+
+:::note[Ignored when keepAlive is true]
+When `keepAlive: true` is set, `sleepAfter` is ignored and the sandbox never sleeps automatically.
+:::
+
+### containerTimeouts
+
+**Type**: `object`
+
+Configure timeouts for container startup operations.
+
+<TypeScriptExample>
+```ts
+// Extended startup with custom Dockerfile work
+// (installing packages, starting services before SDK)
+const sandbox = getSandbox(env.Sandbox, 'data-processor', {
+  containerTimeouts: {
+    portReadyTimeoutMS: 180_000  // 3 minutes for startup work
+  }
+});
+
+// Wait longer during traffic spikes
+const sandbox2 = getSandbox(env.Sandbox, 'user-env', {
+  containerTimeouts: {
+    instanceGetTimeoutMS: 60_000   // 1 minute for provisioning
+  }
+});
+```
+</TypeScriptExample>
+
+**Available timeout options**:
+
+- `instanceGetTimeoutMS` - How long to wait for Cloudflare to provision a new container instance. Increase during traffic spikes when many containers provision simultaneously. **Default**: `30000` (30 seconds)
+- `portReadyTimeoutMS` - How long to wait for the sandbox API to become ready. Increase if you extend the base Dockerfile with custom startup work (installing packages, starting services). **Default**: `90000` (90 seconds)
+
+**Environment variable overrides**:
+- `SANDBOX_INSTANCE_TIMEOUT_MS` - Override `instanceGetTimeoutMS`
+- `SANDBOX_PORT_TIMEOUT_MS` - Override `portReadyTimeoutMS`
+
+Precedence: `options` > `env vars` > SDK defaults
+
+### normalizeId
+
+**Type**: `boolean`
+**Default**: `false` (will become `true` in a future version)
+
+Lowercase sandbox IDs when creating sandboxes. When `true`, the ID you provide is lowercased before creating the Durable Object (e.g., "MyProject-123" → "myproject-123").
+
+**Why this matters**: Preview URLs extract the sandbox ID from the hostname, which is always lowercase due to DNS case-insensitivity. Without normalization, a sandbox created with "MyProject-123" becomes unreachable via preview URL because the URL routing looks for "myproject-123" (different Durable Object).
+
+<TypeScriptExample>
+```ts
+// Without normalization (default)
+const sandbox1 = getSandbox(env.Sandbox, 'MyProject-123');
+// Creates Durable Object with ID: "MyProject-123"
+// Preview URL: 8000-myproject-123.example.com
+// Problem: URL routes to "myproject-123" (different DO)
+
+// With normalization
+const sandbox2 = getSandbox(env.Sandbox, 'MyProject-123', {
+  normalizeId: true
+});
+// Creates Durable Object with ID: "myproject-123"
+// Preview URL: 8000-myproject-123.example.com
+// Works: URL routes to "myproject-123" (same DO)
+```
+</TypeScriptExample>
+
+:::caution[Different normalizeId values = different sandboxes]
+`getSandbox(ns, 'MyProject-123')` and `getSandbox(ns, 'MyProject-123', { normalizeId: true })` create two separate Durable Objects. If you have existing sandboxes with uppercase IDs, enabling normalization creates new sandboxes—you won't access the old ones.
+:::
+
+:::note[Future default]
+In a future SDK version, `normalizeId` will default to `true`. All sandbox IDs will be lowercase regardless of input casing. Use lowercase IDs now or explicitly set `normalizeId: true` to prepare for this change.
+:::
+
+## When to use normalizeId
+
+Use `normalizeId: true` when:
+
+- **Using preview URLs** - Required for port exposure if your IDs contain uppercase letters
+- **New projects** - Either enable this option OR use lowercase IDs from the start (both work)
+- **Migrating existing code** - Create new sandboxes with this enabled; old uppercase sandboxes will eventually be destroyed (explicitly or after timeout)
+
+**Best practice**: Use lowercase IDs from the start (`'my-project-123'` instead of `'MyProject-123'`).
+
+## When to use sleepAfter
+
+Use custom `sleepAfter` values to:
+
+- **Reduce costs** - Shorter timeouts (e.g., `"1m"`) for infrequent workloads
+- **Extend availability** - Longer timeouts (e.g., `"30m"`) for interactive workflows
+- **Balance performance** - Fine-tune based on your application's usage patterns
+
+The default 10-minute timeout works well for most applications. Adjust based on your needs.
+
 ## When to use keepAlive
 
 Use `keepAlive: true` for:
@@ -56,10 +172,12 @@ Use `keepAlive: true` for:
 - **Monitoring tasks** - Processes that periodically check external services
 - **Interactive sessions** - User-driven workflows where the container should remain available
 
-By default, containers automatically shut down after 10 minutes of inactivity. The `keepAlive` option prevents this automatic shutdown.
+With `keepAlive`, containers never sleep automatically - use for scenarios where you control the lifecycle explicitly.
 
 ## Related resources
 
+- [Expose services guide](/sandbox/guides/expose-services/) - Using `normalizeId` with preview URLs
+- [Preview URLs concept](/sandbox/concepts/preview-urls/) - Understanding DNS case-insensitivity
 - [Background processes guide](/sandbox/guides/background-processes/) - Using `keepAlive` with long-running processes
 - [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes
 - [Sandboxes concept](/sandbox/concepts/sandboxes/) - Understanding sandbox lifecycle

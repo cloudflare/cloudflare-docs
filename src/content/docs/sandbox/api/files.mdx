@@ -23,7 +23,7 @@ await sandbox.writeFile(path: string, content: string, options?: WriteFileOption
 - `path` - Absolute path to the file
 - `content` - Content to write
 - `options` (optional):
-  - `encoding` - File encoding (default: `"utf-8"`)
+  - `encoding` - File encoding (`"utf-8"` or `"base64"`, default: `"utf-8"`)
 
 <TypeScriptExample>
 ```
@@ -33,6 +33,10 @@ await sandbox.writeFile('/workspace/app.js', `console.log('Hello!');`);
 await sandbox.writeFile('/tmp/image.png', base64Data, { encoding: 'base64' });
 ```
 </TypeScriptExample>
+
+:::note[Base64 validation]
+When using `encoding: 'base64'`, content must contain only valid base64 characters (A-Z, a-z, 0-9, +, /, =). Invalid base64 content returns a validation error.
+:::
 
 ### `readFile()`
 
@@ -45,7 +49,7 @@ const file = await sandbox.readFile(path: string, options?: ReadFileOptions): Pr
 **Parameters**:
 - `path` - Absolute path to the file
 - `options` (optional):
-  - `encoding` - File encoding (default: `"utf-8"`)
+  - `encoding` - File encoding (`"utf-8"` or `"base64"`, default: auto-detected from MIME type)
 
 **Returns**: `Promise<FileInfo>` with `content` and `encoding`
 
@@ -54,10 +58,50 @@ const file = await sandbox.readFile(path: string, options?: ReadFileOptions): Pr
 const file = await sandbox.readFile('/workspace/package.json');
 const pkg = JSON.parse(file.content);
 
-// Binary data
+// Binary data (auto-detected or forced)
 const image = await sandbox.readFile('/tmp/image.png', { encoding: 'base64' });
+
+// Force encoding (override MIME detection)
+const textAsBase64 = await sandbox.readFile('/workspace/data.txt', { encoding: 'base64' });
 ```
 </TypeScriptExample>
+
+:::note[Encoding behavior]
+When `encoding` is specified, it overrides MIME-based auto-detection. Without `encoding`, the SDK detects the appropriate encoding from the file's MIME type.
+:::
+
+### `exists()`
+
+Check if a file or directory exists.
+
+```ts
+const result = await sandbox.exists(path: string): Promise<FileExistsResult>
+```
+
+**Parameters**:
+- `path` - Absolute path to check
+
+**Returns**: `Promise<FileExistsResult>` with `exists` boolean
+
+<TypeScriptExample>
+```
+const result = await sandbox.exists('/workspace/package.json');
+if (result.exists) {
+  const file = await sandbox.readFile('/workspace/package.json');
+  // process file
+}
+
+// Check directory
+const dirResult = await sandbox.exists('/workspace/src');
+if (!dirResult.exists) {
+  await sandbox.mkdir('/workspace/src');
+}
+```
+</TypeScriptExample>
+
+:::note[Available on sessions]
+Both `sandbox.exists()` and `session.exists()` are supported.
+:::
 
 ### `mkdir()`
 
