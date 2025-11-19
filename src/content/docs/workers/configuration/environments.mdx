@@ -540,7 +540,7 @@ All future commits to that branch will automatically use these overrides. When t
 
 ## Local Development
 
-**Local Development** is where you develop and test changes on your local machine. Unlike **[Production](#production)** and **[Preview](#preview)** which run on Cloudflare's network, local development uses [Miniflare](https://miniflare.dev/) to simulate the Workers runtime on your computer.
+**Local Development** is where you develop and test changes on your local machine. When you run your Worker in local development, using either [`wrangler dev`](/workers/wrangler/commands/#dev) or `vite dev` with the [Cloudflare Vite Plugin](/workers/vite-plugin/), your code runs in the open-source Workers Runtime, called [workerd](https://github.com/cloudflare/workerd)
 
 Local development is not a separate stored environment. Instead, you pull environment variables from Preview or Production.
 
