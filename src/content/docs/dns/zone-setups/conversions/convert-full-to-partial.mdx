@@ -80,7 +80,7 @@ Make sure you consider the following:
 
 ## 3. Verify ownership
 
-Add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
+Add the **Verification TXT Record** at your new authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
 
 <Details header="Example verification record">
 
@@ -100,8 +100,10 @@ After creating the record, you can use this [Dig Web Interface link](https://dig
 
 :::
 
-That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
+The verification record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
 
 If your organization has multiple Cloudflare accounts, also consider using zone holds to have more control over [domain ownership](/dns/zone-setups/partial-setup/#domain-ownership).
 
 ## 4. Update your nameservers
+
+Once verification is complete, update the nameservers at your domain registrar to point to your new authoritative DNS provider.
