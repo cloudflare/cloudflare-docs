@@ -22,13 +22,13 @@ import {
 	TabItem,
 } from "~/components";
 
-An **environment** is a collection of settings that determines how your Worker runs - such as which resources it connects to, what [environment variables](/workers/configuration/environment-variables/) it uses, and what domains it's available on.
+An **environment** is a collection of settings that determines how your Worker runs. These settings include which resources it connects to, what [environment variables](/workers/configuration/environment-variables/) and [secrets](/workers/configuration/secrets/) it uses, and what domains it's available on.
 
-Every Worker has two default **environments** that map to specific phases in your workflow:
+Every Worker has two **environments**:
 
-- **[Production](#production)**: For serving your live application to real users on your [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/), [custom domain](/workers/configuration/routing/custom-domains/), or [route](/workers/configuration/routing/routes/).
+- **[Production](#production)**: For serving your live application to real users.
 
-- **[Preview](#preview)**: For testing and sharing Pull Request changes before they go live. Each Pull Request deploys its own unique **PR Preview** using the **Preview** environment settings.
+- **[Preview](#preview)**: For reviewing, testing, and sharing changes before they go live. When you create a preview deployment (by pushing to a pull request or running `wrangler deploy --preview`), the deployment uses your Preview environment settings.
 
 You can also easily set up your **[local development environment](#local-development)** by pulling down your **Preview** settings with `wrangler env pull` to develop and test changes on your local machine.
 
@@ -70,9 +70,19 @@ Here's what a configuration file looks like:
 ```
 </WranglerConfig>
 
-Notice how `production` and `preview` have different values for `database_id`? Your Worker runs the same code in both environments, but connects to different databases.
+Notice how `production` and `preview` have different values for `database_id`? Your Worker code always uses `env.DB` - it never references a specific database ID. The configuration file tells Cloudflare what `env.DB` actually points to.
 
-The settings outside of `production` and `preview` - like `name` and `main` - describe your Worker itself. These stay the same everywhere because you want to test the exact same Worker that your users will see. For the complete list of these settings, refer to [Global settings](#global-settings).
+**What can differ between environments:**
+
+You can configure environment variables, secrets, resource connections, and observability settings differently between **Production** and **Preview**. Everything else stays the same - like your Worker's name, which code file to run, and build settings.
+
+**How it works in practice:**
+
+When you're developing a new feature, you push your code to a feature branch and open a pull request. Cloudflare automatically creates a preview deployment at a unique URL where you can test your changes. This preview deployment runs your new code and uses your **Preview** environment settings - so `env.DB` connects to your test database, `env.API_SECRET` uses your test API key, and so on. You and your team can click the URL and try out the feature without affecting your live site.
+
+If someone else on your team is working on a different feature in a separate pull request, they get their own preview deployment with their own unique URL. Each preview deployment runs different code (your feature vs their feature), but they all share the same **Preview** environment settings - they all connect to the same test database, use the same test API keys, and so on. This way multiple people can test their changes at the same time without their code clashing.
+
+When you're ready to go live, you merge your pull request. Cloudflare deploys your code to **Production**, and now the exact same code that you just tested runs with your **Production** environment settings instead - `env.DB` now connects to your real database with actual user data, `env.API_SECRET` uses your live API key, and your Worker serves traffic to your users.
 
 <Details header="View complete configuration example">
 
@@ -81,17 +91,13 @@ Here's a comprehensive example showing all available configuration options:
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
-  // ============================================================================
-  // GLOBAL SETTINGS - Apply to all environments
-  // ============================================================================
-  // These describe your Worker's code and can't differ between environments
-
+  // Settings that describe your Worker - these stay the same for all environments
   "name": "my-worker",
   "main": "src/index.ts",
   "compatibility_date": "$today",
   "compatibility_flags": ["nodejs_compat_v2"],
 
-  // Durable Object migrations - Global because they're part of your code
+  // Durable Object migrations
   "migrations": [
     {
       "tag": "v1",
@@ -99,55 +105,48 @@ Here's a comprehensive example showing all available configuration options:
     }
   ],
 
-  // Build configuration - Global because it affects how your code is built
+  // Build configuration
   "tsconfig": "tsconfig.json",
   "minify": true,
   "no_bundle": false,
 
-  // ============================================================================
-  // PRODUCTION ENVIRONMENT
-  // ============================================================================
   "production": {
-    // Where your production Worker is accessible
-    "domains": ["app.example.com"],
+    // Where your Worker is accessible
+    "domains": ["my-worker.workers.dev", "app.example.com"],
 
     // Environment variables
     "env": {
-      // Plain text variable - separated by "value"
+      // Plain text - Production and Preview use different "value"
       "ENVIRONMENT": {
         "type": "text",
         "value": "production"
       },
 
-      // KV namespace - separated by "id"
-      // Each environment connects to a different KV namespace
+      // KV namespace - Production and Preview connect to different namespaces via "id"
       "MY_KV": {
         "type": "kv_namespace",
         "id": "abc123prod"
       },
 
-      // D1 database - separated by "database_id"
-      // Production uses the real database
+      // D1 database - Production uses real database, Preview uses test database
       "DB": {
         "type": "d1",
         "database_id": "prod-db-id-123"
       },
 
-      // R2 bucket - separated by "bucket_name"
-      // Production uses the real bucket
+      // R2 bucket - Production uses real bucket, Preview uses test bucket
       "MY_BUCKET": {
         "type": "r2_bucket",
         "bucket_name": "production-bucket"
       },
 
-      // Durable Object - separated by "class_name" and optionally "script_name"
-      // Both environments use the same class from your code
+      // Durable Object - Both environments use the same class from your code
       "COUNTER": {
         "type": "durable_object_namespace",
         "class_name": "Counter"
       },
 
-      // Service binding - separated by "service" name
+      // Service binding
       // NOTE: Preview environments always connect to the PRODUCTION version
       // of the bound Worker, not its preview version
       "AUTH_SERVICE": {
@@ -155,41 +154,41 @@ Here's a comprehensive example showing all available configuration options:
         "service": "auth-worker"
       },
 
-      // Vectorize index - separated by "index_name"
+      // Vectorize index - Production and Preview use different indexes
       "EMBEDDINGS": {
         "type": "vectorize",
         "index_name": "production-embeddings"
       },
 
-      // Hyperdrive - separated by "id"
+      // Hyperdrive - Production and Preview use different database configs
       "POSTGRES": {
         "type": "hyperdrive",
         "id": "hyperdrive-prod-id"
       },
 
-      // Analytics Engine - separated by "dataset"
+      // Analytics Engine - Production and Preview use different datasets
       "ANALYTICS": {
         "type": "analytics_engine",
         "dataset": "production-analytics"
       },
 
-      // Workers AI - No separation needed (same for all environments)
+      // Workers AI - Same for all environments
       "AI": {
         "type": "ai"
       },
 
-      // Browser rendering - No separation needed
+      // Browser rendering - Same for all environments
       "BROWSER": {
         "type": "browser"
       },
 
-      // Queue producer - separated by "queue" name
+      // Queue producer - Production and Preview use different queues
       "MY_QUEUE": {
         "type": "queue_producer",
         "queue": "production-queue"
       },
 
-      // mTLS certificate - separated by "certificate_id"
+      // mTLS certificate - Production and Preview can use different certificates
       "CLIENT_CERT": {
         "type": "mtls_certificate",
         "certificate_id": "cert-prod-123"
@@ -197,15 +196,7 @@ Here's a comprehensive example showing all available configuration options:
     }
   },
 
-  // ============================================================================
-  // PREVIEW ENVIRONMENT
-  // ============================================================================
   "preview": {
-    // Preview domains are auto-generated per PR
-    // By default: pr-123-my-worker.workers.dev
-    // Or specify a custom template:
-    "domain_template": "{pr}-{branch}.preview.example.com",
-
     // Environment variables
     "env": {
       // Plain text - different value for preview
@@ -292,7 +283,7 @@ Here's a comprehensive example showing all available configuration options:
 
 </Details>
 
-### Types
+### Configuring the env object
 
 An environment variable can have one of the following types:
 
@@ -333,11 +324,11 @@ An environment variable can have one of the following types:
       },
       "MY_KV": {
         "type": "kv_namespace",
-        "id": "def456staging"
+        "id": "def456preview"
       },
       "DB": {
         "type": "d1",
-        "database_id": "staging-db-id-456"
+        "database_id": "preview-db-id-456"
       }
     }
   }
@@ -437,9 +428,7 @@ You define your **Production** environment using the `production` section in you
 
 ### Domains
 
-You can configure which domains your Worker is available on by setting the `domains` field. Every Worker gets a free `workers.dev` subdomain automatically, and you can also add your own custom domains.
-
-When you add `"workers.dev"`, your Worker becomes available at `<worker-name>.<account-subdomain>.workers.dev` at no cost. You can also list custom domains you manage in Cloudflare. If you want your Worker to only handle certain paths (like `/api/*`), use the object format with a `path` field.
+You can configure which domains your Worker is available on by setting the `domains` field. If you don't include a `domains` field, your existing domain configuration stays unchanged.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -447,7 +436,7 @@ When you add `"workers.dev"`, your Worker becomes available at `<worker-name>.<a
 {
   "name": "my-worker",
   "production": {
-    "domains": ["workers.dev"]
+    "domains": ["my-worker.workers.dev"]
   }
 }
 
@@ -463,18 +452,25 @@ When you add `"workers.dev"`, your Worker becomes available at `<worker-name>.<a
 {
   "name": "my-worker",
   "production": {
-    "domains": ["workers.dev", "app.example.com"]
+    "domains": [
+      "my-worker.workers.dev",
+      "app.example.com"
+    ]
   }
 }
+```
+</WranglerConfig>
 
-// Route only specific URL paths to your Worker
+For advanced routing patterns (like running your Worker only on specific URL paths), use the `routes` field:
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
 {
   "name": "my-worker",
   "production": {
-    "domains": [
-      "workers.dev",
-      "app.example.com",
-      { "name": "www.example.com", "path": "/api/*" }
+    "domains": ["app.example.com"],
+    "routes": [
+      { "pattern": "www.example.com/api/*", "zone_id": "your-zone-id" }
     ]
   }
 }
@@ -483,16 +479,11 @@ When you add `"workers.dev"`, your Worker becomes available at `<worker-name>.<a
 
 ## Preview
 
-Your **Preview** environment lets you test changes in isolated **PR Previews** before they reach **Production**. For example, if your **Production** environment uses your real customer [D1 database](/d1/), you can configure **Preview** to use a test database instead - keeping your **Production** data safe while you test changes.
-
-Cloudflare creates a **PR Preview** with its own unique URL using your **Preview** settings when you:
-
-- Push a commit to a branch that's not your **Production** branch when you've connected your [Git repository](/workers/ci-cd/builds/git-integration/). Cloudflare automatically posts a comment on your PR with a link to your **PR Preview**.
-- Run [`wrangler deploy --preview`](/workers/wrangler/commands/#deploy) using the Wrangler CLI.
+Your **Preview** environment is a collection of settings that keep your **Production** data safe while you develop and review changes. For example, you can configure **Preview** to use a separate database instead of your production database.
 
 ### Configuration
 
-You define your **Preview** environment using the `preview` section in your configuration file.
+Define your **Preview** environment using the `preview` section:
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -502,14 +493,6 @@ You define your **Preview** environment using the `preview` section in your conf
   "production": {
     "domains": ["app.example.com"],
     "env": {
-      "ENVIRONMENT": {
-        "type": "text",
-        "value": "production"
-      },
-      "MY_KV": {
-        "type": "kv_namespace",
-        "id": "xyz789production"
-      },
       "DB": {
         "type": "d1",
         "database_id": "prod-db-id-123"
@@ -518,17 +501,9 @@ You define your **Preview** environment using the `preview` section in your conf
   },
   "preview": {
     "env": {
-      "ENVIRONMENT": {
-        "type": "text",
-        "value": "preview"
-      },
-      "MY_KV": {
-        "type": "kv_namespace",
-        "id": "abc123preview"  // Use test KV namespace
-      },
       "DB": {
         "type": "d1",
-        "database_id": "staging-db-id-456"  // Use test database
+        "database_id": "preview-db-id-456"  // Use separate database
       }
     }
   }
@@ -536,44 +511,30 @@ You define your **Preview** environment using the `preview` section in your conf
 ```
 </WranglerConfig>
 
-In this example, **PR Previews** will use:
+**Preview deployments** will use the separate database (`preview-db-id-456`).
 
-- The `abc123preview` [KV namespace](/kv/) (not the **Production** namespace)
-- The `staging-db-id-456` test database (not the **Production** database)
-- The environment variable `ENVIRONMENT` set to `"preview"`
+### Using Preview deployments
 
-### Domains
+Cloudflare automatically creates a **Preview deployment** with its own unique URL when you:
 
-Preview domains work differently than Production. Instead of picking specific domains, Cloudflare automatically generates a unique URL for each pull request so you can test multiple changes at the same time without them interfering with each other.
+- Push a commit to a pull request (when you've connected your [Git repository](/workers/ci-cd/builds/git-integration/)). Cloudflare posts a comment on your PR with a link.
+- Run [`wrangler deploy --preview`](/workers/wrangler/commands/#deploy) using the CLI.
 
-By default, each PR Preview gets a URL like `pr-123-my-worker.my-account.workers.dev` where `123` is the pull request number. If you want to customize this pattern, you can set a `domain_template`:
+Each deployment you create can run different code but uses the same **Preview** environment settings - so you and your team can review multiple changes at the same time without affecting your live site.
 
-<WranglerConfig>
-```jsonc title="wrangler.jsonc"
-{
-  "name": "my-worker",
-  "preview": {
-    "domain_template": "{pr}-{branch}.preview.example.com"
-  }
-}
-```
-</WranglerConfig>
+### Override settings for a specific Preview deployment
 
-The template can use `{pr}` for the pull request number, `{branch}` for the branch name, `{commit}` for the commit hash, and `{worker}` for the Worker name. So a pull request #123 from the `new-feature` branch would become `123-new-feature.preview.example.com`.
-
-### Override settings for a specific PR Preview
-
-If a specific PR needs to use different resources, [environment variables](/workers/configuration/environment-variables/), or [secrets](/workers/configuration/secrets/) than what's configured for the **Preview** environment, you can override them for that specific **PR Preview**.
+If a specific PR needs to use different resources, [environment variables](/workers/configuration/environment-variables/), or [secrets](/workers/configuration/secrets/) than what's configured for the **Preview** environment, you can override them for that specific **Preview deployment**.
 
 For example, one PR might be debugging a complex issue and needs `DEBUG_MODE=true` with verbose logging enabled, while other PRs use normal logging levels.
 
-**To set overrides for a specific PR Preview:**
+**To set overrides for a specific Preview deployment:**
 
 1. Go to **Workers & Pages** > select your Worker
-2. Go to **Deployments** > find your **PR Preview**
+2. Go to **Deployments** > find your **Preview deployment**
 3. Click **Settings** > **Variables & secrets** > toggle the **Override** button
 4. Add or modify the values you want to override for this specific PR
-5. Click **Save** - this redeploys the **PR Preview** with your overrides
+5. Click **Save** - this redeploys the **Preview deployment** with your overrides
 
 All future commits to that branch will automatically use these overrides. When the branch is deleted, the overrides are automatically cleaned up.
 
@@ -599,7 +560,7 @@ ENVIRONMENT=preview
 # Bindings (commented out by default - simulated locally)
 # Uncomment to connect to the remote resource
 # MY_KV=@kv_namespace:abc123preview
-# DB=@d1:staging-db-id-456
+# DB=@d1:preview-db-id-456
 # MY_BUCKET=@r2_bucket:preview-bucket
 ```
 
@@ -610,8 +571,6 @@ You can also pull from **Production**:
 ### Local vs Remote bindings
 
 By default, all bindings in your `.env.local` file are commented out. This means [Miniflare](https://miniflare.dev/) will create local simulations of your resources (like [KV namespaces](/kv/) or [D1 databases](/d1/)). This lets you develop offline without costs or needing to connect to deployed resources.
-
-You can pull from **Production** with `wrangler env pull --prod` if you need to connect to production resources during local development.
 
 To connect a binding to its remote resource in **Preview** or **Production**, uncomment the line in your `.env.local` file:
 
@@ -624,7 +583,7 @@ ENVIRONMENT=preview
 # MY_KV=@kv_namespace:abc123preview
 
 # Connected to remote Preview resource (uncommented)
-DB=@d1:staging-db-id-456
+DB=@d1:preview-db-id-456
 MY_BUCKET=@r2_bucket:preview-bucket
 ```
 
@@ -789,7 +748,7 @@ If you look at your `wrangler.jsonc` file, you'll see that resource IDs have bee
 
 Your Worker is now live! In the [Cloudflare dashboard](https://dash.cloudflare.com), you'll see your **Production** deployment in the **Overview** tab, available on your [`workers.dev` domain](/workers/configuration/routing/workers-dev/).
 
-You can automate **Production** and **Preview** deployments by [connecting your Git repository](/workers/ci-cd/builds/git-integration/) to Cloudflare, making it easy to create **PR Previews** for your pull requests.
+You can automate **Production** and **Preview** deployments by [connecting your Git repository](/workers/ci-cd/builds/git-integration/) to Cloudflare, making it easy to create **Preview deployments** for your pull requests.
 
 #### Set up local development
 
@@ -816,7 +775,7 @@ By default, Miniflare will create local simulations of your bindings. To connect
 4. Connect your Git provider and configure your project
 5. Select **Deploy**
 
-Your Worker will be automatically deployed with both **Production** and **Preview** environments. This means all pull requests against non-main branches will automatically get **[PR Previews](#preview)** with their own unique URL using your **Preview** environment settings.
+Your Worker will be automatically deployed with both **Production** and **Preview** environments. This means all pull requests against non-main branches will automatically get **[Preview deployments](#preview)** with their own unique URL using your **Preview** environment settings.
 
 #### Set up local development
 
@@ -833,7 +792,7 @@ Then pull down your **[Preview](#preview)** environment settings for local devel
 
 This creates a `.env.local` file with your **Preview** environment variables (commented out by default). When you run [`wrangler dev`](/workers/wrangler/commands/#dev), the development server will use these settings. By default, bindings are simulated locally - uncomment a binding in `.env.local` to connect to the remote resource.
 
-#### Test changes with a PR Preview
+#### Test changes with a Preview deployment
 
 1. Create a new branch for your changes:
 
@@ -853,7 +812,7 @@ git push origin feature/my-new-feature
 
 4. Create a pull request in your Git repository
 
-5. Cloudflare automatically creates a **PR Preview** using your **Preview** environment settings. You'll see a comment on your pull request with a unique URL to your **PR Preview**.
+5. Cloudflare automatically creates a **Preview deployment** using your **Preview** environment settings. You'll see a comment on your pull request with a unique URL to your **Preview deployment**.
 
 </TabItem>
 
@@ -888,7 +847,7 @@ This gives you back a Worker ID that you'll use in the next steps. Keep this ID 
 
 #### Configure Preview settings
 
-Now let's set up the default settings for **PR Previews**. These settings act as a template - every time you create a preview, it will automatically use these settings.
+Now let's set up the default settings for **Preview deployments**. These settings act as a template - every time you create a preview, it will automatically use these settings.
 
 ```bash
 # Set up preview_settings on your Worker
@@ -990,7 +949,7 @@ Your Worker is now live in **Production**! Notice how we included all the enviro
 
 #### Deploy a Preview
 
-**PR Previews** are temporary, fully-featured Workers that are automatically cleaned up when your pull request is merged or closed. They're created as sub-resources nested under your main Production Worker (notice the `/workers/$WORKER_ID/previews` endpoint). When you create a preview, it automatically uses the `preview_settings` you configured earlier. Here's how you create one:
+**Preview deployments** are temporary, fully-featured Workers that are automatically cleaned up when your pull request is merged or closed. They're created as sub-resources nested under your main Production Worker (notice the `/workers/$WORKER_ID/previews` endpoint). When you create a preview, it automatically uses the `preview_settings` you configured earlier. Here's how you create one:
 
 ```bash
 BRANCH_NAME="feature-xyz-123"
@@ -1076,7 +1035,7 @@ This gives you back a Worker ID that you'll use in the next steps. Keep this ID 
 
 #### Configure Preview settings
 
-Now let's set up the default settings for **PR Previews**. These settings act as a template - every time you create a preview, it will automatically use these settings.
+Now let's set up the default settings for **Preview deployments**. These settings act as a template - every time you create a preview, it will automatically use these settings.
 
 ```typescript
 async function configurePreviewSettings(workerId: string) {
@@ -1195,7 +1154,7 @@ wrangler secret put API_SECRET --name my-worker --preview
 
 #### Deploy a Preview
 
-**PR Previews** are temporary, fully-featured Workers that are automatically cleaned up when your pull request is merged or closed. They're created as sub-resources nested under your main Production Worker. When you create a preview, it automatically uses the `preview_settings` you configured earlier. Here's how you create one:
+**Preview deployments** are temporary, fully-featured Workers that are automatically cleaned up when your pull request is merged or closed. They're created as sub-resources nested under your main Production Worker. When you create a preview, it automatically uses the `preview_settings` you configured earlier. Here's how you create one:
 
 ```typescript
 async function deployPreview(workerId: string, branchName: string) {
@@ -1284,7 +1243,7 @@ resource "cloudflare_workers_kv_namespace" "preview" {
 
 #### Create your Worker and configure Preview settings
 
-Now let's create your **Production** Worker - the main container for your code. We'll also set up the `preview_settings` which act as a template for all **PR Previews**.
+Now let's create your **Production** Worker - the main container for your code. We'll also set up the `preview_settings` which act as a template for all **Preview deployments**.
 
 ```hcl
 # Create the Worker (this is your Production Worker)
@@ -1292,7 +1251,7 @@ resource "cloudflare_worker" "my_worker" {
   account_id = var.account_id
   name       = "my-worker"
 
-  # Configure preview_settings - these act as a template for all PR Previews
+  # Configure preview_settings - these act as a template for all Preview deployments
   preview_settings {
     # Environment variables for Preview
     bindings {
@@ -1310,7 +1269,7 @@ resource "cloudflare_worker" "my_worker" {
 }
 ```
 
-Now any preview you create will automatically use these **Preview** environment variables - `ENVIRONMENT` and `MY_KV`. These settings are stored as a template, and when you create a PR Preview, Terraform automatically applies these bindings.
+Now any preview you create will automatically use these **Preview** environment variables - `ENVIRONMENT` and `MY_KV`. These settings are stored as a template, and when you create a Preview deployment, Terraform automatically applies these bindings.
 
 ##### Deploy to Production
 
@@ -1392,7 +1351,7 @@ terraform apply
 
 After Terraform completes, run the secret commands above to set your secrets.
 
-That's it! Your **Production** Worker is deployed, and the **Preview** settings are configured as a template. When you create a pull request, **PR Previews** will automatically use the `preview_settings` you defined - they'll use the preview KV namespace, keeping your test data separate from production! Secrets you set with `wrangler secret put --preview` will be available to all previews.
+That's it! Your **Production** Worker is deployed, and the **Preview** settings are configured as a template. When you create a pull request, **Preview deployments** will automatically use the `preview_settings` you defined - they'll use the preview KV namespace, keeping your test data separate from production! Secrets you set with `wrangler secret put --preview` will be available to all previews.
 
 **Important notes:**
 
@@ -1402,18 +1361,6 @@ That's it! Your **Production** Worker is deployed, and the **Preview** settings 
 
 </TabItem>
 </Tabs>
-
-## Global settings
-
-Some settings apply to your Worker as a whole and cannot be configured separately per environment. These are **global settings** - they're tied to your code, not to where your code runs.
-
-### Which settings are global?
-
-- `name` - Your Worker's name
-- `compatibility_date` - Which API behaviors your code uses
-- `compatibility_flags` - Specific feature flags
-- `main` - Your code's entry point file
-- `migrations` - Durable Object migration definitions
 
 ## Legacy
 
@@ -1445,7 +1392,7 @@ If you have an existing Wrangler configuration using the legacy format and don't
       "database_id": "prod-db-id-123"
     }
   ],
-  // Preview environment (applies to all PR Previews)
+  // Preview environment (applies to all Preview deployments)
   "preview": {
     "vars": {
       "ENVIRONMENT": "preview"
@@ -1460,7 +1407,7 @@ If you have an existing Wrangler configuration using the legacy format and don't
       {
         "binding": "DB",
         "database_name": "preview-db",
-        "database_id": "staging-db-id-456"
+        "database_id": "preview-db-id-456"
       }
     ]
   }
@@ -1472,10 +1419,10 @@ This format is valid and will work with default environments. You can keep your 
 
 ### Using with Wrangler Environments
 
-If you're using [Wrangler Environments](/workers/wrangler/environments/), each environment creates a separate Worker with the name `<worker-name>-<environment-name>`. You can add a `preview` block within each Wrangler environment to give each Worker its own **Production** and **Preview** configurations with separate **PR Previews**. For example:
+If you're using [Wrangler Environments](/workers/wrangler/environments/), each environment creates a separate Worker with the name `<worker-name>-<environment-name>`. You can add a `preview` block within each Wrangler environment to give each Worker its own **Production** and **Preview** configurations with separate **Preview deployments**. For example:
 
-- `env.staging` creates `my-worker-staging` with its own PR Previews
-- `env.production` creates `my-worker-production` with its own PR Previews
+- `env.staging` creates `my-worker-staging` with its own Preview deployments
+- `env.production` creates `my-worker-production` with its own Preview deployments
 
 Here's an example configuration:
 
@@ -1561,11 +1508,11 @@ Here's an example configuration:
 </WranglerConfig>
 
 In this example:
-- **`my-worker`** (top-level) has Production deployment and PR Previews using `dev-preview-kv-id`
-- **`my-worker-staging`** has Production deployment and PR Previews using `staging-preview-kv-id`
-- **`my-worker-production`** has Production deployment and PR Previews using `production-preview-kv-id`
+- **`my-worker`** (top-level) has Production deployment and Preview deployments using `dev-preview-kv-id`
+- **`my-worker-staging`** has Production deployment and Preview deployments using `staging-preview-kv-id`
+- **`my-worker-production`** has Production deployment and Preview deployments using `production-preview-kv-id`
 
-When you deploy with `wrangler deploy --env staging`, you're deploying to the **Production** environment of the `my-worker-staging` Worker. When you push a PR to a non-main branch, Cloudflare will create **PR Previews** for each Worker using their respective `preview` configurations.
+When you deploy with `wrangler deploy --env staging`, you're deploying to the **Production** environment of the `my-worker-staging` Worker. When you push a PR to a non-main branch, Cloudflare will create **Preview deployments** for each Worker using their respective `preview` configurations.
 
 ## Related resources
 
