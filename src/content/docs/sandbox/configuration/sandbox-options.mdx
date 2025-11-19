@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Configure sandbox behavior by passing options when creating a sandbox instance with `getSandbox()`.
 
@@ -107,6 +107,30 @@ const sandbox2 = getSandbox(env.Sandbox, 'user-env', {
 - `SANDBOX_PORT_TIMEOUT_MS` - Override `portReadyTimeoutMS`
 
 Precedence: `options` > `env vars` > SDK defaults
+
+### Logging
+
+**Type**: Environment variables
+
+Control SDK logging for debugging and monitoring. Set these in your Worker's `wrangler.jsonc` file.
+
+**Available options**:
+- `SANDBOX_LOG_LEVEL` - Minimum log level: `debug`, `info`, `warn`, `error`. **Default**: `info`
+- `SANDBOX_LOG_FORMAT` - Output format: `json`, `pretty`. **Default**: `json`
+
+<WranglerConfig>
+```toml
+[vars]
+SANDBOX_LOG_LEVEL = "debug"
+SANDBOX_LOG_FORMAT = "pretty"
+```
+</WranglerConfig>
+
+:::note[Read at startup]
+Logging configuration is read when your Worker starts and cannot be changed at runtime. Changes require redeploying your Worker.
+:::
+
+Use `debug` + `pretty` for local development. Use `info` or `warn` + `json` for production (structured logging).
 
 ### normalizeId
 
