@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
@@ -54,6 +54,10 @@ A traceroute test measures the following data:
 | Packet loss     | Percentage of IP packets that failed to receive a response.                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | Availability    | Percentage of tests where at least one packet reached the destination.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Last seen ISP   | The Internet Service Provider that is managing the connection from the device to Cloudflare. (Only available on macOS and Windows.) <br/> <br/> DEX looks up the IP address of the ISP in a geolocation database and returns the corresponding [ASO and ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/). If the ASO and ASN are `Unknown`, it means this information is unavailable in the geolocation data provider. |
+
+## Export DEX application test logs
+
+<Render file="dex/logpush-export" product="cloudflare-one" params={{ applicationTests: true }} />
 
 ## Related resources
 

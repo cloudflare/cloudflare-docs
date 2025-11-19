@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
@@ -52,6 +52,10 @@ An HTTP test measures the following data:
 | Server response time | Round-trip time for the device to receive a response from the target.                                                                                                   |
 | DNS response time    | Round-trip time for the DNS query to resolve.                                                                                                                           |
 | HTTP status codes    | [Status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status) returned by the target.                                                                         |
+
+## Export DEX application test logs
+  
+<Render file="dex/logpush-export" product="cloudflare-one" params={{ applicationTests: true }} />
 
 ## Related resources
 

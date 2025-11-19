@@ -23,7 +23,7 @@ Cloudflare recommends two tunnels for each ISP and network location router combi
 
 To configure the tunnels between Cloudflare and your locations, you must provide the following data for each tunnel:
 
-- **Tunnel name**: For GRE tunnels, the name must have 15 or fewer characters. IPsec tunnels have no character limit. For both GRE and IPsec tunnels, the name cannot contain spaces or special characters, and cannot be shared with other tunnels.
+- **Tunnel name**: For both GRE and IPsec tunnels, the name cannot contain spaces or special characters, and cannot be shared with other tunnels.
 - **Cloudflare endpoint address**: The public IP address of the Cloudflare side of the tunnel. { props.magicWord === "Magic Transit" && (<>Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information on where to find your Cloudflare IP addresses.</>)}
 - **Customer endpoint**: A public Internet routable IP address which is outside of the prefixes that Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them. <br/>
   This value is not required for <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels, unless your router is using an <GlossaryTooltip term="Internet key exchange (IKE)">Internet Key Exchange (IKE)</GlossaryTooltip> ID of type `ID_IPV4_ADDR`.
@@ -120,7 +120,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 
 <Details header="GRE tunnel">
 
-4. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+4. In **Name**, give your tunnel a descriptive name. This name must be unique, and must not contain spaces or special characters. Hover the mouse over `i` in the dashboard for more information.
 5. Give your tunnel a description in **Description**. You do not have character restrictions here.
 6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 7. In **Customer GRE endpoint**, enter your router's public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
@@ -139,7 +139,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 
 <Details header="IPsec tunnel">
 
-4. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+4. In **Name**, give your tunnel a descriptive name. This name must be unique, and must not contain spaces or special characters. Hover the mouse over `i` in the dashboard for more information.
 5. Give your tunnel a description in **Description**. You do not have character restrictions here.
 6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 7. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
@@ -427,10 +427,10 @@ You can change this setting via the API with `"bidirectional"` or `"unidirection
 To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecksPage}>health check probe</a> consisting of ICMP (Internet Control Message Protocol) reply [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
 
 {/*
-  Conditional logic explanation:
-  - Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
-  - Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
-  This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
+	Conditional logic explanation:
+	- Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
+	- Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
+	This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
 */}
 Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
 

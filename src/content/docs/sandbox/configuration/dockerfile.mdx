@@ -15,14 +15,18 @@ The Sandbox SDK uses a Ubuntu-based Linux container with Python, Node.js (via Bu
 FROM docker.io/cloudflare/sandbox:0.3.3
 ```
 
-:::note
+:::caution[Version synchronization required]
 Always match the Docker image version to your npm package version. If you're using `@cloudflare/sandbox@0.3.3`, use `docker.io/cloudflare/sandbox:0.3.3` as your base image.
+
+**Why this matters**: The SDK automatically checks version compatibility on startup. Mismatched versions can cause features to break or behave unexpectedly. If versions don't match, you'll see warnings in your logs.
+
+See [Version compatibility](/sandbox/concepts/sandboxes/#version-compatibility) for troubleshooting version mismatch warnings.
 :::
 
 **What's included:**
 
 - Ubuntu 22.04 LTS base
-- Python 3.11 with pip and venv
+- Python 3.11.14 with pip and venv
 - Node.js 20 LTS with npm
 - Bun 1.x (JavaScript/TypeScript runtime)
 - Pre-installed Python packages: matplotlib, numpy, pandas, ipython

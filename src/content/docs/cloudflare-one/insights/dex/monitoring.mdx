@@ -1,9 +1,11 @@
 ---
 pcx_content_type: how-to
-title: Monitoring
+title: Device monitoring
 sidebar:
   order: 2
 ---
+
+import { Render } from "~/components";
 
 Monitor performance and network status for your organization's [fleet](/cloudflare-one/insights/dex/monitoring/#fleet-status) or individual [user devices](/cloudflare-one/insights/dex/monitoring/#device-monitoring).
 
@@ -79,3 +81,7 @@ To view a device's network and device performance metrics:
 - **Memory utilization**: Memory utilization over time. Used to debug performance issues related to an overtaxed memory.
 
 - **Disk I/O**: Displays number of disk read/write operations over time. Used to debug performance errors due to heavy disk operations.
+
+## Export DEX device state event logs
+
+<Render file="dex/logpush-export" product="cloudflare-one" params={{ applicationTests: false }} />
