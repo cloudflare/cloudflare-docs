@@ -106,6 +106,12 @@ Here's a comprehensive example showing all available configuration options:
     // Where your Worker is accessible
     "domains": ["my-worker.workers.dev", "app.example.com"],
 
+    // Observability settings
+    "observability": {
+      "enabled": true,
+      "head_sampling_rate": 1
+    },
+
     // Environment variables
     "env": {
       // Plain text - Production and Preview use different "value"
@@ -120,13 +126,13 @@ Here's a comprehensive example showing all available configuration options:
         "id": "abc123prod"
       },
 
-      // D1 database - Production uses real database, Preview uses test database
+      // D1 database - separate database from Production for Preview environment
       "DB": {
         "type": "d1",
         "database_id": "prod-db-id-123"
       },
 
-      // R2 bucket - Production uses real bucket, Preview uses test bucket
+      // R2 bucket - separate bucket from Production for Preview environment
       "MY_BUCKET": {
         "type": "r2_bucket",
         "bucket_name": "production-bucket"
@@ -184,11 +190,34 @@ Here's a comprehensive example showing all available configuration options:
       "CLIENT_CERT": {
         "type": "mtls_certificate",
         "certificate_id": "cert-prod-123"
+      },
+
+      // Send email binding
+      "EMAIL": {
+        "type": "send_email",
+        "destination_address": "alerts@example.com"
+      },
+
+      // Images binding
+      "IMAGES": {
+        "type": "images"
+      },
+
+      // Tail consumer (for sending logs to another Worker)
+      "LOG_CONSUMER": {
+        "type": "tail_consumer",
+        "service": "log-processor-worker"
       }
     }
   },
 
   "preview": {
+    // Observability settings - can use different sampling rate for Preview
+    "observability": {
+      "enabled": true,
+      "head_sampling_rate": 0.1
+    },
+
     // Environment variables
     "env": {
       // Plain text - different value for preview
@@ -203,13 +232,13 @@ Here's a comprehensive example showing all available configuration options:
         "id": "def456preview"
       },
 
-      // D1 database - test database with safe data
+      // D1 database - separate database from Production for Preview environment
       "DB": {
         "type": "d1",
         "database_id": "preview-db-id-456"
       },
 
-      // R2 bucket - test bucket
+      // R2 bucket - separate bucket from Production for Preview environment
       "MY_BUCKET": {
         "type": "r2_bucket",
         "bucket_name": "preview-bucket"
@@ -228,19 +257,19 @@ Here's a comprehensive example showing all available configuration options:
         "service": "auth-worker"
       },
 
-      // Vectorize - test index
+      // Vectorize - separate index from Production for Preview environment
       "EMBEDDINGS": {
         "type": "vectorize",
         "index_name": "preview-embeddings"
       },
 
-      // Hyperdrive - test database config
+      // Hyperdrive - separate database config from Production for Preview environment
       "POSTGRES": {
         "type": "hyperdrive",
         "id": "hyperdrive-preview-id"
       },
 
-      // Analytics Engine - test dataset
+      // Analytics Engine - separate dataset from Production for Preview environment
       "ANALYTICS": {
         "type": "analytics_engine",
         "dataset": "preview-analytics"
@@ -256,7 +285,7 @@ Here's a comprehensive example showing all available configuration options:
         "type": "browser"
       },
 
-      // Queue - test queue
+      // Queue - separate queue from Production for Preview environment
       "MY_QUEUE": {
         "type": "queue_producer",
         "queue": "preview-queue"
@@ -266,6 +295,23 @@ Here's a comprehensive example showing all available configuration options:
       "CLIENT_CERT": {
         "type": "mtls_certificate",
         "certificate_id": "cert-preview-123"
+      },
+
+      // Send email binding - separate destination from Production for Preview environment
+      "EMAIL": {
+        "type": "send_email",
+        "destination_address": "preview-alerts@example.com"
+      },
+
+      // Images binding - Same as production
+      "IMAGES": {
+        "type": "images"
+      },
+
+      // Tail consumer - can use different log processor
+      "LOG_CONSUMER": {
+        "type": "tail_consumer",
+        "service": "preview-log-processor-worker"
       }
     }
   }
@@ -381,11 +427,11 @@ Go to **Settings** > **Environments** > **Preview** > **Secrets**
 
 ## How environments work together
 
-**Production** and **Preview** environments work together to keep your live application safe while you develop new features. Here's how they interact in a typical development workflow:
+**Production** and **Preview** environments work together to prevent changes from affecting your live application while you develop new features. Here's how they interact in a typical development workflow:
 
 - **Develop locally**: You can easily set up [local development](#local-development) with `wrangler env pull`, which pulls down your **Preview** environment settings and saves them to a `.env.local` file on your machine. Then run `wrangler dev` to test your code locally. By default, resources like databases are simulated on your computer so you can develop offline. If you need to test with real data, you can [connect to remote **Preview** resources](#local-vs-remote-bindings) instead.
 
-- **Review your changes**: When you're ready for your team to review, push your code to a feature branch and open a pull request. Cloudflare automatically creates a [preview deployment](#using-preview-deployments) at a unique URL where you and your team can test your changes. This preview deployment runs your new code and uses your **[Preview](#preview)** environment settings - so `env.DB` connects to your test database, `env.API_SECRET` uses your test API key, and so on.
+- **Review your changes**: When you're ready for your team to review, push your code to a feature branch and open a pull request. Cloudflare automatically creates a [preview deployment](#using-preview-deployments) at a unique URL where you and your team can test your changes. This preview deployment runs your new code and uses your **[Preview](#preview)** environment settings - so `env.DB` connects to your review database, `env.API_SECRET` uses your review API key, and so on.
 
 - **Collaborate**: If someone else on your team is working on a different feature in a separate pull request, they get their own [preview deployment](#using-preview-deployments) with their own unique URL. Each preview deployment can run different code, which lets your team develop features independently and test their changes at the same time.
 
@@ -483,7 +529,7 @@ For advanced routing patterns (like running your Worker only on specific URL pat
 
 ## Preview
 
-Your **Preview** environment is a collection of settings that keep your **Production** data safe while you develop and review changes. For example, you can configure **Preview** to use a separate database instead of your production database.
+Your **Preview** environment is a collection of settings that prevent changes from affecting your **Production** data while you develop and review changes. For example, you can configure **Preview** to use a separate database instead of your production database.
 
 ### Configuration
 
@@ -997,7 +1043,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/
   }'
 ```
 
-The preview automatically uses the environment variables from your `preview_settings` - `ENVIRONMENT` is set to "preview", it connects to the preview KV namespace (`abc123preview`), and includes the preview secret (`API_SECRET`). This keeps your test data and secrets separate from production!
+The preview automatically uses the environment variables from your `preview_settings` - `ENVIRONMENT` is set to "preview", it connects to the preview KV namespace (`abc123preview`), and includes the preview secret (`API_SECRET`). This keeps your preview data and secrets separate from production!
 
 Notice the `?deploy=true` parameter - this creates the version and deploys it in one step.
 
@@ -1218,7 +1264,7 @@ Notice a few important things here:
 
 2. **`{ params: { deploy: true } }`** - This creates the version and deploys it in one step, like adding `?deploy=true` to the API URL.
 
-This keeps your test data separate from production while making it easy to deploy previews - you set up the template once, then every preview automatically uses those settings! Secrets are managed separately using the Wrangler CLI as shown in the [Set secrets](#set-secrets-1) section above.
+This keeps your preview data separate from production while making it easy to deploy previews - you set up the template once, then every preview automatically uses those settings! Secrets are managed separately using the Wrangler CLI as shown in the [Set secrets](#set-secrets-1) section above.
 
 </TabItem>
 
@@ -1336,7 +1382,7 @@ Your Worker is now live in **Production**! Notice how we included the environmen
 
 #### Set secrets
 
-[Secrets](/workers/configuration/secrets/) (like API keys) should be managed separately to keep them secure - never include them in Terraform state. After deploying, set them using [Wrangler CLI](/workers/wrangler/commands/#secret):
+[Secrets](/workers/configuration/secrets/) (like API keys) should be managed separately to prevent them from being exposed in Terraform state - never include them in Terraform state. After deploying, set them using [Wrangler CLI](/workers/wrangler/commands/#secret):
 
 **For Production:**
 
@@ -1361,7 +1407,7 @@ terraform apply
 
 After Terraform completes, run the secret commands above to set your secrets.
 
-That's it! Your **Production** Worker is deployed, and the **Preview** settings are configured as a template. When you create a pull request, **Preview deployments** will automatically use the `preview_settings` you defined - they'll use the preview KV namespace, keeping your test data separate from production! Secrets you set with `wrangler secret put --preview` will be available to all previews.
+That's it! Your **Production** Worker is deployed, and the **Preview** settings are configured as a template. When you create a pull request, **Preview deployments** will automatically use the `preview_settings` you defined - they'll use the preview KV namespace, keeping your preview data separate from production! Secrets you set with `wrangler secret put --preview` will be available to all previews.
 
 **Important notes:**
 
