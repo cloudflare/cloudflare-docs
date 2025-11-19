@@ -23,7 +23,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
 	<DashButton url="/?to=/:account/magic-wan/configuration" />
 2. Go to **Tunnels**, and select **Create**.
-3. Select **IPsec Tunnel** > **Next**, and fill in the following settings:
+3. Select **IPsec tunnel** > **Next**, and fill in the following settings:
    - **Name**: `unifi-gw-primary`
    - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
    - **Customer Endpoint**: This should be your UniFi Gateway's WAN IP (for example, `203.0.113.10`)
@@ -43,7 +43,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 3. Configure the following settings:
    - **VPN Type:** `IPsec`.
    - **Name:** `Cloudflare-Magic-WAN`.
-   - **Pre-shared key:** Copy this key. You need it for the Magic WAN tunnel configured in the [previous step](#1-configure-magic-wan).
+   - **Pre-shared key:** Copy this key. You need it for the Magic WAN tunnel configured in [Step 1](#1-configure-magic-wan).
    - **Local IP:** Select the WAN interface (for example, `WAN1`).
    - **Remote IP:** Enter the Cloudflare endpoint IP from [Step 1](#1-configure-magic-wan).
    - **VPN Method:** Route Based.
@@ -60,8 +60,8 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
    - **ESP DH Group**: 14.
    - **ESP Lifetime**: 28800.
    - **PFS**: Enabled.
-   - **Local Authentication ID**: `Auto`.
-   - **Remote Authentication ID**: Uncheck `Auto`, and enter the Cloudflare Endpoint IP from [Step 1](#1-configure-magic-wan).
+   - **Local Authentication ID**: Auto.
+   - **Remote Authentication ID**: Uncheck **Auto**, and enter the Cloudflare Endpoint IP from [Step 1](#1-configure-magic-wan).
    - **MTU**: 1436.
 5. Select **Apply**
 
@@ -71,10 +71,10 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 	<DashButton url="/?to=/:account/magic-wan/configuration" />
 2. In **Tunnels**, find the IPsec tunnel you have just created.
 3. Select your tunnel > **Edit**.
-4. Paste the preshared key from [Step 2](#2-configure-site-to-site-vpn-on-ubiquiti).
+4. Paste the preshared key from [Step 2](#2-configure-site-to-site-vpn-on-unifi).
 5. Select **Save**.
 
-## 4. Configure Routes and health checks
+## 4. Configure Routes
 
 1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
 	<DashButton url="/?to=/:account/magic-wan/configuration" />
@@ -97,7 +97,7 @@ To check your connections are working correctly, wait a few minutes, and then ac
 </Details>
 
 <Details header="UniFi">
-Go to Settings > VPN, and make sure the status is **Connected**.
+Go to **Settings** > **VPN**, and make sure the status is **Connected**.
 </Details>
 
 ## Troubleshooting
@@ -107,7 +107,7 @@ Go to Settings > VPN, and make sure the status is **Connected**.
 - Check that the ISP is not blocking UDP ports `500`/`4500`
 
 **Traffic not routing:**
-- Verify Remote Subnets setting in UniFi VPN config
+- Verify Remote Subnets setting in UniFi VPN configuration
 - Check firewall rules are not blocking VPN traffic
 
 **Health check fails:**
@@ -118,23 +118,23 @@ Go to Settings > VPN, and make sure the status is **Connected**.
 
 To route only specific devices through Cloudflare (UniFi Network Application):
 
-1. Remove necessary routes from Remote Subnets in your VPN config
-2. Go to **Settings** > **Policy Table**
-3. Under **Policy Engine** select **Create New Policy** >
-   - Select `Route`
-   - **Name**: Provide a name for the policy
-   - **Type**: Policy-Based
-   - **Interface/VPN Tunnel**: Select the VPN Tunnel (for example, `Cloudflare-Magic-WAN`)
-   - **Kill Switch**: Enabled (recommended)
-   - **Source**: Select `Device/Network` and then choose the Device(s) or Network(s)
-   - **Destination**: Any
-   - **Interface**: Your VPN tunnel
+1. Remove necessary routes from Remote Subnets in your VPN configuration.
+2. Go to **Settings** > **Policy Table**.
+3. Under **Policy Engine** select **Create New Policy** with the following settings:
+   - Select `Route`.
+   - **Name**: Provide a name for the policy.
+   - **Type**: _Policy-Based_.
+   - **Interface/VPN Tunnel**: Select the VPN Tunnel (for example, `Cloudflare-Magic-WAN`).
+   - **Kill Switch**: _Enabled_ (recommended).
+   - **Source**: Select `Device/Network` and then choose the Device(s) or Network(s).
+   - **Destination**: _Any_.
+   - **Interface**: Your VPN tunnel.
 
 ## Next Steps
 
-- Use [Magic Firewall](/magic-firewall/) for network policies
-- Configure a second tunnel for redundancy
-- Monitor traffic in the Magic WAN dashboard
+- Use [Magic Firewall](/magic-firewall/) for network policies.
+- Configure a second tunnel for redundancy.
+- Monitor traffic in the Magic WAN dashboard.
 
 ---
 
