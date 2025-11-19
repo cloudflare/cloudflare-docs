@@ -6,7 +6,7 @@ sidebar:
   label: Full to partial
 ---
 
-import { Tabs, TabItem, Render, GlossaryTooltip, DashButton, Details } from "~/components";
+import { Tabs, TabItem, Render, GlossaryTooltip, DashButton, Details, APIRequest } from "~/components";
 
 If you initially configured a [full setup](/dns/zone-setups/full-setup/), you can later convert your zone to use a partial setup (also known as CNAME setup).
 
@@ -24,14 +24,24 @@ Make sure you consider the following:
 
 1. Export a zone file
 
-   <Tabs syncKey="dashPlusAPI">
-     <TabItem label="Dashboard">
-       (placeholder)
-     </TabItem>
-     <TabItem label="API">
-       (placeholder)
-     </TabItem>
-   </Tabs>
+   <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+   To export records using the dashboard:
+
+   1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+      <DashButton url="/?to=/:account/:zone/dns/records" />
+
+   2. Select **Import and Export**.
+   3. Select **Export**.
+
+   </TabItem> <TabItem label="API">
+
+   To export records using the API, send a [GET request](/api/resources/dns/subresources/records/methods/export/).
+
+   <APIRequest path="/zones/{zone_id}/dns_records/export" method="GET" />
+
+   </TabItem> </Tabs>
 
 2. Import the zone file into your new primary DNS provider.
 3. Create or update your records so that you have CNAME records pointing to `{your-hostname}.cdn.cloudflare.net` for every hostname you wish to proxy through Cloudflare.
