@@ -109,9 +109,26 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 
 ## 4. Configure Routes
 
-1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
-	<DashButton url="/?to=/:account/magic-wan/configuration" />
-2. Go to **Routes** > **Create static route**:
+{props.magicWord === "Magic WAN" ? (
+	<>
+		<Markdown
+			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
+			inline={false}
+		/>
+		<DashButton url="/?to=/:account/magic-wan/configuration" />
+		<Markdown
+			text={`2. Go to **Routes** > **Create static route**.`}
+			inline={false}
+		/>
+	</>
+) : (
+	<Markdown
+		text={`1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+2. Go to **Routes** > **WAN routes** > **Create**.`}
+		inline={false}
+	/>
+)}
+
 3. Enter the following settings:
    - **Prefix**: Your local network (for example, `192.168.1.0/24`).
    - **Tunnel/Next hop**: Select your tunnel.
