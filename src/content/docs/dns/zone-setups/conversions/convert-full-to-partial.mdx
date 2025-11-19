@@ -19,3 +19,27 @@ Make sure you consider the following:
 - It will not be possible to use proxy for the zone apex (`example.com`), only for subdomains.
 - On the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
 - You should plan for SSL/TLS certificates. If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are proxied. If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
+
+## 1. Prepare DNS records
+
+<Tabs syncKey="dashPlusAPI">
+  <TabItem label="Dashboard">
+    (placeholder)
+  </TabItem>
+  <TabItem label="API">
+    (placeholder)
+  </TabItem>
+</Tabs>
+
+## 2. Convert zone and verify ownership
+
+<Tabs syncKey="dashPlusAPI">
+  <TabItem label="Dashboard">
+    (placeholder)
+  </TabItem>
+  <TabItem label="API">
+    (placeholder)
+  </TabItem>
+</Tabs>
+
+## 3. Update your nameservers
