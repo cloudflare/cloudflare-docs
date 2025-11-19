@@ -359,7 +359,7 @@ export default {
 ```
 </TypeScriptExample>
 
-The `env` parameter is automatically passed to your Worker's `fetch` handler and contains all the environment variables specific to the environment (Production or Preview) your Worker is running in.
+The `env` parameter, available from your Worker's `fetch` handler or from [`import { env } from "cloudflare:workers"`](/workers/runtime-apis/bindings/#importing-env-as-a-global), contains all the environment variables specific to the environment (Production or Preview) your Worker is running in.
 
 ### Secrets
 
