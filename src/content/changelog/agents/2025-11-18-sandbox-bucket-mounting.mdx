@@ -1,0 +1,79 @@
+---
+title: Mount S3-compatible object storage in Sandbox SDK
+description: Persistent data storage with R2, S3, GCS, and any S3-compatible provider by mounting buckets as local filesystems in your sandboxes.
+products:
+  - sandbox
+  - agents
+date: 2025-11-18
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [@cloudflare/sandbox](https://github.com/cloudflare/sandbox-sdk) SDK now supports mounting S3-compatible object storage as local filesystems, enabling persistent data that survives sandbox destruction.
+
+Mount R2, Amazon S3, Google Cloud Storage, or any S3-compatible provider and access them using standard file operations. Data written to mounted paths persists across sandbox lifecycles, making it ideal for data pipelines, AI-generated artifacts, build outputs, or any workflow requiring durable storage.
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "data-processor");
+
+// Mount R2 bucket (credentials from Worker secrets)
+await sandbox.mountBucket("my-r2-bucket", "/data", {
+  endpoint: "https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com",
+});
+
+// Process data from mounted bucket using code interpreter
+const result = await sandbox.runCode(
+  `
+import pandas as pd
+df = pd.read_csv("/data/input.csv")
+df.describe().to_csv("/data/summary.csv")
+`,
+  { language: "python" },
+);
+
+// Data persists even after sandbox destruction
+await sandbox.destroy();
+```
+
+</TypeScriptExample>
+
+### Automatic provider detection
+
+The SDK automatically detects the provider from your endpoint URL and applies the appropriate s3fs flags for R2, S3, and GCS. All providers require credentials - you can either set them as environment variables or pass them explicitly.
+
+<TypeScriptExample>
+
+```ts
+// Credentials from environment variables (any provider)
+// wrangler secret put AWS_ACCESS_KEY_ID
+// wrangler secret put AWS_SECRET_ACCESS_KEY
+await sandbox.mountBucket("my-bucket", "/data", {
+  endpoint: "https://account-id.r2.cloudflarestorage.com",
+});
+
+// Or pass credentials explicitly (any provider)
+await sandbox.mountBucket("my-bucket", "/data", {
+  endpoint: "https://s3.us-west-000.backblazeb2.com",
+  credentials: {
+    accessKeyId: env.ACCESS_KEY_ID,
+    secretAccessKey: env.SECRET_ACCESS_KEY,
+  },
+});
+```
+
+</TypeScriptExample>
+
+### Local development support coming soon
+
+Bucket mounting currently requires production deployment and does not work with `wrangler dev`. This is because the feature relies on FUSE, which has platform-specific limitations and inconsistent support across local development environments. Deploy your Worker with `wrangler deploy` to use this feature. We're working on an alternative approach to enable local development support.
+
+### Resources
+
+- [Bucket mounting tutorial](/sandbox/tutorials/persistent-storage/) - Complete walkthrough with R2
+- [Mount buckets guide](/sandbox/guides/mount-buckets/) - Comprehensive mounting reference
+- [Storage API reference](/sandbox/api/storage/) - Full API documentation
+- [Sandbox SDK on GitHub](https://github.com/cloudflare/sandbox-sdk)
