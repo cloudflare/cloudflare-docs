@@ -75,7 +75,7 @@ async addMcpServer(
 - **`callbackHost`** (string, optional) — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
 - **`agentsPrefix`** (string, optional) — URL prefix for OAuth callback path. Default: `"agents"`
 - **`options`** (object, optional) — Connection configuration:
-  - **`client`** — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor)
+  - **`client`** — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas.
   - **`transport`** — Transport layer configuration:
     - **`headers`** — Custom HTTP headers for authentication
     - **`type`** — Transport type: `"sse"`, `"streamable-http"`, or `"auto"` (tries streamable-http first, falls back to sse)
@@ -114,6 +114,12 @@ export class MyAgent extends Agent<Env, never> {
 </TypeScriptExample>
 
 If the MCP server requires OAuth authentication, `authUrl` will be returned for user authentication. Connections persist across requests and the Agent will automatically reconnect if the connection is lost.
+
+:::note[Default JSON Schema Validation]
+
+All MCP client connections automatically include JSON schema validation using `CfWorkerJsonSchemaValidator`. This ensures that tool parameters are validated against their schemas before execution, improving reliability and catching errors early. You can override this default by providing custom client options.
+
+:::
 
 **Related:**
 
