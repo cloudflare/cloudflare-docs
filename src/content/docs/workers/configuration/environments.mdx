@@ -580,7 +580,7 @@ You can also pull from **Production**:
 
 By default, all bindings in your `.env.local` file are commented out. When you run [`wrangler dev`](/workers/wrangler/commands/#dev) or [`vite dev`](/workers/vite-plugin/), local simulations of your resources (like [KV namespaces](/kv/) or [D1 databases](/d1/)) will be created automatically. This lets you develop offline without costs or needing to connect to deployed resources.
 
-To connect a binding to its remote resource in **Preview** or **Production**, uncomment the line in your `.env.local` file:
+To make a binding run remotely in local dev, uncomment the line in your `.env.local` file:
 
 ```ini title=".env.local"
 # Plain text environment variables
