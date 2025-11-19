@@ -28,12 +28,6 @@ type ReferenceInfo = {
 	pointer: string | null;
 };
 
-type _ReferenceResolver = (
-	ref: ReferenceInfo,
-	propertyPath: string[] | null,
-	parent: SchemaNode | null,
-) => any;
-
 // Reference resolver for schema processing
 const defaultResolver: SchemaTreeRefDereferenceFn = (dereferencedNode: any) => {
 	const ref = dereferencedNode?.$ref || dereferencedNode?.value?.$ref;

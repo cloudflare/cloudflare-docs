@@ -15,6 +15,9 @@ export interface Schema {
 	maximum?: number;
 	title?: string;
 	contentType?: string;
+	pattern?: string;
+	// Allow indexing for dynamic property access
+	[key: string]: any;
 }
 
 export interface FormatMatcher {
@@ -77,7 +80,7 @@ export const schemaMatchers = {
 
 	isObject: (schema: Schema): boolean =>
 		schema.type === "object" ||
-		(schema.properties && typeof schema.properties === "object"),
+		!!(schema.properties && typeof schema.properties === "object"),
 };
 
 // Smart fallback that generates examples from schema

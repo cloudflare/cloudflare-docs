@@ -1,4 +1,4 @@
-import type { FormatMatcher } from "./schema-formats";
+import type { FormatMatcher, Schema, FormatContext } from "./schema-formats";
 import { schemaMatchers } from "./schema-formats";
 import * as templates from "./templates";
 
@@ -8,11 +8,11 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "gpt-oss-responses",
 		label: "Responses",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			(ctx.modelName && ctx.modelName.includes("gpt-oss")) ||
 			schemaMatchers.propertyIncludes("title", "gpt_oss")(schema) ||
 			schemaMatchers.propertyIncludes("title", "responses")(schema),
-		generateExample: (_schema, ctx) =>
+		generateExample: (_schema: Schema, ctx: FormatContext) =>
 			templates.gptOssResponsesOutput(ctx.modelName),
 	},
 
@@ -21,7 +21,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "text-to-image-binary",
 		label: "Binary",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Text-to-Image" && schemaMatchers.isBinary(schema),
 		generateExample: () => templates.binaryImageOutput(),
 	},
@@ -31,7 +31,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "text-to-image-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Text-to-Image" &&
 			schemaMatchers.hasProperty("properties.image")(schema),
 		generateExample: () => templates.textToImageOutput(),
@@ -42,7 +42,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "workers-ai",
 		label: "JSON",
 		priority: 1,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.hasProperty("properties.response")(schema) &&
 			schemaMatchers.hasProperty("properties.usage")(schema) &&
 			!schemaMatchers.hasProperty("properties.choices")(schema),
@@ -54,9 +54,9 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "chat-completion",
 		label: "Chat Completion",
 		priority: 2,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.propertyIncludes("title", "chat completion")(schema),
-		generateExample: (_schema, ctx) =>
+		generateExample: (_schema: Schema, ctx: FormatContext) =>
 			templates.chatCompletionOutput(ctx.modelName),
 	},
 
@@ -64,9 +64,9 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "text-completion",
 		label: "Text Completion",
 		priority: 2,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.propertyIncludes("title", "text completion")(schema),
-		generateExample: (_schema, ctx) =>
+		generateExample: (_schema: Schema, ctx: FormatContext) =>
 			templates.textCompletionOutput(ctx.modelName),
 	},
 
@@ -75,7 +75,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "streaming",
 		label: "Streaming",
 		priority: 3,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schema.contentType === "text/event-stream" ||
 			(schema.type === "string" && schema.format === "binary"),
 		generateExample: () => templates.streamingOutput(),
@@ -86,10 +86,10 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "async-batch-response",
 		label: "Async Batch",
 		priority: 99,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.hasProperty("properties.request_id")(schema) &&
 			schemaMatchers.propertyIncludes("title", "async")(schema),
-		generateExample: (_schema, ctx) =>
+		generateExample: (_schema: Schema, ctx: FormatContext) =>
 			templates.asyncBatchResponse(ctx.modelName),
 	},
 
@@ -98,7 +98,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "embeddings-query-output",
 		label: "Query",
 		priority: 1,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.hasProperty("properties.response")(schema) &&
 			schemaMatchers.propertyIncludes("title", "query")(schema),
 		generateExample: () => templates.embeddingsQueryOutput(),
@@ -108,7 +108,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "embeddings-contexts-output",
 		label: "Embedding for Contexts",
 		priority: 2,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.hasProperty("properties.response")(schema) &&
 			schemaMatchers.hasProperty("properties.shape")(schema) &&
 			schemaMatchers.propertyIncludes("title", "context")(schema),
@@ -119,7 +119,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "embeddings-standard-output",
 		label: "Embedding",
 		priority: 3,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.hasProperty("properties.data")(schema) &&
 			schemaMatchers.hasProperty("properties.shape")(schema),
 		generateExample: () => templates.embeddingsStandardOutput(),
@@ -130,7 +130,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "asr-nova3-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.hasProperty("properties.results.properties.channels")(
 				schema,
 			),
@@ -141,7 +141,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "asr-whisper-segments-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.hasProperty("properties.text")(schema) &&
 			schemaMatchers.hasProperty("properties.segments")(schema),
 		generateExample: () => templates.asrWhisperSegmentsOutput(),
@@ -151,7 +151,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "asr-whisper-words-output",
 		label: "JSON",
 		priority: 2,
-		matches: (schema) => {
+		matches: (schema: Schema) => {
 			const hasText = schemaMatchers.hasProperty("properties.text")(schema);
 			const hasWords = schemaMatchers.hasProperty("properties.words.items")(
 				schema,
@@ -168,7 +168,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "asr-flux-output",
 		label: "JSON",
 		priority: 3,
-		matches: (schema) => {
+		matches: (schema: Schema) => {
 			const hasWords = schemaMatchers.hasProperty("properties.words.items")(
 				schema,
 			);
@@ -185,9 +185,9 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "tts-melotts-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema) =>
+		matches: (schema: Schema) =>
 			schemaMatchers.hasProperty("properties.audio")(schema) &&
-			schema.properties.audio.description?.includes("base64-encoded"),
+			schema.properties?.audio?.description?.includes("base64-encoded"),
 		generateExample: () => templates.ttsMelottsOutput(),
 	},
 
@@ -196,7 +196,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "summarization-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Summarization" &&
 			schemaMatchers.hasProperty("properties.summary")(schema),
 		generateExample: () => templates.summarizationOutput(),
@@ -207,7 +207,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "text-classification-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Text Classification" &&
 			schema.type === "array" &&
 			schemaMatchers.hasProperty("items.properties.label")(schema) &&
@@ -220,7 +220,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "object-detection-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Object Detection" &&
 			schema.type === "array" &&
 			schemaMatchers.hasProperty("items.properties.box")(schema),
@@ -232,7 +232,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "translation-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Translation" &&
 			schemaMatchers.hasProperty("properties.translated_text")(schema),
 		generateExample: () => templates.translationOutput(),
@@ -243,7 +243,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "image-to-text-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Image-to-Text" &&
 			schemaMatchers.hasProperty("properties.description")(schema),
 		generateExample: () => templates.imageToTextOutput(),
@@ -254,7 +254,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "image-classification-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Image Classification" &&
 			schema.type === "array" &&
 			schemaMatchers.hasProperty("items.properties.label")(schema) &&
@@ -267,7 +267,7 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		id: "voice-activity-detection-output",
 		label: "JSON",
 		priority: 1,
-		matches: (schema, ctx) =>
+		matches: (schema: Schema, ctx: FormatContext) =>
 			ctx.taskName === "Voice Activity Detection" &&
 			schemaMatchers.hasProperty("properties.is_complete")(schema) &&
 			schemaMatchers.hasProperty("properties.probability")(schema),
