@@ -1,0 +1,139 @@
+---
+title: Advanced configuration
+pcx_content_type: reference
+sidebar:
+  order: 25
+---
+
+import { DashButton } from "~/components";
+
+## Disable Pay Per Crawl by URI pattern
+
+You may want to offer free access to certain pages while charging for others:
+
+- Allow free access to **homepages, category pages, or navigation** to help crawlers discover paid content.
+- Exclude functional pages like **login, search, or API endpoints** that don't contain chargeable content.
+- Start with Pay Per Crawl on **a small section of your site** before expanding.
+- Offer free access to **promotional or archived content** while charging for premium articles.
+
+To get started, use [Configuration Rules](/rules/configuration-rules/) to exclude specific URI patterns from charging.
+
+1. Go to **Rules** > **Overview** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Select **Create rule** > **Configuration Rule**.
+
+3. **When incoming requests match**: Set your URI pattern
+   - Field: `URI Full`
+   - Operator: `wildcard`
+   - Value: `https://*example.com/public/*`
+
+4. **Then the settings are**: Select **Disable Pay Per Crawl** > **+ Add**
+
+5. Select **Deploy**.
+
+**Example patterns:**
+
+- Free homepage: `URI Full` equals `https://example.com/`
+- Free directory: `URI Full` wildcard `https://*example.com/public/*`
+
+:::note
+These paths are always free by default: `/robots.txt`, `/sitemap.xml`, `/security.txt`, `/.well-known/security.txt`, `/crawlers.json`
+:::
+
+## Custom pricing
+
+Set different prices for different content by returning a `crawler-price` header from your origin or a [Worker](/workers/). This is also known as [in-band pricing](/ai-crawl-control/reference/glossary/#in-band-pricing) because the price is transmitted within the HTTP response alongside the content.
+
+When custom pricing is enabled, the price specified in the `crawler-price` header is used instead of your default zone price. Successful responses are recorded and paid out via Stripe, just like with default pricing.
+
+### Setup steps
+
+**1. Enable custom pricing in the dashboard**
+
+Go to **AI Crawl Control** > **Settings**.
+
+<DashButton url="/?to=/:account/:zone/ai" />
+
+In the **Pay Per Crawl** card, select **Enable custom pricing** and **Save**.
+
+Once enabled, Cloudflare adds this header to every origin request:
+
+```txt
+cf-pay-per-crawl: protocol=cloudflare, pricing=in-band
+```
+
+The `pricing=in-band` value confirms custom pricing is active and your origin should provide a `crawler-price` header.
+
+**2. Update your origin or Worker to return pricing**
+
+Choose one of the following methods to set custom prices:
+
+#### Option A: Set prices from your origin
+
+Return a `crawler-price` header in your HTTP responses:
+
+```txt
+crawler-price: USD 0.05
+```
+
+Your origin can check for the `cf-pay-per-crawl` header with `pricing=in-band` to confirm custom pricing is enabled before setting prices.
+
+#### Option B: Set prices with a Worker
+
+Use a [Worker](/workers/) to add the `crawler-price` header dynamically without modifying your origin. Workers can set prices based on URL paths, content, or [request properties from the Cloudflare network](/workers/runtime-apis/request/#incomingrequestcfproperties).
+
+Workers have access to the `botManagement` property on incoming requests, which includes bot detection information like `verifiedBot`, `score`, and `detectionIds`. You can use this to implement sophisticated pricing logic based on bot characteristics.
+
+**Use Cloudflare Cache with Workers**
+
+Enable [Cloudflare Cache](/cache/) to reduce origin load and improve performance. Crawlers often request the same content multiple times, and cached responses still include your custom pricing headers. Your origin only generates the content once, even with dynamic pricing.
+
+This example shows how to implement custom pricing with caching enabled:
+
+```js
+export default {
+	async fetch(request) {
+		// Verify custom pricing is enabled
+		const cfPayPerCrawl = request.headers.get("cf-pay-per-crawl") || "";
+		
+		// Requests not subject to custom pricing go through unmodified
+		if (!cfPayPerCrawl.includes("pricing=in-band")) {
+			return fetch(request, { cf: { cacheEverything: true } });
+		}
+		
+		// Fetch from origin with caching enabled
+		let response = await fetch(request.url, { cf: { cacheEverything: true } });
+		response = new Response(response.body, response);
+		
+		const url = new URL(request.url);
+		
+		// Access bot information from request.cf.botManagement
+		const botInfo = request.cf?.botManagement;
+		
+		// Set prices based on URL path
+		if (url.pathname.startsWith("/premium/")) {
+			response.headers.set("crawler-price", "USD 0.10");
+		} else if (url.pathname.startsWith("/archive/")) {
+			response.headers.set("crawler-price", "USD 0.01");
+		} else if (url.pathname.startsWith("/free/")) {
+			response.headers.set("crawler-price", "USD 0.00");
+		}
+		
+		// You can also use botInfo for more advanced pricing logic
+		// Example: if (botInfo?.verifiedBot) { ... }
+		
+		return response;
+	},
+};
+```
+
+:::note
+The `crawler-price` response header is only visible to bots configured to **Charge** in your Pay Per Crawl settings. Requests from bots set to **Allow** or **Block**, or from human visitors, will not see the `crawler-price` header or receive a 402 response, even if your origin includes the header.
+:::
+
+## Additional resources
+
+- [Configuration Rules documentation](/rules/configuration-rules/)
+- [Cloudflare Workers documentation](/workers/)
