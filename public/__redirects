@@ -775,7 +775,7 @@
 /fundamentals/account/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/account/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
-/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider.mdx /changelog/terraform/2025-02-03-terraform-v5-provider/ 301
+/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider /changelog/terraform/2025-02-03-terraform-v5-provider/ 301
 /changelog/fundamentals/2025-03-21-resource-force-replacement-bug /changelog/terraform/2025-03-21-resource-force-replacement-bug/ 301
 /changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/terraform/2025-03-21-sensitive-values-redacted/ 301
 /changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider /changelog/terraform/2025-05-06-terraform-v5.4.0-provider/ 301
