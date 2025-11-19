@@ -43,7 +43,10 @@ An Okta administrator in your organization must first [enable U2F support](https
 
 You can begin building U2F policies by testing your Okta integration.
 
-In [Zero Trust](https://one.dash.cloudflare.com/), go to the **Settings** > **Authentication**. Next, choose the row for Okta and select **Test**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to the **Access controls** > **Access settings**.
+2. In **Manage your App Launcher**, select **Manage**.
+3. Choose **Login methods**.
+4. Choose the row for Okta and select **Test**.
 
 Cloudflare Access will prompt you to login with your Okta account. For the purposes of the test, use a second factor option like an app-based code. Okta will return `amr` values to Cloudflare Access - these are standard indicators of multifactor methods shared between identity control systems.
 

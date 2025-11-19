@@ -20,7 +20,7 @@ An account can have any number of additional dedicated egress IPs. To request ad
 To start routing traffic through dedicated egress IPs:
 
 1. Contact your account team to obtain a dedicated egress IP.
-2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+2. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
 3. Turn on **Allow Secure Web Gateway to proxy traffic**.
 4. Select **TCP**.
 5. (Optional) Select **UDP**. This will allow HTTP/3 traffic to egress with your dedicated IPs.
@@ -53,10 +53,10 @@ For more information, refer to [Cloudflare BYOIP](/byoip/) or contact your accou
 If you do not have your own authority-provided IPv4 and IPv6 addresses, you can use dedicated egress IPs with a Cloudflare IP address.
 
 <Render
-  file="check-leased-ips"
+	file="check-leased-ips"
 	product="byoip"
 	params={{
-		product: "Gateway dedicated egress IPs"
+		product: "Gateway dedicated egress IPs",
 	}}
 />
 

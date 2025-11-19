@@ -406,7 +406,7 @@ The Worker is now behind an addressable public hostname. Make sure to turn off b
 
 To secure the AI agent wrapper to ensure that only trusted users can access it:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
 2. Select **Add an application**.
 3. Choose **Self-hosted**.
 4. Enter a name for your AI agent wrapper application.
@@ -421,16 +421,15 @@ Now your AI wrapper can only be accessed by your users that successfully match y
 
 You can now block access to all unauthorized public AI agents with a Gateway [HTTP policy](/cloudflare-one/traffic-policies/http-policies/).
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
-2. Select **HTTP**.
-3. Select **Add a policy**.
-4. Add the following policy:
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies** > **HTTP**.
+2. Select **Add a policy**.
+3. Add the following policy:
 
    | Selector           | Operator | Value                     | Action |
    | ------------------ | -------- | ------------------------- | ------ |
    | Content Categories | in       | _Artificial Intelligence_ | Block  |
 
-5. Select **Create policy**.
+4. Select **Create policy**.
 
 This ensures that public AI agents are not accessible using a managed endpoint.
 
@@ -444,7 +443,7 @@ Now that you have full control over access to your AI agent wrapper, you can enf
 
 You can use [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) to prevent your users from sending sensitive data to the AI agent.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **DLP profiles**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
 2. Ensure that the [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) you want to enforce are properly configured.
 3. Add an HTTP policy to enforce the DLP profile for the hostname for your wrapper. For example:
 
@@ -463,7 +462,7 @@ Because you published your wrapper as a self-hosted Access application, you can 
 
 <Render file="clientless-browser-isolation" product="cloudflare-one" />
 
-3. Go to **Access** > **Policies**.
+3. Go to **Access controls** > **Policies**.
 4. Select **Add a policy**.
 5. Set the **Action** to _Allow_.
 6. In **Add rules**, add identity rules to define who the application should be isolated for.
@@ -471,7 +470,7 @@ Because you published your wrapper as a self-hosted Access application, you can 
 
 Once the Access policy has been created, you can attach it to your wrapper.
 
-1. Go to **Access** > **Applications**.
+1. Go to **Access controls** > **Applications**.
 2. Choose your wrapper application, then select **Configure**.
 3. In **Policies**, select **Select existing policies**.
 4. Choose the Access policy you previously created.
