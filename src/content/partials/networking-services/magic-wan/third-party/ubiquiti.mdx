@@ -140,10 +140,27 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 To check your connections are working correctly, wait a few minutes, and then access both Cloudflare and UniFi to verify the tunnel's status:
 
 <Details header="Cloudflare">
-1. Go to Magic WAN's **Network Health** page.
-	<DashButton url="/?to=/:account/magic-wan/tunnel-healthchecks" />
-2. On the banner in the top of the page, select **Magic Tunnel Health Dashboard** to enable the new health checks experience.
-3. Find the tunnel you have just created and make sure its status shows **Up**. Refer to [Check tunnel health in the dashboard](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information.
+{props.magicWord === "Magic WAN" ? (
+	<>
+		<Markdown
+			text={`1. Go to Magic WAN's **Network Health** page.`}
+			inline={false}
+		/>
+		<DashButton url="/?to=/:account/magic-wan/tunnel-healthchecks" />
+		<Markdown
+			text={`2. On the banner in the top of the page, select **Magic Tunnel Health Dashboard** to enable the new health checks experience.
+3. Find the tunnel you have just created and make sure its status shows **Up**. Refer to [Check tunnel health in the dashboard](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information.`}
+			inline={false}
+		/>
+	</>
+) : (
+	<Markdown
+		text={`1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Insights**.
+2. Go to **Network visibility** > **WAN connector health**.
+3. Find the tunnel you have just created and make sure its status shows **Up**. Refer to [Check tunnel health in the dashboard](/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/check-tunnel-health-dashboard/) for more information.`}
+		inline={false}
+	/>
+)}
 </Details>
 
 <Details header="UniFi">
