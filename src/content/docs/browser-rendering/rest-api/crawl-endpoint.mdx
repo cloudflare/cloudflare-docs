@@ -36,7 +36,7 @@ There are two separate steps to using the `/crawl` endpoint:
 Crawl jobs have a maximum run time of seven days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
 
 :::note[Free plan limitation]
-If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 10 minutes per day](/browser-rendering/pricing/). To avoid this, you can either [upgrade to a Workers Paid plan](/workers/pricing/) or you can [put limitations on timeouts](/browser-rendering/reference/timeouts/) to get the most out of the 10 minutes of your crawl request.
+If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 10 minutes per day](/browser-rendering/pricing/). To avoid this, you can either [upgrade to a Workers Paid plan](/workers/platform/pricing/) or you can [put limitations on timeouts](/browser-rendering/reference/timeouts/) to get the most out of the 10 minutes of your crawl request.
 :::
 
 ### Initiate the crawl job
@@ -74,7 +74,7 @@ The response includes a `status` field indicating the current state of the crawl
 
 - `running` — The crawl job is currently in progress.
 - `cancelled_due_to_timeout` — The crawl job exceeded the maximum run time of seven days.
-- `cancelled_due_to_limits` — The crawl job was cancelled because it hit [account limits](/browser-rendering/platform/limits/).
+- `cancelled_due_to_limits` — The crawl job was cancelled because it hit [account limits](/browser-rendering/limits/).
 - `cancelled_by_user` — The crawl job was manually cancelled by the user.
 - `errored` — The crawl job encountered an error.
 - `completed` — The crawl job finished successfully.
