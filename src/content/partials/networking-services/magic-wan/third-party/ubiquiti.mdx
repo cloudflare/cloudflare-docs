@@ -60,7 +60,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 3. Configure the following settings:
    - **VPN Type:** `IPsec`.
    - **Name:** `Cloudflare-Magic-WAN`.
-   - **Pre-shared key:** Copy this key. You need it for the Magic WAN tunnel configured in [Step 1](#1-configure-magic-wan).
+   - **Pre-shared key:** Copy this key. You need it for the Magic WAN tunnel.
    - **Local IP:** Select the WAN interface (for example, `WAN1`).
    - **Remote IP:** Enter the Cloudflare endpoint IP from [Step 1](#1-configure-magic-wan).
    - **VPN Method:** Route Based.
@@ -103,7 +103,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 		inline={false}
 	/>
 )}
-3. Select your tunnel > **Edit**.
+3. Select your tunnel and then **Edit**.
 4. Paste the preshared key from [Step 2](#2-configure-site-to-site-vpn-on-unifi).
 5. Select **Save**.
 
@@ -148,7 +148,7 @@ To check your connections are working correctly, wait a few minutes, and then ac
 		/>
 		<DashButton url="/?to=/:account/magic-wan/tunnel-healthchecks" />
 		<Markdown
-			text={`2. On the banner in the top of the page, select **Magic Tunnel Health Dashboard** to enable the new health checks experience.
+			text={`2. On the banner at the top of the page, select **Magic Tunnel Health Dashboard** to enable the new health checks experience.
 3. Find the tunnel you have just created and make sure its status shows **Up**. Refer to [Check tunnel health in the dashboard](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information.`}
 			inline={false}
 		/>
@@ -170,7 +170,7 @@ Go to **Settings** > **VPN**, and make sure the status is **Connected**.
 ## Troubleshooting
 
 **Tunnel down:**
-- Verify Peer IP, pres-hared key, and IPsec settings match on both sides
+- Verify Peer IP, pre-shared key, and IPsec settings match on both sides
 - Check that the ISP is not blocking UDP ports `500`/`4500`
 
 **Traffic not routing:**
