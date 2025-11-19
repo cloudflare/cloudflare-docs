@@ -152,12 +152,11 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		label: "JSON",
 		priority: 2,
 		matches: (schema: Schema) => {
-			const hasText = schemaMatchers.hasProperty("properties.text")(schema);
-			const hasWords = schemaMatchers.hasProperty("properties.words.items")(
-				schema,
-			);
-			if (!hasText || !hasWords) return false;
-
+			if (
+				!schemaMatchers.hasProperty("properties.text")(schema) ||
+				!schemaMatchers.hasProperty("properties.words.items")(schema)
+			)
+				return false;
 			const wordProps = schema.properties?.words?.items?.properties || {};
 			return wordProps.start && wordProps.end;
 		},
@@ -169,13 +168,11 @@ export const OUTPUT_FORMATS: FormatMatcher[] = [
 		label: "JSON",
 		priority: 3,
 		matches: (schema: Schema) => {
-			const hasWords = schemaMatchers.hasProperty("properties.words.items")(
-				schema,
+			if (!schemaMatchers.hasProperty("properties.words.items")(schema))
+				return false;
+			return (
+				schema.properties?.words?.items?.properties?.confidence !== undefined
 			);
-			if (!hasWords) return false;
-
-			const wordProps = schema.properties?.words?.items?.properties || {};
-			return wordProps.confidence !== undefined;
 		},
 		generateExample: () => templates.asrFluxOutput(),
 	},
