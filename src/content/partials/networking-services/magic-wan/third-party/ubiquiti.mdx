@@ -1,8 +1,9 @@
 ---
-{}
+params:
+  - magicWord
 ---
 
-import { DashButton, Details } from "~/components";
+import { DashButton, Details, Markdown } from "~/components";
 
 Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These steps use the Cloud Gateway Max (UCG-Max) but work with other UniFi gateways supporting route-based IPsec VPNs, like the Dream Machine series.
 
@@ -20,13 +21,24 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 
 ## 1. Configure Magic WAN
 
-1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
-	<DashButton url="/?to=/:account/magic-wan/configuration" />
-2. Go to **Tunnels**, and select **Create**.
+{props.magicWord === "Magic WAN" ? (
+	<>
+		<Markdown
+			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+2. Go to **Tunnels**, and select **Create**.`}
+		/>
+		<DashButton url="/?to=/:account/magic-wan/configuration" />
+	</>
+) : (
+	<Markdown
+		text={`1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+2. Go to **Connectors** > **WAN Tunnels**, and select **Create**.`}
+	/>
+)}
 3. Select **IPsec tunnel** > **Next**, and fill in the following settings:
-   - **Name**: `unifi-gw-primary`
-   - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
-   - **Customer Endpoint**: This should be your UniFi Gateway's WAN IP (for example, `203.0.113.10`)
+	   - **Name**: `unifi-gw-primary`
+	   - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
+	   - **Customer Endpoint**: This should be your UniFi Gateway's WAN IP (for example, `203.0.113.10`)
    - **Cloudflare Endpoint**: This should be one of the IPv4 addresses gathered from Leased IPs.
    - Under **Tunnel Health checks**, select:
       - **Health check rate**: Set to desired level
