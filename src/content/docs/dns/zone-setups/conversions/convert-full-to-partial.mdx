@@ -6,7 +6,7 @@ sidebar:
   label: Full to partial
 ---
 
-import { Tabs, TabItem, Render, GlossaryTooltip, DashButton } from "~/components";
+import { Tabs, TabItem, Render, GlossaryTooltip, DashButton, Details } from "~/components";
 
 If you initially configured a [full setup](/dns/zone-setups/full-setup/), you can later convert your zone to use a partial setup (also known as CNAME setup).
 
@@ -22,6 +22,36 @@ Make sure you consider the following:
 
 ## 1. Prepare DNS records
 
+1. Export a zone file
+
+   <Tabs syncKey="dashPlusAPI">
+     <TabItem label="Dashboard">
+       (placeholder)
+     </TabItem>
+     <TabItem label="API">
+       (placeholder)
+     </TabItem>
+   </Tabs>
+
+2. Import the zone file into your new primary DNS provider.
+3. Create or update your records so that you have CNAME records pointing to `{your-hostname}.cdn.cloudflare.net` for every hostname you wish to proxy through Cloudflare.
+
+   <Details header="Example CNAME record at authoritative DNS provider">
+
+   The CNAME record for `www.example.com` would be:
+
+   ```txt
+   www.example.com CNAME www.example.com.cdn.cloudflare.net
+   ```
+
+   </Details>
+
+4. Remove any previously existing A, AAAA, or CNAME records referencing the hostnames you want to proxy through Cloudflare. For these hostnames, leave only the records pointing to `{your-hostname}.cdn.cloudflare.net`.
+
+5. Confirm you have the correct record for every subdomain that should be proxied through Cloudflare.
+
+## 2. Convert the zone
+
 <Tabs syncKey="dashPlusAPI">
   <TabItem label="Dashboard">
     (placeholder)
@@ -31,15 +61,30 @@ Make sure you consider the following:
   </TabItem>
 </Tabs>
 
-## 2. Convert zone and verify ownership
+## 3. Verify ownership
 
-<Tabs syncKey="dashPlusAPI">
-  <TabItem label="Dashboard">
-    (placeholder)
-  </TabItem>
-  <TabItem label="API">
-    (placeholder)
-  </TabItem>
-</Tabs>
+Add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
 
-## 3. Update your nameservers
+<Details header="Example verification record">
+
+A verification record for `example.com` might be:
+
+| Type | Name                            | Content             |
+| ---- | ------------------------------- | ------------------- |
+| TXT  | `cloudflare-verify.example.com` | 966215192-518620144 |
+
+</Details>
+
+:::note
+
+If your authoritative DNS provider automatically appends DNS record `name` fields with your domain, make sure to only insert `cloudflare-verify` as the record name. Otherwise, it may result in an incorrect record name, such as `cloudflare-verify.example.com.example.com`.
+
+After creating the record, you can use this [Dig Web Interface link](https://digwebinterface.com/?type=TXT&ns=auth&nameservers=) to search (`dig`) for `cloudflare-verify.<YOUR DOMAIN>` and validate if it is working.
+
+:::
+
+That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
+
+If your organization has multiple Cloudflare accounts, also consider using zone holds to have more control over [domain ownership](/dns/zone-setups/partial-setup/#domain-ownership).
+
+## 4. Update your nameservers
