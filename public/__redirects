@@ -2403,7 +2403,6 @@
 # WAF
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
 /waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
-/waf/custom-rules/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
 /waf/security-events/* /waf/analytics/security-events/:splat 301
 /waf/change-log/2019-* /waf/change-log/historical-2019/ 301
