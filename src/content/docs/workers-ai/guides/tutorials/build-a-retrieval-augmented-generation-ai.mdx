@@ -415,7 +415,7 @@ app.get('/', async (c) => {
   // ... Existing code
 	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
 
-	let modelUsed: string = ""
+	let modelUsed = ""
 	let response = null
 
 	if (c.env.ANTHROPIC_API_KEY) {
