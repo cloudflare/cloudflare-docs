@@ -33,4 +33,4 @@ jobs:
       - name: Semgrep Local (Custom rules found in .semgrep)
         if: github.event_name == 'pull_request'
         # add '--error' below to return error code to workflow
-        run: semgrep scan --config .semgrep --include "*.mdx" --include "*.mdx"
+        run: semgrep scan --config .semgrep --metrics=off --include "*.mdx" --include "*.mdx"

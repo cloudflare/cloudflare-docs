@@ -12,7 +12,7 @@ rules:
         - "*.yaml"
         - "*.yml"
       exclude:
-        - "src/content/changelog/**"
-        - "src/content/release-notes/**"
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
     patterns:
       - pattern-regex: "[Cc]oming [Ss]oon"
