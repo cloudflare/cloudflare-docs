@@ -164,7 +164,7 @@ The `addMcpServer()` method connects to an MCP server. If the server requires OA
 
 			// List MCP state (servers, tools, etc)
 			if (url.pathname.endsWith("mcp-state") && request.method === "GET") {
-				const mcpState = this.getMcpServers();
+				const mcpState = await this.getMcpServers();
 
 				return new Response(JSON.stringify(mcpState, null, 2), {
 					headers: { "Content-Type": "application/json" },

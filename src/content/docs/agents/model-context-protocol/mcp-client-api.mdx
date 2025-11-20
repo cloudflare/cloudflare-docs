@@ -165,7 +165,7 @@ Disconnects from the MCP server, removes all related resources, and deletes the 
 Get the current state of all MCP server connections.
 
 ```ts
-getMcpServers(): MCPServersState
+async getMcpServers(): Promise<MCPServersState>
 ```
 
 #### Parameters
@@ -174,7 +174,7 @@ None.
 
 #### Returns
 
-An `MCPServersState` object containing:
+A Promise that resolves to an `MCPServersState` object containing:
 
 ```ts
 {
@@ -189,7 +189,8 @@ An `MCPServersState` object containing:
 				| "connecting"
 				| "ready"
 				| "discovering"
-				| "failed";
+				| "failed"
+				| "not-connected";
 			capabilities: ServerCapabilities | null;
 			instructions: string | null;
 		}
@@ -210,7 +211,7 @@ export class MyAgent extends Agent<Env, never> {
 		const url = new URL(request.url);
 
 		if (url.pathname === "/mcp-state") {
-			const mcpState = this.getMcpServers();
+			const mcpState = await this.getMcpServers();
 
 			return new Response(JSON.stringify(mcpState, null, 2), {
 				headers: { "Content-Type": "application/json" },
@@ -222,7 +223,24 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-The `state` field can be: `authenticating`, `connecting`, `ready`, `discovering`, or `failed`. Use this method to monitor connection status, list available tools, or build UI for connected servers.
+#### Connection States
+
+The `state` field indicates the current connection status:
+
+- **`authenticating`** — Waiting for OAuth authorization. The server requires OAuth and the user must complete the authorization flow via `auth_url`.
+- **`connecting`** — Establishing transport connection to the MCP server. OAuth (if required) is complete, now connecting to the actual MCP endpoint.
+- **`discovering`** — Discovering server capabilities. The transport is connected, now fetching available tools, resources, and prompts via the MCP protocol.
+- **`ready`** — Fully connected and ready to use. Tools, resources, and prompts have been discovered and are available. This is the terminal success state.
+- **`failed`** — Connection failed. Check observability events or logs for error details.
+- **`not-connected`** — Server configuration is stored but no active connection exists. This occurs when a server is registered but the connection hasn't been established yet, or when the Agent has been restarted and connections are being restored.
+
+**State transitions:**
+
+- **Non-OAuth servers**: `connecting` → `discovering` → `ready`
+- **OAuth servers**: `authenticating` → (OAuth callback) → `connecting` → `discovering` → `ready`
+- Any state can transition to `failed` on error
+
+Use this method to monitor connection status, list available tools, or build UI for connected servers.
 
 ## OAuth Configuration
 

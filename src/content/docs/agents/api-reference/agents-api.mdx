@@ -601,7 +601,7 @@ class Agent<Env, State = unknown> {
   async removeMcpServer(id: string): Promise<void>;
 
   // Get state of all connected MCP servers
-  getMcpServers(): MCPServersState;
+  async getMcpServers(): Promise<MCPServersState>;
 }
 ```
 

@@ -195,7 +195,7 @@ export class MyAgent extends Agent<Env, never> {
 			url.pathname.endsWith("connection-status") &&
 			request.method === "GET"
 		) {
-			const mcpState = this.getMcpServers();
+			const mcpState = await this.getMcpServers();
 
 			const connections = Object.entries(mcpState.servers).map(
 				([id, server]) => ({
@@ -364,7 +364,7 @@ export class ObservabilityAgent extends Agent<Env, never> {
 
 		// Endpoint: Check connection status
 		if (url.pathname.endsWith("status") && request.method === "GET") {
-			const mcpState = this.getMcpServers();
+			const mcpState = await this.getMcpServers();
 
 			const connections = Object.entries(mcpState.servers).map(
 				([id, server]) => ({
