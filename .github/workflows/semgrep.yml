@@ -2,12 +2,15 @@ on:
   workflow_dispatch: {}
   schedule:
     - cron: "0 4 * * *"
+  pull_request: {}
+
 name: Semgrep config
 permissions:
   contents: read
+
 jobs:
   semgrep:
-    name: semgrep/ci
+    name: semgrep
     runs-on: ubuntu-latest
     env:
       SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
@@ -18,4 +21,16 @@ jobs:
       image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
-      - run: semgrep ci
+
+      # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
+      # scans using managed rules at cloudflare.semgrep.dev
+      - name: Semgrep CI (Managed at cloudflare.semgrep.dev)
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: semgrep ci
+
+      # Semgrep Scan to run on Pull Request events
+      # scans using rules inside the .semgrep/ folder and fails on error
+      - name: Semgrep Local (Custom rules found in .semgrep)
+        if: github.event_name == 'pull_request'
+        # add '--error' below to return error code to workflow
+        run: semgrep scan --config .semgrep --include "*.mdx" --include "*.mdx"

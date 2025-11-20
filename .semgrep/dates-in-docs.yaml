@@ -1,0 +1,18 @@
+rules:
+  - id: coming-soon
+    languages: [html, yaml, generic]
+    message: "Found the forbidden string 'coming soon'"
+    severity: ERROR
+    paths:
+      include:
+        - "*.htm"
+        - "*.html"
+        - "*.md"
+        - "*.mdx"
+        - "*.yaml"
+        - "*.yml"
+      exclude:
+        - "src/content/changelog/**"
+        - "src/content/release-notes/**"
+    patterns:
+      - pattern-regex: "[Cc]oming [Ss]oon"
