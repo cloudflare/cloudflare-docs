@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Steps, Tabs, TabItem, Render, DashButton } from "~/components";
+import { Steps, Tabs, TabItem, Render, DashButton } from "~/components"
 
 You can upload objects to your bucket from using API (both [Workers Binding API](/r2/api/workers/workers-api-reference/) or [compatible S3 API](/r2/api/s3/api/)), rclone, Cloudflare dashboard, or Wrangler.
 
@@ -52,7 +52,7 @@ You will receive a confirmation message after a successful upload.
 
 :::note
 
-Wrangler only supports uploading files up to 300 MiB in size. To upload large files, we recommend [rclone](/r2/examples/rclone/) or an [S3-compatible](/r2/api/s3/) tool of your choice.
+Wrangler only supports uploading files up to 315MB in size. To upload large files, we recommend [rclone](/r2/examples/rclone/) or an [S3-compatible](/r2/api/s3/) tool of your choice.
 
 :::
 
@@ -69,34 +69,10 @@ Upload complete.
 
 You can set the `Content-Type` (MIME type), `Content-Disposition`, `Cache-Control` and other HTTP header metadata through optional flags.
 
-You can upload multiple files by running the `bulk put` command with a JSON file that describes the files to upload.
-
-The JSON file should be an array of objects, each containing a `key` and a `file` property. For example, create a file named `files-to-upload.json` with the following content:
-
-```json
-[
-	{
-		"key": "image1.png",
-		"file": "/path/to/images/image1.png"
-	},
-	{
-		"key": "image2.png",
-		"file": "/path/to/images/image2.png"
-	}
-]
-```
-
-The path to the JSON list is passed via `--filename`:
-
-```sh
-wrangler r2 bulk put test-bucket --filename=files-to-upload.json
-```
-
 :::note
-`r2 bulk put` does not currently support setting custom metadata for each object. All objects will be uploaded with the metadata passed via the command line.
+Wrangler's `object put` command only allows you to upload one object at a time.
 
-Each object has a size limit of 300 MiB when using `r2 bulk put`, use `rclone` or other S3-compatible tools to upload larger files.
-
+Use rclone if you wish to upload multiple objects to R2.
 :::
 
-<Render file="link-to-workers-r2-api" product="r2" />
+<Render file="link-to-workers-r2-api" product="r2"/>
