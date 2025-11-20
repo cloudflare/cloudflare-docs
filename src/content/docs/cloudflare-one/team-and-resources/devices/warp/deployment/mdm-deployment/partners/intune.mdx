@@ -146,11 +146,11 @@ You must deploy a [user-side certificate](/cloudflare-one/team-and-resources/dev
 
 6. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > select **macOS**.
 
-	![Intune admin console where you select macOS before creating a policy](~/assets/images/cloudflare-one/connections/intune/devices-macos.png)
+   ![Intune admin console where you select macOS before creating a policy](~/assets/images/cloudflare-one/connections/intune/devices-macos.png)
 
 7. Under **Manage devices**, select **Configuration**.
 
-	![Intune admin console where you will create a new policy](~/assets/images/cloudflare-one/connections/intune/manage-devices-configuration.png)
+   ![Intune admin console where you will create a new policy](~/assets/images/cloudflare-one/connections/intune/manage-devices-configuration.png)
 
 8. Select **Create** > **New Policy**.
 
@@ -189,11 +189,10 @@ Before deploying WARP, you need to allow its system extensions.
 8. Enable **Allowed System Extensions**.
 
 9. Select **Edit instance** and add:
+   - Bundle Identifier: `com.cloudflare.1dot1dot1dot1dot1.macos`
+   - Team Identifier: `68BUP38M2J`
 
-	- Bundle Identifier: `com.cloudflare.1dot1dot1dot1dot1.macos`
-	- Team Identifier: `68BUP38M2J`
-
-	![Intune admin console where you enter team identifier and bundle identifier](~/assets/images/cloudflare-one/connections/intune/intune-bundle-team-identifier.png)
+   ![Intune admin console where you enter team identifier and bundle identifier](~/assets/images/cloudflare-one/connections/intune/intune-bundle-team-identifier.png)
 
 10. Select **Save**.
 
@@ -209,69 +208,72 @@ This step allows WARP to install without user interaction. By completing this st
 
 1. Open a text editor and paste in the following `.mobileconfig` template:
 
-	```xml
-	<?xml version="1.0" encoding="UTF-8"?>
-	<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-	<plist version="1.0">
-			<dict>
-					<key>PayloadDisplayName</key>
-					<string>Cloudflare WARP</string>
-					<key>PayloadIdentifier</key>
-					<string>cloudflare_warp</string>
-					<key>PayloadOrganization</key>
-					<string>Cloudflare, Ltd.</string>
-					<key>PayloadRemovalDisallowed</key>
-					<false/>
-					<key>PayloadType</key>
-					<string>Configuration</string>
-					<key>PayloadScope</key>
-					<string>System</string>
-					<key>PayloadUUID</key>
-					<string>YOUR_PAYLOAD_UUID_HERE</string>
-					<key>PayloadVersion</key>
-					<integer>1</integer>
-					<key>PayloadContent</key>
-					<array>
-							<dict>
-									<key>organization</key>
-									<string>YOUR_TEAM_NAME_HERE</string>
-									<key>auto_connect</key>
-									<integer>120</integer>
-									<key>onboarding</key>
-									<false/>
-									<key>PayloadDisplayName</key>
-									<string>Warp Configuration</string>
-									<key>PayloadIdentifier</key>
-									<string>com.cloudflare.warp.YOUR_PAYLOAD_UUID_HERE</string>
-									<key>PayloadOrganization</key>
-									<string>Cloudflare Ltd.</string>
-									<key>PayloadType</key>
-									<string>com.cloudflare.warp</string>
-									<key>PayloadUUID</key>
-									<string>YOUR_PAYLOAD_UUID_HERE</string>
-									<key>PayloadVersion</key>
-									<integer>1</integer>
-							</dict>
-					</array>
-			</dict>
-	</plist>
-	```
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+   <plist version="1.0">
+   		<dict>
+   				<key>PayloadDisplayName</key>
+   				<string>Cloudflare WARP</string>
+   				<key>PayloadIdentifier</key>
+   				<string>cloudflare_warp</string>
+   				<key>PayloadOrganization</key>
+   				<string>Cloudflare, Ltd.</string>
+   				<key>PayloadRemovalDisallowed</key>
+   				<false/>
+   				<key>PayloadType</key>
+   				<string>Configuration</string>
+   				<key>PayloadScope</key>
+   				<string>System</string>
+   				<key>PayloadUUID</key>
+   				<string>YOUR_PAYLOAD_UUID_HERE</string>
+   				<key>PayloadVersion</key>
+   				<integer>1</integer>
+   				<key>PayloadContent</key>
+   				<array>
+   						<dict>
+   								<key>organization</key>
+   								<string>YOUR_TEAM_NAME_HERE</string>
+   								<key>auto_connect</key>
+   								<integer>120</integer>
+   								<key>onboarding</key>
+   								<false/>
+   								<key>PayloadDisplayName</key>
+   								<string>Warp Configuration</string>
+   								<key>PayloadIdentifier</key>
+   								<string>com.cloudflare.warp.YOUR_PAYLOAD_UUID_HERE</string>
+   								<key>PayloadOrganization</key>
+   								<string>Cloudflare Ltd.</string>
+   								<key>PayloadType</key>
+   								<string>com.cloudflare.warp</string>
+   								<key>PayloadUUID</key>
+   								<string>YOUR_PAYLOAD_UUID_HERE</string>
+   								<key>PayloadVersion</key>
+   								<integer>1</integer>
+   						</dict>
+   				</array>
+   		</dict>
+   </plist>
+   ```
+
 2. Open your macOS Terminal and run `uuidgen`. This will generate a value for `PayloadUUID`. Use this value to replace the default value (`YOUR_PAYLOAD_UUID_HERE`) used in the template (three locations total).
 
 3. Update your organization's string (`YOUR_TEAM_NAME_HERE`) with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name).
 
 4. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
-	```xml
-	<array>
-		<dict>
-				<key>organization</key>
-				<string>YOUR_TEAM_NAME_HERE</string>
-				// add desired deployment parameters here
-	```
 
-	:::tip[Best practice]
-	Start by deploying the template in its default, minimal form. This helps you verify a successful deployment before adding custom parameters.
-	:::
+   ```xml
+   <array>
+   	<dict>
+   			<key>organization</key>
+   			<string>YOUR_TEAM_NAME_HERE</string>
+   			// add desired deployment parameters here
+   ```
+
+   :::tip[Best practice]
+   Start by deploying the template in its default, minimal form. This helps you verify a successful deployment before adding custom parameters.
+   :::
+
 5. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > **macOS**.
 
 6. Under **Manage devices**, select **Configuration**.
@@ -301,32 +303,24 @@ Complete Step 4 at least one hour after steps 1, 2, and 3 so clients have enough
 :::
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
+2. Go to **Settings**.
+3. In **Downloads**, select **View**.
+4. Under **Download the WARP client**, find macOS, and select **Download release**.
 
-2. Go to **Settings** > **Certificates and downloads**, and select **View**.
+   You will be taken to the WARP documentation on [stable releases for macOS](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) and download a `.pkg` file.
 
-3. Under **Download the WARP client**, find macOS, and select **Download release**.
+   :::note[Repeat this step to update WARP when a new release is available]
+   Every time WARP releases a new version, you must repeat this process and get a new `.pkg` file for the new WARP version.
+   :::
 
-	You will be taken to the WARP documentation on [stable releases for macOS](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) and download a `.pkg` file.
-
-	:::note[Repeat this step to update WARP when a new release is available]
-	Every time WARP releases a new version, you must repeat this process and get a new `.pkg` file for the new WARP version.
-	:::
-
-4. Log in to the [Microsoft Intune admin center](https://intune.microsoft.com), and go to **Apps** > **macOS**.
-
-5. Select **Create**.
-
-6. For **App type**, select _macOS app (PKG)_.
-
-7. In **App information**, select the `.pkg` file you downloaded and input required details. Enter `Cloudflare` as the Publisher.
-
-8. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) and find what matches for you.
-
-9. In **Detection rules**, note that the WARP package will have filled in the App bundle ID and App version.
-
-10. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
-
-11. Review your configuration in **Review + create** and select **Create**.
+5. Log in to the [Microsoft Intune admin center](https://intune.microsoft.com), and go to **Apps** > **macOS**.
+6. Select **Create**.
+7. For **App type**, select _macOS app (PKG)_.
+8. In **App information**, select the `.pkg` file you downloaded and input required details. Enter `Cloudflare` as the Publisher.
+9. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) and find what matches for you.
+10. In **Detection rules**, note that the WARP package will have filled in the App bundle ID and App version.
+11. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
+12. Review your configuration in **Review + create** and select **Create**.
 
 By completing this step, you deliver the WARP client to targeted macOS devices, either automatically (assignment scope set as **Required**) or on-demand (assignment scope as **Available**) through your company portal.
 
