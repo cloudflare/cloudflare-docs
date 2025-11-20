@@ -6,95 +6,55 @@ products:
 date: 2025-11-20
 ---
 
-In this release, there are new features, new resources and data sources, bug fixes, and more.
+Earlier this year, we announced the launch of the new Terraform v5 Provider. We are aware of the high number of issues reported by the Cloudflare community related to the v5 release. We have committed to releasing improvements on a [2-3 week cadence](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5774) to ensure its stability and reliability, including the v5.13 release. We have also pivoted from an [issue-to-issue approach to a resource-per-resource approach](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6237) - we will be focusing on specific resources to not only stabilize the resource but ensuring it is migration-friendly for those migrating from v4 to v5. 
 
-:::note[Breaking Changes]
-Before we highlight some of these newer features, please be aware that there are breaking changes for the
-`cloudflare_api_token` and `cloudflare_account_token` resources. These changes eliminate
-configuration drift caused by policy ordering differences in the Cloudflare API.
-For more specific information about the changes or the actions required, please see the [detailed changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.13.0).
-:::
+Thank you for continuing to raise issues. It makes our Provider stronger and helps us build products that reflect your needs.
+
+This release includes new features, new resources and data sources, bug fixes, updated to our Developer Documentation and more. 
+
+### Breaking Change
+Please be aware that there are breaking changes for the `cloudflare_api_token` and `cloudflare_account_token` resources. These changes eliminate configuration drift caused by policy ordering differences in the Cloudflare API.
+
+For more specific information about the changes or the actions required, please see the [detailed Repository changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.13.0).
 
 
 ### Features
 
-* **add new resources and data sources** ([7ce3dec](https://github.com/cloudflare/terraform-provider-cloudflare/commit/7ce3dec8fc5b65116750b8bf8209c2ec612d6a61))
+* **New resources and data sources added** 
 	* cloudflare_connectivity_directory
 	* cloudflare_sso_connector
 	* cloudflare_universal_ssl_setting
-* **api_token+account_tokens:** state upgrader and schema bump ([#6472](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6472)) ([42f7db2](https://github.com/cloudflare/terraform-provider-cloudflare/commit/42f7db27659337230aa03094d050c8ebbcbdc24c))
-* **docs:** make docs explicit when a resource does not have import support ([02699f6](https://github.com/cloudflare/terraform-provider-cloudflare/commit/02699f65c082555c54b84288f23eda2272708144))
-* **magic_transit_connector:** support self-serve license key ([#6398](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6398)) ([a6ec134](https://github.com/cloudflare/terraform-provider-cloudflare/commit/a6ec1340765d2d9e980ded2b66dce847c142523f))
-* **worker_version:** add content_base64 support ([6ff643f](https://github.com/cloudflare/terraform-provider-cloudflare/commit/6ff643fda6f0171a07fcd0070fc0e4716f1b1563))
-* **worker_version:** boolean support for run_worker_first ([#6407](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6407)) ([116a67b](https://github.com/cloudflare/terraform-provider-cloudflare/commit/116a67bdfaf481200152380a627cd1de8397b1c9))
-* **workers_script_subdomains:** add import support  ([#6375](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6375)) ([40f7ed8](https://github.com/cloudflare/terraform-provider-cloudflare/commit/40f7ed8b34adfa42c4dad22ce6e2b0c90d40c8c0))
-* **zero_trust_access_application:** add proxy_endpoint for ZT Access Application ([#6453](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6453)) ([177f20a](https://github.com/cloudflare/terraform-provider-cloudflare/commit/177f20a46ce5f36d8f1eef70893e76ddb4a3ef05))
-* **zero_trust_dlp_predefined_profile:** Switch DLP Predefined Profile endpoints, introduce enabled_entries attribute ([bc69569](https://github.com/cloudflare/terraform-provider-cloudflare/commit/bc695692c86c5af9cfa4a13ce2c6ac5bd38a3538))
-* **zero_trust_tunnel_cloudflared:** v4 to v5 migration tests ([#6461](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6461)) ([ffa0fef](https://github.com/cloudflare/terraform-provider-cloudflare/commit/ffa0fef80e7175346c6b48f92c3cb0ea89be1d37))
+* **api_token+account_tokens:** state upgrader and schema bump ([#6472](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6472))
+* **docs:** make docs explicit when a resource does not have import support 
+* **magic_transit_connector:** support self-serve license key ([#6398](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6398))
+* **worker_version:** add content_base64 support
+* **worker_version:** boolean support for run_worker_first ([#6407](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6407))
+* **workers_script_subdomains:** add import support  ([#6375](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6375))
+* **zero_trust_access_application:** add proxy_endpoint for ZT Access Application ([#6453](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6453))
+* **zero_trust_dlp_predefined_profile:** Switch DLP Predefined Profile endpoints, introduce enabled_entries attribut
 
 
 ### Bug Fixes
 
-* **account_token:** token policy order and nested resources ([#6440](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6440)) ([86c5972](https://github.com/cloudflare/terraform-provider-cloudflare/commit/86c5972edc65d6190f8fc52f5da2d07a99d0bef0))
-* allow r2_bucket_event_notification to be applied twice without failing ([#6419](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6419)) ([6fbd4c5](https://github.com/cloudflare/terraform-provider-cloudflare/commit/6fbd4c5aeb0f89b935e770dc3fa5c1d89661894f))
-* **cloudflare_worker+cloudflare_worker_version:** import for the resources ([#6357](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6357)) ([b98e0be](https://github.com/cloudflare/terraform-provider-cloudflare/commit/b98e0be8d6bbd4f04afbb61c98c36b0ecfa0bea4))
-* **dns_record:** inconsistent apply error ([#6452](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6452)) ([f289994](https://github.com/cloudflare/terraform-provider-cloudflare/commit/f289994d58720ec58fc186534a1a5e82776624bc))
-* **pages_domain:** resource tests ([#6338](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6338)) ([d769e29](https://github.com/cloudflare/terraform-provider-cloudflare/commit/d769e2930016efa73c8e0ac2b4b620a107d03f7d))
-* **pages_project:** unintended resource state drift ([#6377](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6377)) ([1a3955a](https://github.com/cloudflare/terraform-provider-cloudflare/commit/1a3955ad49a4a3d74bb0d5faf08acb0f77d4921b))
-* **queue_consumer:** id population ([#6181](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6181)) ([f3c6498](https://github.com/cloudflare/terraform-provider-cloudflare/commit/f3c6498d16e402044160ad38993de188061405fc))
-* **workers_kv:** multipart request  ([#6367](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6367)) ([65f8c19](https://github.com/cloudflare/terraform-provider-cloudflare/commit/65f8c19a2269f19d88f4f6edd14c4980ad53c9ac))
-* **workers_kv:** updating workers metadata attribute to be read from endpoint ([#6386](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6386)) ([3a35757](https://github.com/cloudflare/terraform-provider-cloudflare/commit/3a35757dff9b6dfdadbd422d36d877e0eec63926))
-* **workers_script_subdomain:** add note to cloudflare_workers_script_subdomain about redundancy with cloudflare_worker ([#6383](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6383)) ([9cc9b59](https://github.com/cloudflare/terraform-provider-cloudflare/commit/9cc9b59cb8b79ce8a0cb3988b353e45cd7be07ec))
-* **workers_script:** allow config.run_worker_first to accept list input ([fab567c](https://github.com/cloudflare/terraform-provider-cloudflare/commit/fab567cc3191feecf1c19d6e4d91125c08dc6121))
-* **zero_trust_device_custom_profile_local_domain_fallback:** drift issues ([#6365](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6365)) ([65c0c18](https://github.com/cloudflare/terraform-provider-cloudflare/commit/65c0c1895587b6f61404a04d748ea2ffd5317442))
-* **zero_trust_device_custom_profile:** resolve drift issues ([#6364](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6364)) ([4cd2cbd](https://github.com/cloudflare/terraform-provider-cloudflare/commit/4cd2cbdd93dbd622cf7f2a29d56f4bf01896a0a5))
-* **zero_trust_dex_test:** correct configurability for 'targeted' attribute to fix drift ([cd81178](https://github.com/cloudflare/terraform-provider-cloudflare/commit/cd81178f30e800af3345822d5eee478419d6cd14))
-* **zero_trust_tunnel_cloudflared_config:** remove warp_routing from cloudflared_config ([#6471](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6471)) ([dc9d557](https://github.com/cloudflare/terraform-provider-cloudflare/commit/dc9d557149289f0bc33d28bb7e31f54dd42e1c82))
+* **account_token:** token policy order and nested resources ([#6440](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6440))
+* allow r2_bucket_event_notification to be applied twice without failing ([#6419](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6419))
+* **cloudflare_worker+cloudflare_worker_version:** import for the resources ([#6357](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6357))
+* **dns_record:** inconsistent apply error ([#6452](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6452))
+* **pages_domain:** resource tests ([#6338](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6338))
+* **pages_project:** unintended resource state drift ([#6377](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6377))
+* **queue_consumer:** id population ([#6181](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6181)) 
+* **workers_kv:** multipart request  ([#6367](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6367))
+* **workers_kv:** updating workers metadata attribute to be read from endpoint ([#6386](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6386)) 
+* **workers_script_subdomain:** add note to cloudflare_workers_script_subdomain about redundancy with cloudflare_worker ([#6383](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6383)) 
+* **workers_script:** allow config.run_worker_first to accept list input 
+* **zero_trust_device_custom_profile_local_domain_fallback:** drift issues ([#6365](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6365))
+* **zero_trust_device_custom_profile:** resolve drift issues ([#6364](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6364))
+* **zero_trust_dex_test:** correct configurability for 'targeted' attribute to fix drift
+* **zero_trust_tunnel_cloudflared_config:** remove warp_routing from cloudflared_config ([#6471](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6471))
 
+### Upgrading
+We suggest holding off on migration to v5 while we work on stabilization. This help will you avoid any blocking issues while the Terraform resources are actively being stabilized. We will be releasing a new migration tool in March 2026 to help support v4 to v5 transitions for our most popular resources.
 
-### Chores
-
-* **account_member:** add migration test ([#6425](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6425)) ([967a972](https://github.com/cloudflare/terraform-provider-cloudflare/commit/967a9727cd7d0b49e5c3ae1f6a6acee66a925186))
-* **byoip:** integrate generated changes for BYOIP resources ([432160e](https://github.com/cloudflare/terraform-provider-cloudflare/commit/432160ef04c30bb13072a2eec84231c197432e69))
-* **certificate_pack:** docs show safe rotation instructions ([#6388](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6388)) ([3d37264](https://github.com/cloudflare/terraform-provider-cloudflare/commit/3d3726408c21561acdd1f908a33f2178660ab489))
-* **ci:** skip flaky test in CI ([fb14d86](https://github.com/cloudflare/terraform-provider-cloudflare/commit/fb14d86b0354e9717caeed87c8b749625fb09f86))
-* **cloudflare_zero_trust_dlp_custom_profile:** migration test and ignore order as set ([#6428](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6428)) ([1659ff3](https://github.com/cloudflare/terraform-provider-cloudflare/commit/1659ff3ee3fa9fd90bc9bba674a2d16927a4e5fe))
-* **d1:** integrate generated changes for D1 resources ([cfa3472](https://github.com/cloudflare/terraform-provider-cloudflare/commit/cfa347232730294a359da2eb6187899d56e973ce))
-* **dns_record:** improve dns sweepers ([#6430](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6430)) ([5e62468](https://github.com/cloudflare/terraform-provider-cloudflare/commit/5e62468963235dfce1cc4d8a87e35063d5203197))
-* **docs:** document configurations and examples ([#6449](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6449)) ([59430e0](https://github.com/cloudflare/terraform-provider-cloudflare/commit/59430e0b7bd2a4371e9a817ddf7105690859b40d))
-* **docs:** generate docs and examples ([cdd77ec](https://github.com/cloudflare/terraform-provider-cloudflare/commit/cdd77eca036fcdb6b7ae2ad27cbbc851c5eca95c))
-* **email_routing:** improved email routing sweepers ([#6429](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6429)) ([133c81e](https://github.com/cloudflare/terraform-provider-cloudflare/commit/133c81e0b3880071ebec216d558b348676e3b301))
-* **iam:** integrate generated changes for IAM resources ([a87806e](https://github.com/cloudflare/terraform-provider-cloudflare/commit/a87806ed569c98ae6b301cec30641ffb492b9317))
-* include new sections for pr template ([#6395](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6395)) ([81c07e1](https://github.com/cloudflare/terraform-provider-cloudflare/commit/81c07e12fc2b2aafbd919af71b2154c16083bf3e))
-* **load_balancing:** integrate generated changes for Load Balancing resources ([4c6b34d](https://github.com/cloudflare/terraform-provider-cloudflare/commit/4c6b34de2bc8a1d191a49d9321dcc6eced60c3a8))
-* **logpull_retention:** add migration test for ([#6426](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6426)) ([529f313](https://github.com/cloudflare/terraform-provider-cloudflare/commit/529f31392cc783af1091604900b0611d7385a731))
-* **logpull_retention:** update acceptance test ([#6277](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6277)) ([3766b3f](https://github.com/cloudflare/terraform-provider-cloudflare/commit/3766b3f3346f3f89d23c6613dad98dd7a8a5ed13))
-* **logpush_job:** add import tests for resource ([#6402](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6402)) ([cded8ec](https://github.com/cloudflare/terraform-provider-cloudflare/commit/cded8ece37d62b4443ce7da1267d964ed42b7215))
-* **logpush:** integrate generated changes for Logpush resources ([06e8446](https://github.com/cloudflare/terraform-provider-cloudflare/commit/06e8446a2c4c253efe4e4687e237edc4158c3392))
-* **notification_policy_webhook:** add migration test for notification-policy-webhook ([#6443](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6443)) ([742d647](https://github.com/cloudflare/terraform-provider-cloudflare/commit/742d64789205f1ac9d177c57b9e97b0ddf6a5a45))
-* **pages:** integrate generated changes for Pages resources ([64855ea](https://github.com/cloudflare/terraform-provider-cloudflare/commit/64855ea4cf8a9396def48d97ceb30bbc0b36b62d))
-* **queue_consumer:** testdata refactor ([d301974](https://github.com/cloudflare/terraform-provider-cloudflare/commit/d3019745c45fc43ecb1a74f500f846dbce2fce08))
-* **r2_bucket:** v4 to v5 migration tests for cloudflare_r2_bucket ([#6437](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6437)) ([99ed1ee](https://github.com/cloudflare/terraform-provider-cloudflare/commit/99ed1ee0f3e8cb761f5e6e712f42ee87bf109039))
-* **sso_connector:** add acceptance tests ([#6427](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6427)) ([8b54303](https://github.com/cloudflare/terraform-provider-cloudflare/commit/8b54303138b0a96a2023d15a3f9da59492ebfbae))
-* **stainless:** integrate changes from unpinned codegen version ([9cb3b8e](https://github.com/cloudflare/terraform-provider-cloudflare/commit/9cb3b8eb7dc6334d8d2ac808cc6adeb02129ca8a))
-* **test:** acceptance tests for token validation resources ([#6417](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6417)) ([4d94bdd](https://github.com/cloudflare/terraform-provider-cloudflare/commit/4d94bddb8f952072a1b4d5fdfd08ac6a5cc01457))
-* **test:** add schema and token validation acceptance tests to CI ([#6421](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6421)) ([b805abc](https://github.com/cloudflare/terraform-provider-cloudflare/commit/b805abcf0b6b134bd51c5218d2c22e99d8d28a37))
-* **test:** increase legacy migrator test coverage ([#6401](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6401)) ([9a8c48a](https://github.com/cloudflare/terraform-provider-cloudflare/commit/9a8c48a29df316d319ac84b2b7aa561181e513b2))
-* **universal_ssl_setting:** add acceptance tests for universal_ssl_setting ([2601c45](https://github.com/cloudflare/terraform-provider-cloudflare/commit/2601c4542dc6e354552d1b1e2ff2052d5757eea4))
-* **worker:** integrate generated changes for Worker resources ([1da2bf2](https://github.com/cloudflare/terraform-provider-cloudflare/commit/1da2bf2b663cd086539b9edbde127a970e6b60cd))
-* **workers_kv_namespace:** v4 to v5 migration tests for workers_kv_namespace ([#6424](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6424)) ([433010f](https://github.com/cloudflare/terraform-provider-cloudflare/commit/433010f2dba43c4ab909126aff351332220b4907))
-* **workers_kv:** v4 to v5 migration tests for workers_kv ([#6435](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6435)) ([58ca912](https://github.com/cloudflare/terraform-provider-cloudflare/commit/58ca912c521729cc9ff0453f589279ec6da9b7c6))
-* **workers_script:** add workers scripts sweeper ([#6351](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6351)) ([f439a08](https://github.com/cloudflare/terraform-provider-cloudflare/commit/f439a086e8120b84193e70fa6e426fedb9895b79))
-* **workers_script:** fix resource name in TestAccCloudflareWorkerScript_ModuleWithDurableObject ([614d8d3](https://github.com/cloudflare/terraform-provider-cloudflare/commit/614d8d3765984e424d5628ad4fd2356bbe422746))
-* **workers_script:** fix resource names in tests ([788e73a](https://github.com/cloudflare/terraform-provider-cloudflare/commit/788e73a5a2a1ef43a02ee75ceb1b7da3a05e5ce8))
-* **workers:** integrate generated changes for Workers resources ([ab0a330](https://github.com/cloudflare/terraform-provider-cloudflare/commit/ab0a3303f4268783c8b78dc2fda0d1517afc2d16))
-* **zero_trust_access_service_token:** add migration test for zero_trust_access_service_token ([#6416](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6416)) ([c77d5d5](https://github.com/cloudflare/terraform-provider-cloudflare/commit/c77d5d5d2eafc852db0468c13fb880f9a4127e28))
-* **zero_trust_gateway_policy:** v4 to v5 migration for zero_trust_gateway_policy ([#6413](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6413)) ([1c1952b](https://github.com/cloudflare/terraform-provider-cloudflare/commit/1c1952b61300569bfbfcb731abfe817bcce33fd9))
-* **zero_trust_list:** v4 to v5 migration tests for zero trust list records ([#6400](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6400)) ([6ed55d6](https://github.com/cloudflare/terraform-provider-cloudflare/commit/6ed55d6787ca377c42ddef59fe700b46139cf262))
-* **zero_trust_tunnel_cloudflared_route:** v4 to v5 migration tests for zero_trust_tunnel_cloudflared_route ([#6409](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6409)) ([5dc2094](https://github.com/cloudflare/terraform-provider-cloudflare/commit/5dc20940902b3f72594f15b91a7f2f1088dfee94))
-* **zero_trust, cfone:** integrate generated changes for ZT and CFONE resources ([b7131b2](https://github.com/cloudflare/terraform-provider-cloudflare/commit/b7131b2be2a9fd36b05d71cb4d05182d4b044fa2))
-* **zone_dnssec:** v4 to v5 migration tests for zone_dnssec ([#6432](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6432)) ([86abd1f](https://github.com/cloudflare/terraform-provider-cloudflare/commit/86abd1f906b03547e04ad66d185d052461d82251))
-* **zone_settings:** acceptance test to repro issue [#6363](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6363) ([#6445](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6445)) ([707c154](https://github.com/cloudflare/terraform-provider-cloudflare/commit/707c1542f7e97c800bef0dfdd0170a7f0594ea33))
-* **zones:** data source tests ([#6414](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6414)) ([4d58e56](https://github.com/cloudflare/terraform-provider-cloudflare/commit/4d58e5631cd10b685c7b0b63230ef4a0d6b18a6f))
-* **zt_access:** add sweepers for policy and service token ([#6465](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6465)) ([9f4fa94](https://github.com/cloudflare/terraform-provider-cloudflare/commit/9f4fa949610bf27ae4b179cd28232e26be7610b6))
-* **build**: point Terraform to released Go v6.3.0 ([6d06b46](https://github.com/cloudflare/terraform-provider-cloudflare/commit/6d06b462491797af17f086193bbf32ccdffdd4b5))
+### For more info
+- [Terraform Provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
+- [Documentation on using Terraform with Cloudflare](https://developers.cloudflare.com/terraform/)
