@@ -5,9 +5,9 @@ title: Connectivity pre-checks
 
 import { TabItem, Tabs } from "~/components";
 
-This guide helps you validate connectivity between your environment and Cloudflare's network before deploying [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). You will run DNS and network checks from the same host machine that will run `cloudflared`. These checks focus on the environment, not on `cloudflared` itself, to help you identify issues that may prevent `cloudflared` from connecting to Cloudflare's network.
+This guide helps you validate connectivity between your environment and Cloudflare's network before deploying [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). You will run DNS and network checks from the same host machine that will run `cloudflared` to help you identify issues that may prevent `cloudflared` from connecting to Cloudflare's network.
 
-Running these checks sets your deployment up for success and narrows down the cause of any later connectivity issues.
+Running these checks before you install `cloudflared` sets your deployment up for success and narrows down the cause of any later connectivity issues.
 
 This guide is structured as follows:
 
@@ -47,7 +47,7 @@ Cloudflare Tunnel errors can originate from the environment (for example, DNS or
 
 Cloudflare Tunnel requires outbound connectivity to `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` (or to the equivalent `us-region1` and `us-region2` endpoints when using only the [US region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#region-us)).  
 
-For a successful deployment, `cloudflared` should have [four active replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) with connectivity to both regions (that is, both `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com`, or both `us-region1` and `us-region2`).
+For a successful and healthy deployment, `cloudflared` should have [four active replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) with connectivity to both regions (that is, both `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com`, or both `us-region1` and `us-region2`).
 
 First, you need to verify that your DNS resolver returns the expected IPv4 addresses for Cloudflare Tunnel endpoints.
 
@@ -150,7 +150,7 @@ If you receive:
 
 ### 2.2. Compare against `1.1.1.1`
 
-If your original dig response is missing or does not match the documented IPs, test again using Cloudflare's public resolver:
+If your original `dig` response is empty or does not match the documented IPs, test again using Cloudflare's public resolver `1.1.1.1`:
 
 ```sh
 dig A region1.v2.argotunnel.com @1.1.1.1
@@ -162,7 +162,7 @@ If `1.1.1.1` returns the correct IPs, but your original resolver does not, your 
 To resolve:
 
 - Configure the host machine to use `1.1.1.1` as its resolver.
-- If you must keep using your existing resolver, 
+- If you must keep using your existing resolver, (question) then what?
 
 #### If neither resolver works
 
@@ -170,7 +170,7 @@ If neither your original resolver nor `1.1.1.1` returns an answer, your firewall
 
 To resolve:
 
-- Check for firewall rules blocking UDP/TCP on port `7844`.
+- Check for firewall rules blocking (question) what? 1.1.1.1.? Endpoints? ports?
 - If you are behind a managed DNS or security appliance, contact that provider to understand why queries to `region1.v2.argotunnel.com` and other Cloudflare Tunnel endpoints are blocked.
 
 Once DNS resolution returns the expected IPs from at least one resolver, proceed to connectivity testing.
@@ -228,7 +228,7 @@ Outbound UDP is allowed, but TCP on port `7844` is blocked or inspected.
 
 `cloudflared` will only be able to connect using `quic`. If you force `http2` in your configuration while TCP is blocked, the tunnel will fail.
 
-To resolve:
+To resolve: (question)
 
 #### TCP succeeds, UDP fails
 
@@ -236,7 +236,7 @@ Outbound TCP is allowed, but UDP on port `7844` is blocked.
 
 `cloudflared` will only be able to connect using `http2`. If you force `quic` while UDP is blocked, the tunnel will fail.
 
-To resolve:
+To resolve: (question)
 
 #### Both UDP and TCP fail
 
@@ -244,8 +244,7 @@ Packets are being dropped somewhere between the host and Cloudflare's network.
 
 This usually indicates a firewall policy or upstream security control that does not allow outbound traffic (or return traffic) on port `7844`.
 
-To resolve:
-
+To resolve: (question)
 
 ### 3.4 Troubleshooting results
 
@@ -267,3 +266,5 @@ From a troubleshooting perspective:
 
 ## 4. Get help or conclusion
 
+Do we want instructions on what info they need to collect when asking for support? Similar to WARP guide or just a conclusion here?
+(question)
