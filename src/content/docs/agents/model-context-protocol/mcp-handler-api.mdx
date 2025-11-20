@@ -9,32 +9,30 @@ sidebar:
 
 import { Render, TypeScriptExample } from "~/components";
 
-The `createMcpHandler` function creates a Cloudflare Workers-compatible request handler that connects your MCP server to HTTP clients. It handles the protocol translation between HTTP requests and the Model Context Protocol. You can use it as a lightweight alternative to the McpAgent class.
+The `createMcpHandler` function creates a fetch handler to serve your MCP server. You can use it as a lightweight alternative to the [`McpAgent`](/agents/model-context-protocol/mcp-agent-api) class.
 
-## createMcpHandler
-
-Creates a Worker fetch handler for an MCP server.
+It uses an implementation of the MCP Transport interface, `WorkerTransport`, built on top of web standards, which conforms to the [streamable-http](https://modelcontextprotocol.io/specification/draft/basic/transports/#streamable-http) transport specification.
 
 ```ts
 import { createMcpHandler, type CreateMcpHandlerOptions } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 function createMcpHandler(
-	server: McpServer | Server,
+	server: McpServer,
 	options?: CreateMcpHandlerOptions,
 ): (request: Request, env: unknown, ctx: ExecutionContext) => Promise<Response>;
 ```
 
-### Parameters
+#### Parameters
 
 - **server** — An instance of `McpServer` from the `@modelcontextprotocol/sdk` package
 - **options** — Optional configuration object (see [`CreateMcpHandlerOptions`](#createmcphandleroptions))
 
-### Returns
+#### Returns
 
 A Worker fetch handler function with the signature `(request: Request, env: unknown, ctx: ExecutionContext) => Promise<Response>`.
 
-## CreateMcpHandlerOptions
+### CreateMcpHandlerOptions
 
 Configuration options for creating an MCP handler.
 
@@ -68,9 +66,9 @@ interface CreateMcpHandlerOptions extends WorkerTransportOptions {
 }
 ```
 
-### Options
+#### Options
 
-#### route
+##### route
 
 The URL path where the MCP handler responds. Requests to other paths return a 404 response.
 
@@ -88,17 +86,13 @@ const handler = createMcpHandler(server, {
 
 #### authContext
 
-An authentication context object that will be available to MCP tools via `getMcpAuthContext()`.
+An authentication context object that will be available to MCP tools via [`getMcpAuthContext()`](/agents/model-context-protocol/mcp-handler-api#authentication-context).
 
-:::note
-When using the [`OAuthProvider`](/agents/model-context-protocol/authorization/) from `@cloudflare/workers-oauth-provider`, the auth context is automatically populated with user information from the OAuth flow. You typically don't need to set this manually.
-:::
-
-The `authContext` option is primarily used for testing or custom authentication flows where you need to manually inject user information.
+When using the [`OAuthProvider`](/agents/model-context-protocol/authorization/) from `@cloudflare/workers-oauth-provider`, the auth context is automatically populated with information from the OAuth flow. You typically don't need to set this manually.
 
 #### transport
 
-A custom `WorkerTransport` instance for advanced use cases like session persistence with Durable Objects. If not provided, a new transport is created automatically.
+A custom `WorkerTransport` instance. If not provided, a new transport is created on every request.
 
 <TypeScriptExample>
 
@@ -120,7 +114,7 @@ const handler = createMcpHandler(server, { transport });
 
 ## Stateless MCP Servers
 
-For simple, stateless MCP servers deployed as Workers, use `createMcpHandler` directly in your fetch handler. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
+Many MCP Servers are stateless, meaning they don't maintain any session state between requests. The `createMcpHandler` function is a lightweight alternative to the `McpAgent` class that can be used to serve an MCP server straight from a Worker. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
 
 <TypeScriptExample>
 
@@ -160,11 +154,13 @@ export default {
 
 </TypeScriptExample>
 
-Each request to this MCP server creates a new session. The server doesn't maintain state between requests, making it ideal for implementing remote, stateless tools.
+Each request to this MCP server creates a new session. The server doesn't maintain state between requests. This is the simplest way to implement an MCP server.
 
 ## Stateful MCP Servers
 
-For stateful MCP servers that need to maintain session state across multiple requests (such as remembering previous tool calls, elicitation or sampling), use a custom `WorkerTransport` with persistent storage. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation).
+For stateful MCP servers that need to maintain session state across multiple requests, you can use the `createMcpHandler` function with a `WorkerTransport` instance directly in an `Agent`. This is useful if you want to make use of advanced client features like elicitation and sampling.
+
+Provide a custom `WorkerTransport` with persistent storage. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation).
 
 <TypeScriptExample>
 
@@ -179,7 +175,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 const STATE_KEY = "mcp-transport-state";
 
-export class MyAgent extends Agent<Env, State> {
+export class MyStatefulMcpAgent extends Agent<Env, State> {
 	server = new McpServer({
 		name: "Stateful MCP Server",
 		version: "1.0.0",
@@ -207,17 +203,41 @@ export class MyAgent extends Agent<Env, State> {
 
 </TypeScriptExample>
 
+In this case we are defining the `sessionIdGenerator` to return the Agent name as the session ID. To make sure we route to the correct Agent we can use `getAgentByName` in the Worker handler:
+
+<TypeScriptExample>
+
+```ts
+import { getAgentByName } from "agents";
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		// Extract session ID from header or generate a new one
+		const sessionId =
+			request.headers.get("mcp-session-id") ?? crypto.randomUUID();
+
+		// Get the Agent instance by name/session ID
+		const agent = await getAgentByName(env.MyStatefulMcpAgent, sessionId);
+
+		// Route the MCP request to the agent
+		return await agent.onMcpRequest(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
 With persistent storage, the transport preserves:
 
 - Session ID across reconnections
 - Protocol version negotiation state
 - Initialization status
 
-This allows MCP clients to reconnect and resume their session.
+This allows MCP clients to reconnect and resume their session in the event of a connection loss.
 
-## WorkerTransport
+### WorkerTransport
 
-The `WorkerTransport` class implements the MCP Transport interface for Cloudflare Workers, handling HTTP request/response cycles, Server-Sent Events (SSE) streaming, session management, and CORS.
+The `WorkerTransport` class implements the MCP Transport interface, handling HTTP request/response cycles, Server-Sent Events (SSE) streaming, session management, and CORS.
 
 ```ts
 class WorkerTransport implements Transport {
@@ -242,7 +262,7 @@ class WorkerTransport implements Transport {
 }
 ```
 
-### Constructor Options
+#### Constructor Options
 
 ```ts
 interface WorkerTransportOptions {
@@ -280,9 +300,9 @@ interface WorkerTransportOptions {
 }
 ```
 
-### sessionIdGenerator
+#### sessionIdGenerator
 
-Provides a custom session identifier. Useful for tying MCP sessions to user sessions or Durable Object names.
+Provides a custom session identifier. This session identifier is used to identify the session in the MCP Client.
 
 <TypeScriptExample>
 
@@ -294,9 +314,9 @@ const transport = new WorkerTransport({
 
 </TypeScriptExample>
 
-### enableJsonResponse
+#### enableJsonResponse
 
-Disables SSE streaming and returns responses as standard JSON. Use this for debugging or when streaming isn't required.
+Disables SSE streaming and returns responses as standard JSON.
 
 <TypeScriptExample>
 
@@ -308,7 +328,7 @@ const transport = new WorkerTransport({
 
 </TypeScriptExample>
 
-### onsessioninitialized
+#### onsessioninitialized
 
 A callback that fires when a session is initialized, either by creating a new session or restoring from storage.
 
@@ -324,7 +344,7 @@ const transport = new WorkerTransport({
 
 </TypeScriptExample>
 
-### corsOptions
+#### corsOptions
 
 Configure CORS headers for cross-origin requests.
 
@@ -353,7 +373,7 @@ const transport = new WorkerTransport({
 
 </TypeScriptExample>
 
-### storage
+#### storage
 
 Persist transport state to survive Durable Object hibernation or restarts.
 
@@ -391,7 +411,7 @@ const transport = new WorkerTransport({
 
 ## Authentication Context
 
-When using [OAuth authentication](/agents/model-context-protocol/authorization/) with the `@cloudflare/workers-oauth-provider` library, user information is automatically made available to your MCP tools through `getMcpAuthContext()`.
+When using [OAuth authentication](/agents/model-context-protocol/authorization/) with the `createMcpHandler`, user information is made available to your MCP tools through `getMcpAuthContext()`. Under the hood this uses `AsyncLocalStorage` to pass the request to the tool handler, keeping the authentication context available.
 
 ```ts
 interface McpAuthContext {
@@ -401,7 +421,7 @@ interface McpAuthContext {
 
 ### getMcpAuthContext
 
-Retrieve the current authentication context within an MCP tool handler. This returns user information that was populated by the OAuth provider.
+Retrieve the current authentication context within an MCP tool handler. This returns user information that was populated by the OAuth provider. Note that if using `McpAgent` this information is accessable directly on `this.props` instead.
 
 ```ts
 import { getMcpAuthContext } from "agents/mcp";
@@ -437,7 +457,7 @@ server.tool("getProfile", "Get the current user's profile", {}, async () => {
 </TypeScriptExample>
 
 :::note
-For a complete guide on setting up OAuth authentication with MCP servers, see the [MCP Authorization documentation](/agents/model-context-protocol/authorization/). View the [complete authenticated MCP server example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker-authenticated).
+For a complete guide on setting up OAuth authentication with MCP servers, see the [MCP Authorization documentation](/agents/model-context-protocol/authorization/). View the [complete authenticated MCP server in a Worker example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker-authenticated).
 :::
 
 ## Error Handling
