@@ -20,16 +20,6 @@ When a destination IP matches both a Cloudflare Tunnel private network route and
 
 For complex deployments where you need overlapping routes in both Cloudflare Tunnel and Magic Networking, consult your Solutions Engineering team for guidance.
 
-## Example of overlapping routes
-
-Consider the following configuration:
-
-- A Cloudflare Tunnel with a private network CIDR of `10.1.2.3/32`.
-- A static route in Magic WAN for `10.1.2.3/24`.
-- A web server at `10.1.2.3` that you want to reach from a network connected via Magic WAN.
-
-From a host behind your customer premises equipment, you can test connectivity by using a browser to load `https://10.1.2.3`. If the page loads correctly, your Cloudflare Tunnel is working properly. In this scenario, both Cloudflare Tunnel and Magic WAN have routes for `10.1.2.3`, and Cloudflare Tunnel takes precedence.
-
 For more information about private network routes with `cloudflared`, refer to <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/">Connect private networks</a>.
 
 ## Test `cloudflared` tunnel integration
@@ -37,14 +27,10 @@ For more information about private network routes with `cloudflared`, refer to <
 To verify that a `cloudflared` tunnel works correctly with your Magic WAN connection:
 
 1. From a host behind your customer premises equipment, open a browser.
-2. Browse to an IP address or hostname that is reachable through your Cloudflare Tunnel private network route.
+2. Browse to an IP address or hostname that is reachable through a Cloudflare Tunnel private network route, such as the example destination `10.1.2.3`.
 3. Confirm that the application loads as expected.
 
 If the application loads correctly, Cloudflare Tunnel is handling the traffic as configured.
-
-## Troubleshoot paths with traceroute
-
-You can use traceroute to verify whether traffic follows a Magic WAN path (for example, GRE or IPsec) or a Cloudflare Tunnel path.
 
 <Render
 	file="traceroute"
