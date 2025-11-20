@@ -37,7 +37,7 @@ jobs:
       - name: Semgrep Repo Rules (Custom rules found in .semgrep/)
         if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '[skip semgrep]')
         run: |
-          git fetch origin ${{ github.base_ref }}
+          #git fetch origin ${{ github.base_ref }}
 
           git diff --name-only origin/${{ github.base_ref }} HEAD --diff-filter=ACMRT | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > changed_files.txt || true
 
