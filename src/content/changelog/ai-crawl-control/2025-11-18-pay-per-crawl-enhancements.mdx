@@ -36,9 +36,13 @@ Site owners can now set dynamic, content-specific prices by returning a `crawler
 
 ### Configure free pages
 
-Site owners can now offer free access to specific pages like homepages, navigation, or discovery pages while charging for other content. Create a [Configuration Rule](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/advanced-configuration/#disable-pay-per-crawl-by-uri-pattern) in **Rules** > **Configuration Rules**, set your URI pattern using wildcard, exact, or prefix matching on the **URI Full** field, and enable the **Disable Pay Per Crawl** setting. When disabled for a URI pattern, crawler requests pass through without blocking or charging.
+Site owners can now offer free access to specific pages like homepages, navigation, or discovery pages while charging for other content.
 
-Note that `/robots.txt`, `/sitemap.xml`, `/security.txt`, `/.well-known/security.txt`, and `/crawlers.json` are always free by default.
+1. Create a [Configuration Rule](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/advanced-configuration/#disable-pay-per-crawl-by-uri-pattern) in **Rules** > **Configuration Rules**.
+2. Set your URI pattern using wildcard, exact, or prefix matching on the **URI Full** field.
+3. Activate the **Disable Pay Per Crawl** setting. When disabled for a URI pattern, crawler requests pass through without blocking or charging.
+
+Note that `/robots.txt`, `/sitemap.xml`, `/security.txt`, `/.well-known/security.txt`, and `/crawlers.json` will always be accessible to crawlers for free.
 
 ## Get started
 

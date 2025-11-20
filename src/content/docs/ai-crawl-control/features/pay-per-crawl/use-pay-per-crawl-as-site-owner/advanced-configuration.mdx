@@ -24,12 +24,12 @@ To get started, use [Configuration Rules](/rules/configuration-rules/) to exclud
 
 2. Select **Create rule** > **Configuration Rule**.
 
-3. **When incoming requests match**: Set your URI pattern
+3. **When incoming requests match**: Set your URI pattern.
    - Field: `URI Full`
    - Operator: `wildcard`
    - Value: `https://*example.com/public/*`
 
-4. **Then the settings are**: Select **Disable Pay Per Crawl** > **+ Add**
+4. Select **Disable Pay Per Crawl** > **Add**
 
 5. Select **Deploy**.
 
@@ -39,24 +39,22 @@ To get started, use [Configuration Rules](/rules/configuration-rules/) to exclud
 - Free directory: `URI Full` wildcard `https://*example.com/public/*`
 
 :::note
-These paths are always free by default: `/robots.txt`, `/sitemap.xml`, `/security.txt`, `/.well-known/security.txt`, `/crawlers.json`
+Some paths are always free to crawl by default. These paths are: `/robots.txt`, `/sitemap.xml`, `/security.txt`, `/.well-known/security.txt`, `/crawlers.json`
 :::
 
-## Custom pricing
+## Set custom pricing
 
 Set different prices for different content by returning a `crawler-price` header from your origin or a [Worker](/workers/). This is also known as [in-band pricing](/ai-crawl-control/reference/glossary/#in-band-pricing) because the price is transmitted within the HTTP response alongside the content.
 
 When custom pricing is enabled, the price specified in the `crawler-price` header is used instead of your default zone price. Successful responses are recorded and paid out via Stripe, just like with default pricing.
 
-### Setup steps
+### 1. Enable custom pricing in the dashboard
 
-**1. Enable custom pricing in the dashboard**
+1. Go to **AI Crawl Control** > **Settings**.
 
-Go to **AI Crawl Control** > **Settings**.
+   <DashButton url="/?to=/:account/:zone/ai" />
 
-<DashButton url="/?to=/:account/:zone/ai" />
-
-In the **Pay Per Crawl** card, select **Enable custom pricing** and **Save**.
+2. In the **Pay Per Crawl** card, select **Enable custom pricing** and **Save**.
 
 Once enabled, Cloudflare adds this header to every origin request:
 
@@ -66,7 +64,7 @@ cf-pay-per-crawl: protocol=cloudflare, pricing=in-band
 
 The `pricing=in-band` value confirms custom pricing is active and your origin should provide a `crawler-price` header.
 
-**2. Update your origin or Worker to return pricing**
+### 2. Update your origin or Worker to return pricing
 
 Choose one of the following methods to set custom prices:
 
@@ -97,21 +95,21 @@ export default {
 	async fetch(request) {
 		// Verify custom pricing is enabled
 		const cfPayPerCrawl = request.headers.get("cf-pay-per-crawl") || "";
-		
+
 		// Requests not subject to custom pricing go through unmodified
 		if (!cfPayPerCrawl.includes("pricing=in-band")) {
 			return fetch(request, { cf: { cacheEverything: true } });
 		}
-		
+
 		// Fetch from origin with caching enabled
 		let response = await fetch(request.url, { cf: { cacheEverything: true } });
 		response = new Response(response.body, response);
-		
+
 		const url = new URL(request.url);
-		
+
 		// Access bot information from request.cf.botManagement
 		const botInfo = request.cf?.botManagement;
-		
+
 		// Set prices based on URL path
 		if (url.pathname.startsWith("/premium/")) {
 			response.headers.set("crawler-price", "USD 0.10");
@@ -120,10 +118,10 @@ export default {
 		} else if (url.pathname.startsWith("/free/")) {
 			response.headers.set("crawler-price", "USD 0.00");
 		}
-		
+
 		// You can also use botInfo for more advanced pricing logic
 		// Example: if (botInfo?.verifiedBot) { ... }
-		
+
 		return response;
 	},
 };
