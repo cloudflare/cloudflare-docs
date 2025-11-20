@@ -210,7 +210,7 @@ entries:
     keywords: [request, location, geolocation, dma, client, visitor]
     summary: The metro code or Designated Market Area (DMA) code associated with the incoming request.
     description: |-
-      **Note**: Currently the value of `ip.src.metro_code` is always an empty string, but this may change in the future. Refer to the [Changelog](/changelog/) for any updates.
+      **Note**: Currently the value of `ip.src.metro_code` is always `"0"`, but this may change in the future. Refer to the [Changelog](/changelog/) for any updates.
 
     example_value: |-
       "635"
