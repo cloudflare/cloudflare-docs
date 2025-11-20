@@ -24,14 +24,27 @@ jobs:
 
       # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
       # scans using managed rules at cloudflare.semgrep.dev
-      - name: Semgrep CI (Managed at cloudflare.semgrep.dev)
+      - name: Semgrep CI Rules (Managed rules at cloudflare.semgrep.dev)
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: semgrep ci
 
       # Semgrep Scan to run on Pull Request events
       # scans using rules inside the .semgrep/ folder and fails on error
       # include [skip semgrep] in top-most commit message to skip scan
-      - name: Semgrep Local (Custom rules found in .semgrep)
+      - name: Semgrep Repo Rules (Custom rules found in .semgrep/)
         if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '[skip semgrep]')
-        # add '--error' below to return error code to workflow
-        run: semgrep scan --config .semgrep --metrics=off --include "*.mdx" --include "*.mdx"
+        run: |
+          git fetch origin ${{ github.base_ref }}
+
+          git diff --name-only origin/${{ github.base_ref }} HEAD --diff-filter=ACMRT | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > changed_files.txt || true
+
+          # Check if file list is empty to prevent errors
+          if [ -s changed_files.txt ]; then
+            semgrep scan --config .semgrep --metrics=off \
+              --include "*.mdx" --include "*.mdx" \
+              --targets changed_files.txt
+            # add '--error' to return error code to workflow
+             semgrep scan --config .semgrep --error --targets changed_files.txt
+          else
+             echo "No relevant files changed."
+          fi
