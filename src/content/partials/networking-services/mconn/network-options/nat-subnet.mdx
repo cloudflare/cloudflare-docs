@@ -17,15 +17,13 @@ Because the mapping is static, the Connector supports both outbound connections 
 
 ## How subnet NAT works in Magic WAN
 
-When you enable NAT for a subnet on a Connector:
+NAT is static and 1:1 between equal-sized prefixes. When you enable NAT for a subnet on a Connector:
 
 - The **local prefix** is the subnet on the LAN side of the Connector.
 - The **NAT prefix** is a WAN-facing prefix of the same size.
 - The Connector translates addresses 1:1 between the two prefixes:
   - For traffic leaving the site towards Magic WAN, it replaces local addresses with the corresponding NAT addresses.
   - For traffic arriving at the site from Magic WAN, it replaces NAT addresses with the corresponding local addresses.
-
-NAT is static and 1:1 between equal-sized prefixes.
 
 ## Addressing rules
 
@@ -47,7 +45,7 @@ These rules allow you to reuse local space at multiple sites, as long as each su
 Consider a subnet that uses the following prefixes:
 
 - **Local prefix**: `192.168.100.0/24`
-- **Static NAT prefix**: `10.10.100.0/24`
+- **NAT prefix**: `10.10.100.0/24`
 
 In this case:
 
