@@ -21,6 +21,9 @@ jobs:
       image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
+        with:
+          # fetch full history so Semgrep can compare against the base branch
+          fetch-depth: 0
 
       # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
       # scans using managed rules at cloudflare.semgrep.dev
