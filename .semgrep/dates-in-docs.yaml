@@ -1,6 +1,6 @@
 rules:
   - id: coming-soon
-    languages: [html, yaml, generic]
+    languages: [generic]
     message: "Found the forbidden string 'coming soon'"
     severity: ERROR
     paths:
