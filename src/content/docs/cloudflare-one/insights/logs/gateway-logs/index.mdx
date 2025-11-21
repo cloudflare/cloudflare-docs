@@ -44,14 +44,14 @@ These settings will only apply to logs displayed in Cloudflare One. Logpush data
 
 #### Configuration information
 
-| Field                  | Description                                                                                                                        |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **DNS location**       | [User-configured location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) from where the DNS query was made. |
-| **Policy name**        | Name of the matched policy.                                                                                                        |
-| **Policy ID**          | ID of the matched policy.                                                                                                          |
-| **Policy description** | Description of the matched policy.                                                                                                 |
-| **DoH subdomain**      | <GlossaryTooltip term="DoH subdomain">DoH subdomain</GlossaryTooltip> of the DNS location.                                         |
-| **Protocol**           | Protocol that was used to make the DNS query (such as `https`).                                                                    |
+| Field                  | Description                                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **DNS location**       | [User-configured location](/cloudflare-one/networks/resolvers-and-proxies/locations/) from where the DNS query was made. |
+| **Policy name**        | Name of the matched policy.                                                                                              |
+| **Policy ID**          | ID of the matched policy.                                                                                                |
+| **Policy description** | Description of the matched policy.                                                                                       |
+| **DoH subdomain**      | <GlossaryTooltip term="DoH subdomain">DoH subdomain</GlossaryTooltip> of the DNS location.                               |
+| **Protocol**           | Protocol that was used to make the DNS query (such as `https`).                                                          |
 
 #### Identities
 
@@ -143,12 +143,12 @@ Gateway can log failed connections in [network session logs](/logs/logpush/logpu
 
 #### Matched policies
 
-| Field                  | Description                                                                                                                        |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **DNS location**       | [User-configured location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) from where the DNS query was made. |
-| **Policy name**        | Name of the matched policy.                                                                                                        |
-| **Policy ID**          | ID of the policy enforcing the decision Gateway made.                                                                              |
-| **Policy description** | Description of the matched policy.                                                                                                 |
+| Field                  | Description                                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **DNS location**       | [User-configured location](/cloudflare-one/networks/resolvers-and-proxies/locations/) from where the DNS query was made. |
+| **Policy name**        | Name of the matched policy.                                                                                              |
+| **Policy ID**          | ID of the policy enforcing the decision Gateway made.                                                                    |
+| **Policy description** | Description of the matched policy.                                                                                       |
 
 #### Identities
 
@@ -211,14 +211,14 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 
 #### Matched policies
 
-| Field                     | Description                                                                                                                        |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **DNS location**          | [User-configured location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) from where the DNS query was made. |
-| **Policy name**           | Name of the matched policy.                                                                                                        |
-| **Policy ID**             | ID of the matched policy.                                                                                                          |
-| **Policy description**    | Description of the matched policy.                                                                                                 |
-| **Matched category ID**   | ID of the category matched in the policy.                                                                                          |
-| **Matched category name** | Name of the category matched in the policy.                                                                                        |
+| Field                     | Description                                                                                                              |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **DNS location**          | [User-configured location](/cloudflare-one/networks/resolvers-and-proxies/locations/) from where the DNS query was made. |
+| **Policy name**           | Name of the matched policy.                                                                                              |
+| **Policy ID**             | ID of the matched policy.                                                                                                |
+| **Policy description**    | Description of the matched policy.                                                                                       |
+| **Matched category ID**   | ID of the category matched in the policy.                                                                                |
+| **Matched category name** | Name of the category matched in the policy.                                                                              |
 
 #### Identities
 
