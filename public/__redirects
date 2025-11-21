@@ -2214,9 +2214,6 @@
 /cloudflare-one/identity/devices/service-providers/custom/#set-up-custom-device-posture-checks /cloudflare-one/integrations/service-providers/custom/#set-up-custom-device-posture-checks 301
 /cloudflare-one/identity/devices/service-providers/custom/ /cloudflare-one/integrations/service-providers/custom/ 301
 /cloudflare-one/identity/devices/service-providers/ /cloudflare-one/integrations/service-providers/ 301
-/cloudflare-one/insights/risk-score/#manage-risk-behaviors /cloudflare-one/team-and-resources/users/risk-score/#manage-risk-behaviors 301
-/cloudflare-one/insights/risk-score/#send-risk-score-to-okta /cloudflare-one/team-and-resources/users/risk-score/#send-risk-score-to-okta 301
-/cloudflare-one/insights/risk-score/#user-risk-scoring /cloudflare-one/team-and-resources/users/risk-score/#user-risk-scoring 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
 /cloudflare-one/policies/filtering/configuring-block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-policies/dns-policies/#safe-search 301
@@ -2334,6 +2331,7 @@
 /cloudflare-one/email-security/directories/manage-ms-directories/* /cloudflare-one/email-security/directories/manage-integrated-directories/:splat 301
 /cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
 /cloudflare-one/faq/teams-* /cloudflare-one/faq/:splat 301
+/cloudflare-one/insights/risk-score/* /cloudflare-one/team-and-resources/users/risk-score/:splat 301
 /cloudflare-one/learning-paths/* /cloudflare-one/implementation-guides/:splat 301
 /cloudflare-one/policies/filtering/* /cloudflare-one/policies/gateway/:splat 301
 /cloudflare-one/policies/zero-trust/* /cloudflare-one/policies/access/:splat 301
