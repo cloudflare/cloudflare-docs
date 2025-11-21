@@ -1,0 +1,23 @@
+---
+title: Environment variable limits increased for Workers Builds
+description: Workers Builds now supports up to 64 environment variables per trigger with 5 KB per variable, up from a previous 5 KB total limit.
+date: 2025-11-21
+products:
+  - workers
+---
+
+We've significantly increased the [environment variable](/workers/ci-cd/builds/configuration/#environment-variables) limits for [Workers Builds](/workers/ci-cd/builds/), allowing you to configure more complex build environments.
+
+Workers Builds now supports up to **64 environment variables per trigger**, with each variable supporting up to **5 KB** of data. This is a major increase from the previous limit of 5 KB total across all environment variables.
+
+| Limit                             | Previous | New      |
+|-----------------------------------|----------|----------|
+| Maximum environment variables     | N/A      | 64 per trigger       |
+| Size per variable                 | N/A      | 5 KB     |
+| Total size (all variables)        | 5 KB     | 320 KB*  |
+
+\* _Effective maximum when all 64 variables are at their 5 KB limit_
+
+This change enables better support for complex build configurations, larger application settings, and more flexible CI/CD workflows.
+
+For more details, refer to the [build limits](/workers/ci-cd/builds/limits-and-pricing/#environment-variable-limits) documentation.
