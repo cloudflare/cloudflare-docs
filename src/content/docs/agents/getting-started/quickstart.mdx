@@ -1,0 +1,62 @@
+---
+title: Quick Start
+pcx_content_type: get-started
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+To use the Agent starter template and create your first Agent with the Agents SDK:
+
+```sh
+# install it
+npm create cloudflare@latest agents-starter -- --template=cloudflare/agents-starter
+# and deploy it
+npx wrangler@latest deploy
+```
+
+Head to the guide on [building a chat agent](/agents/getting-started/build-a-chat-agent) to learn how the starter project is built and how to use it as a foundation for your own agents.
+
+If you're already building on [Workers](/workers/), you can install the `agents` package directly into an existing project:
+
+```sh
+npm i agents
+```
+
+And then define your first Agent by creating a class that extends the `Agent` class:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, AgentNamespace } from "agents";
+
+export class MyAgent extends Agent {
+	// Define methods on the Agent:
+	// https://developers.cloudflare.com/agents/api-reference/agents-api/
+	//
+	// Every Agent has built in state via this.setState and this.sql
+	// Built-in scheduling via this.schedule
+	// Agents support WebSockets, HTTP requests, state synchronization and
+	// can run for seconds, minutes or hours: as long as the tasks need.
+}
+```
+
+</TypeScriptExample>
+
+Lastly, add the [Durable Objects](/durable-objects/) binding to your wrangler file:
+
+<WranglerConfig>
+```toml
+[[durable_objects.bindings]]
+name = "MyAgent"
+class_name = "MyAgent"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyAgent"]
+
+```
+</WranglerConfig>
+
+Dive into the [Agent SDK reference](/agents/api-reference/agents-api/) to learn more about how to use the Agents SDK package and defining an `Agent`.
