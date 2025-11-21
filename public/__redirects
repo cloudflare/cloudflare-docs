@@ -2119,9 +2119,15 @@
 /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas/ /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas-saml/ 301
 /cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes/ /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/ 301
 /cloudflare-one/connections/connect-apps/configuration/ports-and-ips/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
-/cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/ 301
+/cloudflare-one/team-and-resources/devices/agentless/dns/locations/dns-resolver-ips/ /cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/ 301
+/cloudflare-one/team-and-resources/devices/agentless/dns/dns-over-https/ /cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/ 301
+/cloudflare-one/team-and-resources/devices/agentless/dns/dns-over-tls/ /cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/ 301
+/cloudflare-one/team-and-resources/devices/agentless/dns/locations/ /cloudflare-one/networks/resolvers-and-proxies/dns/locations/ 301
+/cloudflare-one/team-and-resources/devices/agentless/dns/ /cloudflare-one/networks/resolvers-and-proxies/dns/ 301
+/cloudflare-one/team-and-resources/devices/agentless/pac-files/ /cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/ 301
+/cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/ 301
 /cloudflare-one/policies/gateway/dns-policies/scheduled-dns-policies/ /cloudflare-one/policies/gateway/timed-policies/#scheduled-policies 301
-/cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/ 301
+/cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/ 301
 /cloudflare-one/connections/connect-devices/warp/control-proxy/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/policies/filtering/dns-policies/dns-categories/ /cloudflare-one/policies/gateway/domain-categories/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/ 301
