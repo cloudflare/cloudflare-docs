@@ -2198,29 +2198,66 @@
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
 /cloudflare-one/team-and-resources/devices/warp/user-side-certificates/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
+/cloudflare-one/insights/analytics/analytics-overview/ /cloudflare-one/insights/analytics-overview/ 301
+/cloudflare-one/api-terraform/access-with-terraform/ /learning-paths/clientless-access/terraform/publish-apps-with-terraform/ 301
+/cloudflare-one/traffic-policies/lists/ /cloudflare-one/reusable-components/lists/ 301
+
+# Specific redirects for old paths (must come before catch-all redirects)
+/cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
+/cloudflare-one/applications/scan-apps/ /cloudflare-one/cloud-and-saas-findings/ 301
+/cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/ 301
+/cloudflare-one/connections/connect-devices/warp/exclude-traffic /cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/ 301
+/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
+/cloudflare-one/connections/connect-devices/warp/warp-settings/#auto-connect /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect 301
+/cloudflare-one/connections/connect-devices/warp/warp-settings/#lock-warp-switch /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#lock-warp-switch 301
+/cloudflare-one/connections/connect-devices/warp/warp-settings/#mode-switch /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#mode-switch 301
+/cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/ 301
+/cloudflare-one/connections/connect-apps/configuration/config /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/ 301
+/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
+/cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/team-and-resources/devices/agentless/dns/locations/ 301
+/cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
+/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
+/cloudflare-one/identity/devices/crowdstrike/ /cloudflare-one/integrations/service-providers/crowdstrike/ 301
+/cloudflare-one/identity/devices/microsoft/ /cloudflare-one/integrations/service-providers/microsoft/ 301
+/cloudflare-one/identity/devices/require-gateway /cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-gateway/ 301
+/cloudflare-one/identity/devices/require-warp /cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-warp/ 301
+/cloudflare-one/identity/devices/service-providers/custom/#set-up-custom-device-posture-checks /cloudflare-one/integrations/service-providers/custom/#set-up-custom-device-posture-checks 301
+/cloudflare-one/identity/devices/service-providers/custom/ /cloudflare-one/integrations/service-providers/custom/ 301
+/cloudflare-one/identity/devices/service-providers/ /cloudflare-one/integrations/service-providers/ 301
+/cloudflare-one/insights/risk-score/#manage-risk-behaviors /cloudflare-one/team-and-resources/users/risk-score/#manage-risk-behaviors 301
+/cloudflare-one/insights/risk-score/#send-risk-score-to-okta /cloudflare-one/team-and-resources/users/risk-score/#send-risk-score-to-okta 301
+/cloudflare-one/insights/risk-score/#user-risk-scoring /cloudflare-one/team-and-resources/users/risk-score/#user-risk-scoring 301
+/cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
+/cloudflare-one/policies/filtering/configuring-block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
+/cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-policies/dns-policies/#safe-search 301
+/cloudflare-one/policies/gateway/block-page/#configure-the-block-page /cloudflare-one/reusable-components/custom-pages/gateway-block-page/#configure-the-block-page 301
+/cloudflare-one/policies/lists /cloudflare-one/reusable-components/lists/ 301
+/cloudflare-one/technical-limitations /reference-architecture/architectures/sase/ 301
+/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-policies/initial-setup/dns/ 301
+
+# More specific redirects from nav revamp (before catch-alls)
 /cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/tanium/ 301
 /cloudflare-one/identity/authorization-cookie/application-token/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/ 301
 /cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
-/cloudflare-one/insights/analytics/analytics-overview/ /cloudflare-one/insights/analytics-overview/ 301
-/cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
-/cloudflare-one/identity/users/session-management/ /cloudflare-one/access-controls/access-settings/session-management/ 301
-/cloudflare-one/identity/users/seat-management/ /cloudflare-one/team-and-resources/users/seat-management/ 301
-/cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
-/cloudflare-one/identity/users/scim/ /cloudflare-one/team-and-resources/users/scim/ 301
-/cloudflare-one/api-terraform/access-with-terraform/ /learning-paths/clientless-access/terraform/publish-apps-with-terraform/ 301
-/cloudflare-one/identity/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
 /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
+/cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
+/cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
 /cloudflare-one/applications/app-library/ /cloudflare-one/team-and-resources/app-library/ 301
 /cloudflare-one/applications/block-page/ /cloudflare-one/reusable-components/custom-pages/access-block-page/ 301
 /cloudflare-one/applications/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
-/cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/applications/bookmarks/ /cloudflare-one/access-controls/applications/bookmarks/ 301
-/cloudflare-one/traffic-policies/lists/ /cloudflare-one/reusable-components/lists/ 301
-/cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
+/cloudflare-one/identity/users/session-management/ /cloudflare-one/access-controls/access-settings/session-management/ 301
+/cloudflare-one/identity/users/seat-management/ /cloudflare-one/team-and-resources/users/seat-management/ 301
+/cloudflare-one/identity/users/scim/ /cloudflare-one/team-and-resources/users/scim/ 301
+/cloudflare-one/identity/users/ /cloudflare-one/team-and-resources/users/ 301
+/cloudflare-one/identity/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
+/cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
 /cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
-/cloudflare-one/identity/users/ /cloudflare-one/team-and-resources/users/ 301
+
+# Catch-all redirects (must come last)
+/cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/connections/ /cloudflare-one/ 301
 
