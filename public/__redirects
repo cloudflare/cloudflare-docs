@@ -2211,6 +2211,7 @@
 /cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/applications/bookmarks/ /cloudflare-one/access-controls/applications/bookmarks/ 301
 /cloudflare-one/traffic-policies/lists/ /cloudflare-one/reusable-components/lists/ 301
+/cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
 /cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
 /cloudflare-one/identity/users/ /cloudflare-one/team-and-resources/users/ 301
