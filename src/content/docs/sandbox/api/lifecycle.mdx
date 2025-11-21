@@ -94,6 +94,18 @@ Containers automatically sleep after 10 minutes of inactivity but still count to
 
 ---
 
+## Automatic state cleanup
+
+When a sandbox container sleeps or restarts, the Durable Object automatically cleans up stale state to prevent memory leaks:
+
+- Port authentication tokens are cleared
+- Session references are reset
+- Mount metadata is removed
+
+This ensures that each container restart starts with a clean state. Your persistent data in the container filesystem remains intact across restarts.
+
+---
+
 ## Related resources
 
 - [Sandbox lifecycle concept](/sandbox/concepts/sandboxes/) - Understanding container lifecycle and state

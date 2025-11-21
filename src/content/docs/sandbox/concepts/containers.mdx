@@ -55,6 +55,16 @@ const process = await sandbox.startProcess('node server.js');
 // Returns immediately, process runs in background
 ```
 
+### Memory management
+
+The container runtime includes optimizations for long-running sandboxes with many processes:
+
+- **Active processes** are kept in memory for fast access
+- **Completed processes** are persisted to disk (`/tmp/sandbox-internal/processes/`) and freed from memory to prevent unbounded growth
+- **Stream listeners** are automatically cleaned up when streaming operations complete or are cancelled
+
+These optimizations ensure stable memory usage even for sandboxes that execute hundreds or thousands of processes over their lifetime. Process history remains queryable after completion via the standard process APIs.
+
 ## Network capabilities
 
 **Outbound connections** work:
