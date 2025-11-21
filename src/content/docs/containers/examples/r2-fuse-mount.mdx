@@ -133,6 +133,26 @@ RUN printf '#!/bin/sh\n\
 
 Your application can then read from `/mnt/r2/${BUCKET_PREFIX}` to access only the files under that prefix. Pass `BUCKET_PREFIX` as an environment variable alongside your other R2 configuration.
 
+## Mounting buckets as read-only
+
+To prevent applications from writing to the mounted bucket, add the `-o ro` flag to mount the filesystem as read-only:
+
+```dockerfile
+RUN printf '#!/bin/sh\n\
+    set -e\n\
+    \n\
+    mkdir -p /mnt/r2\n\
+    \n\
+    R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
+    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -o ro -f "${BUCKET_NAME}" /mnt/r2 &\n\
+    sleep 3\n\
+    \n\
+    ls -lah /mnt/r2\n\
+    ' > /startup.sh && chmod +x /startup.sh
+```
+
+This is useful for shared assets or configuration files where you want to ensure applications only read data.
+
 ## Related resources
 
 - [Container environment variables](/containers/examples/env-vars-and-secrets/) - Learn how to pass secrets and variables to Containers
