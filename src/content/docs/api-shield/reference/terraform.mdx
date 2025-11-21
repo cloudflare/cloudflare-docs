@@ -39,10 +39,10 @@ Refer to the example configuration below to set up [session identifiers](/api-sh
 ```tf title="Example configuration"
 resource "cloudflare_api_shield" "session_identifiers" {
   zone_id = var.zone_id
-  auth_id_characteristics {
+  auth_id_characteristics = [{
     name = "authorization"
     type = "header"
-  }
+  }]
 }
 ```
 
@@ -81,6 +81,7 @@ resource "cloudflare_schema_validation_schemas" "example_schema" {
   zone_id            = var.zone_id
   kind               = "openapi_v3"
   name               = "example-schema.yaml"
+  # In this example, we assume that the `example-schema.yaml` includes `get_image` and `post_image` operations from above
   source             = file("./schemas/example-schema.yaml")
   validation_enabled = true
 }
@@ -126,7 +127,7 @@ resource "cloudflare_token_validation_config" "example_es256_config" {
 }
 
 # Setting up JWT rules for all configured endpoints on `example.com` except for `get_image`
-resource "cloudflare_token_validation_rules" "example.com" {
+resource "cloudflare_token_validation_rules" "example_com" {
  zone_id      = var.zone_id
  title        = "Validate JWTs on example.com"
  description  = "This actions JWT validation results for requests to example.com except for the get_image endpoint"
@@ -135,7 +136,7 @@ resource "cloudflare_token_validation_rules" "example.com" {
  # Require that the JWT described through the example_es256_config is valid.
  # Reference the ID of the generated token config, this constructs: is_jwt_valid("<id>")
  # If the expression is >not true<, Cloudflare will perform the configured action on the request
- expression   = format("(is_jwt_valid(%%q))", cloudflare_token_validation_config.example_es256_config.id)
+ expression   = format("(is_jwt_valid(%q))", cloudflare_token_validation_config.example_es256_config.id)
  selector     = {
     # all current and future operations matching this include selector will perform the described action when the expression fails to match
     include = [
@@ -155,11 +156,11 @@ resource "cloudflare_token_validation_rules" "example.com" {
 # With JWT validation, we can also refine session identifiers to use claims from the JWT
 resource "cloudflare_api_shield" "session_identifiers" {
   zone_id = var.zone_id
-  auth_id_characteristics {
+  auth_id_characteristics = [{
     # select the JWT's `sub` claim as an extremly stable session identifier
     # this is "<token_config_id:json_path>" format
     name = "${cloudflare_token_validation_config.example_es256_config.id}:$.sub"
     type = "jwt"
-  }
+  }]
 }
 ```
