@@ -72,7 +72,7 @@ The startup script creates a mount point, starts tigrisfs in the background to m
 
 ### Passing credentials to the container
 
-Your Container needs R2 credentials and configuration passed as environment variables. Store credentials as [Worker secrets](/workers/configuration/secrets/), then pass them through the `envVars` property:
+Your Container needs [R2 credentials](/r2/api/tokens/) and configuration passed as environment variables. Store credentials as [Worker secrets](/workers/configuration/secrets/), then pass them through the `envVars` property:
 
 <TypeScriptExample filename="src/index.ts">
 ```ts
