@@ -390,7 +390,7 @@ The agent can be [deployed](/cloudflare-one/team-and-resources/devices/warp/depl
 
 When it is not possible to install software on the device, there are agentless approaches.
 
-One option is to configure the browser to forward HTTP requests to Cloudflare by configuring proxy server details in the browser or OS. Although this can be done manually, it is more common for organizations to automate the configuration of browser proxy settings using Internet-hosted [Proxy Auto-Configuration](/cloudflare-one/team-and-resources/devices/agentless/pac-files/) (PAC) files. The browser identifies the PAC file location in several ways:
+One option is to configure the browser to forward HTTP requests to Cloudflare by configuring proxy server details in the browser or OS. Although this can be done manually, it is more common for organizations to automate the configuration of browser proxy settings using Internet-hosted [Proxy Auto-Configuration](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) (PAC) files. The browser identifies the PAC file location in several ways:
 
 - MDM software configuring the setting in the browser
 - In Windows domains, Group Policy Objects (GPO) can configure the browser's PAC file
@@ -452,7 +452,7 @@ Notes:
 
 1. Running the device agent in DNS over HTTP mode provides user identity information, in addition to the same capabilities as connecting via DNS.
 2. To filter HTTPS traffic, the Cloudflare [certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) needs to be installed on each device. This can be automated when using the device agent.
-3. If configuring DNS over HTTPS, it is possible to inject a [service token](/cloudflare-one/team-and-resources/devices/agentless/dns/dns-over-https/#filter-doh-requests-by-user) into the request, which associates the query with an authenticated user.
+3. If configuring DNS over HTTPS, it is possible to inject a [service token](/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/#filter-doh-requests-by-user) into the request, which associates the query with an authenticated user.
 
 #### Checkpoint: Forwarding device traffic to Cloudflare
 
