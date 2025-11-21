@@ -16,7 +16,7 @@ A partial setup allows you to use [Cloudflare's reverse proxy](/fundamentals/con
 
 Make sure you consider the following:
 
-- It will not be possible to use proxy for the zone apex (`example.com`), only for subdomains.
+- It will not be possible to use Cloudflare's reverse proxy on the zone apex (`example.com`), only on subdomains.
 - On the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
 - You should plan for SSL/TLS certificates. If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are proxied. If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
 
@@ -48,7 +48,7 @@ Make sure you consider the following:
 <Tabs syncKey="dashPlusAPI">
   <TabItem label="Dashboard">
 
-	  1. On the Cloudflare dashboard, go to the zone **Overview** page.
+	  1. On the Cloudflare dashboard, go to the zone's **Overview** page.
 		2. Select **Convert to CNAME DNS Setup** and then **Convert** to confirm.
 		3. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, under **Verification TXT Record**.
 
