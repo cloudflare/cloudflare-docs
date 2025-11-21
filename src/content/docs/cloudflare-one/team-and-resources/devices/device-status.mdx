@@ -1,0 +1,63 @@
+---
+pcx_content_type: reference
+title: Device status and registration
+sidebar:
+  order: 3
+---
+
+import { TabItem, Tabs } from "~/components";
+
+Device registration occurs when a user, approved by the [Zero Trust organization](), puts a device onto Cloudflare. A device status indicates the current state of a device registration, such as `Active`, `Revoked`, or `Deleted`.
+
+## Device registration
+
+A device registration represents the identity a device uses to connect through WARP. Cloudflare authenticates each registration with a public key. A single device may have multiple registrations, such as in a shared-device environment where multiple users share and use a single device.
+
+The onboarding process for Cloudflare One starts with creating your Zero Trust organization and configuring an identity provider (IdP) for user authentication. After setting up the login method, administrators define device enrollment permissions to control which users are allowed to register devices.
+
+Users then install and sign in to the WARP client on their device, which creates a device registration for the organization. This registration becomes the primary object that Cloudflare One manages for that device.
+
+From an administrative perspective, device-level revocation removes all registrations associated with that device.
+
+## Device statuses
+
+Registrations can have the following statuses:
+
+| Status | Description |
+| --- | --- |
+| **Active** | Registered and able to connect via WARP. This is the expected operational state. |
+| **Revoked** | The registration's public key is invalidated, preventing the device from connecting. The device still appears in your device list and can be unrevoked. |
+| **Deleted** | The registration is permanently removed from the account and no longer appears in your device list. Deletion is permanent and requires re-registering the device. |
+
+## Revoke and unrevoke access
+
+Revoke access when you need to prevent a device from connecting (for example, if a work laptop is stolen) while still allowing the user to register a new device.
+
+- **Revocation** sends a request to the API which removes the public key associated with the registration. The public key remains on the device during revocation.
+- **Unrevocation** reuses the same public key and re-authenticates it to grant access again.
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Devices**.
+2. Select the device and select **View details**.
+3. To revoke access, select **Revoke access**. This revokes access for all associated registrations on the device.
+4. To unrevoke access, scroll down to the **Users** section and select one or more users using the checkbox. Select **Actions** > **Unrevoke access**.
+
+</TabItem>
+<TabItem label="API">
+
+- [Revoke a device](/api/resources/zero_trust/subresources/devices/subresources/revoke/)
+- [Revoke a registration](/api/resources/zero_trust/subresources/devices/subresources/registrations/methods/revoke/)
+
+</TabItem>
+</Tabs>
+
+## Delete a registration
+
+Deleting a registration permanently removes it from your account. You can delete a registration by:
+
+- Using the Zero Trust dashboard.
+- Running `warp-cli registration delete` on the device.
+- Using the [API](/api/resources/zero_trust/subresources/devices/subresources/devices/methods/delete/).
+- Uninstalling the WARP client (may automatically delete the registration).
