@@ -1,0 +1,98 @@
+---
+title: Tenant Model
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+The tenant model provides clearer isolation and simpler resource management for multi-tenant platforms on Cloudflare.
+
+Each tenant is a dedicated boundary containing all of a customer's resources — their Workers, databases, storage, and configuration. Resources can only be created within a tenant boundary, eliminating the possibility of accidentally exposing one customer's resources to another.
+
+![Tenant architecture diagram](~/assets/images/cloudflare-for-platforms/tenant-architecture.png)
+
+## Key improvements
+
+- **Dynamic bindings** — Workers can dynamically access any resource in the tenant without managing individual bindings for every resource
+- **Consistent naming** — Create resources with the same name (e.g. "my-database") across tenants. This allows you to reference resources consistently in code without prefix logic. 
+- **Same APIs** — Uses standard Cloudflare management APIs, just scoped to tenant paths
+- **Clearer isolation** — Hard tenant boundaries prevent cross-customer resource access
+- **Less error-prone** — Resources must be created within a tenant, eliminating misconfigurations
+- **Automatic cleanup** — Deleting a tenant removes all associated resources
+
+## Additional tenant-level controls
+
+- **Per-customer resource limits** — Apply different quotas and limits at the tenant level for different customer tiers
+- **Customer-specific monitoring** — Get telemetry and logs scoped to individual tenants
+- **Simplified billing and metering** — Track resource usage per tenant for customer billing
+
+## How it works
+
+Your platform contains multiple tenants, each with their own isolated resources. Think of each tenant as a dedicated mini-account for one customer.
+
+```
+Your Platform (e.g., "production-platform")
+├── Tenant (e.g., "tenant-a")
+│   ├── Customer's Workers
+│   ├── Customer's D1 database
+│   ├── Customer's KV namespaces
+│   └── Customer's environment variables and secrets
+├── Tenant (e.g., "tenant-b")
+│   ├── Customer's Workers
+│   ├── Customer's D1 database
+│   ├── Customer's KV namespaces
+│   └── Customer's environment variables and secrets
+└── Platform Infrastructure
+    ├── Dispatch Worker (routes requests to tenants)
+    └── Outbound Worker (handles external calls)
+```
+
+### Request flow
+
+1. Client request arrives at your Dispatch Worker
+2. Dispatch Worker determines which tenant to route to (based on domain, token, etc.)
+3. Customer's Worker executes within their tenant boundary and dynamically accesses their resources
+
+```typescript
+// Dispatch Worker routes to tenant
+const tenant = env.DISPATCHER.get("tenant-a");
+const worker = await tenant.workers.get("api-worker");
+return worker.fetch(request);
+
+// Customer's Worker accesses resources dynamically
+const db = env.TENANT.d1.get("my-database");
+const kv = env.TENANT.kv.get("my-kv-store");
+```
+
+## Managing tenants via the REST API
+
+### API structure
+
+The `/platforms` API endpoint acts as a scoped proxy to other resource APIs (Workers, KV, D1, etc.). This means you use the exact same API structure, parameters, and requests as the standard Cloudflare APIs.
+
+The path is simply scoped to your platform and the specific tenant you want to manage.
+
+**Tenant-Scoped Resources:**
+
+```
+/accounts/<id>/platforms/<platform>/tenant/<customer>/workers/<worker-name>
+/accounts/<id>/platforms/<platform>/tenant/<customer>/kv/<namespace-id>
+/accounts/<id>/platforms/<platform>/tenant/<customer>/d1/<database-id>
+/accounts/<id>/platforms/<platform>/tenant/<customer>/...etc
+```
+
+**Platform-Level Infrastructure:**
+
+```
+/accounts/<id>/platforms/<platform>/dispatch-worker
+/accounts/<id>/platforms/<platform>/outbound-worker
+```
+
+## Next steps
+
+Ready to get started? Follow our step-by-step guides:
+
+- [Getting started](/cloudflare-for-platforms/workers-for-platforms/tenant/getting-started/) - Create your first tenant and deploy customer resources
+- [Dispatch workers](/cloudflare-for-platforms/workers-for-platforms/tenant/dispatch-workers/) - Route requests to the right customer
+- [User workers](/cloudflare-for-platforms/workers-for-platforms/tenant/user-workers/) - Deploy customer code within tenant boundaries
+- [Tenant bindings](/cloudflare-for-platforms/workers-for-platforms/tenant/bindings/) - Use the tenant binding to access customer resources

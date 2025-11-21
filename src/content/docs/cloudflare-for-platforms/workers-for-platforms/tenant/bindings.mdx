@@ -1,0 +1,86 @@
+---
+title: Tenant binding
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+The tenant binding eliminates the need to configure individual bindings for each resource your customers use.
+
+The tenant binding gives Workers dynamic access to all resources within their tenant. Instead of configuring individual bindings for each resource, a single `MY_RESOURCES` binding gives your Worker the ability to discover and access KV namespaces, D1 databases, R2 buckets, and other Workers within the same tenant.
+
+Resources become available immediately after creation—your Worker can access newly created resources without redeployment.
+
+## Configuration
+
+Add a tenant binding to your Worker configuration:
+
+```json
+{
+  "main": "./src/worker.ts",
+  "bindings": [
+    {
+      "type": "tenant",
+      "binding": "MY_RESOURCES"
+    }
+  ]
+}
+```
+
+## Usage
+
+The tenant binding supports two methods for each resource type:
+
+- **`get(name: string)`** - Get a specific resource by name
+- **`list()`** - List all resources of that type in the tenant
+
+## Resource access
+
+### KV namespaces
+
+```javascript
+// Get a specific KV namespace
+const userStore = env.MY_RESOURCES.kv.get("user-store");
+if (userStore) {
+  await userStore.put("key", "value");
+  const value = await userStore.get("key");
+}
+
+// List all KV namespaces
+const allKV = await env.MY_RESOURCES.kv.list();
+```
+
+### D1 databases
+
+```javascript
+// Get a specific database
+const userDB = env.MY_RESOURCES.d1.get("user-database");
+if (userDB) {
+  const result = await userDB.prepare("SELECT * FROM users").all();
+}
+
+// List all databases
+const allDB = await env.MY_RESOURCES.d1.list();
+```
+
+## Error handling
+
+Always check if resources exist before using them:
+
+```javascript
+export default {
+  async fetch(request, env, ctx) {
+    const database = env.MY_RESOURCES.d1.get("user-database");
+    if (!database) {
+      return new Response("Database not configured", { status: 503 });
+    }
+
+    try {
+      const result = await database.prepare("SELECT COUNT(*) as count FROM users").first();
+      return Response.json({ userCount: result.count });
+    } catch (error) {
+      return new Response("Database error", { status: 500 });
+    }
+  },
+};
+```

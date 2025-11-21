@@ -1,0 +1,161 @@
+---
+title: Getting started
+pcx_content_type: tutorial
+sidebar:
+  order: 2
+---
+
+This guide walks you through setting up your first platform with tenants, deploying customer resources, and implementing request routing.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- A Workers for Platforms subscription
+
+## Step 1: Create a platform
+
+Create a platform to contain all your tenants:
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/platforms" \
+  -H "Authorization: Bearer {api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "my-platform"
+  }'
+```
+
+## Step 2: Create your first tenant
+
+Create a tenant for your first customer:
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/platforms/my-platform/tenants" \
+  -H "Authorization: Bearer {api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "acme-corp"
+  }'
+```
+
+## Step 3: Create a KV namespace in the tenant
+
+Create a KV namespace for the customer to store data:
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/platforms/my-platform/tenant/acme-corp/kv/namespaces" \
+  -H "Authorization: Bearer {api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "user-cache"
+  }'
+```
+
+## Step 4: Create a tenant worker
+
+Deploy a worker that accesses the KV namespace:
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/platforms/my-platform/tenant/acme-corp/workers/api-worker" \
+  -H "Authorization: Bearer {api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "script": "export default {\n  async fetch(request, env, ctx) {\n    const cache = env.TENANT.kv.get(\"user-cache\");\n    await cache.put(\"last-visit\", new Date().toISOString());\n    const lastVisit = await cache.get(\"last-visit\");\n    return new Response(`Last visit: ${lastVisit}`);\n  }\n};",
+    "bindings": [
+      {
+        "type": "tenant",
+        "binding": "TENANT"
+      }
+    ]
+  }'
+```
+
+## Step 5: Create a dispatch worker
+
+Create a dispatch worker to route requests to the appropriate tenant:
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/platforms/my-platform/dispatch-worker" \
+  -H "Authorization: Bearer {api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "script": "export default {\n  async fetch(request, env) {\n    const url = new URL(request.url);\n    const subdomain = url.hostname.split(\".\")[0];\n    \n    const tenant = env.DISPATCHER.get(subdomain);\n    if (!tenant) {\n      return new Response(\"Tenant not found\", { status: 404 });\n    }\n    \n    const worker = await tenant.workers.get(\"api-worker\");\n    if (!worker) {\n      return new Response(\"Service unavailable\", { status: 503 });\n    }\n    \n    return await worker.fetch(request);\n  }\n};",
+    "bindings": [
+      {
+        "type": "platform",
+        "binding": "DISPATCHER"
+      }
+    ]
+  }'
+```
+
+## Step 6: Test your setup
+
+Test routing through your dispatch worker:
+
+```bash
+# Assuming your dispatch worker is accessible and you've configured DNS
+# to route acme-corp.{your-domain}.com to it
+
+curl "https://acme-corp.{your-domain}.com/"
+
+# Response: Shows the last visit timestamp
+```
+
+## Using the TypeScript SDK
+
+For easier development, use the Cloudflare TypeScript SDK:
+
+```bash
+npm install cloudflare
+```
+
+```typescript
+import Cloudflare from 'cloudflare';
+
+const cloudflare = new Cloudflare({
+  apiToken: process.env.CLOUDFLARE_API_TOKEN,
+});
+
+// Get the platform
+const platform = await cloudflare.platforms.get({ name: 'my-platform' });
+
+// Create a tenant
+const tenant = await platform.tenants.create({
+  name: 'new-customer',
+  environment_variables: {
+    CUSTOMER_NAME: 'New Customer Inc'
+  }
+});
+
+// Deploy worker
+await tenant.workers.update({
+  name: 'hello-worker',
+  content: {
+    script: `
+      export default {
+        async fetch(request, env, ctx) {
+          const customerName = env.CUSTOMER_NAME || 'Unknown';
+          return new Response('Hello from ' + customerName + '!');
+        }
+      };
+    `,
+    bindings: [{ type: 'tenant', binding: 'TENANT' }]
+  }
+});
+```
+
+## Next steps
+
+Now that you have a basic platform running, explore these guides:
+
+- [Tenant Bindings](/cloudflare-for-platforms/workers-for-platforms/tenant/bindings/) - Learn about dynamic resource access
+- [Dispatch Workers](/cloudflare-for-platforms/workers-for-platforms/tenant/dispatch-workers/) - Advanced routing patterns
+- [API Reference](/cloudflare-for-platforms/workers-for-platforms/tenant/api-reference/) - Complete API documentation
+- [Migration Guide](/cloudflare-for-platforms/workers-for-platforms/tenant/migration/) - Move existing Workers to the tenant model

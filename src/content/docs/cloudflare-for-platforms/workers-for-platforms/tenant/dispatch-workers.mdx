@@ -1,0 +1,103 @@
+---
+title: Dispatch Worker
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+The Dispatch Worker routes incoming requests to the appropriate tenant resources. They act as the entry point to your platform, handling request routing, tenant identification, and resource discovery. With the platform binding, dispatch workers can dynamically access any tenant and their resources.
+
+## Platform Binding
+
+The `platform` binding gives dispatch workers access to all tenants and their resources within your platform.
+
+### Configuration
+
+Configure your dispatch worker with a platform binding:
+
+```json
+{
+  "main": "./src/dispatch-worker.ts",
+  "bindings": [
+    {
+      "type": "platform",
+      "binding": "DISPATCHER"
+    }
+  ]
+}
+```
+
+### Basic Usage
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Get a tenant by name
+    const tenant = env.DISPATCHER.get("acme-corp");
+    if (!tenant) {
+      return new Response("Tenant not found", { status: 404 });
+    }
+
+    // Get a worker within the tenant
+    const worker = await tenant.workers.get("api-handler");
+    if (!worker) {
+      return new Response("Worker not found", { status: 404 });
+    }
+
+    // Forward the request to the tenant's worker
+    return await worker.fetch(request);
+  },
+};
+```
+
+## Request routing
+
+### Subdomain-based routing
+
+Route requests based on subdomain to identify the tenant:
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+    const subdomain = url.hostname.split('.')[0];
+
+    // Map subdomain to tenant name
+    const tenantName = subdomain; // e.g., "acme-corp.yourplatform.com"
+    
+    const tenant = env.DISPATCHER.get(tenantName);
+    if (!tenant) {
+      return new Response("Tenant not found", { status: 404 });
+    }
+
+    // Route to the tenant's main worker
+    const mainWorker = await tenant.workers.get("main");
+    if (mainWorker) {
+      return await mainWorker.fetch(request);
+    }
+
+    return new Response("Service unavailable", { status: 503 });
+  },
+};
+```
+
+
+## Deployment
+
+Deploy your dispatch worker to handle platform routing:
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/platforms/production/dispatch-worker" \
+  -H "Authorization: Bearer {api-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "script": "export default { async fetch(request, env) { /* your dispatch logic */ } }",
+    "bindings": [
+      {
+        "type": "platform", 
+        "binding": "DISPATCHER"
+      }
+    ]
+  }'
+```
