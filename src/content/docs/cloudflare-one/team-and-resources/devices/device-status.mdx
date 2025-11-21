@@ -11,13 +11,13 @@ A device registration is made when a user, approved by the Zero Trust organizati
 
 ## Device registration
 
-A device registration represents the identity a device uses to connect through WARP. Each registration represents a specific combination of user and device. A user is an identity from your IdP (or a service token identity) that can consume a [seat](/cloudflare-one/team-and-resources/users/seat-management/).
+A device registration represents the identity a device uses to connect through WARP. Each registration represents a specific combination of user and device. A user is an identity from your identity provider (IdP) that can consume a [seat](/cloudflare-one/team-and-resources/users/seat-management/).
 
-Cloudflare authenticates each registration with a public key. A single device may have multiple registrations, such as in a shared-device environment where multiple users share and use a single device. Each registration's public key is unique to the device and user.
+Cloudflare authenticates each device registration with a public key. A single device may have multiple device registrations, such as in a shared-device environment where multiple users share and use a single device. Each device registration's public key is unique to the device and user.
 
 :::tip[Check a device's registrations]
 
-Review how many registrations are associated with a device by logging into [Cloudflare One](https://one.dash.cloudflare.com/) and going to **Teams & Resources** > **Devices** > select a device > **View details** > scroll down to **Users** and review users who enrolled on this device.
+Review how many device registrations are associated with a device by logging into [Cloudflare One](https://one.dash.cloudflare.com/) and going to **Teams & Resources** > **Devices** > select a device > **View details** > scroll down to **Users** and review users who enrolled on this device.
 
 :::
 
@@ -54,8 +54,8 @@ To check your device status:
 
 Revoke access when you need to prevent a device from connecting (for example, if a work laptop is stolen) while still allowing the user to register a new device.
 
-- **Revocation** disallows the device from connecting to Cloudflare's network. The public key remains on the device during revocation.
-- **Unrevocation** reuses the same public key and re-authenticates the device to grant access again.
+- Revoking disallows the device from connecting to Cloudflare's network. The public key remains on the device during revocation.
+- Unrevoking reuses the same public key and re-authenticates the device to grant access again.
 
 TODO: add revoke and unrevoke instructions
 
