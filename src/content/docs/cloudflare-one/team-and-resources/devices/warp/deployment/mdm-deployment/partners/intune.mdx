@@ -326,7 +326,47 @@ By completing this step, you deliver the WARP client to targeted macOS devices, 
 
 ## iOS
 
-Refer to the [generic instructions for iOS](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#ios).
+The following steps outline how to deploy the Cloudflare One Agent (WARP client) on iOS using Microsoft Intune and preconfigure it with MDM parameters.
+
+### Prerequisites
+
+- A [Microsoft Intune account](https://intune.microsoft.com)
+- A Cloudflare account that has a [Zero Trust organization](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name)
+- iOS/iPadOS devices enrolled in Intune
+- [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) enabled in Cloudflare Gateway (if you plan to inspect HTTPS traffic)
+
+### 1. Upload user-side certificate
+
+You must deploy a [user-side certificate](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/user-side-certificates/) so that iOS devices managed by Intune can establish trust with Cloudflare when their traffic is inspected.
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
+
+2. Go to **Traffic policies** > **Traffic settings**.
+
+3. Select **Certificates**.
+
+4. Find your user-side certificate and select the three-dotted icon next to it > select **Download .crt**.
+
+5. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > **iOS/iPadOS**.
+
+6. Under **Manage devices**, select **Configuration**.
+
+7. Select **Create** > **New policy**.
+
+8. For **Profile type**, select *Templates* > **Trusted certificate** > **Create**.
+
+9. In **Basics**, fill in the required fields and give your policy a name, such as `Cloudflare Gateway TLS certificate` > **Next**.
+
+11. Upload the `.crt` file you downloaded (convert to `.cer` if Intune requests it) > **Next**.
+
+12. Under **Assignments**, select the appropriate device or user groups > **Next**.
+
+13. Review the configuration and select **Create**.
+
+By completing this step, you distribute the Cloudflare Gateway root certificate to managed iOS devices so that TLS-decrypted traffic is trusted.
+
+
+### Intune configuration
 
 Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/device-uuid/) deployment.
 
