@@ -6,13 +6,11 @@ import liveCode from "astro-live-code";
 import starlightLinksValidator from "starlight-links-validator";
 import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
-import sitemap, { type SitemapItem } from "@astrojs/sitemap";
+import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
-import { execSync } from "child_process";
-import { existsSync } from "fs";
 
 import remarkValidateImages from "./src/plugins/remark/validate-images";
 
@@ -22,6 +20,7 @@ import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
 import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
+import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
 
 async function autogenSections() {
 	const sections = (
@@ -61,134 +60,6 @@ const customCss = await autogenStyles();
 
 const RUN_LINK_CHECK =
 	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
-
-/**
- * Build a cache of all git last-modified dates in one batch
- */
-function buildGitDateCache(): Map<string, string> | null {
-	try {
-		console.time("[sitemap] Building git date cache");
-
-		// Use git log with --name-only and --diff-filter to get all files with their last commit
-		// The format outputs the commit date followed by the list of files changed in that commit
-		// e.g.
-		//  2025-10-01T12:34:56-07:00
-		//  src/content/docs/file1.mdx
-		//  src/content/docs/file2.mdx
-		//
-		//  2025-09-25T09:15:30-07:00
-		//  src/content/docs/file3.mdx
-
-		const result = execSync(
-			'git log --pretty=format:"%cI" --name-only --diff-filter=AMR src/content/docs',
-			{
-				encoding: "utf-8",
-				maxBuffer: 100 * 1024 * 1024,
-			},
-		);
-
-		const cache = new Map<string, string>();
-		const lines = result.split("\n");
-
-		let currentDate: string | null = null;
-		for (const line of lines) {
-			const trimmed = line.trim();
-			if (!trimmed) {
-				continue;
-			}
-			// Lines are either dates or file paths
-			// Date lines match ISO format
-			if (/^\d{4}-\d{2}-\d{2}T/.test(trimmed)) {
-				currentDate = trimmed;
-			} else if (currentDate) {
-				const filePath = `./${trimmed}`; // fileURLToPath includes leading ./, so we do the same here
-				if (!cache.has(filePath)) {
-					cache.set(filePath, currentDate); // e.g., "src/content/docs/file.mdx"
-				}
-			}
-		}
-
-		console.timeEnd("[sitemap] Building git date cache");
-		console.log(`[sitemap] Loaded git dates for ${cache.size} files`);
-		return cache;
-	} catch (error) {
-		console.warn("[sitemap] Failed to build git date cache:", error);
-		return null;
-	}
-}
-
-const gitDateCache = buildGitDateCache();
-
-/**
- * Get the last Git modification date for a file (from cache)
- * @param filePath - Path to the file
- * @returns ISO date string or null if not available
- */
-function getGitLastModified(filePath: string): string | undefined {
-	if (!gitDateCache) {
-		console.warn("[sitemap] Git date cache is not initialized");
-		return undefined;
-	}
-
-	const result = gitDateCache.get(filePath);
-
-	if (!result) {
-		console.log(`[sitemap] Last modified not found in git for: "${filePath}"`);
-	}
-
-	return result ?? undefined;
-}
-
-/**
- * Convert a sitemap URL to the corresponding source file path
- * @param url - The full URL from the sitemap
- * @returns Absolute file path or null if not found
- */
-function urlToFilePath(url: string): string | null {
-	try {
-		const urlObj = new URL(url);
-		const pathname = urlObj.pathname.replace(/\/$/, ""); // Remove trailing slash
-
-		// Try different file extensions and paths
-		const possiblePaths = [
-			`./src/content/docs${pathname}.md`,
-			`./src/content/docs${pathname}.mdx`,
-			`./src/content/docs${pathname}/index.md`,
-			`./src/content/docs${pathname}/index.mdx`,
-		];
-
-		for (const path of possiblePaths) {
-			if (existsSync(path)) {
-				return path;
-			}
-		}
-
-		return null;
-	} catch (_error) {
-		return null;
-	}
-}
-
-function addLastModDate(item: SitemapItem) {
-	const filePath = urlToFilePath(item.url);
-	if (filePath) {
-		const gitDate = getGitLastModified(filePath);
-		if (gitDate) {
-			item.lastmod = gitDate;
-		} else {
-			console.warn(
-				`[sitemap] No git last mod date found for ${filePath} (${item.url}) - setting to now`,
-			);
-			item.lastmod = new Date().toISOString();
-		}
-	} else {
-		console.warn(
-			`[sitemap] Could not find source file for ${item.url} - setting last modified to now`,
-		);
-		item.lastmod = new Date().toISOString();
-	}
-	return item;
-}
 
 // https://astro.build/config
 export default defineConfig({
@@ -324,9 +195,7 @@ export default defineConfig({
 
 				return true;
 			},
-			serialize(item) {
-				return addLastModDate(item);
-			},
+			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
 	],
