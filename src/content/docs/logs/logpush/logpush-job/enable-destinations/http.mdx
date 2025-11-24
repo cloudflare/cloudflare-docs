@@ -19,23 +19,23 @@ Cloudflare expects that the endpoint is available over HTTPS, using a trusted ce
 
 <Render file="enable-logpush-job" product="logs" />
 
-5. In **Select a destination**, choose **HTTP destination**.
+4. In **Select a destination**, choose **HTTP destination**.
 
-6. Enter the **HTTP endpoint** where you want to send the logs to, and select **Continue**. - You can use `"header_*"` URL parameters to set request headers, for example, to pass an authentication token to your HTTP endpoint.
+5. Enter the **HTTP endpoint** where you want to send the logs to, and select **Continue**. - You can use `"header_*"` URL parameters to set request headers, for example, to pass an authentication token to your HTTP endpoint.
 
-7. Select the dataset to push to the storage service.
+6. Select the dataset to push to the storage service.
 
-8. In the next step, you need to configure your logpush job:
+7. In the next step, you need to configure your logpush job:
    - Enter the **Job name**.
    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
-9. In **Advanced Options**, you can:
+8. In **Advanced Options**, you can:
    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
    - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
-10. Select **Submit** once you are done configuring your logpush job.
+9. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 

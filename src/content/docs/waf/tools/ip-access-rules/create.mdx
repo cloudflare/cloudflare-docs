@@ -6,7 +6,7 @@ sidebar:
   label: Create a rule
 ---
 
-import { TabItem, Tabs, Steps } from "~/components";
+import { TabItem, Tabs, Steps, DashButton } from "~/components";
 
 :::tip[Recommendation: Use custom rules instead]
 Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking).
@@ -38,19 +38,19 @@ IP Access Rules are only available in the new security dashboard if you have con
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-2. Go to **Security** > **Security rules**.
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-3. Select **Create rule** > **IP access rules**.
+2. Select **Create rule** > **IP access rules**.
 
-4. Enter the following rule details:
+3. Enter the following rule details:
    1. For **IP, IP range, country name, or ASN**, enter an IP address, IP range, country code/name, or Autonomous System Number (ASN). For details, refer to [Parameters](/waf/tools/ip-access-rules/parameters/).
    2. For **Action**, select an [action](/waf/tools/ip-access-rules/actions/).
    3. For **Zone**, select whether the rule applies to the current website only or to all websites in the account.
    4. (Optional) Enter a note for the rule (for example, `Payment Gateway`).
 
-5. Select **Create**.
+4. Select **Create**.
 
 </Steps>
 

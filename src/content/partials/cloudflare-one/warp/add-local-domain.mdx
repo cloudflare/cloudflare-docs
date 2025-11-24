@@ -19,7 +19,7 @@ To add a domain to the Local Domain Fallback list:
 
 </TabItem> <TabItem label="Terraform (v5)">
 
-A Local Domain Fallback list is scoped to a specific [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/). If a device profile does not have a corresponding Local Domain Fallback resource, those devices will use the default local domains shown in Step 2.
+A Local Domain Fallback list is scoped to a specific [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/). If a device profile does not have a corresponding Local Domain Fallback resource, those devices will use the default local domains shown in Step 2.
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Zero Trust Write`
@@ -106,14 +106,14 @@ WARP tries all servers and always uses the fastest response, even if that respon
 
 ### Route traffic to fallback server
 
-The WARP client routes DNS traffic to your [Local Domain Fallback server](#add-a-domain) according to your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). To ensure that queries can reach your private DNS server:
+The WARP client routes DNS traffic to your [Local Domain Fallback server](#add-a-domain) according to your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/). To ensure that queries can reach your private DNS server:
 
 - If your DNS server is only reachable inside of the WARP tunnel (for example, via `cloudflared` or Magic WAN):
 
-   1. Go to **Networks** > **Routes** and verify that the DNS server is connected to Cloudflare. To connect a DNS server, refer to [Private networks](/cloudflare-one/connections/connect-networks/private-net/).
+   1. Go to **Networks** > **Routes** and verify that the DNS server is connected to Cloudflare. To connect a DNS server, refer to [Private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
 
-   2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), verify that the DNS server IP routes through the WARP tunnel.
+   2. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), verify that the DNS server IP routes through the WARP tunnel.
 
-- If your DNS server is only reachable outside of the WARP tunnel (for example, via a third-party VPN), verify that the DNS server IP is [excluded from the WARP tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+- If your DNS server is only reachable outside of the WARP tunnel (for example, via a third-party VPN), verify that the DNS server IP is [excluded from the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
 
-For more information, refer to [How the WARP client handles DNS requests](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
+For more information, refer to [How the WARP client handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).

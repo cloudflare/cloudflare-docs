@@ -1,0 +1,59 @@
+---
+title: Use with other Cloudflare products
+pcx_content_type: reference
+sidebar:
+  order: 9
+  label: Other products
+---
+
+Use Dedicated CDN Egress IPs in combination with different Cloudflare products.
+
+## Access and CNI
+
+You can use Dedicated CDN Egress IPs combined with [Cloudflare Network Interconnect (CNI)](/network-interconnect/) to secure your applications with [Cloudflare Access](/cloudflare-one/access-controls/policies/) without installing software or customizing code on your server.
+
+While Access allows you to enforce policies at the hostname level, other solutions are usually necessary to protect against origin IP bypass [^1]. With Dedicated CDN Egress IPs, you only allow a small number of IPs (that are not publicly listed) through your network firewall and, with Cloudflare Network Interconnect, you can use a completely private path between Cloudflare and your application server, without exposure to the public Internet. For details and background, refer to the [Cloudflare blog](https://blog.cloudflare.com/access-aegis-cni).
+
+Dedicated CDN Egress IPs are included within [BGP advertisement over CNI](/network-interconnect/).
+
+## Data Localization Suite
+
+[Data Localization Suite (DLS)](/data-localization/) is an enterprise add-on that enables you to choose the location where Cloudflare encrypts, decrypts, and stores data.
+
+To ensure egress will happen from DLS-specified locations, make sure you have Dedicated CDN Egress IPs provisioned in those locations. Refer to [IPs allocation](/smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/#ips-allocation) for details.
+
+## Load Balancing
+
+[Cloudflare Load Balancing](/load-balancing/) allows you to intelligently distribute traffic across your origins by issuing regular monitors (that assess origin health) and following the traffic steering policies you define.
+
+By default, the Load Balancing monitors will use public Cloudflare IP addresses.
+
+To avoid inconsistencies between what the Load Balancing monitors report and what you observe in service traffic with Dedicated CDN Egress IPs, make sure to turn on the **Simulate Zone** option in the [monitor settings](/load-balancing/monitors/create-monitor/#create-a-monitor).
+
+## Spectrum
+
+[Spectrum](/spectrum/) allows you to route email, file transfer, games, and more over TCP or UDP through Cloudflare. This means you can mask your origin and protect it from DDoS attacks.
+
+While you can use [BYOIP](/byoip/) or static IPs to control which IPs are used for ingress with Spectrum, Dedicated CDN Egress IPs allows you to have a more strict list of [egress IPs](/smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/) as well.
+
+Dedicated CDN Egress IPs with Spectrum supports both TCP and UDP application types. HTTP/HTTPS types are also supported, although through a different configuration.
+
+If you are interested in any of these solutions, contact your account team.
+
+## Workers
+
+[Workers](/workers/) provides a serverless execution environment for you to create applications leveraging Cloudflare's global network.
+
+Refer to the sections below for information on how Dedicated CDN Egress IPs pair up with Workers.
+
+### `fetch`
+
+[`fetch()` requests](/workers/runtime-apis/fetch/) that access services on your origin will use Dedicated CDN Egress IP addresses.
+
+Workers subrequests — requests from one Worker to another — are expected to use different IPs. However, [`fetch()` requests](/workers/runtime-apis/fetch/) to external origins made by a Worker invoked via a subrequest will use Dedicated CDN Egress IP addresses.
+
+### `connect`
+
+For [`connect()` requests](/workers/runtime-apis/tcp-sockets/) - which create outbound TCP connections from Workers - Dedicated CDN Egress IPs are **not** used.
+
+[^1]: When an attacker knows your origin server IP and uses it to directly interact with the target application.

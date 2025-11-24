@@ -1,0 +1,18 @@
+---
+title: Expanded CT log activity insights on Cloudflare Radar
+description: Expanded Certificate Transparency (CT) log insights in Cloudflare Radar, including inclusion activity and growth rate
+products:
+  - radar
+date: 2025-10-09
+---
+
+[**Radar**](/radar/) has expanded its Certificate Transparency (CT) log insights with new stats that provide greater visibility into log activity:
+
+- **Log growth rate**: The average throughput of the CT log over the past 7 days, measured in certificates per hour.
+- **Included certificate count**: The total number of certificates already included in this CT log.
+- **Eligible-for-inclusion certificate count**: The number of certificates eligible for inclusion in this log but not yet included. This metric is based on certificates signed by trusted root CAs within the log’s accepted date range.
+- **Last update**: The timestamp of the most recent update to the CT log.
+
+These new statistics have been added to the response of the [Get Certificate Log Details](/api/resources/radar/subresources/ct/subresources/logs/methods/get/) API endpoint, and are displayed on the [CT log information page](https://radar.cloudflare.com/certificate-transparency/log/nimbus2025#log-activity).
+
+![Screenshot of the CT log activity card on the CT log information page](~/assets/images/radar/ct-log-activity.png)

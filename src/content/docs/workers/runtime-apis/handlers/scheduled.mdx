@@ -57,11 +57,11 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import handler
+from workers import WorkerEntrypoint, Response, fetch
 
-@handler
-async def on_scheduled(controller, env, ctx):
-  ctx.waitUntil(doSomeTaskOnASchedule())
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+        ctx.waitUntil(doSomeTaskOnASchedule())
 ```
 
 </TabItem></Tabs>
@@ -69,19 +69,15 @@ async def on_scheduled(controller, env, ctx):
 ### Properties
 
 - `controller.cron` string
-
   - The value of the [Cron Trigger](/workers/configuration/cron-triggers/) that started the `ScheduledEvent`.
 
 - `controller.type` string
-
   - The type of controller. This will always return `"scheduled"`.
 
 - `controller.scheduledTime` number
-
   - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <code>new Date(controller.scheduledTime)</code>.
 
 - `env` object
-
   - An object containing the bindings associated with your Worker using ES modules format, such as KV namespaces and Durable Objects.
 
 - `ctx` object
@@ -91,6 +87,9 @@ async def on_scheduled(controller, env, ctx):
 
 When a Workers script is invoked by a [Cron Trigger](/workers/configuration/cron-triggers/), the Workers runtime starts a `ScheduledEvent` which will be handled by the `scheduled` function in your Workers Module class. The `ctx` argument represents the context your function runs in, and contains the following methods to control what happens next:
 
-- <code>ctx.waitUntil(promisePromise)</code> : void
-
-  - Use this method to notify the runtime to wait for asynchronous tasks (for example, logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/workers/configuration/cron-triggers/) Past Events table. Otherwise, it will be reported as a success.
+- <code>ctx.waitUntil(promisePromise)</code> : void - Use this method to notify
+  the runtime to wait for asynchronous tasks (for example, logging, analytics to
+  third-party services, streaming and caching). The first `ctx.waitUntil` to
+  fail will be observed and recorded as the status in the [Cron
+  Trigger](/workers/configuration/cron-triggers/) Past Events table. Otherwise,
+  it will be reported as a success.

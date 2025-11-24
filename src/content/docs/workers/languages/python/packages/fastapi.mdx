@@ -4,10 +4,9 @@ title: FastAPI
 head:
   - tag: title
     content: FastAPI
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The FastAPI package is supported in Python Workers.
 
@@ -17,14 +16,12 @@ The Workers runtime provides [an ASGI server](https://github.com/cloudflare/work
 
 ## Get Started
 
-<Render file="python-workers-beta-packages" product="workers" />
-
 Clone the `cloudflare/python-workers-examples` repository and run the FastAPI example:
 
 ```bash
 git clone https://github.com/cloudflare/python-workers-examples
 cd python-workers-examples/03-fastapi
-npx wrangler@latest dev
+uv run pywrangler dev
 ```
 
 ### Example code
@@ -33,11 +30,10 @@ npx wrangler@latest dev
 from workers import WorkerEntrypoint
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
+import asgi
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        import asgi
-
         return await asgi.fetch(app, request, self.env)
 
 app = FastAPI()

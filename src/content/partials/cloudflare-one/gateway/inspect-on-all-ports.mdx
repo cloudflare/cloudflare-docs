@@ -5,8 +5,8 @@ params:
 
 import { Markdown } from "~/components";
 
-By default, Gateway will only inspect HTTP traffic through port `80`. Additionally, if you [turn on TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#turn-on-tls-decryption), Gateway will inspect HTTPS traffic through port `443`.
+By default, Gateway will only inspect HTTP traffic through port `80`. Additionally, if you [turn on TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#turn-on-tls-decryption), Gateway will inspect HTTPS traffic through port `443`.
 
 To detect and inspect HTTP and HTTPS traffic on ports in addition to `80` and `443`, <Markdown text={props.turnOnProcedure} />.
 
-Inspecting traffic on all ports works best if you allow all traffic by default. If your organization uses a Network policy to block all traffic by default, Gateway will allow all non-HTTPS TLS traffic, and you will not be able to filter this traffic. To use HTTP policies to filter all TLS traffic on all ports when using a default Block Network policy, [create a Network policy to explicitly allow HTTP and TLS traffic](/cloudflare-one/policies/gateway/network-policies/common-policies/#filter-http-traffic-when-inspecting-on-all-ports).
+Inspecting traffic on all ports works best if you allow all traffic by default. If your organization uses a Network policy to block all traffic by default, Gateway will allow all non-HTTPS TLS traffic, and you will not be able to filter this traffic. To use HTTP policies to filter all TLS traffic on all ports when using a default Block Network policy, [create a Network policy to explicitly allow HTTP and TLS traffic](/cloudflare-one/traffic-policies/network-policies/common-policies/#filter-http-traffic-when-inspecting-on-all-ports).

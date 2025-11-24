@@ -1,0 +1,27 @@
+---
+title: Automatic resource provisioning for KV, R2, and D1
+description: Wrangler can now automatically provision KV, R2, and D1 resources when deploying your Worker
+products:
+  - workers
+date: 2025-10-24
+---
+
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+Previously, if you wanted to develop or deploy a worker with attached resources, you'd have to first manually create the desired resources. Now, if your Wrangler configuration file includes a KV namespace, D1 database, or R2 bucket that does not yet exist on your account, you can develop locally and deploy your application seamlessly, without having to run additional commands.
+
+Automatic provisioning is launching as an open beta, and we'd love to hear your feedback to help us make improvements! It currently works for KV, R2, and D1 bindings. You can disable the feature using the `--no-x-provision` flag. 
+
+To use this feature, update to wrangler@4.45.0 and add bindings to your config file _without_ resource IDs e.g.:
+
+```jsonc
+{
+	"kv_namespaces": [{ "binding": "MY_KV" }],
+	"d1_databases": [{ "binding": "MY_DB" }],
+	"r2_buckets": [{ "binding": "MY_R2" }],
+}
+```
+
+`wrangler dev` will then automatically create these resources for you locally, and on your next run of `wrangler deploy`, Wrangler will call the Cloudflare API to create the requested resources and link them to your Worker.
+
+Though resource IDs will be automatically written back to your Wrangler config file after resource creation, resources will stay linked across future deploys even without adding the resource IDs to the config file. This is especially useful for shared templates, which now no longer need to include account-specific resource IDs when adding a binding.

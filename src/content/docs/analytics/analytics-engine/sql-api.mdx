@@ -32,7 +32,7 @@ Use the dashboard to create a token with permission to read analytics data on yo
 
 ## Querying the API
 
-Submit the query text in the body of a `POST` request to the API address. The format of the data returned can be selected using the [`FORMAT` option](/analytics/analytics-engine/sql-reference/#format-clause) in your query.
+Submit the query text in the body of a `POST` request to the API address. The format of the data returned can be selected using the [`FORMAT`](/analytics/analytics-engine/sql-reference/statements/#format-clause) option in your query.
 
 You can use cURL to test the API as follows, replacing the `<account_id>` with your 32 character account ID (available in the dashboard) and the `<token>` with the token string you generated above.
 
@@ -82,7 +82,7 @@ The rate at which the data is sampled is exposed via the `_sample_interval` colu
 | `SELECT SUM(double1) FROM ...` | `SELECT SUM(_sample_interval * double1) FROM ...`                         |
 | `SELECT AVG(double1) FROM ...` | `SELECT SUM(_sample_interval * double1) / SUM(_sample_interval) FROM ...` |
 
-Additionally, the [QUANTILEWEIGHTED function](/analytics/analytics-engine/sql-reference/#quantileweighted) is designed to be used with sample interval as the third argument.
+Additionally, the [QUANTILEEXACTWEIGHTED](/analytics/analytics-engine/sql-reference/aggregate-functions/#quantileexactweighted) function is designed to be used with sample interval as the third argument.
 
 ## Example queries
 

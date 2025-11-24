@@ -15,6 +15,7 @@ import {
 	Render,
 	Steps,
 	APIRequest,
+	DashButton,
 } from "~/components";
 
 :::note
@@ -37,8 +38,11 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Detections**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Detection tools**.
 3. Turn on **Malicious uploads detection**.
 
 </Steps>
@@ -143,8 +147,11 @@ To check uploaded content in a way that is not covered by the default configurat
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Detections**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Detection tools**.
 3. Under **Malicious uploads detection** > **Configurations**, select the edit icon.
 4. Select **Add content location**.
 5. In **Content location**, enter your custom scan expression. For example:

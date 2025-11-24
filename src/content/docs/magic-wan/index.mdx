@@ -8,144 +8,22 @@ head:
     content: Overview
 ---
 
-import {
-	CardGrid,
-	Description,
-	Feature,
-	GlossaryTooltip,
-	LinkTitleCard,
-	Plan,
-	RelatedProduct,
-	Stream
-} from "~/components";
+import { Render } from "~/components";
 
-<Description>
-	Improve security and performance for your entire corporate networking,
-	reducing cost and operation complexity.
-</Description>
-
-<Plan type="enterprise" />
-
-Magic WAN provides secure, performant connectivity and [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate networking, reducing cost and operation complexity. [Magic Firewall](/magic-firewall/) integrates smoothly with Magic WAN, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
-
-With Magic WAN, you can securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare's network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
-
-Magic WAN supports a variety of <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> including any device that supports <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels. To make it easier to onboard your cloud properties, you can use [Magic Cloud Networking](/magic-wan/configuration/magic-cloud-networking/), which automates the process of creating on-ramps from your cloud networks.
-
-Refer to [On-ramps](/magic-wan/on-ramps/) for a full list of supported on-ramps.
-
-Learn how to [get started](/magic-wan/get-started/).
-
-<Stream
-	id="86f22d1f760b77cdc349f89b25b63c3e"
-	title="SASE - Connect and secure from any network to anywhere"
-	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Video-4-Connect-and-secure-from-any-network-to-anywhere.jpg"
+<Render
+	file="magic-wan/overview"
+	product="networking-services"
+	params={{
+		magicWord: "Magic WAN",
+		productName: "Magic WAN",
+		connectorName: "Magic WAN Connector",
+		connectorCta: "Use Magic WAN Connector",
+		getStartedUrl: "/magic-wan/get-started/",
+		onRampsUrl: "/magic-wan/on-ramps/",
+		cloudNetworkingUrl: "/magic-wan/configuration/magic-cloud-networking/",
+		connectorUrl: "/magic-wan/configuration/connector/",
+		thirdPartyUrl: "/magic-wan/configuration/manually/third-party/",
+		zeroTrustUrl: "/magic-wan/zero-trust/",
+		bgpRoutesUrl: "/magic-wan/configuration/manually/how-to/configure-routes/#configure-bgp-routes"
+	}}
 />
-
----
-
-## Features
-
-<Feature
-	header="Connect your network automatically"
-	href="/magic-wan/configuration/connector/"
-	cta="Use Magic WAN Connector"
->
-	Use Magic WAN Connector to automatically connect, steer, and shape any IP
-	traffic.
-</Feature>
-
-<Feature
-	header="Connect your network manually"
-	href="/magic-wan/configuration/manually/third-party/"
-	cta="Use a third-party device"
->
-	Magic WAN is compatible with a host of third-party devices. If you do not have
-	Magic WAN Connector, start here to learn how to set up Magic WAN manually.
-</Feature>
-
-<Feature
-	header="Automatic cloud on-ramps"
-	href="/magic-wan/configuration/magic-cloud-networking/"
-	cta="Automate your cloud on-ramps"
->
-	Automate resource discovery, and reduce management burden when connecting to
-	your public cloud.
-</Feature>
-
-<Feature
-	header="Zero Trust integration"
-	href="/magic-wan/zero-trust/"
-	cta="Integrate with other Zero Trust products"
->
-	Learn how you can use Magic WAN with other Cloudflare Zero Trust products.
-</Feature>
-
-<Feature header="BGP peering" href="/magic-wan/configuration/manually/how-to/configure-routes/#configure-bgp-routes">
-Use BGP peering between your networks and Cloudflare to automate the process of adding or removing networks and subnets, and take advantage of failure detection and session recovery features.
-</Feature>
-
----
-
-## Related products
-
-<RelatedProduct
-	header="Cloudflare Zero Trust"
-	href="/cloudflare-one/"
-	product="cloudflare-one"
->
-	Cloudflare Zero Trust replaces legacy security perimeters with our global
-	edge, making the Internet faster and safer for teams around the world.
-</RelatedProduct>
-
-<RelatedProduct
-	header="Magic Firewall"
-	href="/magic-firewall/"
-	product="magic-firewall"
->
-	Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the
-	Cloudflare global network to protect office networks and cloud infrastructure
-	with advanced, and scalable protection.
-</RelatedProduct>
-
-<RelatedProduct
-	header="Magic Cloud Networking"
-	href="/magic-cloud-networking/"
-	product="magic-cloud-networking"
->
-	Simplify and automate cloud resource discovery, and reduce your management
-	burden when connecting to your public cloud.
-</RelatedProduct>
-
-<RelatedProduct
-	header="Cloudflare Network Interconnect"
-	href="/network-interconnect/"
-	product="network-interconnect"
->
-	Cloudflare Network Interconnect (CNI) allows you to connect your network
-	infrastructure directly with Cloudflare - rather than using the public
-	Internet - for a more reliable and secure experience.
-</RelatedProduct>
-
-<RelatedProduct
-	header="Load Balancing"
-	href="/load-balancing/"
-	product="load-balancing"
->
-	Cloudflare Load Balancing distributes traffic across your endpoints, which
-	reduces endpoint strain and latency and improves the experience for end users.
-</RelatedProduct>
-
----
-
-## More resources
-
-<CardGrid>
-
-<LinkTitleCard title="Reference Architecture" href="/reference-architecture/architectures/sase/" icon="pen">
-
-Deep dive into key architecture and functionalities aspects of Cloudflare One, and learn more about Magic WAN and its structure.
-
-</LinkTitleCard>
-
-</CardGrid>

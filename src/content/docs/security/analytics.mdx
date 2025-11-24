@@ -1,27 +1,29 @@
 ---
-title: Security analytics (new dashboard)
+title: Security Analytics (new dashboard)
 pcx_content_type: concept
 sidebar:
   order: 3
-  label: Security analytics 
-description: Security analytics shows information about all incoming HTTP requests or mitigated requests (rule matches).  
+  label: Security Analytics
+description: Security Analytics shows information about all incoming HTTP requests or mitigated requests (rule matches).
 ---
 
-import { Stream, GlossaryTooltip } from "~/components";
+import { Stream, GlossaryTooltip, DashButton } from "~/components";
 
-Security analytics shows information about all incoming HTTP requests or only about requests mitigated by Cloudflare.
+Security Analytics shows information about all incoming HTTP requests or only about requests mitigated by Cloudflare.
 
-Use Security analytics as your starting point to understand and analyze traffic patterns, and to create security rules based on the filters you applied.
+Use Security Analytics as your starting point to understand and analyze traffic patterns, and to create security rules based on the filters you applied.
 
-By default, Security Analytics queries filter on `requestSource = 'eyeball'`, which represents requests from end users. Note that requests from Cloudflare Workers (subrequests) are not visible in Security Analytics.
+To access Security Analytics in the new security dashboard, go to the **Analytics** page.
 
-Security analytics is available in **Security** > **Analytics**.
+<DashButton url="/?to=/:account/:zone/security/analytics" />
 
 <Stream
-  id="1a426a3ae597ae3935eb97b5f97f106f"
-  title="Application Security: Get started guide"
-  thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/appsec-get-started-guide.png"
+	id="1a426a3ae597ae3935eb97b5f97f106f"
+	title="Application Security: Get started guide"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/appsec-get-started-guide.png"
 />
+
+By default, Security Analytics queries filter on `requestSource = 'eyeball'`, which represents requests from end users. Note that requests from Cloudflare Workers (subrequests) are not visible in Security Analytics.
 
 ## Traffic
 

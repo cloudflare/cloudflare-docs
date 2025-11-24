@@ -3,6 +3,19 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-10-27"
+    title: Add TLD insights
+    description: |-
+      * Added new dimensions `tld` and `tld_dns_magnitude` to the [DNS](/api/resources/radar/subresources/dns/) API.
+      * Added new endpoints [`/tlds`](/api/resources/radar/subresources/tlds/methods/list/) and [`/tlds/{tld}`](/api/resources/radar/subresources/tlds/methods/get/).
+  - publish_date: "2025-10-09"
+    title: Add CT log activity statistics
+    description: |-
+      * Added new CT log activity stats to the [Get Certificate Log Details](/api/resources/radar/subresources/ct/subresources/logs/methods/get/) API response.
+  - publish_date: "2025-10-06"
+    title: Add PQ encryption browser support check
+    description: |-
+      * Added a [post-quantum encryption browser support check](https://radar.cloudflare.com/adoption-and-usage#browser-support) to the PQ encryption card in the Adoption & Usage section.
   - publish_date: "2025-09-29"
     title: Add geolocation, ADM1 dimension to HTTP endpoints, and NetFlows endpoints
     description: |-

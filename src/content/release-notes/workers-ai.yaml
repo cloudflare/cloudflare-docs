@@ -3,6 +3,20 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-11-13"
+    title: Qwen3 LLM and Embeddings available on Workers AI
+    description: |-
+      - [`@cf/qwen/qwen3-30b-a3b-fp8`](/workers-ai/models/qwen3-30b-a3b-fp8/) and [`@cf/qwen/qwen3-embedding-0.6b`](/workers-ai/models/qwen3-embedding-0.6b) now available on Workers AI
+  - publish_date: "2025-10-21"
+    title: New voice and LLM models on Workers AI
+    description: |-
+      - Deepgram Aura 2 brings new text-to-speech capabilities to Workers AI. Check out [`@cf/deepgram/aura-2-en`](/workers-ai/models/aura-2-en/) and [`@cf/deepgram/aura-2-es`](/workers-ai/models/aura-2-es/) on how to use the new models.
+      - IBM Granite model is also up! This new LLM model is small but mighty, take a look at the docs for more [`@cf/ibm-granite/granite-4.0-h-micro`](/workers-ai/models/granite-4.0-h-micro/)
+  - publish_date: "2025-10-02"
+    title: Deepgram Flux now available on Workers AI
+    description: |-
+      - We're excited to be a launch partner with Deepgram and offer their new Speech Recognition model built specifically for enabling voice agents. Check out [Deepgram's blog](https://deepgram.com/flux) for more details on the release.
+      - Access the model through [`@cf/deepgram/flux`](/workers-ai/models/flux/) and check out the [changelog](/changelog/2025-10-02-deepgram-flux/) for in-depth examples.
   - publish_date: "2025-09-24"
     title: New local models available on Workers AI
     description: |-

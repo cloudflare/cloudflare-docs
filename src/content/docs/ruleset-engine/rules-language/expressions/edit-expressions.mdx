@@ -15,7 +15,14 @@ import { Render } from "~/components";
 
 <Render file="expression-builder-editor" product="ruleset-engine" />
 
-In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions) or the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax).
+In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support advanced features like:
+
+- [Nested expressions](#create-nested-expressions)
+- [Function calls](/ruleset-engine/rules-language/functions/)
+
+The builder may also not show all the fields you can use in the expression you are editing.
+
+If you use advanced expression features or enter unlisted fields in your expression when using the editor, you may not be able to switch to the Expression Builder. You will get a warning popup stating that the expression is not supported in the builder. To proceed, you may discard any changes made in the editor, or cancel the switch and continue working in the editor.
 
 ## Expression Builder
 
@@ -29,7 +36,7 @@ The **Expression Preview** displays the expression in text:
 (ip.src.country ne "GB")
 ```
 
-The Expression Builder will [automatically escape](#escape-special-characters) the backslash (`\`) and double quote (`"`) special characters in string literals.
+The Expression Builder will [automatically escape](#escape-special-characters) the backslash (`\`) and double quote (`"`) special characters in string literals when using the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax).
 
 ## Expression Editor
 
@@ -47,9 +54,23 @@ To switch back from the Expression Editor to the Expression Builder, select **Us
 
 In expressions using the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax), all backslash (`\`) and double quote (`"`) characters in string literals must be escaped. The visual Expression Builder will automatically escape these special characters by prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
 
-Expressions built using the Expression Builder currently use the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax). When entering regular expressions following this syntax, you may need to perform additional escaping — refer to [Quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax) in the Ruleset Engine documentation for details.
+```txt
+# Example of an expression with a " character written using quoted string syntax
+http.request.uri.path eq "/foo\"bar"
+```
 
-To specify complex regular expressions, Cloudflare recommends that you use the Expression Editor and enter your expression using the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax), which needs less escaping.
+The Expression Builder supports both the [quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax) and the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax). In the raw string syntax, there are no special characters or escape sequences, so all characters up to the ending delimiter are interpreted as is.
+
+```txt
+# Example of an expression with a " character written using the raw string syntax
+http.request.uri.path eq r#"/foo"bar"#
+```
+
+When you select _Matches regex_ in the **Operator** dropdown in the dashboard, the expression preview will automatically use the raw string syntax. In other situations, you may need to switch to the Expression Editor to manually enter a string using the raw string syntax. In this case, switching back to the Expression Builder will keep the syntax you used in the editor.
+
+When you write a [regular expression](/ruleset-engine/rules-language/operators/#regular-expression-matching) using the quoted string syntax, you may need to perform additional escaping — refer to [Quoted string syntax](/ruleset-engine/rules-language/values/#quoted-string-syntax) for details.
+
+To write complex regular expressions, Cloudflare recommends that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax), which needs less escaping.
 
 ### Create nested expressions
 

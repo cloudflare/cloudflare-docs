@@ -3,8 +3,11 @@ title: Activate the Cloudflare WordPress plugin
 pcx_content_type: tutorial
 sidebar:
   order: 8
-
+description: >-
+  The easiest way to begin using APO is directly from Cloudflare’s WordPress plugin. Before you can use APO, you must first install and activate the plugin and then activate APO.
 ---
+
+import { DashButton } from "~/components";
 
 After you [change your nameservers](/automatic-platform-optimization/get-started/change-nameservers/), activate the Cloudflare WordPress plugin.
 
@@ -32,11 +35,13 @@ The Cloudflare APO WordPress plugin does not support multisite WordPress install
 
 ## Purchase APO
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **Speed** > **Optimization** > **Content Optimization**.
-4. For **Automatic Platform Optimization for WordPress**, select **Purchase**.
-5. Enter your payment information and select **Confirm payment**.
+1. In the Cloudflare dashboard, go to the **Speed** > **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to **Content Optimization**.
+3. For **Automatic Platform Optimization for WordPress**, select **Purchase**.
+4. Enter your payment information and select **Confirm payment**.
 
 ## Install and activate the Cloudflare WordPress plugin
 
@@ -54,19 +59,19 @@ To create the connection between WordPress and Cloudflare, you will create an AP
 
 ## Create the API token from Cloudflare
 
-1. Open your Cloudflare dashboard.
-2. Select **My Profile** from the top of the page.
-3. Select **API Tokens** > **Create Token**.
-4. Locate **WordPress** from the list and select **Use template**.
-5. Select **Continue to summary** at the bottom of the page.
-6. On the **WordPress API token summary** page, select **Create Token**. Your API token displays.
-7. Select the **Copy** button to copy your token. You will need to paste the token in the next section.
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
+2. Select **Create Token**.
+3. Locate **WordPress** from the list and select **Use template**.
+4. Select **Continue to summary** at the bottom of the page.
+5. On the **WordPress API token summary** page, select **Create Token**. Your API token displays.
+6. Select the **Copy** button to copy your token. You will need to paste the token in the next section.
 
 :::note
 
-
 Copy and paste your API token into a document saved on your computer to easily reference it again.
-
 
 :::
 

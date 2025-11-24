@@ -8,6 +8,13 @@ sidebar:
 
 When Cloudflare detects that a challenge has failed or the user cannot be verified on a page with Turnstile, the user will encounter an [error](/turnstile/concepts/widget/#error-states) on the widget and may be asked to send feedback on the issue that they have encountered by choosing one of the options listed.
 
+When debugging or submitting a feedback report for an unresolved issue, you must provide the Ray ID or QR code associated with the challenge. These identifiers are essential for Cloudflare Support to trace the specific event.
+
+To obtain these identifiers:
+
+1. Ray ID: Find the Ray ID displayed at the end of the Challenge Page. The RayID is collected by the feedback report.
+2. QR Code: Click the success, failure, or spinner logo on the Turnstile widget four times. This action will reveal the unique QR code for that challenge instance.
+
 :::note
 
 Currently, feedback submitted via the feedback form is sent directly to Cloudflare and used for improvements on the Turnstile user experience.

@@ -45,3 +45,9 @@ Error code family `300***` and `600***` (e.g. "`600010: The generic_challenge_fa
 You can troubleshoot these error codes using the following recommendations:
 
 <Render file="troubleshooting-steps" product="turnstile" />
+
+## Error code `401`
+
+Turnstile may occasionally generate a `401` Unauthorized error in your browser console during a security check. This is not typically a problem with your implementation. This error often occurs when the widget attempts to request a [Private Access Token](/cloudflare-challenges/reference/private-access-tokens/) that your device or browser does not support yet. 
+
+You can generally safely ignore the `401` error, as it is an expected part of Turnstile's underlying Challenge Platform workflow. If the widget is successfully resolving and you are receiving a token, no action is required.

@@ -198,44 +198,4 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
 
 </Details>
 
-### Static assets
-
-By default, the Remix template for Cloudflare Pages Functions does not handle static assets, but you can configure it to do so.
-
-First, configure your `wrangler.toml` file to serve a directory.
-
-```toml title="wrangler.toml"
-[[d1_databases]]
-binding = "DB"
-database_name = "remix-app"
-database_id = "<YOUR_DATABASE_ID>"
-
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "my-bucket"
-
-[site]
-bucket = "./public"
-```
-
-Then, you must modify your server handler to serve static assets from that directory.
-
-```ts title="functions/[[path]].ts"
-import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
-import { type Env } from "../app/lib/env";
-
-// @ts-ignore
-import * as build from "../build";
-
-export const onRequest = createPagesFunctionHandler<Env>({
-  build,
-  getLoadContext: (context) => ({
-    cloudflare: {
-      ...context,
-      env: { ...context.env, ASSETS: undefined },
-    },
-  }),
-});
-```
-
 <Render file="frameworks-bindings" product="workers" />

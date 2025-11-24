@@ -22,6 +22,7 @@ The table below lists all available configuration options:
 | [Query rewrite system prompt](/ai-search/configuration/system-prompt/)         | yes                     | Custom system prompt to guide query rewriting behavior                                     |
 | [Match threshold](/ai-search/configuration/retrieval-configuration/)           | yes                     | Minimum similarity score required for a vector match                                       |
 | [Maximum number of results](/ai-search/configuration/retrieval-configuration/) | yes                     | Maximum number of vector matches returned (`top_k`)                                        |
+| [Reranking](/ai-search/configuration/reranking/) | yes | Rerank to reorder retrieved results by semantic relevance using a reranking model after initial retrieval |
 | [Generation model](/ai-search/configuration/models/)                           | yes                     | Model used to generate the final response                                                  |
 | [Generation system prompt](/ai-search/configuration/system-prompt/)            | yes                     | Custom system prompt to guide response generation                                          |
 | [Similarity caching](/ai-search/configuration/cache/)                          | yes                     | Enable or disable caching of responses for similar (not just exact) prompts                |

@@ -6,6 +6,8 @@ sidebar:
   order: 8
 ---
 
+import { FileTree } from "~/components";
+
 ## Monorepos
 
 A monorepo is a single repository that contains multiple applications. This setup can be useful for a few reasons:
@@ -45,23 +47,23 @@ Set the root directory of each Worker to where its wrangler.toml is located. For
 
 When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers if the change is within its included watch paths using the configured commands for that Worker.
 
-```
-ecommerce-monorepo/
-│
-├── workers/
-│ ├── product-service/
-│ │ ├── src/
-│ │ └── wrangler.toml
-│ ├── order-service/
-│ │ ├── src/
-│ │ └── wrangler.toml
-│ └── notification-service/
-│ ├── src/
-│ └── wrangler.toml
-├── packages/
-│ └── schema/
-└── README.md
-```
+{/* prettier-ignore */}
+<FileTree>
+- ecommerce-monorepo/
+  - workers/
+    - product-service/
+      - src/
+      - wrangler.toml
+    - order-service/
+      - src/
+      - wrangler.toml
+    - notification-service/
+      - src/
+      - wrangler.toml
+  - packages/
+    - schema/
+  - README.md
+</FileTree>
 
 ## Wrangler Environments
 

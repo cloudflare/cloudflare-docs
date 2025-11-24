@@ -4,7 +4,7 @@ pcx_content_type: concept
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, DashButton } from "~/components"
 
 Use Cache Analytics to improve site performance or reduce origin web server traffic. Cache Analytics helps determine if resources are missing from cache, expired, or ineligible for caching. Cache Analytics includes filter by hostname, list of top URLs that miss cache, and a query of up to three days of data.
 
@@ -14,8 +14,9 @@ Use Cache Analytics to improve site performance or reduce origin web server traf
 
 ## Access Cache Analytics
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Caching** > **Overview**.
+In the Cloudflare dashboard, go to the **Caching** page.
+
+   <DashButton url="/?to=/:account/:zone/caching" />
 
 ## Requests vs Data Transfer
 

@@ -6,6 +6,10 @@ Asides are a built-in component provided by [Starlight](https://starlight.astro.
 
 ## Note
 
+Use Note for small additions or when you need to provide extra context that is not essential to the main content.
+
+If you do not provide a header, this aside will default to `Note`.
+
 ```mdx
 :::note[Header]
 Hello, world!
@@ -15,19 +19,35 @@ Hello, world!
 :::note[Header]
 Hello, world!
 :::
-
-The default header text is `Note`.
 
 ## Caution
 
+Use Caution to highlight actions that could cause issues for a user.
+
+If you do not provide a header, this aside will default to `Warning`.
+
 ```mdx
-:::caution[Header]
-Hello, world!
+:::caution[Feature conflict]
+If you use feature A and feature B together, your configuration will not work.
 :::
 ```
 
-:::caution[Header]
-Hello, world!
+:::caution[Feature conflict]
+If you use feature A and feature B together, your configuration will not work.
 :::
 
-The default header text is `Warning`.
+## Tip
+
+Use Tip to share best practices or opinionated use cases that do not fit into the main documentation.
+
+If you do not provide a header, this aside will default to `Tip`.
+
+```mdx
+:::tip[Best practice]
+Cloudflare recommends you use [1.1.1.1](/1.1.1.1/) as your DNS resolver.
+:::
+```
+
+:::tip[Best practice]
+Cloudflare recommends you use [1.1.1.1](/1.1.1.1/) as your DNS resolver.
+:::
