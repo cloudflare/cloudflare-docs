@@ -4,6 +4,8 @@ title: Okta (SAML)
 description: Integrate Okta as a SAML identity provider with Cloudflare One.
 ---
 
+import { Render } from "~/components";
+
 Cloudflare One can integrate SAML with Okta as an identity provider.
 
 ## Set up Okta as a SAML provider
@@ -26,10 +28,9 @@ To set up SAML with Okta as your identity provider:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
 6. In the **Attribute Statements** section, enter the following information:
-
    - **Name**: Enter `email`.
    - **Value**: Enter `user.email`.
 
@@ -62,7 +63,6 @@ To set up SAML with Okta as your identity provider:
 14. Under **Your identity providers**, select **Add new identity provider**, and select _SAML_.
 
 15. Fill in the following information:
-
     - **Name**: Name your identity provider.
     - **Single Sign On URL**: Enter the Identity Provider Single-Sign-On URL from Okta.
     - **Issuer ID**: Enter the Identity Provider Issuer from Okta, for example `http://www.okta.com/<your-okta-entity-id>`.

@@ -40,7 +40,7 @@ To set up the Okta integration using the Okta Integration Network (OIN) App Cata
    <your-team-name>
    ```
 
-   You can find your team domain in Cloudflare One under **Settings** > **Team name**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
 8. In the **Sign On** tab, copy the **Client ID** and **Client secret** and paste these into `App ID` and `Client secret`.
 9. Copy your Okta Account URL (without the `-admin` value) and copy it into the Cloudflare Okta setup field.
@@ -63,7 +63,7 @@ To set up the Okta integration using the Okta Integration Network (OIN) App Cata
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
 6. Choose the desired **Assignment** option and select **Save**.
 
@@ -119,9 +119,9 @@ If you would like to only maintain one Okta app instance, Okta does support SAML
 6. On the **Sign-on Options** tab, ensure that **SAML 2.0** is selected.
 
 7. Under **Credential Details**, set **Application username format** to either _Okta Username_ or _Email_. This value will be used for the SCIM `userName` attribute.
-	:::note
-	The `userName` attribute must match the user's email address in Cloudflare One.
-	:::
+   :::note
+   The `userName` attribute must match the user's email address in Cloudflare One.
+   :::
 
 8. Select **Done** to create the integration.
 
@@ -146,7 +146,7 @@ If you would like to only maintain one Okta app instance, Okta does support SAML
 
 15. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group. If a user is removed from the application assignment via a either direct user assignment or removed from the group that was assigned to the app, this will trigger a deprovisioning event from Okta to Cloudflare.
 
-15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder and are the group memberships that will be added and removed upon membership change in Okta.
+16. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder and are the group memberships that will be added and removed upon membership change in Okta.
 
     :::note
     Groups in this SCIM app Push Groups integration should match the groups in your base [OIDC app integration](/cloudflare-one/integrations/identity-providers/okta/#set-up-okta-as-an-oidc-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
