@@ -8,7 +8,7 @@ When you prepare to remove traffic for a [Bring Your Own IP (BYOIP)](/byoip/) pr
 
 This risk is especially evident in the use case where the global routing table relies on more-specific to less-specific prefix routing fallback. Since this fallback mechanism is highly prone to route instability, Cloudflare recommends a multi-step draining process.
 
-### Safely withdraw a BYOIP prefix
+### Multi-step BYOIP withdrawal process
 
 When draining traffic, use the same prefix length on Cloudflare and on your ISP, since matching prefix lengths gives the most effective and deterministic behavior.
 
