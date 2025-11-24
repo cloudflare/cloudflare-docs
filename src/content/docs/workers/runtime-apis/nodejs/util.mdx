@@ -41,7 +41,7 @@ async function foo(args) {
 const callbackifiedFoo = callbackify(foo);
 
 callbackifiedFoo(args, (err, value) => {
-  If (err) throw err;
+  if (err) throw err;
 });
 ```
 

@@ -28,7 +28,7 @@ Provide all IP prefixes you plan to onboard, along with the ASNs from which they
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
 - If you do not own an ASN, you can use the Cloudflare Customer ASN (AS13335).
 
-#### Choose between Cloudflare’s ASN and your ASN
+#### Choose between Cloudflare's ASN and your ASN
 
 As a part of your IP prefix onboarding process, you need to decide the ASN Cloudflare will use to announce your prefixes. If you supply your own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP `AS_PATH`. For example, if your ASN is `AS64496`, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
@@ -108,6 +108,8 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 
 :::caution[Warning: ISP route refresh delays may impact traffic]
 Announcing or withdrawing a prefix means Cloudflare will begin or stop advertising routes, impacting traffic flow to or from that IP range. Changes propagate across our global network almost instantly, typically taking effect within minutes. However, Cloudflare has no control over how quickly ISPs refresh their routes.
+
+Refer to [Safely withdraw a BYOIP prefix](#safely-withdraw-a-byoip-prefix) for more information on how to prevent blackholing during prefix withdrawals.
 :::
 
 ### Delete an IP prefix
@@ -148,6 +150,10 @@ BGP has different mechanisms to control route priorities which are set by the pe
 For traffic originated from Cloudflare's services, Cloudflare's internal network will enforce local preference for traffic delivery to Magic Transit. This applies even if a more specific or shorter path route is available on the public Internet. You should withdraw the prefix from Cloudflare to avoid delivery of Cloudflare-sourced traffic over Magic Transit. This preference is local to our internal network and does not impact the route decision process of other networks.
 For example, if you have a CDN zone onboarded with a Magic Transit-protected origin that is part of a Cloudflare-advertised `/22` prefix, and you later opt to advertise a more specific and shorter `/24` prefix route directly from your network, Cloudflare's servers will continue to route proxied CDN traffic to your Magic Transit network, which will follow configured routes to your tunnel(s). This is specific to Cloudflare services: traffic from other sources will converge as expected by BGP to the direct route, because it is the most specific.
 :::
+
+## Safely withdraw a BYOIP prefix
+
+<Render file="magic-transit/safely-withdraw-byoip-prefix" product="networking-services" />
 
 ## BGP control to Magic routing table
 

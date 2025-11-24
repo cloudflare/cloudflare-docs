@@ -11,7 +11,12 @@ description: >-
   This tutorial explains how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers. You may want to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 ---
 
-import { Render, PackageManagers, WranglerConfig, DashButton } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	DashButton,
+} from "~/components";
 
 In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
@@ -38,9 +43,10 @@ Cloudflare Images allows you to store, resize, optimize and deliver images in a 
 ### Upload with the dashboard
 
 To upload an image using the Cloudflare dashboard:
-1. In the Cloudflare dashboard, go to the **Images** page.
 
-   <DashButton url="/?to=/:account/images" />
+1. In the Cloudflare dashboard, go to the **Transformations** page.
+
+   <DashButton url="/?to=/:account/images/transformations" />
 
 2. Use **Quick Upload** to either drag and drop an image or click to browse and choose a file from your local files.
 3. After the image is uploaded, view it using the generated URL.

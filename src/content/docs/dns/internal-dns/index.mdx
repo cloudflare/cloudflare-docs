@@ -30,7 +30,7 @@ import {
 
 <Plan type="enterprise" />
 
-Manage DNS records that should only be accessible within your private network. Internal DNS [zones](/dns/internal-dns/internal-zones/) and [views](/dns/internal-dns/dns-views/) pair up with [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) so that you can control how a DNS query should be responded to according to query context, such as query source IP.
+Manage DNS records that should only be accessible within your private network. Internal DNS [zones](/dns/internal-dns/internal-zones/) and [views](/dns/internal-dns/dns-views/) pair up with [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) so that you can control how a DNS query should be responded to according to query context, such as query source IP.
 
 <Render file="internal-dns-beta-note" product="dns" />
 
@@ -118,7 +118,7 @@ In this example, a query for `ghi.example.local` routed to view ID 111 would go 
 
 <RelatedProduct
 	header="Cloudflare Gateway"
-	href="/cloudflare-one/policies/gateway/"
+	href="/cloudflare-one/traffic-policies/"
 	product="privacy-gateway"
 >
 	Set up policies to inspect DNS, Network, HTTP, and Egress traffic.

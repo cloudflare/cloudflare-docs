@@ -18,6 +18,7 @@ This error is often triggered by:
 - Empty or malformed responses lacking an HTTP status code or response body.
 - Missing response headers or origin web server not returning [proper HTTP error responses](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
 - Incorrect HTTP/2 configuration at the origin server.
+- Authentication Origin Pull enabled on Cloudflare but the origin is [not configured as expected](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/#2-configure-origin-to-accept-client-certificates).
 
 :::note
 
@@ -39,7 +40,7 @@ As a temporary workaround, you can set the affected DNS record to [DNS-only](/dn
 
 - If `520` errors continue after contacting your hosting provider or site administrator, provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/):
   - Full URL(s) of the resource requested when the error occurred.
-  - Cloudflare **cf-ray** from the `520` error message.
+  - Cloudflare [**cf-ray**](/fundamentals/reference/cloudflare-ray-id/) from the `520` error message.
   - Output from `http://<YOUR_DOMAIN>/cdn-cgi/trace`.
   - Two [HAR files](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file):
     - One with Cloudflare enabled on your website.

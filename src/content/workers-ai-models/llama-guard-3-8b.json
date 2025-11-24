@@ -12,6 +12,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "context_window",
+            "value": "131072"
+        },
+        {
             "property_id": "price",
             "value": [
                 {

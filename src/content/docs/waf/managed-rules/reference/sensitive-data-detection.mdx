@@ -5,7 +5,15 @@ sidebar:
   order: 5
 ---
 
-import { Render, RuleID, APIRequest, Tabs, TabItem, Steps } from "~/components";
+import {
+	Render,
+	RuleID,
+	APIRequest,
+	Tabs,
+	TabItem,
+	Steps,
+	DashButton,
+} from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -48,8 +56,11 @@ To enable Cloudflare Sensitive Data Detection:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Detections**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Detections tools**.
 3. Turn on **Sensitive data detection**.
 
 </Steps>

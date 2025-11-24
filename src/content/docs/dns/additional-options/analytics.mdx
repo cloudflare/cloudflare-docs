@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { FeatureTable, Details } from "~/components"
+import { FeatureTable, Details, DashButton } from "~/components"
 
 When you use Cloudflare DNS, you can access data about DNS queries through a variety of sources.
 
@@ -28,8 +28,7 @@ When using GraphQL, you also have the option to get data for DNS queries across 
 
 For a quick summary, view your DNS analytics on the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **DNS** > **Analytics**.
+<DashButton url="/?to=/:account/:zone/dns/analytics" />
 
 The DNS analytics dashboard contains [four main panels](#dns-analytics-panels). The filters and time frame that you specify at the top of the page apply to all of them.
 

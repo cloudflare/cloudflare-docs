@@ -13,15 +13,15 @@ head:
 ---
 
 import {
-	CardGrid,
-	Description,
-	Feature,
-	LinkTitleCard,
-	Plan,
-	RelatedProduct,
-	LinkButton,
-	Tabs,
-	TabItem,
+  CardGrid,
+  Description,
+  Feature,
+  LinkTitleCard,
+  Plan,
+  RelatedProduct,
+  LinkButton,
+  Tabs,
+  TabItem,
 } from "~/components";
 
 <Description>
@@ -39,87 +39,116 @@ Sandboxes are ideal for building AI agents that need to execute code, interactiv
 With Sandbox, you can execute Python scripts, run Node.js applications, analyze data, compile code, and perform complex computations — all with a simple TypeScript API and no infrastructure to manage.
 
 <Tabs>
-	<TabItem label="Execute Commands">
+  <TabItem label="Execute Commands">
+	```typescript
+	import { getSandbox } from '@cloudflare/sandbox';
+
+	export { Sandbox } from '@cloudflare/sandbox';
+
+	export default {
+		async fetch(request: Request, env: Env): Promise<Response> {
+			const sandbox = getSandbox(env.Sandbox, 'user-123');
+
+			// Execute a command and get the result
+			const result = await sandbox.exec('python --version');
+
+			return Response.json({
+				output: result.stdout,
+				exitCode: result.exitCode,
+				success: result.success
+			});
+		}
+	};
+	```
+  </TabItem>
+
+	<TabItem label="Code Interpreter">
+	```typescript
+	import { getSandbox } from '@cloudflare/sandbox';
+
+	export { Sandbox } from '@cloudflare/sandbox';
+
+	export default {
+		async fetch(request: Request, env: Env): Promise<Response> {
+			const sandbox = getSandbox(env.Sandbox, 'user-123');
+
+			// Create a Python execution context
+			const ctx = await sandbox.createCodeContext({ language: 'python' });
+
+			// Execute Python code with automatic result capture
+			const result = await sandbox.runCode(`
+	import pandas as pd
+	data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
+	df = pd.DataFrame(data)
+	df['sales'].sum()  # Last expression is automatically returned
+		`, { context: ctx });
+
+				return Response.json({
+					result: result.results?.[0]?.text,
+					logs: result.logs
+				});
+			}
+		};
+		```
+	</TabItem>
+
+	<TabItem label="File Operations">
 		```typescript
 		import { getSandbox } from '@cloudflare/sandbox';
 
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+		export { Sandbox } from '@cloudflare/sandbox';
 
-    			// Execute a command and get the result
-    			const result = await sandbox.exec('python --version');
+		export default {
+			async fetch(request: Request, env: Env): Promise<Response> {
+				const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-    			return Response.json({
-    				output: result.stdout,
-    				exitCode: result.exitCode,
-    				success: result.success
-    			});
-    		}
-    	};
-    	```
-    </TabItem>
-    <TabItem label="Code Interpreter">
-    	```typescript
-    	import { getSandbox } from '@cloudflare/sandbox';
+				// Create a project structure
+				await sandbox.mkdir('/workspace/project/src', { recursive: true });
 
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+				// Write files
+				await sandbox.writeFile(
+					'/workspace/project/package.json',
+					JSON.stringify({ name: 'my-app', version: '1.0.0' })
+				);
 
-    			// Create a Python execution context
-    			const ctx = await sandbox.createCodeContext({ language: 'python' });
+				// Read a file back
+				const content = await sandbox.readFile('/workspace/project/package.json');
 
-    			// Execute Python code with automatic result capture
-    			const result = await sandbox.runCode(`
+				return Response.json({ content });
+			}
+		};
+		```
+	</TabItem>
 
-import pandas as pd
-data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
-df = pd.DataFrame(data)
-df['sales'].sum()  # Last expression is automatically returned
-				`, { context: ctx });
+	<TabItem label="WebSocket Connections">
+		```typescript
+		import { getSandbox } from '@cloudflare/sandbox';
 
-    			return Response.json({
-    				result: result.results?.[0]?.text,
-    				logs: result.logs
-    			});
-    		}
-    	};
-    	```
-    </TabItem>
-    <TabItem label="File Operations">
-    	```typescript
-    	import { getSandbox } from '@cloudflare/sandbox';
+		export { Sandbox } from '@cloudflare/sandbox';
 
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+		export default {
+			async fetch(request: Request, env: Env): Promise<Response> {
+				// Connect to WebSocket services in sandbox
+				if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
+					const sandbox = getSandbox(env.Sandbox, 'user-123');
+					return await sandbox.wsConnect(request, 8080);
+				}
 
-    			// Create a project structure
-    			await sandbox.mkdir('/workspace/project/src', { recursive: true });
+				return Response.json({ message: 'WebSocket endpoint' });
+			}
+		};
+		```
 
-    			// Write files
-    			await sandbox.writeFile(
-    				'/workspace/project/package.json',
-    				JSON.stringify({ name: 'my-app', version: '1.0.0' })
-    			);
-
-    			// Read a file back
-    			const content = await sandbox.readFile('/workspace/project/package.json');
-
-    			return Response.json({ content });
-    		}
-    	};
-    	```
-    </TabItem>
+		Connect to WebSocket servers running in sandboxes. Learn more: [WebSocket Connections](/sandbox/guides/websocket-connections/).
+	</TabItem>
 
 </Tabs>
 
 <LinkButton variant="primary" href="/sandbox/get-started/">
-	Get started
+  Get started
 </LinkButton>
 <LinkButton variant="secondary" href="/sandbox/api/">
-	API Reference
+  API Reference
 </LinkButton>
 
 ---
@@ -128,7 +157,7 @@ df['sales'].sum()  # Last expression is automatically returned
 
 <Feature header="Execute commands securely" href="/sandbox/guides/execute-commands/" cta="Learn about command execution">
 
-Run shell commands, Python scripts, Node.js applications, and more in isolated containers with streaming output support and automatic timeout handling.
+Run shell commands, Python scripts, Node.js applications, and more with streaming output support and automatic timeout handling.
 
 </Feature>
 
@@ -144,6 +173,18 @@ Expose HTTP services running in your sandbox with automatically generated previe
 
 </Feature>
 
+<Feature header="Execute code directly" href="/sandbox/guides/code-execution/" cta="Learn about code execution">
+
+Execute Python and JavaScript code with rich outputs including charts, tables, and images. Maintain persistent state between executions for AI-generated code and interactive workflows.
+
+</Feature>
+
+<Feature header="Persistent storage with object storage" href="/sandbox/guides/mount-buckets/" cta="Learn about bucket mounting">
+
+Mount S3-compatible object storage (R2, S3, GCS, and more) as local filesystems. Access buckets using standard file operations with data that persists across sandbox lifecycles. Production deployment required.
+
+</Feature>
+
 ---
 
 ## Use Cases
@@ -156,7 +197,7 @@ Execute code generated by Large Language Models safely and reliably. Perfect for
 
 ### Data Analysis & Notebooks
 
-Create interactive data analysis environments with Python, pandas, and visualization libraries. Build notebook-like experiences at the edge.
+Create interactive data analysis environments with pandas, NumPy, and Matplotlib. Generate charts, tables, and visualizations with automatic rich output formatting.
 
 ### Interactive Development Environments
 
@@ -194,52 +235,73 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 
 <CardGrid>
 
-<LinkTitleCard title="Tutorials" href="/sandbox/tutorials/" icon="pen">
-	Explore complete examples including AI code execution, data analysis, and
-	interactive environments.
+<LinkTitleCard title="Tutorials" href="/sandbox/tutorials/" icon="open-book">
+  Explore complete examples including AI code execution, data analysis, and
+  interactive environments.
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Beta Information"
-	href="/sandbox/platform/beta-info/"
-	icon="seti:shell"
+  title="How-to Guides"
+  href="/sandbox/guides/"
+  icon="seti:notebook"
 >
-	Learn about the Sandbox Beta, current status, and upcoming features.
+  Learn how to solve specific problems and implement features with the Sandbox
+  SDK.
+</LinkTitleCard>
+
+<LinkTitleCard title="API Reference" href="/sandbox/api/" icon="seti:json">
+  Explore the complete API documentation for the Sandbox SDK.
+</LinkTitleCard>
+
+<LinkTitleCard title="Concepts" href="/sandbox/concepts/" icon="seti:info">
+  Learn about the key concepts and architecture of the Sandbox SDK.
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Pricing"
-	href="/sandbox/platform/pricing/"
-	icon="document"
+  title="Configuration"
+  href="/sandbox/configuration/"
+  icon="setting"
 >
-	Understand Sandbox pricing based on the underlying Containers platform.
-</LinkTitleCard>
-
-<LinkTitleCard title="Limits" href="/sandbox/platform/limits/" icon="document">
-	Learn about resource limits, quotas, and best practices for working within
-	them.
-</LinkTitleCard>
-
-<LinkTitleCard title="How-to Guides" href="/sandbox/guides/" icon="seti:lock">
-	Learn how to solve specific problems and implement features with the Sandbox
-	SDK.
+  Learn about the configuration options for the Sandbox SDK.
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="GitHub Repository"
-	href="https://github.com/cloudflare/sandbox-sdk"
-	icon="github"
+  title="GitHub Repository"
+  href="https://github.com/cloudflare/sandbox-sdk"
+  icon="github"
 >
-	View the SDK source code, report issues, and contribute to the project.
+  View the SDK source code, report issues, and contribute to the project.
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Developer Discord"
-	href="https://discord.cloudflare.com"
-	icon="discord"
+  title="Beta Information"
+  href="/sandbox/platform/beta-info/"
+  icon="warning"
 >
-	Connect with the Workers community on Discord. Ask questions, share what
-	you're building, and get help from other developers.
+  Learn about the Sandbox Beta, current status, and upcoming features.
+</LinkTitleCard>
+
+<LinkTitleCard
+  title="Pricing"
+  href="/sandbox/platform/pricing/"
+  icon="seti:shell"
+>
+  Understand Sandbox pricing based on the underlying Containers platform.
+</LinkTitleCard>
+
+<LinkTitleCard title="Limits" href="/sandbox/platform/limits/" icon="error">
+  Learn about resource limits, quotas, and best practices for working within
+  them.
+</LinkTitleCard>
+
+<LinkTitleCard
+  title="Discord Community"
+  href="https://discord.cloudflare.com"
+  icon="discord"
+>
+  Connect with the community on Discord. Ask questions, share what you're
+  building, and get help from other developers.
 </LinkTitleCard>
 
 </CardGrid>
+```

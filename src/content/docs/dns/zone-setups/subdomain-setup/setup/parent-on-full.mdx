@@ -27,9 +27,9 @@ If you have not yet created DNS records covering your subdomain in the parent zo
 
 2. Complete the configuration accordingly for [full](/dns/zone-setups/full-setup/setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) setup.
 
-3. Get the nameserver names for the subdomain. These can be found within your newly created child zone in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), and will **not** be the same nameservers as the ones used in the parent zone.
+3. Get the nameserver names for the subdomain. These can be found within your newly created child zone on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, and will **not** be the same nameservers as the ones used in the parent zone.
 
-4. Within the **DNS** > **Records** of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records for the subdomain you want to delegate.
+4. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records for the subdomain you want to delegate.
 
    For example, if you delegated `www.example.com`, you might add the following records to `example.com`:
 
@@ -62,13 +62,13 @@ If you have already created DNS records covering your subdomain in the parent zo
 
 5. In the child zone, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
 
-6. Get the nameserver names for the subdomain. These can be found within your newly created child zone in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), and will **not** be the same nameservers as the ones used in the parent zone.
+6. Get the nameserver names for the subdomain. These can be found within your newly created child zone on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, and will **not** be the same nameservers as the ones used in the parent zone.
 
    :::note
    If the parent zone is on Cloudflare, steps 7 and 9 below can be achieved via API. Use the [Batch DNS records](/api/resources/dns/subresources/records/methods/batch/) endpoint to delete and create or update DNS records within a single request. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/) for further guidance.
    :::
 
-7. Within the **DNS** > **Records** of the parent zone, update existing address records (`A/AAAA`) on your subdomain to `NS` records. If you only have one address record, update the existing one and add a new `NS` record. If you have multiple address records, update any two of them.
+7. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page of the parent zone, update existing address records (`A/AAAA`) on your subdomain to `NS` records. If you only have one address record, update the existing one and add a new `NS` record. If you have multiple address records, update any two of them.
 
    For example, to delegate the subdomain `www.example.com`, the updated records in the parent zone `example.com` should contain `NS` records similar to the following:
 
@@ -81,7 +81,7 @@ If you have already created DNS records covering your subdomain in the parent zo
 
 8. Flush the address records of your subdomain in public resolvers ([1.1.1.1](https://1.1.1.1/purge-cache/) and [8.8.8.8](https://developers.google.com/speed/public-dns/cache)).
 
-9. In the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all the remaining records on the delegated subdomain, except the `NS` records that you created in step 7.
+9. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all the remaining records on the delegated subdomain, except the `NS` records that you created in step 7.
 
    Also delete all DNS records deeper than the delegated subdomain. For example, if you are delegating `www.example.com`, records for `api.www.example.com` should only exist in the new child zone.
 

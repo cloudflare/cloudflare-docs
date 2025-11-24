@@ -25,9 +25,9 @@ In this document, we'll discuss how Cloudflare can be used to solve this problem
 Cloudflare addresses these challenges by routing device traffic from the Internet breakout to our global network, where traffic is processed at a Cloudflare data center close to the Internet breakout. This allows for two benefits:
 
 1. Cloudflare can analyse the traffic, determine the original country of origin, and then ensure that traffic egresses onto the Internet from an IP address that is geolocated to the same country of origin.
-2. Cloudflare can filter traffic based on [secure web gateway](/cloudflare-one/policies/gateway/) policies, allowing you to protect devices from accessing risky Internet hosts. It also allows you to lock down access for devices to specific Internet hosts, such as only allow devices to make requests to APIs that support their function.
+2. Cloudflare can filter traffic based on [secure web gateway](/cloudflare-one/traffic-policies/) policies, allowing you to protect devices from accessing risky Internet hosts. It also allows you to lock down access for devices to specific Internet hosts, such as only allow devices to make requests to APIs that support their function.
 
-The architecture diagram below provides a visual representation of this solution, showing how traffic from various countries — routed via different mobile network APN — is directed through Internet breakouts. Cloudflare optimizes and secures the Internet connection by leveraging [geolocated public IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/), ensuring that the traffic is secure and regionally localized to the device location.
+The architecture diagram below provides a visual representation of this solution, showing how traffic from various countries — routed via different mobile network APN — is directed through Internet breakouts. Cloudflare optimizes and secures the Internet connection by leveraging [geolocated public IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/), ensuring that the traffic is secure and regionally localized to the device location.
 
 This diagram is intended for network engineers, IT architects, and decision-makers looking to improve service relevance and performance for end-users. Key use cases include multinational corporations aiming to provide faster, region-specific Internet access and services in users' native languages, ensuring a superior user experience across diverse geographical locations.
 
@@ -48,19 +48,19 @@ This diagram is intended for network engineers, IT architects, and decision-make
    - [**IPsec tunnels**](/magic-wan/reference/gre-ipsec-tunnels/) for encrypted communication.
    - [**Cloudflare Network Interconnect (CNI)**](/magic-wan/network-interconnect/) for direct, high-performance connections.
 
-4. **Localized Internet breakout using [Magic WAN](/magic-wan/) and [Gateway](/cloudflare-one/policies/gateway/)**.
+4. **Localized Internet breakout using [Magic WAN](/magic-wan/) and [Gateway](/cloudflare-one/traffic-policies/)**.
 
-   With Magic WAN and using [dedicated egress](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) with our [secure web gateway](/cloudflare-one/policies/gateway/), Cloudflare enables Internet traffic to exit with source IPs registered in the desired country. This ensures end-users benefit from geolocalized content and services, such as access to region-specific platforms, tailored to their location.
+   With Magic WAN and using [dedicated egress](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) with our [secure web gateway](/cloudflare-one/traffic-policies/), Cloudflare enables Internet traffic to exit with source IPs registered in the desired country. This ensures end-users benefit from geolocalized content and services, such as access to region-specific platforms, tailored to their location.
 
 5. **Advanced security and filtering options**.
 
    Cloudflare enhances the security of Internet breakouts with advanced features, including:
-   - [**DNS filtering**](/cloudflare-one/policies/gateway/initial-setup/dns/) to manage and block access to unwanted, high risk domains.
-   - [**Network firewalling**](/cloudflare-one/policies/gateway/network-policies/) for enforcing detailed security policies. For example, you can restrict vehicles to only send data over the Internet to a designated set of cloud telemetry systems while blocking all other traffic.
-   - [**Full SSL inspection**](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to protect against sophisticated threats and provide traffic visibility on encrypted traffic. It enables additional protections such as antivirus scanning, malware prevention, and file sandboxing.
+   - [**DNS filtering**](/cloudflare-one/traffic-policies/initial-setup/dns/) to manage and block access to unwanted, high risk domains.
+   - [**Network firewalling**](/cloudflare-one/traffic-policies/network-policies/) for enforcing detailed security policies. For example, you can restrict vehicles to only send data over the Internet to a designated set of cloud telemetry systems while blocking all other traffic.
+   - [**Full SSL inspection**](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to protect against sophisticated threats and provide traffic visibility on encrypted traffic. It enables additional protections such as antivirus scanning, malware prevention, and file sandboxing.
 
 # Related Resources
 
-- [Gateway](/cloudflare-one/policies/gateway/)
+- [Gateway](/cloudflare-one/traffic-policies/)
 - [Magic WAN](/magic-wan/)
 - [Cloudflare servers don't own IPs anymore](https://blog.cloudflare.com/cloudflare-servers-dont-own-ips-anymore/)

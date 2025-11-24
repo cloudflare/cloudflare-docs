@@ -9,7 +9,7 @@ head:
     content: Configure payload logging for a managed ruleset in the dashboard
 ---
 
-import { Tabs, TabItem, Steps } from "~/components";
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
 
 :::note
 Only users with the [Super Administrator role](/fundamentals/manage-members/roles/) can configure payload logging and decrypt payloads in the Cloudflare dashboard. Other users can decrypt payloads if they have access to the logs and to the private key.
@@ -48,11 +48,13 @@ Only users with the [Super Administrator role](/fundamentals/manage-members/role
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-2. Go to **Security** > **Security rules**.
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-3. In the rules table, search for the managed ruleset you want to configure. Look for a rule with an _Execute_ action. At the top of the page, you can filter the rules to show **Managed rules** only.
+2. (Optional) Filter by **Managed rules**.
+
+3. Search for the managed ruleset you want to configure. Look for a rule with an _Execute_ action.
 
 4. Select the rule name (containing the name of the managed ruleset).
 

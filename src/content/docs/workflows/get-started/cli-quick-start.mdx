@@ -144,6 +144,12 @@ Workflows are deployed via [`wrangler`](/workers/wrangler/install-and-update/), 
 npx wrangler@latest deploy
 ```
 
+:::note
+
+Workflows cannot be deployed to Workers for Platforms namespaces, as Workflows do not support Workers for Platforms.
+
+:::
+
 ## 3. Run a Workflow
 
 You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the Workflows [REST API](/api/resources/workflows/methods/list/).

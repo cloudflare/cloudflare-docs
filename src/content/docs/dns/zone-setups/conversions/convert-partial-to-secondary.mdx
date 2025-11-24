@@ -8,7 +8,7 @@ description: >-
   If you initially set up a partial zone on Cloudflare, you can later convert it to use a secondary setup.
 ---
 
-import { Details, Render, TabItem, Tabs } from "~/components";
+import { Details, Render, TabItem, Tabs, DashButton } from "~/components";
 
 If you initially set up a [partial zone](/dns/zone-setups/partial-setup/) on Cloudflare, you can later convert it to use a [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
 
@@ -98,7 +98,7 @@ This step is essential so that Cloudflare can keep the proxy status of the recor
 
 3. Use the [Edit Zone endpoint](/api/resources/zones/methods/edit/) with `type` set to `secondary`, to convert the zone type.
 
-   You can verify if it answers as expected by querying the new assigned secondary nameservers. You can find your nameservers in [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), and they should follow a format like `ns0123.secondary.cloudflare.com`.
+   You can verify if it answers as expected by querying the new assigned secondary nameservers. You can find your nameservers on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, and they should follow a format like `ns0123.secondary.cloudflare.com`.
 
 ```bash
 # Replace ns0123 with your actual Cloudflare nameservers
@@ -126,7 +126,10 @@ If you keep any DNS records that still refer `cdn.cloudflare.net`, HTTP traffic 
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **DNS** > **Records**.
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
+
 2. Under **DNS Zone Transfers**, select **Manage linked peers**.
 3. Choose a value for **Zone refresh**, which controls the number of seconds between zone updates from your primary DNS server.
    :::caution
@@ -141,4 +144,4 @@ Use the [Update Secondary Zone Configuration endpoint](/api/resources/dns/subres
 
 </TabItem> </Tabs>
 
-4. In [**DNS** > **Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**. Alternatively, you can use the [Force AXFR endpoint](/api/resources/dns/subresources/zone_transfers/subresources/force_axfr/methods/create/).
+4. On the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, confirm the linked peer is listed under **DNS Zone Transfers**, and select **Initiate zone transfer**. Alternatively, you can use the [Force AXFR endpoint](/api/resources/dns/subresources/zone_transfers/subresources/force_axfr/methods/create/).

@@ -187,11 +187,10 @@ api_token="replace_me"
 worker_name="my-hello-world-worker"
 
 worker_script_base64=$(echo '
-from workers import Response, WorkerEntrypoint
-
+from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
-    async def fetch(request):
+    async def fetch(self, request):
         return Response(self.env.MESSAGE)
 ' | base64)
 

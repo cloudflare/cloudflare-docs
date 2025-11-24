@@ -10,9 +10,9 @@ import { Details, APIRequest } from "~/components";
 
 ## View available rulesets
 
-You can list the available rulesets for a zone, account, or phase.
+You can list the available rulesets for a zone or account.
 
-<Details header="Example: View available rulesets at the zone level">
+### Example: View available rulesets at the zone level
 
 The response to the `GET` request will include the following rulesets:
 
@@ -22,7 +22,7 @@ The response to the `GET` request will include the following rulesets:
 
 <APIRequest path="/zones/{zone_id}/rulesets" method="GET" />
 
-```json output
+```json output collapse={12-29}
 {
 	"result": [
 		{
@@ -59,9 +59,7 @@ The response to the `GET` request will include the following rulesets:
 }
 ```
 
-</Details>
-
-<Details header="Example: View available rulesets at the account level">
+### Example: View available rulesets at the account level
 
 The response will include the following rulesets:
 
@@ -71,7 +69,7 @@ The response will include the following rulesets:
 
 <APIRequest path="/accounts/{account_id}/rulesets" method="GET" />
 
-```json output
+```json output collapse={12-38}
 {
 	"result": [
 		{
@@ -117,13 +115,11 @@ The response will include the following rulesets:
 }
 ```
 
-</Details>
-
 ## View the rules included in a ruleset
 
 You can view all versions of phase entry points (at the account and zone levels) and custom rulesets, but you can only view the most recent version of managed rulesets.
 
-<Details header="Example: View rules in a phase entry point ruleset at the zone level">
+### Example: View rules in a phase entry point ruleset at the zone level
 
 The following example lists the rules in version `2` of the `http_request_firewall_managed` phase entry point ruleset at the zone level.
 
@@ -165,9 +161,7 @@ The following example lists the rules in version `2` of the `http_request_firewa
 }
 ```
 
-</Details>
-
-<Details header="Example: View rules in a managed ruleset">
+### Example: View rules in a managed ruleset
 
 The following example lists the rules in version `2` of a managed ruleset (the most recent version of that ruleset).
 
@@ -182,7 +176,7 @@ Each rule in a managed ruleset can have associated tags or categories, listed in
 	}}
 />
 
-```json output
+```json output collapse={26-36}
 {
 	"result": {
 		"id": "<MANAGED_RULESET_ID>",
@@ -228,8 +222,6 @@ Each rule in a managed ruleset can have associated tags or categories, listed in
 	"messages": []
 }
 ```
-
-</Details>
 
 ## Related resources
 

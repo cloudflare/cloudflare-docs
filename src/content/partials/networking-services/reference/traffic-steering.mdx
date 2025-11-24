@@ -45,18 +45,16 @@ The following IPv4 address ranges are allowed in the Magic Routing table:
   )
 }
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
-		<Markdown
-    text={`
-		- [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space, specifically \`10.0.0.0/8\`, \`172.16.0.0/12\`, and \`192.168.0.0/16\`.
-
-		When using ${props.productName} and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for ${props.productName}. For more information, refer to <a href="${props.cfTunnelURL}">Cloudflare Tunnel</a>.
-
-		For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
-			`}
-				inline={false}
-  	/>
+		<Render
+			file="routing/magic-wan-allowed-ip-ranges"
+			product="networking-services"
+			params={{
+				productName: props.productName,
+				cfTunnelURL: props.cfTunnelURL
+			}}
+		/>
   </>
   )
 }
@@ -398,12 +396,12 @@ BGP support currently has the following limitations:
 {props.productName} customers need to enable <a href={props.legacyHCs}>legacy health checks</a> alongside BGP. This is essential to determine if a specific Cloudflare data center is reachable from a customer device or not. <a href={props.tunnelHCsPage}>Tunnel health checks</a> will modify the route's priorities for dynamically learned BGP routes.
 
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
 		<AnchorHeading title="Application-aware policies" depth={2} />
-    <p>By default, Cloudflare balances and steers traffic based on network-layer characteristics (IP, port etc). If you are using the Magic WAN Connector, you can also steer traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
+    <p>By default, Cloudflare balances and steers traffic based on network-layer characteristics (IP, port etc). If you are using the {props.productName} Connector, you can also steer traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
 
-		For more information, refer to <a href="/cloudflare-one/policies/gateway/application-app-types/">Applications and app types</a>.</p>
+		For more information, refer to <a href="/cloudflare-one/traffic-policies/application-app-types/">Applications and app types</a>.</p>
   </>
   )
 }

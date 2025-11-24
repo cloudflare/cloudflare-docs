@@ -8,7 +8,7 @@ head:
     content: Proxy traffic with Secondary DNS override
 ---
 
-import { TabItem, Tabs, APIRequest } from "~/components";
+import { TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 When you set up [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) on a secondary zone, you cannot enable the proxy on any transferred DNS records by default.
 
@@ -38,10 +38,12 @@ Before you set up Secondary DNS override, make sure that you have:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **DNS** > **Settings**.
-3. Enable **Secondary DNS override**.
-4. On **DNS** > **Records**, for specific A, AAAA, or CNAME records, select the grey cloud icon to set their **Proxy status** to **Proxied**.
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
+
+2. Enable **Secondary DNS override**.
+3. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, for specific A, AAAA, or CNAME records, select the grey cloud icon to set their **Proxy status** to **Proxied**.
 
 </TabItem> <TabItem label="API">
 

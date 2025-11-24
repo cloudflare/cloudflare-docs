@@ -41,16 +41,11 @@ This is not necessary if you are using a pre-built image, as described below.
 
 ## Using pre-built container images
 
-Currently, all images must use `registry.cloudflare.com`.
+Currently, we support images stored in the Cloudflare managed registry at `registry.cloudflare.com` and in [Amazon ECR](https://aws.amazon.com/ecr/).
+Support for additional external registries is coming soon.
 
-:::note
-We plan to allow other image registries. Cloudflare will download your image, optionally using auth credentials,
-then cache it globally in the Cloudflare Registry.
-
-This is not yet available.
-:::
-
-If you wish to use a pre-built image, first, make sure it exists locally, then push it to the Cloudflare Registry:
+If you wish to use a pre-built image from another registry provider, first, make sure it exists locally, then
+push it to the Cloudflare Registry:
 
 ```
 docker pull <public-image>
@@ -81,6 +76,65 @@ This will output an image registry URI that you can then use in your Wrangler co
 {
 	"containers": {
 		"image": "registry.cloudflare.com/your-account-id/your-image:tag"
+		// ...rest of config...
+	}
+}
+```
+
+</WranglerConfig>
+
+### Using Amazon ECR container images
+
+To use container images stored in [Amazon ECR](https://aws.amazon.com/ecr/), you will need to configure the ECR registry domain with credentials.
+These credentials get stored in [Secrets Store](/secrets-store) under the `containers` scope.
+When we prepare your container, these credentials will be used to generate an ephemeral token that can pull your image.
+We do not currently support public ECR images.
+To generate the necessary credentials for ECR, you will need to create an IAM user with a read-only policy.
+The following example grants access to all image repositories under AWS account `123456789012` in `us-east-1`.
+
+```json
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Action": ["ecr:GetAuthorizationToken"],
+			"Effect": "Allow",
+			"Resource": "*"
+		},
+		{
+			"Effect": "Allow",
+			"Action": [
+				"ecr:BatchCheckLayerAvailability",
+				"ecr:GetDownloadUrlForLayer",
+				"ecr:BatchGetImage"
+			],
+			// arn:${Partition}:ecr:${Region}:${Account}:repository/${Repository-name}
+			"Resource": [
+				"arn:aws:ecr:us-east-1:123456789012:repository/*"
+				// "arn:aws:ecr:us-east-1:123456789012:repository/example-repo"
+			]
+		}
+	]
+}
+```
+
+You can then use the credentials for the IAM User to [configure a registry in Wrangler](/workers/wrangler/commands/#containers-registries).
+Wrangler will prompt you to create a Secrets Store store if one does not already exist, and then create your secret.
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers registries configure 123456789012.dkr.ecr.us-east-1.amazonaws.com --aws-access-key-id=AKIAIOSFODNN7EXAMPLE"
+/>
+
+Once this is setup, you will be able to use ECR images in your wrangler config.
+
+<WranglerConfig>
+
+```json
+{
+	"containers": {
+		"image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/example-repo:tag"
 		// ...rest of config...
 	}
 }

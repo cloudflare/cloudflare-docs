@@ -3,6 +3,7 @@ title: Stream output
 pcx_content_type: how-to
 sidebar:
   order: 7
+description: Handle real-time output from commands and processes.
 ---
 
 import { TypeScriptExample } from "~/components";
@@ -65,6 +66,10 @@ Return streaming output to users via Server-Sent Events:
 
 <TypeScriptExample>
 ```
+import { getSandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const sandbox = getSandbox(env.Sandbox, 'builder');

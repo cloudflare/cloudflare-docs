@@ -1,0 +1,54 @@
+---
+pcx_content_type: concept
+title: Non-HTTP applications
+sidebar:
+  order: 1
+---
+
+import { Render, Stream } from "~/components";
+
+Cloudflare offers both client-based and clientless ways to grant secure access to non-HTTP applications.
+
+:::note
+Non-HTTP applications require [connecting your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) to Cloudflare. For more details, refer to our [Replace your VPN](/learning-paths/replace-vpn/connect-private-network/) implementation guide.
+:::
+
+<Stream
+	id="f13b085ed4d28a9dbb8faf19ae986125"
+	title="SASE - Secure remote access to your critical infrastructure"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Video-3-Secure-remote-access-to-your-critical-infrastructure.jpg"
+/>
+
+## WARP client
+
+Users can connect by installing the Cloudflare WARP client on their device and enrolling in your Zero Trust organization. Remote devices connect to your applications as if they were on your private network. By default, all devices enrolled in your organization can access any private route unless they are protected by an Access policy or Gateway firewall rule. To secure the application, you can [create a self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) for a private IP range, port range, and/or hostname and build [Access policies](/cloudflare-one/access-controls/policies/) that allow or block specific users.
+
+If you would like to define how users access specific infrastructure servers within your network, [create an infrastructure application](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) in Access for Infrastructure. Access for Infrastructure provides an additional layer of control and visibility over how users access non-HTTP applications, including:
+
+- Define fine-grained policies to govern who has access to specific servers and exactly how a user may access that server.
+- Eliminate SSH keys by using short-lived certificates to authenticate users.
+- Export SSH command logs to a storage service or SIEM solution using [Logpush](/cloudflare-one/insights/logs/logpush/).
+
+## Clientless access
+
+Clientless access methods are suited for organizations that cannot deploy the WARP client or need to support third-party contractors where installing a client is not possible. Clientless access requires onboarding a domain to Cloudflare and configuring a public hostname in order to make the server reachable. Command logging is not supported.
+
+### Browser-rendered terminal
+
+Cloudflare's [browser-based terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/) allows users to connect over SSH, RDP, and VNC without any configuration. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser. For RDP connections, users must authenticate to the Windows server using their Windows username and password in addition to being authenticated by Cloudflare Access.
+
+### Client-side cloudflared (legacy)
+
+:::note
+Not recommended for new deployments.
+:::
+
+Users can log in to the application by installing `cloudflared` on their device and running a hostname-specific command in their terminal. For more information, refer to [cloudflared authentication](/cloudflare-one/access-controls/applications/non-http/cloudflared-authentication/).
+
+## Related resources
+
+To connect to an application over a specific protocol, refer to these tutorials:
+
+- [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/)
+- [SMB](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/smb/)
+- [RDP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/)

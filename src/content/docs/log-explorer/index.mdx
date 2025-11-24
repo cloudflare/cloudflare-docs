@@ -22,6 +22,21 @@ Log Explorer provides access to Cloudflare logs with all the context available w
 
 Contract customers can choose to store their logs in Log Explorer for up to two years, at an additional cost of $0.10 per GB per month. Customers interested in this feature can contact their account team to have it added to their contract.
 
+## Permissions
+
+Access to Log Explorer features is controlled through specific permissions. Each permission grants users the ability to perform certain actions, such as querying logs, managing datasets, or creating dashboards. 
+ 
+| Feature | Required Permission | Description |
+|----------|--------------------|--------------|
+| **Manage datasets** | `Logs Edit` | Add, enable, or disable datasets. |
+| **Log Search** | `Logs Read` | Query logs in the dashboard or via API. |
+| **Log Search (save query)** | `Logs Write` | Save log search queries. |
+| **Custom dashboards** | `Analytics Read` | Create and view custom dashboards. |
+
+These permissions apply across both the dashboard and the API, and must be granted at either the account or zone level depending on which datasets you need to access.
+
+Authentication with the API can be done via an API token or API key with an email. Refer to [Create API token](/fundamentals/api/get-started/create-token/) for further instructions.
+
 ## Features
 
 <Feature header="Log Search" href="/log-explorer/log-search/">

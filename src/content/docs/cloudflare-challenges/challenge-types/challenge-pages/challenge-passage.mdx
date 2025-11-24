@@ -5,8 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Steps, DashButton } from "~/components"
-
+import { Steps, DashButton } from "~/components";
 
 When a visitor solves a [Cloudflare Challenge](/cloudflare-challenges/) - as part of a [WAF custom rule](/waf/custom-rules/) or [IP Access rule](/waf/tools/ip-access-rules/) - you can set the **Challenge Passage** to prevent them from having to solve future Challenges for a specified period of time.
 
@@ -25,13 +24,16 @@ By default, the `cf_clearance` cookie has a lifetime of 30 minutes. Cloudflare r
 To update the Challenge Passage (and the value of the `cf_clearance` cookie):
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **Security Settings** page. 
 
-    <DashButton url="/?to=/:account/:zone/security/settings" />
+1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
 2. Go to **Challenge passage**.
 3. Select the edit icon to set a timeout duration.
+
 </Steps>
 
 ### Limitations
 
-The Challenge Passage does not apply to Challenges issued by [WAF managed rules](/waf/managed-rules/). Also, Challenge Passage does not apply to rate limiting rules unless the rate limit is configured to issue a Challenge.
+The Challenge Passage does not apply to rate limiting rules.

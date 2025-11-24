@@ -7,6 +7,14 @@ sidebar:
 
 This page explains the core concepts and terminology used in RealtimeKit.
 
+### App
+
+An **App** serves as a container for your RealtimeKit application, logically organizing related meetings and participants.
+
+For example, if you are building an interview platform, you might create two apps: `Interviews - staging` and `Interviews - production`. If you later decide to build an assessment platform, you could similarly create `Assessments - staging` and `Assessments - production`.
+
+This structure helps you manage meetings and participants in a clear, organized manner.
+
 ### Meeting
 
 A **Meeting** is the fundamental communication channel in RealtimeKit. You can think of it like an event on your calendar - it's a persistent, long-lived container or "room" that serves as a blueprint for its [sessions](/realtime/realtimekit/concepts/#session). Every session created for this meeting inherits the same base configuration, such as the title of the meeting and whether to automatically record the session when it starts. You add participants to the meeting, which grants them access to join a session of that meeting.

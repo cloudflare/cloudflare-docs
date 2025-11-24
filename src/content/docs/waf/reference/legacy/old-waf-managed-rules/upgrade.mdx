@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, DashButton } from "~/components";
 
 On 2022-05-04, Cloudflare started the upgrade from the [previous version of WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) to the new [WAF Managed Rules](/waf/managed-rules/), allowing a first set of eligible zones to migrate. Currently, all zones can upgrade to WAF Managed Rules, including partner accounts.
 
@@ -169,8 +169,15 @@ You can start the WAF upgrade in the Cloudflare dashboard or via API.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
 
-2. If you are using the old dashboard, go to **Security** > **WAF** > **Managed rules** tab.<br/>
-   If you are using the [new security dashboard](/security/), go **to Security** > **Security rules** instead and select **Go to upgrade your Managed rules**.
+2. A) If you are using the old dashboard:
+   - Go to **Security** > **WAF** > **Managed rules** tab.
+
+   B) If you are using the [new security dashboard](/security/):
+   1. Go to the **Security rules** page.
+
+      <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+   2. Select **Go to upgrade your Managed rules**.
 
    If you are an Enterprise customer, the dashboard will show the following banner:
 

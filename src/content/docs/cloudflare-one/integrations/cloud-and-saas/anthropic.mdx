@@ -1,0 +1,70 @@
+---
+pcx_content_type: reference
+title: Anthropic
+rss: file
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/integration-description"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Anthropic",
+		integrationAccountType: "Anthropic account",
+	}}
+/>
+
+This integration covers the following Anthropic products:
+
+- Claude Console (organizations, workspaces/projects, users, invites)
+- Anthropic API Platform (organization and project API keys)
+
+## Integration prerequisites
+
+- An Anthropic [Team or Enterprise organization](https://www.anthropic.com/pricing#team-&-enterprise)
+- [Organization-level admin (or equivalent) privileges in Anthropic](https://support.anthropic.com/articles/10186004-api-console-roles-and-permissions) to view organization metadata and manage API keys
+
+## Integration permissions
+
+For the Anthropic integration to function, Cloudflare CASB requires authorization via **API keys**:
+
+- `Organization API key (organization-level)`: Grants read-only access to organization/workspace metadata, members and invites, and key metadata used for findings.
+- (Optional) `Project API key (project-level)`: Grants read-only access to project metadata and keys when you include project scopes in the scan.
+
+These credentials follow the principle of least privilege so that only the minimum required access is granted.
+
+## Security findings
+
+<Render
+	file="casb/security-findings"
+	product="cloudflare-one"
+	params={{ integrationName: "Anthropic", slugRelativePath: "anthropic" }}
+/>
+
+### API key hygiene
+
+Detect API keys that may be unused or overdue for rotation.
+
+| Finding type              | FindingTypeID                          | Severity |
+| ------------------------- | -------------------------------------- | -------- |
+| Anthropic: Unused API key | `f343cd22-21f0-45a6-b6f7-39b1539a0f2b` | Medium   |
+
+### Access security
+
+Flag organization access issues to help enforce best practices.
+
+| Finding type                     | FindingTypeID                          | Severity |
+| -------------------------------- | -------------------------------------- | -------- |
+| Anthropic: High-privilege invite | `a435d091-3bb1-42e1-bc98-32d80c6340a5` | High     |
+| Anthropic: Stale pending invite  | `5667f7fa-4215-4a8e-80d7-4694ea33335b` | Low      |
+
+### Data Loss Prevention (optional)
+
+<Render file="casb/data-loss-prevention" product="cloudflare-one" />
+
+| Finding type                                        | FindingTypeID                          | Severity |
+| --------------------------------------------------- | -------------------------------------- | -------- |
+| Anthropic: Downloadable File with DLP Profile match | `74ec2a38-0e69-48d4-80ed-a8faad5f40ef` | High     |

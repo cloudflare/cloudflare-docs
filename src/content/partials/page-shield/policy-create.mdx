@@ -3,7 +3,14 @@ params:
   - policyAction?
 ---
 
-import { Tabs, TabItem, Render, Markdown, Steps } from "~/components";
+import {
+	Tabs,
+	TabItem,
+	Render,
+	Markdown,
+	Steps,
+	DashButton,
+} from "~/components";
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
@@ -45,18 +52,18 @@ In the [new security dashboard](/security/), policies are called content securit
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-2. Go to **Security** > **Security rules**.
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-3. Select **Create** > **Content security rules**.
+2. Select **Create** > **Content security rules**.
 
-4. <a id="rule-form" />
+3. <a id="rule-form" />
    Enter a descriptive name for the rule in **Description**.
 
-5. Under **If incoming requests match**, define the scope of the content security rule (or policy). You can use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
+4. Under **If incoming requests match**, define the scope of the content security rule (or policy). You can use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
-6. Under **Allow these directives**, select the desired [CSP directives](/page-shield/policies/csp-directives/) for the content security rule by enabling one or more checkboxes.
+5. Under **Allow these directives**, select the desired [CSP directives](/page-shield/policies/csp-directives/) for the content security rule by enabling one or more checkboxes.
    - To manually enter an allowed source, select **Add source**.
    - To refresh the displayed sources based on detected resources, select **Refresh suggestions**.
 
@@ -64,13 +71,13 @@ In the [new security dashboard](/security/), policies are called content securit
      Cloudflare provides suggestions for **Default**, **Scripts**, and **Connections** directives. For the **Default** directive, suggestions are based on monitored scripts and connections resources.
      :::
 
-7. <Render
+6. <Render
    	file="policy-create-action"
    	params={{ policyAction: props.policyAction }}
    	product="page-shield"
    />
 
-8. To save and deploy your rule, select **Deploy**. { !props.policyAction && <Markdown text="If you are not ready to deploy your rule, select **Save as Draft**." /> }
+7. To save and deploy your rule, select **Deploy**. { !props.policyAction && <Markdown text="If you are not ready to deploy your rule, select **Save as Draft**." /> }
 
 </Steps>
 

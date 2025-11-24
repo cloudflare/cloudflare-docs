@@ -2,7 +2,7 @@ releaseNotes: |
   This release contains minor fixes and minor improvements.
 
     **Notable updates**
-    - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+    - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) solution.
     - Added the ability to customize PCAP options in the `warp-cli`.
     - Added a list of installed applications in `warp-diag`.
     - Added a `tunnel reset mtu` subcommand to the `warp-cli`.

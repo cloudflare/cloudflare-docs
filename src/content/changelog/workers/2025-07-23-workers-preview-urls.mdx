@@ -17,7 +17,7 @@ These preview URLs are named after your branch and are posted as a comment to ea
 
 Each comment includes **two preview URLs** as shown above:
 
-* **Commit Preview URL**: Unique to the specific version/commit (e.g., `<version-prefix>-<worker-name>.<subdomain>.workers.dev`) 
+* **Commit Preview URL**: Unique to the specific version/commit (e.g., `<version-prefix>-<worker-name>.<subdomain>.workers.dev`)
 * **Branch Preview URL**: A stable alias based on the branch name (e.g., `<branch-name>-<worker-name>.<subdomain>.workers.dev`)
 
 ## How it works
@@ -31,7 +31,7 @@ When you create a pull request:
 
 ## Custom alias name
 
-You can also assign a custom preview alias using the [Wrangler CLI](/workers/wrangler/), by passing the `--preview-alias` flag when [uploading a version](/workers/wrangler/commands/#upload) of your Worker:
+You can also assign a custom preview alias using the [Wrangler CLI](/workers/wrangler/), by passing the `--preview-alias` flag when [uploading a version](/workers/wrangler/commands/#versions-upload) of your Worker:
 
 ```bash
 wrangler versions upload --preview-alias staging
@@ -41,5 +41,5 @@ wrangler versions upload --preview-alias staging
 
 * Only available on the **workers.dev** subdomain (custom domains not yet supported)
 * Requires **Wrangler v4.21.0+**
-* Preview URLs are not generated for Workers that use [Durable Objects](/durable-objects/) 
+* Preview URLs are not generated for Workers that use [Durable Objects](/durable-objects/)
 * Not yet supported for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/)

@@ -1,0 +1,11 @@
+name: Workers VPC
+
+product:
+  title: Workers VPC
+  url: /workers-vpc/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Workers VPC
+  description: Connect Cloudflare Worker's Virtual Private Cloud to your private clouds to build cross-cloud apps.
+  author: "@cloudflare"
