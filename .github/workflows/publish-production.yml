@@ -4,6 +4,10 @@ on:
     branches:
       - production
 
+concurrency:
+  group: publish-production
+  cancel-in-progress: true
+
 jobs:
   publish:
     name: Production
