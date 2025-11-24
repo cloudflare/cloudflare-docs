@@ -3,8 +3,6 @@ title: OpenRouter
 pcx_content_type: get-started
 ---
 
-import { Tabs, TabItem } from "~/components";
-
 [OpenRouter](https://openrouter.ai/) is a platform that provides a unified interface for accessing and using large language models (LLMs).
 
 ## Endpoint
@@ -50,9 +48,6 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/open
 
 If you are using the OpenAI SDK with JavaScript, you can set your endpoint like this:
 
-<Tabs syncKey="sdk">
-<TabItem label="Javascript" icon="seti:javascript">
-
 ```js title="JavaScript"
 import OpenAI from "openai";
 
@@ -75,45 +70,3 @@ try {
 	return new Response(e);
 }
 ```
-
-</TabItem>
-<TabItem label="Javascript (Workers)" icon="seti:javascript">
-
-:::note
-For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
-:::
-
-```js title="JavaScript"
-import OpenAI from "openai";
-import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
-
-export default {
-	async fetch(request, env) {
-		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
-
-		// Use ProviderAuth.storedKey() for BYOK or pass an authorization token directly (e.g., env.OPENROUTER_API_KEY)
-		const auth = ProviderAuth.storedKey();
-
-		const openai = new OpenAI({
-			apiKey: auth,
-			baseURL: "https://openrouter.ai/api/v1",
-		});
-
-		try {
-			const chatCompletion = await openai.chat.completions.create({
-				model: "openai/gpt-5-mini",
-				messages: [{ role: "user", content: "What is Cloudflare?" }],
-			});
-
-			const response = chatCompletion.choices[0].message;
-
-			return new Response(JSON.stringify(response));
-		} catch (e) {
-			return new Response(e);
-		}
-	},
-};
-```
-
-</TabItem>
-</Tabs>

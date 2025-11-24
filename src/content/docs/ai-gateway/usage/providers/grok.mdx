@@ -3,7 +3,7 @@ title: xAI
 pcx_content_type: get-started
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 ## Endpoint
 
@@ -47,9 +47,6 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok/v1/chat
 
 If you are using the OpenAI SDK with JavaScript, you can set your endpoint like this:
 
-<Tabs syncKey="sdk">
-<TabItem label="Javascript" icon="seti:javascript">
-
 ```js title="JavaScript"
 import OpenAI from "openai";
 
@@ -76,54 +73,6 @@ const completion = await openai.chat.completions.create({
 
 console.log(completion.choices[0].message);
 ```
-
-</TabItem>
-<TabItem label="Javascript (Workers)" icon="seti:javascript">
-
-:::note
-For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
-:::
-
-```js title="JavaScript"
-import OpenAI from "openai";
-import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
-
-export default {
-	async fetch(request, env) {
-		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
-
-		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
-		// or pass an authorization token directly (e.g., env.XAI_API_KEY)
-		const auth = ProviderAuth.storedKey();
-
-		const openai = new OpenAI({
-			apiKey: auth,
-			baseURL: "https://api.x.ai/v1",
-		});
-
-		const completion = await openai.chat.completions.create({
-			model: "grok-4",
-			messages: [
-				{
-					role: "system",
-					content:
-						"You are Grok, a chatbot inspired by the Hitchhiker's Guide to the Galaxy.",
-				},
-				{
-					role: "user",
-					content:
-						"What is the meaning of life, the universe, and everything?",
-				},
-			],
-		});
-
-		return Response.json(completion.choices[0].message);
-	},
-};
-```
-
-</TabItem>
-</Tabs>
 
 ### Use OpenAI SDK with Python
 
@@ -154,9 +103,6 @@ print(completion.choices[0].message)
 
 If you are using the Anthropic SDK with JavaScript, you can set your endpoint like this:
 
-<Tabs syncKey="sdk">
-<TabItem label="Javascript" icon="seti:javascript">
-
 ```js title="JavaScript"
 import Anthropic from "@anthropic-ai/sdk";
 
@@ -181,52 +127,6 @@ const msg = await anthropic.messages.create({
 
 console.log(msg);
 ```
-
-</TabItem>
-<TabItem label="Javascript (Workers)" icon="seti:javascript">
-
-:::note
-For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
-:::
-
-```js title="JavaScript"
-import Anthropic from "@anthropic-ai/sdk";
-import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
-
-export default {
-	async fetch(request, env) {
-		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
-
-		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
-		// or pass an authorization token directly (e.g., env.XAI_API_KEY)
-		const auth = ProviderAuth.storedKey();
-
-		const anthropic = new Anthropic({
-			apiKey: auth,
-			baseURL: "https://api.x.ai",
-		});
-
-		const msg = await anthropic.messages.create({
-			model: "grok-beta",
-			max_tokens: 128,
-			system:
-				"You are Grok, a chatbot inspired by the Hitchhiker's Guide to the Galaxy.",
-			messages: [
-				{
-					role: "user",
-					content:
-						"What is the meaning of life, the universe, and everything?",
-				},
-			],
-		});
-
-		return Response.json(msg);
-	},
-};
-```
-
-</TabItem>
-</Tabs>
 
 ### Use Anthropic SDK with Python
 

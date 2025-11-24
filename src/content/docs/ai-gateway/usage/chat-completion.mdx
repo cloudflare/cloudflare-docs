@@ -7,8 +7,6 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from "~/components";
-
 Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.
 
 ## Endpoint URL
@@ -33,9 +31,6 @@ Specify the model using `{provider}/{model}` format. For example:
 
 ### OpenAI SDK
 
-<Tabs syncKey="sdk">
-<TabItem label="Javascript" icon="seti:javascript">
-
 ```js
 import OpenAI from "openai";
 const client = new OpenAI({
@@ -52,44 +47,6 @@ const response = await client.chat.completions.create({
 
 console.log(response.choices[0].message.content);
 ```
-
-</TabItem>
-<TabItem label="Javascript (Workers)" icon="seti:javascript">
-
-:::note
-For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
-:::
-
-```js
-import OpenAI from "openai";
-import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
-
-export default {
-	async fetch(request, env) {
-		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
-
-		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
-		// or pass an authorization token directly (e.g., env.INFERENCE_AUTH_TOKEN)
-		const auth = ProviderAuth.storedKey();
-
-		const client = new OpenAI({
-			apiKey: auth,
-		});
-
-		const response = await client.chat.completions.create({
-			model: "google-ai-studio/gemini-2.5-flash",
-			messages: [{ role: "user", content: "What is Cloudflare?" }],
-		});
-
-		return Response.json({
-			message: response.choices[0].message.content,
-		});
-	},
-};
-```
-
-</TabItem>
-</Tabs>
 
 ### cURL
 

@@ -3,7 +3,7 @@ title: DeepSeek
 pcx_content_type: get-started
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 [DeepSeek](https://www.deepseek.com/) helps you build quickly with DeepSeek's advanced AI models.
 
@@ -57,9 +57,6 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/deepseek/cha
 
 If you are using the OpenAI SDK, you can set your endpoint like this:
 
-<Tabs syncKey="sdk">
-<TabItem label="Javascript" icon="seti:javascript">
-
 ```js title="JavaScript"
 import OpenAI from "openai";
 
@@ -82,48 +79,6 @@ try {
 	return new Response(e);
 }
 ```
-
-</TabItem>
-<TabItem label="Javascript (Workers)" icon="seti:javascript">
-
-:::note
-For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
-:::
-
-```js title="JavaScript"
-import OpenAI from "openai";
-import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
-
-export default {
-	async fetch(request, env) {
-		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
-
-		// Use ProviderAuth.storedKey() for BYOK or pass an authorization token directly (e.g., env.DEEPSEEK_API_KEY)
-		const auth = ProviderAuth.storedKey();
-
-		const openai = new OpenAI({
-			apiKey: auth,
-			baseURL: "https://api.deepseek.com",
-		});
-
-		try {
-			const chatCompletion = await openai.chat.completions.create({
-				model: "deepseek-chat",
-				messages: [{ role: "user", content: "What is Cloudflare?" }],
-			});
-
-			const response = chatCompletion.choices[0].message;
-
-			return new Response(JSON.stringify(response));
-		} catch (e) {
-			return new Response(e);
-		}
-	},
-};
-```
-
-</TabItem>
-</Tabs>
 
 <Render
 	file="chat-completions-providers"

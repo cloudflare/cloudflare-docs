@@ -3,7 +3,7 @@ title: Google AI Studio
 pcx_content_type: get-started
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 [Google AI Studio](https://ai.google.dev/aistudio) helps you build quickly with Google Gemini models.
 
@@ -54,9 +54,6 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai
 
 If you are using the `@google/genai` package, you can set your endpoint like this:
 
-<Tabs syncKey="sdk">
-<TabItem label="Javascript" icon="seti:javascript">
-
 ```js title="JavaScript example"
 import { GoogleGenAI } from "@google/genai";
 
@@ -80,42 +77,6 @@ const response = await ai.models.generateContent({
 
 console.log(response.text);
 ```
-
-</TabItem>
-<TabItem label="Javascript (Workers)" icon="seti:javascript">
-
-:::note
-For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
-:::
-
-```js title="JavaScript example"
-import { GoogleGenAI } from "@google/genai";
-import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
-
-export default {
-	async fetch(request, env) {
-		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
-
-		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
-		// or pass an authorization token directly (e.g., env.GOOGLE_AI_STUDIO_API_KEY)
-		const auth = ProviderAuth.storedKey();
-
-		const ai = new GoogleGenAI({
-			apiKey: auth,
-		});
-
-		const response = await ai.models.generateContent({
-			model: "gemini-2.5-flash",
-			contents: "What is Cloudflare?",
-		});
-
-		return Response.json({ text: response.text });
-	},
-};
-```
-
-</TabItem>
-</Tabs>
 
 <Render
 	file="chat-completions-providers"
