@@ -458,29 +458,7 @@ With the release of [Secrets Store](/secrets-store/) in open beta, you can use t
 In order to interact with Secrets Store in production, you should append `--remote` to your command. Without it, your command will default to [local development mode](/workers/development-testing/).
 :::
 
-### `create`
-
-Create a secret within a store.
-
-```txt
-wrangler secrets-store secret create <STORE_ID> [OPTIONS]
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
-- `--name` <Type text="string" /> <MetaInfo text="required" />
-  - A descriptive name for the account-level secret. Cannot contain spaces.
-- `--value` <Type text="string" /> <MetaInfo text="test only" />
-  - Value of the secret.
-    :::caution[Only use for testing]
-    This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead. Find an example below.
-    :::
-- `--scopes` <Type text="string" /> <MetaInfo text="required" />
-  - Which services will have access to the account-level secret. Currently, only `workers` is available.
-- `--comment` <Type text="string" /> <MetaInfo text="optional" />
-  - Additional information about the account-level secret.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+<WranglerCommand command="secrets-store secret create" headingLevel={3}/>
 
 The following is an example of using the `create` command to create an account-level secret.
 
@@ -496,65 +474,11 @@ npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name
 ✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
 ```
 
-### `update`
+<WranglerCommand command="secrets-store secret update" headingLevel={3}/>
 
-Update a secret within a store.
+<WranglerCommand command="secrets-store secret duplicate" headingLevel={3}/>
 
-```txt
-wrangler secrets-store secret update <STORE_ID> [OPTIONS]
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the secrets store that contains the secret you are updating.
-- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the secret to update.
-- `--value` <Type text="string" /> <MetaInfo text="test only" />
-  - Updated value of the secret.
-    :::caution[Only use for testing]
-    This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead.
-    :::
-- `--scopes` <Type text="string" /> <MetaInfo text="required" />
-  - Which services will have access to the account-level secret. Currently, only `workers` is available.
-- `--comment` <Type text="string" /> <MetaInfo text="optional" />
-  - Updated comment for the account-level secret.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
-
-### `duplicate`
-
-Duplicate a secret within a store. Use this command to create a new secret that holds the same secret value as an existing secret.
-
-```txt
-wrangler secrets-store secret duplicate <STORE_ID> [OPTIONS]
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the secrets store that contains the secret you are duplicating.
-- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the secret you are duplicating.
-- `--name` <Type text="string" /> <MetaInfo text="required" />
-  - A name for the new secret. Cannot contain spaces.
-- `--scopes` <Type text="string" /> <MetaInfo text="required" />
-  - Which services will have access to the new account-level secret. Currently, only `workers` is available.
-- `--comment` <Type text="string" /> <MetaInfo text="optional" />
-  - Additional information about the new account-level secret.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
-
-### `get`
-
-Get information on a secret within a store.
-
-```txt
-wrangler secrets-store secret get <STORE_ID> [OPTIONS]
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the secrets store that contains the secret you want to get.
-- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the secret you want to get.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+<WranglerCommand command="secrets-store secret get" headingLevel={3}/>
 
 The following is an example with the expected output:
 
@@ -570,35 +494,9 @@ npx wrangler secrets-store secret get 8f7a1cdced6342c18d223ece462fd88d --secret-
 | ServiceA_key-1          | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
 ```
 
-### `delete`
+<WranglerCommand command="secrets-store secret delete" headingLevel={3}/>
 
-Delete a secret within a store.
-
-:::caution
-Before deleting a secret, make sure it is not deployed in any Workers application.
-:::
-
-```txt
-wrangler secrets-store secret delete <STORE_ID> [OPTIONS]
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the secrets store that contains the secret you are deleting.
-- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of the secret you are deleting.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
-
-### `list`
-
-List secrets within a store.
-
-```txt
-wrangler secrets-store secret list <STORE_ID>
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+<WranglerCommand command="secrets-store secret list" headingLevel={3}/>
 
 ## `secrets-store store`
 
@@ -608,18 +506,7 @@ Use the following commands to manage your store.
 [Secrets Store](/secrets-store/) is in open beta. Currently, you can only have one store per Cloudflare account.
 :::
 
-### `create`
-
-Create a store within Secrets Store.
-
-```txt
-wrangler secrets-store store create <name>
-```
-
-- `name` <Type text="string" /> <MetaInfo text="required" />
-  - A descriptive name for the account-level secret. Cannot contain spaces.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
-  - Execute the command against the remote Secrets Store.
+<WranglerCommand command="secrets-store store create" headingLevel={3}/>
 
 The following is an example of using the `create` command to create a store.
 
@@ -632,18 +519,7 @@ npx wrangler secrets-store store create default --remote
 ✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
 ```
 
-### `delete`
-
-Delete a store within Secrets Store.
-
-```txt
-wrangler secrets-store store delete <STORE_ID>
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
-  - Execute the command against the remote Secrets Store.
+<WranglerCommand command="secrets-store store delete" headingLevel={3}/>
 
 The following is an example of using the `delete` command to delete a store.
 
@@ -656,16 +532,7 @@ npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211 --remot
 ✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
 ```
 
-### `list`
-
-List the stores within an account.
-
-```txt
-wrangler secrets-store store list
-```
-
-- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
-  - Execute the command against the remote Secrets Store.
+<WranglerCommand command="secrets-store store list" headingLevel={3}/>
 
 The following is an example of using the `list` command to list stores.
 
@@ -713,267 +580,16 @@ If sampling persists after using options to filter messages, consider using [ins
 
 Configure Cloudflare Pages.
 
-### `dev`
+<WranglerNamespace namespace="pages" headingLevel={3}/>
 
-Develop your full-stack Pages application locally.
-
-```txt
-wrangler pages dev [<DIRECTORY>] [OPTIONS]
-```
-
-- `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
-  - The directory of static assets to serve.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
-  - Run on your local machine.
-- `--ip` <Type text="string" /> <MetaInfo text="optional" />
-  - IP address to listen on, defaults to `localhost`.
-- `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" />
-  - The port to listen on (serve from).
-- `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
-  - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If not provided, Wrangler will use the nearest config file based on your current working directory.
-  - You can provide additional configuration files in order to run Workers alongside your Pages project, like this: `wrangler pages dev -c ./wrangler.toml -c ../other-worker/wrangler.toml`. The first argument must point to your Pages configuration file, and the subsequent configurations will be accessible via a Service binding from your Pages project.
-- `--binding` <Type text="string[]" /> <MetaInfo text="optional" />
-  - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
-- `--kv` <Type text="string[]" /> optional
-  - Binding name of [KV namespace](/kv/) to bind (for example, `--kv <BINDING_NAME>`).
-- `--r2` <Type text="string[]" /> <MetaInfo text="optional" />
-  - Binding name of [R2 bucket](/pages/functions/bindings/#interact-with-your-r2-buckets-locally) to bind (for example, `--r2 <BINDING_NAME>`).
-- `--d1` <Type text="string[]" /> <MetaInfo text="optional" />
-  - Binding name of [D1 database](/pages/functions/bindings/#interact-with-your-d1-databases-locally) to bind (for example, `--d1 <BINDING_NAME>`).
-- `--do` <Type text="string[]" /> <MetaInfo text="optional" />
-  - Binding name of Durable Object to bind (for example, `--do <BINDING_NAME>=<CLASS>`).
-- `--live-reload` <Type text="boolean" /> <MetaInfo text="optional (default: false)" />
-  - Auto reload HTML pages when change is detected.
-- `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
-  - Runtime compatibility flags to apply.
-- `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
-  - Runtime compatibility date to apply.
-- `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="optional (default: true if the terminal supports interactivity)" />
-  - Show the interactive dev session.
-- `--https-key-path` <Type text="string" /> <MetaInfo text="optional" />
-  - Path to a custom certificate key.
-- `--https-cert-path` <Type text="string" /> <MetaInfo text="optional" />
-  - Path to a custom certificate.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `download config`
-
-Download your Pages project config as a [Wrangler configuration file](/workers/wrangler/configuration/).
-
-```txt
-wrangler pages download config <PROJECT_NAME>
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `project list`
-
-List your Pages projects.
-
-```txt
-wrangler pages project list
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `project create`
-
-Create a new Cloudflare Pages project.
-
-```txt
-wrangler pages project create <PROJECT_NAME> [OPTIONS]
-```
-
-- `PROJECT_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of your Pages project.
-- `--production-branch` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the production branch of your project.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `project delete`
-
-Delete a Cloudflare Pages project.
-
-```txt
-wrangler pages project delete <PROJECT_NAME> [OPTIONS]
-```
-
-- `PROJECT_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Pages project to delete.
-- `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Answer `"yes"` to confirmation prompt.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `deployment list`
-
-List deployments in your Cloudflare Pages project.
-
-```txt
-wrangler pages deployment list [--project-name <PROJECT_NAME>]
-```
-
-- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the project you would like to list deployments for.
-- `--environment` <Type text="'production'|'preview'" /> <MetaInfo text="optional" />
-  - Environment type to list deployments for.
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Whether to output the list in JSON format.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `deployment tail`
-
-Start a session to livestream logs from your deployed Pages Functions.
-
-```txt
-wrangler pages deployment tail [<DEPLOYMENT>] [OPTIONS]
-```
-
-- `DEPLOYMENT` <Type text="string" /> <MetaInfo text="optional" />
-  - ID or URL of the deployment to tail. Specify by environment if deployment ID is unknown.
-- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the project you would like to tail.
-- `--environment` <Type text="'production'|'preview'" /> <MetaInfo text="optional" />
-  - When not providing a specific deployment ID, specifying environment will grab the latest production or preview deployment.
-- `--format` <Type text="'json'|'pretty'" /> <MetaInfo text="optional" />
-  - The format of the log entries.
-- `--status` <Type text="'ok'|'error'|'canceled'" /> <MetaInfo text="optional" />
-  - Filter by invocation status.
-- `--header` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP header.
-- `--method` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP method.
-- `--sampling-rate` <Type text="number" /> <MetaInfo text="optional" />
-  - Add a percentage of requests to log sampling rate.
-- `--search` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by a text match in `console.log` messages.
-- `--ip` <Type text="(string|'self')\[]" /> <MetaInfo text="optional" />
-  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-:::note
-
+{/* :::note[Deployment tail]
 Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
 :::
 
-After starting `wrangler pages deployment tail`, you will receive a live stream of console and exception logs for each request your Functions receive.
-
-### `deploy`
-
-Deploy a directory of static assets as a Pages deployment.
-
-```txt
-wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
-```
-
-- `BUILD_OUTPUT_DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
-  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a Wrangler file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
-- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the project you want to deploy to.
-- `--branch` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the branch you want to deploy to.
-- `--commit-hash` <Type text="string" /> <MetaInfo text="optional" />
-  - The SHA to attach to this deployment.
-- `--commit-message` <Type text="string" /> <MetaInfo text="optional" />
-  - The commit message to attach to this deployment.
-- `--commit-dirty` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Whether or not the workspace should be considered dirty for this deployment.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-:::note
-
+:::[Deploy]
 Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter a project name in your terminal after you run the command.
+::: */}
 
-:::
-
-### `secret put`
-
-Create or update a secret for a Pages project.
-
-```txt
-wrangler pages secret put <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Pages project.
-- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of your Pages project.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `secret delete`
-
-Delete a secret from a Pages project.
-
-```txt
-wrangler pages secret delete <KEY> [OPTIONS]
-```
-
-- `KEY` <Type text="string" /> <MetaInfo text="required" />
-  - The variable name for this secret to be accessed in the Pages project.
-- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of your Pages project.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `secret list`
-
-List the names of all the secrets for a Pages project.
-
-```txt
-wrangler pages secret list [OPTIONS]
-```
-
-- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of your Pages project.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `secret bulk`
-
-Upload multiple secrets for a Pages project at once.
-
-```txt
-wrangler pages secret bulk [<FILENAME>] [OPTIONS]
-```
-
-- `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
-  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
-  - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
-  - The `.env` file containing [key-value pairs to upload as secrets](/workers/configuration/secrets/#local-development-with-secrets), in the form `SECRET_NAME=secret value`.
-  - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
-- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of your Pages project.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `functions build`
-
-Compile a folder of Pages Functions into a single Worker.
-
-```txt
-wrangler pages functions build [<DIRECTORY>] [OPTIONS]
-```
-
-- `DIRECTORY` <Type text="string" /> <MetaInfo text="optional (default: `functions`)" />
-  - The directory of Pages Functions.
-- `--outdir` <Type text="string" /> <MetaInfo text="optional" />
-  - Output directory for the bundled Worker.
-- `--fallback-service` <Type text="string" /> <MetaInfo text="optional (default: `ASSETS`)" />
-  - The service to fallback to at the end of the `next` chain. Setting to `''` will fallback to the global `fetch`.
-- `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
-  - Date to use for compatibility checks.
-- `--compatibility-flags` <Type text="string[]" /> <MetaInfo text="optional" />
-  - Flags to use for compatibility checks.
-- `--metafile` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 

@@ -18,6 +18,7 @@ This error is often triggered by:
 - Empty or malformed responses lacking an HTTP status code or response body.
 - Missing response headers or origin web server not returning [proper HTTP error responses](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
 - Incorrect HTTP/2 configuration at the origin server.
+- Authentication Origin Pull enabled on Cloudflare but the origin is [not configured as expected](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/#2-configure-origin-to-accept-client-certificates).
 
 :::note
 

@@ -1,24 +1,20 @@
 ---
-params:
-  - productName
-  - dynamicThresholdURL
-  - staticThresholdURL
-  - sFlowDDoSAttackURL
+{}
 ---
 
 import { Render, DashButton } from "~/components"
 
-{props.productName} rules allow you to monitor your network traffic for DDoS attacks on specific IP addresses or IP prefixes within your network. If the network traffic that is monitored by a rule exceeds the rule's threshold or contains a DDoS attack fingerprint, then you will receive an alert.
+Magic Network Monitoring rules allow you to monitor your network traffic for DDoS attacks on specific IP addresses or IP prefixes within your network. If the network traffic that is monitored by a rule exceeds the rule's threshold or contains a DDoS attack fingerprint, then you will receive an alert.
 
 ## Rule types
 
-There are three different types of rules that can be configured within {props.productName}. You can refer to the linked documentation page for each rule type to learn more.
+There are three different types of rules that can be configured within Magic Network Monitoring. You can refer to the linked documentation page for each rule type to learn more.
 
 | Rule Type | Rule Description | Rule Availability |
 | :---- | :---- | :---- |
-| <a href={props.dynamicThresholdURL}>Dynamic threshold</a> (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
-| <a href={props.staticThresholdURL}>Static threshold</a> | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
-| <a href={props.sFlowDDoSAttackURL}>sFlow DDoS attack</a> | {props.productName} customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
+| [Dynamic threshold](/magic-network-monitoring/rules/dynamic-threshold/) (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
+| [Static threshold](/magic-network-monitoring/rules/static-threshold/) | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
+| [sFlow DDoS attack](/magic-network-monitoring/rules/s-flow-ddos-attack/) | Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
 
 ## Create rules in the dashboard
 

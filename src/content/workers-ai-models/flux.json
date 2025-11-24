@@ -16,131 +16,135 @@
             "value": "true"
         },
         {
+            "property_id": "terms",
+            "value": "https://deepgram.com/terms"
+        },
+        {
             "property_id": "realtime",
             "value": "true"
         }
     ],
     "schema": {
-      "input": {
-        "type": "object",
-        "properties": {
-          "encoding": {
-            "type": "string",
-            "description": "Encoding of the audio stream. Currently only supports raw signed little-endian 16-bit PCM.",
-            "enum": [
-              "linear16"
-            ]
-          },
-          "sample_rate": {
-            "type": "string",
-            "description": "Sample rate of the audio stream in Hz.",
-            "pattern": "^[0-9]+$"
-          },
-          "eager_eot_threshold": {
-            "type": "string",
-            "description": "End-of-turn confidence required to fire an eager end-of-turn event. When set, enables EagerEndOfTurn and TurnResumed events. Valid Values 0.3 - 0.9."
-          },
-          "eot_threshold": {
-            "type": "string",
-            "description": "End-of-turn confidence required to finish a turn. Valid Values 0.5 - 0.9.",
-            "default": "0.7"
-          },
-          "eot_timeout_ms": {
-            "type": "string",
-            "description": "A turn will be finished when this much time has passed after speech, regardless of EOT confidence.",
-            "default": "5000",
-            "pattern": "^[0-9]+$"
-          },
-          "keyterm": {
-            "type": "string",
-            "description": "Keyterm prompting can improve recognition of specialized terminology. Pass multiple keyterm query parameters to boost multiple keyterms."
-          },
-          "mip_opt_out": {
-            "type": "string",
-            "description": "Opts out requests from the Deepgram Model Improvement Program. Refer to Deepgram Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip",
-            "enum": [
-              "true",
-              "false"
-            ],
-            "default": "false"
-          },
-          "tag": {
-            "type": "string",
-            "description": "Label your requests for the purpose of identification during usage reporting"
-          },
-          "required": [
-            "sample_rate",
-            "encoding"
-          ]
-        }
-      },
-      "output": {
-        "type": "object",
-        "description": "Output will be returned as websocket messages.",
-        "properties": {
-          "request_id": {
-            "type": "string",
-            "description": "The unique identifier of the request (uuid)"
-          },
-          "sequence_id": {
-            "type": "integer",
-            "description": "Starts at 0 and increments for each message the server sends to the client.",
-            "minimum": 0
-          },
-          "event": {
-            "type": "string",
-            "description": "The type of event being reported.",
-            "enum": [
-              "Update",
-              "StartOfTurn",
-              "EagerEndOfTurn",
-              "TurnResumed",
-              "EndOfTurn"
-            ]
-          },
-          "turn_index": {
-            "type": "integer",
-            "description": "The index of the current turn",
-            "minimum": 0
-          },
-          "audio_window_start": {
-            "type": "number",
-            "description": "Start time in seconds of the audio range that was transcribed"
-          },
-          "audio_window_end": {
-            "type": "number",
-            "description": "End time in seconds of the audio range that was transcribed"
-          },
-          "transcript": {
-            "type": "string",
-            "description": "Text that was said over the course of the current turn"
-          },
-          "words": {
-            "type": "array",
-            "description": "The words in the transcript",
-            "items": {
-              "type": "object",
-              "required": [
-                "word",
-                "confidence"
-              ],
-              "properties": {
-                "word": {
-                  "type": "string",
-                  "description": "The individual punctuated, properly-cased word from the transcript"
+        "input": {
+            "type": "object",
+            "properties": {
+                "encoding": {
+                    "type": "string",
+                    "description": "Encoding of the audio stream. Currently only supports raw signed little-endian 16-bit PCM.",
+                    "enum": [
+                        "linear16"
+                    ]
                 },
-                "confidence": {
-                  "type": "number",
-                  "description": "Confidence that this word was transcribed correctly"
+                "sample_rate": {
+                    "type": "string",
+                    "description": "Sample rate of the audio stream in Hz.",
+                    "pattern": "^[0-9]+$"
+                },
+                "eager_eot_threshold": {
+                    "type": "string",
+                    "description": "End-of-turn confidence required to fire an eager end-of-turn event. When set, enables EagerEndOfTurn and TurnResumed events. Valid Values 0.3 - 0.9."
+                },
+                "eot_threshold": {
+                    "type": "string",
+                    "description": "End-of-turn confidence required to finish a turn. Valid Values 0.5 - 0.9.",
+                    "default": "0.7"
+                },
+                "eot_timeout_ms": {
+                    "type": "string",
+                    "description": "A turn will be finished when this much time has passed after speech, regardless of EOT confidence.",
+                    "default": "5000",
+                    "pattern": "^[0-9]+$"
+                },
+                "keyterm": {
+                    "type": "string",
+                    "description": "Keyterm prompting can improve recognition of specialized terminology. Pass multiple keyterm query parameters to boost multiple keyterms."
+                },
+                "mip_opt_out": {
+                    "type": "string",
+                    "description": "Opts out requests from the Deepgram Model Improvement Program. Refer to Deepgram Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip",
+                    "enum": [
+                        "true",
+                        "false"
+                    ],
+                    "default": "false"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Label your requests for the purpose of identification during usage reporting"
                 }
-              }
+            },
+            "required": [
+                "sample_rate",
+                "encoding"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "description": "Output will be returned as websocket messages.",
+            "properties": {
+                "request_id": {
+                    "type": "string",
+                    "description": "The unique identifier of the request (uuid)"
+                },
+                "sequence_id": {
+                    "type": "integer",
+                    "description": "Starts at 0 and increments for each message the server sends to the client.",
+                    "minimum": 0
+                },
+                "event": {
+                    "type": "string",
+                    "description": "The type of event being reported.",
+                    "enum": [
+                        "Update",
+                        "StartOfTurn",
+                        "EagerEndOfTurn",
+                        "TurnResumed",
+                        "EndOfTurn"
+                    ]
+                },
+                "turn_index": {
+                    "type": "integer",
+                    "description": "The index of the current turn",
+                    "minimum": 0
+                },
+                "audio_window_start": {
+                    "type": "number",
+                    "description": "Start time in seconds of the audio range that was transcribed"
+                },
+                "audio_window_end": {
+                    "type": "number",
+                    "description": "End time in seconds of the audio range that was transcribed"
+                },
+                "transcript": {
+                    "type": "string",
+                    "description": "Text that was said over the course of the current turn"
+                },
+                "words": {
+                    "type": "array",
+                    "description": "The words in the transcript",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "word",
+                            "confidence"
+                        ],
+                        "properties": {
+                            "word": {
+                                "type": "string",
+                                "description": "The individual punctuated, properly-cased word from the transcript"
+                            },
+                            "confidence": {
+                                "type": "number",
+                                "description": "Confidence that this word was transcribed correctly"
+                            }
+                        }
+                    }
+                },
+                "end_of_turn_confidence": {
+                    "type": "number",
+                    "description": "Confidence that no more speech is coming in this turn"
+                }
             }
-          },
-          "end_of_turn_confidence": {
-            "type": "number",
-            "description": "Confidence that no more speech is coming in this turn"
-          }
         }
-      }
     }
 }

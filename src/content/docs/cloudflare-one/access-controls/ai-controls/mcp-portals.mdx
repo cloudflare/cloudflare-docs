@@ -174,3 +174,15 @@ Portal logs allow you to monitor user activity through an MCP server portal. You
 | Server     | Name of the MCP server that handled the request     |
 | Capability | The tool used to process the request                |
 | Duration   | Processing time for the request in milliseconds     |
+
+## Troubleshooting
+
+### After authenticating to the Portal, my user receives the error "No allowed servers available, check your Zero Trust Policies"
+
+1. A Portal and server must both have an attached policy. Ensure that any assigned servers to the Portal have their own associated policy.
+2. The server's admin authentication may be expired. Check that the server's status in the AI Controls dashboard is **Ready**.
+
+### The portal URL will not prompt for authentication when it is added to an MCP client
+
+1. Verify that the Portal has an assigned policy.
+2. Verify that the Portal URL does not have any applied Workers, Page Rules, Custom Hostname definitions, or any other configuration that may interfere with its ability to connect to the MCP client.

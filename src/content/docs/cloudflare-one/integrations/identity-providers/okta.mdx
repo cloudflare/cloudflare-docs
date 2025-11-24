@@ -34,22 +34,16 @@ To set up the Okta integration using the Okta Integration Network (OIN) App Cata
 4. Search for `Cloudflare` and select the **Cloudflare One** app.
 5. Select **Add integration**.
 6. In **Application label**, enter a name for the application (for example, `Cloudflare Access`).
-7. In **Team domain**, enter your Cloudflare Zero Trust team domain:
+7. In **Team domain**, enter your Cloudflare Zero Trust team name (only the subdomain prefix, do not include `.cloudflareaccess.com`):
 
    ```txt
-   <your-team-name>.cloudflareaccess.com
+   <your-team-name>
    ```
 
    You can find your team domain in Cloudflare One under **Settings** > **Team name**.
 
-8. In the **Sign On** tab, copy the **Client ID** and **Client secret**.
-9. Scroll down to **OpenID ConnectID Token** and select **Edit**.
-
-   ![Configuring the Groups claim filter in Okta](~/assets/images/cloudflare-one/identity/okta/okta-2.png)
-
-10. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
-
-<Render file="access/okta-zt-steps" product="cloudflare-one" />
+8. In the **Sign On** tab, copy the **Client ID** and **Client secret** and paste these into `App ID` and `Client secret`.
+9. Copy your Okta Account URL (without the `-admin` value) and copy it into the Cloudflare Okta setup field.
 
 ## Set up Okta as an OIDC provider (Custom App Integration)
 

@@ -37,48 +37,106 @@
     ],
     "schema": {
         "input": {
-            "type": "object",
-            "title": "GPT_OSS_Responses",
-            "properties": {
-                "input": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "items": {},
-                            "type": "array"
-                        }
-                    ],
-                    "description": "Responses API Input messages. Refer to OpenAI Responses API docs to learn more about supported content types",
-                    "title": "Input"
-                },
-                "reasoning": {
+            "oneOf": [
+                {
                     "type": "object",
+                    "title": "GPT_OSS_120B_Responses",
                     "properties": {
-                        "effort": {
-                            "type": "string",
-                            "description": "Constrains effort on reasoning for reasoning models. Currently supported values are low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.",
-                            "enum": [
-                                "low",
-                                "medium",
-                                "high"
-                            ]
+                        "input": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "items": {},
+                                    "type": "array"
+                                }
+                            ],
+                            "description": "Responses API Input messages. Refer to OpenAI Responses API docs to learn more about supported content types"
                         },
-                        "summary": {
-                            "type": "string",
-                            "description": "A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of auto, concise, or detailed.",
-                            "enum": [
-                                "auto",
-                                "concise",
-                                "detailed"
-                            ]
+                        "reasoning": {
+                            "type": "object",
+                            "properties": {
+                                "effort": {
+                                    "type": "string",
+                                    "description": "Constrains effort on reasoning for reasoning models. Currently supported values are low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.",
+                                    "enum": [
+                                        "low",
+                                        "medium",
+                                        "high"
+                                    ]
+                                },
+                                "summary": {
+                                    "type": "string",
+                                    "description": "A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of auto, concise, or detailed.",
+                                    "enum": [
+                                        "auto",
+                                        "concise",
+                                        "detailed"
+                                    ]
+                                }
+                            }
                         }
-                    }
+                    },
+                    "required": [
+                        "input"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "GPT_OSS_120B_Responses_Async",
+                    "properties": {
+                        "requests": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "input": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "items": {},
+                                                "type": "array"
+                                            }
+                                        ],
+                                        "description": "Responses API Input messages. Refer to OpenAI Responses API docs to learn more about supported content types"
+                                    },
+                                    "reasoning": {
+                                        "type": "object",
+                                        "properties": {
+                                            "effort": {
+                                                "type": "string",
+                                                "description": "Constrains effort on reasoning for reasoning models. Currently supported values are low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.",
+                                                "enum": [
+                                                    "low",
+                                                    "medium",
+                                                    "high"
+                                                ]
+                                            },
+                                            "summary": {
+                                                "type": "string",
+                                                "description": "A summary of the reasoning performed by the model. This can be useful for debugging and understanding the model's reasoning process. One of auto, concise, or detailed.",
+                                                "enum": [
+                                                    "auto",
+                                                    "concise",
+                                                    "detailed"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "input"
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "requests"
+                    ]
                 }
-            },
-            "required": [
-                "input"
             ]
         },
         "output": {

@@ -96,7 +96,7 @@ A bucket website endpoint will be available at `http://<your-S3-bucket01>.s3-web
 
 ### 4. Add a published application to the Cloudflare Tunnel
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
 2. Select your Tunnel, then select **Configure**.
 3. Go to **Published applications**, then select **Add a public hostname**.
 4. Enter a subdomain your organization will use to access the S3 bucket. For example, `s3-bucket.<your-domain>.com`.
@@ -108,7 +108,7 @@ Your Cloudflare Tunnel will terminate at the AWS VPC using your public hostname.
 
 ### 5. Restrict S3 access with an Access policy
 
-1. Go to **Access** > **Applications**.
+1. Go to **Access controls** > **Applications**.
 2. Select **Add an application**.
 3. Select **Self-hosted**.
 4. Enter a name for the application.
@@ -186,7 +186,7 @@ A bucket website endpoint will be available at `http://<your-S3-bucket02>.s3-web
 
 ### 3. Setup a dedicated egress IP policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress policies**. Select **Add a policy**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Egress policies**. Select **Add a policy**.
 2. Create a policy that specifies which proxied traffic Gateway should assign a [dedicated egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) to. For more information, refer to [Egress policies](/cloudflare-one/traffic-policies/egress-policies/).
 3. In **Select an egress IP**, choose _Use dedicated Cloudflare egress IPs_. Select the dedicated egress IP defined in your bucket policy.
 4. Select **Create policy**.

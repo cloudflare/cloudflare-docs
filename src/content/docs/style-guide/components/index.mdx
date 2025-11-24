@@ -4,7 +4,7 @@ sidebar:
   order: 2
 ---
 
-import { Details } from "~/components";
+import { Details, Example } from "~/components";
 
 When you are [contributing to the Cloudflare Docs](/style-guide/contributions/), you can use our custom components to add additional formatting, such as buttons, tabs, and collapsible sections.
 
@@ -55,7 +55,32 @@ To add a component to a page:
    2. Go to the specific zone where you want to enable transformations.
    ```
 
-   <Details header="This is how this example would display after it is published:">
-   	![DashButton component
-   	example](~/assets/images/style-guide/ui-elements/dashbutton-example.png)
-   </Details>
+  <Details header="This is how this example would display after it is published:">
+  ![DashButton component example](~/assets/images/style-guide/ui-elements/dashbutton-example.png)
+  </Details>
+
+## Choose the right component
+
+To choose the right component for your use case, browse this table which contains our most commonly used components and a visual example of each. For full documentation on all available components and their use cases, browse the individual component pages in this Style Guide.
+
+| Component | Description & visual example |
+| :---- | :----   |
+| [`APIRequest`](/style-guide/components/api-request/) | <p>Styled API request block. Generate executable cURL API commands with the required API token permissions.</p> <Example>![APIRequest component example](~/assets/images/style-guide/ui-elements/apirequest-example.png) </Example> |
+| [`Badge`](/style-guide/components/badges/) | <p>Small descriptive pill. Label content with status, version, category, or other short metadata.</p> <Example> ![Badge component example](~/assets/images/style-guide/ui-elements/badge-example.png) </Example>|
+| [`DashButton`](/style-guide/components/dash-button/) | <p>Dashboard deep-link button. Directly link users from documentation into a specific, relevant section of the Cloudflare Dashboard.</p> <Example> ![DashButton component example](~/assets/images/style-guide/ui-elements/dashbutton-example-2.png) </Example>|
+| [`Details`](/style-guide/components/details/) | <p>Click-to-expand content block. Hide non-essential, complex, or advanced technical content, allowing users to expand the section when needed.</p> <Example> ![Details example](~/assets/images/style-guide/ui-elements/details-example.png) </Example>|
+| [`DirectoryListing`](/style-guide/components/directory-listing) | <p>Auto-generated sub-page list. Automatically generate a navigable list of links to sub-pages within a specified documentation folder path.</p> <Example> ![DirectoryListing component example](~/assets/images/style-guide/ui-elements/directorylisting-example.png) </Example>|
+| [`Feature`](/style-guide/components/feature/) | <p>Product feature list item. Highlight a product feature with a description and a direct link button.</p> <Example> ![Feature component example](~/assets/images/style-guide/ui-elements/feature-example.png) </Example>|
+| [`FeatureTable`](/style-guide/components/feature-table/) | <p>Product plan comparison table. Display detailed feature information, including availability across different Cloudflare pricing plans.</p> <Example> ![FeatureTable component example](~/assets/images/style-guide/ui-elements/featuretable-example.png) </Example>|
+| [`GlossaryTooltip`](/style-guide/components/glossary-tooltip/) | <p>Hover-activated glossary popup. Provide non-disruptive, hover-activated definitions for technical terms pulled from the documentation glossary.</p> <Example> ![Glossary tooltip example](~/assets/images/style-guide/ui-elements/glossarytooltip-example.png) </Example>|
+| [`LinkCard`](/style-guide/components/link-cards/) | <p>Navigational cards. Present related tutorials, concepts, or guides in a visually engaging format.</p> <Example> ![LinkCard component example](~/assets/images/style-guide/ui-elements/linkcard-example.png) </Example>|
+| [`PackageManagers`](/style-guide/components/package-managers) | <p>Command switcher tabs. Display equivalent installation or execution commands for different package managers.</p> <Example> ![DirectoryListing component example](~/assets/images/style-guide/ui-elements/packagemanagers-example.png) </Example>|
+| [`Plan`](/style-guide/components/plan/) | <p>Product plan availability badge. Show the plan required for a product or specific feature.</p> <Example> ![Plan component example](~/assets/images/style-guide/ui-elements/plan-example.png) </Example>|
+| [`RelatedProduct`](/style-guide/components/related-product/) | <p>Formatted product reference. Visually highlight and link to a specific, complementary Cloudflare product, also featuring the product's logo.</p> <Example> ![RelatedProduct component example](~/assets/images/style-guide/ui-elements/relatedproduct-example.png) </Example>|
+| [`ResourcesBySelector`](/style-guide/components/resources-by-selector/) | <p>Filterable code example library. Pull and display lists of code examples and resources based on tags and content type.</p> <Example> ![ResourcesBySelector component example](~/assets/images/style-guide/ui-elements/resourcesbyselector-example.png) </Example>|
+| [`Stream`](/style-guide/components/stream/) | <p>Embeddable video player. Display a video player optimized for Cloudflare Stream.</p> <Example> ![Stream example](~/assets/images/style-guide/ui-elements/stream-example.png) </Example>|
+| [`Tabs` and `TabItem`](/style-guide/components/tabs/) | <p>Switchable content tabs. Allow easy switching between content views for different code languages or configuration methods.</p> <Example> ![Tabs example](~/assets/images/style-guide/ui-elements/tabs-example.png) </Example>|
+| [`Type` and `MetaInfo`](/style-guide/components/type-highlighting/) | <p>Pill-shaped data type badge and metadata annotation about a field or property. `Type` indicates API parameter data types (`String`, `Integer`) and `MetaInfo` indicates metadata constraints (`Required`, `Optional`, `Read-only`).</p> <Example> ![Type and MetaInfo example](~/assets/images/style-guide/ui-elements/type-example.png)  </Example>|
+| [`WranglerConfig`](/style-guide/components/wrangler-config/) | <p>Tabbed Wrangler config display. Show Wrangler configuration files (JSONC and TOML) and bindings with automatic format switching.</p> <Example> ![WranglerConfig example](~/assets/images/style-guide/ui-elements/wranglerconfig-example.png)  </Example>|
+| [`YouTube`](/style-guide/components/youtube/) | <p>Embeddable video player. Embeds a YouTube video player with a specified video ID.</p> <Example> ![YouTube example](~/assets/images/style-guide/ui-elements/youtube-example.png)  </Example>|
+

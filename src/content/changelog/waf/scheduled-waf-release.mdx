@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2025-11-17
-description: WAF managed ruleset changes scheduled for 2025-11-17
-date: 2025-11-10
+title: WAF Release - Scheduled changes for 2025-12-01
+description: WAF managed ruleset changes scheduled for 2025-12-01
+date: 2025-11-24
 scheduled: true
 ---
 
@@ -20,16 +20,27 @@ import { RuleID } from "~/components";
     </tr>
   </thead>
   <tbody>
-   <tr>
-      <td>2025-11-10</td>
-      <td>2025-11-17</td>
+  <tr>
+      <td>2025-11-24</td>
+      <td>2025-12-01</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="ec1e2aa190e64e7cb468e16dd256f4bc" />
+        <RuleID id="480da5e7984542a6b8d8d88da4fcc8a8" />
       </td>
-      <td>DELMIA Apriso - Auth Bypass - CVE:CVE-2025-6205</td>
-      <td>This is a new detection</td>
+      <td>Monsta FTP - Remote Code Execution - CVE:CVE-2025-34299</td>
+      <td>This is a new detection</td> 
    </tr>
+   <tr>
+      <td>2025-11-24</td>
+      <td>2025-12-01</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="2380b125c53d42ac94479c42b7492846" />
+      </td>
+      <td>XSS - JS Context Escape - Beta</td>
+      <td>This is a beta detection and will replace the action on original detection "XSS - JS Context Escape" (ID: <RuleID id="c1ad1bc37caa4cbeb104f44f7a3769d3" />)</td>
+   </tr>  
   </tbody>
 </table>

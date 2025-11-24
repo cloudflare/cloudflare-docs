@@ -35,7 +35,7 @@ In a tiered account configuration, a top-level parent account enforces global se
   - Child accounts will use the block page setting used by the parent account unless you configure separate block settings for the child account. This applies to both redirects and custom block pages. The block page uses the account certificate for each child account.
 - Generating or uploading [root certificates](/cloudflare-one/team-and-resources/devices/user-side-certificates/)
   - If Gateway cannot attribute an incoming DNS query to a child account, it will use the parent account's certificate. This happens when the source IP address of the DNS query does not match a child account or if a custom DNS resolver endpoint is not configured.
-- Mapping [DNS locations](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/)
+- Mapping [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/)
 - Creating [lists](/cloudflare-one/reusable-components/lists/)
 
 Each child account is subject to the default Zero Trust [account limits](/cloudflare-one/account-limits/).

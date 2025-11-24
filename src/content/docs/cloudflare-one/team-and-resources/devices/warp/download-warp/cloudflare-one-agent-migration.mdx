@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Migrate 1.1.1.1 app
 sidebar:
   order: 12
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Users can connect to Cloudflare Zero Trust services through an agent that runs on their device. Cloudflare previously bundled that functionality into the [WARP client](/warp-client/), an application that also provides privacy-focused DNS and VPN services for consumers (known as 1.1.1.1 w/ WARP). Supporting both enterprise and consumer functionality in the same application allowed us to build Zero Trust upon the same foundation used by millions of consumers across the globe, but has limited the pace at which changes could be released. As a result, we are launching a dedicated Cloudflare One Agent that replaces the WARP client for Zero Trust deployments.
 
@@ -31,13 +30,12 @@ If you downloaded and installed the 1.1.1.1 app manually, here are the recommend
 1. Update the **1.1.1.1** app to version 6.29 or above. The update ensures that 1.1.1.1 can [co-exist](#what-to-do-with-the-old-app) with the new Cloudflare One Agent app.
 
 2. If you have enabled [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/), ensure that you have a [Do Not Inspect policy](/cloudflare-one/traffic-policies/initial-setup/http/) in place for the following applications:
-
-   * *Google Services (Do Not Inspect)*
-   * *Google Play Store (Do Not Inspect)*
-   * *Google (Do Not Inspect)*
-   * *Google Drive (Do Not Inspect)*
-   * *Google Chat (Do Not Inspect)*
-   * *Google Meet (Do Not Inspect)*
+   - _Google Services (Do Not Inspect)_
+   - _Google Play Store (Do Not Inspect)_
+   - _Google (Do Not Inspect)_
+   - _Google Drive (Do Not Inspect)_
+   - _Google Chat (Do Not Inspect)_
+   - _Google Meet (Do Not Inspect)_
 
    This prevents certificate pinning issues when performing the Android migration.
 
@@ -51,7 +49,7 @@ If you downloaded and installed the 1.1.1.1 app manually, here are the recommend
 
 </TabItem> </Tabs>
 
-If you enrolled the Cloudflare One Agent in the same Zero Trust organization as 1.1.1.1, you will be automatically logged out of Zero Trust on 1.1.1.1. The 1.1.1.1 app will revert to consumer mode, and the **Login with Cloudflare Zero Trust**  button on the old app will redirect to the new app.
+If you enrolled the Cloudflare One Agent in the same Zero Trust organization as 1.1.1.1, you will be automatically logged out of Cloudflare One on 1.1.1.1. The 1.1.1.1 app will revert to consumer mode, and the **Login with Cloudflare Zero Trust** button on the old app will redirect to the new app.
 
 If you enrolled the Cloudflare One Agent in a different Zero Trust organization, you will remain logged into your other Zero Trust organization on 1.1.1.1.
 
@@ -103,4 +101,4 @@ Once users have enrolled, the migration process is complete. The 1.1.1.1 app wil
 
 ### Verify migration
 
-To check whether a user has migrated, go to **My Team** > **Devices**. A device enrolled through the Cloudflare One Agent will appear as a new device with a new device ID. Their old 1.1.1.1 registration will remain as an inactive device.
+To check whether a user has migrated, go to **Team & Resources** > **Devices**. A device enrolled through the Cloudflare One Agent will appear as a new device with a new device ID. Their old 1.1.1.1 registration will remain as an inactive device.

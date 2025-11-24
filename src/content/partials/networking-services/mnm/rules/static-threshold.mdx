@@ -1,9 +1,5 @@
 ---
-params:
-  - productName
-  - autoAdvertiseURL
-  - ruleIpPrefixesURL
-  - rulesURL
+{}
 ---
 
 import { DashButton } from "~/components";
@@ -21,22 +17,22 @@ Customers that send NetFlow and/or sFlow data to Cloudflare can configure static
 | **Rule threshold type** | Can be defined in either bits per second or packets per second. |
 | **Rule threshold** | The number of bits per second or packets per second for the rule alert. When this value is exceeded for the rule duration, an alert notification is sent. Minimum of `1` and no maximum. |
 | **Rule duration** | The amount of time in minutes the rule threshold must exceed to send an alert notification. Choose from the following values: `1`, `5`, `10`, `15`, `20`, `30`, `45`, or `60` minutes. |
-| **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule alert is triggered. {props.productName} supports Magic Transit's supernet capability. To learn more refer to <a href={props.autoAdvertiseURL}>Auto-Advertisement section</a>. |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries. To learn more and see an example, view the <a href={props.ruleIpPrefixesURL}>Rule IP prefixes</a> section. |
+| **Auto-advertisement** | If you are a Magic Transit On Demand customer, you can enable this feature to automatically enable Magic Transit if the rule alert is triggered. Magic Network Monitoring supports Magic Transit's supernet capability. To learn more refer to [Auto-Advertisement section](#rule-auto-advertisement). |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries. To learn more and see an example, view the [Rule IP prefixes](#rule-ip-prefixes) section. |
 
 ## API documentation
 
-You can visit the [API documentation](/api/resources/magic_network_monitoring/subresources/rules/) to explore examples of CURL API configuration calls that will create a new rule. The API documentation also includes an example of a successful response.
+To review an example static threshold rule, go to the [Rules](https://api.cloudflare.com/#magic-network-monitoring-rules-properties) section in the Magic Network Monitoring API documentation.
 
 ## Recommended rule configuration
 
-You can create <a href={props.rulesURL}>{props.productName} rules</a> to monitor the traffic volume of your network for a set of IP prefixes and / or IP addresses. The traffic volume threshold for these rules is also set by you. If the traffic volume threshold is crossed, {props.productName} will send an alert via email, webhook, or PagerDuty.
+You can create [Magic Network Monitoring rules](https://dash.cloudflare.com/?to=/:account/network-monitoring) to monitor the traffic volume of your network for a set of IP prefixes and / or IP addresses. The traffic volume threshold for these rules is also set by you. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
 
-Follow the guidelines outlined in this page to create appropriate {props.productName} rules and set accurate rule thresholds.
+Follow the guidelines outlined in this page to create appropriate Magic Network Monitoring rules and set accurate rule thresholds.
 
 ### Rule IP prefixes
 
-Cloudflare recommends that customers start by creating one {props.productName} rule for each public `/24` IP prefix within their network. It is helpful to include the range of the `/24` IP prefix to make it easier to find and filter for the rule in {props.productName} analytics.
+Cloudflare recommends that customers start by creating one Magic Network Monitoring rule for each public `/24` IP prefix within their network. It is helpful to include the range of the `/24` IP prefix to make it easier to find and filter for the rule in Magic Network Monitoring analytics.
 
 As you become more familiar with the traffic patterns across each IP prefix, we encourage you to create more complex rules with IP prefixes that are smaller or larger than a `/24` prefix depending on your needs. You can also combine and monitor multiple IP prefixes within the same rule.
 
@@ -46,9 +42,9 @@ Follow the steps below to configure appropriate rule thresholds.
 
 #### Initial rule configuration
 
-When you initially configure {props.productName}, you may not know the typical traffic volume patterns across each of your IP prefixes. Cloudflare recommends that you set a high rule threshold of either 10 Gbps (gigabits per second) or 10 Mpps (million packets per second) that is unlikely to be crossed during initial configuration.
+When you initially configure Magic Network Monitoring, you may not know the typical traffic volume patterns across each of your IP prefixes. Cloudflare recommends that you set a high rule threshold of either 10 Gbps (gigabits per second) or 10 Mpps (million packets per second) that is unlikely to be crossed during initial configuration.
 
-This will allow you to collect initial information about the typical traffic volume for a {props.productName} rule without receiving any alerts. After you have collected and analyzed the historical traffic data for an {props.productName} rule, the threshold should be adjusted to an appropriate value.
+This will allow you to collect initial information about the typical traffic volume for a Magic Network Monitoring rule without receiving any alerts. After configuring your initial rules, you should begin monitoring for alerts and reviewing network traffic in Magic Network Monitoring Analytics. Over time, each rule's threshold should be updated based on historical traffic data.
 
 | Threshold type | Recommended rule threshold to collect initial data |
 | :---- 				 | :---- 																						  |

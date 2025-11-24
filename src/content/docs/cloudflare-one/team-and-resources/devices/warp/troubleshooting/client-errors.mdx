@@ -3,12 +3,13 @@ pcx_content_type: reference
 title: Client errors
 sidebar:
   order: 2
-
 ---
 
-import { Details } from "~/components"
+import { Details, Render } from "~/components";
 
 This page lists the error codes that can appear in the WARP client GUI. If you do not see your error below, refer to [common issues](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/common-issues/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+<Render file="warp/troubleshooting-guide-reference" product="cloudflare-one" />
 
 <div class="medium-img">
 
@@ -16,32 +17,32 @@ This page lists the error codes that can appear in the WARP client GUI. If you d
 
 </div>
 
-## CF\_CAPTIVE\_PORTAL\_TIMED\_OUT
+## CF_CAPTIVE_PORTAL_TIMED_OUT
 
 ### Symptoms
 
-* Unable to login to a captive portal network
-* No Internet connectivity
+- Unable to login to a captive portal network
+- No Internet connectivity
 
 ### Cause
 
 [Captive portal detection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#captive-portal-detection) is turned on and one of the following issues occurred:
 
-* The user did not complete the captive portal login process within the time limit set by WARP.
-* The captive portal redirected the user to a flow that is not yet supported by the captive portal detection feature.
+- The user did not complete the captive portal login process within the time limit set by WARP.
+- The captive portal redirected the user to a flow that is not yet supported by the captive portal detection feature.
 
 ### Resolution
 
 1. Increase the [captive portal timeout](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#captive-portal-detection) to allow users more time to login.
 2. If this does not resolve the issue, allow users to manually [turn off WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#lock-warp-switch). We recommend setting an [auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) value so that the client turns itself back on after a few minutes.
 
-## CF\_CONNECTIVITY\_FAILURE\_UNKNOWN
+## CF_CONNECTIVITY_FAILURE_UNKNOWN
 
 ### Symptoms
 
-* Unable to connect WARP
-* No Internet connectivity
-* User may be behind a captive portal
+- Unable to connect WARP
+- No Internet connectivity
+- User may be behind a captive portal
 
 ### Cause
 
@@ -52,13 +53,13 @@ The initial [connectivity check](/cloudflare-one/team-and-resources/devices/warp
 1. Retrieve [WARP debug logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/) for the device.
 2. Follow the troubleshooting steps in [Unable to connect WARP](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/common-issues/#unable-to-connect-warp).
 
-## CF\_DNS\_LOOKUP\_FAILURE
+## CF_DNS_LOOKUP_FAILURE
 
 ### Symptoms
 
-* Unable to connect WARP
-* Unable to browse the Internet
-* `nslookup` and `dig` commands fail on the device
+- Unable to connect WARP
+- Unable to browse the Internet
+- `nslookup` and `dig` commands fail on the device
 
 ### Cause
 
@@ -71,11 +72,11 @@ WARP was unable to resolve hostnames via its [local DNS proxy](/cloudflare-one/t
 3. Ensure that no third-party tools are interfering with WARP for control of DNS.
 4. Ensure that no third-party tools are [performing TLS decryption](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/common-issues/#a-third-party-security-product-is-interfering-with-gateway) on traffic to the [WARP IP addresses](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/).
 
-## CF\_DNS\_PROXY\_FAILURE
+## CF_DNS_PROXY_FAILURE
 
 ### Symptoms
 
-* Unable to connect WARP in a [mode that enables DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/).
+- Unable to connect WARP in a [mode that enables DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/).
 
 ### Cause
 
@@ -87,31 +88,29 @@ On macOS, you may see `mDNSResponder` instead of the specific application name -
 
 1. Remove or disable DNS interception in the third-party process.
 
-
 <Details header="mDNSResponder">
 
 Below is a non-exhaustive list of third-party software that are known to cause `mDNSResponder` to bind to port `53`. Rather than try to stop `mDNSResponder`, you should either configure the third-party software so that they no longer use port `53`, or temporarily disable them before connecting to WARP.
 
-* **Docker**: [Turn off kernel networking for UDP](https://github.com/docker/for-mac/issues/7008#issuecomment-1746653802) in Docker.
-* **Internet Sharing feature**: To disable Internet Sharing:
+- **Docker**: [Turn off kernel networking for UDP](https://github.com/docker/for-mac/issues/7008#issuecomment-1746653802) in Docker.
+- **Internet Sharing feature**: To disable Internet Sharing:
   1. On macOS, go to **System Settings** > **General** > **Sharing**.
   2. Turn off **Internet Sharing**.
-* **Certain VM software (such as VMware Workstation or Parallels)**: The presence of VM software does not guarantee that it is the offending program, since compatibility with WARP is highly dependent on the VM's configuration. To work around the issue, connect to WARP before running any VMs:
+- **Certain VM software (such as VMware Workstation or Parallels)**: The presence of VM software does not guarantee that it is the offending program, since compatibility with WARP is highly dependent on the VM's configuration. To work around the issue, connect to WARP before running any VMs:
   1. Stop/quit all VMs.
   2. Connect to WARP.
   3. Start the VMs again.
-
 
 </Details>
 
 2. Alternatively, switch WARP to [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode.
 
-## CF\_FAILED\_READ\_SYSTEM\_DNS\_CONFIG
+## CF_FAILED_READ_SYSTEM_DNS_CONFIG
 
 ### Symptoms
 
-* Unable to connect WARP
-* Unable to browse the Internet
+- Unable to connect WARP
+- Unable to browse the Internet
 
 ### Cause
 
@@ -123,11 +122,11 @@ On macOS and Linux, validate that `/etc/resolv.conf` is [formatted correctly](ht
 
 On Windows, validate that the registry entry `HKLM\System\CurrentControlSet\Services\TCPIP\Parameters\SearchList` contains only valid search domains. Examples of invalid entries include IP addresses and domains that start with a period (such as `.local`).
 
-## CF\_FAILED\_TO\_SET\_MTLS
+## CF_FAILED_TO_SET_MTLS
 
 ### Symptoms
 
-* Unable to connect WARP
+- Unable to connect WARP
 
 ### Cause
 
@@ -138,11 +137,11 @@ The device failed to present a [valid mTLS certificate](/cloudflare-one/team-and
 1. Ensure that there are no admin restrictions on certificate installation.
 2. Re-install the client certificate on the device.
 
-## CF\_HAPPY\_EYEBALLS\_MITM\_FAILURE
+## CF_HAPPY_EYEBALLS_MITM_FAILURE
 
 ### Symptoms
 
-* Unable to connect WARP
+- Unable to connect WARP
 
 ### Cause
 
@@ -152,15 +151,15 @@ A router, firewall, antivirus software, or other third-party security product is
 
 1. Configure the third-party security product to allow the [WARP ingress IPs and ports](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip).
 2. Ensure that your Internet router is working properly and try rebooting the router.
-3. Check that the device is not revoked by going to **My team** > **Devices**.
+3. Check that the device is not revoked by going to **Team & Resources** > **Devices**.
 
-## CF\_HOST\_UNREACHABLE\_CHECK
+## CF_HOST_UNREACHABLE_CHECK
 
 ### Symptoms
 
-* Unable to connect WARP
-* No Internet connectivity
-* User may be behind a captive portal
+- Unable to connect WARP
+- No Internet connectivity
+- User may be behind a captive portal
 
 ### Cause
 
@@ -171,12 +170,12 @@ The [connectivity check](/cloudflare-one/team-and-resources/devices/warp/deploym
 1. Check for the presence of third-party HTTP filtering software (AV, DLP, or firewall) that could be intercepting traffic to the [WARP IPs](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall).
 2. In the third-party software, bypass inspection for all IP traffic going through WARP. To find out what traffic routes through the WARP tunnel, refer to [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
 
-## CF\_INSUFFICIENT\_DISK
+## CF_INSUFFICIENT_DISK
 
 ### Symptoms
 
-* Unable to connect WARP
-* OS warns that the disk is full
+- Unable to connect WARP
+- OS warns that the disk is full
 
 ### Cause
 
@@ -188,12 +187,12 @@ The hard drive is full or has incorrect permissions for WARP to write data.
 2. Check for disk permissions that may prevent WARP from using disk space.
 3. Empty trash or remove large files.
 
-## CF\_INSUFFICIENT\_FILE\_DESCRIPTORS
+## CF_INSUFFICIENT_FILE_DESCRIPTORS
 
 ### Symptoms
 
-* Unable to connect WARP
-* Unable to open files on the device
+- Unable to connect WARP
+- Unable to open files on the device
 
 ### Cause
 
@@ -203,12 +202,12 @@ The device does not have sufficient file descriptors to create network sockets o
 
 Increase the file descriptor limit in your system settings.
 
-## CF\_INSUFFICIENT\_MEMORY
+## CF_INSUFFICIENT_MEMORY
 
 ### Symptoms
 
-* Unable to connect WARP
-* Device is very slow
+- Unable to connect WARP
+- Device is very slow
 
 ### Cause
 
@@ -219,11 +218,11 @@ The device does not have enough memory to run WARP.
 1. Ensure that your device meets the [minimum memory requirements](/cloudflare-one/team-and-resources/devices/warp/download-warp/) for WARP.
 2. List all running processes to check memory usage.
 
-## CF\_LOCAL\_POLICY\_FILE\_FAILED\_TO\_PARSE
+## CF_LOCAL_POLICY_FILE_FAILED_TO_PARSE
 
 ### Symptoms
 
-* Unable to connect WARP
+- Unable to connect WARP
 
 ### Cause
 
@@ -235,12 +234,12 @@ The WARP client was deployed on the device using an invalid MDM configuration fi
 2. Locate the MDM configuration file on your device.
 3. Ensure that the file is formatted correctly and only contains [accepted arguments](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
 
-## CF\_NO\_NETWORK
+## CF_NO_NETWORK
 
 ### Symptoms
 
-* Unable to connect WARP
-* No Internet connectivity
+- Unable to connect WARP
+- No Internet connectivity
 
 ### Cause
 
@@ -253,18 +252,18 @@ The device is not connected to a Wi-Fi network or LAN that has connectivity to t
 3. Check that your device is retrieving a valid IP address.
 4. If this does not resolve the error, try rebooting your device or running your system's network diagnostics tool.
 
-## CF\_REGISTRATION\_MISSING
+## CF_REGISTRATION_MISSING
 
 ### Symptoms
 
-* Unable to connect WARP
+- Unable to connect WARP
 
 ### Cause
 
 The device is not authenticated to an [organization](/cloudflare-one/setup/#create-a-zero-trust-organization) because:
 
-* The device was revoked in Zero Trust.
-* The registration was corrupted or deleted for an unknown reason.
+- The device was revoked in Zero Trust.
+- The registration was corrupted or deleted for an unknown reason.
 
 ### Resolution
 
@@ -275,7 +274,7 @@ The device is not authenticated to an [organization](/cloudflare-one/setup/#crea
 5. If this does not resolve the error, select **Logout from Cloudflare Zero Trust** and then log back in. Logging out is only possible if [Allow device to leave organization](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) is enabled for your device.
 6. If the issue persists, contact your administrator for assistance.
 
-### CF\_REGISTRATION\_MISSING (Revoked)
+### CF_REGISTRATION_MISSING (Revoked)
 
 #### Cause
 
@@ -285,11 +284,11 @@ Your device was unenrolled from your company's [organization](/cloudflare-one/se
 
 Contact your company or team administrator for assistance.
 
-## CF\_TLS\_INTERCEPTION\_BLOCKING\_DOH
+## CF_TLS_INTERCEPTION_BLOCKING_DOH
 
 ### Symptoms
 
-* DNS requests fail to resolve when WARP is turned on.
+- DNS requests fail to resolve when WARP is turned on.
 
 ### Cause
 
@@ -299,11 +298,11 @@ A third-party application or service is intercepting DNS over HTTPS traffic from
 
 Configure the third-party application to exempt the [WARP DoH IPs](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#doh-ip).
 
-## CF\_TLS\_INTERCEPTION\_CHECK
+## CF_TLS_INTERCEPTION_CHECK
 
 ### Symptoms
 
-* Unable to connect WARP
+- Unable to connect WARP
 
 ### Cause
 
@@ -317,7 +316,7 @@ In the third-party security product, disable HTTPS inspection and TLS decryption
 
 ### Symptoms
 
-* Unable to connect WARP
+- Unable to connect WARP
 
 ### Cause
 

@@ -156,8 +156,8 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 
 {/* prettier-ignore */}
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
-  - Throws an error that forces the current Workflow instance to fail and not be retried.
-  - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
+  - When thrown inside [`step.do()`](/workflows/build/workers-api/#step), this error stops step retries, propagating the error to the top level (the [run](/workflows/build/workers-api/#run) function). Any error not handled at this top level will cause the Workflow instance to fail.
+  - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows steps are retried.
 
 ## Call Workflows from Workers
 
