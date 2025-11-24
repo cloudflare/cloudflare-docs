@@ -39,11 +39,11 @@ jobs:
         run: |
 
           base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
-          git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > changed_files.txt || true
+          git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/relevant_changed_files.txt || true
 
           # Check if file list is empty to prevent errors
-          if [ -s changed_files.txt ]; then
-            list_of_files=$(cat tools/changed_files.txt | tr '\n' ' ')
+          if [ -s tools/relevant_changed_files.txt ]; then
+            list_of_files=$(cat tools/relevant_changed_files.txt | tr '\n' ' ')
             semgrep scan \
               --config .semgrep --metrics=off \
               --include "*.mdx" --include "*.mdx" \

@@ -1,7 +1,7 @@
 rules:
   - id: coming-soon
     languages: [generic]
-    message: "Found forbidden string 'coming soon'. Too often we set expectations unfairly by attaching this phrase to a feature that is cancelled or a plan that changes."
+    message: "Found forbidden string 'coming soon'. Too often we set expectations unfairly by attaching this phrase to a feature that may not actually arrive soon."
     severity: MEDIUM
     paths:
       include:
