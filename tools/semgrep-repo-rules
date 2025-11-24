@@ -1,0 +1,17 @@
+#! /bin/bash
+
+repo_root_dir="$(git rev-parse --show-toplevel)"
+
+pushd "${repo_root_dir}" > /dev/null || return
+
+git diff --name-only origin/production HEAD --diff-filter=ACMRT | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/changed_files.txt || true
+
+list_of_files=$(cat tools/changed_files.txt | tr '\n' ' ')
+
+docker run --rm -v "${PWD}:/src" semgrep/semgrep \
+  semgrep scan \
+    --config .semgrep --metrics=off \
+    --include "*.mdx" --include "*.mdx" \
+    $list_of_files
+
+popd > /dev/null || return
