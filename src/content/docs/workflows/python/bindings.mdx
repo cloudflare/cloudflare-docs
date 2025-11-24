@@ -77,7 +77,7 @@ from workers import WorkerEntrypoint, Response
 
 
 class Default(WorkerEntrypoint):
-    async def fetch(request):
+    async def fetch(self, request):
         event = {"foo": "bar"}
         options = to_js({"params": event}, dict_converter=Object.fromEntries)
         await self.env.MY_WORKFLOW.create(options)
