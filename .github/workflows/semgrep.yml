@@ -38,6 +38,7 @@ jobs:
         if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '[skip semgrep]')
         run: |
 
+          git config --global --add safe.directory $PWD
           base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
           git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/relevant_changed_files.txt || true
 
