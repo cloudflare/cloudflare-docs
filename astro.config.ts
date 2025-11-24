@@ -61,23 +61,82 @@ const customCss = await autogenStyles();
 
 const RUN_LINK_CHECK =
 	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
-const ENABLE_LAST_MOD_IN_SITEMAP =
-	process.env.ENABLE_LAST_MOD_IN_SITEMAP?.toLowerCase() === "true";
 
 /**
- * Get the last Git modification date for a file
- * @param filePath - Absolute path to the file
- * @returns ISO date string or null if not available
+ * Build a cache of all git last-modified dates in one batch
  */
-function getGitLastModified(filePath: string): string | null {
+function buildGitDateCache(): Map<string, string> | null {
 	try {
-		const result = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
-			encoding: "utf-8",
-		}).trim();
-		return result || null;
-	} catch (_error) {
+		console.time("[sitemap] Building git date cache");
+
+		// Use git log with --name-only and --diff-filter to get all files with their last commit
+		// The format outputs the commit date followed by the list of files changed in that commit
+		// e.g.
+		//  2025-10-01T12:34:56-07:00
+		//  src/content/docs/file1.mdx
+		//  src/content/docs/file2.mdx
+		//
+		//  2025-09-25T09:15:30-07:00
+		//  src/content/docs/file3.mdx
+
+		const result = execSync(
+			'git log --pretty=format:"%cI" --name-only --diff-filter=AMR src/content/docs',
+			{
+				encoding: "utf-8",
+				maxBuffer: 100 * 1024 * 1024,
+			},
+		);
+
+		const cache = new Map<string, string>();
+		const lines = result.split("\n");
+
+		let currentDate: string | null = null;
+		for (const line of lines) {
+			const trimmed = line.trim();
+			if (!trimmed) {
+				continue;
+			}
+			// Lines are either dates or file paths
+			// Date lines match ISO format
+			if (/^\d{4}-\d{2}-\d{2}T/.test(trimmed)) {
+				currentDate = trimmed;
+			} else if (currentDate) {
+				const filePath = `./${trimmed}`; // fileURLToPath includes leading ./, so we do the same here
+				if (!cache.has(filePath)) {
+					cache.set(filePath, currentDate); // e.g., "src/content/docs/file.mdx"
+				}
+			}
+		}
+
+		console.timeEnd("[sitemap] Building git date cache");
+		console.log(`[sitemap] Loaded git dates for ${cache.size} files`);
+		return cache;
+	} catch (error) {
+		console.warn("[sitemap] Failed to build git date cache:", error);
 		return null;
 	}
+}
+
+const gitDateCache = buildGitDateCache();
+
+/**
+ * Get the last Git modification date for a file (from cache)
+ * @param filePath - Path to the file
+ * @returns ISO date string or null if not available
+ */
+function getGitLastModified(filePath: string): string | undefined {
+	if (!gitDateCache) {
+		console.warn("[sitemap] Git date cache is not initialized");
+		return undefined;
+	}
+
+	const result = gitDateCache.get(filePath);
+
+	if (!result) {
+		console.log(`[sitemap] Last modified not found in git for: "${filePath}"`);
+	}
+
+	return result ?? undefined;
 }
 
 /**
@@ -116,10 +175,15 @@ function addLastModDate(item: SitemapItem) {
 		const gitDate = getGitLastModified(filePath);
 		if (gitDate) {
 			item.lastmod = gitDate;
+		} else {
+			console.warn(
+				`[sitemap] No git last mod date found for ${filePath} (${item.url}) - setting to now`,
+			);
+			item.lastmod = new Date().toISOString();
 		}
 	} else {
 		console.warn(
-			`[sitemap] Could not find last modified for ${item.url} - setting to now`,
+			`[sitemap] Could not find source file for ${item.url} - setting last modified to now`,
 		);
 		item.lastmod = new Date().toISOString();
 	}
@@ -261,7 +325,7 @@ export default defineConfig({
 				return true;
 			},
 			serialize(item) {
-				return ENABLE_LAST_MOD_IN_SITEMAP ? addLastModDate(item) : item;
+				return addLastModDate(item);
 			},
 		}),
 		react(),
