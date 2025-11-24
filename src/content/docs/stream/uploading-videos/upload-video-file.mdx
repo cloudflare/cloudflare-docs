@@ -3,8 +3,8 @@ pcx_content_type: how-to
 title: Basic video uploads
 sidebar:
   order: 2
-
 ---
+
 import { DashButton } from "~/components";
 
 ## Basic Uploads
@@ -15,7 +15,7 @@ For files smaller than 200 MB, you can use simple form-based uploads.
 
 1. In the Cloudflare dashboard, go to the **Stream** page.
 
-   <DashButton url="/?to=/:account/stream" />
+   <DashButton url="/?to=/:account/stream/videos" />
 
 2. Drag and drop your video into the **Quick upload** area. You can also click to browse for the file on your machine.
 
@@ -35,4 +35,3 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream
 :::note
 Note that cURL's `--form` flag automatically configures the `content-type` header and maps `my-video.mp4` to a form input called `file`.
 :::
-

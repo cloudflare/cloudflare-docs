@@ -5,7 +5,7 @@ sidebar:
   order: 12
 ---
 
-import { Details, FeatureTable, Render, TabItem, Tabs } from "~/components";
+import { Details, FeatureTable, Render, TabItem, Tabs, DashButton } from "~/components";
 
 TLS 1.3 enables the latest version of the TLS protocol (when supported) for improved security and performance.
 
@@ -27,9 +27,11 @@ TLS 1.3 can be activated in the Cloudflare dashboard or through the API:
 
 To enable TLS 1.3 in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **SSL/TLS** > **Edge Certificates**.
-3. For **TLS 1.3**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **TLS 1.3**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 

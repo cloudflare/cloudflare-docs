@@ -33,7 +33,7 @@ One example of on-ramping traffic to Cloudflare is updating your public website 
 
 However, maybe you need to protect a private application that is not directly available on the Internet. In this scenario, you can:
 
-* Connect your private application to Cloudflare using [secure tunnels](/cloudflare-one/connections/connect-networks/), and use a [device agent](/cloudflare-one/connections/connect-devices/warp/) to connect as a user.
+* Connect your private application to Cloudflare using [secure tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/), and use a [device agent](/cloudflare-one/team-and-resources/devices/warp/) to connect as a user.
 * For users already connected to a private company network, connect the entire network to Cloudflare using secure tunnels, and any request from a user device will access the private application through those tunnels.
 
 With these options, any request from a user device can access internal private applications via the secure private tunnels.
@@ -42,9 +42,9 @@ Refer to the list below for products you can use to on-ramp traffic to Cloudflar
 
 * [Anycast routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) uses Anycast IP addressing to route traffic to the nearest Cloudflare data center. Selective routing allows an Anycast network to be resilient in the face of high traffic volume, network congestion, and[ DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
 * [DNS-based](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) traffic resolves domains onboarded to [Cloudflare's CDN](/fundamentals/concepts/how-cloudflare-works/). Cloudflare's DNS directs traffic to Cloudflare's global network of servers instead of a website's origin server.
-* [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) connects your resources to Cloudflare without a publicly routable IP address so that your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
+* [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connects your resources to Cloudflare without a publicly routable IP address so that your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
 * [Magic Transit](/magic-transit/about/) offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks by accepting IP packets destined for your network, processing them, and outputting the packets to your origin infrastructure.
-* The [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) securely and privately sends traffic from corporate devices to Cloudflare's global network while also applying advanced Zero Trust policies that check for a device's health before it connects to corporate applications.
+* The [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/warp/) securely and privately sends traffic from corporate devices to Cloudflare's global network while also applying advanced Zero Trust policies that check for a device's health before it connects to corporate applications.
 
 ### Off-ramp traffic from Cloudflare
 

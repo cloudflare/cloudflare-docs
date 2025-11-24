@@ -13,6 +13,7 @@ import {
 	Render,
 	Details,
 	Example,
+	DashButton,
 } from "~/components";
 
 Advanced nameservers included with [Foundation DNS](/dns/foundation-dns/) are an opt-in configuration.
@@ -78,10 +79,12 @@ To enable advanced nameservers on an existing zone:
 1. Opt for advanced nameservers on your zone:
 
    <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-   2. Go to **DNS** > **Records**.
-   3. In the **Cloudflare nameservers** card, enable **Advanced nameservers**.
-   4. After you refresh the page, the card will display the values for your advanced nameservers `NS` records.
+   1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+      <DashButton url="/?to=/:account/:zone/dns/records" />
+
+   2. In the **Cloudflare nameservers** card, enable **Advanced nameservers**.
+   3. After you refresh the page, the card will display the values for your advanced nameservers `NS` records.
 
    </TabItem> <TabItem label="API">
 

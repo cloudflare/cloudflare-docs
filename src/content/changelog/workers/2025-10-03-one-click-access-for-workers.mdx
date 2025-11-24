@@ -8,11 +8,11 @@ date: 2025-10-03
 
 import { DashButton } from "~/components";
 
-You can now enable [Cloudflare Access](/cloudflare-one/policies/access/) for your [`workers.dev`](/workers/configuration/routing/workers-dev/) and [Preview URLs](/workers/configuration/previews/) in a single click.
+You can now enable [Cloudflare Access](/cloudflare-one/access-controls/policies/) for your [`workers.dev`](/workers/configuration/routing/workers-dev/) and [Preview URLs](/workers/configuration/previews/) in a single click.
 
 ![Screenshot of the Enable/Disable Cloudflare Access button on the workers.dev route settings page](~/assets/images/workers/changelog/workers-access.png)
 
-Access allows you to limit access to your Workers to specific users or groups. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [Access policy](/cloudflare-one/policies/access).
+Access allows you to limit access to your Workers to specific users or groups. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [Access policy](/cloudflare-one/access-controls/policies/).
 
 To enable Cloudflare Access:
 
@@ -23,7 +23,7 @@ To enable Cloudflare Access:
 2. In **Overview**, select your Worker.
 3. Go to **Settings** > **Domains & Routes**.
 4. For `workers.dev` or Preview URLs, click **Enable Cloudflare Access**.
-5. Optionally, to configure the Access application, click **Manage Cloudflare Access**. There, you can change the email addresses you want to authorize. View [Access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
+5. Optionally, to configure the Access application, click **Manage Cloudflare Access**. There, you can change the email addresses you want to authorize. View [Access policies](/cloudflare-one/access-controls/policies/#selectors) to learn about configuring alternate rules.
 
 To fully secure your application, it is important that you validate the JWT that Cloudflare Access adds to the `Cf-Access-Jwt-Assertion` header on the incoming request.
 
@@ -36,9 +36,9 @@ export default {
 	async fetch(request, env, ctx) {
 		// Verify the POLICY_AUD environment variable is set
 		if (!env.POLICY_AUD) {
-			return new Response('Missing required audience', {
+			return new Response("Missing required audience", {
 				status: 403,
-				headers: { 'Content-Type': 'text/plain' }
+				headers: { "Content-Type": "text/plain" },
 			});
 		}
 

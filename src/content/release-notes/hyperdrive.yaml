@@ -43,7 +43,7 @@ entries:
     description: |-
       Hyperdrive query caching now happens in all locations where Hyperdrive can be accessed. When making a query in a location that has cached the query result, your latency may be decreased by up to 90%.
 
-      Refer to [documentation on how Hyperdrive caches query results](/hyperdrive/configuration/how-hyperdrive-works/#query-caching).
+      Refer to [documentation on how Hyperdrive caches query results](/hyperdrive/concepts/how-hyperdrive-works/#query-caching).
   - publish_date: "2024-11-19"
     title: Hyperdrive now supports clear-text password authentication
     description: |-

@@ -10,6 +10,6 @@
 | **HD space**          | 75 MB                                                                         |
 | **Memory**            | 35 MB                                                                         |
 | **Network interface type**  | WIFI or LAN |
-| **Minimum MTU** | 1360 bytes[^1] |
+| **MTU** | 1381 bytes recommended [^1] |
 
-[^1]: WireGuard requires 1360 bytes for IPv6 and 1340 bytes for IPv4. MASQUE requires 1350 bytes for IPv6 and 1330 bytes for IPv4.
+[^1]: Minimum 1281 bytes with [Path MTU Discovery](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/)

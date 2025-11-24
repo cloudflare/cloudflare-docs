@@ -5,17 +5,11 @@ sidebar:
   order: 4
 ---
 
+import { ResourcesBySelector } from "~/components";
+
 These guides show you how to solve specific problems and implement features with the Sandbox SDK. Each guide focuses on a particular task and provides practical, production-ready solutions.
 
-## Available guides
-
-- [Execute commands](/sandbox/guides/execute-commands/) - Run commands with streaming output, error handling, and shell access
-- [Manage files](/sandbox/guides/manage-files/) - Read, write, organize, and synchronize files in the sandbox
-- [Run background processes](/sandbox/guides/background-processes/) - Start and manage long-running services and applications
-- [Expose services](/sandbox/guides/expose-services/) - Create preview URLs and expose ports for web services
-- [Use code interpreter](/sandbox/guides/code-execution/) - Execute Python and JavaScript code with rich outputs
-- [Work with Git](/sandbox/guides/git-workflows/) - Clone repositories, manage branches, and automate Git operations
-- [Stream output](/sandbox/guides/streaming-output/) - Handle real-time output from commands and processes
+<ResourcesBySelector directory="sandbox/guides/" types={["how-to"]} />
 
 ## Related resources
 

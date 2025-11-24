@@ -1,0 +1,374 @@
+---
+params:
+  - magicWord
+  - featureName
+  - trafficSteeringURL?
+  - whatHappensApp
+  - dashName
+---
+
+import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs } from "~/components";
+
+{ props.magicWord === "breakout" && (
+	<>
+		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that Magic WAN Connector can detect. This can take several minutes.</p>
+		<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPS.</Aside>
+	</>
+	)
+}
+
+{ props.magicWord === "prioritized" && (
+	<>
+		<p>Prioritized traffic allows you to define which applications Magic WAN Connector should process first. Applications not in the list will be queued behind prioritized traffic.</p>
+		<p>Similarly to breakout traffic, prioritized traffic also works via DNS requests inspection.</p>
+		<Aside type="caution">Prioritized traffic will not work for applications that use DNS-over-HTTPS.</Aside>
+	</>
+	)
+}
+
+{ props.magicWord === "breakout" && (
+	<>
+		<pre class="mermaid">
+			{`
+			flowchart LR
+			accTitle: In this example, the applications go directly to the Internet, skipping Cloudflare's security. filtering
+			a(Magic WAN Connector) --> b(Cloudflare) -->|Filtered traffic|c(Internet)
+
+			a-- Breakout traffic ---d(Application1) & e(Application2) --> c
+
+			classDef orange fill:#f48120,color: black
+			class a,b orange
+			`}
+		</pre>
+		<p><em>In the graph above, Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet</em></p>
+		<Aside type="note" title="A note on security">
+		<Markdown
+		text={`
+		We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
+
+    Refer to <a href="${props.trafficSteeringURL}">Traffic steering</a> to learn how Cloudflare routes traffic.
+		`}
+		inline={false}
+		/>
+		</Aside>
+	</>
+	)
+}
+
+## Add an application to your account
+
+Before you can add or remove {props.featureName} applications to your Magic WAN Connector, you need to create an account-level list with the applications that you want to configure. Currently, adding to or modifying this list is only possible via API, through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
+
+To add applications to your account:
+
+Send a `POST` request to add new apps to your account.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="POST"
+	json={{
+    "managed_app_id": "<APP_ID>",
+    "name": "<APP_NAME>",
+    "type": "<APP_TYPE>",
+	}}
+	/>
+
+	```json output
+	{
+		"result": {
+			"account_app_id": "eb09v665c0784618a3e4ba9809258fd4",
+			"name": "<APP_NAME>",
+			"type": "<APP_TYPE>",
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+You can now add this new app to the {props.featureName} list in your Magic WAN Connector.
+
+### Add an application to Magic WAN Connector
+
+You need to configure {props.featureName} applications for each of your existing sites, as this is a per-site configuration.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+{ props.dashName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
+3. Select the Magic WAN Connector you want to configure > **Edit**.
+4. Select **Traffic Steering**.
+5. In **${props.featureName}**, select **${props.dashName === "WAN Tunnels" ? "Create" : "Assign application traffic"}**.
+6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
+`}
+inline={false}
+/>
+
+{ props.magicWord === "breakout" && (
+	<Markdown
+	text={`
+7. (Optional) You can also pin an application to a WAN port. In **Preferred breakout port**, select the WAN you want to assign your applications to. Refer to [Designate WAN ports for breakout apps](#designate-wan-ports-for-breakout-apps) for more information.
+	`}
+	inline={false}
+	/>
+)
+}
+
+{ props.magicWord === "breakout" ? (
+	<Markdown
+	text={`
+8. Select **Save**.
+
+The traffic for the application you chose ${props.whatHappensApp}.
+	`}
+	inline={false}
+	/>
+) : (
+	<Markdown
+	text={`
+7. Select **Save**.
+
+The traffic for the application you chose ${props.whatHappensApp}.
+	`}
+	inline={false}
+	/>
+)
+}
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+1. Send a `GET` [request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with an account.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="GET"
+	/>
+
+	```json output
+		{
+			"result": [
+				{
+					"managed_app_id": "<APP_ID>",
+					"name": "<APP_NAME>",
+					"type": "File Sharing",
+					"hostnames": [
+						"<app_name.com>",
+						"<app-name.info>"
+					]
+				}
+			]
+		}
+	```
+
+	Take note of the `"managed_app_id"` value for any application you want to add.
+
+2. Send a `POST` request to add new apps to the {props.featureName} policy.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/sites/{site_id}/app_configs"
+	method="POST"
+	json={{
+		"managed_app_id": "<MANAGED_APP_ID>",
+		"breakout": true
+	}}
+	/>
+
+	```json output
+	{
+		"result": {
+			"account_app_id": "<APP_ID>",
+			"name": "<APP_NAME>",
+			"type": "<BREAKOUT_OR_PRIORITY>"
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+</TabItem> </Tabs>
+
+### Delete an application from Magic WAN Connector
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+{ props.dashName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
+3. Select the Connector you want to configure > **Edit**.
+4. Select **Traffic Steering**.
+5. In **${props.featureName}**, find the application you want to delete > select the **three dots** next to it > **Remove application traffic**.
+6. (Optional) If you have several pages of applications, you can use the search box to quickly find the application you are looking for.
+`}
+inline={false}
+/>
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+You need to delete {props.featureName} applications for each of your existing sites, as this is a per-site configuration.
+
+1. Send a [`GET` request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with a site.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/sites/{site_id}/app_configs"
+	method="GET"
+	/>
+
+	```json output
+		{
+			"result": [
+				{
+					"id": "<APP_ID>",
+					"site_id": "<SITE_ID>",
+					"managed_app_id": "<APP_NAME>",
+					"breakout": true
+				}
+			]
+		}
+	```
+
+	Take note of the `"id"` value for the application that want to delete.
+
+2. Send a `DELETE` request to delete an application from the {props.featureName} policy.
+
+	<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id}"
+	method="DELETE"
+	/>
+
+	```json output
+	{
+			"result": {
+					"id": "<APP_ID>",
+					"site_id": "<SITE_ID>",
+					"managed_app_id": "<APP_NAME>",
+					"breakout": true
+			},
+			"success": true,
+			"errors": [],
+			"messages": []
+	}
+	```
+
+</TabItem> </Tabs>
+
+{ props.magicWord === "breakout" && (
+	<>
+		<AnchorHeading title="Designate WAN ports for breakout apps" depth={2} />
+
+		<Markdown
+		text={`
+You can pin applications to a specific WAN port in Magic WAN Connector when you need control over which WAN port your applications egress from the device. In case your preferred WAN port goes down, Magic WAN Connector automatically fails over to a standard configured WAN port priority.
+
+With this preferred breakout port, customers have direct control over their local Internet breakout traffic. You can designate a specific WAN uplink as the primary path for your critical applications configured to bypass the Cloudflare network. This provides the predictability and control needed for performance-sensitive applications, ensuring your critical traffic always takes the path you choose.
+
+To pin applications to a WAN port:
+		`}
+		inline={false}
+		/>
+
+		{ props.dashName === "WAN Tunnels" ? (
+			<>
+				<Markdown
+			text={`
+				1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
+				2. Go to **Connectors** > **Appliances** > **Profiles**.
+				3. Select the Magic WAN Connector you want to configure> **Edit**.
+			`}
+			inline={false}
+			/>
+			</>
+		) : (
+			<>
+				<Markdown
+			text={`
+				1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+				2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
+				3. Select your Connector > **Edit**.
+			`}
+			inline={false}
+			/>
+			</>
+		)
+		}
+		<Markdown
+		text={`
+		4. In **Traffic steering** > **Breakout Traffic** find the application you want to pin to a WAN port.
+		5. Select the three dots next to it > **Edit application traffic**.
+		6. From the **Preferred breakout port** dropdown, select the WAN port you want to assign to the applications.
+		7. Select **Save**.
+		`}
+		inline={false}
+		/>
+	</>
+)
+}
+
+
+{props.magicWord === "breakout" && (
+	<>
+		<Render	file="mconn/network-options/app-aware-policies/netflow" product="networking-services" />
+	</>
+	)
+}
+
+{ props.magicWord === "breakout" && (
+	<>
+	<AnchorHeading title="WARP traffic" depth={2} />
+		<Render
+			file="mconn/network-options/app-aware-policies/warp-traffic"
+			product="networking-services"
+			params={{
+				warpFirewallURL: "/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/"
+			}}
+			/>
+	</>
+	)
+}

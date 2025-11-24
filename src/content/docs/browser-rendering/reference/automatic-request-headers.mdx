@@ -16,7 +16,7 @@ These headers are meant to ensure transparency and cannot be removed or overridd
 | Header               | Description                                                                         |
 | -------------------- | ----------------------------------------------------------------------------------- |
 | `cf-brapi-request-id` | A unique identifier for the Browser Rendering request when using the [REST API](/browser-rendering/rest-api/)                           |
-| `cf-biso-request-id` | A unique identifier for the Browser Rendering request when using [Workers Bindings](/browser-rendering/workers-bindings/)             |
+| `cf-brapi-devtools` | A unique identifier for the Browser Rendering request when using [Workers Bindings](/browser-rendering/workers-bindings/)             |
 | `cf-biso-devtools`   | A flag indicating the request originated from Cloudflare's rendering infrastructure |
 | `Signature-agent`    | [The location of the bot public keys](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev), used to sign the request and verify it came from Cloudflare                                       |
 | `Signature` and `Signature-input`| A digital signature, used to validate requests, as shown in [this architecture document](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)                     |

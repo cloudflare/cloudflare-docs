@@ -50,26 +50,32 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai
       }'
 ```
 
-### Use `@google/generative-ai` with JavaScript
+### Use `@google/genai` with JavaScript
 
-If you are using the `@google/generative-ai` package, you can set your endpoint like this:
+If you are using the `@google/genai` package, you can set your endpoint like this:
 
 ```js title="JavaScript example"
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
-const api_token = env.GOOGLE_AI_STUDIO_TOKEN;
+const apiKey = env.GOOGLE_AI_STUDIO_TOKEN;
 const account_id = "";
 const gateway_name = "";
 
-const genAI = new GoogleGenerativeAI(api_token);
-const model = genAI.getGenerativeModel(
-	{ model: "gemini-2.5-flash" },
-	{
-		baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
-	},
-);
+const ai = new GoogleGenAI({
+  apiKey,
+});
 
-await model.generateContent(["What is Cloudflare?"]);
+const response = await ai.models.generateContent({
+  model: "gemini-2.5-flash",
+  contents: "What is Cloudflare?",
+  config: {
+    httpOptions: {
+      baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
+    },
+  },
+});
+
+console.log(response.text);
 ```
 
 <Render

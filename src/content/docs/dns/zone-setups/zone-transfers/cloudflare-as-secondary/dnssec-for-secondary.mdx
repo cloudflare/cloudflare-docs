@@ -14,6 +14,7 @@ import {
 	Tabs,
 	GlossaryTooltip,
 	APIRequest,
+	DashButton,
 } from "~/components";
 
 [DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/learning/dns/dns-security/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to enable DNSSEC for records served by Cloudflare.
@@ -38,13 +39,13 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and zone.
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
 
-2. Go to **DNS** > **Settings**.
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
 
-3. Under **DNSSEC with Secondary DNS** select **Live signing**. You will then have access to several necessary values to create a **DS** record at your registrar.
+2. Under **DNSSEC with Secondary DNS** select **Live signing**. You will then have access to several necessary values to create a **DS** record at your registrar.
 
-4. <Render file="dnssec-registrar-steps" product="dns" />
+3. <Render file="dnssec-registrar-steps" product="dns" />
 
 </TabItem> <TabItem label="API">
 
@@ -85,7 +86,9 @@ Pre-signed DNSSEC does not support [Secondary DNS Overrides](/dns/zone-setups/zo
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Select your zone and go to **DNS** > **Settings**.
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
 
 2. Under **DNSSEC with Secondary DNS** select **Pre-signed**.
 
@@ -103,6 +106,6 @@ Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/met
 
 </TabItem> </Tabs>
 
-3. Make sure Cloudflare nameservers are added at your registrar. You can see your Cloudflare nameservers on the dashboard by going to **DNS** > **Records**.
+3. Make sure Cloudflare nameservers are added at your registrar. You can see your Cloudflare nameservers on the dashboard by going to the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page.
 
 4. Make sure there is a DS record added at your registrar. The DS record is obtained from your primary DNS provider (the signer of the zone) and is what indicates to DNS resolvers that your zone has DNSSEC enabled.

@@ -6,7 +6,14 @@ sidebar:
   order: 4
 ---
 
-import { FeatureTable, TabItem, Tabs, Steps, APIRequest } from "~/components";
+import {
+	FeatureTable,
+	TabItem,
+	Tabs,
+	Steps,
+	APIRequest,
+	DashButton,
+} from "~/components";
 
 Zone Lockdown specifies a list of one or more IP addresses, CIDR ranges, or networks that are the only IPs allowed to access a domain, subdomain, or URL. You can configure multiple destinations, including IPv4/IPv6 addresses, in a single zone lockdown rule.
 
@@ -64,9 +71,11 @@ Zone Lockdown is only available in the new security dashboard if you have config
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-2. Go to **Security** > **Security rules**, and select **Create rule** > **Zone lockdown rules**.
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Create rule** > **Zone lockdown rules**.
 
 3. Enter a descriptive name for the rule in **Name**.
 

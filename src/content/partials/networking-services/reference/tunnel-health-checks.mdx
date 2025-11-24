@@ -28,13 +28,13 @@ A tunnel health check probe comes from Cloudflare to the tunnel origin, then ret
 	)
 }
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
 	<>
 		<Render
 			file="tunnel-health/health-checks-compatible-cmb-eu"
 			product="networking-services"
 			params={{
-				productName: "Magic WAN"
+				productName: props.productName
 			}}
 		/>
 	</>
@@ -61,7 +61,7 @@ The target defaults to the publicly routable origin specified as the `customer_e
 
 #### Bidirectional
 
-A bidirectional probe stays encapsulated in both directions, that is, the probe comes in via the tunnel and the response also leaves encapsulated via the tunnel.
+A bidirectional probe stays encapsulated in both directions, that is, the probe comes in via the tunnel and the response also leaves encapsulated via the tunnel. The ICMP reply from the customer's router destined for the anycast IP address on Cloudflare's network will be delivered to the closest Cloudflare data center and land on one of the servers using ECMP, ensuring the response takes the most efficient path.
 
 By default, these packets are destined for the Cloudflare side of the interface address field set on the tunnel, and are sourced from the client of the tunnel. For example, if the interface address is `10.100.0.8/31`, then the packet will be destined for `10.100.0.9` and sourced from `10.100.0.8`.
 
@@ -203,7 +203,14 @@ flowchart TB
 
 ### Rate
 
-<Render file="icmp-mfirewall" product="networking-services" />
+<Render
+	file="icmp-mfirewall"
+	product="networking-services"
+	params={{
+		mFirewallName: "Magic Firewall rules",
+		mFirewallURL: "/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
+	}}
+	/>
 
 Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the `health_check` rate of a tunnel with the <a href={props.changeHealthCheckRate}>API or the dash</a>. A customer can set the rate value as _low_, _mid_ or _high_, with _mid_ being the default option. The actual rate formula considers the number of servers in a Cloudflare data center or the number of servers with the customer namespace provisioned on them for dynamically provisioned namespaces. Thus, the rate is not a specific number; it is dynamic and depends on the size of our network.
 

@@ -85,3 +85,31 @@ In this case, Cloudflare will always resolve the CNAME target based on the value
       C
       end
 ```
+
+### Auth DNS points to `cdn.cloudflare.net`
+
+Considering the following scenario:
+
+- The target zone (Cloudflare zone 2 in this example) is a partial zone and the DNS record on the partial is proxied.
+- The DNS record on the authoritative DNS server points to `cdn.cloudflare.net`
+
+If such setup is in place, the subdomain (`www.partialzone.com` in this example) will resolve to a Cloudflare proxy IP, which will ultimately result in an error. Consider using [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) and [Orange-to-Orange](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup instead.
+
+```mermaid
+    flowchart TD
+      accTitle: DNS resolution flow with CNAME target in a zone within the same account and auth DNS pointing to cdn.cloudflare.net
+      A[Request to <code>www\.alice.com</code>] --> B[<code>CNAME</code> record for <code>www\.alice.com</code> to <code>www\.partialzone.com</code>]
+      B --> C[<code>CNAME</code> record for <code>www\.partialzone.com</code> to <code>www\.partialzone.com.cdn.cloudflare.net</code>]
+      C --> D[<code>Cloudflare proxy IP</code>]
+      subgraph Cloudflare account
+        subgraph Cloudflare zone 1
+          B
+        end
+        subgraph Cloudflare zone 2
+        E[Proxied <code>A</code> record for <code>www\.partialzone.com</code> to <code>203.0.113.1</code>]
+        end
+      end
+      subgraph Authoritative DNS
+      C
+      end
+```

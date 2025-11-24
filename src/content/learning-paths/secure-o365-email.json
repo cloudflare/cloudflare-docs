@@ -1,7 +1,7 @@
 {
-	"title": "Secure Microsoft 365 email with Email Security",
+	"title": "Secure Microsoft 365 email with Email security",
 	"path": "/learning-paths/secure-o365-email/concepts/",
 	"pcx_content_type": "learning-path",
-	"description": "Use Cloudflare's Email Security to protect your Microsoft 365 email inbox from phishing and malware attacks.",
+	"description": "Use Cloudflare's Email security to protect your Microsoft 365 email inbox from phishing and malware attacks.",
 	"products": ["email-security-cf1"]
 }

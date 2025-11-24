@@ -30,7 +30,7 @@ If you have not yet created a DNS record covering your subdomain in the parent z
 2. Select either Business or Enterprise as your zone plan and complete the onboarding flow according to your needs.
 3. On the [Overview page](https://dash.cloudflare.com/?to=/:account/:zone), select **Convert to CNAME DNS Setup**.
 4. Confirm that you have created all the [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) needed for your child zone.
-5. On [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), get the **Verification TXT Record** and add it at your authoritative DNS provider.
+5. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, get the **Verification TXT Record** and add it at your authoritative DNS provider.
 
 
 <Details header="Example verification record">
@@ -91,7 +91,7 @@ If you have already created a DNS record covering your subdomain in the parent z
 
 7. Within a short period of time, the child zone should be active.
 
-8. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any `A`, `AAAA`, or `CNAME` records referencing the subdomain or any of its deeper subdomains.
+8. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any `A`, `AAAA`, or `CNAME` records referencing the subdomain or any of its deeper subdomains.
 
 </TabItem> <TabItem label="child is partial">
 
@@ -111,7 +111,7 @@ If you have already created a DNS record covering your subdomain in the parent z
 
 6. In the child zone, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains.
 
-7. On [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), get the **Verification TXT Record** and add it at your authoritative DNS provider.
+7. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, get the **Verification TXT Record** and add it at your authoritative DNS provider.
 
 
 <Details header="Example verification record">
@@ -132,7 +132,7 @@ After creating the record, you can use this [Dig Web Interface link](https://dig
 That record must remain in place for as long as your subdomain is active on the partial setup on Cloudflare.
 
 8. Within a short period of time, the child zone should be active.
-9. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any previous `A`, `AAAA`, or `CNAME` records referencing the subdomain or any of its deeper subdomains.
+9. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any previous `A`, `AAAA`, or `CNAME` records referencing the subdomain or any of its deeper subdomains.
 10. At your authoritative DNS provider, confirm you have `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` for the subdomain you have added and any deeper subdomain records you want to proxy through Cloudflare.
 
 

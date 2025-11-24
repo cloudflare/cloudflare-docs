@@ -82,3 +82,17 @@ No. Cloudflare expects the HEC network port to be configured to `:443` or `:8088
 ## Does Logpush integrate with the Cloudflare Splunk App?
 
 Yes. Refer to [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
+
+
+## What does the error `signedResourceTypes` mean?
+
+When the destination is Azure, the SAS (Shared access signature) token must be set to a blob container with write-only permissions. The service must be Blob-only (`ss=b`), and the resource type must be Object-only (`srt=o`).
+
+If the SAS token uses different settings, the following error will be returned: `signedResourceTypes must be Object only (srt=o)`.
+
+
+## What does the error `reading job for product '<product>' is not allowed (1004)` mean?`
+
+This error indicates that the API token you are using to access your Logpush job does not have the required permissions.
+For Zero Trust datasets, users or tokens must have both of the following permissions: `Logs Edit` and `Zero Trust: PII Read`. For more details, refer to the [Logpush Permission Update for Zero Trust Datasets](https://developers.cloudflare.com/changelog/2025-11-05-logpush-permissions-update/).
+

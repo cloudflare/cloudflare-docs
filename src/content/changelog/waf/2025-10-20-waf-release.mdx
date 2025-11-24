@@ -1,0 +1,66 @@
+---
+title: "WAF Release - 2025-10-20"
+description: Cloudflare WAF managed rulesets 2025-10-20 release
+date: 2025-10-20
+---
+
+import { RuleID } from "~/components";
+
+This week’s update introduces an enhanced rule that expands detection coverage for a critical vulnerability in Oracle E-Business Suite. It also improves an existing rule to provide more reliable coverage in request processing.
+
+**Key Findings**
+
+New WAF rule deployed for Oracle E-Business Suite (CVE-2025-61882) to block  unauthenticated attacker's network access via HTTP to compromise Oracle Concurrent Processing. If successfully exploited, this vulnerability may result in remote code execution.
+
+**Impact**
+
+- Successful exploitation of CVE-2025-61882 allows unauthenticated attackers to execute arbitrary code remotely by chaining multiple weaknesses, enabling lateral movement into internal services, data exfiltration, and large-scale extortionware deployment within Oracle E-Business Suite environments.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="933fc13202cd4e8ba498c0f32b4101ab" />
+			</td>
+			<td>100598A</td>
+			<td>Remote Code Execution - Common Bash Bypass - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This rule is merged into the original rule "Remote Code Execution - Common Bash Bypass" (ID: <RuleID id="f8238867ed3e4d3a9a7b731a50cec478" />)</td>
+		</tr>         
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="185b5df42d1e44e0aeb8f8b8a1118614" />
+			</td>
+			<td>100916A</td>
+			<td>Oracle E-Business Suite - Remote Code Execution - CVE:CVE-2025-61882 - 2</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="646bccf7e9dc46918a4150d6c22b51d3" />
+			</td>
+			<td>N/A</td>
+			<td>HTTP Truncated</td>
+			<td>N/A</td>
+			<td>Disabled</td>
+			<td>This is a New Detection</td>
+		</tr>
+	</tbody>
+</table>

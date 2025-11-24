@@ -32,7 +32,7 @@ Follow the steps below to achieve this conversion.
 ## 3. Convert your zone
 
 1. Use the [Edit Zone endpoint](/api/resources/zones/methods/edit/) with `type` set to `full` to convert the zone type. Existing DNS records will not be affected.
-2. Go to [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) and take note of your new **Cloudflare Nameservers**.
+2. Go to the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page and take note of your new **Cloudflare Nameservers**.
 3. At your domain registrar (or parent zone), [update your nameservers](/dns/nameservers/update-nameservers/). Replace the nameservers ending in `secondary.cloudflare.com` by the ones ending in `ns.cloudflare.com`.
 
    :::note

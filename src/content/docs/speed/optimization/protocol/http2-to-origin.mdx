@@ -1,10 +1,15 @@
 ---
 pcx_content_type: how-to
 title: HTTP/2 to Origin
-
 ---
 
-import { FeatureTable, Details, Render, APIRequest, Dashboard, DashButton } from "~/components"
+import {
+	FeatureTable,
+	Details,
+	Render,
+	APIRequest,
+	DashButton,
+} from "~/components";
 
 A protocol is a set of rules governing the exchange or transmission of data between devices. One of the most important protocols that run on the human-computer interaction layer, where applications can access the network services, is HTTP (Hypertext Transfer Protocol).
 
@@ -24,7 +29,7 @@ If you wish to disable HTTP/2 to Origin, you can follow these steps:
 
    <DashButton url="/?to=/:account/:zone/speed/optimization" />
 
-4. Go to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
+2. Go to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
 
 ## Connection multiplexing
 
@@ -39,7 +44,7 @@ Connection multiplexing is enabled by default on Free, Pro and Business zones an
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Choose the domain that will use HTTP/2 to Origin.
 3. Select **Speed > Optimization**.
-4. Open the **Protocol Optimization** tab. 
+4. Open the **Protocol Optimization** tab.
 5. Under **HTTP/2 to Origin**, select **Configure** and adjust the stream settings as needed.
 
 </Details>
@@ -47,13 +52,13 @@ Connection multiplexing is enabled by default on Free, Pro and Business zones an
 <Details header="API">
 
 <APIRequest
-  path="/zones/{zone_id}/settings/origin_h2_max_streams"
-  method="PATCH"
-  json={{
-    value: 100
-  }}
+	path="/zones/{zone_id}/settings/origin_h2_max_streams"
+	method="PATCH"
+	json={{
+		value: 100,
+	}}
 />
-  
+
 Refer to the [API documentation](/api/python/resources/zones/subresources/settings/methods/edit/) for more information.
 
 </Details>

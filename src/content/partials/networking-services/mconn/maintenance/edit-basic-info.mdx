@@ -1,0 +1,34 @@
+---
+params:
+  - dashName
+---
+
+import { DashButton, Markdown } from "~/components";
+
+In **Basic information**, you can change the name and description of your Magic WAN Connector.
+
+{ props.dashName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Appliances**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+3. Find the Magic WAN Connector that you want to edit > select the three dots next to it > **Edit**.
+4. In **Basic information** make the necessary changes.
+5. Select **Save**.

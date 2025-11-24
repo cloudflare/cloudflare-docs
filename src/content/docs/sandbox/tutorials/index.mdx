@@ -5,57 +5,11 @@ sidebar:
   order: 3
 ---
 
-import { LinkTitleCard, CardGrid } from "~/components";
+import { ResourcesBySelector } from "~/components";
 
 Learn how to build applications with Sandbox SDK through step-by-step tutorials. Each tutorial takes 20-30 minutes.
 
-<CardGrid>
-
-<LinkTitleCard
-	title="AI code executor"
-	href="/sandbox/tutorials/ai-code-executor/"
-	icon="pen"
->
-	Use Claude to generate Python code from natural language and execute it securely in sandboxes.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Analyze data with AI"
-	href="/sandbox/tutorials/analyze-data-with-ai/"
-	icon="document"
->
-	Upload CSV files, generate analysis code with Claude, and return visualizations.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Code review bot"
-	href="/sandbox/tutorials/code-review-bot/"
-	icon="star"
->
-	Clone repositories, analyze code with Claude, and post review comments to GitHub PRs.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Automated testing pipeline"
-	href="/sandbox/tutorials/automated-testing-pipeline/"
-	icon="checkmark"
->
-	Clone repositories, install dependencies, run tests, and report results.
-</LinkTitleCard>
-
-</CardGrid>
-
-## What you'll learn
-
-These tutorials cover real-world applications:
-
-- **AI Code Execution** - Integrate Claude with secure code execution
-- **Data Analysis** - Generate and run analysis code on uploaded datasets
-- **Code Review Automation** - Clone repositories and analyze code changes
-- **CI/CD Pipelines** - Automated testing workflows
-- **File Operations** - Work with files and directories
-- **Error Handling** - Validation and error management
-- **Deployment** - Deploy Workers with containers
+<ResourcesBySelector directory="sandbox/tutorials/" types={["tutorial"]} />
 
 ## Before you start
 

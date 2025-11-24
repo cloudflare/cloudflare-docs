@@ -9,7 +9,7 @@ description: >-
   If you receive a client-side resource alert, sometimes you need to perform some manual investigation to confirm the nature of the script. Use the guidance provided in this page as a starting point for your investigation.
 ---
 
-import { Steps } from "~/components";
+import { Steps, Tabs, TabItem, DashButton } from "~/components";
 
 If you receive a [client-side resource alert](/page-shield/alerts/alert-types/), sometimes you need to perform some manual investigation to confirm the nature of the script. Use the guidance provided in this page as a starting point for your investigation.
 
@@ -19,14 +19,31 @@ Start by identifying the [detection system](/page-shield/how-it-works/malicious-
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Navigate to the client-side resource monitoring page:
-   - Old dashboard: Go to **Security** > **Page Shield**.
-   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
-3. Select **Scripts** or **Connections** and search for the resource mentioned on the alert you received.
-4. Select **Details** next to the resource you identified. The example screenshot below shows a malicious script resource.
+{/* prettier-ignore-start */}
+
+1. Navigate to the client-side resources page:
+
+   <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+   2. Go to **Security** > **Page Shield**.
+
+   </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem> </Tabs>
+
+2. Select **Scripts** or **Connections** and search for the resource mentioned on the alert you received.
+3. Select **Details** next to the resource you identified. The example screenshot below shows a malicious script resource.
 
    ![Dialog box showing the details of a script considered malicious.](~/assets/images/page-shield/handle-alert-malicious-script-example.png)
+
+{/* prettier-ignore-end */}
 
 </Steps>
 
