@@ -37,23 +37,18 @@ jobs:
       - name: Semgrep Repo Rules (Custom rules found in .semgrep/)
         if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '[skip semgrep]')
         run: |
-          semgrep ci
-          #git fetch origin ${{ github.base_ref }}
 
-          #cd "$GITHUB_WORKSPACE"
-          #echo "$PWD"
-          #git show
-
-          #git diff --name-only origin/production HEAD --diff-filter=ACMRT | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > changed_files.txt || true
-          #list_of_files=$(cat tools/changed_files.txt | tr '\n' ' ')
+          base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
+          git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > changed_files.txt || true
 
           # Check if file list is empty to prevent errors
-          #if [ -s changed_files.txt ]; then
-          #  semgrep scan \
-          #    --config .semgrep --metrics=off \
-          #    --include "*.mdx" --include "*.mdx" \
-          #    $list_of_files
+          if [ -s changed_files.txt ]; then
+            list_of_files=$(cat tools/changed_files.txt | tr '\n' ' ')
+            semgrep scan \
+              --config .semgrep --metrics=off \
+              --include "*.mdx" --include "*.mdx" \
+              $list_of_files
             # add '--error' to return error code to workflow
-          #else
-          #   echo "No relevant files changed."
-          #fi
+          else
+            echo "No relevant files changed."
+          fi

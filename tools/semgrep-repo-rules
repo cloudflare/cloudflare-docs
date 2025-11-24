@@ -4,14 +4,22 @@ repo_root_dir="$(git rev-parse --show-toplevel)"
 
 pushd "${repo_root_dir}" > /dev/null || return
 
-git diff --name-only origin/production HEAD --diff-filter=ACMRT | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/changed_files.txt || true
+# this file wants to match all changes in working dir, not just commited changes (in CI this is not the case)
+#base_commit=$(git merge-base HEAD origin/production)
 
-list_of_files=$(cat tools/changed_files.txt | tr '\n' ' ')
+git diff --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/changed_files.txt || true
 
-docker run --rm -v "${PWD}:/src" semgrep/semgrep \
-  semgrep scan \
-    --config .semgrep --metrics=off \
-    --include "*.mdx" --include "*.mdx" \
-    $list_of_files
+if [ -s tools/changed_files.txt ]; then
+  list_of_files=$(cat tools/changed_files.txt | tr '\n' ' ')
+
+  docker run --rm -v "${PWD}:/src" semgrep/semgrep \
+    semgrep scan \
+      --config .semgrep --metrics=off \
+      --include "*.mdx" --include "*.mdx" \
+      --force-color \
+      $list_of_files
+else
+  echo "No relevant files changed."
+fi
 
 popd > /dev/null || return
