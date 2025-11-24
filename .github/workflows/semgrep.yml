@@ -40,6 +40,9 @@ jobs:
           #git fetch origin ${{ github.base_ref }}
 
           cd "$GITHUB_WORKSPACE"
+          echo "$PWD"
+          git show
+
           git diff --name-only origin/production HEAD --diff-filter=ACMRT | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > changed_files.txt || true
           list_of_files=$(cat tools/changed_files.txt | tr '\n' ' ')
 
