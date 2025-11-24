@@ -3,7 +3,7 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
-  - publish_date: "2025-11-21"
+  - publish_date: "2025-11-24"
     title: Add HTTP origins insights
     description: |-
       * Added new [`Origins`](/api/resources/radar/subresources/origins/) API.
