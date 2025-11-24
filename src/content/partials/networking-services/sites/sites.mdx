@@ -8,7 +8,7 @@ params:
   - magicTunnelHcsURL
 ---
 
-import { Markdown, Render } from "~/components";
+import { Markdown, Render, DashButton } from "~/components";
 
 Sites represent the local network of a data center, office, or other physical location, and combine all on-ramps available there. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that you get notified when there are issues with the site's on-ramps.
 
@@ -36,12 +36,11 @@ When you are finished setting these up, refer to the steps below to learn how to
 	<>
 	<Markdown
 		text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Magic WAN** > **Network overview (beta)**.
-		3. Select **Add site**.
+		1. In the Cloudflare dashboard, go to **Network overview**.
 		`}
 		inline={false}
 	/>
+	<DashButton url="/?to=/:account/magic-wan/network" />
 	</>
 )
 }
@@ -94,12 +93,12 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 	<>
 	<Markdown
 		text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Magic WAN** > **Network overview (beta)**.
-		3. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
+		1. In the Cloudflare dashboard, go to **Network overview**.
+		2. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
 		`}
 		inline={false}
 	/>
+	<DashButton url="/?to=/:account/magic-wan/network" />
 	</>
 )
 }
@@ -125,11 +124,12 @@ If you add geographic coordinates to your site, it will show up in the Network m
 	<>
 	<Markdown
 		text={`
-		1. Go to **Magic WAN** > **Network overview (beta)**.
+		1. In the Cloudflare dashboard, go to **Network overview**.
 		2. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
 		`}
 		inline={false}
 	/>
+	<DashButton url="/?to=/:account/magic-wan/network" />
 	</>
 )
 }
