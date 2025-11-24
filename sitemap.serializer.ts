@@ -21,8 +21,8 @@ export function readableMsDuration(duration: number) {
 async function getLastmodViaGitShell(...dirs: string[]) {
 	const gitArgs = [
 		"log",
-		"--pretty=format:DATE: %ad",
-		"--date=iso-strict",
+		"--pretty=format:DATE: %cI",
+		"--diff-filter=AMR",
 		"--name-only",
 		...dirs,
 	];
