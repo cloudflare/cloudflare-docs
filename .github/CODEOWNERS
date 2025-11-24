@@ -20,7 +20,7 @@
 # AI
 
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @cloudflare/pcx-technical-writing
-/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @kathayl @mchenco @cloudflare/pcx-technical-writing
+/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/ @rita3ko @craigsdennis @markdembo @mchenco @cloudflare/pcx-technical-writing
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
 /src/content/partials/vectorize/ @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
