@@ -57,68 +57,6 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 Once you choose a type of proxy endpoint, you cannot revert this decision.
 :::
 
-### Authorization endpoint
-
-Authorization endpoints support being associated with [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide full Zero Trust authorization capabilities. Authorization endpoints give you a comprehensive control of access policies to authorize traffic before it is sent for processing.
-
-Authorization endpoints offer a more flexible way to authorize traffic by leveraging Cloudflare Access. Authorization endpoints support associating a user identity with the connection.
-
-If you select **Add an authorization endpoint**:
-
-1. Enter your basic information.
-
-2. Add an existing policy, or [create a new policy](/cloudflare-one/access-controls/policies/).
-
-3. Add your login method.
-
-4. Once you have filled all the information, select **Save**.
-
-#### Edit authorization
-
-To edit an authorization endpoint:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
-2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Authorization** under **Type**.
-3. Select the three dots, then select **Configure**.
-4. Choose the information you want to edit:
-   - **Basic info**: Enter your basic info, then select **Save**.
-   - **Access policies**: Here, you can:
-     - Select existing policies or create a new policy.
-     - Select the three dots that allow you to
-   - **Login methods**: Select the [identity providers](/cloudflare-one/integrations/identity-providers/) you want to use to log in to this application.
-
-### Source IP endpoint
-
-When you configure a source IP endpoint, traffic authorization is determined by the source IP address of the incoming traffic. You configure the endpoint to allow traffic processing only from a specific pre-defined set of source IP addresses.
-
-If you select **Add a source IP endpoint**:
-
-1. Enter the public source IP address of your device(s) in CIDR notation. For example:
-   - **IPv4**: `192.0.2.0/8`
-   - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
-
-   :::note
-   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
-   :::
-
-2. Select **Save endpoint** and confirm the endpoint creation.
-
-Your Cloudflare proxy server domain is of the form:
-
-```txt
-https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
-```
-
-#### Edit source IP endpoint
-
-To edit a source IP endpoint:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
-2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Source IP** under **Type**.
-3. Select the three dots, then select **Configure**.
-4. Edit the name and/or configure the source IPs that are allowed.
-5. Select **Save**.
-
 </TabItem>
 
 <TabItem label="API">
@@ -173,6 +111,70 @@ To edit a source IP endpoint:
 </TabItem>
 
 </Tabs>
+
+### Types of proxy endpoints
+
+#### Authorization endpoint
+
+Authorization endpoints support being associated with [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide full Zero Trust authorization capabilities. Authorization endpoints give you a comprehensive control of access policies to authorize traffic before it is sent for processing.
+
+Authorization endpoints offer a more flexible way to authorize traffic by leveraging Cloudflare Access. Authorization endpoints support associating a user identity with the connection.
+
+If you select **Add an authorization endpoint**:
+
+1. Enter your basic information.
+
+2. Add an existing policy, or [create a new policy](/cloudflare-one/access-controls/policies/).
+
+3. Add your login method.
+
+4. Once you have filled all the information, select **Save**.
+
+##### Edit authorization
+
+To edit an authorization endpoint:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Authorization** under **Type**.
+3. Select the three dots, then select **Configure**.
+4. Choose the information you want to edit:
+   - **Basic info**: Enter your basic info, then select **Save**.
+   - **Access policies**: Here, you can:
+     - Select existing policies or create a new policy.
+     - Select the three dots that allow you to
+   - **Login methods**: Select the [identity providers](/cloudflare-one/integrations/identity-providers/) you want to use to log in to this application.
+
+#### Source IP endpoint
+
+When you configure a source IP endpoint, traffic authorization is determined by the source IP address of the incoming traffic. You configure the endpoint to allow traffic processing only from a specific pre-defined set of source IP addresses.
+
+If you select **Add a source IP endpoint**:
+
+1. Enter the public source IP address of your device(s) in CIDR notation. For example:
+   - **IPv4**: `192.0.2.0/8`
+   - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
+
+   :::note
+   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
+   :::
+
+2. Select **Save endpoint** and confirm the endpoint creation.
+
+Your Cloudflare proxy server domain is of the form:
+
+```txt
+https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
+```
+
+##### Edit source IP endpoint
+
+To edit a source IP endpoint:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Select **Proxy endpoints**, and locate your authorization endpoint. The dashboard will display **Source IP** under **Type**.
+3. Select the three dots, then select **Configure**.
+4. Edit the name and/or configure the source IPs that are allowed.
+5. Select **Save**.
 
 ## 2. Create a PAC file
 
