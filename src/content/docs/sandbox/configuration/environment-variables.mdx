@@ -42,6 +42,13 @@ await sandbox.exec("node app.js", {
 	},
 });
 
+// Also works with execStream()
+await sandbox.execStream("python analyze.py", {
+	env: {
+		OPENAI_API_KEY: env.OPENAI_API_KEY,
+	},
+});
+
 // Also works with startProcess()
 await sandbox.startProcess("python server.py", {
 	env: {

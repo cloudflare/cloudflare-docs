@@ -25,6 +25,8 @@ const result = await sandbox.exec(command: string, options?: ExecOptions): Promi
   - `stream` - Enable streaming callbacks (default: `false`)
   - `onOutput` - Callback for real-time output: `(stream: 'stdout' | 'stderr', data: string) => void`
   - `timeout` - Maximum execution time in milliseconds
+  - `env` - Environment variables for this command (temporarily override session/sandbox-level variables)
+  - `cwd` - Working directory for this command execution
 
 **Returns**: `Promise<ExecuteResponse>` with `success`, `stdout`, `stderr`, `exitCode`
 
@@ -37,6 +39,12 @@ if (result.success) {
 } else {
   console.error('Build failed:', result.stderr);
 }
+
+// With custom environment and working directory
+await sandbox.exec('node app.js', {
+  env: { NODE_ENV: 'production', PORT: '3000' },
+  cwd: '/workspace/my-app'
+});
 
 // With streaming
 await sandbox.exec('npm install', {
@@ -56,7 +64,10 @@ const stream = await sandbox.execStream(command: string, options?: ExecOptions):
 
 **Parameters**:
 - `command` - The command to execute
-- `options` - Same as `exec()`
+- `options` (optional):
+  - `timeout` - Maximum execution time in milliseconds
+  - `env` - Environment variables for this command (temporarily override session/sandbox-level variables)
+  - `cwd` - Working directory for this command execution
 
 **Returns**: `Promise<ReadableStream>` emitting `ExecEvent` objects (`start`, `stdout`, `stderr`, `complete`, `error`)
 
@@ -93,8 +104,12 @@ const process = await sandbox.startProcess(command: string, options?: ProcessOpt
 **Parameters**:
 - `command` - The command to start as a background process
 - `options` (optional):
-  - `cwd` - Working directory
-  - `env` - Environment variables
+  - `env` - Environment variables for this process (temporarily override session/sandbox-level variables)
+  - `cwd` - Working directory for this process
+  - `timeout` - Maximum execution time in milliseconds
+  - `processId` - Custom process ID (auto-generated if not provided)
+  - `encoding` - Output encoding (default: `'utf8'`)
+  - `autoCleanup` - Automatically clean up process resources when done
 
 **Returns**: `Promise<ProcessInfo>` with `id`, `pid`, `command`, `status`
 
