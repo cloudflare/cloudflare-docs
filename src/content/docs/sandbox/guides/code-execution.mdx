@@ -107,6 +107,37 @@ console.log(result.output); // "Mean: 3.0"
 Context state is lost if the container restarts due to inactivity. For critical data, store results outside the sandbox or design your code to reinitialize as needed.
 :::
 
+### Async JavaScript and TypeScript
+
+The Code Interpreter automatically awaits Promise results in JavaScript and TypeScript contexts:
+
+<TypeScriptExample>
+```
+const context = await sandbox.createCodeContext({
+  language: 'javascript'
+});
+
+// Async functions are automatically awaited
+const result1 = await sandbox.runCode(`
+(async () => {
+  const response = await Promise.resolve({ data: [1, 2, 3, 4, 5] });
+  const sum = response.data.reduce((a, b) => a + b, 0);
+  return { sum, count: response.data.length };
+})()
+`, { context: context.id });
+
+console.log(result1.results[0].json); // { sum: 15, count: 5 }
+
+// Promise.resolve works directly
+const result2 = await sandbox.runCode(
+  'Promise.resolve({ status: "complete", timestamp: Date.now() })',
+  { context: context.id }
+);
+
+console.log(result2.results[0].json); // { status: "complete", timestamp: ... }
+```
+</TypeScriptExample>
+
 ## Handle rich outputs
 
 The code interpreter returns multiple output formats:
