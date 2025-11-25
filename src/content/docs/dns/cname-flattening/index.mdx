@@ -8,7 +8,7 @@ sidebar:
 
 import { Render, GlossaryTooltip } from "~/components";
 
-CNAME flattening speeds up CNAME resolution and allows you to use a CNAME record at your <GlossaryTooltip term="zone apex" link="/dns/concepts/#zone-apex">zone apex</GlossaryTooltip> (`example.com`).
+CNAME flattening speeds up CNAME resolution and allows you to use a [CNAME record](/dns/manage-dns-records/reference/dns-record-types/#cname) at your <GlossaryTooltip term="zone apex" link="/dns/concepts/#zone-apex">zone apex</GlossaryTooltip> (`example.com`).
 
 :::note
 This functionality is also what allows you to use a [root custom domain](/pages/configuration/custom-domains/) with a Cloudflare Pages site.
@@ -23,6 +23,14 @@ For more details on the steps involved in CNAME flattening, review the [CNAME fl
 :::note
 For information about CNAME flattening in [Internal DNS](/dns/internal-dns/), refer to [internal DNS records](/dns/internal-dns/internal-zones/internal-dns-records/).
 :::
+
+### Targets
+
+Only A and AAAA target records are flattened. Refer to the information below for the expected behaviors when you have TXT, MX, or another CNAME record as the target.
+
+- TXT:
+- MX:
+- CNAME:
 
 ## Aspects to keep in mind
 
