@@ -382,21 +382,30 @@ By completing this step, you deliver the WARP client to targeted iOS devices, ei
 
 1. In the [Microsoft Intune admin center](https://intune.microsoft.com), select **Apps** > **Manage apps** > **Configuration**.
 
-2. Select **Create** > _Managed Apps_.
+2. Select **Create** > _Managed devices_.
 
-3. In **Basics**, input the necessary field(s) and give your policy a name like `Cloudflare One Agent` > select **Next**.
+3. In **Basics**, input the necessary field(s) and give your policy a name like `Cloudflare One Agent`. Select _iOS/iPadOS_ for Platform and target the Cloudflare One Agent app. Select **Next**.
 
-4. For the **Target policy to** field, select **Cloudflare One Agent** > select **Next**. It may take a while for your app to be available.
+4. In **Settings**, select _Enter XML data_ and copy and paste the following:
 
+```xml
+<dict>
+    <key>organization</key>
+    <string>org name</string>
+    <key>auto_connect</key>
+    <integer>1</integer>
+    <key>switch_locked</key>
+    <false />
+    <key>service_mode</key>
+    <string>warp</string>
+</dict>
+```
 
+5. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
 
---
+6. Review your configuration in **Review + create** and select **Create**.
 
-3. Under **Manage apps**, select **Configuration**.
-
-4. Select **Create** > _Managed Apps_.
-
-5. In **Basics**, input the necessary field(s) and give your policy a name like `Cloudflare One Agent` > select **Next**.
+By completing this step, 
 
 ### Intune configuration
 
