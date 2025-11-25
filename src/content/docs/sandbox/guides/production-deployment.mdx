@@ -12,7 +12,7 @@ import { WranglerConfig } from "~/components";
 Custom domain setup is ONLY needed if you use `exposePort()` to expose services from sandboxes. If your application does not expose ports, you can deploy to `.workers.dev` without this configuration.
 :::
 
-Deploy your Sandbox SDK application to production with preview URL support. Preview URLs require wildcard DNS routing because they generate unique subdomains for each exposed port: `https://8080-abc123.yourdomain.com`.
+Deploy your Sandbox SDK application to production with preview URL support. Preview URLs require wildcard DNS routing because they generate unique subdomains for each exposed port: `https://8080-abc123-a1b2c3d4e5f6g7h8.yourdomain.com`.
 
 The `.workers.dev` domain does not support wildcard subdomains, so production deployments that use preview URLs need a custom domain.
 
@@ -74,7 +74,7 @@ await sandbox.startProcess('python -m http.server 8080');
 const exposed = await sandbox.exposePort(8080, { hostname });
 
 console.log(exposed.exposedAt);
-// https://8080-test-sandbox.yourdomain.com
+// https://8080-test-sandbox-a1b2c3d4e5f6g7h8.yourdomain.com
 ```
 
 Visit the URL in your browser to confirm your service is accessible.
