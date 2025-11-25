@@ -90,6 +90,45 @@ console.log(result.results[0].text); // "15"
 </TypeScriptExample>
 :::
 
+**Async/await and Promise handling (JavaScript and TypeScript)**:
+
+The Code Interpreter automatically awaits Promise results in JavaScript and TypeScript contexts, allowing you to work with async code naturally.
+
+<TypeScriptExample>
+```
+const ctx = await sandbox.createCodeContext({ language: 'javascript' });
+
+// Async IIFE
+const result1 = await sandbox.runCode(`
+(async () => {
+  const value = await Promise.resolve(42);
+  return { result: value * 2 };
+})()
+`, { context: ctx });
+
+console.log(result1.results[0].json); // { result: 84 }
+
+// Direct Promise.resolve
+const result2 = await sandbox.runCode(
+  'Promise.resolve({ status: "success" })',
+  { context: ctx }
+);
+
+console.log(result2.results[0].json); // { status: "success" }
+
+// Nested async operations
+const result3 = await sandbox.runCode(`
+(async () => {
+  const a = await Promise.resolve(10);
+  const b = await Promise.resolve(20);
+  return { sum: a + b };
+})()
+`, { context: ctx });
+
+console.log(result3.results[0].json); // { sum: 30 }
+```
+</TypeScriptExample>
+
 **Error handling**:
 
 <TypeScriptExample>
@@ -100,6 +139,21 @@ if (result.error) {
   console.error(result.error.name);      // "ZeroDivisionError"
   console.error(result.error.value);     // "division by zero"
   console.error(result.error.traceback); // Stack trace array
+}
+```
+</TypeScriptExample>
+
+**Async error handling**:
+
+<TypeScriptExample>
+```
+const result = await sandbox.runCode(
+  'Promise.reject(new Error("Async error"))',
+  { language: 'javascript' }
+);
+
+if (result.error) {
+  console.error(result.error.message); // "Async error"
 }
 ```
 </TypeScriptExample>
