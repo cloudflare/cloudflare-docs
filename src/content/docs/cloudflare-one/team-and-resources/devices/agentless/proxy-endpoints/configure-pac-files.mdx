@@ -13,13 +13,13 @@ import {
 	APIRequest,
 } from "~/components";
 
-<GlossaryDefinition term="PAC file" prepend="A PAC file is " />
-
 :::note
 PAC files are only available on Enterprise plans.
 :::
 
 You can apply Gateway HTTP and DNS policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file to connect to a proxy endpoint.
+
+<GlossaryDefinition term="PAC file" prepend="A PAC file is " />
 
 When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. PAC files are evaluated by the browser for every request, determining whether traffic should go through the proxy or connect directly. Note that Gateway [cannot filter every type of HTTP traffic](#traffic-limitations) proxied using PAC files. If you want to use Gateway inspection policies, you will need to install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices.
 
