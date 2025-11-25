@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-11-25"
+    title: Black Forest Labs FLUX.2 dev now available 
+    description: |-
+      - [`@cf/black-forest-labs/flux-2-dev`](/workers-ai/models/flux-2-dev/) now available on Workers AI! Read [changelog](/changelog/2025-11-25-flux-2-dev-workers-ai/) to get started
   - publish_date: "2025-11-13"
     title: Qwen3 LLM and Embeddings available on Workers AI
     description: |-
