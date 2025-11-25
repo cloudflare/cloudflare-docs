@@ -3,6 +3,8 @@ title: HuggingFace
 pcx_content_type: get-started
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 [HuggingFace](https://huggingface.co/) helps users build, deploy and train machine learning models.
 
 ## Endpoint
@@ -41,6 +43,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/
 
 If you are using the HuggingFace.js library, you can set your inference endpoint like this:
 
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
+
 ```js title="JavaScript"
 import { HfInferenceEndpoint } from "@huggingface/inference";
 
@@ -52,3 +57,33 @@ const apiToken = env.HF_API_TOKEN;
 
 const hf = new HfInferenceEndpoint(baseURL, apiToken);
 ```
+
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```js title="JavaScript"
+import { HfInferenceEndpoint } from "@huggingface/inference";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK or pass an authorization token directly (e.g., env.HF_API_TOKEN)
+		const auth = ProviderAuth.storedKey();
+		const model = "gpt2";
+		const baseURL = `https://api-inference.huggingface.co/models/${model}`;
+
+		const hf = new HfInferenceEndpoint(baseURL, auth);
+
+		return Response.json({ configured: true });
+	},
+};
+```
+
+</TabItem>
+</Tabs>

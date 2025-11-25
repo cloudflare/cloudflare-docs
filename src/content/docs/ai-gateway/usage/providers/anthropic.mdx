@@ -3,7 +3,7 @@ title: Anthropic
 pcx_content_type: get-started
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 [Anthropic](https://www.anthropic.com/) helps build reliable, interpretable, and steerable AI systems.
 
@@ -44,6 +44,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1
 
 If you are using the `@anthropic-ai/sdk`, you can set your endpoint like this:
 
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
+
 ```js title="JavaScript"
 import Anthropic from "@anthropic-ai/sdk";
 
@@ -67,6 +70,47 @@ const message = await anthropic.messages.create({
 	max_tokens: maxTokens,
 });
 ```
+
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```js title="JavaScript"
+import Anthropic from "@anthropic-ai/sdk";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
+		// or pass an authorization token directly (e.g., env.ANTHROPIC_API_KEY)
+		const auth = ProviderAuth.storedKey();
+
+		const anthropic = new Anthropic({
+			apiKey: auth,
+		});
+
+		const model = "claude-sonnet-4-5";
+		const messages = [{ role: "user", content: "What is Cloudflare?" }];
+		const maxTokens = 1024;
+
+		const message = await anthropic.messages.create({
+			model,
+			messages,
+			max_tokens: maxTokens,
+		});
+
+		return Response.json(message);
+	},
+};
+```
+
+</TabItem>
+</Tabs>
 
 <Render
 	file="chat-completions-providers"

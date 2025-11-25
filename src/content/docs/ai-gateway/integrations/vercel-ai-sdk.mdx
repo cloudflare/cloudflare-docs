@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The [Vercel AI SDK](https://sdk.vercel.ai/) is a TypeScript library for building AI applications. The SDK supports many different AI providers, tools for streaming completions, and more.
 
 To use Cloudflare AI Gateway inside of the AI SDK, you can configure a custom "Gateway URL" for most supported providers. Below are a few examples of how it works.
@@ -15,6 +17,9 @@ To use Cloudflare AI Gateway inside of the AI SDK, you can configure a custom "G
 
 If you're using the `openai` provider in AI SDK, you can create a customized setup with `createOpenAI`, passing your OpenAI-compatible AI Gateway URL:
 
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
+
 ```typescript
 import { createOpenAI } from "@ai-sdk/openai";
 
@@ -23,9 +28,43 @@ const openai = createOpenAI({
 });
 ```
 
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```typescript
+import { createOpenAI } from "@ai-sdk/openai";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
+		// or pass an authorization token directly (e.g., env.OPENAI_API_KEY)
+		const auth = ProviderAuth.storedKey();
+
+		const openai = createOpenAI({
+			apiKey: auth,
+		});
+
+		return Response.json({ configured: true });
+	},
+};
+```
+
+</TabItem>
+</Tabs>
+
 ### Anthropic
 
 If you're using the `anthropic` provider in AI SDK, you can create a customized setup with `createAnthropic`, passing your Anthropic-compatible AI Gateway URL:
+
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
 
 ```typescript
 import { createAnthropic } from "@ai-sdk/anthropic";
@@ -35,9 +74,43 @@ const anthropic = createAnthropic({
 });
 ```
 
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```typescript
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
+		// or pass an authorization token directly (e.g., env.ANTHROPIC_API_KEY)
+		const auth = ProviderAuth.storedKey();
+
+		const anthropic = createAnthropic({
+			apiKey: auth,
+		});
+
+		return Response.json({ configured: true });
+	},
+};
+```
+
+</TabItem>
+</Tabs>
+
 ### Google AI Studio
 
 If you're using the Google AI Studio provider in AI SDK, you need to append `/v1beta` to your Google AI Studio-compatible AI Gateway URL to avoid errors. The `/v1beta` path is required because Google AI Studio's API includes this in its endpoint structure, and the AI SDK sets the model name separately. This ensures compatibility with Google's API versioning.
+
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
 
 ```typescript
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
@@ -46,6 +119,37 @@ const google = createGoogleGenerativeAI({
 	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1beta`,
 });
 ```
+
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```typescript
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
+		// or pass an authorization token directly (e.g., env.GOOGLE_AI_STUDIO_API_KEY)
+		const auth = ProviderAuth.storedKey();
+
+		const google = createGoogleGenerativeAI({
+			apiKey: auth,
+		});
+
+		return Response.json({ configured: true });
+	},
+};
+```
+
+</TabItem>
+</Tabs>
 
 ### Retrieve `log id` from AI SDK
 

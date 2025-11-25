@@ -3,7 +3,7 @@ title: Mistral AI
 pcx_content_type: get-started
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 [Mistral AI](https://mistral.ai) helps you build quickly with Mistral's advanced AI models.
 
@@ -53,6 +53,9 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/mist
 
 If you are using the `@mistralai/mistralai` package, you can set your endpoint like this:
 
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
+
 ```js title="JavaScript example"
 import { Mistral } from "@mistralai/mistralai";
 
@@ -71,6 +74,46 @@ await client.chat.create({
 	],
 });
 ```
+
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```js title="JavaScript example"
+import { Mistral } from "@mistralai/mistralai";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK or pass an authorization token directly (e.g., env.MISTRAL_API_KEY)
+		const auth = ProviderAuth.storedKey();
+
+		const client = new Mistral({
+			apiKey: auth,
+		});
+
+		const response = await client.chat.create({
+			model: "mistral-large-latest",
+			messages: [
+				{
+					role: "user",
+					content: "What is Cloudflare?",
+				},
+			],
+		});
+
+		return Response.json(response);
+	},
+};
+```
+
+</TabItem>
+</Tabs>
 
 <Render
 	file="chat-completions-providers"

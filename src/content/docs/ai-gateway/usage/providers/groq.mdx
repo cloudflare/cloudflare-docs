@@ -3,7 +3,7 @@ title: Groq
 pcx_content_type: get-started
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 [Groq](https://groq.com/) delivers high-speed processing and low-latency performance.
 
@@ -49,6 +49,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq/chat/co
 
 If using the [`groq-sdk`](https://www.npmjs.com/package/groq-sdk), set your endpoint like this:
 
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
+
 ```js title="JavaScript"
 import Groq from "groq-sdk";
 
@@ -70,6 +73,44 @@ const chatCompletion = await groq.chat.completions.create({
 	model,
 });
 ```
+
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```js title="JavaScript"
+import Groq from "groq-sdk";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK or pass an authorization token directly (e.g., env.GROQ_API_KEY)
+		const auth = ProviderAuth.storedKey();
+
+		const groq = new Groq({
+			apiKey: auth,
+		});
+
+		const messages = [{ role: "user", content: "What is Cloudflare?" }];
+		const model = "llama3-8b-8192";
+
+		const chatCompletion = await groq.chat.completions.create({
+			messages,
+			model,
+		});
+
+		return Response.json(chatCompletion);
+	},
+};
+```
+
+</TabItem>
+</Tabs>
 
 <Render
 	file="chat-completions-providers"

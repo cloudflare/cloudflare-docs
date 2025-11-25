@@ -3,6 +3,8 @@ title: OpenAI
 pcx_content_type: get-started
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 [OpenAI](https://openai.com/about/) helps you build with ChatGPT.
 
 ## Endpoint
@@ -57,6 +59,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 
 ### JavaScript SDK example
 
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
+
 ```js
 import OpenAI from "openai";
 
@@ -86,6 +91,50 @@ try {
 }
 ```
 
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```js
+import OpenAI from "openai";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
+		// or pass an authorization token directly (e.g., env.OPENAI_API_KEY)
+		const auth = ProviderAuth.storedKey();
+
+		const openai = new OpenAI({
+			apiKey: auth,
+		});
+
+		try {
+			const model = "gpt-5-mini";
+			const messages = [{ role: "user", content: "What is a neuron?" }];
+			const maxTokens = 100;
+			const chatCompletion = await openai.chat.completions.create({
+				model,
+				messages,
+				max_tokens: maxTokens,
+			});
+			const response = chatCompletion.choices[0].message;
+			return Response.json(response);
+		} catch (e) {
+			return Response.json({ error: e.message }, { status: 500 });
+		}
+	},
+};
+```
+
+</TabItem>
+</Tabs>
+
 ## OpenAI Responses endpoint
 
 ### cURL example
@@ -106,6 +155,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/respo
 ```
 
 ### JavaScript SDK example
+
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
 
 ```js
 import OpenAI from "openai";
@@ -137,3 +189,49 @@ try {
 	console.error(e);
 }
 ```
+
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```js
+import OpenAI from "openai";
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+	async fetch(request, env) {
+		useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+		// Use ProviderAuth.storedKey() for BYOK, ProviderAuth.unifiedBilling() for unified billing,
+		// or pass an authorization token directly (e.g., env.OPENAI_API_KEY)
+		const auth = ProviderAuth.storedKey();
+
+		const openai = new OpenAI({
+			apiKey: auth,
+		});
+
+		try {
+			const model = "gpt-4.1";
+			const input = [
+				{
+					role: "user",
+					content: "Write a one-sentence bedtime story about a unicorn.",
+				},
+			];
+			const response = await openai.responses.create({
+				model,
+				input,
+			});
+			return Response.json({ text: response.output_text });
+		} catch (e) {
+			return Response.json({ error: e.message }, { status: 500 });
+		}
+	},
+};
+```
+
+</TabItem>
+</Tabs>

@@ -1,0 +1,102 @@
+---
+title: Ideogram
+pcx_content_type: get-started
+---
+
+import { Tabs, TabItem } from "~/components";
+
+[Ideogram](https://ideogram.ai/) provides advanced text-to-image generation models with exceptional text rendering capabilities and visual quality.
+
+## Endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/ideogram
+```
+
+## Prerequisites
+
+When making requests to Ideogram, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Ideogram API key.
+- The name of the Ideogram model you want to use (e.g., `V_3`).
+
+## Examples
+
+### cURL
+
+```bash title="Example fetch request"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/ideogram/v1/ideogram-v3/generate \
+  --header 'Api-Key: {ideogram_api_key}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "prompt": "A serene landscape with mountains and a lake at sunset",
+    "model": "V_3"
+  }'
+```
+
+### Use with JavaScript
+
+<Tabs syncKey="sdk">
+<TabItem label="Javascript" icon="seti:javascript">
+
+```js title="JavaScript"
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
+const ideogramApiKey = "{ideogram_api_key}";
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/ideogram`;
+
+const response = await fetch(`${baseURL}/v1/ideogram-v3/generate`, {
+  method: "POST",
+  headers: {
+    "Api-Key": ideogramApiKey,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    prompt: "A serene landscape with mountains and a lake at sunset",
+    model: "V_3",
+  }),
+});
+
+const result = await response.json();
+console.log(result);
+```
+
+</TabItem>
+<TabItem label="Javascript (Workers)" icon="seti:javascript">
+
+:::note
+For detailed information about using the AI Gateway SDK in Workers, refer to [Using AI Gateway in Workers](/ai-gateway/usage/workers/).
+:::
+
+```js title="JavaScript (Workers)"
+import { useAIGateway, ProviderAuth } from "@cloudflare/ai-gateway";
+
+export default {
+  async fetch(request, env) {
+    useAIGateway({ binding: env.AI, gateway: "test-gateway" });
+
+    // Use ProviderAuth.storedKey() for BYOK or pass an authorization token directly (e.g., env.IDEOGRAM_API_KEY)
+    const auth = ProviderAuth.storedKey();
+
+    const response = await fetch("https://api.ideogram.ai/v1/ideogram-v3/generate", {
+      method: "POST",
+      headers: {
+        "Api-Key": auth,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: "A serene landscape with mountains and a lake at sunset",
+        model: "V_3",
+      }),
+    });
+
+    const result = await response.json();
+    return Response.json(result);
+  },
+};
+```
+
+</TabItem>
+</Tabs>
