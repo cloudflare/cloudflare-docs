@@ -21,7 +21,7 @@ You can apply Gateway HTTP and DNS policies at the browser level by configuring 
 
 <GlossaryDefinition term="PAC file" prepend="A PAC file is " />
 
-When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. PAC files are evaluated by the browser for every request, determining whether traffic should go through the proxy or connect directly. Note that Gateway [cannot filter every type of HTTP traffic](#traffic-limitations) proxied using PAC files. If you want to use Gateway inspection policies, you will need to install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices.
+When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. PAC files are evaluated by the browser for every request, determining whether traffic should go through the proxy or connect directly. Note that Gateway [cannot filter every type of HTTP traffic](#traffic-limitations) proxied using PAC files.
 
 PAC files offer several advantages:
 
@@ -184,9 +184,9 @@ For detailed instructions and examples for creating a PAC file, refer to [PAC fi
 
 ## 3. Configure your devices
 
-### 3a. (Optional) Install Cloudflare certificate
+### 3a. Install Cloudflare certificate
 
-If you want to apply Gateway inspection policies or use features like the block page, [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices.
+To use Gateway HTTP policies with proxy endpoints, you must [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices. This allows Gateway to inspect HTTPS traffic and apply policies such as blocking specific domains or displaying the Gateway block page.
 
 ### 3b. Configure browser to use PAC file
 
@@ -216,7 +216,7 @@ Safari relies on your operating system's proxy server settings. To configure you
 
 ## 4. Test your HTTP policy
 
-To test your configuration, create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block a test domain. When you visit the blocked domain in your browser, you should see the Gateway block page (if you installed the Cloudflare certificate in Step 3a) or receive a connection error.
+To test your configuration, create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block a test domain. When you visit the blocked domain in your browser, you should see the Gateway block page.
 
 You can now use the Proxy Endpoint selector in [network](/cloudflare-one/traffic-policies/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/traffic-policies/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
 
@@ -341,6 +341,10 @@ IP endpoints do not support [identity-based policies](/cloudflare-one/traffic-po
 Both HTTP proxy endpoints only support proxying and filtering TCP traffic.
 
 Authorization endpoints do not support anything that is not HTTP/HTTPS. That means no other TCP or UDP protocol is supported, including [HTTP3](/cloudflare-one/traffic-policies/http-policies/http3/).
+
+:::note
+To access plaintext HTTP (non-HTTPS) origins through proxy endpoints, configure them as [self-hosted Access applications](/cloudflare-one/applications/configure-apps/self-hosted-apps/). This allows users to access HTTP resources while maintaining security through Access policies.
+:::
 
 ### Gateway DNS and resolver policies
 
