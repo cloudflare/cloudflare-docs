@@ -25,12 +25,16 @@ See [Version compatibility](/sandbox/concepts/sandboxes/#version-compatibility) 
 
 **What's included:**
 
-- Ubuntu 22.04 LTS base
+- Ubuntu 22.04 LTS base (linux/amd64 architecture)
 - Python 3.11.14 with pip and venv
 - Node.js 20 LTS with npm
 - Bun 1.x (JavaScript/TypeScript runtime)
 - Pre-installed Python packages: matplotlib, numpy, pandas, ipython
 - System utilities: curl, wget, git, jq, zip, unzip, file, procps, ca-certificates
+
+:::note[Architecture]
+Images are built for **linux/amd64 only** to match Cloudflare's production container runtime. ARM Mac users will automatically use emulation (Rosetta/QEMU) for local development, ensuring perfect dev/prod parity.
+:::
 
 ## Creating a custom image
 

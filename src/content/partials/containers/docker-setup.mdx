@@ -2,3 +2,9 @@ You must have Docker running locally when you run `wrangler deploy`. For most pe
 
 You can check that Docker is running properly by running the `docker info` command in your terminal. If Docker is running, the command will succeed. If Docker is not running,
 the `docker info` command will hang or return an error including the message "Cannot connect to the Docker daemon".
+
+## Architecture compatibility
+
+Sandbox SDK builds Docker images for **linux/amd64 only**, matching Cloudflare's production container runtime. This ensures dev/prod parity and prevents architecture-specific bugs.
+
+**On ARM Macs (Apple Silicon)**: Docker automatically uses emulation (Rosetta/QEMU) when running amd64 images. This is expected behavior and ensures your local environment matches production exactly. You may notice slightly slower container startup during development, but this guarantees your code behaves identically in production.
