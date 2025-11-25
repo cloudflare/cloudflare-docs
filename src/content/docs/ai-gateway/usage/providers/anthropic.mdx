@@ -3,30 +3,41 @@ title: Anthropic
 pcx_content_type: get-started
 ---
 
-import { Render } from "~/components";
+import { Render, Details, Tabs, TabItem } from "~/components";
 
 [Anthropic](https://www.anthropic.com/) helps build reliable, interpretable, and steerable AI systems.
 
 ## Endpoint
+**Base URL**
 
 ```txt
 https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic
 ```
 
-## Prerequisites
-
-When making requests to Anthropic, ensure you have the following:
-
-- Your AI Gateway Account ID.
-- Your AI Gateway gateway name.
-- An active Anthropic API token.
-- The name of the Anthropic model you want to use.
-
 ## Examples
 
 ### cURL
 
-```bash title="Example fetch request"
+<Details header="With API Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```bash title=""
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1/messages \
+ --header 'x-api-key: {anthropic_api_key}' \
+ --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+ --header 'anthropic-version: 2023-06-01' \
+ --header 'Content-Type: application/json' \
+ --data  '{
+    "model": "claude-sonnet-4-5",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "What is Cloudflare?"}
+    ]
+  }'
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```bash title=""
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1/messages \
  --header 'x-api-key: {anthropic_api_key}' \
  --header 'anthropic-version: 2023-06-01' \
@@ -39,34 +50,90 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1
     ]
   }'
 ```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```bash title=""
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1/messages \
+ --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+ --header 'anthropic-version: 2023-06-01' \
+ --header 'Content-Type: application/json' \
+ --data  '{
+    "model": "claude-sonnet-4-5",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "What is Cloudflare?"}
+    ]
+  }'
+```
+</Details>
 
-### Use Anthropic SDK with JavaScript
+### Anthropic SDK
 
-If you are using the `@anthropic-ai/sdk`, you can set your endpoint like this:
-
-```js title="JavaScript"
+<Details header="With Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```js title=""
 import Anthropic from "@anthropic-ai/sdk";
 
-const apiKey = env.ANTHROPIC_API_KEY;
-const accountId = "{account_id}";
-const gatewayId = "{gateway_id}";
-const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/anthropic`;
+const baseURL = `https://gateway.ai.cloudflare.com/v1/{accountId}/{gatewayId}/anthropic`;
 
 const anthropic = new Anthropic({
-	apiKey,
+	apiKey: "{ANTHROPIC_API_KEY}",
+	baseURL,
+	defaultHeaders: {
+		Authorization: `Bearer {cf_api_token}`,
+	},
+});
+
+const message = await anthropic.messages.create({
+	model: "claude-sonnet-4-5",
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	max_tokens: 1024,
+});
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```js title=""
+import Anthropic from "@anthropic-ai/sdk";
+
+const baseURL = `https://gateway.ai.cloudflare.com/v1/{accountId}/{gatewayId}/anthropic`;
+
+const anthropic = new Anthropic({
+	apiKey: "{ANTHROPIC_API_KEY}",
 	baseURL,
 });
 
-const model = "claude-sonnet-4-5";
-const messages = [{ role: "user", content: "What is Cloudflare?" }];
-const maxTokens = 1024;
-
 const message = await anthropic.messages.create({
-	model,
-	messages,
-	max_tokens: maxTokens,
+	model: "claude-sonnet-4-5",
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	max_tokens: 1024,
 });
 ```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```js title=""
+import Anthropic from "@anthropic-ai/sdk";
+
+const baseURL = `https://gateway.ai.cloudflare.com/v1/{accountId}/{gatewayId}/anthropic`;
+
+const anthropic = new Anthropic({
+	baseURL,
+	defaultHeaders: {
+		Authorization: `Bearer {cf_api_token}`,
+	},
+});
+
+const message = await anthropic.messages.create({
+	model: "claude-sonnet-4-5",
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	max_tokens: 1024,
+});
+```
+</Details>
 
 <Render
 	file="chat-completions-providers"
@@ -75,7 +142,7 @@ const message = await anthropic.messages.create({
 		name: "Anthropic",
 		jsonexample: `
 {
-	"model": "anthropic/{model}"
+		"model": "anthropic/{model}"
 }`
 
     }}
