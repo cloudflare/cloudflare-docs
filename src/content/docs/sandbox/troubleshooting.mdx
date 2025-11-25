@@ -1,0 +1,76 @@
+---
+title: Troubleshooting
+pcx_content_type: reference
+sidebar:
+  order: 8
+---
+
+Common issues and solutions when working with Sandbox SDK.
+
+## Local Development
+
+### `exec format error` - Architecture compatibility
+
+If you see an error like:
+
+```txt
+exec /container-server/startup.sh: exec format error
+```
+
+This means Docker emulation is not enabled. Sandbox SDK base images run on `linux/amd64` architecture to match production, which requires emulation on ARM-based systems.
+
+#### Docker Desktop
+
+Emulation is included by default. Ensure you're running the latest version of Docker Desktop.
+
+#### Colima
+
+Enable emulation support by configuring Rosetta 2 or QEMU:
+
+```sh
+# Stop Colima
+colima stop
+
+# Start with Rosetta 2 (faster, requires macOS 13+)
+colima start --arch aarch64 --vm-type=vz --vz-rosetta
+
+# Or edit ~/.colima/default/colima.yaml directly and restart:
+# rosetta: true
+# binfmt: true
+```
+
+#### Other container runtimes
+
+If you're using Podman, Rancher Desktop, or other container runtimes, ensure `linux/amd64` emulation is enabled. Refer to your runtime's documentation for emulation configuration.
+
+### Other local development issues
+
+For troubleshooting port exposure, socket configuration, and other local development problems, see the [Containers Local Development guide](/containers/local-dev/#troubleshooting).
+
+## Production Deployment
+
+For issues with preview URLs, custom domain setup, SSL/TLS certificates, and production routing, see the [Production Deployment guide](/sandbox/guides/production-deployment/#troubleshooting).
+
+## Version Compatibility
+
+If you see warnings about version mismatches between the npm package and Docker image:
+
+```txt
+Warning: SDK version (0.5.3) does not match container version (0.5.2)
+```
+
+Update your Dockerfile to use the matching version:
+
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.5.3
+```
+
+The SDK checks version compatibility on startup. Mismatched versions can cause unexpected behavior. See [Dockerfile reference](/sandbox/configuration/dockerfile/#base-image) for details.
+
+## Additional Resources
+
+- [Platform Limits](/containers/platform-details/limits/) - Resource limits and quotas
+- [Beta Information](/sandbox/platform/beta-info/) - Current limitations and known issues
+- [GitHub Issues](https://github.com/cloudflare/sandbox-sdk/issues) - Report bugs or ask questions
+- [Developer Discord](https://discord.cloudflare.com) - Get help from the community and Cloudflare team
+- [Community Forum](https://community.cloudflare.com) - Discuss solutions with other developers

@@ -23,6 +23,8 @@ Sandbox SDK uses [Docker](https://www.docker.com/) to build container images alo
 
 <Render product="containers" file="docker-setup" />
 
+**Architecture note:** The Sandbox SDK base images (`docker.io/cloudflare/sandbox:*`) are built for `linux/amd64` to match production. If you're on an ARM-based system (Apple Silicon, ARM Windows/Linux), Docker will use emulation automatically. See [Troubleshooting](/sandbox/troubleshooting/) if you encounter `exec format error`.
+
 ## 1. Create a new project
 
 Create a new Sandbox SDK project:
