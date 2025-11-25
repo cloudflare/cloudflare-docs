@@ -12,7 +12,7 @@ Pricing documentation is available on the [model page](/workers-ai/models/flux-2
 
 ## Workers AI Platform specifics
 
-The model hosted on Workers AI is able to support up to 4 image inputs and generate a max output image size of 1024x1024. Note, this image model is one of the most powerful in the catalog and is expected to be slower than the other image models we currently support. One catch to look out for is that this model takes multipart form data inputs, even if you just have a prompt.
+The model hosted on Workers AI is able to support up to 4 image inputs (512x512 per input image). Note, this image model is one of the most powerful in the catalog and is expected to be slower than the other image models we currently support. One catch to look out for is that this model takes multipart form data inputs, even if you just have a prompt.
 
 With the REST API, the multipart form data input looks like this:
 
@@ -72,7 +72,7 @@ The FLUX.2 model is great at generating images based on reference images. You ca
 
 For the prompt, you can reference the images based on the index, like `take the subject of image 1 and style it like image 0` or even use natural language like `place the dog beside the woman`.
 
-Note: you have to name the input parameter as `input_image_0`, `input_image_1`, `input_image_2` for it to work correctly. 
+Note: you have to name the input parameter as `input_image_0`, `input_image_1`, `input_image_2` for it to work correctly. All input images must be smaller than 512x512.
 
 ```bash
 curl --request POST \
