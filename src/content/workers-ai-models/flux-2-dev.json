@@ -24,12 +24,12 @@
             "value": [
                 {
                     "unit": "per input 512x512 tile, per step",
-                    "price": 0.000413,
+                    "price": 0.00021,
                     "currency": "USD"
                 },
                 {
                     "unit": "per output 512x512 tile, per step",
-                    "price": 0.000825,
+                    "price": 0.00041,
                     "currency": "USD"
                 }
             ]
