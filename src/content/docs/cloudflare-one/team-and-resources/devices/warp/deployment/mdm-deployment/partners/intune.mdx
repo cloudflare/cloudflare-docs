@@ -388,24 +388,26 @@ By completing this step, you deliver the WARP client to targeted iOS devices, ei
 
 4. In **Settings**, select _Enter XML data_ and copy and paste the following:
 
-```xml
-<dict>
-    <key>organization</key>
-    <string>org name</string>
-    <key>auto_connect</key>
-    <integer>1</integer>
-    <key>switch_locked</key>
-    <false />
-    <key>service_mode</key>
-    <string>warp</string>
-</dict>
-```
+	```xml
+	<dict>
+		<key>organization</key>
+		<string>YOUR_TEAM_NAME_HERE</string>
+		<key>auto_connect</key>
+		<integer>1</integer>
+		<key>switch_locked</key>
+		<false />
+		<key>service_mode</key>
+		<string>warp</string>
+	</dict>
+	```
+
+	Replace `YOUR_TEAM_NAME_HERE` with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name). Review the definitions of the above parameters in the [Parameters documentation](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
 
 5. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
 
 6. Review your configuration in **Review + create** and select **Create**.
 
-By completing this step, 
+By completing this step, you preconfigure the Cloudflare One Agent with your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization) and connection settings so that enrolled iOS devices automatically apply a consistent WARP configuration when the app installs.
 
 ### Intune configuration
 
