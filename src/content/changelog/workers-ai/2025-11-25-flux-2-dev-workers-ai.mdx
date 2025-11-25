@@ -30,17 +30,29 @@ curl --request POST \
 With the Workers AI binding, you can use it as such:
 
 ```javascript
+
 const form = new FormData();
-form.append('prompt', 'a sunset at the alps')
-form.append('width', 512)
-form.append('height', 512)
- 
+form.append('prompt', 'a sunset with a dog');
+form.append('width', '1024');
+form.append('height', '1024');
+
+//this dummy request is temporary hack
+//we're pushing a change to address this soon
+const formRequest = new Request('http://dummy', {
+  method: 'POST',
+  body: form
+});
+const formStream = formRequest.body;
+const formContentType = formRequest.headers.get('content-type') || 'multipart/form-data';
+
 const resp = await env.AI.run("@cf/black-forest-labs/flux-2-dev", {
-    multipart: {
-        body: form,
-        contentType: "multipart/form-data"
-    }
-})
+  multipart: {
+    body: formStream,
+    contentType: formContentType
+  }
+});
+
+```
 
 The parameters you can send to the model are detailed here:
 
@@ -89,6 +101,7 @@ curl --request POST \
 Through Workers AI Binding:
 
 ```javascript
+
 //helper function to convert ReadableStream to Blob
 async function streamToBlob(stream: ReadableStream, contentType: string): Promise<Blob> {
   const reader = stream.getReader();
@@ -112,6 +125,15 @@ const image_blob1 = await streamToBlob(image1.body, "image/png");
 form.append('input_image_0', image_blob0)
 form.append('input_image_1', image_blob1)
 form.append('prompt', 'take the subject of image 1and style it like image 0')
+
+//this dummy request is temporary hack
+//we're pushing a change to address this soon
+const formRequest = new Request('http://dummy', {
+  method: 'POST',
+  body: form
+});
+const formStream = formRequest.body;
+const formContentType = formRequest.headers.get('content-type') || 'multipart/form-data';
  
 const resp = await env.AI.run("@cf/black-forest-labs/flux-2-dev", {
     multipart: {
