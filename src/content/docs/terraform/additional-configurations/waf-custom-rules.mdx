@@ -70,7 +70,8 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
 ## Create and deploy a custom ruleset
 
 :::note
-Account-level WAF configuration requires an Enterprise plan with a paid add-on.
+All customers can create custom rulesets at the [zone level](/waf/custom-rules/custom-rulesets/).<br/>
+Custom rulesets at the [account level](/waf/account/custom-rulesets/) require an Enterprise plan with a paid add-on.
 :::
 
 The following example creates a [custom ruleset](/ruleset-engine/custom-rulesets/) in the account with ID `<ACCOUNT_ID>` containing a single custom rule. This custom ruleset is then deployed using a separate `cloudflare_ruleset` Terraform resource. If you do not deploy a custom ruleset, it will not execute.
