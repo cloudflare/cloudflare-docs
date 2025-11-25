@@ -1,19 +1,23 @@
 ---
 pcx_content_type: concept
-title: Custom rulesets
+title: Custom rulesets (account level)
 sidebar:
   order: 2
+  group:
+    label: Custom rulesets
 ---
+
+import { Render } from "~/components";
 
 :::note
 Custom rulesets at the account level require an Enterprise plan with a paid add-on.
 :::
 
-Custom rulesets are collections of custom rules that you can deploy at the account or zone level.
-
-Like [custom rules](/waf/custom-rules/) at the zone level, custom rulesets allow you to control incoming traffic by filtering requests. For example, you can apply a custom ruleset to all incoming traffic of your Enterprise domains or to a subset of incoming requests.
-
-At the zone level, all customers can create and deploy custom rulesets. Custom rulesets at the account level require an Enterprise plan with a paid add-on. For more details, refer to [Availability](/waf/custom-rules/#availability).
+<Render
+	file="custom-rulesets/intro"
+	product="waf"
+	params={{ scope: "account" }}
+/>
 
 ## Next steps
 

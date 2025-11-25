@@ -1,0 +1,97 @@
+---
+pcx_content_type: concept
+title: Custom rulesets (zone level)
+sidebar:
+  order: 7
+  label: Custom rulesets
+---
+
+import { Render, APIRequest } from "~/components";
+
+<Render file="custom-rulesets/intro" product="waf" params={{ scope: "zone" }} />
+
+:::tip[Use case: Different teams managing different sets of custom rules]
+Consider creating custom rulesets instead of managing individual custom rules at the zone level to allow different teams in your company to manage different sets of rules independently, including [via Terraform](/terraform/additional-configurations/waf-custom-rules/#create-and-deploy-a-custom-ruleset).
+:::
+
+## Deploy a custom ruleset via API
+
+:::note
+Currently, the Cloudflare dashboard does not support working with custom rulesets at the zone level. You will need to use the Cloudflare API to configure or deploy these rulesets.
+:::
+
+To deploy a custom ruleset for a zone:
+
+1. Create a custom ruleset at the zone level with one or more rules. Alternatively, identify the existing custom ruleset you want to deploy using the [List zone rulesets](/api/resources/rulesets/methods/list/) API operation.
+2. Deploy the custom ruleset so that it gets executed. To deploy a custom ruleset, create a rule with the `execute` action.
+
+### 1. Create custom ruleset
+
+The following request creates a new custom ruleset at the zone level with two rules. The response will include the ID of the new custom ruleset in the `id` field.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Custom Ruleset 1",
+		description: "My First Custom Ruleset (zone)",
+		kind: "custom",
+		phase: "http_request_firewall_custom",
+		rules: [
+			{
+				expression:
+					'(ip.src.country in {"GB" "FR"} and cf.bot_management.score < 20 and not cf.bot_management.verified_bot)',
+				action: "challenge",
+				description: "challenge GB and FR based on bot score",
+			},
+			{
+				expression: 'not http.request.uri.path wildcard "/api/*"',
+				action: "challenge",
+				description: "challenge not /api",
+			},
+		],
+	}}
+/>
+
+```json output {3}
+{
+	"result": {
+		"id": "f82ccda3d21f4a02825d3fe45b5e1c10",
+		"name": "Custom Ruleset 1",
+		"description": "My First Custom Ruleset (zone)",
+		"kind": "custom",
+		"version": "1",
+		"rules": [
+			{
+				"expression": "(ip.src.country in {\"GB\" \"FR\"} and cf.bot_management.score < 20 and not cf.bot_management.verified_bot)",
+				"action": "challenge",
+				"description": "challenge GB and FR based on bot score"
+			},
+			{
+				"expression": "not http.request.uri.path wildcard \"/api/*\"",
+				"action": "challenge",
+				"description": "challenge not /api"
+			}
+		],
+		"last_updated": "2025-11-09T10:27:30.636197Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+<Render file="custom-ruleset-zone-limitation" product="ruleset-engine" />
+
+### 2. Deploy custom ruleset
+
+<Render
+	file="custom-rulesets/api-deploy-example-zone"
+	product="waf"
+	params={{ rulesetId: "f82ccda3d21f4a02825d3fe45b5e1c10" }}
+/>
+
+## More resources
+
+For more information on working with custom rulesets via Cloudflare API, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/) in the Ruleset Engine documentation.
