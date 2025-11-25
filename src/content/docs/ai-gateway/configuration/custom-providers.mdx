@@ -53,12 +53,12 @@ To create a new custom provider using the API:
 2. Send a `POST` request to create a new custom provider:
 
 ```bash title="Create Custom Provider"
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "My Custom Provider",
-    "slug": "my-custom-provider",
+    "slug": "some-provider",
     "base_url": "https://api.myprovider.com",
     "description": "Custom AI provider for internal models",
     "enable": true
@@ -88,7 +88,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-p
     "account_id": "abc123def456",
     "account_tag": "my-account",
     "name": "My Custom Provider",
-    "slug": "my-custom-provider",
+    "slug": "some-provider",
     "base_url": "https://api.myprovider.com",
     "description": "Custom AI provider for internal models",
     "enable": true,
@@ -113,7 +113,7 @@ A default SVG logo is automatically generated for each custom provider. The logo
 To create a new custom provider using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Compute & AI** > **AI Gateway** > **Custom Providers**](https://dash.cloudflare.com/?to=/:account/ai-gateway/custom-providers).
+2. Go to [**Compute & AI** > **AI Gateway** > **Custom Providers**](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/custom-providers).
 3. Select **Add Custom Provider**.
 4. Enter the following information:
    - **Provider Name**: Display name for your provider
@@ -132,7 +132,7 @@ To create a new custom provider using the dashboard:
 Retrieve all custom providers with optional filtering and pagination:
 
 ```bash title="List all providers"
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
@@ -148,13 +148,13 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers
 
 List only enabled providers:
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers?enable=true" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers?enable=true" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 Search for specific providers:
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers?search=custom" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers?search=custom" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
@@ -167,7 +167,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers
     {
       "id": "550e8400-e29b-41d4-a716-446655440000",
       "name": "My Custom Provider",
-      "slug": "my-custom-provider",
+      "slug": "some-provider",
       "base_url": "https://api.myprovider.com",
       "enable": true,
       "created_at": 1700000000,
@@ -189,7 +189,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers
 To view all your custom providers:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Compute & AI** > **AI Gateway** > **Custom Providers**](https://dash.cloudflare.com/?to=/:account/ai-gateway/custom-providers).
+2. Go to [**Compute & AI** > **AI Gateway** > **Custom Providers**](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/custom-providers).
 3. You will see a list of all your custom providers with their names, slugs, base URLs, and status.
 
 </TabItem>
@@ -203,7 +203,7 @@ To view all your custom providers:
 Retrieve details for a specific custom provider by its ID:
 
 ```bash title="Get provider by ID"
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers/{provider_id}" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
@@ -217,7 +217,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers
     "account_id": "abc123def456",
     "account_tag": "my-account",
     "name": "My Custom Provider",
-    "slug": "my-custom-provider",
+    "slug": "some-provider",
     "base_url": "https://api.myprovider.com",
     "description": "Custom AI provider for internal models",
     "enable": true,
@@ -243,7 +243,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers
 Update an existing custom provider. All fields are optional - only include the fields you want to change:
 
 ```bash title="Update provider"
-curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers/{provider_id}" \
+curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -268,7 +268,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-
 
 Enable a provider:
 ```bash
-curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers/{provider_id}" \
+curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"enable": true}'
@@ -276,7 +276,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-
 
 Update provider URL:
 ```bash
-curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers/{provider_id}" \
+curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"base_url": "https://api.newprovider.com"}'
@@ -292,7 +292,7 @@ Updates to custom providers automatically invalidate any cached entries related 
 To update an existing custom provider:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Compute & AI** > **AI Gateway** > **Custom Providers**](https://dash.cloudflare.com/?to=/:account/ai-gateway/custom-providers).
+2. Go to [**Compute & AI** > **AI Gateway** > **Custom Providers**](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/custom-providers).
 3. Find the custom provider you want to update and select **Edit**.
 4. Update the fields you want to change (name, slug, base URL, etc.).
 5. Select **Save** to apply your changes.
@@ -308,7 +308,7 @@ To update an existing custom provider:
 Delete a custom provider:
 
 ```bash title="Delete provider"
-curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom-providers/{provider_id}" \
+curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers/{provider_id}" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
@@ -320,7 +320,7 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom
   "result": {
     "id": "550e8400-e29b-41d4-a716-446655440000",
     "name": "My Custom Provider",
-    "slug": "my-custom-provider"
+    "slug": "some-provider"
   }
 }
 ```
@@ -335,7 +335,7 @@ Deleting a custom provider will immediately stop all requests routed through it.
 To delete a custom provider:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Compute & AI** > **AI Gateway** > **Custom Providers**](https://dash.cloudflare.com/?to=/:account/ai-gateway/custom-providers).
+2. Go to [**Compute & AI** > **AI Gateway** > **Custom Providers**](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/custom-providers).
 3. Find the custom provider you want to delete and select **Delete**.
 4. Confirm the deletion when prompted.
 
@@ -351,7 +351,7 @@ Deleting a custom provider will immediately stop all requests routed through it.
 Once you've created a custom provider, you can route requests through AI Gateway. When referencing your custom provider, you must prefix the slug with `custom-`.
 
 :::note[Custom provider prefix]
-All custom provider slugs must be prefixed with `custom-` when making requests through AI Gateway. For example, if your provider slug is `my-custom-provider`, you must use `custom-my-custom-provider` in your requests.
+All custom provider slugs must be prefixed with `custom-` when making requests through AI Gateway. For example, if your provider slug is `some-provider`, you must use `custom-some-provider` in your requests.
 :::
 
 ### Via Unified API
@@ -362,7 +362,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/
   -H "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "custom-my-custom-provider/model-name",
+    "model": "custom-some-provider/model-name",
     "messages": [{"role": "user", "content": "Hello!"}]
   }'
 ```
@@ -372,7 +372,7 @@ In the Unified API, specify the model using the format: `custom-{slug}/{model-na
 ### Via provider-specific endpoint
 
 ```bash title="Direct provider endpoint"
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-my-custom-provider/your-endpoint \
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-some-provider/your-endpoint \
   -H "Authorization: Bearer $PROVIDER_API_KEY" \
   -H "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
   -H "Content-Type: application/json" \

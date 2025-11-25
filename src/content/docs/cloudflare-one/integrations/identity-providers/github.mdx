@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: GitHub
 ---
 
+import { Render } from "~/components";
+
 Cloudflare One allows your team to connect to your applications using their GitHub login. You do not need to have a GitHub organization to use the integration.
 
 ## Set up GitHub Access
@@ -23,7 +25,7 @@ To configure GitHub access in both GitHub and Cloudflare One:
    https://<your-team-name>.cloudflareaccess.com
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) by going to **Settings** > **Team name**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
 6. In the GitHub **Authorization callback URL** field, enter the following URL:
 

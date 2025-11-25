@@ -28,7 +28,6 @@ jobs:
         name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENABLE_LAST_MOD_IN_SITEMAP: true
       - uses: actions/upload-artifact@v4
         continue-on-error: true
         with:

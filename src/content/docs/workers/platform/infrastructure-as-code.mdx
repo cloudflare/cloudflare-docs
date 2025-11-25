@@ -418,3 +418,64 @@ resource "cloudflare_workers_deployment" "my_worker_deployment" {
 ```
 
 To make this succeed, you first have to comment out the `durable_object` binding block, apply the plan, uncomment it, comment out the `migrations` block, then apply again. This time the plan will succeed. This also applies to the API or SDKs. This is an example where it makes sense to just manage the `cloudflare_worker` and/or `cloudflare_workers_deployment` resources while using Wrangler for build and Version management.
+
+## Considerations with Worker Versions
+
+### Resource immutability
+
+Worker versions are immutable at the API level, meaning they cannot be updated after creation, only re-created with any desired changes. This means that meaningful changes to the `cloudflare_worker_version` Terraform resource will always trigger replacement. When the `cloudflare_worker_version` resource is replaced, a new version with the desired changes is created, but the previous version is not deleted. This ensures the Worker has a complete version history when managed via Terraform. In other words, versions are both immutable and append-only. When the parent `cloudflare_worker` resource is deleted, all existing versions associated with the Worker are also deleted.
+
+### Module Content
+
+Worker version modules support two mutually exclusive ways to provide content:
+
+- **`content_file`** - Points to a local file
+- **`content_base64`** - Inline base64-encoded content
+
+In both cases, changes to the underlying content are tracked using the computed `content_sha256` attribute. Specifying content using the `content_file` attribute is preferred in almost all cases, as it avoids storing the content itself in state. Module content may be quite large (up to tens of megabytes), and storing it in state will bloat the state file and negatively affect the performance of Terraform operations. The main use case for the `content_base64` attribute is importing the `cloudflare_worker_version` Terraform resource from the API, discussed below.
+
+### Import Behavior
+
+**During import, Terraform always populates the `content_base64` attribute in state**, regardless of the attribute used in your config.
+
+```bash
+terraform import cloudflare_worker_version.my_worker_version <account_id>/<worker_id>/<version_id>
+```
+
+If your config uses `content_file`, there will be a mismatch after import (state uses `content_base64`, config uses `content_file`). This is expected.
+
+Assuming the content of the local file referenced by `content_file` matches the imported content and their `content_sha256` values are the same, this will result in an in-place update of the `cloudflare_worker_version` Terraform resource. This should be an in-place update instead of a replacement because the underlying content is not changing (the `content_sha256` attribute is the same in both cases), and the resource does not need to be updated at the API level. The only thing that needs to be updated is Terraform state, which will switch from using `content_base64` to `content_file` after the update.
+
+If Terraform instead wants to replace the resource, citing a difference in computed `content_sha256` values, then the content of the local file referenced by `content_file` does not match the imported content and the resource can't be cleanly imported without updating the local file to match the expected API value.
+
+### Examples
+
+**Using `content_file`:**
+
+```tf
+resource "cloudflare_worker_version" "content_file_example" {
+  account_id  = var.account_id
+  worker_id   = cloudflare_worker.example.id
+  main_module = "worker.js"
+  modules = [{
+    name         = "worker.js"
+    content_type = "application/javascript+module"
+    content_file = "build/worker.js"
+  }]
+}
+```
+
+**Using `content_base64`:**
+
+```tf
+resource "cloudflare_worker_version" "content_base64_example" {
+  account_id  = var.account_id
+  worker_id   = cloudflare_worker.example.id
+  main_module = "worker.js"
+  modules = [{
+    name           = "worker.js"
+    content_type   = "application/javascript+module"
+    content_base64 = base64encode("export default { async fetch() { return new Response('Hello world!') } }")
+  }]
+}
+```

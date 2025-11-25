@@ -1,0 +1,41 @@
+rules:
+  - id: coming-soon
+    languages: [generic]
+    message: "Found forbidden string 'coming soon'. Too often we set expectations unfairly by attaching this phrase to a feature that may not actually arrive soon."
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.htm"
+        - "*.html"
+        - "*.md"
+        - "*.mdx"
+        - "*.yaml"
+        - "*.yml"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "[Cc]oming [Ss]oon"
+
+  - id: potential-date
+    languages: [generic]
+    message: "Potential date found. Documentation should strive to represent universal truth, not something time-bound."
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.htm"
+        - "*.html"
+        - "*.md"
+        - "*.mdx"
+        - "*.yaml"
+        - "*.yml"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    pattern-either:
+      - pattern-regex: Jan\| Feb\| Mar\| Apr\| May\| Jun\| Jul\| Aug\| Sep\| Nov\| Dec
+      - pattern-regex: \ 20[0-9][0-9]
