@@ -111,6 +111,10 @@ The `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be stored as secrets,
 }
 ```
 
+### Other S3-compatible storage providers
+
+Other S3-compatible storage providers, including AWS S3 and Google Cloud Storage, can be mounted using the same approach as R2. You will need to provide the appropriate endpoint URL and access credentials for the storage provider.
+
 ## Mounting bucket prefixes
 
 To mount a specific prefix (subdirectory) within a bucket, most FUSE adapters require mounting the entire bucket and then accessing the prefix path within the mount.
@@ -153,6 +157,10 @@ RUN printf '#!/bin/sh\n\
 ```
 
 This is useful for shared assets or configuration files where you want to ensure applications only read data.
+
+### S3 Compatible providers
+
+You can mount
 
 ## Related resources
 
