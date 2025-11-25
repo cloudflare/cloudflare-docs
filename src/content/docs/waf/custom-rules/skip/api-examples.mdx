@@ -88,7 +88,7 @@ This example invokes the [Create a zone ruleset rule](/api/resources/rulesets/su
 	roles={false}
 />
 
-Refer to [Available skip options: Logging](/waf/custom-rules/skip/options/#logging) for more information on disabling logging for requests that match a skip rule.
+Refer to [Available skip options](/waf/custom-rules/skip/options/#log-requests-matching-the-skip-rule) for more information on disabling logging for requests that match a skip rule.
 
 ## Skip security products
 
@@ -108,4 +108,24 @@ This example uses the [Create a zone ruleset rule](/api/resources/rulesets/subre
 	roles={false}
 />
 
-Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list of products you can skip.
+Refer to [Available skip options](/waf/custom-rules/skip/options/#skip-products) for the list of products you can skip.
+
+## Skip the remaining rules in the current phase
+
+This example invokes the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation to add a skip rule to the existing `http_request_firewall_custom` phase entry point ruleset with ID `$RULESET_ID`. The rule will skip all remaining rules in the `http_request_firewall_custom` phase for requests matching the rule expression.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		action: "skip",
+		action_parameters: {
+			phase: "current",
+		},
+		expression: 'http.request.uri.path contains "/skip-current-ruleset/"',
+		description: "",
+	}}
+	roles={false}
+/>
+
+Currently, this skip option is only available at the zone level. Refer to [Available skip options](/waf/custom-rules/skip/options/#skip-the-remaining-custom-rules-current-phase) for more details.
