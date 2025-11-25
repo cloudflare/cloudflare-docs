@@ -10,7 +10,7 @@ description: >-
   A partial (CNAME) setup allows you to use Cloudflare's reverse proxy while maintaining your primary and authoritative DNS provider.
 ---
 
-import { Details, Render, GlossaryTooltip, Steps } from "~/components";
+import { Details, Render, GlossaryTooltip, Steps, Tabs, TabItem, APIRequest } from "~/components";
 
 <Render file="partial-setup-definition" product="dns" />
 
@@ -38,8 +38,14 @@ Partial setups are not supported on Cloudflare Registrar domains.
 
 ## 1. Convert your zone and review DNS records
 
-<Steps>
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+:::caution[Make sure you have the correct plan]
+Make sure your zone is on the Business or Enterprise plan. If you have Free or Pro, the options mentioned below will not be displayed.
+:::
+
+<Steps>
 1. On the **Overview** page, select **Convert to CNAME DNS Setup**.
 2. Select **Convert** to confirm.
 3. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, under **Verification TXT Record**.
@@ -47,31 +53,27 @@ Partial setups are not supported on Cloudflare Registrar domains.
 
 </Steps>
 
+</TabItem> <TabItem label="API">
+
+If you are adding a zone for the first time via API you can add it directly with a `type` of `partial`, without converting it.
+
+<APIRequest
+  path="/zones"
+  method="POST"
+  json={{
+    "name": "example.com",
+    "account": {
+      "id": "YOUR_ACCOUNT_ID"
+    },
+    "type": "partial"
+  }}
+/>
+
+</TabItem> </Tabs>
+
 ## 2. Verify ownership for your domain
 
-Add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
-
-<Details header="Example verification record">
-
-A verification record for `example.com` might be:
-
-| Type | Name                            | Content             |
-| ---- | ------------------------------- | ------------------- |
-| TXT  | `cloudflare-verify.example.com` | 966215192-518620144 |
-
-</Details>
-
-:::note
-
-If your authoritative DNS provider automatically appends DNS record `name` fields with your domain, make sure to only insert `cloudflare-verify` as the record name. Otherwise, it may result in an incorrect record name, such as `cloudflare-verify.example.com.example.com`.
-
-After creating the record, you can use this [Dig Web Interface link](https://digwebinterface.com/?type=TXT&ns=auth&nameservers=) to search (`dig`) for `cloudflare-verify.<YOUR DOMAIN>` and validate if it is working.
-
-:::
-
-That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
-
-If your organization has multiple Cloudflare accounts, also consider using zone holds to have more control over [domain ownership](/dns/zone-setups/partial-setup/#domain-ownership).
+<Render file="partial-setup-verification-record" product="dns" />
 
 ## 3. Add DNS records
 

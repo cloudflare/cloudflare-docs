@@ -5,28 +5,18 @@ sidebar:
   order: 2
 ---
 
-import { Details, DashButton, Steps, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	Details,
+	DashButton,
+	Steps,
+	Tabs,
+	TabItem,
+} from "~/components";
 
 You can define custom [Error Pages](/rules/custom-errors/#error-pages) for the following errors and challenges:
 
-- WAF block
-- IP/Country block
-- IP/Country challenge
-- 500 class errors
-- 1000 class errors
-- Managed challenge / I'm Under Attack Mode
-- Rate limiting block
-
-<Details header="Older error page types">
-
-You can only customize the error pages for the following error page types if you have customized their error pages in the past:
-
-- Interactive Challenge
-- JavaScript Challenge
-
-These types of challenges are being discouraged in favor of managed challenges.
-
-</Details>
+<Render file="error-pages-list" product="rules" />
 
 For more information on the different types of Error Pages, refer to [Error page types](/rules/custom-errors/reference/error-page-types/).
 

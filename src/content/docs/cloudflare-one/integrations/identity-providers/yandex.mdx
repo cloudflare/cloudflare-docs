@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Yandex
 ---
 
+import { Render } from "~/components";
+
 Yandex is a web search engine that also offers identity provider (IdP) services.
 
 ## Set up Yandex
@@ -29,7 +31,7 @@ To set up Yandex for Cloudflare Access:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
    ![Yandex Platform interface with Web services checked and callback URI in open form field](~/assets/images/cloudflare-one/identity/yandex/yandex-3.png)
 

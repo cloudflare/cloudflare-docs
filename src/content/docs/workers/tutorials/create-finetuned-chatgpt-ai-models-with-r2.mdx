@@ -231,7 +231,7 @@ app.get("/jobs", async (c) => {
 
 After you have created your Worker application and added the required functions, deploy the application.
 
-Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`wrangler secret put`](/workers/wrangler/commands/#put) command:
+Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`wrangler secret put`](/workers/wrangler/commands/#secret-put) command:
 
 ```sh
 npx wrangler secret put OPENAI_API_KEY

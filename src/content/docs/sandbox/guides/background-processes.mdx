@@ -167,6 +167,8 @@ By default, containers automatically shut down after 10 minutes of inactivity. F
 ```ts
 import { getSandbox, parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
+export { Sandbox } from '@cloudflare/sandbox';
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     // Enable keepAlive for long-running processes

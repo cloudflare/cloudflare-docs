@@ -22,9 +22,9 @@ Once your AI crawler complies with Web Bot Auth, you can begin to crawl webpages
 When an AI crawler makes a request to a page protected by pay per crawl, the server will respond with `HTTP/2 402 Payment Required`. This response will also include the `crawler-price` header which specifies the cost to access the content. For example, a response may look like the following:
 
 ```txt
-HTTP/2 200
+HTTP/2 402
 date: Fri, 06 Jun 2025 08:42:38 GMT
-crawler-charged: USD 0.01
+crawler-price: USD 0.01
 ```
 
 To access this content, the AI crawler must provide headers for paid access.

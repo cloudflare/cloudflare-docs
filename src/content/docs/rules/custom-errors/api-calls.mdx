@@ -1,16 +1,14 @@
 ---
-title: Common API calls
+title: Common API calls for Custom Errors
 pcx_content_type: configuration
 sidebar:
   order: 5
-head:
-  - tag: title
-    content: Common API calls | Custom Error Assets
+  label: Common API calls
 ---
 
 import { APIRequest } from "~/components";
 
-The following sections provide examples of common API calls for managing custom error assets at the zone level.
+The following sections provide examples of common API calls for managing custom error assets and Error Pages at the zone level.
 
 To perform the same operations at the account level, use the corresponding account-level API endpoints.
 
@@ -241,3 +239,7 @@ This example defines a custom error page for `Rate limiting block` errors (with 
 To set the error page back to the default page, use `"state": "default"` in the request body.
 
 For a list of error page identifiers, refer to [Error page types](/rules/custom-errors/reference/error-page-types/).
+
+## More resources
+
+- [Custom Error Pages API reference](/api/resources/custom_pages/)

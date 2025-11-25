@@ -129,10 +129,8 @@ To turn off SSH command logging, delete your uploaded public key:
 <Tabs>
 <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings** > **SSH log encryption public key**.
-
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings** > **SSH log encryption public key**.
 2. Select **Remove**.
-
 3. Select **Remove key** to confirm.
 
 Cloudflare will stop logging SSH commands to your targets, as well as any commands subject to [Gateway Audit SSH](/cloudflare-one/traffic-policies/network-policies/ssh-logging/) policies.
@@ -475,4 +473,8 @@ By completing all four troubleshooting steps, you should have resolved any conne
 
 ### 5. Get help
 
-<Render file="warp/support-ticket-best-practices" product="cloudflare-one" params={{ sshMode: true }} />
+<Render
+	file="warp/support-ticket-best-practices"
+	product="cloudflare-one"
+	params={{ sshMode: true }}
+/>

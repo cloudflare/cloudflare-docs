@@ -222,7 +222,7 @@ Therefore, the user is able to connect to `https://test.example.com`.
 
 ## Precedence calculations
 
-When arranging policies in Zero Trust, Gateway automatically calculates the precedence for rearranged policies.
+When arranging policies in [Cloudflare One](https://one.dash.cloudflare.com/), Gateway automatically calculates the precedence for rearranged policies.
 
 When using the API to create a policy, unless the precedence is explicitly defined in the policy, Gateway will assign precedence to policies starting at `1000`. Every time a new policy is added to the bottom of the order, Gateway will calculate the current highest precedence in the account and add a random integer between 1 and 100 to `1000` so that it now claims the maximum precedence in the account. To manually update a policy's precedence, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint. You can set a policy's precedence to any value that is not already in use.
 

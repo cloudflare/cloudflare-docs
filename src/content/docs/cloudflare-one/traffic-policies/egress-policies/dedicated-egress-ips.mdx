@@ -20,7 +20,7 @@ An account can have any number of additional dedicated egress IPs. To request ad
 To start routing traffic through dedicated egress IPs:
 
 1. Contact your account team to obtain a dedicated egress IP.
-2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+2. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
 3. Turn on **Allow Secure Web Gateway to proxy traffic**.
 4. Select **TCP**.
 5. (Optional) Select **UDP**. This will allow HTTP/3 traffic to egress with your dedicated IPs.
@@ -53,10 +53,10 @@ For more information, refer to [Cloudflare BYOIP](/byoip/) or contact your accou
 If you do not have your own authority-provided IPv4 and IPv6 addresses, you can use dedicated egress IPs with a Cloudflare IP address.
 
 <Render
-  file="check-leased-ips"
+	file="check-leased-ips"
 	product="byoip"
 	params={{
-		product: "Gateway dedicated egress IPs"
+		product: "Gateway dedicated egress IPs",
 	}}
 />
 
@@ -82,6 +82,10 @@ These origins will see the default shared IPs instead of the dedicated egress IP
 To improve traffic resilience, assign your dedicated egress IPs to different Cloudflare data center locations. If you have multiple IPs in the same city, choose different data centers within that city. For more information, contact your account team.
 
 When creating egress policies with dedicated egress IPs, set your secondary IPv4 address to either _Default Cloudflare egress_ or a Cloudflare location different from your primary IPv4 address. If the physical location of your primary IPv4 address is not available, traffic will be routed to either the location closest to the user (_Default Cloudflare egress_ option) or another location of your choice.
+
+:::tip[Fallback egress IPs]
+If the location for your primary egress IPs goes down and there is no secondary backup IP address configured in the egress policy, Gateway will not properly route your traffic. Cloudflare recommends you always configure a fallback egress IP for every egress policy.
+:::
 
 ### IP geolocation
 
@@ -150,7 +154,7 @@ No, egress IPs are limited to a single data center.
 
 No, traffic will only egress from the data center where the egress IP is provisioned. If you have users in locations far apart, we recommend reserving multiple egress IPs across different data centers and provisioning your users to their closest data centers.
 
-### Can I use dedicated egress IPs with traffic proxied via [PAC files](/cloudflare-one/team-and-resources/devices/agentless/pac-files/)?
+### Can I use dedicated egress IPs with traffic proxied via [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)?
 
 Yes, your users will egress via their provisioned IP address.
 

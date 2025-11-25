@@ -2,12 +2,15 @@ on:
   workflow_dispatch: {}
   schedule:
     - cron: "0 4 * * *"
+  pull_request: {}
+
 name: Semgrep config
 permissions:
   contents: read
+
 jobs:
   semgrep:
-    name: semgrep/ci
+    name: semgrep
     runs-on: ubuntu-latest
     env:
       SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
@@ -18,4 +21,35 @@ jobs:
       image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
-      - run: semgrep ci
+        with:
+          # fetch full history so Semgrep can compare against the base branch
+          fetch-depth: 0
+
+      # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
+      # scans using managed rules at cloudflare.semgrep.dev
+      - name: Semgrep CI Rules (Managed rules at cloudflare.semgrep.dev)
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: semgrep ci
+
+      # Semgrep Scan to run on Pull Request events
+      # scans using rules inside the .semgrep/ folder and fails on error
+      # include [skip semgrep] in top-most commit message to skip scan
+      - name: Semgrep Repo Rules (Custom rules found in .semgrep/)
+        if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '[skip semgrep]')
+        run: |
+
+          git config --global --add safe.directory $PWD
+          base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
+          git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/relevant_changed_files.txt || true
+
+          # Check if file list is empty to prevent errors
+          if [ -s tools/relevant_changed_files.txt ]; then
+            list_of_files=$(cat tools/relevant_changed_files.txt | tr '\n' ' ')
+            semgrep scan \
+              --config .semgrep --metrics=off \
+              --include "*.mdx" --include "*.mdx" \
+              $list_of_files
+            # add '--error' to return error code to workflow
+          else
+            echo "No relevant files changed."
+          fi

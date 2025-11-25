@@ -51,7 +51,7 @@ To remove a user from your Zero Trust Organization:
 
 The user will now show as **Inactive** and will no longer occupy a seat. If a user is removed but authenticates later, they will consume a seat again.
 
-To automate the removal of users who have not logged in or triggered a device enrollment in a specific amount of time, turn on [seat expiration](#enable-seat-expiration).
+To automate the removal of users who have not logged in or triggered a device enrollment in a specific amount of time, turn on [seat expiration](#enable-seat-expiration) or utilize [SCIM](/cloudflare-one/team-and-resources/users/scim/) to remove users when they are deactivated in your identity provider.
 
 :::note[User record persistence]
 You cannot delete or archive a user record. You can [remove a user](#remove-a-user) from a seat, but their user record will remain in your Zero Trust Organization. Inactive users do not count towards billing.

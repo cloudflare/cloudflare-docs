@@ -11,6 +11,10 @@ Some customers may need to manage their own SSL certificates or rely on specific
 
 If you disable your domain's Universal SSL certificate, Cloudflare removes that certificate from our network and will not order or renew any additional Universal SSL certificates.
 
+Disabling Universal SSL will not cause any interruption to ongoing TLS connections to your domain on Cloudflare's network, they will continue to be served according the the Universal SSL certificate used when they were first established. Eventually these connections will naturally end.
+
+New TLS connections are expected to succeed as long as you have another valid certificate active, such as a [custom](/ssl/edge-certificates/custom-certificates/)) or [advanced](/ssl/edge-certificates/advanced-certificate-manager/) certificate. New TLS connections will receive the highest priority certificate from our edge as per our [certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/). If a valid certificate is not active before disabling, TLS connections will fail. For more information, refer to [Potential errors](#potential-errors) below.
+
 ## Potential errors
 
 To avoid errors with your domain, either [upload a custom certificate](/ssl/edge-certificates/custom-certificates/) or purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) before disabling Universal SSL.

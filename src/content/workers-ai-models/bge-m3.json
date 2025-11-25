@@ -16,6 +16,10 @@
             "value": "true"
         },
         {
+            "property_id": "context_window",
+            "value": "60000"
+        },
+        {
             "property_id": "price",
             "value": [
                 {

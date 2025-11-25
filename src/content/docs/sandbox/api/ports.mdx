@@ -20,33 +20,41 @@ Expose services running in your sandbox via public preview URLs. See [Preview UR
 Expose a port and get a preview URL.
 
 ```ts
-const response = await sandbox.exposePort(port: number, options?: ExposePortOptions): Promise<ExposePortResponse>
+const response = await sandbox.exposePort(port: number, options: ExposePortOptions): Promise<ExposePortResponse>
 ```
 
 **Parameters**:
 
 - `port` - Port number to expose (1024-65535)
-- `options` (optional):
-  - `name` - Friendly name for the port
+- `options`:
+  - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-sandbox-abc123.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
+  - `name` - Friendly name for the port (optional)
 
 **Returns**: `Promise<ExposePortResponse>` with `port`, `exposedAt` (preview URL), `name`
 
 <TypeScriptExample>
 ```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
 await sandbox.startProcess('python -m http.server 8000');
-const exposed = await sandbox.exposePort(8000);
+const exposed = await sandbox.exposePort(8000, { hostname });
 
 console.log('Available at:', exposed.exposedAt);
-// https://8000-abc123.example.com
+// https://8000-abc123.yourdomain.com
 
 // Multiple services with names
 await sandbox.startProcess('node api.js');
-const api = await sandbox.exposePort(3000, { name: 'api' });
+const api = await sandbox.exposePort(3000, { hostname, name: 'api' });
 
 await sandbox.startProcess('npm run dev');
-const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
+const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
 ```
 </TypeScriptExample>
+
+:::note[Local development]
+When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile for each port. See [Expose Services guide](/sandbox/guides/expose-services/#local-development) for details.
+:::
 
 ### `unexposePort()`
 
@@ -110,6 +118,8 @@ const response = await sandbox.wsConnect(request: Request, port: number): Promis
 <TypeScriptExample>
 ```ts
 import { getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {

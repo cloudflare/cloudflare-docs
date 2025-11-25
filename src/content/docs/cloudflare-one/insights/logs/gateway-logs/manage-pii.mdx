@@ -5,7 +5,9 @@ sidebar:
   order: 3
 ---
 
-Cloudflare Gateway gives you multiple ways to safely handle your employees' personally identifiable information (PII). You can choose to exclude PII from activity logging, or you can choose to redact PII from everyone except for designated administrators.
+Cloudflare Gateway gives you multiple ways to safely handle your employees' personally identifiable information (PII). By default, PII is redacted from Gateway Activity logs for all permission roles except the Super Administrator and users with the [Cloudflare Zero Trust PII role](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) assigned to them. Only the Super Administrator can assign roles and determine who has permission to view PII. Redacting PII does not affect the way PII is captured in logs as the data is simply hidden and no information is lost.
+
+To add or remove the Cloudflare Zero Trust PII role for a user in your organization, refer to [Roles](/fundamentals/manage-members/roles/). Alternatively, you can choose to [exclude PII](#exclude-pii) from Gateway activity logs for all users.
 
 ## Types of PII
 
@@ -21,17 +23,9 @@ Cloudflare Gateway can log the following types of PII:
 
 ## Exclude PII
 
-Enabling this setting means Cloudflare Gateway will log activity without storing any employee PII. Changes to this setting will not change PII storage of any previous logs. This means if Exclude PII is enabled and then disabled, there will be no PII data for logs captured while Exclude PII was enabled. The PII data will be unavailable to all roles within your Zero Trust organization, including the Super Admin.
+Turning on the setting to exclude PII means Cloudflare Gateway will log activity without storing any employee PII. Changes to this setting will not change PII storage of any previous logs. This means if the setting is turned on and then turned off, there will be no PII data for logs captured while this setting was turned on. The PII data will be unavailable to all roles within your Zero Trust organization, including the Super Administrator.
 
-To enable or disable this setting, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Traffic policies** > **Traffic settings** > **Exclude personally identifiable information (PII) from logs**.
+To turn on the setting to exclude PII:
 
-## Redact PII
-
-:::note
-
-This feature is only available on Enterprise plans.
-:::
-
-PII is by default redacted from Gateway Activity logs for all permission roles except the Super Admin and users with the [Cloudflare Zero Trust PII role](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) assigned to them. Only the Super Admin can assign roles and determine who has permission to view PII. Redacting PII does not affect the way PII is captured in logs — the data is simply hidden and no information is lost.
-
-To add or remove the Cloudflare Zero Trust PII role for a user, refer to our [Account setup](/fundamentals/manage-members/) documentation.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings**.
+2. In **Traffic logging**, turn on **Exclude personally identifiable information (PII) from logs**.

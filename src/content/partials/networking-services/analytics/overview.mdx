@@ -18,7 +18,7 @@ import { AnchorHeading, Markdown } from "~/components";
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
 	<Markdown
-		text="- Overview in [Magic WAN Site Analytics](#magic-wan-site-analytics)"
+		text="- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)"
 		inline={false}
 	/>
   </>
@@ -31,12 +31,12 @@ import { AnchorHeading, Markdown } from "~/components";
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-    <AnchorHeading title="Magic WAN Site Analytics" depth={2} />
+    <AnchorHeading title="Network overview (beta)" depth={2} />
 		<Markdown
 		text={`
-		${props.productName} Site Analytics provides an overview of the connectivity status and traffic analytics of all ${props.productName} sites. This is a great place to start if you receive an alert, need to begin the ${props.productName} troubleshooting process, or are performing routine monitoring.
+		${props.productName} Network overview (beta) provides an overview of the connectivity status and traffic analytics of all ${props.productName} sites. This is a great place to start if you receive an alert, need to begin the ${props.productName} troubleshooting process, or are performing routine monitoring.
 
-		Refer to [${props.productName} Site Analytics](${props.siteAnalyticsURL}) to learn more.
+		Refer to [${props.magicWord === "WAN Tunnels" ? "Network visibility" : "Network overview (beta)"}](${props.siteAnalyticsURL}) to learn more.
 		`}
 		inline={false}
 		/>

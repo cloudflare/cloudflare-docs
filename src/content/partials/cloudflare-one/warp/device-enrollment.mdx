@@ -6,15 +6,15 @@ import { Tabs, TabItem } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
-2. In **Device enrollment permissions**, select **Manage**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Devices** > **Device profiles** > **Management**.
+2. In **Device enrollment** > **Device enrollment permissions**, select **Manage**.
 3. In the **Policies** tab, configure one or more [Access policies](/cloudflare-one/access-controls/policies/) to define who can join their device. For example, you could allow all users with a company email address:
-   | Rule type | Selector | Value |
-   | --------- | ---------| ------ |
-   | Include | Emails ending in | `@company.com` |
+
+   | Rule type | Selector         | Value          |
+   | --------- | ---------------- | -------------- |
+   | Include   | Emails ending in | `@company.com` |
 
 :::note
-
 Device posture checks are not supported in device enrollment policies. WARP can only perform posture checks after the device is enrolled.
 :::
 
@@ -68,4 +68,4 @@ Device posture checks are not supported in device enrollment policies. WARP can 
     ```
 
 </TabItem>
- </Tabs>
+</Tabs>

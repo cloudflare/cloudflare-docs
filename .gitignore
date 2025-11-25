@@ -30,3 +30,5 @@ pnpm-debug.log*
 /worker/functions/
 
 .idea
+
+tools/relevant_changed_files.txt
