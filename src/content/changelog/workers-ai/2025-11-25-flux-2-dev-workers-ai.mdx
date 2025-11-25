@@ -89,6 +89,20 @@ curl --request POST \
 Through Workers AI Binding:
 
 ```javascript
+//helper function to convert ReadableStream to Blob
+async function streamToBlob(stream: ReadableStream, contentType: string): Promise<Blob> {
+  const reader = stream.getReader();
+  const chunks = [];
+ 
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+  }
+ 
+  return new Blob(chunks, { type: contentType });
+}
+
 const image0 = await fetch("http://image-url");
 const image1 = await fetch("http://image-url");
 const form = new FormData();
