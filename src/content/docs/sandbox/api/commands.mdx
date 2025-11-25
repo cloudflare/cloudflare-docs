@@ -65,7 +65,6 @@ const stream = await sandbox.execStream(command: string, options?: ExecOptions):
 **Parameters**:
 - `command` - The command to execute
 - `options` (optional):
-  - `timeout` - Maximum execution time in milliseconds
   - `env` - Environment variables for this command (temporarily override session/sandbox-level variables)
   - `cwd` - Working directory for this command execution
 
@@ -106,10 +105,7 @@ const process = await sandbox.startProcess(command: string, options?: ProcessOpt
 - `options` (optional):
   - `env` - Environment variables for this process (temporarily override session/sandbox-level variables)
   - `cwd` - Working directory for this process
-  - `timeout` - Maximum execution time in milliseconds
   - `processId` - Custom process ID (auto-generated if not provided)
-  - `encoding` - Output encoding (default: `'utf8'`)
-  - `autoCleanup` - Automatically clean up process resources when done
 
 **Returns**: `Promise<ProcessInfo>` with `id`, `pid`, `command`, `status`
 
