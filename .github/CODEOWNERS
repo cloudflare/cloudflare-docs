@@ -200,8 +200,8 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 
 # Reference architecture
 
-/src/content/docs/reference-architecture/ @securitypedant @haleycode @cloudflare/pcx-technical-writing
-/src/assets/images/reference-architecture/ @securitypedant @haleycode @cloudflare/pcx-technical-writing
+/src/content/docs/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
+/src/assets/images/reference-architecture/ @securitypedant @cloudflare/pcx-technical-writing
 
 # Security products
 
@@ -211,7 +211,7 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 /src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
 /src/content/docs/page-shield/ @pedrosousa @cloudflare/pcx-technical-writing
 /src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
-/src/content/docs/security-center/ @jason-cf @cloudflare/pcx-technical-writing
+/src/content/docs/security-center/ @cloudflare/pcx-technical-writing
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
 /src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing

@@ -78,14 +78,6 @@ async function list(
 					}
 				}
 			}
-
-			if (assignees.size === 0) {
-				// assign folks which will manually reassign
-				["haleycode", "pedrosousa", "dcpena", "patriciasantaana"].forEach(
-					(username) => assignees.add(username),
-				);
-			}
-
 			// don't self-assign
 			assignees.delete(author);
 
