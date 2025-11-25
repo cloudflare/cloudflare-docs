@@ -125,10 +125,12 @@ export class PaidMCP extends McpAgent<Env> {
 		);
 
 		// Free tool
-		this.server.tool(
+		this.server.registerTool(
 			"echo",
-			"Echo a message",
-			{ message: z.string() },
+			{
+				description: "Echo a message",
+				inputSchema: { message: z.string() }
+			},
 			async ({ message }) => {
 				return { content: [{ type: "text", text: message }] };
 			},

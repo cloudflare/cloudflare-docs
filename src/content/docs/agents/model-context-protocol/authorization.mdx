@@ -182,9 +182,15 @@ When a user authenticates to your MCP server through Cloudflare's OAuth Provider
 ```js
 export class MyMCP extends McpAgent<Env, unknown, AuthContext> {
   async init() {
-    this.server.tool("userInfo", "Get user information", {}, async () => ({
-      content: [{ type: "text", text: `Hello, ${this.props.claims.name || "user"}!` }],
-    }));
+    this.server.registerTool(
+      "userInfo",
+      {
+        description: "Get user information"
+      },
+      async () => ({
+        content: [{ type: "text", text: `Hello, ${this.props.claims.name || "user"}!` }],
+      })
+    );
   }
 }
 ```
@@ -222,15 +228,23 @@ function requirePermission(permission, handler) {
 // Use the wrapper with your MCP tools
 async init() {
   // Basic tools available to all authenticated users
-  this.server.tool("basicTool", "Available to all users", {}, async () => {
-    // Implementation for all users
-  });
+  this.server.registerTool(
+    "basicTool",
+    {
+      description: "Available to all users"
+    },
+    async () => {
+      // Implementation for all users
+    }
+  );
 
   // Protected tool using the permission wrapper
-  this.server.tool(
+  this.server.registerTool(
     "adminAction",
-    "Administrative action requiring special permission",
-    { /* parameters */ },
+    {
+      description: "Administrative action requiring special permission"
+      // inputSchema can include parameters if needed
+    },
     requirePermission("admin", async (req) => {
       // Only executes if user has "admin" permission
       return {
@@ -241,9 +255,15 @@ async init() {
 
   // Conditionally register tools based on user permissions
   if (this.props.permissions?.includes("special_feature")) {
-    this.server.tool("specialTool", "Special feature", {}, async () => {
-      // This tool only appears for users with the special_feature permission
-    });
+    this.server.registerTool(
+      "specialTool",
+      {
+        description: "Special feature"
+      },
+      async () => {
+        // This tool only appears for users with the special_feature permission
+      }
+    );
   }
 }
 ```

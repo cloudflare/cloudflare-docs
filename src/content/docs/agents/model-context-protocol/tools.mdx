@@ -22,9 +22,12 @@ import { z } from "zod";
 export class MyMCP extends McpAgent {
 	server = new McpServer({ name: "Demo", version: "1.0.0" });
 	async init() {
-		this.server.tool(
+		this.server.registerTool(
 			"add",
-			{ a: z.number(), b: z.number() },
+			{
+				description: "Adds two numbers together",
+				inputSchema: { a: z.number(), b: z.number() }
+			},
 			async ({ a, b }) => ({
 				content: [{ type: "text", text: String(a + b) }],
 			}),

@@ -128,10 +128,12 @@ const server = new McpServer({
 	version: "1.0.0",
 });
 
-server.tool(
+server.registerTool(
 	"hello",
-	"Returns a greeting message",
-	{ name: z.string().optional() },
+	{
+		description: "Returns a greeting message",
+		inputSchema: { name: z.string().optional() }
+	},
 	async ({ name }) => {
 		return {
 			content: [
@@ -437,21 +439,27 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 const server = new McpServer({ name: "Auth Server", version: "1.0.0" });
 
-server.tool("getProfile", "Get the current user's profile", {}, async () => {
-	// Access user info automatically populated by OAuth provider
-	const auth = getMcpAuthContext();
-	const username = auth?.props?.username as string | undefined;
-	const email = auth?.props?.email as string | undefined;
+server.registerTool(
+	"getProfile",
+	{
+		description: "Get the current user's profile"
+	},
+	async () => {
+		// Access user info automatically populated by OAuth provider
+		const auth = getMcpAuthContext();
+		const username = auth?.props?.username as string | undefined;
+		const email = auth?.props?.email as string | undefined;
 
-	return {
-		content: [
-			{
-				type: "text",
-				text: `User: ${username ?? "anonymous"}, Email: ${email ?? "none"}`,
-			},
-		],
-	};
-});
+		return {
+			content: [
+				{
+					type: "text",
+					text: `User: ${username ?? "anonymous"}, Email: ${email ?? "none"}`,
+				},
+			],
+		};
+	}
+);
 ```
 
 </TypeScriptExample>
@@ -467,14 +475,20 @@ The `createMcpHandler` automatically catches errors and returns JSON-RPC error r
 <TypeScriptExample>
 
 ```ts
-server.tool("riskyOperation", "An operation that might fail", {}, async () => {
-	if (Math.random() > 0.5) {
-		throw new Error("Random failure occurred");
+server.registerTool(
+	"riskyOperation",
+	{
+		description: "An operation that might fail"
+	},
+	async () => {
+		if (Math.random() > 0.5) {
+			throw new Error("Random failure occurred");
+		}
+		return {
+			content: [{ type: "text", text: "Success!" }],
+		};
 	}
-	return {
-		content: [{ type: "text", text: "Success!" }],
-	};
-});
+);
 
 // Errors are automatically caught and returned as:
 // {
