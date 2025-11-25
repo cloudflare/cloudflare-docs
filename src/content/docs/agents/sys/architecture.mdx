@@ -1,0 +1,479 @@
+---
+title: Architecture
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample } from "~/components";
+
+This document explains the mental model for how the Agent System components work together.
+
+## High-level components
+
+There are three main layers:
+
+1. **Worker handler** (exported `handler`)
+   - HTTP surface and dashboard
+   - Routes API calls to the right Durable Objects
+   - Provides the HTML UI at `GET /`
+
+2. **Agency** Durable Object (`Agency`)
+   - Control plane per agency
+   - Stores and overrides agent blueprints
+   - Tracks which agent threads exist in this agency
+
+3. **SystemAgent** Durable Object (`SystemAgent`)
+   - One instance per agent thread
+   - Runs the agent loop:
+     - stores messages, files, and todos
+     - calls the LLM provider
+     - executes tools and subagents
+     - emits events
+
+All the interesting work happens inside `SystemAgent` instances.
+
+## Agencies and agent threads
+
+### Agency DO
+
+The `Agency` Durable Object is responsible for:
+
+- **Blueprint management** in SQLite:
+
+  ```sql
+  CREATE TABLE IF NOT EXISTS blueprints (
+    name TEXT PRIMARY KEY,
+    data TEXT NOT NULL, -- JSON AgentBlueprint
+    updated_at INTEGER NOT NULL
+  );
+  ```
+
+- **Agent registry** per agency:
+
+  ```sql
+  CREATE TABLE IF NOT EXISTS agents (
+    id TEXT PRIMARY KEY,
+    type TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    metadata TEXT -- JSON
+  );
+  ```
+
+Each agency is one Durable Object instance, identified by a DO ID string. Agencies are tracked in Workers KV through `AGENCY_REGISTRY`.
+
+### Agency HTTP API
+
+The handler routes:
+
+- `GET /agencies` – list agencies from KV
+- `POST /agencies` – create a new `Agency` DO instance and store its metadata
+
+Per agency:
+
+- `GET /agency/:agencyId/blueprints`
+  - Merges static blueprints (from `AgentSystem.addAgent`) and dynamic ones stored in the Agency's SQLite
+- `POST /agency/:agencyId/blueprints`
+  - Write or override a blueprint in the Agency's SQLite
+
+Agents within an agency:
+
+- `GET /agency/:agencyId/agents` – list agent threads
+- `POST /agency/:agencyId/agents`
+  - Creates a new thread:
+    - generates an ID
+    - writes to `agents` table
+    - spawns a `SystemAgent` DO
+    - calls `/register` on that DO with `ThreadMetadata`
+
+The `Agency` DO never calls the LLM; it just manages metadata and blueprints.
+
+## SystemAgent: per-thread runtime
+
+Each `SystemAgent` Durable Object is the actual agent brain for one thread.
+
+### Persistent info and run state
+
+Two key objects are persisted in KV via `PersistedObject`:
+
+- `info: Info` (thread metadata)
+
+  <TypeScriptExample>
+
+  ```ts
+  type Info = {
+    threadId: string;
+    agencyId: string;
+    createdAt: string;
+    request: ThreadRequestContext;
+    agentType: string;
+    parentInfo?: ParentInfo;   // if this is a subagent
+    pendingToolCalls?: ToolCall[];
+    blueprint?: AgentBlueprint;
+  };
+  ```
+
+  </TypeScriptExample>
+
+- `runState: RunState`
+
+  <TypeScriptExample>
+
+  ```ts
+  type RunState = {
+    runId: string;
+    status: "idle" | "registered" | "running" | "paused" | "completed" | "canceled" | "error";
+    step: number;
+    reason?: string;
+    nextAlarmAt?: number | null;
+  };
+  ```
+
+  </TypeScriptExample>
+
+`PersistedObject` maps object properties to KV keys and adds mutation warnings if you try to mutate nested objects in place instead of reassigning them (to avoid accidental non-persisting changes).
+
+### Store: messages, events, files, subagents
+
+`Store` wraps the Durable Object SQLite and KV:
+
+#### Messages
+
+```sql
+CREATE TABLE IF NOT EXISTS messages (
+  seq INTEGER PRIMARY KEY AUTOINCREMENT,
+  role TEXT NOT NULL CHECK(role IN ('user','assistant','tool')),
+  content TEXT,
+  tool_call_id TEXT,
+  tool_calls_json TEXT,
+  created_at INTEGER NOT NULL
+);
+```
+
+- `appendMessages()` records user, assistant, and tool messages
+- `listMessages()` reconstructs `ChatMessage[]` for the agent
+- `appendToolResult()` inserts a single tool message
+
+#### Events
+
+```sql
+CREATE TABLE IF NOT EXISTS events (
+  seq INTEGER PRIMARY KEY AUTOINCREMENT,
+  type TEXT NOT NULL,
+  data_json TEXT NOT NULL,
+  ts TEXT NOT NULL
+);
+```
+
+- `addEvent()` stores `AgentEvent`s and returns their `seq`
+- `listEvents()` returns chronological agent events
+
+#### Files (virtual filesystem)
+
+```sql
+CREATE TABLE IF NOT EXISTS files (
+  path TEXT PRIMARY KEY,
+  content BLOB,
+  updated_at INTEGER NOT NULL
+);
+```
+
+- `mergeFiles()`, `listFiles()`, `readFile()`, `writeFile()`, `editFile()`
+
+#### Subagent bookkeeping
+
+```sql
+CREATE TABLE IF NOT EXISTS waiting_subagents (...);
+CREATE TABLE IF NOT EXISTS subagent_links (...);
+```
+
+This tracks:
+
+- which tool call spawned which child thread
+- which children are still pending
+- completion, cancel, and reports for each subagent
+
+#### Todos
+
+```sql
+CREATE TABLE IF NOT EXISTS todos (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  content TEXT NOT NULL,
+  status TEXT NOT NULL CHECK(status IN ('pending','in_progress','completed')),
+  pos INTEGER NOT NULL DEFAULT 0,
+  updated_at INTEGER NOT NULL
+);
+```
+
+Only created when `planning` is enabled.
+
+### Middleware pipeline
+
+`SystemAgent` exposes:
+
+<TypeScriptExample>
+
+```ts
+abstract get middleware(): AgentMiddleware[];
+abstract get tools(): Record<string, ToolHandler>;
+abstract get systemPrompt(): string;
+abstract get model(): string;
+abstract get config(): AgentConfig;
+abstract get provider(): Provider;
+```
+
+</TypeScriptExample>
+
+Most of those are resolved dynamically from the `AgentSystem` configuration and the current agent blueprint.
+
+The run loop (`run()`) is:
+
+1. Emit `RUN_TICK`
+2. If there are no pending tool calls and no waiting subagents:
+   - build `ModelRequest` via `ModelPlanBuilder` using all middleware
+   - call `provider.invoke(req)`
+   - let middleware react via `onModelResult`
+   - append the assistant's message
+   - capture any tool calls from the assistant into `info.pendingToolCalls`
+3. If the agent paused (HITL or subagent), stop here
+4. If the agent looks done (`isDone` checks last assistant message):
+   - mark `runState.status = "completed"`
+   - emit `AGENT_COMPLETED`
+   - if this is a subagent, call `/child_result` on the parent and stop
+5. Otherwise, execute pending tools in batches (`executePendingTools`)
+6. Reschedule via Durable Object alarm and repeat
+
+## AgentSystem and blueprints
+
+### AgentSystem
+
+`AgentSystem` is a config-time builder:
+
+<TypeScriptExample>
+
+```ts
+const system = new AgentSystem({
+  defaultModel: "openai:gpt-4.1-mini",
+  provider?: Provider,
+  handlerOptions?: HandlerOptions
+})
+  .defaults()
+  .addTool(myTool, ["analytics"])
+  .use(myMiddleware, ["my-tag"])
+  .addAgent({
+    name: "my-agent",
+    description: "Does things.",
+    prompt: "You are...",
+    tags: ["default", "analytics"],
+    config: { ... } // config consumed by middleware
+  });
+
+const { SystemAgent, Agency, handler } = system.export();
+```
+
+</TypeScriptExample>
+
+Internally:
+
+- Tools registered via `.addTool()` go into a `ToolRegistry`
+- Middleware registered via `.use()` go into a `MiddlewareRegistry`
+- Blueprints registered via `.addAgent()` go into an `agentRegistry`
+
+The generic type `AgentSystem<TConfig>` grows as you add middleware, so you can get type-safe `config` for your blueprints.
+
+### Blueprint tags and selection
+
+Each `AgentBlueprint` has `tags: string[]`.
+
+At runtime:
+
+- `SystemAgent.middleware` selects middlewares whose tags intersect with the blueprint's tags
+- `SystemAgent.tools` selects tools whose tags intersect with the blueprint's tags, plus any tools that middleware registered dynamically with `ctx.registerTool()`
+
+For example:
+
+- `system.defaults()` registers `planning`, `filesystem`, `subagents` with tag `"default"` (plus their internal tags like `"planning"`, `"fs"`, `"subagents"`)
+- The `"manager-agent"` blueprint has `tags: ["default"]`, so it gets all of them
+- Custom analytics tools are added with tag `"security"` and the `"security-agent"` blueprint uses `tags: ["security"]`, so they show up only there
+
+## Subagents and the task tool
+
+The `subagents` middleware defines one special tool: `task`.
+
+### What task does
+
+When the model calls:
+
+```json
+{
+  "name": "task",
+  "args": {
+    "description": "Analyze top IPs in this window...",
+    "subagentType": "security-agent"
+  }
+}
+```
+
+The handler:
+
+1. Generates a `token` and a `childThreadId`
+2. Emits `SUBAGENT_SPAWNED`
+3. Creates a stub for the child `SystemAgent` DO
+4. Calls `POST /register` on the child with thread metadata and parent info
+5. Calls `POST /invoke` on the child with a single user message = `description`
+6. Registers the waiting subagent in the parent's SQLite (token, childThreadId, toolCallId)
+7. Pauses the parent run:
+   ```ts
+   runState.status = "paused";
+   runState.reason = "subagent";
+   ```
+8. Returns `null` from the tool, so no immediate tool-result message is added
+
+The child runs independently until it completes.
+
+### How results come back
+
+When a subagent completes:
+
+1. `SystemAgent.run()` in the child sets status `completed` and emits `AGENT_COMPLETED`
+2. Because the child has `parentInfo`, it also:
+   - computes the final text output (`final`)
+   - calls `POST /child_result` on the parent thread with `{ token, childThreadId, report: final }`
+
+On the parent:
+
+- `childResult()`:
+  - pops the waiting subagent via token and childThreadId
+  - appends a tool message on the waiting tool call ID with the `report`
+  - marks the subagent link as `completed` in SQLite
+  - emits `SUBAGENT_COMPLETED`
+  - if no waiting subagents remain:
+    - moves `runState.status` back to `"running"`
+    - emits `RUN_RESUMED`
+    - schedules the agent again
+
+From the agent's perspective, it looks like one tool call that took multiple ticks and eventually produced a single tool output message.
+
+## HITL (Human-in-the-loop) middleware
+
+The optional `hitl` middleware lets you pause runs when certain tools are proposed.
+
+Config shape:
+
+<TypeScriptExample>
+
+```ts
+export type HitlConfig = {
+  hitl?: {
+    tools: string[]; // list of tool names that require approval
+  };
+};
+```
+
+</TypeScriptExample>
+
+When enabled on a blueprint:
+
+1. `hitl.onModelResult()` inspects the last assistant message
+2. If any tool call's name is in `config.hitl.tools`:
+   - it sets `runState.status = "paused"`, `reason = "hitl"`
+   - emits `RUN_PAUSED`
+
+The dashboard shows HITL buttons when there are pending tool calls:
+
+- `POST /agency/:agencyId/agent/:threadId/approve` with:
+
+  <TypeScriptExample>
+
+  ```ts
+  {
+    approved: boolean;
+    modifiedToolCalls?: ToolCall[]; // optional edits
+  }
+  ```
+
+  </TypeScriptExample>
+
+On approve:
+
+- The parent `SystemAgent.approve()` stores the (possibly modified) tool calls in `info.pendingToolCalls`
+- Emits `HITL_RESUME` and `RUN_RESUMED`
+- Schedules the run again
+
+## Observability and graph
+
+Every important action emits an `AgentEvent`:
+
+- `THREAD_CREATED`, `REQUEST_ACCEPTED`
+- `RUN_*` (`started`, `tick`, `paused`, `resumed`, `canceled`)
+- `AGENT_*` (`started`, `completed`, `error`)
+- `MODEL_*` (`started`, `delta`, `completed`)
+- `TOOL_*` (`started`, `output`, `error`)
+- `SUBAGENT_*` (`spawned`, `completed`)
+- `HITL_*` (`interrupt`, `resume`)
+- `CHECKPOINT_SAVED`
+
+`SystemAgent.emit()`:
+
+- Writes the event to SQLite (`events` table)
+- Broadcasts it as JSON over WebSocket to any connected clients
+
+The dashboard (`client.html`) subscribes to:
+
+- `GET /agency/:agencyId/agent/:threadId/events` for the history
+- `/ws` for live events
+
+It then reconstructs a graph with:
+
+- Nodes: ticks, model calls, tools, done/error markers
+- Edges: sequential flow and dashed spawn/completion edges between parent and child agents
+
+## Filesystem and planning
+
+Because `.defaults()` enables both `planning` and `filesystem`, typical agents get:
+
+- A todo list backed by SQLite (`todos` table)
+- A virtual filesystem in SQLite (`files` table)
+
+These show up in `AgentState`:
+
+- `state.todos` – current todo list
+- `state.files` – map of path to string content
+
+And as tools:
+
+- `write_todos(todos: Todo[])`
+- `ls()`
+- `read_file({ path, offset?, limit? })`
+- `write_file({ path, content })`
+- `edit_file({ path, oldString, newString, replaceAll? })`
+
+The `filesystem` middleware also enforces a simple safety rule:
+
+- You must use `read_file` on a path at least once before you can `edit_file` it
+
+It tracks this via a KV entry `lastReadPaths`.
+
+## Dashboard UI structure
+
+The HTML dashboard includes:
+
+- Left sidebar:
+  - Agencies dropdown
+  - Threads list (root threads and nested subagents)
+- Main area:
+  - **Chat and Todos** tab:
+    - Chat transcript
+    - Run status (running, paused, completed, error)
+    - Message input
+    - HITL controls
+    - Todos panel
+    - Raw state JSON
+  - **Graph** tab:
+    - Cytoscape graph of events
+    - Zoom, fit, and export controls
+  - **Files** tab:
+    - List of files in `state.files`
+    - Markdown and code preview with line numbers and syntax highlighting
+
+All of this is built on the HTTP and WebSocket endpoints exposed by the `handler`.
