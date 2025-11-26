@@ -51,6 +51,7 @@ The following request creates a new custom ruleset at the zone level with two ru
 			},
 		],
 	}}
+	roles="zone waf"
 />
 
 ```json output {3}
@@ -82,7 +83,11 @@ The following request creates a new custom ruleset at the zone level with two ru
 }
 ```
 
-<Render file="custom-ruleset-zone-limitation" product="ruleset-engine" />
+<Render
+	file="custom-ruleset-zone-limitation"
+	params={{ skipLink: true }}
+	product="ruleset-engine"
+/>
 
 ### 2. Deploy custom ruleset
 

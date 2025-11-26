@@ -24,12 +24,6 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulese
 
 If you are using Terraform, refer to [WAF custom rules configuration using Terraform](/terraform/additional-configurations/waf-custom-rules/#create-and-deploy-a-custom-ruleset).
 
-<Render
-	file="custom-ruleset-zone-limitation"
-	params={{ skipLink: true }}
-	product="ruleset-engine"
-/>
-
 ## Procedure
 
 To deploy a custom ruleset, follow these general steps:
@@ -162,14 +156,14 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
 ## Next steps
 
-Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the custom ruleset you just created and deployed. The following table has a list of common tasks for working with custom rulesets at the account level:
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the custom ruleset you created and deployed. The following table has a list of common tasks for working with custom rulesets at the account level:
 
-| Task                               | Procedure                                                                                                                                                                                                                                                               |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Get list of custom rulesets        | <p>Use the [List account or zone rulesets][1] operation and search for rulesets with `"kind": "custom"` and `"phase": "http_request_firewall_custom"`. The response will include the ruleset IDs.</p><p>For more information, refer to [List existing rulesets][2].</p> |
-| List all rules in a custom ruleset | <p>Use the [Get an account or zone ruleset][3] operation with the custom ruleset ID to obtain the list of configured rules and their IDs.</p><p>For more information, refer to [View a specific ruleset][4].</p>                                                        |
-| Update a custom rule               | <p>Use the [Update an account or zone ruleset rule][5] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Update a rule in a ruleset][6].</p>                                                             |
-| Delete a custom rule               | <p>Use the [Delete an account or zone ruleset rule][7] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Delete a rule in a ruleset][8].</p>                                                             |
+| Task                               | Procedure                                                                                                                                                                                                                                                       |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Get list of custom rulesets        | <p>Use the [List account rulesets][1] operation and search for rulesets with `"kind": "custom"` and `"phase": "http_request_firewall_custom"`. The response will include the ruleset IDs.</p><p>For more information, refer to [List existing rulesets][2].</p> |
+| List all rules in a custom ruleset | <p>Use the [Get an account ruleset][3] operation with the custom ruleset ID to obtain the list of configured rules and their IDs.</p><p>For more information, refer to [View a specific ruleset][4].</p>                                                        |
+| Update a custom rule               | <p>Use the [Update an account ruleset rule][5] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Update a rule in a ruleset][6].</p>                                                             |
+| Delete a custom rule               | <p>Use the [Delete an account ruleset rule][7] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Delete a rule in a ruleset][8].</p>                                                             |
 
 [1]: /api/resources/rulesets/methods/list/
 [2]: /ruleset-engine/rulesets-api/view/#list-existing-rulesets
@@ -182,6 +176,6 @@ Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/
 
 ## More resources
 
-For instructions on creating a custom rule at the zone level via API, refer to [Create a custom rule via API](/waf/custom-rules/create-api/).
+For instructions on creating a custom ruleset at the zone level via API, refer to [Custom rulesets (zone level)](/waf/custom-rules/custom-rulesets/).
 
 For more information on working with custom rulesets, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/) in the Ruleset Engine documentation.
