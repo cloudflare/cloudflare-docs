@@ -63,8 +63,8 @@ export default class extends WorkerEntrypoint<Env> {
 			}
 
 			// CED-7 - Localized content experiment for Spanish
+			console.log(pathname);
 			if (pathname.startsWith("/es-la/fundamentals/")) {
-				console.log(pathname);
 				try {
 					// Parse the incoming request URL
 					const url = new URL(request.url);
