@@ -1,0 +1,346 @@
+---
+title: Manage and remediate findings
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+CASB findings represent security risks discovered in your SaaS applications. This page covers how to review, prioritize, and remediate these findings.
+
+## Understanding CASB findings
+
+<Render file="cloudflare-one/casb/security-findings" />
+
+### Finding categories
+
+**Data Loss Prevention:**
+
+- Files containing sensitive data (credit cards, SSNs, PII)
+- DLP profile matches
+- Microsoft Information Protection labeled files
+
+**File Exposure:**
+
+- Files shared publicly on the Internet
+- Files shared with external domains
+- Files with "anyone with link" access
+- Overly broad internal sharing
+
+**Security Misconfigurations:**
+
+- Weak password policies
+- Missing multi-factor authentication
+- Insecure application settings
+- Overly permissive access controls
+
+**Shadow IT:**
+
+- Third-party applications with access to your data
+- Unauthorized OAuth applications
+- Risky application permissions
+
+**User Activity:**
+
+- Unusual file access patterns
+- Mass downloads or deletions
+- Suspicious login activity
+
+## View findings
+
+### Access the findings dashboard
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Findings**.
+2. Review the findings dashboard showing:
+   - Total number of findings
+   - Findings by severity (Critical, High, Medium, Low)
+   - Findings by category
+   - Recent findings
+
+### Filter findings
+
+Use filters to focus on specific types of findings:
+
+- **Severity**: Critical, High, Medium, Low
+- **Category**: DLP, File Exposure, Misconfiguration, Shadow IT, User Activity
+- **Integration**: Microsoft 365, Google Workspace, AWS, etc.
+- **Status**: New, In Progress, Resolved, Dismissed
+- **Date range**: Last 24 hours, Last 7 days, Last 30 days, Custom
+
+### Search findings
+
+Search for specific findings by:
+
+- File name
+- User email
+- Application name
+- Finding description
+
+## Prioritize findings
+
+### Severity levels
+
+**Critical:**
+
+- Publicly shared files with sensitive data
+- Active data exfiltration
+- Compromised accounts
+- **Action**: Immediate remediation required
+
+**High:**
+
+- Externally shared files with sensitive data
+- Risky third-party application access
+- Significant security misconfigurations
+- **Action**: Remediate within 24-48 hours
+
+**Medium:**
+
+- Internally shared sensitive data with overly broad access
+- Minor security misconfigurations
+- Low-risk third-party applications
+- **Action**: Remediate within 1 week
+
+**Low:**
+
+- Informational findings
+- Best practice recommendations
+- Low-risk configuration issues
+- **Action**: Remediate as time permits
+
+### Prioritization framework
+
+Consider these factors when prioritizing:
+
+1. **Data sensitivity**: What type of data is exposed?
+2. **Exposure scope**: Who has access (public, external, internal)?
+3. **Business impact**: What is the potential damage?
+4. **Compliance risk**: Does this violate regulations?
+5. **Ease of remediation**: How quickly can this be fixed?
+
+## Remediate findings
+
+### File exposure findings
+
+**For publicly shared files:**
+
+1. Select the finding to view details.
+2. Select **View in [application]** to open the file.
+3. In the source application:
+   - Remove public sharing link
+   - Change sharing to "Specific people"
+   - Restrict to authorized users only
+4. Return to CASB and mark the finding as **Resolved**.
+
+**For externally shared files:**
+
+1. Review who the file is shared with.
+2. Determine if external sharing is authorized.
+3. If unauthorized:
+   - Remove external users from sharing
+   - Restrict to internal users only
+4. If authorized:
+   - Document the business justification
+   - Mark finding as **Dismissed** with a note
+
+### DLP findings
+
+**For files with sensitive data:**
+
+1. Review the DLP profile match and matched content.
+2. Determine if the data should be in this location.
+3. Take appropriate action:
+   - **If unauthorized**: Delete file or move to secure location
+   - **If authorized but overshared**: Restrict sharing permissions
+   - **If false positive**: Adjust DLP profile and dismiss finding
+
+### Misconfiguration findings
+
+**For security misconfigurations:**
+
+1. Review the specific misconfiguration details.
+2. Assess the security risk.
+3. Remediate in the source application:
+   - Enable MFA if missing
+   - Strengthen password policies
+   - Update security settings
+   - Remove excessive permissions
+4. Verify the fix and mark as **Resolved**.
+
+### Shadow IT findings
+
+**For third-party applications:**
+
+1. Review the application details:
+   - What permissions does it have?
+   - Who authorized it?
+   - What data can it access?
+2. Determine if the application is approved:
+   - **If approved**: Mark as **Dismissed** and add to approved list
+   - **If not approved**: Revoke application access
+3. Communicate with users about approved alternatives.
+
+## Finding workflow
+
+### Update finding status
+
+Track remediation progress by updating finding status:
+
+**New:**
+
+- Finding has not been reviewed
+- Default status for all new findings
+
+**In Progress:**
+
+- Finding is being investigated or remediated
+- Assign to a team member for tracking
+
+**Resolved:**
+
+- Finding has been successfully remediated
+- Issue no longer exists
+
+**Dismissed:**
+
+- Finding is a false positive or accepted risk
+- Add a note explaining why it was dismissed
+
+### Assign findings
+
+Delegate findings to team members:
+
+1. Select one or more findings.
+2. Select **Assign**.
+3. Choose a team member.
+4. Add optional notes or instructions.
+
+### Bulk actions
+
+Process multiple findings at once:
+
+1. Select multiple findings using checkboxes.
+2. Choose a bulk action:
+   - Assign to team member
+   - Update status
+   - Dismiss with reason
+   - Export for reporting
+
+### Add notes
+
+Document investigation and remediation:
+
+1. Select a finding.
+2. Select **Add note**.
+3. Enter details about:
+   - Investigation findings
+   - Remediation steps taken
+   - Business justification (if dismissed)
+   - Follow-up actions needed
+
+## Automated remediation (coming 2025)
+
+Cloudflare is developing automated remediation capabilities:
+
+### Planned features
+
+**Automatic sharing restrictions:**
+
+- Remove public sharing automatically
+- Restrict external sharing to approved domains
+- Enforce sharing policies based on file content
+
+**Automatic quarantine:**
+
+- Move files with sensitive data to secure location
+- Restrict access pending review
+- Notify file owners of quarantine
+
+**Automatic notifications:**
+
+- Alert file owners of policy violations
+- Notify security team of critical findings
+- Send remediation instructions to users
+
+**Policy-based actions:**
+
+- Define remediation rules based on finding type
+- Automate common remediation tasks
+- Escalate complex findings to security team
+
+## Best practices
+
+### Establish a remediation workflow
+
+1. **Triage**: Review new findings daily
+2. **Prioritize**: Sort by severity and business impact
+3. **Investigate**: Determine root cause and appropriate action
+4. **Remediate**: Fix the issue in the source application
+5. **Verify**: Confirm the issue is resolved
+6. **Document**: Add notes and update status
+
+### Set SLAs for remediation
+
+Define service level agreements for different severity levels:
+
+- **Critical**: 4 hours
+- **High**: 24 hours
+- **Medium**: 7 days
+- **Low**: 30 days
+
+### Regular reviews
+
+Schedule recurring reviews:
+
+- **Daily**: Review critical and high-severity findings
+- **Weekly**: Review all new findings and remediation progress
+- **Monthly**: Analyze trends and identify systemic issues
+- **Quarterly**: Comprehensive security posture assessment
+
+### User education
+
+When remediating findings:
+
+- Explain why the finding is a security risk
+- Provide guidance on proper data handling
+- Offer training on secure sharing practices
+- Share approved tools and workflows
+
+### Track metrics
+
+Monitor key performance indicators:
+
+- **Mean time to remediate (MTTR)**: Average time to fix findings
+- **Finding recurrence rate**: How often the same issues occur
+- **False positive rate**: Percentage of dismissed findings
+- **Coverage**: Percentage of data scanned by CASB
+
+## Integration with incident response
+
+### Escalate critical findings
+
+For critical security incidents:
+
+1. Create a security incident ticket.
+2. Notify the security team immediately.
+3. Follow your incident response playbook.
+4. Document all actions taken.
+5. Conduct post-incident review.
+
+### Link findings to incidents
+
+Connect related findings to security incidents:
+
+1. Identify patterns across multiple findings.
+2. Group related findings together.
+3. Create an incident encompassing all related findings.
+4. Track remediation at the incident level.
+
+## Next steps
+
+With findings management established, you can now:
+
+- Monitor CASB analytics for security insights
+- Configure automated remediation policies (when available)
+- Integrate CASB findings with your SIEM or ticketing system

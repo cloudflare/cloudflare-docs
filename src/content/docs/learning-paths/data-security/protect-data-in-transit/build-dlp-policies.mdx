@@ -1,0 +1,235 @@
+---
+title: Build DLP policies for data in transit
+pcx_content_type: learning-unit
+sidebar:
+  order: 7
+---
+
+import { Render } from "~/components";
+
+Data Loss Prevention (DLP) policies detect and prevent sensitive data from leaving your organization through web traffic.
+
+## DLP overview
+
+Cloudflare DLP scans traffic inline as it flows through Gateway, detecting sensitive data patterns in:
+
+- File uploads and downloads
+- Form submissions
+- API requests and responses
+- Copy/paste operations (when using Browser Isolation)
+
+## Create DLP profiles
+
+DLP profiles define what types of sensitive data to detect.
+
+### Use predefined profiles
+
+<Render file="cloudflare-one/data-loss-prevention/predefined-profile" />
+
+Common predefined profiles for data in transit:
+
+- **Financial Information**: Credit card numbers, bank account numbers
+- **Personally Identifiable Information (PII)**: Social Security numbers, driver's license numbers
+- **Credentials**: API keys, passwords, authentication tokens
+- **Source Code**: Programming language patterns
+
+### Create custom profiles
+
+<Render file="cloudflare-one/data-loss-prevention/custom-profile" />
+
+## Build DLP policies
+
+After creating DLP profiles, build Gateway HTTP policies to enforce them.
+
+### Block sensitive data uploads to AI applications
+
+Prevent users from sharing sensitive information with AI tools:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **HTTP**.
+2. Select **Add a policy**.
+3. Configure the policy:
+   - **Name**: Block sensitive data uploads to AI
+   - **Traffic**:
+     - Application is in `Artificial Intelligence`
+     - AND DLP Profile is `Financial Information` or `PII`
+     - AND Upload Mime Type is in `All File Types`
+   - **Action**: Block
+4. Select **Create policy**.
+
+### Block source code uploads to personal repositories
+
+Prevent intellectual property leakage:
+
+1. Create an HTTP policy:
+   - **Name**: Block source code uploads to personal GitHub
+   - **Traffic**:
+     - Application is `GitHub`
+     - AND GitHub Organization is not `your-corporate-org`
+     - AND DLP Profile is `Source Code`
+   - **Action**: Block
+2. Select **Create policy**.
+
+### Detect sensitive data in file uploads
+
+Monitor and optionally block sensitive data uploads to cloud storage:
+
+1. Create an HTTP policy:
+   - **Name**: Block PII uploads to cloud storage
+   - **Traffic**:
+     - Application is in `Cloud Storage`
+     - AND DLP Profile is `PII`
+     - AND Upload Mime Type is in `All File Types`
+   - **Action**: Block (or Allow with logging for monitoring)
+2. Select **Create policy**.
+
+## DLP policy patterns
+
+### Monitor before blocking
+
+Start with audit mode to understand data flows:
+
+```
+Traffic:
+  - DLP Profile is `Financial Information`
+Action: Allow
+Enable logging: Yes
+```
+
+Review logs to identify false positives before changing action to Block.
+
+### Scope DLP to specific applications
+
+Apply DLP only to high-risk applications:
+
+```
+Traffic:
+  - Application is in `Cloud Storage`, `Artificial Intelligence`, `File Sharing`
+  - AND DLP Profile is `Source Code`
+Action: Block
+```
+
+### Combine DLP with tenant control
+
+Block sensitive data uploads to personal tenants:
+
+```
+Traffic:
+  - Application is `Google Workspace`
+  - AND Google Workspace Domain is not `example.com`
+  - AND DLP Profile is `PII`
+Action: Block
+```
+
+### Apply DLP to specific user groups
+
+Enforce stricter DLP for contractors or high-risk users:
+
+```
+Traffic:
+  - User Group is `Contractors`
+  - AND DLP Profile is `Confidential Data`
+  - AND Upload Mime Type is in `All File Types`
+Action: Block
+```
+
+## Configure DLP settings
+
+### Enable OCR
+
+Optical Character Recognition (OCR) detects text in images:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP Profiles**.
+2. Select a profile and edit **Advanced settings**.
+3. Enable **Scan images with OCR**.
+
+OCR is useful for detecting:
+
+- Screenshots of sensitive data
+- Scanned documents
+- Images containing text
+
+### Adjust match count
+
+Configure how many matches trigger a detection:
+
+- **Low threshold** (1-2 matches): More sensitive, may have false positives
+- **Medium threshold** (3-5 matches): Balanced approach
+- **High threshold** (6+ matches): Less sensitive, fewer false positives
+
+### Use context analysis
+
+Enable AI-powered context analysis to reduce false positives:
+
+1. Edit a DLP profile's **Advanced settings**.
+2. Enable **Context analysis**.
+
+Context analysis helps distinguish between:
+
+- Real credit card numbers vs. example numbers in documentation
+- Actual SSNs vs. random number sequences
+- Sensitive data vs. test data
+
+## Integration with other applications
+
+### Slack DLP
+
+Apply DLP to Slack messages:
+
+```
+Traffic:
+  - Application is `Slack`
+  - AND DLP Profile is `Financial Information`
+Action: Block
+```
+
+### Zoom DLP
+
+Prevent sensitive data sharing in Zoom chats:
+
+```
+Traffic:
+  - Application is `Zoom`
+  - AND DLP Profile is `PII`
+  - AND Upload Mime Type is in `All File Types`
+Action: Block
+```
+
+### Email DLP
+
+For email DLP, consider integrating with [Email Security](/email-security/) or using CASB for Microsoft 365 and Google Workspace.
+
+## Monitor DLP effectiveness
+
+### Review DLP logs
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway** > **HTTP**.
+2. Filter by:
+   - **DLP Profile**: See which profiles are triggering
+   - **Action**: View blocked vs. allowed requests
+   - **Application**: Identify which applications have the most DLP events
+
+### Analyze DLP trends
+
+1. Go to **Analytics** > **Gateway** > **HTTP**.
+2. Review:
+   - DLP detections over time
+   - Most common data types detected
+   - Applications with the most DLP events
+   - Users triggering the most DLP policies
+
+## Fine-tune DLP policies
+
+Based on logs and analytics:
+
+1. **Reduce false positives**: Adjust match counts, enable context analysis, or refine custom profiles
+2. **Expand coverage**: Add more applications or data types to DLP policies
+3. **Adjust actions**: Move from Allow (monitoring) to Block (enforcement)
+4. **Create exceptions**: Allow specific users or applications to bypass certain DLP rules
+
+## Next steps
+
+With DLP policies protecting data in transit, you can now:
+
+- Implement data at rest protection with CASB
+- Configure Browser Isolation for additional data in use controls
+- Monitor and refine policies based on ongoing analytics

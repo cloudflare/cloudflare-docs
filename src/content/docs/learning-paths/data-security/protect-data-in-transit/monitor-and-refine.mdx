@@ -1,0 +1,202 @@
+---
+title: Monitor and refine policies
+pcx_content_type: learning-unit
+sidebar:
+  order: 8
+---
+
+Continuous monitoring and refinement ensures your data protection policies remain effective while minimizing false positives and user friction.
+
+## Monitor policy effectiveness
+
+### Gateway Analytics
+
+Use Gateway Analytics to track policy performance:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics** > **Gateway**.
+2. Review key metrics:
+   - **Total requests**: Overall traffic volume
+   - **Blocked requests**: How many requests are being blocked
+   - **Top blocked categories**: What types of content are being blocked most
+   - **DLP detections**: How often sensitive data is detected
+
+### HTTP logs
+
+Review detailed logs for specific policy actions:
+
+1. Go to **Logs** > **Gateway** > **HTTP**.
+2. Filter logs by:
+   - **Policy name**: See activity for specific policies
+   - **Action**: View blocked, allowed, or isolated requests
+   - **DLP Profile**: See which data types are being detected
+   - **User**: Identify users triggering policies most frequently
+
+### Create custom filters
+
+Save common log queries for quick access:
+
+- All DLP blocks in the last 24 hours
+- Tenant control violations by user
+- AI application access attempts
+- File uploads to personal cloud storage
+
+## Identify false positives
+
+False positives occur when legitimate activity is incorrectly flagged or blocked.
+
+### Common false positive scenarios
+
+- **DLP detections**: Test data or example numbers flagged as sensitive
+- **Tenant control**: Legitimate access to personal accounts blocked
+- **Application blocking**: Business-critical applications incorrectly categorized
+- **File type blocking**: Necessary file transfers blocked
+
+### Investigate false positives
+
+1. Review the specific log entry
+2. Examine the matched content (if available)
+3. Determine if the detection was correct but the action was too strict
+4. Identify if the policy needs refinement or if an exception is needed
+
+## Refine DLP policies
+
+### Adjust detection sensitivity
+
+**Reduce false positives:**
+
+- Increase match count thresholds
+- Enable context analysis
+- Add exceptions for specific applications or users
+- Refine custom regex patterns
+
+**Increase detection accuracy:**
+
+- Use Exact Data Match (EDM) for specific datasets
+- Combine multiple DLP profiles in a single policy
+- Add application-specific context to policies
+
+### Create DLP exceptions
+
+Allow specific scenarios while maintaining overall protection:
+
+1. Create an allow policy that comes before your block policy:
+   - **Name**: Allow test data uploads to development environment
+   - **Traffic**:
+     - Application is `Internal Dev Portal`
+     - AND DLP Profile is `Financial Information`
+   - **Action**: Allow
+2. Ensure this policy is ordered before the broader DLP block policy
+
+## Refine HTTP policies
+
+### Adjust policy scope
+
+Based on monitoring, you may need to:
+
+- **Narrow scope**: Apply policies to fewer applications or users
+- **Broaden scope**: Expand policies to additional applications or categories
+- **Change actions**: Move from Block to Isolate, or vice versa
+
+### Update application lists
+
+Maintain lists of approved and blocked applications:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Lists**.
+2. Update lists based on:
+   - New approved applications
+   - Newly discovered shadow IT
+   - Changed business requirements
+   - User feedback
+
+## Respond to policy violations
+
+### Investigate high-risk events
+
+When users trigger DLP or security policies:
+
+1. Review the specific event in Gateway logs
+2. Determine if it was:
+   - Accidental (user education needed)
+   - Malicious (security incident)
+   - Legitimate (policy exception needed)
+3. Take appropriate action:
+   - User training
+   - Policy adjustment
+   - Security investigation
+
+### User communication
+
+When policies block legitimate activity:
+
+1. Provide clear block page messages explaining why
+2. Include instructions for requesting exceptions
+3. Offer approved alternatives when available
+4. Document common scenarios in user guides
+
+## Integrate with SIEM
+
+Send Gateway logs to your Security Information and Event Management (SIEM) system for advanced analysis:
+
+### Configure Logpush
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
+2. Create a Logpush job for Gateway HTTP logs.
+3. Configure destination (Splunk, Datadog, S3, etc.).
+
+For more information, refer to [Logpush](/cloudflare-one/insights/logs/logpush/).
+
+### Use Log Explorer
+
+For ad-hoc analysis without a SIEM:
+
+1. Go to **Logs** > **Log Explorer**.
+2. Query logs using SQL-like syntax.
+3. Create visualizations and dashboards.
+
+For more information, refer to [Log Explorer](/cloudflare-one/insights/logs/log-explorer/).
+
+## Establish review cadence
+
+Create a regular schedule for policy review:
+
+### Weekly reviews
+
+- Check for new high-risk applications in Shadow IT Discovery
+- Review DLP detection trends
+- Investigate any unusual spikes in blocked requests
+- Address user-reported issues
+
+### Monthly reviews
+
+- Analyze policy effectiveness metrics
+- Update application and domain lists
+- Review and adjust DLP profiles
+- Assess user impact and satisfaction
+- Plan policy expansions or changes
+
+### Quarterly reviews
+
+- Comprehensive policy audit
+- Align policies with business changes
+- Review compliance requirements
+- Assess overall data security posture
+- Plan strategic improvements
+
+## Measure success
+
+Track key performance indicators (KPIs):
+
+- **Coverage**: Percentage of users and devices protected
+- **Detection rate**: Number of DLP detections per day/week
+- **False positive rate**: Percentage of detections that are false positives
+- **User impact**: Support tickets related to policy blocks
+- **Shadow IT reduction**: Decrease in unsanctioned application usage
+- **Compliance**: Adherence to regulatory requirements
+
+## Next steps
+
+With data in transit protection established and monitored, you can now:
+
+- Implement data at rest protection with CASB
+- Configure Browser Isolation for data in use
+- Expand policies to additional use cases

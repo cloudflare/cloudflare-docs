@@ -1,0 +1,129 @@
+---
+title: Build baseline HTTP policies
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+---
+
+import { Render } from "~/components";
+
+HTTP policies control access to web applications and enforce security rules on web traffic. Build baseline policies to establish foundational security before implementing more specific data protection controls.
+
+## Recommended baseline policies
+
+Start with these essential HTTP policies for data protection:
+
+### Block high-risk security categories
+
+Block access to known malicious and high-risk sites:
+
+<Render file="cloudflare-one/gateway/block-security-categories" />
+
+### Block or isolate AI applications
+
+Control access to generative AI tools to prevent data leakage:
+
+**Option 1: Block AI applications entirely**
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **HTTP**.
+2. Select **Add a policy**.
+3. Configure the policy:
+   - **Name**: Block AI applications
+   - **Traffic**: Application is in `Artificial Intelligence`
+   - **Action**: Block
+4. Select **Create policy**.
+
+**Option 2: Isolate AI applications with restrictions**
+
+1. Create an HTTP policy with:
+   - **Name**: Isolate AI applications
+   - **Traffic**: Application is in `Artificial Intelligence`
+   - **Action**: Isolate
+2. Configure isolation settings:
+   - Disable copy/paste
+   - Disable file downloads
+   - Disable keyboard input (optional)
+3. Select **Create policy**.
+
+For more information, refer to [Isolate policies](/cloudflare-one/traffic-policies/http-policies/isolate-policies/).
+
+### Control file uploads and downloads
+
+Restrict file transfers to risky or unsanctioned applications:
+
+1. Create an HTTP policy:
+   - **Name**: Block file uploads to personal cloud storage
+   - **Traffic**:
+     - Application is in `Cloud Storage`
+     - AND Application is not `Google Drive` (corporate)
+     - AND Application is not `Microsoft OneDrive` (corporate)
+     - AND Upload Mime Type is in `All File Types`
+   - **Action**: Block
+2. Select **Create policy**.
+
+### Block personal SaaS instances
+
+Prevent users from accessing personal accounts of corporate applications:
+
+This is covered in detail in the [Tenant control](/learning-paths/data-security/protect-data-in-transit/tenant-control/) section.
+
+## Policy ordering
+
+<Render file="cloudflare-one/gateway/order-of-enforcement" />
+
+Order your policies from most specific to most general:
+
+1. Allow policies for approved applications
+2. Tenant control policies
+3. DLP policies
+4. Isolation policies
+5. Block policies for specific applications
+6. Block policies for categories
+7. Default allow (if using allowlist approach)
+
+## Testing policies
+
+Before enforcing policies broadly:
+
+1. **Start in audit mode**: Set action to **Allow** with logging enabled to see what would be blocked
+2. **Test with a pilot group**: Apply policies to a small group of users first
+3. **Review logs**: Check Gateway logs for false positives and user impact
+4. **Adjust and expand**: Refine policies based on feedback, then expand to more users
+
+## Common policy patterns
+
+### Block specific applications
+
+```
+Traffic: Application is `ChatGPT`
+Action: Block
+```
+
+### Allow only approved applications (allowlist)
+
+```
+Traffic: Application is not in `Corporate Approved Apps` (custom list)
+Action: Block
+```
+
+### Block by domain
+
+```
+Traffic: Domain matches regex `.*\.example\.com`
+Action: Block
+```
+
+### Block by content category
+
+```
+Traffic: Content Categories is in `Adult Content`, `Gambling`, `Illegal Activities`
+Action: Block
+```
+
+## Next steps
+
+With baseline HTTP policies in place, you can now:
+
+- Implement tenant controls for SaaS applications
+- Build DLP policies to detect sensitive data
+- Configure Browser Isolation for high-risk applications

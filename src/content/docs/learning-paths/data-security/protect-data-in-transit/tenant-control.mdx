@@ -1,0 +1,175 @@
+---
+title: Implement tenant control
+pcx_content_type: learning-unit
+sidebar:
+  order: 6
+---
+
+Tenant control ensures users only access corporate instances of SaaS applications, preventing data leakage to personal accounts.
+
+## What is tenant control?
+
+Many SaaS applications allow users to have both personal and corporate accounts. Without tenant control, users might:
+
+- Upload work files to personal cloud storage
+- Send work emails from personal accounts
+- Access personal Microsoft 365 or Google Workspace accounts during work hours
+- Save data to personal instances that are not backed up or secured
+
+Tenant control policies restrict access to only approved corporate tenants of these applications.
+
+## Supported applications
+
+Cloudflare supports tenant control for:
+
+- Microsoft 365 (Azure AD tenants)
+- Google Workspace (domains)
+- Slack (workspaces)
+- GitHub (organizations)
+- And other applications with tenant identifiers
+
+## Configure tenant control
+
+### Identify your corporate tenants
+
+First, determine your organization's tenant identifiers:
+
+**For Microsoft 365:**
+
+- Azure AD Tenant ID (found in Azure Portal > Azure Active Directory > Properties)
+
+**For Google Workspace:**
+
+- Your corporate domain(s) (for example, `example.com`)
+
+**For Slack:**
+
+- Your Slack workspace URL (for example, `example.slack.com`)
+
+### Create a tenant control policy
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **HTTP**.
+2. Select **Add a policy**.
+3. Configure the policy:
+   - **Name**: Restrict Microsoft 365 to corporate tenant
+   - **Traffic**:
+     - Application is `Microsoft 365`
+     - AND Microsoft 365 Tenant ID is not `YOUR_TENANT_ID`
+   - **Action**: Block
+4. Select **Create policy**.
+
+### Example policies
+
+**Block personal Google Workspace:**
+
+```
+Traffic:
+  - Application is `Google Workspace`
+  - AND Google Workspace Domain is not `example.com`
+Action: Block
+```
+
+**Block personal Slack workspaces:**
+
+```
+Traffic:
+  - Application is `Slack`
+  - AND Slack Workspace is not `example.slack.com`
+Action: Block
+```
+
+**Block personal GitHub:**
+
+```
+Traffic:
+  - Application is `GitHub`
+  - AND GitHub Organization is not `example-org`
+Action: Block
+```
+
+## Advanced tenant control
+
+### Allow multiple corporate tenants
+
+If your organization has multiple tenants:
+
+```
+Traffic:
+  - Application is `Microsoft 365`
+  - AND Microsoft 365 Tenant ID is not in `TENANT_ID_1`, `TENANT_ID_2`, `TENANT_ID_3`
+Action: Block
+```
+
+### Tenant control with user groups
+
+Apply different tenant restrictions to different user groups:
+
+```
+Traffic:
+  - Application is `Google Workspace`
+  - AND Google Workspace Domain is not `example.com`
+  - AND User Group is `Contractors`
+Action: Block
+```
+
+### Isolate instead of block
+
+For applications where users may need personal access occasionally:
+
+```
+Traffic:
+  - Application is `Microsoft 365`
+  - AND Microsoft 365 Tenant ID is not `YOUR_TENANT_ID`
+Action: Isolate
+Isolation settings:
+  - Disable file downloads
+  - Disable copy/paste
+```
+
+## User experience
+
+When a user attempts to access a non-corporate tenant:
+
+- **Block action**: User sees a block page explaining the policy
+- **Isolate action**: User can view content but cannot download files or copy data
+
+### Customize block pages
+
+Provide helpful information on block pages:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
+2. Customize the block page to include:
+   - Why the request was blocked
+   - How to access the corporate tenant
+   - Who to contact for exceptions
+
+## Testing tenant control
+
+Before enforcing tenant control:
+
+1. **Verify tenant identifiers**: Ensure you have the correct tenant IDs/domains
+2. **Test with pilot users**: Apply policies to a small group first
+3. **Monitor for false positives**: Check if legitimate corporate access is being blocked
+4. **Communicate changes**: Inform users about tenant restrictions and how to comply
+
+## Troubleshooting
+
+**Users cannot access corporate tenant:**
+
+- Verify the tenant ID/domain is correct
+- Check policy ordering — allow policies should come before block policies
+- Ensure TLS inspection is enabled
+
+**Personal tenant access not being blocked:**
+
+- Confirm TLS inspection is enabled and working
+- Verify the application is correctly identified in Gateway logs
+- Check that the tenant identifier selector is supported for that application
+
+## Next steps
+
+With tenant control implemented, you can now:
+
+- Build DLP policies to detect sensitive data in allowed applications
+- Monitor compliance through Gateway Analytics
+- Expand tenant control to additional applications

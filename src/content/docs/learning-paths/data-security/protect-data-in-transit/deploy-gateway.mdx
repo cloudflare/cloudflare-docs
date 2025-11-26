@@ -1,0 +1,74 @@
+---
+title: Deploy Gateway and enable TLS inspection
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+Gateway must be deployed and configured with TLS inspection before you can apply data protection policies to encrypted traffic.
+
+## Enable Gateway proxy
+
+Gateway proxy intercepts HTTP and HTTPS traffic from your users, allowing you to inspect and apply policies.
+
+<Render file="cloudflare-one/gateway/enable-gateway-proxy" />
+
+## Enable TLS decryption
+
+TLS decryption (HTTPS inspection) is required to inspect encrypted traffic for sensitive data and security threats.
+
+<Render file="cloudflare-one/gateway/enable-tls-decryption" />
+
+## Enable antivirus scanning
+
+Antivirus scanning protects against malware in file uploads and downloads.
+
+<Render file="cloudflare-one/gateway/enable-av-scanning" />
+
+## Certificate management
+
+For TLS inspection to work, user devices must trust the Cloudflare root certificate.
+
+### Download the Cloudflare certificate
+
+<Render file="cloudflare-one/gateway/download-cert" />
+
+### Install the certificate on devices
+
+You can install the certificate manually or deploy it through device management tools:
+
+- [Windows certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#windows)
+- [macOS certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#macos)
+- [iOS certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#ios)
+- [Android certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#android)
+- [Linux certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#linux)
+- [ChromeOS certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#chromeos)
+
+## Configure TLS inspection settings
+
+After enabling TLS decryption, configure which traffic to inspect:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
+2. Under **TLS decryption**, configure:
+   - **Do Not Inspect**: Add applications that should bypass TLS inspection (for example, applications with certificate pinning)
+   - **Inspection mode**: Choose between full inspection or certificate-only inspection
+
+For more information, refer to [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+
+## Verify Gateway deployment
+
+Test that Gateway is working correctly:
+
+1. On a device with WARP connected, visit a test website.
+2. Check the certificate details in your browser — you should see the Cloudflare certificate.
+3. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway** > **HTTP** to verify traffic is being logged.
+
+## Next steps
+
+With Gateway deployed and TLS inspection enabled, you can now:
+
+- Deploy the WARP client to user devices
+- Build HTTP policies to control application access
+- Apply DLP policies to detect sensitive data in transit

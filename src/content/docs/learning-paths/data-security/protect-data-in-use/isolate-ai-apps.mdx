@@ -1,0 +1,326 @@
+---
+title: Isolate AI applications
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+Isolating AI applications allows users to benefit from generative AI tools while preventing sensitive data from being uploaded or shared.
+
+## Why isolate AI applications?
+
+Generative AI tools like ChatGPT, Claude, and Gemini pose data security risks:
+
+- Users may inadvertently paste confidential information into prompts
+- AI tools store conversation history that may contain sensitive data
+- Files uploaded to AI tools may be used for training or stored insecurely
+- Lack of visibility into what data is being shared with AI services
+
+Isolation provides a middle ground between blocking AI entirely and allowing unrestricted access.
+
+## Isolation strategies for AI
+
+### Strategy 1: Disable copy/paste and uploads
+
+**Best for**: Organizations that want to allow AI use for general queries but prevent data sharing.
+
+1. Create an HTTP policy:
+   - **Name**: Isolate AI with copy/paste disabled
+   - **Traffic**: Application is in `Artificial Intelligence`
+   - **Action**: Isolate
+2. Configure isolation settings:
+   - **Disable copy/paste**: Yes
+   - **Disable file uploads**: Yes
+   - **Allow keyboard input**: Yes
+   - **Disable downloads**: Yes
+
+**User experience**: Users can type queries manually but cannot paste sensitive data or upload files.
+
+**Use case**: "I do not want my data to go to ChatGPT. How do I do that?" — This configuration allows ChatGPT access while preventing data exfiltration.
+
+### Strategy 2: Disable keyboard input (read-only)
+
+**Best for**: Allowing users to view AI-generated content shared by others without creating their own queries.
+
+1. Create an HTTP policy:
+   - **Name**: Read-only AI access
+   - **Traffic**: Application is in `Artificial Intelligence`
+   - **Action**: Isolate
+2. Configure isolation settings:
+   - **Disable keyboard input**: Yes
+   - **Disable copy/paste**: Yes
+   - **Disable file uploads**: Yes
+   - **Disable downloads**: Yes
+
+**User experience**: Users can view shared AI conversations but cannot interact.
+
+**Use case**: Allowing employees to view AI-generated content shared in Slack without enabling them to use AI tools directly.
+
+### Strategy 3: Combine isolation with DLP
+
+**Best for**: Organizations that want to allow AI use but detect and block sensitive data uploads.
+
+1. Create DLP profiles for sensitive data types.
+2. Create an HTTP policy:
+   - **Name**: Isolate AI with DLP
+   - **Traffic**:
+     - Application is in `Artificial Intelligence`
+     - AND DLP Profile is `Financial Information` or `PII`
+   - **Action**: Block
+3. Create a second policy for non-sensitive AI use:
+   - **Name**: Isolate AI for general use
+   - **Traffic**: Application is in `Artificial Intelligence`
+   - **Action**: Isolate
+4. Configure isolation settings:
+   - **Allow copy/paste**: Yes (DLP will catch sensitive data)
+   - **Disable file uploads**: Yes
+   - **Allow keyboard input**: Yes
+
+**User experience**: Users can use AI normally, but attempts to share sensitive data are blocked.
+
+**Use case**: Allowing AI use while enforcing data protection policies.
+
+## Application-specific configurations
+
+### ChatGPT
+
+**Application identifier**: `ChatGPT` or domain `chat.openai.com`
+
+**Recommended settings**:
+
+- Disable copy/paste: Yes
+- Disable file uploads: Yes (ChatGPT Plus supports file uploads)
+- Allow keyboard input: Yes
+- Disable downloads: Yes
+
+**Special considerations**:
+
+- ChatGPT stores conversation history by default
+- Consider blocking account creation to prevent personal accounts
+- Use tenant control if your organization has ChatGPT Enterprise
+
+### Claude (Anthropic)
+
+**Application identifier**: Domain `claude.ai`
+
+**Recommended settings**:
+
+- Disable copy/paste: Yes
+- Disable file uploads: Yes
+- Allow keyboard input: Yes
+- Disable downloads: Yes
+
+### Google Gemini
+
+**Application identifier**: Domain `gemini.google.com`
+
+**Recommended settings**:
+
+- Disable copy/paste: Yes
+- Disable file uploads: Yes
+- Allow keyboard input: Yes
+- Disable downloads: Yes
+- Consider tenant control for Google Workspace integration
+
+### Microsoft Copilot
+
+**Application identifier**: `Microsoft Copilot` or domain `copilot.microsoft.com`
+
+**Recommended settings**:
+
+- Disable copy/paste: Yes
+- Disable file uploads: Yes
+- Allow keyboard input: Yes
+- Disable downloads: Yes
+- Use tenant control to ensure corporate Microsoft 365 tenant only
+
+### GitHub Copilot
+
+**Application identifier**: Domain `github.com/copilot`
+
+**Recommended settings**:
+
+- Allow copy/paste: Yes (needed for code suggestions)
+- Disable file uploads: Yes
+- Allow keyboard input: Yes
+- Apply source code DLP policies to detect proprietary code
+
+## User group-based policies
+
+Apply different isolation levels to different user groups:
+
+### Executives and high-risk users
+
+Strictest controls for users with access to most sensitive data:
+
+```
+Traffic:
+  - Application is in `Artificial Intelligence`
+  - AND User Group is `Executives`
+Action: Isolate
+Settings:
+  - Disable copy/paste: Yes
+  - Disable keyboard input: Yes (read-only)
+  - Disable file uploads: Yes
+  - Disable downloads: Yes
+```
+
+### General employees
+
+Balanced approach for most users:
+
+```
+Traffic:
+  - Application is in `Artificial Intelligence`
+  - AND User Group is `Employees`
+Action: Isolate
+Settings:
+  - Disable copy/paste: Yes
+  - Disable file uploads: Yes
+  - Allow keyboard input: Yes
+  - Disable downloads: Yes
+```
+
+### Developers and technical teams
+
+More permissive for teams that need AI for coding:
+
+```
+Traffic:
+  - Application is in `Artificial Intelligence`
+  - AND User Group is `Developers`
+Action: Isolate
+Settings:
+  - Allow copy/paste: Yes
+  - Disable file uploads: Yes
+  - Allow keyboard input: Yes
+  - Apply source code DLP policies
+```
+
+## Monitor AI usage
+
+### Review isolation logs
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway** > **HTTP**.
+2. Filter by:
+   - **Application category**: Artificial Intelligence
+   - **Action**: Isolate
+3. Review:
+   - Which AI applications are being accessed
+   - How frequently users access AI tools
+   - Which users are accessing AI most often
+
+### Track policy violations
+
+Monitor attempts to bypass isolation:
+
+1. Filter logs by **Action**: Block
+2. Look for:
+   - DLP policy violations on AI applications
+   - Attempts to access AI through proxies or VPNs
+   - Users trying to access personal AI accounts
+
+### Analyze AI adoption
+
+Use Gateway Analytics to understand AI usage:
+
+1. Go to **Analytics** > **Gateway** > **HTTP**.
+2. Filter by **Application category**: Artificial Intelligence.
+3. Review:
+   - Total AI requests over time
+   - Most popular AI applications
+   - User adoption trends
+   - Peak usage times
+
+## User communication
+
+### Explain the policy
+
+When implementing AI isolation, communicate clearly with users:
+
+**Key messages**:
+
+- Why AI isolation is necessary (data protection, compliance)
+- What users can and cannot do with AI tools
+- How to use AI tools within the restrictions
+- Approved alternatives or corporate AI tools (if available)
+- Who to contact for exceptions or questions
+
+### Provide training
+
+Help users understand how to work within restrictions:
+
+- Demonstrate how to type queries instead of pasting
+- Show how to rephrase sensitive information in general terms
+- Provide examples of appropriate vs. inappropriate AI use
+- Offer guidance on when to use AI vs. other tools
+
+### Document exceptions
+
+Create a process for requesting exceptions:
+
+- Define criteria for granting exceptions
+- Establish approval workflow
+- Document approved exceptions
+- Review exceptions periodically
+
+## Gradual rollout approach
+
+### Phase 1: Monitor (Week 1-2)
+
+1. Create isolation policies in audit mode (Allow with logging)
+2. Analyze AI usage patterns
+3. Identify high-risk scenarios
+4. Gather baseline data
+
+### Phase 2: Isolate with restrictions (Week 3-4)
+
+1. Enable isolation for AI applications
+2. Disable copy/paste and file uploads
+3. Allow keyboard input for general use
+4. Monitor user feedback and issues
+
+### Phase 3: Add DLP (Week 5-6)
+
+1. Create DLP profiles for sensitive data
+2. Add DLP policies to block sensitive data uploads
+3. Monitor DLP detections and false positives
+4. Adjust DLP profiles as needed
+
+### Phase 4: Expand and refine (Ongoing)
+
+1. Expand to additional AI applications
+2. Adjust isolation settings based on feedback
+3. Create user group-specific policies
+4. Continuously monitor and improve
+
+## Troubleshooting
+
+**Users report AI tools not working:**
+
+- Verify isolation is configured correctly
+- Check if keyboard input is disabled (should be enabled for most use cases)
+- Review application compatibility with isolation
+- Check for browser-specific issues
+
+**Users finding workarounds:**
+
+- Monitor for access to AI through mobile devices
+- Check for use of personal hotspots to bypass policies
+- Look for alternative AI tools not in your policies
+- Educate users on policy importance
+
+**Performance issues:**
+
+- Isolation adds latency to AI interactions
+- Consider excluding low-risk AI tools from isolation
+- Review network connectivity to Cloudflare
+- Optimize policy ordering
+
+## Next steps
+
+With AI applications isolated, you can now:
+
+- Implement isolation for other sensitive applications
+- Configure contractor and BYOD access scenarios
+- Monitor and refine isolation policies based on usage

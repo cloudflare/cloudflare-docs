@@ -1,0 +1,300 @@
+---
+title: Integrate DLP with CASB
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+Integrate DLP profiles with CASB to scan files at rest in your SaaS applications for sensitive data.
+
+## How CASB DLP works
+
+<Render file="cloudflare-one/casb/data-loss-prevention" />
+
+CASB scans files stored in your SaaS applications using the same DLP profiles you created for data in transit. This provides consistent data protection across both inline (Gateway) and API-based (CASB) scanning.
+
+## Supported integrations
+
+<Render file="cloudflare-one/casb/casb-dlp-integrations" />
+
+DLP scanning is available for:
+
+- **Microsoft 365**: OneDrive, SharePoint, Teams files
+- **Google Workspace**: Google Drive files
+- **AWS**: S3 bucket objects
+
+:::note
+Salesforce and ServiceNow integrations do not currently support DLP scanning in the same way. They detect sensitive data through different finding types.
+:::
+
+## Enable DLP for CASB integrations
+
+### Microsoft 365 DLP integration
+
+1. Ensure you have a [Microsoft 365 CASB integration](/learning-paths/data-security/protect-data-at-rest/connect-integrations/#connect-microsoft-365) connected.
+2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+3. Select **Configure** for your Microsoft 365 integration.
+4. Enable **Scan for DLP findings**.
+5. Select which DLP profiles to apply:
+   - Choose from existing DLP profiles
+   - Select multiple profiles for comprehensive coverage
+6. Select **Save integration**.
+
+CASB will scan all existing files and new files for matches against the selected DLP profiles.
+
+### Google Workspace DLP integration
+
+1. Ensure you have a [Google Workspace CASB integration](/learning-paths/data-security/protect-data-at-rest/connect-integrations/#connect-google-workspace) connected.
+2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+3. Select **Configure** for your Google Workspace integration.
+4. Enable **Scan for DLP findings**.
+5. Select which DLP profiles to apply.
+6. Select **Save integration**.
+
+### AWS S3 DLP integration
+
+1. Ensure you have an [AWS CASB integration](/learning-paths/data-security/protect-data-at-rest/connect-integrations/#connect-aws) connected.
+2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+3. Select **Configure** for your AWS integration.
+4. Enable **Scan for DLP findings**.
+5. Select which DLP profiles to apply.
+6. Select **Save integration**.
+
+## Microsoft Information Protection integration
+
+For Microsoft 365, you can also detect files based on MIP sensitivity labels:
+
+### Enable MIP label detection
+
+1. Go to **CASB** > **Integrations**.
+2. Select **Configure** for your Microsoft 365 integration.
+3. Enable **Scan for Microsoft Information Protection labels**.
+4. Select which labels to detect:
+   - Highly Confidential
+   - Confidential
+   - Internal
+   - Public
+5. Select **Save integration**.
+
+### MIP label findings
+
+CASB will create findings for files with the selected labels, showing:
+
+- File name and location
+- Applied sensitivity label
+- Sharing permissions
+- Last modified date
+- Owner information
+
+For more information about MIP integration, refer to [Microsoft Information Protection integration](/learning-paths/data-security/prevent-data-exfiltration/microsoft-integration/).
+
+## DLP profile recommendations for CASB
+
+### Start with high-value data
+
+Begin by scanning for the most sensitive data types:
+
+**Financial data profile:**
+
+- Credit card numbers
+- Bank account numbers
+- Tax identification numbers
+
+**Personal information profile:**
+
+- Social Security numbers
+- Driver's license numbers
+- Passport numbers
+
+**Intellectual property profile:**
+
+- Source code patterns
+- Proprietary identifiers
+- Trade secret keywords
+
+### Expand to comprehensive coverage
+
+After establishing baseline protection:
+
+**Customer data profile:**
+
+- Customer IDs (using EDM)
+- Customer email addresses (using EDM)
+- Customer phone numbers
+
+**Employee data profile:**
+
+- Employee IDs (using EDM)
+- Employee SSNs (using EDM)
+- Internal email addresses
+
+**Compliance profiles:**
+
+- HIPAA-specific data (PHI)
+- PCI-specific data (cardholder data)
+- GDPR-specific data (EU personal data)
+
+## Optimize CASB DLP scanning
+
+### Scope scanning to specific locations
+
+For large environments, focus scanning on high-risk locations:
+
+**Microsoft 365:**
+
+- Specific SharePoint sites
+- Specific user OneDrive accounts
+- Specific Teams channels
+
+**Google Workspace:**
+
+- Specific Shared Drives
+- Specific user accounts
+- Specific folders
+
+**AWS:**
+
+- Specific S3 buckets
+- Specific bucket prefixes
+- Specific regions
+
+### Adjust scan frequency
+
+Balance security coverage with API rate limits:
+
+- **High-sensitivity locations**: Scan more frequently
+- **Low-risk locations**: Scan less frequently
+- **Archive storage**: Scan on-demand only
+
+### File type filtering
+
+Focus on file types most likely to contain sensitive data:
+
+- Documents: `.docx`, `.pdf`, `.xlsx`, `.pptx`
+- Text files: `.txt`, `.csv`, `.json`, `.xml`
+- Code files: `.py`, `.js`, `.java`, `.cpp`
+- Images: `.png`, `.jpg` (if OCR is enabled)
+
+## Monitor DLP findings
+
+### View DLP findings in CASB
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Findings**.
+2. Filter by **Finding type** > **Data Loss Prevention**.
+3. Review findings showing:
+   - File name and location
+   - Matched DLP profile
+   - Number of matches
+   - File owner
+   - Sharing permissions
+
+### Investigate DLP findings
+
+For each finding:
+
+1. Select the finding to view details.
+2. Review:
+   - Which DLP profile matched
+   - How many detection entries matched
+   - File sharing status (public, external, internal)
+   - File metadata (size, last modified, owner)
+3. Determine appropriate action:
+   - Remove public sharing
+   - Restrict to specific users
+   - Move to secure location
+   - Delete if unauthorized
+
+## Remediate DLP findings
+
+### Manual remediation
+
+1. Select a finding in the CASB dashboard.
+2. Select **View in [application]** to open the file in the source application.
+3. Take action in the source application:
+   - Change sharing permissions
+   - Move file to secure location
+   - Delete file
+   - Apply encryption or additional protection
+
+### Automated remediation (coming 2025)
+
+Cloudflare is developing automated remediation capabilities that will allow you to:
+
+- Automatically remove public sharing
+- Automatically restrict sharing to specific domains
+- Automatically quarantine files with sensitive data
+- Automatically notify file owners of policy violations
+
+## Combine CASB DLP with Gateway DLP
+
+Use both CASB and Gateway DLP for comprehensive protection:
+
+### CASB DLP (data at rest)
+
+- Scans existing files in SaaS applications
+- Identifies sensitive data already stored
+- Detects historical data exposure
+- Provides inventory of sensitive data locations
+
+### Gateway DLP (data in transit)
+
+- Scans files as they are uploaded or downloaded
+- Prevents new sensitive data from being stored
+- Blocks real-time data exfiltration
+- Enforces policies on data movement
+
+### Unified DLP strategy
+
+1. **Use CASB to discover**: Scan existing data to understand what sensitive information is already stored
+2. **Use Gateway to prevent**: Block new sensitive data uploads based on CASB findings
+3. **Use both to monitor**: Track sensitive data across both storage and transit
+4. **Use both to enforce**: Apply consistent policies across all data states
+
+## Best practices
+
+### Start with audit mode
+
+Before enforcing policies:
+
+1. Enable DLP scanning in CASB
+2. Review findings for 1-2 weeks
+3. Identify false positives
+4. Adjust DLP profiles as needed
+5. Begin remediation of true positives
+
+### Prioritize findings
+
+Focus on the highest-risk findings first:
+
+1. **Publicly shared sensitive data**: Immediate risk
+2. **Externally shared sensitive data**: High risk
+3. **Internally shared sensitive data**: Medium risk
+4. **Private sensitive data**: Low risk (but track for compliance)
+
+### Communicate with users
+
+When remediating findings:
+
+- Notify file owners before taking action
+- Explain why the file is a security risk
+- Provide guidance on proper data handling
+- Offer secure alternatives for data storage
+
+### Regular reviews
+
+Establish a cadence for reviewing CASB DLP findings:
+
+- **Daily**: Review new high-severity findings
+- **Weekly**: Review all new findings and remediation progress
+- **Monthly**: Analyze trends and adjust DLP profiles
+- **Quarterly**: Comprehensive audit of sensitive data locations
+
+## Next steps
+
+With DLP integrated into CASB, you can now:
+
+- Manage and remediate all security findings
+- Monitor CASB analytics for data security insights
+- Implement comprehensive data protection across all states

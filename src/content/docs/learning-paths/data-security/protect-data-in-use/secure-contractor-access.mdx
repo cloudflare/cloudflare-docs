@@ -1,0 +1,405 @@
+---
+title: Secure contractor and BYOD access
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+Browser Isolation provides secure access to sensitive applications for contractors and bring-your-own-device (BYOD) scenarios without trusting the devices themselves.
+
+## Challenges with contractor and BYOD access
+
+### Traditional VPN approach
+
+**Problems**:
+
+- Grants broad network access to untrusted devices
+- Difficult to control what data contractors can access
+- No visibility into contractor activity
+- Risk of malware from contractor devices
+- Complex setup and management
+
+### Browser Isolation approach
+
+**Benefits**:
+
+- Granular application-level access control
+- Prevent data exfiltration through isolation controls
+- No malware risk (code executes remotely)
+- Simple user experience (browser-based access)
+- Detailed audit logging of all activity
+
+## Use cases
+
+### External contractors
+
+**Scenario**: Marketing contractor needs access to HubSpot to manage campaigns but should not be able to download customer lists.
+
+**Solution**: Isolate HubSpot with downloads and copy/paste disabled.
+
+### Temporary workers
+
+**Scenario**: Seasonal workers need access to internal tools during peak periods but should have limited data access.
+
+**Solution**: Clientless isolation with time-based access policies.
+
+### Partner access
+
+**Scenario**: Business partners need to view documents in SharePoint but should not be able to download or share them.
+
+**Solution**: Isolate SharePoint with read-only access (keyboard input disabled).
+
+### BYOD employees
+
+**Scenario**: Employees working from personal devices need access to corporate applications without installing software.
+
+**Solution**: Clientless isolation with appropriate restrictions based on device trust.
+
+## Configure contractor access
+
+### Step 1: Create contractor user group
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client** > **Device enrollment**.
+2. Create a device enrollment rule for contractors.
+3. Assign contractors to a specific user group in your identity provider.
+
+### Step 2: Create isolated applications
+
+For each application contractors need to access:
+
+1. Go to **Access** > **Applications**.
+2. Select **Add an application** > **Self-hosted**.
+3. Configure the application:
+   - **Application name**: For example, "HubSpot (Contractor Access)"
+   - **Application domain**: `hubspot.com`
+   - **Enable Browser Isolation**: Yes
+4. Configure isolation settings:
+   - **Disable copy/paste**: Yes
+   - **Disable file downloads**: Yes
+   - **Allow keyboard input**: Yes
+   - **Disable printing**: Yes
+5. Set access policy:
+   - **Policy name**: Contractor access
+   - **Action**: Allow
+   - **Include**: User Group is `Contractors`
+6. Select **Save application**.
+
+### Step 3: Communicate access instructions
+
+Provide contractors with:
+
+- Unique application URL
+- Authentication instructions
+- What they can and cannot do in isolated sessions
+- Who to contact for support
+
+## BYOD access patterns
+
+### Pattern 1: Clientless isolation for all BYOD
+
+**Configuration**:
+
+- All BYOD users access applications through clientless isolation
+- No WARP client required
+- Strict isolation controls applied
+
+**Policies**:
+
+```
+Application: Internal CRM
+Access: User Group is `BYOD Users`
+Isolation: Enabled
+Settings:
+  - Disable copy/paste: Yes
+  - Disable downloads: Yes
+  - Allow keyboard input: Yes
+```
+
+### Pattern 2: Managed devices get full access, BYOD gets isolated
+
+**Configuration**:
+
+- Managed devices with WARP get normal access
+- BYOD devices get isolated access with restrictions
+
+**Policies**:
+
+```
+Policy 1 (Managed devices):
+  - Application: Internal CRM
+  - Device Posture: Managed device
+  - Action: Allow
+
+Policy 2 (BYOD):
+  - Application: Internal CRM
+  - Device Posture: NOT Managed device
+  - Action: Isolate
+  - Settings: Disable copy/paste, downloads
+```
+
+### Pattern 3: Risk-based isolation
+
+**Configuration**:
+
+- Low-risk applications: Normal access
+- High-risk applications: Isolated access for BYOD
+
+**Policies**:
+
+```
+Low-risk (email, calendar):
+  - Action: Allow for BYOD
+
+High-risk (CRM, financial systems):
+  - Action: Isolate for BYOD
+  - Settings: Strict restrictions
+```
+
+## Application-specific configurations
+
+### CRM systems (Salesforce, HubSpot)
+
+**Contractor needs**:
+
+- View and edit customer records
+- Create campaigns and reports
+- Update contact information
+
+**Restrictions**:
+
+- Cannot download customer lists
+- Cannot copy/paste customer data
+- Cannot print reports with customer information
+
+**Configuration**:
+
+```
+Isolation settings:
+  - Disable copy/paste: Yes
+  - Disable downloads: Yes
+  - Allow keyboard input: Yes
+  - Disable printing: Yes
+```
+
+### Document management (SharePoint, Google Drive)
+
+**Contractor needs**:
+
+- View project documents
+- Edit specific files
+- Collaborate on shared documents
+
+**Restrictions**:
+
+- Cannot download confidential documents
+- Cannot share documents externally
+- Cannot copy sensitive information
+
+**Configuration**:
+
+```
+Isolation settings:
+  - Disable copy/paste: Yes
+  - Disable downloads: Yes (or allow specific file types)
+  - Allow keyboard input: Yes
+  - Disable printing: Yes
+```
+
+### Project management (Jira, Asana)
+
+**Contractor needs**:
+
+- View and update tasks
+- Comment on issues
+- Track project progress
+
+**Restrictions**:
+
+- Cannot export project data
+- Cannot copy project details
+- Limited access to historical data
+
+**Configuration**:
+
+```
+Isolation settings:
+  - Disable copy/paste: Yes
+  - Disable downloads: Yes
+  - Allow keyboard input: Yes
+  - Allow printing: No
+```
+
+### Financial systems (ERP, accounting software)
+
+**Contractor needs**:
+
+- View financial reports
+- Enter transactions
+- Generate invoices
+
+**Restrictions**:
+
+- Cannot download financial data
+- Cannot copy account numbers
+- Cannot print sensitive reports
+
+**Configuration**:
+
+```
+Isolation settings:
+  - Disable copy/paste: Yes
+  - Disable downloads: Yes
+  - Allow keyboard input: Yes
+  - Disable printing: Yes
+```
+
+## Time-based access controls
+
+### Temporary contractor access
+
+Automatically expire access after contract ends:
+
+1. Create an Access policy with time restrictions:
+   - **Include**: User Group is `Contractors`
+   - **Require**: Access expires after `[date]`
+2. Set up automated reminders before expiration.
+3. Review and extend or revoke access as needed.
+
+### Business hours only
+
+Restrict contractor access to business hours:
+
+1. Create an Access policy:
+   - **Include**: User Group is `Contractors`
+   - **Require**: Time of day is between 9 AM and 5 PM
+2. Optionally allow exceptions for specific contractors.
+
+### Project-based access
+
+Grant access only during active project periods:
+
+1. Create project-specific user groups.
+2. Add contractors to groups when projects start.
+3. Remove from groups when projects complete.
+4. Automate group management through identity provider.
+
+## Monitor contractor activity
+
+### Audit logging
+
+Track all contractor actions:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Access**.
+2. Filter by **User Group**: Contractors.
+3. Review:
+   - Which applications were accessed
+   - When access occurred
+   - Duration of sessions
+   - Any policy violations
+
+### Isolation logs
+
+Monitor contractor interactions with isolated applications:
+
+1. Go to **Logs** > **Gateway** > **HTTP**.
+2. Filter by:
+   - **User Group**: Contractors
+   - **Action**: Isolate
+3. Review:
+   - Copy/paste attempts (if logged)
+   - Download attempts
+   - Unusual activity patterns
+
+### Generate contractor access reports
+
+Create regular reports for compliance:
+
+1. Go to **Analytics** > **Access**.
+2. Filter by contractor user groups.
+3. Generate reports showing:
+   - Total access sessions
+   - Applications accessed
+   - Policy violations
+   - Access patterns
+
+## Best practices
+
+### Principle of least privilege
+
+- Grant access only to applications contractors need
+- Use most restrictive isolation settings appropriate for the use case
+- Regularly review and adjust access as needs change
+
+### Clear access policies
+
+Document and communicate:
+
+- Which applications contractors can access
+- What actions are allowed and restricted
+- How to request additional access
+- Consequences of policy violations
+
+### Onboarding and offboarding
+
+**Onboarding**:
+
+1. Create contractor account in identity provider
+2. Assign to appropriate user groups
+3. Configure application access
+4. Provide access instructions and training
+5. Verify access is working correctly
+
+**Offboarding**:
+
+1. Remove from all user groups
+2. Revoke application access
+3. Review audit logs for any suspicious activity
+4. Archive logs for compliance
+5. Document access history
+
+### Regular access reviews
+
+- Review contractor access quarterly
+- Verify contractors still need access
+- Check for unused access that should be revoked
+- Update isolation settings based on risk changes
+
+### User experience considerations
+
+Balance security with usability:
+
+- Test isolated applications before deploying to contractors
+- Gather feedback on usability issues
+- Adjust restrictions if they prevent legitimate work
+- Provide clear error messages and support
+
+## Troubleshooting
+
+**Contractors cannot access applications:**
+
+- Verify contractor is in correct user group
+- Check Access policy includes contractor group
+- Confirm contractor has authenticated successfully
+- Review Access logs for denied requests
+
+**Isolation restrictions too strict:**
+
+- Review specific use case requirements
+- Consider allowing paste-only instead of full copy/paste disable
+- Allow specific file types for download if needed
+- Adjust based on contractor feedback
+
+**Performance issues:**
+
+- Isolation adds latency to application interactions
+- Check network connectivity
+- Verify contractor has adequate bandwidth
+- Consider optimizing isolation settings
+
+## Next steps
+
+With contractor and BYOD access secured, you can now:
+
+- Monitor isolation logs and user activity
+- Expand isolation to additional use cases
+- Fine-tune isolation settings based on feedback

@@ -1,0 +1,262 @@
+---
+title: Use Exact Data Match (EDM)
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+Exact Data Match (EDM) allows you to detect specific sensitive values from datasets, such as employee lists, customer databases, or proprietary identifiers.
+
+## EDM vs. pattern matching
+
+### Pattern matching (regex, keywords)
+
+**Detects:** Data that matches a pattern
+
+- Example: Any 16-digit number that looks like a credit card
+- **Pros**: Catches unknown instances of data types
+- **Cons**: May have false positives
+
+### Exact Data Match
+
+**Detects:** Specific known values from a dataset
+
+- Example: Only the actual credit card numbers from your customer database
+- **Pros**: Very low false positive rate, protects specific known data
+- **Cons**: Only detects values in your dataset
+
+## When to use EDM
+
+Use EDM when you need to protect:
+
+- **Employee data**: Email addresses, employee IDs, Social Security numbers
+- **Customer data**: Customer IDs, account numbers, specific email addresses
+- **Proprietary identifiers**: Product codes, project names, internal identifiers
+- **Partner data**: Vendor IDs, partner contact information
+- **Exact values**: Any specific list of sensitive strings or numbers
+
+### EDM vs. custom word lists
+
+| Use Case                       | EDM              | Custom Word List |
+| ------------------------------ | ---------------- | ---------------- |
+| Large datasets (1000+ entries) | ✓ Recommended    | ✗ Not scalable   |
+| Frequently updated data        | ✓ Easy to update | ✗ Manual updates |
+| Structured data (CSV)          | ✓ Native support | ✗ Manual entry   |
+| Simple keyword matching        | ✗ Overkill       | ✓ Recommended    |
+| Hashed/encrypted values        | ✓ Supported      | ✗ Not supported  |
+
+## Create an EDM dataset
+
+### Prepare your data
+
+1. **Format as CSV**: Create a CSV file with your sensitive data
+
+   ```csv
+   employee_id,email,ssn
+   E12345,john.doe@example.com,123-45-6789
+   E12346,jane.smith@example.com,234-56-7890
+   ```
+
+2. **Choose columns to match**: Decide which columns contain sensitive data to detect
+
+3. **Consider data volume**: EDM datasets can contain thousands of entries
+
+### Upload the dataset
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **Datasets**.
+2. Select **Create dataset**.
+3. Configure the dataset:
+   - **Name**: Descriptive name (for example, "Employee PII")
+   - **Description**: What data this dataset contains
+   - **File**: Upload your CSV file
+4. Select **Create dataset**.
+
+### Configure column matching
+
+After uploading:
+
+1. Select which columns to use for matching
+2. Choose matching options:
+   - **Exact match**: Requires exact string match
+   - **Case insensitive**: Matches regardless of case
+   - **Partial match**: Matches if the value appears within larger text
+
+## Add EDM to DLP profiles
+
+### Create a detection entry
+
+1. Go to **DLP** > **DLP Profiles**.
+2. Select a profile or create a new one.
+3. Select **Add detection entry**.
+4. Configure the entry:
+   - **Type**: Exact Data Match
+   - **Dataset**: Select your uploaded dataset
+   - **Columns**: Choose which columns to match against
+5. Select **Add entry**.
+
+### Example EDM profiles
+
+**Employee data protection:**
+
+```
+Profile: Employee PII
+Detection entries:
+  - EDM: Employee dataset (email column)
+  - EDM: Employee dataset (ssn column)
+  - EDM: Employee dataset (employee_id column)
+Match count: 1
+```
+
+**Customer data protection:**
+
+```
+Profile: Customer Information
+Detection entries:
+  - EDM: Customer dataset (customer_id column)
+  - EDM: Customer dataset (email column)
+  - EDM: Customer dataset (account_number column)
+Match count: 1
+```
+
+## Best practices for EDM datasets
+
+### Data preparation
+
+**Include variations:**
+
+- Email addresses with and without domain
+- IDs with and without prefixes
+- Phone numbers in different formats
+
+**Example:**
+
+```csv
+employee_id,email,email_local,phone,phone_formatted
+E12345,john.doe@example.com,john.doe,5551234567,555-123-4567
+```
+
+**Keep data current:**
+
+- Update datasets regularly (weekly or monthly)
+- Remove terminated employees
+- Add new hires
+- Update changed information
+
+### Dataset organization
+
+**Separate datasets by sensitivity:**
+
+- High-sensitivity: Executive data, financial information
+- Medium-sensitivity: General employee data
+- Low-sensitivity: Public-facing information
+
+**Separate datasets by use case:**
+
+- Employee PII dataset
+- Customer PII dataset
+- Partner information dataset
+- Proprietary identifiers dataset
+
+### Performance considerations
+
+**Dataset size:**
+
+- EDM can handle large datasets (100,000+ entries)
+- Larger datasets may increase matching latency
+- Consider splitting very large datasets by category
+
+**Column selection:**
+
+- Only include columns you need to match
+- More columns = more processing time
+- Balance coverage with performance
+
+## Update EDM datasets
+
+### Regular updates
+
+1. Export current dataset or prepare new CSV
+2. Update the data (add/remove/modify entries)
+3. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **Datasets**
+4. Select the dataset to update
+5. Upload the new CSV file
+6. Select **Update dataset**
+
+### Automated updates
+
+For frequently changing data:
+
+1. Use the Cloudflare API to update datasets programmatically
+2. Schedule regular updates (daily, weekly)
+3. Integrate with HR systems or CRM for automatic synchronization
+
+## Combine EDM with other detection methods
+
+Layer EDM with pattern matching for comprehensive protection:
+
+**Example: Comprehensive employee data profile**
+
+```
+Profile: Employee Data Protection
+Detection entries:
+  - EDM: Employee dataset (email column)
+  - EDM: Employee dataset (ssn column)
+  - Regex: SSN pattern (\d{3}-\d{2}-\d{4})
+  - Keyword: "employee", "personnel"
+Match count: 2
+Context analysis: Enabled
+```
+
+This profile triggers if:
+
+- Any employee email from the dataset is detected, OR
+- Any employee SSN from the dataset is detected, OR
+- Any SSN pattern is detected along with employee-related keywords
+
+## Monitor EDM effectiveness
+
+### Review EDM matches
+
+1. Go to **Logs** > **Gateway** > **HTTP**
+2. Filter by DLP profile name
+3. Review matched content to verify:
+   - EDM is detecting the right data
+   - No false positives from outdated dataset entries
+   - Coverage is comprehensive
+
+### Track dataset coverage
+
+Monitor:
+
+- How often EDM entries are matched vs. pattern-based entries
+- Which dataset columns are matched most frequently
+- Whether dataset needs expansion or refinement
+
+## Troubleshooting EDM
+
+**EDM not detecting known values:**
+
+- Verify the value exists in the dataset
+- Check column selection in detection entry
+- Ensure matching options (case sensitivity, partial match) are appropriate
+- Confirm the dataset was uploaded successfully
+
+**Too many false positives:**
+
+- Review dataset for outdated or incorrect entries
+- Consider using exact match instead of partial match
+- Verify data format consistency
+
+**Performance issues:**
+
+- Reduce dataset size if possible
+- Limit number of columns used for matching
+- Consider splitting into multiple smaller datasets
+
+## Next steps
+
+With EDM configured, you can now:
+
+- Integrate with Microsoft Information Protection for label-based DLP
+- Apply comprehensive DLP policies across all data protection scenarios
+- Monitor and refine EDM datasets based on detection patterns

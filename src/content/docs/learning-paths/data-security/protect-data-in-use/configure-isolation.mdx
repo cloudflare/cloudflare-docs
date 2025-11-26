@@ -1,0 +1,264 @@
+---
+title: Configure Browser Isolation
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+Browser Isolation must be enabled and configured before you can use it to protect data in use.
+
+## Enable Browser Isolation
+
+### Prerequisites
+
+Before enabling Browser Isolation:
+
+- Cloudflare Zero Trust account
+- For client-based isolation: WARP client deployed to devices
+- For clientless isolation: No additional requirements
+
+### Enable isolation in Zero Trust
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Browser Isolation**.
+2. Select **Enable Browser Isolation**.
+3. Configure global isolation settings:
+   - **Isolation mode**: Choose between clientless or client-based
+   - **Default controls**: Set default restrictions for isolated sessions
+4. Select **Save settings**.
+
+## Configure isolation settings
+
+### Global isolation settings
+
+Set default controls that apply to all isolated sessions:
+
+1. Go to **Settings** > **Browser Isolation**.
+2. Configure default settings:
+   - **Disable copy/paste**: Prevent users from copying data from isolated sessions
+   - **Disable printing**: Block printing of isolated content
+   - **Disable file downloads**: Prevent file downloads from isolated applications
+   - **Disable file uploads**: Block file uploads to isolated applications
+   - **Disable keyboard input**: Restrict keyboard input (read-only mode)
+3. Select **Save settings**.
+
+:::note
+These are default settings. You can override them on a per-policy basis for more granular control.
+:::
+
+### Per-policy isolation controls
+
+Override global settings for specific applications or user groups:
+
+1. Go to **Gateway** > **Firewall Policies** > **HTTP**.
+2. Create or edit an isolation policy.
+3. Set **Action** to **Isolate**.
+4. Configure isolation controls:
+   - **Copy/paste**: Allow, Disable, or Allow paste only
+   - **Printing**: Allow or Disable
+   - **Downloads**: Allow, Disable, or Allow specific file types
+   - **Uploads**: Allow, Disable, or Allow specific file types
+   - **Keyboard input**: Allow or Disable
+5. Select **Save policy**.
+
+## Isolation policy examples
+
+### Isolate AI applications with restrictions
+
+Prevent data leakage to AI tools while allowing general use:
+
+1. Create an HTTP policy:
+   - **Name**: Isolate AI applications
+   - **Traffic**: Application is in `Artificial Intelligence`
+   - **Action**: Isolate
+2. Configure isolation settings:
+   - **Disable copy/paste**: Yes
+   - **Disable file uploads**: Yes
+   - **Allow keyboard input**: Yes (for typing queries)
+   - **Disable downloads**: Yes
+3. Select **Create policy**.
+
+**Result**: Users can access AI tools and type queries, but cannot paste sensitive data or upload files.
+
+### Isolate CRM for contractors
+
+Secure contractor access to customer data:
+
+1. Create an HTTP policy:
+   - **Name**: Isolate Salesforce for contractors
+   - **Traffic**:
+     - Application is `Salesforce`
+     - AND User Group is `Contractors`
+   - **Action**: Isolate
+2. Configure isolation settings:
+   - **Disable copy/paste**: Yes
+   - **Disable file downloads**: Yes
+   - **Allow keyboard input**: Yes
+   - **Disable printing**: Yes
+3. Select **Create policy**.
+
+**Result**: Contractors can view and edit Salesforce data but cannot extract it.
+
+### Isolate suspicious websites
+
+Protect against phishing and malware:
+
+1. Create an HTTP policy:
+   - **Name**: Isolate newly registered domains
+   - **Traffic**: Domain Age is less than 30 days
+   - **Action**: Isolate
+2. Configure isolation settings:
+   - **Disable keyboard input**: Yes (read-only)
+   - **Disable downloads**: Yes
+   - **Disable copy/paste**: Yes
+3. Select **Create policy**.
+
+**Result**: Users can view suspicious sites safely without risk of interaction.
+
+### Isolate before blocking
+
+Test isolation before implementing full blocks:
+
+1. Create an HTTP policy:
+   - **Name**: Isolate high-risk applications
+   - **Traffic**: Application Risk Score is greater than 70
+   - **Action**: Isolate
+2. Configure isolation settings:
+   - **Disable copy/paste**: Yes
+   - **Disable downloads**: Yes
+   - **Allow keyboard input**: Yes
+3. Monitor user feedback and adjust.
+4. After testing, change action to **Block** if needed.
+
+## Advanced isolation features
+
+### Allow paste only
+
+Allow users to paste into isolated applications but not copy out:
+
+- **Use case**: Allow users to paste credentials into isolated login forms
+- **Setting**: Copy/paste = Allow paste only
+- **Benefit**: Maintains usability while preventing data exfiltration
+
+### File type restrictions
+
+Allow specific file types while blocking others:
+
+1. In isolation settings, configure:
+   - **Downloads**: Allow specific file types
+   - **Allowed types**: `.pdf`, `.docx`, `.xlsx`
+2. Block all other file types automatically.
+
+**Use case**: Allow document downloads but block executables and archives.
+
+### Clipboard logging
+
+Log copy/paste activity for audit purposes:
+
+1. Enable **Log clipboard activity** in isolation settings.
+2. Review logs in **Logs** > **Gateway** > **HTTP**.
+3. Filter by **Isolation action** = **Copy** or **Paste**.
+
+**Use case**: Monitor what data users are copying from isolated applications.
+
+## Clientless isolation setup
+
+For applications that do not require WARP client:
+
+### Create a clientless application
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+2. Select **Add an application** > **Self-hosted**.
+3. Configure the application:
+   - **Application name**: For example, "Salesforce (Isolated)"
+   - **Application domain**: `salesforce.com`
+   - **Enable Browser Isolation**: Yes
+4. Configure isolation settings specific to this application.
+5. Set access policies (who can access).
+6. Select **Save application**.
+
+### Access clientless isolated applications
+
+Users access clientless applications through a unique URL:
+
+- **Format**: `https://<your-team-name>.cloudflareaccess.com/browser/https://salesforce.com`
+- Users authenticate via identity provider
+- Application loads in isolated browser
+- Configured restrictions apply automatically
+
+For more information, refer to [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/clientless-browser-isolation/).
+
+## Client-based isolation setup
+
+For full Internet browsing isolation:
+
+### Enable client-based isolation
+
+1. Ensure WARP client is deployed to devices.
+2. Create HTTP policies with **Isolate** action.
+3. Policies apply automatically to WARP-connected devices.
+
+### Isolate all browsing
+
+For high-risk users or scenarios:
+
+1. Create an HTTP policy:
+   - **Name**: Isolate all browsing for executives
+   - **Traffic**: User Group is `Executives`
+   - **Action**: Isolate
+2. Configure appropriate isolation settings.
+3. Select **Create policy**.
+
+## Test isolation configuration
+
+### Verify isolation is working
+
+1. Access an isolated application as a test user.
+2. Verify the isolation indicator appears in the browser.
+3. Test configured restrictions:
+   - Try to copy/paste (should be blocked if disabled)
+   - Try to download files (should be blocked if disabled)
+   - Try to upload files (should be blocked if disabled)
+4. Check Gateway logs to confirm isolation is active.
+
+### User experience testing
+
+Before broad deployment:
+
+1. Test with a pilot group of users.
+2. Gather feedback on usability.
+3. Adjust isolation settings based on feedback.
+4. Document any application-specific issues.
+5. Expand to broader user base.
+
+## Troubleshooting
+
+**Isolation not activating:**
+
+- Verify Browser Isolation is enabled in settings
+- Check policy ordering (isolation policies should come before allow policies)
+- Confirm user is in the correct group
+- Ensure WARP is connected (for client-based isolation)
+
+**Application not working in isolation:**
+
+- Some applications may not be compatible with isolation
+- Check for WebSocket or WebRTC requirements
+- Review application-specific isolation documentation
+- Consider adding to Do Not Isolate list if necessary
+
+**Performance issues:**
+
+- Isolation adds some latency due to remote rendering
+- Check network connectivity to Cloudflare
+- Review isolation logs for errors
+- Consider reducing isolation scope if needed
+
+## Next steps
+
+With Browser Isolation configured, you can now:
+
+- Implement specific use cases (AI isolation, contractor access, etc.)
+- Monitor isolation logs and user activity
+- Fine-tune isolation settings based on usage patterns

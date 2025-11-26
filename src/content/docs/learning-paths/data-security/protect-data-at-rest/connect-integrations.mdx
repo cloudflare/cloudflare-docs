@@ -1,0 +1,241 @@
+---
+title: Connect SaaS and cloud integrations
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+CASB connects to your SaaS applications and cloud infrastructure via API to scan for security risks and sensitive data.
+
+## How CASB integrations work
+
+<Render file="cloudflare-one/casb/manage-integrations" />
+
+## Choose your integrations
+
+Select integrations based on where your organization stores sensitive data:
+
+### Business collaboration platforms
+
+**Microsoft 365** (OneDrive, SharePoint, Teams):
+
+- Scan files for sensitive data
+- Detect sharing misconfigurations
+- Identify third-party app access
+- Monitor user activity
+
+**Google Workspace** (Drive, Gmail):
+
+- Scan Drive files for DLP violations
+- Detect publicly shared files
+- Identify external sharing risks
+- Monitor OAuth app permissions
+
+### Business applications
+
+**Salesforce**:
+
+- Scan for data exposure in records
+- Detect misconfigured permissions
+- Monitor user access patterns
+- Identify security policy violations
+
+**ServiceNow**:
+
+- Scan incidents and records for sensitive data
+- Detect access control issues
+- Monitor configuration changes
+- Identify compliance violations
+
+### Cloud infrastructure
+
+**AWS**:
+
+- Scan S3 buckets for sensitive data
+- Detect misconfigured storage permissions
+- Identify publicly accessible resources
+- Monitor compute account security
+
+## Connect Microsoft 365
+
+Microsoft 365 integration scans OneDrive, SharePoint, and Teams for security risks.
+
+### Prerequisites
+
+- Microsoft 365 administrator account
+- Azure AD Global Administrator or Application Administrator role
+- Microsoft 365 E3 or E5 license (recommended)
+
+### Integration steps
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Select **Add integration** > **Microsoft 365**.
+3. Select **Connect Microsoft 365**.
+4. Sign in with your Microsoft 365 administrator account.
+5. Review and accept the requested permissions.
+6. Select **Save integration**.
+
+CASB will begin scanning your Microsoft 365 environment immediately.
+
+### What CASB scans in Microsoft 365
+
+- **OneDrive**: Personal file storage for all users
+- **SharePoint**: Team sites and document libraries
+- **Teams**: Files shared in Teams channels
+- **User activity**: File access, sharing, and modifications
+
+For more information, refer to [Microsoft 365 CASB integration](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/).
+
+## Connect Google Workspace
+
+Google Workspace integration scans Google Drive and Gmail for security risks.
+
+### Prerequisites
+
+- Google Workspace administrator account
+- Super Admin role in Google Workspace
+- Google Workspace Business or Enterprise license
+
+### Integration steps
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Select **Add integration** > **Google Workspace**.
+3. Select **Connect Google Workspace**.
+4. Sign in with your Google Workspace administrator account.
+5. Review and accept the requested permissions.
+6. Select **Save integration**.
+
+### What CASB scans in Google Workspace
+
+- **Google Drive**: All files in user drives and shared drives
+- **Gmail**: Email attachments and content (if enabled)
+- **Sharing settings**: File and folder permissions
+- **Third-party apps**: OAuth applications with access to data
+
+For more information, refer to [Google Workspace CASB integration](/cloudflare-one/applications/scan-apps/casb-integrations/google-workspace/).
+
+## Connect Salesforce
+
+Salesforce integration scans for data exposure and security risks in your CRM.
+
+### Prerequisites
+
+- Salesforce administrator account
+- System Administrator profile
+- Salesforce Enterprise, Unlimited, or Performance edition
+
+### Integration steps
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Select **Add integration** > **Salesforce**.
+3. Follow the step-by-step instructions to create a Connected App in Salesforce.
+4. Enter the required credentials in Cloudflare.
+5. Select **Save integration**.
+
+For detailed instructions, refer to [Salesforce CASB integration](/cloudflare-one/applications/scan-apps/casb-integrations/salesforce/).
+
+## Connect ServiceNow
+
+ServiceNow integration scans incidents, records, and configurations for security risks.
+
+### Prerequisites
+
+- ServiceNow administrator account
+- Admin role in ServiceNow
+- ServiceNow Enterprise or higher
+
+### Integration steps
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Select **Add integration** > **ServiceNow**.
+3. Follow the step-by-step instructions to create an OAuth application in ServiceNow.
+4. Enter the required credentials in Cloudflare.
+5. Select **Save integration**.
+
+For detailed instructions, refer to [ServiceNow CASB integration](/cloudflare-one/applications/scan-apps/casb-integrations/servicenow/).
+
+## Connect AWS
+
+AWS integration scans S3 buckets and compute resources for security risks.
+
+### Prerequisites
+
+<Render file="cloudflare-one/casb/aws-compute-account" />
+
+### Integration steps
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Select **Add integration** > **AWS**.
+3. Follow the instructions to create an IAM role in AWS.
+4. Enter the role ARN in Cloudflare.
+5. Select **Save integration**.
+
+### What CASB scans in AWS
+
+- **S3 buckets**: Files and objects for sensitive data
+- **Bucket permissions**: Public access and misconfigured policies
+- **Compute resources**: EC2 instances, Lambda functions (coming soon)
+- **IAM policies**: Overly permissive access controls
+
+For more information, refer to [AWS CASB integration](/cloudflare-one/applications/scan-apps/casb-integrations/aws/).
+
+## Manage integrations
+
+### View integration status
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Review integration status:
+   - **Active**: Integration is scanning successfully
+   - **Error**: Integration encountered an issue
+   - **Paused**: Scanning is temporarily disabled
+
+### Pause an integration
+
+Temporarily stop scanning an application:
+
+1. Go to **CASB** > **Integrations**.
+2. Select **Configure** for the integration.
+3. Turn off **Scan for findings**.
+4. Select **Save integration**.
+
+### Update integration permissions
+
+If permissions change or expire:
+
+1. Go to **CASB** > **Integrations**.
+2. Select **Configure** for the integration.
+3. Select **Reconnect** or **Update permissions**.
+4. Re-authenticate and grant updated permissions.
+
+### Delete an integration
+
+:::caution
+Deleting an integration removes all scan data and cannot be undone.
+:::
+
+1. Go to **CASB** > **Integrations**.
+2. Select **Configure** for the integration.
+3. Select **Disenroll**.
+4. Confirm the deletion.
+
+## Scan frequency
+
+CASB automatically scans integrations at regular intervals:
+
+- **Microsoft 365**: Every 1-4 hours
+- **Google Workspace**: Every 1-4 hours
+- **Salesforce**: Every 24 hours
+- **ServiceNow**: Every 24 hours
+- **AWS**: Every 4-24 hours
+
+Scan frequency varies based on the application's API rate limits and the amount of data to scan.
+
+## Next steps
+
+With integrations connected, you can now:
+
+- Integrate DLP policies to scan for sensitive data at rest
+- Review and manage security findings
+- Monitor CASB analytics for security insights

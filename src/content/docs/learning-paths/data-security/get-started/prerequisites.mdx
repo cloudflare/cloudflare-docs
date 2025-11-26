@@ -1,0 +1,67 @@
+---
+title: Prerequisites
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+Before you begin implementing data security with Cloudflare One, review the following requirements and considerations.
+
+## Cloudflare account requirements
+
+- A Cloudflare account with Zero Trust enabled
+- Appropriate plan level for desired features:
+  - **Gateway**: Available on all Zero Trust plans
+  - **DLP**: Available on Enterprise plans
+  - **CASB**: Available on Enterprise plans
+  - **Browser Isolation**: Available on all Zero Trust plans (with feature limitations on lower tiers)
+
+## Identity provider
+
+You will need an identity provider (IdP) to authenticate users and enforce identity-based policies. Cloudflare integrates with:
+
+- Azure AD / Microsoft Entra ID
+- Okta
+- Google Workspace
+- OneLogin
+- Generic SAML 2.0 or OIDC providers
+
+## Network and device considerations
+
+### For data in transit protection (Gateway)
+
+- Ability to deploy the WARP client to user devices, or
+- Ability to configure DNS/proxy settings on devices or network equipment
+- Network connectivity to Cloudflare's global network
+- Ability to install and trust a root certificate on user devices (for TLS inspection)
+
+### For data at rest protection (CASB)
+
+- Administrator access to SaaS applications you want to scan
+- API access enabled for your SaaS applications
+- Appropriate permissions to create service accounts or OAuth applications
+
+### For data in use protection (Browser Isolation)
+
+- Modern web browsers (Chrome, Edge, Firefox, Safari)
+- For clientless isolation: No additional requirements
+- For client-based isolation: WARP client installed on devices
+
+## Technical knowledge
+
+This guide assumes familiarity with:
+
+- Basic networking concepts (DNS, HTTP/HTTPS, proxies)
+- Identity and access management
+- Your organization's SaaS application landscape
+- Security policy concepts
+
+## Planning considerations
+
+Before implementing data security, consider:
+
+- **Which data to protect first**: Identify your most sensitive data and highest-risk applications
+- **User impact**: Plan for user communication and training, especially for TLS inspection and application restrictions
+- **Phased rollout**: Consider starting with monitoring mode before enforcing blocking policies
+- **Compliance requirements**: Understand which regulations apply to your organization (GDPR, HIPAA, PCI DSS, etc.)
+- **Data localization**: Determine if you need to control where data is processed and stored

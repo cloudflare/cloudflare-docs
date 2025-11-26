@@ -1,0 +1,82 @@
+---
+title: Protect data at rest with CASB
+pcx_content_type: overview
+sidebar:
+  order: 5
+---
+
+import { Render } from "~/components";
+
+Data at rest refers to information stored in SaaS applications and cloud infrastructure. Cloudflare CASB (Cloud Access Security Broker) scans your cloud applications via API to identify security risks, misconfigurations, and sensitive data exposure.
+
+## Overview
+
+This module covers:
+
+- Understanding CASB security findings and scan types
+- Connecting SaaS applications (Microsoft 365, Google Workspace, Salesforce, ServiceNow)
+- Connecting cloud infrastructure (AWS)
+- Integrating DLP with CASB for data at rest scanning
+- Managing and remediating security findings
+- Monitoring CASB analytics and insights
+
+## Types of CASB findings
+
+CASB detects several categories of security risks:
+
+### Data loss prevention findings
+
+- Files containing sensitive data (credit cards, SSNs, PII, etc.)
+- Documents with DLP profile matches
+- Microsoft Information Protection labeled files
+- Exact Data Match detections in stored files
+
+### Security misconfigurations
+
+- Overly permissive sharing settings
+- Weak password policies
+- Missing multi-factor authentication
+- Insecure application settings
+
+### File exposure
+
+- Files shared publicly on the Internet
+- Files shared with external domains
+- Files with "anyone with link" access
+- Overly broad internal sharing
+
+### Shadow IT
+
+- Third-party applications with access to your data
+- Unauthorized OAuth applications
+- Risky application permissions
+- Suspicious application activity
+
+### User activity
+
+- Unusual file access patterns
+- Mass downloads or deletions
+- Suspicious login activity
+- Anomalous user behavior
+
+## Prerequisites
+
+<Render file="cloudflare-one/casb/integration-perms" />
+
+Before proceeding, ensure you have:
+
+- Completed the [Get started](/learning-paths/data-security/get-started/) module
+- Administrator access to SaaS applications you want to scan
+- API access enabled for your SaaS applications
+- Cloudflare Enterprise plan with CASB enabled
+
+## Objectives
+
+By the end of this module, you will be able to:
+
+- Understand the types of security findings CASB detects.
+- Connect SaaS applications and cloud infrastructure to CASB.
+- Integrate DLP policies with CASB for data at rest scanning.
+- Manage and remediate security findings.
+- Monitor CASB analytics to track security posture.
+- Configure automated remediation policies (coming 2025).

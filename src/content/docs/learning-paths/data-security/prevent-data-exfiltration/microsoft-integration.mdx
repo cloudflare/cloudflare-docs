@@ -1,0 +1,246 @@
+---
+title: Integrate with Microsoft Information Protection
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+---
+
+Microsoft Information Protection (MIP) integration allows you to enforce DLP policies based on sensitivity labels applied to files in Microsoft 365.
+
+## What is Microsoft Information Protection?
+
+Microsoft Information Protection (MIP) is a framework for classifying and protecting sensitive data using labels. Organizations use MIP to:
+
+- Apply sensitivity labels to documents and emails
+- Classify data based on content and context
+- Enforce protection policies based on labels
+- Track and control labeled content
+
+## Benefits of MIP integration
+
+**Consistent labeling:**
+
+- Users label content once in Microsoft 365
+- Labels are respected across Cloudflare Gateway and CASB
+- Unified data classification across platforms
+
+**Simplified policy management:**
+
+- Create DLP policies based on labels instead of content patterns
+- Leverage existing Microsoft 365 label taxonomy
+- Reduce complexity of DLP profile management
+
+**Enhanced protection:**
+
+- Protect labeled content even when accessed outside Microsoft 365
+- Enforce policies on labeled files uploaded to any application
+- Prevent label removal or downgrade
+
+## Prerequisites
+
+Before integrating MIP:
+
+- Microsoft 365 E3 or E5 license (or equivalent)
+- Microsoft Information Protection labels configured in Microsoft 365
+- Cloudflare Enterprise plan with DLP
+- Administrator access to both Microsoft 365 and Cloudflare Zero Trust
+
+## Configure MIP integration
+
+### Connect Microsoft 365 to Cloudflare
+
+The MIP integration is configured through CASB:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Select **Add integration** > **Microsoft 365**.
+3. Follow the authentication flow to connect your Microsoft 365 tenant.
+4. Grant the required permissions for MIP label access.
+
+For detailed instructions, refer to [Microsoft 365 CASB integration](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/).
+
+### Enable MIP label detection
+
+After connecting Microsoft 365:
+
+1. Go to **DLP** > **DLP Profiles**.
+2. Create a new profile or edit an existing one.
+3. Select **Add detection entry**.
+4. Choose **Microsoft Information Protection Label**.
+5. Select the labels you want to detect.
+6. Select **Add entry**.
+
+## Create label-based DLP policies
+
+### Block uploads of highly confidential files
+
+Prevent files labeled as "Highly Confidential" from being uploaded to non-Microsoft applications:
+
+1. Create a DLP profile:
+   - **Name**: Highly Confidential Files
+   - **Detection entry**: MIP Label is `Highly Confidential`
+2. Create a Gateway HTTP policy:
+   - **Name**: Block highly confidential uploads to non-Microsoft apps
+   - **Traffic**:
+     - Application is not `Microsoft 365`
+     - AND DLP Profile is `Highly Confidential Files`
+     - AND Upload Mime Type is in `All File Types`
+   - **Action**: Block
+
+### Isolate confidential files in external applications
+
+Allow access to confidential files but restrict actions:
+
+1. Create a DLP profile for confidential labels
+2. Create a Gateway HTTP policy:
+   - **Traffic**:
+     - DLP Profile is `Confidential Files`
+     - AND Application is not `Microsoft 365`
+   - **Action**: Isolate
+   - **Isolation settings**:
+     - Disable file downloads
+     - Disable copy/paste
+
+### Audit access to sensitive labeled content
+
+Monitor access to all labeled content:
+
+1. Create a DLP profile that includes all MIP labels
+2. Create a Gateway HTTP policy:
+   - **Traffic**: DLP Profile is `All MIP Labels`
+   - **Action**: Allow
+   - **Enable logging**: Yes
+
+## MIP label hierarchy
+
+Microsoft 365 labels can be organized hierarchically:
+
+```
+Confidential
+├── Confidential - Internal
+├── Confidential - Partners
+└── Confidential - Highly Restricted
+```
+
+### Detect parent and child labels
+
+When creating DLP policies, you can:
+
+- **Detect specific label**: Only match exact label
+- **Detect label and children**: Match label and all sub-labels
+
+**Example**: Detecting "Confidential" with children will match:
+
+- Confidential
+- Confidential - Internal
+- Confidential - Partners
+- Confidential - Highly Restricted
+
+## Limitations and considerations
+
+### Nested labels
+
+<Render file="cloudflare-one/dlp/mip-nested-labels-limitation" />
+
+### Label synchronization
+
+- Labels are synced when files are scanned by CASB or pass through Gateway
+- Label changes in Microsoft 365 may take time to propagate
+- Removed labels may still be cached temporarily
+
+### Supported file types
+
+MIP labels are supported for:
+
+- Microsoft Office files (Word, Excel, PowerPoint)
+- PDF files
+- Some other file formats with embedded labels
+
+### Performance
+
+- Label detection adds minimal latency
+- Large files may take longer to scan for labels
+- Consider file size limits for optimal performance
+
+## Combine MIP with content-based DLP
+
+Layer label-based and content-based detection for comprehensive protection:
+
+**Example: Comprehensive financial data profile**
+
+```
+Profile: Financial Data Protection
+Detection entries:
+  - MIP Label: "Confidential - Financial"
+  - Regex: Credit card pattern
+  - Regex: Bank account pattern
+  - Keyword: "financial", "banking"
+Match count: 1
+```
+
+This profile triggers if:
+
+- File has the "Confidential - Financial" label, OR
+- File contains credit card numbers, OR
+- File contains bank account numbers, OR
+- File contains financial keywords
+
+## Best practices
+
+### Label governance
+
+- Establish clear labeling guidelines for users
+- Train users on when and how to apply labels
+- Regularly audit label usage and compliance
+- Enforce labeling through Microsoft 365 policies
+
+### Policy design
+
+- Start with high-sensitivity labels (Highly Confidential, Restricted)
+- Gradually expand to medium and low-sensitivity labels
+- Use label-based policies for broad categories
+- Use content-based DLP for specific data patterns
+
+### Testing
+
+- Test label detection with sample labeled files
+- Verify labels are correctly identified in Gateway logs
+- Confirm policy actions work as expected
+- Validate user experience with labeled content
+
+### Monitoring
+
+- Track label distribution across your organization
+- Monitor policy violations by label type
+- Identify users who frequently trigger label-based policies
+- Review label effectiveness in preventing data loss
+
+## Troubleshooting
+
+**Labels not detected:**
+
+- Verify Microsoft 365 integration is active
+- Confirm labels are applied in Microsoft 365
+- Check that file types support embedded labels
+- Ensure TLS inspection is enabled for label scanning
+
+**Wrong labels detected:**
+
+- Verify label synchronization is complete
+- Check for label changes in Microsoft 365
+- Review label hierarchy configuration
+- Confirm detection entry is selecting correct labels
+
+**Performance issues:**
+
+- Limit label-based scanning to specific applications
+- Consider file size limits
+- Review number of labels being detected
+- Optimize policy ordering
+
+## Next steps
+
+With MIP integration configured, you can:
+
+- Apply comprehensive label-based data protection
+- Combine with CASB for data at rest protection
+- Monitor labeled content across all applications

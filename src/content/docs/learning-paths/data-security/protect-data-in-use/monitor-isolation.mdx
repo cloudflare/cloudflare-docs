@@ -1,0 +1,392 @@
+---
+title: Monitor isolation logs and activity
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+---
+
+Monitoring Browser Isolation logs helps you understand how users interact with isolated applications, identify potential security issues, and optimize isolation policies.
+
+## Access isolation logs
+
+### Gateway HTTP logs
+
+Browser Isolation activity is logged in Gateway HTTP logs:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway** > **HTTP**.
+2. Filter by **Action**: Isolate.
+3. Review isolation events showing:
+   - User identity
+   - Application accessed
+   - Timestamp
+   - Isolation settings applied
+   - Session duration
+
+### Access logs
+
+For clientless isolation applications:
+
+1. Go to **Logs** > **Access**.
+2. Filter by application name.
+3. Review access events showing:
+   - Authentication events
+   - Session start and end times
+   - User identity
+   - Access policy applied
+
+## Key metrics to monitor
+
+### Isolation usage
+
+**Total isolated sessions:**
+
+- How many isolation sessions are occurring
+- Trend over time (increasing or decreasing)
+- Breakdown by application
+
+**Most isolated applications:**
+
+- Which applications are isolated most frequently
+- User adoption of isolated applications
+- Potential candidates for policy adjustment
+
+**Users with most isolated sessions:**
+
+- Identify power users of isolated applications
+- Detect unusual usage patterns
+- Target for user feedback and training
+
+### Policy effectiveness
+
+**Blocked actions:**
+
+- Copy/paste attempts that were blocked
+- Download attempts that were blocked
+- Upload attempts that were blocked
+- Keyboard input attempts that were blocked
+
+**Session duration:**
+
+- Average time users spend in isolated sessions
+- Unusually long or short sessions
+- Patterns by application or user
+
+**Error rates:**
+
+- Isolation failures or errors
+- Application compatibility issues
+- User experience problems
+
+## Create log filters
+
+### Filter by application
+
+View isolation activity for specific applications:
+
+```
+Action: Isolate
+Application: ChatGPT
+Time range: Last 7 days
+```
+
+### Filter by user group
+
+Monitor contractor or BYOD isolation:
+
+```
+Action: Isolate
+User Group: Contractors
+Time range: Last 30 days
+```
+
+### Filter by isolation settings
+
+Find sessions with specific restrictions:
+
+```
+Action: Isolate
+Isolation setting: Copy/paste disabled
+Time range: Last 24 hours
+```
+
+### Filter by blocked actions
+
+Identify when users try to bypass restrictions:
+
+```
+Action: Isolate
+Event: Copy blocked
+OR Event: Download blocked
+Time range: Last 7 days
+```
+
+## Analyze isolation patterns
+
+### Identify user frustration
+
+Look for signs that isolation is too restrictive:
+
+- **High frequency of blocked actions**: Users repeatedly trying to copy/paste or download
+- **Short session durations**: Users giving up quickly
+- **Decreased application usage**: Users avoiding isolated applications
+- **Support tickets**: Users requesting exceptions or reporting issues
+
+### Detect security risks
+
+Monitor for concerning behavior:
+
+- **Unusual access patterns**: Access at odd hours or from unusual locations
+- **Mass data access**: Viewing large numbers of files or records
+- **Repeated policy violations**: Persistent attempts to bypass restrictions
+- **Suspicious applications**: Access to risky or unknown applications
+
+### Optimize policies
+
+Use logs to improve isolation policies:
+
+- **False positives**: Legitimate actions being blocked unnecessarily
+- **Gaps in coverage**: Applications that should be isolated but are not
+- **Overly restrictive**: Settings that prevent legitimate work
+- **Underutilized features**: Isolation capabilities not being used
+
+## Alerting and notifications
+
+### Create alerts for critical events
+
+Set up alerts for important isolation events:
+
+**High-risk user accessing isolated applications:**
+
+```
+Condition: User Group is "Executives" AND Action is "Isolate"
+Alert: Notify security team
+Frequency: Real-time
+```
+
+**Multiple blocked actions:**
+
+```
+Condition: Blocked actions > 10 in 1 hour for single user
+Alert: Notify security team
+Frequency: Hourly
+```
+
+**Isolation failures:**
+
+```
+Condition: Isolation error occurred
+Alert: Notify IT team
+Frequency: Real-time
+```
+
+### Configure notification channels
+
+Send alerts through:
+
+- Email to security team
+- Slack or Teams channels
+- PagerDuty or other incident management systems
+- SIEM integration for correlation with other events
+
+## Reporting
+
+### Daily isolation summary
+
+Create a daily report showing:
+
+- Total isolated sessions
+- Top isolated applications
+- Users with most isolation activity
+- Blocked actions summary
+- Any errors or issues
+
+### Weekly security review
+
+Generate a weekly report for security team:
+
+- Isolation policy effectiveness
+- User behavior trends
+- Security incidents related to isolation
+- Policy violations and remediation
+- Recommendations for policy adjustments
+
+### Monthly executive summary
+
+Provide high-level metrics for leadership:
+
+- Isolation adoption and usage
+- Data protection effectiveness
+- User impact and satisfaction
+- Cost savings vs. alternative solutions
+- Strategic recommendations
+
+## Integration with SIEM
+
+### Send isolation logs to SIEM
+
+Configure Logpush to send isolation logs to your SIEM:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
+2. Create a Logpush job for Gateway HTTP logs.
+3. Configure filters to include isolation events.
+4. Set destination (Splunk, Datadog, S3, etc.).
+
+For more information, refer to [Logpush](/cloudflare-one/insights/logs/logpush/).
+
+### SIEM use cases
+
+**Correlate isolation with other events:**
+
+- Link isolation activity to identity provider logs
+- Correlate with endpoint security events
+- Connect to DLP policy violations
+- Associate with CASB findings
+
+**Advanced analytics:**
+
+- Machine learning for anomaly detection
+- User behavior analytics (UBA)
+- Risk scoring based on isolation patterns
+- Predictive threat detection
+
+**Automated response:**
+
+- Trigger additional authentication for suspicious activity
+- Automatically adjust isolation settings based on risk
+- Create security incidents for investigation
+- Block users exhibiting malicious behavior
+
+## Use Log Explorer
+
+For ad-hoc analysis without a SIEM:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Log Explorer**.
+2. Query isolation logs using SQL-like syntax:
+
+```sql
+SELECT
+  user_email,
+  application,
+  COUNT(*) as session_count,
+  SUM(CASE WHEN action_blocked THEN 1 ELSE 0 END) as blocked_actions
+FROM gateway_http
+WHERE action = 'isolate'
+  AND timestamp > NOW() - INTERVAL '7 days'
+GROUP BY user_email, application
+ORDER BY blocked_actions DESC
+```
+
+For more information, refer to [Log Explorer](/cloudflare-one/insights/logs/log-explorer/).
+
+## Privacy considerations
+
+### Clipboard logging
+
+If clipboard logging is enabled:
+
+- **What is logged**: Text that users attempt to copy from isolated sessions
+- **Privacy concern**: May capture sensitive or personal information
+- **Best practice**:
+  - Only enable for high-risk scenarios
+  - Limit access to clipboard logs
+  - Establish retention policies
+  - Inform users about clipboard logging
+
+### Session recording
+
+If session recording is enabled (future feature):
+
+- **What is recorded**: Visual recording of isolated sessions
+- **Privacy concern**: Captures all user activity in detail
+- **Best practice**:
+  - Only enable for specific high-risk applications or users
+  - Establish clear policies on recording
+  - Inform users about recording
+  - Limit access to recordings
+  - Define retention and deletion policies
+
+### Compliance
+
+Ensure logging practices comply with:
+
+- **GDPR**: User consent and data minimization
+- **CCPA**: User notification and data access rights
+- **Industry regulations**: HIPAA, PCI DSS, etc.
+- **Company policies**: Employee monitoring policies
+
+## Troubleshooting with logs
+
+### Isolation not working
+
+Check logs for:
+
+- Policy evaluation results
+- Isolation activation events
+- Error messages
+- Application compatibility issues
+
+### Performance issues
+
+Review logs for:
+
+- Session latency metrics
+- Connection errors
+- Timeout events
+- Resource utilization
+
+### User complaints
+
+Investigate by:
+
+- Reviewing specific user's isolation sessions
+- Checking for blocked actions
+- Identifying application-specific issues
+- Comparing to other users' experiences
+
+## Best practices
+
+### Regular log reviews
+
+Establish a cadence:
+
+- **Daily**: Quick review of critical alerts and errors
+- **Weekly**: Detailed analysis of isolation patterns and trends
+- **Monthly**: Comprehensive review and policy optimization
+- **Quarterly**: Strategic assessment and planning
+
+### Retention policies
+
+Define how long to retain logs:
+
+- **Active logs**: 30-90 days for operational use
+- **Archived logs**: 1-7 years for compliance
+- **Sensitive logs**: Shorter retention with strict access controls
+- **Compliance logs**: Retention based on regulatory requirements
+
+### Access controls
+
+Limit who can view isolation logs:
+
+- **Security team**: Full access to all logs
+- **IT team**: Access to troubleshooting logs
+- **Managers**: Access to team-level summaries
+- **Audit**: Read-only access for compliance reviews
+
+### Documentation
+
+Document your logging practices:
+
+- What is logged and why
+- How logs are used
+- Who has access to logs
+- Retention and deletion policies
+- Privacy and compliance considerations
+
+## Next steps
+
+With isolation monitoring established, you have completed the data security implementation guide. You can now:
+
+- Continuously monitor and optimize all data protection policies
+- Expand coverage to additional applications and use cases
+- Integrate data security insights into broader security strategy
+- Measure and report on data protection effectiveness

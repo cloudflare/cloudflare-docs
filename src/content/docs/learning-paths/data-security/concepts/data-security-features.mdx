@@ -1,0 +1,147 @@
+---
+title: What data security features does Cloudflare provide?
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+import { GlossaryDefinition } from "~/components";
+
+Review the key Cloudflare products and features that protect your organization's data.
+
+## What is a secure web gateway (SWG)?
+
+A secure web gateway (SWG) is a cybersecurity product that protects company data and enforces security policies by filtering Internet traffic.
+
+<GlossaryDefinition term="Cloudflare Gateway" />
+
+Gateway inspects traffic in real-time as data moves through your network, allowing you to:
+
+- Filter DNS, HTTP, and network traffic
+- Apply data loss prevention policies inline
+- Block or isolate risky applications
+- Enforce tenant controls for SaaS applications
+- Log all traffic for security analytics
+
+For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) and [Gateway documentation](/cloudflare-one/traffic-policies/).
+
+## What is data loss prevention (DLP)?
+
+Data loss prevention checks for sensitive data in uploads, downloads, and stored files to prevent unauthorized disclosure.
+
+<GlossaryDefinition term="Cloudflare Data Loss Prevention (DLP)" />
+
+Cloudflare DLP works in two modes:
+
+- **Inline DLP**: Scans data in transit through Gateway to detect and block sensitive information in real-time
+- **API-based DLP**: Scans data at rest in SaaS applications through CASB integrations
+
+DLP capabilities include:
+
+- Predefined profiles for common data types (credit cards, social security numbers, etc.)
+- Custom profiles with regular expressions and keyword matching
+- Exact Data Match (EDM) for specific datasets
+- Optical Character Recognition (OCR) for text in images
+- Context analysis to reduce false positives
+
+For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-dlp/) and [DLP documentation](/cloudflare-one/data-loss-prevention/).
+
+## What is a cloud access security broker (CASB)?
+
+A cloud access security broker protects cloud services from security threats by scanning SaaS applications and cloud storage for risks.
+
+<GlossaryDefinition term="Cloudflare CASB" />
+
+Cloudflare CASB connects to your SaaS applications via API to:
+
+- Scan files for sensitive data at rest
+- Identify security misconfigurations
+- Detect publicly exposed files
+- Discover third-party application access
+- Monitor for suspicious activity
+- Surface shadow IT within SaaS platforms
+
+CASB integrations are available for:
+
+- Microsoft 365 (OneDrive, SharePoint, Teams)
+- Google Workspace (Drive, Gmail)
+- Salesforce
+- ServiceNow
+- AWS
+- And more
+
+For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) and [CASB documentation](/cloudflare-one/applications/scan-apps/).
+
+## What is browser isolation?
+
+Browser isolation protects data in use by rendering web pages in a remote browser and streaming only safe visual content to users.
+
+<GlossaryDefinition term="Cloudflare Browser Isolation" />
+
+Browser Isolation allows you to:
+
+- Control user interactions with web applications (disable copy/paste, downloads, keyboard input)
+- Isolate risky or unknown websites
+- Provide secure access to applications without requiring a device client (clientless access)
+- Protect against web-based threats while maintaining user productivity
+- Secure contractor and BYOD access to sensitive applications
+
+Browser Isolation can be deployed in two modes:
+
+- **Client-based isolation**: Requires WARP client for full Internet browsing isolation
+- **Clientless isolation**: Provides browser-based access to specific applications without a device client
+
+For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-browser-isolation/) and [Browser Isolation documentation](/cloudflare-one/remote-browser-isolation/).
+
+## What is HTTPS inspection?
+
+HTTPS inspection (also known as TLS decryption) is the process of decrypting HTTPS traffic, inspecting it for threats or policy violations, and re-encrypting it before sending it to its destination.
+
+Without HTTPS inspection, encrypted traffic cannot be scanned for sensitive data or security threats. Gateway performs HTTPS inspection by:
+
+1. Intercepting HTTPS connections from user devices
+2. Decrypting the traffic using a Cloudflare-issued certificate
+3. Applying security policies and DLP scanning
+4. Re-encrypting the traffic before forwarding it
+
+For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/security/what-is-https-inspection/) and [TLS decryption documentation](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+
+## What is Zero Trust Network Access (ZTNA)?
+
+Zero Trust Network Access provides secure access to private applications and networks based on user identity and device posture, without exposing resources to the Internet.
+
+While ZTNA is primarily used for application access, it plays a role in data security by:
+
+- Enforcing identity-based access controls
+- Requiring device posture checks before granting access
+- Logging all access attempts for audit purposes
+- Integrating with DLP policies to protect data in private applications
+
+For more information, refer to the [ZTNA documentation](/cloudflare-one/connections/connect-networks/) and [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
+
+## What is the WARP client?
+
+The WARP client is a lightweight agent that runs on user devices to route traffic through Cloudflare's network for inspection and policy enforcement.
+
+WARP enables:
+
+- Secure web gateway functionality for roaming users
+- TLS inspection of encrypted traffic
+- Device posture checks
+- Split tunneling to route only specific traffic through Cloudflare
+- Integration with identity providers for user-based policies
+
+For more information, refer to the [WARP client documentation](/cloudflare-one/connections/connect-devices/warp/).
+
+## What is Cloud App Control?
+
+Cloud App Control (coming June/July 2025) provides granular control over user actions within specific SaaS applications.
+
+This feature will allow you to:
+
+- Control specific actions within applications (for example, restrict file sharing in Google Drive)
+- Apply policies based on application context
+- Enforce different controls for different user groups
+- Monitor and log application-specific activities
+
+More information will be available as this feature approaches release.

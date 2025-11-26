@@ -1,0 +1,74 @@
+---
+title: Deploy the WARP client
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+The WARP client routes traffic from user devices through Cloudflare's network for inspection and policy enforcement.
+
+## Install WARP on devices
+
+<Render file="cloudflare-one/warp/install-warp" />
+
+## Configure WARP settings
+
+After deploying WARP, configure settings appropriate for data protection:
+
+### Device enrollment
+
+<Render file="cloudflare-one/warp/device-enrollment" />
+
+### Split tunneling
+
+Configure which traffic routes through Cloudflare:
+
+<Render file="cloudflare-one/warp/split-tunnel-intro" />
+
+For data protection, consider:
+
+- **Include mode**: Route only specific applications or domains through Cloudflare (recommended for initial deployments)
+- **Exclude mode**: Route all traffic except specified applications through Cloudflare (recommended for comprehensive protection)
+
+For more information, refer to [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+
+### Local Domain Fallback
+
+Configure Local Domain Fallback if you need to resolve internal domain names:
+
+<Render file="cloudflare-one/warp/local-domain-fallback" />
+
+## Deploy at scale
+
+For enterprise deployments, use device management tools to deploy WARP:
+
+- [Deploy WARP with Intune](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/intune/)
+- [Deploy WARP with Jamf](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/jamf/)
+- [Deploy WARP with other MDM providers](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/)
+
+## Verify WARP deployment
+
+Confirm that WARP is working correctly:
+
+1. Check that the WARP client shows as **Connected** on user devices.
+2. Visit [https://help.teams.cloudflare.com/](https://help.teams.cloudflare.com/) to verify the device is connected to your Zero Trust organization.
+3. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices** to see enrolled devices.
+
+## Troubleshooting
+
+If users experience connectivity issues:
+
+- Verify the Cloudflare certificate is installed and trusted
+- Check split tunneling configuration
+- Review firewall rules to ensure Cloudflare IPs are allowed
+- Consult [WARP troubleshooting](/cloudflare-one/connections/connect-devices/warp/troubleshooting/)
+
+## Next steps
+
+With WARP deployed, you can now:
+
+- Analyze traffic patterns in Gateway Analytics
+- Build HTTP policies based on observed usage
+- Apply DLP policies to protect sensitive data

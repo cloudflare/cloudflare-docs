@@ -1,0 +1,91 @@
+---
+title: Analyze traffic and discover shadow IT
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+Before building data protection policies, analyze your traffic to understand what applications users are accessing and where sensitive data may be at risk.
+
+## Gateway Analytics
+
+Gateway Analytics provides visibility into all traffic flowing through your network.
+
+### Access Gateway Analytics
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics** > **Gateway**.
+2. Review the available dashboards:
+   - **Overview**: High-level traffic statistics
+   - **DNS**: DNS query patterns and blocked requests
+   - **HTTP**: Web traffic, application usage, and policy actions
+   - **Network**: Layer 4 traffic patterns
+
+### Key metrics to review
+
+When planning data protection policies, focus on:
+
+- **Top applications**: Which SaaS applications are most used
+- **Top categories**: What types of sites users access (Cloud Storage, Collaboration, AI, etc.)
+- **Blocked requests**: What is already being blocked by existing policies
+- **File uploads/downloads**: Where data is being transferred
+- **Risky categories**: Access to potentially dangerous or policy-violating sites
+
+## Shadow IT Discovery
+
+Shadow IT Discovery helps identify unsanctioned applications and services being used across your organization.
+
+### Access Shadow IT Discovery
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics** > **Gateway** > **Shadow IT Discovery**.
+2. Review discovered applications organized by:
+   - **Risk level**: High, medium, or low risk applications
+   - **Category**: Application type (Cloud Storage, Collaboration, AI, etc.)
+   - **Usage**: Number of users and requests
+
+### Identify high-risk applications
+
+Look for:
+
+- **Personal cloud storage**: Dropbox, personal Google Drive, personal OneDrive
+- **Unsanctioned AI tools**: ChatGPT, Claude, Gemini, and other AI services
+- **File sharing services**: WeTransfer, SendAnywhere, and similar services
+- **Personal communication tools**: Personal Slack workspaces, Discord, Telegram
+- **Code repositories**: Personal GitHub, GitLab, or Bitbucket accounts
+
+### Assess application risk
+
+For each discovered application, consider:
+
+- **Data sensitivity**: What type of data might be shared with this application?
+- **User count**: How many users are accessing this application?
+- **Business justification**: Is there a legitimate business need for this application?
+- **Corporate alternative**: Do you offer an approved alternative?
+- **Compliance impact**: Does this application create compliance risks?
+
+## Plan your policy strategy
+
+Based on your traffic analysis, determine:
+
+1. **Which applications to block entirely**: High-risk applications with no business justification
+2. **Which applications to isolate**: Applications that may be needed but require restrictions (for example, AI tools with copy/paste disabled)
+3. **Which applications need tenant controls**: SaaS applications where users should only access corporate instances
+4. **Which applications need DLP policies**: Applications where sensitive data may be uploaded or downloaded
+5. **Which data types to protect**: Credit cards, SSNs, source code, PHI, PII, etc.
+
+## Document your findings
+
+Create a prioritized list of actions:
+
+- **Immediate blocks**: Applications that pose unacceptable risk
+- **Tenant controls**: Corporate vs. personal SaaS instances
+- **DLP policies**: Data types and applications to monitor
+- **Isolation policies**: Applications to isolate with restrictions
+- **User communication**: What users need to know about policy changes
+
+## Next steps
+
+With traffic analysis complete, you can now:
+
+- Build baseline HTTP policies to control application access
+- Implement tenant controls for SaaS applications
+- Create DLP policies based on observed data flows

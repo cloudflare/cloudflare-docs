@@ -1,0 +1,343 @@
+---
+title: Monitor CASB analytics
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+---
+
+CASB analytics provide insights into your organization's security posture, data exposure risks, and remediation progress.
+
+## Access CASB analytics
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Analytics**.
+2. Review the analytics dashboard showing:
+   - Findings over time
+   - Findings by severity
+   - Findings by category
+   - Findings by integration
+   - Remediation trends
+
+## Key metrics
+
+### Findings overview
+
+**Total findings:**
+
+- Current number of open findings
+- Trend over time (increasing or decreasing)
+- Comparison to previous periods
+
+**Findings by severity:**
+
+- Critical findings requiring immediate attention
+- High-severity findings needing prompt remediation
+- Medium and low-severity findings for ongoing improvement
+
+**Findings by category:**
+
+- DLP findings (sensitive data exposure)
+- File exposure findings (sharing misconfigurations)
+- Security misconfigurations
+- Shadow IT discoveries
+- User activity anomalies
+
+### Remediation metrics
+
+**Mean time to remediate (MTTR):**
+
+- Average time from finding discovery to resolution
+- Broken down by severity level
+- Trend over time
+
+**Remediation rate:**
+
+- Percentage of findings resolved within SLA
+- Comparison across different finding types
+- Team performance metrics
+
+**Finding recurrence:**
+
+- How often the same issues reoccur
+- Indicates need for policy changes or user training
+- Tracks effectiveness of remediation efforts
+
+### Data exposure metrics
+
+**Publicly shared files:**
+
+- Number of files accessible on the Internet
+- Trend over time
+- Files containing sensitive data
+
+**Externally shared files:**
+
+- Files shared with external domains
+- Breakdown by external domain
+- Risk assessment by sharing scope
+
+**Shadow IT applications:**
+
+- Number of third-party apps with access to data
+- Risk level distribution
+- Most common unauthorized applications
+
+## Analytics dashboards
+
+### Security posture dashboard
+
+View your overall security posture:
+
+1. Go to **CASB** > **Analytics** > **Security Posture**.
+2. Review:
+   - Security score (0-100)
+   - Score trend over time
+   - Top security risks
+   - Recommended actions
+
+### Data exposure dashboard
+
+Understand where your data is exposed:
+
+1. Go to **CASB** > **Analytics** > **Data Exposure**.
+2. Review:
+   - Files shared publicly
+   - Files shared externally
+   - Most exposed data types
+   - Users with most exposed files
+
+### Shadow IT dashboard
+
+Discover unauthorized applications:
+
+1. Go to **CASB** > **Analytics** > **Shadow IT**.
+2. Review:
+   - Discovered third-party applications
+   - Application risk levels
+   - Applications by category
+   - Users with most third-party app connections
+
+### User risk dashboard
+
+Identify high-risk user behavior:
+
+1. Go to **CASB** > **Analytics** > **User Risk**.
+2. Review:
+   - Users with most findings
+   - Users with highest-severity findings
+   - Unusual user activity patterns
+   - Users requiring additional training
+
+## Custom reports
+
+### Create custom reports
+
+Build reports for specific use cases:
+
+1. Go to **CASB** > **Analytics** > **Reports**.
+2. Select **Create report**.
+3. Configure report parameters:
+   - **Metrics**: Choose which data to include
+   - **Filters**: Narrow scope (integration, severity, date range)
+   - **Grouping**: Organize by category, user, application, etc.
+   - **Visualization**: Choose chart types
+4. Select **Save report**.
+
+### Schedule reports
+
+Automate report delivery:
+
+1. Create or edit a report.
+2. Select **Schedule**.
+3. Configure schedule:
+   - **Frequency**: Daily, weekly, monthly
+   - **Recipients**: Email addresses
+   - **Format**: PDF, CSV, JSON
+4. Select **Save schedule**.
+
+### Export data
+
+Export analytics data for external analysis:
+
+1. Go to **CASB** > **Analytics**.
+2. Select the data to export.
+3. Choose export format:
+   - **CSV**: For spreadsheet analysis
+   - **JSON**: For programmatic processing
+   - **PDF**: For sharing reports
+4. Select **Export**.
+
+## Integration with SIEM
+
+Send CASB findings and analytics to your Security Information and Event Management (SIEM) system.
+
+### Configure Logpush for CASB
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
+2. Select **Create Logpush job**.
+3. Configure the job:
+   - **Dataset**: CASB findings
+   - **Destination**: Your SIEM (Splunk, Datadog, S3, etc.)
+   - **Frequency**: Real-time or batch
+4. Select **Create job**.
+
+For more information, refer to [Logpush](/cloudflare-one/insights/logs/logpush/).
+
+### SIEM use cases
+
+**Correlate CASB with other security events:**
+
+- Link CASB findings to Gateway policy violations
+- Correlate with identity provider logs
+- Connect to endpoint security events
+
+**Advanced analytics:**
+
+- Machine learning for anomaly detection
+- Predictive risk scoring
+- Behavioral analysis across multiple data sources
+
+**Automated response:**
+
+- Trigger automated remediation workflows
+- Create security incident tickets
+- Alert security team based on correlation rules
+
+## Trending and forecasting
+
+### Identify trends
+
+Look for patterns in your analytics:
+
+**Positive trends:**
+
+- Decreasing number of findings over time
+- Improving MTTR
+- Reduced finding recurrence
+- Better security scores
+
+**Negative trends:**
+
+- Increasing number of findings
+- Growing MTTR
+- High finding recurrence
+- Declining security scores
+
+### Root cause analysis
+
+When negative trends appear:
+
+1. **Identify the pattern**: What type of findings are increasing?
+2. **Determine the cause**:
+   - New users or applications?
+   - Policy changes?
+   - Lack of training?
+   - Systemic issues?
+3. **Take corrective action**:
+   - Update policies
+   - Provide user training
+   - Implement technical controls
+   - Change processes
+
+### Forecast future risks
+
+Use historical data to predict future security risks:
+
+- Estimate future finding volumes based on growth trends
+- Predict resource needs for remediation
+- Identify seasonal patterns in security incidents
+- Plan proactive security improvements
+
+## Benchmarking
+
+### Internal benchmarking
+
+Compare performance across:
+
+- **Departments**: Which teams have the best security posture?
+- **Applications**: Which SaaS apps have the most findings?
+- **Time periods**: Are we improving month over month?
+- **Finding types**: Which categories are we best at remediating?
+
+### Industry benchmarking
+
+Compare your metrics to industry standards:
+
+- Average MTTR for similar organizations
+- Typical finding volumes by industry
+- Common security posture scores
+- Best-in-class remediation rates
+
+## Reporting to stakeholders
+
+### Executive dashboards
+
+Create high-level dashboards for leadership:
+
+- **Security posture score**: Single metric showing overall health
+- **Critical findings**: Number requiring immediate attention
+- **Trend indicators**: Improving or declining security
+- **Business impact**: Potential risks and costs
+
+### Compliance reports
+
+Generate reports for compliance requirements:
+
+- **Data inventory**: Where sensitive data is stored
+- **Access controls**: Who has access to what data
+- **Remediation evidence**: Actions taken to address findings
+- **Audit trail**: Complete history of findings and resolutions
+
+### Team performance reports
+
+Track team effectiveness:
+
+- **Findings assigned vs. resolved**: Team workload and capacity
+- **MTTR by team member**: Individual performance
+- **Finding quality**: False positive rates
+- **Trend improvement**: Team impact on security posture
+
+## Best practices
+
+### Regular review cadence
+
+Establish a schedule for reviewing analytics:
+
+- **Daily**: Quick check of critical findings and trends
+- **Weekly**: Detailed review of new findings and remediation progress
+- **Monthly**: Comprehensive analysis and reporting
+- **Quarterly**: Strategic review and planning
+
+### Set baselines and goals
+
+Establish targets for improvement:
+
+- **MTTR goal**: For example, reduce from 7 days to 3 days
+- **Finding reduction**: For example, reduce total findings by 25%
+- **Security score goal**: For example, achieve score of 85+
+- **Recurrence goal**: For example, reduce recurrence rate to under 5%
+
+### Use data to drive decisions
+
+Let analytics inform your security strategy:
+
+- Prioritize investments based on highest-risk areas
+- Allocate resources to areas with most findings
+- Focus training on users with most violations
+- Adjust policies based on effectiveness data
+
+### Share insights broadly
+
+Communicate analytics findings:
+
+- Share security posture updates with leadership
+- Provide team-specific metrics to managers
+- Educate users on common security risks
+- Celebrate improvements and successes
+
+## Next steps
+
+With CASB analytics monitoring established, you can now:
+
+- Implement data in use protection with Browser Isolation
+- Integrate CASB insights into broader security strategy
+- Continuously improve data security posture based on metrics

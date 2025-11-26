@@ -1,0 +1,109 @@
+---
+title: Protect data in use with Browser Isolation
+pcx_content_type: overview
+sidebar:
+  order: 6
+---
+
+import { Render } from "~/components";
+
+Data in use refers to information being actively viewed, processed, or modified by users. Browser Isolation protects data in use by controlling how users interact with web applications, preventing data exfiltration through copy/paste, downloads, and other user actions.
+
+## Overview
+
+This module covers:
+
+- Understanding Browser Isolation modes (clientless and client-based)
+- Configuring Browser Isolation for data protection
+- Controlling user interactions (copy/paste, downloads, keyboard input)
+- Isolating AI applications to prevent data leakage
+- Securing contractor and BYOD access
+- Monitoring isolation logs and user activity
+
+## Browser Isolation modes
+
+### Clientless web isolation
+
+<Render file="cloudflare-one/clientless-browser-isolation" />
+
+**Use cases:**
+
+- Secure access to specific internal applications
+- Contractor access without device client
+- BYOD scenarios
+- Temporary access for partners
+
+**Example**: Isolate Salesforce access for contractors, restricting copy/paste and file downloads to protect customer data.
+
+### Client-based isolation
+
+Requires WARP client for full Internet browsing isolation.
+
+**Use cases:**
+
+- Isolate all web browsing for high-risk users
+- Protect against phishing and malware
+- Control data interactions across all websites
+- Isolate AI applications with restrictions
+
+**Example**: Isolate ChatGPT for all users, disabling copy/paste to prevent sensitive data uploads while allowing general use.
+
+## Common use cases
+
+### Isolate AI applications
+
+Prevent sensitive data from being shared with generative AI tools:
+
+- Allow access to AI tools through isolation
+- Disable copy/paste to prevent data uploads
+- Disable keyboard input for highly sensitive environments
+- Apply DLP policies to detect sensitive data in AI interactions
+
+### Secure CRM and customer data access
+
+Protect sensitive customer information:
+
+- Isolate Salesforce, HubSpot, or other CRM systems
+- Restrict copy/paste of customer data
+- Disable file downloads containing customer information
+- Control access for contractors and temporary workers
+
+### Contractor and BYOD access
+
+Provide secure access without trusting devices:
+
+- Grant access to internal applications without VPN
+- Restrict data exfiltration capabilities
+- Prevent malware from unmanaged devices
+- Maintain audit trail of all access
+
+### Phishing protection
+
+Isolate suspicious or unknown websites:
+
+- Automatically isolate sites suspected of phishing
+- Prevent keyboard input on untrusted sites
+- Block file downloads from risky sites
+- Protect against drive-by downloads
+
+## Prerequisites
+
+<Render file="cloudflare-one/gateway/gateway-prereqs" />
+
+Before proceeding, ensure you have:
+
+- Completed the [Get started](/learning-paths/data-security/get-started/) module
+- For client-based isolation: WARP client deployed to devices
+- For clientless isolation: No additional requirements
+- Identified which applications to isolate
+
+## Objectives
+
+By the end of this module, you will be able to:
+
+- Understand the difference between clientless and client-based isolation.
+- Configure Browser Isolation for data protection use cases.
+- Control user interactions with isolated applications.
+- Isolate AI applications to prevent data leakage.
+- Secure contractor and BYOD access to sensitive applications.
+- Monitor isolation logs and user activity.
