@@ -87,15 +87,12 @@ export default class extends WorkerEntrypoint<Env> {
 			request.headers.get("accept")?.includes("text/html")
 		) {
 			try {
-				// Parse the incoming request URL
-				const url = new URL(request.url);
-				const params = url.search; // Get the query parameters
+				// Forward the request to the target server
 				const userAgent = request.headers.get("User-Agent") || ""; // Get the userAgent of the URL
 				const outgoingHeaders = new Headers();
 				outgoingHeaders.append("User-Agent", userAgent);
-				// Forward the request to the target server
 				const response = await fetch(
-					"https://developers.cloudflare.com" + pathname + params,
+					"https://developers.cloudflare.com" + pathname,
 					{
 						headers: outgoingHeaders,
 						cf: {
@@ -130,6 +127,15 @@ export default class extends WorkerEntrypoint<Env> {
 					},
 				);
 			}
+		} else if (
+			pathname.startsWith("/es-la/fundamentals/") &&
+			request.headers.get("accept")?.includes("text/css")
+		) {
+			const url = new URL(request.url);
+			const targetPath = "/es-la";
+			url.pathname = url.pathname.replace(targetPath, "");
+			const newRequest = new Request(url.toString(), request);
+			return fetch(newRequest);
 		}
 
 		try {
