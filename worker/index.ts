@@ -67,14 +67,13 @@ export default class extends WorkerEntrypoint<Env> {
 				try {
 					// Parse the incoming request URL
 					const url = new URL(request.url);
-					const path = url.pathname; // Get the path of the URL
 					const params = url.search; // Get the query parameters
 					const userAgent = request.headers.get("User-Agent") || ""; // Get the userAgent of the URL
 					const outgoingHeaders = new Headers();
 					outgoingHeaders.append("User-Agent", userAgent);
 					// Forward the request to the target server
 					const response = await fetch(
-						"https://developers.cloudflare.com" + path + params,
+						"https://developers.cloudflare.com" + pathname + params,
 						{
 							headers: outgoingHeaders,
 							cf: {
