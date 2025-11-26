@@ -24,6 +24,7 @@ export async function getSidebar(context: AstroGlobal) {
 	const segments = pathname.split("/").filter(Boolean);
 
 	let product;
+	console.log(segments);
 
 	if (pathname.startsWith("/es-la/")) {
 		product = segments.at(1);

@@ -5,9 +5,10 @@ import { Icon as AstroIcon } from "astro-icon/components";
 import { lookupProductTitle } from "~/util/sidebar";
 
 let [product, module] = Astro.url.pathname.split("/").filter(Boolean);
+let _;
 
-if (Astro.url.pathname.startsWith("/es-la/fundamentals")) {
-	product = "fundamentals";
+if (Astro.url.pathname.startsWith("/es-la/")) {
+	[_, product, module] = Astro.url.pathname.split("/").filter(Boolean);
 }
 ---
 
