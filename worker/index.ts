@@ -93,7 +93,9 @@ export default class extends WorkerEntrypoint<Env> {
 				outgoingHeaders.append("User-Agent", userAgent);
 				// Forward the request to the target server
 				const response = await fetch(
-					"https://developers.cloudflare.com" + pathname + params,
+					"https://esla-translation.preview.developers.cloudflare.com" +
+						pathname +
+						params,
 					{
 						headers: outgoingHeaders,
 						cf: {
