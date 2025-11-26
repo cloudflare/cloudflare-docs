@@ -11,7 +11,7 @@ The latest release of [@cloudflare/agents](https://github.com/cloudflare/agents)
 
 ### Resumable streaming
 
-You can now enable resumable streaming allowing clients to reconnect and continue receiving streamed responses without losing data. This is particularly useful for long-running AI responses or unreliable network conditions.
+`AIChatAgent` now supports resumable streaming, which maintains streams across page refreshes, broken connections, or syncing across open tabs and devices.
 
 ### MCP client API improvements
 
@@ -19,7 +19,6 @@ The `MCPClientManager` API has been redesigned for better clarity and control:
 
 - **New `registerServer()` method**: Register MCP servers without immediately connecting
 - **New `connectToServer()` method**: Establish connections to registered servers
-- **Connection state observability**: New `onServerStateChanged()` event for tracking all server state changes
 - **Improved reconnect logic**: `restoreConnectionsFromStorage()` now properly handles failed connections
 
 ```ts
@@ -52,7 +51,6 @@ The `MCPClientConnection` class now includes a dedicated `discover()` method wit
 
 - Default JSON schema validator added to MCP client for better request validation
 - Internal AI SDK stream events now convert to UIMessageStreamPart format for improved compatibility
-- MCP server requests now use `relatedRequestId` in TransportOptions to send responses down POST streams when supported
 - The SSE transport now properly forwards session IDs and request headers to MCP message handlers
 - Schedules can now safely destroy the agent
 
