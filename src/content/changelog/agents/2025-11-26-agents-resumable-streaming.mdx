@@ -11,7 +11,7 @@ The latest release of [@cloudflare/agents](https://github.com/cloudflare/agents)
 
 ### Resumable streaming
 
-You can now enable resumable streamin allowing clients to reconnect and continue receiving streamed responses without losing data. This is particularly useful for long-running AI responses or unreliable network conditions.
+You can now enable resumable streaming allowing clients to reconnect and continue receiving streamed responses without losing data. This is particularly useful for long-running AI responses or unreliable network conditions.
 
 ### MCP client API improvements
 
@@ -23,22 +23,17 @@ The `MCPClientManager` API has been redesigned for better clarity and control:
 - **Improved reconnect logic**: `restoreConnectionsFromStorage()` now properly handles failed connections
 
 ```ts
-// New connection lifecycle
-const manager = new MCPClientManager(agent);
-
-// Register a server
-await manager.registerServer({
+// Register a server to Agent storage
+const { id } = await this.mcp.registerServer({
 	name: "my-server",
 	url: "https://my-mcp-server.example.com",
 });
 
 // Connect when ready
-await manager.connectToServer("my-server");
+await this.mcp.connectToServer(id);
 
-// Track state changes
-manager.onServerStateChanged((serverId, state) => {
-	console.log(`Server ${serverId} is now ${state}`);
-});
+// Discover tools, prompts and resources
+await this.mcp.discoverIfConnected(id);
 ```
 
 The SDK now includes a formalized `MCPConnectionState` enum with states: `idle`, `connecting`, `authenticating`, `connected`, `discovering`, and `ready`.
@@ -59,7 +54,12 @@ The `MCPClientConnection` class now includes a dedicated `discover()` method wit
 - Internal AI SDK stream events now convert to UIMessageStreamPart format for improved compatibility
 - MCP server requests now use `relatedRequestId` in TransportOptions to send responses down POST streams when supported
 - The SSE transport now properly forwards session IDs and request headers to MCP message handlers
-- Schedules can now safely destroy the agent using a new `destroyed` flag
+- Schedules can now safely destroy the agent
+
+### Bug fixes
+
+- Fixed a bug where schedules meant to fire immediately with `this.schedule(0, ...)` or `this.schedule(new Date(), ...)` would not fire
+- Fixed an issue where schedules that took longer than 30 seconds would occasionally time out
 
 ### Upgrade
 
