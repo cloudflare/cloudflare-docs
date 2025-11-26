@@ -85,6 +85,7 @@ if (
 // CED-49 - Translation disclaimer
 
 let localized = false;
+console.log(Astro.locals.starlightRoute.id);
 
 if (Astro.locals.starlightRoute.id.startsWith("es-la/fundamentals")) {
 	localized = true;
