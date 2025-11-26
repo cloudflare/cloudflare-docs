@@ -22,8 +22,10 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
+		// extract pathname earlier as a variable
+		const { pathname } = new URL(request.url);
+
 		if (request.url.endsWith("/llms-full.txt")) {
-			const { pathname } = new URL(request.url);
 			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
 
 			return new Response(res?.body, {
@@ -61,7 +63,7 @@ export default class extends WorkerEntrypoint<Env> {
 			}
 
 			// CED-7 - Localized content experiment for Spanish
-			if (request.url.startsWith("/es-la/fundamentals/")) {
+			if (pathname.startsWith("/es-la/fundamentals/")) {
 				try {
 					// Parse the incoming request URL
 					const url = new URL(request.url);
