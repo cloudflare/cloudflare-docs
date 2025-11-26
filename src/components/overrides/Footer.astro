@@ -1,5 +1,6 @@
 ---
 import Default from "@astrojs/starlight/components/Footer.astro";
+import { Aside } from "@astrojs/starlight/components";
 import { Icon } from "@astrojs/starlight/components";
 import type { StarlightIcon } from "@astrojs/starlight/types";
 
@@ -80,6 +81,14 @@ if (
 ) {
 	isProduction = true;
 }
+
+// CED-49 - Translation disclaimer
+
+let localized = false;
+
+if (Astro.locals.starlightRoute.id.startsWith("es-la/")) {
+	localized = true;
+}
 ---
 
 {
@@ -89,6 +98,19 @@ if (
 		</div>
 	)
 }
+
+<!-- CED-49 - Translation disclaimer -->
+{
+	localized && (
+		<Aside type="note">
+			<p class="text-sm">
+				Este contenido es una traducción automática y puede contener errores u
+				omisiones. Para cualquier duda, consulta la versión original en inglés.
+			</p>
+		</Aside>
+	)
+}
+
 {!splash && <Default />}
 <div class="w-full">
 	<div class="grid grid-cols-2 gap-8 pt-6 pb-10 lg:grid-cols-5">
