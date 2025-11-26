@@ -992,6 +992,28 @@ function ChatInterface() {
 
 </TypeScriptExample>
 
+#### Multi-tab support
+
+The `useAgentChat` hook automatically handles multi-tab scenarios where multiple browser tabs are connected to the same Agent instance. When one tab sends a message and receives a streaming response, all other tabs viewing the same chat will see the AI response in real-time.
+
+**How it works:**
+
+- Each tab tracks its own initiated requests to avoid processing duplicate streams
+- When a tab sends a message, it handles the streaming response directly
+- Other tabs connected to the same Agent receive real-time broadcasts of the streaming chunks
+- All tabs stay synchronized with the same conversation state
+
+**Stream lifecycle management:**
+
+The hook properly cleans up request tracking when streams complete, are interrupted, or encounter errors. This prevents memory leaks and ensures reliable behavior when:
+
+- Users abort an in-progress AI response
+- Network connections are interrupted
+- Multiple rapid requests are made
+- Tabs are closed during active streams
+
+This multi-tab synchronization works automatically without any additional configuration required.
+
 
 ### Next steps
 
