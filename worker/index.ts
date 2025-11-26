@@ -22,9 +22,7 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		// extract pathname earlier as a variable
 		const { pathname } = new URL(request.url);
-
 		if (request.url.endsWith("/llms-full.txt")) {
 			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
 
@@ -62,55 +60,6 @@ export default class extends WorkerEntrypoint<Env> {
 				return res;
 			}
 
-			// CED-7 - Localized content experiment for Spanish
-			console.log(pathname);
-			if (pathname.startsWith("/es-la/fundamentals/")) {
-				try {
-					// Parse the incoming request URL
-					const url = new URL(request.url);
-					const params = url.search; // Get the query parameters
-					const userAgent = request.headers.get("User-Agent") || ""; // Get the userAgent of the URL
-					const outgoingHeaders = new Headers();
-					outgoingHeaders.append("User-Agent", userAgent);
-					// Forward the request to the target server
-					const response = await fetch(
-						"https://developers.cloudflare.com" + pathname + params,
-						{
-							headers: outgoingHeaders,
-							cf: {
-								// Override DNS resolution to use a specific hostname
-								resolveOverride: "smartling.developers.cloudflare.com",
-							},
-						},
-					);
-					// Check if the response is successful (status code 2xx)
-					if (!response.ok) {
-						// If not successful, return an error response
-						return new Response(
-							`Error: Received status ${response.status} from upstream translation server.`,
-							{
-								status: response.status,
-							},
-						);
-					}
-					// If successful, return the response from the upstream server
-					return response;
-				} catch (error) {
-					// Handle any errors that occur during the process
-					console.error("Fetch failed:", error); // Log the error for debugging
-					// Return a generic error response
-					return new Response(
-						"Internal Server Error: Unable to process your request.",
-						{
-							status: 500,
-							headers: {
-								"Content-Type": "text/plain",
-							},
-						},
-					);
-				}
-			}
-
 			if (
 				res.status === 200 &&
 				res.headers.get("content-type")?.startsWith("text/html")
@@ -129,6 +78,55 @@ export default class extends WorkerEntrypoint<Env> {
 						"x-robots-tag": "noindex",
 					},
 				});
+			}
+		}
+
+		// CED-7 - Localized content experiment for Spanish
+		console.log(pathname);
+		if (pathname.startsWith("/es-la/fundamentals/")) {
+			try {
+				// Parse the incoming request URL
+				const url = new URL(request.url);
+				const params = url.search; // Get the query parameters
+				const userAgent = request.headers.get("User-Agent") || ""; // Get the userAgent of the URL
+				const outgoingHeaders = new Headers();
+				outgoingHeaders.append("User-Agent", userAgent);
+				// Forward the request to the target server
+				const response = await fetch(
+					"https://developers.cloudflare.com" + pathname + params,
+					{
+						headers: outgoingHeaders,
+						cf: {
+							// Override DNS resolution to use a specific hostname
+							resolveOverride: "smartling.developers.cloudflare.com",
+						},
+					},
+				);
+				// Check if the response is successful (status code 2xx)
+				if (!response.ok) {
+					// If not successful, return an error response
+					return new Response(
+						`Error: Received status ${response.status} from upstream translation server.`,
+						{
+							status: response.status,
+						},
+					);
+				}
+				// If successful, return the response from the upstream server
+				return response;
+			} catch (error) {
+				// Handle any errors that occur during the process
+				console.error("Fetch failed:", error); // Log the error for debugging
+				// Return a generic error response
+				return new Response(
+					"Internal Server Error: Unable to process your request.",
+					{
+						status: 500,
+						headers: {
+							"Content-Type": "text/plain",
+						},
+					},
+				);
 			}
 		}
 
