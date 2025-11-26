@@ -28,7 +28,7 @@ You can only deploy custom rulesets in an entry point ruleset with the same scop
 
 The following `PUT` request adds a rule that executes a custom ruleset when the zone name matches `example.com`.
 
-You must include in the `PUT` request the IDs of all existing rules you want to keep. The response will include all the rules in the phase entry point ruleset after the update.
+In the `PUT` request, you must include the IDs of all existing rules you want to keep. The response will include all the rules in the phase entry point ruleset after the update.
 
 <APIRequest
 	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
