@@ -133,6 +133,30 @@ await sandbox.exec('python /workspace/analyze.py data.csv');
 ```
 </TypeScriptExample>
 
+## Work with large output
+
+The SDK has no output size limits, allowing you to process large files and datasets without restrictions:
+
+<TypeScriptExample>
+```
+// Read and process large files
+const result = await sandbox.exec('cat large-dataset.csv');
+console.log('Dataset size:', result.stdout.length, 'bytes');
+
+// Generate large output
+await sandbox.exec('python generate-report.py > /tmp/large-report.json');
+const report = await sandbox.readFile('/tmp/large-report.json');
+
+// Process binary data
+await sandbox.exec('base64 video.mp4 > /tmp/encoded.txt');
+const encoded = await sandbox.readFile('/tmp/encoded.txt');
+```
+</TypeScriptExample>
+
+:::note
+While there are no artificial output size limits, be mindful of Worker memory constraints when processing very large outputs. For extremely large datasets, consider streaming results or writing to files instead of capturing all output in memory.
+:::
+
 ## Best practices
 
 - **Check exit codes** - Always verify `result.success` and `result.exitCode`
