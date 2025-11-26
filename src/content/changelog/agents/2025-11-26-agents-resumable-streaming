@@ -1,0 +1,70 @@
+---
+title: Agents SDK v0.2.24 with resumable streaming, MCP improvements, and schedule fixes
+description: This release adds resumable streaming over websockets, enhanced MCP client APIs with connection state observability, improved schedule reliability, and SSE transport enhancements.
+products:
+  - agents
+  - workers
+date: 2025-11-26
+---
+
+The latest release of [@cloudflare/agents](https://github.com/cloudflare/agents) brings resumable streaming, significant MCP client improvements, and critical fixes for schedules and Durable Object lifecycle management.
+
+### Resumable streaming
+
+You can now enable resumable streamin allowing clients to reconnect and continue receiving streamed responses without losing data. This is particularly useful for long-running AI responses or unreliable network conditions.
+
+### MCP client API improvements
+
+The `MCPClientManager` API has been redesigned for better clarity and control:
+
+- **New `registerServer()` method**: Register MCP servers without immediately connecting
+- **New `connectToServer()` method**: Establish connections to registered servers
+- **Connection state observability**: New `onServerStateChanged()` event for tracking all server state changes
+- **Improved reconnect logic**: `restoreConnectionsFromStorage()` now properly handles failed connections
+
+```ts
+// New connection lifecycle
+const manager = new MCPClientManager(agent);
+
+// Register a server
+await manager.registerServer({
+	name: "my-server",
+	url: "https://my-mcp-server.example.com",
+});
+
+// Connect when ready
+await manager.connectToServer("my-server");
+
+// Track state changes
+manager.onServerStateChanged((serverId, state) => {
+	console.log(`Server ${serverId} is now ${state}`);
+});
+```
+
+The SDK now includes a formalized `MCPConnectionState` enum with states: `idle`, `connecting`, `authenticating`, `connected`, `discovering`, and `ready`.
+
+### Enhanced MCP discovery
+
+The `MCPClientConnection` class now includes a dedicated `discover()` method with full lifecycle management:
+
+- Handles state transitions (CONNECTED → DISCOVERING → READY on success)
+- Supports cancellation via AbortController
+- Configurable timeout (default 15s)
+- New `cancelDiscovery()` method to abort in-flight discoveries
+- Discovery failures now throw errors immediately instead of continuing with empty arrays
+
+### Additional improvements
+
+- Default JSON schema validator added to MCP client for better request validation
+- Internal AI SDK stream events now convert to UIMessageStreamPart format for improved compatibility
+- MCP server requests now use `relatedRequestId` in TransportOptions to send responses down POST streams when supported
+- The SSE transport now properly forwards session IDs and request headers to MCP message handlers
+- Schedules can now safely destroy the agent using a new `destroyed` flag
+
+### Upgrade
+
+To update to the latest version:
+
+```sh
+npm i agents@latest
+```
