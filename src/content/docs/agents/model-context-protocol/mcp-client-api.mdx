@@ -50,7 +50,7 @@ Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and
 
 ### `addMcpServer()`
 
-Add a connection to an MCP server and make its tools available to your Agent.
+Add a connection to an MCP server and make its tools available to your Agent. This method establishes the connection and automatically discovers server capabilities (tools, resources, prompts).
 
 ```ts
 async addMcpServer(
@@ -65,7 +65,18 @@ async addMcpServer(
       type?: "sse" | "streamable-http" | "auto";
     };
   }
-): Promise<{ id: string; authUrl: string | undefined }>
+): Promise<
+  | {
+      id: string;
+      state: "authenticating";
+      authUrl: string;
+    }
+  | {
+      id: string;
+      state: "ready";
+      authUrl?: undefined;
+    }
+>
 ```
 
 #### Parameters
@@ -82,10 +93,22 @@ async addMcpServer(
 
 #### Returns
 
-A Promise that resolves to an object containing:
+A Promise that resolves to a discriminated union based on connection state:
 
-- **`id`** (string) — Unique identifier for this server connection
-- **`authUrl`** (string | undefined) — OAuth authorization URL if authentication is required, otherwise `undefined`
+- If **OAuth authentication is required**:
+  - **`id`** (string) — Unique identifier for this server connection
+  - **`state`** (`"authenticating"`) — Indicates OAuth flow is needed
+  - **`authUrl`** (string) — OAuth authorization URL for user authentication
+
+- If **connection and discovery succeeded**:
+  - **`id`** (string) — Unique identifier for this server connection
+  - **`state`** (`"ready"`) — Server is connected and tools are available
+  - **`authUrl`** (undefined) — Not present for non-OAuth connections
+
+#### Throws
+
+- Throws an error if connection fails
+- Throws an error if discovery fails (with 15-second timeout)
 
 #### Example
 
@@ -94,26 +117,32 @@ A Promise that resolves to an object containing:
 ```ts title="src/index.ts"
 export class MyAgent extends Agent<Env, never> {
 	async onRequest(request: Request): Promise<Response> {
-		const { id, authUrl } = await this.addMcpServer(
-			"Weather API",
-			"https://weather-mcp.example.com/mcp",
-		);
+		try {
+			const result = await this.addMcpServer(
+				"Weather API",
+				"https://weather-mcp.example.com/mcp",
+			);
 
-		if (authUrl) {
-			// User needs to complete OAuth flow
-			return new Response(JSON.stringify({ serverId: id, authUrl }), {
-				headers: { "Content-Type": "application/json" },
-			});
+			if (result.state === "authenticating") {
+				// User needs to complete OAuth flow
+				return new Response(JSON.stringify({ serverId: result.id, authUrl: result.authUrl }), {
+					headers: { "Content-Type": "application/json" },
+				});
+			}
+
+			// Server is ready - tools are available
+			return new Response(`Connected: ${result.id}`, { status: 200 });
+		} catch (error) {
+			// Connection or discovery failed
+			return new Response(`Failed to connect: ${error.message}`, { status: 500 });
 		}
-
-		return new Response("Connected", { status: 200 });
 	}
 }
 ```
 
 </TypeScriptExample>
 
-If the MCP server requires OAuth authentication, `authUrl` will be returned for user authentication. Connections persist across requests and the Agent will automatically reconnect if the connection is lost.
+If the MCP server requires OAuth authentication, the result will include `state: "authenticating"` with an `authUrl` for user authentication. Otherwise, the server transitions to `"ready"` state with all tools discovered and available. Connections persist across requests and the Agent will automatically reconnect if the connection is lost.
 
 :::note[Default JSON Schema Validation]
 
@@ -193,8 +222,9 @@ An `MCPServersState` object containing:
 			state:
 				| "authenticating"
 				| "connecting"
-				| "ready"
+				| "connected"
 				| "discovering"
+				| "ready"
 				| "failed";
 			capabilities: ServerCapabilities | null;
 			instructions: string | null;
@@ -228,7 +258,16 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-The `state` field can be: `authenticating`, `connecting`, `ready`, `discovering`, or `failed`. Use this method to monitor connection status, list available tools, or build UI for connected servers.
+The `state` field represents the connection lifecycle:
+
+- **`authenticating`** — Waiting for OAuth authorization
+- **`connecting`** — Establishing transport connection
+- **`connected`** — Transport connected, but capabilities not yet discovered
+- **`discovering`** — Discovering server capabilities (tools, resources, prompts)
+- **`ready`** — Fully connected with all capabilities discovered
+- **`failed`** — Connection or discovery failed
+
+Use this method to monitor connection status, list available tools, or build UI for connected servers.
 
 ## OAuth Configuration
 
@@ -250,6 +289,51 @@ export class MyAgent extends Agent<Env, never> {
 </TypeScriptExample>
 
 You can also provide a `customHandler` function for full control over the callback response. Refer to the [OAuth handling guide](/agents/guides/oauth-mcp-client) for details.
+
+## Connection State Lifecycle
+
+The Agents SDK exports an `MCPConnectionState` enum that defines the connection lifecycle states:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { MCPConnectionState } from "agents";
+
+// Access state constants
+console.log(MCPConnectionState.AUTHENTICATING); // "authenticating"
+console.log(MCPConnectionState.CONNECTING); // "connecting"
+console.log(MCPConnectionState.CONNECTED); // "connected"
+console.log(MCPConnectionState.DISCOVERING); // "discovering"
+console.log(MCPConnectionState.READY); // "ready"
+console.log(MCPConnectionState.FAILED); // "failed"
+```
+
+</TypeScriptExample>
+
+### State Transitions
+
+Connections follow this lifecycle:
+
+**Non-OAuth flow:**
+```
+CONNECTING → CONNECTED → DISCOVERING → READY
+```
+
+**OAuth flow:**
+```
+AUTHENTICATING → (user completes OAuth) → CONNECTING → CONNECTED → DISCOVERING → READY
+```
+
+Any state can transition to `FAILED` if an error occurs.
+
+### Key Changes in Connection Behavior
+
+Previously, `init()` would automatically trigger discovery. Now:
+
+1. **Connection and discovery are separate phases** — After a successful connection (state `CONNECTED`), you must explicitly call discovery
+2. **`addMcpServer()` handles both automatically** — For most use cases, use `addMcpServer()` which connects and discovers in one call
+3. **Discovery has a 15-second timeout** — If a server does not respond within 15 seconds, discovery fails and the connection returns to `CONNECTED` state
+4. **Discovery can be cancelled** — Repeated discovery requests automatically cancel previous in-flight discoveries
 
 ## Error Handling
 

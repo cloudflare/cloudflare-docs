@@ -1,0 +1,133 @@
+---
+title: MCP connection state improvements and standardized tool discovery
+description: The Agents SDK now includes a formalized MCPConnectionState enum, improved discovery lifecycle with timeouts and cancellation, and better error handling for MCP server connections.
+products:
+  - agents
+  - workers
+date: 2025-11-26
+---
+
+We have improved the MCP (Model Context Protocol) client connection lifecycle in the [Agents SDK](https://github.com/cloudflare/agents) with better state management, explicit discovery control, and enhanced reliability.
+
+## New Features
+
+### MCPConnectionState Enum
+
+A new `MCPConnectionState` enum formalizes the connection lifecycle with six distinct states:
+
+- `AUTHENTICATING` — Waiting for OAuth authorization
+- `CONNECTING` — Establishing transport connection
+- `CONNECTED` — Transport connected, ready for discovery
+- `DISCOVERING` — Fetching server capabilities
+- `READY` — Fully connected with all tools available
+- `FAILED` — Connection or discovery error
+
+```ts
+import { MCPConnectionState } from "agents";
+
+if (result.state === MCPConnectionState.READY) {
+  // Server is connected and tools are available
+}
+```
+
+### Enhanced Discovery Control
+
+Discovery is now a separate, explicit phase with full lifecycle management:
+
+- **Configurable timeout** — Default 15-second timeout prevents hanging connections
+- **Cancellation support** — New discoveries automatically cancel previous in-flight requests
+- **Better error handling** — Discovery failures throw errors immediately instead of continuing with empty tool arrays
+- **New `discover()` method** — On `MCPClientConnection` for manual discovery control
+- **New `discoverIfConnected()` method** — On `MCPClientManager` for simpler per-server discovery
+
+### Improved `addMcpServer()` Return Type
+
+The return type is now a discriminated union that makes OAuth vs. ready states explicit:
+
+```ts
+const result = await this.addMcpServer("Weather", "https://weather.example.com/mcp");
+
+if (result.state === "authenticating") {
+  // Redirect user to result.authUrl
+} else {
+  // result.state === "ready", tools are available
+}
+```
+
+### Better `createConnection()` Return Value
+
+The `createConnection()` method now returns the connection object for immediate use, eliminating the need for separate lookup calls.
+
+## Bug Fixes
+
+- **Fixed discovery hanging on repeated requests** — New discoveries now cancel previous in-flight ones via AbortController
+- **Fixed Durable Object crash-looping** — `restoreConnectionsFromStorage()` now starts connections in background to avoid blocking initialization and causing timeouts
+- **Fixed OAuth callback race condition** — When `auth_url` exists in storage during restoration, state is set to `AUTHENTICATING` directly instead of calling `connectToServer()` which was overwriting the state
+
+## Migration Guide
+
+### Breaking Change: `MCPClientConnection.init()` No Longer Auto-Discovers
+
+Previously, `init()` would automatically trigger discovery. Now connection and discovery are separate phases.
+
+**For most use cases, no changes are needed** — `addMcpServer()` handles both connection and discovery automatically.
+
+If you are using lower-level APIs like `MCPClientConnection` directly, you must now call `discover()` explicitly after connection:
+
+```ts
+// Before
+await connection.init();
+// init() would automatically discover
+
+// After
+await connection.init();
+await connection.discover();
+// Or use the MCPClientManager method
+await clientManager.discoverIfConnected(serverId);
+```
+
+### Updated Return Type for `addMcpServer()`
+
+The return type changed from:
+
+```ts
+{ id: string; authUrl: string | undefined }
+```
+
+To a discriminated union:
+
+```ts
+| { id: string; state: "authenticating"; authUrl: string }
+| { id: string; state: "ready"; authUrl?: undefined }
+```
+
+Update your code to check the `state` field:
+
+```ts
+// Before
+const { id, authUrl } = await this.addMcpServer(...);
+if (authUrl) {
+  // Handle OAuth
+}
+
+// After
+const result = await this.addMcpServer(...);
+if (result.state === "authenticating") {
+  // Handle OAuth with result.authUrl
+}
+```
+
+### New Connection State: `connected`
+
+A new `connected` state represents a connected transport with no tools loaded yet. This state occurs between `CONNECTING` and `DISCOVERING`, allowing you to distinguish between:
+
+- **`connected`** — Transport is connected, but capabilities are not yet discovered
+- **`ready`** — Transport is connected and all capabilities have been discovered
+
+Update any code that checks connection states to account for this new intermediate state.
+
+## Learn More
+
+- [MCP Client API reference](/agents/model-context-protocol/mcp-client-api/)
+- [Connect to MCP servers guide](/agents/guides/connect-mcp-client/)
+- [OAuth handling for MCP clients](/agents/guides/oauth-mcp-client/)
