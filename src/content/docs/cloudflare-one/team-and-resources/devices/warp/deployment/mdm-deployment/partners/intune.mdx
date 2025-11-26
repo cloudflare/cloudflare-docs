@@ -21,17 +21,18 @@ To deploy WARP on Windows using Intune:
 4. In **App type**, select _Line-of-business app_ from the drop-down menu. Select **Select**.
 5. Select **Select app package file** and upload the `Cloudflare_WARP_<VERSION>.msi` installer you downloaded previously.
 6. Select **OK**.
-7. In the **Name** field, we recommend entering the version number of the package being uploaded.
-8. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
-9. In the **Command-line arguments** field, enter a valid installation command.
-   For example:
+7. For **Run this script using the logged on credentials**, choose _No_.
+8. For **Enforce script signature check**, choose _No_.
+9. In the **Name** field, we recommend entering the version number of the package being uploaded.
+10. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
+11. In the **Command-line arguments** field, enter a valid installation command. For example:
    ```txt
    /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
    ```
    Refer to [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument. You can change these parameters at any time by pushing a new [MDM file](#update-mdm-parameters).
-10. Select **Next**.
-11. Add the users or groups who require Cloudflare WARP and select **Next**.
-12. Review your configuration and select **Create**.
+12. Select **Next**.
+13. Add the users or groups who require Cloudflare WARP and select **Next**.
+14. Review your configuration and select **Create**.
 
 Intune is now configured to deploy the WARP client.
 
