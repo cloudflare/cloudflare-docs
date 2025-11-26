@@ -165,7 +165,7 @@ export default {
 		let userId = new URL(request.url).searchParams.get('userId') || 'anonymous';
 		// Use an identifier that allows you to route to requests, WebSockets or call methods on the Agent
 		// You can also put authentication logic here - e.g. to only create or retrieve Agents for known users.
-		let namedAgent = getAgentByName<Env, MyAgent>(env.MyAgent, 'my-unique-agent-id');
+		let namedAgent = getAgentByName<Env, MyAgent>(env.MyAgent, userId);
 		return (await namedAgent).fetch(request);
 	},
 } satisfies ExportedHandler<Env>;
