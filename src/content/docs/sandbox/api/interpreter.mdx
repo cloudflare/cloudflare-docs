@@ -9,11 +9,15 @@ import { TypeScriptExample } from "~/components";
 
 Execute Python, JavaScript, and TypeScript code with support for data visualizations, tables, and rich output formats. Contexts maintain state (variables, imports, functions) across executions.
 
+:::note[Context Isolation]
+Each code context is fully isolated with dedicated execution resources from creation to deletion. Contexts do not share state with each other, ensuring complete isolation for security and correctness. You can create as many concurrent contexts as needed without pool size limitations.
+:::
+
 ## Methods
 
 ### `createCodeContext()`
 
-Create a persistent execution context for running code.
+Create a persistent execution context for running code. Each context receives dedicated execution resources and maintains complete isolation from other contexts.
 
 ```ts
 const context = await sandbox.createCodeContext(options?: CreateContextOptions): Promise<CodeContext>
@@ -121,7 +125,7 @@ console.log(`Found ${contexts.length} contexts`);
 
 ### `deleteCodeContext()`
 
-Delete a code execution context and free its resources.
+Delete a code execution context and free its dedicated execution resources.
 
 ```ts
 await sandbox.deleteCodeContext(contextId: string): Promise<void>
@@ -134,6 +138,10 @@ await sandbox.runCode('print("Hello")', { context: ctx });
 await sandbox.deleteCodeContext(ctx.id);
 ```
 </TypeScriptExample>
+
+:::caution[Context Cleanup]
+Always delete contexts when finished to free resources. Each context maintains dedicated execution resources throughout its lifetime.
+:::
 
 ## Rich Output Formats
 
