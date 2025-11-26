@@ -23,7 +23,13 @@ export async function getSidebar(context: AstroGlobal) {
 	const pathname = context.url.pathname;
 	const segments = pathname.split("/").filter(Boolean);
 
-	const product = segments.at(0);
+	let product;
+
+	if (pathname.startsWith("/es-la/")) {
+		product = segments.at(1);
+	} else {
+		product = segments.at(0);
+	}
 
 	if (!product) {
 		throw new Error(`[Sidebar] Splitting ${pathname} resulted in 0 segments`);
@@ -198,7 +204,13 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 		);
 	}
 
-	const entry = await getEntry("docs", index.href.slice(1, -1));
+	let entry;
+
+	if (index.href.startsWith("/es-la/")) {
+		entry = await getEntry("docs", index.href.slice(7, -1));
+	} else {
+		entry = await getEntry("docs", index.href.slice(1, -1));
+	}
 
 	if (!entry) {
 		throw new Error(
@@ -272,7 +284,13 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 }
 
 async function handleLink(link: Link): Promise<Link> {
-	const entry = await getEntry("docs", link.href.slice(1, -1));
+	let entry;
+
+	if (link.href.startsWith("/es-la/")) {
+		entry = await getEntry("docs", link.href.slice(7, -1));
+	} else {
+		entry = await getEntry("docs", link.href.slice(1, -1));
+	}
 
 	if (!entry) {
 		throw new Error(

@@ -127,15 +127,6 @@ export default class extends WorkerEntrypoint<Env> {
 					},
 				);
 			}
-		} else if (
-			pathname.startsWith("/es-la/fundamentals/") &&
-			request.headers.get("accept")?.includes("text/css")
-		) {
-			const url = new URL(request.url);
-			const targetPath = "/es-la";
-			url.pathname = url.pathname.replace(targetPath, "");
-			const newRequest = new Request(url.toString(), request);
-			return fetch(newRequest);
 		}
 
 		try {

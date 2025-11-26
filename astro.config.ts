@@ -128,6 +128,16 @@ export default defineConfig({
 			},
 			sidebar,
 			customCss,
+			locales: {
+				root: {
+					label: "English",
+					lang: "en",
+				},
+				"es-la": {
+					label: "Español",
+					lang: "es",
+				},
+			},
 			pagination: false,
 			plugins: [
 				...(RUN_LINK_CHECK
