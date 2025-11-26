@@ -266,7 +266,7 @@ return Response.json({
 
 Returns a `WorkflowInstance`.
 
-Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance. 
+Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance.
 
 <Render file="workflows-type-parameters" product="workflows" />
 
@@ -334,8 +334,8 @@ Unlike [`create`](/workflows/build/workers-api/#create), this operation is idemp
 
 Get a specific Workflow instance by ID.
 
-- <code>get(id: string): Promise&lt;WorkflowInstance&gt;</code>
-  - `id` - the ID of the Workflow instance.
+- <code>get(id: string): Promise&lt;WorkflowInstance&gt;</code>- `id` - the ID
+  of the Workflow instance.
 
 Returns a `WorkflowInstance`. Throws an exception if the instance ID does not exist.
 
@@ -493,8 +493,11 @@ type InstanceStatus = {
 		| "waiting" // instance is hibernating and waiting for sleep or event to finish
 		| "waitingForPause" // instance is finishing the current work to pause
 		| "unknown";
-	error?: string;
-	output?: object;
+	error?: { 
+		name: string,
+		message: string 
+	};
+	output?: unknown;
 };
 ```
 
