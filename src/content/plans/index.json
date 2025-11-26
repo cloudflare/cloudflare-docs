@@ -1903,7 +1903,7 @@
 					"title": "Number of custom rulesets (zone)",
 					"link": "/waf/account/custom-rulesets/",
 					"free": "1",
-					"pro": "5",
+					"pro": "2",
 					"biz": "5",
 					"ent": "10"
 				},
