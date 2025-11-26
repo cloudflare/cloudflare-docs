@@ -13,6 +13,11 @@ The latest release of [@cloudflare/agents](https://github.com/cloudflare/agents)
 
 `AIChatAgent` now supports resumable streaming, which maintains streams across page refreshes, broken connections, or syncing across open tabs and devices.
 
+### Other improvements
+
+- Default JSON schema validator added to MCP client
+- Schedules can now safely destroy the agent
+
 ### MCP client API improvements
 
 The `MCPClientManager` API has been redesigned for better clarity and control:
@@ -22,7 +27,7 @@ The `MCPClientManager` API has been redesigned for better clarity and control:
 - **Improved reconnect logic**: `restoreConnectionsFromStorage()` now properly handles failed connections
 
 ```ts
-// Register a server to Agent storage
+// Register a server to Agent
 const { id } = await this.mcp.registerServer({
 	name: "my-server",
 	url: "https://my-mcp-server.example.com",
@@ -47,17 +52,12 @@ The `MCPClientConnection` class now includes a dedicated `discover()` method wit
 - New `cancelDiscovery()` method to abort in-flight discoveries
 - Discovery failures now throw errors immediately instead of continuing with empty arrays
 
-### Additional improvements
-
-- Default JSON schema validator added to MCP client for better request validation
-- Internal AI SDK stream events now convert to UIMessageStreamPart format for improved compatibility
-- The SSE transport now properly forwards session IDs and request headers to MCP message handlers
-- Schedules can now safely destroy the agent
-
 ### Bug fixes
 
-- Fixed a bug where schedules meant to fire immediately with `this.schedule(0, ...)` or `this.schedule(new Date(), ...)` would not fire
+- Fixed a bug where schedules meant to fire immediately with this.schedule(0, ...) or `this.schedule(new Date(), ...)` would not fire
 - Fixed an issue where schedules that took longer than 30 seconds would occasionally time out
+- Fixed SSE transport now properly forwards session IDs and request headers
+- Fixed AI SDK stream events convertion to UIMessageStreamPart
 
 ### Upgrade
 
