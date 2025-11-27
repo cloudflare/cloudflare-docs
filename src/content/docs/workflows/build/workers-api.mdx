@@ -114,7 +114,7 @@ More information about the limits imposed on Workflow can be found in the [Workf
 
 - <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
-  - `options` - an object with properties for `type`, which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
+  - `options` - an object with properties for `type` (up to 100 characters [^1]), which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
 
 <TypeScriptExample>
 
@@ -444,7 +444,7 @@ Terminate a Workflow instance.
 [Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
 
 - <code>sendEvent(): Promise&lt;void&gt;</code>
-  - `options` - the event `type` and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
+  - `options` - the event `type` (up to 100 characters [^1]) and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
 
 Return `void` on success; throws an exception if the Workflow is not running or is an errored state.
 

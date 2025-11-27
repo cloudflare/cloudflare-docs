@@ -50,6 +50,12 @@ To configure GitHub access in both GitHub and Cloudflare One:
 To test that your connection is working, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Integrations** > **Identity providers** and select **Test** next to your GitHub login method.
 If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
 
+:::note[Troubleshooting organization policies]
+
+When using a GitHub organization policy, if a user joins the required organization after a failed login attempt, they will remain blocked. To fix this, they must revoke the application's access in their GitHub settings and log in again to update their permissions.
+
+:::
+
 ## Example API Configuration
 
 ```json

@@ -28,7 +28,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 These records include the following fields:
 
 - **Name**: A subdomain or the zone apex (`@`), which must:
-  - Be 63 characters or less
+  - Be composed of labels of 63 characters or less (`label1.label2.label3`), where the fully qualified domain name (`label1.label2.label3.example.com`) does not exceed 255 characters.
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
 - **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
@@ -103,7 +103,7 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 These records include the following fields:
 
 - **Name**: A subdomain or the zone apex (`@`), which must:
-  - Be 63 characters or less
+  - Be composed of labels of 63 characters or less (`label1.label2.label3`), where the fully qualified domain name (`label1.label2.label3.example.com`) does not exceed 255 characters.
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
 - **Target**: The hostname where traffic should be directed (`example.com`).
