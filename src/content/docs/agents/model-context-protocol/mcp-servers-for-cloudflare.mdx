@@ -35,33 +35,3 @@ These MCP servers allow your MCP Client to read configurations from your account
 
 Check our [GitHub page](https://github.com/cloudflare/mcp-server-cloudflare) to know how to use Cloudflare's remote MCP servers with different MCP clients.
 
-## Agents SDK Documentation server
-
-The Agents SDK Documentation server provides a token-efficient search tool for the Cloudflare Agents SDK documentation. This server is particularly useful when building with the Agents SDK, allowing you to quickly find relevant documentation without consuming excessive tokens.
-
-### Available tools
-
-The server exposes one tool:
-
-- **search-agent-docs**: Search the Cloudflare Agents SDK documentation using natural language queries
-  - **query** (string): Query string to search for (for example, `agent hibernate`, `schedule tasks`)
-  - **k** (number, optional): Number of results to return (default: 5)
-
-### How it works
-
-The server fetches documentation from GitHub, chunks it using a recursive chunker, and indexes it with Orama. The index is cached in KV for one day. Search uses BM25 with stemming enabled, which allows natural language queries like "hibernation" to match with "hibernate" for better results.
-
-### Usage example
-
-Connect to the server at `https://agents.mcp.cloudflare.com/mcp` in your MCP client. You can then use queries like:
-
-- `agent hibernate` - Find information about agent hibernation
-- `schedule tasks` - Learn about task scheduling
-- `tool calling` - Discover how to implement tool calling
-
-The server returns relevant documentation chunks with their file names and full content URLs, making it easy to find the information you need while building agents.
-
-### Rate limiting
-
-The server is designed to avoid GitHub rate limiting by caching documentation. If you are self-hosting this server, you can set the `GITHUB_TOKEN` environment variable to increase your rate limits.
-
