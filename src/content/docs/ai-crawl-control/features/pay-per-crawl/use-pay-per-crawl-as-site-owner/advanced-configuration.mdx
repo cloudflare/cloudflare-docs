@@ -39,14 +39,14 @@ To get started, use [Configuration Rules](/rules/configuration-rules/) to exclud
 - Free directory: `URI Full` wildcard `https://*example.com/public/*`
 
 :::note
-Some paths are always free to crawl by default. These paths are: `/robots.txt`, `/sitemap.xml`, `/security.txt`, `/.well-known/security.txt`, `/crawlers.json`
+Some paths are always free to crawl. These paths are: `/robots.txt`, `/sitemap.xml`, `/security.txt`, `/.well-known/security.txt`, `/crawlers.json`
 :::
 
 ## Set custom pricing
 
-Set different prices for different content by returning a `crawler-price` header from your origin or a [Worker](/workers/). This is also known as [in-band pricing](/ai-crawl-control/reference/glossary/#in-band-pricing) because the price is transmitted within the HTTP response alongside the content.
+Set different prices for different content by returning a `crawler-price` header in your HTTP responses from your origin or a [Worker](/workers/). This is also known as [in-band pricing](/ai-crawl-control/reference/glossary/#in-band-pricing) because the price is set by the origin or a Worker that serves the content.
 
-When custom pricing is enabled, the price specified in the `crawler-price` header is used instead of your default zone price. Successful responses are recorded and paid out via Stripe, just like with default pricing.
+When custom pricing is enabled, and a `crawler-price` header is set by the origin or Worker, that price is used in place of your default zone price. Successful responses are recorded and paid out via Stripe, just like with default pricing.
 
 ### 1. Enable custom pricing in the dashboard
 
