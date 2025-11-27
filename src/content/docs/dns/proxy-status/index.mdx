@@ -79,6 +79,16 @@ In this example, all traffic intended for `blog.example.com` will be treated as 
 
 </Details>
 
+### CNAME records
+
+Proxied [CNAME records](/dns/manage-dns-records/reference/dns-record-types/#cname) are flattened by default. With CNAME flattening, Cloudflare finds the IP address that a CNAME points to, helping DNS queries resolve up to 30% faster. Refer to [CNAME flattening](/dns/cname-flattening/) for details.
+
+In some cases, Cloudflare will show a warning message or [prevent](/dns/proxy-status/limitations/#proxy-eligibility) you from proxying a CNAME record. This happens to avoid misconfigurations and is generally related to other CDN providers or to specific records used for DKIM validation.
+
+:::note
+Specific CNAME record values with traffic proxied through Cloudflare will enable Orange-to-Orange (O2O) routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
+:::
+
 ### Protocol optimization
 
 For proxied records, if your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/) and is also using [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare automatically generates corresponding [HTTPS Service (HTTPS) records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) on the fly. HTTPS records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
