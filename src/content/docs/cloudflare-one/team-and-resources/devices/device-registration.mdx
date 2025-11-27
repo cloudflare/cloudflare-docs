@@ -1,13 +1,13 @@
 ---
 pcx_content_type: reference
-title: Device status and registration
+title: Device registration
 sidebar:
   order: 3
 ---
 
 import { TabItem, Tabs } from "~/components";
 
-A device registration is made when a user, approved by the Zero Trust organization, puts a device onto Cloudflare. A device status indicates the current state of a device registration, such as `Active`, `Revoked`, or `Deleted`.
+A device registration is made when a user, approved by the Zero Trust organization, puts a device onto Cloudflare. A device registration status indicates the current state of a device registration, such as `Active`, `Revoked`, or `Deleted`.
 
 ## Device registration
 
@@ -27,20 +27,27 @@ Whether the WARP client is installed manually by a user or deployed through an M
 
 | Concept | Definition |
 |--------|------------|
-| User | A human identity that consumes a [seat](/cloudflare-one/team-and-resources/users/seat-management/) after any authentication event. |
+| User | An IdP-backed human identity that can connect new devices to your Zero Trust organization. |
+| Seat | definition needed |
 | [Service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) | Used by automated systems (a non-human identity) to authenticate against your Cloudflare One policies. |
-| Device registration | An public key, associated to a user and device, used by WARP to connect to Cloudflare's network. |
+| Device registration | A public key, associated to a user and device, used by WARP to connect to Cloudflare's network. |
 | [Session](/cloudflare-one/access-controls/access-settings/session-management/) | JSON Web Tokens (JWTs) that are generated when Access validates user identity against your Access policies and determines how long a user can access an Access application without re-authenticating. |
 
-## Device statuses
+## Device registration statuses
 
 Registrations can have the following statuses:
 
 | Status | Description |
 | --- | --- |
 | **Active** | Registered and able to connect via WARP. This is the expected operational state. |
-| **Revoked** | The registration's public key is invalidated, preventing the device from connecting. The device still appears in your device list and can be unrevoked. |
+| **Revoked** | The registration's public key is invalidated, preventing the device from connecting. The device registration can be unrevoked manually or via WARP re-authentication. |
 | **Deleted** | The registration is permanently removed from the account and no longer appears in your device list. Deletion is permanent and requires re-registering the device. |
+
+:::caution[Revocation has no practical usefulness]
+
+The WARP clients automatically re-registers when it detects that a device registration has been revoked. As a result, the **Unrevoke** action has no practical effect and will be phased out in the near future.
+
+:::
 
 To check your device status:
 
@@ -48,7 +55,7 @@ To check your device status:
 2. Go to **Teams & Resources** > **Devices**.
 3. Select the device and select **View details**.
 4. Scroll down to **Users** and find the user associated with the device.
-5. Review the status (`Active` or `Revoked`) of the device registration under **Status**.
+5. Review the status (such as `Active` or revoked) of the device registration under **Status**.
 
 ## Revoke and unrevoke access
 
