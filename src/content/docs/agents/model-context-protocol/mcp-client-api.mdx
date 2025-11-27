@@ -25,18 +25,18 @@ export class MyAgent extends Agent<Env, never> {
 		const url = new URL(request.url);
 
 		if (url.pathname === "/connect" && request.method === "POST") {
-			const { id, authUrl } = await this.addMcpServer(
+			const result = await this.addMcpServer(
 				"Weather API",
 				"https://weather-mcp.example.com/mcp",
 			);
 
-			if (authUrl) {
-				return new Response(JSON.stringify({ authUrl }), {
+			if (result.state === "authenticating") {
+				return new Response(JSON.stringify({ authUrl: result.authUrl }), {
 					headers: { "Content-Type": "application/json" },
 				});
 			}
 
-			return new Response(`Connected: ${id}`, { status: 200 });
+			return new Response(`Connected: ${result.id}`, { status: 200 });
 		}
 	}
 }
@@ -65,7 +65,10 @@ async addMcpServer(
       type?: "sse" | "streamable-http" | "auto";
     };
   }
-): Promise<{ id: string; authUrl: string | undefined }>
+): Promise<
+  | { id: string; state: "authenticating"; authUrl: string }
+  | { id: string; state: "ready"; authUrl?: undefined }
+>
 ```
 
 #### Parameters
@@ -82,10 +85,17 @@ async addMcpServer(
 
 #### Returns
 
-A Promise that resolves to an object containing:
+A Promise that resolves to a discriminated union based on connection state:
 
-- **`id`** (string) — Unique identifier for this server connection
-- **`authUrl`** (string | undefined) — OAuth authorization URL if authentication is required, otherwise `undefined`
+- **When `state` is `"authenticating"`:**
+  - **`id`** (string) — Unique identifier for this server connection
+  - **`state`** (`"authenticating"`) — Server is waiting for OAuth authorization
+  - **`authUrl`** (string) — OAuth authorization URL for user authentication
+
+- **When `state` is `"ready"`:**
+  - **`id`** (string) — Unique identifier for this server connection
+  - **`state`** (`"ready"`) — Server is fully connected and operational
+  - **`authUrl`** (undefined) — Not present when already authenticated
 
 #### Example
 
@@ -94,19 +104,19 @@ A Promise that resolves to an object containing:
 ```ts title="src/index.ts"
 export class MyAgent extends Agent<Env, never> {
 	async onRequest(request: Request): Promise<Response> {
-		const { id, authUrl } = await this.addMcpServer(
+		const result = await this.addMcpServer(
 			"Weather API",
 			"https://weather-mcp.example.com/mcp",
 		);
 
-		if (authUrl) {
+		if (result.state === "authenticating") {
 			// User needs to complete OAuth flow
-			return new Response(JSON.stringify({ serverId: id, authUrl }), {
+			return new Response(JSON.stringify({ serverId: result.id, authUrl: result.authUrl }), {
 				headers: { "Content-Type": "application/json" },
 			});
 		}
 
-		return new Response("Connected", { status: 200 });
+		return new Response(`Connected: ${result.id}`, { status: 200 });
 	}
 }
 ```
@@ -193,8 +203,9 @@ An `MCPServersState` object containing:
 			state:
 				| "authenticating"
 				| "connecting"
-				| "ready"
+				| "connected"
 				| "discovering"
+				| "ready"
 				| "failed";
 			capabilities: ServerCapabilities | null;
 			instructions: string | null;
@@ -203,6 +214,7 @@ An `MCPServersState` object containing:
 	tools: Array<Tool & { serverId: string }>;
 	prompts: Array<Prompt & { serverId: string }>;
 	resources: Array<Resource & { serverId: string }>;
+	resourceTemplates: Array<ResourceTemplate & { serverId: string }>;
 }
 ```
 
@@ -228,7 +240,159 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-The `state` field can be: `authenticating`, `connecting`, `ready`, `discovering`, or `failed`. Use this method to monitor connection status, list available tools, or build UI for connected servers.
+The `state` field indicates the connection lifecycle:
+- `authenticating` — Waiting for OAuth authorization to complete
+- `connecting` — Establishing transport connection
+- `connected` — Transport connection established
+- `discovering` — Discovering server capabilities (tools, resources, prompts)
+- `ready` — Fully connected and operational
+- `failed` — Connection failed
+
+Use this method to monitor connection status, list available tools, or build UI for connected servers.
+
+## Lifecycle Methods
+
+The `this.mcp` property exposes additional methods for fine-grained control over MCP server connections.
+
+### `this.mcp.registerServer()`
+
+Register a server without immediately connecting. Useful for pre-configuring servers that will be connected later.
+
+```ts
+async registerServer(
+  id: string,
+  options: {
+    url: string;
+    name: string;
+    callbackUrl: string;
+    clientOptions?: ClientOptions;
+    transportOptions?: TransportOptions;
+  }
+): Promise<string>
+```
+
+#### Parameters
+
+- **`id`** (string, required) — Unique identifier for the server
+- **`options`** (object, required) — Server configuration:
+  - **`url`** — MCP server endpoint URL
+  - **`name`** — Display name for the server
+  - **`callbackUrl`** — OAuth callback URL
+  - **`clientOptions`** — MCP client configuration
+  - **`transportOptions`** — Transport layer settings
+
+#### Returns
+
+A Promise that resolves to the server ID.
+
+### `this.mcp.connectToServer()`
+
+Establish a connection to a previously registered server.
+
+```ts
+async connectToServer(id: string): Promise<MCPConnectionResult>
+```
+
+#### Parameters
+
+- **`id`** (string, required) — Server ID from `registerServer()`
+
+#### Returns
+
+A Promise that resolves to an `MCPConnectionResult`:
+
+```ts
+type MCPConnectionResult =
+  | { state: "failed"; error: string }
+  | { state: "authenticating"; authUrl: string }
+  | { state: "connected" }
+```
+
+### `this.mcp.discoverIfConnected()`
+
+Check server capabilities if a connection is active.
+
+```ts
+async discoverIfConnected(
+  serverId: string,
+  options?: { timeoutMs?: number }
+): Promise<MCPDiscoverResult | undefined>
+```
+
+#### Parameters
+
+- **`serverId`** (string, required) — Server ID to check
+- **`options`** (object, optional):
+  - **`timeoutMs`** — Discovery timeout in milliseconds
+
+#### Returns
+
+A Promise that resolves to `MCPDiscoverResult` if connected, or `undefined` if not connected:
+
+```ts
+type MCPDiscoverResult = {
+  success: boolean;
+  state: MCPConnectionState;
+  error?: string;
+}
+```
+
+### `this.mcp.closeConnection()`
+
+Close the connection to a specific server while keeping it registered.
+
+```ts
+async closeConnection(id: string): Promise<void>
+```
+
+### `this.mcp.closeAllConnections()`
+
+Close all active server connections while preserving registrations.
+
+```ts
+async closeAllConnections(): Promise<void>
+```
+
+## Capabilities
+
+### `this.mcp.getAITools()`
+
+Get all discovered MCP tools in a format compatible with the [AI SDK](https://ai-sdk.dev/).
+
+```ts
+getAITools(): ToolSet
+```
+
+#### Returns
+
+A `ToolSet` object containing all tools from connected MCP servers, ready to use with AI SDK functions like `generateText()` or `streamText()`.
+
+#### Example
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { generateText } from "ai";
+
+export class MyAgent extends Agent<Env, never> {
+	async onRequest(request: Request): Promise<Response> {
+		// Get all MCP tools as AI SDK compatible tools
+		const tools = this.mcp.getAITools();
+
+		const result = await generateText({
+			model: openai("gpt-4"),
+			prompt: "What's the weather in San Francisco?",
+			tools,
+		});
+
+		return new Response(result.text);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Tools are automatically namespaced by server ID to prevent conflicts when multiple MCP servers expose tools with the same name.
 
 ## OAuth Configuration
 
