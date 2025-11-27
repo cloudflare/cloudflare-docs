@@ -72,6 +72,29 @@ class Default(WorkerEntrypoint):
         return Response("Hello, {name}".format(name=name))
 ```
 
+## Read bundled asset files in your Worker
+
+Let's say your Worker has the following structure:
+
+```
+├── src
+│   ├── file.html
+│   └── main.py
+└── wrangler.jsonc
+```
+
+In order to read a file in your Worker, you would do the following:
+
+```python
+from pathlib import Path
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        html_file = Path(__file__).parent / "file.html"
+        return Response(html_file.read_text(), headers={"Content-Type": "text/html"})
+```
+
 ## Emit logs from your Python Worker
 
 ```python
