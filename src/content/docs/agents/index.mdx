@@ -33,11 +33,36 @@ The Agents SDK enables you to build and deploy AI-powered agents that can autono
 
 To use the Agent starter template and create your first Agent with the Agents SDK:
 
+1. Create a new project:
+
 ```sh
-# install it
-npm create cloudflare@latest agents-starter -- --template=cloudflare/agents-starter
-# and deploy it
-npx wrangler@latest deploy
+npx create-cloudflare@latest --template cloudflare/agents-starter
+```
+
+2. Install dependencies:
+
+```sh
+npm install
+```
+
+3. Set up your environment:
+
+Create a `.dev.vars` file:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+```
+
+4. Run locally:
+
+```sh
+npm start
+```
+
+5. Deploy:
+
+```sh
+npm run deploy
 ```
 
 Head to the guide on [building a chat agent](/agents/getting-started/build-a-chat-agent) to learn how the starter project is built and how to use it as a foundation for your own agents.
