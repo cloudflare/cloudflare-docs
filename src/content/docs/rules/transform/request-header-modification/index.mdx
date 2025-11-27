@@ -66,6 +66,11 @@ You can create a request header transform rule [in the dashboard](/rules/transfo
 
 - To use [claims inside a JSON Web Token (JWT)](/api-shield/security/jwt-validation/transform-rules/), you must first set up a token validation configuration in API Shield.
 
+- Request header transform rule matches are determined based on the original request properties. For example, if rule #1 sets a header to a different value than the one in the original request and rule #2 checks for this new value in its filter expression, rule #2 will not match because field values are immutable within a phase.<br/>
+  Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
+
+- Request header transform rules that appear later in the list of rules can override changes done by previous rules. Additionally, a request header transform rule executed later will not take into account any changes already done by previous request header transform rules. For example, if multiple matching rules add or modify the same request header, only the last rule will effectively be applied, since it will override the header set by previous rules. Refer to [Transform Rules evaluation](/rules/transform/#transform-rules-evaluation) for more information.
+
 <Render
 	file="troubleshoot-rules-with-trace"
 	product="rules"

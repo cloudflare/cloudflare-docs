@@ -71,6 +71,12 @@ You can create a response header transform rule [in the dashboard](/rules/transf
 
 - To add a `set-cookie` header to the response, make sure you use one of the _Add static_/_Add dynamic_ operations instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
 
+- Response header transform rule matches are determined based on the original request properties. For example, if rule #1 sets a header to a different value than the one in the original request and rule #2 checks for this new value in its filter expression, rule #2 will not match because field values are immutable within a phase.<br/>
+  Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
+
+- Response header transform rules that appear later in the list of rules can override changes done by previous rules. Additionally, a response header transform rule executed later will not take into account any changes already done by previous response header transform rules. For example, if multiple matching rules add or modify the same response header, only the last rule will effectively be applied, since it will override the header set by previous rules without taking into account any previous changes.<br/>
+  Refer to [Transform Rules evaluation](/rules/transform/#transform-rules-evaluation) for more information.
+
 <Render
 	file="troubleshoot-rules-with-trace"
 	product="rules"
