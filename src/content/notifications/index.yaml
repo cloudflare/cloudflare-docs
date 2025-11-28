@@ -65,7 +65,14 @@ entries:
     associatedProducts: Security Center
     nextSteps: Review the insight and decide whether you want to resolve it, archive it, or export it.
     otherFilters: You can select the insight(s) you want to be alerted on.
-
+  
+  - name: Abuse report
+    audience: Customers who want to be alerted in the event that an abuse report is filed against their website. 
+    availability: All Cloudflare plans.
+    associatedProducts: Security Center
+    nextSteps: View our guidance on [customer abuse report obligations](/fundamentals/reference/report-abuse/abuse-report-obligations/) and more information on how to [view and submit abuse reports](/fundamentals/reference/report-abuse/submit-report/).
+    otherFilters: You can filter the reports based on date, report status, report type, and domain.
+    
   - name: Maintenance Notification
     audience: Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers. The notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
     availability: All Cloudflare plans.
