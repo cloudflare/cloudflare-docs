@@ -1,0 +1,158 @@
+---
+pcx_content_type: reference
+title: Programmatic configuration
+sidebar:
+  order: 4
+description: Configure Workers programmatically using the Vite plugin
+---
+
+import { WranglerConfig } from "~/components";
+
+The Wrangler configuration file is optional when using the Cloudflare Vite plugin. Without one, the plugin uses default values. You can customize Worker configuration programmatically with the `configure` option. This is useful when the Cloudflare plugin runs inside another plugin or framework.
+
+## Default configuration
+
+Without a configuration file, the plugin generates sensible defaults for an assets-only Worker. The `name` comes from `package.json` or the project directory name. The `compatibility_date` uses the latest date supported by your installed Miniflare version.
+
+## The `configure` option
+
+The `configure` option offers three ways to programmatically configure your Worker:
+
+### Configuration object
+
+Set `configure` to an object to provide values that merge with defaults and config file settings:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configure: {
+				compatibility_date: "2025-01-01",
+				vars: {
+					API_URL: "https://api.example.com",
+				},
+			},
+		}),
+	],
+});
+```
+
+These values merge with config file values. The `configure` values take precedence.
+
+### Dynamic configuration function
+
+Use a function when configuration depends on existing config values or external data:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configure: (config) => ({
+				vars: {
+					WORKER_NAME: config.name,
+					BUILD_TIME: new Date().toISOString(),
+				},
+			}),
+		}),
+	],
+});
+```
+
+The function receives the current configuration (defaults or loaded config file). Return an object with values to merge.
+
+### In-place editing
+
+A `configure` function can mutate the config object directly instead of returning overrides. This is useful for deleting properties or removing array items:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configure: (config) => {
+				// Replace all existing compatibility flags
+				config.compatibility_flags = ["nodejs_compat"];
+			},
+		}),
+	],
+});
+```
+
+When editing in place, do not return a value from the function.
+
+## Auxiliary Workers
+
+Auxiliary Workers also support the `configure` option, enabling multi-Worker architectures without config files.
+
+Define auxiliary Workers without config files using `configure` inside the `auxiliaryWorkers` array:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configure: {
+				name: "entry-worker",
+				main: "./src/entry.ts",
+				compatibility_date: "2025-01-01",
+				services: [{ binding: "API", service: "api-worker" }],
+			},
+			auxiliaryWorkers: [
+				{
+					configure: {
+						name: "api-worker",
+						main: "./src/api.ts",
+						compatibility_date: "2025-01-01",
+					},
+				},
+			],
+		}),
+	],
+});
+```
+
+### Configuration overrides
+
+Combine a config file with `configure` to override specific values:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configPath: "./wrangler.jsonc",
+			auxiliaryWorkers: [
+				{
+					configPath: "./workers/api/wrangler.jsonc",
+					configure: {
+						vars: {
+							ENDPOINT: "https://api.example.com/v2",
+						},
+					},
+				},
+			],
+		}),
+	],
+});
+```
+
+## Configuration merging behavior
+
+The `configure` option uses [defu](https://github.com/unjs/defu) for merging configuration objects.
+
+- Object properties are recursively merged
+- Arrays are concatenated (configure values first, then existing values)
+- Primitive values from `configure` override existing values
+- `undefined` values in `configure` do not override existing values
