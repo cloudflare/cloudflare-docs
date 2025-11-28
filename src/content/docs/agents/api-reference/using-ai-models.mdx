@@ -225,6 +225,98 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
+#### File attachments in AI chat
+
+When building AI chat applications with `AIChatAgent`, you can send file attachments (such as images or documents) along with text messages. This is useful for vision-capable models or when you need to provide context from documents.
+
+The `filesToParts()` function converts JavaScript `File` objects into the format expected by the AI SDK. You can use this in your React client with the `useAgentChat` hook.
+
+<TypeScriptExample filename="src/client.tsx">
+
+```ts
+import { useAgentChat, filesToParts } from "agents/ai-react";
+import { useAgent } from "agents/react";
+import { useState } from "react";
+
+function ChatComponent() {
+	const [files, setFiles] = useState<File[]>([]);
+	const [input, setInput] = useState("");
+
+	const agent = useAgent({
+		agent: "MyAgent",
+		name: "chat-session",
+	});
+
+	const { messages, sendMessage } = useAgentChat({ agent });
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		await sendMessage({
+			text: input || "Please describe this image",
+			files: files.length > 0 ? await filesToParts(files) : undefined,
+		});
+
+		setInput("");
+		setFiles([]);
+	};
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<input
+				type="file"
+				multiple
+				onChange={(e) => setFiles(Array.from(e.target.files || []))}
+			/>
+			<textarea
+				value={input}
+				onChange={(e) => setInput(e.target.value)}
+				placeholder="Message..."
+			/>
+			<button type="submit">Send</button>
+		</form>
+	);
+}
+```
+
+</TypeScriptExample>
+
+On the server side, `AIChatAgent` automatically handles file attachments. The files are included in the `this.messages` array and can be passed directly to vision-capable models.
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { openai } from "@ai-sdk/openai";
+import {
+	streamText,
+	convertToModelMessages,
+	createUIMessageStream,
+	createUIMessageStreamResponse,
+} from "ai";
+
+export class MyAgent extends AIChatAgent<Env> {
+	async onChatMessage() {
+		const stream = createUIMessageStream({
+			execute: async ({ writer }) => {
+				const result = streamText({
+					model: openai("gpt-4o"), // Use a vision-capable model
+					messages: convertToModelMessages(this.messages),
+				});
+
+				writer.merge(result.toUIMessageStream());
+			},
+		});
+
+		return createUIMessageStreamResponse({ stream });
+	}
+}
+```
+
+</TypeScriptExample>
+
+File attachments are automatically stripped from storage to avoid SQLite size limits. When a user message contains files, the files are sent to the model but only metadata (filename and type) is persisted in the Agent state. This prevents large image data URLs from exceeding storage limits while maintaining conversation context.
+
 ### OpenAI compatible endpoints
 
 Agents can call models across any service, including those that support the OpenAI API. For example, you can use the OpenAI SDK to use one of [Google's Gemini models](https://ai.google.dev/gemini-api/docs/openai#node.js) directly from your Agent.
