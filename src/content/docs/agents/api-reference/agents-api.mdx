@@ -933,6 +933,37 @@ const { messages } = useAgentChat({
 
 ### Chat Agent React API
 
+#### filesToParts
+
+Helper function to convert File objects to FileUIPart format for use with `sendMessage`.
+
+```ts
+import { filesToParts } from "agents/ai-react";
+import type { FileUIPart } from "ai";
+
+// Convert File[] to FileUIPart[] for use with sendMessage
+async function filesToParts(files: File[]): Promise<FileUIPart[]>;
+```
+
+This utility is useful when you have an array of Files from component state. If you have a FileList directly from an input element, use the AI SDK's `convertFileListToFileUIParts` instead.
+
+<TypeScriptExample>
+
+```tsx
+import { filesToParts } from "agents/ai-react";
+
+// Convert files from state to parts for sending
+const fileArray = [file1, file2];
+const fileParts = await filesToParts(fileArray);
+
+await sendMessage({
+	text: "Please analyze these files",
+	files: fileParts,
+});
+```
+
+</TypeScriptExample>
+
 #### useAgentChat
 
 React hook for building AI chat interfaces using an Agent.
@@ -1005,6 +1036,11 @@ function useAgentChat(options: UseAgentChatOptions): {
 	}) => void;
 	// Current error if any
 	error: Error | undefined;
+	// Send a message with optional file attachments
+	sendMessage: (options: {
+		text: string;
+		files?: FileUIPart[];
+	}) => Promise<void>;
 };
 ```
 
@@ -1065,6 +1101,97 @@ function ChatInterface() {
 				</button>
 				<button type="button" onClick={clearHistory}>
 					Clear Chat
+				</button>
+			</form>
+		</div>
+	);
+}
+```
+
+</TypeScriptExample>
+
+#### Sending messages with file attachments
+
+You can send files (images, documents) along with text messages using the `sendMessage` method and `filesToParts` helper:
+
+<TypeScriptExample>
+
+```tsx
+import { useAgentChat, filesToParts } from "agents/ai-react";
+import { useAgent } from "agents/react";
+import { useState, useRef } from "react";
+
+function ChatWithFiles() {
+	const [files, setFiles] = useState<File[]>([]);
+	const [input, setInput] = useState("");
+	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	const agent = useAgent({
+		agent: "chat-agent",
+		name: "user-123",
+	});
+
+	const { messages, sendMessage, status } = useAgentChat({
+		agent,
+	});
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		if (!input.trim() && files.length === 0) return;
+
+		const message = input;
+		const fileArray = files;
+
+		// Clear input and files
+		setInput("");
+		setFiles([]);
+
+		// Send message with files
+		await sendMessage({
+			text: message || "Please analyze these files",
+			files: fileArray.length > 0 ? await filesToParts(fileArray) : undefined,
+		});
+	};
+
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			setFiles(Array.from(e.target.files));
+		}
+	};
+
+	return (
+		<div>
+			<div>
+				{messages.map((message, i) => (
+					<div key={i}>
+						<strong>{message.role}:</strong>
+						{message.parts
+							.filter((part) => part.type === "text")
+							.map((part, j) => (
+								<span key={j}>{(part as any).text}</span>
+							))}
+					</div>
+				))}
+			</div>
+
+			<form onSubmit={handleSubmit}>
+				<input
+					type="file"
+					ref={fileInputRef}
+					onChange={handleFileChange}
+					multiple
+					accept="image/*"
+				/>
+
+				<input
+					type="text"
+					value={input}
+					onChange={(e) => setInput(e.target.value)}
+					placeholder="Type a message..."
+				/>
+
+				<button type="submit" disabled={status === "streaming"}>
+					Send
 				</button>
 			</form>
 		</div>
