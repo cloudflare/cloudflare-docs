@@ -9,6 +9,16 @@ import { TypeScriptExample } from "~/components";
 
 Execute Python, JavaScript, and TypeScript code with support for data visualizations, tables, and rich output formats. Contexts maintain state (variables, imports, functions) across executions.
 
+:::note[Python execution requires Python image]
+To execute Python code, you must use the `-python` image variant in your Dockerfile:
+
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.6.0-python
+```
+
+The default image only supports JavaScript and TypeScript. Attempting to run Python code without the Python image will fail with a `PYTHON_NOT_AVAILABLE` error. See [Dockerfile reference](/sandbox/configuration/dockerfile/) for details on image variants.
+:::
+
 ## Methods
 
 ### `createCodeContext()`

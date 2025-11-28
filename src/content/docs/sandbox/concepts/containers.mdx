@@ -5,14 +5,14 @@ sidebar:
   order: 3
 ---
 
-Each sandbox runs in an isolated Linux container with Python, Node.js, and common development tools pre-installed. For a complete list of pre-installed software and how to customize the container image, see [Dockerfile reference](/sandbox/configuration/dockerfile/).
+Each sandbox runs in an isolated Linux container with Node.js and common development tools pre-installed. Two image variants are available: a lean default image for shell and JavaScript workloads, and a Python-enabled image for data science tasks. For a complete list of pre-installed software and how to customize the container image, see [Dockerfile reference](/sandbox/configuration/dockerfile/).
 
 ## Runtime software installation
 
 Install additional software at runtime using standard package managers:
 
 ```bash
-# Python packages
+# Python packages (requires Python image variant)
 pip install scikit-learn tensorflow
 
 # Node.js packages
@@ -21,6 +21,10 @@ npm install express
 # System packages (requires apt-get update first)
 apt-get update && apt-get install -y redis-server
 ```
+
+:::note[Python package installation]
+Python package installation requires the `-python` image variant. See [Dockerfile reference](/sandbox/configuration/dockerfile/) for details on choosing the appropriate image variant.
+:::
 
 ## Filesystem
 
