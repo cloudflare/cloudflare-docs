@@ -352,9 +352,13 @@ More recent versions of MyBB include a Scrutinize User's IP address option.
 
 `Admin CP > Configuration > Server and Optimization Options > Scrutinize User's IP address? > Yes`
 
-Alternatively, you may install the [Cloudflare management plugin](https://mods.mybb.com/view/antoligy-mybb-cloudflare-management-plugin) available for MyBB 1.6.
+Alternatively, you may install the [Cloudflare management plugin](https://community.mybb.com/mods.php?action=view&pid=651) available for MyBB 1.8.x
+#### MyBB 1.8.x
+1. Navigate to `./inc/functions.php`.
+2. In function `function get_ip()` around line 4471
+4. Find and replace:`$ip = strtolower($_SERVER['REMOTE_ADDR']);`With:`$ip = strtolower($_SERVER['HTTP_CF_CONNECTING_IP']);`
 
-#### MyBB 1.6.0, 1.6.1, 1.6.2, or 1.6.3
+#### MyBB 1.6.x, 1.6.1, 1.6.2, or 1.6.3
 
 1. Navigate to `./inc/functions.php`.
 2. Go to line 2790.
