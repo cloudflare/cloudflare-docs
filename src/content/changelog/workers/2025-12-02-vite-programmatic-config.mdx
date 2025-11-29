@@ -1,0 +1,106 @@
+---
+title: Configure Workers programmatically using the Vite plugin
+description: The Cloudflare Vite plugic can now programmatically configure Workers without a Wrangler config file, or modify existing configuration.
+products:
+  - workers
+date: 2025-12-02
+---
+
+The [Cloudflare Vite plugin](/workers/vite-plugin/) now supports programmatic configuration of Workers without a Wrangler configuration file. You can use the `configure` option to define Worker settings directly in your Vite configuration, or to modify existing configuration loaded from a Wrangler config file. This is particularly useful when integrating with other build tools or frameworks, as it allows them to control Worker configuration without needing users to manage a separate config file.
+
+## The `configure` option
+
+The Vite plugin's new `configure` option accepts either a partial configuration object or a function that receives the current configuration and returns overrides. This option is applied after any config file is loaded, allowing the plugin to override specific values or define Workers entirely in code.
+
+## Example usage
+
+Setting `configure` to an object to provide configuration values that merge with defaults and config file settings:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configure: {
+				name: "my-worker",
+				compatibility_flags: ["nodejs_compat"],
+				send_email: [
+					{
+						name: "EMAIL",
+					},
+				],
+			},
+		}),
+	],
+});
+```
+
+Use a function to modify the existing configuration:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configure: (config) => {
+				delete config.compatibility_flags;
+			},
+		}),
+	],
+});
+```
+
+Return an object with values to merge:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configure: (config) => {
+				if (!config.compatibility_flags.includes("no_nodejs_compat")) {
+					return { compatibility_flags: ["nodejs_compat"] };
+				}
+			},
+		}),
+	],
+});
+```
+
+### Auxiliary Workers
+
+Auxiliary Workers also support the `configure` option, enabling multi-Worker architectures without config files.
+
+Define auxiliary Workers without config files using `configure` inside the `auxiliaryWorkers` array:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configure: {
+				name: "entry-worker",
+				main: "./src/entry.ts",
+				services: [{ binding: "API", service: "api-worker" }],
+			},
+			auxiliaryWorkers: [
+				{
+					configure: {
+						name: "api-worker",
+						main: "./src/api.ts",
+					},
+				},
+			],
+		}),
+	],
+});
+```
+
+For more details and examples, see [Programmatic configuration](/workers/vite-plugin/reference/programmatic-configuration/).
