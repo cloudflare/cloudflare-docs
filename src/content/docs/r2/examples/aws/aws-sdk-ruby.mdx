@@ -21,8 +21,8 @@ Then you can use Ruby to operate on R2 buckets:
 ```ruby
 require "aws-sdk-s3"
 
-# Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
 @r2 = Aws::S3::Client.new(
+  # Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
   access_key_id: "#{ACCESS_KEY_ID}",
   secret_access_key: "#{SECRET_ACCESS_KEY}",
   # Provide your Cloudflare account ID

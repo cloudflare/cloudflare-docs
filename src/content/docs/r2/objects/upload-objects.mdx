@@ -7,7 +7,11 @@ sidebar:
 
 import { Steps, Tabs, TabItem, Render, DashButton } from "~/components"
 
-You can upload objects to R2 using the dashboard, Workers API, S3 API, or command-line tools.
+There are several ways to upload objects to R2:
+1. Using the [S3 API](/r2/api/s3/api/), which is supported by a wide range of tools and libraries (recommended)
+2. Directly from within a Worker using R2's [Workers API](/r2/api/workers/)
+3. Using the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview)
+4. Using the [Wrangler](/r2/reference/wrangler-commands/) command-line (`wrangler r2`)
 
 ## Upload via dashboard
 
@@ -87,7 +91,7 @@ s3.put_object(Bucket="my-bucket", Key="image.png", Body=file_content)
 </TabItem>
 </Tabs>
 
-For complete S3 API documentation, refer to [S3 API](/r2/api/s3/api/).
+Refer to R2's [S3 API documentation](/r2/api/s3/api/) for all S3 API methods.
 
 ### Presigned URLs
 

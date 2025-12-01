@@ -32,7 +32,7 @@ async fn main() -> Result<(), s3::Error> {
         .credentials_provider(aws_sdk_s3::config::Credentials::new(
             access_key_id,
             access_key_secret,
-            None,
+            None, // session token is not used with R2
             None,
             "R2",
         ))
