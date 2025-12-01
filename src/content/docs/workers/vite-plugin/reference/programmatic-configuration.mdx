@@ -16,7 +16,11 @@ Without a configuration file, the plugin generates sensible defaults for an asse
 
 ## The `config` option
 
-The `config` option offers three ways to programmatically configure your Worker:
+The `config` option offers three ways to programmatically configure your Worker. You can set any property from the [Wrangler configuration file](/workers/wrangler/configuration/), though some options are [ignored or replaced by Vite equivalents](/workers/vite-plugin/reference/migrating-from-wrangler-dev/#redundant-fields-in-the-wrangler-config-file).
+
+:::note
+You cannot define [Cloudflare environments](/workers/vite-plugin/reference/cloudflare-environments/) via `config`, as they are resolved before this option is applied.
+:::
 
 ### Configuration object
 
