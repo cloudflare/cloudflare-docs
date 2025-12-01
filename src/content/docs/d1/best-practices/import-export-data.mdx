@@ -92,6 +92,16 @@ For example, if you have a raw SQLite dump called `db_dump.sqlite3`, run the fol
 sqlite3 db_dump.sqlite3 .dump > db.sql
 ```
 
+:::note
+
+If you are using sqlite v3.50.0 or later you need to pass `--escape off` to the .dump command to avoid usage of `unistr`. See [sqlite v3.50.0 release notes](https://sqlite.org/releaselog/3_50_0.html) for more details
+
+```sh
+sqlite3 db_dump.sqlite3 .dump --escape off > db.sql
+```
+
+:::
+
 Once you have run the above command, you will need to edit the output SQL file to be compatible with D1:
 
 1. Remove `BEGIN TRANSACTION` and `COMMIT;` from the file
