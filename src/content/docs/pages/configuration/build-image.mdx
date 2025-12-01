@@ -105,3 +105,42 @@ The following features are not currently supported when using the v3 build syste
 Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container.
 
 <PagesBuildEnvironment />
+
+
+## Build Image Policy
+
+New versions come with improvements (vibe)
+
+### Image Version Deprecation
+
+Build image versions are deprecated when they only contain end-of-life (EOL) software that is no longer maintained by upstream providers.
+Build image versions are deprecated 2 years (at least two years before being )
+
+**Deprecation timeline**: We provide at least 6 months notice before removing support for a build image version.
+
+**Deprecation process**:
+1. **Announcement** via [Cloudflare Changelog](https://developers.cloudflare.com/changelog/) and dashboard notifications
+2. **Deprecation warnings** displayed prominently in dashboard for affected projects
+3. **Email notifications** to project owners upon announcement 
+4. **Final removal** on the announced date; the deprecated image version will no longer be available for new deployments prior to being forced upgraded to next major 
+
+Existing deployments using deprecated build images will continue to function, but new builds will require migration to a supported version.
+
+### Default Version Updates
+
+Within each build image version, default versions of languages and tools are updated regularly to their latest stable releases. We provide advance notice before making updates that may impact your builds:
+
+- **Minor version updates**: Default versions are updated to the latest minor version without notice (e.g., Node.js 22.15.0 → 22.16.0). If you need a specific minor version, [override the default version](/pages/configuration/build-image/#override-default-versions).
+
+- **Major version updates**: Updates will only occur when Node.js approaches its EOL date. When updating Node.js, we also update related tools and dependencies to their latest stable versions. We will provide at least 3 months advance notice via:
+  - [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
+  - Dashboard notification to affected projects upon announcement
+  - Email notification to affected projects upon announcement
+
+### Best Practices
+
+To avoid unexpected build failures:
+- **Monitor announcements** via the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/) and dashboard notifications
+- **Test migrations** when switching to a new build image version or when default versions are updated
+- **Pin specific versions** of critical dependencies by [overriding default versions](/pages/configuration/build-image/#override-default-versions)
+- **Plan for migration** when you receive deprecation notices—waiting until the last minute may cause service disruption

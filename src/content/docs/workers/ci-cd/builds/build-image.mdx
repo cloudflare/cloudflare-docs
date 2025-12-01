@@ -88,3 +88,22 @@ Workers Builds are run in the following environment:
 | --------------------- | ------------ |
 | **Build Environment** | Ubuntu 24.04 |
 | **Architecture**      | x86_64       |
+
+
+## Build Image Policy
+
+### Default Version Updates
+
+Default versions of languages and tools are updated regularly to their latest stable releases.
+
+- **Minor version updates**: Default versions are updated to the latest minor version without notice (e.g., Node.js 22.15.0 → 22.16.0). If you need a specific minor version, [override the default version](/workers/ci-cd/builds/build-image/#overriding-default-versions).
+
+- **Major version updates**: When a language runtime or tool approaches its end-of-life (EOL) date, e.g. Node.js, we update to the latest supported version. We will provide at least 3 months advance notice via
+  - [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
+  - Dashboard notification to affected projects upon announcement
+
+### Best Practices
+
+To avoid unexpected build failures:
+- **Pin specific versions** for production applications by [overriding default versions](/workers/ci-cd/builds/build-image/#overriding-default-versions)
+- Monitor the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/) for upcoming updates

@@ -1,0 +1,17 @@
+---
+title: Build image policies for Workers Builds and Cloudflare Pages
+description: Workers Builds and Cloudflare Pages now have documented build image policies outlining deprecation timelines and version update procedures.
+products:
+  - workers
+date: 2025-12-01
+---
+
+We've published build image policies for [Workers Builds](/workers/ci-cd/builds/build-image) and [Cloudflare Pages](/pages/configuration/build-image) that establish:
+
+- **Minor version updates** happen automatically without notice 
+- **Major version updates** require at least 3 months advance notice when language runtimes or tools approach their end-of-life dates
+- **Build image version deprecation** (Pages only): Build image versions are supported for at least 2 years and will receive at least 6 months notice before removal
+
+When deprecations or major updates are announced, you'll receive notifications via the Cloudflare Changelog, dashboard notifications, and email.
+
+To avoid unexpected build failures, we recommend [pinning specific versions](/workers/ci-cd/builds/build-image/#overriding-default-versions) for production applications and monitoring the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/), as well as the dashboard, and your emails. 
