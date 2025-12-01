@@ -4,7 +4,7 @@ import { reference, type SchemaContext } from "astro:content";
 import { sidebar, SidebarIconSchema } from "./types/sidebar";
 
 export const baseSchema = ({ image }: SchemaContext) =>
-	z.object({sp
+	z.object({
 		preview_image: image()
 			.optional()
 			.describe(
