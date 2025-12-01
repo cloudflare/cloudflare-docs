@@ -35,8 +35,10 @@ import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const S3 = new S3Client({
-	region: "auto",
+	region: "auto", // Required by SDK but not used by R2
+	// Provide your Cloudflare account ID
 	endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
 	credentials: {
 		accessKeyId: ACCESS_KEY_ID,
 		secretAccessKey: SECRET_ACCESS_KEY,
@@ -49,7 +51,7 @@ const getUrl = await getSignedUrl(
 	new GetObjectCommand({ Bucket: "my-bucket", Key: "image.png" }),
 	{ expiresIn: 3600 }, // Valid for 1 hour
 );
-// https://my-bucket.<accountid>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
+// https://my_bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
 
 // Generate presigned URL for writing (PUT)
 const putUrl = await getSignedUrl(
@@ -66,11 +68,13 @@ const putUrl = await getSignedUrl(
 import boto3
 
 s3 = boto3.client(
-	service_name="s3",
-	endpoint_url='https://<accountid>.r2.cloudflarestorage.com',
-	aws_access_key_id='<access_key_id>',
-	aws_secret_access_key='<access_key_secret>',
-	region_name="auto",
+    service_name="s3",
+    # Provide your Cloudflare account ID
+    endpoint_url='https://<ACCOUNT_ID>.r2.cloudflarestorage.com',
+    # Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+    aws_access_key_id='<ACCESS_KEY_ID>',
+    aws_secret_access_key='<SECRET_ACCESS_KEY>',
+    region_name="auto", # Required by SDK but not used by R2
 )
 
 # Generate presigned URL for reading (GET)
@@ -79,7 +83,7 @@ get_url = s3.generate_presigned_url(
 	Params={'Bucket': 'my-bucket', 'Key': 'image.png'},
 	ExpiresIn=3600  # Valid for 1 hour
 )
-# https://my-bucket.<accountid>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
+# https://my-bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
 
 # Generate presigned URL for writing (PUT)
 put_url = s3.generate_presigned_url(
@@ -95,12 +99,12 @@ put_url = s3.generate_presigned_url(
 ```sh
 # Generate presigned URL for reading (GET)
 # The AWS CLI presign command defaults to GET operations
-aws s3 presign --endpoint-url https://<accountid>.r2.cloudflarestorage.com \
+aws s3 presign --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com \
   s3://my-bucket/image.png \
   --expires-in 3600
 
 # Output:
-# https://<accountid>.r2.cloudflarestorage.com/my-bucket/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=...
+# https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=...
 
 # Note: The AWS CLI presign command only supports GET operations.
 # For PUT operations, use one of the SDK examples above.
@@ -122,10 +126,10 @@ Once generated, use a presigned URL like any HTTP endpoint. The signature is emb
 
 ```sh
 # Download using a GET presigned URL
-curl "https://my-bucket.<accountid>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=..."
+curl "https://my-bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=..."
 
 # Upload using a PUT presigned URL
-curl -X PUT "https://my-bucket.<accountid>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=..." \
+curl -X PUT "https://my-bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=..." \
   --data-binary @image.png
 ```
 
@@ -169,7 +173,7 @@ Treat presigned URLs as bearer tokens. Anyone with the URL can perform the speci
 
 ## Custom domains
 
-Presigned URLs work with the S3 API domain (`<accountid>.r2.cloudflarestorage.com`) and cannot be used with custom domains.
+Presigned URLs work with the S3 API domain (`<ACCOUNT_ID>.r2.cloudflarestorage.com`) and cannot be used with custom domains.
 
 If you need authentication with R2 buckets accessed via custom domains (public buckets), use the [WAF HMAC validation feature](/ruleset-engine/rules-language/functions/#hmac-validation) (requires Pro plan or above).
 
