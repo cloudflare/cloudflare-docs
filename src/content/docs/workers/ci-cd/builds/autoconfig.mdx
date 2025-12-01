@@ -1,0 +1,203 @@
+---
+pcx_content_type: autoconfig
+title: Project Auto-configuration
+description: Learn how Workers Builds Configures your project to run on Workers 
+sidebar:
+  order: 11
+---
+
+### Automatic Configuration
+
+Workers Builds includes automatic configuration to streamline your deployment process. When you deploy a project without a Wrangler configuration file, Workers Builds automatically detects your framework, configures your project, and creates a pull request with the necessary configuration files.
+
+#### Overview
+
+When you connect a repository to Workers Builds and your project doesn't have a `wrangler.toml` or `wrangler.jsonc` file, automatic configuration will:
+
+- Detect your framework (Astro, SvelteKit, or static sites)
+- Identify your build settings from `package.json`
+- Create the necessary Wrangler configuration files
+- Deploy your Worker successfully
+- Create a pull request with the configuration changes
+
+After you merge the pull request, future deployments will be faster since the configuration step can be skipped.
+
+### How It Works
+
+#### First Deployment
+
+On your first deployment, Workers Builds will:
+
+1. **Configure your project** - Automatically detect your framework and create configuration files
+2. **Build your project** - Run your build command to prepare your Worker
+3. **Deploy your Worker** - Publish your Worker to Cloudflare's network
+4. **Create a pull request** - Open a PR in your repository with the configuration files
+
+
+##### After Merging the PR
+
+Once you merge the configuration pull request:
+
+- Future deployments will use your committed configuration
+- Builds will be faster (no configuration step needed)
+- You can customize the configuration as needed
+
+### Supported Frameworks
+
+Automatic configuration currently supports:
+
+| Framework | Support Level |
+|-----------|--------------|
+| **Astro** | Full SSR support with Cloudflare adapter |
+| **SvelteKit** | Full SSR support with Cloudflare adapter |
+| **Static sites** | Any project with static HTML/assets |
+| + more | | 
+
+
+### Configuration Pull Request
+
+#### What's Included
+
+The pull request will contain only the files needed to configure your Worker:
+
+- **`wrangler.jsonc`** - Your Worker configuration (compatibility settings, build command, output directory)
+- **`package.json`** - Updated with Wrangler dependency and deployment scripts
+- **`.gitignore`** - Appended with Wrangler-specific ignore patterns (`.wrangler/`, `.dev.vars`, `.env`)
+- **Framework configs** (if applicable) - For example, `astro.config.mjs` or `svelte.config.js`
+- **`.assetsignore`** files (if applicable) - Asset handling configuration for your framework
+- can have a better list here when we get more data 
+
+#### Why Merge the PR
+
+Merging the configuration PR provides several benefits:
+
+1. ** Faster builds** - Skip the configuration step on every deployment
+2. ** Transparency** - See exactly what configuration was applied to your project
+3. ** Customizable** - Modify the configuration to fit your specific needs
+4. ** Version controlled** - Track your Worker configuration alongside your code
+
+#### If You Don't Merge
+
+If you choose not to merge the PR:
+
+- Automatic configuration will run on every deployment
+- Builds will take longer due to the additional configuration step
+- The PR will remain open for you to review and merge later
+
+
+### Customizing Your Configuration
+
+After merging the PR, you can customize your Worker configuration by editing `wrangler.jsonc`:
+
+```jsonc
+{
+  "name": "my-worker",
+  "main": "dist/_worker.js",
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist/"
+  }
+}
+```
+
+Common customizations include:
+
+- **Environment variables** - Add [vars](/workers/configuration/environment-variables/) or [secrets](/workers/configuration/secrets/)
+- **Custom domains** - Configure [routes](/workers/configuration/routing/routes/)
+- **Bindings** - Add [KV](/kv/), [R2](/r2/), [D1](/d1/), or other [service bindings](/workers/runtime-apis/bindings/)
+- **Compatibility settings** - Adjust [compatibility dates](/workers/configuration/compatibility-dates/) and [flags](/workers/configuration/compatibility-dates/#compatibility-flags)
+
+See the [configuration reference](/workers/wrangler/configuration/) for all available options.
+
+### Manual Configuration
+
+If you prefer to configure your Worker manually instead of using automatic configuration:
+
+1. **Run setup locally**:
+   ```bash
+   npx wrangler setup
+   ```
+
+2. **Review the generated files**:
+   - Check `wrangler.jsonc` for accuracy
+   - Verify framework-specific configurations
+
+3. **Customize as needed**:
+   - Edit configurations to match your requirements
+   - Add environment variables, bindings, etc.
+
+4. **Commit and push**:
+   ```bash
+   git add wrangler.jsonc package.json .gitignore
+   git commit -m "Add Wrangler configuration"
+   git push
+   ```
+
+Once a Wrangler configuration file exists in your repository, automatic configuration will not run on subsequent deployments.
+
+### Troubleshooting
+
+#### Build Fails After Merging PR
+
+If your deployment fails after merging the configuration PR:
+
+**Possible causes:**
+- Specified build command may not match the proper configuration
+- Missing environment variables or bindings
+- Framework-specific requirements not met
+
+**Solutions:**
+1. Review your build logs for specific error messages
+2. Check that `wrangler.jsonc` settings match your project:
+   - Verify the `main` entry point exists
+   - Confirm the output directory is correct
+   - Ensure compatibility flags are appropriate
+3. Consult the [framework guides](/workers/framework-guides/) for framework-specific setup
+
+
+#### Need to Reconfigure
+
+If you want to regenerate your configuration:
+
+1. **Delete the configuration file**:
+   ```bash
+   git rm wrangler.jsonc
+   git commit -m "Remove Wrangler config for regeneration"
+   git push
+   ```
+
+2. **Trigger a new deployment** - Automatic configuration will run again and create a new PR
+
+
+## FAQ
+
+**Q: Will automatic configuration run on every deployment?**
+
+A: No. Once you have a `wrangler.jsonc` file in your repository (either from merging the PR or committing manually), automatic configuration will be skipped on future deployments.
+
+---
+
+**Q: Is my code or data committed in the PR?**
+
+A: No. The PR only contains configuration files that automatic configuration created or modified. Your source code, build outputs, and environment variables are never included.
+
+---
+
+**Q: Can I disable automatic configuration?**
+
+A: Yes. Create and commit a `wrangler.jsonc` file in your repository before deploying. Once a configuration file exists, automatic configuration will not run.
+
+---
+
+**Q: How long does automatic configuration add to my build time?**
+
+A: The first deployment with automatic configuration takes an additional x seconds for the configuration step. After merging the PR, this overhead is eliminated entirely.
+
+### Related Resources
+
+- [Configuration Reference](/workers/wrangler/configuration/) - Complete guide to `wrangler.jsonc` options (add wrangler docs)
+- [Framework Guides](/workers/framework-guides/) - Framework-specific setup instructions
+- [Build Configuration](/workers/ci-cd/builds/configuration/) - Customize your build and deploy commands
+- [Git Integration](/workers/ci-cd/builds/git-integration/) - Manage your repository connection
+- [Wrangler Commands](/workers/wrangler/commands/) - CLI reference for local development
