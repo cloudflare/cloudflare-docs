@@ -15,8 +15,6 @@ To generate a presigned URL, you specify:
 2. **Operation**: The S3 API operation permitted (GET, PUT, HEAD, or DELETE)
 3. **Expiry**: Timeout from 1 second to 7 days (604,800 seconds)
 
-The signature parameters (`X-Amz-Algorithm`, `X-Amz-Credential`, `X-Amz-Date`, `X-Amz-Expires`, `X-Amz-Signature`) cannot be tampered with. Attempting to modify the resource, operation, or expiry will result in a `403/SignatureDoesNotMatch` error.
-
 Presigned URLs are generated client-side with no communication with R2, requiring only your R2 API credentials and an implementation of the AWS Signature Version 4 signing algorithm.
 
 ## Generate a presigned URL
@@ -132,6 +130,27 @@ curl -X PUT "https://my-bucket.<accountid>.r2.cloudflarestorage.com/image.png?X-
 ```
 
 You can also use presigned URLs directly in web browsers, mobile apps, or any HTTP client. The same presigned URL can be reused multiple times until it expires.
+
+## Presigned URL example
+
+The following is an example of a presigned URL that was created using R2 API credentials and following the AWS Signature Version 4 signing process:
+
+```
+https://my-bucket.123456789abcdef0123456789abcdef.r2.cloudflarestorage.com/photos/cat.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=CFEXAMPLEKEY12345%2F20251201%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20251201T180512Z&X-Amz-Expires=3600&X-Amz-Signature=8c3ac40fa6c83d64b4516e0c9e5fa94c998bb79131be9ddadf90cefc5ec31033&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject
+```
+
+In this example, this presigned url performs a `GetObject` on the object `photos/cat.png` within bucket `my-bucket` in the account with id `123456789abcdef0123456789abcdef`. The key signature parameters that compose this presigned URL are:
+
+- `X-Amz-Algorithm`: Identifies the algorithm used to sign the URL.
+- `X-Amz-Credential`: Contains information about the credentials used to calculate the signature.
+- `X-Amz-Date`: The date and time (in ISO 8601 format) when the signature was created.
+- `X-Amz-Expires`: The duration in seconds that the presigned URL remains valid, starting from `X-Amz-Date`.
+- `X-Amz-Signature`: The signature proving the URL was signed using the secret key.
+- `X-Amz-SignedHeaders`: Lists the HTTP headers that were included in the signature calculation.
+
+:::note
+The signature parameters (e.g. `X-Amz-Algorithm`, `X-Amz-Credential`, `X-Amz-Date`, `X-Amz-Expires`, `X-Amz-Signature`) cannot be tampered with. Attempting to modify the resource, operation, or expiry will result in a `403/SignatureDoesNotMatch` error.
+:::
 
 ## Supported operations
 
