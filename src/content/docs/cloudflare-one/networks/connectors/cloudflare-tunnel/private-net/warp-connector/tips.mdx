@@ -52,7 +52,7 @@ Generally, this does not cause issues for TCP traffic and modern applications th
 
 However, this may cause issues for legacy applications (like some video streaming or monitoring tools) that may not perform [Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/). Instead, they send large packets (e.g., more than 1,280 bytes) with the `do not fragment` (DF) bit unset (`DF=0`).
 
-In this situation, WARP Connector host receives this large packet (for example, 1,460 bytes), then fragments the packet to fit its [tunnel MTU](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface). These fragments are then reassembled at the Cloudflare edge back into the original 1,460-byte packet.
+In this situation, WARP Connector host receives this large packet (for example, 1,460 bytes), then fragments the packet to fit its [tunnel MTU](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface). These fragments are then reassembled at a Cloudflare data center back into the original 1,460-byte packet.
 Cloudflare then tries to encapsulate this 1,460-byte packet to send to the WARP client, pushing it over 1,500 bytes and causing it to be dropped. Cloudflare does not currently support fragmenting these outgoing encapsulated packets.
 
 ### Recommendations
