@@ -1,7 +1,7 @@
 rules:
   - id: coming-soon
     languages: [generic]
-    message: "Found forbidden string 'coming soon'. Too often we set expectations unfairly by attaching this phrase to a feature that may not actually arrive soon."
+    message: "Found forbidden string 'coming soon'. Too often we set expectations unfairly by attaching this phrase to a feature that may not actually arrive soon. (add [skip semgrep] to commit message to skip check)"
     severity: MEDIUM
     paths:
       include:
@@ -21,7 +21,7 @@ rules:
 
   - id: potential-date
     languages: [generic]
-    message: "Potential date found. Documentation should strive to represent universal truth, not something time-bound."
+    message: "Potential date found. Documentation should strive to represent universal truth, not something time-bound. (add [skip semgrep] to commit message to skip check)"
     severity: MEDIUM
     paths:
       include:

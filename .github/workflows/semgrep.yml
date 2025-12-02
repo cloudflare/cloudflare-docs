@@ -48,6 +48,7 @@ jobs:
             semgrep scan \
               --config .semgrep --metrics=off \
               --include "*.mdx" --include "*.mdx" \
+              --error \
               --json \
               $list_of_files \
               | jq --raw-output ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
