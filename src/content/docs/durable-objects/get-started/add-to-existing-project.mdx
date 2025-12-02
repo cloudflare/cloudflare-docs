@@ -1,0 +1,480 @@
+---
+title: Add to existing project
+pcx_content_type: get-started
+sidebar:
+  order: 3
+---
+
+import {
+	Render,
+	TabItem,
+	Tabs,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
+
+This guide shows you how to add Durable Objects to an existing Workers project. If you're starting from scratch, see [Create your first Durable Object](/durable-objects/get-started/create-your-first-durable-object/) instead.
+
+**What you'll build:** A rate limiter that tracks requests per client. Each client IP gets its own Durable Object instance with isolated storage — no race conditions, no distributed locks.
+
+**Time to complete:** 10 minutes
+
+## When to add a Durable Object
+
+<Render file="when-to-use-durable-objects" product="durable-objects" />
+
+Common use cases include:
+
+- **Rate limiting** — Track request counts per user or API key
+- **User sessions** — Store per-user state without a separate database
+- **Live collaboration** — Coordinate multiple users editing the same document
+- **Game state** — Manage per-match or per-room game logic
+
+For a complete guide on designing Durable Objects applications, see [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/).
+
+## Prerequisites
+
+You need an existing Workers project with:
+
+- A `wrangler.jsonc` or `wrangler.toml` configuration file
+- A Worker entry point (e.g., `src/index.ts`)
+
+## 1. Create the Durable Object class
+
+Add a new Durable Object class to your project. You can add it to your existing entry file or create a separate file.
+
+This example creates a rate limiter that tracks requests per client:
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample filename="src/rate-limiter.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
+}
+
+export class RateLimiter extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		// Initialize the requests table on first access
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS requests (
+				window_start INTEGER PRIMARY KEY,
+				count INTEGER NOT NULL DEFAULT 0
+			)
+		`);
+	}
+
+	async checkLimit(
+		limit: number = 100,
+		windowMs: number = 60_000
+	): Promise<{ allowed: boolean; remaining: number; resetAt: number }> {
+		const now = Date.now();
+		const windowStart = Math.floor(now / windowMs) * windowMs;
+		const resetAt = windowStart + windowMs;
+
+		// Clean up old windows
+		this.ctx.storage.sql.exec(
+			"DELETE FROM requests WHERE window_start < ?",
+			windowStart
+		);
+
+		// Increment the counter for this window
+		this.ctx.storage.sql.exec(
+			`INSERT INTO requests (window_start, count) VALUES (?, 1)
+			 ON CONFLICT(window_start) DO UPDATE SET count = count + 1`,
+			windowStart
+		);
+
+		// Get the current count
+		const result = this.ctx.storage.sql
+			.exec<{ count: number }>(
+				"SELECT count FROM requests WHERE window_start = ?",
+				windowStart
+			)
+			.one();
+
+		const count = result.count;
+		const allowed = count <= limit;
+		const remaining = Math.max(0, limit - count);
+
+		return { allowed, remaining, resetAt };
+	}
+}
+```
+
+</TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+import time
+import math
+
+class RateLimiter(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+
+        # Initialize the requests table on first access
+        self.ctx.storage.sql.exec("""
+            CREATE TABLE IF NOT EXISTS requests (
+                window_start INTEGER PRIMARY KEY,
+                count INTEGER NOT NULL DEFAULT 0
+            )
+        """)
+
+    async def check_limit(self, limit: int = 100, window_ms: int = 60000):
+        now = int(time.time() * 1000)
+        window_start = math.floor(now / window_ms) * window_ms
+        reset_at = window_start + window_ms
+
+        # Clean up old windows
+        self.ctx.storage.sql.exec(
+            "DELETE FROM requests WHERE window_start < ?",
+            window_start
+        )
+
+        # Increment the counter for this window
+        self.ctx.storage.sql.exec(
+            """INSERT INTO requests (window_start, count) VALUES (?, 1)
+               ON CONFLICT(window_start) DO UPDATE SET count = count + 1""",
+            window_start
+        )
+
+        # Get the current count
+        result = self.ctx.storage.sql.exec(
+            "SELECT count FROM requests WHERE window_start = ?",
+            window_start
+        ).one()
+
+        count = result["count"]
+        allowed = count <= limit
+        remaining = max(0, limit - count)
+
+        return {"allowed": allowed, "remaining": remaining, "resetAt": reset_at}
+```
+
+</TabItem>
+
+</Tabs>
+
+Let's break this down:
+
+1. **`extends DurableObject<Env>`** — Your class inherits from the base `DurableObject` class.
+2. **Table creation in constructor** — `CREATE TABLE IF NOT EXISTS` is safe to call every time; SQLite only creates it once.
+3. **`checkLimit()` is an RPC method** — Any public method is automatically callable from Workers.
+4. **Sliding window pattern** — Delete old windows, increment current window, check against limit.
+
+:::note[No infrastructure to manage]
+The SQLite database is automatically created and persisted. You don't provision storage or manage connections — it's all handled for you.
+:::
+
+## 2. Export the class from your Worker
+
+Make sure your Durable Object class is exported from your Worker's entry point. If you created a separate file, re-export it:
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+// Re-export the Durable Object class so Cloudflare can find it
+export { RateLimiter } from "./rate-limiter";
+
+// Add the binding to your Env interface
+export interface Env {
+	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
+	// ... your other bindings
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		// Your existing Worker code...
+		return new Response("Hello World");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import Response, WorkerEntrypoint
+from rate_limiter import RateLimiter
+
+# Re-export for Cloudflare
+__all__ = ["RateLimiter", "Default"]
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Your existing Worker code...
+        return Response("Hello World")
+```
+
+</TabItem>
+
+</Tabs>
+
+:::caution[Common mistake]
+Forgetting to export the class is a common error. The class must be exported from your Worker's entry point for Cloudflare to find it.
+:::
+
+## 3. Add the Durable Object binding
+
+Update your Wrangler configuration to bind the Durable Object class:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-existing-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-05",
+	// Add the Durable Object binding
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "RATE_LIMITER",
+				"class_name": "RateLimiter"
+			}
+		]
+	},
+	// Add the migration for SQLite storage
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["RateLimiter"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Here's what each part does:
+
+1. **`name: "RATE_LIMITER"`** — The variable name you'll use in code (`env.RATE_LIMITER`).
+2. **`class_name: "RateLimiter"`** — Must exactly match your exported class name.
+3. **`new_sqlite_classes`** — Tells Cloudflare to create this DO with SQLite storage.
+
+## 4. Use the Durable Object in your Worker
+
+Now integrate the rate limiter into your Worker:
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export { RateLimiter } from "./rate-limiter";
+
+export interface Env {
+	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		// Use the client IP to identify the rate limit bucket
+		const clientId = request.headers.get("CF-Connecting-IP") ?? "unknown";
+
+		// Get a stub for this client's rate limiter
+		const rateLimiter = env.RATE_LIMITER.getByName(clientId);
+
+		// Check the rate limit (100 requests per minute)
+		const { allowed, remaining, resetAt } = await rateLimiter.checkLimit(100, 60_000);
+
+		if (!allowed) {
+			return new Response("Rate limit exceeded", {
+				status: 429,
+				headers: {
+					"X-RateLimit-Remaining": remaining.toString(),
+					"X-RateLimit-Reset": resetAt.toString(),
+					"Retry-After": Math.ceil((resetAt - Date.now()) / 1000).toString(),
+				},
+			});
+		}
+
+		// Request is allowed — continue with your normal logic
+		return new Response("Hello World", {
+			headers: {
+				"X-RateLimit-Remaining": remaining.toString(),
+				"X-RateLimit-Reset": resetAt.toString(),
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import Response, WorkerEntrypoint
+from rate_limiter import RateLimiter
+import math
+import time
+
+__all__ = ["RateLimiter", "Default"]
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Use the client IP to identify the rate limit bucket
+        client_id = request.headers.get("CF-Connecting-IP") or "unknown"
+
+        # Get a stub for this client's rate limiter
+        rate_limiter = self.env.RATE_LIMITER.getByName(client_id)
+
+        # Check the rate limit (100 requests per minute)
+        result = await rate_limiter.check_limit(100, 60000)
+
+        if not result["allowed"]:
+            return Response(
+                "Rate limit exceeded",
+                status=429,
+                headers={
+                    "X-RateLimit-Remaining": str(result["remaining"]),
+                    "X-RateLimit-Reset": str(result["resetAt"]),
+                    "Retry-After": str(math.ceil((result["resetAt"] - time.time() * 1000) / 1000)),
+                }
+            )
+
+        # Request is allowed
+        return Response(
+            "Hello World",
+            headers={
+                "X-RateLimit-Remaining": str(result["remaining"]),
+                "X-RateLimit-Reset": str(result["resetAt"]),
+            }
+        )
+```
+
+</TabItem>
+
+</Tabs>
+
+Let's break this down:
+
+1. **`env.RATE_LIMITER.getByName(clientId)`** — Gets a stub for this client's Durable Object. Same client ID = same instance globally.
+2. **`rateLimiter.checkLimit(100, 60_000)`** — Calls the RPC method on the DO. This runs on the Durable Object, not the Worker.
+3. **Single-threaded execution** — No race conditions when incrementing counters because each DO instance is single-threaded.
+
+:::caution[Common mistake]
+Don't use a single ID like `getByName("global")` for all requests — this creates a bottleneck. Use meaningful IDs (user ID, client IP, API key) to distribute load across many instances.
+:::
+
+## 5. Test locally
+
+Run your Worker locally:
+
+```sh
+npx wrangler dev
+```
+
+Test the rate limiting:
+
+```sh
+# First request should succeed
+curl http://localhost:8787
+# Returns: Hello World (with X-RateLimit headers)
+
+# Check the rate limit headers
+curl -v http://localhost:8787 2>&1 | grep X-RateLimit
+# X-RateLimit-Remaining: 99
+# X-RateLimit-Reset: 1701432060000
+```
+
+## 6. Deploy
+
+Deploy your updated Worker:
+
+```sh
+npx wrangler deploy
+```
+
+The first deploy with a new Durable Object class runs the migration automatically.
+
+## Complete project structure
+
+Your project should look like this:
+
+```
+my-existing-worker/
+├── src/
+│   ├── index.ts          # Worker entry point + re-exports
+│   └── rate-limiter.ts   # Durable Object class
+├── wrangler.jsonc        # Configuration with DO bindings
+├── package.json
+└── tsconfig.json
+```
+
+## Common patterns
+
+### Per-user state
+
+Route by user ID to give each user their own Durable Object:
+
+<TypeScriptExample>
+
+```ts
+// Get user ID from auth token, session, etc.
+const userId = await getUserId(request);
+const userDO = env.USER_STATE.getByName(userId);
+
+// Each user has isolated storage
+await userDO.updatePreferences({ theme: "dark" });
+```
+
+</TypeScriptExample>
+
+### Per-resource coordination
+
+Route by resource ID to coordinate access:
+
+<TypeScriptExample>
+
+```ts
+// All requests for the same document go to the same DO
+const docId = url.pathname.split("/")[2]; // e.g., /docs/abc123
+const doc = env.DOCUMENT.getByName(docId);
+
+// Single-threaded execution prevents conflicts
+await doc.applyEdit(userId, changes);
+```
+
+</TypeScriptExample>
+
+### Hierarchical routing
+
+Combine multiple identifiers for more granular routing:
+
+<TypeScriptExample>
+
+```ts
+// Separate rate limits per tenant + endpoint
+const tenantId = request.headers.get("X-Tenant-ID");
+const endpoint = new URL(request.url).pathname;
+const rateLimiter = env.RATE_LIMITER.getByName(`${tenantId}:${endpoint}`);
+```
+
+</TypeScriptExample>
+
+## Where to next?
+
+**Go deeper:**
+- [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) — Design patterns and anti-patterns
+- [SQLite Storage API](/durable-objects/api/sqlite-storage-api/) — Full SQL reference
+
+**Add capabilities:**
+- [WebSockets](/durable-objects/best-practices/websockets/) — Real-time bidirectional communication with Hibernation
+- [Alarms](/durable-objects/api/alarms/) — Schedule future work within your Durable Objects
+
+**See examples:**
+- [Build a rate limiter](/durable-objects/examples/build-a-rate-limiter/) — More advanced rate limiting patterns
+- [WebSocket chat server](/durable-objects/examples/websocket-hibernation-server/) — Real-time chat with Hibernation

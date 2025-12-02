@@ -1,0 +1,627 @@
+---
+title: Create your first Durable Object
+pcx_content_type: get-started
+sidebar:
+  order: 2
+---
+
+import {
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
+
+This guide walks you through building a Durable Object from scratch. You will learn how to:
+
+- Write a Durable Object class with SQLite storage
+- Communicate with your Durable Object using RPC methods
+- Configure bindings and migrations
+- Deploy your Durable Object to Cloudflare
+
+**What you'll build:** A persistent counter where each unique ID gets its own counter instance. Requests to `/my-counter` always reach the same globally-unique Durable Object, no matter where in the world the request originates.
+
+**Time to complete:** 15-20 minutes
+
+:::note[What is a Durable Object?]
+<Render file="what-is-a-durable-object" product="durable-objects" />
+
+For a deeper explanation, refer to [What are Durable Objects?](/durable-objects/concepts/what-are-durable-objects/).
+:::
+
+### When to use Durable Objects
+
+<Render file="when-to-use-durable-objects" product="durable-objects" />
+
+For detailed guidance on designing Durable Objects applications, see [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/).
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## 1. Create a Worker project
+
+You will access your Durable Object from a [Worker](/workers/). Your Worker acts as the entry point that routes requests to your Durable Object.
+
+Create a new project:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"durable-object-starter"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Worker + Durable Objects",
+		lang: "TypeScript",
+	}}
+/>
+
+This creates a new directory with a `src/index.ts` file for your code and a [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file.
+
+Move into your project:
+
+```sh
+cd durable-object-starter
+```
+
+## 2. Write a Durable Object class
+
+A Durable Object is defined by an exported JavaScript class that extends `DurableObject`. Let's start with the minimal structure.
+
+Replace the contents of `src/index.ts` with:
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+}
+```
+
+</TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class MyDurableObject(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+```
+
+</TabItem>
+
+</Tabs>
+
+Let's break this down:
+
+1. **`extends DurableObject<Env>`** — Your class inherits from the base `DurableObject` class, giving it access to storage and other APIs.
+2. **`ctx` parameter** — Contains state specific to this Durable Object instance, including `ctx.storage` for accessing the SQLite database.
+3. **`env` parameter** — Contains your Worker's bindings (environment variables, other Durable Objects, etc.).
+4. **`super(ctx, env)`** — Required when extending the base class.
+
+## 3. Add an RPC method
+
+Workers communicate with Durable Objects using [RPC (Remote Procedure Call)](/workers/runtime-apis/rpc/). Any public method on your Durable Object class is automatically exposed as an RPC method — no HTTP routes to define.
+
+Add a simple method to your class:
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample>
+
+```ts
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	// This method is automatically callable from any Worker
+	async sayHello(name: string): Promise<string> {
+		return `Hello, ${name}!`;
+	}
+}
+```
+
+</TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+class MyDurableObject(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+
+    # This method is automatically callable from any Worker
+    async def say_hello(self, name: str) -> str:
+        return f"Hello, {name}!"
+```
+
+</TabItem>
+
+</Tabs>
+
+That's it — `sayHello()` is now an RPC endpoint. No decorators, no route definitions. Workers can call it directly.
+
+## 4. Add SQLite storage
+
+Each Durable Object has its own private SQLite database. Let's use it to build a persistent counter.
+
+Update your class to add `increment()` and `getCount()` methods:
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample>
+
+```ts
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	async increment(): Promise<number> {
+		// Create the table if it doesn't exist
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS counter (
+				id INTEGER PRIMARY KEY,
+				value INTEGER NOT NULL DEFAULT 0
+			)
+		`);
+
+		// Insert initial row if needed, then increment
+		this.ctx.storage.sql.exec(`
+			INSERT INTO counter (id, value) VALUES (1, 1)
+			ON CONFLICT(id) DO UPDATE SET value = value + 1
+		`);
+
+		// Return the current count
+		const result = this.ctx.storage.sql
+			.exec<{ value: number }>("SELECT value FROM counter WHERE id = 1")
+			.one();
+
+		return result.value;
+	}
+
+	async getCount(): Promise<number> {
+		const result = this.ctx.storage.sql
+			.exec<{ value: number }>(
+				"SELECT COALESCE((SELECT value FROM counter WHERE id = 1), 0) as value"
+			)
+			.one();
+
+		return result.value;
+	}
+}
+```
+
+</TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+class MyDurableObject(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+
+    async def increment(self) -> int:
+        # Create the table if it doesn't exist
+        self.ctx.storage.sql.exec("""
+            CREATE TABLE IF NOT EXISTS counter (
+                id INTEGER PRIMARY KEY,
+                value INTEGER NOT NULL DEFAULT 0
+            )
+        """)
+
+        # Insert initial row if needed, then increment
+        self.ctx.storage.sql.exec("""
+            INSERT INTO counter (id, value) VALUES (1, 1)
+            ON CONFLICT(id) DO UPDATE SET value = value + 1
+        """)
+
+        # Return the current count
+        result = self.ctx.storage.sql.exec(
+            "SELECT value FROM counter WHERE id = 1"
+        ).one()
+
+        return result["value"]
+
+    async def get_count(self) -> int:
+        result = self.ctx.storage.sql.exec(
+            "SELECT COALESCE((SELECT value FROM counter WHERE id = 1), 0) as value"
+        ).one()
+
+        return result["value"]
+```
+
+</TabItem>
+
+</Tabs>
+
+Here's what's happening:
+
+1. **`this.ctx.storage.sql.exec()`** — Runs SQL queries against this Durable Object's private SQLite database.
+2. **`CREATE TABLE IF NOT EXISTS`** — Safe to call on every request; only creates the table once.
+3. **`ON CONFLICT ... DO UPDATE`** — SQLite upsert pattern: insert if new, update if exists.
+4. **`.one()`** — Returns a single row and throws if there isn't exactly one result.
+
+:::note[No infrastructure to manage]
+The SQLite database is automatically created, persisted, and replicated. You don't provision storage or manage backups — it's all handled for you.
+:::
+
+## 5. Call the Durable Object from your Worker
+
+Durable Objects don't receive requests directly from the internet. Instead, a Worker creates a "stub" (client) to communicate with a specific Durable Object instance.
+
+Add the Worker fetch handler to your `src/index.ts`:
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		const url = new URL(request.url);
+		const name = url.pathname.slice(1) || "default";
+
+		// Get a stub for this Durable Object instance
+		const stub = env.MY_DURABLE_OBJECT.getByName(name);
+
+		// Call RPC methods on the stub
+		if (request.method === "POST") {
+			const count = await stub.increment();
+			return Response.json({ name, count, action: "incremented" });
+		}
+
+		const count = await stub.getCount();
+		return Response.json({ name, count });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import Response, WorkerEntrypoint
+from urllib.parse import urlparse
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        url = urlparse(request.url)
+        name = url.path.lstrip("/") or "default"
+
+        # Get a stub for this Durable Object instance
+        stub = self.env.MY_DURABLE_OBJECT.getByName(name)
+
+        # Call RPC methods on the stub
+        if request.method == "POST":
+            count = await stub.increment()
+            return Response.json({"name": name, "count": count, "action": "incremented"})
+
+        count = await stub.get_count()
+        return Response.json({"name": name, "count": count})
+```
+
+</TabItem>
+
+</Tabs>
+
+Let's break this down:
+
+1. **`env.MY_DURABLE_OBJECT`** — The binding to your Durable Object namespace, configured in `wrangler.jsonc`.
+2. **`getByName(name)`** — Gets a stub for the instance with this name. The same name always routes to the same instance globally.
+3. **`stub.increment()`** — Calls the RPC method. This executes on the Durable Object, not the Worker.
+
+:::caution[Common mistake]
+Don't use a single name like `getByName("global")` for all requests — this creates a bottleneck. Instead, use meaningful IDs that represent your "unit of coordination": one per user, room, document, or entity.
+:::
+
+**Understanding routing:**
+
+| Request path | Durable Object instance |
+|--------------|------------------------|
+| `/counter-a` | Instance "counter-a" |
+| `/counter-a` | Same instance "counter-a" |
+| `/counter-b` | Different instance "counter-b" |
+
+This is how you create one Durable Object per entity — all requests for the same entity go to the same instance, anywhere in the world.
+
+## 6. Configure Durable Object bindings
+
+[Bindings](/workers/runtime-apis/bindings/) connect your Worker to Cloudflare resources. Update your `wrangler.jsonc` to bind the Durable Object:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "durable-object-starter",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-05",
+	"durable_objects": {
+		"bindings": [
+			{
+				// The variable name you use in code (env.MY_DURABLE_OBJECT)
+				"name": "MY_DURABLE_OBJECT",
+				// The class name exported from your Worker
+				"class_name": "MyDurableObject"
+			}
+		]
+	}
+}
+```
+
+</WranglerConfig>
+
+## 7. Configure the SQLite storage migration
+
+Durable Objects require a migration to set up their storage backend. Add the migration to enable SQLite storage:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "durable-object-starter",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-05",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject"
+			}
+		]
+	},
+	"migrations": [
+		{
+			// Unique tag for this migration — increment for future migrations
+			"tag": "v1",
+			// Creates a new Durable Object class with SQLite storage
+			"new_sqlite_classes": ["MyDurableObject"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+:::note
+Always use `new_sqlite_classes` for new Durable Object classes. SQLite storage provides better performance and a familiar SQL interface. For more details, see [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/).
+:::
+
+## 8. Test locally
+
+Start the development server:
+
+```sh
+npx wrangler dev
+```
+
+Test your Durable Object with curl:
+
+```sh
+# Get the current count for "my-counter"
+curl http://localhost:8787/my-counter
+# Returns: {"name":"my-counter","count":0}
+
+# Increment the counter
+curl -X POST http://localhost:8787/my-counter
+# Returns: {"name":"my-counter","count":1,"action":"incremented"}
+
+# Increment again
+curl -X POST http://localhost:8787/my-counter
+# Returns: {"name":"my-counter","count":2,"action":"incremented"}
+
+# Different path = different Durable Object instance
+curl -X POST http://localhost:8787/another-counter
+# Returns: {"name":"another-counter","count":1,"action":"incremented"}
+```
+
+Each unique path creates a separate Durable Object instance with its own counter.
+
+## 9. Deploy
+
+Deploy your Durable Object to Cloudflare:
+
+```sh
+npx wrangler deploy
+```
+
+Your application is now live. Visit `https://durable-object-starter.<YOUR_SUBDOMAIN>.workers.dev/my-counter` to see it in action.
+
+## Complete project structure
+
+Your project should look like this:
+
+```
+durable-object-starter/
+├── src/
+│   └── index.ts          # Worker + Durable Object code
+├── wrangler.jsonc        # Cloudflare configuration
+├── package.json
+└── tsconfig.json
+```
+
+## Complete code
+
+<Tabs syncKey="workersExamples">
+
+<TabItem label="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
+
+	async increment(): Promise<number> {
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS counter (
+				id INTEGER PRIMARY KEY,
+				value INTEGER NOT NULL DEFAULT 0
+			)
+		`);
+
+		this.ctx.storage.sql.exec(`
+			INSERT INTO counter (id, value) VALUES (1, 1)
+			ON CONFLICT(id) DO UPDATE SET value = value + 1
+		`);
+
+		const result = this.ctx.storage.sql
+			.exec<{ value: number }>("SELECT value FROM counter WHERE id = 1")
+			.one();
+
+		return result.value;
+	}
+
+	async getCount(): Promise<number> {
+		const result = this.ctx.storage.sql
+			.exec<{ value: number }>(
+				"SELECT COALESCE((SELECT value FROM counter WHERE id = 1), 0) as value"
+			)
+			.one();
+
+		return result.value;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		const url = new URL(request.url);
+		const name = url.pathname.slice(1) || "default";
+
+		const stub = env.MY_DURABLE_OBJECT.getByName(name);
+
+		if (request.method === "POST") {
+			const count = await stub.increment();
+			return Response.json({ name, count, action: "incremented" });
+		}
+
+		const count = await stub.getCount();
+		return Response.json({ name, count });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem>
+
+<TabItem label="wrangler.jsonc">
+
+```jsonc
+{
+	"name": "durable-object-starter",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-05",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyDurableObject"]
+		}
+	]
+}
+```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject, Response, WorkerEntrypoint
+from urllib.parse import urlparse
+
+class MyDurableObject(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+
+    async def increment(self):
+        self.ctx.storage.sql.exec("""
+            CREATE TABLE IF NOT EXISTS counter (
+                id INTEGER PRIMARY KEY,
+                value INTEGER NOT NULL DEFAULT 0
+            )
+        """)
+
+        self.ctx.storage.sql.exec("""
+            INSERT INTO counter (id, value) VALUES (1, 1)
+            ON CONFLICT(id) DO UPDATE SET value = value + 1
+        """)
+
+        result = self.ctx.storage.sql.exec(
+            "SELECT value FROM counter WHERE id = 1"
+        ).one()
+
+        return result["value"]
+
+    async def get_count(self):
+        result = self.ctx.storage.sql.exec(
+            "SELECT COALESCE((SELECT value FROM counter WHERE id = 1), 0) as value"
+        ).one()
+
+        return result["value"]
+
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        url = urlparse(request.url)
+        name = url.path.lstrip("/") or "default"
+
+        stub = self.env.MY_DURABLE_OBJECT.getByName(name)
+
+        if request.method == "POST":
+            count = await stub.increment()
+            return Response.json({"name": name, "count": count, "action": "incremented"})
+
+        count = await stub.get_count()
+        return Response.json({"name": name, "count": count})
+```
+
+</TabItem>
+
+</Tabs>
+
+## Where to next?
+
+**Go deeper:**
+- [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) — Design patterns and anti-patterns
+- [SQLite Storage API](/durable-objects/api/sqlite-storage-api/) — Full SQL reference
+
+**Add capabilities:**
+- [WebSockets](/durable-objects/best-practices/websockets/) — Real-time bidirectional communication with Hibernation
+- [Alarms](/durable-objects/api/alarms/) — Schedule future work within your Durable Objects
+
+**See examples:**
+- [Build a rate limiter](/durable-objects/examples/build-a-rate-limiter/) — Per-client rate limiting
+- [WebSocket chat server](/durable-objects/examples/websocket-hibernation-server/) — Real-time chat with Hibernation

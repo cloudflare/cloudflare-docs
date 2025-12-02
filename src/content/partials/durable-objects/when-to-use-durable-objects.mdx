@@ -1,0 +1,11 @@
+---
+{}
+---
+
+Use Durable Objects when you need:
+
+- **Coordination** — Multiple clients interacting with shared state (chat rooms, multiplayer games, collaborative documents)
+- **Strong consistency** — Operations that must be serialized to avoid race conditions (inventory management, booking systems)
+- **Per-entity storage** — Each user, tenant, or resource needs its own isolated database
+- **Persistent connections** — Long-lived WebSocket connections for real-time features
+- **Scheduled work per entity** — Timers or alarms scoped to individual entities

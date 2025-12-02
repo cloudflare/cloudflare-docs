@@ -1,0 +1,5 @@
+---
+{}
+---
+
+A Durable Object is a special kind of Cloudflare Worker with a globally-unique name and persistent storage. Unlike regular Workers that are stateless, each Durable Object instance maintains state across requests and can coordinate between multiple clients. Each instance runs single-threaded, eliminating race conditions and the need for distributed locks.

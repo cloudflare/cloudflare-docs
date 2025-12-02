@@ -1,0 +1,171 @@
+---
+title: Quick Start
+pcx_content_type: get-started
+sidebar:
+  order: 1
+---
+
+import { Render, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
+
+Deploy your first Durable Object in under 2 minutes. This guide uses a starter template to get you up and running quickly.
+
+**What you'll build:** A simple "Hello World" Durable Object that responds to requests. Every request to the same ID reaches the same globally-unique instance.
+
+:::note[What is a Durable Object?]
+<Render file="what-is-a-durable-object" product="durable-objects" />
+:::
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## 1. Create your project
+
+Create a new Durable Objects project using the starter template:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"my-do-app --template=hello-world-durable-object"}
+/>
+
+Select **TypeScript** when prompted, then move into your project directory:
+
+```sh
+cd my-do-app
+```
+
+## 2. Understand the code
+
+The template creates a complete Durable Objects application. Let's walk through the key parts.
+
+### The Durable Object class
+
+<TypeScriptExample>
+
+```ts
+export class MyDurableObject extends DurableObject<Env> {
+	async sayHello(name: string): Promise<string> {
+		return `Hello, ${name}!`;
+	}
+}
+```
+
+</TypeScriptExample>
+
+This defines a Durable Object with one RPC method. Here's what's happening:
+
+1. **`extends DurableObject`** — Your class inherits from the base `DurableObject` class, which provides access to storage and other APIs.
+2. **`sayHello()` is an RPC method** — Any public method on the class is automatically callable from Workers. No HTTP routes to define.
+3. **Each instance is isolated** — If you create 1,000 Durable Objects, each has its own `sayHello()` running independently.
+
+### Calling the Durable Object from a Worker
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
+		const greeting = await stub.sayHello("world");
+		return new Response(greeting);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Let's break this down:
+
+1. **`env.MY_DURABLE_OBJECT`** — This is the binding to your Durable Object namespace, configured in `wrangler.jsonc`.
+2. **`getByName("foo")`** — Gets a stub (client) for the instance named "foo". The same name always routes to the same instance globally.
+3. **`stub.sayHello("world")`** — Calls the RPC method on the Durable Object. This runs on the DO, not the Worker.
+
+:::caution[Common mistake]
+Don't hardcode a single name like `getByName("global")` for all requests — this creates a bottleneck. Use meaningful IDs like user IDs, room names, or document IDs to distribute load across many instances.
+:::
+
+## 3. Run locally
+
+Start the development server:
+
+```sh
+npm run dev
+```
+
+Open [http://localhost:8787](http://localhost:8787) in your browser. You should see `Hello, world!` returned from your Durable Object.
+
+## 4. Deploy
+
+Deploy your Durable Object to Cloudflare:
+
+```sh
+npm run deploy
+```
+
+Your application is now live at `https://my-do-app.<YOUR_SUBDOMAIN>.workers.dev`.
+
+:::note[No infrastructure to manage]
+Unlike traditional databases or servers, you don't provision Durable Objects. They're created automatically on first access and scale to millions of instances without any configuration.
+:::
+
+## Alternative: Deploy with one click
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/hello-world-do-template)
+
+This creates a repository in your GitHub account and deploys automatically.
+
+## Complete project structure
+
+Your project should look like this:
+
+```
+my-do-app/
+├── src/
+│   └── index.ts          # Worker + Durable Object code
+├── wrangler.jsonc        # Cloudflare configuration
+├── package.json
+└── tsconfig.json
+```
+
+The `wrangler.jsonc` configuration binds the Durable Object to your Worker:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-do-app",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-05",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyDurableObject"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## Where to next?
+
+**Go deeper:**
+- [Create your first Durable Object](/durable-objects/get-started/create-your-first-durable-object/) — Build a DO step-by-step with SQLite storage
+- [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) — Design patterns and anti-patterns
+
+**Add capabilities:**
+- [WebSockets](/durable-objects/best-practices/websockets/) — Real-time bidirectional communication
+- [Alarms](/durable-objects/api/alarms/) — Schedule future work
+
+**See examples:**
+- [Build a counter](/durable-objects/examples/build-a-counter/) — Persistent counter with SQL storage
+- [Build a rate limiter](/durable-objects/examples/build-a-rate-limiter/) — Per-client rate limiting
