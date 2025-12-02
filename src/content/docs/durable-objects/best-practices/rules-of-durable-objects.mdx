@@ -1,0 +1,1313 @@
+---
+title: Rules of Durable Objects
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
+Durable Objects provide a powerful primitive for building stateful, coordinated applications. Each Durable Object is a single-threaded, globally-unique instance with its own persistent storage. Understanding how to design around these properties is essential for building effective applications.
+
+This is a guidebook on how to build more effective and correct Durable Object applications.
+
+## Design and sharding
+
+### Model your Durable Objects around your "atom" of coordination
+
+The most important design decision is choosing what each Durable Object represents. Create one Durable Object per logical unit that needs coordination: a chat room, a game session, a document, a user's data, or a tenant's workspace.
+
+This is the key insight that makes Durable Objects powerful. Instead of a shared database with locks, each "atom" of your application gets its own single-threaded execution environment with private storage.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+// Each chat room is its own Durable Object instance
+export class ChatRoom extends DurableObject<Env> {
+	async sendMessage(userId: string, message: string) {
+		// All messages to this room are processed sequentially by this single instance.
+		// No race conditions, no distributed locks needed.
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
+			userId,
+			message,
+			Date.now()
+		);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const roomId = url.searchParams.get("room") ?? "lobby";
+
+		// Each room ID maps to exactly one Durable Object instance globally
+		const id = env.CHAT_ROOM.idFromName(roomId);
+		const stub = env.CHAT_ROOM.get(id);
+
+		await stub.sendMessage("user-123", "Hello, room!");
+		return new Response("Message sent");
+	},
+};
+```
+</TypeScriptExample>
+
+Do not create a single "global" Durable Object that handles all requests:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+// 🔴 Bad: A single Durable Object handling ALL chat rooms
+export class ChatRoom extends DurableObject<Env> {
+	async sendMessage(roomId: string, userId: string, message: string) {
+		// All messages for ALL rooms go through this single instance.
+		// This becomes a bottleneck as traffic grows.
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (room_id, user_id, content) VALUES (?, ?, ?)",
+			roomId,
+			userId,
+			message
+		);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		// 🔴 Bad: Always using the same ID means one global instance
+		const id = env.CHAT_ROOM.idFromName("global");
+		const stub = env.CHAT_ROOM.get(id);
+
+		await stub.sendMessage("room-123", "user-456", "Hello!");
+		return new Response("Sent");
+	},
+};
+```
+</TypeScriptExample>
+
+### Use deterministic IDs with `idFromName()` for predictable routing
+
+Use `idFromName()` with meaningful, deterministic strings for consistent routing. The same input always produces the same Durable Object ID, ensuring requests for the same logical entity always reach the same instance.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	GAME_SESSION: DurableObjectNamespace<GameSession>;
+}
+
+export class GameSession extends DurableObject<Env> {
+	async join(playerId: string) {
+		// Game logic here
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const gameId = url.searchParams.get("game");
+
+		if (!gameId) {
+			return new Response("Missing game ID", { status: 400 });
+		}
+
+		// ✅ Good: Deterministic ID from a meaningful string
+		// All requests for "game-abc123" go to the same Durable Object
+		const id = env.GAME_SESSION.idFromName(gameId);
+		const stub = env.GAME_SESSION.get(id);
+
+		await stub.join("player-xyz");
+		return new Response("Joined game");
+	},
+};
+```
+</TypeScriptExample>
+
+Use `newUniqueId()` only when you need a new, random instance and will store the mapping externally:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	GAME_SESSION: DurableObjectNamespace<GameSession>;
+}
+
+export class GameSession extends DurableObject<Env> {
+	async join(playerId: string) {
+		// Game logic here
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		// newUniqueId() creates a random ID - useful when creating new instances
+		// You must store this ID somewhere (e.g., D1) to find it again later
+		const id = env.GAME_SESSION.newUniqueId();
+		const stub = env.GAME_SESSION.get(id);
+
+		// Store the mapping: gameCode -> id.toString()
+		// await env.DB.prepare("INSERT INTO games (code, do_id) VALUES (?, ?)").bind(gameCode, id.toString()).run();
+
+		return Response.json({ gameId: id.toString() });
+	},
+};
+```
+</TypeScriptExample>
+
+### Use parent-child relationships for related entities
+
+Do not put all your data in a single Durable Object. When you have hierarchical data (workspaces containing projects, game servers managing matches), create separate child Durable Objects for each entity. The parent coordinates and tracks children, while children handle their own state independently.
+
+This enables parallelism: operations on different children can happen concurrently, while each child maintains its own single-threaded consistency.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	GAME_SERVER: DurableObjectNamespace<GameServer>;
+	GAME_MATCH: DurableObjectNamespace<GameMatch>;
+}
+
+// Parent: Coordinates matches, but doesn't store match data
+export class GameServer extends DurableObject<Env> {
+	async createMatch(matchName: string): Promise<string> {
+		const matchId = crypto.randomUUID();
+
+		// Store reference to the child in parent's database
+		this.ctx.storage.sql.exec(
+			"INSERT INTO matches (id, name, created_at) VALUES (?, ?, ?)",
+			matchId,
+			matchName,
+			Date.now()
+		);
+
+		// Initialize the child Durable Object
+		const childId = this.env.GAME_MATCH.idFromName(matchId);
+		const childStub = this.env.GAME_MATCH.get(childId);
+		await childStub.init(matchId, matchName);
+
+		return matchId;
+	}
+
+	async listMatches(): Promise<{ id: string; name: string }[]> {
+		// Parent knows about all matches without waking up each child
+		const cursor = this.ctx.storage.sql.exec<{ id: string; name: string }>(
+			"SELECT id, name FROM matches ORDER BY created_at DESC"
+		);
+		return cursor.toArray();
+	}
+}
+
+// Child: Handles its own game state independently
+export class GameMatch extends DurableObject<Env> {
+	async init(matchId: string, matchName: string) {
+		await this.ctx.storage.put("matchId", matchId);
+		await this.ctx.storage.put("matchName", matchName);
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS players (
+				id TEXT PRIMARY KEY,
+				name TEXT NOT NULL,
+				score INTEGER DEFAULT 0
+			)
+		`);
+	}
+
+	async addPlayer(playerId: string, playerName: string) {
+		this.ctx.storage.sql.exec(
+			"INSERT INTO players (id, name, score) VALUES (?, ?, 0)",
+			playerId,
+			playerName
+		);
+	}
+
+	async updateScore(playerId: string, score: number) {
+		this.ctx.storage.sql.exec(
+			"UPDATE players SET score = ? WHERE id = ?",
+			score,
+			playerId
+		);
+	}
+}
+```
+</TypeScriptExample>
+
+With this pattern:
+- Listing matches only queries the parent (children stay hibernated)
+- Different matches process player actions in parallel
+- Each match has its own SQLite database for player data
+
+### Consider location hints for latency-sensitive applications
+
+By default, a Durable Object is created near the location of the first request it receives. For most applications, this works well. However, you can provide a location hint to influence where the Durable Object is created.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	GAME_SESSION: DurableObjectNamespace<GameSession>;
+}
+
+export class GameSession extends DurableObject<Env> {
+	// Game session logic
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const gameId = url.searchParams.get("game") ?? "default";
+		const region = url.searchParams.get("region") ?? "wnam"; // Western North America
+
+		// Provide a location hint for where this Durable Object should be created
+		const id = env.GAME_SESSION.idFromName(gameId, {
+			locationHint: region,
+		});
+		const stub = env.GAME_SESSION.get(id);
+
+		return new Response("Connected to game session");
+	},
+};
+```
+</TypeScriptExample>
+
+Location hints are suggestions, not guarantees. Refer to [Data location](/durable-objects/reference/data-location/) for available regions and details.
+
+## Storage and state
+
+### Use SQLite-backed Durable Objects
+
+SQLite storage is the recommended storage backend for new Durable Objects. It provides relational queries, indexes, transactions, and better performance than the legacy key-value storage API.
+
+Configure your Durable Object class to use SQLite storage in your Wrangler configuration:
+
+<WranglerConfig>
+```toml
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ChatRoom"]
+```
+</WranglerConfig>
+
+Then use the SQL API in your Durable Object:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+type Message = {
+	id: number;
+	user_id: string;
+	content: string;
+	created_at: number;
+};
+
+export class ChatRoom extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		// Create tables on first instantiation
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS messages (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				user_id TEXT NOT NULL,
+				content TEXT NOT NULL,
+				created_at INTEGER NOT NULL
+			)
+		`);
+	}
+
+	async addMessage(userId: string, content: string) {
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
+			userId,
+			content,
+			Date.now()
+		);
+	}
+
+	async getRecentMessages(limit: number = 50): Promise<Message[]> {
+		// Use type parameter for typed results
+		const cursor = this.ctx.storage.sql.exec<Message>(
+			"SELECT * FROM messages ORDER BY created_at DESC LIMIT ?",
+			limit
+		);
+		return cursor.toArray();
+	}
+}
+```
+</TypeScriptExample>
+
+Refer to [Access Durable Objects storage](/durable-objects/best-practices/access-durable-objects-storage/) for more details on the SQL API.
+
+### Initialize storage and run migrations in the constructor
+
+Use `blockConcurrencyWhile()` in the constructor to run migrations and initialize state before any requests are processed. This ensures your schema is ready and prevents race conditions during initialization.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		// blockConcurrencyWhile() ensures no requests are processed until this completes
+		ctx.blockConcurrencyWhile(async () => {
+			await this.migrate();
+		});
+	}
+
+	private async migrate() {
+		// Check current schema version
+		const version =
+			this.ctx.storage.sql
+				.exec<{ version: number }>("PRAGMA user_version")
+				.one()?.version ?? 0;
+
+		if (version < 1) {
+			this.ctx.storage.sql.exec(`
+				CREATE TABLE IF NOT EXISTS messages (
+					id INTEGER PRIMARY KEY AUTOINCREMENT,
+					user_id TEXT NOT NULL,
+					content TEXT NOT NULL,
+					created_at INTEGER NOT NULL
+				);
+				CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at);
+				PRAGMA user_version = 1;
+			`);
+		}
+
+		if (version < 2) {
+			// Future migration: add a new column
+			this.ctx.storage.sql.exec(`
+				ALTER TABLE messages ADD COLUMN edited_at INTEGER;
+				PRAGMA user_version = 2;
+			`);
+		}
+	}
+}
+```
+</TypeScriptExample>
+
+### Understand the difference between in-memory state and persistent storage
+
+Durable Objects provide multiple storage layers, each with different characteristics:
+
+| Storage Type | Speed | Persistence | Use Case |
+|-------------|-------|-------------|----------|
+| In-memory (class properties) | Fastest | Lost on eviction or crash | Caching, active connections |
+| SQLite storage | Fast | Durable across restarts | Primary data storage |
+| External (R2, D1) | Variable | Durable, cross-DO accessible | Large files, shared data |
+
+In-memory state is **not preserved** if the Durable Object is evicted from memory due to inactivity, or if it crashes from an uncaught exception. Always persist important state to SQLite storage.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+type Message = {
+	id: number;
+	user_id: string;
+	content: string;
+	created_at: number;
+};
+
+export class ChatRoom extends DurableObject<Env> {
+	// In-memory cache - fast but NOT preserved across evictions or crashes
+	private messageCache: Message[] | null = null;
+
+	async getRecentMessages(): Promise<Message[]> {
+		// Return from cache if available (only valid while DO is in memory)
+		if (this.messageCache !== null) {
+			return this.messageCache;
+		}
+
+		// Otherwise, load from durable storage
+		const cursor = this.ctx.storage.sql.exec<Message>(
+			"SELECT * FROM messages ORDER BY created_at DESC LIMIT 100"
+		);
+		this.messageCache = cursor.toArray();
+		return this.messageCache;
+	}
+
+	async addMessage(userId: string, content: string) {
+		// ✅ Always persist to durable storage first
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
+			userId,
+			content,
+			Date.now()
+		);
+
+		// Then update the cache (if it exists)
+		// If the DO crashes here, the message is still saved in SQLite
+		this.messageCache = null; // Invalidate cache
+	}
+}
+```
+</TypeScriptExample>
+
+:::caution
+
+If an uncaught exception occurs in your Durable Object, the runtime may terminate the instance. Any in-memory state will be lost, but SQLite storage remains intact. Always persist critical state to storage before performing operations that might fail.
+
+:::
+
+### Create indexes for frequently-queried columns
+
+Just like any database, indexes dramatically improve read performance for frequently-filtered columns. The cost is slightly more storage and marginally slower writes.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(`
+				CREATE TABLE IF NOT EXISTS messages (
+					id INTEGER PRIMARY KEY AUTOINCREMENT,
+					user_id TEXT NOT NULL,
+					content TEXT NOT NULL,
+					created_at INTEGER NOT NULL
+				);
+
+				-- Index for queries filtering by user
+				CREATE INDEX IF NOT EXISTS idx_messages_user_id ON messages(user_id);
+
+				-- Index for time-based queries (recent messages)
+				CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at);
+
+				-- Composite index for user + time queries
+				CREATE INDEX IF NOT EXISTS idx_messages_user_time ON messages(user_id, created_at);
+			`);
+		});
+	}
+
+	// This query benefits from idx_messages_user_time
+	async getUserMessages(userId: string, since: number) {
+		return this.ctx.storage.sql
+			.exec(
+				"SELECT * FROM messages WHERE user_id = ? AND created_at > ? ORDER BY created_at",
+				userId,
+				since
+			)
+			.toArray();
+	}
+}
+```
+</TypeScriptExample>
+
+## Communication and API design
+
+### Use RPC methods instead of the `fetch()` handler
+
+Projects with a [compatibility date](/workers/configuration/compatibility-flags/) of `2024-04-03` or later should use RPC methods. RPC is more ergonomic, provides better type safety, and eliminates manual request/response parsing.
+
+Define public methods on your Durable Object class, and call them directly from stubs with full TypeScript support:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	// Type parameter provides typed method calls on the stub
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+type Message = {
+	id: number;
+	userId: string;
+	content: string;
+	createdAt: number;
+};
+
+export class ChatRoom extends DurableObject<Env> {
+	// Public methods are automatically exposed as RPC endpoints
+	async sendMessage(userId: string, content: string): Promise<Message> {
+		const createdAt = Date.now();
+		const result = this.ctx.storage.sql.exec<{ id: number }>(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?) RETURNING id",
+			userId,
+			content,
+			createdAt
+		);
+		const { id } = result.one();
+		return { id, userId, content, createdAt };
+	}
+
+	async getMessages(limit: number = 50): Promise<Message[]> {
+		const cursor = this.ctx.storage.sql.exec<{
+			id: number;
+			user_id: string;
+			content: string;
+			created_at: number;
+		}>("SELECT * FROM messages ORDER BY created_at DESC LIMIT ?", limit);
+
+		return cursor.toArray().map((row) => ({
+			id: row.id,
+			userId: row.user_id,
+			content: row.content,
+			createdAt: row.created_at,
+		}));
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const roomId = url.searchParams.get("room") ?? "lobby";
+
+		const id = env.CHAT_ROOM.idFromName(roomId);
+		// stub is typed as DurableObjectStub<ChatRoom>
+		const stub = env.CHAT_ROOM.get(id);
+
+		if (request.method === "POST") {
+			const { userId, content } = await request.json<{
+				userId: string;
+				content: string;
+			}>();
+			// Direct method call with full type checking
+			const message = await stub.sendMessage(userId, content);
+			return Response.json(message);
+		}
+
+		// TypeScript knows getMessages() returns Promise<Message[]>
+		const messages = await stub.getMessages(100);
+		return Response.json(messages);
+	},
+};
+```
+</TypeScriptExample>
+
+Refer to [Invoke methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for more details on RPC and the legacy `fetch()` handler.
+
+### Initialize Durable Objects explicitly with an `init()` method
+
+Durable Objects do not know their own name or ID from within. If your Durable Object needs to know its identity (for example, to store a reference to itself or to communicate with related objects), you must explicitly initialize it.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	private roomId: string | null = null;
+
+	// Call this after creating the Durable Object for the first time
+	async init(roomId: string, createdBy: string) {
+		// Check if already initialized
+		const existing = await this.ctx.storage.get("roomId");
+		if (existing) {
+			return; // Already initialized
+		}
+
+		// Store the identity
+		await this.ctx.storage.put("roomId", roomId);
+		await this.ctx.storage.put("createdBy", createdBy);
+		await this.ctx.storage.put("createdAt", Date.now());
+
+		// Cache in memory for this session
+		this.roomId = roomId;
+	}
+
+	async getRoomId(): Promise<string> {
+		if (this.roomId) {
+			return this.roomId;
+		}
+
+		const stored = await this.ctx.storage.get<string>("roomId");
+		if (!stored) {
+			throw new Error("ChatRoom not initialized. Call init() first.");
+		}
+
+		this.roomId = stored;
+		return stored;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const roomId = url.searchParams.get("room") ?? "lobby";
+
+		const id = env.CHAT_ROOM.idFromName(roomId);
+		const stub = env.CHAT_ROOM.get(id);
+
+		// Initialize on first access
+		await stub.init(roomId, "system");
+
+		return new Response(`Room ${await stub.getRoomId()} ready`);
+	},
+};
+```
+</TypeScriptExample>
+
+### Always `await` RPC calls
+
+When calling methods on a Durable Object stub, always use `await`. Unawaited calls create dangling promises, causing errors to be swallowed and return values to be lost.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	async sendMessage(userId: string, content: string): Promise<number> {
+		const result = this.ctx.storage.sql.exec<{ id: number }>(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?) RETURNING id",
+			userId,
+			content,
+			Date.now()
+		);
+		return result.one().id;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const id = env.CHAT_ROOM.idFromName("lobby");
+		const stub = env.CHAT_ROOM.get(id);
+
+		// 🔴 Bad: Not awaiting the call
+		// The message ID is lost, and any errors are swallowed
+		stub.sendMessage("user-123", "Hello");
+
+		// ✅ Good: Properly awaited
+		const messageId = await stub.sendMessage("user-123", "Hello");
+
+		return Response.json({ messageId });
+	},
+};
+```
+</TypeScriptExample>
+
+## Error handling
+
+### Handle errors and use exception boundaries
+
+Uncaught exceptions in a Durable Object can leave it in an unknown state and may cause the runtime to terminate the instance. Wrap risky operations in try/catch blocks, and handle errors appropriately.
+
+When calling Durable Objects from a Worker, check for the `.retryable` and `.overloaded` properties on errors to determine whether to retry:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	async processMessage(userId: string, content: string) {
+		// ✅ Good: Wrap risky operations in try/catch
+		try {
+			// Validate input before processing
+			if (!content || content.length > 10000) {
+				throw new Error("Invalid message content");
+			}
+
+			this.ctx.storage.sql.exec(
+				"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
+				userId,
+				content,
+				Date.now()
+			);
+
+			// External call that might fail
+			await this.notifySubscribers(content);
+		} catch (error) {
+			// Log the error for debugging
+			console.error("Failed to process message:", error);
+
+			// Re-throw if it's a validation error (don't retry)
+			if (error instanceof Error && error.message.includes("Invalid")) {
+				throw error;
+			}
+
+			// For transient errors, you might want to handle differently
+			throw error;
+		}
+	}
+
+	private async notifySubscribers(content: string) {
+		// External notification logic
+	}
+}
+
+// Retry helper with exponential backoff
+async function callWithRetry<T>(
+	fn: () => Promise<T>,
+	maxRetries: number = 3
+): Promise<T> {
+	let lastError: Error | null = null;
+
+	for (let attempt = 0; attempt < maxRetries; attempt++) {
+		try {
+			return await fn();
+		} catch (error) {
+			lastError = error as Error;
+
+			// Check if the error is retryable
+			const isRetryable =
+				error instanceof Error &&
+				"retryable" in error &&
+				(error as Error & { retryable: boolean }).retryable;
+
+			const isOverloaded =
+				error instanceof Error &&
+				"overloaded" in error &&
+				(error as Error & { overloaded: boolean }).overloaded;
+
+			if (!isRetryable && !isOverloaded) {
+				throw error; // Don't retry non-retryable errors
+			}
+
+			// Exponential backoff: 100ms, 200ms, 400ms...
+			const delay = Math.pow(2, attempt) * 100;
+			await new Promise((resolve) => setTimeout(resolve, delay));
+		}
+	}
+
+	throw lastError;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const id = env.CHAT_ROOM.idFromName("lobby");
+		const stub = env.CHAT_ROOM.get(id);
+
+		try {
+			await callWithRetry(() => stub.processMessage("user-123", "Hello!"));
+			return new Response("Message sent");
+		} catch (error) {
+			return new Response(`Error: ${error}`, { status: 500 });
+		}
+	},
+};
+```
+</TypeScriptExample>
+
+Refer to [Error handling](/durable-objects/best-practices/error-handling/) for more details on error properties and retry strategies.
+
+## WebSockets and real-time
+
+### Use the Hibernatable WebSockets API for cost efficiency
+
+The Hibernatable WebSockets API allows Durable Objects to sleep while maintaining WebSocket connections. This significantly reduces costs for applications with many idle connections.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/websocket") {
+			// Check for WebSocket upgrade
+			if (request.headers.get("Upgrade") !== "websocket") {
+				return new Response("Expected WebSocket", { status: 400 });
+			}
+
+			const pair = new WebSocketPair();
+			const [client, server] = Object.values(pair);
+
+			// Accept the WebSocket with Hibernation API
+			this.ctx.acceptWebSocket(server);
+
+			return new Response(null, { status: 101, webSocket: client });
+		}
+
+		return new Response("Not found", { status: 404 });
+	}
+
+	// Called when a message is received (even after hibernation)
+	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+		const data = typeof message === "string" ? message : "binary data";
+
+		// Broadcast to all connected clients
+		for (const client of this.ctx.getWebSockets()) {
+			if (client !== ws && client.readyState === WebSocket.OPEN) {
+				client.send(data);
+			}
+		}
+	}
+
+	// Called when a WebSocket is closed
+	async webSocketClose(
+		ws: WebSocket,
+		code: number,
+		reason: string,
+		wasClean: boolean
+	) {
+		console.log(`WebSocket closed: ${code} ${reason}`);
+	}
+
+	// Called when a WebSocket error occurs
+	async webSocketError(ws: WebSocket, error: unknown) {
+		console.error("WebSocket error:", error);
+	}
+}
+```
+</TypeScriptExample>
+
+With the Hibernation API, your Durable Object can go to sleep when there is no active JavaScript execution, but WebSocket connections remain open. When a message arrives, the Durable Object wakes up automatically.
+
+Refer to [WebSockets](/durable-objects/best-practices/websockets/) for more details.
+
+### Use `serializeAttachment()` to persist per-connection state
+
+WebSocket attachments let you store metadata for each connection that survives hibernation. Use this for user IDs, session tokens, or other per-connection data.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+type ConnectionState = {
+	oderId: string;
+	username: string;
+	joinedAt: number;
+};
+
+export class ChatRoom extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/websocket") {
+			if (request.headers.get("Upgrade") !== "websocket") {
+				return new Response("Expected WebSocket", { status: 400 });
+			}
+
+			const userId = url.searchParams.get("userId") ?? "anonymous";
+			const username = url.searchParams.get("username") ?? "Anonymous";
+
+			const pair = new WebSocketPair();
+			const [client, server] = Object.values(pair);
+
+			this.ctx.acceptWebSocket(server);
+
+			// Store per-connection state that survives hibernation
+			const state: ConnectionState = {
+				userId,
+				username,
+				joinedAt: Date.now(),
+			};
+			server.serializeAttachment(state);
+
+			// Broadcast join message
+			this.broadcast(`${username} joined the chat`);
+
+			return new Response(null, { status: 101, webSocket: client });
+		}
+
+		return new Response("Not found", { status: 404 });
+	}
+
+	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+		// Retrieve the connection state (works even after hibernation)
+		const state = ws.deserializeAttachment() as ConnectionState;
+
+		const chatMessage = JSON.stringify({
+			userId: state.userId,
+			username: state.username,
+			content: message,
+			timestamp: Date.now(),
+		});
+
+		this.broadcast(chatMessage);
+	}
+
+	async webSocketClose(ws: WebSocket) {
+		const state = ws.deserializeAttachment() as ConnectionState;
+		this.broadcast(`${state.username} left the chat`);
+	}
+
+	private broadcast(message: string) {
+		for (const client of this.ctx.getWebSockets()) {
+			if (client.readyState === WebSocket.OPEN) {
+				client.send(message);
+			}
+		}
+	}
+}
+```
+</TypeScriptExample>
+
+## Scheduling and lifecycle
+
+### Use alarms for per-entity scheduled tasks
+
+Each Durable Object can schedule its own future work using the Alarms API. This is more efficient than global cron jobs because only the relevant Durable Object wakes up at the scheduled time.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	GAME_MATCH: DurableObjectNamespace<GameMatch>;
+}
+
+export class GameMatch extends DurableObject<Env> {
+	async startGame(durationMs: number = 60000) {
+		await this.ctx.storage.put("gameStarted", Date.now());
+		await this.ctx.storage.put("gameActive", true);
+
+		// Schedule the game to end after the duration
+		await this.ctx.storage.setAlarm(Date.now() + durationMs);
+	}
+
+	// Called when the alarm fires
+	async alarm() {
+		const isActive = await this.ctx.storage.get<boolean>("gameActive");
+
+		if (!isActive) {
+			return; // Game was already ended
+		}
+
+		// End the game
+		await this.ctx.storage.put("gameActive", false);
+		await this.ctx.storage.put("gameEnded", Date.now());
+
+		// Calculate final scores, notify players, etc.
+		await this.calculateFinalScores();
+
+		// Schedule cleanup in 24 hours
+		await this.ctx.storage.setAlarm(Date.now() + 24 * 60 * 60 * 1000);
+	}
+
+	private async calculateFinalScores() {
+		// Game ending logic
+	}
+}
+```
+</TypeScriptExample>
+
+### Make alarm handlers idempotent
+
+In rare cases, alarms may fire more than once. Your `alarm()` handler should be safe to run multiple times without causing issues.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	SUBSCRIPTION: DurableObjectNamespace<Subscription>;
+}
+
+export class Subscription extends DurableObject<Env> {
+	async alarm() {
+		// ✅ Good: Check state before performing the action
+		const lastRenewal = await this.ctx.storage.get<number>("lastRenewal");
+		const renewalPeriod = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+		// If we already renewed recently, don't do it again
+		if (lastRenewal && Date.now() - lastRenewal < renewalPeriod - 60000) {
+			console.log("Already renewed recently, skipping");
+			return;
+		}
+
+		// Perform the renewal
+		const success = await this.processRenewal();
+
+		if (success) {
+			// Record the renewal time
+			await this.ctx.storage.put("lastRenewal", Date.now());
+
+			// Schedule the next renewal
+			await this.ctx.storage.setAlarm(Date.now() + renewalPeriod);
+		} else {
+			// Retry in 1 hour
+			await this.ctx.storage.setAlarm(Date.now() + 60 * 60 * 1000);
+		}
+	}
+
+	private async processRenewal(): Promise<boolean> {
+		// Payment processing logic
+		return true;
+	}
+}
+```
+</TypeScriptExample>
+
+### Deleting Durable Objects
+
+A Durable Object only ceases to exist when its storage is empty. To delete a Durable Object completely, you must call `deleteAll()` to remove all stored data. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	async deleteRoom() {
+		// If you have an alarm set, delete it first
+		await this.ctx.storage.deleteAlarm();
+
+		// Delete all storage - this fully removes the Durable Object
+		await this.ctx.storage.deleteAll();
+
+		// After this, the Durable Object no longer exists
+		// A new request with the same ID will create a fresh instance
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const roomId = url.searchParams.get("room") ?? "lobby";
+
+		const id = env.CHAT_ROOM.idFromName(roomId);
+		const stub = env.CHAT_ROOM.get(id);
+
+		if (request.method === "DELETE") {
+			await stub.deleteRoom();
+			return new Response("Room deleted");
+		}
+
+		return new Response("OK");
+	},
+};
+```
+</TypeScriptExample>
+
+## Anti-patterns to avoid
+
+### Do not use a single Durable Object as a global singleton
+
+A single Durable Object handling all traffic becomes a bottleneck. Durable Objects execute single-threaded, so all requests to one instance are processed sequentially. Shard your workload by your coordination boundary.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	COUNTER: DurableObjectNamespace<Counter>;
+}
+
+// 🔴 Bad: Global singleton handles all counter operations
+export class Counter extends DurableObject<Env> {
+	async increment(counterId: string) {
+		// All counters go through this one instance - bottleneck!
+		const current = (await this.ctx.storage.get<number>(counterId)) ?? 0;
+		await this.ctx.storage.put(counterId, current + 1);
+		return current + 1;
+	}
+}
+
+// 🔴 Bad: Always using the same ID
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const stub = env.COUNTER.get(env.COUNTER.idFromName("global"));
+		const count = await stub.increment("page-views");
+		return new Response(`Count: ${count}`);
+	},
+};
+```
+</TypeScriptExample>
+
+Instead, create one Durable Object per counter:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	COUNTER: DurableObjectNamespace<Counter>;
+}
+
+// ✅ Good: Each counter is its own Durable Object
+export class Counter extends DurableObject<Env> {
+	async increment() {
+		const current = (await this.ctx.storage.get<number>("count")) ?? 0;
+		const newCount = current + 1;
+		await this.ctx.storage.put("count", newCount);
+		return newCount;
+	}
+}
+
+// ✅ Good: Different counters use different Durable Objects
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const counterId = url.pathname; // e.g., "/page-views" or "/api-calls"
+
+		// Each counter ID gets its own Durable Object instance
+		const stub = env.COUNTER.get(env.COUNTER.idFromName(counterId));
+		const count = await stub.increment();
+		return new Response(`Count: ${count}`);
+	},
+};
+```
+</TypeScriptExample>
+
+### Avoid blocking the Durable Object with long-running operations
+
+Durable Objects are single-threaded per instance. While one request is being processed, all other requests to that instance wait. Long-running CPU work or slow external API calls block all other requests.
+
+For heavy workloads, consider offloading to [Queues](/queues/) or [Workflows](/workflows/):
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+	PROCESSING_QUEUE: Queue;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	// 🔴 Potentially problematic: Slow external call blocks all other requests
+	async processMessageSlow(content: string) {
+		// This 5-second API call blocks all other requests to this room
+		const analysis = await fetch("https://slow-api.example.com/analyze", {
+			method: "POST",
+			body: content,
+		});
+		return analysis.json();
+	}
+
+	// ✅ Better: Queue the work and return immediately
+	async processMessageFast(messageId: string, content: string) {
+		// Store the message
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (id, content, status) VALUES (?, ?, ?)",
+			messageId,
+			content,
+			"pending"
+		);
+
+		// Queue the heavy processing
+		await this.env.PROCESSING_QUEUE.send({
+			messageId,
+			content,
+			roomId: await this.ctx.storage.get("roomId"),
+		});
+
+		// Return immediately - other requests aren't blocked
+		return { messageId, status: "queued" };
+	}
+}
+```
+</TypeScriptExample>
+
+This is not a hard rule. Short external calls are fine. Consider offloading when operations consistently take more than a few hundred milliseconds.
+
+## Testing and migrations
+
+### Test with Vitest and plan for class migrations
+
+Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. For schema changes, run migrations in the constructor. For class renames or deletions, use Wrangler migrations.
+
+<TypeScriptExample filename="index.test.ts">
+```ts
+import {
+	env,
+	createExecutionContext,
+	waitOnExecutionContext,
+} from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+
+// Import your Durable Object class and Worker
+import { ChatRoom } from "./index";
+
+describe("ChatRoom", () => {
+	it("should send and retrieve messages", async () => {
+		// Get a stub to a test Durable Object instance
+		const id = env.CHAT_ROOM.idFromName("test-room");
+		const stub = env.CHAT_ROOM.get(id);
+
+		// Call RPC methods directly on the stub
+		await stub.sendMessage("user-1", "Hello!");
+		await stub.sendMessage("user-2", "Hi there!");
+
+		const messages = await stub.getMessages(10);
+
+		expect(messages).toHaveLength(2);
+		expect(messages[0].content).toBe("Hi there!");
+		expect(messages[1].content).toBe("Hello!");
+	});
+});
+```
+</TypeScriptExample>
+
+Configure Vitest in your `vitest.config.ts`:
+
+```ts
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersConfig({
+	test: {
+		poolOptions: {
+			workers: {
+				wrangler: { configPath: "./wrangler.toml" },
+			},
+		},
+	},
+});
+```
+
+When you need to rename or delete a Durable Object class, use Wrangler migrations to ensure data is handled correctly:
+
+<WranglerConfig>
+```toml
+# Rename a class
+[[migrations]]
+tag = "v2"
+renamed_classes = [{ from = "OldChatRoom", to = "ChatRoom" }]
+
+# Delete a class (removes all data!)
+[[migrations]]
+tag = "v3"
+deleted_classes = ["DeprecatedRoom"]
+```
+</WranglerConfig>
+
+Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) for more details on class migrations, and [Testing](/durable-objects/examples/testing-with-durable-objects/) for testing patterns.
