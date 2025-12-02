@@ -104,6 +104,40 @@ if (result.error) {
 ```
 </TypeScriptExample>
 
+**JavaScript and TypeScript features**:
+
+JavaScript and TypeScript code execution supports top-level `await` and persistent variables across executions within the same context.
+
+<TypeScriptExample>
+```
+const ctx = await sandbox.createCodeContext({ language: 'javascript' });
+
+// Execution 1: Fetch data with top-level await
+await sandbox.runCode(`
+const response = await fetch('https://api.example.com/data');
+const data = await response.json();
+`, { context: ctx });
+
+// Execution 2: Use the data from previous execution
+const result = await sandbox.runCode('console.log(data)', { context: ctx });
+console.log(result.logs.stdout); // Data persists across executions
+```
+</TypeScriptExample>
+
+Variables declared with `const`, `let`, or `var` persist across executions, enabling multi-step workflows:
+
+<TypeScriptExample>
+```
+const ctx = await sandbox.createCodeContext({ language: 'javascript' });
+
+await sandbox.runCode('const x = 10', { context: ctx });
+await sandbox.runCode('let y = 20', { context: ctx });
+const result = await sandbox.runCode('x + y', { context: ctx });
+
+console.log(result.results[0].text); // "30"
+```
+</TypeScriptExample>
+
 ### `listCodeContexts()`
 
 List all active code execution contexts.
