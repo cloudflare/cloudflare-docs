@@ -132,9 +132,9 @@ For complete examples and additional operations, refer to the SDK-specific docum
 
 ### Best practices
 
-When generating presigned URLs for uploads, you can limit abuse and misuse by:
+When generating presigned URLs, you can limit abuse and misuse by:
 
-- **Restricting Content-Type**: Specify the allowed `Content-Type` in your SDK's parameters. The signature will include this header, so uploads will fail with a `403/SignatureDoesNotMatch` error if the client sends a different `Content-Type`.
+- **Restricting Content-Type**: Specify the allowed `Content-Type` in your SDK's parameters. The signature will include this header, so uploads will fail with a `403/SignatureDoesNotMatch` error if the client sends a different `Content-Type` for an upload request.
 - **Configuring CORS**: If your presigned URLs will be used from a browser, set up [CORS rules](/r2/buckets/cors/#use-cors-with-a-presigned-url) on your bucket to control which origins can make requests.
 
 ## Using a presigned URL
