@@ -48,7 +48,9 @@ jobs:
             semgrep scan \
               --config .semgrep --metrics=off \
               --include "*.mdx" --include "*.mdx" \
-              $list_of_files
+              --json \
+              $list_of_files \
+              | jq ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
             # add '--error' to return error code to workflow
           else
             echo "No relevant files changed."
