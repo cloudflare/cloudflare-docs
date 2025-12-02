@@ -6,12 +6,12 @@ products:
 date: 2025-12-01
 ---
 
-We've published build image policies for [Workers Builds](/workers/ci-cd/builds/build-image) and [Cloudflare Pages](/pages/configuration/build-image) that establish:
+We've published build image policies for [Workers Builds](/workers/ci-cd/builds/build-image/#build-image-policy) and [Cloudflare Pages](/pages/configuration/build-image/#build-image-policy) that establish:
 
-- **Minor version updates** happen automatically without notice 
-- **Major version updates** require at least 3 months advance notice when language runtimes or tools approach their end-of-life dates
-- **Build image version deprecation** (Pages only): Build image versions are supported for at least 2 years and will receive at least 6 months notice before removal
+- **Minor version updates**: Default versions are updated to the latest available minor version without notice 
+- **Major version updates**: When language runtimes or tools reach end-of-life, we update to the next stable LTS version with at least 3 months advance notice via Changelog and dashboard notifications
+- **Build image version deprecation** (Pages only): Build image versions are supported for at least 2 years and receive 6 months notice before removal via Changelog, dashboard notifications, and email
 
-When deprecations or major updates are announced, you'll receive notifications via the Cloudflare Changelog, dashboard notifications, and email.
-
-To avoid unexpected build failures, we recommend [pinning specific versions](/workers/ci-cd/builds/build-image/#overriding-default-versions) for production applications and monitoring the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/), as well as the dashboard, and your emails. 
+To prepare for updates and avoid unexpected build failures:
+- Monitor the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/), the dashboard, and your email for announcements
+- [Override default versions](/workers/ci-cd/builds/build-image/#overriding-default-versions) if you need to maintain specific versions for your applications

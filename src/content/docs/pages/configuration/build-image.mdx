@@ -113,30 +113,33 @@ New build image versions bring improvements to tooling, security, and performanc
 
 ### Image Version Deprecation
 
-Build image versions are supported for at least 2 years before a deprecation is announced.
+Build image versions are supported for at least 2 years from their initial release before a deprecation is announced.
 
-**Deprecation timeline**: We provide at least 6 months notice before removing support for a build image version.
+**Deprecation timeline**: We provide 6 months notice before removing support for a build image version.
 
 **Deprecation process**:
-1. **Announcement** via [Cloudflare Changelog](https://developers.cloudflare.com/changelog/) and dashboard notifications
-2. **Deprecation warnings** displayed prominently in dashboard for affected projects
+1. **Announcement** via [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
+2. **Deprecation warnings** displayed in dashboard for projects using the build image version scheduled for deprecation
 3. **Email notifications** to project owners 
-4. **Final removal** on the announced date; projects using the deprecated image will be automatically upgraded to the next supported version 
-
+4. **Final removal** on the announced date:
+   - The deprecated image version will no longer be available for selection
+   - Projects that have not migrated will be automatically upgraded to the latest supported version
 
 ### Default Version Updates
 
-Default versions of languages and tools are updated regularly to their latest stable releases.
+Default versions of languages and tools are updated as they reach end-of-life (EOL). These updates only apply if you have not [overridden the default version](/pages/configuration/build-image/#override-default-versions).
 
-- **Minor version updates**: Default versions are updated to the latest minor version without notice (e.g., Node.js 22.15.0 → 22.16.0). If you need a specific minor version, [override the default version](/workers/ci-cd/builds/build-image/#overriding-default-versions).
+- **Minor version updates**: Updated to the latest available minor version without notice.
 
-- **Major version updates**: When a language runtime or tool approaches its end-of-life (EOL) date, e.g. Node.js, we update to the latest supported version. We will provide at least 3 months advance notice via
+- **Major version updates**: Updated to the next stable, long-term support (LTS) version with at least 3 months advance notice via:
   - [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
-  - Dashboard notification to affected projects upon announcement
+  - Dashboard notifications to projects that will receive the default version update
+
+To maintain a specific version and avoid automatic updates, [override the default version](/pages/configuration/build-image/#override-default-versions).
 
 ### Best Practices
 
 To avoid unexpected build failures:
 - **Monitor announcements** via the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/) and dashboard notifications
 - **Plan for migration** when you receive deprecation notices
-- **Pin specific versions** of critical dependencies by [overriding default versions](/pages/configuration/build-image/#override-default-versions)
+- **Pin specific versions** of critical dependencies by [overriding default versions](/pages/configuration/build-image/#override-default-versions) to maintain full control over when versions change
