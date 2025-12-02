@@ -132,7 +132,7 @@ curl -X PUT "https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/dog.png?X-A
 
 ## Restrict uploads with CORS and Content-Type
 
-When generating presigned URLs for uploads, you can limit abuse by:
+When generating presigned URLs for uploads, you can limit abuse and misuse by:
 
 1. **Restricting Content-Type**: Specify the `Content-Type` header in the request when signing. The upload will fail if the client sends a different `Content-Type` header.
 
