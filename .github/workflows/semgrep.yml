@@ -36,7 +36,7 @@ jobs:
       # include [skip semgrep] in top-most commit message to skip scan
       - name: Semgrep Repo Rules (Custom rules found in .semgrep/)
         shell: bash
-        if: github.event_name == 'pull_request' && !contains(github.event.workflow_run.head_commit.message, '[skip semgrep]')
+        if: github.event_name == 'pull_request' && !contains(github.event.pull_request.head_commit.message, '[skip semgrep]')
         run: |
 
           git config --global --add safe.directory $PWD
