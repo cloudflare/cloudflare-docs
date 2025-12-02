@@ -51,7 +51,7 @@ jobs:
               --error \
               --json \
               $list_of_files \
-              | jq --raw-output ".results[] | \"::error file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
+              | jq --raw-output ".results[] | \"::error file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\" | halt_error $?"
             # add '--error' to return error code to workflow
           else
             echo "No relevant files changed."

@@ -17,8 +17,9 @@ if [ -s tools/relevant_changed_files.txt ]; then
     semgrep scan \
       --config .semgrep --metrics=off \
       --include "*.mdx" --include "*.mdx" \
-      --force-color \
+      --error \
       $list_of_files
+  echo "return code: $?"
 else
   echo "No relevant files changed."
 fi
