@@ -54,8 +54,10 @@ Use S3-compatible SDKs to upload objects. You'll need your [account ID](/fundame
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const S3 = new S3Client({
-	region: "auto",
+	region: "auto", // Required by SDK but not used by R2
+	// Provide your Cloudflare account ID
 	endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
 	credentials: {
 		accessKeyId: ACCESS_KEY_ID,
 		secretAccessKey: SECRET_ACCESS_KEY,
@@ -79,10 +81,12 @@ import boto3
 
 s3 = boto3.client(
 	service_name="s3",
-	endpoint_url=f"https://{account_id}.r2.cloudflarestorage.com",
-	aws_access_key_id=access_key_id,
-	aws_secret_access_key=secret_access_key,
-	region_name="auto",
+	# Provide your Cloudflare account ID
+	endpoint_url=f"https://{ACCOUNT_ID}.r2.cloudflarestorage.com",
+	# Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	aws_access_key_id=ACCESS_KEY_ID,
+	aws_secret_access_key=SECRET_ACCESS_KEY,
+	region_name="auto", # Required by SDK but not used by R2
 )
 
 s3.put_object(Bucket="my-bucket", Key="image.png", Body=file_content)
