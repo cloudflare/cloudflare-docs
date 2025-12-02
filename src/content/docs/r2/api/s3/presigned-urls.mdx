@@ -54,9 +54,14 @@ const getUrl = await getSignedUrl(
 // https://my_bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
 
 // Generate presigned URL for writing (PUT)
+// Specify ContentType to restrict uploads to a specific file type
 const putUrl = await getSignedUrl(
 	S3,
-	new PutObjectCommand({ Bucket: "my-bucket", Key: "image.png" }),
+	new PutObjectCommand({
+		Bucket: "my-bucket",
+		Key: "image.png",
+		ContentType: "image/png",
+	}),
 	{ expiresIn: 3600 },
 );
 ```
@@ -86,9 +91,14 @@ get_url = s3.generate_presigned_url(
 # https://my-bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
 
 # Generate presigned URL for writing (PUT)
+# Specify ContentType to restrict uploads to a specific file type
 put_url = s3.generate_presigned_url(
 	'put_object',
-	Params={'Bucket': 'my-bucket', 'Key': 'image.png'},
+	Params={
+		'Bucket': 'my-bucket',
+		'Key': 'image.png',
+		'ContentType': 'image/png'
+	},
 	ExpiresIn=3600
 )
 ```
@@ -119,6 +129,13 @@ For complete examples and additional operations, refer to the SDK-specific docum
 - [AWS CLI](/r2/examples/aws/aws-cli/#generate-presigned-urls)
 - [AWS SDK for Go](/r2/examples/aws/aws-sdk-go/#generate-presigned-urls)
 - [AWS SDK for PHP](/r2/examples/aws/aws-sdk-php/#generate-presigned-urls)
+
+### Best practices
+
+When generating presigned URLs for uploads, you can limit abuse and misuse by:
+
+- **Restricting Content-Type**: Specify the allowed `Content-Type` in your SDK's parameters. The signature will include this header, so uploads will fail with a `403/SignatureDoesNotMatch` error if the client sends a different `Content-Type`.
+- **Configuring CORS**: If your presigned URLs will be used from a browser, set up [CORS rules](/r2/buckets/cors/#use-cors-with-a-presigned-url) on your bucket to control which origins can make requests.
 
 ## Using a presigned URL
 
