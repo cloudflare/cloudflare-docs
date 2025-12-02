@@ -10,6 +10,10 @@ import { WranglerConfig } from "~/components";
 
 The Wrangler configuration file is optional when using the Cloudflare Vite plugin. Without one, the plugin uses default values. You can customize Worker configuration programmatically with the `config` option. This is useful when the Cloudflare plugin runs inside another plugin or framework.
 
+:::note
+Programmatic configuration is primarily designed for use by frameworks and plugin developers. Users should normally use Wrangler config files instead. Configuration set via the `config` option will not be included when running `wrangler types` or resource based Wrangler CLI commands such as `wrangler kv` or `wrangler d1`.
+:::
+
 ## Default configuration
 
 Without a configuration file, the plugin generates sensible defaults for an assets-only Worker. The `name` comes from `package.json` or the project directory name. The `compatibility_date` uses the latest date supported by your installed Miniflare version.
