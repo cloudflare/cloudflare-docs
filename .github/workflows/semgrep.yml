@@ -50,7 +50,7 @@ jobs:
               --include "*.mdx" --include "*.mdx" \
               --json \
               $list_of_files \
-              | jq ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
+              | jq --raw-output ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
             # add '--error' to return error code to workflow
           else
             echo "No relevant files changed."
