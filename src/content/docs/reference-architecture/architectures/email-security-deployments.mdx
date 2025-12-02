@@ -100,7 +100,7 @@ From a security perspective, the Inline deployment is the preferred method of de
 #### Benefits of Inline deployment
 
 - Messages are processed and blocked before delivery to the user mailbox.
-- Can modify the message, adding subject or body mark-ups such as appending [SPAM] or [EXTERNAL SPAM] to the subject.
+- Inline deployment allows you to modify the message, adding subject or body mark-ups such as appending [SPAM] or [EXTERNAL SPAM] to the subject.
 - Provides high availability and adaptive message pooling as Cloudflare will continue to accept incoming emails in queue, even when the downstream services are not available. When the downstream services are restored, messages will resume delivery for the queue.
 -  Messages with an assigned [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/#dispositions) that are not quarantined receive an `X-header` that may be used for advanced handling downstream.
 - Compatible with all mail systems including Microsoft Exchange On-Prem, Postfix, Lotus Notes, Google Workspace, Microsoft 365, and more.
@@ -211,12 +211,16 @@ If you have mailboxes where emails are consumed by services such as ticketing sy
 Cloudflare's hybrid deployment allows us to collapse all of those use cases into a single solution by allowing quarantining of messages at the Cloudflare edge in addition to evaluating internal email and removing them when needed. This improves security while decreasing vendor spend, management overhead, and risk due to the complexity of managing three different policy sets.
 </Example>
 
-## Benefits
+#### Benefits
 
-Combines the benefits of Inline for External emails and BCC/Journaling for Internal emails.
-Considerations
-Internal email detections are limited due to a lack of information such as Email Authentication, Sending Server, and Delivery Path. Only the content within the body of the email can be analyzed.
-Internal emails may have higher False Positives when using Protecting Users with impersonation registry.
+Hybrid deployment combines the benefits of Inline deployment for external emails and BCC/Journaling for internal emails.
+
+#### Considerations
+
+When you choose hybrid deployment, you need to consider that:
+
+- Internal email detections are limited due to a lack of information such as Email Authentication, Sending Server, and Delivery Path. Only the content within the body of the email can be analyzed.
+- Internal emails may have higher False Positives when using Protecting Users with impersonation registry.
 
 ## Automated Post Delivery
 
