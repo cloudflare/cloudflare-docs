@@ -55,6 +55,6 @@ jobs:
               | jq --raw-output ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
             exit ${PIPESTATUS[0]}
           else
-            echo "No relevant files changed."
+            echo "No relevant files changed"
           fi
 
