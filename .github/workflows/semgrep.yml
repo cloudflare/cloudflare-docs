@@ -43,7 +43,8 @@ jobs:
           echo "github.event.pull_request_commit.message: ${{ github.event.pull_request.head_commit.message }}"
           echo "github.event.head_commit.message: ${{ github.event.head_commit.message }}"
           echo "github.event.commits[0].message: ${{ github.event.commits[0].message }}"
-
+          echo '${{toJSON(github.event)}}'
+          
           git config --global --add safe.directory $PWD
           base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
           git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/relevant_changed_files.txt || true
