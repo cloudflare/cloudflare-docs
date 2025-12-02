@@ -39,9 +39,13 @@ Cloudflare's developer documentation is publicly available at [cloudflare-docs G
 
 In November 2025, using AI Crawl Control, we found that as much as 80% of the AI crawls were accessing our preview sites instead of our main site. This meant that AI crawlers were prone to returning inaccurate information (which may have seemed like hallucinations).
 
-After the discovery, we promptly implemented a security rule to block all access to our preview sites, which dramatically reduced the number of crawls on our preview sites from 80% to 1.05%.
+After the discovery, we initially implemented a `robots.txt` on our preview sites disallowing access. This reduced the number of crawls on these sites from 80% to 20%.
+
+To further reduce crawlers from accessing incomplete information, we promptly implemented a security rule to completely block all access to our preview sites, which simply reduced the number of crawls on our preview sites from 20% to 0% (the security rule completely blocked access to our preview sites).
 
 This change likely has significantly improved the accuracy of information returned to users, improving their documentation experience.
+
+This case study highlights the importance of understanding and controlling how AI crawlers interact with our documentation sites.
 </Example>
 
 ## Action points
