@@ -8,7 +8,7 @@ sidebar:
 
 ---
 
-import { WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 You can trigger Workflows both programmatically and via the Workflows APIs, including:
 
@@ -166,6 +166,8 @@ Restarting an instance will immediately cancel any in-progress steps, erase any 
 
 You can create a new Workflow instance from within a step of another Workflow. The parent Workflow will not block waiting for the child Workflow to complete — it continues execution immediately after the child instance is successfully created.
 
+<TypeScriptExample>
+
 ```ts
 export class ParentWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -191,6 +193,8 @@ export class ParentWorkflow extends WorkflowEntrypoint<Env, Params> {
 	}
 }
 ```
+
+</TypeScriptExample>
 
 If the child Workflow fails to start, the step will fail and be retried according to your retry configuration. Once the child instance is successfully created, it runs independently from the parent.
 
