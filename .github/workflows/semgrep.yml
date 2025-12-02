@@ -52,7 +52,7 @@ jobs:
               --json \
               $list_of_files \
               | jq --raw-output ".results[] | \"::error file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
-            exit $PIPESTATUS[0]
+            exit ${PIPESTATUS[0]}
             # add '--error' to return error code to workflow
           else
             echo "No relevant files changed."
