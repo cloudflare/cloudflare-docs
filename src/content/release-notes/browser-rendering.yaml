@@ -3,6 +3,11 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-12-03"
+    title: Improved AI JSON response parsing and debugging
+    description: |-
+      * Added `rawAiResponse` field to [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) error responses, allowing you to inspect the unparsed AI output when JSON parsing fails for easier debugging.
+      * Improved AI response handling to better distinguish between valid JSON objects, arrays, and invalid payloads, increasing type safety and reliability.
   - publish_date: "2025-10-21"
     title: Added guidance on REST API timeouts and custom fonts
     description: |-
