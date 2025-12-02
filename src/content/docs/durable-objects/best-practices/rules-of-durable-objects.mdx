@@ -11,6 +11,83 @@ Durable Objects provide a powerful primitive for building stateful, coordinated 
 
 This is a guidebook on how to build more effective and correct Durable Object applications.
 
+## When to use Durable Objects
+
+### Use Durable Objects for stateful coordination, not stateless request handling
+
+Workers are stateless functions: each request may run on a different instance, in a different location, with no shared memory between requests. Durable Objects are stateful compute: each instance has a unique identity, runs in a single location, and maintains state across requests.
+
+Use Durable Objects when you need:
+
+- **Coordination** — Multiple clients need to interact with shared state (chat rooms, multiplayer games, collaborative documents)
+- **Strong consistency** — Operations must be serialized to avoid race conditions (counters, rate limiters, booking systems)
+- **Per-entity storage** — Each user, tenant, or resource needs its own isolated database (multi-tenant SaaS, per-user data)
+- **Persistent connections** — Long-lived WebSocket connections that survive across requests (real-time notifications, live updates)
+- **Scheduled work per entity** — Each entity needs its own timer or scheduled task (subscription renewals, game timeouts)
+
+Use plain Workers when you need:
+
+- **Stateless request handling** — API endpoints, proxies, or transformations with no shared state
+- **Maximum global distribution** — Requests should be handled at the nearest edge location
+- **High fan-out** — Each request is independent and can be processed in parallel
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
+}
+
+// ✅ Good use of Durable Objects: Rate limiting requires coordination
+// All requests for a given API key must be counted by the same instance
+export class RateLimiter extends DurableObject<Env> {
+	async checkLimit(apiKey: string): Promise<{ allowed: boolean; remaining: number }> {
+		const now = Date.now();
+		const windowStart = now - 60_000; // 1-minute window
+
+		// Clean old entries and count recent requests
+		this.ctx.storage.sql.exec("DELETE FROM requests WHERE timestamp < ?", windowStart);
+		this.ctx.storage.sql.exec("INSERT INTO requests (timestamp) VALUES (?)", now);
+
+		const count = this.ctx.storage.sql
+			.exec<{ count: number }>("SELECT COUNT(*) as count FROM requests")
+			.one().count;
+
+		const limit = 100;
+		return { allowed: count <= limit, remaining: Math.max(0, limit - count) };
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const apiKey = request.headers.get("X-API-Key") ?? "anonymous";
+
+		// Route to a Durable Object by API key for coordinated rate limiting
+		const id = env.RATE_LIMITER.idFromName(apiKey);
+		const limiter = env.RATE_LIMITER.get(id);
+
+		const { allowed, remaining } = await limiter.checkLimit(apiKey);
+
+		if (!allowed) {
+			return new Response("Rate limit exceeded", {
+				status: 429,
+				headers: { "X-RateLimit-Remaining": remaining.toString() },
+			});
+		}
+
+		// ✅ Stateless work happens in the Worker
+		// This part doesn't need coordination
+		return new Response("OK", {
+			headers: { "X-RateLimit-Remaining": remaining.toString() },
+		});
+	},
+};
+```
+</TypeScriptExample>
+
+A common pattern is to use Workers as the stateless entry point that routes requests to Durable Objects when coordination is needed. The Worker handles authentication, validation, and response formatting, while the Durable Object handles the stateful logic.
+
 ## Design and sharding
 
 ### Model your Durable Objects around your "atom" of coordination
@@ -1244,23 +1321,20 @@ This is not a hard rule. Short external calls are fine. Consider offloading when
 
 ### Test with Vitest and plan for class migrations
 
-Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. For schema changes, run migrations in the constructor. For class renames or deletions, use Wrangler migrations.
+Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integration provides isolated storage per test and utilities for direct instance access.
 
-<TypeScriptExample filename="index.test.ts">
+<TypeScriptExample filename="test/chat-room.test.ts">
 ```ts
 import {
 	env,
-	createExecutionContext,
-	waitOnExecutionContext,
+	runInDurableObject,
+	runDurableObjectAlarm,
 } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 
-// Import your Durable Object class and Worker
-import { ChatRoom } from "./index";
-
 describe("ChatRoom", () => {
+	// Each test gets isolated storage automatically
 	it("should send and retrieve messages", async () => {
-		// Get a stub to a test Durable Object instance
 		const id = env.CHAT_ROOM.idFromName("test-room");
 		const stub = env.CHAT_ROOM.get(id);
 
@@ -1269,10 +1343,24 @@ describe("ChatRoom", () => {
 		await stub.sendMessage("user-2", "Hi there!");
 
 		const messages = await stub.getMessages(10);
-
 		expect(messages).toHaveLength(2);
-		expect(messages[0].content).toBe("Hi there!");
-		expect(messages[1].content).toBe("Hello!");
+	});
+
+	it("can access instance internals and trigger alarms", async () => {
+		const id = env.CHAT_ROOM.idFromName("test-room");
+		const stub = env.CHAT_ROOM.get(id);
+
+		// Access storage directly for verification
+		await runInDurableObject(stub, async (instance, state) => {
+			const count = state.storage.sql
+				.exec<{ count: number }>("SELECT COUNT(*) as count FROM messages")
+				.one();
+			expect(count.count).toBe(0); // Fresh instance due to test isolation
+		});
+
+		// Trigger alarms immediately without waiting
+		const alarmRan = await runDurableObjectAlarm(stub);
+		expect(alarmRan).toBe(false); // No alarm was scheduled
 	});
 });
 ```
@@ -1294,7 +1382,7 @@ export default defineWorkersConfig({
 });
 ```
 
-When you need to rename or delete a Durable Object class, use Wrangler migrations to ensure data is handled correctly:
+For schema changes, run migrations in the constructor using `blockConcurrencyWhile()`. For class renames or deletions, use Wrangler migrations:
 
 <WranglerConfig>
 ```toml
@@ -1310,4 +1398,4 @@ deleted_classes = ["DeprecatedRoom"]
 ```
 </WranglerConfig>
 
-Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) for more details on class migrations, and [Testing](/durable-objects/examples/testing-with-durable-objects/) for testing patterns.
+Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) for more details on class migrations, and [Testing with Durable Objects](/durable-objects/examples/testing-with-durable-objects/) for comprehensive testing patterns including SQLite queries and alarm testing.
