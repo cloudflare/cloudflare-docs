@@ -37,11 +37,11 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 const S3 = new S3Client({
 	region: "auto", // Required by SDK but not used by R2
 	// Provide your Cloudflare account ID
-	endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
 	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
 	credentials: {
-		accessKeyId: ACCESS_KEY_ID,
-		secretAccessKey: SECRET_ACCESS_KEY,
+		accessKeyId: '<ACCESS_KEY_ID>',
+		secretAccessKey: '<SECRET_ACCESS_KEY>',
 	},
 });
 
@@ -51,7 +51,7 @@ const getUrl = await getSignedUrl(
 	new GetObjectCommand({ Bucket: "my-bucket", Key: "image.png" }),
 	{ expiresIn: 3600 }, // Valid for 1 hour
 );
-// https://my_bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
+// https://my-bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
 
 // Generate presigned URL for writing (PUT)
 // Specify ContentType to restrict uploads to a specific file type
