@@ -20,7 +20,7 @@ Workers are stateless functions: each request may run on a different instance, i
 Use Durable Objects when you need:
 
 - **Coordination** — Multiple clients need to interact with shared state (chat rooms, multiplayer games, collaborative documents)
-- **Strong consistency** — Operations must be serialized to avoid race conditions (counters, rate limiters, booking systems)
+- **Strong consistency** — Operations must be serialized to avoid race conditions (inventory management, booking systems, turn-based games)
 - **Per-entity storage** — Each user, tenant, or resource needs its own isolated database (multi-tenant SaaS, per-user data)
 - **Persistent connections** — Long-lived WebSocket connections that survive across requests (real-time notifications, live updates)
 - **Scheduled work per entity** — Each entity needs its own timer or scheduled task (subscription renewals, game timeouts)
@@ -36,50 +36,58 @@ Use plain Workers when you need:
 import { DurableObject } from "cloudflare:workers";
 
 export interface Env {
-	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
+	BOOKING: DurableObjectNamespace<SeatBooking>;
 }
 
-// ✅ Good use of Durable Objects: Rate limiting requires coordination
-// All requests for a given API key must be counted by the same instance
-export class RateLimiter extends DurableObject<Env> {
-	async checkLimit(apiKey: string): Promise<{ allowed: boolean; remaining: number }> {
-		const now = Date.now();
-		const windowStart = now - 60_000; // 1-minute window
+// ✅ Good use of Durable Objects: Seat booking requires coordination
+// All booking requests for a venue must be serialized to prevent double-booking
+export class SeatBooking extends DurableObject<Env> {
+	async bookSeat(
+		seatId: string,
+		userId: string
+	): Promise<{ success: boolean; message: string }> {
+		// Check if seat is already booked
+		const existing = this.ctx.storage.sql
+			.exec<{ user_id: string }>(
+				"SELECT user_id FROM bookings WHERE seat_id = ?",
+				seatId
+			)
+			.toArray();
 
-		// Clean old entries and count recent requests
-		this.ctx.storage.sql.exec("DELETE FROM requests WHERE timestamp < ?", windowStart);
-		this.ctx.storage.sql.exec("INSERT INTO requests (timestamp) VALUES (?)", now);
+		if (existing.length > 0) {
+			return { success: false, message: "Seat already booked" };
+		}
 
-		const count = this.ctx.storage.sql
-			.exec<{ count: number }>("SELECT COUNT(*) as count FROM requests")
-			.one().count;
+		// Book the seat - this is safe because Durable Objects are single-threaded
+		this.ctx.storage.sql.exec(
+			"INSERT INTO bookings (seat_id, user_id, booked_at) VALUES (?, ?, ?)",
+			seatId,
+			userId,
+			Date.now()
+		);
 
-		const limit = 100;
-		return { allowed: count <= limit, remaining: Math.max(0, limit - count) };
+		return { success: true, message: "Seat booked successfully" };
 	}
 }
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const apiKey = request.headers.get("X-API-Key") ?? "anonymous";
+		const url = new URL(request.url);
+		const eventId = url.searchParams.get("event") ?? "default";
 
-		// Route to a Durable Object by API key for coordinated rate limiting
-		const id = env.RATE_LIMITER.idFromName(apiKey);
-		const limiter = env.RATE_LIMITER.get(id);
+		// Route to a Durable Object by event ID
+		// All bookings for the same event go to the same instance
+		const id = env.BOOKING.idFromName(eventId);
+		const booking = env.BOOKING.get(id);
 
-		const { allowed, remaining } = await limiter.checkLimit(apiKey);
+		const { seatId, userId } = await request.json<{
+			seatId: string;
+			userId: string;
+		}>();
+		const result = await booking.bookSeat(seatId, userId);
 
-		if (!allowed) {
-			return new Response("Rate limit exceeded", {
-				status: 429,
-				headers: { "X-RateLimit-Remaining": remaining.toString() },
-			});
-		}
-
-		// ✅ Stateless work happens in the Worker
-		// This part doesn't need coordination
-		return new Response("OK", {
-			headers: { "X-RateLimit-Remaining": remaining.toString() },
+		return Response.json(result, {
+			status: result.success ? 200 : 409,
 		});
 	},
 };
