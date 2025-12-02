@@ -35,6 +35,7 @@ jobs:
       # scans using rules inside the .semgrep/ folder and fails on error
       # include [skip semgrep] in top-most commit message to skip scan
       - name: Semgrep Repo Rules (Custom rules found in .semgrep/)
+        shell: bash
         if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '[skip semgrep]')
         run: |
 
