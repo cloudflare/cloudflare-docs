@@ -24,7 +24,7 @@ For Amazon Web Services (AWS) deployments:
 		| ----------- | ------ |
 		| `0.0.0.0/0` | `eni-11223344556677889` |
 
-## Source IP configuration
+## Source IPs for Cloudflare services
 
 When Cloudflare services such as [Load Balancing](/load-balancing/) send traffic to your private network through WARP Connector, the traffic originates from a configurable IP range (default `100.64.0.0/12`). You may need to [configure Cloudflare source IPs](/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-cloudflare-source-ips/) to avoid IP conflicts or align with your IP address management plan.
 
