@@ -52,7 +52,7 @@ jobs:
               --error \
               --json \
               $list_of_files \
-              | jq --raw-output ".results[] | \"::error file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
+              | jq --raw-output ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
             exit ${PIPESTATUS[0]}
           else
             echo "No relevant files changed."
