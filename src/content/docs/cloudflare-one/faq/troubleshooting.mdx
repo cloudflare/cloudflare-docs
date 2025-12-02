@@ -269,7 +269,7 @@ Turning off TLS decryption should be a temporary measure. TLS decryption should 
 
 ## I entered an override code for WARP that was supposed to be valid for 3 hours but the override code expired faster than I expected.
 
-[Admin override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#admin-override) codes are time-sensitive and adhere to fixed-hour time blocks. Override codes can be reused until the end of their timeout. An override code's timeout begins in the hour the override code was generated in. Refer to the following scenarios.
+[Admin override codes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes) are time-sensitive and adhere to fixed-hour time blocks. Override codes can be reused until the end of their timeout. An override code's timeout begins in the hour the override code was generated in. Refer to the following scenarios.
 
 ### Scenario one: Admin generates an override code at 9:00 AM with a timeout of one hour.
 
@@ -293,7 +293,7 @@ If the user attempts to enter the override code at **11:59 AM** the next day, th
 
 ## I disabled WARP using an override code but WARP turned on by itself before my override code expired.
 
-If you are using an [Admin override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#admin-override) code with [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) also enabled, WARP will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
+If you are using an [admin override code](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes) with [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) also enabled, WARP will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
 
 To prevent WARP from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.
 
