@@ -7,10 +7,12 @@ sidebar:
 
 import { DirectoryListing } from "~/components";
 
-Cloudflare One offers observability tools to monitor and troubleshoot your environment:  
-- [Analytics Dashboards](#analytics-dashboards) for traffic trends and policy insights  
-- [Logs](#logs) for event-level investigation  
-- [Digital Experience Monitoring (DEX)](#digital-experience-monitoring-dex) for device, network, and application performance  
+Cloudflare One offers observability tools to monitor and troubleshoot your environment:
+
+- [Analytics Overview](/cloudflare-one/insights/analytics-overview/) to monitor overall Cloudflare One usage.
+- Analytics Dashboards to review organizational traffic trends and policy insights.
+- [Logs](/cloudflare-one/insights/logs/) for event-level investigation.  
+- [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) for device, network, and application performance.
 
 ## Example usage
 
@@ -18,56 +20,43 @@ Cloudflare One offers observability tools to monitor and troubleshoot your envir
 A user reports they cannot reach an internal application behind [Cloudflare Access](/cloudflare-one/).
 
 #### Solution
-1. The admin checks **Access Event Analytics dashboard to see if others are experiencing similar issues.
-2. The admin then reviews **Logs** to examine the user's authentication attempts and blocked requests.
-3. Finally, the admin uses **DEX** to evaluate the user's device and network performance, identifying the root cause.
+1. The admin checks [Access Event Analytics dashboard](/cloudflare-one/insights/analytics-overview/) to review if other users are experiencing similar issues.
+2. The admin then reviews [Logs](/cloudflare-one/insights/logs/) to examine the user's authentication attempts and blocked requests.
+3. Finally, the admin uses [DEX](/cloudflare-one/insights/dex/) to evaluate the user's device health and network performance.
 
 ## How to use these tools together
 
 ### Onboarding
+
+After onboarding your devices and users, use these tools to confirm everything is set up correctly and to monitor your organization's activity.
 
   1. Start with [Logs](/cloudflare-one/insights/logs/) to validate initial configuration and confirm that authentication is successful.
   2. Use [Analytics overview](/cloudflare-one/insights/analytics-overview/) to confirm expected patterns and policy activity.
 
 ### Daily monitoring
 
-  1. Use [Analytics Dashboards] to understand trends and environment behavior.  
+  1. Use Analytics Dashboards to understand trends and for visualizations of your log data.
+
+      Administrators typically start with Analytics because they offer:
+
+      - A high-level view of activity across your products, like Access, or security use-cases, such as AI and shadow IT.  
+      - Visibility into trends, provided through time-series graphs, to track the evolution of key metrics (such as [DNS queries](/cloudflare-one/insights/analytics/gateway/#dns-query-analytics), [network sessions](/cloudflare-one/insights/analytics/gateway/#network-session-analytics), [HTTP requests](/cloudflare-one/insights/analytics/gateway/#http-request-analytics), and [CASB posture/content findings](/cloudflare-one/insights/analytics/data-analytics/)) over time.
+
   2. Use Logs as needed for event-level verification.
+
+      Use Logs when you need to:
+
+      - Investigate a specific event; for example, a user's [failed authentication attempt](/cloudflare-one/insights/logs/audit-logs/) when trying to log into an application.
+      - Validate identity or device details; for example, confirming which user made the request, how they authenticated, and whether their device met required [posture conditions](/cloudflare-one/insights/logs/posture-logs/).
+      - Confirm policy matches; for example, verifying which [specific rule](/cloudflare-one/access-controls/policies/#rule-types) allowed, blocked, or challenged a user's request and why it was applied.
 
 ### User-reported issues
 
+Users may report problems like slow or failing connections to internal apps.
+
   1. Start with Analytics Dashboards to review if the issue impacts others.  
-  2. Check Logs for specific failing events.  
-  3. Use DEX to diagnose device- or network-level causes with DEX tests and device monitoring.
-
-## Analytics dashboards
-
-Analytics dashboards provide visualizations of your log data. Analytics dashboards show you policy-related activity by showing top metrics such as blocked and allowed users, the geographic and source IP origins of traffic, and trends in network session and application usage.
-
-Administrators typically start with Analytics because they offer:
-
-- A high-level view of activity across your products, like Access, or security use-cases, such as AI and shadow IT.  
-- Visibility into trends, provided through time-series graphs, to track the evolution of key metrics (such as DNS queries, network sessions, HTTP requests, and CASB posture/content findings) over time.
-
-## Logs
-
-Logs provide line-by-line visibility into the events occurring within your Cloudflare One deployment. If Analytics highlight a spike or an anomaly, logs help you trace and analyze what happened.
-
-Use Logs when you need to:
-
-- Investigate a specific event; for example, a user's failed authentication attempt when trying to log into a Cloudflare One application.
-- Validate identity or device details; for example, confirming which user made the request, how they authenticated, and whether their device met required posture conditions.
-- Confirm policy matches; for example, verifying which specific rule allowed, blocked, or challenged a user's request and why it was applied.
-
-## Digital Experience Monitoring (DEX)
-
-Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance. While Analytics and Logs show what happened on the network, DEX measures and tests device and [network conditions](/cloudflare-one/insights/dex/tests/) to reveal the performance factors affecting a user's experience.
-
-If a user notifies that “the connection isn't working” or “performance is slow,” DEX allows you to:
-
-- Use [device monitoring] to check device health and endpoint connectivity.
-- Test network health and application responsiveness with [synthetic tests].
-- Identify whether problems originate from the device (such as [issues with the WARP client]()), the network, or Cloudflare.
+  2. Check [Logs](/cloudflare-one/insights/logs/) for failed authentication attempts, blocked requests, or unexpected policy matches.
+  3. Use [DEX](/cloudflare-one/insights/dex/) to diagnose device- or network-level causes with [synthetic tests](/cloudflare-one/insights/dex/tests/) and [device monitoring](/cloudflare-one/insights/dex/monitoring/).
 
 ## Directory
 
