@@ -60,7 +60,7 @@ This document will discuss the following methods to deploy and where you would u
 
 Before you choose a deployment option, it is important to consider your needs and desired experience. Our best practice is typically to go with an MX deployment when we are the primary phishing protection in place. The key reasons for this are as follows:
 
-- [Pre-delivery](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-Inline-deployment/) remediation allows us to tune how messages are delivered by appending to the subject/body, applying URL Rewriting to Cloudflare [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/), and delivering messages into the junk folder or downstream email quarantine. This enables you to design with a specific user experience in mind.
+- [Pre-delivery](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/) remediation allows us to tune how messages are delivered by appending to the subject/body, applying URL Rewriting to Cloudflare [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/), and delivering messages into the junk folder or downstream email quarantine. This enables you to design with a specific user experience in mind.
 - We can remove messages before they are consumed by systems that ingest emails such as a ServiceNow or an Archiving Solution.
 - We remove the risk of dwell time issues where there is a time difference between delivery to the inbox and when the message is moved from the inbox.
 - We can support hybrid deployments such as a mix of Microsoft 365 and Microsoft Exchange or Microsoft 365 and Google Workspace.
