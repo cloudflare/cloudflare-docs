@@ -124,19 +124,20 @@ export default defineWorkersConfig({
 Make sure your Wrangler configuration includes the Durable Object binding and SQLite migration:
 
 <WranglerConfig>
-```toml
-name = "counter-worker"
-main = "src/index.ts"
-compatibility_date = "2024-12-01"
-
-[durable_objects]
-bindings = [
-	{ name = "COUNTER", class_name = "Counter" }
-]
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["Counter"]
+```jsonc
+{
+  "name": "counter-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-12-01",
+  "durable_objects": {
+    "bindings": [
+      { "name": "COUNTER", "class_name": "Counter" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["Counter"] }
+  ]
+}
 ```
 </WranglerConfig>
 

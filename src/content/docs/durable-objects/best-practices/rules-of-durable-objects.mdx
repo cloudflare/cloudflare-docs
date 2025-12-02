@@ -378,10 +378,12 @@ SQLite storage is the recommended storage backend for new Durable Objects. It pr
 Configure your Durable Object class to use SQLite storage in your Wrangler configuration:
 
 <WranglerConfig>
-```toml
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["ChatRoom"]
+```jsonc
+{
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["ChatRoom"] }
+  ]
+}
 ```
 </WranglerConfig>
 
@@ -1393,16 +1395,15 @@ export default defineWorkersConfig({
 For schema changes, run migrations in the constructor using `blockConcurrencyWhile()`. For class renames or deletions, use Wrangler migrations:
 
 <WranglerConfig>
-```toml
-# Rename a class
-[[migrations]]
-tag = "v2"
-renamed_classes = [{ from = "OldChatRoom", to = "ChatRoom" }]
-
-# Delete a class (removes all data!)
-[[migrations]]
-tag = "v3"
-deleted_classes = ["DeprecatedRoom"]
+```jsonc
+{
+  "migrations": [
+    // Rename a class
+    { "tag": "v2", "renamed_classes": [{ "from": "OldChatRoom", "to": "ChatRoom" }] },
+    // Delete a class (removes all data!)
+    { "tag": "v3", "deleted_classes": ["DeprecatedRoom"] }
+  ]
+}
 ```
 </WranglerConfig>
 
