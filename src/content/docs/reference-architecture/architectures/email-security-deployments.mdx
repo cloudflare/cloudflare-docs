@@ -10,7 +10,7 @@ description: >-
   This reference architecture describes the key architecture of Cloudflare Email security.
 ---
 
-import { Render, Example } from "~/components";
+import { Render, Example, GlossaryTooltip } from "~/components";
 
 ## Introduction
 
@@ -20,11 +20,11 @@ Cloudflare Email security service is a market leading solution that can be deplo
 
 ## Strengthen your email infrastructure with Cloudflare Email security
 
-Email remains a critical communication channel for businesses of all sizes. However, email also serves as a prime target for cyber attacks, including phishing, spam, and malware. To safeguard your organization sensitive data and reputation, a robust Email security solution is essential.
+Email remains a critical communication channel for businesses of all sizes. However, email also serves as a prime target for cyber attacks, including phishing, spam, and malware. To safeguard your organization sensitive data and reputation, a robust email security solution is essential.
 
 Cloudflare Email security offers a comprehensive suite of tools and technologies designed to protect your email infrastructure from a wide range of threats. By implementing Cloudflare Email security, you can significantly enhance your organization security posture and mitigate the risks associated with email-borne attacks.
 
-This reference architecture provides a detailed overview of how to deploy and configure Cloudflare Email security to optimize your Email security posture. This reference architecture will delve into key components and best practices to ensure the seamless integration of this solution into your existing IT infrastructure.
+This reference architecture provides a detailed overview of how to deploy and configure Cloudflare Email security to optimize your email security posture. This reference architecture will delve into key components and best practices to ensure the seamless integration of this solution into your existing IT infrastructure.
 
 ### Who is this reference architecture for and what will you learn?
 
@@ -51,8 +51,8 @@ Cloudflare Email security is a modern approach to solving phishing attacks. Clou
 
 This document will discuss the following methods to deploy and where you would use them:
 
-- Inline or MX
-- M365 API integration
+- [Inline or MX](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/)
+- [Microsoft 365 API integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/)
 - [Journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/) or [BCC](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/) with auto-move
 - Hybrid deployment
 
@@ -65,7 +65,7 @@ Before you choose a deployment option, it is important to consider your needs an
 - We remove the risk of dwell time issues where there is a time difference between delivery to the inbox and when the message is moved from the inbox.
 - We can support hybrid deployments such as a mix of Microsoft 365 and Microsoft Exchange or Microsoft 365 and Google Workspace.
 
-If those needs are not important or you are using layered security that does not include another API-based solution, then our API method is quick and efficient to deploy with no changes to mail flow. If you want the benefits of API without the risk of API Throttling, then Journal/BCC is the best choice as the ingestion method does not use API calls. However, if you want the protection of an MX deployment along with the benefits of API for internal messaging, then our hybrid deployment is ideal.
+If those needs are not important or you are using layered security that does not include another API-based solution, then our API method is quick and efficient to deploy with no changes to your mail flow. If you want the benefits of API without the risk of API Throttling, then Journal/BCC is the best choice as the ingestion method does not use API calls. However, if you want the protection of an MX deployment along with the benefits of API for internal messaging, then our hybrid deployment is ideal.
 
 Should your needs change, know that you have the flexibility to change deployment methods as you see fit without having to repurchase our solution. The only caveat is that Advantage and CyberSafe customers are limited to Inline deployments while Enterprise licensing benefits from all capabilities.
 
@@ -75,13 +75,13 @@ Before you commit to a specific deployment, Cloudflare suggests you review all o
 
 ### Inline
 
-With an Inline deployment, all emails destined for one or more domains are filtered through Cloudflare before they are delivered to the user's inbox. Cloudflare can be deployed anywhere in your email processing chain. When deployed as the first hop, you will need to update the domain's DNS MX records to point to Cloudflare. If you prefer Cloudflare to inspect messages after your existing SEG (Secure Email Gateway), Cloudflare can be inserted as a hop in the processing chain, and will then forward processed messages downstream to the next hop. Based on policies, messages are blocked and/or quarantined if they are marked as spam, malicious, bulk, and more.
+With an Inline deployment, all emails destined for one or more domains are filtered through Cloudflare before they are delivered to the user's inbox. Cloudflare can be deployed anywhere in your email processing chain. When deployed as the first <GlossaryTooltip term="Hops">hop</GlossaryTooltip>, you will need to update the domain's DNS MX records to point to Cloudflare. If you prefer Cloudflare to inspect messages after your existing SEG (Secure Email Gateway), Cloudflare can be inserted as a hop in the processing chain, and will then forward processed messages downstream to the next hop. Based on policies, messages are blocked and/or quarantined if they are marked as Spam, Malicious, Bulk, and more.
 
 ![Inline deployment](~/assets/images/reference-architecture/understanding-email-security-deployments/Inline_MX.svg)
 
 The diagram above describes the following:
 
-1. Email arrives at Cloudflare based on MX records.
+1. Email arrives at Cloudflare based on [MX records](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-mx-record/).
 2. Cloudflare inspects email body, header, and attachments and assigns the appropriate disposition:
    - Malicious
    - Spam
@@ -153,7 +153,7 @@ Under normal circumstances, this process is typically performed in less than 2-3
 - Easy way to add protection in complex email architectures with no changes to mail flow operations.
 - Agentless deployment for Microsoft 365.
 - Microsoft 365 Defender/ATP operates on the message first.
-- This method can be used for a Proof of Value to collect and report on emails without requiring changes to mail flow. In this scenario you would leave the Remediation policy not configured to prevent actions being taken.
+- This method can be used for a Proof of Value to collect and report on emails without requiring changes to mail flow. In this scenario you would leave the remediation policy not configured to prevent actions being taken.
 
 #### Considerations
 
