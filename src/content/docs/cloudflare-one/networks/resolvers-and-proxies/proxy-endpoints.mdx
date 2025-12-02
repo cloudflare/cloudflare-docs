@@ -1,0 +1,354 @@
+---
+pcx_content_type: how-to
+title: Proxy endpoints
+sidebar:
+  order: 2
+---
+
+import {
+	Details,
+	GlossaryDefinition,
+	TabItem,
+	Tabs,
+	APIRequest,
+} from "~/components";
+
+:::note
+PAC files are only available on Enterprise plans.
+:::
+
+You can apply Gateway HTTP and DNS policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file to connect to a proxy endpoint.
+
+<GlossaryDefinition term="PAC file" prepend="A PAC file is " />
+
+When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. PAC files are evaluated by the browser for every request, determining whether traffic should go through the proxy or connect directly. Note that Gateway [cannot filter every type of HTTP traffic](#traffic-limitations) proxied using PAC files.
+
+PAC files offer several advantages:
+
+- **Centralized management**: Update routing rules in one location without reconfiguring individual devices
+- **Flexible routing**: Route different traffic types to different proxies or direct connections based on domain, IP range, or protocol
+- **Load balancing**: Distribute traffic across multiple proxy servers with automatic failover
+
+:::note
+PAC files require user interaction. Authorization endpoints require users to log in through [Cloudflare Access](/cloudflare-one/access-controls/policies/). PAC files do not support username/password or mTLS authorization.
+:::
+
+## Types of proxy endpoints
+
+Cloudflare One offers two types of proxy endpoints, each with different authorization methods.
+
+Once you create a proxy endpoint, you cannot change its type. If you need a different authorization method, you must create a new proxy endpoint.
+
+### Authorization endpoint
+
+Authorization endpoints use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide Zero Trust authorization. Users must authenticate through an identity provider and pass Access policies before they can use the proxy endpoint.
+
+Use authorization endpoints when:
+
+- You need user-level authentication and identity-based policies
+- You want to associate specific users with their proxy traffic
+- Your organization requires login through identity providers (such as Okta, Microsoft Entra ID, or Google Workspace)
+- You need granular control over who can access the proxy
+
+### Source IP endpoint
+
+Source IP endpoints authorize traffic based on the originating IP address. Only traffic from pre-configured IP addresses can use the proxy endpoint.
+
+Use source IP endpoints when:
+
+- You have a fixed set of office or network locations
+- You want simpler setup without user authentication
+- Your devices share a common egress IP address
+- You do not need to identify individual users
+
+## 1. Create a proxy endpoint
+
+:::caution
+All devices you add to the proxy endpoint will be able to access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, you can build a network policy that blocks those source IPs from connecting to your internal resources.
+:::
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
+<Details header="Authorization endpoint" open={true}>
+
+To add an [authorization endpoint](#authorization-endpoint):
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies**, then go to **Proxy endpoints**.
+2. In **Proxy endpoints**, select **Add an endpoint**.
+3. Choose **Add an authorization endpoint**.
+4. Name your endpoint.
+5. Add [Access policies](/cloudflare-one/access-controls/policies/) to control who can access your applications. You can select existing policies or create new policies.
+6. Choose which login methods to support. To accept all login methods, turn on **Accept all available identity providers**.
+7. (Optional) If only one identity provider is configured, turn on **Instant Auth** to skip identity provider selection when your users reach the proxy endpoint.
+8. Select **Create**.
+
+</Details>
+
+<Details header="Source IP endpoint" open={true}>
+
+To add a [source IP endpoint](#source-ip-endpoint):
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies**, then go to **Proxy endpoints**.
+2. In **Proxy endpoints**, select **Add an endpoint**.
+3. Choose **Add a source IP endpoint**.
+4. Name your endpoint.
+5. Add the source IP addresses of your devices in CIDR notation. For example:
+   - **IPv4**: `192.0.2.0/8`
+   - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/32`
+6. Select **Save endpoint**.
+
+</Details>
+
+</TabItem>
+
+<TabItem label="API">
+
+To create a source IP endpoint:
+
+1. Use [Create A Proxy Endpoint](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/create/) with the following call:
+
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/proxy_endpoints"
+   	method="POST"
+   	json={{
+   		name: "any_name",
+   		ips: ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"],
+   	}}
+   />
+
+   Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example:
+   - **IPv4**: `192.0.2.0/8`
+   - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/32`
+
+   :::note
+   Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
+   :::
+
+2. After running the call, you should see an output similar to
+
+   ```json title="Example output" {10}
+   {
+   	"result": {
+   		"id": "d969d7bf-ec28-4291-9af0-86825f472c21",
+   		"name": "test",
+   		"created_at": "2022-03-02T10:57:18.094789Z",
+   		"updated_at": "2022-03-02T10:57:18.094789Z",
+   		"ips": ["90.90.241.229/8"],
+   		"subdomain": "3ele0ss56t"
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
+
+   Note the `subdomain` value returned by the API. Your Cloudflare proxy server domain is of the form:
+
+   ```txt
+   <SUBDOMAIN>.proxy.cloudflare-gateway.com
+   ```
+
+   In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
+
+</TabItem>
+
+</Tabs>
+
+## 2. Create a PAC file
+
+A PAC file is a text file written in JavaScript that specifies which traffic should redirect to the proxy server. You can create a PAC file in the Cloudflare dashboard or write your own custom PAC file.
+
+For detailed instructions and examples for creating a PAC file, refer to [PAC file best practices](/cloudflare-one/team-and-resources/devices/agentless/proxy-endpoints/best-practices/).
+
+## 3. Configure your devices
+
+### 3a. Install Cloudflare certificate
+
+To use Gateway HTTP policies with proxy endpoints, you must [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices. This allows Gateway to inspect HTTPS traffic and apply policies such as blocking specific domains or displaying the Gateway block page.
+
+### 3b. Configure browser to use PAC file
+
+All major browsers support PAC files. You can configure individual browsers, or you can configure system settings that apply to all browsers on the device. Multiple devices can call the same PAC file as long as their source IP addresses were included in the proxy endpoint configuration.
+
+<Details header="Chromium-based browsers">
+
+Chromium-based browsers (such as Google Chrome, Microsoft Edge, and Brave) rely on your operating system's proxy server settings. To configure your browser to use Gateway with PAC files, refer to the [macOS](https://support.apple.com/guide/mac-help/mchlp2591/mac) or [Windows](https://support.microsoft.com/windows/use-a-proxy-server-in-windows-03096c53-0554-4ffe-b6ab-8b1deee8dae1) documentation.
+
+</Details>
+
+<Details header="Mozilla Firefox">
+
+1. In Firefox, go to **Settings** and scroll down to **Network Settings**.
+2. Select **Settings**.
+3. Select **Automatic proxy configuration URL**.
+4. Enter the URL where your PAC file is hosted, for example `https://proxy-pac.cflr.workers.dev/3ele0ss56t.pac`.
+5. Select **OK**. HTTP traffic from Firefox is now being filtered by Gateway.
+
+</Details>
+
+<Details header="Safari">
+
+Safari relies on your operating system's proxy server settings. To configure your browser to use Gateway with PAC files, refer to the [macOS documentation](https://support.apple.com/guide/mac-help/mchlp2591/mac).
+
+</Details>
+
+## 4. Test your HTTP policy
+
+To test your configuration, create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block a test domain. When you visit the blocked domain in your browser, you should see the Gateway block page.
+
+You can now use the Proxy Endpoint selector in [network](/cloudflare-one/traffic-policies/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/traffic-policies/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
+
+## 5. (Optional) Configure firewall
+
+You may need to configure your organization's firewall to allow your users to connect to a proxy endpoint. Depending on your firewall, you will need to create a rule using either your proxy endpoint's domain or IP addresses.
+
+To get the domain of a proxy endpoint:
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Choose the proxy endpoint. Select **Edit**.
+3. In **Proxy Endpoint**, copy the domain.
+
+</TabItem>
+
+<TabItem label="API">
+
+1. Use the [List proxy endpoints](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/list/) operation to get a list of your proxy endpoints and their details. For example:
+
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/proxy_endpoints"
+   	method="GET"
+   />
+
+   ```json {8} output
+   {
+   	"success": true,
+   	"result": {
+   		"id": "ed35569b41ce4d1facfe683550f54086",
+   		"created_at": "2014-01-01T05:20:00.12345Z",
+   		"ips": ["192.0.2.1/32"],
+   		"name": "DevOps team",
+   		"subdomain": "oli3n9zkz5.proxy.cloudflare-gateway.com",
+   		"updated_at": "2014-01-01T05:20:00.12345Z"
+   	}
+   }
+   ```
+
+2. Find the proxy endpoint you want to use.
+3. Copy the value of the `subdomain` key.
+
+</TabItem>
+
+</Tabs>
+
+Using your proxy endpoint's domain, you can get the IP addresses assigned to the proxy endpoint:
+
+<Tabs>
+
+<TabItem label="macOS and Linux">
+
+1. Open a terminal.
+2. Run `dig` on your proxy endpoint's A records to get its IPv4 addresses. For example:
+
+   ```bash
+   dig A example.cloudflare-gateway.com +short
+   ```
+
+   ```txt output
+   162.159.36.5
+   162.159.36.20
+   ```
+
+3. Run `dig` on your proxy endpoint's AAAA records to get its IPv6 addresses. For example:
+
+   ```bash
+   dig AAAA example.cloudflare-gateway.com +short
+   ```
+
+   ```txt output
+   2606:4700:54::a29f:2407
+   2606:4700:5c::a29f:2e07
+   ```
+
+</TabItem>
+
+<TabItem label="Windows">
+
+1. Open a PowerShell terminal.
+2. Run `Resolve-DnsName` on your proxy endpoint's A records. Your proxy endpoint's IPv4 addresses will appear under `IPAddress`. For example:
+
+   ```powershell
+   Resolve-DnsName -Name example.cloudflare-gateway.com -Type A
+   ```
+
+   ```txt output
+   Name                                           Type   TTL   Section    IPAddress
+   ----                                           ----   ---   -------    ---------
+   example.cloudflare-gateway.com                 A      300   Answer     162.159.36.5
+   example.cloudflare-gateway.com                 A      300   Answer     162.159.36.20
+   ```
+
+3. Run `Resolve-DnsName` on your proxy endpoint's AAAA records. Your proxy endpoint's IPv6 addresses will appear under `IPAddress`. For example:
+
+   ```powershell
+   Resolve-DnsName -Name example.cloudflare-gateway.com -Type AAAA
+   ```
+
+   ```txt output
+   Name                                           Type   TTL   Section    IPAddress
+   ----                                           ----   ---   -------    ---------
+   example.cloudflare-gateway.com                 AAAA   300   Answer     2606:4700:5c::a29f:2e07
+   example.cloudflare-gateway.com                 AAAA   300   Answer     2606:4700:54::a29f:2407
+   ```
+
+</TabItem>
+
+</Tabs>
+
+To ensure responses are allowed through your firewall, add an inbound rule to allow the static IPv4 address for Cloudflare proxy endpoints, `162.159.193.21`.
+
+## Edit proxy endpoints
+
+You can modify proxy endpoint settings after creation.
+
+### Edit authorization endpoint
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Locate your authorization endpoint (indicated by **Authorization** under **Type**).
+3. Select the three dots, then select **Configure**.
+4. Choose what to edit:
+   - **Basic info**: Update the endpoint name and description.
+   - **Access policies**: Add, remove, or modify Access policies that control who can use the endpoint.
+   - **Login methods**: Select which [identity providers](/cloudflare-one/integrations/identity-providers/) users can authenticate with.
+5. Select **Save**.
+
+### Edit source IP endpoint
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Locate your source IP endpoint (indicated by **Source IP** under **Type**).
+3. Select the three dots, then select **Configure**.
+4. Update the endpoint name or modify the allowed source IP addresses.
+5. Select **Save**.
+
+## Limitations
+
+### Traffic limitations
+
+IP endpoints do not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
+
+Both HTTP proxy endpoints only support proxying and filtering TCP traffic.
+
+Authorization endpoints do not support anything that is not HTTP/HTTPS. That means no other TCP or UDP protocol is supported, including [HTTP3](/cloudflare-one/traffic-policies/http-policies/http3/).
+
+:::note
+To access plaintext HTTP (non-HTTPS) origins through proxy endpoints, configure them as [self-hosted Access applications](/cloudflare-one/applications/configure-apps/self-hosted-apps/). This allows users to access HTTP resources while maintaining security through Access policies.
+:::
+
+### Gateway DNS and resolver policies
+
+Gateway DNS and resolver policies will always apply to traffic proxied with PAC files, regardless of device configuration.

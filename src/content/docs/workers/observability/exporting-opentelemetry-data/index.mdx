@@ -28,7 +28,7 @@ Below are common OTLP endpoint formats for popular observability providers. Refe
 | [**Grafana Cloud**](/workers/observability/exporting-opentelemetry-data/grafana-cloud/) | `https://otlp-gateway-{region}.grafana.net/otlp/v1/traces`| `https://otlp-gateway-{region}.grafana.net/otlp/v1/logs`[^1] |
 | [**Axiom**](/workers/observability/exporting-opentelemetry-data/axiom/) | `https://api.axiom.co/v1/traces` | `https://api.axiom.co/v1/logs` |
 | [**Sentry**](/workers/observability/exporting-opentelemetry-data/sentry/) | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/traces` | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/logs` |
-| [**Datadog**](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/) | Not yet available. Pending release from Datadog | Not yet available. Pending release from Datadog |
+| [**Datadog**](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/) | Coming soon, pending release from Datadog | `https://otlp.{SITE}.datadoghq.com/v1/logs` |
 
 :::note[Authentication]
 Most providers require authentication headers. Refer to your provider's documentation for specific authentication requirements.

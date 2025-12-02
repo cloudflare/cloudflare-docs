@@ -2,12 +2,12 @@
 {}
 ---
 
-import { Tabs, TabItem } from '~/components';
+import { Tabs, TabItem } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-2. Under **Device settings**, locate the [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Devices** > **Device profiles**.
+2. Locate the [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
 3. Scroll down to **Split Tunnels**.
 4. (Optional) To view your existing Split Tunnel configuration, select **Manage**. You will see a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected. We recommend making a copy of your Split Tunnel entries, as they will revert to the default upon switching modes.
 5. Under **Split Tunnels**, choose a mode:
@@ -16,52 +16,52 @@ import { Tabs, TabItem } from '~/components';
 
 </TabItem> <TabItem label="Terraform (v5)">
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Zero Trust Write`
+1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+    - `Zero Trust Write`
 
-2. Choose a [`cloudflare_zero_trust_device_default_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_default_profile) or [`cloudflare_zero_trust_device_custom_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_custom_profile) resource to modify, or [create a new device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/#create-a-new-profile).
+2.  Choose a [`cloudflare_zero_trust_device_default_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_default_profile) or [`cloudflare_zero_trust_device_custom_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_custom_profile) resource to modify, or [create a new device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/#create-a-new-profile).
 
-3. In your device profile, configure either the `exclude` or `include` argument. You cannot set both `exclude` and `include` in a given device profile.
+3.  In your device profile, configure either the `exclude` or `include` argument. You cannot set both `exclude` and `include` in a given device profile.
 
-	a. To manage Split Tunnel routes in **Exclude** mode, use the `exclude` argument:
+    a. To manage Split Tunnel routes in **Exclude** mode, use the `exclude` argument:
 
-		```tf
-		resource "cloudflare_zero_trust_device_custom_profile" "exclude_example" {
-			account_id            = var.cloudflare_account_id
-			name                  = "Custom profile in Split Tunnels Exclude mode"
-			enabled               = true
-			precedence            = 101
-			service_mode_v2       = {mode = "warp"}
-			match 								=  "identity.email == \"test@cloudflare.com\""
+        ```tf
+        resource "cloudflare_zero_trust_device_custom_profile" "exclude_example" {
+        	account_id            = var.cloudflare_account_id
+        	name                  = "Custom profile in Split Tunnels Exclude mode"
+        	enabled               = true
+        	precedence            = 101
+        	service_mode_v2       = {mode = "warp"}
+        	match 								=  "identity.email == \"test@cloudflare.com\""
 
-			exclude = [{
-					address = "10.0.0.0/8"
-					description = "Example route to exclude from WARP tunnel"
-			}]
-		}
-		```
+        	exclude = [{
+        			address = "10.0.0.0/8"
+        			description = "Example route to exclude from WARP tunnel"
+        	}]
+        }
+        ```
 
-		In this example, all traffic will be sent to Cloudflare Gateway except for traffic destined to `10.0.0.0/8`. To exclude the default IPs and domains recommended by Cloudflare, refer to [Add a route](#add-a-route).
+        In this example, all traffic will be sent to Cloudflare Gateway except for traffic destined to `10.0.0.0/8`. To exclude the default IPs and domains recommended by Cloudflare, refer to [Add a route](#add-a-route).
 
-	b. To manage Split Tunnel routes in **Include** mode, use the `include` argument:
+    b. To manage Split Tunnel routes in **Include** mode, use the `include` argument:
 
-		```tf
-		resource "cloudflare_zero_trust_device_custom_profile" "include_example" {
-			account_id            = var.cloudflare_account_id
-			name                  = "Custom profile in Split Tunnels Include mode"
-			enabled               = true
-			precedence            = 101
-			service_mode_v2       = {mode = "warp"}
-			match 								=  "identity.email == \"test@cloudflare.com\""
+        ```tf
+        resource "cloudflare_zero_trust_device_custom_profile" "include_example" {
+        	account_id            = var.cloudflare_account_id
+        	name                  = "Custom profile in Split Tunnels Include mode"
+        	enabled               = true
+        	precedence            = 101
+        	service_mode_v2       = {mode = "warp"}
+        	match 								=  "identity.email == \"test@cloudflare.com\""
 
-			include = [{
-					address = "10.0.0.0/8"
-					description = "Example route to include in WARP tunnel"
-			}]
-		}
-		```
+        	include = [{
+        			address = "10.0.0.0/8"
+        			description = "Example route to include in WARP tunnel"
+        	}]
+        }
+        ```
 
-		In this example, only traffic destined to `10.0.0.0/8` will be sent to Cloudflare Gateway.
+        In this example, only traffic destined to `10.0.0.0/8` will be sent to Cloudflare Gateway.
 
 </TabItem>
 </Tabs>

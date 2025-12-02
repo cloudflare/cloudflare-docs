@@ -1,46 +1,57 @@
-
 ---
 pcx_content_type: configuration
 title: Unified Billing
 sidebar:
   order: 1
+  group:
+    badge: Beta
 head: []
 description: Use the Cloudflare billing to pay for and authenticate your inference requests.
 ---
 
-:::caution
-Unified Billing is in closed beta. Request for access.
-:::
+import { DashButton } from "~/components";
 
-Unified Billing allows users to connect to various AI providers (e.g. OpenAI, Anthropic) and receive a single Cloudflare bill. To use Unified Billing, users must purchase and load credits into their Cloudflare account, via the Dashboard, which can then be spent via the AI Gateway.
+Unified Billing allows users to connect to various AI providers (such as OpenAI, Anthropic, and Google AI Studio) and receive a single Cloudflare bill. To use Unified Billing, you must purchase and load credits into your Cloudflare account in the Cloudflare dashboard, which you can then spend with AI Gateway.
 
+## Pre-requisites
 
-### Load credits
+- Ensure your Cloudflare account has [sufficient credits loaded](#load-credits).
+- Ensure you have [authenticated](/ai-gateway/configuration/authentication/) your AI Gateway.
 
-- Navigate to [AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway) on Cloudflare dashboard
-- The "Credits Available" card on the top right shows how many AI gateway credits you have on your account currently. 
-- Click "Manage" to navigate to the new billing page
-- If you don't have a payment method already on your account, you will be prompted to "Add a payment method to purchase credits" on top of page. 
-- Once you have a card added, you will be able to do a credit top up on your account by clicking "Top-up credits", and then adding the required amount on the next popup.
+## Load credits
 
+To load credits for AI Gateway:
+
+1. In the Cloudflare dashboard, go to the **AI Gateway** page.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+   The **Credits Available** card on the top right shows how many AI gateway credits you have on your account currently.
+
+2. In **Credits Available**, select **Manage**.
+3. If your account does not have an available payment method, AI Gateway will prompt you to add a payment method to purchase credits. Add a payment method.
+4. Select **Top-up credits**.
+5. Add the amount of credits you want to purchase, then select **Confirm and pay**.
 
 ### Auto-top up
 
-- Navigate to [AI Gateway](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway) on Cloudflare dashboard
-- Click "Manage"  on the "Credits Available" card on the top right to navigate to the new billing page 
-- Click the "Setup auto top-up credits" option on the dashboard, and set up a threshold and a recharge amount for auto topup. 
+You can configure AI Gateway to automatically replenish your credits when they fall below a certain threshold. To configure auto top-up:
 
-When your balance falls below the given threshold, we will automatically apply the auto topup on your account.
+1. In the Cloudflare dashboard, go to the **AI Gateway** page.
 
-### Using Unified Billing
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
 
-#### Pre-requisites
+2. In **Credits Available**, select **Manage**.
+3. Select **Setup auto top-up credits**.
+4. Choose a threshold and a recharge amount for auto top-up.
 
-- Ensure your gateway is [authenticated](/ai-gateway/configuration/authentication/).
+When your balance falls below the set threshold, AI Gateway will automatically apply the auto top-up amount to your account.
 
-Call any supported provider without passing any API Key. The request will automatically use Cloudflare's key and deduct credits from your account. 
+## Use Unified Billing
 
-Example with Unified API:
+Call any supported provider without passing an API Key. The request will automatically use Cloudflare's key and deduct credits from your account.
+
+For example, you can use the Unified API:
 
 ```bash
 curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
@@ -57,12 +68,13 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
   }'
 ```
 
-### Spend limit
+### Spend limits
 
 Set spend limits to prevent unexpected charges on your loaded credits. You can define daily, weekly, or monthly limits. When a limit is reached, the AI Gateway automatically stops processing requests until the period resets or you increase the limit.
 
+### Supported providers
 
-### Supported Providers
+Unified Billing supports the following AI providers:
 
 - [OpenAI](/ai-gateway/usage/providers/openai/)
 - [Anthropic](/ai-gateway/usage/providers/anthropic/)

@@ -56,24 +56,7 @@ To import records using the API, send a [POST request](/api/resources/dns/subres
 
 You can also bulk export records from Cloudflare.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-To export records using the dashboard:
-
-1. In the Cloudflare dashboard, go to the **DNS Records** page.
-
-   <DashButton url="/?to=/:account/:zone/dns/records" />
-
-2. Select **Import and Export**.
-3. Select **Export**.
-
-</TabItem> <TabItem label="API">
-
-To export records using the API, send a [GET request](/api/resources/dns/subresources/records/methods/export/).
-
-<APIRequest path="/zones/{zone_id}/dns_records/export" method="GET" />
-
-</TabItem> </Tabs>
+<Render file="export-dns-records" product="dns" />
 
 ---
 

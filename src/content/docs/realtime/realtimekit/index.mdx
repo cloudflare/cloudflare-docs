@@ -3,36 +3,101 @@ title: RealtimeKit
 pcx_content_type: overview
 sidebar:
   order: 1
+  group:
+    badge:
+      text: Beta
 head:
   - tag: title
     content: Overview
 ---
 
 import { Description, LinkButton } from "~/components";
+import RTKPill from "~/components/realtimekit/RTKPill/RTKPill.astro";
 
 <Description>
-
-Integrate programmable, and easily customizable live video and voice into your web, mobile, and desktop applications with just a few lines of code.
-
+	Add live video and voice to your web or mobile apps in minutes — customizable
+	SDKs, Integrate in just a few lines of code.
 </Description>
+With RealtimeKit, you can expect:
 
-The RealtimeKit is a set of user-friendly SDKs and APIs that provides the fastest and simplest way to integrate a complete video and voice call interface into any application, allowing you to get started with just a few lines of code while still offering flexibility for customization.
+- **Fast, simple integration:** Add live video
+  and voice calling to any platform using our SDKs in minutes.
+- **Customizable:**
+  Tailor the experience to your needs.
+- **Powered by WebRTC:**
+  Built on top of modern, battle-tested WebRTC technology. RealtimeKit sits on top
+  of [Realtime SFU](/realtime/sfu/) handling media track management, peer management, and
+  other complicated tasks for you.
 
-Powerful yet simple to use, RealtimeKit is built on top of WebRTC and provides a set of user-friendly SDKs and APIs that act as a layer on top of the [Realtime SFU](/realtime/sfu/), so you don't have to handle the complexities of media track management, peer management, and other intricate WebRTC-related tasks.
-
-Learn more about the [concepts](/realtime/realtimekit/concepts/) behind RealtimeKit, [how it works](/realtime/realtimekit/introduction/#how-realtimekit-works), and [use cases](/realtime/realtimekit/introduction/#use-cases).
+Experience the product:
 
 <LinkButton
-	variant="secondary"
-	href="https://dash.cloudflare.com/?to=/:account/realtime/kit"
-	target="_blank"
->
-	RealtimeKit dashboard
-</LinkButton>
-<LinkButton
-	variant="secondary"
+	variant="primary"
 	href="https://demo.realtime.cloudflare.com"
 	target="_blank"
 >
-	RealtimeKit demo app
+	Try A Demo Meeting
 </LinkButton>
+<LinkButton
+	variant="ghost"
+	href="https://github.com/cloudflare/realtimekit-web-examples"
+	target="_blank"
+>
+	Build using Examples
+</LinkButton>
+<LinkButton
+	variant="ghost"
+	href="https://dash.cloudflare.com/?to=/:account/realtime/kit"
+	target="_blank"
+>
+	RealtimeKit Dashboard
+</LinkButton>
+
+## Build with RealtimeKit
+
+RealtimeKit powers a wide range of usecases — here are the most common ones
+
+<div>
+	#### Group Calls
+	<span>
+		Experience team meetings, virtual classrooms with interactive plugins, and
+		seamless private or group video chats — all within your platform.
+	</span>
+</div>
+
+<div>
+	#### Webinars
+	<span>
+		Host large, interactive one-to-many events with virtual stage management,
+		and engagement tools like plugins, chat, and polls — ideal for product
+		demos, company all-hands, and live workshops
+	</span>
+</div>
+
+<div>
+	#### Audio Only Calls
+	<span>
+		Host audio-only calls — perfect for team discussions, support lines, and
+		community hangouts— low bandwidth usage and features like mute controls,
+		hand-raise, and role management.
+	</span>
+</div>
+
+<div>
+	#### Livestreaming
+	<span>
+		Broadcast high-quality video to massive audiences with scalable one-way
+		livestreams—perfect for sports, gaming, and live events—enhanced with
+		interactive features like chat and polls.
+	</span>
+</div>
+
+## Product Suite
+
+- [**UI Kit**](/realtime/realtimekit/ui-kit) <RTKPill>Recommended</RTKPill> UI library of pre-built, customizable components for rapid development — sits on top of the Core SDK.
+
+- [**Core SDK**](/realtime/realtimekit/core) Client SDK built on top of Realtime SFU that provides a full set of APIs for managing video calls, from joining and leaving sessions to muting, unmuting, and toggling audio and video.
+
+- [**Realtime SFU**](/realtime/sfu) efficiently routes media with low latency—all running on Cloudflare’s global network for reliability and scale.
+
+The **Backend Infrastructure** Powering the SDKs is a robust layer that includes REST APIs for managing meetings, participants, recordings and more, along with webhooks for server-side events. A dedicated signalling server coordinates real-time updates.

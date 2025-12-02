@@ -73,6 +73,22 @@ If you do not specify `workers_dev = false` but add a [`routes` component](/work
 If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's Wrangler file with `workers_dev = false`, the `workers.dev` route will be re-enabled the next time you deploy your Worker with Wrangler.
 :::
 
+## Limitations
+
+When deploying a Worker with a `workers.dev` subdomain enabled, your Worker name must meet the following requirements:
+
+- Must be 63 characters or less
+- Must contain only alphanumeric characters (`a-z`, `A-Z`, `0-9`) and dashes (`-`)
+- Cannot start or end with a dash (`-`)
+
+These restrictions apply because the Worker name is used as a DNS label in your `workers.dev` URL. DNS labels have a maximum length of 63 characters and cannot begin or end with a dash.
+
+:::note
+
+Worker names can be up to 255 characters when not using a `workers.dev` subdomain. If you need a longer name, you can disable `workers.dev` and use [routes](/workers/configuration/routing/routes/) or [custom domains](/workers/configuration/routing/custom-domains/) instead.
+
+:::
+
 ## Related resources
 
 - [Announcing `workers.dev`](https://blog.cloudflare.com/announcing-workers-dev)

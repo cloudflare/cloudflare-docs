@@ -1,5 +1,4 @@
 ---
-
 hideChildren: false
 pcx_content_type: concept
 title: Connect to PostgreSQL
@@ -44,7 +43,7 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 
 | Driver                                                     | Documentation                                                            | Minimum Version Required | Notes                                                                                                                                                                                                                                                                                |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| node-postgres - `pg`      (recommended)                                 | [node-postgres - `pg` documentation](https://node-postgres.com/)         | `pg@8.13.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires `compatibility_flags = ["nodejs_compat"]` and `compatibility_date = "2024-09-23"` - refer to [Node.js compatibility](/workers/runtime-apis/nodejs). Requires wrangler `3.78.7` or later. |
+| node-postgres - `pg` (recommended)                         | [node-postgres - `pg` documentation](https://node-postgres.com/)         | `pg@8.13.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires `compatibility_flags = ["nodejs_compat"]` and `compatibility_date = "2024-09-23"` - refer to [Node.js compatibility](/workers/runtime-apis/nodejs). Requires wrangler `3.78.7` or later. |
 | Postgres.js                                                | [Postgres.js documentation](https://github.com/porsager/postgres)        | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                                                                                                   |
 | Drizzle                                                    | [Drizzle documentation](https://orm.drizzle.team/)                       | `0.26.2`^                |                                                                                                                                                                                                                                                                                      |
 | Kysely                                                     | [Kysely documentation](https://kysely.dev/)                              | `0.26.3`^                |                                                                                                                                                                                                                                                                                      |
@@ -53,6 +52,8 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 ^ _The marked libraries use `node-postgres` as a dependency._
 
 Other drivers and ORMs not listed may also be supported: this list is not exhaustive.
+
+<Render file="node-postgres-recommendation" product="hyperdrive" />
 
 ### Database drivers and Node.js compatibility
 

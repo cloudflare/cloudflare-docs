@@ -1,10 +1,7 @@
 ---
 params:
-  - productName
   - warpURL
   - greIpsecURL
-  - magicFirewallName
-  - magicFirewallURL
   - setupZeroTrustAccountURL
   - ztDashPath
   - splitTunnelsURL
@@ -12,33 +9,32 @@ params:
   - warpIngressIpURL
   - mwanConnectorName
   - domainFallbackURL
-  - cloudflareTunnelURL
   - tracerouteURL
 ---
 
 :::note
-By default, direct WARP-to-WARP connections are not supported for devices located behind {props.productName} with WARP enabled. This is due to issues caused by double encapsulation and asymmetric routing.
+By default, direct WARP-to-WARP connections are not supported for devices located behind Magic WAN with WARP enabled. This is due to issues caused by double encapsulation and asymmetric routing.
 
-When a device is behind {props.productName}, it is recommended to avoid enabling WARP. Instead, access the device using its local LAN IP from remote systems, rather than relying on WARP-to-WARP communication.
+When a device is behind Magic WAN, it is recommended to avoid enabling WARP. Instead, access the device using its local LAN IP from remote systems, rather than relying on WARP-to-WARP communication.
 
-If you do want to use WARP on a device behind {props.productName} and connect to its WARP IP (within the `100.96.0.0/12` range), you will need to adjust your WARP profiles. Specifically, exclude the `100.96.0.0/12` subnet from the on-premises WARP profile, and include it in the off-premises profile.
+If you do want to use WARP on a device behind Magic WAN and connect to its WARP IP (within the `100.96.0.0/12` range), you will need to adjust your WARP profiles. Specifically, exclude the `100.96.0.0/12` subnet from the on-premises WARP profile, and include it in the off-premises profile.
 :::
 
 import { GlossaryTooltip, Render } from "~/components";
 
-Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to {props.productName} and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <a href={props.greIpsecURL}>GRE, IPsec</a>, or [CNI](/network-interconnect/)). Take advantage of the integration between {props.productName} and <a href={props.magicFirewallURL}>{props.magicFirewallName}</a> and enforce policies at Cloudflare's global network.
+Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <a href={props.greIpsecURL}>GRE, IPsec</a>, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and <a href="/magic-firewall/">Magic Firewall</a> and enforce policies at Cloudflare's global network.
 
 ## Prerequisites
 
-Before you can begin using WARP as an on-ramp to {props.productName}, you must set up your <a href={props.setupZeroTrustAccountURL}>Zero Trust account</a>.
+Before you can begin using WARP as an on-ramp to Magic WAN, you must set up your <a href={props.setupZeroTrustAccountURL}>Zero Trust account</a>.
 
 ## IP ranges
 
-When connecting a WARP device to {props.productName}, you will have virtual IP addresses from WARP, in the `100.96.0.0/12` range.
+When connecting a WARP device to Magic WAN, you will have virtual IP addresses from WARP, in the `100.96.0.0/12` range.
 
 ---
 
-## Set up WARP with {props.productName}
+## Set up WARP with Magic WAN
 
 ### 1. Route packets back to WARP devices
 
@@ -75,19 +71,17 @@ You must log out and log back in with at least one WARP device to ensure the con
 	file="traceroute"
 	product="networking-services"
 	params={{
-		productName: props.productName,
 		greIpsecURL: props.greIpsecURL,
 		warpURL: props.warpURL,
-		cloudflareTunnelURL: props.cloudflareTunnelURL,
 		tracerouteURL: props.tracerouteURL
 		}}
 	/>
 
 ## Double encapsulation
 
-When a WARP user goes to a location (like an office) with a {props.productName} tunnel already set up, WARP traffic is doubly encapsulated - first by WARP and then by {props.productName}. This is unnecessary, since each on-ramp method provides full Zero Trust protection.
+When a WARP user goes to a location (like an office) with a Magic WAN tunnel already set up, WARP traffic is doubly encapsulated - first by WARP and then by Magic WAN. This is unnecessary, since each on-ramp method provides full Zero Trust protection.
 
-Since WARP traffic is already protected on its own, Cloudflare recommends that you set up {props.productName} to exclude WARP traffic, sending it to the Internet through regular connections.
+Since WARP traffic is already protected on its own, Cloudflare recommends that you set up Magic WAN to exclude WARP traffic, sending it to the Internet through regular connections.
 
 To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to <a href={props.warpIngressIpURL}>WARP ingress IP</a>.
 
@@ -107,7 +101,7 @@ Before testing, be sure to <a href={props.domainFallbackURL}>configure domain fa
 
 If WARP integration has been enabled for the account within the last day, log off and on again in the WARP client before testing.
 
-To check if WARP is working correctly as an on-ramp, you can do a resolution test on a [fully qualified domain name (FQDN)](https://en.wikipedia.org/wiki/Fully_qualified_domain_name) for a server or service in the {props.productName}. Test this from a user with a WARP device.
+To check if WARP is working correctly as an on-ramp, you can do a resolution test on a [fully qualified domain name (FQDN)](https://en.wikipedia.org/wiki/Fully_qualified_domain_name) for a server or service in the Magic WAN. Test this from a user with a WARP device.
 
 For example:
 

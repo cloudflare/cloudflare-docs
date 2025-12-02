@@ -1,0 +1,87 @@
+---
+pcx_content_type: concept
+title: When we use AI
+sidebar:
+  order: 2
+---
+
+## Our core principles for using AI
+
+AI is a powerful tool, but it is not a cure-all. Its success depends heavily on the use case. Knowing its strengths and weaknesses is key to using AI appropriately.
+
+When deciding whether to use AI for a task, use these principles as your guide:
+
+1. **The feedback loop is critical:** The single most important factor for success is the feedback loop. How quickly and easily can you test the output and correct for hallucinations? Code and scripts are far easier to test for correctness than subjective content.
+2. **Prioritize additive tasks:** AI is generally better for additive tasks, like new things you could not or would not do before, as opposed to operational tasks that are required to keep the business running.
+
+### How to decide when to use AI
+
+We ask ourselves a few questions before we look to AI to solve a problem or streamline a process:
+
+- Is this a manual, repetitive chore?
+- Will this task take hours, days, or weeks to complete manually?
+- Will we need to complete the _exact_ same action over and over again?
+- Is there a clear logic we can apply to successfully identify or perform the action?
+- Will this be scalable or useful for others to also use?
+
+If we can say `yes` to these questions, it is a strong candidate for an AI-based solution. If we say `no` or `I do not know` to any of them, we first pursue the current process and look for smaller, specific areas where AI could still be helpful.
+
+### Recommended use cases: What has worked for us
+
+These are areas where we have found AI to be unequivocally positive and effective.
+
+#### Local scripts and tooling
+
+This is the most positive and recommended use case for AI.
+
+- **Why it works:** AI is at its best when you can easily "test" for hallucinations, and code is highly testable.
+- **What to use it for:**
+  - Writing local scripts (like Vibecoding scripts) to automate updates in our docs.
+  - Generating simple docs components.
+  - Creating GitHub Actions.
+  - Assisting with competitive doc analyses.
+- **Key benefit:** You own the resulting code. It is stable and will not change, regardless of future changes to AI models or pricing.
+
+#### AI-powered IDEs
+
+For teams using a docs-as-code approach, AI chat integrated into an IDE, like Windsurf, Cursor, etc., is highly effective for making multiple, streamlined changes.
+
+- **Why it works:**
+  - The AI can understand a large amount of context from your codebase, or docs in this case.
+  - The feedback loop for spotting and fixing hallucinations is very short.
+  - Git integration makes it easy to find, review, and remove hallucinations.
+- **Key benefit:** This can save days, if not weeks, of work. For massive documentation updates that require completing the same task repeatedly, AI-enabled IDEs can significantly streamline the process.
+- **Caveat:** Always consider simpler solutions (like regex) first, as they are often better, faster, and cheaper. Use AI when you need to brute-force a large task or navigate high complexity.
+
+### Still figuring it out: What we are optimistic about but getting mixed results
+
+These are areas that show promise but require careful implementation.
+
+#### AI for initial drafts
+
+We are optimistic about asking stakeholders to use AI to create _initial drafts_ of documentation before handing them off to the technical writing team.
+
+- **Key value:** The quality of the AI-generated draft itself is often mixed. The primary value is that it acts as a forcing function for the stakeholder to think about documentation as part of their product – not separate from their product – while also sharing key information to the technical writing team as quickly as possible for our busy stakeholders.
+- **Why?** To create a draft, the requester must gather all the necessary background information first. Receiving this information upfront is a significant win for the technical writing team.
+- **Action:** See our [prompt templates](/style-guide/how-we-docs/how-we-ai/prompt-templates/) for more information on structuring these requests.
+
+#### Customer-facing chatbots
+
+Our experience with customer-facing chatbots has been mixed.
+
+- **Pros:** Occasionally, it provides a great answer.
+- **Cons:** To prevent hallucinations, bots are often made more "confident." This leads them to refuse to answer (for example, "I don't know"), which users dislike. On the flipside, users also dislike hallucinations. So, be mindful of the actual user experience and come up with a method for tracking user engagement and success with your documentation chatbot. Depending on the results, you may be able to identify worthwhile documentation gaps to fill, which prevent hallucinations in the future.
+- **Alternative:** At the moment, we are much more optimistic about the potential of AI-powered search and similarity scores. These feel more in our control. However, we are still testing and tracking how our docs can positively influence chatbot experiences at Cloudflare and via third-party apps.
+
+### Not recommended: What has not worked for us yet
+
+Based on our experience, we do not recommend the following use case at this time.
+
+#### Automated content editors (bots)
+
+We have not found success with bots that automatically suggest content changes (for example, grammar, formatting) via pull requests.
+
+- **Why it failed:**
+  - **Slow feedback loop:** The GitHub PR context makes the feedback loop for correcting hallucinations very slow and difficult.
+  - **Low engagement:** We found that even our own team often closed or ignored the PRs because they were too much effort to verify.
+  - **Contributor confusion:** A similar bot used to flag issues on _incoming_ PRs frustrated and confused contributors, and its suggestions were often hallucinations.

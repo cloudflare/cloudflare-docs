@@ -16,7 +16,7 @@ A default cache key includes:
 1. Full URL:
    * scheme - could be HTTP or HTTPS.
    * host - for example, `www.cloudflare.com`
-   * URI with query string - for example, `/logo.jpg`
+   * URI with query string - for example, `/logo.jpg?utm_source=newsletter`
 2. Origin header sent by client (for CORS support).
 3. `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
 4. `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless http or https), `x-original-url`, `x-rewrite-url`, and `forwarded` headers.

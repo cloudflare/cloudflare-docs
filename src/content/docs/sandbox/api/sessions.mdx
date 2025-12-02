@@ -2,7 +2,7 @@
 title: Sessions
 pcx_content_type: configuration
 sidebar:
-  order: 5
+  order: 6
 ---
 
 import { TypeScriptExample } from "~/components";
@@ -10,11 +10,7 @@ import { TypeScriptExample } from "~/components";
 Create isolated execution contexts within a sandbox. Each session maintains its own shell state, environment variables, and working directory. See [Session management concept](/sandbox/concepts/sessions/) for details.
 
 :::note
-Every sandbox has a default session that automatically maintains shell state. Create additional sessions when you need isolated shell contexts for different environments or parallel workflows.
-:::
-
-:::note
-For sandbox-level configuration options like `keepAlive`, refer to the [Sandbox options configuration](/sandbox/configuration/sandbox-options/).
+Every sandbox has a default session that automatically maintains shell state. Create additional sessions when you need isolated shell contexts for different environments or parallel workflows. For sandbox-level operations like creating containers or destroying the entire sandbox, see the [Lifecycle API](/sandbox/api/lifecycle/).
 :::
 
 ## Methods
@@ -84,6 +80,44 @@ const result = await session.exec('cd repo && npm run build');
 ```
 </TypeScriptExample>
 
+---
+
+### `deleteSession()`
+
+Delete a session and clean up its resources.
+
+```ts
+const result = await sandbox.deleteSession(sessionId: string): Promise<SessionDeleteResult>
+```
+
+**Parameters**:
+- `sessionId` - ID of the session to delete (cannot be `"default"`)
+
+**Returns**: `Promise<SessionDeleteResult>` containing:
+- `success` - Whether deletion succeeded
+- `sessionId` - ID of the deleted session
+- `timestamp` - Deletion timestamp
+
+<TypeScriptExample>
+```
+// Create a temporary session for a specific task
+const tempSession = await sandbox.createSession({ id: 'temp-task' });
+
+try {
+  await tempSession.exec('npm run heavy-task');
+} finally {
+  // Clean up the session when done
+  await sandbox.deleteSession('temp-task');
+}
+```
+</TypeScriptExample>
+
+:::caution
+Deleting a session immediately terminates all running commands. The default session cannot be deleted.
+:::
+
+---
+
 ### `setEnvVars()`
 
 Set environment variables in the sandbox.
@@ -115,45 +149,19 @@ await sandbox.exec('python script.py');
 ```
 </TypeScriptExample>
 
-### `destroy()`
-
-Destroy the sandbox container and free up resources.
-
-```ts
-await sandbox.destroy(): Promise<void>
-```
-
-:::note
-Containers automatically sleep after 10 minutes of inactivity, but still count toward account limits. Use `destroy()` to immediately free up resources.
-
-**Important**: When using [`keepAlive: true`](/sandbox/configuration/sandbox-options/#keepalive), containers will not automatically timeout, so calling `destroy()` is **required** to prevent containers running indefinitely.
-:::
-
-<TypeScriptExample>
-```
-async function executeCode(code: string): Promise<string> {
-  const sandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
-
-  try {
-    await sandbox.writeFile('/tmp/code.py', code);
-    const result = await sandbox.exec('python /tmp/code.py');
-    return result.stdout;
-  } finally {
-    await sandbox.destroy();
-  }
-}
-```
-</TypeScriptExample>
+---
 
 ## ExecutionSession methods
 
 The `ExecutionSession` object has all sandbox methods bound to the specific session:
 
-**Commands**: [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream)
-**Processes**: [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs)
-**Files**: [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout)
-**Environment**: [`setEnvVars()`](/sandbox/api/sessions/#setenvvars)
-**Code Interpreter**: [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext)
+| Category | Methods |
+| -------- | ------- |
+| **Commands** | [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream) |
+| **Processes** | [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs) |
+| **Files** | [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout) |
+| **Environment** | [`setEnvVars()`](/sandbox/api/sessions/#setenvvars) |
+| **Code Interpreter** | [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext) |
 
 ## Related resources
 

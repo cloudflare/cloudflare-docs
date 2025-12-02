@@ -9,6 +9,16 @@ import { Render, Tabs, TabItem, Steps, Details } from "~/components";
 
 Learn how to add the Turnstile widget to your webpage using implicit or explicit rendering methods.
 
+Choosing the appropriate rendering method for Turnstile is important and effectively helps you to add it to your website while ensuring optimal performance and user experience. Both implicit and explicit rendering have their own advantages and are suited to different types of web applications. Refer to the table below that highlights the ideal use case for each of these rendering methods:
+
+| Feature             | Implicit rendering               | Explicit rendering                   |
+|-------------------------|--------------------------------------|------------------------------------------|
+| **Ease of setup**       | Simple, minimal code                 | Requires additional JavaScript           |
+| **Control over timing** | Renders automatically on page load   | Full control over rendering timing       |
+| **Use cases**           | Static content                       | Dynamic or interactive content           |
+| **Customization**       | Limited to HTML attributes           | Extensive via JavaScript API             |
+
+
 ## Prerequisites
 
 Before you begin, you must have:
@@ -28,7 +38,7 @@ Before you begin, you must have:
 
 ## Implicit rendering
 
-Implicit rendering automatically scans your HTML for elements with the `cf-turnstile` class and renders widgets when the page loads.
+Implicit rendering automatically scans your HTML for elements with the `cf-turnstile` class and renders widgets without additional JavaScript code. This set up is ideal for static pages where you want the widget to load immediately when the page loads.
 
 ### Use cases
 
@@ -43,7 +53,7 @@ Cloudflare recommends using implicit rendering on the following scenarios:
 
 #### 1. Add the Turnstile script
 
-Add the Turnstile JavaScript API to your HTML.
+**Include the Turnstile Script**: Add the Turnstile JavaScript API to your HTML file within the `<head>` section or just before the closing `</body>` tag.
 
 ```html wrap
 <script
@@ -75,7 +85,7 @@ Add widget containers where you want the challenges to appear on your website.
 
 #### 3. Configure with data attributes
 
-[Customize your widgets](/turnstile/get-started/client-side-rendering/widget-configurations/) using data attributes.
+[Customize your widgets](/turnstile/get-started/client-side-rendering/widget-configurations/) using data attributes. Insert a `div` element where you want the widget to appear.
 
 ```html
 <div
@@ -87,9 +97,12 @@ Add widget containers where you want the challenges to appear on your website.
 ></div>
 ```
 
+Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our [Siteverify endpoint](/turnstile/get-started/server-side-validation/).
+
 ### Complete implicit rendering examples by use case
 
 <Details header="Basic login form">
+Turnstile is often used to protect forms on websites such as login forms or contact forms. You can embed the widget within your `<form>` tag.
 ```html title="Example"
 <!DOCTYPE html>
 <html>
@@ -107,6 +120,32 @@ Add widget containers where you want the challenges to appear on your website.
         <button type="submit">Log in</button>
     </form>
 
+</body>
+</html>
+```
+
+An invisible input with the name `cf-turnstile-response` is added and will be sent to the server with the other fields.
+
+```html title="Complete HTML example"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Implicit Rendering with Cloudflare Turnstile</title>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+  <h1>Contact Us</h1>
+  <form action="/submit" method="POST">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+    <!-- Turnstile Widget -->
+    <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
+    <br>
+    <button type="submit">Submit</button>
+  </form>
 </body>
 </html>
 ```
@@ -201,7 +240,7 @@ When you embed a Turnstile widget inside a `<form>` element, an invisible input 
 
 ## Explicit rendering
 
-Explicit rendering gives you programmatic control over when and how widgets are created using JavaScript functions.
+Explicit rendering gives you programmatic control over when and where the widget appears and how the widgets are created using JavaScript functions. This method is suitable for dynamic content, single-page applications(SPAs), or conditional rendering based on user interactions.
 
 ### Use cases
 
@@ -244,6 +283,36 @@ const widgetId = turnstile.render("#turnstile-container", {
 	},
 });
 ```
+
+### Optional calls
+
+After rendering the Turnstile widget explicitly, you may need to interact with it based on your application's requirements. Refer to the sections below to manage the widget's state.
+
+#### Reset a widget
+
+To reset the widget if the given widget timed out or expired, you can use the function:
+
+```js
+turnstile.reset(widgetId);
+```
+
+#### Get the response token
+
+Retrieve the current response token at any time:
+
+```js
+const responseToken = turnstile.getResponse(widgetId);
+```
+
+#### Remove a widget
+
+When a widget is no longer needed, it can be removed from the page using:
+
+```js
+turnstile.remove(widgetId)
+```
+
+This will not call any callback and will remove all related DOM elements.
 
 ### Complete explicit rendering examples by use case
 

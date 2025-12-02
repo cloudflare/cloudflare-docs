@@ -28,6 +28,11 @@ jobs:
         name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: site-html
+          path: dist
       - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
         env:
@@ -50,12 +55,10 @@ jobs:
           cd ..
 
           cd distllms
-          for file in $(find . -type f); do
-            rclone copy \
-              --config ../bin/rclone.conf \
-              $file \
-              devdocs:vendored-markdown
-          done
+          rclone copy --max-depth 2 \
+            --config ../bin/rclone.conf \
+            . \
+            devdocs:vendored-markdown
           cd ..
       - name: Upload vendored Markdown files to ZT DevDocs bucket
         env:

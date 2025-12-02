@@ -20,6 +20,7 @@ import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
 import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
+import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
 
 async function autogenSections() {
 	const sections = (
@@ -57,7 +58,8 @@ async function autogenStyles() {
 const sidebar = await autogenSections();
 const customCss = await autogenStyles();
 
-const runLinkCheck = process.env.RUN_LINK_CHECK || false;
+const RUN_LINK_CHECK =
+	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
 
 // https://astro.build/config
 export default defineConfig({
@@ -128,7 +130,7 @@ export default defineConfig({
 			customCss,
 			pagination: false,
 			plugins: [
-				...(runLinkCheck
+				...(RUN_LINK_CHECK
 					? [
 							starlightLinksValidator({
 								errorOnInvalidHashes: false,
@@ -193,10 +195,7 @@ export default defineConfig({
 
 				return true;
 			},
-			serialize(item) {
-				item.lastmod = new Date().toISOString();
-				return item;
-			},
+			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
 	],

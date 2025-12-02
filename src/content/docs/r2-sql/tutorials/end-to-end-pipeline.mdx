@@ -143,7 +143,7 @@ Copy the `warehouse` (ACCOUNTID_BUCKETNAME) and paste it in the `export` below. 
 :::
 
 ```bash
-export $WAREHOUSE= #Paste your warehouse here
+export WAREHOUSE= #Paste your warehouse here
 ```
 
 ### (Optional) Enable compaction on your R2 Data Catalog
@@ -285,7 +285,7 @@ npx wrangler pipelines create raw_events_pipeline \
 
 1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
 
-   <DashButton url="/?to=/:account/pipelines" />
+   <DashButton url="/?to=/:account/pipelines/overview" />
 
 2. Select **Create Pipeline**.
 

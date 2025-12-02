@@ -3,6 +3,11 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-11-24"
+    title: Add HTTP origins insights
+    description: |-
+      * Added new [`Origins`](/api/resources/radar/subresources/origins/) API.
+      * Extended [`Annotations`](/api/resources/radar/subresources/annotations/) and [`Traffic Anomalies`](/api/resources/radar/subresources/traffic_anomalies/) APIs to support origin outages and anomalies.
   - publish_date: "2025-10-27"
     title: Add TLD insights
     description: |-

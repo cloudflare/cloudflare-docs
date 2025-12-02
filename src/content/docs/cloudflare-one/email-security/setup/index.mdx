@@ -91,11 +91,11 @@ You should review your impersonation registry on a quarterly basis as roles chan
 
 ## 4. Reclassify messages
 
-A reclassification is a change to an email's disposition **after** initial scanning. It is Cloudflare's built-in feedback loop for correcting false positives/negatives **and** training the detection models to get smarter over time. Refer to [Reclassify messages](/cloudflare-one/email-security/investigation/search-email/#reclassify-messages) to learn how to reclassify a message.
+A reclassification is a change to an email's disposition **after** initial scanning. It is Cloudflare's built-in feedback loop for correcting false positives/negatives **and** training the detection models to get smarter over time. Refer to [Reclassify messages](/cloudflare-one/email-security/reclassifications/#reclassify-messages) to learn how to reclassify a message.
 
 ### Who can reclassify messages
 
-[Security teams](/cloudflare-one/email-security/monitoring/search-email/#team-submissions) and [end users](/cloudflare-one/email-security/monitoring/search-email/#user-submissions) can submit a reclassification.
+[Security teams](/cloudflare-one/email-security/reclassifications/team-submissions/) and [end users](/cloudflare-one/email-security/reclassifications/user-submissions/) can submit a reclassification.
 
 ### Why you should reclassify messages
 
@@ -104,13 +104,13 @@ Reclassifications are critical because:
 - **They help improve model accuracy**: Every validated reclassification teaches Cloudflare's machine learning to recognise new lures, language, infrastructure, and benign patterns.
 - **They reduce alert fatigue**: Correcting Suspicious or Spam emails that users actually want tailors detections to your organization, cutting noise in the dashboard.
 - **They close the remediation loop**: When a disposition is upgraded to Malicious, Cloudflare auto-moves those emails out of every inbox (Graph API or Google Workspace API integrations).
-- **They can help you log activity taken on any reclassification**: Each reclassification displays a submission ID, details about original, requested and final dispositions, and more. Refer to [Reclassify messages](/cloudflare-one/email-security/investigation/search-email/#reclassify-messages) to learn more about reclassifications.
+- **They can help you log activity taken on any reclassification**: Each reclassification displays a submission ID, details about original, requested and final dispositions, and more. Refer to [Reclassify messages](/cloudflare-one/email-security/reclassifications/#reclassify-messages) to learn more about reclassifications.
 
 To make the most of reclassifications:
 
 1. Review reclassifications on a weekly basis.
 2. Ensure you have an integration associated with any MX/Inline deployment. When you associate an integration, you will not need to upload the EMLs every time; Cloudflare can use APIs to receive a copy of your email messages.
-3. Investigate any increase in [user submissions](/cloudflare-one/email-security/monitoring/search-email/#user-submissions) (users may have found a phish that bypassed filters) and confirm that analyst-final dispositions align with your policies.
+3. Investigate any increase in [user submissions](/cloudflare-one/email-security/investigation/search-email/#user-submissions) (users may have found a phish that bypassed filters) and confirm that analyst-final dispositions align with your policies.
 
 A correct use of reclassifications ensures that Email security delivers a stronger protection with less manual tuning.
 

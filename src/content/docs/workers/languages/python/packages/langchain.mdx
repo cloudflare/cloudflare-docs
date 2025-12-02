@@ -4,29 +4,26 @@ title: Langchain
 head:
   - tag: title
     content: Langchain
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 [LangChain](https://www.langchain.com/) is the most popular framework for building AI applications powered by large language models (LLMs).
 
 LangChain publishes multiple Python packages. The following are provided by the Workers runtime:
 
-* [`langchain`](https://pypi.org/project/langchain/) (version `0.1.8`)
-* [`langchain-core`](https://pypi.org/project/langchain-core/) (version `0.1.25`)
-* [`langchain-openai`](https://pypi.org/project/langchain-openai/) (version `0.0.6`)
+- [`langchain`](https://pypi.org/project/langchain/) (version `0.1.8`)
+- [`langchain-core`](https://pypi.org/project/langchain-core/) (version `0.1.25`)
+- [`langchain-openai`](https://pypi.org/project/langchain-openai/) (version `0.0.6`)
 
 ## Get Started
-
-<Render file="python-workers-beta-packages" product="workers" />
 
 Clone the `cloudflare/python-workers-examples` repository and run the LangChain example:
 
 ```bash
 git clone https://github.com/cloudflare/python-workers-examples
 cd 04-langchain
-npx wrangler@latest dev
+uv run pywrangler dev
 ```
 
 ### Example code
