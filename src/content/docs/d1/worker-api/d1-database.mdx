@@ -409,7 +409,10 @@ return { bookmark } = session.getBookmark();
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
 session = self.env.DB.withSession("first-primary")
-result = await session.prepare("SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'").run()
+result = await session.prepare(
+    "SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'"
+).run()
+
 bookmark = session.getBookmark()
 ```
 </TabItem> </Tabs>
