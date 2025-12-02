@@ -139,7 +139,6 @@ bindings = [{
   type = "durable_object_namespace"
   name = "MY_DURABLE_OBJECT"
   class_name = "MyDurableObjectClass"
-  script_name = "my-worker"
 }]
 ```
 
@@ -148,7 +147,6 @@ bindings = [{
 - `name`: The binding name to access via `env.MY_DURABLE_OBJECT`
 - `class_name`: The exported class name of the Durable Object
 - `script_name`: (Optional) The Worker script that exports this Durable Object class. Omit if the class is defined in the same Worker.
-- `environment`: (Optional) The environment of the script if binding to an external Worker
 
 ### Service Binding
 
@@ -166,7 +164,6 @@ bindings = [{
 - `type`: `"service"`
 - `name`: The binding name to access via `env.MY_SERVICE`
 - `service`: The name of the target Worker
-- `environment`: (Optional) The environment of the target Worker
 - `entrypoint`: (Optional) The named [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to
 
 ### Queue Binding
@@ -183,12 +180,12 @@ bindings = [{
 }]
 ```
 
-For consuming messages, configure your Worker as a consumer in the queue resource itself, not via bindings.
-
 **Properties:**
 - `type`: `"queue"`
 - `name`: The binding name to access via `env.MY_QUEUE`
 - `queue_name`: The name of your Queue
+
+For consuming messages, configure your Worker as a consumer in the queue resource itself, not via bindings.
 
 ### Vectorize Binding
 
