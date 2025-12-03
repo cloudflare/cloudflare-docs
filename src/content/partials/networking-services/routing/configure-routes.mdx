@@ -390,12 +390,12 @@ Example:
 			url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/ipsec_tunnels/$IPSEC_TUNNEL_ID"
 			method="POST"
 			json={{
-				"cloudflare_endpoint": "203.0.113.1",
-				"interface_address": "192.0.2.0/31",
+				"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+				"interface_address": "<INTERFACE_ADDRESS>",
 				"name": "IPsec_1",
-				"customer_endpoint": "203.0.113.1",
+				"customer_endpoint": "<CUSTOMER_ENDPOINT>",
 				"description": "Tunnel for ISP X",
-				"psk": "O3bwKSjnaoCxDoUxjcq4Rk8ZKkezQUiy",
+				"psk": "<PSK>",
 				"stateful_return_path": "true"
 			}}
 		/>
