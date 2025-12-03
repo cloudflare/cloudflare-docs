@@ -29,16 +29,16 @@ Your Cloudflare dashboard user must have one of the following [Account Roles](/f
    <DashButton url="/?to=/:account/tag-management/google-tag-gateway" />
 
 2. Select your domain.
-4. Enable the toggle for **Turn on and configure Google tag gateway**.
+3. Enable the toggle for **Turn on and configure Google tag gateway**.
 
 ![Google tag gateway for advertisers configuration](~/assets/images/google-tag-gateway/google-tag-configuration.png)
 
-5. Add your Google tag ID and the path on your website reserved for the Google tag.
+4. Add your Google tag ID and the path on your website reserved for the Google tag.
 The [Google tag ID](https://support.google.com/analytics/answer/9539598?hl=en) can be found in the Google Tag Experience dashboard. The measurement path is an unused path on your site that will load Google Tag Manager and all subsequent measurement requests.
 
 ![Add to ID and path](~/assets/images/google-tag-gateway/google-tag-id-path.png)
 
-6. Once you click **Save**, Google tag gateway for advertisers will be enabled on your zone. If you already have a GTM script on your website, this First Party Tag will override the existing script.
+5. Once you click **Save**, Google tag gateway for advertisers will be enabled on your zone. If you already have a GTM script on your website, this First Party Tag will override the existing script.
 
 Now that you have authenticated into your Cloudflare account and configured GTM in first-party mode, your Google Tags will be loaded using `https://your-domain/measurement-path/...`and subsequent measurement requests will be served by Cloudflare.
 
@@ -46,3 +46,17 @@ Now that you have authenticated into your Cloudflare account and configured GTM 
 - [Google Developer Docs: Set up Google tag gateway for advertisers](https://developers.google.com/tag-platform/tag-manager/gateway/setup-guide?setup=auto)
 - [Google Help Center: Set up Google tag gateway for advertisers in the Google tag with Cloudflare](https://support.google.com/tagmanager/answer/16061406)
 - [Google Help Center: Set up Google tag gateway for advertisers in Google Tag Manager with Cloudflare](https://support.google.com/analytics/answer/16061641)
+
+## FAQs
+
+### I disabled the "Set up tag" on the dashboard, but the code is still being injected on my domain and subdomains. Is this an expected behavior?
+
+Yes, this is an expected behavior, the "Set up tag" button does not control if the script is injected, it controls the content of the injected script.
+
+1. When "Set up tag" is **disabled**, a base initialization script is still injected. This allows you to implement your own customized Google Tag Manager (GTM) logic. This is useful for selectively applying GTM to specific parts of your website. 
+2. When "Set up tag" is **enabled**, injects the standard Google Tag Manager script which includes the line
+```js showLineNumbers
+w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+```
+
+
