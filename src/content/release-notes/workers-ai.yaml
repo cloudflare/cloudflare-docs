@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-12-03"
+    title: Deepgram Flux promotional period over, now has pricing
+    description: |-
+      - Check out updated pricing on the [`@cf/deepgram/flux`](/workers-ai/models/flux/) model page or [pricing](/workers-ai/platform/pricing/) page
   - publish_date: "2025-11-25"
     title: Black Forest Labs FLUX.2 dev now available
     description: |-
