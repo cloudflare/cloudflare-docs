@@ -21,7 +21,7 @@ You can apply Gateway HTTP and DNS policies at the browser level by configuring 
 
 <GlossaryDefinition term="PAC file" prepend="A PAC file is " />
 
-When end users visit a website, their browser will send the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. PAC files are evaluated by the browser for every request, determining whether traffic should go through the proxy or connect directly. Note that Gateway [cannot filter every type of HTTP traffic](#traffic-limitations) proxied using PAC files.
+When end users visit a website, their browser sends the request to a Cloudflare proxy server associated with your account to be filtered by Gateway. PAC files are evaluated by the browser for every request, determining whether traffic should go through the proxy or connect directly. Note that Gateway [cannot filter every type of HTTP traffic](#traffic-limitations) proxied using PAC files.
 
 PAC files offer several advantages:
 
@@ -134,7 +134,7 @@ To create a source IP endpoint:
    Gateway limits the prefix length of source networks for proxy endpoints to `/8` for IPv4 networks and `/32` for IPv6 networks.
    :::
 
-2. After running the call, you should see an output similar to
+2. The response returns output similar to the following:
 
    ```json title="Example output" {10}
    {

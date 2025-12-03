@@ -15,12 +15,12 @@ To create a PAC file:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
 2. Create a proxy endpoint.
-3. Once you create a proxy endpoint, select **Add PAC files**.
+3. After you create a proxy endpoint, select **Add PAC files**.
 4. Here, you can add **PAC file details** and **Setup instructions**.
 
    In **PAC file details**:
    - Enter the **Basic Information**.
-   - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** will be populated with the selected template.
+   - In **PAC file configuration**, select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The available templates are Okta and Azure. After you select a template, the **PAC file JavaScript** populates with the selected template.
 
    In **Setup instructions:**
    - Choose a browser and follow the instructions.
@@ -148,7 +148,7 @@ When using authorization endpoints, you **must** uncomment and configure the IdP
 
 ## Performance optimization
 
-PAC files are evaluated for every request, so optimizing their performance is critical to avoid delays in web browsing.
+PAC files are evaluated for every request. Optimizing their performance is critical to avoid delays in web browsing.
 
 ### Cache DNS results in variables
 
