@@ -359,6 +359,10 @@ Authorization endpoints do not support anything that is not HTTP/HTTPS. That mea
 To access plaintext HTTP (non-HTTPS) origins through proxy endpoints, configure them as [self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). This allows users to access HTTP resources while maintaining security through Access policies.
 :::
 
+### Session duration
+
+All connections proxied through Cloudflare Gateway have a maximum guaranteed duration of 10 hours. For more information, refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#long-lived-ssh-sessions-frequently-disconnect).
+
 ### Gateway DNS and resolver policies
 
 Gateway DNS and resolver policies will always apply to traffic proxied with PAC files, regardless of device configuration.
