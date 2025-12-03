@@ -148,6 +148,68 @@ export class Counter extends DurableObject {
 }
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject, Response, WorkerEntrypoint
+from urllib.parse import urlparse, parse_qs
+
+# Worker
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		parsed_url = urlparse(request.url)
+		query_params = parse_qs(parsed_url.query)
+		name = query_params.get('name', [None])[0]
+
+		if not name:
+			return Response(
+				"Select a Durable Object to contact by using"
+				+ " the `name` URL query string parameter, for example, ?name=A"
+			)
+
+		# A stub is a client Object used to send messages to the Durable Object.
+		stub = self.env.COUNTERS.getByName(name)
+
+		# Send a request to the Durable Object using RPC methods, then await its response.
+		count = None
+
+		if parsed_url.path == "/increment":
+			count = await stub.increment()
+		elif parsed_url.path == "/decrement":
+			count = await stub.decrement()
+		elif parsed_url.path == "" or parsed_url.path == "/":
+			# Serves the current value.
+			count = await stub.getCounterValue()
+		else:
+			return Response("Not found", status=404)
+
+		return Response(f"Durable Object '{name}' count: {count}")
+
+# Durable Object
+class Counter(DurableObject):
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+
+	async def getCounterValue(self):
+		value = await self.ctx.storage.get("value")
+		return value if value is not None else 0
+
+	async def increment(self, amount=1):
+		value = await self.ctx.storage.get("value")
+		value = (value if value is not None else 0) + amount
+		# You do not have to worry about a concurrent request having modified the value in storage.
+		# "input gates" will automatically protect against unwanted concurrency.
+		# Read-modify-write is safe.
+		await self.ctx.storage.put("value", value)
+		return value
+
+	async def decrement(self, amount=1):
+		value = await self.ctx.storage.get("value")
+		value = (value if value is not None else 0) - amount
+		await self.ctx.storage.put("value", value)
+		return value
+```
+
 </TabItem> </Tabs>
 
 Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.

@@ -156,7 +156,7 @@ Restrict user access to only the specific sites or applications configured in yo
 
 ## Filter HTTPS traffic when inspecting on all ports
 
-If your organization blocks traffic by default with a network policy and you want to [inspect HTTP traffic on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports), you need to explicitly allow HTTP and TLS traffic to filter it.
+If your organization blocks traffic by default with a Network policy and you want to [inspect HTTP traffic on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports), you need to explicitly allow HTTP and TLS traffic to filter it.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -224,7 +224,10 @@ The following example consists of two policies: the first allows specific users 
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="gateway/policies/restrict-access-to-private-networks-block" product="cloudflare-one" />
+<Render
+	file="gateway/policies/restrict-access-to-private-networks-block"
+	product="cloudflare-one"
+/>
 
 </TabItem>
 

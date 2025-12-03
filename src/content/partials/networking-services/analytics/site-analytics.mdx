@@ -9,7 +9,7 @@ params:
 
 
 
-import { Details, Markdown } from "~/components"
+import { Details, Markdown, DashButton } from "~/components"
 
 After adding your sites, the {props.networkOverviewPageName} section of the dashboard provides a summary of the connectivity status and traffic analytics for all your sites. This is a great place to start if you receive a Magic WAN alert, need to begin the troubleshooting process, or are performing routine monitoring. <Markdown text={props.instructions} />
 
@@ -51,11 +51,11 @@ To start using network overview:
 	<>
 	<Markdown
 		text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Select **Magic WAN** > **${props.networkOverviewPageName}**.
+		1. Go to the **Network overview** page.
 		`}
 		inline={false}
 	/>
+	<DashButton url="/?to=/:account/magic-wan/network" />
 	</>
 )
 }

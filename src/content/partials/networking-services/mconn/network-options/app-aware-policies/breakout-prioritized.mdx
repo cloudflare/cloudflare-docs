@@ -7,7 +7,7 @@ params:
   - dashName
 ---
 
-import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Aside, AnchorHeading, CURL, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
 { props.magicWord === "breakout" && (
 	<>
@@ -108,11 +108,11 @@ You need to configure {props.featureName} applications for each of your existing
 	<>
 		<Markdown
 	text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-		2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
-	`}
+		1. Go to the **Connector on-ramps** page.
+		`}
 	inline={false}
 	/>
+		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
 	</>
 )
 }
@@ -230,11 +230,11 @@ The traffic for the application you chose ${props.whatHappensApp}.
 	<>
 		<Markdown
 	text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-		2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
-	`}
+		1. Go to the **Connector on-ramps** page.
+		`}
 	inline={false}
 	/>
+		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
 	</>
 )
 }
@@ -329,9 +329,14 @@ To pin applications to a WAN port:
 			<>
 				<Markdown
 			text={`
-				1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-				2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
-				3. Select your Connector > **Edit**.
+				1. Go to the **Connector on-ramps** page.
+				`}
+				inline={false}
+			/>
+				<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
+				<Markdown
+			text={`
+				2. Select your Connector > **Edit**.
 			`}
 			inline={false}
 			/>

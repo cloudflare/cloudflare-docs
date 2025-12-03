@@ -4,21 +4,63 @@ params:
   - virtualConnectorURL
 ---
 
-Each subnet (directly-attached or routed) must have a unique address space within your Magic WAN. You can re-use address spaces locally by enabling static network address translation (NAT) for a subnet. NAT is static. This means that inbound connections - from Magic WAN to the site behind the Connector - are allowed, and connections do not have to be initiated by hosts behind the Magic WAN Connector. NAT is also 1:1, that is, the  Connector will translate between corresponding addresses in two equal-sized prefixes.
+## Overview
 
-To enable NAT, supply a WAN-facing address prefix the same size as the subnet's prefix, and the Magic WAN Connector will translate between the two.
+Each subnet (directly attached or routed) must use a unique address space within the Magic WAN overlay. Many networks already reuse private RFC 1918 space at different sites. To avoid renumbering and still satisfy the Magic WAN uniqueness requirements, you can enable static network address translation (NAT) for a subnet on a Magic WAN Connector.
 
-For example:
+With subnet NAT, the Connector performs a static, 1:1 translation between:
 
-- **Prefix**: `192.168.100.0/24`
-- **Static NAT prefix**: `10.10.100.0/24`
+- The **local prefix** used inside the site.
+- A **NAT prefix** that is advertised into the Magic WAN overlay.
 
-With the example above, outbound traffic from host `192.168.100.13` in the subnet is translated to `10.10.100.13` in the Magic WAN Connector (and vice versa for incoming traffic).
+Because the mapping is static, the Connector supports both outbound connections from the site and inbound connections from Magic WAN to the site. Connections do not have to be initiated by hosts behind the Magic WAN Connector.
 
-:::note
-Even if NAT is enabled, the local prefix for a subnet must be unique within its LAN. It can, however, be reused on other LANs or other sites. Overlay-facing prefixes - that is, a subnet's NAT prefix if NAT is enabled, and its local prefix otherwise - must always be unique across your whole Magic WAN.
-:::
+## How subnet NAT works in Magic WAN
 
-## Create NATs for subnets
+NAT is static and 1:1 between equal-sized prefixes. When you enable NAT for a subnet on a Connector:
 
-For more information on how to a create a NAT for a subnets, refer to **Create a LAN**, either in <a href={props.hardConnectorURL}>Configure hardware Connector</a> or in <a href={props.virtualConnectorURL}>Configure Virtual Connector</a>.
+- The **local prefix** is the subnet on the LAN side of the Connector.
+- The **NAT prefix** is a WAN-facing prefix of the same size.
+- The Connector translates addresses 1:1 between the two prefixes:
+  - For traffic leaving the site towards Magic WAN, it replaces local addresses with the corresponding NAT addresses.
+  - For traffic arriving at the site from Magic WAN, it replaces NAT addresses with the corresponding local addresses.
+
+## Addressing rules
+
+To avoid overlapping addresses in the overlay, Magic WAN enforces the following rules:
+
+- **Uniqueness within a LAN**
+  - The local prefix for each subnet must be unique within that LAN on the Connector.
+  - You can reuse the same local prefix on a different LAN or on a different site.
+
+- **Uniqueness in the Magic WAN overlay**
+  - Every **overlay-facing prefix** must be unique across all sites in your Magic WAN deployment.
+  - For a subnet **with NAT enabled**, the overlay-facing prefix is the **NAT prefix**.
+  - For a subnet **without NAT**, the overlay-facing prefix is the **local prefix**.
+
+These rules allow you to reuse local space at multiple sites, as long as each subnet in the Magic WAN overlay has a unique overlay-facing prefix.
+
+## Example
+
+Consider a subnet that uses the following prefixes:
+
+- **Local prefix**: `192.168.100.0/24`
+- **NAT prefix**: `10.10.100.0/24`
+
+In this case:
+
+- When a host inside the site with address `192.168.100.13` sends traffic into the Magic WAN overlay, the Connector translates the address to `10.10.100.13`.
+- When traffic from another site, or from the Internet via Magic WAN, targets `10.10.100.13`, the Connector translates the address back to `192.168.100.13`.
+
+## Configure NAT for subnets
+
+You configure subnet NAT when you create or edit a LAN on a Magic WAN Connector. In the Connector configuration:
+
+- You define the **local prefix** for the subnet on the LAN side.
+- You optionally define a **static NAT prefix** of the same size. When present, this prefix becomes the overlay-facing prefix for that subnet.
+
+For step-by-step instructions to configure a LAN and supply a static NAT prefix, refer to:
+
+- <a href={props.hardConnectorURL}>Configure hardware Connector</a>
+- <a href={props.virtualConnectorURL}>Configure Virtual Connector</a>
+

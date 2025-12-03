@@ -7,15 +7,12 @@ sidebar:
     text: Beta
 ---
 
+import { WranglerConfig } from "~/components";
+
 Workflow entrypoints can be declared using Python. To achieve this, you can export a `WorkflowEntrypoint` that runs on the Cloudflare Workers platform.
 Refer to [Python Workers](/workers/languages/python) for more information about Python on the Workers runtime.
 
 :::caution[Python Workflows are in beta, as well as the underlying platform.]
-
-You must add both `python_workflows` and `python_workers` compatibility flags to your Wrangler config file.
-
-Also, Python Workflows require `compatibility_date = "2025-08-01"`, or later, to be set in your Wrangler config file.
-
 Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
 :::
 
@@ -31,7 +28,48 @@ class MyWorkflow(WorkflowEntrypoint):
         # steps here
 ```
 
-To run a Python Workflow locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers:
+For example, a Workflow may be defined as:
+
+```python
+from workers import Response, WorkflowEntrypoint
+
+class PythonWorkflowStarter(WorkflowEntrypoint):
+    async def run(self, event, step):
+
+        @step.do('step1')
+        async def step_1():
+            # does stuff
+            print('executing step1')
+
+        @step.do('step2')
+        async def step_2():
+            # does stuff
+            print('executing step2')
+
+        await await_step(step_1,step_2)
+
+async def on_fetch(request, env):
+    await env.MY_WORKFLOW.create()
+    return Response("Hello world!")
+```
+
+You must add both `python_workflows` and `python_workers` compatibility flags to your `wrangler.toml` file.
+
+<WranglerConfig>
+```toml
+name = "hello-python"
+main = "src/entry.py"
+compatibility_flags = ["python_workers", "experimental", "python_workflows"]
+compatibility_date = "2024-03-29"
+
+[[workflows]]
+name = "workflows-demo"
+binding = "MY_WORKFLOW"
+class_name = "PythonWorkflowStarter"
+```
+</WranglerConfig>
+
+To run a Python Workflow locally, use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers:
 
 ```bash
 npx wrangler@latest dev
@@ -42,3 +80,5 @@ To deploy a Python Workflow to Cloudflare, run [`wrangler deploy`](/workers/wran
 ```bash
 npx wrangler@latest deploy
 ```
+
+Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you would like to see next.

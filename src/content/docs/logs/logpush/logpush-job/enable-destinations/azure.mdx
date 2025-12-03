@@ -23,7 +23,7 @@ The [Microsoft Sentinel](/analytics/analytics-integrations/sentinel/) integratio
 4. In **Select a destination**, choose **Microsoft Azure**.
 
 5. Enter or select the following destination details:
-   - **SAS URL** - a pre-signed URL that grants access to Azure Storage resources. Refer to [Azure storage documentation](https://learn.microsoft.com/en-us/azure/storage/storage-explorer/vs-azure-tools-storage-manage-with-storage-explorer?tabs=macos#shared-access-signature-sas-url) for more information on generating a SAS URL using Azure Storage Explorer.
+   - **SAS URL** - a pre-signed URL that grants access to Azure Storage resources. Refer to [Azure storage documentation](https://learn.microsoft.com/en-us/azure/storage/storage-explorer/vs-azure-tools-storage-manage-with-storage-explorer?tabs=macos#shared-access-signature-sas-url) for more information on generating a SAS URL using Azure Storage Explorer. The service must be set to Blob-only (`ss=b`), and the resource type must be set to Object-only (`srt=o`).
    - **Path** - bucket location within the storage container
    - **Organize logs into daily subfolders** (recommended)
 

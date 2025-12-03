@@ -14,14 +14,18 @@ If your origin only receives traffic from <GlossaryTooltip term="proxy status">p
 
 For more background information on origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
 
-:::note
-
-Using Cloudflare origin CA certificates does not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+:::caution[API Access required]
+Users who do not have [**API Access**](https://dash.cloudflare.com/?to=/:account/members) will receive an error while trying to create or revoke an origin CA certificate.
+Refer to [Troubleshooting](/ssl/origin-configuration/origin-ca/troubleshooting/#this-zone-is-either-not-part-of-your-account-or-you-do-not-have-access-to-it) for guidance.
 :::
 
 ## Availability
 
 <FeatureTable id="ssl.origin_certificates" />
+
+:::note
+Using Cloudflare origin CA certificates does not prevent you from using [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+:::
 
 ---
 
@@ -36,9 +40,7 @@ To create an Origin CA certificate in the dashboard:
    <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
 
 2. Select **Create Certificate**.
-   :::note[API Access required]
-   Users who do not have [**API Access**](https://dash.cloudflare.com/?to=/:account/members) will receive an error while trying to perform this action. Refer to [Troubleshooting](/ssl/origin-configuration/origin-ca/troubleshooting/#this-zone-is-either-not-part-of-your-account-or-you-do-not-have-access-to-it) for guidance.
-   :::
+
 3. Choose either:
    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
    - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.

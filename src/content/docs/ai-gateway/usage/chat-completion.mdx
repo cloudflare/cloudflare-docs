@@ -7,6 +7,12 @@ sidebar:
   order: 2
 ---
 
+import {
+	Details,
+  Tabs,
+  TabItem
+} from "~/components";
+
 Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.
 
 ## Endpoint URL
@@ -31,26 +37,91 @@ Specify the model using `{provider}/{model}` format. For example:
 
 ### OpenAI SDK
 
-```js
+<Details header="With Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```js title=""
 import OpenAI from "openai";
+
 const client = new OpenAI({
-	apiKey: "YOUR_PROVIDER_API_KEY", // Provider API key
-	// NOTE: the OpenAI client automatically adds /chat/completions to the end of the URL, you should not add it yourself.
+	apiKey: "YOUR_PROVIDER_API_KEY",
+	defaultHeaders: {
+		"cf-aig-authorization": `Bearer {cf_api_token}`,
+	},
 	baseURL:
 		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
 });
 
+// Use different providers by changing the model parameter
 const response = await client.chat.completions.create({
-	model: "google-ai-studio/gemini-2.5-flash",
-	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	model: "google-ai-studio/gemini-2.5-flash", // or "openai/gpt-5-mini", "anthropic/claude-sonnet-4-5"
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```js title=""
+import OpenAI from "openai";
+
+const client = new OpenAI({
+	apiKey: "YOUR_PROVIDER_API_KEY",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
 });
 
-console.log(response.choices[0].message.content);
+// Use different providers by changing the model parameter
+const response = await client.chat.completions.create({
+	model: "google-ai-studio/gemini-2.5-flash", // or "openai/gpt-5-mini", "anthropic/claude-sonnet-4-5"
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
 ```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```js title="OpenAI JS SDK"
+import OpenAI from "openai";
+
+const client = new OpenAI({
+	apiKey: "{cf_api_token}",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+});
+
+// Ensure either your LLM Keys are stored with BYOK
+// or Unified Billing has credits
+const response = await client.chat.completions.create({
+	// Use different providers by changing the model parameter
+	model: "google-ai-studio/gemini-2.5-flash", // or "openai/gpt-5-mini"
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
+```
+</Details>
 
 ### cURL
 
-```bash
+
+<Details header="With Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```bash title=""
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
+  --header 'Authorization: Bearer {GOOGLE_GENERATIVE_AI_API_KEY}' \
+  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "google-ai-studio/gemini-2.5-flash",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```bash title=""
 curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
   --header 'Authorization: Bearer {GOOGLE_GENERATIVE_AI_API_KEY}' \
   --header 'Content-Type: application/json' \
@@ -64,6 +135,25 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
     ]
   }'
 ```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```bash title=""
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
+  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "google-ai-studio/gemini-2.5-flash",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+</Details>
 
 ## Supported Providers
 

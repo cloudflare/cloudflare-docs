@@ -3,7 +3,7 @@ params:
   - dashName
 ---
 
-import { Markdown } from "~/components";
+import { DashButton, Markdown } from "~/components";
 
 You can only add or remove applications to Breakout traffic and Prioritized traffic. To add or remove applications:
 
@@ -21,11 +21,11 @@ You can only add or remove applications to Breakout traffic and Prioritized traf
 	<>
 		<Markdown
 	text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
-	`}
+		1. Go to the **Connector on-ramps** page.
+		`}
 	inline={false}
 	/>
+		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
 	</>
 )
 }

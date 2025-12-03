@@ -1,0 +1,194 @@
+---
+pcx_content_type: navigation
+title: Livestreaming
+slug: realtime/realtimekit/core/livestreaming
+sidebar:
+  order: 9
+---
+
+Livestreaming is the real-time broadcasting of video or audio content over the internet, enabling viewers to watch and interact with events as they happen. RealtimeKit offers livestreaming services that facilitate one-to-many communication, where a single source streams content to multiple viewers or participants. It enables hosts and participants to engage and interact during the stream, creating an interactive live streaming (ILS) experience.
+
+## Key concepts
+
+### Interactive live streaming
+
+Interactive live streaming (ILS) is an engaging online broadcasting method where hosts and viewers can actively participate by interacting through comments, chat, polls, and other interactive features.
+
+### Stage
+
+RealtimeKit's Interactive Live Streaming (ILS) feature revolves around a virtual stage where hosts have direct access and viewers can request to join.
+
+- **Hosts** - Have full control of the stage and can actively participate, share video and audio, conduct presentations, and more
+- **Viewers** - Can request to join the stage using interactive features like chat or raised hand. Once approved by the host, viewers can contribute by sharing their video and audio or participating in discussions
+
+The stage is where all the action happens. It is broadcasted live to all viewers, creating a real-time and engaging experience for everyone.
+
+### Restream
+
+Restreaming allows you to redistribute an existing live stream to multiple platforms or destinations simultaneously. It enables content creators to broadcast their live stream to different streaming services, social media platforms, or CDNs, reaching a broader audience and maximizing the content's exposure. Restreaming is a many-to-many communication model, as it enables the simultaneous distribution of a single live stream to multiple platforms, rather than streaming separately to each platform.
+
+RealtimeKit can restream your meeting to any platform that supports an RTMP endpoint, such as YouTube, Twitch, or LinkedIn.
+
+### Livestream custom video input
+
+RealtimeKit supports live streaming from applications like OBS, [ffmpeg](https://en.wikipedia.org/wiki/FFmpeg), and others. You can live stream any RTMP input from any source using RealtimeKit.
+
+You can pass the custom input to the ingest server and stream key, and freely distribute it using the playback URL on any HLS/LHLS supported player.
+
+## Configure permissions
+
+A [preset](/realtime/realtimekit/concepts/preset/) is a set of permissions and configurations that are applied to participants. They determine the look, feel, and behavior of a livestream participant, with options to set varied permissions, such as the ability to create polls or chat, control access for plugins, and more.
+
+You can define the following permissions and UI configurations:
+
+- **Max number of people on screen** - Set the maximum number of participants who can appear on the screen at any given time. We recommend setting this number between 6 and 9 for the best possible experience
+- **Max number of people screensharing** - Set the maximum number of participants who can share the screen at any given time. We recommend setting this number between 3 to 4 for the best experience
+
+### Host controls
+
+Host controls allow you as the host to control various aspects of a RealtimeKit livestream, such as managing the participants.
+
+### Media permissions
+
+You can manage permissions for your livestreams in Media, such as who can start the livestream and who can join the livestream with what kind of permissions.
+
+### Chat permissions
+
+Configure chat permissions to control who can send messages during the livestream.
+
+### Poll permissions
+
+Configure poll permissions to control who can create and participate in polls during the livestream.
+
+### Plugin permissions
+
+Manage permissions for your plugins:
+
+1. Select the plugin that you want to use for collaboration within your meeting. Multiple plugins such as Excalidraw, Remote browser, Google apps, Quiz, Chess, and so on are supported. You can select multiple plugins for your meeting
+2. Click **Configure**
+3. Select permissions for the selected preset. You can provide **Full Access** or **View Only**
+4. Select **Show only active plugins** to view the plugins that you have configured for your meeting
+
+### Customization
+
+#### Colors
+
+You can specify brand color, background color, text color, text color on brand, and video background color.
+
+#### Theme
+
+Specify the URL of the logo.
+
+### Save preset changes
+
+1. Once you have made all the changes that you need to add to your preset, click **Save**
+2. Enter the name for your preset and click **Save**
+3. Your preset is listed - click **Edit** to make any changes to the preset
+
+## Livestream custom video input
+
+RealtimeKit can livestream video from any applications like OBS, [ffmpeg](https://en.wikipedia.org/wiki/FFmpeg) that can stream via RTMP.
+
+### Step 1: Get your API keys
+
+Get your Authentication token from the Cloudflare dashboard.
+
+Follow the [Quickstart Guide](/realtime/realtimekit/quickstart/) to create a new token via the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens).
+
+### Step 2: Generate credentials for a livestream
+
+This step generates credentials and ingest URLs for the livestream.
+
+For more information, refer to [Create an independent livestream](https://developers.cloudflare.com/api/resources/realtime_kit/subresources/livestreams/methods/create_independent_livestream/).
+
+#### Request
+
+```bash
+curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<account_id>/realtime/kit/<app_id>/livestreams' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer <api_token>' \
+  --data-raw '{
+    "name": "test_livestream"
+  }'
+```
+
+#### Response
+
+The response contains the `ingest_server`, livestream `id`, `stream_key`, and `playback_url`.
+
+```json
+{
+	"success": true,
+	"data": {
+		"status": "OFFLINE",
+		"name": "test_livestream",
+		"meeting_id": null,
+		"ingest_server": "rtmps://live.cloudflare.com:443/live/",
+		"id": "9fb22eea-3392-42ad-b884-1129a4f517d2",
+		"stream_key": "f26566285faca6fbe2e79a73a66rsrrsrrsr3cde23a2bb7dbc6c2c1761b98f4e4",
+		"playback_url": "https://customer-s8oj0c1n5ek8ah1e.cloudflarestream.com/7de6a3fec0f9c05bf1df140950d3a237/manifest/video.m3u8"
+	}
+}
+```
+
+### Step 3: Specify RTMP ingestion URL for live streaming
+
+In your application, enter the ingestion URL you generated in the previous step.
+
+- **OBS** - If you are using [OBS](https://en.wikipedia.org/wiki/OBS_Studio), enter the ingest server URL and stream key separately
+- **ffmpeg** - For [ffmpeg](https://en.wikipedia.org/wiki/FFmpeg), you must specify both the ingest URL and the stream key together. For example:
+
+```bash
+ffmpeg -re -f lavfi -i "testsrc=size=1280x720 [out0]; sine=frequency=500 [out1]" \
+  -acodec aac -vcodec h264 -f flv \
+  rtmps://live.cloudflare.com:443/live/f26566285faca6fbe2e79a73a66rsrrsrrsr3cde23a2bb7dbc6c2c1761b98f4e4
+```
+
+### Fetch livestream details
+
+Using the livestream ID that you generated in the previous step, you can fetch details of the livestream.
+
+For more information, refer to [Fetch livestream details using livestream ID](https://developers.cloudflare.com/api/resources/realtime_kit/subresources/livestreams/methods/get_livestream_session_for_livestream_id/).
+
+#### Request
+
+This request returns the `ingest_seconds`, `viewer_seconds`, `ingest_server`, `id`, `stream_key`, and `playback_url`.
+
+```bash
+curl --location \
+  --request GET 'https://api.cloudflare.com/client/v4/accounts/<account_id>/realtime/kit/<app_id>/livestreams/<livestream_id>' \
+  --header 'Authorization: Bearer <api_token>'
+```
+
+:::note
+
+The ingest and viewer seconds details are returned after 40-50 seconds; until then, they default to 60.
+
+:::
+
+#### Response
+
+```json
+{
+	"success": true,
+	"data": {
+		"status": "OFFLINE",
+		"name": "test_livestream",
+		"meeting_id": null,
+		"ingest_seconds": 0,
+		"viewer_seconds": 0,
+		"ingest_server": "rtmps://live.cloudflare.com:443/live/",
+		"id": "9fb22eea-3392-42ad-b884-1129a4f517d2",
+		"stream_key": "f26566285faca6fbe2e79a73a66rsrrsrrsr3cde23a2bb7dbc6c2c1761b98f4e4",
+		"playback_url": "https://customer-s8oj0c1n5ek8ah1e.cloudflarestream.com/7de6a3fec0f9c05bf1df140950d3a237/manifest/video.m3u8"
+	}
+}
+```
+
+## Next steps
+
+Explore additional capabilities you can add to your livestreaming experiences:
+
+- [Recording](/realtime/realtimekit/recording-guide) - Record your livestreams
+- [Chat](/realtime/realtimekit/core/chat/) - Build real-time chat for users in the livestream
+- [Polls](/realtime/realtimekit/core/polls/) - Integrate polls within your livestream

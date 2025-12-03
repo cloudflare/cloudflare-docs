@@ -7,7 +7,7 @@ head:
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, Render } from "~/components"
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the headers. Refer to the [Edge TTL](/cache/how-to/configure-cache-status-code/#edge-ttl) section for details on default TTL behavior.
 
@@ -53,6 +53,14 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 | CSS   | FLAC | MID  | PLS  | TAR  | XLSX  |     |
 
 To cache additional content, refer to [Cache Rules](/cache/how-to/cache-rules/) to create a rule to cache everything.
+
+<Render
+  file="edge-ttl"
+	product="cache"
+	params={{
+		conditional: "dedicated-cache-tile"
+	}}
+/>
 
 ## Customization options and limits
 

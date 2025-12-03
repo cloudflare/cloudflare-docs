@@ -1,0 +1,403 @@
+---
+pcx_content_type: navigation
+title: Stage Management
+slug: realtime/realtimekit/core/stage-management
+sidebar:
+  order: 7
+---
+
+import { Tabs, TabItem } from "~/components";
+
+This guide explains how to use stage management APIs for Interactive Livestream (LHLS) and Webinar (WebRTC) use cases in Cloudflare RealtimeKit.
+
+## Overview
+
+Instead of a traditional publish-subscribe model, where a user can publish their media and others can choose to subscribe, RealtimeKit comes with an optional managed configuration. In this managed configuration, a less privileged user can be configured with a default behavior to not publish media. The user can then request permission to be allowed to publish their media, where a privileged user can choose to grant or deny access.
+
+Using RealtimeKit's stage management APIs, a user can perform actions such as:
+
+- Leave and join stage
+- Manage stage requests and permissions
+- Kick participants
+
+## Access the Stage APIs
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+The stage module can be accessed under the `meeting.stage` namespace.
+
+```js
+console.log("Stage object:", meeting.stage);
+```
+
+</TabItem>
+<TabItem label="React">
+
+The stage module can be accessed under the `meeting.stage` namespace.
+
+```jsx
+console.log("Stage object:", meeting.stage);
+```
+
+</TabItem>
+</Tabs>
+
+## Properties
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Status
+
+The `meeting.stage.status` property returns the current stage status of the local user.
+
+```js
+console.log("Stage status:", meeting.stage.status);
+```
+
+**Possible status values:**
+
+- **`ON_STAGE`** - The user is currently on the stage and participating in the live stream
+- **`OFF_STAGE`** - The user is viewing the live stream but is not on the stage
+- **`REQUESTED_TO_JOIN_STAGE`** - The user has a pending request to join the livestream. This status is assigned until the host accepts or rejects their request
+- **`ACCEPTED_TO_JOIN_STAGE`** - The host has accepted the user's request to join the livestream
+
+:::note
+A user with permission to join stage directly can only assume `ON_STAGE` and `ACCEPTED_TO_JOIN_STAGE` status values.
+:::
+
+</TabItem>
+<TabItem label="React">
+
+### Status
+
+The `meeting.stage.status` property returns the current stage status of the local user.
+
+```jsx
+console.log("Stage status:", meeting.stage.status);
+```
+
+**Possible status values:**
+
+- **`ON_STAGE`** - The user is currently on the stage and participating in the live stream
+- **`OFF_STAGE`** - The user is viewing the live stream but is not on the stage
+- **`REQUESTED_TO_JOIN_STAGE`** - The user has a pending request to join the livestream. This status is assigned until the host accepts or rejects their request
+- **`ACCEPTED_TO_JOIN_STAGE`** - The host has accepted the user's request to join the livestream
+
+:::note
+A user with permission to join stage directly can only assume `ON_STAGE` and `ACCEPTED_TO_JOIN_STAGE` status values.
+:::
+
+</TabItem>
+</Tabs>
+
+## Host Controls
+
+RealtimeKit's stage management APIs allow hosts to receive and manage stage requests as well as leave and join the stage.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Join Stage
+
+This method connects the user to the media room, enabling them to interact with other peers in the meeting.
+
+```js
+await meeting.stage.join();
+```
+
+### Leave Stage
+
+By employing this method, the user will be disconnected from the media room and subsequently unable to communicate with their peers. Additionally, their audio and video will no longer be visible to others in the room.
+
+```js
+await meeting.stage.leave();
+```
+
+### Grant Access
+
+A privileged user can grant access to stage for a set of users with the `grantAccess` method.
+
+```js
+await meeting.stage.grantAccess(userIds);
+```
+
+**Parameters:**
+
+- `userIds` (string[]) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+### Deny Access
+
+A privileged user can deny access to stage for a set of users with the `denyAccess` method.
+
+```js
+await meeting.stage.denyAccess(userIds);
+```
+
+**Parameters:**
+
+- `userIds` (string[]) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+### Kick Users
+
+A privileged user can remove a set of users from stage using the `kick` method.
+
+```js
+await meeting.stage.kick(userIds);
+```
+
+**Parameters:**
+
+- `userIds` (string[]) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</TabItem>
+<TabItem label="React">
+
+### Join Stage
+
+This method connects the user to the media room, enabling them to interact with other peers in the meeting.
+
+```jsx
+await meeting.stage.join();
+```
+
+### Leave Stage
+
+By employing this method, the user will be disconnected from the media room and subsequently unable to communicate with their peers. Additionally, their audio and video will no longer be visible to others in the room.
+
+```jsx
+await meeting.stage.leave();
+```
+
+### Grant Access
+
+A privileged user can grant access to stage for a set of users with the `grantAccess` method.
+
+```jsx
+await meeting.stage.grantAccess(userIds);
+```
+
+**Parameters:**
+
+- `userIds` (string[]) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+### Deny Access
+
+A privileged user can deny access to stage for a set of users with the `denyAccess` method.
+
+```jsx
+await meeting.stage.denyAccess(userIds);
+```
+
+**Parameters:**
+
+- `userIds` (string[]) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+### Kick Users
+
+A privileged user can remove a set of users from stage using the `kick` method.
+
+```jsx
+await meeting.stage.kick(userIds);
+```
+
+**Parameters:**
+
+- `userIds` (string[]) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</TabItem>
+</Tabs>
+
+## Participant Controls
+
+RealtimeKit's stage management APIs allow participants to request and manage stage access.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Request Access
+
+This method is used to create a new stage request which can be approved by the host. Each user (viewer or host) must call this method in order to join the stage.
+
+When the host calls this method, their status will be updated to `ACCEPTED_TO_JOIN_STAGE`.
+
+```js
+await meeting.stage.requestAccess();
+```
+
+### Cancel Access Request
+
+You can call this method to cancel your stage request.
+
+```js
+await meeting.stage.cancelRequestAccess();
+```
+
+</TabItem>
+<TabItem label="React">
+
+### Request Access
+
+This method is used to create a new stage request which can be approved by the host. Each user (viewer or host) must call this method in order to join the stage.
+
+When the host calls this method, their status will be updated to `ACCEPTED_TO_JOIN_STAGE`.
+
+```jsx
+await meeting.stage.requestAccess();
+```
+
+### Cancel Access Request
+
+You can call this method to cancel your stage request.
+
+```jsx
+await meeting.stage.cancelRequestAccess();
+```
+
+</TabItem>
+</Tabs>
+
+## Events
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+The `meeting.stage` module emits the following events:
+
+### `stageAccessRequestUpdate`
+
+Emitted when there is an update to stage access requests.
+
+```js
+meeting.stage.on("stageAccessRequestUpdate", (data) => {
+	console.log("Stage access request updated:", data);
+});
+```
+
+### `acceptPresentRequests`
+
+Emitted when present requests are accepted.
+
+```js
+meeting.stage.on("acceptPresentRequests", (data) => {
+	console.log("Present requests accepted:", data);
+});
+```
+
+### `stageStatusUpdate`
+
+Emitted when the stage status changes.
+
+```js
+meeting.stage.on("stageStatusUpdate", (status) => {
+	console.log("Stage status updated:", status);
+});
+```
+
+### `newStageRequest`
+
+Emitted when a new stage request is received.
+
+```js
+meeting.stage.on("newStageRequest", (request) => {
+	console.log("New stage request:", request);
+});
+```
+
+### `stageRequestApproved`
+
+Emitted when a stage request is approved.
+
+```js
+meeting.stage.on("stageRequestApproved", (data) => {
+	console.log("Stage request approved:", data);
+});
+```
+
+### `stageRequestRejected`
+
+Emitted when a stage request is rejected.
+
+```js
+meeting.stage.on("stageRequestRejected", (data) => {
+	console.log("Stage request rejected:", data);
+});
+```
+
+</TabItem>
+<TabItem label="React">
+
+The `meeting.stage` module emits the following events:
+
+### `stageAccessRequestUpdate`
+
+Emitted when there is an update to stage access requests.
+
+```jsx
+meeting.stage.on("stageAccessRequestUpdate", (data) => {
+	console.log("Stage access request updated:", data);
+});
+```
+
+### `acceptPresentRequests`
+
+Emitted when present requests are accepted.
+
+```jsx
+meeting.stage.on("acceptPresentRequests", (data) => {
+	console.log("Present requests accepted:", data);
+});
+```
+
+### `stageStatusUpdate`
+
+Emitted when the stage status changes.
+
+```jsx
+meeting.stage.on("stageStatusUpdate", (status) => {
+	console.log("Stage status updated:", status);
+});
+```
+
+### `newStageRequest`
+
+Emitted when a new stage request is received.
+
+```jsx
+meeting.stage.on("newStageRequest", (request) => {
+	console.log("New stage request:", request);
+});
+```
+
+### `stageRequestApproved`
+
+Emitted when a stage request is approved.
+
+```jsx
+meeting.stage.on("stageRequestApproved", (data) => {
+	console.log("Stage request approved:", data);
+});
+```
+
+### `stageRequestRejected`
+
+Emitted when a stage request is rejected.
+
+```jsx
+meeting.stage.on("stageRequestRejected", (data) => {
+	console.log("Stage request rejected:", data);
+});
+```
+
+Alternatively, you can use React hooks to listen for stage updates:
+
+```jsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+
+// useRealtimeKitSelector hook only works when `RealtimeKitProvider` is used.
+const stageStatus = useRealtimeKitSelector((m) => m.stage.status);
+```
+
+</TabItem>
+</Tabs>

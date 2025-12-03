@@ -3,7 +3,7 @@ params:
   - dashName
 ---
 
-import { Markdown } from "~/components";
+import { DashButton, Markdown } from "~/components";
 
 To add a new Magic WAN Connector you first need to remove the one associated with the on-ramps. You can only have more than one Magic WAN Connector if you initially enabled high availability on your on-ramp.
 
@@ -21,11 +21,11 @@ To add a new Magic WAN Connector you first need to remove the one associated wit
 	<>
 		<Markdown
 	text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
-	`}
+		1. Go to the **Connector on-ramps** page.
+		`}
 	inline={false}
 	/>
+		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
 	</>
 )
 }

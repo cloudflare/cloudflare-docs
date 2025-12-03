@@ -4,7 +4,7 @@ logo: <svg class="c_hf c_ck c_dw c_hg" role="presentation" xmlns="http://www.w3.
 product:
   title: Registrar
   url: /registrar/
-  group: Consumer services
+  group: Core platform
 
 meta:
   title: Cloudflare Registrar docs

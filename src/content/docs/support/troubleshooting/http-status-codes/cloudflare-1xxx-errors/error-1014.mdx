@@ -10,7 +10,7 @@ This error indicates that a CNAME record between domains in different Cloudflare
 
 ### Common cause
 
-By default, Cloudflare prohibits a DNS CNAME record between domains in different Cloudflare accounts. CNAME records are permitted within a domain ([`www.example.com`](http://www.example.com) CNAME to `api.example.com`) and across zones within the same user account ([`www.example.com`](http://www.example.com) CNAME to [`www.example.net`](http://www.example.net)) or using our [Cloudflare for SaaS](https://www.cloudflare.com/saas/) solution.
+By default, Cloudflare prohibits a DNS CNAME record between domains in different Cloudflare accounts. CNAME records are permitted within a domain (`www.example.com` CNAME to `api.example.com`) and across zones within the same user account (`www.example.com` CNAME to `www.example.net`) or using our [Cloudflare for SaaS](https://www.cloudflare.com/saas/) solution.
 
 Another common cause is connecting a custom domain to an R2 bucket, where the domain is an active zone with the [zone hold](/fundamentals/account/account-security/zone-holds/) feature enabled.
 

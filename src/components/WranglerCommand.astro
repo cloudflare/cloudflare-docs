@@ -7,6 +7,7 @@ import Details from "./Details.astro";
 import { marked } from "marked";
 import { commands, getCommand } from "~/util/wrangler";
 import { parse } from "node-html-parser";
+import { Badge } from "@astrojs/starlight/components";
 
 const props = z.object({
 	command: z.string(),
@@ -20,7 +21,13 @@ const definition = getCommand(command);
 
 description ??= definition.metadata.description;
 
-// some commands are present but marked as "hidden" and shouldn't be shown
+// CED-192 - some commands are experimental and need to be marked as such
+let experimental = false;
+if (definition.metadata.status === "experimental") {
+	experimental = true;
+}
+
+// CED-191 some commands are present but marked as "hidden" and shouldn't be shown
 let hidden = false;
 
 if (definition.metadata.hidden) {
@@ -47,7 +54,10 @@ const positionalSet = new Set(definition.positionalArgs);
 
 // Extract ExtraFlagDetails from slot
 const slotContent = await Astro.slots.render("default");
-const extraFlagDetailsMap = new Map<string, { content: string; mode: "append" | "replace" }>();
+const extraFlagDetailsMap = new Map<
+	string,
+	{ content: string; mode: "append" | "replace" }
+>();
 
 if (slotContent) {
 	const html = parse(slotContent);
@@ -60,7 +70,7 @@ if (slotContent) {
 		if (key) {
 			extraFlagDetailsMap.set(key, {
 				content: element.innerHTML.trim(),
-				mode: mode as "append" | "replace"
+				mode: mode as "append" | "replace",
 			});
 		}
 	}
@@ -69,6 +79,15 @@ if (slotContent) {
 
 <AnchorHeading depth={headingLevel} title={`\`${command}\``} />
 
+<!-- CED-192 - Label experimental commands with a badge-->
+{
+	experimental && (
+		<>
+			<br />
+			<Badge text="Experimental" variant="caution" />
+		</>
+	)
+}
 <Fragment set:html={marked.parse(description)} />
 
 <PackageManagers

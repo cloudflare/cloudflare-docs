@@ -3,14 +3,70 @@ link: "/ai-gateway/changelog/"
 productName: AI Gateway
 productLink: "/ai-gateway/"
 entries:
+  # - publish_date: "2025-11-25"
+  #   description: |-
+  #     New easy to use [utility](/ai-gateway/integrations/utility/) for simplified AI Gateway integration. Drop `useAIGateway({ binding: env.AI })` anwhere in any worker project and AI requests will be automatically routed through AI Gateway.
+  - publish_date: "2025-11-21"
+    description: |-
+      Unified Billing now supports opt-in Zero Data Retention. This ensures supported upstream AI providers (eg [OpenAI ZDR](https://platform.openai.com/docs/guides/your-data#zero-data-retention)) do not retain request and response data.
+  - publish_date: "2025-11-14"
+    description: |-
+      - Supports adding OpenAI compatible [Custom Providers](/ai-gateway/configuration/custom/) for inferencing with AI providers that are not natively supported by AI Gateway
+      - Cost and usage tracking for voice models
+      - You can now use Workers AI via AI Gateway with no additional configuration. Previously, this required generating / passing additional Workers AI tokens.
+  - publish_date: "2025-11-06"
+    title: Unified Billing
+    description: |-
+      - [Unified Billing](/ai-gateway/features/unified-billing/) is now in open beta. Connect multiple AI providers (e.g. OpenAI, Anthropic) without any additional setup and pay through a single Cloudflare invoice. To use it, purchase credits in the Cloudflare Dashboard and spend them across providers via AI Gateway.
+  - publish_date: "2025-11-03"
+    description: |-
+      New supported providers 
+        - [Baseten](/ai-gateway/usage/providers/baseten/)
+        - [Ideogram](/ai-gateway/usage/providers/ideogram/)
+        - [Deepgram](/ai-gateway/usage/providers/deepgram/)
+
+  - publish_date: "2025-10-29"
+    description: |-
+      - Add support for pipecat model on Workers AI
+      - Fix OpenAI realtime websocket authentication.
+  - publish_date: "2025-10-24"
+    description: |-
+      - Added cost tracking and observability support for async video generation requests for OpenAI Sora 2 and Google AI Studio Veo 3.
+      - `cf-aig-eventId` and `cf-aig-log-id` headers are now returned on all requests including failed requests
+  - publish_date: "2025-10-14"
+    description: The Model playground is now available in the AI Gateway Cloudflare Dashboard, allowing you to request and compare model behaviour across all models supported by AI Gateway.
+  - publish_date: "2025-10-07"
+    description: |-
+      - Add support for [Deepgram on Workers AI](/ai-gateway/usage/websockets-api/realtime-api/#deepgram-workers-ai) using Websocket transport.
+      - Added [Parallel](/ai-gateway/usage/providers/parallel/) as a provider.
+  - publish_date: "2025-09-24"
+    title: OTEL Tracing
+    description: |-
+      Added OpenTelemetry (OTEL) tracing export for better observability and debugging of AI Gateway requests.
+
+  - publish_date: "2025-09-21"
+    description: |-
+      - Added support for [Fal AI](/ai-gateway/usage/providers/fal/) provider.
+      - You can now set up custom Stripe usage reporting, and report usage and costs for your users directly to Stripe from AI Gateway.
+      - Fixed incorrectly geoblocked requests for certain regions.
+
+  - publish_date: "2025-09-19"
+    description: |-
+      - New API endpoint (`/compat/v1/models`) for listing available models along with their costs.
+      - Unified API now supports Google Vertex AI providers and all their models.
+      - BYOK support for requests using WebSocket transport.
+  - publish_date: "2025-08-28"
+    title: Data Loss Prevention
+    description: |-
+      [Data loss prevention](/ai-gateway/features/dlp/) capabilities are now available to scan both incoming prompts and outgoing AI responses for sensitive information, ensuring your AI applications maintain security and compliance standards.
   - publish_date: "2025-08-25"
     title: Dynamic routing
     description: |-
-      Introduced [Dynamic routing](/ai-gateway/routing/dynamic-routing/) to help manage AI provider interactions effectively, ensuring your applications remain responsive and reliable.
+      Introduced [Dynamic routing](/ai-gateway/routing/dynamic-routing/) that lets you visually or via JSON define flexible request flows that segment users, enforce quotas, and choose models with fallbacks—without changing application code.
   - publish_date: "2025-08-21"
     title: Bring your own keys (BYOK)
     description: |-
-      Introduced [Bring your own keys (BYOK)](/ai-gateway/configuration/byok/) allowing you to save your ai provider keys directly in the AI Gateway dashboard.
+      Introduced [Bring your own keys (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) allowing you to save your AI provider keys securely with Cloudflare Secret Store and manage them through the Cloudflare dashboard.
   - publish_date: "2025-06-18"
     title: New GA providers
     description: |-

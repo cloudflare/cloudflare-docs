@@ -5,15 +5,15 @@ sidebar:
   order: 7
 ---
 
-Use the following workflow to deploy a custom ruleset at the account level:
+Use the following workflow to deploy a custom ruleset:
 
 1. [Create a custom ruleset](/ruleset-engine/custom-rulesets/create-custom-ruleset/).
 2. [Add rules to your custom ruleset](/ruleset-engine/custom-rulesets/add-rules-ruleset/).
-3. [Add a rule to an account-level phase entry point ruleset that executes the custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).
+3. [Add a rule to a phase entry point ruleset that executes the custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).
 
 You must create a rule with `execute` action in an entry point ruleset to execute the custom ruleset (step 3 in the previous procedure). If you skip this step, the rules of the custom ruleset will not run.
 
-Currently, custom rulesets are only supported by the [Cloudflare WAF](/waf/).
+Currently, custom rulesets are only supported by the [Cloudflare WAF](/waf/), both at the account and the zone level.
 
 :::note
 You cannot execute a custom ruleset from another custom ruleset, only from an entry point ruleset.

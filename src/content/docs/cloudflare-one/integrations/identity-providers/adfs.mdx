@@ -4,7 +4,7 @@ title: Active Directory (SAML)
 description: Integrate Active Directory with Cloudflare One for secure identity management.
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 :::caution
 Microsoft recommends migrating your Active Directory Federation Service (AD FS) SSO to Microsoft Entra ID. For more information, refer to [Microsoft Learn](https://learn.microsoft.com/windows-server/identity/ad-fs/ad-fs-overview).
@@ -65,7 +65,7 @@ To create a Relying Party Trust:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
+    <Render file="find-team-name" product="cloudflare-one" />
 
 15. Select **Next**. The **Configure Identifiers** step displays.
 

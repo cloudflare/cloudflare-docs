@@ -1,0 +1,59 @@
+---
+pcx_content_type: navigation
+title: Recording
+sidebar:
+  order: 7
+  label: Overview
+---
+
+import { DirectoryListing } from "~/components";
+
+Learn how RealtimeKit records the audio and video of multiple users in a meeting, as well as interacts with RealtimeKit plugins, in a single file using composite recording mode.
+
+Visit the following pages to learn more about recording meetings:
+
+<DirectoryListing />
+
+RealtimeKit records the audio and video of multiple users in a meeting, as well as
+interactions with RealtimeKit plugins, in a single file using composite recording mode.
+
+## How does RealtimeKit recording work?
+
+RealtimeKit recordings are powered by anonymous virtual bot users who join your
+meeting, record it, and then upload it to RealtimeKit's AWS S3 bucket. For video files,
+we currently support the
+[H.264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) and
+[VP8](https://en.wikipedia.org/wiki/VP8) codecs.
+
+1. When the recording is finished, it is stored in RealtimeKit's AWS S3 bucket.
+2. RealtimeKit generates a downloadable link from which the recording can be
+   downloaded. You can get the download URL using the
+   [Fetch details of a recording API](/api/resources/realtime_kit/subresources/recordings/)
+   or from the Developer Portal.
+
+   You can receive notifications of recording status in any of the following
+   ways:
+   - Using the `recording.statusUpdate` webhook. RealtimeKit uses webhooks to notify your application when an event happens.
+   - Using the [Fetch active recording API](/api/resources/realtime_kit/subresources/recordings/methods/get_active_recordings/).
+   - You can also view the states of recording from the Developer Portal.
+
+3. Download the recording from the download url and store it to your cloud
+   storage. The file is kept on RealtimeKit's server for seven days before being
+   deleted.
+
+   You can get the download URL using the
+   [Fetch active recording API](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) or
+   from the Developer Portal.
+
+   We support transferring recordings to AWS, Azure, and DigitalOcean storage
+   buckets. You can also choose to preconfigure the storage configurations using
+   the Developer Portal or the
+   [Start recording a meeting API](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/).
+
+## Workflow
+
+A typical workflow for recording a meeting involves the following steps:
+
+1. Start a recording using the [Start Recording API](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) or client side SDK.
+2. Stop the recording using the [Stop Recording API](/api/resources/realtime_kit/subresources/recordings/) or client side SDK.
+3. Fetch the download URL for downloading the recording using the [Fetch Recording Details API](/api/resources/realtime_kit/subresources/recordings/methods/get_one_recording/), webhook, or from the Developer Portal.
