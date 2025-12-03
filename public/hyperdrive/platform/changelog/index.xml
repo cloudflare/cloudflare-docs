@@ -1,0 +1,66 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Hyperdrive</title>
+    <link>https://developers.cloudflare.com/hyperdrive/platform/changelog/</link>
+    <description>Updates to Hyperdrive</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/hyperdrive/platform/changelog/index.xml" rel="self" />
+    <lastBuildDate>Fri, 24 May 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Increased configuration limits</title>
+    <link>https://developers.cloudflare.com/hyperdrive/platform/changelog/#increased-configuration-limits</link>
+    <description>&lt;p&gt;You can now create up to 25 Hyperdrive configurations per account, up from the previous maximum of 10.&lt;/p&gt;
+&lt;p&gt;Refer to &lt;a href=https://developers.cloudflare.com/hyperdrive/platform/limits/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Limits&lt;/span&gt;&lt;/a&gt; to review the limits that apply to Hyperdrive.&lt;/p&gt;
+</description>
+    <pubDate>Fri, 24 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Driver performance improvements</title>
+    <link>https://developers.cloudflare.com/hyperdrive/platform/changelog/#driver-performance-improvements</link>
+    <description>&lt;p&gt;Compatibility improvements to how Hyperdrive interoperates with the popular &lt;a href=&#34;https://github.com/porsager/postgres&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Postgres.js&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; driver have been released. These improvements allow queries made via Postgres.js to be correctly cached (when enabled) in Hyperdrive.&lt;/p&gt;
+&lt;p&gt;Developers who had previously set &lt;code&gt;prepare: false&lt;/code&gt; can remove this configuration when establishing a new Postgres.js client instance.&lt;/p&gt;
+&lt;p&gt;Read the &lt;a href=https://developers.cloudflare.com/hyperdrive/configuration/connect-to-postgres/#supported-drivers class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;documentation on supported drivers&lt;/span&gt;&lt;/a&gt; to learn more about database driver interoperability with Hyperdrive.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 22 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Hyperdrive is now Generally Available</title>
+    <link>https://developers.cloudflare.com/hyperdrive/platform/changelog/#hyperdrive-is-now-generally-available</link>
+    <description>&lt;p&gt;Hyperdrive is now Generally Available and ready for production applications.&lt;/p&gt;
+&lt;p&gt;Read the &lt;a href=&#34;https://blog.cloudflare.com/making-full-stack-easier-d1-ga-hyperdrive-queues&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;announcement blog&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; to learn more about the Hyperdrive and the roadmap, including upcoming support for MySQL databases.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 01 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Improved local development configuration</title>
+    <link>https://developers.cloudflare.com/hyperdrive/platform/changelog/#improved-local-development-configuration</link>
+    <description>&lt;p&gt;Hyperdrive now supports a &lt;code&gt;WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_&lt;BINDING_NAME&gt;&lt;/code&gt; environmental variable for configuring local development to use a test/non-production database, in addition to the &lt;code&gt;localConnectionString&lt;/code&gt; configuration in &lt;code&gt;wrangler.toml&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Refer to &lt;a href=https://developers.cloudflare.com/hyperdrive/configuration/local-development/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Local development&lt;/span&gt;&lt;/a&gt; for instructions on how to configure Hyperdrive locally.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 19 Mar 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Hyperdrive now available</title>
+    <link>https://developers.cloudflare.com/hyperdrive/platform/changelog/#hyperdrive-now-available</link>
+    <description>&lt;p&gt;Hyperdrive is now available in public beta to any developer with a Workers paid plan.&lt;/p&gt;
+&lt;p&gt;To start using Hyperdrive, visit the &lt;a href=https://developers.cloudflare.com/hyperdrive/get-started/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;get started&lt;/span&gt;&lt;/a&gt; guide or read the &lt;a href=&#34;https://blog.cloudflare.com/hyperdrive-making-regional-databases-feel-distributed/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;announcement blog&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; to learn more.&lt;/p&gt;
+</description>
+    <pubDate>Thu, 28 Sep 2023 08:00:00 EST</pubDate></item></channel>
+</rss>

@@ -1,0 +1,14 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gateway · Gateway</title>
+    <link>https://developers.cloudflare.com/cloudflare-one/changelog/gateway/</link>
+    <description>Updates to Gateway</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/cloudflare-one/changelog/gateway/index.xml" rel="self" />
+    <lastBuildDate>Fri, 05 Apr 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Gateway file type control improvements</title>
+    <link>https://developers.cloudflare.com/cloudflare-one/changelog/gateway/#gateway-file-type-control-improvements</link>
+    <description>Gateway now offers a more extensive, categorized &lt;a href=https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;list of files&lt;/span&gt;&lt;/a&gt; to control uploads and downloads.</description>
+    <pubDate>Fri, 05 Apr 2024 08:00:00 EST</pubDate></item></channel>
+</rss>

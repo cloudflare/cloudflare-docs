@@ -1,0 +1,415 @@
+---
+pcx_content_type: how-to
+title: Automate End-to-End Testing with Puppeteer or Playwright
+sidebar:
+  order: 4
+---
+
+import { Aside, WranglerConfig, PackageManagers, Render, Tabs, TabItem } from "~/components";
+
+Browser Rendering enables you to automate end-to-end (E2E) testing of web applications directly from Cloudflare Workers. By leveraging [Puppeteer](/browser-rendering/platform/puppeteer/) or [Playwright](/browser-rendering/platform/playwright/), you can create automated tests that verify critical user flows, check for regressions, and ensure your application works as expected.
+
+This guide shows you how to build a Worker that runs automated E2E tests against a web application, returning test results in a structured format.
+
+## Prerequisites
+
+1. Use the `create-cloudflare` CLI to generate a new Cloudflare Worker:
+
+<PackageManagers type="create" pkg="cloudflare@latest" args="e2e-testing-worker" />
+
+2. Install your preferred browser automation library:
+
+<Tabs syncKey="browserLib">
+<TabItem label="Puppeteer">
+
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
+
+</TabItem>
+<TabItem label="Playwright">
+
+<PackageManagers pkg="@cloudflare/playwright" dev />
+
+</TabItem>
+</Tabs>
+
+3. Add your Browser Rendering binding to your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+browser = { binding = "BROWSER" }
+```
+
+</WranglerConfig>
+
+<Render file="remote-binding-note" product="workers" />
+
+## Use Case
+
+This tutorial demonstrates how to create automated E2E tests for a login flow. The test will:
+
+1. Navigate to a login page
+2. Fill in username and password fields
+3. Submit the form
+4. Verify successful authentication
+5. Return test results including screenshots on failure
+
+This pattern can be extended to test any user flow in your application, such as checkout processes, form submissions, or multi-step workflows.
+
+## Example with Puppeteer
+
+Replace the contents of `src/index.ts` with the following:
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+interface TestResult {
+	testName: string;
+	status: "passed" | "failed";
+	duration: number;
+	error?: string;
+	screenshot?: string;
+}
+
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const targetUrl = url.searchParams.get("url") || "https://example.com/login";
+
+		const results: TestResult[] = [];
+		const browser = await puppeteer.launch(env.BROWSER);
+
+		try {
+			// Test 1: Login Flow
+			const loginTest = await testLoginFlow(browser, targetUrl);
+			results.push(loginTest);
+
+			// Test 2: Navigation After Login
+			const navTest = await testNavigation(browser);
+			results.push(navTest);
+
+			await browser.close();
+
+			return new Response(JSON.stringify(results, null, 2), {
+				headers: { "content-type": "application/json" },
+			});
+		} catch (error) {
+			await browser.close();
+			return new Response(
+				JSON.stringify({
+					error: "Test suite failed",
+					message: error.message,
+				}),
+				{
+					status: 500,
+					headers: { "content-type": "application/json" },
+				}
+			);
+		}
+	},
+};
+
+async function testLoginFlow(browser, targetUrl: string): Promise<TestResult> {
+	const startTime = Date.now();
+
+	try {
+		const page = await browser.newPage();
+		await page.goto(targetUrl, { waitUntil: "networkidle2" });
+
+		// Fill in login form
+		await page.type('input[name="username"]', "testuser");
+		await page.type('input[name="password"]', "testpassword");
+
+		// Submit form
+		await Promise.all([
+			page.waitForNavigation({ waitUntil: "networkidle2" }),
+			page.click('button[type="submit"]'),
+		]);
+
+		// Verify successful login by checking for dashboard element
+		const dashboardElement = await page.$(".dashboard");
+
+		if (!dashboardElement) {
+			const screenshot = await page.screenshot({ encoding: "base64" });
+			await page.close();
+
+			return {
+				testName: "Login Flow",
+				status: "failed",
+				duration: Date.now() - startTime,
+				error: "Dashboard element not found after login",
+				screenshot: screenshot,
+			};
+		}
+
+		await page.close();
+
+		return {
+			testName: "Login Flow",
+			status: "passed",
+			duration: Date.now() - startTime,
+		};
+	} catch (error) {
+		return {
+			testName: "Login Flow",
+			status: "failed",
+			duration: Date.now() - startTime,
+			error: error.message,
+		};
+	}
+}
+
+async function testNavigation(browser): Promise<TestResult> {
+	const startTime = Date.now();
+
+	try {
+		const page = await browser.newPage();
+
+		// Test navigation to profile page
+		await page.goto("https://example.com/profile", {
+			waitUntil: "networkidle2",
+		});
+
+		// Check for specific profile elements
+		const profileHeader = await page.$("h1.profile-header");
+
+		if (!profileHeader) {
+			await page.close();
+			return {
+				testName: "Navigation Test",
+				status: "failed",
+				duration: Date.now() - startTime,
+				error: "Profile header not found",
+			};
+		}
+
+		await page.close();
+
+		return {
+			testName: "Navigation Test",
+			status: "passed",
+			duration: Date.now() - startTime,
+		};
+	} catch (error) {
+		return {
+			testName: "Navigation Test",
+			status: "failed",
+			duration: Date.now() - startTime,
+			error: error.message,
+		};
+	}
+}
+```
+
+## Example with Playwright
+
+If you prefer to use Playwright, replace `src/index.ts` with:
+
+```ts
+import { chromium } from "@cloudflare/playwright";
+
+interface TestResult {
+	testName: string;
+	status: "passed" | "failed";
+	duration: number;
+	error?: string;
+	screenshot?: string;
+}
+
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const targetUrl = url.searchParams.get("url") || "https://example.com/login";
+
+		const results: TestResult[] = [];
+		const browser = await chromium.launch(env.BROWSER);
+
+		try {
+			// Test 1: Login Flow
+			const loginTest = await testLoginFlow(browser, targetUrl);
+			results.push(loginTest);
+
+			// Test 2: Navigation After Login
+			const navTest = await testNavigation(browser);
+			results.push(navTest);
+
+			await browser.close();
+
+			return new Response(JSON.stringify(results, null, 2), {
+				headers: { "content-type": "application/json" },
+			});
+		} catch (error) {
+			await browser.close();
+			return new Response(
+				JSON.stringify({
+					error: "Test suite failed",
+					message: error.message,
+				}),
+				{
+					status: 500,
+					headers: { "content-type": "application/json" },
+				}
+			);
+		}
+	},
+};
+
+async function testLoginFlow(browser, targetUrl: string): Promise<TestResult> {
+	const startTime = Date.now();
+
+	try {
+		const context = await browser.newContext();
+		const page = await context.newPage();
+		await page.goto(targetUrl, { waitUntil: "networkidle" });
+
+		// Fill in login form
+		await page.fill('input[name="username"]', "testuser");
+		await page.fill('input[name="password"]', "testpassword");
+
+		// Submit form and wait for navigation
+		await Promise.all([
+			page.waitForNavigation({ waitUntil: "networkidle" }),
+			page.click('button[type="submit"]'),
+		]);
+
+		// Verify successful login
+		const dashboardElement = await page.locator(".dashboard").count();
+
+		if (dashboardElement === 0) {
+			const screenshot = await page.screenshot({ encoding: "base64" });
+			await context.close();
+
+			return {
+				testName: "Login Flow",
+				status: "failed",
+				duration: Date.now() - startTime,
+				error: "Dashboard element not found after login",
+				screenshot: screenshot,
+			};
+		}
+
+		await context.close();
+
+		return {
+			testName: "Login Flow",
+			status: "passed",
+			duration: Date.now() - startTime,
+		};
+	} catch (error) {
+		return {
+			testName: "Login Flow",
+			status: "failed",
+			duration: Date.now() - startTime,
+			error: error.message,
+		};
+	}
+}
+
+async function testNavigation(browser): Promise<TestResult> {
+	const startTime = Date.now();
+
+	try {
+		const context = await browser.newContext();
+		const page = await context.newPage();
+
+		// Test navigation to profile page
+		await page.goto("https://example.com/profile", {
+			waitUntil: "networkidle",
+		});
+
+		// Check for specific profile elements
+		const profileHeaderCount = await page.locator("h1.profile-header").count();
+
+		if (profileHeaderCount === 0) {
+			await context.close();
+			return {
+				testName: "Navigation Test",
+				status: "failed",
+				duration: Date.now() - startTime,
+				error: "Profile header not found",
+			};
+		}
+
+		await context.close();
+
+		return {
+			testName: "Navigation Test",
+			status: "passed",
+			duration: Date.now() - startTime,
+		};
+	} catch (error) {
+		return {
+			testName: "Navigation Test",
+			status: "failed",
+			duration: Date.now() - startTime,
+			error: error.message,
+		};
+	}
+}
+```
+
+## Running Your Tests
+
+Test your Worker locally:
+
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+Once running, trigger the tests by visiting:
+
+```txt
+http://localhost:8787/?url=https://your-app.com/login
+```
+
+The Worker will return a JSON response with test results:
+
+```json
+[
+	{
+		"testName": "Login Flow",
+		"status": "passed",
+		"duration": 2341
+	},
+	{
+		"testName": "Navigation Test",
+		"status": "passed",
+		"duration": 1523
+	}
+]
+```
+
+## Integrating with CI/CD
+
+You can integrate this E2E testing Worker into your continuous integration pipeline:
+
+1. Deploy your Worker:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+2. Call the Worker from your CI/CD pipeline (GitHub Actions example):
+
+```yaml
+- name: Run E2E Tests
+  run: |
+    response=$(curl -s https://your-worker.workers.dev?url=https://staging.example.com)
+    echo $response
+    if echo $response | jq -e '.[] | select(.status=="failed")' > /dev/null; then
+      echo "Tests failed"
+      exit 1
+    fi
+```
+
+## Best Practices
+
+- **Use environment variables**: Store test credentials and URLs in [environment variables](/workers/configuration/environment-variables/) or [secrets](/workers/configuration/secrets/) rather than hardcoding them.
+- **Implement timeouts**: Set appropriate timeouts to prevent tests from running indefinitely.
+- **Parallelize tests**: Use [Durable Objects](/browser-rendering/workers-bindings/browser-rendering-with-do/) to run multiple tests in parallel for faster results.
+- **Monitor test results**: Send test results to logging services or databases for historical tracking.
+- **Handle flaky tests**: Implement retry logic for tests that occasionally fail due to network issues or timing.
+
+## Related Resources
+
+- [Browser Rendering platform overview](/browser-rendering/)
+- [Puppeteer API documentation](/browser-rendering/platform/puppeteer/)
+- [Playwright API documentation](/browser-rendering/platform/playwright/)
+- [Browser Rendering with Durable Objects](/browser-rendering/workers-bindings/browser-rendering-with-do/)
+- [Workers Bindings](/browser-rendering/workers-bindings/)

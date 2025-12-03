@@ -1,0 +1,10162 @@
+<!doctype html>
+<html lang="en" theme="light" is-site-page is-docs-page>
+
+<head>
+
+  <meta charset="utf-8">
+  <title>Plans · Cloudflare Docs</title>
+  <meta name="title" content="Plans · Cloudflare Docs" />
+  <meta name="image" content="https://developers.cloudflare.com/cf-twitter-card.png" />
+
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="application-name" content="Plans · Cloudflare Docs" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="Plans · Cloudflare Docs" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
+
+  <meta name="description" content="View the products and features available to you based on your Cloudflare plan." />
+
+  <meta property="og:site_name" content="Cloudflare Docs" />
+  <meta property="og:image" content="https://developers.cloudflare.com/cf-twitter-card.png" />
+  <meta property="og:title" content="Plans · Cloudflare Docs" />
+  <meta property="og:description" content="View the products and features available to you based on your Cloudflare plan." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://developers.cloudflare.com/plans/" />
+
+  <meta name="twitter:title" content="Plans · Cloudflare Docs" />
+  <meta name="twitter:image" content="https://developers.cloudflare.com/cf-twitter-card.png" />
+  <meta name="twitter:description" content="View the products and features available to you based on your Cloudflare plan." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="algolia_page_title" content="Plans">
+  <meta name="pcx_word_count" content="3400"><meta name="pcx_last_modified" content="414"><meta name="pcx_last_reviewed" content="500" /><meta name="pcx_content_type" content="Not set" />
+  
+  
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="https://developers.cloudflare.com/plans/" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" /><script type="module" src="/search.js" defer></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3.5.1" />
+  <script defer async src="https://cdn.jsdelivr.net/npm/@docsearch/js@3.5.1"></script>
+  <script>window.algoliaConfig = {"apikey":"4edb0a6cef3338ff4bcfbc6b3d2db56b","index":"developers-cloudflare2"}</script>
+  <meta name="docsearch:product" content="" />
+  <link rel="stylesheet preconnect" href="/plans.css" /><link rel="stylesheet preconnect" href="/codeBlock.css" />
+
+  <link rel="stylesheet preconnect" href="/home.css" /><script>// <stdin>
+(function() {
+  let tooEarly = false;
+  let btn;
+  let media;
+  if (document.readyState !== "loading")
+    init();
+  else
+    addEventListener("DOMContentLoaded", init);
+  btn = document.querySelector("#ThemeToggle");
+  tooEarly = !btn;
+  function setter(isDark) {
+    try {
+      let theme = isDark ? "dark" : "light";
+      document.documentElement.setAttribute("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.theme = JSON.stringify({ theme });
+      if (btn) {
+        btn.checked = isDark;
+        tooEarly = false;
+      } else if (tooEarly) {
+        setTimeout(setter, 1, isDark);
+      }
+    } catch (err) {
+    }
+    if (isDark) {
+      document.getElementById("ThemeToggle--tooltip").textContent = "Set theme to light (\u21E7+D)";
+    } else {
+      document.getElementById("ThemeToggle--tooltip").textContent = "Set theme to dark (\u21E7+D)";
+    }
+  }
+  function init() {
+    btn = btn || document.querySelector("#ThemeToggle");
+    btn.addEventListener("change", () => setter(!!btn.checked));
+    addEventListener("keydown", (ev) => {
+      if (ev.target !== document.body || ev.repeat)
+        return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
+  try {
+    media = window.matchMedia("(prefers-color-scheme:dark)");
+    media.onchange = (ev) => setter(ev.matches);
+  } catch (err) {
+  }
+  try {
+    let value = localStorage.theme;
+    let row = value && JSON.parse(value);
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
+  } catch (err) {
+  }
+})();
+</script><script type="module" src="/home.js" defer></script></head>
+
+<body>
+  <div class="DocsPage">
+    <div class="SiteHeader">
+      <div class="SiteHeader--container">
+        <div class="SiteHeader--logo-section">
+          <a aria-current="page" class="SiteHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+            <div class="DocsNavLogoLockup">
+<div class="DocsNavLogoLockup--logo">
+  <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="title - 2addc5415c4bdc88eedafc4fc6b8cc4f" xmlns="http://www.w3.org/2000/svg">
+    <title id="title - 2addc5415c4bdc88eedafc4fc6b8cc4f">Cloudflare Docs logomark</title>
+    <path d="M31.236 28.717c-.373-.548-1.003-.864-1.76-.9l-14.353-.195a.262.262 0 01-.221-.122.348.348 0 01-.035-.267.396.396 0 01.338-.268l14.48-.195c1.714-.085 3.58-1.533 4.232-3.309l.828-2.25a.503.503 0 00.023-.292c-.932-4.404-4.698-7.689-9.198-7.689-4.15 0-7.672 2.798-8.931 6.679a4.156 4.156 0 00-2.973-.864c-1.994.207-3.59 1.874-3.789 3.954a4.84 4.84 0 00.105 1.545c-3.253.097-5.853 2.871-5.853 6.29 0 .304.024.608.059.912.023.146.14.256.28.256h26.488c.151 0 .291-.11.338-.268l.198-.742c.245-.876.152-1.68-.256-2.275zM36.062 21.39c-.128 0-.268 0-.396.012-.093 0-.175.073-.21.17l-.56 2.032c-.244.876-.151 1.679.257 2.275.373.548 1.003.864 1.76.9l3.055.195c.093 0 .175.049.222.122a.356.356 0 01.035.267.396.396 0 01-.339.268l-3.182.195c-1.726.085-3.58 1.532-4.232 3.309l-.234.62c-.046.122.035.243.164.243h10.935a.289.289 0 00.28-.219 8.654 8.654 0 00.292-2.214c0-4.501-3.521-8.175-7.847-8.175"></path>
+  </svg>
+</div>
+<span class="DocsNavLogoLockup--text">
+  <span data-text="Cloudflare">Cloudflare </span>
+  <span data-text="Docs">Docs</span>
+</span></div>
+          </a>
+        </div>
+
+<div class="DocsToolbar--search">
+  <div class="DocsSearch">
+    <div id="algolia"></div>
+  </div>
+</div><div class="SiteHeader--nav">
+          <a class="SiteHeader--nav-link" href="/products/"><span>Product directory</span></a>
+          <a class="SiteHeader--nav-link" href="/learning-paths/"><span>Learning paths</span></a>
+          <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
+          <a class="SiteHeader--nav-link"
+            href="/support/contacting-cloudflare-support/"><span>Support</span></a>
+          <a class="SiteHeader--nav-link"
+          href="https://dash.cloudflare.com"><span>Log in</span></a>
+        </div>
+        <div class="SiteHeader--theme-toggle"><button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+            <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+              <path
+                d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+              </path>
+            </svg>
+          </button><div class="Tooltip---root">
+  <div class="ThemeToggle">
+    <input type="checkbox" id="ThemeToggle" class="ThemeToggle--input">
+
+    <label class="ThemeToggle--toggle" for="ThemeToggle">
+      <div class="ThemeToggle--toggle-handle"></div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--sun">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-8812071124069258"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-8812071124069258">Light theme icon (depiction of a sun)</title>
+          <path
+            d="M7.5 11.465a3.482 3.482 0 01-1.596-.662L4.11 12.596a.5.5 0 01-.707-.707l1.793-1.793A3.482 3.482 0 014.535 8.5H2a.5.5 0 010-1h2.535a3.482 3.482 0 01.662-1.596L3.404 4.11a.5.5 0 01.707-.707l1.793 1.793A3.482 3.482 0 017.5 4.535V2a.5.5 0 011 0v2.535a3.482 3.482 0 011.596.662l1.793-1.793a.5.5 0 01.707.707l-1.793 1.793c.343.458.577 1.003.662 1.596H14a.5.5 0 110 1h-2.535a3.482 3.482 0 01-.662 1.596l1.793 1.793a.5.5 0 01-.707.707l-1.793-1.793a3.482 3.482 0 01-1.596.662V14a.5.5 0 11-1 0v-2.535z">
+          </path>
+        </svg>
+      </div>
+
+      <div class="ThemeToggle--toggle-handle-icon ThemeToggle--moon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-5971296394189265"
+          xmlns="http://www.w3.org/2000/svg">
+          <title id="title-5971296394189265">Dark theme icon (depiction of a moon)</title>
+          <path d="M7.067 3.087a5 5 0 005.466 7.026 5 5 0 11-5.466-7.026z"></path>
+        </svg>
+      </div>
+    </label>
+
+    <span class="Tooltip" id="ThemeToggle--tooltip" role="tooltip" position="bottom-end">Set theme to dark (⇧+D)</span>
+  </div>
+</div></div>
+      </div>
+    </div>
+
+    
+    <div class="SiteHeader---shadow"></div>
+    <div class="SiteHeader---shadow-cover"></div>
+    
+
+    <main class="DocsBody">
+      
+          <div id="docs-content" data-reach-skip-nav-content></div>
+          <div class="DocsContent" page-type="developers-site">
+            <article class="DocsMarkdown">
+<div class="Stripe">
+    <div class="Stripe--content">
+      <h1 id="documentation">Plans</h1>
+      <p>A feature-level companion to our <a href='https://www.cloudflare.com/plans/'>Plans and Pricing page</a></p>
+      <p style="font-size:.85em;margin-top:-1em;">(may not include <a href='#missing-features'>all features</a>)</p>
+    </div>
+  </div>
+
+  <span style="font-size:1.25em;text-align:center">
+    <h2 id="analytics">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#analytics" aria-hidden="true">​</a>
+        </span>
+        <span>Account</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/cloudflare-one/applications/configure-apps/dash-sso-apps/>Cloudflare dashboard single sign-on</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes (with Standard or Premium Success plans)
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/version-management/>Version Management</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/fundamentals/setup/account/account-security/zone-holds/>Zone holds</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+
+  <span style="font-size:1.25em;text-align:center">
+    <h2 id="analytics">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#analytics" aria-hidden="true">​</a>
+        </span>
+        <span>Analytics</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/analytics/graphql-api/>GraphQL Analytics API</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/logs/instant-logs/>Instant Logs</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/logs/instant-logs/>Logpull</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/logs/about/>Logpush</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/analytics/account-and-zone-analytics/zone-analytics/>Traffic analytics</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Level of detail
+        </em></p></td><td>
+            Requests, bandwidth, unique visitors
+        </td>
+        
+        <td>
+            
+            Requests, bandwidth, unique visitors
+            
+        </td>
+        
+        <td>
+            Same as Free, but able to see historical trends and filter by characteristics
+        </td>
+        
+        <td>
+            
+            Same as Free, but able to see historical trends and filter by characteristics
+            
+        </td>
+        
+        <td>
+            Same as Pro
+        </td>
+        <td>
+            Same as Pro
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Historical time
+        </em></p></td><td>
+            30 days
+        </td>
+        
+        <td>
+            
+            30 days
+            
+        </td>
+        
+        <td>
+            7 days
+        </td>
+        
+        <td>
+            
+            7 days
+            
+        </td>
+        
+        <td>
+            30 days
+        </td>
+        <td>
+            30 days
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+  <span style="font-size:1.25em;text-align:center">
+    <h2 id="cache">
+      <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#cache" aria-hidden="true">​</a>
+      </span>
+      <span>Cache</span>
+    </h2>
+  </span>
+
+  <div class="DocsMarkdown--table-wrap">
+      <div class="DocsMarkdown--table-wrap-inner">
+      <table>
+          <tr>
+              <td><strong>Feature</strong></td>
+              <td><strong>Additional features</strong></td>
+              <td>
+                  <strong>Free</strong>
+              </td>
+              
+              <td>
+                  <strong>Lite</strong>
+              </td>
+              
+              <td>
+                  <strong>Pro</strong>
+              </td>
+              
+              <td>
+                  <strong>Pro Plus</strong>
+              </td>
+              
+              <td>
+                  <strong>Business</strong>
+              </td>
+              <td>
+                  <strong>Enterprise</strong>
+              </td>
+          </tr><tr><td>
+          <p><strong>
+              <a href=/cache/how-to/always-online/>Always Online</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Crawl interval
+      </em></p></td><td>
+          Every 30 days
+      </td>
+      
+      <td>
+          
+          Every 30 days
+          
+      </td>
+      
+      <td>
+          Every 15 days
+      </td>
+      
+      <td>
+          
+          Every 15 days
+          
+      </td>
+      
+      <td>
+          Every 5 days
+      </td>
+      <td>
+          Every 5 days
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/how-to/edge-browser-cache-ttl/>Browser Cache TTL</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Default Browser Cache TTL
+      </em></p></td><td>
+          4 hours
+      </td>
+      
+      <td>
+          
+          4 hours
+          
+      </td>
+      
+      <td>
+          4 hours
+      </td>
+      
+      <td>
+          
+          4 hours
+          
+      </td>
+      
+      <td>
+          4 hours
+      </td>
+      <td>
+          4 hours
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Minimum Browser Cache TTL (Cache Rules)
+      </em></p></td><td>
+          2 hours
+      </td>
+      
+      <td>
+          
+          2 hours
+          
+      </td>
+      
+      <td>
+          1 hour
+      </td>
+      
+      <td>
+          
+          1 hour
+          
+      </td>
+      
+      <td>
+          1 second
+      </td>
+      <td>
+          1 second
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Minimum Browser Cache TTL (Page Rules)
+      </em></p></td><td>
+          2 minutes
+      </td>
+      
+      <td>
+          
+          2 minutes
+          
+      </td>
+      
+      <td>
+          2 minutes
+      </td>
+      
+      <td>
+          
+          2 minutes
+          
+      </td>
+      
+      <td>
+          2 minutes
+      </td>
+      <td>
+          30 seconds
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/performance-review/cache-analytics/>Cache analytics</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Retention period
+      </em></p></td><td>
+          N/A
+      </td>
+      
+      <td>
+          
+          N/A
+          
+      </td>
+      
+      <td>
+          7 days
+      </td>
+      
+      <td>
+          
+          7 days
+          
+      </td>
+      
+      <td>
+          30 days
+      </td>
+      <td>
+          30 days
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/how-to/cache-keys/>Cache keys</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/how-to/set-caching-levels/>Set caching level</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/advanced-configuration/cache-reserve/>Cache reserve</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Paid add-on
+      </td>
+      
+      <td>
+          
+          Paid add-on
+          
+      </td>
+      
+      <td>
+          Paid add-on
+      </td>
+      
+      <td>
+          
+          Paid add-on
+          
+      </td>
+      
+      <td>
+          Paid add-on
+      </td>
+      <td>
+          Paid add-on
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/how-to/cache-rules/>Cache Rules</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Number of rules
+      </em></p></td><td>
+          10
+      </td>
+      
+      <td>
+          
+          10
+          
+      </td>
+      
+      <td>
+          25
+      </td>
+      
+      <td>
+          
+          25
+          
+      </td>
+      
+      <td>
+          50
+      </td>
+      <td>
+          125
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/how-to/configure-cache-status-code/>Cache by status code</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/advanced-configuration/crawler-hints/>Crawler Hints</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/reference/csam-scanning/>CSAM Scanning Tool</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/reference/development-mode/>Development mode</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/how-to/edge-browser-cache-ttl/>Edge Cache TTL</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Minimum Edge Cache TTL
+      </em></p></td><td>
+          2 hours
+      </td>
+      
+      <td>
+          
+          2 hours
+          
+      </td>
+      
+      <td>
+          1 hour
+      </td>
+      
+      <td>
+          
+          1 hour
+          
+      </td>
+      
+      <td>
+          1 second
+      </td>
+      <td>
+          1 second
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/reference/etag-headers/>ETag Headers</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/how-to/purge-cache/>Purge cache</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Purge options
+      </em></p></td><td>
+          URL
+      </td>
+      
+      <td>
+          
+          URL
+          
+      </td>
+      
+      <td>
+          URL
+      </td>
+      
+      <td>
+          
+          URL
+          
+      </td>
+      
+      <td>
+          URL
+      </td>
+      <td>
+          URL, Hostname, Tag, or Prefix
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/advanced-configuration/query-string-sort/>Query string sort</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  <tr><td></td>
+      <td><p><em>
+      Tiered Cache
+      </em></p></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Smart Topology
+      </em></p></td><td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Generic Global Topology
+      </em></p></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Regional Tiered Cache
+      </em></p></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  <tr><td></td>
+      <td><p><em>
+      Custom Topology
+      </em></p></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          No
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  
+  <tr><td>
+          <p><strong>
+              <a href=/cache/advanced-configuration/vary-for-images/>Vary for images</a>
+          
+      </strong></p>
+      </td>
+      <td></td><td>
+          No
+      </td>
+      
+      <td>
+          
+          No
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      
+      <td>
+          
+          Yes
+          
+      </td>
+      
+      <td>
+          Yes
+      </td>
+      <td>
+          Yes
+          
+      </td>
+  </tr>
+  
+  
+  
+  </table>
+  </div>
+  </div>
+
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="dns">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#dns" aria-hidden="true">​</a>
+        </span>
+        <span>DNS</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/dns/foundation-dns/advanced-nameservers/>Advanced nameservers</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Included with <a href=/dns/foundation-dns/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Foundation DNS</span></a>
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        GraphQL DNS analytics
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/cname-flattening/>CNAME flattening</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Can customize
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/nameservers/custom-nameservers/>Custom nameservers</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/analytics/account-and-zone-analytics/zone-analytics/>DNS analytics</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Historical time
+        </em></p></td><td>
+            6 hours
+        </td>
+        
+        <td>
+            
+            6 hours
+            
+        </td>
+        
+        <td>
+            24 hours
+        </td>
+        
+        <td>
+            
+            36 hours
+            
+        </td>
+        
+        <td>
+            7 days
+        </td>
+        <td>
+            30 days
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/dns-firewall/>DNS Firewall</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/dnssec/>DNSSEC</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/zone-setups/full-setup/>Full zone setup</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/zone-setups/partial-setup/>Partial zone setup</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/manage-dns-records/reference/record-attributes/>DNS record comments</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Character limit
+        </em></p></td><td>
+            100
+        </td>
+        
+        <td>
+            
+            500
+            
+        </td>
+        
+        <td>
+            500
+        </td>
+        
+        <td>
+            
+            500
+            
+        </td>
+        
+        <td>
+            500
+        </td>
+        <td>
+            500
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Comments per record
+        </em></p></td><td>
+            1
+        </td>
+        
+        <td>
+            
+            1
+            
+        </td>
+        
+        <td>
+            1
+        </td>
+        
+        <td>
+            
+            1
+            
+        </td>
+        
+        <td>
+            1
+        </td>
+        <td>
+            1
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/manage-dns-records/reference/record-attributes/>DNS record tags</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Name character limit<br/>(everything before the colon)
+        </em></p></td><td>
+            N/A
+        </td>
+        
+        <td>
+            
+            32
+            
+        </td>
+        
+        <td>
+            32
+        </td>
+        
+        <td>
+            
+            32
+            
+        </td>
+        
+        <td>
+            32
+        </td>
+        <td>
+            32
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Value character limit<br/>(everything after the colon)
+        </em></p></td><td>
+            N/A
+        </td>
+        
+        <td>
+            
+            100
+            
+        </td>
+        
+        <td>
+            100
+        </td>
+        
+        <td>
+            
+            100
+            
+        </td>
+        
+        <td>
+            100
+        </td>
+        <td>
+            100
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Tags per record
+        </em></p></td><td>
+            N/A
+        </td>
+        
+        <td>
+            
+            20
+            
+        </td>
+        
+        <td>
+            20
+        </td>
+        
+        <td>
+            
+            20
+            
+        </td>
+        
+        <td>
+            20
+        </td>
+        <td>
+            20
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/additional-options/reverse-zones/>Reverse zones</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/>Subdomain delegation</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/zone-setups/subdomain-setup/>Subdomain zone setup</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/dns/zone-setups/zone-transfers/>DNS zone transfers</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="email">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#email" aria-hidden="true">​</a>
+        </span>
+        <span>Email</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/email-routing/>Email Routing</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/email-security/>Area 1 Email Security</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="global-configurations">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#global-configurations" aria-hidden="true">​</a>
+        </span>
+        <span>Global configurations</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/>Custom error/challenge pages</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/tools/lists/>Lists</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/tools/lists/custom-lists/>Number of custom lists</a>
+        </em></p></td><td>
+            1
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            10
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            10
+        </td>
+        <td>
+            10
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/tools/lists/custom-lists/>Custom lists with IPs (IP lists)</a>
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/tools/lists/custom-lists/>Other custom lists (ASNs, hostnames)</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/tools/lists/managed-lists/#managed-ip-lists>Managed IP List: Cloudflare Open Proxies</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/tools/lists/managed-lists/#managed-ip-lists>All Managed IP Lists</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            With separate add-on
+            
+        </td>
+    </tr>
+    
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="network">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#network" aria-hidden="true">​</a>
+        </span>
+        <span>Network</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/speed/optimization/protocol/0-rtt-connection-resumption/>0-RTT Connection Resumption</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/network/grpc-connections/>gRPC</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/network/ip-geolocation/>IP Geolocation</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/network/ipv6-compatibility/>IPv6 Compatibility</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Can customize
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/cache/concepts/default-cache-behavior/>Max upload size</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Max upload size
+        </em></p></td><td>
+            100 MB
+        </td>
+        
+        <td>
+            
+            100 MB
+            
+        </td>
+        
+        <td>
+            100 MB
+        </td>
+        
+        <td>
+            
+            200 MB
+            
+        </td>
+        
+        <td>
+            200 MB
+        </td>
+        <td>
+            500+ MB
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/network/onion-routing/>Onion Routing</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/network/pseudo-ipv4/>Pseudo IPv4</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/network/response-buffering/>Response buffering</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only>True Client IP Header</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/network/websockets/>WebSockets</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Volume of concurrent connections
+        </em></p></td><td>
+            Low (hobby projects)
+        </td>
+        
+        <td>
+            
+            Low (hobby projects)
+            
+        </td>
+        
+        <td>
+            Medium (Small businesses)
+        </td>
+        
+        <td>
+            
+            Medium (Small businesses)
+            
+        </td>
+        
+        <td>
+            High (important applications)
+        </td>
+        <td>
+            Custom (mission-critical applications)
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="rules">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#rules" aria-hidden="true">​</a>
+        </span>
+        <span>Rules</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/rules/url-forwarding/bulk-redirects/>Bulk Redirects</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Bulk Redirect Rules
+        </em></p></td><td>
+            15
+        </td>
+        
+        <td>
+            
+            15
+            
+        </td>
+        
+        <td>
+            15
+        </td>
+        
+        <td>
+            
+            15
+            
+        </td>
+        
+        <td>
+            15
+        </td>
+        <td>
+            50
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Bulk Redirect Lists
+        </em></p></td><td>
+            5
+        </td>
+        
+        <td>
+            
+            5
+            
+        </td>
+        
+        <td>
+            5
+        </td>
+        
+        <td>
+            
+            5
+            
+        </td>
+        
+        <td>
+            5
+        </td>
+        <td>
+            25
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        URL redirects across lists
+        </em></p></td><td>
+            20
+        </td>
+        
+        <td>
+            
+            20
+            
+        </td>
+        
+        <td>
+            500
+        </td>
+        
+        <td>
+            
+            500
+            
+        </td>
+        
+        <td>
+            500
+        </td>
+        <td>
+            10,000
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/rules/compression-rules/>Compression Rules</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            0
+        </td>
+        <td>
+            10
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/rules/configuration-rules/>Configuration Rules</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            10
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            25
+        </td>
+        
+        <td>
+            
+            25
+            
+        </td>
+        
+        <td>
+            50
+        </td>
+        <td>
+            125
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/rules/origin-rules/>Origin Rules</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            10
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            25
+        </td>
+        
+        <td>
+            
+            25
+            
+        </td>
+        
+        <td>
+            50
+        </td>
+        <td>
+            125
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Override destination port
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Override DNS records
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Override Host header
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Override SNI
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/rules/page-rules/>Page Rules (legacy)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            3
+        </td>
+        
+        <td>
+            
+            3
+            
+        </td>
+        
+        <td>
+            20
+        </td>
+        
+        <td>
+            
+            30
+            
+        </td>
+        
+        <td>
+            50
+        </td>
+        <td>
+            125
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/rules/url-forwarding/single-redirects/>Single Redirects</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            10
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            25
+        </td>
+        
+        <td>
+            
+            25
+            
+        </td>
+        
+        <td>
+            50
+        </td>
+        <td>
+            125
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Regex support
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/rules/snippets/>Snippets (alpha)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of snippets
+        </em></p></td><td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            10
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            25
+        </td>
+        <td>
+            50
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/rules/transform/>Transform Rules</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Active Transform Rules
+        </em></p></td><td>
+            10
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            25
+        </td>
+        
+        <td>
+            
+            25
+            
+        </td>
+        
+        <td>
+            50
+        </td>
+        <td>
+            100
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Regex support
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="scrapeshield">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#scrapeshield" aria-hidden="true">​</a>
+        </span>
+        <span>Scrape Shield</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/waf/tools/scrape-shield/email-address-obfuscation/>Email Address Obfuscation</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/tools/scrape-shield/hotlink-protection/>Hotlink Protection</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/tools/scrape-shield/server-side-excludes/>Server-side Excludes (deprecated)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="security">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#security" aria-hidden="true">​</a>
+        </span>
+        <span>Security</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/bots/>Bot protection</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/bots/bot-analytics/>Bot analytics</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/bots/reference/bot-management-variables/>Bot Management variables</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Bot Fight Mode
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Super Bot Fight Mode
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ddos-protection/>DDoS protection</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Standard, unmetered DDoS<br/>protection (layers 3-7)
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/ddos-protection/managed-rulesets/http/>HTTP DDoS attack protection</a>
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/ddos-protection/managed-rulesets/network/>Network-layer (L3/4)<br />DDoS attack protection</a>
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Managed rules customization
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes, with Log action
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            Expression fields &amp; multi-rule support
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/ddos-protection/managed-rulesets/#proactive-false-positive-detection-for-new-rules>Proactive false positive<br />detection for new rules</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/ddos-protection/managed-rulesets/adaptive-protection/>Adaptive DDoS protection</a>
+        </em></p></td><td>
+            Only error adaptive rules
+        </td>
+        
+        <td>
+            
+            Only error adaptive rules
+            
+        </td>
+        
+        <td>
+            Only error adaptive rules
+        </td>
+        
+        <td>
+            
+            Only error adaptive rules
+            
+        </td>
+        
+        <td>
+            Only error adaptive rules
+        </td>
+        <td>
+            Only error adaptive rules
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            All adaptive rules
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Traffic profiling signals for<br/>adaptive DDoS protection
+        </em></p></td><td>
+            Error rates only
+        </td>
+        
+        <td>
+            
+            Error rates only
+            
+        </td>
+        
+        <td>
+            Error rates only
+        </td>
+        
+        <td>
+            
+            Error rates only
+            
+        </td>
+        
+        <td>
+            Error rates &amp; historical trends
+        </td>
+        <td>
+            Error rates &amp; historical trends
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            Error rates &amp; historical trends, client country, user agent, query string, ML-scores
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/ddos-protection/tcp-protection/>Advanced TCP Protection</a>
+        </em></p></td><td>
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+        </td>
+        
+        <td>
+            
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+            
+        </td>
+        
+        <td>
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+        </td>
+        
+        <td>
+            
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+            
+        </td>
+        
+        <td>
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+        </td>
+        <td>
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/ddos-protection/dns-protection/>Advanced DNS Protection</a>
+        </em></p></td><td>
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+        </td>
+        
+        <td>
+            
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+            
+        </td>
+        
+        <td>
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+        </td>
+        
+        <td>
+            
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+            
+        </td>
+        
+        <td>
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+        </td>
+        <td>
+            Available to <a href=/magic-transit/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Magic Transit</span></a> customers
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/ddos-protection/reference/alerts/>Alerts</a>
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            Advanced alerts with filtering
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/page-shield/>Page Shield</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Script monitor
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        New Resources Alerts<br/> and New Domain Alerts
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Page attribution
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Malicious script detection<br/> and alerting
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            No
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Code change detection<br /> and alerting
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            No
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Connection monitor
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Malicious connection detection<br/> and alerting
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            No
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of policies<br/>(positive blocking)
+        </em></p></td><td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            0
+        </td>
+        <td>
+            0
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            5
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of Logpush jobs
+        </em></p></td><td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            0
+        </td>
+        <td>
+            0
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            4
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/rate-limiting-rules/>Rate limiting rules (new version)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            1
+        </td>
+        
+        <td>
+            
+            1
+            
+        </td>
+        
+        <td>
+            2
+        </td>
+        
+        <td>
+            
+            2
+            
+        </td>
+        
+        <td>
+            5
+        </td>
+        <td>
+            5
+            
+            <br/>
+            <br/>
+            <em>With add-on</em>
+            <br/>
+            100
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/reference/legacy/old-rate-limiting/>Rate Limiting (previous version)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            1
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            10
+        </td>
+        
+        <td>
+            
+            15
+            
+        </td>
+        
+        <td>
+            15
+        </td>
+        <td>
+            100
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of header rules
+        </em></p></td><td>
+            1
+        </td>
+        
+        <td>
+            
+            1
+            
+        </td>
+        
+        <td>
+            1
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            10
+        </td>
+        <td>
+            10
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/analytics/security-analytics/>Security Analytics</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/analytics/security-events/>Security Events</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Dashboard features
+        </em></p></td><td>
+            Activity log only
+        </td>
+        
+        <td>
+            
+            Activity log only
+            
+        </td>
+        
+        <td>
+            All
+        </td>
+        
+        <td>
+            
+            All
+            
+        </td>
+        
+        <td>
+            All
+        </td>
+        <td>
+            All
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Account-level dashboard
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Export report
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Up to 500 events
+        </td>
+        <td>
+            Up to 500 events
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Historical time
+        </em></p></td><td>
+            Up to the last 24 hours
+        </td>
+        
+        <td>
+            
+            Up to the last 24 hours
+            
+        </td>
+        
+        <td>
+            Up to the last 24 hours
+        </td>
+        
+        <td>
+            
+            Up to the last 24 hours
+            
+        </td>
+        
+        <td>
+            Up to the last 72 hours
+        </td>
+        <td>
+            Up to the last 30 days
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Print report
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/managed-rules/>WAF Managed Rules</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=https://blog.cloudflare.com/waf-for-everyone/>Free Managed Ruleset</a>
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/managed-rules/reference/cloudflare-managed-ruleset/>Cloudflare Managed Ruleset</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/managed-rules/reference/owasp-core-ruleset/>Cloudflare OWASP Core Ruleset</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/managed-rules/reference/exposed-credentials-check/>Cloudflare Exposed Credentials Check</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/managed-rules/reference/sensitive-data-detection/>Cloudflare Sensitive Data Detection</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/custom-rules/>WAF custom rules</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            5
+        </td>
+        
+        <td>
+            
+            20
+            
+        </td>
+        
+        <td>
+            20
+        </td>
+        
+        <td>
+            
+            40
+            
+        </td>
+        
+        <td>
+            100
+        </td>
+        <td>
+            1,000
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/ruleset-engine/rules-language/actions/>Supported actions</a>
+        </em></p></td><td>
+            All except Log
+        </td>
+        
+        <td>
+            
+            All except Log
+            
+        </td>
+        
+        <td>
+            All except Log
+        </td>
+        
+        <td>
+            
+            All except Log
+            
+        </td>
+        
+        <td>
+            All except Log
+        </td>
+        <td>
+            All
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Regex support
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waf/custom-rules/custom-rulesets/>Custom rulesets</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/firewall/>Firewall rules (deprecated)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            5
+        </td>
+        
+        <td>
+            
+            20
+            
+        </td>
+        
+        <td>
+            20
+        </td>
+        
+        <td>
+            
+            40
+            
+        </td>
+        
+        <td>
+            100
+        </td>
+        <td>
+            1,000
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/firewall/cf-firewall-rules/actions/>Supported actions</a>
+        </em></p></td><td>
+            All except Log
+        </td>
+        
+        <td>
+            
+            All except Log
+            
+        </td>
+        
+        <td>
+            All except Log
+        </td>
+        
+        <td>
+            
+            All except Log
+            
+        </td>
+        
+        <td>
+            All except Log
+        </td>
+        <td>
+            All
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Regex support
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/tools/ip-access-rules/>IP Access Rules</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Block by country
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            50,000
+        </td>
+        
+        <td>
+            
+            50,000
+            
+        </td>
+        
+        <td>
+            50,000
+        </td>
+        
+        <td>
+            
+            50,000
+            
+        </td>
+        
+        <td>
+            50,000
+        </td>
+        <td>
+            50,000, but can purchase more
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/tools/user-agent-blocking/>User Agent Blocking</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            10
+        </td>
+        
+        <td>
+            
+            50
+            
+        </td>
+        
+        <td>
+            50
+        </td>
+        
+        <td>
+            
+            250
+            
+        </td>
+        
+        <td>
+            250
+        </td>
+        <td>
+            1,000
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waf/tools/zone-lockdown/>Zone Lockdown</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rules
+        </em></p></td><td>
+            0
+        </td>
+        
+        <td>
+            
+            3
+            
+        </td>
+        
+        <td>
+            3
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            10
+        </td>
+        <td>
+            200
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="spectrum">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#spectrum" aria-hidden="true">​</a>
+        </span>
+        <span>Spectrum</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/spectrum/>Spectrum</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        TCP
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/spectrum/reference/limitations/#udp>UDP</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/spectrum/reference/limitations/#minecraft>Minecraft (one app allowed)</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        SSH (one app allowed)
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        RDP (one app allowed)
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="speed">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#speed" aria-hidden="true">​</a>
+        </span>
+        <span>Speed</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/speed/optimization/other/amp-real-url/>AMP Real URL</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/content/auto-minify/>Auto Minify (deprecated)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/automatic-platform-optimization/>Automatic Platform Optimization</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/other/signed-exchanges/>Automatic Signed Exchanges (SXGs)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/content/brotli/>Brotli compression</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/cache/advanced-configuration/early-hints>Early Hints</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=https://blog.cloudflare.com/better-http-2-prioritization-for-a-faster-web/>Enhanced HTTP/2 Prioritization</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/protocol/http2/>HTTP/2</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Can customize
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/protocol/http2-to-origin/>HTTP/2 to Origin</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/protocol/http3/>HTTP/3 (with QUIC)</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/images/>Image Optimization</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/images/mirage/>Mirage</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/other/mobile-redirect/>Mobile redirect</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/images/polish/>Polish</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/content/prefetch-urls/>Prefetch URLs</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/speed/optimization/content/rocket-loader/>Rocket Loader</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+            TCP Turbo
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="ssl">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#ssl" aria-hidden="true">​</a>
+        </span>
+        <span>SSL/TLS</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/advanced-certificate-manager/>Advanced Certificates</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/always-use-https/>Always Use HTTPS</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/origin-configuration/authenticated-origin-pull/>Authenticated origin pull</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/automatic-https-rewrites/>Automatic HTTPS Rewrites</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/backup-certificates/>Backup Certificates</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Can opt out?
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/>Certificate Transparency Monitoring</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Email Recipients
+        </em></p></td><td>
+            All account members
+        </td>
+        
+        <td>
+            
+            All account members
+            
+        </td>
+        
+        <td>
+            All account members
+        </td>
+        
+        <td>
+            
+            All account members
+            
+        </td>
+        
+        <td>
+            Specified email addresses
+        </td>
+        <td>
+            Specified email addresses
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/certificate-signing-requests/>Certificate Signing Requests</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/custom-certificates/>Custom Certificates</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Certificates included
+        </em></p></td><td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            0
+        </td>
+        
+        <td>
+            
+            1
+            
+        </td>
+        
+        <td>
+            1 (Modern)<br/>1 (Legacy)
+        </td>
+        <td>
+            1 (Modern) (can purchase more)<br/>1 (Legacy) (can purchase more)
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/origin-configuration/custom-origin-trust-store/>Custom origin trust store</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        
+        <td>
+            
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+        
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        
+        <td>
+            
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+        
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/>Delegated DCV</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        
+        <td>
+            
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+        
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        
+        <td>
+            
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+        
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/origin-configuration/ssl-modes/>SSL/TLS encryption mode</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Strict (SSL-Only Origin Pull)
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/http-strict-transport-security/>HTTP Strict Transport Security</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/keyless-ssl/>Keyless SSL</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/minimum-tls/>Minimum TLS Version</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/opportunistic-encryption/>Opportunistic Encryption</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/origin-configuration/origin-ca/>Origin certificates</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/origin-configuration/ssl-tls-recommender/>SSL/TLS Recommender</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/staging-environment/>Staging environment</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes<br/>(open beta)
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/tls-13/>TLS 1.3</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/additional-options/total-tls/>Total TLS</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        
+        <td>
+            
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+        
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        
+        <td>
+            
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+        
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+        </td>
+        <td>
+            Included with <a href=/ssl/edge-certificates/advanced-certificate-manager/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Advanced Certificate Manager</span></a>
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/ssl/edge-certificates/universal-ssl/>Universal Certificates</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/cloudflare-for-platforms/cloudflare-for-saas/plans/>Custom Hostnames</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Hostnames included
+        </em></p></td><td>
+            100
+        </td>
+        
+        <td>
+            
+            100
+            
+        </td>
+        
+        <td>
+            100
+        </td>
+        
+        <td>
+            
+            100
+            
+        </td>
+        
+        <td>
+            100
+        </td>
+        <td>
+            0
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Max hostnames
+        </em></p></td><td>
+            5000
+        </td>
+        
+        <td>
+            
+            5000
+            
+        </td>
+        
+        <td>
+            5000
+        </td>
+        
+        <td>
+            
+            5000
+            
+        </td>
+        
+        <td>
+            5000
+        </td>
+        <td>
+            Unlimited, but contact sales if using over 5000.
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">CSR support</span></a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Custom analytics</span></a>
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Custom certificates</span></a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Custom origin</span></a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">mTLS support</span></a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Non-SNI support for SaaS zone
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/ssl/reference/certificate-authorities/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Selectable CA</span></a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">WAF for SaaS</span></a>
+        </em></p></td><td>
+            WAF rules with current zone plan
+        </td>
+        
+        <td>
+            
+            WAF rules with current zone plan
+            
+        </td>
+        
+        <td>
+            WAF rules with current zone plan
+        </td>
+        
+        <td>
+            
+            WAF rules with current zone plan
+            
+        </td>
+        
+        <td>
+            WAF rules with current zone plan
+        </td>
+        <td>
+            Create and apply custom firewall rulesets.
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Wildcard custom hostnames
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Apex proxying/BYOIP</span></a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        <a href=/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Custom metadata</span></a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="support">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#support" aria-hidden="true">​</a>
+        </span>
+        <span>Support</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+            Ticket Support
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Initial ticket response time
+        </em></p></td><td>
+            N/A
+        </td>
+        
+        <td>
+            
+            N/A
+            
+        </td>
+        
+        <td>
+            N/A
+        </td>
+        
+        <td>
+            
+            N/A
+            
+        </td>
+        
+        <td>
+            8-72 hrs (P1-P4 issues)
+        </td>
+        <td>
+            1hr (urgent issues)
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+            Chat Support
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+            24x7x365 Emergency Phone Support
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+            Uptime guarantees
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        SLA
+        </em></p></td><td>
+            N/A
+        </td>
+        
+        <td>
+            
+            N/A
+            
+        </td>
+        
+        <td>
+            N/A
+        </td>
+        
+        <td>
+            
+            N/A
+            
+        </td>
+        
+        <td>
+            100%
+        </td>
+        <td>
+            100%
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Service credits
+        </em></p></td><td>
+            N/A
+        </td>
+        
+        <td>
+            
+            N/A
+            
+        </td>
+        
+        <td>
+            N/A
+        </td>
+        
+        <td>
+            
+            N/A
+            
+        </td>
+        
+        <td>
+            1x
+        </td>
+        <td>
+            10x (Standard)<br/>25x (Premium)
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="traffic">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#traffic" aria-hidden="true">​</a>
+        </span>
+        <span>Traffic</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/argo-smart-routing/>Argo Smart Routing</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td></td>
+        <td><p><em>
+        Analytics
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td>
+            <p><strong>
+                <a href=/health-checks/>Health checks</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of checks
+        </em></p></td><td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            10
+        </td>
+        
+        <td>
+            
+            10
+            
+        </td>
+        
+        <td>
+            50
+        </td>
+        <td>
+            1,000
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td></td>
+        <td><p><em>
+            <a href=/load-balancing/reference/load-balancing-analytics/>Analytics</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td>
+            <p><strong>
+                <a href=/load-balancing/>Load Balancing</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        
+        <td>
+            
+            Paid add-on
+            
+        </td>
+        
+        <td>
+            Paid add-on
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/load-balancing/pools/>Origin servers</a>
+        </em></p></td><td>
+            Up to 20
+        </td>
+        
+        <td>
+            
+            Up to 20
+            
+        </td>
+        
+        <td>
+            Up to 20
+        </td>
+        
+        <td>
+            
+            Up to 20
+            
+        </td>
+        
+        <td>
+            Up to 20
+        </td>
+        <td>
+            Custom
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/load-balancing/additional-options/load-balancing-rules/>Custom rules</a>
+        </em></p></td><td>
+            1 per hostname
+        </td>
+        
+        <td>
+            
+            1 per hostname
+            
+        </td>
+        
+        <td>
+            1 per hostname
+        </td>
+        
+        <td>
+            
+            1 per hostname
+            
+        </td>
+        
+        <td>
+            1 per hostname
+        </td>
+        <td>
+            Varies
+            
+        </td>
+    </tr>
+    
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/waiting-room/>Waiting Room</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Number of rooms
+        </em></p></td><td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            0
+        </td>
+        
+        <td>
+            
+            0
+            
+        </td>
+        
+        <td>
+            1
+        </td>
+        <td>
+            1 (default)<br/><br/><em>With add-on</em><br/>Custom (can purchase more)
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/how-to/place-waiting-room/>Configure multiple hostnames and paths</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/how-to/customize-waiting-room/>Customized templates</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/reference/configuration-settings/>Disable session renewal</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/how-to/json-response/>JSON-friendly response</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/reference/configuration-settings/>Customize queuing status code</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/reference/queueing-methods/>Queueing methods</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            First In First Out (FIFO)
+        </td>
+        <td>
+            First In First Out (FIFO) (default)<br/><br/><em>With add-on</em><br/>All options
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/additional-options/waiting-room-rules/>Waiting Room rules</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/additional-options/create-events/>Scheduled events</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        <td>
+            Paid add-on
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/waiting-room/reference/best-practices/#waiting-room-and-seo>SEO Crawler Bypassing</a>
+        </em></p></td><td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            No
+        </td>
+        
+        <td>
+            
+            No
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="web3">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#web3" aria-hidden="true">​</a>
+        </span>
+        <span>Web3</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr><tr><td>
+            <p><strong>
+                <a href=/web3/ethereum-gateway/>Ethereum Gateways</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes<br/>(Usage-based billing)
+        </td>
+        
+        <td>
+            
+            Yes<br/>(Usage-based billing)
+            
+        </td>
+        
+        <td>
+            Yes<br/>(Usage-based billing)
+        </td>
+        
+        <td>
+            
+            Yes<br/>(Usage-based billing)
+            
+        </td>
+        
+        <td>
+            Yes<br/>(Usage-based billing)
+        </td>
+        <td>
+            Yes<br/>(Usage-based billing)
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Total gateways
+        </em></p></td><td>
+            15
+        </td>
+        
+        <td>
+            
+            15
+            
+        </td>
+        
+        <td>
+            15
+        </td>
+        
+        <td>
+            
+            15
+            
+        </td>
+        
+        <td>
+            15
+        </td>
+        <td>
+            Unlimited
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Included bandwidth<br/> (without additional cost)
+        </em></p></td><td>
+            500,000 HTTP requests
+        </td>
+        
+        <td>
+            
+            500,000 HTTP requests
+            
+        </td>
+        
+        <td>
+            500,000 HTTP requests
+        </td>
+        
+        <td>
+            
+            500,000 HTTP requests
+            
+        </td>
+        
+        <td>
+            500,000 HTTP requests
+        </td>
+        <td>
+            1,000,000 HTTP requests
+            
+        </td>
+    </tr>
+    
+    
+    <tr><td>
+            <p><strong>
+                <a href=/web3/ipfs-gateway/>IPFS Gateways</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes<br/>(Usage-based billing)
+        </td>
+        
+        <td>
+            
+            Yes<br/>(Usage-based billing)
+            
+        </td>
+        
+        <td>
+            Yes<br/>(Usage-based billing)
+        </td>
+        
+        <td>
+            
+            Yes<br/>(Usage-based billing)
+            
+        </td>
+        
+        <td>
+            Yes<br/>(Usage-based billing)
+        </td>
+        <td>
+            Yes<br/>(Usage-based billing)
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Total gateways
+        </em></p></td><td>
+            15
+        </td>
+        
+        <td>
+            
+            15
+            
+        </td>
+        
+        <td>
+            15
+        </td>
+        
+        <td>
+            
+            15
+            
+        </td>
+        
+        <td>
+            15
+        </td>
+        <td>
+            Unlimited
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Gateway types
+        </em></p></td><td>
+            <a href=/web3/ipfs-gateway/concepts/dnslink/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DNSLink</span></a>
+        </td>
+        
+        <td>
+            
+            <a href=/web3/ipfs-gateway/concepts/dnslink/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DNSLink</span></a>
+            
+        </td>
+        
+        <td>
+            <a href=/web3/ipfs-gateway/concepts/dnslink/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DNSLink</span></a>
+        </td>
+        
+        <td>
+            
+            <a href=/web3/ipfs-gateway/concepts/dnslink/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DNSLink</span></a>
+            
+        </td>
+        
+        <td>
+            <a href=/web3/ipfs-gateway/concepts/dnslink/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DNSLink</span></a>
+        </td>
+        <td>
+            <a href=/web3/ipfs-gateway/concepts/dnslink/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">DNSLink</span></a>,<br/> <a href=/web3/ipfs-gateway/concepts/universal-gateway/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Universal Gateway</span></a>
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        Included bandwidth<br/> (without additional cost)
+        </em></p></td><td>
+            50 GB data transfer
+        </td>
+        
+        <td>
+            
+            50 GB data transfer
+            
+        </td>
+        
+        <td>
+            50 GB data transfer
+        </td>
+        
+        <td>
+            
+            50 GB data transfer
+            
+        </td>
+        
+        <td>
+            50 GB data transfer
+        </td>
+        <td>
+            100 GB data transfer
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+        File size limit
+        </em></p></td><td>
+            None
+        </td>
+        
+        <td>
+            
+            None
+            
+        </td>
+        
+        <td>
+            None
+        </td>
+        
+        <td>
+            
+            None
+            
+        </td>
+        
+        <td>
+            None
+        </td>
+        <td>
+            None
+            
+        </td>
+    </tr>
+    
+    
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="zaraz">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#zaraz" aria-hidden="true">​</a>
+        </span>
+        <span>Zaraz</span>
+    </h2>
+    </span>
+
+    <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+            <tr>
+                <td><strong>Feature</strong></td>
+                <td><strong>Additional features</strong></td>
+                <td>
+                    <strong>Free</strong>
+                </td>
+                
+                <td>
+                    <strong>Lite</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro</strong>
+                </td>
+                
+                <td>
+                    <strong>Pro Plus</strong>
+                </td>
+                
+                <td>
+                    <strong>Business</strong>
+                </td>
+                <td>
+                    <strong>Enterprise</strong>
+                </td>
+            </tr>
+    <tr><td>
+            <p><strong>
+                <a href=/zaraz/>Zaraz</a>
+            
+        </strong></p>
+        </td>
+        <td></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/zaraz/consent-management/>Consent Management</a>
+        </em></p></td><td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        
+        <td>
+            
+            Yes
+            
+        </td>
+        
+        <td>
+            Yes
+        </td>
+        <td>
+            Yes
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/zaraz/history/history/>History</a>
+        </em></p></td><td>
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+        </td>
+        
+        <td>
+            
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+            
+        </td>
+        
+        <td>
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+        </td>
+        
+        <td>
+            
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+            
+        </td>
+        
+        <td>
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+        </td>
+        <td>
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+            
+        </td>
+    </tr>
+    <tr><td></td>
+        <td><p><em>
+            <a href=/zaraz/history/preview-mode/>Preview mode</a>
+        </em></p></td><td>
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+        </td>
+        
+        <td>
+            
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+            
+        </td>
+        
+        <td>
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+        </td>
+        
+        <td>
+            
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+            
+        </td>
+        
+        <td>
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+        </td>
+        <td>
+            Included with a <a href=/workers/platform/pricing/ class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Workers Paid Plan</span></a>
+            
+        </td>
+    </tr>
+    
+    
+    
+    </table>
+    </div>
+    </div>
+
+
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="missing-features">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#missing-features" aria-hidden="true">​</a>
+        </span>
+        <span>Missing features</span>
+    </h2>
+    </span>
+
+    <p>This page is meant to be a companion to our <a href='https://www.cloudflare.com/plans/'>Plans and Pricing page</a>, but is not meant to be comprehensive. In the event of any inconsistency between this page and the Plans and Pricing page, the Plans and Pricing page controls.</p>
+    <p>Refer to the following locations for more information:</p>
+    <ul>
+        <li><strong>Developer products</strong>: Refer to the <a href='https://www.cloudflare.com/plans/developer-platform/'>Developer Platform pricing page</a> or individual <a href='/products/'>product docs</a> to learn more about plans and pricing.</li>
+        <li><strong>Zero Trust products</strong>: Refer to the <a href='https://www.cloudflare.com/plans/zero-trust-services/'>Zero Trust pricing</a> page.</li>
+        <li><strong>Other products</strong>: Refer to the individual <a href='/products/'>product docs</a> to learn more about plans and pricing.</li>
+    </ul></article>
+          </div>
+          
+    </main><div class="SiteFooter">
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Stay in touch</p>
+    </div>
+
+    <ul>
+      <li><a href="https://github.com/cloudflare">GitHub</a></li>
+      <li><a href="https://discord.cloudflare.com">Discord</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Resources</p>
+    </div>
+    <ul>
+      <li><a href="/api/">API</a></li>
+      <li><a href="/fundamentals/">New to Cloudflare?</a></li>
+      <li><a href="/products/">Products</a></li>
+      <li><a href="/sponsorships/">Sponsorships</a></li>
+      <li><a href="https://github.com/cloudflare">Open Source</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Support</p>
+    </div>
+    <ul>
+      <li><a href="https://support.cloudflare.com/">Help Center</a></li>
+      <li><a href="https://www.cloudflarestatus.com/">System Status</a></li>
+      <li><a href="https://www.cloudflare.com/trust-hub/compliance-resources/">Compliance</a></li>
+      <li><a href="https://www.cloudflare.com/trust-hub/gdpr/">GDPR</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>What we do</p>
+    </div>
+    <ul>
+      <li><a href="https://www.cloudflare.com/people/">Our Team</a></li>
+      <li><a href="https://www.cloudflare.com/careers/">Careers</a></li>
+    </ul>
+  </div>
+
+  <div class="SiteFooterItem">
+    <div class="SiteFooterHeader">
+      <p>Tools</p>
+    </div>
+    <ul>
+      <li><a href="https://radar.cloudflare.com">Cloudflare Radar</a></li>
+      <li><a href="https://speed.cloudflare.com/">Speed Test</a></li>
+      <li><a href="https://isbgpsafeyet.com/">Is BGP Safe Yet?</a></li>
+      <li><a href="https://rpki.cloudflare.com/">RPKI Toolkit</a></li>
+      <li><a href="https://ct.cloudflare.com/">Certificate Transparency</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="legalInformation">
+  <ul>
+    <li>© 2024 Cloudflare, Inc.</li>
+    <li><a href="https://www.cloudflare.com/privacypolicy/">Privacy Policy</a></li>
+    <li><a href="https://www.cloudflare.com/website-terms/">Terms of Use</a></li>
+    <li><a href="https://www.cloudflare.com/disclosure/">Report Security Issues</a></li>
+    <li><a href="https://www.cloudflare.com/trademark/">Trademark</a></li>
+    <li>
+      
+        <a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a>
+      
+    </li>
+  </ul>
+</div>
+</div>
+</body>
+
+</html>

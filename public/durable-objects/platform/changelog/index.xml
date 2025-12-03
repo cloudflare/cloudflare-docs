@@ -1,0 +1,23 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Durable Objects</title>
+    <link>https://developers.cloudflare.com/durable-objects/platform/changelog/</link>
+    <description>Updates to Durable Objects</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/durable-objects/platform/changelog/index.xml" rel="self" />
+    <lastBuildDate>Wed, 03 Apr 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Durable Objects support for Oceania region</title>
+    <link>https://developers.cloudflare.com/durable-objects/platform/changelog/#durable-objects-support-for-oceania-region</link>
+    <description>&lt;p&gt;Durable Objects can reside in Oceania, lowering Durable Objects request latency for eyeball Workers in Oceania locations.&lt;/p&gt;
+&lt;p&gt;Refer to &lt;a href=https://developers.cloudflare.com/durable-objects/reference/data-location/#provide-a-location-hint class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Durable Objects&lt;/span&gt;&lt;/a&gt; to provide location hints to objects.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 03 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Billing reduction for WebSocket messages</title>
+    <link>https://developers.cloudflare.com/durable-objects/platform/changelog/#billing-reduction-for-websocket-messages</link>
+    <description>&lt;p&gt;Durable Objects &lt;a href=https://developers.cloudflare.com/durable-objects/platform/pricing/#billing-metrics class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;request billing&lt;/span&gt;&lt;/a&gt; applies a 20:1 ratio for incoming WebSocket messages. For example, 1 million Websocket received messages across connections would be charged as 50,000 Durable Objects requests.&lt;/p&gt;
+&lt;p&gt;This is a billing-only calculation and does not impact Durable Objects &lt;a href=https://developers.cloudflare.com/durable-objects/observability/graphql-analytics/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;metrics and analytics&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 01 Apr 2024 08:00:00 EST</pubDate></item></channel>
+</rss>

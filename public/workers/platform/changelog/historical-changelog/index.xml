@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Workers (Historic) on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/workers/platform/changelog/historical-changelog/</link>
+    <description>Recent content in Workers (Historic) on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/workers/platform/changelog/historical-changelog/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

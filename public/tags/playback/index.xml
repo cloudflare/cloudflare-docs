@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Playback on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/tags/playback/</link>
+    <description>Recent content in Playback on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/tags/playback/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Stream Player</title>
+      <link>https://developers.cloudflare.com/stream/examples/stream-player/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/stream-player/</guid>
+      <description>Example of video playback with the Cloudflare Stream Player</description>
+    </item>
+    <item>
+      <title>iOS (AVPlayer)</title>
+      <link>https://developers.cloudflare.com/stream/examples/ios/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/ios/</guid>
+      <description>Example of video playback on iOS using AVPlayer</description>
+    </item>
+    <item>
+      <title>Android (ExoPlayer)</title>
+      <link>https://developers.cloudflare.com/stream/examples/android/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/android/</guid>
+      <description>Example of video playback on Android using ExoPlayer</description>
+    </item>
+    <item>
+      <title>dash.js</title>
+      <link>https://developers.cloudflare.com/stream/examples/dash-js/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/dash-js/</guid>
+      <description>Example of video playback with Cloudflare Stream and the DASH reference player (dash.js)</description>
+    </item>
+    <item>
+      <title>hls.js</title>
+      <link>https://developers.cloudflare.com/stream/examples/hls-js/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/hls-js/</guid>
+      <description>Example of video playback with Cloudflare Stream and the HLS reference player (hls.js)</description>
+    </item>
+    <item>
+      <title>Video.js</title>
+      <link>https://developers.cloudflare.com/stream/examples/video-js/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/video-js/</guid>
+      <description>Example of video playback with Cloudflare Stream and Video.js</description>
+    </item>
+    <item>
+      <title>Shaka Player</title>
+      <link>https://developers.cloudflare.com/stream/examples/shaka-player/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/shaka-player/</guid>
+      <description>Example of video playback with Cloudflare Stream and Shaka Player</description>
+    </item>
+    <item>
+      <title>Vidstack</title>
+      <link>https://developers.cloudflare.com/stream/examples/vidstack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/vidstack/</guid>
+      <description>Example of video playback with Cloudflare Stream and Vidstack</description>
+    </item>
+    <item>
+      <title>RTMPS playback</title>
+      <link>https://developers.cloudflare.com/stream/examples/rtmps_playback/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/rtmps_playback/</guid>
+      <description>Example of sub 1s latency video playback using RTMPS and ffplay</description>
+    </item>
+    <item>
+      <title>SRT playback</title>
+      <link>https://developers.cloudflare.com/stream/examples/srt_playback/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/stream/examples/srt_playback/</guid>
+      <description>Example of sub 1s latency video playback using SRT and ffplay</description>
+    </item>
+  </channel>
+</rss>

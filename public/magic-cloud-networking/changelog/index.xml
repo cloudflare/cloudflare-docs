@@ -1,0 +1,14 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Magic Cloud Networking</title>
+    <link>https://developers.cloudflare.com/magic-cloud-networking/changelog/</link>
+    <description>Updates to Magic Cloud Networking</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/magic-cloud-networking/changelog/index.xml" rel="self" />
+    <lastBuildDate>Fri, 31 May 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Closed beta launch</title>
+    <link>https://developers.cloudflare.com/magic-cloud-networking/changelog/#closed-beta-launch</link>
+    <description>Cloudflare launched Magic Cloud Networking in closed beta.</description>
+    <pubDate>Fri, 31 May 2024 08:00:00 EST</pubDate></item></channel>
+</rss>
