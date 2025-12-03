@@ -5,13 +5,15 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 Follow these steps to enable and add your first Email Worker. If you have never used Cloudflare Workers before, Cloudflare will create a subdomain for you, and assign you to the Workers [free pricing plan](/workers/platform/pricing/).
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Email Routing** page.
 
-2. Go to **Email** > **Email Routing** > **Email Workers**.
+   <DashButton url="/?to=/:account/:zone/email/routing" />
+
+2. Select **Email Workers**.
 
 3. Select **Get started**.
 
