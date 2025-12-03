@@ -1,0 +1,44 @@
+---
+title: MCP OAuth security hardening
+pcx_content_type: changelog
+date: 2025-12-03
+---
+
+The MCP client now includes enhanced OAuth security measures to protect against replay attacks and DoS vulnerabilities when connecting to OAuth-protected MCP servers.
+
+## What changed
+
+**OAuth state validation improvements:**
+- State parameters now use the format `{nonce}.{serverId}` instead of simple client IDs
+- State tokens have a 10-minute time-to-live (TTL) and are validated before use
+- State tokens are consumed after successful validation to prevent replay attacks
+- Callback URLs are now unified across all servers on a client (differentiated by state parameter)
+
+**Breaking change:**
+OAuth flows that were initiated on a previous version cannot complete after upgrading, as the state parameter format has changed. Users will need to restart any in-progress authentication flows.
+
+## Why this matters
+
+These changes harden your MCP client against several attack vectors:
+
+- **Replay attacks**: State tokens can only be used once and expire after 10 minutes
+- **DoS attacks**: Attackers cannot consume valid state tokens before legitimate callbacks complete (two-phase validation: check first, consume after successful authentication)
+- **Server validation**: State parameters now encode and validate the specific server being authenticated
+
+## Migration
+
+No code changes are required. However:
+
+- Any OAuth flows in progress during the upgrade will fail with an "Invalid state" error
+- Users will need to restart authentication flows after upgrading
+- Callback URLs remain the same, so no configuration changes are needed
+
+## API additions
+
+The `DurableObjectOAuthClientProvider` gained new methods for state management:
+
+- `checkState(state: string)` — Validates state without consuming it (non-destructive check)
+- `consumeState(state: string)` — Consumes state after successful authentication (prevents replay)
+- `deleteCodeVerifier()` — Cleans up code verifiers after token exchange
+
+These methods are used internally by the MCP client and do not require direct usage in most applications.

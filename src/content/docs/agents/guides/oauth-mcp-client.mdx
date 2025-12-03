@@ -73,6 +73,19 @@ Instead of an automatic redirect, you can also present the `authUrl` to your use
 
 After your user completes OAuth, the provider redirects back to your Agent's callback URL. Configure what happens next.
 
+:::note[Security]
+
+The MCP client includes built-in protections against replay attacks and DoS vulnerabilities:
+
+- **State validation**: OAuth state parameters include a nonce and server ID, validated before authentication completes
+- **Time limits**: State tokens expire after 10 minutes to prevent stale authorization attempts
+- **Single-use tokens**: State tokens are consumed after successful validation to prevent replay attacks
+- **Unified callbacks**: All MCP servers on your client share the same callback URL, differentiated by the state parameter
+
+These protections happen automatically without requiring additional configuration.
+
+:::
+
 ### Redirect to your application (recommended)
 
 For the automatic redirect approach, redirect users back to your application after OAuth completes:
