@@ -12,6 +12,8 @@ params:
   - cfTunnelURL?
   - sitesURL?
   - addTunnelsURL?
+  - unifiedRoutingModeURL?
+  - arrReferenceURL?
 ---
 
 import { AnchorHeading, Aside, APIRequest, CURL, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -362,9 +364,7 @@ Example:
 		<AnchorHeading title="Configure Automatic Return Routing (beta)" depth={2} />
 		<Markdown
 		text={`
-		Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode](#).
-
-		This feature requires the Unified Routing Mode. Refer to [Automatic Return Routing (Beta)](#) for more information.
+		[Automatic Return Routing (beta)](${props.arrReferenceURL}) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode](${props.unifiedRoutingModeURL}).
 
 		To enable ARR:
 		`}
