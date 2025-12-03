@@ -21,7 +21,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 - Routes' priorities and weights
 - Regional scoping of traffic to reduce latency
 - BGP peering
-{ props.magicWord !== "Magic Transit" && (<>- Automatic Return Routing (ARR)</>)}
+{ props.magicWord !== "Magic Transit" && (<Markdown text={`- Automatic Return Routing (ARR)`} inline={false} />)}
 
 { props.magicWord === "Magic Transit" && (
   <>
