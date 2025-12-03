@@ -107,7 +107,58 @@ To add a [source IP endpoint](#source-ip-endpoint):
 
 <Details header="Authorization endpoint" open={true}>
 
-todo
+To create an authorization endpoint:
+
+1. Use [Create a Proxy Endpoint](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/create/) with the following call:
+
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/proxy_endpoints"
+   	method="POST"
+   	json={{
+   		kind: "identity",
+   		name: "any_name",
+   	}}
+   />
+
+2. The response returns output similar to the following:
+
+   ```json title="Example output" {8}
+   {
+   	"result": {
+   		"kind": "identity",
+   		"id": "d969d7bf-ec28-4291-9af0-86825f472c21",
+   		"name": "Identity Proxy Endpoint",
+   		"created_at": "2014-01-01T05:20:00.12345Z",
+   		"updated_at": "2014-01-01T05:20:00.12345Z",
+   		"subdomain": "3ele0ss56t"
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
+
+   Note the `subdomain` value returned by the API. You will use this to create the Access application.
+
+3. Use [Add An Access Application](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) to associate the proxy endpoint with Access policies:
+
+   <APIRequest
+   	path="/accounts/{account_id}/access/apps"
+   	method="POST"
+   	json={{
+   		domain: "<SUBDOMAIN>.proxy.cloudflare-gateway.com",
+   		name: "Proxy Endpoint App",
+   		session_duration: "12h",
+   		type: "proxy_endpoint",
+   		policies: [
+   			{
+   				id: "<ACCESS_POLICY_ID>",
+   			},
+   		],
+   	}}
+   />
+
+   Replace `<SUBDOMAIN>` with the subdomain from step 2 and `<ACCESS_POLICY_ID>` with the ID of an existing [reusable Access policy](/cloudflare-one/access-controls/policies/reusable-policies/).
 
 </Details>
 
