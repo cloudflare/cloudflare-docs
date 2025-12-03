@@ -32,7 +32,6 @@ jobs:
         run: |
           git config --global --add safe.directory $PWD
           echo "COMMIT_MESSAGE=\"$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }})\"" >> "$GITHUB_ENV"
-          { set -x; } 2>/dev/null
           echo "COMMIT_MESSAGE=\"$COMMIT_MESSAGE\""
           echo "(if \$COMMIT_MESSAGE contains '[skip semgrep]' semgrep repo rules checks will be skipped)"
 
