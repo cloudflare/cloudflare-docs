@@ -9,7 +9,7 @@ import { Render, PackageManagers, TypeScriptExample, WranglerConfig } from "~/co
 
 Deploy your first Durable Object in under 2 minutes. This guide uses a starter template to get you up and running quickly.
 
-**What you'll build:** A simple "Hello World" Durable Object that responds to requests. Every request to the same ID reaches the same globally-unique instance.
+**What you'll build:** A greeting service where each user gets their own Durable Object instance. Requests to `/alice` and `/bob` route to separate, globally-unique instances.
 
 :::note[What is a Durable Object?]
 <Render file="what-is-a-durable-object" product="durable-objects" />
@@ -37,11 +37,11 @@ cd my-do-app
 
 ## 2. Understand the code
 
-The template creates a complete Durable Objects application. Let's walk through the key parts.
+The template creates a Durable Objects application. Let's walk through how it works.
 
 ### The Durable Object class
 
-<TypeScriptExample>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
@@ -53,21 +53,30 @@ export class MyDurableObject extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-This defines a Durable Object with one RPC method. Here's what's happening:
+Here's what's happening:
 
 1. **`extends DurableObject`** — Your class inherits from the base `DurableObject` class, which provides access to storage and other APIs.
 2. **`sayHello()` is an RPC method** — Any public method on the class is automatically callable from Workers. No HTTP routes to define.
-3. **Each instance is isolated** — If you create 1,000 Durable Objects, each has its own `sayHello()` running independently.
+3. **Each instance is isolated** — If you create 1,000 Durable Objects, each runs `sayHello()` independently with its own storage.
 
 ### Calling the Durable Object from a Worker
 
-<TypeScriptExample>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
-		const greeting = await stub.sayHello("world");
+		// Extract the name from the URL path: /alice -> "alice"
+		const url = new URL(request.url);
+		const name = url.pathname.slice(1) || "world";
+
+		// Get a stub for this user's Durable Object instance
+		// Same name = same instance, globally
+		const stub = env.MY_DURABLE_OBJECT.getByName(name);
+
+		// Call the RPC method on the Durable Object
+		const greeting = await stub.sayHello(name);
+
 		return new Response(greeting);
 	},
 } satisfies ExportedHandler<Env>;
@@ -75,15 +84,13 @@ export default {
 
 </TypeScriptExample>
 
-Let's break this down:
+The example above:
 
-1. **`env.MY_DURABLE_OBJECT`** — This is the binding to your Durable Object namespace, configured in `wrangler.jsonc`.
-2. **`getByName("foo")`** — Gets a stub (client) for the instance named "foo". The same name always routes to the same instance globally.
-3. **`stub.sayHello("world")`** — Calls the RPC method on the Durable Object. This runs on the DO, not the Worker.
+1. **`url.pathname.slice(1)`** — Extracts the name from the URL path (`/alice` becomes `"alice"`).
+2. **`getByName(name)`** — Gets a stub for the Durable Object instance with this name. Requests for `/alice` always route to the same instance globally.
+3. **`stub.sayHello(name)`** — Calls the RPC method. This executes on the Durable Object, not the Worker.
 
-:::caution[Common mistake]
-Don't hardcode a single name like `getByName("global")` for all requests — this creates a bottleneck. Use meaningful IDs like user IDs, room names, or document IDs to distribute load across many instances.
-:::
+This pattern — one Durable Object per user, document, or entity — is the foundation of effective DO design.
 
 ## 3. Run locally
 
@@ -93,7 +100,17 @@ Start the development server:
 npm run dev
 ```
 
-Open [http://localhost:8787](http://localhost:8787) in your browser. You should see `Hello, world!` returned from your Durable Object.
+Test with different names:
+
+```sh
+curl http://localhost:8787/alice
+# Returns: Hello, alice!
+
+curl http://localhost:8787/bob
+# Returns: Hello, bob!
+```
+
+Each name routes to a separate Durable Object instance.
 
 ## 4. Deploy
 
@@ -106,7 +123,7 @@ npm run deploy
 Your application is now live at `https://my-do-app.<YOUR_SUBDOMAIN>.workers.dev`.
 
 :::note[No infrastructure to manage]
-Unlike traditional databases or servers, you don't provision Durable Objects. They're created automatically on first access and scale to millions of instances without any configuration.
+Durable Objects are created automatically on first access and scale to millions of instances. You don't provision servers or manage capacity.
 :::
 
 ## Alternative: Deploy with one click

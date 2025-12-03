@@ -13,11 +13,61 @@ import {
 	TypeScriptExample,
 } from "~/components";
 
-This guide shows you how to add Durable Objects to an existing Workers project. If you're starting from scratch, see [Create your first Durable Object](/durable-objects/get-started/create-your-first-durable-object/) instead.
+Add Durable Objects to an existing Workers project. This guide walks you through adding a rate limiter to an existing Worker.
+
+:::note[Who is this guide for?]
+This guide assumes you have an existing Workers project and are familiar with Workers concepts like bindings and `wrangler.jsonc`. If you're new to Workers, start with [Create your first Durable Object](/durable-objects/get-started/create-your-first-durable-object/) instead.
+:::
 
 **What you'll build:** A rate limiter that tracks requests per client. Each client IP gets its own Durable Object instance with isolated storage — no race conditions, no distributed locks.
 
 **Time to complete:** 10 minutes
+
+## Your existing project
+
+You should have an existing Workers project with a structure like this:
+
+```
+my-worker/
+├── src/
+│   └── index.ts          # Your Worker code
+├── wrangler.jsonc        # Wrangler configuration
+├── package.json
+└── tsconfig.json
+```
+
+Your existing `wrangler.jsonc` might look like:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-05"
+}
+```
+
+</WranglerConfig>
+
+And your existing Worker in `src/index.ts`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export interface Env {
+	// Your existing bindings (KV, R2, etc.)
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		// Your existing Worker logic
+		return new Response("Hello World");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
 
 ## When to add a Durable Object
 
@@ -30,20 +80,9 @@ Common use cases include:
 - **Live collaboration** — Coordinate multiple users editing the same document
 - **Game state** — Manage per-match or per-room game logic
 
-For a complete guide on designing Durable Objects applications, see [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/).
-
-## Prerequisites
-
-You need an existing Workers project with:
-
-- A `wrangler.jsonc` or `wrangler.toml` configuration file
-- A Worker entry point (e.g., `src/index.ts`)
-
 ## 1. Create the Durable Object class
 
-Add a new Durable Object class to your project. You can add it to your existing entry file or create a separate file.
-
-This example creates a rate limiter that tracks requests per client:
+Create a new file for your Durable Object. This example creates a rate limiter:
 
 <Tabs syncKey="workersExamples">
 
@@ -52,15 +91,11 @@ This example creates a rate limiter that tracks requests per client:
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
-export interface Env {
-	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
-}
-
-export class RateLimiter extends DurableObject<Env> {
-	constructor(ctx: DurableObjectState, env: Env) {
+export class RateLimiter extends DurableObject {
+	constructor(ctx: DurableObjectState, env: unknown) {
 		super(ctx, env);
 
-		// Initialize the requests table on first access
+		// Create the table on first access (safe to call every time)
 		this.ctx.storage.sql.exec(`
 			CREATE TABLE IF NOT EXISTS requests (
 				window_start INTEGER PRIMARY KEY,
@@ -120,7 +155,7 @@ class RateLimiter(DurableObject):
     def __init__(self, ctx, env):
         super().__init__(ctx, env)
 
-        # Initialize the requests table on first access
+        # Create the table on first access
         self.ctx.storage.sql.exec("""
             CREATE TABLE IF NOT EXISTS requests (
                 window_start INTEGER PRIMARY KEY,
@@ -163,79 +198,25 @@ class RateLimiter(DurableObject):
 
 </Tabs>
 
-Let's break this down:
+Here's what's happening:
 
-1. **`extends DurableObject<Env>`** — Your class inherits from the base `DurableObject` class.
+1. **`extends DurableObject`** — Your class inherits from the base `DurableObject` class.
 2. **Table creation in constructor** — `CREATE TABLE IF NOT EXISTS` is safe to call every time; SQLite only creates it once.
 3. **`checkLimit()` is an RPC method** — Any public method is automatically callable from Workers.
 4. **Sliding window pattern** — Delete old windows, increment current window, check against limit.
 
-:::note[No infrastructure to manage]
-The SQLite database is automatically created and persisted. You don't provision storage or manage connections — it's all handled for you.
-:::
+## 2. Update your wrangler.jsonc
 
-## 2. Export the class from your Worker
-
-Make sure your Durable Object class is exported from your Worker's entry point. If you created a separate file, re-export it:
-
-<Tabs syncKey="workersExamples">
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-// Re-export the Durable Object class so Cloudflare can find it
-export { RateLimiter } from "./rate-limiter";
-
-// Add the binding to your Env interface
-export interface Env {
-	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
-	// ... your other bindings
-}
-
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		// Your existing Worker code...
-		return new Response("Hello World");
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TypeScriptExample>
-
-<TabItem label="Python" icon="seti:python">
-
-```python
-from workers import Response, WorkerEntrypoint
-from rate_limiter import RateLimiter
-
-# Re-export for Cloudflare
-__all__ = ["RateLimiter", "Default"]
-
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        # Your existing Worker code...
-        return Response("Hello World")
-```
-
-</TabItem>
-
-</Tabs>
-
-:::caution[Common mistake]
-Forgetting to export the class is a common error. The class must be exported from your Worker's entry point for Cloudflare to find it.
-:::
-
-## 3. Add the Durable Object binding
-
-Update your Wrangler configuration to bind the Durable Object class:
+Add the Durable Object binding and migration to your existing configuration:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"name": "my-existing-worker",
+	"name": "my-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "2024-12-05",
+
 	// Add the Durable Object binding
 	"durable_objects": {
 		"bindings": [
@@ -245,6 +226,7 @@ Update your Wrangler configuration to bind the Durable Object class:
 			}
 		]
 	},
+
 	// Add the migration for SQLite storage
 	"migrations": [
 		{
@@ -261,21 +243,24 @@ Here's what each part does:
 
 1. **`name: "RATE_LIMITER"`** — The variable name you'll use in code (`env.RATE_LIMITER`).
 2. **`class_name: "RateLimiter"`** — Must exactly match your exported class name.
-3. **`new_sqlite_classes`** — Tells Cloudflare to create this DO with SQLite storage.
+3. **`new_sqlite_classes`** — Creates this Durable Object class with SQLite storage.
 
-## 4. Use the Durable Object in your Worker
+## 3. Export the class and update your Worker
 
-Now integrate the rate limiter into your Worker:
+Update your `src/index.ts` to export the Durable Object class and use it:
 
 <Tabs syncKey="workersExamples">
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+// Re-export the Durable Object class (required for Cloudflare to find it)
 export { RateLimiter } from "./rate-limiter";
 
+// Add the new binding to your Env interface
 export interface Env {
 	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
+	// ... your existing bindings
 }
 
 export default {
@@ -284,6 +269,7 @@ export default {
 		const clientId = request.headers.get("CF-Connecting-IP") ?? "unknown";
 
 		// Get a stub for this client's rate limiter
+		// Same client ID = same Durable Object instance globally
 		const rateLimiter = env.RATE_LIMITER.getByName(clientId);
 
 		// Check the rate limit (100 requests per minute)
@@ -300,7 +286,7 @@ export default {
 			});
 		}
 
-		// Request is allowed — continue with your normal logic
+		// Request is allowed — continue with your existing logic
 		return new Response("Hello World", {
 			headers: {
 				"X-RateLimit-Remaining": remaining.toString(),
@@ -321,6 +307,7 @@ from rate_limiter import RateLimiter
 import math
 import time
 
+# Re-export for Cloudflare to find the class
 __all__ = ["RateLimiter", "Default"]
 
 class Default(WorkerEntrypoint):
@@ -345,7 +332,7 @@ class Default(WorkerEntrypoint):
                 }
             )
 
-        # Request is allowed
+        # Request is allowed — continue with your existing logic
         return Response(
             "Hello World",
             headers={
@@ -359,17 +346,17 @@ class Default(WorkerEntrypoint):
 
 </Tabs>
 
-Let's break this down:
+The example above:
 
-1. **`env.RATE_LIMITER.getByName(clientId)`** — Gets a stub for this client's Durable Object. Same client ID = same instance globally.
-2. **`rateLimiter.checkLimit(100, 60_000)`** — Calls the RPC method on the DO. This runs on the Durable Object, not the Worker.
-3. **Single-threaded execution** — No race conditions when incrementing counters because each DO instance is single-threaded.
+1. **`export { RateLimiter }`** — The class must be exported from your entry point for Cloudflare to find it.
+2. **`getByName(clientId)`** — Gets a stub for this client's Durable Object. Same ID = same instance globally.
+3. **`rateLimiter.checkLimit()`** — Calls the RPC method. This runs on the Durable Object, not the Worker.
 
 :::caution[Common mistake]
-Don't use a single ID like `getByName("global")` for all requests — this creates a bottleneck. Use meaningful IDs (user ID, client IP, API key) to distribute load across many instances.
+Forgetting to export the class is a common error. The `export { RateLimiter }` line is required.
 :::
 
-## 5. Test locally
+## 4. Test locally
 
 Run your Worker locally:
 
@@ -390,7 +377,7 @@ curl -v http://localhost:8787 2>&1 | grep X-RateLimit
 # X-RateLimit-Reset: 1701432060000
 ```
 
-## 6. Deploy
+## 5. Deploy
 
 Deploy your updated Worker:
 
@@ -400,16 +387,16 @@ npx wrangler deploy
 
 The first deploy with a new Durable Object class runs the migration automatically.
 
-## Complete project structure
+## Updated project structure
 
-Your project should look like this:
+Your project now looks like this:
 
 ```
-my-existing-worker/
+my-worker/
 ├── src/
-│   ├── index.ts          # Worker entry point + re-exports
-│   └── rate-limiter.ts   # Durable Object class
-├── wrangler.jsonc        # Configuration with DO bindings
+│   ├── index.ts          # Worker entry point (updated)
+│   └── rate-limiter.ts   # New Durable Object class
+├── wrangler.jsonc        # Updated with DO bindings
 ├── package.json
 └── tsconfig.json
 ```
@@ -420,14 +407,11 @@ my-existing-worker/
 
 Route by user ID to give each user their own Durable Object:
 
-<TypeScriptExample>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-// Get user ID from auth token, session, etc.
 const userId = await getUserId(request);
 const userDO = env.USER_STATE.getByName(userId);
-
-// Each user has isolated storage
 await userDO.updatePreferences({ theme: "dark" });
 ```
 
@@ -437,14 +421,11 @@ await userDO.updatePreferences({ theme: "dark" });
 
 Route by resource ID to coordinate access:
 
-<TypeScriptExample>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-// All requests for the same document go to the same DO
 const docId = url.pathname.split("/")[2]; // e.g., /docs/abc123
 const doc = env.DOCUMENT.getByName(docId);
-
-// Single-threaded execution prevents conflicts
 await doc.applyEdit(userId, changes);
 ```
 
@@ -454,10 +435,9 @@ await doc.applyEdit(userId, changes);
 
 Combine multiple identifiers for more granular routing:
 
-<TypeScriptExample>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-// Separate rate limits per tenant + endpoint
 const tenantId = request.headers.get("X-Tenant-ID");
 const endpoint = new URL(request.url).pathname;
 const rateLimiter = env.RATE_LIMITER.getByName(`${tenantId}:${endpoint}`);
