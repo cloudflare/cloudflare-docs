@@ -44,10 +44,7 @@ jobs:
         if: github.event_name == 'pull_request' && !contains(env.COMMIT_MESSAGE, '[skip semgrep]')
         run: |
 
-          echo "github.event.workflow_run.head_commit.message: ${{ github.event.workflow_run.head_commit.message }}"
-          echo "github.event.pull_request_commit.message: ${{ github.event.pull_request.head_commit.message }}"
-          echo "github.event.head_commit.message: ${{ github.event.head_commit.message }}"
-          echo "github.event.commits[0].message: ${{ github.event.commits[0].message }}"
+          echo "env.COMMIT_MESSAGE: ${{ env.COMMIT_MESSAGE }}"
           
           git config --global --add safe.directory $PWD
           base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
