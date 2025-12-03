@@ -105,6 +105,14 @@ To add a [source IP endpoint](#source-ip-endpoint):
 
 <TabItem label="API">
 
+<Details header="Authorization endpoint" open={true}>
+
+todo
+
+</Details>
+
+<Details header="Source IP endpoint" open={true}>
+
 To create a source IP endpoint:
 
 1. Use [Create A Proxy Endpoint](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/create/) with the following call:
@@ -152,6 +160,8 @@ To create a source IP endpoint:
 
    In the example above, the subdomain is `3ele0ss56t` and the proxy server domain is `3ele0ss56t.proxy.cloudflare-gateway.com`.
 
+</Details>
+
 </TabItem>
 
 </Tabs>
@@ -160,7 +170,7 @@ To create a source IP endpoint:
 
 A PAC file is a text file written in JavaScript that specifies which traffic should redirect to the proxy server. You can create a PAC file in the Cloudflare dashboard or write your own custom PAC file.
 
-For detailed instructions and examples for creating a PAC file, refer to [PAC file best practices](/cloudflare-one/team-and-resources/devices/agentless/proxy-endpoints/best-practices/).
+For detailed instructions and examples for creating a PAC file, refer to [PAC file best practices](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/).
 
 ## 3. Configure your devices
 

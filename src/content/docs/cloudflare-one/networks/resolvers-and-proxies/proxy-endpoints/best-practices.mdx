@@ -69,7 +69,7 @@ function FindProxyForURL(url, host) {
 
 ## PAC file template with identity provider bypass
 
-When using [authorization endpoints](/cloudflare-one/team-and-resources/devices/agentless/proxy-endpoints/configure-pac-files/#authorization-endpoint), you must bypass your identity provider (IdP) domains in the PAC file. This prevents authentication loops where the browser tries to authenticate with the proxy before it can reach the IdP to authenticate.
+When using [authorization endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#authorization-endpoint), you must bypass your identity provider (IdP) domains in the PAC file. This prevents authentication loops where the browser tries to authenticate with the proxy before it can reach the IdP to authenticate.
 
 Below is a comprehensive template that includes common IdP bypass rules. Replace the placeholder values with your actual configuration:
 

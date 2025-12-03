@@ -2238,7 +2238,6 @@
 /cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
 /cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
-/cloudflare-one/team-and-resources/devices/agentless/pac-files/ /cloudflare-one/team-and-resources/devices/agentless/proxy-endpoints/configure-pac-files/ 301
 
 # Catch-all redirects (must come last)
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
