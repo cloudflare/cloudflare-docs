@@ -25,6 +25,11 @@ jobs:
           # fetch full history so Semgrep can compare against the base branch
           fetch-depth: 0
 
+      # Set environment variables
+      - name: Configure
+        run: |
+          echo "COMMIT_MESSAGE=\"$(git log -1 --pretty=%B)\"" >> "$GITHUB_ENV"
+        
       # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
       # scans using managed rules at cloudflare.semgrep.dev
       - name: Semgrep CI Rules (Managed rules at cloudflare.semgrep.dev)
@@ -36,14 +41,13 @@ jobs:
       # include [skip semgrep] in top-most commit message to skip scan
       - name: Semgrep Repo Rules (Custom rules found in .semgrep/)
         shell: bash
-        if: github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip semgrep]')
+        if: github.event_name == 'pull_request' && !contains(env.COMMIT_MESSAGE, '[skip semgrep]')
         run: |
 
           echo "github.event.workflow_run.head_commit.message: ${{ github.event.workflow_run.head_commit.message }}"
           echo "github.event.pull_request_commit.message: ${{ github.event.pull_request.head_commit.message }}"
           echo "github.event.head_commit.message: ${{ github.event.head_commit.message }}"
           echo "github.event.commits[0].message: ${{ github.event.commits[0].message }}"
-          echo '${{toJSON(github.event)}}'
           
           git config --global --add safe.directory $PWD
           base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
