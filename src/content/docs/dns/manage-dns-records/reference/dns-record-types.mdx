@@ -107,7 +107,6 @@ These records include the following fields:
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
 - **Target**: The hostname where traffic should be directed (`example.com`).
-  - Depending on the different record types that you have on the target (A, AAAA, CNAME, MX, or TXT, for example) and the CNAME flattening or proxy status, the response will be different. Refer to [CNAME targets](/dns/cname-flattening/#targets) for details.
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
   - If the **Proxy Status** is **DNS Only**, you can customize the value.
