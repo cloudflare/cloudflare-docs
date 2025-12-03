@@ -1069,7 +1069,13 @@ export class ChatRoom extends DurableObject<Env> {
 
 ### Use alarms for per-entity scheduled tasks
 
-Each Durable Object can schedule its own future work using the Alarms API. This is more efficient than global cron jobs because only the relevant Durable Object wakes up at the scheduled time.
+Each Durable Object can schedule its own future work using the [Alarms API](/durable-objects/api/alarms/), allowing a Durable Object to execute background tasks on any interval without an incoming request, RPC call, or WebSocket message.
+
+Key points about alarms:
+
+- **`setAlarm(timestamp)`** schedules the `alarm()` handler to run at any time in the future (millisecond precision)
+- **Alarms do not repeat automatically** — you must call `setAlarm()` again to schedule the next execution
+- **Only schedule alarms when there is work to do** — avoid waking up every Durable Object on short intervals (seconds), as each alarm invocation incurs costs
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1103,7 +1109,8 @@ export class GameMatch extends DurableObject<Env> {
 		// Calculate final scores, notify players, etc.
 		await this.calculateFinalScores();
 
-		// Schedule cleanup in 24 hours
+		// Schedule the next alarm only if there's more work to do
+		// In this case, schedule cleanup in 24 hours
 		await this.ctx.storage.setAlarm(Date.now() + 24 * 60 * 60 * 1000);
 	}
 
@@ -1161,9 +1168,9 @@ export class Subscription extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
-### Deleting Durable Objects
+### Clean up storage with `deleteAll()`
 
-A Durable Object only ceases to exist when its storage is empty. To delete a Durable Object completely, you must call `deleteAll()` to remove all stored data. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain.
+To fully clear a Durable Object's storage, call `deleteAll()`. Simply deleting individual keys or dropping tables is not sufficient, as some internal metadata may remain. If you have alarms set, delete those first.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1174,29 +1181,59 @@ export interface Env {
 }
 
 export class ChatRoom extends DurableObject<Env> {
-	async deleteRoom() {
+	async clearStorage() {
 		// If you have an alarm set, delete it first
 		await this.ctx.storage.deleteAlarm();
 
-		// Delete all storage - this fully removes the Durable Object
+		// Delete all storage
 		await this.ctx.storage.deleteAll();
 
-		// After this, the Durable Object no longer exists
-		// A new request with the same ID will create a fresh instance
+		// The Durable Object instance still exists, but with empty storage
+		// A subsequent request will find no data
+	}
+}
+```
+</TypeScriptExample>
+
+## Anti-patterns to avoid
+
+### Do not use a single Durable Object as a global singleton
+
+A single Durable Object handling all traffic becomes a bottleneck. Durable Objects execute single-threaded, so all requests to one instance are processed sequentially.
+
+A common mistake is using a Durable Object for global rate limiting or global counters. This funnels all traffic through a single instance:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	RATE_LIMITER: DurableObjectNamespace<RateLimiter>;
+}
+
+// 🔴 Bad: Global rate limiter - ALL requests go through one instance
+export class RateLimiter extends DurableObject<Env> {
+	async checkLimit(ip: string): Promise<boolean> {
+		const key = `rate:${ip}`;
+		const count = (await this.ctx.storage.get<number>(key)) ?? 0;
+		await this.ctx.storage.put(key, count + 1);
+		return count < 100;
 	}
 }
 
+// 🔴 Bad: Always using the same ID creates a global bottleneck
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const roomId = url.searchParams.get("room") ?? "lobby";
+		// Every single request to your application goes through this one DO
+		const limiter = env.RATE_LIMITER.get(
+			env.RATE_LIMITER.idFromName("global")
+		);
 
-		const id = env.CHAT_ROOM.idFromName(roomId);
-		const stub = env.CHAT_ROOM.get(id);
+		const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
+		const allowed = await limiter.checkLimit(ip);
 
-		if (request.method === "DELETE") {
-			await stub.deleteRoom();
-			return new Response("Room deleted");
+		if (!allowed) {
+			return new Response("Rate limited", { status: 429 });
 		}
 
 		return new Response("OK");
@@ -1205,75 +1242,7 @@ export default {
 ```
 </TypeScriptExample>
 
-## Anti-patterns to avoid
-
-### Do not use a single Durable Object as a global singleton
-
-A single Durable Object handling all traffic becomes a bottleneck. Durable Objects execute single-threaded, so all requests to one instance are processed sequentially. Shard your workload by your coordination boundary.
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	COUNTER: DurableObjectNamespace<Counter>;
-}
-
-// 🔴 Bad: Global singleton handles all counter operations
-export class Counter extends DurableObject<Env> {
-	async increment(counterId: string) {
-		// All counters go through this one instance - bottleneck!
-		const current = (await this.ctx.storage.get<number>(counterId)) ?? 0;
-		await this.ctx.storage.put(counterId, current + 1);
-		return current + 1;
-	}
-}
-
-// 🔴 Bad: Always using the same ID
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const stub = env.COUNTER.get(env.COUNTER.idFromName("global"));
-		const count = await stub.increment("page-views");
-		return new Response(`Count: ${count}`);
-	},
-};
-```
-</TypeScriptExample>
-
-Instead, create one Durable Object per counter:
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	COUNTER: DurableObjectNamespace<Counter>;
-}
-
-// ✅ Good: Each counter is its own Durable Object
-export class Counter extends DurableObject<Env> {
-	async increment() {
-		const current = (await this.ctx.storage.get<number>("count")) ?? 0;
-		const newCount = current + 1;
-		await this.ctx.storage.put("count", newCount);
-		return newCount;
-	}
-}
-
-// ✅ Good: Different counters use different Durable Objects
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const counterId = url.pathname; // e.g., "/page-views" or "/api-calls"
-
-		// Each counter ID gets its own Durable Object instance
-		const stub = env.COUNTER.get(env.COUNTER.idFromName(counterId));
-		const count = await stub.increment();
-		return new Response(`Count: ${count}`);
-	},
-};
-```
-</TypeScriptExample>
+This pattern does not scale. As traffic increases, the single Durable Object becomes a chokepoint. Instead, identify natural coordination boundaries in your application (per user, per room, per document) and create separate Durable Objects for each.
 
 ### Avoid blocking the Durable Object with long-running operations
 
