@@ -254,7 +254,7 @@ export default {
 
 Do not put all your data in a single Durable Object. When you have hierarchical data (workspaces containing projects, game servers managing matches), create separate child Durable Objects for each entity. The parent coordinates and tracks children, while children handle their own state independently.
 
-This enables parallelism: operations on different children can happen concurrently, while each child maintains its own single-threaded consistency.
+This enables parallelism: operations on different children can happen concurrently, while each child maintains its own single-threaded consistency ([read more about this pattern](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/)).
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -373,7 +373,7 @@ Location hints are suggestions, not guarantees. Refer to [Data location](/durabl
 
 ### Use SQLite-backed Durable Objects
 
-SQLite storage is the recommended storage backend for new Durable Objects. It provides relational queries, indexes, transactions, and better performance than the legacy key-value storage API.
+[SQLite storage](/durable-objects/api/sqlite-storage-api/) is the recommended storage backend for new Durable Objects. It provides a familiar SQL API for relational queries, indexes, transactions, and better performance than the legacy key-value storage backed Durable Objects. SQLite Durable Objects also support the KV API in synchronous and asynchronous versions.
 
 Configure your Durable Object class to use SQLite storage in your Wrangler configuration:
 
@@ -811,8 +811,6 @@ export default {
 
 Uncaught exceptions in a Durable Object can leave it in an unknown state and may cause the runtime to terminate the instance. Wrap risky operations in try/catch blocks, and handle errors appropriately.
 
-When calling Durable Objects from a Worker, check for the `.retryable` and `.overloaded` properties on errors to determine whether to retry:
-
 <TypeScriptExample filename="index.ts">
 ```ts
 import { DurableObject } from "cloudflare:workers";
@@ -857,61 +855,12 @@ export class ChatRoom extends DurableObject<Env> {
 		// External notification logic
 	}
 }
-
-// Retry helper with exponential backoff
-async function callWithRetry<T>(
-	fn: () => Promise<T>,
-	maxRetries: number = 3
-): Promise<T> {
-	let lastError: Error | null = null;
-
-	for (let attempt = 0; attempt < maxRetries; attempt++) {
-		try {
-			return await fn();
-		} catch (error) {
-			lastError = error as Error;
-
-			// Check if the error is retryable
-			const isRetryable =
-				error instanceof Error &&
-				"retryable" in error &&
-				(error as Error & { retryable: boolean }).retryable;
-
-			const isOverloaded =
-				error instanceof Error &&
-				"overloaded" in error &&
-				(error as Error & { overloaded: boolean }).overloaded;
-
-			if (!isRetryable && !isOverloaded) {
-				throw error; // Don't retry non-retryable errors
-			}
-
-			// Exponential backoff: 100ms, 200ms, 400ms...
-			const delay = Math.pow(2, attempt) * 100;
-			await new Promise((resolve) => setTimeout(resolve, delay));
-		}
-	}
-
-	throw lastError;
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const id = env.CHAT_ROOM.idFromName("lobby");
-		const stub = env.CHAT_ROOM.get(id);
-
-		try {
-			await callWithRetry(() => stub.processMessage("user-123", "Hello!"));
-			return new Response("Message sent");
-		} catch (error) {
-			return new Response(`Error: ${error}`, { status: 500 });
-		}
-	},
-};
 ```
 </TypeScriptExample>
 
-Refer to [Error handling](/durable-objects/best-practices/error-handling/) for more details on error properties and retry strategies.
+When calling Durable Objects from a Worker, errors may include `.retryable` and `.overloaded` properties indicating whether the operation can be retried. For transient failures, implement exponential backoff to avoid overwhelming the system.
+
+Refer to [Error handling](/durable-objects/best-practices/error-handling/) for details on error properties, retry strategies, and exponential backoff patterns.
 
 ## WebSockets and real-time
 
