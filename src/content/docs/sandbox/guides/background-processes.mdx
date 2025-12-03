@@ -64,6 +64,50 @@ console.log('API server started');
 ```
 </TypeScriptExample>
 
+## Use callbacks for real-time monitoring
+
+Monitor process lifecycle and output using callbacks instead of polling:
+
+<TypeScriptExample>
+```
+const server = await sandbox.startProcess('node server.js', {
+  onStart: (process) => {
+    console.log(`Server started with PID ${process.pid}`);
+  },
+  onOutput: (stream, data) => {
+    // Handle output in real-time
+    if (stream === 'stdout') {
+      console.log('Output:', data);
+    } else {
+      console.error('Error:', data);
+    }
+  },
+  onExit: (exitCode) => {
+    console.log(`Server exited with code ${exitCode}`);
+  },
+  onError: (error) => {
+    console.error('Process error:', error);
+  }
+});
+
+// Process continues running in background
+// Callbacks fire automatically as events occur
+```
+</TypeScriptExample>
+
+**When to use callbacks:**
+
+- **Real-time monitoring** - React immediately to process events
+- **Error detection** - Catch failures as they happen
+- **Progress tracking** - Monitor long-running operations
+- **Integration** - Forward output to logging systems or user interfaces
+
+**When to use polling:**
+
+- **Periodic checks** - Query status at intervals
+- **Batch processing** - Collect accumulated logs after completion
+- **Simpler logic** - When immediate notification is not required
+
 ## Monitor process status
 
 List and check running processes:

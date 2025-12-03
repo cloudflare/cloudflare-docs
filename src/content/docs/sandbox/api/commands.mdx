@@ -95,6 +95,10 @@ const process = await sandbox.startProcess(command: string, options?: ProcessOpt
 - `options` (optional):
   - `cwd` - Working directory
   - `env` - Environment variables
+  - `onStart` - Callback invoked when process starts: `(process: ProcessInfo) => void`
+  - `onOutput` - Callback for real-time output: `(stream: 'stdout' | 'stderr', data: string) => void`
+  - `onExit` - Callback invoked when process exits: `(exitCode: number | null) => void`
+  - `onError` - Callback for errors: `(error: Error) => void`
 
 **Returns**: `Promise<ProcessInfo>` with `id`, `pid`, `command`, `status`
 
@@ -107,6 +111,14 @@ console.log('Started with PID:', server.pid);
 const app = await sandbox.startProcess('node app.js', {
   cwd: '/workspace/my-app',
   env: { NODE_ENV: 'production', PORT: '3000' }
+});
+
+// With callbacks for monitoring
+const service = await sandbox.startProcess('node service.js', {
+  onStart: (process) => console.log(`Started with PID ${process.pid}`),
+  onOutput: (stream, data) => console.log(`[${stream}] ${data}`),
+  onExit: (exitCode) => console.log(`Exited with code ${exitCode}`),
+  onError: (error) => console.error('Process error:', error)
 });
 ```
 </TypeScriptExample>
@@ -210,8 +222,22 @@ await new Promise(resolve => setTimeout(resolve, 5000));
 
 const logs = await sandbox.getProcessLogs(server.id);
 console.log('Server logs:', logs);
+
+// For fast commands, logs are available immediately after completion
+const build = await sandbox.startProcess('npm run build');
+// Wait for completion
+const processes = await sandbox.listProcesses();
+const buildProcess = processes.find(p => p.id === build.id);
+if (buildProcess?.status === 'completed') {
+  const buildLogs = await sandbox.getProcessLogs(build.id);
+  console.log('Build output:', buildLogs);
+}
 ```
 </TypeScriptExample>
+
+:::note
+For completed processes, `getProcessLogs()` automatically waits for all output to be captured before returning, ensuring complete logs even for fast-executing commands.
+:::
 
 ## Related resources
 
