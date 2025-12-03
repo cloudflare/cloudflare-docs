@@ -28,8 +28,9 @@ jobs:
       # Set environment variables
       - name: Configure
         run: |
+          git config --global --add safe.directory $PWD
           echo "COMMIT_MESSAGE=\"$(git log -1 --pretty=%B)\"" >> "$GITHUB_ENV"
-        
+
       # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
       # scans using managed rules at cloudflare.semgrep.dev
       - name: Semgrep CI Rules (Managed rules at cloudflare.semgrep.dev)
@@ -45,8 +46,7 @@ jobs:
         run: |
 
           echo "env.COMMIT_MESSAGE: ${{ env.COMMIT_MESSAGE }}"
-          
-          git config --global --add safe.directory $PWD
+
           base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
           git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/relevant_changed_files.txt || true
 
