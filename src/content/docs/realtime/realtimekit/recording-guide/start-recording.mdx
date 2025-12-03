@@ -40,7 +40,7 @@ When [creating a meeting](/api/resources/realtime_kit/subresources/meetings/meth
 specify the `record_on_start` parameter to start the recording as soon as someone joins the
 meeting.
 
-:::info Specify storage_config
+:::note[Specify storage config]
 
 If you're using this method to start the recording, you must specify the
 `storage-config` using the Developer Portal.
@@ -59,7 +59,6 @@ curl --location 'https://api.cloudflare.com/client/v4/accounts/<account_id>/real
   --header 'Authorization: Bearer <api_token>' \
   --data '{
   "title": "Lorem Ipsum",
-  "preferred_region": "ap-south-1",
   "record_on_start": true
 }'
 ```
@@ -68,14 +67,13 @@ curl --location 'https://api.cloudflare.com/client/v4/accounts/<account_id>/real
 
 ```json
 {
-  "success": true,
-  "data": {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-    "preferred_region": "ap-south-1",
-    "record_on_start": true,
-    "created_at": "2019-08-24T14:15:22Z",
-    "updated_at": "2019-08-24T14:15:22Z"
-  }
+	"success": true,
+	"data": {
+		"id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+		"record_on_start": true,
+		"created_at": "2025-08-24T14:15:22Z",
+		"updated_at": "2025-08-24T14:15:22Z"
+	}
 }
 ```
 
@@ -106,27 +104,25 @@ curl --location 'https://api.cloudflare.com/client/v4/accounts/<account_id>/real
 
 ```json
 {
-  "success": true,
-  "data": {
-    "id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
-    "download_url": "http://example.com",
-    "download_url_expiry": "2019-08-24T14:15:22Z",
-    "download_audio_url": "http://example1.com",
-    "file_size": 0,
-    "session_id": "1ffd059c-17ea-40a8-8aef-70fd0307db82",
-    "output_file_name": "string",
-    "status": "INVOKED",
-    "invoked_time": "2019-08-24T14:15:22Z",
-    "started_time": "2019-08-24T14:15:22Z",
-    "stopped_time": "2019-08-24T14:15:22Z",
-    "storage_config": {
-      "type": "aws",
-      "secret_key": "string",
-      "bucket": "string",
-      "region": "us-east-1",
-      "path": "string"
-    }
-  }
+	"success": true,
+	"data": {
+		"id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
+		"download_url": "http://example.com",
+		"download_url_expiry": "2025-08-24T14:15:22Z",
+		"download_audio_url": "http://example1.com",
+		"file_size": 0,
+		"session_id": "1ffd059c-17ea-40a8-8aef-70fd0307db82",
+		"output_file_name": "string",
+		"status": "INVOKED",
+		"invoked_time": "2025-08-24T14:15:22Z",
+		"started_time": "2025-08-24T14:15:22Z",
+		"stopped_time": "2025-08-24T14:15:22Z",
+		"storage_config": {
+			"type": "cloudflare",
+			"secret_key": "string",
+			"bucket": "string",
+			"path": "string"
+		}
+	}
 }
 ```
-
