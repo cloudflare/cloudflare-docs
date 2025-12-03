@@ -11,6 +11,7 @@ params:
   - dashButtonPath?
   - cfTunnelURL?
   - sitesURL?
+  - addTunnelsURL?
 ---
 
 import { AnchorHeading, Aside, APIRequest, CURL, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -374,7 +375,7 @@ Example:
 
 		<Markdown
 		text={`
-1. Follow the Add tunnels information to learn how to create an IPsec or GRE tunnel.
+1. Follow the [Add tunnels](${props.addTunnelsURL}) information to learn how to create an IPsec or GRE tunnel.
 2. On the tunnel's options, select **Automatic return routing**.
 3. Select **Add tunnels** to save your changes.
 		`}
