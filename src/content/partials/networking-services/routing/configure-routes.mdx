@@ -16,7 +16,7 @@ params:
   - arrReferenceURL?
 ---
 
-import { AnchorHeading, Aside, APIRequest, CURL, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
+import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
@@ -386,20 +386,19 @@ Example:
 
 		<Markdown text={`Create a \`POST\` request to create an IPsec or GRE tunnel with ARR enabled. For example:`} inline={false} />
 
-		<CURL
-			url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/ipsec_tunnels/$IPSEC_TUNNEL_ID"
-			method="POST"
-			json={{
-				"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-				"interface_address": "<INTERFACE_ADDRESS>",
-				"name": "IPsec_1",
-				"customer_endpoint": "<CUSTOMER_ENDPOINT>",
-				"description": "Tunnel for ISP X",
-				"psk": "<PSK>",
-				"stateful_return_path": "true"
-			}}
-		/>
-
+	<APIRequest
+		path="/accounts/{account_id}/magic/ipsec_tunnels"
+		method="POST"
+		json={{
+			"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+			"interface_address": "<INTERFACE_ADDRESS>",
+			"name": "IPsec_1",
+			"customer_endpoint": "<CUSTOMER_ENDPOINT>",
+			"description": "Tunnel for ISP X",
+			"psk": "<PSK>",
+			"stateful_return_path": "true"
+		}}
+	/>
 		</TabItem> </Tabs>
 	</>
 )}
