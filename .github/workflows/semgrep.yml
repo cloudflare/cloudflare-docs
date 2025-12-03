@@ -29,7 +29,7 @@ jobs:
       - name: Configure
         run: |
           git config --global --add safe.directory $PWD
-          echo "COMMIT_MESSAGE=\"$(git log -2 --pretty=%B)\"" >> "$GITHUB_ENV"
+          echo "COMMIT_MESSAGE=\"$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }})\"" >> "$GITHUB_ENV"
 
       # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
       # scans using managed rules at cloudflare.semgrep.dev
