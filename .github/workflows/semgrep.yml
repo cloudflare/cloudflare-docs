@@ -25,7 +25,9 @@ jobs:
           # fetch full history so Semgrep can compare against the base branch
           fetch-depth: 0
 
-      # Set environment variables
+      # Configure
+      # add git safe directory to enable git commands on checkout path
+      # set COMMIT_MESSAGE environment variable to be able to skip semgrep if requested
       - name: Configure
         run: |
           git config --global --add safe.directory $PWD
