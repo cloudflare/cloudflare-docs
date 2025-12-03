@@ -13,7 +13,7 @@ params:
   - sitesURL?
 ---
 
-import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
+import { AnchorHeading, Aside, APIRequest, CURL, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
@@ -355,6 +355,42 @@ Example:
 ```
 
 </TabItem> </Tabs>
+
+## Configure Automatic Return Routing (beta)
+
+Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode](#).
+
+This feature requires the Unified Routing Mode. Refer to [Automatic Return Routing (Beta)](#) for more information.
+
+To enable ARR:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Follow the Add tunnels information to learn how to create an IPsec or GRE tunnel.
+2. On the tunnel's options, select **Automatic return routing**.
+3. Select **Add tunnels** to save your changes.
+
+</TabItem> <TabItem label="API">
+
+Create a `POST` request to create an IPsec or GRE tunnel with ARR enabled:
+
+<CURL
+  url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/ipsec_tunnels/$IPSEC_TUNNEL_ID"
+  method="POST"
+	json={{
+		"cloudflare_endpoint": "203.0.113.1",
+		"interface_address": "192.0.2.0/31",
+		"name": "IPsec_1",
+		"customer_endpoint": "203.0.113.1",
+		"description": "Tunnel for ISP X",
+		"psk": "O3bwKSjnaoCxDoUxjcq4Rk8ZKkezQUiy",
+		"stateful_return_path": "true"
+  }}
+/>
+
+
+</TabItem> </Tabs>
+
 
 
 ## Configure BGP routes
