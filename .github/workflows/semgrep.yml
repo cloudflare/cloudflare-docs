@@ -32,7 +32,6 @@ jobs:
         run: |
           git config --global --add safe.directory $PWD
           echo "COMMIT_MESSAGE=\"$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }})\"" | tee /dev/stderr >> "$GITHUB_ENV"
-          { set +x; } 2>/dev/null
           echo "(if the last commit message contains '[skip semgrep]' semgrep repo rule checks will be skipped)"
 
       # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
