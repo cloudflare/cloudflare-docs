@@ -9,9 +9,11 @@ description: Create a Durable Object that stores the last location it was
   accessed from in-memory.
 ---
 
-import { WranglerConfig } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 This example shows you how Durable Objects are stateful, meaning in-memory state can be retained between requests. After a brief period of inactivity, the Durable Object will be evicted, and all in-memory state will be lost. The next request will reconstruct the object, but instead of showing the city of the previous request, it will display a message indicating that the object has been reinitialized. If you need your applications state to survive eviction, write the state to storage by using the [Storage API](/durable-objects/api/sqlite-storage-api/), or by storing your data elsewhere.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 import { DurableObject } from "cloudflare:workers";
@@ -64,6 +66,55 @@ New Location: ${request.cf.city}`);
 	}
 }
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject, Response, WorkerEntrypoint
+
+# Worker
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		return await handle_request(request, self.env)
+
+async def handle_request(request, env):
+	stub = env.LOCATION.getByName("A")
+	# Forward the request to the remote Durable Object.
+	resp = await stub.fetch(request)
+	# Return the response to the client.
+	return Response(await resp.text())
+
+# Durable Object
+class Location(DurableObject):
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+		# Upon construction, you do not have a location to provide.
+		# This value will be updated as people access the Durable Object.
+		# When the Durable Object is evicted from memory, this will be reset.
+		self.location = None
+
+	# Handle HTTP requests from clients.
+	async def fetch(self, request):
+		response = None
+
+		if self.location is None:
+			response = f"""
+This is the first request, you called the constructor, so this.location was null.
+You will set this.location to be your city: ({request.js_object.cf.city}). Try reloading the page."""
+		else:
+			response = f"""
+The Durable Object was already loaded and running because it recently handled a request.
+
+Previous Location: {self.location}
+New Location: {request.js_object.cf.city}"""
+
+		# You set the new location to be the new city.
+		self.location = request.js_object.cf.city
+		print(response)
+		return Response(response)
+```
+
+</TabItem> </Tabs>
 
 Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 

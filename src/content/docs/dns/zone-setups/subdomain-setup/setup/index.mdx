@@ -36,18 +36,9 @@ Subdomain setup is only available for Enterprise accounts. If you only want to c
 
 ## Available setups
 
-The availability of different setups will depend on both the parent zone setup and the setup used for the child zone. A child zone holds DNS management for a delegated subdomain.
+<Render file="subdomain-setup-matrix" product="dns" />
 
-| Parent zone                                                                                                   | Child zone                                                            | Available |
-| ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------- |
-| [Full](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | [Full](/dns/zone-setups/full-setup/)                                  | Yes       |
-| [Full](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | Yes       |
-| [Full](/dns/zone-setups/full-setup/) or [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | [Partial](/dns/zone-setups/partial-setup/)                            | No        |
-| [Partial](/dns/zone-setups/partial-setup/)                                                                    | [Full](/dns/zone-setups/full-setup/)                                  | Yes       |
-| [Partial](/dns/zone-setups/partial-setup/)                                                                    | [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | Yes       |
-| [Partial](/dns/zone-setups/partial-setup/)                                                                    | [Partial](/dns/zone-setups/partial-setup/)\*                          | Yes       |
-
-:::caution[* Subdomain zones in partial setup are not delegated]
+:::caution[Subdomain zones in partial setup are not delegated]
 
 Subdomains using a partial setup represent an exception in the sense that delegation does not apply in this context. As explained in the dedicated [Partial (CNAME) setup section](/dns/zone-setups/partial-setup/), this setup is intended to simply proxy individual subdomains through Cloudflare. For completeness, however, this is listed as an option in this table and the [how-to guide](/dns/zone-setups/subdomain-setup/setup/parent-on-partial/) has detailed explanation on how to achieve a subdomain zone using partial setup.
 :::

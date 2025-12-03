@@ -1,5 +1,5 @@
 releaseNotes: >-
-  This release contains support for a new WARP setting, [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-warp-override). It also includes significant improvements to our captive portal / public Wi-Fi detection logic. If you have experienced captive portal issues in the past, re-test and give this version a try.
+  This release contains support for a new WARP setting, [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices). It also includes significant improvements to our captive portal / public Wi-Fi detection logic. If you have experienced captive portal issues in the past, re-test and give this version a try.
 
 
   **Changes and improvements**
@@ -22,7 +22,7 @@ releaseNotes: >-
 
   - Fixed an issue where DEX tests would run during certain sleep states where the networking stack was not fully up. This would result in failures that would be ignored.
 
-  - Added a new [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-warp-override) setting. This setting puts account administrators in control of disabling and enabling WARP across all devices registered to an account from the dashboard. Global WARP override is disabled by default.
+  - Added a new [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) setting. This setting puts account administrators in control of disabling and enabling WARP across all devices registered to an account from the dashboard. Global WARP override is disabled by default.
 
 
   **Known issues**

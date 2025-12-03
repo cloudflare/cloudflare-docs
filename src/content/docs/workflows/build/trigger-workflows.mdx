@@ -83,7 +83,7 @@ export default {
 
 		// Else, create a new instance of our Workflow, passing in any (optional)
 		// params and return the ID.
-		const newId = await crypto.randomUUID();
+		const newId = crypto.randomUUID();
 		let instance = await env.MY_WORKFLOW.create({ id: newId });
 		return Response.json({
 			id: instance.id,
@@ -115,14 +115,12 @@ The possible values of status are as follows:
     | "waiting" // instance is hibernating and waiting for sleep or event to finish
     | "waitingForPause" // instance is finishing the current work to pause
     | "unknown";
-  error?: { 
+  error?: {
     name: string,
     message: string
   };
 	output?: unknown;
 ```
-
-
 
 ### Explicitly pause a Workflow
 
@@ -143,7 +141,6 @@ await instance.resume(); // Returns Promise<void>
 ```
 
 Calling `resume` on an instance that is not currently paused will have no effect.
-
 
 ### Stop a Workflow
 

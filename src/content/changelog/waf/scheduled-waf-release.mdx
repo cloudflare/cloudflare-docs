@@ -7,6 +7,7 @@ scheduled: true
 
 import { RuleID } from "~/components";
 
+
 <table style="width: 100%">
   <thead>
     <tr>
@@ -20,7 +21,18 @@ import { RuleID } from "~/components";
     </tr>
   </thead>
   <tbody>
-     <tr>
+	<tr>
+      <td>2025-12-01</td>
+      <td>2025-12-08</td>
+      <td>Unchanged (rule remains disabled)</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="7b822fd1f5814e17888ded658480ea8f" />
+      </td>
+      <td>Anomaly:Body - Large 2</td>
+      <td>Default action changes from Log to <b>Block</b> while the rule stays disabled. If you override and enable the rule, review recent log events to ensure blocking will not affect legitimate traffic.</td>
+  </tr>
+	<tr>
       <td>2025-12-01</td>
       <td>2025-12-08</td>
       <td>Log</td>
