@@ -72,7 +72,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 
 		a. Create an nginx configuration file called `nginx.conf`:
 
-			```txt
+			```txt title="nginx.conf"
 			events {
 			worker_connections  1024;
 			}
@@ -93,8 +93,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 
 		b. Add the nginx image to your Docker compose file:
 
-			```yml
-			version: "3.3"
+			```yml title="docker-compose.yml"
 			services:
 			nginx:
 				image: nginx:latest
@@ -110,7 +109,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 		c. Start the server:
 
 			```sh
-			docker-compose up -d
+			docker compose up -d
 			```
 
 3. To test that the TLS server is working, run a curl command from the end user's device:
