@@ -389,7 +389,7 @@ export default {
 
 ### Context Management
 
-`agents` wraps all your methods with an `AsyncLocalStorage` to maintain context throughout the request lifecycle. This allows you to access the current agent, connection, request, or email (depending of what event is being handled) from anywhere in your code:
+`agents` wraps all your methods with an `AsyncLocalStorage` to maintain context throughout the request lifecycle. This allows you to access the current agent, connection, request, or email (depending of what event is being handled) from anywhere in your code, including nested async functions:
 
 ```ts
 import { getCurrentAgent } from "agents";
@@ -403,6 +403,45 @@ function someUtilityFunction() {
 
   if (connection) {
     console.log("WebSocket connection ID:", connection.id);
+  }
+}
+```
+
+The context is properly propagated through async operations, making it available in tool execution functions and other nested async calls:
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { getCurrentAgent } from "agents";
+import { tool } from "ai";
+
+class MyAgent extends AIChatAgent {
+  async onChatMessage() {
+    const tools = {
+      checkStatus: tool({
+        description: "Check the status of something",
+        parameters: z.object({}),
+        execute: async () => {
+          // getCurrentAgent() works inside tool execution
+          const { agent, connection } = getCurrentAgent();
+
+          if (connection) {
+            // You can access the connection that triggered this chat
+            console.log("Tool called by connection:", connection.id);
+          }
+
+          return "Status: OK";
+        }
+      })
+    };
+
+    // Use tools in your chat response
+    const result = await streamText({
+      model: this.env.AI.openai("gpt-4o"),
+      messages: this.messages,
+      tools
+    });
+
+    return result.toUIMessageStreamResponse();
   }
 }
 ```
