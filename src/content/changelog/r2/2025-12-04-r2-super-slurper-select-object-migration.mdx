@@ -1,0 +1,32 @@
+---
+title: Super Slurper now supports selective object migration
+description: Super Slurper now supports migrating specific objects by key.
+products:
+  - r2
+date: 2025-12-04
+---
+
+[Super Slurper](/r2/data-migration/super-slurper/) now supports selective object migration, allowing you to specify up to 10,000 specific objects per migration job to copy from your source bucket to [Cloudflare R2](/r2/).
+
+With selective migration, you can migrate specific objects according to your needs without copying an entire bucket or prefix, or easily retry objects that failed to migrate from a previous Super Slurper job.
+
+In the dashboard, use the **Specific object keys** option to list up to 10,000 objects using newlines as the delimiter, or upload a CSV file containing your list of object keys.
+
+To use selective migration via the API, include the `keys` array in your request:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/slurper/jobs" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "Content-Type: application/json" \
+--data '{
+  "source": {...},
+  "destination": {...},
+  "keys": [
+    "object1-key",
+    "object2-key"
+  ]
+}'
+```
+
+For more information, refer to [Super Slurper documentation](/r2/data-migration/super-slurper/).

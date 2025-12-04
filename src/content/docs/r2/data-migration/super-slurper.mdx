@@ -43,6 +43,14 @@ You can view the status of your migration job at any time by selecting your migr
 
 This setting specifies the prefix within the source bucket where objects will be copied from.
 
+#### Specific object keys
+
+This setting allows you to specify up to 10,000 specific objects per migration to copy from the source bucket. Use this option when you need to migrate a defined set of objects rather than an entire bucket or prefix.
+
+When used together with the **Bucket sub path** option, the two settings have an OR relationship. Objects that match the specified sub path prefix or are included in your list of specific object keys will be migrated.
+
+Objects specified in your list that do not exist in the source bucket will return an error status in the migration results.
+
 ### Destination R2 bucket options
 
 #### Overwrite files?
