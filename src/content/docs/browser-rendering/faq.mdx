@@ -66,6 +66,21 @@ There is no fixed limit on the number of requests per browser session. A single 
 
 ## Errors & Troubleshooting
 
+### Why is my browser usage higher than expected?
+
+If you are hitting the daily limit or seeing higher usage than expected, the most common cause is browser sessions that are not being closed properly. When a browser session is not explicitly closed with `browser.close()`, it remains open and continues to consume browser time until it times out (60 seconds by default, or up to 10 minutes if you use the `keep_alive` option).
+
+To minimize usage:
+- Always call `browser.close()` when you are finished with a browser session.
+- Wrap your browser code in a `try/finally` block to ensure `browser.close()` is called even if an error occurs.
+- Use the `history()` method ([Puppeteer](/browser-rendering/puppeteer/#list-recent-sessions) or [Playwright](/browser-rendering/playwright/#list-recent-sessions)) to review recent sessions and identify any that closed due to `BrowserIdle` instead of `NormalClosure`. Sessions that close due to idle timeout indicate the browser was not closed explicitly.
+
+You can monitor your usage and view session close reasons in the Cloudflare dashboard on the **Browser Rendering** page:
+
+<DashButton url="/?to=/:account/workers/browser-rendering" />
+
+Refer to [Browser close reasons](/browser-rendering/reference/browser-close-reasons/) for more information.
+
 ### `Cannot read properties of undefined (reading 'fetch')`
 
 This error typically occurs because your Puppeteer launch is not receiving the Browser binding. To resolve: Pass your Browser binding into `puppeteer.launch`.
