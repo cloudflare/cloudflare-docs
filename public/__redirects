@@ -2336,7 +2336,7 @@
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
-/cloudflare-one/email-security/submissions/ /cloudflare-one/email-security/submissions/ 301
+/cloudflare-one/email-security/reclassifications/ /cloudflare-one/email-security/submissions/ 301
  /cloudflare-one/email-security/reclassifications/invalid-submissions/ /cloudflare-one/email-security/submissions/invalid-submissions/ 301
  /cloudflare-one/email-security/reclassifications/team-submissions/ /cloudflare-one/email-security/submissions/team-submissions/ 301
  /cloudflare-one/email-security/reclassifications/user-submissions/ /cloudflare-one/email-security/submissions/user-submissions/ 301
