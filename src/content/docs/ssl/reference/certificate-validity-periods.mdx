@@ -15,23 +15,22 @@ For certificates managed by Cloudflare, attempts to renew start at the auto rene
 
 If a certificate fails to renew and another valid certificate exists for the hostname, Cloudflare will deploy the valid certificate within the last 24 hours before expiration.
 
-:::note
+## Domain control validation (DCV)
+
 HTTP validation is attempted on renewals but will fall back to TXT validation depending on the certificate validity period:
 
-90 day certs: 15 days of failures
-30 day certs: 7 days of failures 
-14 day certs: 3 days of failures
-:::
+- 90 day certs: 15 days of failures
+- 30 day certs: 7 days of failures
+- 14 day certs: 3 days of failures
 
-:::note
-For information regarding custom certificates (managed by you), consider this other page on [renewal and expiration](/ssl/edge-certificates/custom-certificates/renewing/).
-:::
 
-## Universal SSL
+## Certificate types
+
+### Universal SSL
 
 <Render file="universal-ssl-validity" product="ssl" />
 
-## Advanced certificates
+### Advanced certificates
 
 When you order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can select different certificate validity periods. Each certificate validity period has a corresponding auto renewal period, when [attempts to renew](/ssl/reference/certificate-validity-periods/) will start.
 
@@ -47,6 +46,10 @@ When you order an [advanced certificate](/ssl/edge-certificates/advanced-certifi
 For more details on the `validity_days` parameter used in API calls, refer to [Order Advanced Certificate Pack](/api/resources/ssl/subresources/certificate_packs/methods/create/).
 
 :::
+
+### Custom certificates
+
+For information regarding custom certificates (managed by you), consider this other page on [renewal and expiration](/ssl/edge-certificates/custom-certificates/renewing/).
 
 ## Benefits of shorter validity periods
 
