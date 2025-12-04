@@ -5,11 +5,11 @@ params:
 
 import { Markdown } from "~/components";
 
-In this example, you are going to use the GraphQL Analytics API to query {props.productName} health check results which are aggregated from individual health checks carried out by Cloudflare servers to Generic Routing Encapsulation (GRE) tunnels you have set up to work with {props.productName} during the onboarding process. You can query up to one week of data for dates up to three months ago.
+This example uses the GraphQL Analytics API to query {props.productName} tunnel health check results. These results are aggregated from individual health checks that Cloudflare servers perform against Generic Routing Encapsulation (GRE) tunnels you configured to work with {props.productName} during onboarding. You can query up to one week of data for dates up to three months in the past.
 
-The following API call will request a particular account's tunnel health checks over a one day period for a particular Cloudflare data center, and outputs the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_TAG>` and `<API_TOKEN>`[^1] with your API credentials, and adjust the `datetimeStart`, `datetimeEnd` variables as needed.
+The following API call requests tunnel health checks for a specific account over a one-day period for a specific Cloudflare data center and outputs the requested fields. Replace `<CLOUDFLARE_ACCOUNT_TAG>` and `<API_TOKEN>`[^1] with your API credentials, and adjust the `datetimeStart` and `datetimeEnd` variables as needed.
 
-It will return the tunnel health check results by Cloudflare data center. The result for each data center is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the state of the tunnel. These states are used by {props.productName} for routing. The value `0` for the tunnel state represents it being down, the value `0.5` being degraded and the value `1` as healthy.
+The API call returns tunnel health check results by Cloudflare data center. Each data center's result is aggregated from health checks conducted on individual servers. The `tunnelState` field represents the state of the tunnel. {props.productName} uses these states for routing. A `tunnelState` value of `0` represents a down tunnel, `0.5` represents a degraded tunnel, and `1` represents a healthy tunnel.
 
 ## API Call
 
@@ -49,7 +49,7 @@ https://api.cloudflare.com/client/v4/graphql \
 --data @-
 ```
 
-The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
+The results are returned in JSON (as requested), so piping the output to `jq` makes them easier to read, as in the following example:
 
 ```bash
 ... | curl --silent \
