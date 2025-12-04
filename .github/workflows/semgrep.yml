@@ -32,20 +32,20 @@ jobs:
         run: |
           git config --global --add safe.directory $PWD
           echo "COMMIT_MESSAGE=\"$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }})\"" | tee /dev/stderr >> "$GITHUB_ENV"
-          echo "(if the last commit message contains '[skip semgrep]' semgrep repo rule checks will be skipped)"
+          echo "(if the last commit message contains '[skip style]' Semgrep Style Guide rule checks will be skipped)"
 
       # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
       # scans using managed rules at cloudflare.semgrep.dev
-      - name: Semgrep CI Rules (Managed rules at cloudflare.semgrep.dev)
+      - name: Semgrep managed rules (managed at cloudflare.semgrep.dev)
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: semgrep ci
 
       # Semgrep Scan to run on Pull Request events
       # scans using rules inside the .semgrep/ folder and fails on error
       # include [skip semgrep] in top-most commit message to skip scan
-      - name: Semgrep Repo Rules (Custom rules found in .semgrep/)
+      - name: Semgrep style guide rules (stored in .semgrep/)
         shell: bash
-        if: github.event_name == 'pull_request' && !contains(env.COMMIT_MESSAGE, '[skip semgrep]')
+        if: github.event_name == 'pull_request' && !contains(env.COMMIT_MESSAGE, '[skip style guide checks]')
         run: |
 
           echo "env.COMMIT_MESSAGE: ${{ env.COMMIT_MESSAGE }}"
