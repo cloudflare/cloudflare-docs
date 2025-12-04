@@ -14,17 +14,18 @@ import {
 	TabItem,
 } from "~/components";
 
-WARP settings define the WARP client modes and permissions available to end users.
+WARP settings allow you to customize the WARP client modes and permissions available to end users.
 
-- [Global settings](#global-settings) apply to all devices enrolled in your Zero Trust organization.
-- [Device settings](#device-settings) may vary across devices depending on which [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is applied.
+- [Global WARP settings](#global-warp-settings) are configurations which apply to all devices enrolled in your Zero Trust organization.
+- [Global disconnection settings](#global-disconnection-settings) allow administrators to quickly  disconnect all devices during a security incident, compliance event, or disaster recovery scenario.
+- [Device profile settings](#device-profile-settings) can vary across devices depending on which [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is applied.
 
 :::note
 
 <Render file="warp/client-notification-lag" product="cloudflare-one" />
 :::
 
-## Global settings
+## Global WARP settings
 
 ### Allow admin override codes
 
@@ -117,6 +118,8 @@ This setting is primarily used as a prerequisite for [WARP Connector](/cloudflar
 
 The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization. Disconnects and reconnects do not change the IP address assignment.
 
+## Global disconnection settings
+
 ### Disconnect WARP on all devices
 
 <Details header="Feature availability">
@@ -154,7 +157,7 @@ Allows administrators to disconnect WARP independently from any Cloudflare infra
 
 To set up the external HTTPS endpoint, refer to [External emergency disconnect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/).
 
-## Device settings
+## Device profile settings
 
 ### Captive portal detection
 
