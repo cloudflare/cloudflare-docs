@@ -777,6 +777,63 @@ export class Account extends DurableObject<Env> {
 
 For more details, see [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) and the [glossary](/durable-objects/reference/glossary/).
 
+**Use `blockConcurrencyWhile()` sparingly:** The [`blockConcurrencyWhile()`](/durable-objects/api/state/#blockconcurrencywhile) method guarantees that no other events are processed until the provided callback completes. This is useful for operations that must be atomic, such as schema migrations in the constructor:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		// ✅ Good: Use blockConcurrencyWhile for one-time initialization
+		ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(`
+				CREATE TABLE IF NOT EXISTS messages (
+					id INTEGER PRIMARY KEY,
+					content TEXT
+				)
+			`);
+		});
+	}
+
+	// 🔴 Bad: Don't use blockConcurrencyWhile on every request
+	async sendMessageSlow(content: string) {
+		await this.ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(
+				"INSERT INTO messages (content) VALUES (?)",
+				content
+			);
+		});
+		// If this takes ~5ms, you're limited to ~200 requests/second
+	}
+
+	// ✅ Good: Let output gates handle consistency
+	async sendMessageFast(content: string) {
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (content) VALUES (?)",
+			content
+		);
+		// Output gate ensures write completes before response is sent
+		// Other requests can be processed concurrently
+	}
+}
+```
+</TypeScriptExample>
+
+Because `blockConcurrencyWhile()` blocks *all* concurrency unconditionally, it significantly reduces throughput. If each call takes ~5ms, that individual Durable Object is limited to approximately 200 requests/second. Reserve it for initialization and migrations, not regular request handling. For normal operations, rely on input/output gates and write coalescing instead.
+
+:::caution
+
+Using `blockConcurrencyWhile()` across I/O operations (such as `fetch()`, KV, R2, or other external API calls) is an anti-pattern. This is equivalent to holding a lock across I/O in other languages or concurrency frameworks — it blocks all other requests while waiting for slow external operations, severely degrading throughput. Keep `blockConcurrencyWhile()` callbacks fast and limited to local storage operations.
+
+:::
+
 ## Communication and API design
 
 ### Use RPC methods instead of the `fetch()` handler
