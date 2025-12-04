@@ -33,7 +33,7 @@ Before you begin, ensure you have completed the following:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Use a Node version manager like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
-3. Have a publicly accessible PostgreSQL or MySQL (or compatible) database that is directly reachable from the Internet. _If your database is in a private network (like a VPC)_, refer to [Connect to a private database](/hyperdrive/configuration/connect-to-private-database/) for instructions on using Cloudflare Tunnel with Hyperdrive.
+3. Have a publicly accessible PostgreSQL or MySQL (or compatible) database. _If your database is in a private network (like a VPC)_, refer to [Connect to a private database](/hyperdrive/configuration/connect-to-private-database/) for instructions on using Cloudflare Tunnel with Hyperdrive.
 
 ## 1. Log in
 
@@ -349,7 +349,7 @@ Upon receiving a request, the code above does the following:
 
 You can test your Worker locally before deploying by running `wrangler dev`. This runs your Worker code on your machine while connecting to your database.
 
-The `localConnectionString` field works with both local and remote databases and allows you to connect directly to your database from your Worker project running locally.
+The `localConnectionString` field works with both local and remote databases and allows you to connect directly to your database from your Worker project running locally. You must specify the SSL/TLS mode if required (`sslmode=require` for Postgres, `sslMode=REQUIRED` for MySQL).
 
 To connect to a database during local development, configure `localConnectionString` in your `wrangler.jsonc`:
 

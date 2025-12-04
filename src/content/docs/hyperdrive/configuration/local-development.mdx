@@ -10,7 +10,7 @@ import { WranglerConfig } from "~/components";
 Hyperdrive can be used when developing and testing your Workers locally. [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, provides two options for local development:
 
 - **`wrangler dev`** (default): Runs your Worker code locally on your machine. You configure a `localConnectionString` to connect directly to a database (either local or remote). Hyperdrive query caching does not take effect in this mode.
-- **`wrangler dev --remote`**: Runs your Worker in Cloudflare's network using your deployed Hyperdrive configuration. This is useful for testing with Hyperdrive's connection pooling and query caching enabled.
+- **`wrangler dev --remote`**: Runs your Worker on Cloudflare's using your deployed Hyperdrive configuration. This is useful for testing with Hyperdrive's connection pooling and query caching enabled.
 
 ## Use `wrangler dev`
 
@@ -19,7 +19,7 @@ By default, `wrangler dev` runs your Worker code locally on your machine. To con
 The `localConnectionString` works with both local and remote databases:
 
 - **Local databases**: Connect to a database instance running on your machine (for example, `postgres://user:password@localhost:5432/database`)
-- **Remote databases**: Connect directly to remote databases over TLS (for example, `postgres://user:password@remote-host.example.com:5432/database?sslmode=require`)
+- **Remote databases**: Connect directly to remote databases over TLS (for example, `postgres://user:password@remote-host.example.com:5432/database?sslmode=require` or `mysql://user:password@remote-host.example.com:3306/database?sslMode=required`). You must specify the SSL/TLS mode if required.
 
 :::note
 
