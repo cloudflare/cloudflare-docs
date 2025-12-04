@@ -348,8 +348,8 @@
 		"name": "PhishGuard"
 	},
 	{
-		"deeplink": "/?to=/:account/email-security/submissions",
-		"name": "Submissions"
+		"deeplink": "/?to=/:account/email-security/reclassifications",
+		"name": "Reclassifications"
 	},
 	{
 		"deeplink": "/?to=/:account/email-security/settings",
