@@ -14,12 +14,14 @@ Cloudflare One offers observability tools to monitor and troubleshoot your envir
 - [Logs](/cloudflare-one/insights/logs/) for event-level investigation.  
 - [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) for device, network, and application performance.
 
-## Example usage
+## Troubleshooting workflow example
 
 #### Issue
+
 A user reports they cannot reach an internal application behind [Cloudflare Access](/cloudflare-one/).
 
 #### Solution
+
 1. The admin checks [Access Event Analytics dashboard](/cloudflare-one/insights/analytics-overview/) to review if other users are experiencing similar issues.
 2. The admin then reviews [Logs](/cloudflare-one/insights/logs/) to examine the user's authentication attempts and blocked requests.
 3. Finally, the admin uses [DEX](/cloudflare-one/insights/dex/) to evaluate the user's device health and network performance.
@@ -57,7 +59,3 @@ Users may report problems like slow or failing connections to internal apps.
   1. Start with Analytics Dashboards to review if the issue impacts others.  
   2. Check [Logs](/cloudflare-one/insights/logs/) for failed authentication attempts, blocked requests, or unexpected policy matches.
   3. Use [DEX](/cloudflare-one/insights/dex/) to diagnose device- or network-level causes with [synthetic tests](/cloudflare-one/insights/dex/tests/) and [device monitoring](/cloudflare-one/insights/dex/monitoring/).
-
-## Directory
-
-<DirectoryListing />
