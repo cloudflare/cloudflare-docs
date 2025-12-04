@@ -7,7 +7,7 @@ params:
 
 import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 
-{props.productName} customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare's network to their own network.
+{props.productName} customers can run traceroutes to analyze the hop-by-hop Internet path and latency between Cloudflare's network and their own network.
 
 { props.magicWord === "WAN Tunnels" && (
   <>
@@ -17,7 +17,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
 2. Go to **Network visibility** > **WAN connector health**.
-3. Select the tunnel you want to run the traceroute on.
+3. Select the tunnel for the traceroute.
 4. Select the three dots > **Traceroute details**.
       `}
       inline={false}
@@ -46,7 +46,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
 
         <Markdown
           text={`
-2. Expand a Magic Tunnel, and find the Cloudflare data center where the traceroute will be run from.
+2. Expand a Magic Tunnel and find the Cloudflare data center from which to run the traceroute.
 3. Select **Traceroute for details**.
           `}
           inline={false}
@@ -65,7 +65,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
 
         <Markdown
           text={`
-2. Select the tunnel you want to run the traceroute on.
+2. Select the tunnel for the traceroute.
 3. Select the three dots > **Traceroute details**.
           `}
           inline={false}
