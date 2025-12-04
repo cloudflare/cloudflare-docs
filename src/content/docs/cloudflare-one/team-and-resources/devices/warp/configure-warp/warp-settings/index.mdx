@@ -39,7 +39,7 @@ When [**Lock WARP switch**](#lock-warp-switch) is enabled, users cannot toggle t
 Example use cases for **Allow admin override codes** include:
 
 - Allowing users to momentarily turn off WARP to work around a temporary network issue such as an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection.
-- Allowing test users to turn on WARP when [Disconnect WARP on all devices](#disconnect-warp-on-all-devices) is in effect.
+- Allowing test users to turn on WARP while a global disconnect is in effect.
 
 As admin, you can set a **Timeout** to define how long a user can toggle the WARP switch on or off after entering the override code. Cloudflare generates a new override code every hour that an admin can send to end users. The override code's validity adheres to fixed-hour time blocks and aims to be generous to the end user.
 
@@ -142,9 +142,17 @@ Requires the [Super Administrator](/cloudflare-one/roles-permissions/) role.
 
 **Disconnect WARP on all devices** allows administrators to fail open WARP in case of an incident occurring in your environment, independent from incidents or outages affecting Cloudflare's services. When you turn on **Disconnect WARP on all devices**, Cloudflare will disconnect all Windows, macOS, and Linux WARP clients that are connected to your Zero Trust organization. This includes end user devices, [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) hosts, and [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) devices. End users will receive a notification on their device and the WARP client will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect).
 
-[Auto connect](#auto-connect) and [Lock WARP switch](#lock-warp-switch) will not apply while the global disconnect is on. Additionally, the global disconnect will clear any existing [admin override codes](#allow-admin-override-codes). The only way for users to reconnect during a global disconnect is by using a new [admin override code](#allow-admin-override-codes). For example, you may want to provide IT staff with a code so that they can test resolution of the incident that led to the global disconnect.
-
 To resume normal operations, turn off **Disconnect WARP on all devices**. The WARP client will automatically reconnect.
+
+For more information on how **Disconnect WARP on all devices** works with other WARP settings, refer to [WARP settings precedence](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/#warp-settings-precedence).
+
+### Manage device connection using an external signal
+
+<Render file="warp/external-disconnect-availability" product="cloudflare-one" />
+
+Allows administrators to disconnect WARP independently from any Cloudflare infrastructure. When `Enabled`, WARP clients will poll the configured HTTPS endpoint on regular intervals and disconnect when it receives a valid disconnect signal.
+
+To set up the external HTTPS endpoint, refer to [External emergency disconnect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/).
 
 ## Device settings
 
