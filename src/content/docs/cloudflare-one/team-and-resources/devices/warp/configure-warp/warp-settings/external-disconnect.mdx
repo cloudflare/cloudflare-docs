@@ -1,0 +1,196 @@
+---
+pcx_content_type: concept
+title: External emergency disconnect
+sidebar:
+  order: 3
+  badge: Beta
+---
+
+import { Details, Render, TabItem, Tabs } from "~/components";
+
+<Render file="warp/external-disconnect-availability" product="cloudflare-one" />
+
+
+## External endpoint requirements
+
+### Endpoint URL
+
+
+
+Does it matter if the URL is in the tunnel vs. outside of the tunnel? IP should be accessible by the device whether WARP is turned on or off.
+
+
+### Response payload
+
+### Cipher suites
+
+The WARP client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your HTTPS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
+
+
+## Create an external disconnect endpoint
+
+An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. The WARP client polls the HTTPS endpoint and validates its certificate against an SHA-256 fingerprint that you upload to Zero Trust.
+
+1. Generate a TLS certificate:
+
+	```sh
+	openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout key.pem -out cert.pem
+	```
+
+	You will be prompted to fill in Distinguished Name (DN) fields. Fill in your organization's information or press `Enter` to use the default values.
+
+	The command will output a certificate in PEM format and its private key. Store these files in a secure place.
+
+2. Configure an HTTPS server on your network to use this certificate and key. The example below demonstrates how to serve the certificate from an nginx container in Docker:
+
+		a. Create an nginx configuration file called `nginx.conf`:
+
+			```txt title="nginx.conf"
+			events {
+				worker_connections  1024;
+			}
+
+			http {
+					server {
+							listen              443 ssl;
+							ssl_certificate     /certs/cert.pem;
+							ssl_certificate_key /certs/key.pem;
+							location /status/disconnect {
+									default_type application/json;
+									return 200 '{"emergency_disconnect": false}';
+							}
+					}
+			}
+			```
+
+		If needed, replace `/certs/cert.pem` and `/certs/key.pem` with the locations of your certificate and key.
+
+		b. Add the nginx image to your Docker compose file:
+
+			```yml title="docker-compose.yml"
+			services:
+				nginx:
+					image: nginx:latest
+					ports:
+						- 3333:443
+					volumes:
+						- ./nginx.conf:/etc/nginx/nginx.conf:ro
+						- ./certs:/certs:ro
+			```
+
+			If needed, replace `./nginx.conf` and `./certs` with the locations of your nginx configuration file and certificate.
+
+		c. Start the server:
+
+			```sh
+			docker compose up -d
+			```
+
+3. To test that the HTTPS URL is working, run a curl command from the end user's device. You need to pass the `--insecure` option because we are using a self-signed certificate.
+
+	```sh
+	curl --insecure https://<server-ip>:3333/status/disconnect
+	```
+
+	```sh output
+	{"emergency_disconnect": false}
+	```
+
+
+## Extract the SHA-256 fingerprint
+
+The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed certificate.
+
+<Tabs> <TabItem label="Local certificate">
+
+To obtain the SHA-256 fingerprint of a local certificate:
+
+```sh
+openssl x509 -noout -fingerprint -sha256 -inform pem -in example.pem | tr -d :
+```
+
+The output will look something like:
+
+```txt
+SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
+```
+
+</TabItem> <TabItem label="Remote server">
+
+<Render file="warp/managed-networks-sha-256" product="cloudflare-one"/>
+
+</TabItem> </Tabs>
+
+## Configure WARP external disconnect
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Management**.
+2. Select **Global disconnection settings**.
+3. Find **Manage device connection using an external signal** and select **Edit**.
+4. Configure the following fields:
+	- **Endpoint IP address and port**: Enter the HTTPS URL from which to fetch the external disconnect signal (for example, `https://192.168.18:3333/status/disconnect`). The endpoint must use HTTPS and have an IPv4 or IPv6 address as the host.
+	- **Polling frequency**: Choose how often WARP should fetch the external disconnect signal.
+	- **Certificate fingerprint**: Enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the HTTPS server certificate (for example, `DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662`).
+5. Select **Save**.
+6. To enable the external disconnect feature, turn on **Manage device connection using an external signal**.
+
+All WARP clients in your organization will now start polling the external endpoint and connect or disconnect based on the response payload.
+
+</TabItem>
+<TabItem label="API">
+
+
+</TabItem>
+
+<TabItem label="MDM">
+
+
+</TabItem>
+</Tabs>
+
+
+## Test WARP external disconnect
+
+1. Ensure that WARP is connected.
+2. Ensure that **Manage device connection using an external signal** is [turned on](#configure-warp-external-disconnect).
+3. In your [external endpoint](#create-an-external-disconnect-endpoint) configuration, change `emergency_disconnect` to `true`:
+	```json
+	{"emergency_disconnect": true}
+	```
+
+4. You may need to reload the server to apply changes. To reload the [example `nginx` server](#create-an-external-disconnect-endpoint):
+	```sh
+	docker exec <container-name-or-id> nginx -s reload
+	```
+
+WARP will automatically disconnect within the configured polling interval. The WARP GUI will display [
+`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect) and log the event To reconnect all devices, change `emergency_disconnect` back to `false`.
+
+## View logs
+
+the global disconnection event will appear in [Admin audit logs] and warp-diag
+
+## Turn off WARP external disconnect
+
+Server has emergency disconnect = true. But then the server goes down and device is stuck in disconnected state. To turn off emergency disconnect: use dashboard/API/MDM.
+
+
+## WARP settings precedence
+
+Learn how global disconnect settings interact and how they impact other WARP profile settings.
+
+### Global disconnection settings
+
+### Auto connect
+
+[Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) does not apply while a global disconnect is in effect.
+
+### Lock WARP switch
+
+[Lock WARP switch](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#lock-warp-switch) does not apply while a global disconnect is in effect. Users will be unable to turn on WARP unless they have an [admin override code](#admin-override).
+
+### Admin override
+
+A global disconnect will clear any existing [admin override codes](#allow-admin-override-codes). The only way for users to reconnect during a global disconnect is by using a new [admin override code](#allow-admin-override-codes). For example, you may want to provide IT staff with a code so that they can test resolution of the incident that led to the global disconnect. The override code will exempt a specific user and device from the global disconnect until the override timeout expires.
+
