@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, TypeScriptExample } from "~/components";
 
 When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) as a `Cf-Access-Jwt-Assertion` request header. Requests made through a browser will also pass the token as a `CF_Authorization` cookie.
 
@@ -108,33 +108,42 @@ When Cloudflare Access is in front of your [Worker](/workers), your Worker still
 
 The following code will validate the JWT using the [jose NPM package](https://www.npmjs.com/package/jose):
 
-```javascript
-import { jwtVerify, createRemoteJWKSet } from 'jose';
+<TypeScriptExample>
+
+```ts
+import { jwtVerify, createRemoteJWKSet } from "jose";
+
+interface Env {
+	POLICY_AUD: string;
+	TEAM_DOMAIN: string;
+}
 
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		// Verify the POLICY_AUD environment variable is set
 		if (!env.POLICY_AUD) {
-			return new Response('Missing required audience', {
+			return new Response("Missing required audience", {
 				status: 403,
-				headers: { 'Content-Type': 'text/plain' }
+				headers: { "Content-Type": "text/plain" },
 			});
 		}
 
 		// Get the JWT from the request headers
-		const token = request.headers.get('cf-access-jwt-assertion');
+		const token = request.headers.get("cf-access-jwt-assertion");
 
 		// Check if token exists
 		if (!token) {
-			return new Response('Missing required CF Access JWT', {
+			return new Response("Missing required CF Access JWT", {
 				status: 403,
-				headers: { 'Content-Type': 'text/plain' }
+				headers: { "Content-Type": "text/plain" },
 			});
 		}
 
 		try {
 			// Create JWKS from your team domain
-			const JWKS = createRemoteJWKSet(new URL(`${env.TEAM_DOMAIN}/cdn-cgi/access/certs`));
+			const JWKS = createRemoteJWKSet(
+				new URL(`${env.TEAM_DOMAIN}/cdn-cgi/access/certs`)
+			);
 
 			// Verify the JWT
 			const { payload } = await jwtVerify(token, JWKS, {
@@ -143,20 +152,25 @@ export default {
 			});
 
 			// Token is valid, proceed with your application logic
-			return new Response(`Hello ${payload.email || 'authenticated user'}!`, {
-				headers: { 'Content-Type': 'text/plain' }
-			});
-
+			return new Response(
+				`Hello ${payload.email || "authenticated user"}!`,
+				{
+					headers: { "Content-Type": "text/plain" },
+				}
+			);
 		} catch (error) {
 			// Token verification failed
-			return new Response(`Invalid token: ${error.message}`, {
+			const message = error instanceof Error ? error.message : "Unknown error";
+			return new Response(`Invalid token: ${message}`, {
 				status: 403,
-				headers: { 'Content-Type': 'text/plain' }
+				headers: { "Content-Type": "text/plain" },
 			});
 		}
 	},
 };
 ```
+
+</TypeScriptExample>
 
 #### Required environment variables
 
