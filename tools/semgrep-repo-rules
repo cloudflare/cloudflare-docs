@@ -20,7 +20,9 @@ if [ -s tools/relevant_changed_files.txt ]; then
       --include "*.mdx" --include "*.mdx" \
       --error \
       $list_of_files
-  echo "return code: $?"
+  semgrep_return_code=$?
+  echo "return code: $semgrep_return_code"
+  exit $semgrep_return_code
 else
   echo "No relevant files changed."
 fi
