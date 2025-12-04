@@ -615,6 +615,168 @@ export class ChatRoom extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
+### Understand how input and output gates prevent data races
+
+While Durable Objects are single-threaded, JavaScript's `async`/`await` can allow multiple requests to interleave execution. Cloudflare's runtime uses **input gates** and **output gates** to prevent data races and ensure correctness by default.
+
+**Input gates** block new events (incoming requests, fetch responses) while storage operations are in progress. This prevents concurrent requests from interleaving during critical storage operations:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	COUNTER: DurableObjectNamespace<Counter>;
+}
+
+export class Counter extends DurableObject<Env> {
+	// This code is safe due to input gates
+	async increment(): Promise<number> {
+		// While these storage operations execute, no other requests
+		// can interleave - input gate blocks new events
+		const value = (await this.ctx.storage.get<number>("count")) ?? 0;
+		await this.ctx.storage.put("count", value + 1);
+		return value + 1;
+	}
+}
+```
+</TypeScriptExample>
+
+**Output gates** hold outgoing network messages (responses, fetch requests) until pending storage writes complete. This ensures clients never see confirmation of data that hasn't been persisted:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	async sendMessage(userId: string, content: string): Promise<string> {
+		// Write to storage - don't need to await for correctness
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
+			userId,
+			content,
+			Date.now()
+		);
+
+		// This response is held by the output gate until the write completes.
+		// The client only receives "Message sent" after data is safely persisted.
+		return "Message sent";
+	}
+}
+```
+</TypeScriptExample>
+
+However, input gates only protect during storage operations. Non-storage I/O like `fetch()` or writing to R2 allows other requests to interleave:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	PROCESSOR: DurableObjectNamespace<Processor>;
+}
+
+export class Processor extends DurableObject<Env> {
+	// ⚠️ Potential race condition: fetch() allows interleaving
+	async processWithExternalCall(id: string) {
+		const item = await this.ctx.storage.get<{ status: string }>(`item:${id}`);
+
+		if (item?.status === "pending") {
+			// During this fetch, other requests CAN execute and modify storage
+			const result = await fetch("https://api.example.com/process");
+
+			// Another request may have already processed this item!
+			await this.ctx.storage.put(`item:${id}`, { status: "completed" });
+		}
+	}
+
+	// ✅ Better: Use optimistic locking or check-and-set patterns
+	async processWithCheck(id: string) {
+		const item = await this.ctx.storage.get<{ status: string; version: number }>(
+			`item:${id}`
+		);
+
+		if (item?.status !== "pending") {
+			return; // Already processed
+		}
+
+		const expectedVersion = item.version;
+		const result = await fetch("https://api.example.com/process");
+
+		// Re-check version before updating
+		const current = await this.ctx.storage.get<{ status: string; version: number }>(
+			`item:${id}`
+		);
+		if (current?.version !== expectedVersion) {
+			throw new Error("Item was modified by another request");
+		}
+
+		await this.ctx.storage.put(`item:${id}`, {
+			status: "completed",
+			version: expectedVersion + 1,
+		});
+	}
+}
+```
+</TypeScriptExample>
+
+**Write coalescing:** Multiple storage writes without intervening `await` calls are automatically batched into a single atomic transaction:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	ACCOUNT: DurableObjectNamespace<Account>;
+}
+
+export class Account extends DurableObject<Env> {
+	async transfer(fromId: string, toId: string, amount: number) {
+		// ✅ Good: These writes are coalesced into one atomic transaction
+		this.ctx.storage.sql.exec(
+			"UPDATE accounts SET balance = balance - ? WHERE id = ?",
+			amount,
+			fromId
+		);
+		this.ctx.storage.sql.exec(
+			"UPDATE accounts SET balance = balance + ? WHERE id = ?",
+			amount,
+			toId
+		);
+		this.ctx.storage.sql.exec(
+			"INSERT INTO transfers (from_id, to_id, amount, created_at) VALUES (?, ?, ?, ?)",
+			fromId,
+			toId,
+			amount,
+			Date.now()
+		);
+		// All three writes commit together atomically
+	}
+
+	async transferBroken(fromId: string, toId: string, amount: number) {
+		// 🔴 Bad: await breaks coalescing - each write is a separate transaction
+		await this.ctx.storage.sql.exec(
+			"UPDATE accounts SET balance = balance - ? WHERE id = ?",
+			amount,
+			fromId
+		);
+		// If the next write fails, the debit already committed!
+		await this.ctx.storage.sql.exec(
+			"UPDATE accounts SET balance = balance + ? WHERE id = ?",
+			amount,
+			toId
+		);
+	}
+}
+```
+</TypeScriptExample>
+
+For more details, see [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) and the [glossary](/durable-objects/reference/glossary/).
+
 ## Communication and API design
 
 ### Use RPC methods instead of the `fetch()` handler
