@@ -10,7 +10,7 @@ date: 2025-12-04
 
 With selective migration, you can migrate specific objects according to your needs without copying an entire bucket or prefix, or easily retry objects that failed to migrate from a previous Super Slurper job.
 
-In the dashboard, use the **Specific object keys** option to list up to 10,000 objects using newlines as the delimiter, or upload a CSV file containing your list of object keys.
+In the Dashboard, when setting the Source bucket options, use the **Specific object keys** option to list up to 10,000 objects using newlines as the delimiter, or upload a CSV file containing your list of object keys.
 
 To use selective migration via the API, include the `keys` array in your request:
 
@@ -23,8 +23,8 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/slurper/jobs" \
   "source": {...},
   "destination": {...},
   "keys": [
-    "object1-key",
-    "object2-key"
+    "path/to/object1-key.pdf",
+    "object2-key.csv"
   ]
 }'
 ```
