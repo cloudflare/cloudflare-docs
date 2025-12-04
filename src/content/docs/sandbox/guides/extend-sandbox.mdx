@@ -1,0 +1,273 @@
+---
+title: Extend Sandbox class
+pcx_content_type: how-to
+sidebar:
+  order: 12
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Add custom methods to the Sandbox class to create reusable, domain-specific operations.
+
+## Overview
+
+You can extend the `Sandbox` class to add custom methods that encapsulate common operations for your application. This is useful for:
+
+- Creating domain-specific APIs (e.g., `runAnalysis()`, `deployApp()`)
+- Encapsulating complex multi-step operations
+- Adding custom validation or error handling
+- Building reusable sandbox behaviors across your Worker
+
+## Create a custom Sandbox class
+
+Define a class that extends `Sandbox` and add your custom methods:
+
+<TypeScriptExample>
+```
+import { Sandbox } from '@cloudflare/sandbox';
+
+export class CustomSandbox extends Sandbox {
+  async runAnalysis(dataFile: string): Promise<string> {
+    // Custom method that runs a multi-step analysis
+    await this.writeFile('/workspace/data.csv', dataFile);
+    await this.exec('pip install pandas matplotlib');
+
+    const result = await this.exec('python analyze.py');
+    return result.stdout;
+  }
+
+  async deployApp(code: string): Promise<void> {
+    // Custom method that deploys an application
+    await this.writeFile('/workspace/app.js', code);
+    await this.exec('npm install');
+    await this.startProcess('node app.js');
+  }
+}
+```
+</TypeScriptExample>
+
+## Configure your Worker
+
+Update your Worker configuration to use the custom Sandbox class:
+
+### 1. Update wrangler configuration
+
+<WranglerConfig>
+```toml
+name = "my-worker"
+main = "src/index.ts"
+
+[[durable_objects.bindings]]
+name = "Sandbox"
+class_name = "CustomSandbox"
+script_name = "my-worker"
+
+[observability]
+enabled = true
+```
+</WranglerConfig>
+
+### 2. Export the custom class
+
+In your Worker entry point, export your custom Sandbox class:
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+import { CustomSandbox } from './custom-sandbox';
+
+// Export your custom Sandbox class as a Durable Object
+export { CustomSandbox };
+
+interface Env {
+  Sandbox: DurableObjectNamespace<CustomSandbox>;
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Use getSandbox with your custom type
+    const sandbox = getSandbox<CustomSandbox>(env.Sandbox, 'user-123');
+
+    // Call your custom methods
+    const result = await sandbox.runAnalysis('data content here');
+
+    return Response.json({ result });
+  }
+};
+```
+</TypeScriptExample>
+
+:::note
+When using custom Sandbox classes, specify the type parameter in `getSandbox<CustomSandbox>()` to get proper TypeScript inference for your custom methods.
+:::
+
+## Type-safe environment interface
+
+Define a type-safe environment interface for your Worker:
+
+<TypeScriptExample>
+```
+import { SandboxEnv } from '@cloudflare/sandbox';
+import { CustomSandbox } from './custom-sandbox';
+
+// Extend SandboxEnv with your custom type
+interface Env extends SandboxEnv<CustomSandbox> {
+  // Add other bindings as needed
+  MY_BUCKET: R2Bucket;
+  MY_KV: KVNamespace;
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox<CustomSandbox>(env.Sandbox, 'user-123');
+
+    // TypeScript knows about your custom methods
+    await sandbox.runAnalysis('data');
+    await sandbox.deployApp('code');
+
+    return new Response('OK');
+  }
+};
+```
+</TypeScriptExample>
+
+## Best practices
+
+### Keep methods focused
+
+Each custom method should have a single, clear purpose:
+
+<TypeScriptExample>
+```
+export class CustomSandbox extends Sandbox {
+  // Good: Focused, reusable method
+  async installDependencies(packages: string[]): Promise<void> {
+    await this.exec(`pip install ${packages.join(' ')}`);
+  }
+
+  // Good: Domain-specific operation
+  async runTests(testFile: string): Promise<boolean> {
+    const result = await this.exec(`python -m pytest ${testFile}`);
+    return result.exitCode === 0;
+  }
+}
+```
+</TypeScriptExample>
+
+### Handle errors appropriately
+
+Add proper error handling in your custom methods:
+
+<TypeScriptExample>
+```
+export class CustomSandbox extends Sandbox {
+  async processData(input: string): Promise<string> {
+    try {
+      await this.writeFile('/tmp/input.txt', input);
+      const result = await this.exec('python process.py /tmp/input.txt');
+
+      if (result.exitCode !== 0) {
+        throw new Error(`Processing failed: ${result.stderr}`);
+      }
+
+      return result.stdout;
+    } catch (error) {
+      // Add context to errors
+      throw new Error(`Data processing failed: ${error.message}`);
+    }
+  }
+}
+```
+</TypeScriptExample>
+
+### Validate inputs
+
+Add validation to prevent common errors:
+
+<TypeScriptExample>
+```
+export class CustomSandbox extends Sandbox {
+  async runScript(scriptPath: string): Promise<void> {
+    // Validate input
+    if (!scriptPath.startsWith('/workspace/')) {
+      throw new Error('Script must be in /workspace directory');
+    }
+
+    // Check file exists before running
+    const files = await this.listFiles('/workspace');
+    const fileName = scriptPath.split('/').pop();
+
+    if (!files.includes(fileName)) {
+      throw new Error(`Script not found: ${scriptPath}`);
+    }
+
+    await this.exec(`python ${scriptPath}`);
+  }
+}
+```
+</TypeScriptExample>
+
+## Complete example
+
+A practical example of a custom Sandbox class for a code execution service:
+
+<TypeScriptExample>
+```
+import { Sandbox } from '@cloudflare/sandbox';
+
+export interface ExecutionResult {
+  success: boolean;
+  output: string;
+  executionTime: number;
+}
+
+export class CodeExecutorSandbox extends Sandbox {
+  async executeCode(
+    language: 'python' | 'javascript',
+    code: string,
+    timeout: number = 30
+  ): Promise<ExecutionResult> {
+    const startTime = Date.now();
+
+    try {
+      // Write code to file
+      const fileName = language === 'python' ? 'script.py' : 'script.js';
+      await this.writeFile(`/tmp/${fileName}`, code);
+
+      // Execute based on language
+      const command = language === 'python'
+        ? `python /tmp/${fileName}`
+        : `node /tmp/${fileName}`;
+
+      const result = await this.exec(command, { timeout });
+
+      return {
+        success: result.exitCode === 0,
+        output: result.exitCode === 0 ? result.stdout : result.stderr,
+        executionTime: Date.now() - startTime
+      };
+    } catch (error) {
+      return {
+        success: false,
+        output: error.message,
+        executionTime: Date.now() - startTime
+      };
+    }
+  }
+
+  async installPackages(language: 'python' | 'javascript', packages: string[]): Promise<void> {
+    const command = language === 'python'
+      ? `pip install ${packages.join(' ')}`
+      : `npm install ${packages.join(' ')}`;
+
+    await this.exec(command);
+  }
+}
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Lifecycle API](/sandbox/api/lifecycle/) - Base Sandbox class methods
+- [Sessions API](/sandbox/api/sessions/) - Manage execution contexts
+- [Configuration reference](/sandbox/configuration/sandbox-options/) - Configure sandbox behavior

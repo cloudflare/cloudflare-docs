@@ -16,12 +16,15 @@ Create and manage sandbox containers. Get sandbox instances, configure options, 
 Get or create a sandbox instance by ID.
 
 ```ts
-const sandbox = getSandbox(
-  binding: DurableObjectNamespace<Sandbox>,
+function getSandbox<T extends Sandbox>(
+  binding: DurableObjectNamespace<T>,
   sandboxId: string,
   options?: SandboxOptions
-): Sandbox
+): T
 ```
+
+**Type parameters**:
+- `T` - The Sandbox class type (use when extending Sandbox with custom methods)
 
 **Parameters**:
 - `binding` - The Durable Object namespace binding from your Worker environment
@@ -32,7 +35,7 @@ const sandbox = getSandbox(
   - `containerTimeouts` - Configure container startup timeouts
   - `normalizeId` - Lowercase sandbox IDs for preview URL compatibility (default: `false`)
 
-**Returns**: `Sandbox` instance
+**Returns**: Sandbox instance of type `T`
 
 :::note
 The container starts lazily on first operation. Calling `getSandbox()` returns immediately—the container only spins up when you execute a command, write a file, or perform other operations. See [Sandbox lifecycle](/sandbox/concepts/sandboxes/) for details.
@@ -51,6 +54,35 @@ export default {
 };
 ```
 </TypeScriptExample>
+
+**Using with custom Sandbox classes**:
+
+When extending the `Sandbox` class with custom methods, specify the type parameter to get proper TypeScript inference:
+
+<TypeScriptExample>
+```
+import { getSandbox, Sandbox } from '@cloudflare/sandbox';
+
+export class CustomSandbox extends Sandbox {
+  async customMethod(): Promise<string> {
+    return 'custom result';
+  }
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Specify the custom type to access custom methods
+    const sandbox = getSandbox<CustomSandbox>(env.Sandbox, 'user-123');
+
+    // TypeScript knows about customMethod()
+    const result = await sandbox.customMethod();
+    return Response.json({ result });
+  }
+};
+```
+</TypeScriptExample>
+
+See [Extend Sandbox class](/sandbox/guides/extend-sandbox/) for a complete guide on creating custom Sandbox classes.
 
 :::caution
 When using `keepAlive: true`, you **must** call `destroy()` when finished to prevent containers running indefinitely.
