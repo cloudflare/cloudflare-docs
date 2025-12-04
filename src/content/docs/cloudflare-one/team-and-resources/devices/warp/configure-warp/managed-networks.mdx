@@ -58,7 +58,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 1. Generate a TLS certificate:
 
 	```sh
-	openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
+	openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout key.pem -out cert.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
 	```
 
 	The command will output a certificate in PEM format and its private key. Store these files in a secure place.
@@ -80,8 +80,8 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 			http {
 					server {
 						listen              443 ssl;
-						ssl_certificate     /certs/example.pem;
-						ssl_certificate_key /certs/example.key;
+						ssl_certificate     /certs/cert.pem;
+						ssl_certificate_key /certs/key.pem;
 						location / {
 									return 200;
 						}
@@ -89,7 +89,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 			}
 			```
 
-		If needed, replace `/certs/example.pem` and `/certs/example.key` with the locations of your certificate and key.
+		If needed, replace `/certs/cert.pem` and `/certs/key.pem` with the locations of your certificate and key.
 
 		b. Add the nginx image to your Docker compose file:
 
@@ -185,25 +185,7 @@ The WARP client establishes a TLS connection using [Rustls](https://github.com/r
 
 The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed certificate.
 
-<Tabs> <TabItem label="Local certificate">
-
-To obtain the SHA-256 fingerprint of a local certificate:
-
-```sh
-openssl x509 -noout -fingerprint -sha256 -inform pem -in example.pem | tr -d :
-```
-
-The output will look something like:
-
-```txt
-SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
-```
-
-</TabItem> <TabItem label="Remote server">
-
-<Render file="warp/managed-networks-sha-256" product="cloudflare-one"/>
-
-</TabItem> </Tabs>
+<Render file="warp/sha-256-fingerprint" product="cloudflare-one"/>
 
 ## 3. Add managed network to Cloudflare One
 

@@ -86,7 +86,7 @@ An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. T
 			docker compose up -d
 			```
 
-3. To test that the HTTPS URL is working, run a curl command from the end user's device. You need to pass the `--insecure` option because we are using a self-signed certificate.
+3. To test that the HTTPS endpoint is working, run a curl command from the end user's device. You need to pass the `--insecure` option because we are using a self-signed certificate.
 
 	```sh
 	curl --insecure https://<server-ip>:3333/status/disconnect
@@ -99,27 +99,7 @@ An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. T
 
 ## Extract the SHA-256 fingerprint
 
-The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed certificate.
-
-<Tabs> <TabItem label="Local certificate">
-
-To obtain the SHA-256 fingerprint of a local certificate:
-
-```sh
-openssl x509 -noout -fingerprint -sha256 -inform pem -in example.pem | tr -d :
-```
-
-The output will look something like:
-
-```txt
-SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
-```
-
-</TabItem> <TabItem label="Remote server">
-
-<Render file="warp/managed-networks-sha-256" product="cloudflare-one"/>
-
-</TabItem> </Tabs>
+<Render file="warp/sha-256-fingerprint" product="cloudflare-one"/>
 
 ## Configure WARP external disconnect
 
