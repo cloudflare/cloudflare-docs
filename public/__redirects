@@ -2172,7 +2172,6 @@
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
 /cloudflare-one/tutorials/block-tld/ /cloudflare-one/policies/gateway/dns-policies/common-policies/#block-sites-by-top-level-domain 301
-/cloudflare-one/insights/analytics/ /cloudflare-one/insights/analytics-overview/ 301
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
 /cloudflare-one/identity/entra-id/ /cloudflare-one/identity/idp-integration/entra-id/ 301
 /warp-client/warp-for-teams/teams/ /cloudflare-one/connections/connect-devices/warp/deployment/ 301
