@@ -1,0 +1,67 @@
+---
+title: Sandbox v0.6.3 with process readiness detection and top-level await
+description: This release adds process readiness detection methods, top-level await support for JavaScript execution, and performance improvements including removed output size limits.
+products:
+  - sandbox
+date: 2025-12-05
+---
+
+The latest release of [@cloudflare/sandbox](https://www.npmjs.com/package/@cloudflare/sandbox) brings process readiness detection, top-level await support, and several reliability improvements.
+
+### Process readiness detection
+
+The `Process` object returned by [`startProcess()`](/sandbox/api/commands/) now includes readiness methods to wait for your process to be ready before interacting with it:
+
+**`process.waitForPort(port, options?)`** — Wait for a process to listen on a specific port:
+
+- HTTP mode (default): checks endpoint returns expected status (200-399)
+- TCP mode: checks port accepts connections
+- Configurable timeout, interval, path, and expected status
+
+**`process.waitForLog(pattern, options?)`** — Wait for a pattern in process output:
+
+- Supports string or RegExp patterns
+- Returns matching line and capture groups
+
+```ts
+const process = await sandbox.startProcess("npm", ["run", "dev"]);
+
+// Wait for the server to be ready
+await process.waitForPort(3000, { mode: "http", timeout: 30000 });
+
+// Or wait for a specific log message
+const match = await process.waitForLog(/Server listening on port (\d+)/);
+console.log(`Server started on port ${match.groups[0]}`);
+```
+
+### Top-level await support
+
+JavaScript code can now use `await` at the top level without wrapping in an async IIFE. Variables declared with `const`, `let`, or `var` persist across executions, enabling multi-step workflows:
+
+```ts
+// Execution 1
+const data = await fetch("https://api.example.com").then((r) => r.json());
+
+// Execution 2
+console.log(data); // Works - data persists
+```
+
+### Other improvements
+
+- Removed the 10MB output size limit for command execution, giving developers full control over resource management
+- Optimized Docker image size with lean and Python variants
+
+### Bug fixes
+
+- Fixed executor mutex race condition
+- Fixed process callbacks, PID capture, and `getLogs` race condition
+- Fixed type error when extending `Sandbox` class
+- Fixed `/api/ping` endpoint to return health status
+
+### Upgrade
+
+To update to the latest version:
+
+```sh
+npm i @cloudflare/sandbox@latest
+```
