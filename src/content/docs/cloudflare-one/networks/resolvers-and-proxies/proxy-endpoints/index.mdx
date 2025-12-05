@@ -6,6 +6,7 @@ sidebar:
 ---
 
 import {
+	Badge,
 	Details,
 	GlossaryDefinition,
 	TabItem,
@@ -15,6 +16,8 @@ import {
 
 :::note
 PAC files are only available on Enterprise plans.
+
+Authorization endpoints and PAC file hosting are available to all Enterprise plans during the closed beta period. For access, contact your account team.
 :::
 
 You can apply Gateway HTTP and DNS policies at the browser level by configuring a Proxy Auto-Configuration (PAC) file to connect to a proxy endpoint.
@@ -39,7 +42,7 @@ Cloudflare One offers two types of proxy endpoints, each with different authoriz
 
 Once you create a proxy endpoint, you cannot change its type. If you need a different authorization method, you must create a new proxy endpoint.
 
-### Authorization endpoint
+### Authorization endpoint <Badge text="Beta" variant="caution" />
 
 Authorization endpoints use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide Zero Trust authorization. Users must authenticate through an identity provider and pass Access policies before they can use the proxy endpoint.
 
