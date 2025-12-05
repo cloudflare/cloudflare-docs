@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: how-to
 title: External Emergency Disconnect
 sidebar:
   order: 3
@@ -18,20 +18,37 @@ External Emergency Disconnect can be used in combination with the dashboard-init
 
 ## Use cases
 
+You can use External Emergency Disconnect to address the following scenarios:
+
 - **Security Incident Response**: Provides the ability to quickly terminate all WARP tunnels across the entire fleet.
 - **Compliance and Auditing**: Fulfills requirements in sensitive or regulated environments that mandate an "emergency stop" capability that is fully isolated, auditable, and controlled by the organization's own on-premises infrastructure.
 - **Disaster Recovery**: If WARP devices cannot reach Cloudflare's API (due to a network outage, routing issue, or client-side misconfiguration), administrators retain the ability to force-disconnect the fleet via the customer-hosted endpoint.
 
+
 ## External endpoint requirements
+
+An external disconnect endpoint is an HTTPS server hosted outside of Cloudflare from which WARP will fetch the emergency disconnect signal. The customer is fully responsible for managing this endpoint.
 
 ### Endpoint URL
 
-
+The endpoint URL must:
+- Use HTTPS
+- Use an IPv4 or IPv6 address as the host. A public IP is recommended to ensure that devices can fetch the latest state regardless of their network location.
 
 Does it matter if the URL is in the tunnel vs. outside of the tunnel? IP should be accessible by the device whether WARP is turned on or off.
 
-
 ### Response payload
+
+The WARP client expects a JSON response payload from the external endpoint with the following format:
+
+```json
+{
+  "emergency_disconnect": false | true
+}
+```
+
+- If `emergency_disconnect` is set to `true`, the device will initiate an emergency disconnect.
+- If `emergency_disconnect` is set to `false`, the device will continue normal operation.
 
 ### Cipher suites
 
@@ -41,9 +58,11 @@ The WARP client establishes a TLS connection using [Rustls](https://github.com/r
 
 ### 1. Create an external disconnect endpoint
 
-An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. The WARP client polls the HTTPS endpoint and validates its certificate against an SHA-256 fingerprint that you upload to Zero Trust.
+To configure External Emergency Disconnect, you will need an HTTPS endpoint in your own infrastructure that serves the global disconnect signal. The WARP client will poll the external endpoint and validate its TLS/SSL certificate against an SHA-256 fingerprint that you upload to Zero Trust. Refer to [External endpoint requirements](#external-endpoint-requirements) for more details.
 
-1. Generate a TLS certificate:
+The following example demonstrates how to deploy an external disconnect endpoint using an nginx container in Docker.
+
+1. Generate a TLS/SSL certificate:
 
 	```sh
 	openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout key.pem -out cert.pem
@@ -53,7 +72,7 @@ An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. T
 
 	The command will output a certificate in PEM format and its private key. Store these files in a secure place.
 
-2. Configure an HTTPS server on your network to use this certificate and key. The example below demonstrates how to serve the certificate from an nginx container in Docker:
+2. Configure an HTTPS server on your network to use this certificate and key:
 
 		a. Create an nginx configuration file called `nginx.conf`:
 
@@ -108,7 +127,6 @@ An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. T
 	{"emergency_disconnect": false}
 	```
 
-
 ### 2. Extract the SHA-256 fingerprint
 
 <Render file="warp/sha-256-fingerprint" product="cloudflare-one"/>
@@ -121,7 +139,7 @@ An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. T
 2. Select **Global disconnection settings**.
 3. Find **Manage device connection using an external signal** and select **Edit**.
 4. Configure the following fields:
-	- **Endpoint IP address and port**: Enter the HTTPS URL from which to fetch the external disconnect signal (for example, `https://192.168.18:3333/status/disconnect`). The endpoint must use HTTPS and have an IPv4 or IPv6 address as the host.
+	- **Endpoint IP address and port**: Enter the HTTPS URL from which to fetch the external disconnect signal (for example, `https://192.0.2.1:3333/status/disconnect`). The endpoint must use HTTPS and have an IPv4 or IPv6 address as the host.
 	- **Polling frequency**: Choose how often WARP should fetch the external disconnect signal.
 	- **Certificate fingerprint**: Enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the HTTPS server certificate (for example, `DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662`).
 5. Select **Save**.
@@ -161,7 +179,9 @@ WARP will automatically disconnect within the configured polling interval. The W
 
 ## View logs
 
-the global disconnection event will appear in [Admin audit logs] and warp-diag
+the global disconnection event will appear in [Admin audit logs]
+
+(tbd)
 
 ## Turn off External Emergency Disconnect
 
@@ -173,6 +193,13 @@ Server has emergency disconnect = true. But then the server goes down and device
 Learn how global disconnect settings interact and how they impact other WARP profile settings.
 
 ### Global disconnection settings
+
+The client will honor disconnect signals from both the Cloudflare dashboard (via [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices)) and the external endpoint. A global disconnect is enforced if either source triggers it.
+
+| | [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) is `On` | [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) is `Off` |
+| --- | --- | --- |
+| **External endpoint returns `true`** | Force disconnected | Force disconnected |
+| **External endpoint returns `false`** | Force disconnected | Normal operation |
 
 ### Auto connect
 
