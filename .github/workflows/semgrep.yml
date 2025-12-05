@@ -4,13 +4,13 @@ on:
     - cron: "0 4 * * *"
   pull_request: {}
 
-name: Semgrep config
+name: Semgrep rules checking results
 permissions:
   contents: read
 
 jobs:
   semgrep:
-    name: semgrep
+    name: Semgrep
     runs-on: ubuntu-latest
     env:
       SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
@@ -67,4 +67,3 @@ jobs:
           else
             echo "No relevant files changed"
           fi
-
