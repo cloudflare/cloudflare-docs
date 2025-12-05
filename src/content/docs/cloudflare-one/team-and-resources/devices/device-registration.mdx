@@ -7,13 +7,15 @@ sidebar:
 
 import { TabItem, Tabs } from "~/components";
 
-A device registration is made when a user, approved by the Zero Trust organization, puts a device onto Cloudflare. A device registration status indicates the current state of a device registration, such as `Active`, `Revoked`, or `Deleted`.
+A device registration is an individual session within a device. A device registration status indicates the current state of a device registration, such as `Active` or `Revoked`. Device registrations can be deleted but if a user still has 
 
 ## Device registration
 
-A device registration represents the identity a device uses to connect through WARP. Each registration represents a specific combination of user and device. A user is an identity from your identity provider (IdP) that can consume a [seat](/cloudflare-one/team-and-resources/users/seat-management/).
+A device registration represents the identity a device uses to connect through WARP. Each registration represents a specific combination of user or service token and device.
 
-Cloudflare authenticates each device registration with a public key. A single device may have multiple device registrations, such as in a shared-device environment where multiple users share and use a single device. Each device registration's public key is unique to the device and user.
+Cloudflare authenticates each device registration with a public key. Each device registration's public key is unique
+
+A single device may have multiple device registrations, such as in a shared-device environment where multiple users share and use a single device.
 
 :::tip[Check a device's registrations]
 
@@ -21,7 +23,7 @@ Review how many device registrations are associated with a device by logging int
 
 :::
 
-The onboarding process for Cloudflare One starts with creating your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization) and configuring an identity provider (IdP) or one-time pin for user authentication. After setting up the login method, administrators define [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to define which users should be able to connect devices to your organization.
+The onboarding process for Cloudflare One starts with creating your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization) and configuring an identity provider (IdP) or one-time pin for user authentication. After setting up the login method, administrators define [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to specify which users are able to connect devices to your organization.
 
 Whether the WARP client is installed manually by a user or deployed through an MDM solution, a device registration is created when the WARP client first authenticates.
 
