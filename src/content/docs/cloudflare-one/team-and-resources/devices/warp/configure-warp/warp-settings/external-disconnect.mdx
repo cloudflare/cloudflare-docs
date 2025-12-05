@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: External emergency disconnect
+title: External Emergency Disconnect
 sidebar:
   order: 3
   badge: Beta
@@ -10,6 +10,17 @@ import { Details, Render, TabItem, Tabs } from "~/components";
 
 <Render file="warp/external-disconnect-availability" product="cloudflare-one" />
 
+The External Emergency Disconnect feature allows organizations to remotely disconnect their fleet of WARP clients using their own infrastructure, independent of the standard Cloudflare control plane. This capability mitigates single point of failure risk and ensures continuity of control in case Cloudflare services are unavailable.
+
+When External Emergency Disconnect is enabled, WARP clients will periodically poll a customer-hosted HTTPS endpoint. A client will only change its connection state upon receiving a valid JSON payload. Any failure to successfully retrieve the state (such as endpoint unreachability, invalid certificate fingerprint, or an improperly structured payload) will not cause a state change on the client. It will remain in the state corresponding to the last successfully received signal.
+
+External Emergency Disconnect can be used in combination with the dashboard-initiated [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) setting. A disconnect signal retrieved from the external endpoint will [take precedence](#warp-settings-precedence).
+
+## Use cases
+
+- **Security Incident Response**: Provides the ability to quickly terminate all WARP tunnels across the entire fleet.
+- **Compliance and Auditing**: Fulfills requirements in sensitive or regulated environments that mandate an "emergency stop" capability that is fully isolated, auditable, and controlled by the organization's own on-premises infrastructure.
+- **Disaster Recovery**: If WARP devices cannot reach Cloudflare's API (due to a network outage, routing issue, or client-side misconfiguration), administrators retain the ability to force-disconnect the fleet via the customer-hosted endpoint.
 
 ## External endpoint requirements
 
@@ -26,8 +37,9 @@ Does it matter if the URL is in the tunnel vs. outside of the tunnel? IP should 
 
 The WARP client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your HTTPS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
 
+## Set up External Emergency Disconnect
 
-## Create an external disconnect endpoint
+### 1. Create an external disconnect endpoint
 
 An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. The WARP client polls the HTTPS endpoint and validates its certificate against an SHA-256 fingerprint that you upload to Zero Trust.
 
@@ -97,11 +109,11 @@ An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. T
 	```
 
 
-## Extract the SHA-256 fingerprint
+### 2. Extract the SHA-256 fingerprint
 
 <Render file="warp/sha-256-fingerprint" product="cloudflare-one"/>
 
-## Configure WARP external disconnect
+### 3. Turn on External Emergency Disconnect
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -113,7 +125,7 @@ An HTTPS endpoint is a host on your network that serves a TLS/SSL certificate. T
 	- **Polling frequency**: Choose how often WARP should fetch the external disconnect signal.
 	- **Certificate fingerprint**: Enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the HTTPS server certificate (for example, `DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662`).
 5. Select **Save**.
-6. To enable the external disconnect feature, turn on **Manage device connection using an external signal**.
+6. Turn on **Manage device connection using an external signal**.
 
 All WARP clients in your organization will now start polling the external endpoint and connect or disconnect based on the response payload.
 
@@ -130,7 +142,7 @@ All WARP clients in your organization will now start polling the external endpoi
 </Tabs>
 
 
-## Test WARP external disconnect
+### 4. Test External Emergency Disconnect
 
 1. Ensure that WARP is connected.
 2. Ensure that **Manage device connection using an external signal** is [turned on](#configure-warp-external-disconnect).
@@ -151,7 +163,7 @@ WARP will automatically disconnect within the configured polling interval. The W
 
 the global disconnection event will appear in [Admin audit logs] and warp-diag
 
-## Turn off WARP external disconnect
+## Turn off External Emergency Disconnect
 
 Server has emergency disconnect = true. But then the server goes down and device is stuck in disconnected state. To turn off emergency disconnect: use dashboard/API/MDM.
 
