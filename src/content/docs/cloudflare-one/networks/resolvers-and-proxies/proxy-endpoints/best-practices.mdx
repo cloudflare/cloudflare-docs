@@ -91,7 +91,7 @@ function FindProxyForURL(url, host) {
 
 You can [customize the PAC file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access.
 
-:::note
+### Formatting considerations
 
 - Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`. For example:
   - Correct: `return "HTTPS your-subdomain.proxy.cloudflare-gateway.com:443";`
@@ -99,15 +99,14 @@ You can [customize the PAC file](https://developer.mozilla.org/en-US/docs/Web/HT
 - You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. Modern browsers do not support HTTPS proxies without PAC files.
 - Use a plain text editor such as VS Code to avoid extra characters.
 - If you are using PAC files for public Internet browsing (instead of only internal services), refer to [Common bypass rules](#common-bypass-rules) for domains you may need to exclude from the proxy to prevent website functionality issues.
-  :::
 
 ## PAC file template with identity provider bypass
 
 When using [authorization endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#authorization-endpoint), you must bypass your identity provider (IdP) domains in the PAC file. This prevents authentication loops where the browser tries to authenticate with the proxy before it can reach the IdP to authenticate.
 
-Below is a comprehensive template that includes common IdP bypass rules. Replace the placeholder values with your actual configuration:
+The following example PAC file is a comprehensive template that includes common IdP bypass rules. Replace the placeholder values with your configuration:
 
-```js title="pac-template.js"
+```js title="pac-idp-template.js"
 function FindProxyForURL(url, host) {
 	// *** Identity Provider Bypass ***
 	// CRITICAL: Bypass your IdP to prevent authentication loops
@@ -176,13 +175,13 @@ function FindProxyForURL(url, host) {
 }
 ```
 
-:::caution[Important]
-When using authorization endpoints, you **must** uncomment and configure the IdP bypass section for your identity provider. Without this, users will be unable to authenticate and will encounter errors when trying to use the proxy.
+:::caution
+When using authorization endpoints, you must configure IdP bypass for your identity provider. Without this, your users will be unable to authenticate and encounter errors when trying to use the proxy.
 :::
 
 ## Performance optimization
 
-PAC files are evaluated for every request. Optimizing their performance is critical to avoid delays in web browsing.
+Browsers evaluate PAC files for every request. Optimizing PAC file performance is critical to avoid delays and issues in web browsing for your users.
 
 ### Cache DNS results in variables
 
