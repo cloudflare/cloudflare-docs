@@ -15,36 +15,34 @@ When you create a PAC file, Cloudflare will host it in a publicly accessible Wor
 
 To create a hosted PAC file:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
-2. Create a proxy endpoint.
-3. After you create a proxy endpoint, select **Add PAC files**.
-4. Configure your PAC file:
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies**.
+2. Select **Proxy endpoints**.
+3. [Create a proxy endpoint](cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#1-create-a-proxy-endpoint) or select an existing one, then select **Edit**.
+4. Select **Add PAC files**.
+5. Configure your PAC file:
 
    In **PAC file details**:
-   - Enter the **Basic Information**, including a name and optional description.
-   - (Optional) Customize the **URL slug** to create a memorable URL path. The slug cannot be changed after creation.
-   - In **PAC file configuration**, select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The available templates are Okta and Azure. After you select a template, the **PAC file JavaScript** populates with the selected template.
-   - Modify the JavaScript as needed to match your network requirements.
+   1. Enter the **Basic Information**, including a name and optional description.
+   2. (Optional) Customize the **URL slug** to create a memorable URL path. The slug cannot be changed after creation.
+   3. In **PAC file configuration**, select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The available templates are Okta and Azure. After you select a template, **PAC file JavaScript** will populate with the selected template.
+   4. Modify the JavaScript as needed to match your network requirements.
 
    In **Setup instructions**:
-   - Choose a browser and follow the instructions to configure devices.
+   1. Choose a browser.
+   2. Follow the instructions in Cloudflare One to configure devices.
 
-5. Select **Create**.
+6. Select **Create**.
 
 Your hosted PAC file URL will be:
 
 ```txt
-https://pac.cloudflare-gateway.com/<account-tag>/<slug>
+https://pac.cloudflare-gateway.com/<account-id>/<slug>
 ```
 
 Where:
 
-- `<account-tag>` is your Cloudflare account identifier
+- `<account-id>` is your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/)
 - `<slug>` is the customizable path you specified (or an auto-generated value if not customized)
-
-### Self-hosting PAC files
-
-Alternatively, you can host PAC files on your own infrastructure, such as an internal web server or [Cloudflare Workers](/workers/). Self-hosting gives you complete control over the hosting environment but requires you to manage availability and distribution.
 
 ### Hosted PAC file limits
 
@@ -53,6 +51,10 @@ Cloudflare-hosted PAC files have the following limits:
 - **Maximum file size**: 256 KB per PAC file
 - **Maximum PAC files per account**: 100
 - **Update propagation**: Changes to PAC files propagate within seconds to minutes across the global network
+
+### Self-hosting PAC files
+
+You can also host PAC files on your own infrastructure, such as an internal web server or [Cloudflare Workers](/workers/). Self-hosting gives you complete control over the hosting environment but requires you to manage availability and distribution.
 
 ### Caching behavior
 
@@ -64,7 +66,7 @@ Hosted PAC files are cached globally for performance and reliability:
 
 ## PAC file format
 
-Below is the default Zero Trust PAC file. You can [customize the file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access, such as on an internal web server or on [Cloudflare Workers](/workers/).
+The default Cloudflare PAC file follows a standard format:
 
 ```js title="default-pac.js"
 function FindProxyForURL(url, host) {
@@ -87,14 +89,17 @@ function FindProxyForURL(url, host) {
 }
 ```
 
+You can [customize the PAC file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file) and host it somewhere your browser can access.
+
 :::note
 
-- Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`.
-- You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
-- Use a proper text editor such as VS Code to avoid extra characters.
-- If you are using PAC files for public Internet browsing (not just internal services), refer to [Common bypass rules](#common-bypass-rules) for domains you may need to exclude from the proxy to prevent website functionality issues.
-
-:::
+- Make sure the directive used for the endpoint is `HTTPS` and not `PROXY`. For example:
+  - Correct: `return "HTTPS your-subdomain.proxy.cloudflare-gateway.com:443";`
+  - Incorrect: `return "PROXY your-subdomain.proxy.cloudflare-gateway.com:443";`
+- You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. Modern browsers do not support HTTPS proxies without PAC files.
+- Use a plain text editor such as VS Code to avoid extra characters.
+- If you are using PAC files for public Internet browsing (instead of only internal services), refer to [Common bypass rules](#common-bypass-rules) for domains you may need to exclude from the proxy to prevent website functionality issues.
+  :::
 
 ## PAC file template with identity provider bypass
 
