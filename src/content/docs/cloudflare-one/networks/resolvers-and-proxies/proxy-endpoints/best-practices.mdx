@@ -175,7 +175,7 @@ function FindProxyForURL(url, host) {
 }
 ```
 
-:::caution
+:::caution[IdP bypass requirement]
 When using authorization endpoints, you must configure IdP bypass for your identity provider. Without this, your users will be unable to authenticate and encounter errors when trying to use the proxy.
 :::
 
@@ -235,7 +235,11 @@ function FindProxyForURL(url, host) {
 
 ## Common bypass rules
 
-When using PAC files for public Internet browsing (not just internal services), you may need to bypass the proxy for certain domains to prevent website functionality issues. Common scenarios include:
+When using PAC files for public Internet browsing (not just internal services), you may need to bypass the proxy for certain domains to prevent website functionality issues. The following are common scenarios where your proxy may interfere with traffic.
+
+:::note[Optional rules]
+These bypass rules are optional and depend on your organization's security requirements. Evaluate each bypass rule against your security policies before implementation. You can also use [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to selectively filter traffic from these domains while still routing them through the proxy.
+:::
 
 ### Content delivery networks and performance services
 
@@ -282,58 +286,60 @@ if (
 }
 ```
 
-:::note
-These bypass rules are optional and depend on your organization's security requirements. Evaluate each bypass rule against your security policies before implementation. You can also use [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to selectively filter traffic from these domains while still routing them through the proxy.
-:::
-
 ## Test PAC files
 
 ### Test with expected websites
 
-Before deploying your PAC file to all users, test it with the websites and applications your users commonly access. This helps ensure:
+Before deploying your PAC file to all users in your organization, test it with the websites and applications your users commonly access. This helps ensure:
 
-- Internal resources are accessible (not incorrectly routed through the proxy)
+- Internal resources are accessible and not incorrectly routed through the proxy
 - External websites are properly filtered through Gateway
 - Performance is acceptable for typical usage patterns
 
+:::tip
 Create a test list of representative domains and verify the PAC file routes them correctly.
+:::
 
 ### Validate syntax
 
-PAC files use JavaScript syntax. A single syntax error (such as a missing closing parenthesis or bracket) will cause the entire PAC file to fail. Use a JavaScript-aware text editor to catch syntax errors before deployment.
+PAC files use JavaScript syntax. A single syntax error (such as a missing closing parenthesis `)` or bracket `]`) will cause the entire PAC file to fail. Use a JavaScript-aware text editor to find and fix syntax errors before deployment.
 
 ## Troubleshoot configurations
 
 ### Debug PAC file routing decisions
 
-Most browsers provide debugging tools to verify PAC file behavior:
+If you have an issue with proxy routing, most browsers provide debugging tools to verify PAC file behavior:
 
 <Details header="Chromium-based browsers (Chrome, Edge, Brave)">
 
-1. Go to `chrome://net-export/` (or `edge://net-export/`).
+1. In your browser, go to `chrome://net-export/` (or `edge://net-export/`).
 2. Select **Start Logging to Disk**.
-3. Reproduce the issue by visiting the problematic website.
+3. Go to the website you want to test with the affected browser.
 4. Select **Stop Logging**.
-5. Open the downloaded file at [netlog-viewer](https://netlog-viewer.appspot.com/).
+5. Open the downloaded file with [netlog-viewer](https://netlog-viewer.appspot.com/).
 6. Search for your domain to see proxy resolution decisions.
 
 </Details>
 
 <Details header="Firefox">
 
-1. Open the Browser Console: **Tools** > **Browser Tools** > **Browser Console** (or press `Ctrl+Shift+J` on Windows/Linux, `Cmd+Shift+J` on macOS).
-2. Go to the website you want to test.
+1. In Firefox, go to **Tools** > **Browser Tools** > **Browser Console**.
+2. Go to the website you want to test with the affected browser.
 3. Look for messages related to proxy resolution.
-4. You can also test PAC file logic directly in the console by copying your `FindProxyForURL` function and calling it with test URLs.
+
+You can also test PAC file logic directly in the console by copying your `FindProxyForURL` function and calling it with test URLs. For example:
+
+TODO
 
 </Details>
 
 <Details header="Safari">
 
-1. Enable the Develop menu: **Safari** > **Settings** > **Advanced** > **Show Develop menu in menu bar**.
-2. Select **Develop** > **Show Web Inspector**.
-3. Go to the **Network** tab.
-4. Look at the request details to verify proxy usage.
+1. In Safari, go to **Safari** > **Settings**, then select **Advanced**.
+2. Turn on **Show Develop menu in menu bar**.
+3. Select **Develop** > **Show Web Inspector**.
+4. Go to the **Network** tab.
+5. Look at the request details to verify proxy usage.
 
 </Details>
 
@@ -343,4 +349,4 @@ Excessive DNS lookups in the PAC file can cause delays. Review your PAC file and
 
 ### Browser caches PAC files incorrectly
 
-When you update a PAC file, browsers may continue to use a cached version, causing unexpected behavior. Clear your browser cache and restart the browser after updating the PAC file to ensure the latest version is used.
+When you update a PAC file, browsers may continue to use a cached version, causing unexpected behavior. Clear your browser cache and restart the browser after updating the PAC file to ensure the browser uses the latest version.
