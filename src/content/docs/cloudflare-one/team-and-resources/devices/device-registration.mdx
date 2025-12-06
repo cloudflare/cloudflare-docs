@@ -7,64 +7,82 @@ sidebar:
 
 import { TabItem, Tabs } from "~/components";
 
-A device registration is an individual session within a device. A device registration status indicates the current state of a device registration, such as `Active` or `Revoked`. Device registrations can be deleted but if a user still has 
+A device registration represents an individual session of the WARP client on a physical device, linking a user (or service token) and the device to your Zero Trust organization.  A device registration is created when the WARP client first [authenticates](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). Cloudflare authenticates each device registration with a unique public key.
 
-## Device registration
+A single physical device can have multiple device registrations, for instance, if multiple users share a single laptop and each enrolls the WARP client with their own credentials.
 
-A device registration represents the identity a device uses to connect through WARP. Each registration represents a specific combination of user or service token and device.
+To review how many device registrations are associated with a device:
 
-Cloudflare authenticates each device registration with a public key. Each device registration's public key is unique
+1. Log into [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Teams & Resources** > **Devices**.
+2. Select a device and select **View details**.
+3. Scroll down to **Users** and review users who enrolled on this device.
 
-A single device may have multiple device registrations, such as in a shared-device environment where multiple users share and use a single device.
-
-:::tip[Check a device's registrations]
-
-Review how many device registrations are associated with a device by logging into [Cloudflare One](https://one.dash.cloudflare.com/) and going to **Teams & Resources** > **Devices** > select a device > **View details** > scroll down to **Users** and review users who enrolled on this device.
-
-:::
-
-The onboarding process for Cloudflare One starts with creating your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization) and configuring an identity provider (IdP) or one-time pin for user authentication. After setting up the login method, administrators define [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to specify which users are able to connect devices to your organization.
-
-Whether the WARP client is installed manually by a user or deployed through an MDM solution, a device registration is created when the WARP client first authenticates.
+## Key concepts
 
 | Concept | Definition |
 |--------|------------|
-| User | An IdP-backed human identity that can connect new devices to your Zero Trust organization. |
-| Seat | definition needed |
+| User | An identity provider (IdP)-backed human identity that can connect new devices to your Zero Trust organization. |
+| Seat | A unique, billable user within your Zero Trust organization who has performed [an authentication event](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). |
 | [Service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) | Used by automated systems (a non-human identity) to authenticate against your Cloudflare One policies. |
 | Device registration | A public key, associated to a user and device, used by WARP to connect to Cloudflare's network. |
 | [Session](/cloudflare-one/access-controls/access-settings/session-management/) | JSON Web Tokens (JWTs) that are generated when Access validates user identity against your Access policies and determines how long a user can access an Access application without re-authenticating. |
 
 ## Device registration statuses
 
+To check a device registration status:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Devices**.
+2. Select the device and select **View details**.
+3. Scroll down to **Users** and find the user associated with the device.
+4. Review the status (such as `Active` or `Revoked`) of the device registration under **Status**.
+
 Registrations can have the following statuses:
 
 | Status | Description |
 | --- | --- |
 | **Active** | Registered and able to connect via WARP. This is the expected operational state. |
-| **Revoked** | The registration's public key is invalidated, preventing the device from connecting. The device registration can be unrevoked manually or via WARP re-authentication. |
-| **Deleted** | The registration is permanently removed from the account and no longer appears in your device list. Deletion is permanent and requires re-registering the device. |
+| **Revoked** | The registration's public key is invalidated. |
 
-:::caution[Revocation has no practical usefulness] 
+A deleted device registration is permanently removed from the account and no longer appears in your device list. Deletion is permanent and requires re-registering the device. 
 
-The WARP clients automatically re-registers when it detects that a device registration has been revoked. As a result, the **Unrevoke** action has no practical effect and will be phased out in the near future.
+## Device and device registration management
+
+:::caution[Seat usage and offboarding]
+
+Deleting a device or device registration does not change a user's seat usage. To stop a user from consuming a seat, you must remove the user from your Access policies and/or delete the user from your Zero Trust organization. If you need to decommission an employee's access completely, the recommended steps are:
+
+1. Delete the employee/user in Access. This should automatically delete all their associated registrations on all devices.
+2. Review and, if necessary, remove any service tokens the device may have used from Access.
 
 :::
 
-To check your device status:
+### Delete a device 
 
-1. Log into [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Go to **Teams & Resources** > **Devices**.
-3. Select the device and select **View details**.
-4. Scroll down to **Users** and find the user associated with the device.
-5. Review the status (such as `Active` or revoked) of the device registration under **Status**.
+Deleting a device removes the physical device from your Cloudflare Zero Trust account. This action automatically deletes all associated device registrations.
 
-## Revoke and unrevoke access
+Devices that have zero active registrations (because all registrations deleted) are hidden by default in Cloudflare One > **Teams & Resources** > **Devices** table. You may need to adjust the filter to view devices with zero device registrations.
 
-Revoke access when you need to prevent a device from connecting (for example, if a work laptop is stolen) while still allowing the user to register a new device.
+:::caution[Device re-creation]
 
-- Revoking disallows the device from connecting to Cloudflare's network. The public key remains on the device during revocation.
-- Unrevoking reuses the same public key and re-authenticates the device to grant access again.
+If you delete a device record, but the WARP client remains installed and is successfully able to re-authenticate, the device record will be automatically recreated in your dashboard with a new device registration. For long-term, permanent denial of access, you should ______
+
+:::
+
+To delete a device:
+
+1. In Cloudflare One > **Teams & Resources** > **Devices**.
+2. Select the device and select **View details**.
+3. Select **Delete**.
+
+### Revoke a registration
+
+Revoking a registration invalidates its associated public key, disallowing the specific registration from connecting to Cloudflare's network.
+
+:::caution
+
+If a user re-authenticates while the device registration is revoked, the public key will automatically validate making the device registration active again. For long-term, permanent denial of access, you should ______
+
+:::
 
 TODO: add revoke and unrevoke instructions
 
@@ -85,15 +103,15 @@ TODO: add revoke and unrevoke instructions
 </TabItem>
 </Tabs>
 
-:::caution
-
-Device revocation does not change [seat usage](/cloudflare-one/team-and-resources/users/seat-management/). To stop a user from consuming a seat, [remove the user](/cloudflare-one/team-and-resources/users/seat-management/#remove-a-user) from your organization.
-
-:::
-
-## Delete a registration
+### Delete a registration
 
 Deleting a registration permanently removes it from your account. If you delete a registration, you will need to re-register the device to connect to your organization.
+
+:::caution
+
+If a user re-authenticates while their device registration is deleted, a new public key and device registration will be automatically created for that user. For long-term, permanent denial of access, you should ______
+
+:::
 
 You can delete a registration by: TODO: add delete instructions
 
@@ -101,9 +119,3 @@ You can delete a registration by: TODO: add delete instructions
 - Running `warp-cli registration delete` on the device.
 - Using the [API](/api/resources/zero_trust/subresources/devices/subresources/devices/methods/delete/).
 - Uninstalling the WARP client (may automatically delete the registration).
-
-:::caution
-
-Deleting a device registration does not change [seat usage](/cloudflare-one/team-and-resources/users/seat-management/). To stop a user from consuming a seat, you must [remove the user](/cloudflare-one/team-and-resources/users/seat-management/#remove-a-user) from your organization.
-
-:::
