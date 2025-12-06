@@ -224,7 +224,64 @@ To create a source IP endpoint:
 
 A PAC file is a text file written in JavaScript that specifies which traffic should redirect to the proxy server. You can create a PAC file in the Cloudflare dashboard or write your own custom PAC file.
 
+:::tip
 For detailed instructions and examples for creating a PAC file, refer to [PAC file best practices](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/).
+:::
+
+### Create a hosted PAC file
+
+When you create a PAC file in Cloudflare One, Cloudflare will host it in a publicly accessible Worker. Hosted PAC files are automatically distributed through Cloudflare's global network.
+
+To create a hosted PAC file:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies**.
+2. Select **Proxy endpoints**.
+3. [Create a proxy endpoint](#1-create-a-proxy-endpoint) or select an existing one, then select **Edit**.
+4. Select **Add PAC files**.
+5. Configure your PAC file:
+
+   In **PAC file details**:
+   1. Enter the **Basic Information**, including a name and optional description.
+   2. (Optional) Customize the **URL slug** to create a memorable URL path. The slug cannot be changed after creation.
+   3. In **PAC file configuration**, select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The available templates are Okta and Azure. After you select a template, **PAC file JavaScript** will populate with the selected template.
+   4. Modify the JavaScript as needed to match your network requirements.
+
+   In **Setup instructions**:
+   1. Choose a browser.
+   2. Follow the instructions in Cloudflare One to configure devices.
+
+6. Select **Create**.
+
+Your hosted PAC file URL will be:
+
+```txt
+https://pac.cloudflare-gateway.com/<account-id>/<slug>
+```
+
+Where:
+
+- `<account-id>` is your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/)
+- `<slug>` is the customizable path you specified (or an auto-generated value if not customized)
+
+#### Hosted PAC file limits
+
+Cloudflare-hosted PAC files have the following limits:
+
+- **Maximum file size**: 256 KB per PAC file
+- **Maximum PAC files per account**: 100
+- **Update propagation**: Changes to PAC files propagate within seconds to minutes across the global network
+
+#### Caching behavior
+
+Hosted PAC files are cached globally for performance and reliability:
+
+- Browsers and operating systems may cache PAC files locally based on their own policies
+- Updates to hosted PAC files automatically invalidate the cache
+- If you need to force clients to fetch a new version, you may need to clear browser caches or restart browsers depending on the client configuration
+
+### Self-hosting PAC files
+
+You can also host PAC files on your own infrastructure, such as an internal web server or [Cloudflare Workers](/workers/). Self-hosting gives you complete control over the hosting environment but requires you to manage availability and distribution.
 
 ## 3. Configure your devices
 
