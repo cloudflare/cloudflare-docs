@@ -34,7 +34,7 @@ To create a Workflow, use the `create cloudflare` (C3) CLI tool, specifying the 
 npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflows-starter"
 ```
 
-This will create a new folder called `workflows-tutorial`, which contains two files:
+This will create a new folder called `workflows-starter`, which contains two files:
 
 * `src/index.ts` - this is where your Worker script, including your Workflows definition, is defined.
 * wrangler.jsonc - the [Wrangler configuration file](/workers/wrangler/configuration/) for your Workers project and your Workflow.
@@ -158,7 +158,7 @@ You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the 
 
 ```sh
 # Trigger a Workflow from the CLI, and pass (optional) parameters as an event to the Workflow.
-npx wrangler@latest workflows trigger workflows-tutorial --params={"email": "user@example.com", "metadata": {"id": "1"}}
+npx wrangler@latest workflows trigger workflows-starter --params={"email": "user@example.com", "metadata": {"id": "1"}}
 ```
 
 Refer to the [events and parameters documentation](/workflows/build/events-and-parameters/) to understand how events are passed to Workflows.
