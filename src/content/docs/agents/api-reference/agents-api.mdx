@@ -880,6 +880,166 @@ class CustomerSupportAgent extends AIChatAgent<Env> {
 
 </TypeScriptExample>
 
+#### Chat processing modes
+
+The `AIChatAgent` class supports two modes for handling multiple incoming messages:
+
+- **Sequential mode** (default): Process each message one-by-one. Each message gets its own response. Messages are queued and processed in order.
+- **Batch mode**: Combine multiple rapid messages into one response. Uses debounce timing and optional typing indicators to batch messages.
+
+##### Sequential mode
+
+Sequential mode is the default. Each message receives its own individual response, processed in order through a durable queue.
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+
+// Default behavior - no configuration needed
+export class ChatAgent extends AIChatAgent<Env> {
+	async onChatMessage() {
+		// Each message processed one-by-one
+		const result = streamText({
+			model: openai("gpt-4o"),
+			messages: this.messages,
+		});
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+##### Batch mode
+
+Batch mode combines multiple rapid messages into a single response. This is useful for conversational interfaces where users may send multiple short messages in quick succession.
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+
+export class ChatAgent extends AIChatAgent<Env> {
+	// Configure batch mode via static options
+	static options = {
+		...AIChatAgent.options,
+		chatProcessingMode: "batch" as const,
+		chatIdleTimeout: 2000, // Wait 2s after last message
+		chatTypingTimeout: 5000, // Wait 5s after typing stops
+	};
+
+	async onChatMessage() {
+		// All batched messages are in this.messages
+		const result = streamText({
+			model: openai("gpt-4o"),
+			messages: this.messages,
+		});
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+##### Configuration options
+
+When using batch mode, you can configure the timing behavior:
+
+- `chatIdleTimeout`: How long to wait after a message is sent before processing (default: 3000ms)
+- `chatTypingTimeout`: How long to wait after user stops typing before processing (default: 5000ms)
+
+<TypeScriptExample>
+
+```ts
+type ChatProcessingMode = "sequential" | "batch";
+
+type AIChatAgentOptions = {
+	hibernate: boolean;
+	chatProcessingMode: ChatProcessingMode;
+	chatIdleTimeout: number;
+	chatTypingTimeout: number;
+};
+
+class AIChatAgent {
+	static options: AIChatAgentOptions = {
+		hibernate: true,
+		chatProcessingMode: "sequential",
+		chatIdleTimeout: 3000,
+		chatTypingTimeout: 5000,
+	};
+}
+```
+
+</TypeScriptExample>
+
+##### Typing indicators
+
+When using batch mode, you can send typing indicators to delay processing while the user is actively typing. This prevents the agent from responding too quickly when the user intends to send multiple messages.
+
+<TypeScriptExample>
+
+```tsx
+import { useAgentChat } from "agents/ai-react";
+import { useAgent } from "agents/react";
+
+function ChatInterface() {
+	const agent = useAgent({
+		agent: "chat-agent",
+		name: "user-123",
+	});
+
+	const { messages, input, handleInputChange, handleSubmit, onInputChange } =
+		useAgentChat({ agent });
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<textarea
+				value={input}
+				onChange={(e) => {
+					handleInputChange(e);
+					// Send typing indicator to delay processing
+					onInputChange(e);
+				}}
+			/>
+			<button type="submit">Send</button>
+		</form>
+	);
+}
+```
+
+</TypeScriptExample>
+
+Alternatively, use the `inputProps` helper for automatic typing detection:
+
+<TypeScriptExample>
+
+```tsx
+function ChatInterface() {
+	const agent = useAgent({
+		agent: "chat-agent",
+		name: "user-123",
+	});
+
+	const { messages, input, handleInputChange, handleSubmit, inputProps } =
+		useAgentChat({ agent });
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<textarea
+				value={input}
+				onChange={(e) => {
+					handleInputChange(e);
+					inputProps.onChange(e);
+				}}
+			/>
+		</form>
+	);
+}
+```
+
+</TypeScriptExample>
+
 #### Resumable streaming
 
 The `AIChatAgent` class provides **automatic resumable streaming** out of the box. When a client disconnects and reconnects during an active stream, the response automatically resumes from where it left off. This works across browser tabs and devices.
@@ -1005,6 +1165,18 @@ function useAgentChat(options: UseAgentChatOptions): {
 	}) => void;
 	// Current error if any
 	error: Error | undefined;
+	// Send a typing indicator to the agent (throttled)
+	sendTypingIndicator: () => void;
+	// Input change handler that automatically sends typing indicators
+	onInputChange: (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => void;
+	// Props to spread onto your input element for automatic typing detection
+	inputProps: {
+		onChange: (
+			e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+		) => void;
+	};
 };
 ```
 
