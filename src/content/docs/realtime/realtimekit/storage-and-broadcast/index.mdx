@@ -10,29 +10,17 @@ sidebar:
 The RealtimeKit Stores API allows you to create multiple key-value pair realtime stores. Users can subscribe to changes in a store and receive real-time updates. Data is stored till a [session](/realtime/realtimekit/concepts/session) is active.
 
 ### Create a Store
-Allows users to create a global store (Changes are synced with other users) or a local store (Changes not synced with other users).
+Allows users to create a realtime store (Changes are synced with other users) 
 
 | Param     | Type | Description | Required |
 | --------- | --- | --- | --- |
 | storeName | string | Name of the store | true |
-| options   | StoreOptions | Options to configure the store | false |
-
-```ts
-interface StoreOptions {
-    local: boolean; // If true, the store is created locally and changes are not synced with other users
-}
-```
 
 Here is how you can create a store:
 > **Note:** This method must be executed for every user.
 
 ```ts
-// create a global store
-meeting.stores.create('myStore');
-
-// create a local store
-const options: Options = { local: true };
-meeting.stores.create('myLocalStore', options);
+const store = meeting.stores.create('myStore');
 ```
 
 ### Load Remote Stores
@@ -89,19 +77,10 @@ A store can be deleted using the `storeName`.
 | Param         | Type               | Description                                | Required |
 | ------------- | ------------------ | ------------------------------------------ | -------- |
 | storeName     | string             | Name of the store                          | Yes      |
-| options       | StoreOptions       | Options to configure the specify to delete | No       |
 
-```ts
-interface StoreOptions {
-    local: boolean; // If true, the store is created locally and changes are not synced with other users
-}
-```
 ```ts
 // delete a global store
 await meeting.stores.delete('myStore');
-
-// delete a local store
-meeting.stores.delete('myLocalStore', { local: true });
 ```
 
 ### Fetch Store Data
