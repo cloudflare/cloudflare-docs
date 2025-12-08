@@ -54,7 +54,7 @@ Now that you have authenticated into your Cloudflare account and configured GTM 
 Yes. This is expected behavior. **Set up tag** does not control whether the script is injected. It controls the content of the injected script.
 
 When **Set up tag** is turned off, a base initialization script is still injected. This allows you to implement your own customized Google Tag Manager (GTM) logic. This is useful for selectively applying GTM to specific parts of your website. 
-2. When "Set up tag" is **enabled**, injects the standard Google Tag Manager script which includes the line
+When **Set up tag** is turned on, Cloudflare injects the standard Google Tag Manager script which includes the line:
 ```js showLineNumbers
 w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
 ```
