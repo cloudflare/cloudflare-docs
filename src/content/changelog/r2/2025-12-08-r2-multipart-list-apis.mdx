@@ -1,0 +1,39 @@
+---
+title: List multipart uploads and parts with the R2 Workers API
+description: New Workers API methods to list in-progress multipart uploads and their uploaded parts
+products:
+  - r2
+date: 2025-12-08
+---
+
+The [R2 Workers API](/r2/api/workers/workers-api-reference/) now includes two new methods for managing multipart uploads:
+
+#### List multipart uploads
+
+Use [`listMultipartUploads()`](/r2/api/workers/workers-api-reference/#r2listmultipartuploadsoptions) on your R2 bucket binding to list all in-progress multipart uploads. This is useful for monitoring active uploads or cleaning up incomplete ones.
+
+```js
+const uploads = await env.MY_BUCKET.listMultipartUploads({
+  prefix: "uploads/",
+  limit: 100,
+});
+
+for (const upload of uploads.uploads) {
+  console.log(`Upload: ${upload.key}, ID: ${upload.uploadId}`);
+}
+```
+
+#### List parts of a multipart upload
+
+Use [`listParts()`](/r2/api/workers/workers-api-reference/#r2listpartsoptions) on an `R2MultipartUpload` object to list all parts that have been uploaded. This enables you to resume uploads by checking which parts have already been uploaded.
+
+```js
+const multipartUpload = env.MY_BUCKET.resumeMultipartUpload(key, uploadId);
+const result = await multipartUpload.listParts();
+
+for (const part of result.parts) {
+  console.log(`Part ${part.partNumber}: ${part.size} bytes`);
+}
+```
+
+Both methods support pagination for handling large result sets. For more details and examples, refer to the [Workers API reference](/r2/api/workers/workers-api-reference/) and [multipart upload guide](/r2/api/workers/workers-multipart-usage/).
