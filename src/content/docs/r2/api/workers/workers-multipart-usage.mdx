@@ -269,6 +269,65 @@ def upload_part(filename, partsize, url, uploadId, index):
 upload_file(worker_endpoint, filename, partsize)
 ```
 
+## List multipart uploads
+
+You can list all in-progress multipart uploads in a bucket using the `listMultipartUploads` method. This is useful for managing and cleaning up incomplete uploads.
+
+```js
+// List all in-progress multipart uploads
+const uploads = await env.MY_BUCKET.listMultipartUploads();
+
+for (const upload of uploads.uploads) {
+	console.log(`Upload: ${upload.key}, ID: ${upload.uploadId}, Started: ${upload.initiated}`);
+}
+
+// Handle pagination for large results
+let cursor = uploads.cursor;
+while (uploads.truncated) {
+	const moreUploads = await env.MY_BUCKET.listMultipartUploads({ cursor });
+	for (const upload of moreUploads.uploads) {
+		console.log(`Upload: ${upload.key}, ID: ${upload.uploadId}`);
+	}
+	cursor = moreUploads.cursor;
+	uploads.truncated = moreUploads.truncated;
+}
+
+// Filter by prefix
+const filteredUploads = await env.MY_BUCKET.listMultipartUploads({
+	prefix: "uploads/",
+	delimiter: "/",
+});
+```
+
+## List parts of a multipart upload
+
+You can list all parts that have been uploaded to a multipart upload using the `listParts` method. This is useful for resuming uploads or verifying which parts have been uploaded.
+
+```js
+// Resume an existing multipart upload
+const multipartUpload = env.MY_BUCKET.resumeMultipartUpload(key, uploadId);
+
+// List all uploaded parts
+const result = await multipartUpload.listParts();
+
+for (const part of result.parts) {
+	console.log(
+		`Part ${part.partNumber}: etag=${part.etag}, size=${part.size}, uploaded=${part.uploaded}`
+	);
+}
+
+// Handle pagination for uploads with many parts
+let partNumberMarker = result.partNumberMarker;
+while (result.truncated) {
+	const moreParts = await multipartUpload.listParts({ partNumberMarker });
+	for (const part of moreParts.parts) {
+		console.log(`Part ${part.partNumber}: size=${part.size}`);
+	}
+	partNumberMarker = moreParts.partNumberMarker;
+	result.truncated = moreParts.truncated;
+}
+```
+
 ## State management
 
 The stateful nature of multipart uploads does not easily map to the usage model of Workers, which are inherently stateless. In a normal multipart upload, the multipart upload is usually performed in one continuous execution of the client application. This is different from multipart uploads in a Worker, which will often be completed over multiple invocations of that Worker. This makes state management more challenging.
@@ -277,4 +336,4 @@ To overcome this, the state associated with a multipart upload, namely the `uplo
 
 In the example Worker and Python application described in this guide, the state of the multipart upload is tracked in the client application which sends requests to the Worker, with the necessary state contained in each request. Keeping track of the multipart state in the client application enables maximal flexibility and allows for parallel and unordered uploads of each part.
 
-When keeping track of this state in the client is impossible, alternative designs can be considered. For example, you could track the `uploadId` and which parts have been uploaded in a Durable Object or other database.
+When keeping track of this state in the client is impossible, alternative designs can be considered. For example, you could track the `uploadId` and which parts have been uploaded in a Durable Object or other database. Alternatively, use `listMultipartUploads` and `listParts` to query the current state of uploads directly from R2.

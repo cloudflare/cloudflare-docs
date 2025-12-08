@@ -140,6 +140,12 @@ class Default(WorkerEntrypoint):
   - Returns an object representing a multipart upload with the given key and uploadId.
   - The resumeMultipartUpload operation does not perform any checks to ensure the validity of the uploadId, nor does it verify the existence of a corresponding active multipart upload. This is done to minimize latency before being able to call subsequent operations on the `R2MultipartUpload` object.
 
+- `listMultipartUploads` <Type text="(options?: R2ListMultipartUploadsOptions): Promise<R2MultipartUploads>" />
+
+  - Returns an `R2MultipartUploads` containing a list of in-progress multipart uploads in the bucket.
+  - The returned list of multipart uploads is ordered lexicographically by key.
+  - Refer to [R2ListMultipartUploadsOptions](#r2listmultipartuploadsoptions) for available options.
+
 ## `R2Object` definition
 
 `R2Object` is created when you `PUT` an object into an R2 bucket. `R2Object` represents the metadata of an object based on the information provided by the uploader. Every object that you `PUT` into an R2 bucket will have an `R2Object` created.
@@ -264,6 +270,12 @@ A multipart upload can be completed or aborted at any time, either through the S
 
   - Completes the multipart upload with the given parts.
   - Returns a Promise that resolves when the complete operation has finished. Once this happens, the object is immediately accessible globally by any subsequent read operation.
+
+- `listParts` <Type text="(options?: R2ListPartsOptions): Promise<R2UploadedParts>" />
+
+  - Returns an `R2UploadedParts` containing a list of parts that have been uploaded to this multipart upload.
+  - Parts are returned in ascending order by part number.
+  - Refer to [R2ListPartsOptions](#r2listpartsoptions) for available options.
 
 ## Method-specific types
 
@@ -451,6 +463,114 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
   - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurrence of the delimiter.
 
   - For example, if no prefix is provided and the delimiter is '/', `foo/bar/baz` would return `foo` as a delimited prefix. If `foo/` was passed as a prefix with the same structure and delimiter, `foo/bar` would be returned as a delimited prefix.
+
+### R2ListMultipartUploadsOptions
+
+- `limit` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The number of results to return. Defaults to `1000`, with a maximum of `1000`.
+
+- `prefix` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The prefix to match keys against. Keys will only be returned if they start with given prefix.
+
+- `cursor` <Type text="string" /> <MetaInfo text="optional" />
+
+  - An opaque token that indicates where to continue listing multipart uploads from. A cursor can be retrieved from a previous list operation.
+
+- `delimiter` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The character to use when grouping keys.
+
+- `startAfter` <Type text="string" /> <MetaInfo text="optional" />
+
+  - A key to start listing multipart uploads after. Used for pagination in combination with cursor.
+
+### R2MultipartUploads
+
+An object containing an array of `R2MultipartUploadListing` objects, returned by `BUCKET_BINDING.listMultipartUploads()`.
+
+- `uploads` <Type text="Array<R2MultipartUploadListing>" />
+
+  - An array of multipart uploads matching the `listMultipartUploads` request.
+
+- `truncated` <Type text="boolean" />
+
+  - If true, indicates there are more results to be retrieved for the current `listMultipartUploads` request.
+
+- `cursor` <Type text="string" /> <MetaInfo text="optional" />
+
+  - A token that can be passed to future `listMultipartUploads` calls to resume listing from that point. Only present if truncated is true.
+
+- `delimitedPrefixes` <Type text="Array<string>" />
+
+  - If a delimiter has been specified, contains all prefixes between the specified prefix and the next occurrence of the delimiter.
+
+### R2MultipartUploadListing
+
+An object representing a single multipart upload in the list returned by `listMultipartUploads`.
+
+- `key` <Type text="string" />
+
+  - The key (object name) for this multipart upload.
+
+- `uploadId` <Type text="string" />
+
+  - The unique identifier for this multipart upload.
+
+- `initiated` <Type text="Date" /> <MetaInfo text="optional" />
+
+  - A Date object representing when the multipart upload was initiated.
+
+- `storageClass` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The storage class associated with this multipart upload.
+
+### R2ListPartsOptions
+
+- `maxParts` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The maximum number of parts to return. Defaults to `1000`, with a maximum of `1000`.
+
+- `partNumberMarker` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The part number to start listing from. Parts with a part number greater than this value will be returned. Must be a positive integer.
+
+### R2UploadedParts
+
+An object containing an array of uploaded parts, returned by `multipartUpload.listParts()`.
+
+- `parts` <Type text="Array<R2UploadedPartInfo>" />
+
+  - An array of parts that have been uploaded to this multipart upload.
+
+- `truncated` <Type text="boolean" />
+
+  - If true, indicates there are more parts to be retrieved for the current `listParts` request.
+
+- `partNumberMarker` <Type text="number" /> <MetaInfo text="optional" />
+
+  - A part number marker that can be passed to future `listParts` calls to resume listing from that point. Only present if truncated is true.
+
+### R2UploadedPartInfo
+
+An object representing detailed information about an uploaded part.
+
+- `partNumber` <Type text="number" />
+
+  - The part number of this part.
+
+- `etag` <Type text="string" />
+
+  - The etag of this part.
+
+- `size` <Type text="number" />
+
+  - The size of this part in bytes.
+
+- `uploaded` <Type text="Date" />
+
+  - A Date object representing when this part was uploaded.
 
 ### Conditional operations
 
