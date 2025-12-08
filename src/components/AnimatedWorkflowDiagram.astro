@@ -44,7 +44,7 @@ const { steps, autoPlay = true, loop = true } = Astro.props;
 		z-index: 0;
 	}
 
-	:global(.dark) animated-workflow-diagram :global(.workflow-line) {
+	:root[data-theme="dark"] animated-workflow-diagram :global(.workflow-line) {
 		background-color: rgb(64 64 64);
 	}
 
@@ -70,7 +70,9 @@ const { steps, autoPlay = true, loop = true } = Astro.props;
 		width: 280px;
 	}
 
-	:global(.dark) animated-workflow-diagram :global(.workflow-node-card) {
+	:root[data-theme="dark"]
+		animated-workflow-diagram
+		:global(.workflow-node-card) {
 		background: rgb(23 23 23);
 		border-color: rgb(64 64 64);
 	}
@@ -81,10 +83,10 @@ const { steps, autoPlay = true, loop = true } = Astro.props;
 		border-color: rgb(163 163 163);
 	}
 
-	:global(.dark)
+	:root[data-theme="dark"]
 		animated-workflow-diagram
 		:global(.workflow-node.running .workflow-node-card),
-	:global(.dark)
+	:root[data-theme="dark"]
 		animated-workflow-diagram
 		:global(.workflow-node.completed .workflow-node-card) {
 		border-color: rgb(115 115 115);
@@ -102,7 +104,7 @@ const { steps, autoPlay = true, loop = true } = Astro.props;
 		color: rgb(115 115 115);
 	}
 
-	:global(.dark) animated-workflow-diagram :global(.step-badge) {
+	:root[data-theme="dark"] animated-workflow-diagram :global(.step-badge) {
 		background-color: rgb(38 38 38);
 		color: rgb(163 163 163);
 	}
@@ -113,10 +115,10 @@ const { steps, autoPlay = true, loop = true } = Astro.props;
 		color: rgb(64 64 64);
 	}
 
-	:global(.dark)
+	:root[data-theme="dark"]
 		animated-workflow-diagram
 		:global(.workflow-node.running .step-badge),
-	:global(.dark)
+	:root[data-theme="dark"]
 		animated-workflow-diagram
 		:global(.workflow-node.completed .step-badge) {
 		background-color: rgb(64 64 64);
@@ -149,7 +151,7 @@ const { steps, autoPlay = true, loop = true } = Astro.props;
 		color: rgb(23 23 23);
 	}
 
-	:global(.dark) animated-workflow-diagram :global(.step-name) {
+	:root[data-theme="dark"] animated-workflow-diagram :global(.step-name) {
 		color: rgb(245 245 245);
 	}
 
@@ -158,7 +160,9 @@ const { steps, autoPlay = true, loop = true } = Astro.props;
 		color: rgb(115 115 115);
 	}
 
-	:global(.dark) animated-workflow-diagram :global(.step-description) {
+	:root[data-theme="dark"]
+		animated-workflow-diagram
+		:global(.step-description) {
 		color: rgb(163 163 163);
 	}
 
@@ -186,7 +190,7 @@ const { steps, autoPlay = true, loop = true } = Astro.props;
 		cursor: default;
 	}
 
-	:global(.dark) animated-workflow-diagram :global(.start-end-btn) {
+	:root[data-theme="dark"] animated-workflow-diagram :global(.start-end-btn) {
 		background-color: rgb(64 64 64);
 	}
 
