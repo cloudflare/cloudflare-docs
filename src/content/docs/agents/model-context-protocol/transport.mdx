@@ -102,6 +102,21 @@ If you have an existing MCP server using the `McpAgent` class:
 - **Using state?** Use `createMcpHandler` with a `WorkerTransport` inside an [Agent](/agents/) class. See [Stateful MCP Servers](/agents/model-context-protocol/mcp-handler-api#stateful-mcp-servers) for details.
 - **Need SSE support?** Continue using `McpAgent` with `serveSSE()` for legacy client compatibility. See the [McpAgent API reference](/agents/model-context-protocol/mcp-agent-api/).
 
+## Protocol version validation
+
+The Agents SDK transport implementation follows a stateless approach to MCP protocol version validation. During the initialization handshake, the SDK negotiates the protocol version according to the MCP specification. After initialization, the transport validates protocol versions as follows:
+
+- **When the `MCP-Protocol-Version` header is present**: The version must be in the list of supported protocol versions, or the request is rejected with a 400 Bad Request error.
+- **When the `MCP-Protocol-Version` header is absent**: The request is accepted and uses the version negotiated during initialization.
+
+This stateless validation approach means:
+
+- Clients are not required to send the `MCP-Protocol-Version` header on subsequent requests after initialization.
+- The transport does not enforce version consistency across requests. Clients may use different supported protocol versions in different requests (though this is not recommended).
+- Only explicitly unsupported protocol versions are rejected.
+
+This design aligns with the stateless nature of HTTP transports and delegates protocol-level version semantics to the MCP SDK.
+
 ### Testing with MCP clients
 
 You can test your MCP server using an MCP client that supports remote connections, or use [`mcp-remote`](https://www.npmjs.com/package/mcp-remote), an adapter that lets MCP clients that only support local connections work with remote MCP servers.
