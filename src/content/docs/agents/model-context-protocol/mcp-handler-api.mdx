@@ -230,7 +230,6 @@ export default {
 With persistent storage, the transport preserves:
 
 - Session ID across reconnections
-- Protocol version negotiation state
 - Initialization status
 
 This allows MCP clients to reconnect and resume their session in the event of a connection loss.
@@ -386,7 +385,6 @@ interface MCPStorageApi {
 interface TransportState {
 	sessionId?: string;
 	initialized: boolean;
-	protocolVersion?: ProtocolVersion;
 }
 ```
 
@@ -408,6 +406,20 @@ const transport = new WorkerTransport({
 ```
 
 </TypeScriptExample>
+
+## Protocol Version Validation
+
+The `WorkerTransport` validates the `MCP-Protocol-Version` header on incoming requests but does not track or enforce version consistency after initialization. This stateless approach aligns with the transport's design philosophy.
+
+### How validation works
+
+- **Header present and supported**: Request is accepted
+- **Header present and unsupported**: Returns 400 Bad Request with error message
+- **Header missing**: Request is accepted (defaults to SDK-negotiated version)
+
+The transport only validates that explicitly provided version headers are in the list of supported protocol versions. Protocol version negotiation and semantic versioning is handled by the MCP SDK during the initialization handshake, not by the transport layer.
+
+This means clients can send different supported protocol versions across requests without error, though this is not recommended in practice. The transport trusts the SDK to handle version negotiation correctly and only rejects truly unsupported versions.
 
 ## Authentication Context
 
