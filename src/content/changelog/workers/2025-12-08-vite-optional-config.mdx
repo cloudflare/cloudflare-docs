@@ -3,7 +3,7 @@ title: Wrangler config is optional when using Vite plugin
 description: When using the Cloudflare Vite plugin in an assets-only (static) site, a Wrangler configuration file is now optional.
 products:
   - workers
-date: 2025-12-02
+date: 2025-12-08
 ---
 
 When using the [Cloudflare Vite plugin](/workers/vite-plugin/) to build and deploy Workers, a Wrangler configuration file is now optional for assets-only (static) sites. If no `wrangler.toml`, `wrangler.json`, or `wrangler.jsonc` file is found, the plugin generates sensible defaults for an assets-only site. The `name` is based on the `package.json` or the project directory name, and the `compatibility_date` uses the latest date supported by your installed Miniflare version.
