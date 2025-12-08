@@ -6,15 +6,15 @@ sidebar:
   badge: Beta
 ---
 
-import { Details, Render, TabItem, Tabs } from "~/components";
+import { Details, Render, TabItem, Tabs, APIRequest } from "~/components";
 
 <Render file="warp/external-disconnect-availability" product="cloudflare-one" />
 
 The External Emergency Disconnect feature allows organizations to remotely disconnect their fleet of WARP clients using their own infrastructure, independent of the standard Cloudflare control plane. This capability mitigates single point of failure risk and ensures continuity of control in case Cloudflare services are unavailable.
 
-When External Emergency Disconnect is enabled, WARP clients will periodically poll a customer-hosted HTTPS endpoint. A client will only change its connection state upon receiving a valid JSON payload. Any failure to successfully retrieve the state (such as endpoint unreachability, invalid certificate fingerprint, or an improperly structured payload) will not cause a state change on the client. It will remain in the state corresponding to the last successfully received signal.
+When External Emergency Disconnect is enabled, WARP clients will periodically poll a customer-hosted HTTPS endpoint. A client will only change its connection state if it receives a valid JSON payload with the new state. Any failure to successfully retrieve the state (such as endpoint unreachability, invalid certificate fingerprint, or an improperly structured payload) will not cause a state change on the client.
 
-External Emergency Disconnect can be used in combination with the dashboard-initiated [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) setting. A disconnect signal retrieved from the external endpoint will [take precedence](#warp-settings-precedence).
+You can use External Emergency Disconnect in combination with the dashboard-initiated [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) setting. A disconnect signal retrieved from the external endpoint will [take precedence](#warp-settings-precedence).
 
 ## Use cases
 
@@ -31,11 +31,11 @@ An external disconnect endpoint is an HTTPS server hosted outside of Cloudflare 
 
 ### Endpoint URL
 
-The endpoint URL must:
-- Use HTTPS
-- Use an IPv4 or IPv6 address as the host. A public IP is recommended to ensure that devices can fetch the latest state regardless of their network location.
+The external endpoint URL should:
 
-Does it matter if the URL is in the tunnel vs. outside of the tunnel? IP should be accessible by the device whether WARP is turned on or off.
+- Use the HTTPS protocol.
+- Use an IPv4 or IPv6 address as the host, not a domain.
+- Use a public IP to ensure that devices can fetch the latest state regardless of their network location.
 
 ### Response payload
 
@@ -150,11 +150,31 @@ All WARP clients in your organization will now start polling the external endpoi
 </TabItem>
 <TabItem label="API">
 
+<APIRequest
+  path="/accounts/{account_id}/devices/settings"
+  method="PATCH"
+	json={[
+		{
+		  "external_emergency_signal_enabled": false,
+  		"external_emergency_signal_url": "https://192.0.2.1:3333/status/disconnect",
+  		"external_emergency_signal_fingerprint": "DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662",
+  		"external_emergency_signal_interval": "1m"
+		}
+	]}
+/>
 
 </TabItem>
 
 <TabItem label="MDM">
 
+```xml
+<key>external_emergency_signal_url</key>
+<string>https://192.0.2.1:3333/status/disconnect</string>
+<key>external_emergency_signal_fingerprint</key>
+<string>DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662</string>
+<key>external_emergency_signal_interval</key>
+<integer>60</integer>
+```
 
 </TabItem>
 </Tabs>
@@ -183,10 +203,44 @@ the global disconnection event will appear in [Admin audit logs]
 
 (tbd)
 
-## Turn off External Emergency Disconnect
+## Clear External Emergency Disconnect state
 
-Server has emergency disconnect = true. But then the server goes down and device is stuck in disconnected state. To turn off emergency disconnect: use dashboard/API/MDM.
+If the external endpoint becomes unavailable or serves an invalid configuration, WARP clients can get stuck in the emergency disconnect state. You can recover clients by removing the External Emergency Disconnect configuration. The method depends on how the feature was originally deployed.
 
+### Dashboard or API
+
+The External Emergency Disconnect state cannot be cleared from the Cloudflare One dashboard. To remove the feature configuration, send a `PATCH` request with the endpoint URL and fingerprint set to empty strings:
+
+<APIRequest
+  path="/accounts/{account_id}/devices/settings"
+  method="PATCH"
+	json={[
+		{
+		  "external_emergency_signal_enabled": false,
+  		"external_emergency_signal_url": "",
+  		"external_emergency_signal_fingerprint": "",
+  		"external_emergency_signal_interval": "1m"
+		}
+	]}
+/>
+
+Cloudflare will propagate the new settings to clients, instructing them to stop polling and discard its cached emergency state.
+
+### MDM
+
+If you deployed External Emergency Disconnect using an MDM, remove the `external_emergency_signal_url` key (and other related keys) from the MDM profile. Then, use your MDM to push the changes to devices. WARP will stop polling the external endpoint and discard its cached emergency state.
+
+Alternatively, users can switch WARP to a [different MDM configuration](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/) that does not have the feature configured.
+
+### Local client reset
+
+As a last resort, you can use the CLI to reset External Emergency Disconnect on an individual device:
+
+```
+warp-cli registration delete
+```
+
+This command will clear the client registration, clear the local policy, and discard the cached emergency state. Users will need to [re-enroll WARP](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) with your Zero Trust organization.
 
 ## WARP settings precedence
 
