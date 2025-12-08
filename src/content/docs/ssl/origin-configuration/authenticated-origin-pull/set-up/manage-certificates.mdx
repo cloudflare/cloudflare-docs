@@ -35,6 +35,12 @@ However, requests are dropped at your origin if your origin only accepts a valid
 
 ## Replace a client cert (without downtime)
 
+:::note
+The most recently created certificate in a non-deleted status will always be used. Some customers actually rely on expired AOP certs being deployed at the edge, so we keep expired certs deployed to the edge. The expiration date will only drive issuing expiry notifications 29 days before and 13 days before expiration.
+
+Use the API to derive the most recently created certificate (via the `created_at` timestamp) that is not deleted. 
+:::
+
 ### Per-hostname
 
 1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/create/).
