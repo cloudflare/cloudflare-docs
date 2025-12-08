@@ -48,7 +48,7 @@ WARP Connector uses [encapsulation](/magic-wan/reference/mtu-mss/#encapsulation)
 
 This final encapsulation adds overhead. If a device on your private network sends a packet that is already near the maximum size (1,460 bytes or more), this final encapsulation will create a packet larger than 1,500 bytes, which will be dropped.
 
-Generally, this does not cause issues for TCP traffic and modern applications that use [Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/). When they send a large packet with the `do not fragment` (DF) bit set, the WARP Connector's Linux host will correctly send an ICMP `Fragmentation Needed` message back to the source device. The source device then learns to send smaller packets.
+Generally, this does not cause issues for TCP traffic and modern applications that use [Path MTU Discovery (PMTUD)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/). When they send a large packet with the `do not fragment` (DF) bit set, the WARP Connector's Linux host will correctly send an ICMP `Fragmentation Needed` message back to the source device. The source device then learns to send smaller packets.
 
 However, this may cause issues for legacy applications (like some video streaming or monitoring tools) that may not perform [Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/). Instead, they send large packets (e.g., more than 1,280 bytes) with the `do not fragment` (DF) bit unset (`DF=0`).
 
