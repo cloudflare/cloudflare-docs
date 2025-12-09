@@ -60,7 +60,7 @@ await store.delete('user');
 :::note
 The `set` method overwrites the existing value, while the `update` method updates the existing value.
     
-For example, if the stored value is `['a', 'b']`, and the update operation adds `['c']`, the final value will be `['a', 'b', 'c']`.
+For example, if the stored value is `['a', 'b']` and you call `update` with `['c']`, the final value will be `['a', 'b', 'c']`.
 :::
 
 
