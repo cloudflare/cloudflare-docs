@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-import { Type, GlossaryTooltip } from "~/components";
+import { Type, GlossaryTooltip, Tabs, TabItem } from "~/components";
 
 ## Background
 
@@ -84,6 +84,10 @@ This example shows how to both set alarms with the `setAlarm(timestamp)` method 
 - If an unexpected error terminates the Durable Object, the `alarm()` handler may be re-instantiated on another machine.
 - Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
 
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 import { DurableObject } from "cloudflare:workers";
 
@@ -115,7 +119,48 @@ export class AlarmExample extends DurableObject {
 }
 ```
 
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+import time
+
+from workers import DurableObject, WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return await self.env.ALARM_EXAMPLE.getByName("foo").fetch(request)
+
+SECONDS = 1000
+
+class AlarmExample(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+        self.storage = ctx.storage
+
+    async def fetch(self, request):
+        # If there is no alarm currently set, set one for 10 seconds from now
+        current_alarm = await self.storage.getAlarm()
+        if current_alarm is None:
+            self.storage.setAlarm(int(time.time() * 1000) + 10 * SECONDS)
+
+    async def alarm(self):
+        # The alarm handler will be invoked whenever an alarm fires.
+        # You can use this to do work, read from the Storage API, make HTTP calls
+        # and set future alarms to run using self.storage.setAlarm() from within this handler.
+        pass
+```
+
+</TabItem>
+
+</Tabs>
+
 The following example shows how to use the `alarmInfo` property to identify if the alarm event has been attempted before.
+
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 class MyDurableObject extends DurableObject {
@@ -128,6 +173,21 @@ class MyDurableObject extends DurableObject {
 	}
 }
 ```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+class MyDurableObject(DurableObject):
+    async def alarm(self, alarm_info):
+        if alarm_info and alarm_info.get('retryCount', 0) != 0:
+            print(f"This alarm event has been attempted {alarm_info.get('retryCount')} times before.")
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Related resources
 

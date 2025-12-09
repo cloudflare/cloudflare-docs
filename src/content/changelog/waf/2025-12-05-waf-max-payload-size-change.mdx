@@ -4,20 +4,14 @@ description: We are changing the maximum request-payload size inspected by the C
 date: 2025-12-05
 ---
 
-We are reinstating the maximum request-payload size the Cloudflare WAF inspects to the following values:
-
-|                                  | Free | Professional | Business | Enterprise |
-| -------------------------------- | ---- | ------------ | -------- | ---------- |
-| WAF scans request payload up to: | 1 MB | 8 KB         | 8 KB     | 128 KB     |
+We are reinstating the maximum request-payload size the Cloudflare WAF inspects, with WAF on Enterprise zones inspecting up to 128 KB.
 
 **Key Findings**
 
-On December 5, 2025, we initially attempted to increase the maximum WAF payload limit to 1 MB across all plans. However, an automatic rollout for all customers proved impractical because the increase led to a surge in false positives. This issue was particularly notable within the Cloudflare Managed Ruleset and the Cloudflare OWASP Core Ruleset, impacting customer traffic.
+On December 5, 2025, we initially attempted to increase the maximum WAF payload limit to 1 MB across all plans. However, an automatic rollout for all customers proved impractical because the increase led to a surge in false positives for existing managed rules. 
 
-Consequently, we have decided to revert this change. Our Free plans will maintain the 1 MB limit as they are not experiencing an increase in false positives.
+This issue was particularly notable within the Cloudflare Managed Ruleset and the Cloudflare OWASP Core Ruleset, impacting customer traffic. 
 
 **Impact**
 
-Customers on paid plans can increase the limit to 1 MB for any of their zones by contacting Cloudflare Support. Free zones are already protected up to 1 MB and do not require any action.
-
-The initial increase in the size of the body inspected by the WAF may result in a higher rate of false positives being triggered in both the Cloudflare Managed Ruleset and the Cloudflare OWASP Core Ruleset. This higher rate should revert back to a normal value once the new limits are in place.
+Customers on paid plans can increase the limit to 1 MB for any of their zones by contacting Cloudflare Support. Free zones are already protected up to 1 MB and do not require any action. 

@@ -5,17 +5,17 @@ sidebar:
   order: 8
 ---
 
-Once the recording is complete, by default, RealtimeKit uploads all recordings to RealtimeKit's AWS S3 bucket. Additionally, a presigned URL is generated with a 7-day expiry. The recording can be accessed using the `downloadUrl` associated with each recording.
+Once the recording is complete, by default, RealtimeKit uploads all recordings to RealtimeKit's Cloudflare R2 bucket. Additionally, a presigned URL is generated with a 7-day expiry. The recording can be accessed using the `downloadUrl` associated with each recording.
 
-However, RealtimeKit provides users with the flexibility to choose whether or not to upload their recordings to RealtimeKit's S3 bucket. If you wish to disable uploads to RealtimeKit's bucket, you can set the `realtimekit_bucket_config` parameter to false in the [Start Recording API](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/).
+However, RealtimeKit provides users with the flexibility to choose whether or not to upload their recordings to RealtimeKit's R2 bucket. If you wish to disable uploads to RealtimeKit's bucket, you can set the `realtimekit_bucket_config` parameter to false in the [Start Recording API](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/).
 
 For example:
 
 ```json
 {
-  "realtimekit_bucket_config": {
-    "enabled": false
-  }
+	"realtimekit_bucket_config": {
+		"enabled": false
+	}
 }
 ```
 
