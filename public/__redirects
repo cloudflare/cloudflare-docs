@@ -338,6 +338,7 @@
 /realtime/pricing/ /realtime/sfu/pricing/ 302
 /realtime/changelog/ /realtime/sfu/changelog/ 302
 /realtime/realtimekit/get-started/ /realtime/realtimekit/quickstart/ 302
+/realtime/realtimekit/core/breakout-rooms/ /realtime/realtimekit/ui-kit/breakout-rooms/ 302
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
@@ -1354,6 +1355,9 @@
 /docs-guide/manage-content/redirects/process/ /style-guide/how-we-docs/redirects/ 301
 /docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
 /docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
+/style-guide/components/asides/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
+/style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
 
 # support
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/reference/troubleshooting/ 301
@@ -2172,7 +2176,6 @@
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
 /cloudflare-one/tutorials/block-tld/ /cloudflare-one/policies/gateway/dns-policies/common-policies/#block-sites-by-top-level-domain 301
-/cloudflare-one/insights/analytics/ /cloudflare-one/insights/analytics-overview/ 301
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
 /cloudflare-one/identity/entra-id/ /cloudflare-one/identity/idp-integration/entra-id/ 301
 /warp-client/warp-for-teams/teams/ /cloudflare-one/connections/connect-devices/warp/deployment/ 301
@@ -2247,7 +2250,7 @@
 # Email Security nav revamp (statics)
 /cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
 /cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
-/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/reclassifications/invalid-submissions/ 301
+/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/submissions/invalid-submissions/ 301
 /cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
 /cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
 
@@ -2336,6 +2339,8 @@
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
+/cloudflare-one/email-security/reclassifications/* /cloudflare-one/email-security/submissions/ :splat 301
+
 
 # Cloudflare One nav revamp (dynamics)
 /cloudflare-one/applications/configure-apps/mcp-servers/* /cloudflare-one/access-controls/ai-controls/:splat 301

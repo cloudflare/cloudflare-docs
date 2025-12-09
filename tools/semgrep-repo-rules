@@ -1,5 +1,6 @@
 #! /bin/bash
 
+
 repo_root_dir="$(git rev-parse --show-toplevel)"
 
 pushd "${repo_root_dir}" > /dev/null || return
@@ -17,8 +18,11 @@ if [ -s tools/relevant_changed_files.txt ]; then
     semgrep scan \
       --config .semgrep --metrics=off \
       --include "*.mdx" --include "*.mdx" \
-      --force-color \
+      --error \
       $list_of_files
+  semgrep_return_code=$?
+  echo "return code: $semgrep_return_code"
+  exit $semgrep_return_code
 else
   echo "No relevant files changed."
 fi

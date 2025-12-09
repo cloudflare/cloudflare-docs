@@ -3,6 +3,9 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2025-11-25"
+    description: |-
+      - Updated v8 to version 14.3.
   - publish_date: "2025-10-25"
     description: |-
       - The maximum WebSocket message size limit has been increased from 1 MiB to 32 MiB.

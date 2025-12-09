@@ -31,6 +31,10 @@ Once you have authenticated, you will be redirected back to the inspector. You s
 
 ![MCP inspector — authenticated](~/assets/images/agents/mcp-inspector-authenticated.png)
 
+## Connect your remote MCP server to Cloudflare Workers AI Playground
+
+Visit the [Workers AI Playground](https://playground.ai.cloudflare.com/), enter your MCP server URL, and click "Connect". Once authenticated (if required), you should see your tools listed and they will be available to the AI model in the chat.
+
 ## Connect your remote MCP server to Claude Desktop via a local proxy
 
 Even though [Claude Desktop](https://claude.ai/download) doesn't yet support remote MCP clients, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect it to your remote MCP server. This lets you to test what an interaction with your remote MCP server will be like with a real-world MCP client.
@@ -41,15 +45,13 @@ Even though [Claude Desktop](https://claude.ai/download) doesn't yet support rem
 ```json
 {
 	"mcpServers": {
-		"math": {
+		"my-server": {
 			"command": "npx",
-			"args": ["mcp-remote", "http://my-mcp-server.my-account.workers.dev/sse"]
+			"args": ["mcp-remote", "http://my-mcp-server.my-account.workers.dev/mcp"]
 		}
 	}
 }
 ```
-
-This tells Claude to communicate with your MCP server running at `http://localhost:8788/sse`.
 
 3. Save the file and restart Claude Desktop (command/ctrl + R). When Claude restarts, a browser window will open showing your OAuth login page. Complete the authorization flow to grant Claude access to your MCP server.
 
@@ -57,18 +59,27 @@ Once authenticated, you'll be able to see your tools by clicking the tools icon 
 
 ## Connect your remote MCP server to Cursor
 
-To connect [Cursor](https://www.cursor.com/) with your remote MCP server, choose `Type`: "Command" and in the `Command` field, combine the command and args fields into one (e.g.`npx mcp-remote https://your-worker-name.your-account.workers.dev/sse`).
-
-## Connect your remote MCP server to Windsurf
-
-You can connect your remote MCP server to [Windsurf](https://codeium.com/windsurf) by editing the [`mcp_config.json` file](https://docs.codeium.com/windsurf/mcp), and adding the following configuration:
+Connect [Cursor](https://cursor.com/docs/context/mcp) to your remote MCP server by editing the project's `.cursor/mcp.json` file or a global `~/.cursor/mcp.json` file and adding the following configuration:
 
 ```json
 {
 	"mcpServers": {
-		"math": {
-			"command": "npx",
-			"args": ["mcp-remote", "http://my-mcp-server.my-account.workers.dev/sse"]
+		"my-server": {
+			"url": "http://my-mcp-server.my-account.workers.dev/mcp"
+		}
+	}
+}
+```
+
+## Connect your remote MCP server to Windsurf
+
+You can connect your remote MCP server to [Windsurf](https://docs.windsurf.com) by editing the [`mcp_config.json` file](https://docs.windsurf.com/windsurf/cascade/mcp), and adding the following configuration:
+
+```json
+{
+	"mcpServers": {
+		"my-server": {
+			"serverUrl": "http://my-mcp-server.my-account.workers.dev/mcp"
 		}
 	}
 }

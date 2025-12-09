@@ -7,7 +7,7 @@ head:
 
 ---
 
-import { FeatureTable, Render } from "~/components"
+import { FeatureTable, Render, DashButton } from "~/components"
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an [Edge Cache TTL cache rule](/cache/how-to/cache-rules/settings/#edge-ttl) overrides the headers. Refer to the [Edge TTL](/cache/how-to/configure-cache-status-code/#edge-ttl) section for details on default TTL behavior.
 
@@ -67,8 +67,13 @@ To cache additional content, refer to [Cache Rules](/cache/how-to/cache-rules/) 
 Cloudflare’s CDN provides several cache customization options:
 
 * Caching behavior for individual URLs via [Cache Rules](/cache/how-to/cache-rules/)
+
+ <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+
 * Customize caching with [Cloudflare Workers](/workers/reference/how-the-cache-works/)
-* Adjust caching level, cache TTL, and more via the Cloudflare Caching app
+* Adjust caching level, cache TTL, and more in the Caching page in the Cloudflare dashboard:
+
+ <DashButton url="/?to=/:account/:zone/caching/configuration" />
 
 ### Upload limits
 

@@ -32,6 +32,15 @@ It accepts an optional `PluginConfig` parameter.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
+- `config` <Type text='Partial<WorkerConfig> | ((config: WorkerConfig) => Partial<WorkerConfig> | void)' /> <MetaInfo text='optional' />
+
+  Customize or override Worker configuration programmatically.
+  Accepts a partial configuration object or a function that receives the current config.
+
+  Applied after any config file loads. Use it to override values, modify the existing config, or define Workers entirely in code.
+
+  See [Programmatic configuration](/workers/vite-plugin/reference/programmatic-configuration/) for details.
+
 - `viteEnvironment` <Type text='{ name?: string }' /> <MetaInfo text='optional' />
 
   Optional Vite environment options.
@@ -75,11 +84,21 @@ It accepts an optional `PluginConfig` parameter.
 
 ## `interface AuxiliaryWorkerConfig`
 
-- `configPath` <Type text='string' />
+Auxiliary Workers require a `configPath`, a `config` option, or both.
 
-  A required path to your Worker config file.
+- `configPath` <Type text='string' /> <MetaInfo text='optional' />
+
+  The path to your Worker config file.
+  This field is required unless `config` is provided.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
+
+- `config` <Type text='Partial<WorkerConfig> | ((config: WorkerConfig) => Partial<WorkerConfig> | void)' /> <MetaInfo text='optional' />
+
+  Customize or override Worker configuration programmatically.
+  When used without `configPath`, this allows defining auxiliary Workers entirely in code.
+
+  See [Programmatic configuration](/workers/vite-plugin/reference/programmatic-configuration/) for usage examples.
 
 - `viteEnvironment` <Type text='{ name?: string }' /> <MetaInfo text='optional' />
 
