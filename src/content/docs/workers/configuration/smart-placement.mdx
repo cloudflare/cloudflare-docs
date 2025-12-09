@@ -59,9 +59,12 @@ Add the following to your Wrangler configuration file:
 
 <WranglerConfig>
 
-```toml
-[placement]
-mode = "smart"
+```jsonc
+{
+  "placement": {
+    "mode": "smart"
+  }
+}
 ```
 
 </WranglerConfig>
@@ -122,7 +125,7 @@ The `cf-placement` header may be removed before Smart Placement exits beta.
 
 Placement Hints let you explicitly specify a cloud region where your Worker should run. Use Placement Hints when your Worker connects to infrastructure in a known cloud region, such as databases, services running on virtual machines, or Kubernetes clusters. By placing your Worker near this infrastructure, you can achieve single-digit millisecond latency to your back-end services — as if your Worker is co-located in the same cloud region.
 
-Placement Hints are ideal when back-end requests are on the critical path for your users. For example, if your Worker queries a database on every request, reducing that round-trip latency from 100ms to 2ms significantly improves overall response times.
+Placement Hints are ideal when back-end requests are on the critical path for your users. For example, if your Worker queries a database on every request, reducing that round-trip latency from 20-30ms per query to 1-3ms significantly improves overall response times.
 
 :::note
 Workers run on [Cloudflare's global network](https://www.cloudflare.com/network/), not inside cloud provider regions. Placement Hints run your Worker in the Cloudflare data center with the lowest latency to your specified cloud region.
@@ -134,9 +137,12 @@ Set the `placement.region` property in your Wrangler configuration file using th
 
 <WranglerConfig>
 
-```toml
-[placement]
-region = "aws:us-east-1"
+```jsonc
+{
+  "placement": {
+    "region": "aws:us-east-1"
+  }
+}
 ```
 
 </WranglerConfig>
