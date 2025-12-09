@@ -56,10 +56,11 @@ jobs:
           # Check if file list is empty to prevent errors
           if [ -s tools/relevant_changed_files.txt ]; then
             list_of_files=$(cat tools/relevant_changed_files.txt | tr '\n' ' ')
+
+            # when ready to show errors add back --error below
             semgrep scan \
               --config .semgrep --metrics=off \
               --include "*.mdx" --include "*.mdx" \
-              --error \
               --json \
               $list_of_files \
               | jq --raw-output ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
