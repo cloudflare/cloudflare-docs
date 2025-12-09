@@ -43,7 +43,7 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 
 ### GRE and IPsec tunnels
 
-You can use GRE or IPsec tunnels to onboard your traffic to {props.productName}, and set them up via the Cloudflare dashboard or the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
+You can use GRE or IPsec tunnels to onboard your traffic to {props.productName}, and set them up through the Cloudflare dashboard or the API. If you use the API, you need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -62,7 +62,7 @@ IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
 
 #### Anti-replay protection
 
-If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare's side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> IPsec tunnels, we recommend disabling anti-replay protection. Cloudflare disables this setting by default. However, you can enable it through the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
 Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
 
