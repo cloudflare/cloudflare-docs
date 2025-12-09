@@ -6,59 +6,64 @@ sidebar:
   order: 7
 ---
 
-The RealtimeKit Stores API allows you to create multiple key-value pair realtime stores. Users can subscribe to changes in a store and receive real-time updates. Data is stored till a [session](/realtime/realtimekit/concepts/meeting/#session) is active.
+The RealtimeKit Stores API allows you to create multiple key-value pair realtime stores. Users can subscribe to changes in a store and receive real-time updates. Data is stored until a [session](/realtime/realtimekit/concepts/meeting/#session) is active.
 
 ### Create a Store
-Allows users to create a realtime store (Changes are synced with other users) 
+
+You can create a realtime store (changes are synced with other users):
 
 | Param     | Type | Description | Required |
 | --------- | --- | --- | --- |
-| storeName | string | Name of the store | true |
+| `name` | string | Name of the store | true |
 
-Here is how you can create a store:
-> **Note:** This method must be executed for every user.
+To create a store:
 
 ```ts
 const store = meeting.stores.create('myStore');
 ```
 
-### Load Remote Stores
-Once the store is created you can fetch the remote state of the data in that store.
-
-```ts
-await meeting.stores.populate('myStore');
-```
+:::note
+This method must be executed for every user.
+:::
 
 ### Update a Store
-You can add, update or delete entires in a store like so:
+
+You can add, update or delete entires in a store:
 
 | Param | Type       | Description                                                 | Required |
 | ----- | ---------- | ----------------------------------------------------------- | -------- |
-| key   | string     | Unique identifier used to store/update a value in the store | Yes      |
-| value | StoreValue | Value that can be stored agains a key                       | Yes      |
+| `key`   | string     | Unique identifier used to store/update a value in the store | Yes      |
+| `value` | StoreValue | Value that can be stored agains a key                       | Yes      |
 
 
 ```ts
 type StoreValue = string | number | object | array;
 ```
 ```ts
-const store = meeting.stores.get('myStore');
+const { stores } = meeting.stores;
+const store = stores.get('myStore');
 
 await store.set('user', { name: 'John Doe' });
 
 await store.update('user', { age: 34 });  // { name: 'John Doe', age: 34 }
 
-await store.delete('key');
+await store.delete('user');
 ```
-> **Note:** The `set` method overwrites the existing value, while the `update` method updates the existing value.<br/>
-    For Example:  If the stored value is `['a', 'b']`, and the update operation adds `['c']`, the final value will be `['a', 'b', 'c']`.
+
+:::note
+The `set` method overwrites the existing value, while the `update` method updates the existing value.
+    
+For example, if the stored value is `['a', 'b']` and you call `update` with `['c']`, the final value will be `['a', 'b', 'c']`.
+:::
 
 
 ### Subscribe to a Store
-Attach event listenerds on a store's key which fire when the value changes.
+
+You can attach event listeners on a store's key, which fire when the value changes.
 
 ```ts
-const store = meeting.stores.get('myStore');
+const { stores } = meeting.stores;
+const store = stores.get('myStore');
 store.subscribe('key', (data) => { 
     console.log(data);
 });
@@ -71,21 +76,12 @@ store.subscribe('*', (data) => {
 store.unsubscribe('key');
 ```
 
-### Delete a Store
-A store can be deleted using the `storeName`.
-| Param         | Type               | Description                                | Required |
-| ------------- | ------------------ | ------------------------------------------ | -------- |
-| storeName     | string             | Name of the store                          | Yes      |
-
-```ts
-// delete a global store
-await meeting.stores.delete('myStore');
-```
-
 ### Fetch Store Data
-You can fetch the data stored in the store like so:
+
+You can fetch the data stored in the store:
 ```ts
-const store = meeting.stores.get('myStore');
+const { stores } = meeting.stores;
+const store = stores.get('myStore');
 
 // fetch value for a specific key
 const data = store.get('key');

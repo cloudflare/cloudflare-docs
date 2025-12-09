@@ -8,7 +8,7 @@ head:
     content: Cloudflare Queues - Pull consumers
 ---
 
-import { WranglerConfig, DashButton } from "~/components";
+import { WranglerConfig, DashButton, TypeScriptExample, Tabs, TabItem } from "~/components";
 
 A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
 
@@ -117,6 +117,8 @@ You will need to note the token down: it will only be displayed once.
 
 To pull a message, make a HTTP POST request to the [Queues REST API](/api/resources/queues/subresources/messages/methods/pull/) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
 
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
 let resp = await fetch(
@@ -132,6 +134,26 @@ let resp = await fetch(
 	},
 );
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+import json
+from workers import fetch
+
+# POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
+resp = await fetch(
+    f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/queues/{QUEUE_ID}/messages/pull",
+    method="POST",
+    headers={
+        "content-type": "application/json",
+        "authorization": f"Bearer {QUEUES_API_TOKEN}",
+    },
+    # Optional - you can provide an empty object '{}' and the defaults will apply.
+    body=json.dumps({"visibility_timeout_ms": 6000, "batch_size": 50}),
+)
+```
+</TabItem>
+</Tabs>
 
 This will return an array of messages (up to the specified `batch_size`) in the below format:
 
@@ -209,6 +231,8 @@ Messages pulled by a consumer need to be either acknowledged or marked for retry
 
 To acknowledge and/or mark messages to be retried, make a HTTP `POST` request to `/ack` endpoint of your queue per the [Queues REST API](/api/resources/queues/subresources/messages/methods/ack/) by providing an array of `lease_id` objects to acknowledge and/or retry:
 
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
 let resp = await fetch(
@@ -231,6 +255,33 @@ let resp = await fetch(
 	},
 );
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+import json
+from workers import fetch
+
+# POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
+resp = await fetch(
+    f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/queues/{QUEUE_ID}/messages/ack",
+    method="POST",
+    headers={
+        "content-type": "application/json",
+        "authorization": f"Bearer {QUEUES_API_TOKEN}",
+    },
+    # If you have no messages to retry, you can specify an empty array - retries: []
+    body=json.dumps({
+        "acks": [
+            {"lease_id": "lease_id1"},
+            {"lease_id": "lease_id2"},
+            {"lease_id": "etc"},
+        ],
+        "retries": [{"lease_id": "lease_id4"}],
+    }),
+)
+```
+</TabItem>
+</Tabs>
 
 You may optionally specify the number of seconds to delay a message for when marking it for retry by providing a `{ lease_id: string, delay_seconds: number }` object in the `retries` array:
 
