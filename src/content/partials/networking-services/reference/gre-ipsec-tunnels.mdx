@@ -176,7 +176,7 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
 - The IKE version must be IKEv2.
 - The IKE authentication method must be Pre-Shared Key (PSK).
-- If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
+- If your router is behind Network Address Translation (NAT) and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
 - (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
 - If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not expose this setting, check the router documentation for its dead peer detection behavior.
 
@@ -230,7 +230,7 @@ If route-based VPNs are not an option and you must use policy-based VPNs, be awa
 { props.magicWord === "Magic Transit" && (
   <>
 	<AnchorHeading title="Network Analytics" depth={2} />
-	<p>Cloudflare's Network Analytics provides near real-time visibility into network and transport layer traffic patterns and DDoS attacks which can help troubleshoot IP traffic issues. You can also use Network Analytics to view information about the traffic that leaves Cloudflare's global network by reviewing ingress and egress tunnel traffic over a specific amount of time.</p>
+	<p>Cloudflare's Network Analytics provides near real-time visibility into network and transport layer traffic patterns and Distributed Denial of Service (DDoS) attacks which can help troubleshoot IP traffic issues. You can also use Network Analytics to view information about the traffic that leaves Cloudflare's global network by reviewing ingress and egress tunnel traffic over a specific amount of time.</p>
 	<p>For more information, refer to <a href="/magic-transit/analytics/">Analytics</a>.</p>
   </>
   )
