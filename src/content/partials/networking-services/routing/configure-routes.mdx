@@ -90,7 +90,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 3. Enter a descriptive name for your route in **Description**.
 4. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
-5. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
+5. In **Tunnel/Next hop**, select a tunnel for your route from the tunnels you created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
 6. Choose the **Priority** for your route. Lower numbers have higher priorities.
 	:::note
 	<Render file="longest-prefix-match" product="networking-services/reference" /> Have this in mind when configuring priorities for your routes. Refer to <a href={props.routePrioritization}>Route prioritization</a> for more information.
@@ -98,7 +98,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 7. (Optional) Choose a **Weight** for your route. Refer to <a href={props.chooseWeights}>Set priority and weights for static routes</a> for examples.
 8. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
 9. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
-10. Select **Add routes** when you are done.
+10. Select **Add routes**.
 
 </TabItem> <TabItem label="API">
 
