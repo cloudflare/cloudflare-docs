@@ -11,6 +11,9 @@ params:
   - dashButtonPath?
   - cfTunnelURL?
   - sitesURL?
+  - addTunnelsURL?
+  - unifiedRoutingModeURL?
+  - arrReferenceURL?
 ---
 
 import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -21,6 +24,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 - Routes' priorities and weights
 - Regional scoping of traffic to reduce latency
 - BGP peering
+{ props.magicWord !== "Magic Transit" && (<Markdown text={`- Automatic Return Routing (ARR)`} inline={false} />)}
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -354,6 +358,51 @@ Example:
 ```
 
 </TabItem> </Tabs>
+
+{ props.magicWord !== "Magic Transit" && (
+	<>
+		<AnchorHeading title="Configure Automatic Return Routing (beta)" depth={2} />
+		<Markdown
+		text={`
+		[Automatic Return Routing (beta)](${props.arrReferenceURL}) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode](${props.unifiedRoutingModeURL}).
+
+		To enable ARR:
+		`}
+		inline={false}
+		/>
+
+		<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+		<Markdown
+		text={`
+1. Follow the [Add tunnels](${props.addTunnelsURL}) information to learn how to create an IPsec or GRE tunnel.
+2. On the tunnel's options, select **Automatic return routing**.
+3. Select **Add tunnels** to save your changes.
+		`}
+		inline={false}
+		/>
+
+		</TabItem> <TabItem label="API">
+
+		<Markdown text={`Create a \`POST\` request to create an [IPsec](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/) or [GRE](/api/resources/magic_transit/subresources/gre_tunnels/methods/create/) tunnel with ARR enabled. For example:`} inline={false} />
+
+	<APIRequest
+		path="/accounts/{account_id}/magic/ipsec_tunnels"
+		method="POST"
+		json={{
+			"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+			"interface_address": "<INTERFACE_ADDRESS>",
+			"name": "IPsec_1",
+			"customer_endpoint": "<CUSTOMER_ENDPOINT>",
+			"description": "Tunnel for ISP X",
+			"psk": "<PSK>",
+			"automatic_return_routing": "true"
+		}}
+	/>
+		</TabItem> </Tabs>
+	</>
+)}
+
 
 
 ## Configure BGP routes
