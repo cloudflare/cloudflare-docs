@@ -135,6 +135,8 @@ The following example demonstrates how to deploy an external disconnect endpoint
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+To configure External Emergency Disconnect using the dashboard:
+
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Management**.
 2. Select **Global disconnection settings**.
 3. Find **Manage device connection using an external signal** and select **Edit**.
@@ -149,6 +151,8 @@ All WARP clients in your organization will now start polling the external endpoi
 
 </TabItem>
 <TabItem label="API">
+
+To configure External Emergency Disconnect using the API, send a `PATCH` request to the `/devices/settings` endpoint:
 
 <APIRequest
   path="/accounts/{account_id}/devices/settings"
@@ -167,6 +171,8 @@ All WARP clients in your organization will now start polling the external endpoi
 
 <TabItem label="MDM">
 
+To configure External Emergency Disconnect using an MDM, add the following parameters to your [MDM file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/):
+
 ```xml
 <key>external_emergency_signal_url</key>
 <string>https://192.0.2.1:3333/status/disconnect</string>
@@ -178,7 +184,6 @@ All WARP clients in your organization will now start polling the external endpoi
 
 </TabItem>
 </Tabs>
-
 
 ### 4. Test External Emergency Disconnect
 
