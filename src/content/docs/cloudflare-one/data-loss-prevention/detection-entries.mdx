@@ -51,7 +51,7 @@ To select which Exact Data Match columns to use, you will need to [reupload any 
 
 <Details header="Upload an Exact Data Match dataset">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
 2. From the **Datasets** tab, select **Add a dataset**.
 3. Select **Exact Data Match (EDM)**.
 4. Upload your dataset file. Select **Next**.
@@ -65,7 +65,7 @@ DLP will encrypt your dataset and save its hash.
 
 <Details header="Upload a Custom Wordlist dataset">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
 2. From the **Datasets** tab, select **Add a dataset**.
 3. Select **Custom Wordlist (CWL)**.
 4. Name your dataset. Optionally, add a description.
@@ -83,8 +83,8 @@ The dataset will appear in the list with an **Uploading** status. Once the uploa
 
 Uploaded DLP datasets are read-only. To update a dataset, you must upload a new file to replace the original.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **DLP datasets**.
-2. Select the dataset you want to update.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+2. From the **Datasets** tab, select the dataset you want to update.
 3. Select **Upload dataset** and choose your updated dataset. Select **Next**.
 4. If your select dataset is an Exact Data Match dataset, review and choose the new columns. Select **Next**.
 5. Select **Save dataset**.
@@ -109,13 +109,12 @@ DLP supports documents in `.docx` and `.txt` format. Documents must be under 10 
 
 To upload a new document entry to DLP:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
-2. Go to **Documents**.
-3. Select **Add a document entry**.
-4. Name your document. Optionally, add a description.
-5. In **Minimum similarity for matches**, enter a value between 0% and 100%.
-6. In **Upload document**, choose and upload your document file.
-7. Select **Save**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+2. From the **Documents** tab, select **Add a document entry**.
+3. Name your document. Optionally, add a description.
+4. In **Minimum similarity for matches**, enter a value between 0% and 100%.
+5. In **Upload document**, choose and upload your document file.
+6. Select **Save**.
 
 The document will appear in the list with a **Pending** status. Once the upload is complete, the status will change to **Complete**. If you created a document entry with Terraform, the status will be **No file** until you upload a file.
 
@@ -125,8 +124,8 @@ To use your uploaded document fingerprint, add it as an existing entry to a [cus
 
 Uploaded document entries are read-only. To update a document entry, you must upload a new file to replace the original.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
-2. Choose the document you want to update and select **Edit**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+2. From the **Documents** tab, choose the document you want to update and select **Edit**.
 3. (Optional) Update the name and minimum similarity for matches for your document entry. You can also open the existing uploaded document.
 4. In **Update document entry**, choose and upload your updated document file.
 5. Select **Save**.

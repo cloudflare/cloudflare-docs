@@ -17,6 +17,10 @@ If one or more hostnames are onboarded to a SaaS Provider that uses Cloudflare p
 
 To give the SaaS provider permission to route traffic through their zone, any custom hostname must be activated by you (the SaaS customer) by placing a [CNAME record](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#3-have-customer-create-cname-record) on your authoritative DNS. If your authoritative DNS is Cloudflare, you have the option to [proxy](/fundamentals/concepts/how-cloudflare-works/#application-services) your CNAME record, achieving an Orange-to-Orange setup.
 
+## Prerequisites
+
+- O2O only applies when the two zones are part of different Cloudflare accounts.
+- Since O2O is based on CNAME, it does not apply when an A record is used to point to the SaaS provider's ([apex proxying](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/)).
 
 ## With O2O
 
@@ -51,6 +55,7 @@ A --> B
 B --> C
 C --> D
 ```
+
 ## Without O2O
 
 If you do not have your own Cloudflare zone and have only onboarded one or more of your hostnames to a SaaS Provider, then O2O will not be enabled.

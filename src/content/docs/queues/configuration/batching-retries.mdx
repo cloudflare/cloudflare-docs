@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, TypeScriptExample, Tabs, TabItem } from "~/components";
 
 ## Batching
 
@@ -62,7 +62,9 @@ You can acknowledge individual messages within a batch by explicitly acknowledgi
 
 To explicitly acknowledge a message as delivered, call the `ack()` method on the message.
 
-```ts title="index.js"
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
+```ts
 export default {
 	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
 		for (const msg of batch.messages) {
@@ -73,10 +75,26 @@ export default {
 	},
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def queue(self, batch):
+        for msg in batch.messages:
+            # TODO: do something with the message
+            # Explicitly acknowledge the message as delivered
+            msg.ack()
+```
+</TabItem>
+</Tabs>
 
 You can also call `retry()` to explicitly force a message to be redelivered in a subsequent batch. This is referred to as "negative acknowledgement". This can be particularly useful when you want to process the rest of the messages in that batch without throwing an error that would force the entire batch to be redelivered.
 
-```ts title="index.ts"
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
+```ts
 export default {
 	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
 		for (const msg of batch.messages) {
@@ -86,6 +104,19 @@ export default {
 	},
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def queue(self, batch):
+        for msg in batch.messages:
+            # TODO: do something with the message that fails
+            msg.retry()
+```
+</TabItem>
+</Tabs>
 
 You can also acknowledge or negatively acknowledge messages at a batch level with `ackAll()` and `retryAll()`. Calling `ackAll()` on the batch of messages (`MessageBatch`) delivered to your consumer Worker has the same behaviour as a consumer Worker that successfully returns (does not throw an error).
 
@@ -133,6 +164,8 @@ Configuring delivery and retry delays via the `wrangler` CLI or when [developing
 
 To delay a message or batch of messages when sending to a queue, you can provide a `delaySeconds` parameter when sending a message.
 
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 // Delay a singular message by 600 seconds (10 minutes)
 await env.YOUR_QUEUE.send(message, { delaySeconds: 600 });
@@ -144,6 +177,21 @@ await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 300 });
 // If there is a global delay configured on the queue, ignore it.
 await env.YOUR_QUEUE.sendBatch(messages, { delaySeconds: 0 });
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+# Delay a singular message by 600 seconds (10 minutes)
+await env.YOUR_QUEUE.send(message, delaySeconds=600)
+
+# Delay a batch of messages by 300 seconds (5 minutes)
+await env.YOUR_QUEUE.sendBatch(messages, delaySeconds=300)
+
+# Do not delay this message.
+# If there is a global delay configured on the queue, ignore it.
+await env.YOUR_QUEUE.sendBatch(messages, delaySeconds=0)
+```
+</TabItem>
+</Tabs>
 
 You can also configure a default, global delay on a per-queue basis by passing `--delivery-delay-secs` when creating a queue via the `wrangler` CLI:
 
@@ -158,7 +206,9 @@ When [consuming messages from a queue](/queues/reference/how-queues-works/#consu
 
 To delay an individual message within a batch:
 
-```ts title="index.ts"
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
+```ts
 export default {
 	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
 		for (const msg of batch.messages) {
@@ -169,10 +219,26 @@ export default {
 	},
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def queue(self, batch):
+        for msg in batch.messages:
+            # Mark for retry and delay a singular message
+            # by 3600 seconds (1 hour)
+            msg.retry(delaySeconds=3600)
+```
+</TabItem>
+</Tabs>
 
 To delay a batch of messages:
 
-```ts title="index.ts"
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
+```ts
 export default {
 	async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext) {
 		// Mark for retry and delay a batch of messages
@@ -181,6 +247,19 @@ export default {
 	},
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def queue(self, batch):
+        # Mark for retry and delay a batch of messages
+        # by 600 seconds (10 minutes)
+        batch.retryAll(delaySeconds=600)
+```
+</TabItem>
+</Tabs>
 
 You can also choose to set a default retry delay to any messages that are retried due to either implicit failure or when calling `retry()` explicitly. This is set at the consumer level, and is supported in both push-based (Worker) and pull-based (HTTP) consumers.
 
@@ -233,6 +312,8 @@ Each message delivered to a consumer includes an `attempts` property that tracks
 
 For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you:
 
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 const calculateExponentialBackoff = (
 	attempts: number,
@@ -241,10 +322,20 @@ const calculateExponentialBackoff = (
 	return baseDelaySeconds ** attempts;
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+def calculate_exponential_backoff(attempts, base_delay_seconds):
+    return base_delay_seconds ** attempts
+```
+</TabItem>
+</Tabs>
 
 In your consumer, you then pass the value of `msg.attempts` and your desired delay factor as the argument to `delaySeconds` when calling `retry()` on an individual message:
 
-```ts title="index.ts"
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
+```ts
 const BASE_DELAY_SECONDS = 30;
 
 export default {
@@ -262,6 +353,27 @@ export default {
 	},
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import WorkerEntrypoint
+
+BASE_DELAY_SECONDS = 30
+
+class Default(WorkerEntrypoint):
+    async def queue(self, batch):
+        for msg in batch.messages:
+            # Mark for retry and delay a singular message
+            # by 3600 seconds (1 hour)
+            msg.retry(
+                delaySeconds=calculate_exponential_backoff(
+                    msg.attempts,
+                    BASE_DELAY_SECONDS,
+                )
+            )
+```
+</TabItem>
+</Tabs>
 
 ## Related
 

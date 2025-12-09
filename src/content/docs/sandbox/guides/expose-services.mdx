@@ -72,6 +72,22 @@ export default {
 When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile for each port you plan to expose. Without this, you'll see "Connection refused: container port not found". See [Local development](#local-development) section below for setup details.
 :::
 
+:::caution[Uppercase sandbox IDs don't work with preview URLs]
+Preview URLs extract the sandbox ID from the hostname, which is always lowercase (e.g., `8000-myproject-123.yourdomain.com`). If you created your sandbox with an uppercase ID like `"MyProject-123"`, the URL routes to `"myproject-123"` (a different Durable Object), making your sandbox unreachable.
+
+To fix this, use `normalizeId: true` when creating sandboxes for port exposure:
+
+```ts
+const sandbox = getSandbox(env.Sandbox, 'MyProject-123', { normalizeId: true });
+```
+
+This lowercases the ID during creation so it matches preview URL routing. Without this, `exposePort()` throws an error.
+
+**Best practice**: Use lowercase IDs from the start (`'my-project-123'`).
+
+See [Sandbox options](/sandbox/configuration/sandbox-options/#normalizeid) for details.
+:::
+
 ## Name your exposed ports
 
 When exposing multiple ports, use names to stay organized:
@@ -291,6 +307,26 @@ if (!ports.some(p => p.port === 8080)) {
 }
 ```
 </TypeScriptExample>
+
+### Uppercase sandbox ID error
+
+**Error**: `Preview URLs require lowercase sandbox IDs`
+
+**Cause**: You created a sandbox with uppercase characters (e.g., `"MyProject-123"`) but preview URLs always use lowercase in routing, causing a mismatch.
+
+**Solution**:
+
+<TypeScriptExample>
+```
+// Create sandbox with normalization
+const sandbox = getSandbox(env.Sandbox, 'MyProject-123', { normalizeId: true });
+await sandbox.exposePort(8080, { hostname });
+```
+</TypeScriptExample>
+
+This creates the Durable Object with ID `"myproject-123"`, matching the preview URL routing.
+
+See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#normalizeid) for details.
 
 ## Preview URL Format
 

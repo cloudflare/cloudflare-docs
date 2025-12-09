@@ -4,10 +4,9 @@ title: Parameters
 description: Explore parameters for deploying Cloudflare WARP via MDM, including organization setup and device registration for Zero Trust.
 sidebar:
   order: 2
-
 ---
 
-import { GlossaryTooltip, Details, InlineBadge} from "~/components"
+import { GlossaryTooltip, Details, InlineBadge } from "~/components";
 
 Each client supports the following set of parameters as part of their deployment, regardless of the deployment mechanism.
 
@@ -35,7 +34,7 @@ This field is used to enforce DNS policies when deploying the client in DoH-only
 
 ### `gateway_unique_id`
 
-Instructs the client to direct all DNS queries to a specific [Gateway DNS location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/). This value is only necessary if deploying without a [team name](#organization) or in an organization with multiple DNS locations.  If you do not supply a DoH subdomain, we will automatically use the default Gateway DNS location for your organization.
+Instructs the client to direct all DNS queries to a specific [Gateway DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/). This value is only necessary if deploying without a [team name](#organization) or in an organization with multiple DNS locations. If you do not supply a DoH subdomain, we will automatically use the default Gateway DNS location for your organization.
 
 **Value Type:** `string`
 
@@ -84,14 +83,13 @@ If switch has been turned off by user, the client will automatically turn itself
 
 **Value:**
 
-* `0` — Allow the switch to stay in the off position indefinitely until the user turns it back on.
-* `1` to `1440` — Turn switch back on automatically after the specified number of minutes.
+- `0` — Allow the switch to stay in the off position indefinitely until the user turns it back on.
+- `1` to `1440` — Turn switch back on automatically after the specified number of minutes.
 
 :::note
 
 This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 :::
-
 
 ### `display_name`
 
@@ -109,22 +107,22 @@ Identifies a Zero Trust organization in the WARP GUI when WARP is deployed with 
 
 **Value:**
 
-* `false` — (default) Disables PMTUD.
-* `true` — Enables PMTUD on the WARP tunnel interface.
+- `false` — (default) Disables PMTUD.
+- `true` — Enables PMTUD on the WARP tunnel interface.
 
 ### `enable_post_quantum`
 
 <Details header="Feature availability">
 
 | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>  | All plans                                                     |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2025.5.735.1        |
-| macOS    | ✅           | 2025.5.735.1       |
-| Linux    | ✅           | 2025.5.735.1        |
+| Windows  | ✅           | 2025.5.735.1         |
+| macOS    | ✅           | 2025.5.735.1         |
+| Linux    | ✅           | 2025.5.735.1         |
 | iOS      | ✅           | 1.10                 |
 | Android  | ✅           | 2.4                  |
 | ChromeOS | ✅           | 2.4                  |
@@ -137,8 +135,8 @@ WARP uses [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure
 
 **Value:**
 
-* `false` — Disables post-quantum key agreement.
-* `true` —  Enables post-quantum key agreement for all traffic through the WARP tunnel.
+- `false` — Disables post-quantum key agreement.
+- `true` — Enables post-quantum key agreement for all traffic through the WARP tunnel.
 
 ### `onboarding`
 
@@ -148,8 +146,8 @@ Controls the visibility of the onboarding screens that ask the user to review th
 
 **Value:**
 
-* `false` — Screens hidden.
-* `true` — (default) Screens visible.
+- `false` — Screens hidden.
+- `true` — (default) Screens visible.
 
 ### `override_api_endpoint`
 
@@ -183,7 +181,7 @@ The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will 
 
 ### `override_warp_endpoint`
 
-Overrides the [IP address and UDP port](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip) used by the WARP client to send traffic to Cloudflare's edge.  If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
+Overrides the [IP address and UDP port](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip) used by the WARP client to send traffic to Cloudflare's edge. If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 
 This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all WARP traffic to a new IP.
 
@@ -201,17 +199,17 @@ Allows you to choose the operational mode of the client.
 
 **Value:**
 
-* `warp` — (default) [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default).
-* `1dot1` — [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh).
-* `proxy` — [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode). Use the `proxy_port` parameter to specify the localhost SOCKS proxy port (between `0`-`66535`). For example,
+- `warp` — (default) [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default).
+- `1dot1` — [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh).
+- `proxy` — [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode). Use the `proxy_port` parameter to specify the localhost SOCKS proxy port (between `0`-`66535`). For example,
   ```xml
   <key>service_mode</key>
   <string>proxy</string>
   <key>proxy_port</key>
   <integer>44444</integer>
   ```
-* `postureonly` — [Device Information Only](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#device-information-only).
-* `tunnelonly` - [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering).
+- `postureonly` — [Device Information Only](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#device-information-only).
+- `tunnelonly` - [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering).
 
 ### `support_url`
 
@@ -221,9 +219,8 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 
 **Value:**
 
-* `https://<support.example.com>` — Use an `https://` link to open your company's internal help site.
-* `mailto:<yoursupport@example.com>` — Use a `mailto:` link to open your default mail client.
-
+- `https://<support.example.com>` — Use an `https://` link to open your company's internal help site.
+- `mailto:<yoursupport@example.com>` — Use a `mailto:` link to open your default mail client.
 
 ### `switch_locked`
 
@@ -233,8 +230,8 @@ Allows the user to turn off the WARP switch and disconnect the client.
 
 **Value:**
 
-* `false` — (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-* `true` — The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
+- `false` — (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
+- `true` — The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
 
 On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
@@ -262,8 +259,8 @@ Configures the protocol used to route IP traffic from the device to Cloudflare G
 
 **Value:**
 
-* `masque` — (default) [MASQUE](https://datatracker.ietf.org/wg/masque/about/) protocol
-* `wireguard` — [WireGuard](https://www.wireguard.com/) protocol
+- `masque` — (default) [MASQUE](https://datatracker.ietf.org/wg/masque/about/) protocol
+- `wireguard` — [WireGuard](https://www.wireguard.com/) protocol
 
 ## Top-level parameters
 
@@ -285,8 +282,8 @@ Enables multiple user registrations on a Windows device.
 
 **Value:**
 
-* `false` — (default) Only one WARP registration is stored per device. After a user logs in to WARP, their settings and identity will apply to all traffic from the device.
-* `true` — Each Windows user has their own WARP registration. For more information, refer to [Multiple users on a Windows device](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-multiuser/).
+- `false` — (default) Only one WARP registration is stored per device. After a user logs in to WARP, their settings and identity will apply to all traffic from the device.
+- `true` — Each Windows user has their own WARP registration. For more information, refer to [Multiple users on a Windows device](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-multiuser/).
 
 ### `pre_login`
 

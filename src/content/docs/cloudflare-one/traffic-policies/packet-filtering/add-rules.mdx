@@ -3,7 +3,6 @@ title: Add rules
 pcx_content_type: how-to
 sidebar:
   order: 3
-
 ---
 
 import { DashButton } from "~/components";
@@ -45,13 +44,11 @@ Below, you can find examples of how to use the API to perform certain actions.
 
 :::caution[Warning]
 
-
 The examples on this page all use the `https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets` endpoint. This endpoint is intended to create rules from scratch and **might overwrite existing rules**.
 
 If you have a ruleset already deployed, consider using the `https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules` endpoint instead.
 
 Refer to [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) and [Create an account ruleset](/api/resources/rulesets/methods/create/) for more information.
-
 
 :::
 
@@ -111,10 +108,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 
 Magic Firewall supports [using lists in expressions](/waf/tools/lists/use-in-expressions/) for the `ip.src` and `ip.dst` fields. The supported lists are:
 
-* `$cf.anonymizer` - Anonymizer proxies
-* `$cf.botnetcc` - Botnet command and control channel
-* `$cf.malware` - Sources of malware
-* `$<IP_LIST_NAME>` - The name of an account-level IP list
+- `$cf.anonymizer` - Anonymizer proxies
+- `$cf.botnetcc` - Botnet command and control channel
+- `$cf.malware` - Sources of malware
+- `$<IP_LIST_NAME>` - The name of an account-level IP list
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \

@@ -1,0 +1,46 @@
+---
+title: Select Wrangler environments using the CLOUDFLARE_ENV environment variable
+description: Wrangler now supports the CLOUDFLARE_ENV environment variable to select the active environment without using the --env flag.
+products:
+  - workers
+date: 2025-11-09
+---
+
+Wrangler now supports using the `CLOUDFLARE_ENV` [environment variable](/workers/wrangler/system-environment-variables/#supported-environment-variables) to select the active [environment](/workers/wrangler/environments/) for your Worker commands. This provides a more flexible way to manage environments, especially when working with build tools and CI/CD pipelines.
+
+## What's new
+
+**Environment selection via environment variable:**
+- Set `CLOUDFLARE_ENV` to specify which environment to use for Wrangler commands
+- Works with all Wrangler commands that support the `--env` flag
+- The `--env` command line argument takes precedence over the `CLOUDFLARE_ENV` environment variable
+
+## Example usage
+
+```bash
+# Deploy to the production environment using CLOUDFLARE_ENV
+CLOUDFLARE_ENV=production wrangler deploy
+
+# Upload a version to the staging environment
+CLOUDFLARE_ENV=staging wrangler versions upload
+
+# The --env flag takes precedence over CLOUDFLARE_ENV
+CLOUDFLARE_ENV=dev wrangler deploy --env production
+# This will deploy to production, not dev
+```
+
+## Use with build tools
+
+The `CLOUDFLARE_ENV` environment variable is particularly useful when working with build tools like Vite. You can set the environment once during the build process, and it will be used for both building and deploying your Worker:
+
+```bash
+# Set the environment for both build and deploy
+CLOUDFLARE_ENV=production npm run build & wrangler deploy
+```
+
+When using `@cloudflare/vite-plugin`, the build process generates a ["redirected deploy config"](/workers/wrangler/configuration/#generated-wrangler-configuration) that is flattened to only contain the active environment. Wrangler will validate that the environment specified matches the environment used during the build to prevent accidentally deploying a Worker built for one environment to a different environment.
+
+## Learn more
+
+- [System environment variables](/workers/wrangler/system-environment-variables/)
+- [Environments](/workers/wrangler/environments/)

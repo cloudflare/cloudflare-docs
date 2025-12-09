@@ -18,20 +18,19 @@ If your device does not support [certificate installation via WARP](/cloudflare-
 
 Zero Trust will only inspect traffic using installed certificates set to [**Available** and **In-Use**](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate).
 
-## Download the Cloudflare root certificate
+## Download a Cloudflare root certificate
 
 :::note[Download limitation]
-You can only download Cloudflare-generated certificates from the Zero Trust dashboard or with WARP.
+You can only download Cloudflare-generated certificates from the Cloudflare One dashboard or with WARP.
 :::
 
 First, [generate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and download a Cloudflare certificate. The certificate is available in both `.pem` and `.crt` file format. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Settings** > **Certificates and downloads**.
-2. Select **View**.
-3. In **Cloudflare certificates**, select **Manage**.
-4. Select the certificate you want to download.
-5. Select **More actions**.
-   - Depending on which format you want, choose **Download .pem** and/or **Download .crt**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings**.
+2. Select **Certificates**.
+3. Select the certificate you want to download.
+4. Select **More actions**.
+5. Depending on which format you want, choose **Download .pem** and/or **Download .crt**.
 
 Alternatively, you can download and install a certificate [using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#install-a-certificate-using-warp). WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
 

@@ -1,0 +1,329 @@
+---
+pcx_content_type: navigation
+title: Waiting Room
+slug: realtime/realtimekit/core/waiting-room
+sidebar:
+  order: 6
+---
+
+import { Tabs, TabItem } from "~/components";
+
+The waiting room feature allows hosts to control who can join a meeting. When enabled, participants must wait for approval before entering the meeting.
+
+:::note[Prerequisites]
+This page assumes you've already initialized the SDK and understand the meeting object structure. Refer to [Initialize SDK](/realtime/realtimekit/core/) and [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) if needed.
+:::
+
+## How the Waiting Room Works
+
+After you call `meeting.join()`, one of two events will occur:
+
+- **`roomJoined`** - You are allowed to join the meeting immediately
+- **`waitlisted`** - You are placed in the waiting room and must wait for host approval
+
+Use `meeting.self.roomState` to track the user's state in the meeting.
+
+:::note
+The diagram below represents only waiting room-related states. The `roomState` property also transitions through other states like `'disconnected'`, `'left'`, `'kicked'`, and `'ended'`.
+:::
+
+## Waiting Room States
+
+### State Flow
+
+```
+        join()
+          ↓
+    [waitlisted]  ←------ (host rejects)
+          ↓                      ↓
+   (host accepts)           [rejected]
+          ↓
+      [joined]
+```
+
+## Listening to State Changes
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Joined Event
+
+Triggered when the local user successfully joins the meeting:
+
+```js
+meeting.self.on("roomJoined", () => {
+	// Local user is in the meeting
+	console.log("Successfully joined the meeting");
+});
+```
+
+### Waitlisted Event
+
+Triggered when the local user is placed in the waiting room:
+
+```js
+meeting.self.on("waitlisted", () => {
+	// Local user is waitlisted
+	console.log("You are in the waiting room. Waiting for host approval...");
+});
+```
+
+### Rejected Event
+
+Triggered when the host rejects the entry request:
+
+```js
+meeting.self.on("roomLeft", ({ state }) => {
+	if (state === "rejected") {
+		// Host rejected the entry
+		console.log("Your entry request was rejected");
+	}
+});
+```
+
+### Monitor State with roomState
+
+You can also directly check the current room state:
+
+```js
+const currentState = meeting.self.roomState;
+
+if (currentState === "waitlisted") {
+	console.log("Waiting for approval");
+} else if (currentState === "joined") {
+	console.log("In the meeting");
+} else if (currentState === "rejected") {
+	console.log("Entry was rejected");
+}
+```
+
+</TabItem>
+<TabItem label="React">
+
+### Joined Event
+
+Monitor when the local user joins the meeting:
+
+```jsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+import { useEffect } from "react";
+
+function MeetingStatus() {
+	const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+	const joined = roomState === "joined";
+
+	useEffect(() => {
+		if (joined) {
+			console.log("Successfully joined the meeting");
+		}
+	}, [joined]);
+
+	return joined ? <div>You are in the meeting</div> : null;
+}
+```
+
+Alternatively, use event listeners:
+
+```jsx
+import { useRealtimeKitClient } from "@cloudflare/realtimekit-react";
+
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleRoomJoined = () => {
+		console.log("Successfully joined the meeting");
+	};
+
+	meeting.self.on("roomJoined", handleRoomJoined);
+
+	return () => {
+		meeting.self.off("roomJoined", handleRoomJoined);
+	};
+}, [meeting]);
+```
+
+### Waitlisted Event
+
+Monitor when the local user is in the waiting room:
+
+```jsx
+function WaitingRoomStatus() {
+	const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+	const isWaitlisted = roomState === "waitlisted";
+
+	useEffect(() => {
+		if (isWaitlisted) {
+			console.log("You are in the waiting room");
+		}
+	}, [isWaitlisted]);
+
+	return isWaitlisted ? <div>Waiting for host approval...</div> : null;
+}
+```
+
+Alternatively, use event listeners:
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleWaitlisted = () => {
+		console.log("You are in the waiting room");
+	};
+
+	meeting.self.on("waitlisted", handleWaitlisted);
+
+	return () => {
+		meeting.self.off("waitlisted", handleWaitlisted);
+	};
+}, [meeting]);
+```
+
+### Rejected Event
+
+Monitor when the host rejects the entry request:
+
+```jsx
+function RejectionStatus() {
+	const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+	const rejected = roomState === "rejected";
+
+	useEffect(() => {
+		if (rejected) {
+			console.log("Your entry request was rejected");
+		}
+	}, [rejected]);
+
+	return rejected ? <div>Your entry was rejected by the host</div> : null;
+}
+```
+
+Alternatively, use event listeners:
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleRoomLeft = ({ state }) => {
+		if (state === "rejected") {
+			console.log("Your entry request was rejected");
+		}
+	};
+
+	meeting.self.on("roomLeft", handleRoomLeft);
+
+	return () => {
+		meeting.self.off("roomLeft", handleRoomLeft);
+	};
+}, [meeting]);
+```
+
+### Comprehensive State Handler
+
+Handle all waiting room states in one component:
+
+```jsx
+function WaitingRoomManager() {
+	const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+
+	switch (roomState) {
+		case "init":
+			return <div>Connecting...</div>;
+		case "waitlisted":
+			return <div>Waiting for host approval...</div>;
+		case "joined":
+			return <div>You are in the meeting</div>;
+		case "rejected":
+			return <div>Your entry was rejected</div>;
+		case "left":
+			return <div>You left the meeting</div>;
+		case "kicked":
+			return <div>You were removed from the meeting</div>;
+		case "ended":
+			return <div>The meeting has ended</div>;
+		case "disconnected":
+			return <div>Connection lost</div>;
+		default:
+			return null;
+	}
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Host Actions
+
+Hosts can manage waiting room requests using participant management methods. See [Remote Participants](/realtime/realtimekit/core/remote-participant/) for details on:
+
+- **`acceptWaitingRoomRequest(participantId)`** - Accept a participant from the waiting room
+- **`rejectWaitingRoomRequest(participantId)`** - Reject a participant's entry request
+
+### Example: Host Accepting Participants
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+```js
+// Get waitlisted participants
+const waitlistedParticipants = meeting.participants.waitlisted.toArray();
+
+// Accept the first waitlisted participant
+if (waitlistedParticipants.length > 0) {
+	const participantId = waitlistedParticipants[0].id;
+	await meeting.participants.acceptWaitingRoomRequest(participantId);
+}
+```
+
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import {
+	useRealtimeKitClient,
+	useRealtimeKitSelector,
+} from "@cloudflare/realtimekit-react";
+
+function WaitingRoomHost() {
+	const [meeting] = useRealtimeKitClient();
+	const waitlistedParticipants = useRealtimeKitSelector((m) =>
+		m.participants.waitlisted.toArray(),
+	);
+
+	const acceptParticipant = async (participantId) => {
+		await meeting.participants.acceptWaitingRoomRequest(participantId);
+	};
+
+	const rejectParticipant = async (participantId) => {
+		await meeting.participants.rejectWaitingRoomRequest(participantId);
+	};
+
+	return (
+		<div>
+			<h3>Waiting Room ({waitlistedParticipants.length})</h3>
+			{waitlistedParticipants.map((participant) => (
+				<div key={participant.id}>
+					<span>{participant.name}</span>
+					<button onClick={() => acceptParticipant(participant.id)}>
+						Accept
+					</button>
+					<button onClick={() => rejectParticipant(participant.id)}>
+						Reject
+					</button>
+				</div>
+			))}
+		</div>
+	);
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Best Practices
+
+- **Provide Clear Feedback** - Show users when they're in the waiting room and that they're waiting for approval
+- **Set Expectations** - Let users know their request is being reviewed
+- **Handle Rejection Gracefully** - Provide a friendly message if entry is rejected
+- **Monitor State Changes** - Subscribe to room state changes to update your UI accordingly
+- **Check Permissions** - Ensure your app has appropriate permissions configured in the preset to use waiting room features

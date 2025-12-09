@@ -7,144 +7,147 @@ import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-2. Under **Device settings**, locate the [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
-3. Under **Split Tunnels**, check whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude** or **Include**.
-4. Select **Manage**.
-5. You can exclude or include routes based on either their IP address or domain. When possible we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
+1.  In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Devices** > **Device profiles**.
+2.  Locate the [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
+3.  Under **Split Tunnels**, check whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude** or **Include**.
+4.  Select **Manage**.
+5.  You can exclude or include routes based on either their IP address or domain. When possible we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
 
-		<Tabs> <TabItem label="Add an IP">
+        <Tabs> <TabItem label="Add an IP">
 
-		To add an IP address to Split Tunnels:
+        To add an IP address to Split Tunnels:
 
-		1. Select _IP Address_.
-		2. Enter the IP address or <GlossaryTooltip term="CIDR">CIDR</GlossaryTooltip> you want to exclude or include.
-		3. Select **Save destination**.
+        1. Select _IP Address_.
+        2. Enter the IP address or <GlossaryTooltip term="CIDR">CIDR</GlossaryTooltip> you want to exclude or include.
+        3. Select **Save destination**.
 
-		Traffic to this IP address is now excluded or included from the WARP tunnel.
+        Traffic to this IP address is now excluded or included from the WARP tunnel.
 
-		:::note
+        :::note
+
     If you would like to exclude a specific IP range from a larger IP range, you can use this calculator:
 
-			<SubtractIPCalculator
-				client:load
-				defaults={{
-					base: "172.16.0.0/12",
-					exclude: ["172.31.0.0/16"]
-				}}
-			/>
-		:::
-    
-		</TabItem> <TabItem label="Add a domain">
+        	<SubtractIPCalculator
+        		client:load
+        		defaults={{
+        			base: "172.16.0.0/12",
+        			exclude: ["172.31.0.0/16"]
+        		}}
+        	/>
+        :::
 
-		To add a domain to Split Tunnels:
+        </TabItem> <TabItem label="Add a domain">
 
-		1. Select _Domain_.
-		2. Enter a [valid domain](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#valid-domains) to exclude or include.
-		3. Select **Save destination**.
-		4. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
+        To add a domain to Split Tunnels:
 
-		When a user goes to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
+        1. Select _Domain_.
+        2. Enter a [valid domain](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#valid-domains) to exclude or include.
+        3. Select **Save destination**.
+        4. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
-		</TabItem> </Tabs>
+        When a user goes to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
+
+        </TabItem> </Tabs>
 
 </TabItem> <TabItem label="Terraform (v5)">
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Zero Trust Write`
+   - `Zero Trust Write`
 
 2. Choose a [`cloudflare_zero_trust_device_default_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_default_profile) or [`cloudflare_zero_trust_device_custom_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_custom_profile) resource to modify, or [create a new device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/#create-a-new-profile).
 
 3. (Optional) Create a list of split tunnel routes that you can reuse across multiple device profiles. For example, you can declare a local value in the same module as your device profiles:
 
-	```tf title="split-tunnels.local.tf"
-	locals {
-		global_exclude_list = [
-			# Default Split Tunnel entries recommended by Cloudflare
-			{
-				address     = "ff05::/16"
-			},
-			{
-				address     = "ff04::/16"
-			},
-			{
-				address     = "ff03::/16"
-			},
-			{
-				address     = "ff02::/16"
-			},
-			{
-				address     = "ff01::/16"
-			},
-			{
-				address     = "fe80::/10"
-				description = "IPv6 Link Local"
-			},
-			{
-				address     = "fd00::/8"
-			},
-			{
-				address     = "255.255.255.255/32"
-				description = "DHCP Broadcast"
-			},
-			{
-				address     = "240.0.0.0/4"
-			},
-			{
-				address     = "224.0.0.0/24"
-			},
-			{
-				address     = "192.168.0.0/16"
-			},
-			{
-				address     = "192.0.0.0/24"
-			},
-			{
-				address     = "172.16.0.0/12"
-			},
-			{
-				address     = "169.254.0.0/16"
-				description = "DHCP Unspecified"
-			},
-			{
-				address     = "100.64.0.0/10"
-			},
-			{
-				address     = "10.0.0.0/8"
-			}
-		]
-	}
-	```
+   ```tf title="split-tunnels.local.tf"
+   locals {
+   	global_exclude_list = [
+   		# Default Split Tunnel entries recommended by Cloudflare
+   		{
+   			address     = "ff05::/16"
+   		},
+   		{
+   			address     = "ff04::/16"
+   		},
+   		{
+   			address     = "ff03::/16"
+   		},
+   		{
+   			address     = "ff02::/16"
+   		},
+   		{
+   			address     = "ff01::/16"
+   		},
+   		{
+   			address     = "fe80::/10"
+   			description = "IPv6 Link Local"
+   		},
+   		{
+   			address     = "fd00::/8"
+   		},
+   		{
+   			address     = "255.255.255.255/32"
+   			description = "DHCP Broadcast"
+   		},
+   		{
+   			address     = "240.0.0.0/4"
+   		},
+   		{
+   			address     = "224.0.0.0/24"
+   		},
+   		{
+   			address     = "192.168.0.0/16"
+   		},
+   		{
+   			address     = "192.0.0.0/24"
+   		},
+   		{
+   			address     = "172.16.0.0/12"
+   		},
+   		{
+   			address     = "169.254.0.0/16"
+   			description = "DHCP Unspecified"
+   		},
+   		{
+   			address     = "100.64.0.0/10"
+   		},
+   		{
+   			address     = "10.0.0.0/8"
+   		}
+   	]
+   }
+   ```
+
 4. In the device profile, exclude or include routes based on either their IP address or domain:
 
-	```tf title="device-profiles.tf"
-	resource "cloudflare_zero_trust_device_custom_profile" "example" {
-		account_id            = var.cloudflare_account_id
-		name                  = "Example custom profile with split tunnels"
-		enabled               = true
-		precedence            = 101
-		service_mode_v2       = {mode = "warp"}
-		match                 =  "identity.email == \"test@cloudflare.com\""
+   ```tf title="device-profiles.tf"
+   resource "cloudflare_zero_trust_device_custom_profile" "example" {
+   	account_id            = var.cloudflare_account_id
+   	name                  = "Example custom profile with split tunnels"
+   	enabled               = true
+   	precedence            = 101
+   	service_mode_v2       = {mode = "warp"}
+   	match                 =  "identity.email == \"test@cloudflare.com\""
 
-		exclude = concat(
-			# Global entries
-			local.global_exclude_list,
+   	exclude = concat(
+   		# Global entries
+   		local.global_exclude_list,
 
-			# Profile-specific entries
-			[
-				{
-					address = "192.0.2.0/24"
-					description = "Example IP to exclude from WARP"
-				},
-				{
-					host = "example.com"
-					description = "Example domain to exclude from WARP"
-				}
-			]
-		)
-	}
-	```
-	 When possible we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
+   		# Profile-specific entries
+   		[
+   			{
+   				address = "192.0.2.0/24"
+   				description = "Example IP to exclude from WARP"
+   			},
+   			{
+   				host = "example.com"
+   				description = "Example domain to exclude from WARP"
+   			}
+   		]
+   	)
+   }
+   ```
+
+   When possible we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
 
 </TabItem>
 </Tabs>

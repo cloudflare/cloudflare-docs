@@ -8,7 +8,7 @@ params:
   - magicTunnelHcsURL
 ---
 
-import { Markdown, Render } from "~/components";
+import { Markdown, Render, DashButton } from "~/components";
 
 Sites represent the local network of a data center, office, or other physical location, and combine all on-ramps available there. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that you get notified when there are issues with the site's on-ramps.
 
@@ -28,6 +28,15 @@ When you are finished setting these up, refer to the steps below to learn how to
 		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 		2. Go to **Insights** > **Network visibility**.
 		3. In **Network overview**, select **Add site**.
+		4. Add a name and description for your new site. Optionally, you can also add the geographical coordinates for your site in **Latitude** and **Longitude**. If you add geographical coordinates, once created your site's location will show in the map.
+		5. Select **Create and continue**.
+		6. Choose one or more on-ramps for your site from the list. Remember to only choose the on-ramps available to that particular site, as the list might show on-ramps available on other locations.
+		7. Select **Continue**.
+		8. In **Define alert settings** you set up alerts to notify you when there are issues with your site's on-ramps. If you want to set up alerts later, select **Skip this for now** to complete your setup. Otherwise, continue reading.
+		9. In **Magic WAN Health Check Alert** > **Notification name**, enter a name for the site's alert.
+		10. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
+		11. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information.
+		12. Select **Complete setup** to finish setting up your site.
 		`}
 		inline={false}
 	/>
@@ -36,24 +45,29 @@ When you are finished setting these up, refer to the steps below to learn how to
 	<>
 	<Markdown
 		text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Magic WAN** > **Network overview (beta)**.
-		3. Select **Add site**.
+		1. Go to the **Network overview** page.
+		`}
+		inline={false}
+	/>
+	<DashButton url="/?to=/:account/magic-wan/network" />
+
+		<Markdown
+		text={`
+		2. Add a name and description for your new site. Optionally, you can also add the geographical coordinates for your site in **Latitude** and **Longitude**. If you add geographical coordinates, once created your site's location will show in the map.
+		3. Select **Create and continue**.
+		4. Choose one or more on-ramps for your site from the list. Remember to only choose the on-ramps available to that particular site, as the list might show on-ramps available on other locations.
+		5. Select **Continue**.
+		6. In **Define alert settings** you set up alerts to notify you when there are issues with your site's on-ramps. If you want to set up alerts later, select **Skip this for now** to complete your setup. Otherwise, continue reading.
+		7. In **Magic WAN Health Check Alert** > **Notification name**, enter a name for the site's alert.
+		8. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
+		9. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information.
+		10. Select **Complete setup** to finish setting up your site.
 		`}
 		inline={false}
 	/>
 	</>
 )
 }
-4. Add a name and description for your new site. Optionally, you can also add the geographical coordinates for your site in **Latitude** and **Longitude**. If you add geographical coordinates, once created your site's location will show in the map.
-5. Select **Create and continue**.
-6. Choose one or more on-ramps for your site from the list. Remember to only choose the on-ramps available to that particular site, as the list might show on-ramps available on other locations.
-7. Select **Continue**.
-8. In **Define alert settings** you set up alerts to notify you when there are issues with your site's on-ramps. If you want to set up alerts later, select **Skip this for now** to complete your setup. Otherwise, continue reading.
-9. In **Magic WAN Health Check Alert** > **Notification name**, enter a name for the site's alert.
-10. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
-11. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information.
-12. Select **Complete setup** to finish setting up your site.
 
 Your site is now set up. If you have other sites you need to set up, repeat the steps above. If you did not set up alerts, we strongly recommend that you do it. Otherwise you will not be notified when there is a problem with one of your on-ramps.
 
@@ -86,6 +100,9 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 		2. Go to **Insights** > **Network visibility**.
 		3. In **Network overview** > **Traffic overview**, find your site > select the three dots in front of it > **Edit**.
+		4. Select **On-ramps**.
+		5. Select **Add** to add a new on-ramp.
+		6. If you want to remove an on-ramp, select the three dots in front of your on-ramp > **Remove**.
 		`}
 		inline={false}
 	/>
@@ -94,18 +111,25 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 	<>
 	<Markdown
 		text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Magic WAN** > **Network overview (beta)**.
-		3. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
+		1. Go to the **Network overview** page.
+		`}
+		inline={false}
+	/>
+
+	<DashButton url="/?to=/:account/magic-wan/network" />
+
+	<Markdown
+		text={`
+		2. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
+		3. Select **On-ramps**.
+		4. Select **Add** to add a new on-ramp.
+		5. If you want to remove an on-ramp, select the three dots in front of your on-ramp > **Remove**.
 		`}
 		inline={false}
 	/>
 	</>
 )
 }
-4. Select **On-ramps**.
-5. Select **Add** to add a new on-ramp.
-6. If you want to remove an on-ramp, select the three dots in front of your on-ramp > **Remove**.
 
 ### Set geographic coordinates
 
@@ -125,7 +149,13 @@ If you add geographic coordinates to your site, it will show up in the Network m
 	<>
 	<Markdown
 		text={`
-		1. Go to **Magic WAN** > **Network overview (beta)**.
+		1. Go to the **Network overview** page.
+		`}
+		inline={false}
+	/>
+	<DashButton url="/?to=/:account/magic-wan/network" />
+		<Markdown
+		text={`
 		2. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
 		`}
 		inline={false}

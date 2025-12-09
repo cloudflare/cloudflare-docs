@@ -7,7 +7,12 @@ sidebar:
 
 A phase defines a stage in the life of a request where you can execute [rulesets](/ruleset-engine/about/rulesets/). Phases are defined by Cloudflare and cannot be modified.
 
-Phases exist at two levels: at the account level and at the zone level. For the same phase, rules defined at the account level are evaluated before the rules defined at the zone level.
+Phases exist at two levels:
+
+- At the [account](/fundamentals/concepts/accounts-and-zones/#accounts) level
+- At the [zone](/fundamentals/concepts/accounts-and-zones/#zones) level
+
+For the same phase, rules defined at the account level are evaluated before the rules defined at the zone level.
 
 Each phase has at most one [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account and zone level.
 

@@ -65,22 +65,16 @@ import * as codeOwnersUtils from "codeowners-utils";
 		}
 		console.log("Assignees are:");
 		console.log(assignees);
-
-		if (assignees.size === 0) {
-			// assign folks which will manually reassign
-			["haleycode", "pedrosousa", "dcpena", "patriciasantaana"].forEach(
-				(username) => assignees.add(username),
-			);
-		}
-
 		const client = github.getOctokit(token);
 
-		await client.rest.issues.addAssignees({
-			owner: repository.owner.login,
-			issue_number: issue.number,
-			repo: repository.name,
-			assignees: [...assignees],
-		});
+		if (assignees.size > 0) {
+			await client.rest.issues.addAssignees({
+				owner: repository.owner.login,
+				issue_number: issue.number,
+				repo: repository.name,
+				assignees: [...assignees],
+			});
+		}
 
 		console.log("Assignees added (if present)");
 

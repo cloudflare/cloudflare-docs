@@ -33,10 +33,7 @@ Before you begin, ensure you have completed the following:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Use a Node version manager like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
-3. Have PostgreSQL/MySQL (or compatible) database, accessible in one of the following ways:
-	* **Publicly Accessible**: Your database is directly reachable from the Internet.
-	* **Private Network**: Your database is in a private network (like a VPC) and can be securely connected using [Cloudflare Tunnel](/hyperdrive/configuration/connect-to-private-database/).
-
+3. Have a publicly accessible PostgreSQL or MySQL (or compatible) database. _If your database is in a private network (like a VPC)_, refer to [Connect to a private database](/hyperdrive/configuration/connect-to-private-database/) for instructions on using Cloudflare Tunnel with Hyperdrive.
 
 ## 1. Log in
 
@@ -111,7 +108,7 @@ Hyperdrive accepts the combination of these parameters in the common connection 
 	<TabItem label="PostgreSQL">
 		```txt
 
-		postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
+    	postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
 
     	```
 
@@ -193,7 +190,11 @@ To install `pg`, ensure you are in the `hyperdrive-tutorial` directory. Open you
 
 If you are using TypeScript, you should also install the type definitions for `pg`:
 
-<PackageManagers pkg="@types/pg" dev comment="This should install v8.13.0 or later" />
+<PackageManagers
+	pkg="@types/pg"
+	dev
+	comment="This should install v8.13.0 or later"
+/>
 
 With the driver installed, you can now create a Worker script that queries your database.
 
@@ -236,10 +237,10 @@ export interface Env {
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		// Create a client using the pg driver (or any supported driver, ORM or query builder)
-        // with the Hyperdrive credentials. These credentials are only accessible from your Worker.
-        const sql = new Client({
-          connectionString: env.HYPERDRIVE.connectionString,
-        });
+		// with the Hyperdrive credentials. These credentials are only accessible from your Worker.
+		const sql = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
 
 		try {
 			// Connect to the database
@@ -346,7 +347,45 @@ Upon receiving a request, the code above does the following:
 
 ### Run in development mode (optional)
 
-You can start your project in development mode. If you want to connect to the local database configured in your `wrangler.jsonc` with `localConnectionString` (e.g. `localhost:5432`), you can now run `wrangler dev`. This will connect directly to your database from your local Worker project emulation (Hyperdrive caching will not take effect, and the local database must not require SSL). To develop using a remote database, you can connect to your Hyperdrive configuration by running `wrangler dev --remote`.
+You can test your Worker locally before deploying by running `wrangler dev`. This runs your Worker code on your machine while connecting to your database.
+
+The `localConnectionString` field works with both local and remote databases and allows you to connect directly to your database from your Worker project running locally. You must specify the SSL/TLS mode if required (`sslmode=require` for Postgres, `sslMode=REQUIRED` for MySQL).
+
+To connect to a database during local development, configure `localConnectionString` in your `wrangler.jsonc`:
+
+```jsonc
+{
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "your-hyperdrive-id",
+			"localConnectionString": "postgres://user:password@your-database-host:5432/database",
+		},
+	],
+}
+```
+
+Or set an environment variable:
+
+```sh
+export CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="postgres://user:password@your-database-host:5432/database"
+```
+
+Then start local development:
+
+```sh
+npx wrangler dev
+```
+
+:::note
+
+When using `wrangler dev` with `localConnectionString` or `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE`, Hyperdrive caching does not take effect locally.
+
+Alternatively, you can run `wrangler dev --remote` to test against your deployed Hyperdrive configuration with caching enabled, but this runs your entire Worker in Cloudflare's network instead of locally.
+
+Learn more about [local development with Hyperdrive](/hyperdrive/configuration/local-development/).
+
+:::
 
 ## 6. Deploy your Worker
 

@@ -8,37 +8,56 @@ head:
     content: Dedicated Egress IP for Logpush
 ---
 
-This guide covers [Aegis](/aegis/) and Logpush configuration and testing instructions to enable log delivery with a fixed, dedicated egress IP.
+import { APIRequest, Render } from "~/components";
 
-## Prerequisites 
+This guide covers [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) and Logpush configuration and testing instructions to enable log delivery with a fixed, dedicated egress IP.
 
-To use Logpush with a dedicated egress IP, you will need to have Aegis IPs. Note that the Aegis IP pool is associated with a zone, not with an account. To use Logpush with dedicated IPs, traffic must be routed to a single zone.  
+## Prerequisites
 
-The general approach is to have your Logpush job proxying Logpush data through a Cloudflare zone with Aegis enabled to send data to your desired destination. This way your destination will only need to allowlist the provisioned Aegis IPs of your proxy zone.
+To use Logpush with a dedicated egress IP, you will need to have [Smart Shield Advanced](/smart-shield/get-started/#smart-shield-advanced) with Dedicated CDN Egress IPs (formerly known as Aegis). Note that the Dedicated CDN Egress IPs pool is associated with a zone, not with an account. To use Logpush with dedicated IPs, traffic must be routed to a single zone.
 
-As a prerequisite, you need to create a dedicated zone or use an existing zone. If using an existing zone, be aware that the zone's egress will be restricted to Aegis IPs. Make sure all services using that zone will not be impacted. 
+The general approach is to have your Logpush job proxying Logpush data through a Cloudflare zone with Dedicated CDN Egress IPs enabled to send data to your desired destination. This way your destination will only need to allowlist the provisioned dedicated egress IPs of your proxy zone.
+
+As a prerequisite, you need to create a dedicated zone or use an existing zone. If using an existing zone, be aware that the zone's egress will be restricted to Dedicated CDN Egress IPs. Make sure all services using that zone will not be impacted.
 
 It is recommended to use a separate, dedicated zone as a proxy to avoid impacting production systems. If you choose to create a new zone, follow the [steps](/registrar/get-started/register-domain/) to register a new domain with Cloudflare.
 
-The following example shows how to set up logpush and Aegis to proxy an HTTPS destination, but the proxying should work for any supported Logpush destination as all destinations use the HTTP protocol underneath.
+The following example shows how to set up logpush and Dedicated CDN Egress IPs to proxy an HTTPS destination, but the proxying should work for any supported Logpush destination as all destinations use the HTTP protocol underneath.
 
-## 1. Provision Aegis IP Pool
+## 1. Provision dedicated egress IP Pool
 
-1. Work with your Cloudflare account team to purchase [Aegis](/aegis/) IPs for your zone.
+1. Work with your Cloudflare account team to purchase [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) for your zone.
 
 2. (Optional but recommended) Request two IPs — one in PDX-B and one in SJC-A — to ensure coverage across regions.
 
 3. Confirm Pool ID once provisioned.
 
-## 2. Configure a zone for Aegis
+## 2. Configure a zone
 
-1. Register or use an existing zone for the Aegis pool.
+1. Register or use an existing zone for the dedicated egress IPs pool.
+2. Contact your account team to get the ID for your dedicated egress IPs pool.
+3. Make a `PATCH` request to the [Edit Zone Setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint:
+  - Specify `aegis` as the setting ID in the URL.
+  - In the request body, set `enabled` to `true` and use the ID from the previous step as `pool_id`.
 
-2. Associate the Pool ID with the selected zone using the API. For more details, refer to the [Aegis Setup documentation](/aegis/setup/).
-  
+<APIRequest
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		  "id": "aegis",
+			"value": {
+				"enabled": true,
+				"pool_id": "<YOUR_EGRESS_POOL_ID>",
+				},
+	}}
+	parameters={{
+    setting_id: "aegis",
+  }}
+/>
+
 ## 3. Proxy zone setup
 
-1. In your zone, add a DNS record (CNAME or A/AAAA) with **Target** as HTTP destination endpoint. 
+1. In your zone, add a DNS record (CNAME or A/AAAA) with **Target** as HTTP destination endpoint.
 
 ![Create a DNS record in the Cloudflare dashboard to define the HTTP destination endpoint](~/assets/images/logs/endpoint.png)
 

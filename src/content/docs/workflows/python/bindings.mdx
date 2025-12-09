@@ -16,7 +16,7 @@ You must add both `python_workflows` and `python_workers` compatibility flags to
 Also, Python Workflows requires `compatibility_date = "2025-08-01"`, or later, to be set in your Wrangler config file.
 :::
 
-The Python Workers platform leverages FFI to access bindings to Cloudflare resources. Refer to the [bindings](/workers/languages/python/ffi/#using-bindings-from-python-workers) documentation for more information.
+The Python Workers platform leverages [FFI](https://en.wikipedia.org/wiki/Foreign_function_interface) to access bindings to Cloudflare resources. Refer to the [bindings](/workers/languages/python/ffi/#using-bindings-from-python-workers) documentation for more information.
 
 From the configuration perspective, enabling Python Workflows requires adding the `python_workflows` compatibility flag to your `wrangler.toml` file.
 
@@ -26,7 +26,7 @@ From the configuration perspective, enabling Python Workflows requires adding th
 #:schema node_modules/wrangler/config-schema.json
 name = "workflows-starter"
 main = "src/index.ts"
-compatibility_date = "2024-10-22"
+compatibility_date = "2025-10-24"
 compatibility_flags = ["python_workflows", "python_workers"]
 
 [[workflows]]
@@ -71,14 +71,17 @@ Create (trigger) a new instance of a given Workflow.
   type.
 
 ```python
-from pyodide.ffi import to_js
 from js import Object
+from pyodide.ffi import to_js
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request, env, ctx):
-    event = {"foo": "bar"}
-    options = to_js({"params": event}, dict_converter=Object.fromEntries)
-    await env.MY_WORKFLOW.create(options)
-    return Response.json({"status": "success"})
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        event = {"foo": "bar"}
+        options = to_js({"params": event}, dict_converter=Object.fromEntries)
+        await self.env.MY_WORKFLOW.create(options)
+        return Response.json({"status": "success"})
 ```
 
 :::note

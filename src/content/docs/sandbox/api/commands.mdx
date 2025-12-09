@@ -87,7 +87,7 @@ for await (const event of parseSSEStream<ExecEvent>(stream)) {
 Start a long-running background process.
 
 ```ts
-const process = await sandbox.startProcess(command: string, options?: ProcessOptions): Promise<ProcessInfo>
+const process = await sandbox.startProcess(command: string, options?: ProcessOptions): Promise<Process>
 ```
 
 **Parameters**:
@@ -96,7 +96,16 @@ const process = await sandbox.startProcess(command: string, options?: ProcessOpt
   - `cwd` - Working directory
   - `env` - Environment variables
 
-**Returns**: `Promise<ProcessInfo>` with `id`, `pid`, `command`, `status`
+**Returns**: `Promise<Process>` object with:
+- `id` - Unique process identifier
+- `pid` - System process ID
+- `command` - The command being executed
+- `status` - Current status (`'running'`, `'exited'`, etc.)
+- `kill()` - Stop the process
+- `getStatus()` - Get current status
+- `getLogs()` - Get accumulated logs
+- `waitForPort()` - Wait for process to listen on a port
+- `waitForLog()` - Wait for pattern in process output
 
 <TypeScriptExample>
 ```
@@ -212,6 +221,100 @@ const logs = await sandbox.getProcessLogs(server.id);
 console.log('Server logs:', logs);
 ```
 </TypeScriptExample>
+
+## Process readiness methods
+
+The `Process` object returned by `startProcess()` includes methods to wait for the process to be ready before proceeding.
+
+### `process.waitForPort()`
+
+Wait for a process to listen on a port.
+
+```ts
+await process.waitForPort(port: number, options?: WaitForPortOptions): Promise<void>
+```
+
+**Parameters**:
+- `port` - The port number to check
+- `options` (optional):
+  - `mode` - Check mode: `'http'` (default) or `'tcp'`
+  - `timeout` - Maximum wait time in milliseconds
+  - `interval` - Check interval in milliseconds (default: `100`)
+  - `path` - HTTP path to check (default: `'/'`, HTTP mode only)
+  - `status` - Expected HTTP status range (default: `{ min: 200, max: 399 }`, HTTP mode only)
+
+**HTTP mode** (default) makes an HTTP GET request and checks the response status:
+
+<TypeScriptExample>
+```
+const server = await sandbox.startProcess('node server.js');
+
+// Wait for server to be ready (HTTP mode)
+await server.waitForPort(3000);
+
+// Check specific endpoint and status
+await server.waitForPort(8080, {
+  path: '/health',
+  status: { min: 200, max: 299 },
+  timeout: 30000
+});
+```
+</TypeScriptExample>
+
+**TCP mode** checks if the port accepts connections:
+
+<TypeScriptExample>
+```
+const db = await sandbox.startProcess('redis-server');
+
+// Wait for database to accept connections
+await db.waitForPort(6379, {
+  mode: 'tcp',
+  timeout: 10000
+});
+```
+</TypeScriptExample>
+
+**Throws**:
+- `ProcessReadyTimeoutError` - If port does not become ready within timeout
+- `ProcessExitedBeforeReadyError` - If process exits before becoming ready
+
+### `process.waitForLog()`
+
+Wait for a pattern to appear in process output.
+
+```ts
+const result = await process.waitForLog(pattern: string | RegExp, timeout?: number): Promise<WaitForLogResult>
+```
+
+**Parameters**:
+- `pattern` - String or RegExp to match in stdout/stderr
+- `timeout` - Maximum wait time in milliseconds (optional)
+
+**Returns**: `Promise<WaitForLogResult>` with:
+- `line` - The matching line of output
+- `matches` - Array of capture groups (for RegExp patterns)
+
+<TypeScriptExample>
+```
+const server = await sandbox.startProcess('node server.js');
+
+// Wait for string pattern
+const result = await server.waitForLog('Server listening');
+console.log('Ready:', result.line);
+
+// Wait for RegExp with capture groups
+const result = await server.waitForLog(/Server listening on port (\d+)/);
+console.log('Port:', result.matches[1]); // Extracted port number
+
+// With timeout
+await server.waitForLog('Ready', 30000);
+```
+</TypeScriptExample>
+
+**Throws**:
+- `ProcessReadyTimeoutError` - If pattern is not found within timeout
+- `ProcessExitedBeforeReadyError` - If process exits before pattern appears
 
 ## Related resources
 

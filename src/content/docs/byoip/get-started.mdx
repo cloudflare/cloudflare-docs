@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { APIRequest, Tabs, TabItem, GlossaryDefinition, GlossaryTooltip, Details } from "~/components";
+import { APIRequest, Tabs, TabItem, GlossaryDefinition, GlossaryTooltip, Details, Render } from "~/components";
 
 To use your own IP addresses with Cloudflare, please check with your account team to confirm your contract covers this functionality. You will need to configure settings specific to the services you want to use, as well as meet some standard requirements for all BYOIP customers.
 
@@ -30,9 +30,7 @@ The process described on this page does not support onboarding IP prefixes for u
     - `route` or `route6` objects matching the exact prefixes you want to onboard
     - `origin` matching the correct ASN you want to onboard
 
-    :::note
-    The process described on this page only supports using Cloudflare's ASN (AS13335). If you must announce the prefixes under your own ASN, contact your account team.
-    :::
+    <Render file="cloudflare-asn-callout" product="byoip" />
 
 - You must use [Resource Public Key Infrastructure (RPKI) validation](/byoip/concepts/route-filtering-rpki/) and make sure your ROAs are accurate. You can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/) to double-check your prefixes.
 
@@ -45,6 +43,8 @@ The process described on this page does not support onboarding IP prefixes for u
 ### Add your prefix
 
 Use the [Add Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/create/) to create a prefix in the Cloudflare account that should own the BYOIP prefix.
+
+<Render file="cloudflare-asn-callout" product="byoip" />
 
 <APIRequest
  path="/accounts/{account_id}/addressing/prefixes"
