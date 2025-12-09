@@ -202,13 +202,24 @@ WARP will automatically exclude the external endpoint IP address from the WARP t
 	docker exec <container-name-or-id> nginx -s reload
 	```
 
-WARP will automatically disconnect within the configured polling interval, and the WARP GUI will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect).. To reconnect all devices, change `emergency_disconnect` back to `false`.
+WARP will automatically disconnect within the configured polling interval, and the WARP GUI will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect). To reconnect all devices, change `emergency_disconnect` back to `false`.
 
-## View logs
+## Logs
 
-the global disconnection event will appear in [Admin audit logs]
+Since External Emergency Disconnect signals are independent from Cloudflare's infrastructure, externally-triggered disconnects are not logged by Cloudflare. Dashboard logs will only report changes to feature settings (such as turning on/off the feature or changing the endpoint URL), not disconnection events.
 
-(tbd)
+To get the current emergency disconnect status on a device, you can run the following command:
+
+```sh
+warp-cli settings
+```
+
+```sh output
+Merged configuration:
+(override)	Emergency disconnect: true (issued @ 2025-12-09T13:57:42.597864Z)
+```
+
+The current status is also available in [WARP diagnosic logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#macoswindowslinux) in `warp-settings.txt`.
 
 ## Clear External Emergency Disconnect state
 
