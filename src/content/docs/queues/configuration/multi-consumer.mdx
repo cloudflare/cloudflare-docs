@@ -1,0 +1,32 @@
+---
+title: Multiple consumers
+pcx_content_type: concept
+sidebar:
+  order: 6
+---
+
+Multiple consumer support allows a queue to bind to multiple HTTP or Workers consumers. Each message in the queue will be sent to each consumer independently, with unique retry behavior and dead letter queues supported per consumer. Uniqueness is enforced on the `lease_id` and `message_id` pair, where the `lease_id` is unique to each consumer. This way, a message will not leave the queue until it has been resolved[^1] by all consumers.
+
+For [batching, retries, and delays](/queues/configuration/batching-retries/) each consumer will support its own configuration. All settings defined in the consumer binding will define the behavior **only** for that consumer. If a queue consumer fails on a specific message or fails to return successfully when processing a batch, the failure will not affect any other consumers of the queue. Rather, that consumer will execute its specified (or default) retry behavior until the message or batch is resolved.
+
+Consider a few possible scenarios where a queue is bound to multiple consumers:
+
+- The queue sends a batch of messages to Workers Consumer A and Workers Consumer B (both of which have default settings). The batch is processed successfully from Consumer A and fails to return successfully from Consumer B. The batch will remain in the queue and retry delivery 3 times (per the default retry behavior) only to Consumer B. If the batch is returned successfully from Consumer B, it will be acknowledged and removed from the queue. If the batch fails to return successfully after the 3 retries, it will go into the dead letter queue specified in the binding on Consumer B (if applicable).
+
+- The queue sends a message to Workers Consumer A and WOrkers Consumer B, who share a [dead letter queue](/queues/configuration/dead-letter-queues). The message is not acknowledged by either Consumer A or Consumer B. The queue executes the unique retry behavior for Consumer A and Consumer B respectively, but both still fail to acknowledge the message. Then, the message will be sent to the dead letter queue **twice**, once with the `consumerID` of Consumer A and once with the `consumerID` of Consumer B.
+
+- The queue sends a message to a Workers Consumer, and an HTTP pull consumer pulls the message from the queue. Again, the message will only be removed from the queue once it has been resolved by both consumers, following unique retry behavior for each.
+
+[^1]: A message is considered **resolved** when it has either reached the maximum number of retries or been acknowledged by all consumers of that queue.
+
+## Multi-consumer configuration
+
+To configure multiple Workers consumers on a queue, set up the respective bindings in your Wrangler files for each consumer Worker. If you would like to specify settings including maximum batch size, dead letter queue, or retry behavior for the consumer, pass these optional values [in the binding](/queues/configuration/configure-queues/#consumer-worker-configuration).
+
+Only the consumer with that binding will inherit the settings. Other consumers who are bound to the same queue will maintain unique behavior based on the bindings in their own Wrangler file.
+
+To configure multiple HTTP pull consumers -- or to enable an HTTP pull consumer in addition to an existing Workers consumer on a particular queue -- simply [enable HTTP pull](/queues/configuration/pull-consumers/#1-enable-http-pull) for each consumer by setting the HTTP pull binding in the Wrangler configuration file. Existing consumer bindings of a queue will not be affected by the addition or removal of secondary consumers of that queue.
+
+## Metrics
+
+To query per-consumer metrics, filter by the `consumerID` field via the [GraphQL Analytics API](/analytics/graphql-api/). For more details on observability, refer to [Metrics](/queues/observability/metrics/).
