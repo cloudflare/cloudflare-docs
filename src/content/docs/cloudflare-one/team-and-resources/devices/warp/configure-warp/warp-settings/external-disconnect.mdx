@@ -188,7 +188,7 @@ To configure External Emergency Disconnect using an MDM, add the following param
 ### 4. Test External Emergency Disconnect
 
 1. Ensure that WARP is connected.
-2. Ensure that **Manage device connection using an external signal** is [turned on](#3-turn-on-external-emergency-disconnect).
+2. Ensure that the External Emergency Disconnect feature is [turned on](#3-turn-on-external-emergency-disconnect).
 3. In your [external endpoint](#create-an-external-disconnect-endpoint) configuration, change `emergency_disconnect` to `true`:
 	```json
 	{"emergency_disconnect": true}
@@ -199,8 +199,7 @@ To configure External Emergency Disconnect using an MDM, add the following param
 	docker exec <container-name-or-id> nginx -s reload
 	```
 
-WARP will automatically disconnect within the configured polling interval. The WARP GUI will display [
-`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect) and log the event To reconnect all devices, change `emergency_disconnect` back to `false`.
+WARP will automatically disconnect within the configured polling interval, and the WARP GUI will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect).. To reconnect all devices, change `emergency_disconnect` back to `false`.
 
 ## View logs
 
