@@ -36,11 +36,20 @@ Select a framework based on the platform you are building for.
 <RTKSDKSelector />
 
 <RTKCodeSnippet id="web-react">
-	Please install the following dependancies into your project repository:
-	```bash npm i @cloudflare/realtimekit-react @cloudflare/realtimekit-react-ui
-	``` _Optional:_ You can also build on top of our ready-made template: ```bash
-	git clone https://github.com/cloudflare/realtimekit-web-examples.git cd
-	realtimekit-web-examples/react-examples/examples/default-meeting-ui ```
+
+Please install the following dependencies into your project repository:
+
+```bash
+npm i @cloudflare/realtimekit-react @cloudflare/realtimekit-react-ui
+```
+
+_Optional:_ You can also build on top of our ready-made template:
+
+```bash
+git clone https://github.com/cloudflare/realtimekit-web-examples.git
+cd realtimekit-web-examples/react-examples/examples/default-meeting-ui
+```
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-web-components">
@@ -92,7 +101,7 @@ curl --location 'https://api.cloudflare.com/client/v4/accounts/<account_id>/real
 
 ### Create a Meeting
 
-Use our [Meetings API](/api/resources/realtime_kit/#create-a-meeting) to create a meeting. We will use the **ID from the response** in subsequent steps.
+Use our [Meetings API](/api/resources/realtime_kit/subresources/meetings/methods/create/) to create a meeting. We will use the **ID from the response** in subsequent steps.
 
 ```bash
 curl --location 'https://api.cloudflare.com/client/v4/accounts/<account_id>/realtime/kit/<app_id>/meetings' \
@@ -106,13 +115,13 @@ curl --location 'https://api.cloudflare.com/client/v4/accounts/<account_id>/real
 #### Create a Preset
 
 Presets define what permissions a user should have. Learn more in the Concepts guide.
-You can create new presets using the [Presets API](/api/resources/realtime_kit/#create-a-preset) or via the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit) ↗.
+You can create new presets using the [Presets API](/api/resources/realtime_kit/subresources/presets/methods/create/) or via the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit).
 
 > **Note:** Skip this step if you created the app in the dashboard—default presets are already set up for you.
 
 > **Note:** Presets can be reused across multiple meetings. Define a role (for example, admin or viewer) once and apply it to participants in any number of meetings.
 
-#### Create a Participant
+#### Add a Participant
 
 A participant is added to a meeting using the `Meeting ID` created above and selecting a `Preset Name` from the available options.
 
@@ -129,7 +138,7 @@ curl --location 'https://api.cloudflare.com/client/v4/accounts/<account_id>/real
 }'
 ```
 
-Learn more about creating participants in the [API reference](/api/resources/realtime_kit/#create-a-participant).
+Learn more about adding participants in the [API reference](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/).
 
 ### Frontend Integration
 
@@ -155,11 +164,11 @@ initMeeting({ authToken: '<auth-token>' });
 }, []);
 
 return (
+
 <RealtimeKitProvider value={meeting}>
-<MyMeetingUI />
+	<MyMeetingUI />
 </RealtimeKitProvider>
-);
-}
+); }
 
 export default function MyMeetingUI() {
   const { meeting } = useRealtimeKitMeeting();

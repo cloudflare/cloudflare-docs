@@ -1,19 +1,19 @@
 ---
-title: Reclassifications
+title: Submissions
 pcx_content_type: how-to
 sidebar:
   order: 13
 ---
 
-Reclassifying messages allows you to choose the disposition of your messages if the disposition is incorrect. This helps improve Email security's detection accuracy and ensures proper handling of email threats.
+Submitting messages allows you to choose the disposition of your messages if the disposition is incorrect. This helps improve Email security's detection accuracy and ensures proper handling of email threats.
 
-## Reclassify messages
+## Submit messages
 
-To reclassify a message:
+To submit a message:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** and select **Investigation**.
 2. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
-3. Select the three dots, then select **Request reclassification**.
+3. Select the three dots, then select **Submit for review**.
 4. Under **New disposition**, select among the following:
    - **Malicious**: Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.
    - **Spoof**: Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching Envelope From and `Header From` values.
@@ -22,7 +22,7 @@ To reclassify a message:
    - **Clean**: Traffic not associated with any phishing campaigns.
 5. Select **Save**.
 
-To reclassify messages in bulk, select **Select all messages** > **Action** > **Request reclassification**.
+To submit messages in bulk, select **Select all messages** > **Action** > **Request submissions**.
 
 To release messages in bulk, select **Select all messages** > **Action** > **Release**.
 
@@ -33,20 +33,20 @@ Email security classifies certain emails as "Clean". If you disagree with the di
 On the **Investigation** page:
 
 1. Go to the email marked as **Clean**.
-2. Select the three dots > **Request reclassification**.
+2. Select the three dots > **Submit for review**.
 3. Upload the EML file.
 4. Select a new disposition.
 5. Select **Save**.
 
-## View reclassifications
+## View submissions
 
-Once you have reclassified your messages, you can access those on **Reclassifications**.
+Once you have submitted your messages, you can access those on **Submissions**.
 
-To view reclassifications:
+To view submissions:
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email security** > **Reclassifications**.
+2. Select **Email security** > **Submissions**.
 3. Choose from the following submission types:
-   - [**Team submissions**](/cloudflare-one/email-security/reclassifications/team-submissions/): View emails your security team submitted for reclassification
-   - [**User submissions**](/cloudflare-one/email-security/reclassifications/user-submissions/): View emails your users submitted for reclassification
-   - [**Invalid submissions**](/cloudflare-one/email-security/reclassifications/invalid-submissions/): View submissions that could not be processed
+   - [**Team submissions**](/cloudflare-one/email-security/submissions/team-submissions/): View emails your security team submitted for submissions.
+   - [**User submissions**](/cloudflare-one/email-security/submissions/user-submissions/): View emails your users submitted for submissions.
+   - [**Invalid submissions**](/cloudflare-one/email-security/submissions/invalid-submissions/): View submissions that could not be processed.

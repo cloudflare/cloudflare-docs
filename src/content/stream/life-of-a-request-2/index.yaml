@@ -1,0 +1,10 @@
+---
+id: 789b42ba4403b32caf54d09a5e5987fd
+url: life-of-a-request-2
+title: "Life of a Request: The Fast Lane - Caching and Smart Routing"
+description: After your request hits Cloudflare's secure network at the nearest data center where it's checked for security threats with a clean bill of health, it's time to get it to its destination at lightning speed.
+products:
+  - fundamentals
+pcx_content_type: video
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/lor-2-the-fast-lane.png

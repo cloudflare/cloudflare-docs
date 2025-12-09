@@ -8,7 +8,7 @@ head:
     content: Frequently asked questions about Cloudflare Browser Rendering
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, DashButton, Steps } from "~/components";
 
 Below you will find answers to our most commonly asked questions about Browser Rendering.
 
@@ -27,11 +27,27 @@ Not yet. Local development currently has the following limitation(s):
 
 <Render file="remote-binding-note" product="workers" />
 
-### Will Browser Rendering bypass Cloudflare's Bot Protection?
+### Will Browser Rendering be detected by Bot Management?
 
-No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection.
+Yes, Browser Rendering requests are always identified as bot traffic by Cloudflare. Cloudflare does not enforce bot protection by default — that is the customer's choice.
 
-If you are attempting to scan your **own zone** and need Browser Rendering to access areas protected by Cloudflare’s Bot Protection, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
+If you are attempting to scan your own zone and want Browser Rendering to access your website freely without your bot protection configuration interfering, you can create a WAF skip rule to [allowlist Browser Rendering](/browser-rendering/faq/#how-do-i-allowlist-browser-rendering).
+
+### How do I allowlist Browser Rendering?
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Security rules** page of your account and domain.
+
+     <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. To create a new empty rule, select **Create rule** > **Custom rules**.
+3. Enter a descriptive name for the rule in **Rule name**, such as `Allow Browser Rendering`.
+4. Under **When incoming requests match**, use the **Field** dropdown to choose _Bot Detection ID_. For **Operator**, select _equals_. For **Value**, enter `128292352`.
+5. Under **Then take action**, in the **Choose action** dropdown, select  **Skip**.
+6. Under **Place at**, select the order of the rule in the **Select order** dropdown to be **First**. Setting the order as **First** allows this rule to be applied before subsequent rules.
+7. To save and deploy your rule, select **Deploy**.
+
+</Steps>
 
 ### Does Browser Rendering rotate IP addresses for outbound requests?
 

@@ -59,7 +59,7 @@ WHERE Date >= '2025-02-06' AND Date <= '2025-02-06' AND CreatedAt >= '2025-02-06
 
 ### Headers and cookies
 
-To query request headers and cookies, you must first enable logging for these fields using [Custom fields](/logs/logpush/logpush-job/custom-fields/).
+To query request headers, response headers, and cookies you must first enable logging for these fields using [Custom fields](/logs/logpush/logpush-job/custom-fields/). Configure the list of custom fields using the API or the dashboard; there is no need to modify the Logpush job itself.
 
 The example below shows how to query HTTP requests by date, timestamp, client country, and a custom request header. Be sure to log the specific headers or cookies you plan to query in advance.
 
