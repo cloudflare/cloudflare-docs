@@ -780,12 +780,19 @@ import { useAgent } from "agents/react";
 // Options for the useAgent hook
 type UseAgentOptions<State = unknown> = Omit<
 	Parameters<typeof usePartySocket>[0],
-	"party" | "room"
+	"party" | "room" | "query"
 > & {
 	// Name of the agent to connect to
 	agent: string;
 	// Name of the specific Agent instance (optional)
 	name?: string;
+	// Query parameters - can be static object or async function
+	query?: Record<string, string | null> | (() => Promise<Record<string, string | null>>);
+	// Dependencies for async query caching
+	queryDeps?: unknown[];
+	// Cache TTL in milliseconds for async query results (default: 300000ms / 5 minutes)
+	// Set to 0 to disable caching
+	cacheTtl?: number;
 	// Called when the Agent's state is updated
 	onStateUpdate?: (state: State, source: "server" | "client") => void;
 };
@@ -799,6 +806,44 @@ function useAgent<State = unknown>(
 	setState: (state: State) => void;
 };
 ```
+
+**Async Query Caching**
+
+When using the `query` option as an async function (for example, to fetch authentication tokens), the `useAgent` hook automatically caches query results to avoid unnecessary repeated calls.
+
+- **Default behavior**: Query results are cached for 5 minutes (300,000 milliseconds)
+- **Custom TTL**: Set `cacheTtl` to a custom value in milliseconds to control cache duration
+- **Disable caching**: Set `cacheTtl: 0` to disable caching entirely (query will be executed fresh every time)
+- **Cache invalidation**: Use `queryDeps` array to specify dependencies that trigger cache invalidation when they change
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents/react";
+
+// Example: Cache authentication token for 10 minutes
+const agent = useAgent({
+	agent: "my-agent",
+	query: async () => {
+		const token = await fetchAuthToken();
+		return { token };
+	},
+	cacheTtl: 10 * 60 * 1000, // 10 minutes
+	queryDeps: [userId], // Invalidate cache when userId changes
+});
+
+// Example: Disable caching for always-fresh data
+const agent = useAgent({
+	agent: "my-agent",
+	query: async () => {
+		const nonce = await generateNonce();
+		return { nonce };
+	},
+	cacheTtl: 0, // No caching
+});
+```
+
+</TypeScriptExample>
 
 ### Chat Agent
 
