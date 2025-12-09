@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-12-04"
+    title: Added guidance on allowlisting Browser Rendering in Bot Management
+    description: |-
+      * Added [FAQ guidance](/browser-rendering/faq/#how-do-i-allowlist-browser-rendering) on how to create a WAF skip rule to allowlist Browser Rendering requests when using Bot Management on your zone.
   - publish_date: "2025-12-03"
     title: Improved AI JSON response parsing and debugging
     description: |-

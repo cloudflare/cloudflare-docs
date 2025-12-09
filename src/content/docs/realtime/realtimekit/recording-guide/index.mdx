@@ -20,12 +20,12 @@ interactions with RealtimeKit plugins, in a single file using composite recordin
 ## How does RealtimeKit recording work?
 
 RealtimeKit recordings are powered by anonymous virtual bot users who join your
-meeting, record it, and then upload it to RealtimeKit's AWS S3 bucket. For video files,
+meeting, record it, and then upload it to RealtimeKit's Cloudflare R2 bucket. For video files,
 we currently support the
 [H.264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) and
 [VP8](https://en.wikipedia.org/wiki/VP8) codecs.
 
-1. When the recording is finished, it is stored in RealtimeKit's AWS S3 bucket.
+1. When the recording is finished, it is stored in RealtimeKit's Cloudflare R2 bucket.
 2. RealtimeKit generates a downloadable link from which the recording can be
    downloaded. You can get the download URL using the
    [Fetch details of a recording API](/api/resources/realtime_kit/subresources/recordings/)

@@ -23,23 +23,23 @@ Ensure that the cloud keys you provide to RealtimeKit APIs have only limited acc
 
 You can configure storage configs for RealtimeKit Recordings in the following ways:
 
-### Set Storage Configuration Details Using Developer Portal
+### Set Storage Configuration Details Using RealtimeKit Dashboard
 
-You can specify storage configuration details using Developer Portal for all meetings.
+You can specify storage configuration details using RealtimeKit Dashboard for all meetings.
 
-1. In the Cloudflare [RealtimeKit Dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), go to Recordings.
+1. In the Cloudflare [RealtimeKit Dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), go to Recordings tab.
 2. Click **Setup Storage**.
 3. Specify the details for your cloud provider. We support transferring
    recordings to Cloudflare R2, AWS S3, Azure, DigitalOcean, and Google Cloud Storage (GCS) buckets.
 
-![Recording Storage Screenshot](~/assets/images/realtime/realtimekit/recording-storage.png)
+![Recording Storage Screenshot](~/assets/images/realtime/realtimekit/setup-recording-storage.png)
+
 <br />
 
 :::note
 
-If you have specified storage configuration in the
-[Start Recording](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) APIs, it will take
-precedence and override the storage details configured in the Developer Portal.
+If you specify storage configuration in the [Start Recording](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API request,
+that configuration takes precedence over the storage details configured in the RealtimeKit Dashboard.
 
 :::
 
@@ -47,8 +47,7 @@ To familiarize yourself with the RealtimeKit REST APIs, we recommend exploring t
 
 ### Using the `storage_config` option in the Start Recording API
 
-This allows for the most granular level of control, and lets you specify a
-storage_config for a specific
+This allows for the most granular level of control, and lets you specify a storage_config for a specific
 [recording started](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) on a meeting.
 
 ```bash
@@ -59,11 +58,10 @@ curl --request POST \
   --data '{
   "meeting_id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
   "storage_config": {
-    "type": "aws",
+    "type": "cloudflare",
     "access_key": "your-access-key",
     "secret_key": "your-secret-key",
     "bucket": "your-bucket-name",
-    "region": "us-east-1",
     "path": "/"
   }
 }'
@@ -80,7 +78,7 @@ Currently, the following cloud providers are supported:
 To transfer recordings to Cloudflare R2, set the following fields in
 the `storage_config` parameter:
 
-- Type: Specify `r2`.
+- Type: Specify `cloudflare`.
 - Access Key: Enter your R2 access key ID. For more information, see [Create API tokens](/r2/api/tokens/).
 - Bucket: Enter the name of your R2 bucket.
 - (Optional) Path: Specify the path to a sub-folder where recordings should be
@@ -94,7 +92,7 @@ the `storage_config` parameter:
 To transfer recordings to the AWS S3 bucket, set the following fields in the
 `storage_config` parameter:
 
-- Type: Specify aws.
+- Type: Specify `aws`.
 - Access Key: Enter your `aws_access_key_id`.
 - Bucket: Enter your AWS S3 bucket name.
 - (Optional) Path: Specify the path to a sub-folder where recordings should be
@@ -162,9 +160,9 @@ It's important to note that you can only add a prefix to the default format; you
 For more information, see [start recording a meeting](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/).
 
 <head>
-  <title>Publish Recorded File to Your Cloud Provider Guide</title>
-  <meta
-    name="description"
-    content="Explore how to set up custom cloud storage for RealtimeKit's recording. Follow our guide for effective configuration and integration."
-  />
+	<title>Publish Recorded File to Your Cloud Provider Guide</title>
+	<meta
+		name="description"
+		content="Explore how to set up custom cloud storage for RealtimeKit's recording. Follow our guide for effective configuration and integration."
+	/>
 </head>
