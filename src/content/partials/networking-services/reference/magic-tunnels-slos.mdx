@@ -7,7 +7,7 @@ Cloudflare combines different metrics to determine when to send you Magic Tunnel
 
 ### Service-level indicator (SLI)
 
-A ratio between the total number of positive events divided by the total number of events. An SLI of 0% is a state where the feature is not working at all, and an SLI of 100% is a state where the feature is fully working as expected.
+A ratio between the total number of positive events divided by the total number of events. An SLI of 0% means the feature is not working at all, and an SLI of 100% means the feature is fully working as expected.
 
 ### Service-level objectives (SLOs)
 
@@ -17,7 +17,7 @@ SLOs are the threshold for the SLI and they set a target level of reliability fo
 
 The error budget is the amount of unsuccessful events (from the SLI perspective) that can happen over the course of the SLO time window while maintaining the service at the level of availability defined by the SLO.
 
-The SLO is a target percentage, and the error budget is defined as 100% minus the SLO. For example, let us assume that during a course of 30 days there were one million Magic Tunnel health checks in your account, and your SLO is set to 99%. The error budget for this case would be:
+The SLO is a target percentage, and the error budget is defined as 100% minus the SLO. For example, assume that during 30 days there were one million Magic Tunnel health checks in your account, and your SLO is set to 99%. The error budget for this case would be:
 
 ```txt
 number of events x (1 - SLO) = 1000000 x (1-0.99) = 1000
@@ -27,11 +27,11 @@ This means the SLO would allow for 1000 unsuccessful Magic health checks over th
 
 ### Burn rate
 
-The burn rate measures how fast the error budget is expended over a given time window relative to the SLO window. In the example from above, an SLO of 99% means it is acceptable to observe 100 Magic health check fails over the course of 30 days. However, those same 100 health check fails would not be acceptable during the course of one hour, for example.
+The burn rate measures how fast the error budget is expended over a given time window relative to the SLO window. In the example from above, an SLO of 99% means you can observe 100 Magic health check fails over the course of 30 days. However, those same 100 health check fails are not acceptable during one hour.
 
 ## How does Cloudflare decide when to alert
 
-To determine when to send Magic Tunnel health alerts, Cloudflare relies on a multi-window, multi-burn rate approach. Every five minutes, Cloudflare analyzes the last hour and the last five minutes of data. We calculate the SLI for the short window (five minutes) and large window (one hour) of data.
+To determine when to send Magic Tunnel health alerts, Cloudflare relies on a multi-window, multi-burn rate approach. Every five minutes, Cloudflare analyzes the last hour and the last five minutes of data. Cloudflare calculates the SLI for the short window (five minutes) and large window (one hour) of data.
 
 Cloudflare only alerts you when both the short and long SLOs are below the configured threshold, so the maximum of the two is the limiting factor. For example, if you defined a threshold of 99%:
 
