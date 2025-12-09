@@ -48,7 +48,7 @@ You can add, update or delete entires in a store:
 type StoreValue = string | number | object | array;
 ```
 ```ts
-const store = meeting.stores.get('myStore');
+const store = meeting.stores.stores.get('myStore');
 
 await store.set('user', { name: 'John Doe' });
 
