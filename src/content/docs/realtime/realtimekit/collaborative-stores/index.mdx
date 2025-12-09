@@ -28,15 +28,6 @@ const store = meeting.stores.create('myStore');
 This method must be executed for every user.
 :::
 
-### Load Remote Stores
-
-Once the store is created, you can fetch the remote state of the data in that store.
-
-```ts
-const { stores } = meeting.stores;
-await stores.populate('myStore');
-```
-
 ### Update a Store
 
 You can add, update or delete entires in a store:
