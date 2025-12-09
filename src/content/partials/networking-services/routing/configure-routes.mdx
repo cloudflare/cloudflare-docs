@@ -18,7 +18,7 @@ params:
 
 import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
+Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (only available over Direct CNI).
 
 Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more information about all the technical aspects related to:
 - Routes' priorities and weights
