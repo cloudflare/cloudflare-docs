@@ -39,11 +39,29 @@ If you are experiencing an issue with a particular Durable Object, you may wish 
 
 `equals` is used to compare equality between two instances of `DurableObjectId`.
 
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 const id1 = env.MY_DURABLE_OBJECT.newUniqueId();
 const id2 = env.MY_DURABLE_OBJECT.newUniqueId();
 console.assert(!id1.equals(id2), "Different unique ids should never be equal.");
 ```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+id1 = env.MY_DURABLE_OBJECT.newUniqueId()
+id2 = env.MY_DURABLE_OBJECT.newUniqueId()
+assert not id1.equals(id2), "Different unique ids should never be equal."
+```
+
+</TabItem>
+
+</Tabs>
 
 #### Parameters
 
@@ -59,6 +77,10 @@ console.assert(!id1.equals(id2), "Different unique ids should never be equal.");
 
 `name` is an optional property of a `DurableObjectId`, which returns the name that was used to create the `DurableObjectId` via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname). This value is undefined if the `DurableObjectId` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid). This value is also undefined within the `ctx.id` passed into the Durable Object constructor (refer to [GitHub issue](https://github.com/cloudflare/workerd/issues/2240) for discussion).
 
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 const uniqueId = env.MY_DURABLE_OBJECT.newUniqueId();
 const fromNameId = env.MY_DURABLE_OBJECT.idFromName("foo");
@@ -68,6 +90,21 @@ console.assert(
 	"name matches parameter to idFromName",
 );
 ```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+unique_id = env.MY_DURABLE_OBJECT.newUniqueId()
+from_name_id = env.MY_DURABLE_OBJECT.idFromName("foo")
+assert unique_id.name is None, "unique ids have no name"
+assert from_name_id.name == "foo", "name matches parameter to idFromName"
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Related resources
 

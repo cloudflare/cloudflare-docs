@@ -9,7 +9,9 @@ import { Render, Tabs, TabItem, GlossaryTooltip, Type, MetaInfo, TypeScriptExamp
 
 The `DurableObject` base class is an abstract class which all Durable Objects inherit from. This base class provides a set of optional methods, frequently referred to as handler methods, which can respond to events, for example a webSocketMessage when using the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api). To provide a concrete example, here is a Durable Object `MyDurableObject` which extends `DurableObject` and implements the fetch handler to return "Hello, World!" to the calling Worker.
 
-<TypeScriptExample>
+<Tabs>
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class MyDurableObject extends DurableObject {
 	constructor(ctx: DurableObjectState, env: Env) {
@@ -22,6 +24,23 @@ export class MyDurableObject extends DurableObject {
 }
 ```
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject, Response
+
+class MyDurableObject(DurableObject):
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+
+	async def fetch(self, request):
+		return Response("Hello, World!")
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Methods
 

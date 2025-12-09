@@ -5,60 +5,97 @@ sidebar:
   order: 3
 ---
 
-The [Vercel AI SDK](https://sdk.vercel.ai/) is a TypeScript library for building AI applications. The SDK supports many different AI providers, tools for streaming completions, and more.
+import {
+  Details,
+  Tabs,
+  TabItem
+} from "~/components";
 
-To use Cloudflare AI Gateway inside of the AI SDK, you can configure a custom "Gateway URL" for most supported providers. Below are a few examples of how it works.
+The [Vercel AI SDK](https://sdk.vercel.ai/) is a TypeScript library for building AI applications. The SDK supports many different AI providers, tools for streaming completions, and more.
+To use Cloudflare AI Gateway with Vercel AI SDK, you will need to use the `ai-gateway-provider` package.
+
+## Installation
+
+```bash
+npm install ai-gateway-provider
+```
 
 ## Examples
 
-### OpenAI
+<Details header="With Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```js title=""
+import { createAiGateway } from 'ai-gateway-provider';
+import { createOpenAI } from 'ai-gateway-provider/providers/openai';
+import { generateText } from "ai";
 
-If you're using the `openai` provider in AI SDK, you can create a customized setup with `createOpenAI`, passing your OpenAI-compatible AI Gateway URL:
+const aigateway = createAiGateway({
+  accountId: "{CLOUDFLARE_ACCOUNT_ID}",
+  gateway: '{GATEWAY_NAME}',
+  apiKey: '{CF_AIG_TOKEN}',
+});
 
-```typescript
-import { createOpenAI } from "@ai-sdk/openai";
+const openai = createOpenAI({ apiKey: '{OPENAI_API_KEY}' });
 
-const openai = createOpenAI({
-	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`,
+const { text } = await generateText({
+  model: aigateway(openai.chat("gpt-5.1")),
+  prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+});
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```js title=""
+import { createAiGateway } from 'ai-gateway-provider';
+import { createOpenAI } from 'ai-gateway-provider/providers/openai';
+import { generateText } from "ai";
+
+const aigateway = createAiGateway({
+  accountId: "{CLOUDFLARE_ACCOUNT_ID}",
+  gateway: '{GATEWAY_NAME}',
+});
+
+const openai = createOpenAI({ apiKey: '{OPENAI_API_KEY}' });
+
+const { text } = await generateText({
+  model: aigateway(openai.chat("gpt-5.1")),
+  prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+});
+```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```js title=""
+import { createAiGateway } from 'ai-gateway-provider';
+import { createOpenAI } from 'ai-gateway-provider/providers/openai';
+import { generateText } from "ai";
+
+const aigateway = createAiGateway({
+  accountId: "{CLOUDFLARE_ACCOUNT_ID}",
+  gateway: '{GATEWAY_NAME}',
+  apiKey: '{CF_AIG_TOKEN}',
+});
+
+const openai = createOpenAI();
+
+const { text } = await generateText({
+  model: aigateway(openai.chat("gpt-5.1")),
+  prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+});
+```
+</Details>
+
+### Fallback Providers
+
+To specify model or provider fallbacks to handle request failures and ensure reliability, you can pass an array of models to the `model` option.
+
+```js title=""
+const { text } = await generateText({
+  model: aigateway([
+		openai.chat("gpt-5.1"), anthropic("claude-sonnet-4-5")
+  ]),
+  prompt: 'Write a vegetarian lasagna recipe for 4 people.',
 });
 ```
 
-### Anthropic
-
-If you're using the `anthropic` provider in AI SDK, you can create a customized setup with `createAnthropic`, passing your Anthropic-compatible AI Gateway URL:
-
-```typescript
-import { createAnthropic } from "@ai-sdk/anthropic";
-
-const anthropic = createAnthropic({
-	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic`,
-});
-```
-
-### Google AI Studio
-
-If you're using the Google AI Studio provider in AI SDK, you need to append `/v1beta` to your Google AI Studio-compatible AI Gateway URL to avoid errors. The `/v1beta` path is required because Google AI Studio's API includes this in its endpoint structure, and the AI SDK sets the model name separately. This ensures compatibility with Google's API versioning.
-
-```typescript
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-
-const google = createGoogleGenerativeAI({
-	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1beta`,
-});
-```
-
-### Retrieve `log id` from AI SDK
-
-You can access the AI Gateway `log id` from the response headers when invoking the SDK.
-
-```typescript
-const result = await generateText({
-	model: anthropic("claude-3-sonnet-20240229"),
-	messages: [],
-});
-console.log(result.response.headers["cf-aig-log-id"]);
-```
-
-### Other providers
-
-For other providers that are not listed above, you can follow a similar pattern by creating a custom instance for any AI provider, and passing your AI Gateway URL. For help finding your provider-specific AI Gateway URL, refer to the [Supported providers page](/ai-gateway/usage/providers).

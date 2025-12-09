@@ -8,7 +8,7 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-This guide explains how to use stage management APIs for Interactive Livestream (LHLS) and Webinar (WebRTC) use cases in Cloudflare RealtimeKit.
+This guide explains how to use stage management APIs for Webinar (WebRTC) use cases in Cloudflare RealtimeKit.
 
 ## Overview
 
@@ -58,10 +58,10 @@ console.log("Stage status:", meeting.stage.status);
 
 **Possible status values:**
 
-- **`ON_STAGE`** - The user is currently on the stage and participating in the live stream
-- **`OFF_STAGE`** - The user is viewing the live stream but is not on the stage
-- **`REQUESTED_TO_JOIN_STAGE`** - The user has a pending request to join the livestream. This status is assigned until the host accepts or rejects their request
-- **`ACCEPTED_TO_JOIN_STAGE`** - The host has accepted the user's request to join the livestream
+- **`ON_STAGE`** - The user is currently on the stage and sharing audio and video.
+- **`OFF_STAGE`** - The user is viewing the session but is not on the stage and is not sharing audio or video.
+- **`REQUESTED_TO_JOIN_STAGE`** - The user has a pending request to join the stage and share audio and video. This status remains until the host accepts or rejects the request.
+- **`ACCEPTED_TO_JOIN_STAGE`** - The host has accepted the user's request to join the stage.
 
 :::note
 A user with permission to join stage directly can only assume `ON_STAGE` and `ACCEPTED_TO_JOIN_STAGE` status values.
@@ -80,10 +80,10 @@ console.log("Stage status:", meeting.stage.status);
 
 **Possible status values:**
 
-- **`ON_STAGE`** - The user is currently on the stage and participating in the live stream
-- **`OFF_STAGE`** - The user is viewing the live stream but is not on the stage
-- **`REQUESTED_TO_JOIN_STAGE`** - The user has a pending request to join the livestream. This status is assigned until the host accepts or rejects their request
-- **`ACCEPTED_TO_JOIN_STAGE`** - The host has accepted the user's request to join the livestream
+- **`ON_STAGE`** - The user is currently on the stage and sharing audio and video.
+- **`OFF_STAGE`** - The user is viewing the session but is not on the stage and is not sharing audio or video.
+- **`REQUESTED_TO_JOIN_STAGE`** - The user has a pending request to join the stage and share audio and video. This status remains until the host accepts or rejects the request.
+- **`ACCEPTED_TO_JOIN_STAGE`** - The host has accepted the user's request to join the stage.
 
 :::note
 A user with permission to join stage directly can only assume `ON_STAGE` and `ACCEPTED_TO_JOIN_STAGE` status values.

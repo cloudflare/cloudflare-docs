@@ -51,7 +51,8 @@ To use WebSockets with Durable Objects, you first need to proxy the `request` ob
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples">
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 import { DurableObject } from "cloudflare:workers";
@@ -89,7 +90,8 @@ export class WebSocketHibernationServer extends DurableObject {
 }
 ```
 
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+</TabItem>
+<TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
@@ -136,7 +138,46 @@ export class WebSocketHibernationServer extends DurableObject {
 }
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import Response, DurableObject
+from js import WebSocketPair
+
+# Durable Object
+class WebSocketHibernationServer(DurableObject):
+    def __init__(self, state, env):
+        super().__init__(state, env)
+        self.ctx = state
+
+    async def fetch(self, request):
+        # Creates two ends of a WebSocket connection.
+        client, server = WebSocketPair.new().object_values()
+
+        # Calling `acceptWebSocket()` connects the WebSocket to the Durable Object, allowing the WebSocket to send and receive messages.
+        # Unlike `ws.accept()`, `state.acceptWebSocket(ws)` allows the Durable Object to be hibernated
+        # When the Durable Object receives a message during Hibernation, it will run the `__init__` to be re-initialized
+        self.ctx.acceptWebSocket(server)
+
+        return Response(
+            None,
+            status=101,
+            web_socket=client
+        )
+
+    async def webSocketMessage(self, ws, message):
+        # Upon receiving a message from the client, reply with the same message,
+        # but will prefix the message with "[Durable Object]: " and return the number of connections.
+        ws.send(
+            f"[Durable Object] message: {message}, connections: {len(self.ctx.get_websockets())}"
+        )
+
+    async def webSocketClose(self, ws, code, reason, was_clean):
+        # If the client closes the connection, the runtime will invoke the webSocketClose() handler.
+        ws.close(code, "Durable Object is closing WebSocket")
+```
+</TabItem>
+</Tabs>
 
 Similar to the [WebSocket Standard API example](/durable-objects/examples/websocket-server/), to execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
@@ -192,7 +233,8 @@ Both Workers and Durable Objects are billed, in part, based on the number of req
 
 :::
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples">
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 // Worker
@@ -232,7 +274,8 @@ export default {
 };
 ```
 
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+</TabItem>
+<TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 // Worker
@@ -272,11 +315,52 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import Response, WorkerEntrypoint
+
+# Worker
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        if request.method == "GET" and request.url.endswith("/websocket"):
+            # Expect to receive a WebSocket Upgrade request.
+            # If there is one, accept the request and return a WebSocket Response.
+            upgrade_header = request.headers.get("Upgrade")
+            if not upgrade_header or upgrade_header != "websocket":
+                return Response(
+                    None,
+                    status=426,
+                    status_text="Durable Object expected Upgrade: websocket",
+                    headers={
+                        "Content-Type": "text/plain",
+                    },
+                )
+
+            # This example will refer to a single Durable Object instance, since the name "foo" is
+            # hardcoded
+            stub = self.env.WEBSOCKET_SERVER.getByName("foo")
+
+            # The Durable Object's fetch handler will accept the server side connection and return
+            # the client
+            return await stub.fetch(request)
+
+        return Response(
+            None,
+            status=400,
+            status_text="Bad Request",
+            headers={
+                "Content-Type": "text/plain",
+            },
+        )
+```
+</TabItem>
+</Tabs>
 
 Each WebSocket server in this example is represented by a Durable Object. This WebSocket server creates a single WebSocket connection and responds to all messages over that connection with the total number of accepted WebSocket connections. In the Durable Object's fetch handler we create client and server connections and add event listeners for relevant event types.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+<Tabs syncKey="workersExamples">
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 import { DurableObject } from "cloudflare:workers";
@@ -321,7 +405,8 @@ export class WebSocketServer extends DurableObject {
 }
 ```
 
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+</TabItem>
+<TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 // Durable Object
@@ -364,7 +449,51 @@ export class WebSocketServer extends DurableObject {
 }
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import Response, DurableObject
+from js import WebSocketPair
+from pyodide.ffi import create_proxy
+
+# Durable Object
+class WebSocketServer(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+        self.currently_connected_websockets = 0
+
+    async def fetch(self, request):
+        # Creates two ends of a WebSocket connection.
+        client, server = WebSocketPair.new().object_values()
+
+        # Calling `accept()` connects the WebSocket to this Durable Object
+        server.accept()
+        self.currently_connected_websockets += 1
+
+        # Upon receiving a message from the client, the server replies with the same message,
+        # and the total number of connections with the "[Durable Object]: " prefix
+        def on_message(event):
+            server.send(
+                f"[Durable Object] currentlyConnectedWebSockets: {self.currently_connected_websockets}"
+            )
+
+        server.addEventListener("message", create_proxy(on_message))
+
+        # If the client closes the connection, the runtime will close the connection too.
+        def on_close(event):
+            self.currently_connected_websockets -= 1
+            server.close(event.code, "Durable Object is closing WebSocket")
+
+        server.addEventListener("close", create_proxy(on_close))
+
+        return Response(
+            None,
+            status=101,
+            web_socket=client,
+        )
+```
+</TabItem>
+</Tabs>
 
 To execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 

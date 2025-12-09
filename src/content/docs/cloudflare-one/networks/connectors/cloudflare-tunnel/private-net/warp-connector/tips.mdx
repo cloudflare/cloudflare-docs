@@ -42,5 +42,27 @@ To allow `cloudflared` to connect, use [Split Tunnels](/cloudflare-one/team-and-
 Split Tunnels is the only supported method of running both connectors on one machine. Due to its low-level integration with the kernel networking stack, WARP Connector will override any routing configurations made by commands such as `ip route add` and `iptables`.
 :::
 
+## MTU, MSS, and packet fragmentation
 
+To ensure reliable network performance, it is important to understand the requirements for [Maximum Transmission Unit (MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) and [Maximum Segment Size (MSS)](https://www.cloudflare.com/learning/network-layer/what-is-mss/) when using WARP Connector. An incorrect configuration can lead to performance degradation or packet loss.
 
+WARP Connector uses encapsulation to route traffic, which adds extra headers and bytes to each [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/). This is especially critical for traffic from your private network (on-ramped via WARP Connector) to a remote WARP client. This traffic flow is encapsulated twice:
+1. By the WARP Connector on your Linux host.
+2. Again by Cloudflare before being delivered to the off-ramp.
+
+This final encapsulation adds overhead. If a device on your private network sends a packet that is already near the maximum size (1,460 bytes or more), this final encapsulation will create a packet larger than 1,500 bytes, which will be dropped.
+
+Generally, this does not cause issues for TCP traffic and modern applications that use [Path MTU Discovery (PMTUD)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/). When they send a large packet with the `do not fragment` (DF) bit set, the WARP Connector's Linux host will correctly send an ICMP `Fragmentation Needed` message back to the source device. The source device then learns to send smaller packets.
+
+However, this may cause issues for legacy applications (like some video streaming or monitoring tools) that may not perform [Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/). Instead, they send large packets (e.g., more than 1,280 bytes) with the `do not fragment` (DF) bit unset (`DF=0`).
+
+In this situation, WARP Connector host receives this large packet (for example, 1,460 bytes), then fragments the packet to fit its [tunnel MTU](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface). These fragments are then reassembled at a Cloudflare data center back into the original 1,460-byte packet.
+Cloudflare then tries to encapsulate this 1,460-byte packet to send to the WARP client, pushing it over 1,500 bytes and causing it to be dropped. Cloudflare does not currently support fragmenting these outgoing encapsulated packets.
+
+### Recommendations
+
+To ensure reliable connectivity for all traffic types, especially legacy UDP applications, the most effective solution is to configure the MTU on your source devices (such as servers, cameras, or other devices on your private network) to 1,280 bytes. 
+
+This ensures the original packet is small enough to be encapsulated and delivered without being fragmented or dropped.
+
+For TCP-only applications, you can alternatively apply an [MSS clamping](https://www.cloudflare.com/learning/network-layer/what-is-mss/) on your router (an intermediary network device). A value of 1,240 bytes (1,280 bytes MTU - 20-byte IP header - 20-byte TCP header) is recommended to align with the WARP Connector's [tunnel MTU](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface).
