@@ -24,7 +24,6 @@ You can use External Emergency Disconnect to address the following scenarios:
 - **Compliance and Auditing**: Fulfills requirements in sensitive or regulated environments that mandate an "emergency stop" capability that is fully isolated, auditable, and controlled by the organization's own on-premises infrastructure.
 - **Disaster Recovery**: If WARP devices cannot reach Cloudflare's API (due to a network outage, routing issue, or client-side misconfiguration), administrators retain the ability to force-disconnect the fleet via the customer-hosted endpoint.
 
-
 ## External endpoint requirements
 
 An external disconnect endpoint is an HTTPS server hosted outside of Cloudflare from which WARP will fetch the emergency disconnect signal. The customer is fully responsible for managing this endpoint.
@@ -35,7 +34,7 @@ The external endpoint URL should:
 
 - Use the HTTPS protocol.
 - Use an IPv4 or IPv6 address as the host, not a domain.
-- Use a public IP to ensure that devices can fetch the latest state regardless of their network location.
+- (Recommended) Use a public IP to ensure that devices can fetch the latest state regardless of their network location.
 
 ### Response payload
 
@@ -184,6 +183,10 @@ To configure External Emergency Disconnect using an MDM, add the following param
 
 </TabItem>
 </Tabs>
+
+:::note[Split Tunnels in Include mode]
+WARP will automatically exclude the external endpoint IP address from the WARP tunnel. If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that your Split Tunnel entries do not contain the external endpoint IP; otherwise WARP will exclude the entire Split Tunnel entry from the tunnel.
+:::
 
 ### 4. Test External Emergency Disconnect
 
