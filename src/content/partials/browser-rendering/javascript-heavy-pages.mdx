@@ -1,0 +1,16 @@
+### Handling JavaScript-heavy pages
+
+For JavaScript-heavy pages or Single Page Applications (SPAs), the default page load behavior may return empty or incomplete results. This happens because the browser considers the page loaded before JavaScript has finished rendering the content.
+
+To ensure the browser waits for dynamic content to render, use the `gotoOptions.waitUntil` parameter set to `networkidle0` or `networkidle2`:
+
+```json
+{
+  "url": "https://example.com",
+  "gotoOptions": {
+    "waitUntil": "networkidle0"
+  }
+}
+```
+
+For more details on `waitUntil` options and other timeout settings, refer to [REST API timeouts](/browser-rendering/reference/timeouts/).
