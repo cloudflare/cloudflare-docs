@@ -2,7 +2,7 @@
 
 For JavaScript-heavy pages or Single Page Applications (SPAs), the default page load behavior may return empty or incomplete results. This happens because the browser considers the page loaded before JavaScript has finished rendering the content.
 
-To ensure the browser waits for dynamic content to render, use the `gotoOptions.waitUntil` parameter set to `networkidle0` or `networkidle2`:
+The simplest solution is to use the `gotoOptions.waitUntil` parameter set to `networkidle0` or `networkidle2`:
 
 ```json
 {
@@ -13,4 +13,4 @@ To ensure the browser waits for dynamic content to render, use the `gotoOptions.
 }
 ```
 
-For more details on `waitUntil` options and other timeout settings, refer to [REST API timeouts](/browser-rendering/reference/timeouts/).
+For faster responses, advanced users can use `waitForSelector` to wait for a specific element instead of waiting for all network activity to stop. This requires knowing which CSS selector indicates the content you need has loaded. For more details, refer to [REST API timeouts](/browser-rendering/reference/timeouts/).
