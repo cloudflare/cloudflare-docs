@@ -31,7 +31,7 @@ jobs:
       - name: Configure
         run: |
           git config --global --add safe.directory $PWD
-          echo "COMMIT_MESSAGE='$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }} | sed "s/\"/'/g")'" | tee /dev/stderr >> "$GITHUB_ENV"
+          echo "COMMIT_MESSAGE='$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }} | sed "s/\"/'/g" | tr "\n" " ") '" | tee /dev/stderr >> "$GITHUB_ENV"
           echo "(if the last commit message contains '[skip style guide checks]' Semgrep style guide rule checks will be skipped)"
 
       # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
