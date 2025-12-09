@@ -131,6 +131,10 @@ Placement Hints are ideal when back-end requests are on the critical path for yo
 Workers run on [Cloudflare's global network](https://www.cloudflare.com/network/), not inside cloud provider regions. Placement Hints run your Worker in the Cloudflare data center with the lowest latency to your specified cloud region.
 :::
 
+:::note
+At extremely high request and query volumes (hundreds of thousands of requests per second or more), Cloudflare may run instances of your Worker across a more distributed geographic area to balance traffic demands.
+:::
+
 ### Configure Placement Hints
 
 Set the `placement.region` property in your Wrangler configuration file using the format `{provider}:{region}`:

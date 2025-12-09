@@ -214,6 +214,11 @@ The `main` key is optional for assets-only Workers.
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
   - Maps a Durable Object from a class name to a runtime state. This communicates changes to the Durable Object (creation / deletion / rename / transfer) to the Workers runtime and provides the runtime with instructions on how to deal with those changes. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/#durable-object-migrations-in-wranglertoml).
 
+* `placement` <Type text="object"/> <MetaInfo text="optional"/>
+  - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/smart-placement/).
+  - `mode` <Type text="string"/> — Set to `"smart"` to automatically place your Worker near back-end services based on observed latency.
+  - `region` <Type text="string"/> — Specify a cloud region (for example, `"aws:us-east-1"` or `"gcp:europe-west1"`) to place your Worker near infrastructure in that region.
+
 ## Non-inheritable keys
 
 Non-inheritable keys are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
