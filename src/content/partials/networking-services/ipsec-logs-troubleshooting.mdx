@@ -5,7 +5,7 @@ params:
 
 import { DashButton } from "~/components";
 
-{props.productName}	customers can use IPsec logs to help them troubleshoot issues with their IPsec tunnels. This functionality is specifically aimed at the key-exchange portion of the IPsec handshake, where customers can run into issues. With IPsec logs, customers can set up a logpush job to forward their IPsec logs to their preferred storage service. Once they have the logs, they can investigate and find the root cause of their key exchange issues.
+{props.productName} customers can use IPsec logs to troubleshoot issues with their IPsec tunnels. This functionality targets the key-exchange portion of the IPsec handshake. Set up a logpush job to forward your IPsec logs to your preferred storage service, then investigate to find the root cause of key exchange issues.
 
 ## Set up an IPsec logpush job
 
@@ -13,7 +13,7 @@ import { DashButton } from "~/components";
 
 	<DashButton url="/?to=/:account/logs" />
 
-3. Select **Create a Logpush job**.
-4. Select **IPsec logs** as your dataset.
+2. Select **Create a Logpush job**.
+3. Select **IPsec logs** as your dataset.
 
 Refer to the [Logpush documentation](/logs/logpush/) for more information about features, including the [available fields](/logs/logpush/logpush-job/datasets/account/ipsec_logs/) in the dataset.
