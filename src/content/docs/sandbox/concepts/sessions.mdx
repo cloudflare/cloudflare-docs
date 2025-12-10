@@ -164,6 +164,22 @@ This enables:
 - **Better resource utilization** for independent workloads
 - **Isolated environments** for concurrent operations
 
+### Long-running processes
+
+Background processes automatically release their session lock after startup, allowing other commands to execute:
+
+```typescript
+const session = await sandbox.getSession('default');
+
+// Start a server (releases lock after startup)
+await session.startProcess('python -m http.server 8000');
+
+// Can immediately run other commands in the same session
+const result = await session.exec('curl http://localhost:8000');
+```
+
+Without this behavior, starting a server would block the entire session indefinitely.
+
 ## When to use sessions
 
 **Use sessions when**:
