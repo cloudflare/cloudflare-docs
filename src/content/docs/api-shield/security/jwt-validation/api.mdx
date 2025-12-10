@@ -224,7 +224,7 @@ This can occur if you need to split JWKs into multiple token configurations.
 
 #### Require a valid token but ignore requests without a token
 
-The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or not is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` expressions will trigger an action if a request has an invalid token, ignoring requests with no tokens at all.
+The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or not is_jwt_present("51231d16-01f1-48e3-93f8-91c99e81288e")` expressions will trigger an action if a request has an invalid token, ignoring requests with no tokens at all.
 
 ## Apply a rule to operations
 
