@@ -20,7 +20,7 @@ The error budget is the amount of unsuccessful events (from the SLI perspective)
 The SLO is a target percentage, and the error budget is defined as 100% minus the SLO. For example, assume that during 30 days there were one million Magic Tunnel health checks in your account, and your SLO is set to 99%. The error budget for this case would be:
 
 ```txt
-number of events x (1 - SLO) = 1,0000,00 x (1-0.999) = 1000
+number of events x (1 - SLO) = 1,0000,00 x (1-0.999) = 1,000
 ```
 
 This means the SLO allows for 1,000 unsuccessful Magic health checks over the course of 30 days. However, what happens if all errors happen in one hour instead of 30 days? This leads us to the concept of burn rate.
