@@ -3,12 +3,11 @@ pcx_content_type: faq
 title: GraphQL API inconsistent results
 sidebar:
   order: 5
-
 ---
 
 If you run the same GraphQL Analytics API query multiple times and receive slightly different results, this is caused by Adaptive Bit Rate (ABR) sampling. ABR dynamically adjusts data resolution based on query complexity and timing, which can result in slight variations between query runs.
 
-To reduce variation, query shorter timeframes (daily or weekly instead of monthly), use aggregated datasets (nodes with the `Groups` suffix), and request confidence intervals to understand data quality. Refer to [Sampling](/analytics/graphql-api/sampling/) for more details.
+To reduce variation, query shorter timeframes (daily or weekly instead of monthly), use aggregated datasets (nodes with the `Groups` suffix), and request confidence intervals to understand data quality. For more information, refer to [Sampling](/analytics/graphql-api/sampling/).
 
 ## What is sampling?
 
@@ -100,13 +99,13 @@ A higher `sampleSize` indicates more reliable results.
 
 ## Quick reference
 
-| Issue | Mitigation |
-| --- | --- |
-| Results vary between runs | Query shorter time ranges (daily or weekly instead of monthly) |
+| Issue                                | Mitigation                                                          |
+| ------------------------------------ | ------------------------------------------------------------------- |
+| Results vary between runs            | Query shorter time ranges (daily or weekly instead of monthly)      |
 | Aggressive sampling on large queries | Break queries into smaller time intervals and aggregate client-side |
-| Need consistent ordering | Add `orderBy` clause to all queries |
-| Need to verify data quality | Request `confidence` intervals to check sample size and accuracy |
-| Using raw adaptive data | Switch to aggregated datasets (nodes with `Groups` suffix) |
+| Need consistent ordering             | Add `orderBy` clause to all queries                                 |
+| Need to verify data quality          | Request `confidence` intervals to check sample size and accuracy    |
+| Using raw adaptive data              | Switch to aggregated datasets (nodes with `Groups` suffix)          |
 
 ## Related resources
 
