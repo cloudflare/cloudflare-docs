@@ -11,7 +11,7 @@ params:
 
 import { Render } from "~/components";
 
-A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an IPsec tunnel, the ICMP [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
+A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an Internet Protocol Security (IPsec) tunnel, the ICMP [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
 
 A tunnel health check probe comes from Cloudflare to the tunnel origin, then returns a response to Cloudflare. This response is used to determine the outcome of the probe, which is used to calculate the state of the tunnel (this is explained in greater detail below).
 
@@ -61,11 +61,11 @@ The target defaults to the publicly routable origin specified as the `customer_e
 
 #### Bidirectional
 
-A bidirectional probe stays encapsulated in both directions, that is, the probe comes in via the tunnel and the response also leaves encapsulated via the tunnel. The ICMP reply from the customer's router destined for the anycast IP address on Cloudflare's network will be delivered to the closest Cloudflare data center and land on one of the servers using ECMP, ensuring the response takes the most efficient path.
+A bidirectional probe stays encapsulated in both directions, that is, the probe comes in via the tunnel and the response also leaves encapsulated via the tunnel. The ICMP reply from the customer's router destined for the anycast IP address on Cloudflare's network will be delivered to the closest Cloudflare data center and land on one of the servers using equal-cost multi-path (ECMP), ensuring the response takes the most efficient path.
 
 By default, these packets are destined for the Cloudflare side of the interface address field set on the tunnel, and are sourced from the client of the tunnel. For example, if the interface address is `10.100.0.8/31`, then the packet will be destined for `10.100.0.9` and sourced from `10.100.0.8`.
 
-Note that the interface address field is always a `/30` or `/31` CIDR range. In the case of a `/31` range, the IP provided will be the Cloudflare side, whereas the other will be the client side. For example, if the interface address is `10.100.0.8/31`, `10.100.0.8` is the Cloudflare side, and `10.100.0.9` is the client side. In the case of a `/30` range, the IP provided will be the Cloudflare side whereas the other IP (excluding the broadcast and network identifier) will be the client side. For example, if the interface address is `10.100.0.9/30`, `10.100.0.9` will be the Cloudflare side and `10.100.0.10` will be the client side.
+Note that the interface address field is always a `/30` or `/31` Classless Inter-Domain Routing (CIDR) range. In the case of a `/31` range, the IP provided will be the Cloudflare side, whereas the other will be the client side. For example, if the interface address is `10.100.0.8/31`, `10.100.0.8` is the Cloudflare side, and `10.100.0.9` is the client side. In the case of a `/30` range, the IP provided will be the Cloudflare side whereas the other IP (excluding the broadcast and network identifier) will be the client side. For example, if the interface address is `10.100.0.9/30`, `10.100.0.9` will be the Cloudflare side and `10.100.0.10` will be the client side.
 
 A bidirectional health check can also be configured with a custom public target and is the recommended approach for an Azure Active Standby tunnel setup.
 
@@ -98,7 +98,7 @@ In a reply style health check the payload probe is an ICMP response.
 
 For a unidirectional probe, the destination address is the Cloudflare side of the tunnel (a publicly routable address) and the source is the origin router (also publicly routable). The origin router receives the probe and sends it back as the response, unchanged, outside of the tunnel.
 
-For a Bidirectional probe, the destination address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the source is the interface address of the tunnel (also privately routable). The origin router receives the probe packet and sends the probe packet back as the response (unchanged) into the tunnel as the destination is routed via the tunnel.
+For a bidirectional probe, the destination address is the interface address of the Cloudflare side of the tunnel (a privately routable address) and the source is the interface address of the tunnel (also privately routable). The origin router receives the probe packet and sends the probe packet back as the response (unchanged) into the tunnel as the destination is routed via the tunnel.
 
 :::note
 To avoid control plane policies enforced by the origin network, tunnel health checks can be set to use a request style health check if reply style health checks are being dropped.
