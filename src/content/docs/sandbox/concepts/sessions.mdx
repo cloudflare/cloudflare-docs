@@ -122,12 +122,66 @@ await session1.startProcess('node server.js');
 await session2.listProcesses();  // Sees the server
 ```
 
+## Concurrency and execution order
+
+Commands within the same session are executed **serially** (one at a time), while commands across different sessions run in **parallel**. This prevents race conditions and ensures predictable output.
+
+### Serial execution within a session
+
+When you execute multiple commands concurrently in the same session, they queue and run one at a time:
+
+```typescript
+// These commands run one after another, even though called concurrently
+await Promise.all([
+  sandbox.exec('sleep 2 && echo "first"', { sessionId: 'default' }),
+  sandbox.exec('echo "second"', { sessionId: 'default' }),
+  sandbox.exec('echo "third"', { sessionId: 'default' })
+]);
+// Output order is deterministic: "first", "second", "third"
+```
+
+This serialization:
+- **Prevents race conditions** when commands modify shared state (environment variables, working directory)
+- **Avoids interleaved output** from concurrent commands
+- **Maintains shell state consistency** across command boundaries
+
+### Parallel execution across sessions
+
+Commands in different sessions run concurrently:
+
+```typescript
+// These commands run in parallel
+await Promise.all([
+  sandbox.exec('sleep 2 && echo "session1"', { sessionId: 'session1' }),
+  sandbox.exec('echo "session2"', { sessionId: 'session2' }),
+  sandbox.exec('echo "session3"', { sessionId: 'session3' })
+]);
+// All three sessions execute simultaneously
+```
+
+This enables:
+- **Parallel task execution** without waiting for unrelated operations
+- **Better resource utilization** for independent workloads
+- **Isolated environments** for concurrent operations
+
 ## When to use sessions
 
 **Use sessions when**:
 - You need isolated shell state for different tasks
 - Running parallel operations with different environments
 - Keeping AI agent credentials separate from app runtime
+- Executing independent tasks concurrently without waiting
+
+**Example - parallel task execution**:
+```typescript
+// Run linting, tests, and build in parallel across different sessions
+const [lintResult, testResult, buildResult] = await Promise.all([
+  sandbox.exec('npm run lint', { sessionId: 'lint' }),
+  sandbox.exec('npm test', { sessionId: 'test' }),
+  sandbox.exec('npm run build', { sessionId: 'build' })
+]);
+// All three tasks run simultaneously, completing faster than serial execution
+```
 
 **Example - separate dev and runtime environments**:
 ```typescript
@@ -152,6 +206,33 @@ await appSession.exec("node server.js");
 - Independent resource allocation is needed
 
 ## Best practices
+
+### Concurrent execution
+
+**Use separate sessions for parallel operations**:
+```typescript
+// Bad - these run serially in the same session (slower)
+await Promise.all([
+  sandbox.exec('task1'),
+  sandbox.exec('task2'),
+  sandbox.exec('task3')
+]);
+
+// Good - these run in parallel across sessions (faster)
+await Promise.all([
+  sandbox.exec('task1', { sessionId: 'worker1' }),
+  sandbox.exec('task2', { sessionId: 'worker2' }),
+  sandbox.exec('task3', { sessionId: 'worker3' })
+]);
+```
+
+**Use the same session when order matters**:
+```typescript
+// Good - commands run in order within the same session
+await sandbox.exec('git clone repo');
+await sandbox.exec('cd repo && npm install');
+await sandbox.exec('npm test');
+```
 
 ### Session cleanup
 
