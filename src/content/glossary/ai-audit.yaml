@@ -1,18 +1,46 @@
 ---
 productName: AI Crawl Control
 entries:
-  - term: robots.txt
+  - term: AI crawler
     general_definition: |-
-      A text file which lists pages in your website that are off-limits for bots. Well-behaved bots respect this file, but some bots may violate it. You can enforce `robots.txt` with Cloudflare WAF custom rules.
+      A bot which scrapes content from websites in support of an AI model, including by scraping content for indexing, retrieval augmented generation, or training.
+
+  - term: category
+    general_definition: |-
+      A single classification assigned to each crawler that best describes its primary stated purpose, such as "Training", "Search", "User-initiated", or "Archival". AI Crawl Control assigns one category per crawler based on Cloudflare's responsible AI bot principles, which propose that bots should declare a single purpose to help website operators make clear decisions about content access. However, not all crawlers operate with a single purpose under their declared category. For example, some crawlers may combine search indexing with AI inference or training, even though they are categorized primarily as "Search" crawlers. Understanding a crawler's category helps you assess what the operator claims the crawler does, though you should review the operator's official documentation to understand the full scope of how your content may be used.
+
+  - term: Content Signals
+    general_definition: |-
+      An emerging standard developed by the IETF AI Preferences (aipref) Working Group that provides a common vocabulary and mechanism for website publishers to express preferences about how their content is collected and processed for AI model development, deployment, and use. Content Signals builds on the existing robots.txt standard (RFC 9309) by defining standardized ways to attach AI-related preferences to content through HTTP headers, metadata, or well-known URIs. This standard aims to replace the confusing array of non-standard signals currently used by AI vendors with a clear, machine-readable format that allows publishers to control whether their content can be used for AI training, inference, or other purposes. Learn more at https://contentsignals.org/.
+
+  - term: crawl
+    general_definition: |-
+      The act of an automated bot systematically browsing and requesting pages from your website to collect content. In AI Crawl Control, a crawl represents a single HTTP request made by a crawler to access a page on your domain. Crawling is typically the first step AI companies take to understand your site's content before including it in their models or search results.
+
+  - term: crawler
+    general_definition: |-
+      A specific bot or user agent operated by a company to access web content. For example, OpenAI operates multiple crawlers including GPTBot (for training), OAI-SearchBot (for search indexing), and ChatGPT-User (for user-initiated requests). Each crawler typically has a distinct user agent string and may serve different purposes. A single operator can run many crawlers with different functions.
+
+  - term: In-band pricing
+    general_definition: |-
+      A pricing model where pricing information is transmitted within the same communication channel as the content itself. In Pay Per Crawl, in-band pricing means the price is included in the HTTP response headers (`crawler-price`) alongside the actual content, rather than being retrieved from a separate system or API call. When custom pricing is enabled, Cloudflare sets the `cf-pay-per-crawl` header to `pricing=in-band`, indicating that the origin server or Worker can dynamically set prices by including a `crawler-price` header in the response.
 
   - term: Merchant of Record
     general_definition: |-
       The entity who facilitates "buying and selling". For pay per crawl, Cloudflare is the merchant of record.
 
-  - term: AI crawler
+  - term: operator
     general_definition: |-
-      A bot which scrapes content from websites in support of an AI model, including by scraping content for indexing, retrieval augmented generation, or training.
+      The company or organization that runs one or more crawlers. For example, OpenAI is an operator that runs multiple crawlers (GPTBot, OAI-SearchBot, ChatGPT-User, and ChatGPT agent). Understanding the relationship between operators and their crawlers helps you make informed decisions about which companies can access your content. One operator can have many crawlers, each serving different purposes.
 
-  - term: In-band pricing
+  - term: referrer
     general_definition: |-
-      A pricing model where pricing information is transmitted within the same communication channel as the content itself. In Pay Per Crawl, in-band pricing means the price is included in the HTTP response headers (`crawler-price`) alongside the actual content, rather than being retrieved from a separate system or API call. When custom pricing is enabled, Cloudflare sets the `cf-pay-per-crawl` header to `pricing=in-band`, indicating that the origin server or Worker can dynamically set prices by including a `crawler-price` header in the response.
+      The web page or site that a user was on immediately before visiting your domain, tracked via the HTTP Referer header. In AI Crawl Control analytics, referrer data shows when users start on a site owned by an AI operator (such as ChatGPT or Perplexity) and then navigate to your site, indicating that the operator's site referred the visit. This is a heuristic that helps identify which AI services are driving traffic to your content and suggests that the AI company likely crawled your site first to understand and include it in their results.
+
+  - term: request
+    general_definition: |-
+      A single HTTP request made by a crawler to access a specific URL on your website. AI Crawl Control tracks and analyzes these requests to provide insights into crawler behavior, including successful requests (2xx status codes), redirects (3xx), client errors (4xx), and server errors (5xx). The total number of requests indicates how frequently crawlers are accessing your content.
+
+  - term: robots.txt
+    general_definition: |-
+      A text file which lists pages in your website that are off-limits for bots. Well-behaved bots respect this file, but some bots may violate it. You can enforce `robots.txt` with Cloudflare WAF custom rules.

@@ -1,0 +1,504 @@
+---
+title: Configuration scenarios
+pcx_content_type: reference
+sidebar:
+  order: 11
+description: Common AI Crawl Control configuration scenarios based on your content access and monetization goals.
+---
+
+import { Aside, GlossaryTooltip, Steps, Render } from "~/components";
+
+This reference provides practical configuration scenarios to help you set up AI Crawl Control based on your specific needs. Each scenario includes the crawlers to allow or block, along with step-by-step guidance.
+
+<Aside type="note">
+
+These scenarios represent common use cases and starting points. You can customize your configuration based on your specific requirements and business goals.
+
+</Aside>
+
+## How to use this reference
+
+1. **Identify your scenario** — Review the scenarios below to find the one that best matches your goals
+2. **Review the crawler list** — Each scenario lists which crawlers to allow or block
+3. **Implement the configuration** — Follow the implementation steps to set up your controls
+4. **Monitor and adjust** — Use [AI Crawl Control analytics](/ai-crawl-control/features/analyze-ai-traffic/) to monitor crawler activity and refine your configuration
+
+For detailed information about each crawler, refer to the [Bot catalog](/ai-crawl-control/reference/bot-catalog/).
+
+---
+
+## Scenario 1: Maximum discoverability (The Anything Goes)
+
+**Goal:** Maximize your content's reach across search engines, AI models, and AI-powered applications.
+
+### What you want
+
+- Appear in Google Search and Bing Search results
+- Be discoverable via Apple Spotlight, Siri, Amazon product search, and Alexa answers
+- Be discoverable via Huawei's Petal Search Engine
+- Enable LLMs to train on your content
+- Appear in AI chatbot search results and be cited in AI answers
+- Allow AI chatbots to fetch your content when users explicitly request it
+- Have your content archived on the internet
+- Allow other businesses to use Google's tools to index your site
+- Enable AI agent automation platforms to interact with your site
+
+### Crawlers to allow
+
+**Search engines and training:**
+
+- [Googlebot](/ai-crawl-control/reference/bot-catalog/#googlebot-google)
+- [BingBot](/ai-crawl-control/reference/bot-catalog/#bingbot-microsoft)
+- [Applebot](/ai-crawl-control/reference/bot-catalog/#applebot-apple)
+- [Amazonbot](/ai-crawl-control/reference/bot-catalog/#amazonbot-amazon)
+- [PetalBot](/ai-crawl-control/reference/bot-catalog/#petalbot-huawei)
+
+**Foundation model training:**
+
+- [GPTBot](/ai-crawl-control/reference/bot-catalog/#gptbot-openai)
+- [ClaudeBot](/ai-crawl-control/reference/bot-catalog/#claudebot-anthropic)
+- [Bytespider](/ai-crawl-control/reference/bot-catalog/#bytespider-bytedance)
+- [CCBot](/ai-crawl-control/reference/bot-catalog/#ccbot-common-crawl)
+- [Meta-ExternalAgent](/ai-crawl-control/reference/bot-catalog/#meta-externalagent-meta)
+
+**AI search and answers:**
+
+- [OAI-SearchBot](/ai-crawl-control/reference/bot-catalog/#oai-searchbot-openai)
+- [Claude-SearchBot](/ai-crawl-control/reference/bot-catalog/#claude-searchbot-anthropic)
+- [PerplexityBot](/ai-crawl-control/reference/bot-catalog/#perplexitybot-perplexity)
+- [DuckAssistBot](/ai-crawl-control/reference/bot-catalog/#duckassistbot-duckduckgo)
+
+**User-initiated agents:**
+
+- [ChatGPT-User](/ai-crawl-control/reference/bot-catalog/#chatgpt-user-openai)
+- [Claude-User](/ai-crawl-control/reference/bot-catalog/#claude-user-anthropic)
+- [Perplexity-User](/ai-crawl-control/reference/bot-catalog/#perplexity-user-perplexity)
+- [MistralAI-User](/ai-crawl-control/reference/bot-catalog/#mistralai-user-mistral)
+
+**Archival:**
+
+- [archive.org_bot](/ai-crawl-control/reference/bot-catalog/#archiveorg_bot-internet-archive)
+
+**Cloud tools:**
+
+- [Google-CloudVertexBot](/ai-crawl-control/reference/bot-catalog/#google-cloudvertexbot-google)
+
+**AI automation platforms:**
+
+- [Anchor Browser](/ai-crawl-control/reference/bot-catalog/#anchor-browser-anchor)
+- [Novellum AI Crawl](/ai-crawl-control/reference/bot-catalog/#novellum-ai-crawl-novellum)
+
+### Implementation
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **AI Crawl Control** > **Crawlers**.
+
+3. Verify that no crawlers have **Block** actions applied.
+
+4. (Optional) Monitor crawler activity in the **Metrics** tab to understand which crawlers are accessing your content.
+
+</Steps>
+
+<Aside type="note">
+
+This is the default configuration. No action is required unless you have previously blocked crawlers.
+
+</Aside>
+
+---
+
+## Scenario 2: Protect training rights while maintaining visibility
+
+**Goal:** Prevent AI companies from training on your content for free while still appearing in search results and AI-powered answers.
+
+### What you want
+
+- Appear in Google, Bing, Apple, and Amazon search results
+- Be cited and have your content be summarizable in AI chatbots
+- Block AI companies from training models on your content without compensation
+- Maintain discoverability across major platforms
+
+### What you do not want
+
+- AI companies training foundation models on your content for free
+- Your content archived by third parties
+- Unrestricted access by AI automation platforms
+
+### Crawlers to allow
+
+**Search engines (without training):**
+
+- [Googlebot](/ai-crawl-control/reference/bot-catalog/#googlebot-google) — Update via [Google Search Console](https://search.google.com/search-console/about) to opt out of AI training
+- [BingBot](/ai-crawl-control/reference/bot-catalog/#bingbot-microsoft) — Update via [Bing Webmaster Tools](https://www.bing.com/webmasters/about) to opt out of AI training
+- [Applebot](/ai-crawl-control/reference/bot-catalog/#applebot-apple) — Update via [Applebot directives](https://support.apple.com/en-us/119829) to opt out of AI training
+- [Amazonbot](/ai-crawl-control/reference/bot-catalog/#amazonbot-amazon) — Update via robots.txt to opt out of AI training
+- [PetalBot](/ai-crawl-control/reference/bot-catalog/#petalbot-huawei)
+
+**AI search and answers:**
+
+- [OAI-SearchBot](/ai-crawl-control/reference/bot-catalog/#oai-searchbot-openai)
+- [Claude-SearchBot](/ai-crawl-control/reference/bot-catalog/#claude-searchbot-anthropic)
+- [PerplexityBot](/ai-crawl-control/reference/bot-catalog/#perplexitybot-perplexity)
+- [DuckAssistBot](/ai-crawl-control/reference/bot-catalog/#duckassistbot-duckduckgo)
+
+**User-initiated agents:**
+
+- [ChatGPT-User](/ai-crawl-control/reference/bot-catalog/#chatgpt-user-openai)
+- [Claude-User](/ai-crawl-control/reference/bot-catalog/#claude-user-anthropic)
+- [Perplexity-User](/ai-crawl-control/reference/bot-catalog/#perplexity-user-perplexity)
+- [MistralAI-User](/ai-crawl-control/reference/bot-catalog/#mistralai-user-mistral)
+
+### Crawlers to block
+
+**Foundation model training:**
+
+- [GPTBot](/ai-crawl-control/reference/bot-catalog/#gptbot-openai)
+- [ClaudeBot](/ai-crawl-control/reference/bot-catalog/#claudebot-anthropic)
+- [Bytespider](/ai-crawl-control/reference/bot-catalog/#bytespider-bytedance)
+- [CCBot](/ai-crawl-control/reference/bot-catalog/#ccbot-common-crawl)
+- [Meta-ExternalAgent](/ai-crawl-control/reference/bot-catalog/#meta-externalagent-meta)
+- [FacebookBot](/ai-crawl-control/reference/bot-catalog/#facebookbot-meta)
+
+**Archival:**
+
+- [archive.org_bot](/ai-crawl-control/reference/bot-catalog/#archiveorg_bot-internet-archive)
+
+### Implementation
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **AI Crawl Control** > **Crawlers**.
+
+3. For each training crawler listed above, select **Block** from the **Action** column.
+
+4. Update your search engine crawler permissions:
+   - **Google:** Use [Google Search Console](https://search.google.com/search-console/about) to opt out of Gemini training while maintaining search indexing
+   - **Bing:** Use [Bing Webmaster Tools](https://www.bing.com/webmasters/about) to opt out of AI training
+   - **Apple:** Add `Applebot-Extended` disallow directive to your robots.txt file
+   - **Amazon:** Add `Amazonbot` disallow directive to your robots.txt file for AI training paths
+
+5. (Optional) Consider implementing [Content Signals](https://contentsignals.org/) to express granular AI usage preferences using the emerging IETF standard for machine-readable content preferences.
+
+6. Monitor the **Metrics** tab to verify that training crawlers are being blocked while search and citation crawlers continue to access your content.
+
+</Steps>
+
+<Aside type="caution">
+
+**Important considerations:**
+
+- **Googlebot, BingBot, Applebot, and Amazonbot** serve dual purposes (search indexing and AI training). Use their respective webmaster tools or robots.txt directives to opt out of training while maintaining search visibility.
+- **Bytespider** is operated by ByteDance (TikTok's parent company). Consider your TikTok presence when blocking this crawler.
+- Blocking **CCBot** prevents your content from appearing in Common Crawl datasets, which are widely used by researchers and third-party AI developers.
+
+</Aside>
+
+---
+
+## Scenario 3: Maximize licensing opportunities
+
+**Goal:** Position your content for potential licensing deals with AI companies while maintaining maximum discoverability.
+
+### What you want
+
+- Appear in Google, Bing, Apple, and Amazon search results
+- Maintain visibility and discoverability across major platforms
+- Block all AI training crawlers to preserve licensing value
+- Block AI search crawlers to increase the value of direct content access
+- Create scarcity to improve negotiating position with AI companies
+
+### What you do not want
+
+- AI companies training models on your content without compensation
+- Your content freely available in AI search results or answer engines
+- Your content archived by third parties
+- Unrestricted access by AI automation platforms
+
+### Crawlers to allow
+
+**Search engines (without training):**
+
+- [Googlebot](/ai-crawl-control/reference/bot-catalog/#googlebot-google) — Update via [Google Search Console](https://search.google.com/search-console/about) to opt out of AI training
+- [BingBot](/ai-crawl-control/reference/bot-catalog/#bingbot-microsoft) — Update via [Bing Webmaster Tools](https://www.bing.com/webmasters/about) to opt out of AI training
+- [Applebot](/ai-crawl-control/reference/bot-catalog/#applebot-apple) — Update via [Applebot directives](https://support.apple.com/en-us/119829) to opt out of AI training
+- [Amazonbot](/ai-crawl-control/reference/bot-catalog/#amazonbot-amazon) — Update via robots.txt to opt out of AI training
+- [PetalBot](/ai-crawl-control/reference/bot-catalog/#petalbot-huawei)
+
+### Crawlers to block
+
+**Foundation model training:**
+
+- [GPTBot](/ai-crawl-control/reference/bot-catalog/#gptbot-openai)
+- [ClaudeBot](/ai-crawl-control/reference/bot-catalog/#claudebot-anthropic)
+- [Bytespider](/ai-crawl-control/reference/bot-catalog/#bytespider-bytedance)
+- [CCBot](/ai-crawl-control/reference/bot-catalog/#ccbot-common-crawl)
+- [Meta-ExternalAgent](/ai-crawl-control/reference/bot-catalog/#meta-externalagent-meta)
+- [FacebookBot](/ai-crawl-control/reference/bot-catalog/#facebookbot-meta)
+
+**AI search and answers:**
+
+- [OAI-SearchBot](/ai-crawl-control/reference/bot-catalog/#oai-searchbot-openai)
+- [Claude-SearchBot](/ai-crawl-control/reference/bot-catalog/#claude-searchbot-anthropic)
+- [PerplexityBot](/ai-crawl-control/reference/bot-catalog/#perplexitybot-perplexity)
+- [DuckAssistBot](/ai-crawl-control/reference/bot-catalog/#duckassistbot-duckduckgo)
+
+**Archival:**
+
+- [archive.org_bot](/ai-crawl-control/reference/bot-catalog/#archiveorg_bot-internet-archive)
+
+### Crawlers to consider blocking
+
+**User-initiated agents:**
+
+These agents fetch content when users explicitly request it. Blocking them may reduce user experience but increases content scarcity:
+
+- [ChatGPT-User](/ai-crawl-control/reference/bot-catalog/#chatgpt-user-openai)
+- [Claude-User](/ai-crawl-control/reference/bot-catalog/#claude-user-anthropic)
+- [Perplexity-User](/ai-crawl-control/reference/bot-catalog/#perplexity-user-perplexity)
+- [MistralAI-User](/ai-crawl-control/reference/bot-catalog/#mistralai-user-mistral)
+
+**Cloud tools:**
+
+- [Google-CloudVertexBot](/ai-crawl-control/reference/bot-catalog/#google-cloudvertexbot-google) — Used by site owners building their own AI tools
+
+**AI automation platforms:**
+
+- [Anchor Browser](/ai-crawl-control/reference/bot-catalog/#anchor-browser-anchor)
+- [Novellum AI Crawl](/ai-crawl-control/reference/bot-catalog/#novellum-ai-crawl-novellum)
+
+### Implementation
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **AI Crawl Control** > **Crawlers**.
+
+3. For each crawler listed in the "Crawlers to block" section above, select **Block** from the **Action** column.
+
+4. Update your search engine crawler permissions:
+   - **Google:** Use [Google Search Console](https://search.google.com/search-console/about) to opt out of Gemini training while maintaining search indexing
+   - **Bing:** Use [Bing Webmaster Tools](https://www.bing.com/webmasters/about) to opt out of AI training
+   - **Apple:** Add `Applebot-Extended` disallow directive to your robots.txt file
+   - **Amazon:** Add `Amazonbot` disallow directive to your robots.txt file for AI training paths
+
+5. (Optional) Consider implementing [Content Signals](https://contentsignals.org/) to express granular AI usage preferences using the emerging IETF standard for machine-readable content preferences.
+
+6. Evaluate whether to block user-initiated agents based on your content strategy and user experience priorities.
+
+7. Monitor the **Metrics** tab to track crawler activity and verify your configuration.
+
+8. Consider setting up [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/) (private beta) to monetize crawler access while maintaining control.
+
+</Steps>
+
+<Aside type="caution">
+
+**Important considerations:**
+
+- **Googlebot, BingBot, Applebot, and Amazonbot** serve dual purposes (search indexing and AI training). Use their respective webmaster tools or robots.txt directives to opt out of training while maintaining search visibility.
+- **Bytespider** is operated by ByteDance (TikTok's parent company). Consider your TikTok presence and potential licensing opportunities when blocking this crawler.
+- Blocking **user-initiated agents** may negatively impact user experience when people try to use AI assistants to summarize or analyze your content.
+- This configuration creates maximum scarcity but may reduce your content's visibility in AI-powered applications.
+
+</Aside>
+
+---
+
+## Scenario 4: Research and education focus
+
+**Goal:** Support research and education while controlling commercial AI training.
+
+### What you want
+
+- Support academic research and education
+- Allow archival for historical preservation
+- Maintain search engine visibility
+- Allow AI search and citation
+- Block commercial AI training
+
+### Crawlers to allow
+
+**Search engines:**
+
+- [Googlebot](/ai-crawl-control/reference/bot-catalog/#googlebot-google)
+- [BingBot](/ai-crawl-control/reference/bot-catalog/#bingbot-microsoft)
+- [Applebot](/ai-crawl-control/reference/bot-catalog/#applebot-apple)
+
+**Research and archival:**
+
+- [CCBot](/ai-crawl-control/reference/bot-catalog/#ccbot-common-crawl) — Supports open research
+- [archive.org_bot](/ai-crawl-control/reference/bot-catalog/#archiveorg_bot-internet-archive) — Historical preservation
+
+**AI search and answers:**
+
+- [OAI-SearchBot](/ai-crawl-control/reference/bot-catalog/#oai-searchbot-openai)
+- [Claude-SearchBot](/ai-crawl-control/reference/bot-catalog/#claude-searchbot-anthropic)
+- [PerplexityBot](/ai-crawl-control/reference/bot-catalog/#perplexitybot-perplexity)
+- [DuckAssistBot](/ai-crawl-control/reference/bot-catalog/#duckassistbot-duckduckgo)
+
+**User-initiated agents:**
+
+- [ChatGPT-User](/ai-crawl-control/reference/bot-catalog/#chatgpt-user-openai)
+- [Claude-User](/ai-crawl-control/reference/bot-catalog/#claude-user-anthropic)
+- [Perplexity-User](/ai-crawl-control/reference/bot-catalog/#perplexity-user-perplexity)
+- [MistralAI-User](/ai-crawl-control/reference/bot-catalog/#mistralai-user-mistral)
+
+### Crawlers to block
+
+**Commercial training:**
+
+- [GPTBot](/ai-crawl-control/reference/bot-catalog/#gptbot-openai)
+- [ClaudeBot](/ai-crawl-control/reference/bot-catalog/#claudebot-anthropic)
+- [Bytespider](/ai-crawl-control/reference/bot-catalog/#bytespider-bytedance)
+- [Meta-ExternalAgent](/ai-crawl-control/reference/bot-catalog/#meta-externalagent-meta)
+- [FacebookBot](/ai-crawl-control/reference/bot-catalog/#facebookbot-meta)
+- [Amazonbot](/ai-crawl-control/reference/bot-catalog/#amazonbot-amazon)
+
+### Implementation
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **AI Crawl Control** > **Crawlers**.
+
+3. For each commercial training crawler listed above, select **Block** from the **Action** column.
+
+4. Verify that research and archival crawlers (CCBot, archive.org_bot) remain allowed.
+
+5. Monitor the **Metrics** tab to track crawler activity.
+
+</Steps>
+
+---
+
+## Scenario 5: E-commerce and business data protection
+
+**Goal:** Protect sensitive business data while maintaining customer-facing visibility.
+
+### What you want
+
+- Appear in search results for product discovery
+- Allow user-initiated content access for customer support
+- Block automated data collection of pricing and inventory
+- Prevent competitive intelligence gathering
+
+### Crawlers to allow
+
+**Search engines:**
+
+- [Googlebot](/ai-crawl-control/reference/bot-catalog/#googlebot-google)
+- [BingBot](/ai-crawl-control/reference/bot-catalog/#bingbot-microsoft)
+- [Amazonbot](/ai-crawl-control/reference/bot-catalog/#amazonbot-amazon) — For Amazon product integration
+
+**User-initiated agents (for customer support):**
+
+- [ChatGPT-User](/ai-crawl-control/reference/bot-catalog/#chatgpt-user-openai)
+- [Claude-User](/ai-crawl-control/reference/bot-catalog/#claude-user-anthropic)
+
+### Crawlers to block
+
+**Training and automation:**
+
+- [GPTBot](/ai-crawl-control/reference/bot-catalog/#gptbot-openai)
+- [ClaudeBot](/ai-crawl-control/reference/bot-catalog/#claudebot-anthropic)
+- [Bytespider](/ai-crawl-control/reference/bot-catalog/#bytespider-bytedance)
+- [CCBot](/ai-crawl-control/reference/bot-catalog/#ccbot-common-crawl)
+- [Meta-ExternalAgent](/ai-crawl-control/reference/bot-catalog/#meta-externalagent-meta)
+- [Anchor Browser](/ai-crawl-control/reference/bot-catalog/#anchor-browser-anchor)
+- [Novellum AI Crawl](/ai-crawl-control/reference/bot-catalog/#novellum-ai-crawl-novellum)
+
+**AI search engines:**
+
+- [PerplexityBot](/ai-crawl-control/reference/bot-catalog/#perplexitybot-perplexity)
+- [OAI-SearchBot](/ai-crawl-control/reference/bot-catalog/#oai-searchbot-openai)
+
+### Implementation
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **AI Crawl Control** > **Crawlers**.
+
+3. For each crawler listed in the "Crawlers to block" section above, select **Block** from the **Action** column.
+
+4. Consider implementing [WAF custom rules](/waf/custom-rules/) to protect specific paths (such as `/pricing`, `/inventory`, `/api`) from all automated access.
+
+5. Use [Rate Limiting](/waf/rate-limiting-rules/) to prevent excessive requests to sensitive endpoints.
+
+6. Monitor the **Metrics** tab and [Security Analytics](/waf/analytics/security-analytics/) to identify unusual access patterns.
+
+</Steps>
+
+<Aside type="note">
+
+For e-commerce sites, consider combining AI Crawl Control with [Bot Management](/bots/get-started/bot-management/) for comprehensive protection against automated data collection and competitive intelligence gathering.
+
+</Aside>
+
+---
+
+## Advanced configuration with WAF custom rules
+
+For more granular control, you can use [WAF custom rules](/waf/custom-rules/) with detection IDs to create path-specific or conditional access policies.
+
+### Example: Allow training on blog content only
+
+```txt
+(cf.bot_management.verified_bot and cf.bot_management.detection_ids contains "gptbot" and starts_with(http.request.uri.path, "/blog/"))
+```
+
+This rule allows GPTBot to access only your blog content while blocking access to other areas of your site.
+
+### Example: Block all training bots except on specific pages
+
+```txt
+(cf.bot_management.verified_bot and
+ cf.bot_management.detection_ids in {"gptbot" "claudebot" "bytespider" "ccbot" "meta-externalagent"} and
+ not starts_with(http.request.uri.path, "/public-content/"))
+```
+
+This rule blocks training bots from all paths except those starting with `/public-content/`.
+
+### Example: Rate limit AI automation platforms
+
+```txt
+(cf.bot_management.verified_bot and
+ cf.bot_management.detection_ids in {"anchor-browser" "novellum-ai-crawl"})
+```
+
+Use this expression with [Rate Limiting](/waf/rate-limiting-rules/) to control the frequency of requests from AI automation platforms.
+
+For more information about using detection IDs in custom rules, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
+
+---
+
+## Monitoring and optimization
+
+After implementing your configuration:
+
+1. **Monitor crawler activity** — Use the [Metrics tab](/ai-crawl-control/features/analyze-ai-traffic/) to track which crawlers are accessing your content
+2. **Review robots.txt compliance** — Use [Track robots.txt](/ai-crawl-control/features/track-robots-txt/) to identify crawlers that violate your directives
+3. **Analyze traffic patterns** — Review [Security Analytics](/waf/analytics/security-analytics/) to identify unusual bot behavior
+4. **Adjust as needed** — Refine your configuration based on observed crawler behavior and your evolving business needs
+
+---
+
+## Related resources
+
+- [Bot catalog](/ai-crawl-control/reference/bot-catalog/)
+- [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/)
+- [Analyze AI traffic](/ai-crawl-control/features/analyze-ai-traffic/)
+- [Track robots.txt](/ai-crawl-control/features/track-robots-txt/)
+- [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/)
+- [Bot Management](/bots/get-started/bot-management/)
+- [WAF custom rules](/waf/custom-rules/)
+- [Content Signals](https://contentsignals.org/) — IETF standard for expressing AI content usage preferences
+- [Cloudflare's Responsible AI Bot Principles](https://blog.cloudflare.com/building-a-better-internet-with-responsible-ai-bot-principles/) — Cloudflare's proposal for transparent, accountable AI crawler behavior
