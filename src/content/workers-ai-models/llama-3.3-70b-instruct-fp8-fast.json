@@ -48,7 +48,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Prompt",
+                    "title": "Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -137,7 +137,7 @@
                     ]
                 },
                 {
-                    "title": "Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Messages",
+                    "title": "Messages",
                     "properties": {
                         "messages": {
                             "type": "array",

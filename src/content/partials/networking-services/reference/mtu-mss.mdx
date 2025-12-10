@@ -1,6 +1,6 @@
 ---
 params:
-  - magicProduct?
+  - magicWord?
   - productName
 ---
 
@@ -72,7 +72,7 @@ Refer to [MSS clamping recommendations](#mss-clamping-recommendations) for infor
 Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packets. Changing the MTU of a network interface is not recommended as this might have unforeseen impacts on traffic.
 :::
 
-{ props.magicProduct === "Magic Transit" && (
+{ props.magicWord === "Magic Transit" && (
   <>
     <AnchorHeading title="MSS with Magic Transit and Direct Server Return" depth={2} />
 		<p>Asymmetric <a href="https://www.cloudflare.com/learning/network-layer/what-is-routing/" target="_blank" rel="noopener noreferrer">routing</a> is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1,476 bytes), and egress traffic from the datacenter is sent via Direct Server Return (DSR) over the Internet (MTU of 1,500 bytes).</p>
@@ -92,14 +92,14 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 ### GRE tunnels as off-ramp
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
     <Render file="magic-wan/mtu-mss/mss-clamping-gre" product="networking-services" />
   </>
   )
 }
 
-{ props.magicProduct === "Magic Transit" && (
+{ props.magicWord === "Magic Transit" && (
   <>
     <Render file="magic-transit/mtu-mss/mss-clamping-gre" product="networking-services" />
   </>
@@ -108,14 +108,14 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 ### IPsec tunnels
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
     <Render file="magic-wan/mtu-mss/mss-clamping-ipsec" product="networking-services" />
   </>
   )
 }
 
-{ props.magicProduct === "Magic Transit" && (
+{ props.magicWord === "Magic Transit" && (
   <>
     <Render file="magic-transit/mtu-mss/mss-clamping-ipsec" product="networking-services" />
   </>

@@ -16,6 +16,8 @@ sidebar:
 head:
   - tag: title
     content: Add a site
+description: >-
+  This tutorial uses Pulumi infrastructure as code (IaC) to familiarize yourself with the resource management lifecycle.
 ---
 
 import { TabItem, Tabs } from "~/components";
@@ -584,14 +586,14 @@ new Record("my-record", new RecordArgs
 **Filename: `Pulumi.yaml`**
 
 ```yaml
-  myRecord:
-    type: cloudflare:Record
-    properties:
-      zoneId: ${myZone.id}
-      name: ${domain}
-      content: 192.0.2.1
-      type: A
-      proxied: true
+myRecord:
+  type: cloudflare:Record
+  properties:
+    zoneId: ${myZone.id}
+    name: ${domain}
+    content: 192.0.2.1
+    type: A
+    proxied: true
 ```
 
 </TabItem> </Tabs>

@@ -1,0 +1,20 @@
+---
+{}
+
+---
+
+To test supported TLS versions, attempt a request to your website or application while specifying a TLS version.
+
+For example, to test TLS 1.1, use the `curl` command below. Replace `www.example.com` with your Cloudflare domain and hostname.
+
+```sh
+curl https://www.example.com -svo /dev/null --tls-max 1.1
+```
+
+If the TLS version you are testing is blocked by Cloudflare, the TLS handshake is not completed and returns an error:
+
+`* error:1400442E:SSL routines:CONNECT_CR_SRVR_HELLO:tlsv1 alert`
+
+:::note
+Local VPN or a device security client may prevent insecure connections using legacy protocols like TLS 1.0. Make sure to disable such network or security client before running the test on your device.
+:::

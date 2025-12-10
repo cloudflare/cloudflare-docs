@@ -1,0 +1,10 @@
+---
+id: 789b42ba4403b32caf54d09a5e5987fd
+url: life-of-a-request-3
+title: "The Finish Line: Serving the Content"
+description: Once a request is routed to the nearest Cloudflare data center and then intelligently sped along its way, it moves to the final leg of the journey and how we serve content faster than ever.
+products:
+  - fundamentals
+pcx_content_type: video
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/lor-3-the-finish-line.png

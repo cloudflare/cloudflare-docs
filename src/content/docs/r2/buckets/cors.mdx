@@ -33,44 +33,34 @@ Next, [add a CORS policy](#add-cors-policies-from-the-dashboard) to your bucket 
 
 ## Use CORS with a presigned URL
 
-Presigned URLs are an S3 concept that contain a special signature that encodes details of an S3 action, such as `GetObject` or `PutObject`. Presigned URLs are only used for authentication, which means they are generally safe to distribute publicly without revealing any secrets.
+[Presigned URLs](/r2/api/s3/presigned-urls/) allow temporary access to perform specific actions on your bucket without exposing your credentials. While presigned URLs handle authentication, you still need to configure CORS when making requests from a browser.
 
-### Create a presigned URL
+When a browser makes a request to a presigned URL on a different origin, the browser enforces CORS. Without a CORS policy, browser-based uploads and downloads using presigned URLs will fail, even though the presigned URL itself is valid.
 
-You will need a pair of S3-compatible credentials to use when you generate the presigned URL.
+To enable browser-based access with presigned URLs:
 
-The example below shows how to generate a presigned `PutObject` URL using the [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) package for JavaScript.
+1. [Add a CORS policy](#add-cors-policies-from-the-dashboard) to your bucket that allows requests from your application's origin.
 
-```js
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-const S3 = new S3Client({
-	endpoint: "https://<account_id>.r2.cloudflarestorage.com",
-	credentials: {
-		accessKeyId: "<access_key_id>",
-		secretAccessKey: "<access_key_secret>",
-	},
-	region: "auto",
-});
-const url = await getSignedUrl(
-	S3,
-	new PutObjectCommand({
-		Bucket: bucket,
-		Key: object,
-	}),
-	{
-		expiresIn: 60 * 60 * 24 * 7, // 7d
-	},
-);
-console.log(url);
-```
+2. Set `AllowedMethods` to match the operations your presigned URLs perform, use `GET`, `PUT`, `HEAD`, and/or `DELETE`.
 
-### Test the presigned URL
+3. Set `AllowedHeaders` to include any headers the client will send when using the presigned URL, such as headers for content type, checksums, caching, or custom metadata.
 
-Test the presigned URL by uploading an object using cURL. The example below would upload the `123` text to R2 with a `Content-Type` of `text/plain`.
+4. (Optional) Set `ExposeHeaders` to allow your JavaScript to read response headers like `ETag`, which contains the object's hash and is useful for verifying uploads.
 
-```sh
-curl --request PUT <URL> --header "Content-Type: text/plain" --data "123"
+5. (Optional) Set `MaxAgeSeconds` to cache the preflight response and reduce the number of preflight requests the browser makes.
+
+The following example allows browser-based uploads from `https://example.com` with a `Content-Type` header:
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://example.com"],
+    "AllowedMethods": ["PUT"],
+    "AllowedHeaders": ["Content-Type"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3600
+  }
+]
 ```
 
 ## Add CORS policies from the dashboard
@@ -85,6 +75,37 @@ curl --request PUT <URL> --header "Content-Type: text/plain" --data "123"
 6. When you are done, select **Save**.
 
 Your policy displays on the **Settings** page for your bucket.
+
+## Add CORS policies via Wrangler CLI
+
+You can configure CORS rules using the [Wrangler CLI](/r2/reference/wrangler-commands/).
+
+1. Create a JSON file with your CORS configuration:
+
+```json title="cors.json"
+{
+  "rules": [
+    {
+      "allowed": {
+        "origins": ["https://example.com"],
+        "methods": ["GET"]
+      }
+    }
+  ]
+}
+```
+
+2. Apply the CORS policy to your bucket:
+
+```sh
+npx wrangler r2 bucket cors set <BUCKET_NAME> --file cors.json
+```
+
+3. Verify the CORS policy was applied:
+
+```sh
+npx wrangler r2 bucket cors list <BUCKET_NAME>
+```
 
 ## Response headers
 

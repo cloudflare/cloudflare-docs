@@ -13,8 +13,8 @@ import { Render, GlossaryTooltip } from "~/components";
 
 This page provides examples of creating [WAF custom rules](/waf/custom-rules/) in a zone or account using Terraform. The examples cover the following scenarios:
 
-- [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone) (zone-level configuration)
-- [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset) (account-level configuration)
+- [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
+- [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
 
 The WAF documentation includes additional Terraform examples — refer to [More resources](#more-resources).
 
@@ -67,15 +67,14 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
 />
 <br />
 
-## Create and deploy a custom ruleset (account-level configuration) {/* create-and-deploy-a-custom-ruleset */}
+## Create and deploy a custom ruleset
 
 :::note
-Account-level WAF configuration requires an Enterprise plan with a paid add-on.
+All customers can create custom rulesets at the [zone level](/waf/custom-rules/custom-rulesets/).<br/>
+Custom rulesets at the [account level](/waf/account/custom-rulesets/) require an Enterprise plan with a paid add-on.
 :::
 
 The following example creates a [custom ruleset](/ruleset-engine/custom-rulesets/) in the account with ID `<ACCOUNT_ID>` containing a single custom rule. This custom ruleset is then deployed using a separate `cloudflare_ruleset` Terraform resource. If you do not deploy a custom ruleset, it will not execute.
-
-You can only create and deploy custom rulesets at the account level.
 
 The following configuration creates a custom ruleset with a single rule:
 
@@ -122,7 +121,7 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   rules {
     ref         = "deploy_custom_ruleset_example_com"
     description = "Deploy custom ruleset for example.com"
-    expression  = "(cf.zone.name eq \"example.com\")"
+    expression  = "(cf.zone.name eq \"example.com\") and (cf.zone.plan eq \"ENT\")"
     action      = "execute"
     action_parameters {
       id = cloudflare_ruleset.account_firewall_custom_ruleset.id

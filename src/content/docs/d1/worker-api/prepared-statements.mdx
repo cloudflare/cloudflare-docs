@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Type, MetaInfo, Details } from "~/components";
+import { Type, MetaInfo, Details, Tabs, TabItem } from "~/components";
 
 This chapter documents the various ways you can run and retrieve the results of a query after you have [prepared your statement](/d1/worker-api/d1-database/#prepare).
 
@@ -15,10 +15,19 @@ This chapter documents the various ways you can run and retrieve the results of 
 
 Binds a parameter to the prepared statement.
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+some_variable = "Bs Beverages"
+stmt = self.env.DB.prepare(
+  "SELECT * FROM Customers WHERE CompanyName = ?"
+).bind(some_variable)
+```
+</TabItem> </Tabs>
 
 #### Parameter
 
@@ -43,21 +52,42 @@ const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bin
 
 	Order and anonymous examples:
 
+	<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 	```js
 	const stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind("");
 	```
+	</TabItem> <TabItem label="Python" icon="seti:python">
+	```py
+	stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind("")
+	```
+	</TabItem> </Tabs>
 
+	<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 	```js
 	const stmt = db
 		.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?")
 		.bind("Alfreds Futterkiste", 1);
 	```
+	</TabItem> <TabItem label="Python" icon="seti:python">
+	```py
+	stmt = db.prepare(
+    "SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?"
+  ).bind("Alfreds Futterkiste", 1)
+	```
+	</TabItem> </Tabs>
 
+	<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 	```js
 	const stmt = db
-		.prepare("SELECT * FROM Customers WHERE CompanyName = ?2 AND CustomerId = ?1")
-		.bind(1, "Alfreds Futterkiste");
+		.prepare(
+      "SELECT * FROM Customers WHERE CompanyName = ?2 AND CustomerId = ?1"
+    ).bind(1, "Alfreds Futterkiste");
 	```
+	</TabItem> <TabItem label="Python" icon="seti:python">
+	```py
+	stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ?2 AND CustomerId = ?1").bind(1, "Alfreds Futterkiste")
+	```
+	</TabItem> </Tabs>
 
 #### Static statements
 
@@ -70,28 +100,51 @@ The recommended approach is to use [prepared statements](/d1/worker-api/d1-datab
 
 Example of a prepared statement with dynamically bound value:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 // A variable (someVariable) will replace the placeholder '?' in the query.
 // `stmt` is a prepared statement.
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+some_variable = "Bs Beverages"
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(some_variable)
+# A variable (some_variable) will replace the placeholder '?' in the query.
+# `stmt` is a prepared statement.
+```
+</TabItem> </Tabs>
 
 Example of a static statement:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = Bs Beverages");
 // "Bs Beverages" is hard-coded into the query.
 // `stmt` is a static statement.
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = Bs Beverages")
+# "Bs Beverages" is hard-coded into the query.
+# `stmt` is a static statement.
+```
+</TabItem> </Tabs>
 
 ### `run()`
 
 Runs the prepared query (or queries) and returns results. The returned results includes metadata.
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const returnValue = await stmt.run();
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+return_value = await stmt.run()
+```
+</TabItem> </Tabs>
 
 #### Parameter
 
@@ -104,15 +157,26 @@ const returnValue = await stmt.run();
   - For more information on the object, refer to [`D1Result`](/d1/worker-api/return-object/#d1result).
 
 <Details header="Example of return values" open = {false}>
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 const returnValue = await stmt.run();
-```
-```js
 return Response.json(returnValue);
 ```
-```js output
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import Response
+
+some_variable = "Bs Beverages"
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(some_variable)
+return_value = await stmt.run()
+return Response.json(return_value)
+```
+</TabItem> </Tabs>
+
+```json output
 {
   "success": true,
   "meta": {
@@ -149,10 +213,20 @@ return Response.json(returnValue);
 - You can choose to extract only the results you expect from the statement by simply returning the `results` property of the return object.
 
 <Details header="Example of returning only the `results`" open={false}>
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 return Response.json(returnValue.results);
 ```
-```js output
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import Response
+
+return Response.json(return_value.results)
+```
+</TabItem> </Tabs>
+
+```json output
 [
   {
     "CustomerId": 11,
@@ -174,9 +248,15 @@ Runs the prepared query (or queries), and returns the results as an array of arr
 
 Column names are not included in the result set by default. To include column names as the first row of the result array, set `.raw({columnNames: true})`.
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const returnValue = await stmt.raw();
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+return_value = await stmt.raw()
+```
+</TabItem> </Tabs>
 
 #### Parameters
 
@@ -189,13 +269,26 @@ const returnValue = await stmt.raw();
   - An array of arrays. Each sub-array represents a row.
 
 <Details header="Example of return values" open = {false}>
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 const returnValue = await stmt.raw();
 return Response.json(returnValue);
 ```
-```js output
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import Response
+
+some_variable = "Bs Beverages"
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(some_variable)
+return_value = await stmt.raw()
+return Response.json(return_value)
+```
+</TabItem> </Tabs>
+
+```json output
 [
   [11, "Bs Beverages",
     "Victoria Ashworth"
@@ -207,13 +300,27 @@ return Response.json(returnValue);
 ```
 
 With parameter `columnNames: true`:
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 const returnValue = await stmt.raw({columnNames:true});
 return Response.json(returnValue)
 ```
-```js output
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from pyodide.ffi import to_js
+from workers import Response
+
+some_variable = "Bs Beverages"
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(some_variable)
+return_value = await stmt.raw(columnNames=True)
+return Response.json(return_value)
+```
+</TabItem> </Tabs>
+
+```json output
 [
   [
     "CustomerId",
@@ -238,9 +345,15 @@ return Response.json(returnValue)
 
 Runs the prepared query (or queries), and returns the first row of the query result as an object. This does not return any metadata. Instead, it directly returns the object.
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const values = await stmt.first();
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+values = await stmt.first()
+```
+</TabItem> </Tabs>
 
 #### Parameters
 
@@ -262,13 +375,25 @@ const values = await stmt.first();
 
 Get all the columns from the first row:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 const returnValue = await stmt.first();
 return Response.json(returnValue)
 ```
-```js output
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import Response
+
+some_variable = "Bs Beverages"
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(some_variable)
+return_value = await stmt.first()
+return Response.json(return_value)
+```
+</TabItem> </Tabs>
+
+```json output
 {
   "CustomerId": 11,
   "CompanyName": "Bs Beverages",
@@ -278,13 +403,25 @@ return Response.json(returnValue)
 
 Get a specific column from the first row:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 const returnValue = await stmt.first(CustomerId);
 return Response.json(returnValue)
 ```
-```js output
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import Response
+
+some_variable = "Bs Beverages"
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(some_variable)
+return_value = await stmt.first("CustomerId")
+return Response.json(return_value)
+```
+</TabItem> </Tabs>
+
+```json output
 11
 ```
 </Details>

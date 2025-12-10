@@ -1,0 +1,311 @@
+---
+pcx_content_type: navigation
+title: Meeting Object Explained
+slug: realtime/realtimekit/core/meeting-object-explained
+sidebar:
+  order: 2
+---
+
+import { Tabs, TabItem } from "~/components";
+
+The meeting object is the core interface for interacting with a RealtimeKit session. It provides access to participants, local user controls, chat, polls, plugins, and more. This object is returned when you initialize the SDK.
+
+:::note[Prerequisites]
+This page assumes you've already initialized the SDK as described in the [Initialize SDK](/realtime/realtimekit/core/) guide.
+:::
+
+The meeting object structure is identical across all web frameworks (React, Angular, Web Components). The only difference is how you access it - React SDK provides a custom hook `useRealtimeKitMeeting` for convenience.
+
+This guide covers the core namespaces on the meeting object along with the most commonly used properties, methods, and events. Individual namespace references have been linked for more details.
+
+## Meeting Object Structure
+
+The meeting object contains several namespaces that organize different aspects of the meeting:
+
+### [`meeting.self`](https://docs.realtime.cloudflare.com/web-core/reference/RTKSelf) - Local Participant
+
+The `self` namespace represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
+
+**Key Properties:**
+
+```javascript
+// Participant identifiers
+meeting.self.id; // Peer ID (unique per session)
+meeting.self.userId; // Participant ID (persistent across sessions)
+meeting.self.name; // Participant display name
+
+// Media state
+meeting.self.audioEnabled; // Boolean: Is audio enabled?
+meeting.self.videoEnabled; // Boolean: Is video enabled?
+meeting.self.screenShareEnabled; // Boolean: Is screen share active?
+
+// Media tracks
+meeting.self.audioTrack; // Audio MediaStreamTrack, if audio is enabled
+meeting.self.videoTrack; // Video MediaStreamTrack, if video is enabled
+meeting.self.screenShareTracks; // Structure: { audio: MediaStreamTrack, video: MediaStreamTrack }, if screen share is enabled
+
+// Room state
+meeting.self.roomJoined; // Boolean: Has joined the meeting?
+meeting.self.roomState; // Current room state
+```
+
+**Common Methods:**
+
+```javascript
+// Media controls
+await meeting.self.enableAudio(); // Emits a `audioUpdate` event on `meeting.self` when successful.
+await meeting.self.disableAudio(); // Emits a `audioUpdate` event on `meeting.self` when successful.
+await meeting.self.enableVideo(); // Emits a `videoUpdate` event on `meeting.self` when successful.
+await meeting.self.disableVideo(); // Emits a `videoUpdate` event on `meeting.self` when successful.
+await meeting.self.enableScreenShare(); // Emits a `screenShareUpdate` event on `meeting.self` when successful.
+await meeting.self.disableScreenShare(); // Emits a `screenShareUpdate` event on `meeting.self` when successful.
+
+// Update Name
+await meeting.self.setName("New Name"); // setName works only works before joining the meeting
+
+// List Devices
+await meeting.self.getAllDevices(); // Returns all available devices
+await meeting.self.getAudioDevices(); // Returns all available audio devices
+await meeting.self.getVideoDevices(); // Returns all available video devices
+await meeting.self.getSpeakerDevices(); // Returns all available speaker devices
+await meeting.self.getCurrentDevices(); // {audio: MediaDevice, video: MediaDevice, speaker: MediaDevice} Returns the current device configuration
+
+// Change a device
+await meeting.self.setDevice((await meeting.self.getAllDevices())[0]);
+```
+
+### [`meeting.participants`](https://docs.realtime.cloudflare.com/web-core/reference/RTKParticipants) - All Remote Participants
+
+The `participants` namespace contains maps of all remote participants in the meeting, organized by their state.
+
+:::note
+`meeting.participants` only contains remote participants. It does not include the local participant.
+Local participant is available in `meeting.self`.
+:::
+
+**Participant Maps:**
+
+```javascript
+// All participants who have joined
+meeting.participants.joined; // Map of joined participants
+meeting.participants.joined.toArray(); // Array of joined participants
+
+// Participants with active media
+meeting.participants.active; // Map of participants with active audio/video
+meeting.participants.active.toArray(); // Array of participants with active audio/video
+
+// Participants in waiting room
+meeting.participants.waitlisted; // Map of waitlisted participants
+meeting.participants.waitlisted.toArray(); // Array of waitlisted participants
+
+// Pinned participants
+meeting.participants.pinned; // Map of pinned participants
+meeting.participants.pinned.toArray(); // Array of pinned participants
+```
+
+**Accessing Participant Data:**
+
+```javascript
+// Get all joined participants as an array
+const joinedParticipants = meeting.participants.joined.toArray();
+
+// Access first participant's IDs
+const firstParticipant = joinedParticipants[0];
+console.log("First Participant Peer ID:", firstParticipant?.id); // Peer ID (unique per session)
+console.log("First Participant User ID:", firstParticipant?.userId); // Participant ID (persistent)
+console.log("First Participant Name:", firstParticipant?.name); // Display name
+console.log("First Participant Audio Enabled:", firstParticipant?.audioEnabled); // Audio state
+console.log("First Participant Video Enabled:", firstParticipant?.videoEnabled); // Video state
+console.log(
+	"First Participant Screen Share Enabled:",
+	firstParticipant?.screenShareEnabled,
+); // Screen share state
+console.log("First Participant Audio Track:", firstParticipant?.audioTrack); // Audio MediaStreamTrack
+console.log("First Participant Video Track:", firstParticipant?.videoTrack); // Video MediaStreamTrack
+console.log(
+	"First Participant Screen Share Track:",
+	firstParticipant?.screenShareTracks,
+); // Screen share MediaStreamTrack
+
+// Access participant by peer ID
+const participant = meeting.participants.joined.get("peer-id");
+
+// Get count of joined participants
+const count = meeting.participants.joined.size();
+```
+
+**Participant Properties:**
+
+Each participant object has similar properties to `meeting.self`:
+
+```javascript
+participant.id; // Peer ID
+participant.userId; // Participant ID
+participant.name; // Display name
+participant.audioEnabled; // Audio state
+participant.videoEnabled; // Video state
+participant.screenShareEnabled; // Screen share state
+participant.audioTrack; // Audio MediaStreamTrack
+participant.videoTrack; // Video MediaStreamTrack
+participant.screenShareTrack; // Screen share MediaStreamTrack
+```
+
+### [`meeting.meta`](https://docs.realtime.cloudflare.com/web-core/reference/RTKMeta) - Meeting Metadata
+
+The `meta` namespace contains information about the meeting room itself.
+
+```javascript
+meeting.meta.meetingId; // Meeting identifier
+meeting.meta.meetingTitle; // Meeting Title
+meeting.meta.meetingStartedTimestamp; // Meeting start time
+```
+
+### [`meeting.chat`](https://docs.realtime.cloudflare.com/web-core/reference/RTKChat) - Chat Messages
+
+The `chat` namespace manages text messages, images, and files shared in the meeting.
+
+```javascript
+// Get all chat messages
+const messages = meeting.chat.messages;
+
+// Send a text message
+await meeting.chat.sendTextMessage("Hello everyone!");
+
+// Send an image
+await meeting.chat.sendImageMessage(imageFile);
+
+// Listen to chat messages
+console.log("First message:", meeting.chat.messages[0]);
+
+meeting.chat.on("chatUpdate", ({ message, messages }) => {
+	console.log(`Received message ${message}`);
+	console.log(`All messages in chat: ${messages.join(", ")}`);
+});
+```
+
+### [`meeting.polls`](https://docs.realtime.cloudflare.com/web-core/reference/RTKPolls) - Polls
+
+The `polls` namespace manages polls in the meeting.
+
+```javascript
+// Get all polls
+const polls = meeting.polls.items;
+
+// Create a poll
+await meeting.polls.create(
+	"What time works best?", //question
+	["9 AM", "2 PM", "5 PM"], // options
+	false, // anonymous
+	false, // hideVotes
+);
+
+// Vote on a poll
+await meeting.polls.vote(pollId, optionIndex); // Retrieve pollId from meeting.polls.items
+```
+
+### [`meeting.plugins`](https://docs.realtime.cloudflare.com/web-core/reference/RTKPlugins) - Plugins
+
+The `plugins` namespace manages meeting plugins (collaborative apps).
+
+```javascript
+// Get all available plugins
+const plugins = meeting.plugins.all;
+
+// Activate a plugin
+await meeting.plugins.activate(pluginId);
+
+// Deactivate a plugin
+await meeting.plugins.deactivate();
+```
+
+### `meeting.ai` - AI Features
+
+The `ai` namespace provides access to AI-powered features like live transcription.
+
+```javascript
+// Access live transcriptions
+meeting.ai.transcripts; // Shows only when transcription is enabled in Preset
+```
+
+## Methods
+
+### `meeting.join()`
+
+Join the meeting room. Emits a `roomJoined` event on `meeting.self` when successful.
+
+```javascript
+await meeting.join();
+```
+
+### `meeting.leave()`
+
+Leave the meeting room.
+
+```javascript
+await meeting.leave();
+```
+
+## Events
+
+The meeting object and its namespaces emit events that you can listen to:
+
+```javascript
+// Participant joined
+meeting.participants.joined.on("participantJoined", (participant) => {
+	console.log(`${participant.name} joined`);
+});
+
+// Participant left
+meeting.participants.joined.on("participantLeft", (participant) => {
+	console.log(`${participant.name} left`);
+});
+
+// Room joined
+meeting.self.on("roomJoined", () => {
+	console.log("Successfully joined the meeting");
+});
+
+// Media updates
+meeting.self.on("audioUpdate", ({ audioEnabled, audioTrack }) => {
+	console.log("Audio state:", audioEnabled);
+});
+
+meeting.self.on("videoUpdate", ({ videoEnabled, videoTrack }) => {
+	console.log("Video state:", videoEnabled);
+});
+
+meeting.self.on(
+	"screenShareUpdate",
+	({ screenShareEnabled, screenShareTracks }) => {
+		console.log("Screen share state:", screenShareEnabled);
+	},
+);
+
+// Device updates
+meeting.self.on("deviceUpdate", ({ device }) => {
+	console.log("Device state:", device); // Triggers when device is changed
+});
+
+meeting.self.on("deviceListUpdate", ({ added, removed, devices }) => {
+	console.log("Device list:", devices); // Triggers when device list is updated
+});
+```
+
+## Understanding IDs
+
+RealtimeKit uses two types of identifiers:
+
+- **Peer ID (`id`)**: Unique identifier for each connection to a meeting. Changes every time a participant joins a new session. This is stored in `meeting.self.id` or `participant.id`.
+- **Participant ID (`userId`)**: Persistent identifier for a participant across multiple sessions. This is stored in `meeting.self.userId` or `participant.userId`.
+
+Use `userId` when you need to track the same user across different sessions or reconnections. Use `id` (peer ID) when working with the current session's connections.
+
+## Best Practices
+
+- **Listen to events** instead of polling for changes - the meeting object emits events when state changes occur
+- **Use `toArray()`** to convert participant maps to arrays when you need to iterate over them
+- **Check `roomJoined`** before accessing certain properties or calling methods that require an active session
+
+## Next Steps
+
+Now that you understand the meeting object structure, you can use it to build custom meeting experiences. The UI Kit components internally use this same meeting object to provide ready-to-use interfaces. In the next guide, we'll show you how to combine UI Kit components with direct meeting object access to create your own custom UI.

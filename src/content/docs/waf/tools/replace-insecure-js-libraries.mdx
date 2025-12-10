@@ -12,6 +12,7 @@ import {
 	TabItem,
 	Steps,
 	APIRequest,
+	DashButton,
 } from "~/components";
 
 This feature, when turned on, automatically rewrites URLs to external JavaScript libraries to point to Cloudflare-hosted libraries instead. This change improves security and performance, and reduces the risk of malicious code being injected.
@@ -46,9 +47,11 @@ The feature is available in all Cloudflare plans, and is turned on by default on
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
-2. Go to **Security** > **Settings**.
-3. Turn **Replace insecure JavaScript libraries** on or off.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. Turn **Replace insecure JavaScript libraries** on or off.
 
 </Steps>
 

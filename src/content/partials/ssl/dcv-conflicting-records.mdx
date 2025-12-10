@@ -1,0 +1,14 @@
+---
+{}
+
+---
+
+:::caution[Remove previous TXT records]
+
+Existing TXT records for `_acme-challenge` will conflict with the delegated DCV CNAME record. Make sure to check and remove records such as the following:
+
+```txt
+_acme-challenge.example.com TXT <CERTIFICATE_VALIDATION_VALUE>
+```
+
+:::

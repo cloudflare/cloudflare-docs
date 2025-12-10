@@ -1,0 +1,20 @@
+---
+pcx_content_type: concept
+title: Troubleshoot and debug
+sidebar:
+  order: 10
+---
+
+Troubleshoot and debug errors commonly associated with Workers VPC.
+
+## Connection errors
+
+Workers VPC may return errors at runtime when connecting to private services through Cloudflare Tunnel.
+
+### Tunnel errors
+
+| Error Message                   | Details                                                                                                                                                                                                                                                                       | Recommended fixes                                                                                                                                                                                                                                                                                                          |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Error: ProxyError: dns_error`  | DNS resolution failed when attempting to connect to your private service through the tunnel.                                                                                                                                                                                  | This error may occur if your `cloudflared` version is outdated. Ensure you are running `cloudflared` version 2025.7.0 or later (latest version recommended). See [Cloudflare Tunnel update instructions](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/update-cloudflared/). |
+| `Error: ProxyError: dns_error`  | Cloudflare Tunnel may be configured with `http2` protocol (`TUNNEL_TRANSPORT_PROTOCOL:http2`), which works for Cloudflare Zero Trust [(see note)](/workers-vpc/configuration/tunnel/#create-and-run-tunnel-cloudflared) traffic but prevents DNS resolution from Workers VPC. | Workers VPC requires Cloudflare Tunnel to connect using the [QUIC transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol). Ensure outbound UDP traffic on port 7844 is allowed through your firewall.                             |
+| Requests not staying within VPC | Worker requests using `.fetch()` with a public hostname are routing out of the VPC to the hostname configured for the VPC Service.                                                                                                                                            | Ensure your Worker code and the VPC Service use the internal VPC hostname for backend services, not a public hostname.                                                                                                                                                                                                     |

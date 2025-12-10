@@ -3,7 +3,7 @@ name: Cloudflare Tunnel
 product:
   title: Cloudflare Tunnel
   group: Cloudflare One
-  url: /cloudflare-one/connections/connect-networks/
+  url: /cloudflare-one/networks/connectors/cloudflare-tunnel/
 
 meta:
   description: Securely connect resources to Cloudflare without a publicly routable IP address

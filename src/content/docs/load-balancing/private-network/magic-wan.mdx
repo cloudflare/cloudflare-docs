@@ -37,7 +37,7 @@ Pools can be created using either the Cloudflare dashboard or the API. Refer to 
 After selecting an IP address and completing the setup, you will be redirected to the Load Balancing dashboard. You can locate your load balancer using the search bar or by filtering for **Private** load balancers. Be sure to note the assigned IP address, as it will be required in the following steps.
 
 :::note
-Traffic from your load balancer will appear to originate from one of Cloudflare’s IP addresses. These IP addresses must be whitelisted to ensure proper traffic flow. Ensure your routing is properly configured to return traffic to your Magic WAN tunnels and not the public Internet. Private Load Balancers created with a Cloudflare private IP address will receive an address in the CGNAT range `100.112.0.0`.
+Traffic from your load balancer will appear to originate from one of Cloudflare's IP addresses. These IP addresses must be whitelisted to ensure proper traffic flow. Ensure your routing is properly configured to return traffic to your Magic WAN tunnels and not the public Internet. Private Load Balancers created with a Cloudflare private IP address will receive a default address in the CGNAT range `100.112.0.0`. This IP address is configurable. Refer to [Cloudflare source IP range](/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-cloudflare-source-ips/) to learn more.
 :::
 
 ## 3. FQDN override (optional)
@@ -51,6 +51,6 @@ To create the override, follow these steps:
    - The **Selector** equals `Host`
    - The **Operator** equals `is`
    - The **Value** is the hostname you wish to associate with your load balancer.
-3. Set the **Action** to _Override_, and in **Override Hostname**, enter the IP address of your Private Load Balancer. 
+3. Set the **Action** to _Override_, and in **Override Hostname**, enter the IP address of your Private Load Balancer.
 
 Requests to the hostname will now resolve to your private load balancer.

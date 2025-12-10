@@ -7,7 +7,7 @@ head: []
 description: Learn how to review scripts on your domain after receiving a code change alert.
 ---
 
-import { Steps } from "~/components";
+import { Steps, Tabs, TabItem, DashButton } from "~/components";
 
 :::note
 Available as a paid add-on for customers on an Enterprise plan.
@@ -21,11 +21,27 @@ When you receive such a notification:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to the client-side resources page:
-   - Old dashboard: Go to **Security** > **Page Shield**.
-   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
+{/* prettier-ignore-start */}
 
-3. Check the details of each changed script and validate if it is an expected change.
+1. Go to the client-side resources page:
+
+   <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+   2. Go to **Security** > **Page Shield**.
+
+   </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem> </Tabs>
+
+2. Check the details of each changed script and validate if it is an expected change.
+
+{/* prettier-ignore-end */}
 
 </Steps>

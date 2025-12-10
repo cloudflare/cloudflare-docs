@@ -5,19 +5,14 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components";
+
 ## Instance Types
 
 The memory, vCPU, and disk space for Containers are set through predefined instance types.
 Six instance types are currently available:
 
-| Instance Type | vCPU | Memory  | Disk  |
-| ------------- | ---- | ------  | ----  |
-| lite          | 1/16 | 256 MiB | 2 GB  |
-| basic         | 1/4  | 1 GiB   | 4 GB  |
-| standard-1    | 1/2  | 4 GiB   | 8 GB  |
-| standard-2    | 1    | 6 GiB   | 12 GB |
-| standard-3    | 2    | 8 GiB   | 16 GB |
-| standard-4    | 4    | 12 GiB  | 20 GB |
+<Render product="containers" file="instance-types" />
 
 These are specified using the [`instance_type` property](/workers/wrangler/configuration/#containers) in your Worker's Wrangler configuration file. Looking for larger instances? [Give us feedback here](/containers/beta-info/#feedback-wanted) and tell us what size instances you need, and what you want to use them for.
 

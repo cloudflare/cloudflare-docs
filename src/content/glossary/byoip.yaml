@@ -17,7 +17,7 @@ entries:
 
   - term: Internet Routing Registry (IRR)
     general_definition: |-
-      a globally distributed database of routing information which contains announced routes and routing policies in a common format. Network operators use this information to configure backbone routers.
+      a globally distributed database of routing information which contains announced routes and routing policies in a common format. Network operators use this information, as well as [RPKI](/byoip/concepts/route-filtering-rpki/), to configure backbone routers.
 
   - term: Resource Public Key Infrastructure (RPKI)
     general_definition: |-

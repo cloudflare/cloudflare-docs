@@ -1,0 +1,23 @@
+---
+title: Billing for SQLite Storage
+description: SQLite storage billing in January 2026
+products:
+  - durable-objects
+  - workers
+date: 2026-01-07
+---
+
+import { DashButton } from "~/components";
+
+Storage billing for SQLite-backed Durable Objects will be enabled in January 2026, with a target date of January 7, 2026 (no earlier). 
+
+To view your SQLite storage usage, go to the **Durable Objects** page
+<DashButton url="/?to=/:account/workers/durable-objects" />
+
+If you do not want to incur costs, please take action such as optimizing queries or deleting unnecessary stored data in order to reduce your SQLite storage usage ahead of the January 7th target. Only usage on and after the billing target date will incur charges.
+
+Developers on the Workers Paid plan with Durable Object's SQLite storage usage beyond included limits will incur charges according to [SQLite storage pricing](/durable-objects/platform/pricing/#sqlite-storage-backend) announced in September 2024 with the [public beta](https://blog.cloudflare.com/sqlite-in-durable-objects/). Developers on the Workers Free plan will not be charged.
+
+Compute billing for SQLite-backed Durable Objects has been enabled since the initial public beta. SQLite-backed Durable Objects currently incur [charges for requests and duration](/durable-objects/platform/pricing/#compute-billing), and no changes are being made to compute billing.
+
+For more information about SQLite storage pricing and limits, refer to the [Durable Objects pricing documentation](/durable-objects/platform/pricing/#sqlite-storage-backend).

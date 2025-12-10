@@ -4,17 +4,14 @@ pcx_content_type: get-started
 sidebar:
   order: 2
   label: Get started
-  
 ---
 
-import { GlossaryTooltip, Render, Steps } from "~/components"
-
+import { GlossaryTooltip, Render, Steps } from "~/components";
 
 This guide will help you set up API Shield to identify and address API security best practices.
 
 :::note
-
-Enabling API Shield features will have no impact on your traffic until you choose to move a setting from `log` to `block` mode. 
+Enabling API Shield features will have no impact on your traffic until you choose to move a setting from `log` to `block` mode.
 :::
 
 ## Session identifiers
@@ -34,19 +31,17 @@ Schema validation protects your APIs by ensuring only requests matching your <Gl
 While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema validation](/api-shield/security/schema-validation/).
 
 :::note
-
-It is recommended to start with Schema validation rules set to `log` to review logged requests in **Security** > **Events**. When you are confident that only the correct requests are logged, you should switch the rule to `block`. 
+It is recommended to start with Schema validation rules set to `log` to review logged requests in [Security Events](/waf/analytics/security-events/). When you are confident that only the correct requests are logged, you should switch the rule to `block`.
 :::
 
 If you do not have a schema to upload, continue reading this guide to learn how to generate a schema with API Shield.
 
 ## Enable the Sensitive Data Detection ruleset and accompanying rules
 
-API Shield works with Cloudflare WAF’s [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset to identify <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip> that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected.
+API Shield works with Cloudflare WAF’s [Sensitive Data Detection](/api-shield/management-and-monitoring/endpoint-management/#sensitive-data-detection) ruleset to identify <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip> that return sensitive data such as social security or credit card numbers in their HTTP responses. Monitoring these endpoints can be critical to ensuring sensitive data is returned only when expected.
 
 :::note
-
-A subscription is required for Sensitive Data Detection. Contact your account team if you are not entitled for Sensitive Data Detection. 
+A subscription is required for Sensitive Data Detection. Contact your account team if you are not entitled for Sensitive Data Detection.
 :::
 
 You can identify endpoints returning sensitive data by selecting the icon next to the path in a row. Expand the endpoint to see details on which rules were triggered and view more information by exploring events in **Firewall Events**.
@@ -56,15 +51,14 @@ You can identify endpoints returning sensitive data by selecting the icon next t
 Cloudflare’s machine learning models have already inspected your existing traffic for the presence of API endpoints. By adding endpoints from API Discovery to Endpoint Management, you can unlock further security, visibility, and management features of the platform. Endpoint Management monitors the health of your API endpoints by saving, updating, and monitoring performance metrics.
 
 :::note
-
-Schema validation, schema learning, JWT validation, Sequence Analytics, sequence mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management. 
+Schema validation, schema learning, JWT validation, Sequence Analytics, sequence mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management.
 :::
 
-You can save your endpoints directly from [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), or [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) by method, path, and host.
+You can save your endpoints directly from [API Discovery](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-from-api-discovery), [Schema validation](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-from-schema-validation), or [manually](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-manually) by method, path, and host.
 
 This will add the specified endpoints to your list of managed endpoints. You can view your list of saved endpoints in the **Endpoint Management** page.
 
-Cloudflare will aggregate [performance data](/api-shield/management-and-monitoring/#endpoint-analysis) and security data on your endpoint once it is saved.
+Cloudflare will aggregate [performance data](/api-shield/management-and-monitoring/endpoint-management/#endpoint-analysis) and security data on your endpoint once it is saved.
 
 ### Allow the system to learn your traffic patterns
 
@@ -92,9 +86,9 @@ You can import the learned schema of an entire hostname using the [Cloudflare da
 
 ## Export a learned schema from Endpoint Management
 
-Learned schemas will always include the listed hostname in the servers section, all endpoints by host, method, and path, and detected path variables. They can also potentially include detected query parameters and their format. You can optionally include API Shield’s rate limit threshold recommendations.
+Learned schemas will always include the listed hostname in the servers section, all endpoints by host, method, and path, and detected path variables. They can also potentially include detected query parameters and their format. You can optionally include API Shield's rate limit threshold recommendations.
 
-You can export your learned schemas in the [Cloudflare dashboard](/api-shield/management-and-monitoring/#export-a-schema) or via the [API](/api/resources/api_gateway/subresources/schemas/methods/list/).
+You can export your learned schemas in the [Cloudflare dashboard](/api-shield/management-and-monitoring/endpoint-management/schema-learning/#export-a-schema) or via the [API](/api/resources/api_gateway/subresources/schemas/methods/list/).
 
 ## View and configure Sequence Analytics
 

@@ -5,6 +5,7 @@ title: Create an API token
 description: In this video, learn the difference between account and user API tokens how to create one.
 products:
   - fundamentals
+pcx_content_type: video
 thumbnail:
   url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/API%20token.png
 transcript: |
