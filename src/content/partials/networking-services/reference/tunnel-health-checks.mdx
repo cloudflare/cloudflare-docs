@@ -13,7 +13,7 @@ import { Render } from "~/components";
 
 A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an Internet Protocol Security (IPsec) tunnel, the ICMP [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
 
-A tunnel health check probe comes from Cloudflare to the tunnel origin, then returns a response to Cloudflare. This response is used to determine the outcome of the probe, which is used to calculate the state of the tunnel (the following sections explain this in greater detail).
+A tunnel health check probe comes from Cloudflare to the tunnel origin, then returns a response to Cloudflare. Cloudflare uses this response to determine the probe outcome and calculate the tunnel state (the following sections explain this in greater detail).
 
 { props.magicWord === "Magic Transit" && (
 	<>
@@ -43,11 +43,11 @@ A tunnel health check probe comes from Cloudflare to the tunnel origin, then ret
 
 ## Tunnel health check attributes
 
-A tunnel health check probe has important attributes described in the following sections.
+A tunnel health check probe has the following attributes.
 
 ### Target
 
-A tunnel health check probe tests whether Cloudflare can successfully connect to a specific address or endpoint through the tunnel. The target is the address you want to ensure is reachable through the tunnel. This helps verify that the tunnel is functional and traffic can flow properly to the intended destination. It is optional, and there are certain defaults depending on the direction of the health check (refer to [Direction](#direction) for more information).
+A tunnel health check probe tests whether Cloudflare can successfully connect to a specific address or endpoint through the tunnel. The target is the address you want to verify is reachable. It is optional, and defaults vary depending on the direction of the health check (refer to [Direction](#direction) for more information).
 
 ### Direction
 
@@ -212,7 +212,9 @@ flowchart TB
 	}}
 	/>
 
-Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the `health_check` rate of a tunnel with the <a href={props.changeHealthCheckRate}>API or the dashboard</a>. A customer can set the rate value as _low_, _mid_ or _high_, with _mid_ being the default option. The actual rate formula considers the number of servers in a Cloudflare data center or the number of servers with the customer namespace provisioned on them for dynamically provisioned namespaces. Thus, the rate is not a specific number; it is dynamic and depends on the size of our network.
+Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these probes are sent varies based on tunnel and location. You can tune this rate on a per tunnel basis by modifying the `health_check` rate with the <a href={props.changeHealthCheckRate}>API or the dashboard</a>. You can set the rate as _low_, _mid_, or _high_, with _mid_ being the default.
+
+The actual rate formula considers the number of servers in a Cloudflare data center or the number of servers with the customer namespace provisioned on them for dynamically provisioned namespaces. The rate is dynamic and depends on the size of our network.
 
 When a probe attempt fails for a <a href={props.probeHealth}>healthy tunnel</a>, each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second — each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
 
@@ -235,7 +237,7 @@ As a result, tunnel health may be in different states in different parts of the 
 
 ### Degraded
 
-- When at least 0.1% or more of tunnel health checks fail in the previous five minutes (with at least two failures), {props.productName} considers the link lossy and sets the tunnel state to degraded (assuming the tunnel is not down).
+- When at least 0.1% of tunnel health checks fail in the previous five minutes (with at least two failures), {props.productName} considers the link lossy and sets the tunnel state to degraded (assuming the tunnel is not down).
 - {props.productName} requires two failures so that a single lost packet does not trigger a penalty.
 - {props.productName} then immediately sets the tunnel status to degraded and applies a priority penalty.
 
