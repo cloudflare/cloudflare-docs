@@ -1,0 +1,330 @@
+---
+title: Use OpenCode AI agent
+pcx_content_type: how-to
+sidebar:
+  order: 6
+description: Run OpenCode AI coding agent inside Sandbox containers with web UI or programmatic SDK access.
+---
+
+import { TypeScriptExample, PackageManagers } from "~/components";
+
+This guide shows you how to run OpenCode, an AI coding agent, inside Sandbox containers. OpenCode can interact with your codebase, execute commands, and handle complex coding tasks through either a web UI or programmatic SDK.
+
+## When to use OpenCode
+
+Use OpenCode integration when you need:
+
+- **AI-powered code editing** - Let an AI agent read, write, and modify code
+- **Interactive development** - Use the web UI for real-time AI-assisted coding
+- **Automated workflows** - Build programmatic agents that modify code autonomously
+- **Secure isolation** - Run AI agents in isolated containers with resource limits
+
+## Prerequisites
+
+1. **Docker image**: Use the `-opencode` variant of the Sandbox image which includes OpenCode CLI pre-installed
+2. **Peer dependency**: Install `@opencode-ai/sdk` for programmatic access (not needed for web UI only)
+3. **API key**: Configure your AI provider API key (for example, `ANTHROPIC_API_KEY`)
+
+## Web UI integration
+
+Expose OpenCode's web interface through your Worker. Users can access the full OpenCode experience in their browser.
+
+### Configure your container
+
+Update your `wrangler.jsonc` to use the OpenCode image variant:
+
+```json
+{
+  "name": "opencode-worker",
+  "compatibility_date": "2025-12-10",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "Sandbox",
+        "class_name": "Sandbox",
+        "script_name": "opencode-worker"
+      }
+    ]
+  },
+  "[[unsafe.bindings]]": {
+    "name": "Sandbox",
+    "type": "durable_object_namespace",
+    "class_name": "Sandbox",
+    "image": "cloudflare/sandbox:latest-opencode"
+  }
+}
+```
+
+### Create the proxy worker
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+import { createOpencodeServer, proxyToOpencode } from '@cloudflare/sandbox/opencode';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, 'opencode-session');
+
+    // Start OpenCode server
+    const server = await createOpencodeServer(sandbox, {
+      directory: '/home/user/my-project',
+      config: {
+        provider: {
+          anthropic: {
+            options: {
+              apiKey: env.ANTHROPIC_API_KEY
+            }
+          }
+        }
+      }
+    });
+
+    // Proxy requests to OpenCode web UI
+    return proxyToOpencode(request, sandbox, server);
+  }
+};
+```
+</TypeScriptExample>
+
+### Clone a repository
+
+To give OpenCode a codebase to work with, clone a repository before starting the server:
+
+<TypeScriptExample>
+```
+const sandbox = getSandbox(env.Sandbox, 'opencode-session');
+
+// Clone repository
+await sandbox.gitCheckout('https://github.com/your-org/your-repo.git', {
+  targetDir: '/home/user/my-project'
+});
+
+// Start OpenCode in the cloned directory
+const server = await createOpencodeServer(sandbox, {
+  directory: '/home/user/my-project',
+  config: {
+    provider: {
+      anthropic: {
+        options: {
+          apiKey: env.ANTHROPIC_API_KEY
+        }
+      }
+    }
+  }
+});
+
+return proxyToOpencode(request, sandbox, server);
+```
+</TypeScriptExample>
+
+Users can now browse to your Worker URL and interact with OpenCode in their browser.
+
+## Programmatic SDK access
+
+Build automated agents that interact with OpenCode programmatically using the typed SDK client.
+
+### Install peer dependency
+
+<PackageManagers pkg="@opencode-ai/sdk" />
+
+### Create SDK client
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+import { createOpencode } from '@cloudflare/sandbox/opencode';
+import type { OpencodeClient } from '@opencode-ai/sdk';
+
+const sandbox = getSandbox(env.Sandbox, 'automation');
+
+// Create server and typed SDK client
+const { client, server } = await createOpencode<OpencodeClient>(sandbox, {
+  directory: '/home/user/my-project',
+  config: {
+    provider: {
+      anthropic: {
+        options: {
+          apiKey: env.ANTHROPIC_API_KEY
+        }
+      }
+    }
+  }
+});
+
+// Create a session
+const session = await client.session.create({
+  body: { title: 'Automated Task' },
+  query: { directory: '/home/user/my-project' }
+});
+
+// Send a prompt
+const result = await client.session.prompt({
+  path: { id: session.data.id },
+  query: { directory: '/home/user/my-project' },
+  body: {
+    model: {
+      providerID: 'anthropic',
+      modelID: 'claude-haiku-4-5'
+    },
+    parts: [
+      {
+        type: 'text',
+        text: 'Add a new function that validates email addresses'
+      }
+    ]
+  }
+});
+
+console.log('Agent response:', result.data);
+
+// Clean up
+await server.close();
+```
+</TypeScriptExample>
+
+### Extract response text
+
+OpenCode responses contain structured data with multiple parts. Extract text content:
+
+<TypeScriptExample>
+```
+const result = await client.session.prompt({
+  path: { id: session.data.id },
+  query: { directory: '/home/user/my-project' },
+  body: {
+    model: {
+      providerID: 'anthropic',
+      modelID: 'claude-haiku-4-5'
+    },
+    parts: [
+      {
+        type: 'text',
+        text: 'Summarize the main function in this file'
+      }
+    ]
+  }
+});
+
+// Find text response
+const parts = result.data?.parts ?? [];
+const textPart = parts.find((p) => p.type === 'text');
+console.log(textPart?.text);
+```
+</TypeScriptExample>
+
+## Configuration options
+
+### Provider configuration
+
+Configure AI provider credentials in the `config.provider` object:
+
+<TypeScriptExample>
+```
+const config = {
+  provider: {
+    anthropic: {
+      options: {
+        apiKey: env.ANTHROPIC_API_KEY
+      }
+    },
+    openai: {
+      options: {
+        apiKey: env.OPENAI_API_KEY
+      }
+    }
+  }
+};
+
+const server = await createOpencodeServer(sandbox, {
+  directory: '/workspace',
+  config
+});
+```
+</TypeScriptExample>
+
+### Port configuration
+
+Change the default port (4096) if needed:
+
+<TypeScriptExample>
+```
+const server = await createOpencodeServer(sandbox, {
+  port: 8080,
+  directory: '/workspace'
+});
+```
+</TypeScriptExample>
+
+### Working directory
+
+OpenCode uses the specified directory as its working directory:
+
+<TypeScriptExample>
+```
+// Start OpenCode in a specific project directory
+const server = await createOpencodeServer(sandbox, {
+  directory: '/home/user/projects/my-app'
+});
+```
+</TypeScriptExample>
+
+If no directory is specified, OpenCode uses the container's current working directory.
+
+## Process reuse
+
+The OpenCode integration automatically detects and reuses existing server processes. If an OpenCode server is already running on the same port, subsequent calls will reuse it instead of starting a new one:
+
+<TypeScriptExample>
+```
+// First request starts the server
+const server1 = await createOpencodeServer(sandbox, { port: 4096 });
+
+// Second request reuses the existing server
+const server2 = await createOpencodeServer(sandbox, { port: 4096 });
+
+// Both references point to the same running process
+```
+</TypeScriptExample>
+
+This prevents resource waste and improves response times for subsequent requests.
+
+## Error handling
+
+Handle server startup failures:
+
+<TypeScriptExample>
+```
+try {
+  const server = await createOpencodeServer(sandbox, {
+    directory: '/home/user/project',
+    config: {
+      provider: {
+        anthropic: {
+          options: {
+            apiKey: env.ANTHROPIC_API_KEY
+          }
+        }
+      }
+    }
+  });
+
+  return proxyToOpencode(request, sandbox, server);
+} catch (error) {
+  if (error.code === 'OPENCODE_STARTUP_FAILED') {
+    console.error('Startup failed:', error.context.stderr);
+    return new Response('OpenCode failed to start', { status: 500 });
+  }
+  throw error;
+}
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [OpenCode SDK documentation](https://docs.opencode.ai/)
+- [Code Interpreter API](/sandbox-sdk/api/interpreter/) - For simple Python/JavaScript execution
+- [Process management](/sandbox-sdk/guides/background-processes/) - Managing long-running processes
+- [Expose services](/sandbox-sdk/guides/expose-services/) - Port forwarding patterns

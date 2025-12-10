@@ -1,0 +1,314 @@
+---
+title: OpenCode
+pcx_content_type: concept
+sidebar:
+  order: 5
+---
+
+import { TypeScriptExample } from "~/components";
+
+Run OpenCode AI coding agent inside Sandbox containers. OpenCode provides AI-powered code editing through a web UI or programmatic SDK.
+
+## Functions
+
+### `createOpencodeServer()`
+
+Start an OpenCode server for web UI access or manual proxying.
+
+```ts
+const server = await createOpencodeServer(
+  sandbox: Sandbox,
+  options?: OpencodeOptions
+): Promise<OpencodeServer>
+```
+
+**Parameters**:
+- `sandbox` (required) - Sandbox instance to run OpenCode in
+- `options` (optional):
+  - `port` - Server port (default: `4096`)
+  - `directory` - Working directory (default: container cwd)
+  - `config` - OpenCode configuration with provider API keys
+
+**Returns**: `Promise<OpencodeServer>` with:
+- `port` - Port number the server is running on
+- `url` - Base URL (`http://localhost:{port}`)
+- `close()` - Function to stop the server
+
+**Process reuse**: If an OpenCode server is already running on the specified port, this function reuses it instead of starting a new one.
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+import { createOpencodeServer } from '@cloudflare/sandbox/opencode';
+
+const sandbox = getSandbox(env.Sandbox, 'my-agent');
+
+const server = await createOpencodeServer(sandbox, {
+  directory: '/home/user/my-project',
+  config: {
+    provider: {
+      anthropic: {
+        options: {
+          apiKey: env.ANTHROPIC_API_KEY
+        }
+      }
+    }
+  }
+});
+
+console.log('Server running at:', server.url);
+
+// Proxy to the server manually
+const response = await sandbox.containerFetch(request, server.port);
+
+// Stop server when done
+await server.close();
+```
+</TypeScriptExample>
+
+### `createOpencode()`
+
+Start an OpenCode server and return a typed SDK client for programmatic access.
+
+```ts
+const result = await createOpencode<TClient>(
+  sandbox: Sandbox,
+  options?: OpencodeOptions
+): Promise<OpencodeResult<TClient>>
+```
+
+**Parameters**:
+- `sandbox` (required) - Sandbox instance to run OpenCode in
+- `options` (optional):
+  - `port` - Server port (default: `4096`)
+  - `directory` - Working directory (default: container cwd)
+  - `config` - OpenCode configuration with provider API keys
+
+**Type parameter**:
+- `TClient` - Type of SDK client (for example, `OpencodeClient` from `@opencode-ai/sdk`)
+
+**Returns**: `Promise<OpencodeResult<TClient>>` with:
+- `client` - Typed OpenCode SDK client
+- `server` - Server lifecycle management (same as `createOpencodeServer()` return)
+
+**Peer dependency**: Requires `@opencode-ai/sdk` to be installed.
+
+**Process reuse**: If an OpenCode server is already running on the specified port, this function reuses it instead of starting a new one.
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+import { createOpencode } from '@cloudflare/sandbox/opencode';
+import type { OpencodeClient } from '@opencode-ai/sdk';
+
+const sandbox = getSandbox(env.Sandbox, 'automation');
+
+// Get both server and typed client
+const { client, server } = await createOpencode<OpencodeClient>(sandbox, {
+  directory: '/home/user/my-project',
+  config: {
+    provider: {
+      anthropic: {
+        options: {
+          apiKey: env.ANTHROPIC_API_KEY
+        }
+      }
+    }
+  }
+});
+
+// Use SDK for programmatic access
+const session = await client.session.create({
+  body: { title: 'Task Name' },
+  query: { directory: '/home/user/my-project' }
+});
+
+const result = await client.session.prompt({
+  path: { id: session.data.id },
+  query: { directory: '/home/user/my-project' },
+  body: {
+    model: {
+      providerID: 'anthropic',
+      modelID: 'claude-haiku-4-5'
+    },
+    parts: [
+      {
+        type: 'text',
+        text: 'Write a function to parse CSV files'
+      }
+    ]
+  }
+});
+
+console.log('Response:', result.data);
+
+await server.close();
+```
+</TypeScriptExample>
+
+### `proxyToOpencode()`
+
+Proxy HTTP requests to OpenCode web UI with automatic redirect handling.
+
+```ts
+const response = proxyToOpencode(
+  request: Request,
+  sandbox: Sandbox,
+  server: OpencodeServer
+): Response | Promise<Response>
+```
+
+**Parameters**:
+- `request` (required) - Incoming HTTP request
+- `sandbox` (required) - Sandbox instance running OpenCode
+- `server` (required) - OpenCode server handle from `createOpencodeServer()`
+
+**Returns**: `Response` or `Promise<Response>` - Proxied response from OpenCode or redirect
+
+**Behavior**:
+- For GET requests to HTML pages without `?url=` parameter: Returns redirect to set the parameter
+- For all other requests: Proxies directly to the container
+
+The `?url=` parameter tells OpenCode's frontend to make API calls through the proxy instead of directly to localhost:4096.
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+import { createOpencodeServer, proxyToOpencode } from '@cloudflare/sandbox/opencode';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, 'opencode');
+
+    const server = await createOpencodeServer(sandbox, {
+      directory: '/home/user/project',
+      config: {
+        provider: {
+          anthropic: {
+            options: {
+              apiKey: env.ANTHROPIC_API_KEY
+            }
+          }
+        }
+      }
+    });
+
+    return proxyToOpencode(request, sandbox, server);
+  }
+};
+```
+</TypeScriptExample>
+
+## Types
+
+### `OpencodeOptions`
+
+Configuration options for starting OpenCode server.
+
+```ts
+interface OpencodeOptions {
+  port?: number;
+  directory?: string;
+  config?: Config;
+}
+```
+
+**Properties**:
+- `port` - Server port (default: `4096`)
+- `directory` - Working directory for OpenCode (default: container cwd)
+- `config` - OpenCode configuration object (from `@opencode-ai/sdk`)
+
+### `OpencodeServer`
+
+Server lifecycle management interface.
+
+```ts
+interface OpencodeServer {
+  port: number;
+  url: string;
+  close(): Promise<void>;
+}
+```
+
+**Properties**:
+- `port` - Port number the server is running on
+- `url` - Base URL for API access (`http://localhost:{port}`)
+- `close()` - Stop the server gracefully
+
+### `OpencodeResult`
+
+Result from `createOpencode()` containing both client and server.
+
+```ts
+interface OpencodeResult<TClient> {
+  client: TClient;
+  server: OpencodeServer;
+}
+```
+
+**Properties**:
+- `client` - Typed OpenCode SDK client (type from user's `@opencode-ai/sdk` version)
+- `server` - Server lifecycle management
+
+## Error codes
+
+### `OPENCODE_STARTUP_FAILED`
+
+Thrown when OpenCode server fails to start.
+
+**Error properties**:
+- `code` - `"OPENCODE_STARTUP_FAILED"`
+- `message` - Error message with stderr output
+- `context`:
+  - `port` - Port that failed to start
+  - `stderr` - Server error output
+  - `command` - Command that was executed
+
+<TypeScriptExample>
+```
+import { createOpencodeServer } from '@cloudflare/sandbox/opencode';
+
+try {
+  const server = await createOpencodeServer(sandbox, {
+    directory: '/nonexistent',
+    config: { provider: { anthropic: { options: { apiKey: 'invalid' } } } }
+  });
+} catch (error) {
+  if (error.code === 'OPENCODE_STARTUP_FAILED') {
+    console.error('Port:', error.context.port);
+    console.error('Stderr:', error.context.stderr);
+    console.error('Command:', error.context.command);
+  }
+}
+```
+</TypeScriptExample>
+
+## Container requirements
+
+Use the `-opencode` Docker image variant which includes OpenCode CLI pre-installed:
+
+```dockerfile
+FROM cloudflare/sandbox:latest-opencode
+```
+
+Or in `wrangler.jsonc`:
+
+```json
+{
+  "[[unsafe.bindings]]": {
+    "name": "Sandbox",
+    "type": "durable_object_namespace",
+    "class_name": "Sandbox",
+    "image": "cloudflare/sandbox:latest-opencode"
+  }
+}
+```
+
+The base `cloudflare/sandbox` image does not include OpenCode. Only the `-opencode` variant includes the necessary CLI installation.
+
+## Related resources
+
+- [Use OpenCode AI agent](/sandbox-sdk/guides/opencode-integration/) - Step-by-step usage guide
+- [OpenCode SDK documentation](https://docs.opencode.ai/) - Official OpenCode SDK reference
+- [Background processes](/sandbox-sdk/guides/background-processes/) - Process management patterns
+- [Expose services](/sandbox-sdk/guides/expose-services/) - Port forwarding and service exposure

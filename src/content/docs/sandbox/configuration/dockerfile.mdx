@@ -9,10 +9,17 @@ Customize the sandbox container image with your own packages, tools, and configu
 
 ## Base image
 
-The Sandbox SDK uses a Ubuntu-based Linux container with Python, Node.js (via Bun), and common development tools pre-installed:
+The Sandbox SDK provides multiple image variants for different use cases:
 
 ```dockerfile
+# Default image (no Python)
 FROM docker.io/cloudflare/sandbox:0.3.3
+
+# Python variant (includes Python 3.11 and data science libraries)
+FROM docker.io/cloudflare/sandbox:0.3.3-python
+
+# OpenCode variant (includes OpenCode AI agent CLI)
+FROM docker.io/cloudflare/sandbox:0.3.3-opencode
 ```
 
 :::caution[Version synchronization required]
@@ -23,14 +30,46 @@ Always match the Docker image version to your npm package version. If you're usi
 See [Version compatibility](/sandbox/concepts/sandboxes/#version-compatibility) for troubleshooting version mismatch warnings.
 :::
 
+### Default image
+
 **What's included:**
 
 - Ubuntu 22.04 LTS base
-- Python 3.11.14 with pip and venv
 - Node.js 20 LTS with npm
 - Bun 1.x (JavaScript/TypeScript runtime)
-- Pre-installed Python packages: matplotlib, numpy, pandas, ipython
 - System utilities: curl, wget, git, jq, zip, unzip, file, procps, ca-certificates
+
+Use this lightweight image when you do not need Python or specialized tools.
+
+### Python variant
+
+Add `-python` suffix to the image tag to include Python and data science libraries:
+
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.3.3-python
+```
+
+**Additional packages:**
+
+- Python 3.11.14 with pip and venv
+- Pre-installed Python packages: matplotlib, numpy, pandas, ipython
+
+Use this variant for data analysis, scientific computing, or when using the Code Interpreter API.
+
+### OpenCode variant
+
+Add `-opencode` suffix to the image tag to include OpenCode AI agent:
+
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.3.3-opencode
+```
+
+**Additional packages:**
+
+- OpenCode CLI pre-installed and configured
+- All packages from the default image
+
+Use this variant when running the OpenCode AI agent. Refer to [Use OpenCode AI agent](/sandbox-sdk/guides/opencode-integration/) for usage examples.
 
 ## Creating a custom image
 
