@@ -49,7 +49,7 @@ const starlightPageProps = {
 		<div>
 			<h1
 				id="_top"
-				class="-mt-4! mb-2! flex items-center text-2xl! font-bold! leading-none!"
+				class="-mt-4! mb-2! flex items-center text-2xl! leading-none! font-bold!"
 			>
 				{name}
 			</h1>
@@ -97,8 +97,12 @@ const starlightPageProps = {
 							<code>http.request.body.size</code>
 						</a>
 						) handle a given maximum body size, which varies per plan. For
-						Enterprise customers, the maximum body size analyzed by Cloudflare
-						is 128 KB; for lower Cloudflare plans, the maximum size is lower.
+						Enterprise customers, the maximum body size is 128 KB. For other
+						paid plans, the limit is lower by default — reach out to your
+						account team or to Cloudflare Support to increase the limit. For
+						users in the Free plan, the limit is 1 MB.
+					</p>
+					<p>
 						You cannot define expressions that rely on request body data beyond
 						the maximum size set for your plan. If the request body is larger,
 						the body fields will contain a truncated value and the{" "}
