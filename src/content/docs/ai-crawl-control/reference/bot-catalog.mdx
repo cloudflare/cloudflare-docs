@@ -18,9 +18,7 @@ This is not an exhaustive list of all AI crawlers on the internet. This catalog 
 
 ## How to use this reference
 
-- **Detection IDs** — Use these identifiers in [WAF custom rules](/waf/custom-rules/) for precise crawler targeting (available to [Bot Management](/bots/get-started/bot-management/) customers)
 - **User agents** — Copy user agent strings from the [AI Crawl Control dashboard](/ai-crawl-control/features/analyze-ai-traffic/#per-crawler-drilldowns) for use in rules or robots.txt files
-- **Cloudflare Radar links** — Access real-time data and trends for verified crawlers
 - **Official sources** — Review each operator's documentation to understand their crawling policies
 
 ---
@@ -33,11 +31,7 @@ These crawlers collect web content to train large language models and other AI f
 
 **Stated purpose:** Crawls web content that may be used to train OpenAI's generative AI foundation models.
 
-**Detection ID:** `gptbot`
-
-**Official documentation:** [OpenAI – Crawler Documentation](https://platform.openai.com/docs/bots/gptbot)
-
-**Cloudflare Radar:** [View GPTBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/gptbot)
+**Official documentation:** [OpenAI – Crawler Documentation](https://platform.openai.com/docs/bots)
 
 ---
 
@@ -45,11 +39,7 @@ These crawlers collect web content to train large language models and other AI f
 
 **Stated purpose:** Crawls the web to collect content that may be used to train Anthropic's generative AI models (Claude).
 
-**Detection ID:** `claudebot`
-
 **Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
-
-**Cloudflare Radar:** [View ClaudeBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/claudebot)
 
 ---
 
@@ -57,11 +47,7 @@ These crawlers collect web content to train large language models and other AI f
 
 **Stated purpose:** Web crawler operated by ByteDance (parent company of TikTok). Collects data to power ByteDance's search products, content recommendations, and AI model training (including Doubao).
 
-**Detection ID:** `bytespider`
-
 **Official documentation:** While extensive public documentation is limited, Bytespider is widely identified in security analysis and user agent logs. [DataDome – What is Bytespider?](https://datadome.co/bot-management-protection/bytespider-bytedance-tiktok-web-crawler/)
-
-**Cloudflare Radar:** [View Bytespider on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/bytespider)
 
 ---
 
@@ -69,11 +55,7 @@ These crawlers collect web content to train large language models and other AI f
 
 **Stated purpose:** Crawls the web to build an open, public dataset of web crawl data that is freely available for research, education, and analysis. This dataset is often used to train third-party AI models.
 
-**Detection ID:** `ccbot`
-
-**Official documentation:** [Common Crawl – CCBot](https://commoncrawl.org/ccbot)
-
-**Cloudflare Radar:** [View CCBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/ccbot)
+**Official documentation:** [Common Crawl – CCBot](https://commoncrawl.org/faq)
 
 ---
 
@@ -81,11 +63,7 @@ These crawlers collect web content to train large language models and other AI f
 
 **Stated purpose:** Crawls the web to collect data for training Meta's AI models and improving products.
 
-**Detection ID:** `meta-externalagent`
-
 **Official documentation:** [Meta for Developers – Web Crawlers](https://developers.facebook.com/docs/sharing/webmasters/crawler/)
-
-**Cloudflare Radar:** [View Meta-ExternalAgent on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/meta-externalagent)
 
 ---
 
@@ -93,11 +71,7 @@ These crawlers collect web content to train large language models and other AI f
 
 **Stated purpose:** While FacebookBot is a known user agent token often associated with Meta's data collection, Meta's official documentation primarily lists Meta-ExternalAgent as the crawler used for training AI models. FacebookBot is frequently identified by third-party security firms as a scraper for training speech recognition and other AI models.
 
-**Detection ID:** `facebookbot`
-
-**Official documentation:** [Meta for Developers – Web Crawlers](https://developers.facebook.com/docs/sharing/webmasters/crawler/) (lists Meta-ExternalAgent); [Dark Visitors – FacebookBot](https://darkvisitors.com/agents/facebookbot) (identifies FacebookBot specific behavior)
-
-**Cloudflare Radar:** [View FacebookBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/facebookbot)
+**Official documentation:** [Meta for Developers – Web Crawlers](https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/) (lists Meta-ExternalAgent); [Dark Visitors – FacebookBot](https://darkvisitors.com/agents/facebookbot) (identifies FacebookBot specific behavior)
 
 ---
 
@@ -109,11 +83,7 @@ These crawlers index content for search engines and may also collect data for AI
 
 **Stated purpose:** Primary crawler for Google Search. Discovers and indexes content for Google's search engine. Also collects content that may be used to train Google's generative AI foundation models.
 
-**Detection ID:** `googlebot`
-
 **Official documentation:** [Google Search Central – Googlebot](https://developers.google.com/search/docs/crawling-indexing/googlebot), [List of Google's common crawlers](https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers)
-
-**Cloudflare Radar:** [View Googlebot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/googlebot)
 
 ---
 
@@ -121,11 +91,7 @@ These crawlers index content for search engines and may also collect data for AI
 
 **Stated purpose:** Crawler for Microsoft Bing. Discovers and indexes new and updated pages to provide search results for Bing users. Also collects content that may be used to train Microsoft's generative AI foundation models.
 
-**Detection ID:** `bingbot`
-
 **Official documentation:** [Microsoft – Bingbot Documentation](https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0), [Robots meta tags and attributes that Bing supports](https://www.bing.com/webmasters/help/robots-meta-tag-and-x-robots-tag-specifications-9c6f7e9f)
-
-**Cloudflare Radar:** [View BingBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/bingbot)
 
 ---
 
@@ -133,11 +99,7 @@ These crawlers index content for search engines and may also collect data for AI
 
 **Stated purpose:** The data crawled by Applebot is used to power various features, such as the search technology that is integrated into many user experiences in Apple's ecosystem including Spotlight, Siri, and Safari. The data crawled by Applebot may also be used to help train Apple foundation models powering generative AI features across Apple products, including Apple Intelligence, Services, and Developer Tools.
 
-**Detection ID:** `applebot`
-
 **Official documentation:** [Apple Support – About Applebot](https://support.apple.com/en-us/119829)
-
-**Cloudflare Radar:** [View Applebot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/applebot)
 
 ---
 
@@ -145,11 +107,7 @@ These crawlers index content for search engines and may also collect data for AI
 
 **Stated purpose:** Used to improve Amazon's products and services (such as Alexa and Amazon advertising). Collects content that may be used to train Amazon's AI models.
 
-**Detection ID:** `amazonbot`
-
 **Official documentation:** [Amazon Developer – Amazonbot](https://developer.amazon.com/amazonbot)
-
-**Cloudflare Radar:** [View Amazonbot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/amazonbot)
 
 ---
 
@@ -157,11 +115,7 @@ These crawlers index content for search engines and may also collect data for AI
 
 **Stated purpose:** Web crawler for Huawei's Petal Search engine and Petal Merchant Center. Indexes content for search results and product listings.
 
-**Detection ID:** `petalbot`
-
-**Official documentation:** [Huawei Developers – PetalBot](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/petalbot-0000001174524867)
-
-**Cloudflare Radar:** [View PetalBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/petalbot)
+**Official documentation:** [Huawei Developers – PetalBot](https://aspiegel.com/petalbot)
 
 ---
 
@@ -173,11 +127,7 @@ These crawlers index content to surface in AI-powered search results and answer 
 
 **Stated purpose:** Used to index and surface websites in ChatGPT's search features (SearchGPT). Not used to crawl content for training OpenAI's foundation models.
 
-**Detection ID:** `oai-searchbot`
-
 **Official documentation:** [OpenAI – Web Crawler Documentation](https://platform.openai.com/docs/bots/oai-searchbot)
-
-**Cloudflare Radar:** [View OAI-SearchBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/oai-searchbot)
 
 ---
 
@@ -185,11 +135,7 @@ These crawlers index content to surface in AI-powered search results and answer 
 
 **Stated purpose:** Used to index and surface websites in search results or to retrieve information to answer user questions, enhancing the accuracy of responses.
 
-**Detection ID:** `claude-searchbot`
-
 **Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
-
-**Cloudflare Radar:** [View Claude-SearchBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/claude-searchbot)
 
 ---
 
@@ -197,11 +143,7 @@ These crawlers index content to surface in AI-powered search results and answer 
 
 **Stated purpose:** Crawls the web to index content for Perplexity's search engine, allowing it to surface and link to websites in answers. Not used to train foundation models.
 
-**Detection ID:** `perplexitybot`
-
-**Official documentation:** [Perplexity Docs – Perplexity Crawlers](https://docs.perplexity.ai/guides/perplexity-bot)
-
-**Cloudflare Radar:** [View PerplexityBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/perplexitybot)
+**Official documentation:** [Perplexity Docs – Perplexity Crawlers](https://docs.perplexity.ai/guides/bots)
 
 ---
 
@@ -209,11 +151,7 @@ These crawlers index content to surface in AI-powered search results and answer 
 
 **Stated purpose:** Crawls pages in real-time to generate AI-assisted answers (DuckAssist) for search queries. Not used to train AI models.
 
-**Detection ID:** `duckassistbot`
-
-**Official documentation:** [DuckDuckGo Help – DuckAssistBot](https://help.duckduckgo.com/duckduckgo-help-pages/results/duckassistbot/)
-
-**Cloudflare Radar:** [View DuckAssistBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/duckassistbot)
+**Official documentation:** [DuckDuckGo Help – DuckAssistBot](https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot)
 
 ---
 
@@ -225,11 +163,7 @@ These agents fetch web pages when a user explicitly requests information or asks
 
 **Stated purpose:** Used when a user explicitly asks ChatGPT to browse a specific web page or when the system needs to cite a source. Not used for automatic crawling or model training.
 
-**Detection ID:** `chatgpt-user`
-
 **Official documentation:** [OpenAI – Web Crawler Documentation](https://platform.openai.com/docs/bots/chatgpt-user)
-
-**Cloudflare Radar:** [View ChatGPT-User on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/chatgpt-user)
 
 ---
 
@@ -237,11 +171,7 @@ These agents fetch web pages when a user explicitly requests information or asks
 
 **Stated purpose:** Fetches specific web pages when a user explicitly asks Claude to visit a URL or when the system performs a user-initiated web search.
 
-**Detection ID:** `claude-user`
-
 **Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
-
-**Cloudflare Radar:** [View Claude-User on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/claude-user)
 
 ---
 
@@ -249,11 +179,7 @@ These agents fetch web pages when a user explicitly requests information or asks
 
 **Stated purpose:** Fetches web pages on-demand when a user asks a question or clicks a citation, enabling Perplexity to provide accurate, real-time answers.
 
-**Detection ID:** `perplexity-user`
-
-**Official documentation:** [Perplexity Docs – Perplexity Crawlers](https://docs.perplexity.ai/guides/perplexity-bot)
-
-**Cloudflare Radar:** [View Perplexity-User on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/perplexity-user)
+**Official documentation:** [Perplexity Docs – Perplexity Crawlers](https://docs.perplexity.ai/guides/bots)
 
 ---
 
@@ -261,11 +187,7 @@ These agents fetch web pages when a user explicitly requests information or asks
 
 **Stated purpose:** Used for user-initiated actions in Mistral's "Le Chat." Visits web pages to help answer user questions and provide citations but is not used for automatic crawling or training.
 
-**Detection ID:** `mistralai-user`
-
-**Official documentation:** [Mistral AI Docs – Robots](https://docs.mistral.ai/capabilities/agents/#robots)
-
-**Cloudflare Radar:** [View MistralAI-User on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/mistralai-user)
+**Official documentation:** [Mistral AI Docs – Robots](https://docs.mistral.ai/robots/)
 
 ---
 
@@ -277,11 +199,7 @@ These agents perform actions or retrieve information from third-party APIs durin
 
 **Stated purpose:** Traffic associated with ChatGPT plugins and actions. Allows ChatGPT to perform user-requested actions or retrieve information from third-party APIs during a conversation.
 
-**Detection ID:** `chatgpt-agent`
-
-**Official documentation:** [OpenAI Help – ChatGPT Agent Allowlisting](https://help.openai.com/en/articles/8555545-allowing-chatgpt-to-access-your-website)
-
-**Cloudflare Radar:** [View ChatGPT agent on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/chatgpt-agent)
+**Official documentation:** [OpenAI Help – ChatGPT Agent Allowlisting](https://chatgpt.com/features/agent/)
 
 ---
 
@@ -293,11 +211,7 @@ These platforms enable AI agents to interact with the web autonomously for brows
 
 **Stated purpose:** Cloud-hosted browser platform designed to enable AI agents to interact with the web (browsing, scraping, and automation) autonomously.
 
-**Detection ID:** `anchor-browser`
-
-**Official documentation:** [Anchor Browser – Official Site](https://www.anchor.dev/)
-
-**Cloudflare Radar:** [View Anchor Browser on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/anchor-browser)
+**Official documentation:** [Anchor Browser – Official Site](https://docs.anchorbrowser.io/introduction)
 
 ---
 
@@ -305,11 +219,7 @@ These platforms enable AI agents to interact with the web autonomously for brows
 
 **Stated purpose:** Tool used by AI agents to crawl and extract content from websites for automation purposes.
 
-**Detection ID:** `novellum-ai-crawl`
-
-**Official documentation:** Limited public documentation available.
-
-**Cloudflare Radar:** [View Novellum AI Crawl on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/novellum-ai-crawl)
+**Official documentation:** [Novellum AI Crawl](https://crawl.corp.novellum.ai/docs)
 
 ---
 
@@ -321,11 +231,7 @@ These crawlers are used by site owners to build their own AI-powered tools and s
 
 **Stated purpose:** Used to crawl sites when requested by site owners who are building agents using Google Cloud's Vertex AI Agent Builder. Does not affect Google Search indexing.
 
-**Detection ID:** `google-cloudvertexbot`
-
 **Official documentation:** [Google Cloud – Vertex AI Search](https://cloud.google.com/generative-ai-app-builder/docs/about-advanced-features#web-search)
-
-**Cloudflare Radar:** [View Google-CloudVertexBot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/google-cloudvertexbot)
 
 ---
 
@@ -337,11 +243,7 @@ These crawlers preserve web content for historical and research purposes.
 
 **Stated purpose:** Crawls the web to collect and preserve digital artifacts (web pages) for the Wayback Machine, creating a public, open archive of the Internet.
 
-**Detection ID:** `archive-org-bot`
-
 **Official documentation:** [Internet Archive – Heritrix/Crawling](https://archive.org/details/archive.org_bot)
-
-**Cloudflare Radar:** [View archive.org_bot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/archive-org-bot)
 
 ---
 
@@ -353,11 +255,7 @@ These agents fetch content when users share links on social platforms or perform
 
 **Stated purpose:** Performs user-initiated fetches (for example, when a user shares a link in a chat) to support product functions. Might bypass robots.txt when performing security or integrity checks, such as checking for malware or malicious content.
 
-**Detection ID:** `meta-externalfetcher`
-
 **Official documentation:** [Meta for Developers – Web Crawlers](https://developers.facebook.com/docs/sharing/webmasters/crawler/)
-
-**Cloudflare Radar:** [View Meta-ExternalFetcher on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/meta-externalfetcher)
 
 ---
 
@@ -369,11 +267,7 @@ These crawlers power independent or decentralized search engines.
 
 **Stated purpose:** Decentralized web crawler used to index the entire web for the Timpi search engine, which aims to provide unfiltered, independent search results.
 
-**Detection ID:** `timpibot`
-
 **Official documentation:** [Timpi – Official Site](https://timpi.io/)
-
-**Cloudflare Radar:** [View Timpibot on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/timpibot)
 
 ---
 
@@ -381,11 +275,7 @@ These crawlers power independent or decentralized search engines.
 
 **Stated purpose:** Builds AI-powered search and attribution solutions. They state that they only use licensed content and do not scrape websites without consent; thus, their bot activity is typically related to indexing content from authorized partners for their "Gist" answers engine.
 
-**Detection ID:** `proratainc`
-
-**Official documentation:** [ProRata.ai – Official Site](https://prorata.ai/)
-
-**Cloudflare Radar:** [View ProRataInc on Radar](https://radar.cloudflare.com/traffic/verified-bots/bot/proratainc)
+**Official documentation:** [ProRata.ai – Official Site](https://gist.ai/)
 
 ---
 

@@ -447,12 +447,12 @@ For e-commerce sites, consider combining AI Crawl Control with [Bot Management](
 
 ## Advanced configuration with WAF custom rules
 
-For more granular control, you can use [WAF custom rules](/waf/custom-rules/) with detection IDs to create path-specific or conditional access policies.
+For more granular control, you can use [WAF custom rules](/waf/custom-rules/) with detection IDs to create path-specific or conditional access policies. See the [detection ID reference](#detection-id-reference) below for a complete list.
 
 ### Example: Allow training on blog content only
 
 ```txt
-(cf.bot_management.verified_bot and cf.bot_management.detection_ids contains "gptbot" and starts_with(http.request.uri.path, "/blog/"))
+(cf.bot_management.verified_bot and cf.bot_management.detection_ids in {123815556 33563875} and starts_with(http.request.uri.path, "/blog/"))
 ```
 
 This rule allows GPTBot to access only your blog content while blocking access to other areas of your site.
@@ -461,7 +461,7 @@ This rule allows GPTBot to access only your blog content while blocking access t
 
 ```txt
 (cf.bot_management.verified_bot and
- cf.bot_management.detection_ids in {"gptbot" "claudebot" "bytespider" "ccbot" "meta-externalagent"} and
+ cf.bot_management.detection_ids in {123815556 33563875 33563859 33563853 133621792 33563855 124581738 33563982} and
  not starts_with(http.request.uri.path, "/public-content/"))
 ```
 
@@ -471,12 +471,46 @@ This rule blocks training bots from all paths except those starting with `/publi
 
 ```txt
 (cf.bot_management.verified_bot and
- cf.bot_management.detection_ids in {"anchor-browser" "novellum-ai-crawl"})
+ cf.bot_management.detection_ids in {124259203 121781688})
 ```
 
 Use this expression with [Rate Limiting](/waf/rate-limiting-rules/) to control the frequency of requests from AI automation platforms.
 
 For more information about using detection IDs in custom rules, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
+
+### Detection ID reference
+
+Use these detection IDs in WAF custom rules to target specific crawlers:
+
+- **Amazonbot:** `118601807` or `33563839`
+- **Anchor Browser:** `124259203`
+- **Applebot:** `120424214` or `33563845`
+- **archive.org_bot:** `131190766` or `33564033`
+- **BingBot:** `117479730` or `33554461`
+- **Bytespider:** `33563853`
+- **CCBot:** `133621792` or `33563855`
+- **ChatGPT agent:** `129220581`
+- **ChatGPT-User:** `132995013` or `33563857`
+- **ClaudeBot:** `33563859`
+- **Claude-SearchBot:** `33564301`
+- **Claude-User:** `33564303`
+- **DuckAssistBot:** `126666910` or `33564037`
+- **FacebookBot:** `33563972`
+- **Googlebot:** `120623194` or `33554459`
+- **Google-CloudVertexBot:** `133730073` or `33564321`
+- **GPTBot:** `123815556` or `33563875`
+- **Meta-ExternalAgent:** `124581738` or `33563982`
+- **Meta-ExternalFetcher:** `132272919` or `33563980`
+- **MistralAI-User:** `128950951` or `33564323`
+- **Novellum AI Crawl:** `121781688`
+- **OAI-SearchBot:** `126255384` or `33563986`
+- **PerplexityBot:** `33563889`
+- **Perplexity-User:** `33564371`
+- **PetalBot:** `124150991` or `33564369`
+- **ProRataInc:** `117766436`
+- **Timpibot:** `33564051`
+
+For more details about each crawler, refer to the [Bot catalog](/ai-crawl-control/reference/bot-catalog/).
 
 ---
 
