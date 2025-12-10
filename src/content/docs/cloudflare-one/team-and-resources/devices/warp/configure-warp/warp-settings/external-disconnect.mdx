@@ -223,11 +223,20 @@ The current status is also available in [WARP diagnosic logs](/cloudflare-one/te
 
 ## Clear External Emergency Disconnect state
 
-If the external endpoint becomes unavailable or serves an invalid configuration, WARP clients can get stuck in the emergency disconnect state. You can recover clients by removing the External Emergency Disconnect configuration. The method depends on how the feature was originally deployed.
+If the external endpoint becomes unavailable or serves an invalid configuration, WARP clients can get stuck in the emergency disconnect state. You can recover clients by removing their External Emergency Disconnect configuration:
 
-### Dashboard or API
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-The External Emergency Disconnect state cannot be cleared from the Cloudflare One dashboard. To remove the feature configuration, send a `PATCH` request with the endpoint URL and fingerprint set to empty strings:
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Management**.
+2. Select **Global disconnection settings**.
+3. Turn off **Manage device connection using an external signal**.
+
+Cloudflare will propagate the new setting to clients, instructing them to stop polling and discard its cached emergency state.
+
+</TabItem>
+<TabItem label="API">
+
+Send a `PATCH` request with the endpoint URL and fingerprint set to empty strings:
 
 <APIRequest
   path="/accounts/{account_id}/devices/settings"
@@ -243,12 +252,16 @@ The External Emergency Disconnect state cannot be cleared from the Cloudflare On
 />
 
 Cloudflare will propagate the new settings to clients, instructing them to stop polling and discard its cached emergency state.
+</TabItem>
 
-### MDM
+<TabItem label="MDM">
 
 If you deployed External Emergency Disconnect using an MDM, remove the `external_emergency_signal_url` key (and other related keys) from the MDM profile. Then, use your MDM to push the changes to devices. WARP will stop polling the external endpoint and discard its cached emergency state.
 
 Alternatively, users can switch WARP to a [different MDM configuration](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/) that does not have the feature configured.
+
+</TabItem>
+</Tabs>
 
 ### Local client reset
 
@@ -258,7 +271,7 @@ As a last resort, you can use the CLI to reset External Emergency Disconnect on 
 warp-cli registration delete
 ```
 
-This command will clear the client registration, clear the local policy, and discard the cached emergency state. Users will need to [re-enroll WARP](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) with your Zero Trust organization.
+This command will clear the client registration, clear the local policy, and discard the cached emergency state. To reconnect, you will need to [turn off External Emergency Disconnect](#clear-external-emergency-disconnect-state) and then [re-enroll WARP](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) with your Zero Trust organization.
 
 ## WARP settings precedence
 
