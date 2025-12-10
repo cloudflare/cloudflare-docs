@@ -7,7 +7,7 @@ tags:
   - Response modification
 title: Add a wildcard CORS response header 
 description:
-  Create a CORS response header transform rule to add a `Access-Control-Allow-Origin` HTTP header to the response with wildcard as static value
+  Create a CORS response header transform rule to add an `Access-Control-Allow-Origin` HTTP header to the response with wildcard as static value.
   (`cookiename=value`).
 ---
 
@@ -31,7 +31,7 @@ Selected operation under **Modify response header**: _Set static_
 
 </Example>
 
-You can also use the following syntax to apply the CORS header to several specific hostnames:
+You can also use an expression similar to the following to apply the CORS header to several specific hostnames:
 
 ```txt
 (http.host in {"<YOUR_HOSTNAME_1>" "<YOUR_HOSTNAME_2>"})
