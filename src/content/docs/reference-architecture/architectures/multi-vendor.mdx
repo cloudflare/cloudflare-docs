@@ -320,7 +320,7 @@ The below diagram describes the default connectivity to origins as requests flow
 
 ![Figure 12: Connectivity from Cloudflare to origin server(s) via Internet](~/assets/images/reference-architecture/multi-vendor-architecture-images/Figure_12.png "Figure 12")
 
-Optionally, customers can also choose to leverage [Cloudflare Aegis](https://blog.cloudflare.com/cloudflare-aegis/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access. In addition to IP blocking at the origin side firewall, we also strongly recommend additional verification of traffic via either the "Full (Strict)" SSL setting or mTLS auth to ensure all traffic is sourced from requests passing through the customer configured zones.
+Optionally, customers can also choose to leverage [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), which allocates customer-specific IPs that Cloudflare will use to connect back to your origins. We recommend allowlisting traffic from only these networks to avoid direct access. In addition to IP blocking at the origin side firewall, we also strongly recommend additional verification of traffic via either the "Full (Strict)" SSL setting or mTLS auth to ensure all traffic is sourced from requests passing through the customer configured zones.
 
 Cloudflare also supports [Bring Your Own IP (BYOIP)](/byoip/). When BYOIP is configured, the Cloudflare global network will announce a customer’s own IP prefixes and the prefixes can be used with the respective Cloudflare Layer 7 services.
 

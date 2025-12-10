@@ -83,9 +83,36 @@ const isRunning = processes.some(p => p.id === processId && p.status === 'runnin
 ```
 </TypeScriptExample>
 
+## Wait for process readiness
+
+Wait for a process to be ready before proceeding:
+
+<TypeScriptExample>
+```
+const server = await sandbox.startProcess('node server.js');
+
+// Wait for server to respond on port 3000
+await server.waitForPort(3000);
+
+console.log('Server is ready');
+```
+</TypeScriptExample>
+
+Or wait for specific log patterns:
+
+<TypeScriptExample>
+```
+const server = await sandbox.startProcess('node server.js');
+
+// Wait for log message
+const result = await server.waitForLog('Server listening');
+console.log('Server is ready:', result.line);
+```
+</TypeScriptExample>
+
 ## Monitor process logs
 
-Stream logs in real-time to detect when a service is ready:
+Stream logs in real-time:
 
 <TypeScriptExample>
 ```
@@ -98,11 +125,6 @@ const logStream = await sandbox.streamProcessLogs(server.id);
 
 for await (const log of parseSSEStream<LogEvent>(logStream)) {
   console.log(log.data);
-
-  if (log.data.includes('Server listening')) {
-    console.log('Server is ready!');
-    break;
-  }
 }
 ```
 </TypeScriptExample>
@@ -137,23 +159,19 @@ Start services in sequence, waiting for dependencies:
 
 <TypeScriptExample>
 ```
-import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
-
 // Start database first
 const db = await sandbox.startProcess('redis-server');
 
 // Wait for database to be ready
-const dbLogs = await sandbox.streamProcessLogs(db.id);
-for await (const log of parseSSEStream<LogEvent>(dbLogs)) {
-  if (log.data.includes('Ready to accept connections')) {
-    break;
-  }
-}
+await db.waitForPort(6379, { mode: 'tcp' });
 
 // Now start API server (depends on database)
 const api = await sandbox.startProcess('node api-server.js', {
   env: { DATABASE_URL: 'redis://localhost:6379' }
 });
+
+// Wait for API to be ready
+await api.waitForPort(8080, { path: '/health' });
 
 console.log('All services running');
 ```
@@ -207,7 +225,7 @@ When using `keepAlive: true`, containers will not automatically timeout. You **m
 
 ## Best practices
 
-- **Wait for readiness** - Stream logs to detect when services are ready
+- **Wait for readiness** - Use `waitForPort()` or `waitForLog()` to detect when services are ready
 - **Clean up** - Always stop processes when done
 - **Handle failures** - Monitor logs for errors and restart if needed
 - **Use try/finally** - Ensure cleanup happens even on errors

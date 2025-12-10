@@ -25,5 +25,32 @@ Running `wrangler deploy --env some-env` is therefore not applicable and the env
 
 There are various options in the [Worker config file](/workers/wrangler/configuration/) that are ignored when using Vite, as they are either no longer applicable or are replaced by Vite equivalents.
 If these options are provided, then warnings will be printed to the console with suggestions for how to proceed.
-Examples where the Vite configuration should be used instead include `alias` and `define`.
+
+### Not applicable
+
+The following build-related options are handled by Vite and are not applicable when using the Cloudflare Vite plugin:
+
+- `tsconfig`
+- `rules`
+- `build`
+- `no_bundle`
+- `find_additional_modules`
+- `base_dir`
+- `preserve_file_names`
+
+### Not supported
+
+- `site` — Use [Workers Assets](/workers/static-assets/) instead.
+
+### Replaced by Vite equivalents
+
+The following options have Vite equivalents that should be used instead:
+
+| Wrangler option | Vite equivalent |
+| --- | --- |
+| `define` | [`define`](https://vite.dev/config/shared-options.html#define) |
+| `alias` | [`resolve.alias`](https://vite.dev/config/shared-options.html#resolve-alias) |
+| `minify` | [`build.minify`](https://vite.dev/config/build-options.html#build-minify) |
+| Local dev settings (`ip`, `port`, `local_protocol`, etc.) | [Server options](https://vite.dev/config/server-options.html) |
+
 See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information about configuring your Worker environments in Vite.

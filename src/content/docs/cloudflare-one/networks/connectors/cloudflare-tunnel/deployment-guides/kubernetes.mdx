@@ -242,7 +242,7 @@ To run the Cloudflare Tunnel in Kubernetes:
               - tunnel
               - --no-autoupdate
               - --loglevel
-              - debug
+              - info
               - --metrics
               - 0.0.0.0:2000
               - run
@@ -263,7 +263,7 @@ To run the Cloudflare Tunnel in Kubernetes:
 	kubectl create -f tunnel.yaml
 	```
 
-	 Kubernetes will install the `cloudflared` image on two pods and run the tunnel using the command `cloudflared tunnel --no-autoupdate --loglevel debug --metrics 0.0.0.0:2000 run`. `cloudflared` will consume the tunnel token from the `TUNNEL_TOKEN` environment variable.
+	 Kubernetes will install the `cloudflared` image on two pods and run the tunnel using the command `cloudflared tunnel --no-autoupdate --loglevel info --metrics 0.0.0.0:2000 run`. `cloudflared` will consume the tunnel token from the `TUNNEL_TOKEN` environment variable.
 
 3. Check the status of your cluster:
 

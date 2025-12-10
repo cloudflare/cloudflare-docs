@@ -1,0 +1,91 @@
+---
+pcx_content_type: navigation
+title: Storage and Broadcast
+sidebar:
+  label: Collaborative Stores
+  order: 7
+---
+
+The RealtimeKit Stores API allows you to create multiple key-value pair realtime stores. Users can subscribe to changes in a store and receive real-time updates. Data is stored until a [session](/realtime/realtimekit/concepts/meeting/#session) is active.
+
+### Create a Store
+
+You can create a realtime store (changes are synced with other users):
+
+| Param     | Type | Description | Required |
+| --------- | --- | --- | --- |
+| `name` | string | Name of the store | true |
+
+To create a store:
+
+```ts
+const store = meeting.stores.create('myStore');
+```
+
+:::note
+This method must be executed for every user.
+:::
+
+### Update a Store
+
+You can add, update or delete entires in a store:
+
+| Param | Type       | Description                                                 | Required |
+| ----- | ---------- | ----------------------------------------------------------- | -------- |
+| `key`   | string     | Unique identifier used to store/update a value in the store | Yes      |
+| `value` | StoreValue | Value that can be stored agains a key                       | Yes      |
+
+
+```ts
+type StoreValue = string | number | object | array;
+```
+```ts
+const { stores } = meeting.stores;
+const store = stores.get('myStore');
+
+await store.set('user', { name: 'John Doe' });
+
+await store.update('user', { age: 34 });  // { name: 'John Doe', age: 34 }
+
+await store.delete('user');
+```
+
+:::note
+The `set` method overwrites the existing value, while the `update` method updates the existing value.
+    
+For example, if the stored value is `['a', 'b']` and you call `update` with `['c']`, the final value will be `['a', 'b', 'c']`.
+:::
+
+
+### Subscribe to a Store
+
+You can attach event listeners on a store's key, which fire when the value changes.
+
+```ts
+const { stores } = meeting.stores;
+const store = stores.get('myStore');
+store.subscribe('key', (data) => { 
+    console.log(data);
+});
+
+// subscribe to all keys of a store
+store.subscribe('*', (data) => { 
+    console.log(data);
+});
+
+store.unsubscribe('key');
+```
+
+### Fetch Store Data
+
+You can fetch the data stored in the store:
+```ts
+const { stores } = meeting.stores;
+const store = stores.get('myStore');
+
+// fetch value for a specific key
+const data = store.get('key');
+
+// fetch all the data in the store
+const data = store.getAll();
+```

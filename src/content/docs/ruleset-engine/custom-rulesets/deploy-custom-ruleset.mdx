@@ -8,11 +8,15 @@ description: Learn how to deploy a custom ruleset to your Cloudflare account.
 
 import { APIRequest, Render } from "~/components";
 
-To deploy a custom ruleset, add a rule with `execute` action to the list of rules of a phase [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account level. The expression of the new rule will define when the custom ruleset will run.
+To deploy a custom ruleset, add a rule with `execute` action to the list of rules of a phase [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account or zone level. The expression of the new rule will define when the custom ruleset will run.
+
+You can only deploy custom rulesets in an entry point ruleset with the same scope. For example, a custom ruleset defined at the account level can only be deployed at the account level.
 
 <Render file="custom-rulesets-terraform" product="ruleset-engine" />
 
 <Render file="custom-rulesets-dashboard" product="ruleset-engine" />
+
+<Render file="custom-ruleset-zone-limitation" product="ruleset-engine" />
 
 ## Before you begin
 
@@ -20,9 +24,11 @@ To deploy a custom ruleset, add a rule with `execute` action to the list of rule
 2. [Create a custom ruleset](/ruleset-engine/custom-rulesets/create-custom-ruleset/) and keep the ID of the new custom ruleset.
 3. [Fetch the rules already present in the phase entry point ruleset](/ruleset-engine/basic-operations/view-rulesets/#view-the-rules-included-in-a-ruleset). You must include in the `PUT` request all existing rules you want to keep.
 
-## Example
+## Example A - Account-level deployment
 
-The following `PUT` request adds a rule that executes a custom ruleset when the zone name matches `example.com`. The response will include all the rules in the phase entry point ruleset.
+The following `PUT` request adds a rule that executes a custom ruleset when the zone name matches `example.com`.
+
+In the `PUT` request, you must include the IDs of all existing rules you want to keep. The response will include all the rules in the phase entry point ruleset after the update.
 
 <APIRequest
 	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
@@ -110,5 +116,78 @@ The following `PUT` request adds a rule that executes a custom ruleset when the 
 ```
 
 :::caution
-Regarding the expression of the rule deploying the ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
+When deploying the custom ruleset at the account level, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` like in the example above, or else the API operation will fail.
 :::
+
+## Example B - Zone-level deployment
+
+The following `PUT` request adds a rule to a zone-level entry point ruleset that executes a custom ruleset with ID `"<CUSTOM_RULESET_ID>"` for requests targeting the `/login` URI path.
+
+You must include in the `PUT` request the IDs of all existing rules you want to keep. The response will include all the rules in the phase entry point ruleset after the update.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_custom",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				description: "Execute custom ruleset (zone)",
+				expression: '(http.request.uri.path eq "/login")',
+				action_parameters: {
+					id: "<CUSTOM_RULESET_ID>",
+				},
+			},
+			{
+				id: "<EXISTING_PHASE_RULE_ID_1>",
+			},
+		],
+	}}
+/>
+
+```json output
+{
+	"result": {
+		"id": "<ZONE_PHASE_RULESET_ID>",
+		"name": "http_request_firewall_custom phase entry point ruleset for my zone",
+		"description": "",
+		"kind": "zone",
+		"version": "3",
+		"rules": [
+			{
+				"id": "<PHASE_RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"description": "Execute custom ruleset (zone)",
+				"action_parameters": {
+					"id": "<CUSTOM_RULESET_ID>",
+					"version": "latest"
+				},
+				"expression": "(http.request.uri.path eq \"/login\")",
+				"last_updated": "2025-08-18T18:35:14.135697Z",
+				"ref": "<PHASE_RULE_REF>",
+				"enabled": true
+			},
+			{
+				"id": "<EXISTING_PHASE_RULE_ID_1>",
+				"version": "1",
+				"action": "managed_challenge",
+				"expression": "(cf.waf.score lt 20 and http.request.uri.path wildcard \"/admin/*\")",
+				"last_updated": "2025-08-16T15:51:49.180378Z",
+				"ref": "<EXISTING_PHASE_RULE_REF_1>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2025-08-18T18:35:14.135697Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+<Render file="custom-ruleset-zone-limitation" product="ruleset-engine" />

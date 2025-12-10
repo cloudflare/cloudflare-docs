@@ -26,7 +26,8 @@ The Magic networking routing table is a virtual network overlay, private to your
 - Magic Transit delivery for [DoS](/ddos-protection/) and <a href={props.mFirewallURL}>{props.mFirewallName}</a> filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
 - {props.productName} packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as <a href={props.warpClientURL}>WARP Client</a>, <a href={props.remoteBrowserURL}>Remote Browser Isolation</a>, <a href={props.accessURL}>Access</a>, and <a href={props.gatewayURL}>Gateway</a>.
 
-The Magic routing table supports routing the {props.productName} traffic via anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [Direct Cloudflare Network Interconnect (CNI)](/network-interconnect/). Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
+The Magic routing table supports routing the {props.productName} traffic via anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [Direct Cloudflare Network Interconnect (CNI)](/network-interconnect/). Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
+
 
 ### Allowed IP ranges
 
@@ -141,6 +142,80 @@ AS_PATH: 65000 65000 65000 65200
 #### How communities and prepends work together
 
 Cloudflare adjusts route priority when using AS prepending with communities. For example, if a route is tagged with `13335:60150`, the base priority is set to `150`. If you prepend your ASN twice, Cloudflare adds `10` for each prepend, increasing the route priority to `180`.
+
+{ props.magicWord !== "Magic Transit" && (
+	<>
+		<AnchorHeading title="Automatic Return Routing (beta)" depth={2} />
+		<Markdown
+		text={`
+Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode](#unified-routing-mode).
+
+Instead of relying on static or dynamic routes for the return path, Magic WAN learns flows and remembers which connection a given flow arrived on. For any matching return traffic, Magic WAN uses this learned state to choose the next hop. This simplifies configuration, reduces the number of routes you must manage, and helps preserve symmetry for stateful traffic.
+
+ARR provides the following benefits:
+
+- **Removes the need for return routes**: For supported traffic types like new TCP connections (TCP SYN), UDP, and ICMP echo traffic, Magic WAN no longer requires a routing table entry to return traffic to the originating tunnel or interconnect.
+- **Maintains symmetric routing for flows**: Responses to a given flow (for example, a TCP session) return over the same Magic WAN connection that carried the initial request — important for stateful firewalls and middleboxes.
+- **Supports overlapping IP space**: Because the return path is tied to the learned connection state instead of a destination prefix in the routing table, Automatic Return Routing can support scenarios where different sites use overlapping private address space.
+- **Operates per connection**: You decide which IPsec / GRE tunnels or network interconnects should use this behavior by enabling the feature on each connection.
+		`}
+		inline={false}
+		/>
+
+		<AnchorHeading title="How ARR works" depth={3} />
+		<Markdown
+		text={`
+When traffic that is eligible for Automatic Return Routing (ARR) arrives on a connection with ARR enabled, Magic WAN creates a flow entry that records:
+
+- The source and destination IP addresses
+- The relevant ports or identifiers, depending on the protocol
+- The connection (tunnel or interconnect) that the traffic arrived on
+
+For any subsequent packets that match this flow and require a next hop, Magic WAN:
+
+1. Checks for a matching Automatic Return Routing flow.
+2. If a match exists, routes the packet back to the same connection where the flow was learned, instead of consulting the Magic WAN routing table.
+
+The initial request from your network to the Internet still uses your configured static or BGP routes. ARR only affects the return path for supported traffic after the flow is learned.
+		`}
+		inline={false}
+		/>
+
+		<AnchorHeading title="Traffic and destinations affected" depth={3} />
+		<Markdown
+		text={`
+Automatic Return Routing applies when:
+
+- Traffic is received on a tunnel or network interconnect where the feature is enabled.
+- The received traffic is one of:
+  - New TCP connections (TCP SYN)
+  - UDP
+  - ICMP echo (ping) requests
+- The traffic is destined for:
+  - Internet egress through Cloudflare
+  - A WARP client
+  - A private network connected to Cloudflare via Cloudflare Tunnel
+  - A private network connected to Cloudflare via WARP Connector
+
+In this initial release, ARR does not change routing for traffic between Magic WAN connections (for example, traffic from one Magic WAN tunnel or interconnect to another). That traffic continues to follow your configured Magic WAN routes.
+		`}
+		inline={false}
+		/>
+
+		<AnchorHeading title="Unified routing mode" depth={2} />
+		<Markdown
+		text={`
+The Unified routing mode is the newer Cloudflare One data plane that uses a single routing fabric for all supported connection types. Unified routing mode routes traffic across WARP, Cloudflare Tunnel, IPsec, GRE, and Cloudflare Network Interconnect (CNI) in a single system, making it easier to set up your Cloudflare One connections.
+
+In the Magic WAN dashboard, routing mode appears where you manage Magic routes:
+
+- **Routing mode: Unified** — your account is on the unified data plane and supports the new routing features.
+- **Routing mode: Legacy** — your account uses the previous data plane and does not support all unified routing features.
+		`}
+		inline={false}
+		/>
+	</>
+)}
 
 ## Scoping routes to specific regions
 

@@ -27,7 +27,7 @@ To increase this limit, go to the **Compute (Workers) > Workers plans** page in 
 | Browser timeout                        | 60 seconds |
 | Total requests per min (REST API only) | 6 per minute  [^1]  |
 
-[^1]: Rate limits are enforced with a fixed **per-second fill rate**. For example, a limit of 6 requests per minute translates to **1 request every 10 seconds**. This means you cannot send all 6 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
+[^1]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of six requests per minute translates to one request every 10 seconds. This means you cannot send all six requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
 
 :::note[Note on browser timeout]
 By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
@@ -41,13 +41,13 @@ The limits for Browser Rendering will continue to be raised over time. In the me
 
 | Feature                                | Limit               |
 | -------------------------------------- | ------------------- |
-| Concurrent browsers per account (Workers Bindings only)        | 30 per account [^1] [^2] |
-| New browser instances per minute (Workers Bindings only)       | 30 per minute [^1] [^2]  |
+| Concurrent browsers per account (Workers Bindings only)        | 30 per account [^2] |
+| New browser instances per minute (Workers Bindings only)       | 30 per minute [^2]  |
 | Browser timeout                        | 60 seconds |
-| Total requests per min (REST API only) | 180 per minute [^1] [^2]       |
+| Total requests per min (REST API only) | 180 per minute [^2][^3]       |
 
-[^1]: Rate limits are enforced with a fixed **per-second fill rate**. For example, a limit of 180 requests per minute translates to **3 requests per second**. This means you cannot send all 180 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
 [^2]: Contact our team to request increases to this limit.
+[^3]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of 180 requests per minute translates to three requests per second. This means you cannot send all 180 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
 
 :::note[Note on browser timeout]
 By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
@@ -74,7 +74,7 @@ By default, a browser instance will time out after 60 seconds of inactivity. If 
 
 ### Is there a maximum session duration?
 
-There is no fixed maximum lifetime for a browser session as long as it remains active. By default, Browser Rendering closes sessions after 1 minute of inactivity to prevent unintended usage. You can [increase this inactivity timeout](/browser-rendering/puppeteer/#keep-alive) to up to 10 minutes. 
+There is no fixed maximum lifetime for a browser session as long as it remains active. By default, Browser Rendering closes sessions after one minute of inactivity to prevent unintended usage. You can [increase this inactivity timeout](/browser-rendering/puppeteer/#keep-alive) to up to 10 minutes.
 
 If you need sessions to remain open longer, keep them active by sending a command at least once within your configured inactivity window (for example, every 10 minutes). Sessions also close when Browser Rendering rolls out a new release.
 

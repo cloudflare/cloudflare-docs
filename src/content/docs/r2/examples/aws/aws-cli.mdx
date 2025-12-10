@@ -15,20 +15,23 @@ aws configure
 ```
 
 ```sh output
-AWS Access Key ID [None]: <access_key_id>
-AWS Secret Access Key [None]: <access_key_secret>
+AWS Access Key ID [None]: <ACCESS_KEY_ID>
+AWS Secret Access Key [None]: <SECRET_ACCESS_KEY>
 Default region name [None]: auto
 Default output format [None]: json
 ```
 
+The `region` value can be set to `auto` since it is required by the SDK but not used by R2.
+
 You may then use the `aws` CLI for any of your normal workflows.
 
 ```sh
-aws s3api list-buckets --endpoint-url https://<accountid>.r2.cloudflarestorage.com
+# Provide your Cloudflare account ID
+aws s3api list-buckets --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com
 # {
 #     "Buckets": [
 #         {
-#             "Name": "sdk-example",
+#             "Name": "my-bucket",
 #             "CreationDate": "2022-05-18T17:19:59.645000+00:00"
 #         }
 #     ],
@@ -38,7 +41,7 @@ aws s3api list-buckets --endpoint-url https://<accountid>.r2.cloudflarestorage.c
 #     }
 # }
 
-aws s3api list-objects-v2 --endpoint-url https://<accountid>.r2.cloudflarestorage.com --bucket sdk-example
+aws s3api list-objects-v2 --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com --bucket my-bucket
 # {
 #     "Contents": [
 #         {
@@ -58,8 +61,6 @@ You can also generate presigned links which allow you to share public access to 
 
 ```sh
 # You can pass the --expires-in flag to determine how long the presigned link is valid.
-$ aws s3 presign --endpoint-url https://<accountid>.r2.cloudflarestorage.com  s3://sdk-example/ferriswasm.png --expires-in 3600
-# https://<accountid>.r2.cloudflarestorage.com/sdk-example/ferriswasm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
-aws s3 presign --endpoint-url https://<accountid>.r2.cloudflarestorage.com  s3://sdk-example/ferriswasm.png --expires-in 3600
-# https://<accountid>.r2.cloudflarestorage.com/sdk-example/ferriswasm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
+aws s3 presign --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com  s3://my-bucket/ferriswasm.png --expires-in 3600
+# https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/ferriswasm.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
 ```
