@@ -62,7 +62,7 @@ The following IPv4 address ranges are allowed in the Magic Routing table:
 
 ### Route prioritization
 
-{props.productName} is steered along tunnel routes based on priorities of route entries.
+{props.productName} steers traffic along tunnel routes based on route entry priorities.
 
 - Lower values have greater priority.
 - When the priority values for prefix entries match, Cloudflare uses [equal-cost multi-path (ECMP)](#equal-cost-multi-path-routing) packet forwarding to route traffic. An optional weight value can be applied to static routes to [modify ECMP tunnel distribution](#set-priority-and-weights-for-static-routes).
@@ -83,7 +83,7 @@ The priority value for static routes is directly configured as part of the route
 
 In the example above, tunnels with priority of `100` will be preferred to tunnels with priority of `200` since lower numbers have greater priority.
 
-Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. The weight values determine the proportion of traffic directed to each tunnel, with higher weights resulting in a greater share of traffic. The maximum weight value is `256`.
+Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. Weight values determine traffic proportion, with higher weights receiving more traffic. The maximum weight value is `256`.
 
 In the following example, `TUNNEL_2_IAD` is likely to receive twice as much traffic as `TUNNEL_1_IAD`.
 
@@ -98,9 +98,9 @@ Aside from priority, scoping static routes to specific geographic regions will a
 
 ### Set priority for BGP routes
 
-When BGP advertises a route, it is automatically added to the Magic routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route will always take precedence over the BGP route. You will have to set a different priority for static routes, to be more or less than `100`, depending on which you want to prioritize. Lower values have greater priority.
+When BGP advertises a route, Cloudflare automatically adds it to the Magic routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route will always take precedence over the BGP route. Set a different priority for static routes (more or less than `100`) depending on which you want to prioritize. Lower values have greater priority.
 
-Additionally, when multiple BGP routes exist with the same prefix length and priority, traffic is distributed across them using [equal-cost multi-path (ECMP) routing](#equal-cost-multi-path-routing).
+Additionally, when multiple BGP routes exist with the same prefix length and priority, ECMP distributes traffic across them using [equal-cost multi-path (ECMP) routing](#equal-cost-multi-path-routing).
 
 ### Change route priorities with BGP attributes
 
@@ -120,7 +120,7 @@ The community values supported for setting base route priority are:
 - `13335:60901`: Set base Magic route priority to `501000`
 - `13335:60902`: Set baseMagic route priority to `1001000`
 
-It is considered a misconfiguration to set multiple base priority communities in the same prefix update message. In this situation the highest priority (lowest integer value) is preferred.
+Setting multiple base priority communities in the same prefix update message is a misconfiguration. In this situation, Cloudflare prefers the highest priority (lowest integer value).
 
 #### AS path prepending for adjusting route priority
 
@@ -219,7 +219,9 @@ In the Magic WAN dashboard, routing mode appears where you manage Magic routes:
 
 ## Scoping routes to specific regions
 
-If you have multiple connectivity paths to a network segment and you would like to apply different route prioritization based on where the traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful, for example, if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user. When a route is scoped to a Cloudflare data center region it will only show up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
+If you have multiple connectivity paths to a network segment and you would like to apply different route prioritization based on where the traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user.
+
+When a route is scoped to a Cloudflare data center region, it will only show up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
 
 :::note
 Scoping routes to specific regions is not supported with BGP peering, and is only available to statically configured routes at this time.
@@ -274,7 +276,7 @@ Configure scoping for your traffic in the **Region code** section when adding or
 		<AnchorHeading title="Map routes prefixes bigger than onboarded prefixes" depth={3} />
 		<Markdown
     text={`
-		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route individually, as all traffic will be routed through the same GRE tunnels.
+		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route, as all traffic will be routed through the same GRE tunnels.
 
 		For example, if you have two tunnels:
 
@@ -337,7 +339,7 @@ E[Anycast IP] --> H[/GRE Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{
 
 **Customer router failure**
 
-When {props.productName} health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 with the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1.
+When {props.productName} health checks determine that Tunnel 2 is unhealthy, {props.productName} dynamically de-prioritizes that route, leaving Tunnel 1 with the sole top-priority route. As a result, {props.productName} steers traffic away from Tunnel 2, and all traffic flows to Tunnel 1.
 
 ```mermaid
 flowchart LR
@@ -428,7 +430,7 @@ If instead you are seeking to do public peering with the Cloudflare ASN 13335 at
 
 ### BGP route distribution and convergence
 
-Routes received from the customer device will be redistributed into the Magic routing table, which is used by both {props.productName} and Magic Transit.
+Cloudflare redistributes routes received from the customer device into the Magic routing table, which is used by both {props.productName} and Magic Transit.
 
 All routes in the Magic routing table are advertised to BGP peers. Each BGP peer will receive each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
@@ -450,7 +452,7 @@ Cloudflare uses the timers as follows. These are not configurable:
 
 ### BGP limitations
 
-BGP multipath is supported. If the same prefix is learned on two different interconnects then traffic destined for that prefix will be distributed across each interconnect according to the usual ECMP behavior.
+BGP multipath is supported. If BGP learns the same prefix on two different interconnects, Cloudflare distributes traffic destined for that prefix across each interconnect according to the usual ECMP behavior.
 
 BGP support currently has the following limitations:
 
