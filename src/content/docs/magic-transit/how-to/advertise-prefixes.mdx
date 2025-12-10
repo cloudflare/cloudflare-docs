@@ -20,7 +20,7 @@ Cloudflare measures the Magic Transit prefix count based on the number of BGP pr
 
 There is no billing limit on the accepted prefix sizes. However, only prefixes up to `/24` are accepted for onboarding because longer prefixes (like `/25`, `/26`) are not globally routable.
 
-Provide all IP prefixes you plan to onboard, along with the ASNs from which they will be advertised. When specifying prefixes, observe these guidelines:
+Provide all IP prefixes you plan to onboard, along with the ASNs from which you will advertise them. When specifying prefixes, observe these guidelines:
 
 - Prefixes must support at least 256 hosts (`/24` in CIDR ([Classless Inter-Domain Routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/)) notation). If you do not meet the `/24` prefix length requirement, refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/).
 - Internet Routing Registry entries and Letters of Agency (LOA) must match the prefixes and originating prefixes you submit to Cloudflare.
@@ -40,7 +40,7 @@ For all future onboardings, you must use AS13335. Current customers who are alre
 
 ### BGP prefixes
 
-BGP prefixes represent the prefix that will be announced through anycast from Cloudflare's global network. By default, there is always at least one BGP prefix that is identical to the onboarded IP prefix.
+BGP prefixes represent the prefix that Cloudflare will announce through anycast from Cloudflare's global network. By default, there is always at least one BGP prefix that is identical to the onboarded IP prefix.
 
 For example, if a customer onboards a `/20` IP prefix to Magic Transit, it can only be announced as a `/20` because there is only the default `/20` BGP prefix. Smaller sub-prefixes (such as `/24s`) within that `/20` cannot be announced individually unless they are configured as separate BGP prefixes.
 
@@ -79,7 +79,7 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 
   <TabItem label="Dashboard">
 		:::note
-		You can only advertise your prefix after running pre-flight checks with Cloudflare. If your prefix status is greyed out and shows a Withdrawn status, your prefix is locked. Contact your account team to close the pre-flight checks phase and unlock your prefixes.
+		You can only advertise your prefix after running pre-flight checks with Cloudflare. If your prefix status is greyed out and shows a Withdrawn status, Cloudflare locks your prefix. Contact your account team to close the pre-flight checks phase and unlock your prefixes.
 
 		Currently, only the default BGP prefix (that matches the IP prefix) can be controlled through the Cloudflare dashboard.
 		:::
@@ -139,7 +139,7 @@ The `"asn_prepend_count"` parameter accepts values from `0` to `3`. A higher val
 
 When you use AS prepending to migrate traffic away from Magic Transit, the typical sequence of events is as follows:
 
-- **Initial state**: Cloudflare advertises your prefix with the default priority (`"asn_prepend_count": 0`). All traffic is routed to your network through the Cloudflare global network.
+- **Initial state**: Cloudflare advertises your prefix with the default priority (`"asn_prepend_count": 0`). Cloudflare routes all traffic to your network through the Cloudflare global network.
 - **Deprioritize Cloudflare**: You update the prefix through the API to set an AS prepend count (for example, `"asn_prepend_count": 3`). Cloudflare now advertises your prefix with a longer `AS_PATH`. External networks will update their BGP tables to recognize the Cloudflare path has the new, longer `AS_PATH`.
 - **Introduce new provider**: You begin advertising the same prefix from your alternate provider with a standard (shorter) `AS_PATH`.
 - **Final state**: External networks now receive two advertisements: the prepended route through Cloudflare and the non-prepended route through your new provider. The external network will select a path based on its BGP policy rules.
@@ -149,8 +149,9 @@ BGP has different mechanisms to control route priorities which are set by the pe
 :::
 
 :::caution
-For traffic originated from Cloudflare's services, Cloudflare's internal network will enforce local preference for traffic delivery to Magic Transit. This applies even if a more specific or shorter path route is available on the public Internet. You should withdraw the prefix from Cloudflare to avoid delivery of Cloudflare-sourced traffic over Magic Transit. This preference is local to our internal network and does not impact the route decision process of other networks.
-For example, if you have a CDN zone onboarded with a Magic Transit-protected origin that is part of a Cloudflare-advertised `/22` prefix, and you later opt to advertise a more specific and shorter `/24` prefix route directly from your network, Cloudflare's servers will continue to route proxied CDN traffic to your Magic Transit network, which will follow configured routes to your tunnel(s). This is specific to Cloudflare services: traffic from other sources will converge as expected by BGP to the direct route, because it is the most specific.
+For traffic originated from Cloudflare's services, Cloudflare's internal network will enforce local preference for traffic delivery to Magic Transit. This applies even if a more specific or shorter path route is available on the public Internet. Withdraw the prefix from Cloudflare to avoid delivery of Cloudflare-sourced traffic over Magic Transit. This preference is local to our internal network and does not impact the route decision process of other networks.
+
+For example, if you have a CDN zone onboarded with a Magic Transit-protected origin that is part of a Cloudflare-advertised `/22` prefix, and you later opt to advertise a more specific and shorter `/24` prefix route directly from your network, Cloudflare's servers will continue to route proxied CDN traffic to your Magic Transit network. The traffic will follow configured routes to your tunnel(s). This is specific to Cloudflare services. Traffic from other sources will converge as expected by BGP to the direct route, because it is the most specific.
 :::
 
 ## Safely withdraw a BYOIP prefix
@@ -175,11 +176,11 @@ To automatically control the withdrawal of the BGP session globally you must ena
   }}
 />
 
-Once this is configured for a BGP prefix the following logic will apply:
-- If there are no BGP routes in the Magic routing table exactly matching the BGP prefix then the BGP prefix will be withdrawn.
-- If there is at least one BGP route in the Magic routing table exactly matching the BGP prefix then the BGP prefix will be announced.
+Once you configure this for a BGP prefix, Cloudflare applies the following logic:
+- If there are no BGP routes in the Magic routing table exactly matching the BGP prefix, Cloudflare withdraws the BGP prefix.
+- If there is at least one BGP route in the Magic routing table exactly matching the BGP prefix, Cloudflare announces the BGP prefix.
 
-The Addressing API BGP prefix and the Magic routing table BGP route must match exactly (same IP prefix and CIDR prefix length). This means that if there is a valid route to a subnet or supernet, the BGP prefix will withdraw when there are no exactly matching Magic BGP routes.
+The Addressing API BGP prefix and the Magic routing table BGP route must match exactly (same IP prefix and CIDR prefix length). If there is a valid route to a subnet or supernet, Cloudflare withdraws the BGP prefix when there are no exactly matching Magic BGP routes.
 
 :::note
 When you withdraw a prefix using BGP, you must ensure you withdraw all matching BGP learned prefixes from the Magic routing table. Otherwise, your prefix will not be withdrawn from Cloudflare's global network.
@@ -201,11 +202,11 @@ BGP has different mechanisms to control route priorities which are set by the pe
 
 ## BGP control with Cloudflare Route Reflectors
 
-Optionally, you can use BGP to control the advertisement status of your prefix — advertised or withdrawn — from Cloudflare's global network for on-demand deployment scenarios. BGP Control works by establishing BGP sessions to Cloudflare's globally distributed Route Reflectors, which will initiate propagation of your prefix advertisement across Cloudflare's global network. You can peer with Cloudflare's Route Reflectors through Internet or CNI. CNI peering is available through your account team.
+Optionally, you can use BGP to control the advertisement status of your prefix — advertised or withdrawn — from Cloudflare's global network for on-demand deployment scenarios. BGP Control works by establishing BGP sessions to Cloudflare's globally distributed Route Reflectors, which initiate propagation of your prefix advertisement across Cloudflare's global network. You can peer with Cloudflare's Route Reflectors through Internet or CNI. CNI peering is available through your account team.
 
-Prefixes can be advertised from Cloudflare's network in a supported on-demand method such as BGP Control, or dynamically through the UI, API, or [Magic Network Monitoring](/magic-transit/magic-network-monitoring/). During the onboarding of your on-demand prefixes, please specify whether you want BGP-controlled advertisement or dynamic advertisement (through dashboard/API/Magic Network Monitoring).
+You can advertise prefixes from Cloudflare's network in a supported on-demand method such as BGP Control, or dynamically through the UI, API, or [Magic Network Monitoring](/magic-transit/magic-network-monitoring/). During the onboarding of your on-demand prefixes, specify whether you want BGP-controlled advertisement or dynamic advertisement (through dashboard/API/Magic Network Monitoring).
 
-Our network architecture utilizes multiple, redundant Route Reflectors, ensuring that the failure of any single reflector does not impact overall network resiliency or traffic forwarding. For maximum resiliency, we recommend peering with all three of Cloudflare's redundant Route Reflectors, as this architecture ensures the failure of any single reflector does not impact overall network availability or traffic forwarding.
+Our network architecture utilizes multiple, redundant Route Reflectors. The failure of any single reflector does not impact overall network resiliency or traffic forwarding. For maximum resiliency, we recommend peering with all three of Cloudflare's redundant Route Reflectors.
 
 To begin using BGP control, contact your account team with the following information:
 
@@ -216,7 +217,7 @@ To begin using BGP control, contact your account team with the following informa
 After receiving your information, Cloudflare will update firewall filters to establish the BGP session and provide you with the BGP endpoints to control your prefixes.
 
 :::note
-When you withdraw a prefix using BGP, you must ensure the prefix is withdrawn across all BGP sessions on all route reflectors. Otherwise, your prefix will not be withdrawn from Cloudflare's global network.
+When you withdraw a prefix using BGP, you must ensure the prefix is withdrawn across all BGP sessions on all route reflectors. Otherwise, Cloudflare will not withdraw your prefix from the global network.
 :::
 
 ### BGP peering
@@ -225,7 +226,7 @@ If you use Direct CNI as a way to on-ramp your network traffic to Magic Transit,
 
 ### Regional settings
 
-Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (for GRE and IPsec tunnels). For CNI, both static routing and BGP options are available. Currently, advertisement of routes for traffic engineering purposes is not supported. As a best practice to reduce last-hop latency, you should consider scoping your routes regionally.
+Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (for GRE and IPsec tunnels). For CNI, both static routing and BGP options are available. Cloudflare does not currently support advertisement of routes for traffic engineering purposes. As a best practice to reduce last-hop latency, consider scoping your routes regionally.
 
 <Render file="traffic-steering-region-codes" product="networking-services/reference" />
 
