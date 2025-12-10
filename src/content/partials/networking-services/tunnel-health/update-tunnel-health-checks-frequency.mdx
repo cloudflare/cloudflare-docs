@@ -53,7 +53,7 @@ Available options are `low`, `mid`, and `high`.
 
 You can adjust the health check frequency by updating your [GRE](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/), [IPsec](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/), or [CNI](/api/resources/magic_transit/subresources/cf_interconnects/methods/update/) tunnels.
 
-Below is an example of how to adjust tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
+The following example adjusts tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
