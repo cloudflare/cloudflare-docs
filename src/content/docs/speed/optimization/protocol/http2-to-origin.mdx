@@ -156,35 +156,35 @@ Some 5xx errors, like `520` or `522`, may be related to idle timeouts or unreach
 
 ### FAQ
 
-**Does Cloudflare use a fixed multiplexing ratio?**
+#### Does Cloudflare use a fixed multiplexing ratio?
 
 Free, Pro, and Business plans use 200 concurrent streams per connection. Enterprise users can configure between 1–200+ streams.
 
-**How does Cloudflare scale connections during spikes or failovers?**
+#### How does Cloudflare scale connections during spikes or failovers?
 
 Cloudflare first reuses existing keep-alive connections. If they reach concurrency limits, new connections are opened as needed. Even during surges, total connection count is typically lower than without multiplexing.
 
-**What if my backend is sensitive to parallel requests?**
+#### What if my backend is sensitive to parallel requests?
 
-Enterprise users can lower the concurrency limit. Cloudflare also honors your origin's `SETTINGS_MAX_CONCURRENT_STREAMS`, allowing your server to enforce stricter limits. Cloudflare's CDN also provides Cache Locking, which helps avoid multiple parallel requests to your origin during revalidation. Refer to Revalidation for more information.
+Enterprise users can lower the concurrency limit. Cloudflare also honors your origin's `SETTINGS_MAX_CONCURRENT_STREAMS`, allowing your server to enforce stricter limits. Cloudflare's CDN also provides Cache Locking, which helps avoid multiple parallel requests to your origin during revalidation. Refer to [Revalidation](/cache/concepts/revalidation/) for more information.
 
-**Can I gradually roll out higher concurrency?**
+#### Can I gradually roll out higher concurrency?
 
 Yes. You can adjust your origin's HTTP/2 settings or Cloudflare's zone setting incrementally to increase concurrency safely.
 
-**From where does Cloudflare connect to my origin?**
+#### From where does Cloudflare connect to my origin?
 
 Cloudflare operates a flat anycast network. Any data center may connect directly to your origin — there is no L1/L2 hierarchy. Origin connections may come from multiple data centers worldwide.
 
-**Does Cloudflare prewarm connections to origins?**
+#### Does Cloudflare prewarm connections to origins?
 
 No. Connections are created on demand and reused where possible. There is no persistent idle pool.
 
-**How are idle connections managed?**
+#### How are idle connections managed?
 
 Idle connections are closed after 900 seconds of inactivity. They are not reopened proactively; new connections are created as traffic resumes.
 
-**Can Cloudflare close active TCP connections?**
+#### Can Cloudflare close active TCP connections?
 
 Only if the origin closes them, a network error occurs, or Cloudflare performs maintenance or load redistribution. There is no hard maximum lifetime for active connections.
 
