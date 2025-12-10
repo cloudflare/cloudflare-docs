@@ -20,22 +20,22 @@ The error budget is the amount of unsuccessful events (from the SLI perspective)
 The SLO is a target percentage, and the error budget is defined as 100% minus the SLO. For example, assume that during 30 days there were one million Magic Tunnel health checks in your account, and your SLO is set to 99%. The error budget for this case would be:
 
 ```txt
-number of events x (1 - SLO) = 1000000 x (1-0.99) = 1000
+number of events x (1 - SLO) = 1,0000,00 x (1-0.999) = 1000
 ```
 
-This means the SLO allows for 1000 unsuccessful Magic health checks over the course of 30 days. However, what happens if all errors happen in one hour instead of 30 days? This leads us to the concept of burn rate.
+This means the SLO allows for 1,000 unsuccessful Magic health checks over the course of 30 days. However, what happens if all errors happen in one hour instead of 30 days? This leads us to the concept of burn rate.
 
 ### Burn rate
 
-The burn rate measures how fast the error budget is expended over a given time window relative to the SLO window. In the example from above, an SLO of 99% means you can observe 100 Magic health check fails over the course of 30 days. However, those same 100 health check fails are not acceptable during one hour.
+The burn rate measures how fast the error budget is expended over a given time window relative to the SLO window. In the example from above, an SLO of 99% means you can observe 1,000 Magic health check failures over the course of 30 days. However, those same 1,000 health check failures are not acceptable during one hour.
 
 ## How does Cloudflare decide when to alert
 
-To determine when to send Magic Tunnel health alerts, Cloudflare relies on a multi-window, multi-burn rate approach. Every five minutes, Cloudflare analyzes the last hour and the last five minutes of data. Cloudflare calculates the SLI for the short window (five minutes) and large window (one hour) of data.
+To determine when to send Magic Tunnel health alerts, Cloudflare relies on a multi-window, multi-burn rate approach. Every five minutes, Cloudflare analyzes the last hour and the last five minutes of data. Cloudflare calculates the SLI for the short window (five minutes) and long window (one hour) of data.
 
-Cloudflare only alerts you when both the short and long SLOs are below the configured threshold, so the maximum of the two is the limiting factor. For example, if you defined a threshold of 99%:
+Cloudflare only alerts you when both the short and long windows are below the configured threshold, so the maximum of the two is the limiting factor. For example, if you defined a threshold of 99%:
 
-- 99.2% (small window) + 99% (large window) = 99%. An alert would not be triggered.
-- 98% (small window) + 98% (large window) = 98%. An alert would be triggered.
+- 99.2% (short window) + 99% (long window) = 99%. An alert would not be triggered.
+- 98% (short window) + 98% (long window) = 98%. An alert would be triggered.
 
 Cloudflare counts degraded health checks as failed health checks.
