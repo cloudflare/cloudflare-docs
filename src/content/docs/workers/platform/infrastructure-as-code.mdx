@@ -73,6 +73,272 @@ resource "cloudflare_workers_deployment" "my_worker_deployment" {
 
 Notice how you don't have to manage all of these resources in Terraform. For example, you could just the `cloudflare_worker` resource and seamlessly use Wrangler or your own deployment tools for Versions or Deployments.
 
+## Bindings in Terraform
+
+[Bindings](/workers/runtime-apis/bindings/) allow your Worker to interact with resources on the Cloudflare Developer Platform. In Terraform, bindings are configured differently than in Wrangler. Instead of separate top-level properties for each binding type (like `kv_namespaces`, `r2_buckets`, etc.), Terraform uses a single `bindings` array where each binding has a `type` property along with type-specific properties.
+
+Below are examples of each binding type and their required properties:
+
+### KV Namespace Binding
+
+Bind to a [KV namespace](/kv/api/) for key-value storage:
+
+```tf
+bindings = [{
+  type = "kv_namespace"
+  name = "MY_KV"
+  namespace_id = "your-kv-namespace-id"
+}]
+```
+
+**Properties:**
+- `type`: `"kv_namespace"`
+- `name`: The variable name for the binding, accessible via `env.MY_KV`
+- `namespace_id`: The ID of your KV namespace
+
+### R2 Bucket Binding
+
+Bind to an [R2 bucket](/r2/api/workers/workers-api-reference/) for object storage:
+
+```tf
+bindings = [{
+  type = "r2_bucket"
+  name = "MY_BUCKET"
+  bucket_name = "my-bucket-name"
+}]
+```
+
+**Properties:**
+- `type`: `"r2_bucket"`
+- `name`: The binding name to access via `env.MY_BUCKET`
+- `bucket_name`: The name of your R2 bucket
+
+### D1 Database Binding
+
+Bind to a [D1 database](/d1/worker-api/) for SQL storage:
+
+```tf
+bindings = [{
+  type = "d1"
+  name = "DB"
+  id = "your-database-id"
+}]
+```
+
+**Properties:**
+- `type`: `"d1"`
+- `name`: The binding name to access via `env.DB`
+- `id`: The ID of your D1 database
+
+### Durable Object Binding
+
+Bind to a [Durable Object](/durable-objects/api/) class:
+
+```tf
+bindings = [{
+  type = "durable_object_namespace"
+  name = "MY_DURABLE_OBJECT"
+  class_name = "MyDurableObjectClass"
+}]
+```
+
+**Properties:**
+- `type`: `"durable_object_namespace"`
+- `name`: The binding name to access via `env.MY_DURABLE_OBJECT`
+- `class_name`: The exported class name of the Durable Object
+- `script_name`: (Optional) The Worker script that exports this Durable Object class. Omit if the class is defined in the same Worker.
+
+### Service Binding
+
+Bind to another [Worker](/workers/runtime-apis/bindings/service-bindings/) for Worker-to-Worker communication:
+
+```tf
+bindings = [{
+  type = "service"
+  name = "MY_SERVICE"
+  service = "other-worker-name"
+}]
+```
+
+**Properties:**
+- `type`: `"service"`
+- `name`: The binding name to access via `env.MY_SERVICE`
+- `service`: The name of the target Worker
+- `entrypoint`: (Optional) The named [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to
+
+### Queue Binding
+
+Bind to a [Queue](/queues/configuration/javascript-apis/) for message passing:
+
+For producing messages:
+
+```tf
+bindings = [{
+  type = "queue"
+  name = "MY_QUEUE"
+  queue_name = "my-queue"
+}]
+```
+
+**Properties:**
+- `type`: `"queue"`
+- `name`: The binding name to access via `env.MY_QUEUE`
+- `queue_name`: The name of your Queue
+
+For consuming messages, configure your Worker as a consumer in the queue resource itself, not via bindings.
+
+### Vectorize Binding
+
+Bind to a [Vectorize index](/vectorize/) for vector search:
+
+```tf
+bindings = [{
+  type = "vectorize"
+  name = "VECTORIZE_INDEX"
+  index_name = "my-index"
+}]
+```
+
+**Properties:**
+- `type`: `"vectorize"`
+- `name`: The binding name to access via `env.VECTORIZE_INDEX`
+- `index_name`: The name of your Vectorize index
+
+### Workers AI Binding
+
+Bind to [Workers AI](/workers-ai/) for AI inference:
+
+```tf
+bindings = [{
+  type = "ai"
+  name = "AI"
+}]
+```
+
+**Properties:**
+- `type`: `"ai"`
+- `name`: The binding name to access via `env.AI`
+
+### Hyperdrive Binding
+
+Bind to a [Hyperdrive](/hyperdrive/) configuration for database connection pooling:
+
+```tf
+bindings = [{
+  type = "hyperdrive"
+  name = "HYPERDRIVE"
+  id = "your-hyperdrive-config-id"
+}]
+```
+
+**Properties:**
+- `type`: `"hyperdrive"`
+- `name`: The binding name to access via `env.HYPERDRIVE`
+- `id`: The ID of your Hyperdrive configuration
+
+### Analytics Engine Binding
+
+Bind to an [Analytics Engine](/analytics/analytics-engine/) dataset:
+
+```tf
+bindings = [{
+  type = "analytics_engine"
+  name = "ANALYTICS"
+  dataset = "my_dataset"
+}]
+```
+
+**Properties:**
+- `type`: `"analytics_engine"`
+- `name`: The binding name to access via `env.ANALYTICS`
+- `dataset`: The name of your Analytics Engine dataset
+
+### Environment Variables
+
+For plain text environment variables, use the `plain_text` binding type:
+
+```tf
+bindings = [{
+  type = "plain_text"
+  name = "MY_VARIABLE"
+  text = "my-value"
+}]
+```
+
+**Properties:**
+- `type`: `"plain_text"`
+- `name`: The binding name to access via `env.MY_VARIABLE`
+- `text`: The value of the environment variable
+
+### Secret Text Binding
+
+For encrypted secrets, use the `secret_text` binding type:
+
+```tf
+bindings = [{
+  type = "secret_text"
+  name = "API_KEY"
+  text = var.api_key
+}]
+```
+
+**Properties:**
+- `type`: `"secret_text"`
+- `name`: The binding name to access via `env.API_KEY`
+- `text`: The secret value (will be encrypted)
+
+### Complete Example
+
+Here's an example combining multiple binding types:
+
+```tf
+resource "cloudflare_worker_version" "my_worker_version" {
+  account_id = var.account_id
+  worker_id = cloudflare_worker.my_worker.id
+  compatibility_date = "2025-08-06"
+  main_module = "worker.js"
+  
+  modules = [{
+    name = "worker.js"
+    content_type = "application/javascript+module"
+    content_file = "worker.js"
+  }]
+  
+  bindings = [
+    {
+      type = "kv_namespace"
+      name = "MY_KV"
+      namespace_id = var.kv_namespace_id
+    },
+    {
+      type = "r2_bucket"
+      name = "MY_BUCKET"
+      bucket_name = "my-bucket"
+    },
+    {
+      type = "d1"
+      name = "DB"
+      id = var.d1_database_id
+    },
+    {
+      type = "service"
+      name = "AUTH_SERVICE"
+      service = "auth-worker"
+    },
+    {
+      type = "plain_text"
+      name = "ENVIRONMENT"
+      text = "production"
+    },
+    {
+      type = "secret_text"
+      name = "API_KEY"
+      text = var.api_key
+    }
+  ]
+}
+```
+
 ## Cloudflare API Libraries
 
 This example uses the [cloudflare-typescript](https://github.com/cloudflare/cloudflare-typescript) SDK which provides convenient access to the Cloudflare REST API from server-side JavaScript or TypeScript.
@@ -399,7 +665,7 @@ resource "cloudflare_worker_version" "my_worker_version" {
   worker_id = cloudflare_worker.my_worker.id
   bindings = [
     {
-      type = "durable_object"
+      type = "durable_object_namespace"
       name = "my_durable_object"
       class_name = "MyDurableObjectClass"
     }

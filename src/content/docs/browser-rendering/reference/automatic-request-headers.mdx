@@ -21,4 +21,10 @@ These headers are meant to ensure transparency and cannot be removed or overridd
 | `Signature-agent`    | [The location of the bot public keys](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev), used to sign the request and verify it came from Cloudflare                                       |
 | `Signature` and `Signature-input`| A digital signature, used to validate requests, as shown in [this architecture document](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)                     |
 
+### About Web Bot Auth
+
 The `Signature` headers use an authentication method called [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/). Web Bot Auth leverages cryptographic signatures in HTTP messages to verify that a request comes from an automated bot. To verify a request originated from Cloudflare Browser Rendering, use the keys found on [this directory](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev/.well-known/http-message-signatures-directory) to verify the `Signature` and `Signature-Input` found in the headers from the incoming request. A successful verification proves that the request originated from Cloudflare Browser Rendering and has not been tampered with in transit.
+
+### Bot detection
+
+The bot detection ID for Browser Rendering is `128292352`. If you are attempting to scan your own zone and want Browser Rendering to access your website freely without your bot protection configuration interfering, you can create a WAF skip rule to [allowlist Browser Rendering](/browser-rendering/faq/#how-do-i-allowlist-browser-rendering).

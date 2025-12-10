@@ -91,8 +91,8 @@ Gateway applies your policies in the following order:
 1. DNS policies with selectors evaluated before resolution
 2. Resolver policies (if applicable)
 3. DNS policies with selectors evaluated after resolution
-4. Network policies
-5. Egress policies (if applicable)
+4. Egress policies (if applicable)
+5. Network policies
 6. HTTP policies
 
 DNS and resolver policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.

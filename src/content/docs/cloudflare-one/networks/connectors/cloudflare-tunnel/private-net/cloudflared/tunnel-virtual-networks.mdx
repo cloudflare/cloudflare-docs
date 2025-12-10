@@ -49,12 +49,15 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
   <TabItem label="Dashboard">
       To route overlapping IPs over virtual networks:
 
-      1. First, create two unique virtual networks:
-         1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
-         2. In **Virtual networks**, select **Create virtual network**.
+      1. Create two unique virtual networks:
+         1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes** > **Virtual networks**.
+				 :::note
+				 The **Virtual networks** card will only appear if a CIDR route exists in your account. If you do not already have a route, you can navigate to **Virtual networks** using this [direct link](https://one.dash.cloudflare.com/?to=/:account/networks/routes/cidr/vnets).
+				 :::
+         2. Select **Create virtual network**.
          3. Name your virtual network `staging-vnet` and select **Save**.
          4. Repeat Steps 1a-1d to create another virtual network called `production-vnet`.
-      2. Next, create a Cloudflare Tunnel for each private network:
+      2. Create a Cloudflare Tunnel for each private network:
          1. Go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
          2. Select **Create a tunnel**.
          3. Name your tunnel `Staging tunnel` and select **Save tunnel**.

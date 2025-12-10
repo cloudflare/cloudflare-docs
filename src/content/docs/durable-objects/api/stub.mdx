@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Render, GlossaryTooltip } from "~/components";
+import { Render, GlossaryTooltip, Tabs, TabItem } from "~/components";
 
 ## Description
 
@@ -23,20 +23,55 @@ If an exception is thrown by a Durable Object <GlossaryTooltip term="stub">stub<
 
 `id` is a property of the `DurableObjectStub` corresponding to the [`DurableObjectId`](/durable-objects/api/id) used to create the stub.
 
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 const id = env.MY_DURABLE_OBJECT.newUniqueId();
 const stub = env.MY_DURABLE_OBJECT.get(id);
 console.assert(id.equals(stub.id), "This should always be true");
 ```
 
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+id = env.MY_DURABLE_OBJECT.newUniqueId()
+stub = env.MY_DURABLE_OBJECT.get(id)
+assert id.equals(stub.id), "This should always be true"
+```
+
+</TabItem>
+
+</Tabs>
+
 ### `name`
 
 `name` is an optional property of a `DurableObjectStub`, which returns a name if it was provided upon stub creation either directly via [`DurableObjectNamespace::getByName`](/durable-objects/api/namespace/#getbyname) or indirectly via a [`DurableObjectId`](/durable-objects/api/id) created by [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname). This value is undefined if the [`DurableObjectId`](/durable-objects/api/id) used to create the `DurableObjectStub` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid).
+
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 console.assert(stub.name === "foo", "This should always be true");
 ```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+stub = env.MY_DURABLE_OBJECT.getByName("foo")
+assert stub.name == "foo", "This should always be true"
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Related resources
 

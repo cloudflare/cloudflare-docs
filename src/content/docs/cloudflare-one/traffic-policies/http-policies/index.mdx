@@ -11,7 +11,7 @@ import { Details, InlineBadge, Render } from "~/components";
 To use HTTP policies, install a [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/).
 :::
 
-HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/traffic-policies/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports 80 and 443.
+HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/traffic-policies/initial-setup/http/#1-connect-to-gateway)) traffic. By default, Gateway inspects HTTP traffic on port `80` and, with [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) turned on, HTTPS traffic on port `443`. You can also configure Gateway to [inspect HTTP/HTTPS traffic on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports).
 
 An HTTP policy consists of an **Action** as well as a logical expression that determines the scope of the policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
@@ -56,7 +56,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Option       | Action                                                                                                                                                                                                                                               |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                               |
-| Block        | Display [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) as set in Zero Trust.                                                                                                                                                             |
+| Block        | Display [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) as set in Cloudflare One.                                                                                                                                 |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block

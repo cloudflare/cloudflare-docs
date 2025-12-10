@@ -12,10 +12,6 @@
     "tags": [],
     "properties": [
         {
-            "property_id": "async_queue",
-            "value": "true"
-        },
-        {
             "property_id": "context_window",
             "value": "60000"
         },
@@ -35,7 +31,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "BGE M3 Input Query and Contexts",
+                    "title": "Input Query and Contexts",
                     "properties": {
                         "query": {
                             "type": "string",
@@ -67,7 +63,7 @@
                     ]
                 },
                 {
-                    "title": "BGE M3 Input Embedding",
+                    "title": "Input Embedding",
                     "properties": {
                         "text": {
                             "oneOf": [
@@ -107,7 +103,7 @@
                                 "type": "object",
                                 "oneOf": [
                                     {
-                                        "title": "BGE M3 Input Query and Contexts",
+                                        "title": "Input Query and Contexts",
                                         "properties": {
                                             "query": {
                                                 "type": "string",
@@ -139,7 +135,7 @@
                                         ]
                                     },
                                     {
-                                        "title": "BGE M3 Input Embedding",
+                                        "title": "Input Embedding",
                                         "properties": {
                                             "text": {
                                                 "oneOf": [
@@ -185,7 +181,7 @@
             "contentType": "application/json",
             "oneOf": [
                 {
-                    "title": "BGE M3 Ouput Query",
+                    "title": "Ouput Query",
                     "properties": {
                         "response": {
                             "type": "array",
@@ -206,7 +202,7 @@
                     }
                 },
                 {
-                    "title": "BGE M3 Output Embedding for Contexts",
+                    "title": "Output Embedding for Contexts",
                     "properties": {
                         "response": {
                             "type": "array",
@@ -234,7 +230,7 @@
                     }
                 },
                 {
-                    "title": "BGE M3 Ouput Embedding",
+                    "title": "Ouput Embedding",
                     "properties": {
                         "shape": {
                             "type": "array",

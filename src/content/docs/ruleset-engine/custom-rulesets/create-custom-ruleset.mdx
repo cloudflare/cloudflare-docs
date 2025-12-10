@@ -7,7 +7,7 @@ sidebar:
 
 import { APIRequest, Render } from "~/components";
 
-Use the [Create an account ruleset](/api/resources/rulesets/methods/create/) operation to create a custom ruleset, making sure that you:
+Use the [Create an account or zone ruleset](/api/resources/rulesets/methods/create/) operation to create a custom ruleset, making sure that you:
 
 - Set the `kind` field to `custom`.
 - Specify the name of the [phase](/ruleset-engine/reference/phases-list/) where you want to create the custom ruleset in the `phase` field.
@@ -16,16 +16,18 @@ Use the [Create an account ruleset](/api/resources/rulesets/methods/create/) ope
 
 <Render file="custom-rulesets-dashboard" product="ruleset-engine" />
 
-## Example
+<Render file="custom-ruleset-zone-limitation" product="ruleset-engine" />
 
-The following request creates a new custom ruleset. The response will include the ID of the new custom ruleset in the `id` field.
+## Example A - Custom ruleset at the account level
+
+The following request creates a new custom ruleset at the account level. The response will include the ID of the new custom ruleset in the `id` field.
 
 <APIRequest
 	path="/accounts/{account_id}/rulesets"
 	method="POST"
 	json={{
 		name: "Custom Ruleset 1",
-		description: "My First Custom Ruleset",
+		description: "My First Custom Ruleset (account)",
 		kind: "custom",
 		phase: "http_request_firewall_custom",
 	}}
@@ -36,10 +38,10 @@ The following request creates a new custom ruleset. The response will include th
 	"result": {
 		"id": "f82ccda3d21f4a02825d3fe45b5e1c10",
 		"name": "Custom Ruleset 1",
-		"description": "My First Custom Ruleset",
+		"description": "My First Custom Ruleset (account)",
 		"kind": "custom",
 		"version": "1",
-		"last_updated": "2021-03-09T10:27:30.636197Z",
+		"last_updated": "2025-08-09T10:27:30.636197Z",
 		"phase": "http_request_firewall_custom"
 	},
 	"success": true,
@@ -49,3 +51,41 @@ The following request creates a new custom ruleset. The response will include th
 ```
 
 You can include a list of rules in the custom ruleset creation request. If you have not added any rules, refer to [Add rules to a custom ruleset](/ruleset-engine/custom-rulesets/add-rules-ruleset/) for more information.
+
+
+## Example B - Custom ruleset at the zone level
+
+The following request creates a new custom ruleset at the zone level. The response will include the ID of the new custom ruleset in the `id` field.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Custom Ruleset 1",
+		description: "My First Custom Ruleset (zone)",
+		kind: "custom",
+		phase: "http_request_firewall_custom",
+	}}
+/>
+
+```json output {3}
+{
+	"result": {
+		"id": "f82ccda3d21f4a02825d3fe45b5e1c10",
+		"name": "Custom Ruleset 1",
+		"description": "My First Custom Ruleset (zone)",
+		"kind": "custom",
+		"version": "1",
+		"last_updated": "2025-08-09T10:27:30.636197Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+You can include a list of rules in the custom ruleset creation request. If you have not added any rules, refer to [Add rules to a custom ruleset](/ruleset-engine/custom-rulesets/add-rules-ruleset/) for more information.
+
+<Render file="custom-ruleset-zone-limitation" product="ruleset-engine" />
+

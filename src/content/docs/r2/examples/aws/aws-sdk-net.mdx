@@ -19,11 +19,13 @@ private static IAmazonS3 s3Client;
 
 public static void Main(string[] args)
 {
-	var accessKey = "<ACCESS_KEY>";
-	var secretKey = "<SECRET_KEY>";
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	var accessKey = "<ACCESS_KEY_ID>";
+	var secretKey = "<SECRET_ACCESS_KEY>";
 	var credentials = new BasicAWSCredentials(accessKey, secretKey);
 	s3Client = new AmazonS3Client(credentials, new AmazonS3Config
 		{
+			// Provide your Cloudflare account ID
 			ServiceURL = "https://<ACCOUNT_ID>.r2.cloudflarestorage.com",
 		});
 }
@@ -43,8 +45,11 @@ static async Task ListBuckets()
 		Console.WriteLine("{0}", s3Bucket.BucketName);
 	}
 }
-// sdk-example
-// my-bucket-name
+```
+
+```sh output
+sdk-example
+my-bucket
 ```
 
 ```csharp
@@ -52,7 +57,7 @@ static async Task ListObjectsV2()
 {
 	var request = new ListObjectsV2Request
 	{
-		BucketName = "sdk-example"
+		BucketName = "my-bucket"
 	};
 
 	var response = await s3Client.ListObjectsV2Async(request);
@@ -62,8 +67,11 @@ static async Task ListObjectsV2()
 		Console.WriteLine("{0}", s3Object.Key);
 	}
 }
-// dog.png
-// cat.png
+```
+
+```sh output
+dog.png
+cat.png
 ```
 
 ## Upload and retrieve objects
@@ -80,29 +88,35 @@ static async Task PutObject()
 	var request = new PutObjectRequest
 	{
 		FilePath = @"/path/file.txt",
-		BucketName = "sdk-example",
+		BucketName = "my-bucket",
 		DisablePayloadSigning = true,
-    DisableDefaultChecksumValidation = true
+		DisableDefaultChecksumValidation = true
 	};
 
 	var response = await s3Client.PutObjectAsync(request);
 
 	Console.WriteLine("ETag: {0}", response.ETag);
 }
-// ETag: "186a71ee365d9686c3b98b6976e1f196"
+```
+
+```sh output
+ETag: "186a71ee365d9686c3b98b6976e1f196"
 ```
 
 ```csharp
 static async Task GetObject()
 {
-  var bucket = "sdk-example";
-  var key = "file.txt"
+	var bucket = "my-bucket";
+	var key = "file.txt";
 
 	var response = await s3Client.GetObjectAsync(bucket, key);
 
 	Console.WriteLine("ETag: {0}", response.ETag);
 }
-// ETag: "186a71ee365d9686c3b98b6976e1f196"
+```
+
+```sh output
+ETag: "186a71ee365d9686c3b98b6976e1f196"
 ```
 
 ## Generate presigned URLs
@@ -115,7 +129,7 @@ static string? GeneratePresignedUrl()
 	AWSConfigsS3.UseSignatureVersion4 = true;
 	var presign = new GetPreSignedUrlRequest
 	{
-		BucketName = "sdk-example",
+		BucketName = "my-bucket",
 		Key = "file.txt",
 		Verb = HttpVerb.GET,
 		Expires = DateTime.Now.AddDays(7),
@@ -127,5 +141,8 @@ static string? GeneratePresignedUrl()
 
 	return presignedUrl;
 }
-// URL: https://<accountid>.r2.cloudflarestorage.com/sdk-example/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
+```
+
+```sh output
+https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
 ```

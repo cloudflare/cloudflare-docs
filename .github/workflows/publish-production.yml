@@ -41,34 +41,6 @@ jobs:
         run: sudo -v ; curl https://rclone.org/install.sh | sudo bash
       - name: Build vendored Markdown
         run: npx tsx bin/generate-index-md.ts
-      - name: Upload vendored Markdown archives to Vendored Markdown bucket
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.VENDORED_DEVDOCS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.VENDORED_DEVDOCS_SECRET_ACCESS_KEY }}
-        run: |
-          cd distmd && zip -r markdown.zip .
-          rclone copy \
-            --config ../bin/rclone.conf \
-            ./markdown.zip \
-            devdocs:vendored-markdown
-          rm markdown.zip
-          cd ..
-
-          cd distllms
-          rclone copy --max-depth 2 \
-            --config ../bin/rclone.conf \
-            . \
-            devdocs:vendored-markdown
-          cd ..
-      - name: Upload vendored Markdown files to ZT DevDocs bucket
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ZT_DEVDOCS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.ZT_DEVDOCS_SECRET_ACCESS_KEY }}
-        run: |
-          rclone sync \
-            --config bin/rclone.conf \
-            distmd \
-            zt:zt-dashboard-dev-docs
       - name: Upload vendored Markdown files to AI Search DevDocs bucket
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AUTORAG_DEVDOCS_ACCESS_KEY_ID }}

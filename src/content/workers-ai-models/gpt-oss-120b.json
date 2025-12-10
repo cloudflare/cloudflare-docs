@@ -12,10 +12,6 @@
     "tags": [],
     "properties": [
         {
-            "property_id": "async_queue",
-            "value": "true"
-        },
-        {
             "property_id": "context_window",
             "value": "128000"
         },
@@ -40,7 +36,7 @@
             "oneOf": [
                 {
                     "type": "object",
-                    "title": "GPT_OSS_120B_Responses",
+                    "title": "Responses",
                     "properties": {
                         "input": {
                             "anyOf": [
@@ -84,7 +80,7 @@
                 },
                 {
                     "type": "object",
-                    "title": "GPT_OSS_120B_Responses_Async",
+                    "title": "Async Request",
                     "properties": {
                         "requests": {
                             "type": "array",

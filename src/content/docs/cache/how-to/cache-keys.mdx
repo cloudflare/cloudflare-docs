@@ -154,6 +154,10 @@ Cache keys options availability varies according to your plan.
 
 <FeatureTable id="cache.cache_key" />
 
+## Troubleshooting
+
+You can use [Cloudflare Trace](/rules/trace-request/) to find which Cache Key settings were applied to your request. When you send a request through the Trace tool, if the request was served from cache, it will show a cache hit in the **Cache Paremeters** section. Then select **View paremeter detail** to see exactly which Cache Key properties were used.
+
 ## Limitations
 
 The [Prefetch](/speed/optimization/content/prefetch-urls/) feature is not compatible with the [Custom Cache Keys](/cache/how-to/cache-rules/examples/custom-cache-key/). With [Cache Rules](/cache/how-to/cache-rules/), the custom cache key is used to cache all assets. However, Prefetch always uses the default cache key. This results in a key mismatch.

@@ -20,6 +20,7 @@ As an example, let us assume you have a Workflow that charges your customers, an
 check if they were already charged:
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -55,6 +56,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 :::note
@@ -72,6 +74,7 @@ You can also think of it as a transaction, or a unit of work.
 - ✅ Minimize the number of API/binding calls per step (unless you need multiple calls to prove idempotency).
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -89,6 +92,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 Otherwise, your entire Workflow might not be as durable as you might think, and you may encounter some undefined behaviour. You can avoid them by following the rules below:
@@ -99,6 +103,7 @@ Otherwise, your entire Workflow might not be as durable as you might think, and 
 - 🔴 Do not do too much CPU-intensive work inside a single step - sometimes the engine may have to restart, and it will start over from the beginning of that step.
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -112,6 +117,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Do not rely on state outside of a step
@@ -121,6 +127,7 @@ Workflows may hibernate and lose all in-memory state. This will happen when engi
 This means that you should not store state outside of a step:
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 function getRandomInt(min, max) {
 	const minCeiled = Math.ceil(min);
@@ -161,11 +168,13 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 Instead, you should build top-level state exclusively comprised of `step.do` returns:
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 function getRandomInt(min, max) {
 	const minCeiled = Math.ceil(min);
@@ -203,6 +212,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Avoid doing side effects outside of a `step.do`
@@ -214,6 +224,7 @@ For example, a `console.log()` outside of workflow steps may cause the logs to p
 However, logic involving non-serializable resources, like a database connection, should be executed outside of steps. Operations ouside of a `step.do` might be repeated more than once, due to the nature of the Workflows' instance lifecycle.
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
@@ -223,10 +234,10 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 		// 🔴 Bad: using non-deterministic functions outside of steps
 		// this will produce different results if the instance has to restart, different runs of the same instance
-	  // might go through different paths
+		// might go through different paths
 		const myRandom = Math.random();
 
-		if(myRandom > 0) {
+		if (myRandom > 0) {
 			// do some stuff
 		}
 
@@ -238,40 +249,43 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 			// this log will only appear once
 			console.log("successfully did stuff");
-		})
-
+		});
 
 		// ✅ Good: wrap non-deterministic function in a step
 		// after running successfully will not run again
 		const myRandom = await step.do("create a random number", async () => {
-	    return Math.random();
-		})
+			return Math.random();
+		});
 
 		// ✅ Good: calls that have no side effects can be done outside of steps
 		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
 
 		// ✅ Good: run funtions with side effects inside of a step
 		// after running successfully will not run again
-		const myNewInstance = await step.do("good step that returns state", async () => {
-			const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
+		const myNewInstance = await step.do(
+			"good step that returns state",
+			async () => {
+				const myNewInstance = await this.env.ANOTHER_WORKFLOW.create();
 
-	    return myNewInstance;
-		})
+				return myNewInstance;
+			},
+		);
 	}
 }
 ```
-</TypeScriptExample>
 
+</TypeScriptExample>
 
 ### Do not mutate your incoming events
 
 The `event` passed to your Workflow's `run` method is immutable: changes you make to the event are not persisted across steps and/or Workflow restarts.
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 interface MyEvent {
-  user: string;
-  data: string;
+	user: string;
+	data: string;
 }
 
 export class MyWorkflow extends WorkflowEntrypoint {
@@ -280,23 +294,27 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		// This will not be persisted across steps and `event.payload` will
 		// take on its original value.
 		await step.do("bad step that mutates the incoming event", async () => {
-		    let userData = await env.KV.get(event.payload.user)
-				event.payload = userData
-		})
+			let userData = await env.KV.get(event.payload.user);
+			event.payload = userData;
+		});
 
 		// ✅ Good: persist data by returning it as state from your step
 		// Use that state in subsequent steps
 		let userData = await step.do("good step that returns state", async () => {
-		  return await env.KV.get(event.payload.user)
-		})
+			return await env.KV.get(event.payload.user);
+		});
 
-		let someOtherData = await step.do("following step that uses that state", async () => {
-		  // Access to userData here
-			// Will always be the same if this step is retried
-		})
+		let someOtherData = await step.do(
+			"following step that uses that state",
+			async () => {
+				// Access to userData here
+				// Will always be the same if this step is retried
+			},
+		);
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Name steps deterministically
@@ -304,41 +322,43 @@ export class MyWorkflow extends WorkflowEntrypoint {
 Steps should be named deterministically (that is, not using the current date/time, randomness, etc). This ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: Naming the step non-deterministically prevents it from being cached
 		// This will cause the step to be re-run if subsequent steps fail.
 		await step.do(`step #1 running at: ${Date.now()}`, async () => {
-		    let userData = await env.KV.get(event.payload.user)
-				// Do not mutate event.payload
-				event.payload = userData
-		})
+			let userData = await env.KV.get(event.payload.user);
+			// Do not mutate event.payload
+			event.payload = userData;
+		});
 
 		// ✅ Good: give steps a deterministic name.
 		// Return dynamic values in your state, or log them instead.
 		let state = await step.do("fetch user data from KV", async () => {
-		    let userData = await env.KV.get(event.payload.user)
-				console.log(`fetched at ${Date.now}`)
-				return userData
-		})
+			let userData = await env.KV.get(event.payload.user);
+			console.log(`fetched at ${Date.now}`);
+			return userData;
+		});
 
 		// ✅ Good: steps that are dynamically named are constructed in a deterministic way.
 		// In this case, `catList` is a step output, which is stable, and `catList` is
 		// traversed in a deterministic fashion (no shuffles or random accesses) so,
 		// it's fine to dynamically name steps (e.g: create a step per list entry).
 		let catList = await step.do("get cat list from KV", async () => {
-			return await env.KV.get("cat-list")
-		})
+			return await env.KV.get("cat-list");
+		});
 
-		for(const cat of catList) {
+		for (const cat of catList) {
 			await step.do(`get cat: ${cat}`, async () => {
-				return await env.KV.get(cat)
-			})
+				return await env.KV.get(cat);
+			});
 		}
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Take care with `Promise.race()` and `Promise.any()`
@@ -348,92 +368,69 @@ Workflows allows the usage steps within the `Promise.race()` or `Promise.any()` 
 Due to the nature of Workflows' instance lifecycle, and given that a step inside a Promise will run until it finishes, the step that is returned during the first passage may not be the actual cached step, as [steps are cached by their names](#name-steps-deterministically).
 
 <TypeScriptExample filename="index.ts">
-```ts
 
+```ts
 // helper sleep method
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: The `Promise.race` is not surrounded by a `step.do`, which may cause undeterministic caching behavior.
-		const race_return = await Promise.race(
-			[
-				step.do(
-					'Promise first race',
-					async () => {
-						await sleep(1000);
-						return "first";
-					}
-				),
-				step.do(
-					'Promise second race',
-					async () => {
-						return "second";
-					}
-				),
-			]
-		);
+		const race_return = await Promise.race([
+			step.do("Promise first race", async () => {
+				await sleep(1000);
+				return "first";
+			}),
+			step.do("Promise second race", async () => {
+				return "second";
+			}),
+		]);
 
 		await step.sleep("Sleep step", "2 hours");
 
-		return await step.do(
-			'Another step',
-			async () => {
-				// This step will return `first`, even though the `Promise.race` first returned `second`.
-				return race_return;
-			},
-		);
+		return await step.do("Another step", async () => {
+			// This step will return `first`, even though the `Promise.race` first returned `second`.
+			return race_return;
+		});
 	}
 }
 ```
+
 </TypeScriptExample>
 
 To ensure consistency, we suggest to surround the `Promise.race()` or `Promise.any()` within a `step.do()`, as this will ensure caching consistency across multiple passages.
 
 <TypeScriptExample filename="index.ts">
-```ts
 
+```ts
 // helper sleep method
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// ✅ Good: The `Promise.race` is surrounded by a `step.do`, ensuring deterministic caching behavior.
-		const race_return = await step.do(
-			'Promise step',
-			async () => {
-				return await Promise.race(
-					[
-						step.do(
-							'Promise first race',
-							async () => {
-								await sleep(1000);
-								return "first";
-							}
-						),
-						step.do(
-							'Promise second race',
-							async () => {
-								return "second";
-							}
-						),
-					]
-				);
-			}
-		);
+		const race_return = await step.do("Promise step", async () => {
+			return await Promise.race([
+				step.do("Promise first race", async () => {
+					await sleep(1000);
+					return "first";
+				}),
+				step.do("Promise second race", async () => {
+					return "second";
+				}),
+			]);
+		});
 
 		await step.sleep("Sleep step", "2 hours");
 
-		return await step.do(
-			'Another step',
-			async () => {
-				// This step will return `second` because the `Promise.race` was surround by the `step.do` method.
-				return race_return;
-			},
-		);
+		return await step.do("Another step", async () => {
+			// This step will return `second` because the `Promise.race` was surround by the `step.do` method.
+			return race_return;
+		});
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Instance IDs are unique
@@ -445,36 +442,38 @@ It would also present a problem if you wanted to run multiple different Workflow
 If you need to associate multiple instances with a specific user, merchant or other "customer" ID in your system, consider using a composite ID or using randomly generated IDs and storing the mapping in a database like [D1](/d1/).
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 // This is in the same file as your Workflow definition
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+	async fetch(req: Request, env: Env): Promise<Response> {
 		// 🔴 Bad: Use an ID that isn't unique across future Workflow invocations
-		let userId = getUserId(req) // Returns the userId
-    let badInstance = await env.MY_WORKFLOW.create({
-    	id: userId,
-    	params: payload
-    });
+		let userId = getUserId(req); // Returns the userId
+		let badInstance = await env.MY_WORKFLOW.create({
+			id: userId,
+			params: payload,
+		});
 
-    // ✅ Good: use an ID that is unique
-    // e.g. a transaction ID, order ID, or task ID are good options
-    let instanceId = getTransactionId() // e.g. assuming transaction IDs are unique
-    // or: compose a composite ID and store it in your database
-    // so that you can track all instances associated with a specific user or merchant.
-    instanceId = `${getUserId(req)}-${await crypto.randomUUID().slice(0, 6)}`
-    let { result } = await addNewInstanceToDB(userId, instanceId)
-    let goodInstance = await env.MY_WORKFLOW.create({
-    	id: instanceId,
-    	params: payload
-    });
+		// ✅ Good: use an ID that is unique
+		// e.g. a transaction ID, order ID, or task ID are good options
+		let instanceId = getTransactionId(); // e.g. assuming transaction IDs are unique
+		// or: compose a composite ID and store it in your database
+		// so that you can track all instances associated with a specific user or merchant.
+		instanceId = `${getUserId(req)}-${crypto.randomUUID().slice(0, 6)}`;
+		let { result } = await addNewInstanceToDB(userId, instanceId);
+		let goodInstance = await env.MY_WORKFLOW.create({
+			id: instanceId,
+			params: payload,
+		});
 
-    return Response.json({
-      id: goodInstance.id,
-      details: await goodInstance.status(),
-    });
-  },
+		return Response.json({
+			id: goodInstance.id,
+			details: await goodInstance.status(),
+		});
+	},
 };
 ```
+
 </TypeScriptExample>
 
 ### `await` your steps
@@ -486,26 +485,28 @@ If you don't call `await step.do` or `await step.sleep`, you create a dangling P
 This happens when you do not use the `await` keyword or fail to chain `.then()` methods to handle the result of a Promise. For example, calling `fetch(GITHUB_URL)` without awaiting its response will cause subsequent code to execute immediately, regardless of whether the fetch completed. This can cause issues like premature logging, exceptions being swallowed (and not terminating the Workflow), and lost return values (state).
 
 <TypeScriptExample filename="index.ts">
+
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// 🔴 Bad: The step isn't await'ed, and any state or errors is swallowed before it returns.
-	  const issues = step.do(`fetch issues from GitHub`, async () => {
-				// The step will return before this call is done
-		    let issues = await getIssues(event.payload.repoName)
-				return issues
-		})
+		const issues = step.do(`fetch issues from GitHub`, async () => {
+			// The step will return before this call is done
+			let issues = await getIssues(event.payload.repoName);
+			return issues;
+		});
 
 		// ✅ Good: The step is correctly await'ed.
-	  const issues = await step.do(`fetch issues from GitHub`, async () => {
-		    let issues = await getIssues(event.payload.repoName)
-				return issues
-		})
+		const issues = await step.do(`fetch issues from GitHub`, async () => {
+			let issues = await getIssues(event.payload.repoName);
+			return issues;
+		});
 
 		// Rest of your Workflow goes here!
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Batch multiple Workflow invocations
@@ -516,22 +517,27 @@ When creating multiple Workflow instances, use the [`createBatch`](/workflows/bu
 
 ```ts
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
-		let instances = [{id: "user1", params: {name: "John"}}, {id: "user2", params: {name: "Jane"}}, {id: "user3", params: {name: "Alice"}}, {id: "user4", params: {name: "Bob"}}];
+	async fetch(req: Request, env: Env): Promise<Response> {
+		let instances = [
+			{ id: "user1", params: { name: "John" } },
+			{ id: "user2", params: { name: "Jane" } },
+			{ id: "user3", params: { name: "Alice" } },
+			{ id: "user4", params: { name: "Bob" } },
+		];
 
 		// 🔴 Bad: Create them one by one, which is more likely to hit creation rate limits.
 		for (let instance of instances) {
 			await env.MY_WORKFLOW.create({
 				id: instance.id,
-				params: instance.params
+				params: instance.params,
 			});
 		}
 
-    // ✅ Good: Batch calls together
-    // This improves throughput.
-    let instances = await env.MY_WORKFLOW.createBatch(instances);
-    return Response.json({ instances })
-  },
+		// ✅ Good: Batch calls together
+		// This improves throughput.
+		let instances = await env.MY_WORKFLOW.createBatch(instances);
+		return Response.json({ instances });
+	},
 };
 ```
 
