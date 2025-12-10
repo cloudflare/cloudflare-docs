@@ -12,7 +12,7 @@ params:
 
 import { AnchorHeading, Markdown } from "~/components";
 
-{props.productName} customers can follow the troubleshooting steps listed below to gather information at the beginning of a troubleshooting process, then move to more detailed network data collection and analysis to identify the root cause of a problem.
+{props.productName} customers can follow these troubleshooting steps to gather information at the beginning of a troubleshooting process, then move to more detailed network data collection and analysis to identify the root cause of a problem.
 
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
@@ -24,7 +24,7 @@ import { AnchorHeading, Markdown } from "~/components";
   </>
   )
 }
-- Analyze network traffic data over time in <a href={props.analyticsAnchorHeading}>{props.productName} Network Analytics</a>
+- Analyze network traffic over time in <a href={props.analyticsAnchorHeading}>{props.productName} Network Analytics</a>
 - Perform more detailed troubleshooting with:
   - [Traceroutes](#traceroutes)
   - [Packet captures](#packet-captures)
@@ -34,7 +34,7 @@ import { AnchorHeading, Markdown } from "~/components";
     <AnchorHeading title="Network overview (beta)" depth={2} />
 		<Markdown
 		text={`
-		${props.productName} Network overview (beta) provides an overview of the connectivity status and traffic analytics of all ${props.productName} sites. This is a great place to start if you receive an alert, need to begin the ${props.productName} troubleshooting process, or are performing routine monitoring.
+		${props.productName} Network overview (beta) shows the connectivity status and traffic analytics for all ${props.productName} sites. Use it when you receive an alert, need to begin the ${props.productName} troubleshooting process, or are performing routine monitoring.
 
 		Refer to [${props.magicWord === "WAN Tunnels" ? "Network visibility" : "Network overview (beta)"}](${props.siteAnalyticsURL}) to learn more.
 		`}
@@ -46,25 +46,25 @@ import { AnchorHeading, Markdown } from "~/components";
 
 <AnchorHeading depth={2} title={`${props.productName} Network Analytics`} />
 
-Network Analytics provides detailed analytics on {props.productName} traffic over time. Customers can filter data on specific traffic characteristics and view traffic analytics over time.
+Network Analytics provides detailed analytics on {props.productName} traffic over time. Customers can filter data on specific traffic characteristics and view traffic trends over time.
 
-Refer to <a href={props.networkAnalyticsURL}>{props.productName} Network Analytics to learn more.</a>
+Refer to <a href={props.networkAnalyticsURL}>{props.productName} Network Analytics</a> to learn more.
 
 ## Traceroutes
 
-Traceroutes provide a hop by hop breakdown of the Internet path network traffic follows as it traverses from Cloudflare's network to a customer's network.
+Traceroutes provide a hop-by-hop breakdown of the Internet path network traffic follows from Cloudflare's network to a customer's network.
 
 Refer to <a href={props.traceRoutes}>Traceroutes</a> to learn more.
 
 ## Packet captures
 
-Packet captures allow customers to analyze the raw packet data that a customer is sending and receiving from Cloudflare's network.
+Packet captures allow customers to analyze the raw packet data they send to and receive from Cloudflare's network.
 
 Refer to [packet captures](/magic-firewall/packet-captures/) to learn more.
 
-## Query Analytics with GraphQL
+## Query analytics with GraphQL
 
-GraphQL Analytics provides customers with a GraphQL API that they can query to receive raw JSON data of their {props.productName} traffic analytics. This data can be ingested into a SIEM or other tool and analyzed further.
+GraphQL Analytics provides a GraphQL API that customers can query to receive raw JSON data for their {props.productName} traffic analytics. Customers can ingest this data into a SIEM or other tool for further analysis.
 
 - <a href={props.graphQlTunnelBandwidthURL}>Querying {props.productName} tunnel bandwidth analytics with GraphQL</a>
 - <a href={props.graphQlTunnelHealthURL}>Querying {props.productName} tunnel health check results with GraphQL</a>

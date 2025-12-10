@@ -5,7 +5,7 @@ title: Diagrams
 
 ## Definition
 
-Images that depict a process, architecture, or some other form of technology. These should ideally be in an `SVG` format because of scalability issues.
+Visualizations that depict a process, architecture, or some other form of technology. We recommend either using [SVG files](#svg-diagrams) or [Mermaid diagrams](#mermaid-diagrams).
 
 ## Used in
 
@@ -15,27 +15,70 @@ All content types
 
 Diagrams explain complex topics in a compelling way and help users visualize a specific solution, process, or interaction between products.
 
-## Template
+## SVG diagrams
+
+Use SVG files instead of PNG or JPEG because SVG scales well when users want to zoom in. Use clear and straightforward `Alt text` with your SVG for use by screen readers.
+
+We optimize SVG files with a [recurring script](https://github.com/cloudflare/cloudflare-docs/blob/production/scripts/optimize-svgs.ts) in our repo.
+
+### Template
 
 ```md
 ![Alt text](/link/to/image.svg "Caption to go under the image")
 ```
 
-## Example
+### Example
 
 ![A simple flow diagram shows interactions between important elements of the design.](~/assets/images/firewall/simple-flow.png "An example flow diagram")
 
-## Additional information
+```md
+![A simple flow diagram shows interactions between important elements of the design.](~/assets/images/firewall/simple-flow.png "An example flow diagram")
+## Mermaid diagrams
 
-Always try to use SVG images for diagrams. Bitmap formats like PNG and JPEG do not scale well, and often users will zoom into diagrams to explore the details.
+Use Mermaid diagrams to illustrate product or process flows. If they work for your use case, Mermaid diagrams are preferable to other [diagrams](/style-guide/documentation-content-strategy/component-attributes/diagrams/) because they are more easily searchable and changeable.
 
-The alt (alternative) text on diagrams is used by screen readers and is read out as part of the surrounding content. Ensure the alt text is straightforward and fits in the context of the content.
+Our Mermaid diagrams are based on [`rehype-mermaid`](https://github.com/remcohaszing/rehype-mermaid/) and [`mermaid`](https://www.npmjs.com/package/mermaid).
 
-## Optimizations
+## Template
 
-When we use SVGs for diagrams, we can also optimize them via a [recurring script](https://github.com/cloudflare/cloudflare-docs/blob/production/scripts/optimize-svgs.ts) in our repo.
+```mermaid
+flowchart LR
+accTitle: Tunnels diagram
+accDescr: The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
+
+subgraph Cloudflare
+direction LR
+B[Cloudflare <br/> data center]
+C[Cloudflare <br/> data center]
+D[Cloudflare <br/> data center]
+end
+
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP] --> F[/Tunnel 1 / <br/> priority 1/] --> I{{Customer <br/> data center/ <br/> network 1}}
+E[Anycast IP] --> G[/Tunnel 2 / <br/> priority 1/] --> J{{Customer <br/> data center/ <br/> network 2}}
+E[Anycast IP] --> H[/Tunnel 3 / <br/> priority 2/] --> K{{Customer <br/> data center/ <br/> network 3}}
+```
+
+````
+```mermaid
+flowchart LR
+accTitle: Tunnels diagram
+accDescr: The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
+
+subgraph Cloudflare
+direction LR
+B[Cloudflare <br/> data center]
+C[Cloudflare <br/> data center]
+D[Cloudflare <br/> data center]
+end
+
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP] --> F[/Tunnel 1 / <br/> priority 1/] --> I{{Customer <br/> data center/ <br/> network 1}}
+E[Anycast IP] --> G[/Tunnel 2 / <br/> priority 1/] --> J{{Customer <br/> data center/ <br/> network 2}}
+E[Anycast IP] --> H[/Tunnel 3 / <br/> priority 2/] --> K{{Customer <br/> data center/ <br/> network 3}}
+```
+````
 
 ## Related components
 
-- [Mermaid diagrams](/style-guide/components/mermaid/)
 - [Screenshots](/style-guide/documentation-content-strategy/component-attributes/screenshots/)

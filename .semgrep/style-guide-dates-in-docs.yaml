@@ -37,7 +37,7 @@ rules:
         - "/.semgrep/**"
         - "/.github/**"
     patterns:
-      - pattern-regex: "Jan|Feb|Mar[^k]|Apr|May[^b]|Jun[^k]|Jul|Aug|Sep|Nov|Dec[^i]"
+      - pattern-regex: "Jan|Feb|Mar[ c]|Apr|May[ \\.]|Jun[ e]|Jul|Aug|Sep|Nov|Dec[ e]"
 
   - id: style-guide-potential-date-year
     languages: [generic]
@@ -58,4 +58,5 @@ rules:
         - "/.github/**"
     patterns:
       # ignore 2xxx- with a - at the end (double-escape because in string and not a range operator!)
-      - pattern-regex: "20[0-9][0-9][^\\-]"
+      # ignore 200!:: as part of IPv6 address
+      - pattern-regex: "20[0-9][0-9][^\\-:]"

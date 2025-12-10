@@ -11,18 +11,18 @@ import { APIRequest, Details, GlossaryTooltip, Render, Tabs, TabItem, DashButton
 
 You can bring your own public IPs to Cloudflare to use with Magic Transit. This process requires two steps:
 
-1. Add IP <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letter of Agency or LOA</GlossaryTooltip>) that allows Cloudflare to announce the network or its subnets. The IP prefix is also where you define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
-2. Define additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default there is always one BGP prefix that is identical to the IP prefix. You can optionally configure additional, more-specific BGP prefixes (subnets of the IP prefix), up to a maximum prefix length of `/24`.
+1. Add IP <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letter of Agency or LOA</GlossaryTooltip>) that allows Cloudflare to announce the network or its subnets. You can also define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
+2. Define additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default, there is always one BGP prefix that is identical to the IP prefix. You can optionally configure additional, more-specific BGP prefixes (subnets of the IP prefix), up to a maximum prefix length of `/24`.
 
 ### IP prefixes
 
 Cloudflare measures the Magic Transit prefix count based on the number of BGP prefixes a customer defines. Each prefix is billed separately, even if they overlap. For example, both a `/16` and any `/24` within it are counted individually. Onboarding a larger aggregate prefix does not automatically include its smaller subnets for announcement or billing purposes.
 
-While there is no billing limit on the accepted prefix sizes, technically only prefixes up to `/24` are accepted for onboarding, as longer ones (like `/25`, `/26`) are not globally routable.
+There is no billing limit on the accepted prefix sizes. However, only prefixes up to `/24` are accepted for onboarding because longer prefixes (like `/25`, `/26`) are not globally routable.
 
 Provide all IP prefixes you plan to onboard, along with the ASNs from which they will be advertised. When specifying prefixes, observe these guidelines:
 
-- Prefixes must support at least 256 hosts (`/24` in classless inter-domain [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) CIDR notation). Refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/) if you do not meet the `/24` prefix length requirement.
+- Prefixes must support at least 256 hosts (`/24` in CIDR ([Classless Inter-Domain Routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/)) notation). If you do not meet the `/24` prefix length requirement, refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/).
 - Internet Routing Registry entries and Letters of Agency (LOA) must match the prefixes and originating prefixes you submit to Cloudflare.
 - When using contiguous prefixes, specify aggregate prefixes where possible.
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
@@ -88,8 +88,8 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 
 		<DashButton url="/?to=/:account/magic-transit/configuration" />
 
-		2. From the **IP Prefixes** tab, select the prefix you want to modify > **Edit**.
-		3. From the dropdown menu **Status**, choose whether the status of your IP is **Advertised** or **Withdrawn**.
+		2. From the **IP Prefixes** tab, select the prefix to modify > **Edit**.
+		3. From the **Status** drop-down menu, choose **Advertised** or **Withdrawn**.
 		4. (Optional) Edit the description for your prefix.
 		5. Select **Edit IP Prefix** to save your changes.
   </TabItem>
@@ -133,7 +133,7 @@ json={{
 }}
 />
 
-AS prepending helps you gracefully transition traffic between network providers. By adding prepends to Cloudflare's advertisement, you make the route through Cloudflare less preferred for some Internet network providers. This allows you to simultaneously advertise the same prefix from an alternate provider with a shorter, more desirable `AS_PATH`. Advertising from both providers at once can provide a smoother traffic migration and minimize packet loss during a change of provider.
+AS prepending helps you gracefully transition traffic between network providers. By adding prepends to Cloudflare's advertisement, you make the route through Cloudflare less preferred for some Internet network providers. This allows you to simultaneously advertise the same prefix from an alternate provider with a shorter, more desirable `AS_PATH`. Advertising from both providers at once provides a smoother traffic migration and minimizes packet loss during a change of provider.
 
 The `"asn_prepend_count"` parameter accepts values from `0` to `3`. A higher value makes the route less preferred.  This parameter can also be changed using BGP — refer to [Use communities to set AS prepends on an anycast prefix](#use-communities-to-set-as-prepends-on-an-anycast-prefix).
 
@@ -145,7 +145,7 @@ When you use AS prepending to migrate traffic away from Magic Transit, the typic
 - **Final state**: External networks now receive two advertisements: the prepended route through Cloudflare and the non-prepended route through your new provider. The external network will select a path based on its BGP policy rules.
 
 :::caution
-BGP has different mechanisms to control route priorities which are set by the peered network, not by Cloudflare. As such, this is a best effort feature. Cloudflare cannot guarantee that peers will honor AS prepends on Cloudflare's transit and peering connections.
+BGP has different mechanisms to control route priorities which are set by the peered network, not by Cloudflare. As such, this is a best-effort feature. Cloudflare cannot guarantee that peers will honor AS prepends on Cloudflare's transit and peering connections.
 :::
 
 :::caution

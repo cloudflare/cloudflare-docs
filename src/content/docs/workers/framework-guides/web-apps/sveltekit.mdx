@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Svelte
+title: SvelteKit
 sidebar:
   order: 8
 tags: ["spa"]
-description: Create a Svelte application and deploy it to Cloudflare Workers with Workers Assets.
+description: Create a SvelteKit application and deploy it to Cloudflare Workers with Workers Assets.
 ---
 
 import {
@@ -15,13 +15,13 @@ import {
 	PackageManagers,
 } from "~/components";
 
-In this guide, you will create a new [Svelte](https://svelte.dev/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
+In this guide, you will create a new [SvelteKit](https://svelte.dev/docs/kit/introduction) application and deploy to Cloudflare Workers.
 
 ## 1. Set up a new project
 
-Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate SvelteKit's official setup tool, and provide the option to deploy instantly.
 
-To use `create-cloudflare` to create a new Svelte project with Workers Assets, run the following command:
+To use `create-cloudflare` to create a new SvelteKit project with Workers Assets, run the following command:
 
 <PackageManagers
 	type="create"
@@ -53,6 +53,6 @@ The following command will build and deploy your project. If you're using CI, en
 
 ## Bindings
 
-Your Svelte application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [Svelte documentation](https://kit.svelte.dev/docs/adapter-cloudflare#runtime-apis) provides information about configuring bindings and how you can access them in your Svelte hooks and endpoints.
+Your SvelteKit application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [SvelteKit documentation](https://kit.svelte.dev/docs/adapter-cloudflare#runtime-apis) provides information about configuring bindings and how you can access them in your SvelteKit hooks and endpoints.
 
 <Render file="frameworks-bindings" product="workers" />

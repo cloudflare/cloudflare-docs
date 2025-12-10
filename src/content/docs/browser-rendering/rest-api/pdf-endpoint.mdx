@@ -197,6 +197,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "dynamic-header-footer.pdf"
 ```
 
+### Use custom fonts
+
+If your PDF requires a font that is not pre-installed in the Browser Rendering environment, you can load custom fonts using the `addStyleTag` parameter. For instructions and examples, refer to [Use your own custom font](/browser-rendering/reference/supported-fonts/#rest-api).
+
 <Render
   file="setting-custom-user-agent"
   product="browser-rendering"
