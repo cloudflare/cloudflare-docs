@@ -46,7 +46,7 @@ Suppose that the UDP datagram has source port `389` and is destined for a {props
 
 ### How Cloudflare handles fragments
 
-The diagram below shows how the three UDP fragments in the example above flow through Cloudflare and {props.productName}. However, the main takeaways are:
+The following diagram shows how the three UDP fragments in the preceding example flow through Cloudflare and {props.productName}. However, the main takeaways are:
 
 - **Cloudflare will never send incomplete packets to a customer**: If we do not see all parts of a packet required to fully reassemble that packet, we will not send the partial data fragments on to the customer.
 - **Magic Firewall operates on fully reassembled packets, not individual fragments**: This means that filters that match on UDP/TCP header information, for example, will apply to the fully reassembled packet, not just the initial fragment. So, we will not leak non-initial fragments to customers.
@@ -76,9 +76,9 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
   <>
     <AnchorHeading title="MSS with Magic Transit and Direct Server Return" depth={2} />
 		<p>Asymmetric <a href="https://www.cloudflare.com/learning/network-layer/what-is-routing/" target="_blank" rel="noopener noreferrer">routing</a> is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1,476 bytes), and egress traffic from the datacenter is sent through Direct Server Return (DSR) over the Internet (MTU of 1,500 bytes).</p>
-		<p>In an asymmetric scenario, we want to reduce the MSS value of packets sent by Magic Transit users to the Internet in order to reduce the size of packets sent from the Internet towards their network. To accomplish this, the configuration must be done either on the customer's end-hosts or through an MSS clamp on an intermediary device on the egress path of traffic leaving their network. How MSS values affect payload sizes on both routing paths is detailed below.</p>
+		<p>In an asymmetric scenario, we want to reduce the MSS value of packets sent by Magic Transit users to the Internet in order to reduce the size of packets sent from the Internet towards their network. To accomplish this, the configuration must be done either on the customer's end-hosts or through an MSS clamp on an intermediary device on the egress path of traffic leaving their network. The following chart details how MSS values affect payload sizes on both routing paths.</p>
 		<Image src={dsr} alt="A diagram showing how MSS works with Magic Transit and Direct Server Return." />
-		<p><em>Key takeaway from the chart above: MSS clamping affects TCP packet payload sizes flowing in the opposite direction vs. where the clamp is applied.</em></p>
+		<p><em>Key takeaway from the preceding chart: MSS clamping affects TCP packet payload sizes flowing in the opposite direction vs. where the clamp is applied.</em></p>
 		<AnchorHeading title="Tunnel-in-tunnel scenario with Magic Transit" depth={2} />
 		<p>MSS clamping only affects TCP traffic. If, for example, you have a web server on your Magic Transit prefix, then the MSS clamp will take effect on the TCP data from direct server return traffic. However, be aware that you will have to take a different approach for any tunnels inside of your Magic Transit tunnel (tunnel-in-tunnel scenario).</p>
 		<Image src={tunnel} alt="A diagram showing where the MSS clamp goes with TCP traffic." />
