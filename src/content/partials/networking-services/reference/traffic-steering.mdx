@@ -71,7 +71,7 @@ The following IPv4 address ranges are allowed in the Magic Routing table:
 
 ### Set priority and weights for static routes
 
-The priority value for static routes is directly configured as part of the route object in the Cloudflare <a href={props.createStaticRoute}>dashboard or via API</a>. For example:
+The priority value for static routes is directly configured as part of the route object in the Cloudflare <a href={props.createStaticRoute}>dashboard or through the API</a>. For example:
 
 
 | Prefix | NextHop | Priority |
@@ -85,7 +85,7 @@ In the example above, tunnels with priority of `100` will be preferred to tunnel
 
 Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. The weight values determine the proportion of traffic directed to each tunnel, with higher weights resulting in a greater share of traffic. The maximum weight value is `256`.
 
-In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic as `TUNNEL_1_IAD`.
+In the following example, `TUNNEL_2_IAD` is likely to receive twice as much traffic as `TUNNEL_1_IAD`.
 
 | Prefix | NextHop | Priority | Weight |
 | ----- | ----- | ----- | ----- |
@@ -104,7 +104,7 @@ Additionally, when multiple BGP routes exist with the same prefix length and pri
 
 ### Change route priorities with BGP attributes
 
-Cloudflare supports traffic engineering via BGP communities and AS prepending. You can use these traffic routing techniques to set route priorities and perform traffic engineering across multiple interconnects.
+Cloudflare supports traffic engineering through BGP communities and AS prepending. You can use these traffic routing techniques to set route priorities and perform traffic engineering across multiple interconnects.
 
 #### BGP communities for setting route priority
 
@@ -194,8 +194,8 @@ Automatic Return Routing applies when:
 - The traffic is destined for:
   - Internet egress through Cloudflare
   - A WARP client
-  - A private network connected to Cloudflare via Cloudflare Tunnel
-  - A private network connected to Cloudflare via WARP Connector
+  - A private network connected to Cloudflare through Cloudflare Tunnel
+  - A private network connected to Cloudflare through WARP Connector
 
 In this initial release, ARR does not change routing for traffic between Magic WAN connections (for example, traffic from one Magic WAN tunnel or interconnect to another). That traffic continues to follow your configured Magic WAN routes.
 		`}
@@ -259,7 +259,7 @@ Configure scoping for your traffic in the **Region code** section when adding or
     <AnchorHeading title="Map route prefixes smaller than `/24`" depth={3} />
 		<Markdown
     text={`
-		You must provide your prefixes and the tunnels that should be mapped to for Cloudflare to route your traffic from our global network to your data centers via anycast tunnels. Use the table below as reference.
+		You must provide your prefixes and the tunnels that should be mapped to for Cloudflare to route your traffic from our global network to your data centers through anycast tunnels. Use the following table as reference.
 
   | Prefix            | NextHop        |
   | ----------------- | -------------- |
@@ -416,7 +416,7 @@ Using BGP peering with a CNI allows customers to:
 
 With this functionality, customers can:
 
-- Establish an eBGP session between their devices and the {props.productName} service when connected via CNI.
+- Establish an eBGP session between their devices and the {props.productName} service when connected through CNI.
 - Secure the session by MD5 authentication to prevent misconfigurations.
 - Exchange routes dynamically between their devices and their Magic routing table.
 
@@ -436,7 +436,7 @@ BGP peering sessions can advertise reachable prefixes to a peer and withdraw pre
 
 ### BGP timers and settings
 
-Cloudflare uses the timers as described below. These are not configurable:
+Cloudflare uses the timers as follows. These are not configurable:
 
 | Setting | Description |
 | ----- | ----- |
