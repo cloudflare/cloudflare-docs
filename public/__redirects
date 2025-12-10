@@ -2063,7 +2063,7 @@
 
 # argo-tunnel
 /argo-tunnel/getting-started/installation/ /cloudflare-one/connections/connect-networks/get-started/ 301
-/argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/ 301
+/argo-tunnel/reference/load-balancing/ /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/ 301
 /argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/ 301
 /argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
@@ -2117,6 +2117,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/installation/ /cloudflare-one/connections/connect-networks/downloads/update-cloudflared/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/lb/ /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/installation/ /cloudflare-one/connections/connect-networks/downloads/ 301
