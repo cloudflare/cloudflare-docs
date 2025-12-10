@@ -1,6 +1,6 @@
 ---
 title: Increased WAF payload limit for all plans
-description: Updating WAF to run on requests body of up to 1MB
+description: Updating WAF to run on requests body of up to 1 MB
 date: 2025-12-05
 ---
 
@@ -9,3 +9,5 @@ Cloudflare WAF now inspects request-payload size of up to 1 MB across all plans 
 **Key Findings**
 
 React payloads commonly have a default maximum size of 1 MB. Cloudflare WAF previously inspected up to 128 KB on Enterprise plans, with even lower limits on other plans.
+
+**Update:** We later reinstated the maximum request-payload size the Cloudflare WAF inspects. Refer to [Updating the WAF maximum payload values](/changelog/2025-12-05-waf-max-payload-size-change/) for details.
