@@ -162,7 +162,7 @@ Free, Pro, and Business plans use 200 concurrent streams per connection. Enterpr
 
 **How does Cloudflare scale connections during spikes or failovers?**
 
-Cloudflare first reuses existing keep-alive connections. If those reach concurrency limits, new connections are opened as needed. Even during surges, total connection count is typically lower than without multiplexing.
+Cloudflare first reuses existing keep-alive connections. If they reach concurrency limits, new connections are opened as needed. Even during surges, total connection count is typically lower than without multiplexing.
 
 **What if my backend is sensitive to parallel requests?**
 
