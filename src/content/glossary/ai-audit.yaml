@@ -7,7 +7,7 @@ entries:
 
   - term: category
     general_definition: |-
-      A single classification assigned to each crawler that best describes its primary stated purpose, such as "Training", "Search", "User-initiated", or "Archival". AI Crawl Control assigns one category per crawler based on Cloudflare's responsible AI bot principles, which propose that bots should declare a single purpose to help website operators make clear decisions about content access. However, not all crawlers operate with a single purpose under their declared category. For example, some crawlers may combine search indexing with AI inference or training, even though they are categorized primarily as "Search" crawlers. Understanding a crawler's category helps you assess what the operator claims the crawler does, though you should review the operator's official documentation to understand the full scope of how your content may be used.
+      A single classification assigned to each crawler that best describes its primary stated purpose, such as "AI Crawler", "AI Search", "AI Assistant", or "Archiver". AI Crawl Control assigns one category per crawler based on Cloudflare's responsible AI bot principles, which propose that bots should declare a single purpose to help website operators make clear decisions about content access. However, not all crawlers operate with a single purpose under their declared category. For example, some crawlers may combine search indexing with AI inference or training, even though they are categorized primarily as "Search Engine Optimization" crawlers. Understanding a crawler's category helps you assess what the operator claims the crawler does, though you should review the operator's official documentation to understand the full scope of how crawler operator may use your content.
 
   - term: Content Signals
     general_definition: |-
@@ -35,7 +35,7 @@ entries:
 
   - term: referrer
     general_definition: |-
-      The web page or site that a user was on immediately before visiting your domain, tracked via the HTTP Referer header. In AI Crawl Control analytics, referrer data shows when users start on a site owned by an AI operator (such as ChatGPT or Perplexity) and then navigate to your site, indicating that the operator's site referred the visit. This is a heuristic that helps identify which AI services are driving traffic to your content and suggests that the AI company likely crawled your site first to understand and include it in their results.
+      The web page or site that a user was on immediately before visiting your domain, tracked via the HTTP Referer header. In AI Crawl Control analytics, referrer data shows when users start on a site owned by an AI operator (such as ChatGPT or Perplexity) and then navigate to your site, indicating that the operator's site referred the visit. This is helps identify which AI services are driving traffic to your content and suggests that the AI company likely crawled your site first to understand and include it in their results.
 
   - term: request
     general_definition: |-
