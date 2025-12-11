@@ -29,7 +29,7 @@ import {
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
 
 :::note
-SPA mode and prerendering are not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
+SPA mode is not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/framework-guides/web-apps/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
 :::
 
@@ -204,3 +204,43 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
 </Details>
 
 <Render file="frameworks-bindings" product="workers" />
+
+## Pre-rendering
+
+:::note
+
+This feature is experimental and requires `@react-router/dev` v7.x.y or later.
+
+:::
+
+React Router can prerender routes to static HTML at build time. Prerendered routes are served as [static assets](/workers/static-assets/) with full access to environment variables and bindings.
+
+Add `unstable_previewServerPrerendering` and `prerender` to your React Router config to enable prerendering on Cloudflare Workers:
+
+```ts title="react-router.config.ts"
+import type { Config } from "@react-router/dev/config";
+
+export default {
+  future: {
+    unstable_previewServerPrerendering: true,
+  },
+  prerender: true,
+} satisfies Config;
+```
+
+Setting `prerender` to `true` prerenders all static routes. You can also pass an array of paths to prerender specific routes. For more options, see the [React Router prerendering documentation](https://reactrouter.com/how-to/pre-rendering#pre-rendering).
+
+### Prerendering data sources
+
+:::caution
+
+Prerendering runs at build time. It uses your local environment variables, secrets, and bindings storage data.
+
+:::
+
+To prerender with production data, use [remote bindings](/workers/development-testing/#remote-bindings).
+
+In CI environments, environment variables or secrets may not be available during the build. To make them accessible:
+
+- Set `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` in your CI environment and provide the required values as environment variables.
+- If using [Workers Builds](/workers/ci-cd/builds/), update your [build settings](/workers/ci-cd/builds/configuration/#build-settings).
