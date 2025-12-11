@@ -98,13 +98,23 @@ For detailed information about each crawler, refer to the [Bot catalog](/ai-craw
 
 3. Verify that no crawlers have **Block** actions applied.
 
-4. (Optional) Monitor crawler activity in the **Metrics** tab to understand which crawlers are accessing your content.
+4. (Optional) Add Content Signals directives to your robots.txt to express your AI usage preferences:
+
+   ```txt
+   User-Agent: *
+   Allow: /
+   Content-Signal: ai-train=yes, search=yes, ai-input=yes
+   ```
+
+   This signals that you allow AI training, search indexing, and AI input on your content. See [Content Signals](https://contentsignals.org/) for more information.
+
+5. (Optional) Monitor crawler activity in the **Metrics** tab to understand which crawlers are accessing your content.
 
 </Steps>
 
 <Aside type="note">
 
-This is the default configuration. No action is required unless you have previously blocked crawlers.
+This is the default configuration. No action is required unless you have previously blocked crawlers. Content Signals directives are optional but help communicate your preferences to compliant crawlers.
 
 </Aside>
 
@@ -182,7 +192,24 @@ This is the default configuration. No action is required unless you have previou
    - **Apple:** Add `Applebot-Extended` disallow directive to your robots.txt file
    - **Amazon:** Add `Amazonbot` disallow directive to your robots.txt file for AI training paths
 
-5. (Optional) Consider implementing [Content Signals](https://contentsignals.org/) to express granular AI usage preferences using the emerging IETF standard for machine-readable content preferences.
+5. Add Content Signals directives to your robots.txt to express your AI usage preferences:
+
+   ```txt
+   User-Agent: *
+   Allow: /
+   Content-Signal: ai-train=no, search=yes, ai-input=no
+   ```
+
+   This signals that you do not allow AI training on your content, but allow search indexing. For more granular control, you can specify different preferences for different paths:
+
+   ```txt
+   User-Agent: *
+   Allow: /
+   Content-Signal: ai-train=no, search=yes, ai-input=no
+   Content-Signal: /public-content/ ai-train=yes, search=yes, ai-input=yes
+   ```
+
+   See [Content Signals](https://contentsignals.org/) for the full specification.
 
 6. Monitor the **Metrics** tab to verify that training crawlers are being blocked while search and citation crawlers continue to access your content.
 
@@ -287,7 +314,15 @@ These agents fetch content when users explicitly request it. Blocking them may r
    - **Apple:** Add `Applebot-Extended` disallow directive to your robots.txt file
    - **Amazon:** Add `Amazonbot` disallow directive to your robots.txt file for AI training paths
 
-5. (Optional) Consider implementing [Content Signals](https://contentsignals.org/) to express granular AI usage preferences using the emerging IETF standard for machine-readable content preferences.
+5. Add Content Signals directives to your robots.txt to clearly express your licensing requirements:
+
+   ```txt
+   User-Agent: *
+   Allow: /
+   Content-Signal: ai-train=no, search=yes, ai-input=no
+   ```
+
+   This signals that AI training requires explicit permission or licensing, but search indexing is allowed. See [Content Signals](https://contentsignals.org/) for the full specification.
 
 6. Evaluate whether to block user-initiated agents based on your content strategy and user experience priorities.
 
@@ -370,11 +405,33 @@ These agents fetch content when users explicitly request it. Blocking them may r
 
 3. For each commercial training crawler listed above, select **Block** from the **Action** column.
 
-4. Verify that research and archival crawlers (CCBot, archive.org_bot) remain allowed.
+4. Add Content Signals directives to your robots.txt to express your research-friendly preferences:
 
-5. Monitor the **Metrics** tab to track crawler activity.
+   ```txt
+   User-Agent: *
+   Allow: /
+   Content-Signal: ai-train=no, search=yes, ai-input=no
+
+   User-Agent: CCBot
+   Allow: /
+   Content-Signal: ai-train=yes, search=yes, ai-input=yes
+   ```
+
+   This signals that commercial AI training is not allowed, but you support research through Common Crawl. See [Content Signals](https://contentsignals.org/) for more information.
+
+5. (Optional) Monitor the **Metrics** tab to track crawler activity and ensure research crawlers can access your content.
+
+6. Verify that research and archival crawlers (CCBot, archive.org_bot) remain allowed.
+
+7. Monitor the **Metrics** tab to track crawler activity.
 
 </Steps>
+
+<Aside type="note">
+
+For research-focused sites, consider combining AI Crawl Control with [Bot Management](/bots/get-started/bot-management/) for comprehensive protection against commercial AI training.
+
+</Aside>
 
 ---
 
@@ -429,11 +486,24 @@ These agents fetch content when users explicitly request it. Blocking them may r
 
 3. For each crawler listed in the "Crawlers to block" section above, select **Block** from the **Action** column.
 
-4. Consider implementing [WAF custom rules](/waf/custom-rules/) to protect specific paths (such as `/pricing`, `/inventory`, `/api`) from all automated access.
+4. Add Content Signals directives to your robots.txt to protect sensitive business data:
 
-5. Use [Rate Limiting](/waf/rate-limiting-rules/) to prevent excessive requests to sensitive endpoints.
+   ```txt
+   User-Agent: *
+   Allow: /
+   Content-Signal: ai-train=no, search=yes, ai-input=no
+   Content-Signal: /pricing ai-train=no, search=no, ai-input=no
+   Content-Signal: /inventory ai-train=no, search=no, ai-input=no
+   Content-Signal: /api ai-train=no, search=no, ai-input=no
+   ```
 
-6. Monitor the **Metrics** tab and [Security Analytics](/waf/analytics/security-analytics/) to identify unusual access patterns.
+   This signals that AI training is not allowed, and sensitive business endpoints should not be indexed or used as AI input. See [Content Signals](https://contentsignals.org/) for more information.
+
+5. Consider implementing [WAF custom rules](/waf/custom-rules/) to protect specific paths (such as `/pricing`, `/inventory`, `/api`) from all automated access.
+
+6. Use [Rate Limiting](/waf/rate-limiting-rules/) to prevent excessive requests to sensitive endpoints.
+
+7. Monitor the **Metrics** tab and [Security Analytics](/waf/analytics/security-analytics/) to identify unusual access patterns.
 
 </Steps>
 
@@ -442,6 +512,60 @@ These agents fetch content when users explicitly request it. Blocking them may r
 For e-commerce sites, consider combining AI Crawl Control with [Bot Management](/bots/get-started/bot-management/) for comprehensive protection against automated data collection and competitive intelligence gathering.
 
 </Aside>
+
+---
+
+## Using Content Signals to express AI usage preferences
+
+[Content Signals](https://contentsignals.org/) is an IETF standard (draft) that provides a machine-readable way to express your preferences about how AI systems use your content. It works through two mechanisms:
+
+### robots.txt directives
+
+Add `Content-Signal` rules to your robots.txt file to express preferences for different paths:
+
+```txt
+User-Agent: *
+Allow: /
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
+# Allow training on specific paths
+Content-Signal: /public-content/ ai-train=yes, search=yes, ai-input=yes
+
+# Target specific crawlers
+User-Agent: CCBot
+Allow: /
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+```
+
+**Key points:**
+
+- `ai-train=yes` signals that AI training is allowed; `ai-train=no` signals it is not allowed
+- `search=yes` signals that search indexing is allowed; `search=no` signals it is not allowed
+- `ai-input=yes` signals that content can be used as AI input; `ai-input=no` signals it cannot
+- Path-specific rules use the same prefix matching as Allow/Disallow rules
+- Preferences only apply to paths that can be crawled (not disallowed)
+- The longest matching path prefix determines which preference applies
+
+### HTTP Content-Signal header
+
+You can also signal preferences via HTTP response headers:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Signal: ai-train=no, search=yes, ai-input=no
+```
+
+This approach allows dynamic, per-response preferences and works with content types that don't support embedded metadata.
+
+### When to use Content Signals
+
+- **Complement blocking:** Content Signals express your preferences, but don't enforce them. Use AI Crawl Control and WAF rules for enforcement.
+- **Future-proofing:** As more crawlers adopt the standard, Content Signals provides a standardized way to communicate preferences.
+- **Granular control:** Express different preferences for different paths or content types.
+- **Legal clarity:** Provide clear, machine-readable statements about content usage rights.
+
+For the complete specification, see the [IETF draft](https://ietf-wg-aipref.github.io/drafts/draft-ietf-aipref-attach.html).
 
 ---
 
@@ -510,7 +634,7 @@ Use these detection IDs in WAF custom rules to target specific crawlers:
 - **ProRataInc:** `117766436`
 - **Timpibot:** `33564051`
 
-For more details about each crawler, refer to the [Bot catalog](/ai-crawl-control/reference/bot-catalog/).
+For more details about each crawler, refer to [AI crawlers](/ai-crawl-control/reference/ai-crawlers/).
 
 ---
 
@@ -527,7 +651,7 @@ After implementing your configuration:
 
 ## Related resources
 
-- [Bot catalog](/ai-crawl-control/reference/bot-catalog/)
+- [AI Crawlers](/ai-crawl-control/reference/ai-crawlers/)
 - [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/)
 - [Analyze AI traffic](/ai-crawl-control/features/analyze-ai-traffic/)
 - [Track robots.txt](/ai-crawl-control/features/track-robots-txt/)
