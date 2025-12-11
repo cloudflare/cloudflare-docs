@@ -107,11 +107,14 @@ Configuration steps vary depending on your [device on-ramp](/cloudflare-one/netw
 
 9. In the **Hostname routes** tab, enter the fully qualified domain name (FDQN) that represents your application (for example, `wiki.internal.local`).
 
-	<Details header="Hostname format restrictions">
-			- Less than 255 characters
-			- Leading wildcards (`*`) and dots (`.`) are allowed but trimmed off. For example, `*.internal.local` becomes `internal.local`.
-			- Ending dots (`.`) are allowed but trimmed off.
-			- No wildcards (`*`) in the middle. For example, `foo*bar.internal.local` is not allowed.
+<Details header="Hostname format restrictions">
+			- **Length:** Must be less than 255 characters.
+			- **Full subdomains only:** Wildcards (`*`) are supported but must represent a full DNS label (e.g., `*.internal.local`). Partial wildcards (e.g., `*-dev.internal.local`) are not supported.
+			- **Trimming:** Leading wildcards (`*`) are trimmed off and an implicit dot (`.`) is assumed.
+			  - Example: `*.internal.local` is treated as "any subdomain of `internal.local`".
+			  - Example: `*-dev.internal.local` will **not** match `app-dev.internal.local`.
+			- **Formatting:** Leading and ending dots (`.`) are allowed but trimmed off.
+			- **Placement:** No wildcards (`*`) in the middle of a label. For example, `foo*bar.internal.local` is not allowed.
 	</Details>
 
 10. Select **Complete setup**.
