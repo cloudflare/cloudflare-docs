@@ -23,87 +23,7 @@ This is not an exhaustive list of all AI crawlers on the internet. This catalog 
 
 ---
 
-## Foundation model training crawlers
-
-These crawlers collect web content to train large language models and other AI foundation models.
-
-### GPTBot (OpenAI)
-
-**Stated purpose:** Crawls web content that may be used to train OpenAI's generative AI foundation models.
-
-**Official documentation:** [OpenAI – Crawler Documentation](https://platform.openai.com/docs/bots)
-
----
-
-### ClaudeBot (Anthropic)
-
-**Stated purpose:** Crawls the web to collect content that may be used to train Anthropic's generative AI models (Claude).
-
-**Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
-
----
-
-### Bytespider (ByteDance)
-
-**Stated purpose:** Web crawler operated by ByteDance (parent company of TikTok). Collects data to power ByteDance's search products, content recommendations, and AI model training (including Doubao).
-
-**Official documentation:** While extensive public documentation is limited, Bytespider is widely identified in security analysis and user agent logs. [DataDome – What is Bytespider?](https://datadome.co/bot-management-protection/bytespider-bytedance-tiktok-web-crawler/)
-
----
-
-### CCBot (Common Crawl)
-
-**Stated purpose:** Crawls the web to build an open, public dataset of web crawl data that is freely available for research, education, and analysis. This dataset is often used to train third-party AI models.
-
-**Official documentation:** [Common Crawl – CCBot](https://commoncrawl.org/faq)
-
----
-
-### Meta-ExternalAgent (Meta)
-
-**Stated purpose:** Crawls the web to collect data for training Meta's AI models and improving products.
-
-**Official documentation:** [Meta for Developers – Web Crawlers](https://developers.facebook.com/docs/sharing/webmasters/crawler/)
-
----
-
-### FacebookBot (Meta)
-
-**Stated purpose:** While FacebookBot is a known user agent token often associated with Meta's data collection, Meta's official documentation primarily lists Meta-ExternalAgent as the crawler used for training AI models. FacebookBot is frequently identified by third-party security firms as a scraper for training speech recognition and other AI models.
-
-**Official documentation:** [Meta for Developers – Web Crawlers](https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/) (lists Meta-ExternalAgent); [Dark Visitors – FacebookBot](https://darkvisitors.com/agents/facebookbot) (identifies FacebookBot specific behavior)
-
----
-
-## Search engine crawlers
-
-These crawlers index content for search engines and may also collect data for AI model training.
-
-### Googlebot (Google)
-
-**Stated purpose:** Primary crawler for Google Search. Discovers and indexes content for Google's search engine. Also collects content that may be used to train Google's generative AI foundation models.
-
-**Official documentation:** [Google Search Central – Googlebot](https://developers.google.com/search/docs/crawling-indexing/googlebot), [List of Google's common crawlers](https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers)
-
----
-
-### BingBot (Microsoft)
-
-**Stated purpose:** Crawler for Microsoft Bing. Discovers and indexes new and updated pages to provide search results for Bing users. Also collects content that may be used to train Microsoft's generative AI foundation models.
-
-**Official documentation:** [Microsoft – Bingbot Documentation](https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0), [Robots meta tags and attributes that Bing supports](https://www.bing.com/webmasters/help/robots-meta-tag-and-x-robots-tag-specifications-9c6f7e9f)
-
----
-
-### Applebot (Apple)
-
-**Stated purpose:** The data crawled by Applebot is used to power various features, such as the search technology that is integrated into many user experiences in Apple's ecosystem including Spotlight, Siri, and Safari. The data crawled by Applebot may also be used to help train Apple foundation models powering generative AI features across Apple products, including Apple Intelligence, Services, and Developer Tools.
-
-**Official documentation:** [Apple Support – About Applebot](https://support.apple.com/en-us/119829)
-
----
-
-### Amazonbot (Amazon)
+## Amazonbot (Amazon)
 
 **Stated purpose:** Used to improve Amazon's products and services (such as Alexa and Amazon advertising). Collects content that may be used to train Amazon's AI models.
 
@@ -111,103 +31,7 @@ These crawlers index content for search engines and may also collect data for AI
 
 ---
 
-### PetalBot (Huawei)
-
-**Stated purpose:** Web crawler for Huawei's Petal Search engine and Petal Merchant Center. Indexes content for search results and product listings.
-
-**Official documentation:** [Huawei Developers – PetalBot](https://aspiegel.com/petalbot)
-
----
-
-## AI search and answer engines
-
-These crawlers index content to surface in AI-powered search results and answer engines. They typically provide citations and links back to source content.
-
-### OAI-SearchBot (OpenAI)
-
-**Stated purpose:** Used to index and surface websites in ChatGPT's search features (SearchGPT). Not used to crawl content for training OpenAI's foundation models.
-
-**Official documentation:** [OpenAI – Web Crawler Documentation](https://platform.openai.com/docs/bots/oai-searchbot)
-
----
-
-### Claude-SearchBot (Anthropic)
-
-**Stated purpose:** Used to index and surface websites in search results or to retrieve information to answer user questions, enhancing the accuracy of responses.
-
-**Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
-
----
-
-### PerplexityBot (Perplexity)
-
-**Stated purpose:** Crawls the web to index content for Perplexity's search engine, allowing it to surface and link to websites in answers. Not used to train foundation models.
-
-**Official documentation:** [Perplexity Docs – Perplexity Crawlers](https://docs.perplexity.ai/guides/bots)
-
----
-
-### DuckAssistBot (DuckDuckGo)
-
-**Stated purpose:** Crawls pages in real-time to generate AI-assisted answers (DuckAssist) for search queries. Not used to train AI models.
-
-**Official documentation:** [DuckDuckGo Help – DuckAssistBot](https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot)
-
----
-
-## User-initiated agents
-
-These agents fetch web pages when a user explicitly requests information or asks an AI assistant to visit a specific URL.
-
-### ChatGPT-User (OpenAI)
-
-**Stated purpose:** Used when a user explicitly asks ChatGPT to browse a specific web page or when the system needs to cite a source. Not used for automatic crawling or model training.
-
-**Official documentation:** [OpenAI – Web Crawler Documentation](https://platform.openai.com/docs/bots/chatgpt-user)
-
----
-
-### Claude-User (Anthropic)
-
-**Stated purpose:** Fetches specific web pages when a user explicitly asks Claude to visit a URL or when the system performs a user-initiated web search.
-
-**Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
-
----
-
-### Perplexity-User (Perplexity)
-
-**Stated purpose:** Fetches web pages on-demand when a user asks a question or clicks a citation, enabling Perplexity to provide accurate, real-time answers.
-
-**Official documentation:** [Perplexity Docs – Perplexity Crawlers](https://docs.perplexity.ai/guides/bots)
-
----
-
-### MistralAI-User (Mistral)
-
-**Stated purpose:** Used for user-initiated actions in Mistral's "Le Chat." Visits web pages to help answer user questions and provide citations but is not used for automatic crawling or training.
-
-**Official documentation:** [Mistral AI Docs – Robots](https://docs.mistral.ai/robots/)
-
----
-
-## Plugin and action agents
-
-These agents perform actions or retrieve information from third-party APIs during AI assistant conversations.
-
-### ChatGPT agent (OpenAI)
-
-**Stated purpose:** Traffic associated with ChatGPT plugins and actions. Allows ChatGPT to perform user-requested actions or retrieve information from third-party APIs during a conversation.
-
-**Official documentation:** [OpenAI Help – ChatGPT Agent Allowlisting](https://chatgpt.com/features/agent/)
-
----
-
-## AI agent automation platforms
-
-These platforms enable AI agents to interact with the web autonomously for browsing, scraping, and automation purposes.
-
-### Anchor Browser (Anchor)
+## Anchor Browser (Anchor)
 
 **Stated purpose:** Cloud-hosted browser platform designed to enable AI agents to interact with the web (browsing, scraping, and automation) autonomously.
 
@@ -215,31 +39,15 @@ These platforms enable AI agents to interact with the web autonomously for brows
 
 ---
 
-### Novellum AI Crawl (Novellum)
+## Applebot (Apple)
 
-**Stated purpose:** Tool used by AI agents to crawl and extract content from websites for automation purposes.
+**Stated purpose:** The data crawled by Applebot is used to power various features, such as the search technology that is integrated into many user experiences in Apple's ecosystem including Spotlight, Siri, and Safari. The data crawled by Applebot may also be used to help train Apple foundation models powering generative AI features across Apple products, including Apple Intelligence, Services, and Developer Tools.
 
-**Official documentation:** [Novellum AI Crawl](https://crawl.corp.novellum.ai/docs)
-
----
-
-## Cloud and enterprise tools
-
-These crawlers are used by site owners to build their own AI-powered tools and services.
-
-### Google-CloudVertexBot (Google)
-
-**Stated purpose:** Used to crawl sites when requested by site owners who are building agents using Google Cloud's Vertex AI Agent Builder. Does not affect Google Search indexing.
-
-**Official documentation:** [Google Cloud – Vertex AI Search](https://cloud.google.com/generative-ai-app-builder/docs/about-advanced-features#web-search)
+**Official documentation:** [Apple Support – About Applebot](https://support.apple.com/en-us/119829)
 
 ---
 
-## Archival and research crawlers
-
-These crawlers preserve web content for historical and research purposes.
-
-### archive.org_bot (Internet Archive)
+## archive.org_bot (Internet Archive)
 
 **Stated purpose:** Crawls the web to collect and preserve digital artifacts (web pages) for the Wayback Machine, creating a public, open archive of the Internet.
 
@@ -247,11 +55,119 @@ These crawlers preserve web content for historical and research purposes.
 
 ---
 
-## Social media fetchers
+## BingBot (Microsoft)
 
-These agents fetch content when users share links on social platforms or perform security checks.
+**Stated purpose:** Crawler for Microsoft Bing. Discovers and indexes new and updated pages to provide search results for Bing users. Also collects content that may be used to train Microsoft's generative AI foundation models.
 
-### Meta-ExternalFetcher (Meta)
+**Official documentation:** [Microsoft – Bingbot Documentation](https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0), [Robots meta tags and attributes that Bing supports](https://www.bing.com/webmasters/help/robots-meta-tag-and-x-robots-tag-specifications-9c6f7e9f)
+
+---
+
+## Bytespider (ByteDance)
+
+**Stated purpose:** Web crawler operated by ByteDance (parent company of TikTok). Collects data to power ByteDance's search products, content recommendations, and AI model training (including Doubao).
+
+**Official documentation:** While extensive public documentation is limited, Bytespider is widely identified in security analysis and user agent logs. [DataDome – What is Bytespider?](https://datadome.co/bot-management-protection/bytespider-bytedance-tiktok-web-crawler/)
+
+---
+
+## CCBot (Common Crawl)
+
+**Stated purpose:** Crawls the web to build an open, public dataset of web crawl data that is freely available for research, education, and analysis. This dataset is often used to train third-party AI models.
+
+**Official documentation:** [Common Crawl – CCBot](https://commoncrawl.org/faq)
+
+---
+
+## ChatGPT agent (OpenAI)
+
+**Stated purpose:** Traffic associated with ChatGPT plugins and actions. Allows ChatGPT to perform user-requested actions or retrieve information from third-party APIs during a conversation.
+
+**Official documentation:** [OpenAI Help – ChatGPT Agent Allowlisting](https://chatgpt.com/features/agent/)
+
+---
+
+## ChatGPT-User (OpenAI)
+
+**Stated purpose:** Used when a user explicitly asks ChatGPT to browse a specific web page or when the system needs to cite a source. Not used for automatic crawling or model training.
+
+**Official documentation:** [OpenAI – Web Crawler Documentation](https://platform.openai.com/docs/bots/chatgpt-user)
+
+---
+
+## ClaudeBot (Anthropic)
+
+**Stated purpose:** Crawls the web to collect content that may be used to train Anthropic's generative AI models (Claude).
+
+**Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
+
+---
+
+## Claude-SearchBot (Anthropic)
+
+**Stated purpose:** Used to index and surface websites in search results or to retrieve information to answer user questions, enhancing the accuracy of responses.
+
+**Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
+
+---
+
+## Claude-User (Anthropic)
+
+**Stated purpose:** Fetches specific web pages when a user explicitly asks Claude to visit a URL or when the system performs a user-initiated web search.
+
+**Official documentation:** [Anthropic Support – User Agents](https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler)
+
+---
+
+## DuckAssistBot (DuckDuckGo)
+
+**Stated purpose:** Crawls pages in real-time to generate AI-assisted answers (DuckAssist) for search queries. Not used to train AI models.
+
+**Official documentation:** [DuckDuckGo Help – DuckAssistBot](https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot)
+
+---
+
+## FacebookBot (Meta)
+
+**Stated purpose:** While FacebookBot is a known user agent token often associated with Meta's data collection, Meta's official documentation primarily lists Meta-ExternalAgent as the crawler used for training AI models. FacebookBot is frequently identified by third-party security firms as a scraper for training speech recognition and other AI models.
+
+**Official documentation:** [Meta for Developers – Web Crawlers](https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/) (lists Meta-ExternalAgent); [Dark Visitors – FacebookBot](https://darkvisitors.com/agents/facebookbot) (identifies FacebookBot specific behavior)
+
+---
+
+## Googlebot (Google)
+
+**Stated purpose:** Primary crawler for Google Search. Discovers and indexes content for Google's search engine. Also collects content that may be used to train Google's generative AI foundation models.
+
+**Official documentation:** [Google Search Central – Googlebot](https://developers.google.com/search/docs/crawling-indexing/googlebot), [List of Google's common crawlers](https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers)
+
+---
+
+## Google-CloudVertexBot (Google)
+
+**Stated purpose:** Used to crawl sites when requested by site owners who are building agents using Google Cloud's Vertex AI Agent Builder. Does not affect Google Search indexing.
+
+**Official documentation:** [Google Cloud – Vertex AI Search](https://cloud.google.com/generative-ai-app-builder/docs/about-advanced-features#web-search)
+
+---
+
+## GPTBot (OpenAI)
+
+**Stated purpose:** Crawls web content that may be used to train OpenAI's generative AI foundation models.
+
+**Official documentation:** [OpenAI – Crawler Documentation](https://platform.openai.com/docs/bots)
+
+---
+
+## Meta-ExternalAgent (Meta)
+
+**Stated purpose:** Crawls the web to collect data for training Meta's AI models and improving products.
+
+**Official documentation:** [Meta for Developers – Web Crawlers](https://developers.facebook.com/docs/sharing/webmasters/crawler/)
+
+---
+
+## Meta-ExternalFetcher (Meta)
 
 **Stated purpose:** Performs user-initiated fetches (for example, when a user shares a link in a chat) to support product functions. Might bypass robots.txt when performing security or integrity checks, such as checking for malware or malicious content.
 
@@ -259,23 +175,67 @@ These agents fetch content when users share links on social platforms or perform
 
 ---
 
-## Independent search engines
+## MistralAI-User (Mistral)
 
-These crawlers power independent or decentralized search engines.
+**Stated purpose:** Used for user-initiated actions in Mistral's "Le Chat." Visits web pages to help answer user questions and provide citations but is not used for automatic crawling or training.
 
-### Timpibot (Timpi)
-
-**Stated purpose:** Decentralized web crawler used to index the entire web for the Timpi search engine, which aims to provide unfiltered, independent search results.
-
-**Official documentation:** [Timpi – Official Site](https://timpi.io/)
+**Official documentation:** [Mistral AI Docs – Robots](https://docs.mistral.ai/robots/)
 
 ---
 
-### ProRataInc (ProRata.ai)
+## Novellum AI Crawl (Novellum)
+
+**Stated purpose:** Tool used by AI agents to crawl and extract content from websites for automation purposes.
+
+**Official documentation:** [Novellum AI Crawl](https://crawl.corp.novellum.ai/docs)
+
+---
+
+## OAI-SearchBot (OpenAI)
+
+**Stated purpose:** Used to index and surface websites in ChatGPT's search features (SearchGPT). Not used to crawl content for training OpenAI's foundation models.
+
+**Official documentation:** [OpenAI – Web Crawler Documentation](https://platform.openai.com/docs/bots/oai-searchbot)
+
+---
+
+## PerplexityBot (Perplexity)
+
+**Stated purpose:** Crawls the web to index content for Perplexity's search engine, allowing it to surface and link to websites in answers. Not used to train foundation models.
+
+**Official documentation:** [Perplexity Docs – Perplexity Crawlers](https://docs.perplexity.ai/guides/bots)
+
+---
+
+## Perplexity-User (Perplexity)
+
+**Stated purpose:** Fetches web pages on-demand when a user asks a question or clicks a citation, enabling Perplexity to provide accurate, real-time answers.
+
+**Official documentation:** [Perplexity Docs – Perplexity Crawlers](https://docs.perplexity.ai/guides/bots)
+
+---
+
+## PetalBot (Huawei)
+
+**Stated purpose:** Web crawler for Huawei's Petal Search engine and Petal Merchant Center. Indexes content for search results and product listings.
+
+**Official documentation:** [Huawei Developers – PetalBot](https://aspiegel.com/petalbot)
+
+---
+
+## ProRataInc (ProRata.ai)
 
 **Stated purpose:** Builds AI-powered search and attribution solutions. They state that they only use licensed content and do not scrape websites without consent; thus, their bot activity is typically related to indexing content from authorized partners for their "Gist" answers engine.
 
 **Official documentation:** [ProRata.ai – Official Site](https://gist.ai/)
+
+---
+
+## Timpibot (Timpi)
+
+**Stated purpose:** Decentralized web crawler used to index the entire web for the Timpi search engine, which aims to provide unfiltered, independent search results.
+
+**Official documentation:** [Timpi – Official Site](https://timpi.io/)
 
 ---
 
