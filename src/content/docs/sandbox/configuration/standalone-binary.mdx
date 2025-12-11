@@ -1,0 +1,238 @@
+---
+title: Standalone binary
+pcx_content_type: configuration
+sidebar:
+  order: 3
+---
+
+Add Cloudflare Sandbox capabilities to any Docker image using the standalone `/sandbox` binary.
+
+## Overview
+
+The standalone binary pattern allows you to add sandbox functionality to arbitrary Docker images without extending the official base image. This is useful when you:
+
+- Already have a production-ready Docker image
+- Need to minimize image size by starting from a minimal base (alpine, distroless, etc.)
+- Want full control over the base operating system and installed packages
+
+The `/sandbox` binary is a self-contained executable that:
+
+1. Starts the HTTP API server on port 3000
+2. Executes any user-provided CMD as a child process
+3. Forwards signals for graceful shutdown
+
+## Basic usage
+
+Copy the binary from the official image and use it as your entrypoint:
+
+```dockerfile
+FROM node:20-slim
+
+# Required: install 'file' for SDK file operations
+RUN apt-get update && apt-get install -y --no-install-recommends file \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=cloudflare/sandbox:latest /container-server/sandbox /sandbox
+
+ENTRYPOINT ["/sandbox"]
+```
+
+Update your wrangler configuration to use the custom Dockerfile:
+
+```jsonc title="wrangler.jsonc"
+{
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile"
+		}
+	]
+}
+```
+
+:::caution[Version synchronization required]
+Always match the Docker image version to your npm package version. If you are using `@cloudflare/sandbox@0.3.3`, copy the binary from `cloudflare/sandbox:0.3.3`.
+
+```dockerfile
+COPY --from=cloudflare/sandbox:0.3.3 /container-server/sandbox /sandbox
+```
+
+See [Version compatibility](/sandbox/concepts/sandboxes/#version-compatibility) for troubleshooting version mismatch warnings.
+:::
+
+## Optional startup command
+
+The binary supports an optional CMD that runs after the API server starts:
+
+```dockerfile
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends file bash \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=cloudflare/sandbox:latest /container-server/sandbox /sandbox
+COPY startup.sh /workspace/startup.sh
+RUN chmod +x /workspace/startup.sh
+
+ENTRYPOINT ["/sandbox"]
+CMD ["/workspace/startup.sh"]
+```
+
+```bash title="startup.sh"
+#!/bin/bash
+
+# Start background services
+redis-server --daemonize yes
+
+# Start application server
+python /workspace/app.py &
+```
+
+The binary forwards signals (SIGTERM, SIGINT) to the child process for graceful shutdown.
+
+## Required dependencies
+
+| Dependency | Required for | Install command |
+| --- | --- | --- |
+| `file` | File operations (`readFile()`, `writeFile()`) | `apt-get install file` |
+| `git` | Git operations (`gitCheckout()`, `listBranches()`) | `apt-get install git` |
+| `bash` | Core functionality (shell commands) | Usually pre-installed |
+
+Most base images (node:slim, python:slim, ubuntu) include `bash` but not `file` or `git`.
+
+### Minimal example
+
+```dockerfile
+FROM node:20-slim
+
+# Install only what you need
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    file \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=cloudflare/sandbox:latest /container-server/sandbox /sandbox
+
+ENTRYPOINT ["/sandbox"]
+```
+
+## What works without extra dependencies
+
+- `exec()` - Run shell commands
+- `startProcess()` - Manage background processes
+- `exposePort()` - Expose services via preview URLs
+
+## Code interpreter limitations
+
+The standalone binary does not include Python or Node.js executors required for code interpreter functionality. If you need `runCode()`, use the official base image instead:
+
+```dockerfile
+FROM cloudflare/sandbox:latest
+
+# Add your customizations
+RUN pip install scikit-learn
+```
+
+Alternatively, install Python or Node.js in your custom image:
+
+```dockerfile
+FROM ubuntu:22.04
+
+RUN apt-get update && apt-get install -y python3 nodejs file bash
+
+COPY --from=cloudflare/sandbox:latest /container-server/sandbox /sandbox
+
+ENTRYPOINT ["/sandbox"]
+```
+
+## Troubleshooting
+
+### Failed to detect MIME type
+
+**Error message:**
+
+```
+Failed to detect MIME type
+```
+
+**Solution:** Install the `file` package:
+
+```dockerfile
+RUN apt-get update && apt-get install -y file
+```
+
+### Git command not found
+
+**Error message:**
+
+```
+git: command not found
+```
+
+**Solution:** Install git (only needed if using git operations):
+
+```dockerfile
+RUN apt-get update && apt-get install -y git
+```
+
+### Commands hang or timeout
+
+**Symptom:** Commands never complete, timeout errors
+
+**Solution:** Ensure `bash` is available at `/bin/bash`. Most distributions include bash by default, but minimal images (alpine, distroless) may not.
+
+```dockerfile
+# For Alpine Linux
+RUN apk add bash
+
+# For Debian/Ubuntu
+RUN apt-get update && apt-get install -y bash
+```
+
+## Download the binary
+
+### From Docker image
+
+Extract the binary from a running container:
+
+```bash
+docker run --rm cloudflare/sandbox:latest cat /container-server/sandbox > sandbox
+chmod +x sandbox
+```
+
+### From GitHub releases
+
+Download from GitHub releases (requires GitHub CLI):
+
+```bash
+gh release download @cloudflare/sandbox@0.3.3 -p sandbox-linux-x64
+chmod +x sandbox-linux-x64
+```
+
+### From PR artifacts
+
+Preview versions are available as artifacts in pull request builds:
+
+```bash
+gh run download <RUN_ID> -n sandbox-binary
+```
+
+## Backwards compatibility
+
+The standalone binary maintains compatibility with existing custom startup scripts. If your script calls `bun /container-server/dist/index.js`, it detects the running server and exits cleanly:
+
+```bash title="legacy-startup.sh"
+#!/bin/bash
+
+# Your services
+redis-server --daemonize yes
+
+# This is now a no-op if using /sandbox entrypoint
+exec bun /container-server/dist/index.js
+```
+
+## Related resources
+
+- [Dockerfile reference](/sandbox/configuration/dockerfile/) - Extending the official base image
+- [Container concepts](/sandbox/concepts/containers/) - Understanding the runtime environment
+- [Environment variables](/sandbox/configuration/environment-variables/) - Configuring the runtime

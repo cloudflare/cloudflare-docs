@@ -7,6 +7,10 @@ sidebar:
 
 Customize the sandbox container image with your own packages, tools, and configurations by extending the base runtime image.
 
+:::note
+Looking to add sandbox capabilities to an existing Docker image? See the [Standalone binary](/sandbox/configuration/standalone-binary/) pattern for an alternative approach that does not require extending the base image.
+:::
+
 ## Base image
 
 The Sandbox SDK uses a Ubuntu-based Linux container with Python, Node.js (via Bun), and common development tools pre-installed:
@@ -93,7 +97,11 @@ node /workspace/my-app.js &
 exec bun /container-server/dist/index.js
 ```
 
-Your startup script must end with `exec bun /container-server/dist/index.js` to start the SDK's control plane.
+Your startup script must end with `exec bun /container-server/dist/index.js` to start the SDK control plane.
+
+:::note
+The [Standalone binary](/sandbox/configuration/standalone-binary/) pattern provides a simpler approach for startup commands - you can specify CMD directly in your Dockerfile without needing to call the control plane explicitly.
+:::
 
 ### Multiple services
 
@@ -110,6 +118,7 @@ exec bun /container-server/dist/index.js
 
 ## Related resources
 
+- [Standalone binary](/sandbox/configuration/standalone-binary/) - Add sandbox to arbitrary Docker images
 - [Image Management](/containers/platform-details/image-management/) - Building and pushing images to Cloudflare\'s registry
 - [Wrangler configuration](/sandbox/configuration/wrangler/) - Using custom images in wrangler.jsonc
 - [Docker documentation](https://docs.docker.com/reference/dockerfile/) - Complete Dockerfile syntax
