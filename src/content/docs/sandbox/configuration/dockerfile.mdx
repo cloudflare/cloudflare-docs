@@ -74,7 +74,101 @@ Update `wrangler.jsonc` to reference your Dockerfile:
 
 When you run `wrangler dev` or `wrangler deploy`, Wrangler automatically builds your Docker image and pushes it to Cloudflare's container registry. You don't need to manually build or publish images.
 
-## Custom startup scripts
+## Standalone binary for arbitrary base images
+
+Add Sandbox capabilities to any Docker image by copying the `/sandbox` binary from the official image. This allows you to use your own base image (Alpine, Debian, custom images) instead of extending the Ubuntu-based Sandbox image.
+
+```dockerfile title="Dockerfile"
+FROM node:20-alpine
+
+# Required: install dependencies
+RUN apk add --no-cache bash file
+
+COPY --from=docker.io/cloudflare/sandbox:0.3.3 /container-server/sandbox /sandbox
+
+ENTRYPOINT ["/sandbox"]
+```
+
+The `/sandbox` binary:
+- Starts the HTTP API server (listening on port 3000)
+- Executes any `CMD` you provide as a child process
+- Forwards signals (SIGTERM, SIGINT) to the child process
+- Exits when the child process exits
+
+### With custom startup command
+
+```dockerfile title="Dockerfile"
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash file git \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=docker.io/cloudflare/sandbox:0.3.3 /container-server/sandbox /sandbox
+COPY startup.sh /startup.sh
+RUN chmod +x /startup.sh
+
+ENTRYPOINT ["/sandbox"]
+CMD ["/startup.sh"]
+```
+
+```bash title="startup.sh"
+#!/bin/bash
+set -e
+
+# Start background services
+redis-server --daemonize yes
+
+# Start your application
+exec python /workspace/app.py
+```
+
+:::note
+When using the standalone binary pattern, your startup script should NOT call `exec bun /container-server/dist/index.js`. The binary automatically starts the API server before running your CMD.
+:::
+
+### Required dependencies
+
+The standalone binary requires these system packages:
+
+| Package | Required For | Install Command |
+| --- | --- | --- |
+| `bash` | Core requirement | Usually pre-installed |
+| `file` | `readFile()`, `writeFile()`, any file operation | `apt-get install file` or `apk add file` |
+| `git` | `gitCheckout()`, `listBranches()` | `apt-get install git` or `apk add git` |
+
+Most base images include `bash`. You typically only need to install `file` and `git` (if using git operations).
+
+**What works without extra dependencies:**
+- `exec()` - Run shell commands
+- `startProcess()` - Background processes
+- `exposePort()` - Expose services
+
+**Limitations:**
+- Code interpreter (`runCode()`) requires Python/Node.js executors not included in the standalone binary. Use the official Sandbox images if you need code execution features.
+
+### Accessing the binary
+
+**From Docker image:**
+
+```bash
+docker run --rm docker.io/cloudflare/sandbox:0.3.3 cat /container-server/sandbox > sandbox
+chmod +x sandbox
+```
+
+**From GitHub releases:**
+
+```bash
+gh release download @cloudflare/sandbox@0.3.3 -p sandbox-linux-x64
+mv sandbox-linux-x64 sandbox
+chmod +x sandbox
+```
+
+## Custom startup scripts (legacy)
+
+:::note
+If you're building a new project, prefer the [standalone binary pattern](/sandbox/configuration/dockerfile/#standalone-binary-for-arbitrary-base-images) with `ENTRYPOINT ["/sandbox"]` and `CMD`. The method below is maintained for backwards compatibility.
+:::
 
 Run services automatically when the container starts by creating a custom startup script:
 
