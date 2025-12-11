@@ -34,13 +34,17 @@ WARP is guaranteed to support operating systems for the primary maintenance time
 
 ### Windows
 
-The WARP client supports Windows versions consistent with Microsoft's [active servicing timelines](https://learn.microsoft.com/en-us/windows/release-health/).
+The WARP client support policy for Windows follows [Microsoft's Lifecycle Policy](https://learn.microsoft.com/en-us/lifecycle/).
+- **Windows 10 and 11**: WARP supports [Windows client versions](https://learn.microsoft.com/en-us/windows/release-health/supported-versions-windows-client) as long as they remain in active servicing under Microsoft's Modern Lifecycle Policy. Enterprise LTSC editions must remain under Mainstream Support.
+- **Windows Server**: WARP support for Windows Server is coming soon. Once testing is complete, our policy will be to support [Windows Server LTSC releases](https://learn.microsoft.com/en-us/windows/release-health/windows-server-release-info) within their Mainstream Support window. Annual Channel releases of Windows Server will not be supported.
 
 :::note
 There is only one version of Windows 10 still supported by the WARP client: the latest LTSC release. Standard Windows 10 releases are no longer supported. We strongly encourage customers to deploy Windows 11 for desktop devices.
 :::
 
-As of December 2025, the following Windows versions are supported:
+#### Supported Windows versions
+
+As of December 2025, the following versions of Windows are supported:
 
 | Windows version          | Supported until                                                                               |
 | ----------------------- | -------------------------------------------------------------------------------------------- |
@@ -48,22 +52,32 @@ As of December 2025, the following Windows versions are supported:
 | Windows&nbsp;11&nbsp;24H2&nbsp;LTSC     | October 2029                                                                                  |
 | Windows&nbsp;11&nbsp;25H2          | October 2027                                                                                  |
 | Windows&nbsp;11&nbsp;24H2          | October 2026                                                                                  |
-| Windows&nbsp;Server&nbsp;2025&nbsp;LTSC | [Pending full testing](#windows-server). Once complete, will be supported until November 2029                   |
-| Windows&nbsp;Server&nbsp;2022&nbsp;LTSC | [Pending full testing](#windows-server). Once complete, will be supported until October 2026                    |
-| Windows&nbsp;Server&nbsp;2019&nbsp;LTSC | [To be determined](#windows-server) as it is currently out of mainstream Microsoft support. Usage is highly discouraged. |
+| Windows&nbsp;Server&nbsp;2025&nbsp;LTSC | Pending full testing. Once complete, will be supported until November 2029                   |
+| Windows&nbsp;Server&nbsp;2022&nbsp;LTSC | Pending full testing. Once complete, will be supported until October 2026                    |
+| Windows&nbsp;Server&nbsp;2019&nbsp;LTSC | [To be determined](#older-versions-of-windows-server) as it is currently out of mainstream Microsoft support. Usage is highly discouraged. |
 
 
-#### Windows Server
+#### Older versions of Windows Server
 
-Windows Server support is still in progress. Once testing is complete, our plan is to support Windows Server LTSC releases that are within Microsoft's [Mainstream Support window](https://learn.microsoft.com/en-us/windows/release-health/windows-server-release-info). Annual Channel releases of Windows Server will not be supported.
-
-To enable customers to migrate, the WARP client will also support the most recent Windows Server version that has left Mainstream Support, as migration of Windows Server has been observed to take significantly longer than most operating systems. Once Windows Server releases have left Mainstream Support, the WARP client does not guarantee an amount of time it will continue to be supported, though end of support will be announced 90 days in advance. We strongly recommend migrating as quickly as possible to supported versions of Windows Server to avoid incidents caused by unfixed bugs in the operating system. In all cases, the WARP client will not attempt to fix security issues in the underlying operating system.
+The WARP client will support the most recent Windows Server version that has left Microsoft's Mainstream Support window, as migration of Windows Server has been observed to take significantly longer than most operating systems. Once Windows Server releases have left Mainstream Support, the WARP client does not guarantee an amount of time it will continue to be supported, though end of support will be announced 90 days in advance. We strongly recommend migrating as quickly as possible to supported versions of Windows Server to avoid incidents caused by unfixed bugs in the operating system. In all cases, the WARP client will not attempt to fix security issues in the underlying operating system.
 
 #### Windows Subsystem for Linux (WSL)
 
-Windows Subsystem for Linux v2 (WSLv2) is supported by the WARP client that is installed on the Windows host (not a WARP client running inside WSLv2) so long as the host version of Windows is supported.
+Windows Subsystem for Linux v2 (WSLv2) is supported by the WARP client that is installed on the Windows host (not a WARP client running inside WSLv2), so long as the host version of Windows is supported.
 
 ### macOS
+
+The WARP client supports the current major version of macOS and the two previous major versions,specifically on devices with Apple silicon. Devices on a previous major version must have the latest minor update in order to be considered supported. This policy aligns with Apple's standard security update cycle, as well as the comparatively rapid release of new macOS versions compared to other desktop operating systems.
+
+#### Supported macOS versions
+
+As of December 2025, the following versions of macOS are supported:
+
+| macOS version | Supported until |
+| --- | --- |
+| macOS&nbsp;26&nbsp;(Tahoe) | Release of 2028 macOS major version |
+| macOS&nbsp;15&nbsp;(Sequoia) | Release of 2027 macOS major version |
+| macOS&nbsp;14&nbsp;(Sonoma) | Release of 2026 macOS major version |
 
 ### Debian
 
