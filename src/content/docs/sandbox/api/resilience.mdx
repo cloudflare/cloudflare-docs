@@ -1,0 +1,275 @@
+---
+title: Resilience
+pcx_content_type: configuration
+sidebar:
+  order: 8
+---
+
+import { TypeScriptExample } from "~/components";
+
+The Sandbox SDK includes built-in resilience features to protect against cascading failures and handle traffic bursts gracefully. These features are automatically enabled for all API operations.
+
+## Circuit Breaker
+
+The circuit breaker tracks request failures in a sliding window and fails fast when a threshold is exceeded. This prevents overwhelming unhealthy containers with requests and allows time for recovery.
+
+### States
+
+The circuit breaker operates in three states:
+
+- **Closed** - Normal operation. All requests pass through.
+- **Open** - Threshold exceeded. Requests fail immediately with `CircuitOpenError`.
+- **Half-open** - Testing recovery. Limited requests allowed to check if service is healthy.
+
+### State Transitions
+
+The circuit breaker automatically transitions between states:
+
+1. **Closed → Open**: After 5 server errors (5xx) within 30 seconds
+2. **Open → Half-open**: After 10 seconds of recovery time
+3. **Half-open → Closed**: After 2 successful requests
+4. **Half-open → Open**: Immediately on any failure
+
+### Configuration
+
+Circuit breaker settings are configured when creating a sandbox:
+
+```ts
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox', {
+  circuitBreaker: {
+    failureThreshold: 5,      // Failures before opening (default: 5)
+    failureWindow: 30000,     // Window in ms (default: 30000)
+    recoveryTimeout: 10000,   // Recovery time in ms (default: 10000)
+    successThreshold: 2       // Successes to close (default: 2)
+  }
+});
+```
+
+**Parameters**:
+- `failureThreshold` - Number of failures in the window before opening the circuit (default: `5`)
+- `failureWindow` - Time window in milliseconds for counting failures (default: `30000` / 30 seconds)
+- `recoveryTimeout` - Time to wait before attempting recovery in half-open state (default: `10000` / 10 seconds)
+- `successThreshold` - Number of successful requests needed in half-open state to close the circuit (default: `2`)
+
+:::note[What counts as a failure?]
+Only server errors (5xx responses) count as failures for the circuit breaker. Client errors (4xx) and network errors do not affect the circuit state, as these typically indicate caller issues rather than service health problems.
+:::
+
+### Error Handling
+
+When the circuit is open, requests fail immediately with a `CircuitOpenError`:
+
+<TypeScriptExample>
+```
+import { CircuitOpenError } from '@cloudflare/sandbox';
+
+try {
+  const result = await sandbox.exec('python script.py');
+} catch (error) {
+  if (error instanceof CircuitOpenError) {
+    console.error(`Circuit open. Retry after ${error.remainingMs}ms`);
+    // Wait and retry, or return cached result, or fail gracefully
+  }
+}
+```
+</TypeScriptExample>
+
+**`CircuitOpenError` properties**:
+- `remainingMs` - Milliseconds until recovery attempt (half-open state)
+
+---
+
+## Request Queue
+
+The request queue limits concurrent requests and queues excess requests with a timeout. This provides backpressure during traffic bursts and prevents overwhelming the container.
+
+### Behavior
+
+- Requests execute immediately when under the concurrency limit
+- Excess requests are queued in FIFO order
+- Queued requests timeout if not processed within the timeout period
+- Queue size is limited to prevent memory exhaustion
+
+### Configuration
+
+Request queue settings are configured when creating a sandbox:
+
+```ts
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox', {
+  requestQueue: {
+    maxConcurrent: 10,     // Concurrent requests (default: 10)
+    maxQueueSize: 100,     // Max queued requests (default: 100)
+    queueTimeout: 30000    // Queue timeout in ms (default: 30000)
+  }
+});
+```
+
+**Parameters**:
+- `maxConcurrent` - Maximum number of concurrent requests allowed (default: `10`)
+- `maxQueueSize` - Maximum number of requests waiting in queue (default: `100`)
+- `queueTimeout` - Timeout for requests waiting in queue in milliseconds (default: `30000` / 30 seconds)
+
+### Error Handling
+
+The request queue can reject requests in two scenarios:
+
+#### Queue Full
+
+When the queue is full, new requests are rejected immediately:
+
+<TypeScriptExample>
+```
+import { QueueFullError } from '@cloudflare/sandbox';
+
+try {
+  const result = await sandbox.exec('python script.py');
+} catch (error) {
+  if (error instanceof QueueFullError) {
+    console.error(`Queue full with ${error.queueSize} pending requests`);
+    // Retry with exponential backoff, or shed load
+  }
+}
+```
+</TypeScriptExample>
+
+**`QueueFullError` properties**:
+- `queueSize` - Number of requests currently in the queue
+
+#### Queue Timeout
+
+When a request waits too long in the queue:
+
+<TypeScriptExample>
+```
+import { QueueTimeoutError } from '@cloudflare/sandbox';
+
+try {
+  const result = await sandbox.exec('python script.py');
+} catch (error) {
+  if (error instanceof QueueTimeoutError) {
+    console.error(`Request timed out after ${error.waitTime}ms in queue`);
+    // Retry with higher timeout, or fail gracefully
+  }
+}
+```
+</TypeScriptExample>
+
+**`QueueTimeoutError` properties**:
+- `waitTime` - Milliseconds the request spent waiting in queue
+
+---
+
+## Disabling Resilience Features
+
+Both features can be disabled if needed:
+
+<TypeScriptExample>
+```
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox', {
+  circuitBreaker: false,  // Disable circuit breaker
+  requestQueue: false     // Disable request queue
+});
+```
+</TypeScriptExample>
+
+:::caution
+Disabling resilience features removes protection against cascading failures and traffic bursts. Only disable these features if you have alternative resilience mechanisms in place.
+:::
+
+---
+
+## Best Practices
+
+### Handling Circuit Breaker Errors
+
+When the circuit opens, implement graceful degradation:
+
+<TypeScriptExample>
+```
+import { CircuitOpenError } from '@cloudflare/sandbox';
+
+async function executeWithFallback(sandbox: Sandbox, command: string) {
+  try {
+    return await sandbox.exec(command);
+  } catch (error) {
+    if (error instanceof CircuitOpenError) {
+      // Option 1: Return cached result
+      const cached = await cache.get(command);
+      if (cached) return cached;
+
+      // Option 2: Fail fast with helpful error
+      throw new Error(
+        `Service temporarily unavailable. Retry in ${Math.ceil(error.remainingMs / 1000)}s`
+      );
+    }
+    throw error;
+  }
+}
+```
+</TypeScriptExample>
+
+### Handling Queue Errors
+
+Implement retry logic with exponential backoff for queue errors:
+
+<TypeScriptExample>
+```
+import { QueueFullError, QueueTimeoutError } from '@cloudflare/sandbox';
+
+async function executeWithRetry(sandbox: Sandbox, command: string, maxRetries = 3) {
+  let attempt = 0;
+
+  while (attempt < maxRetries) {
+    try {
+      return await sandbox.exec(command);
+    } catch (error) {
+      if (error instanceof QueueFullError || error instanceof QueueTimeoutError) {
+        attempt++;
+        if (attempt >= maxRetries) throw error;
+
+        // Exponential backoff
+        const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      throw error;
+    }
+  }
+}
+```
+</TypeScriptExample>
+
+### Monitoring
+
+Monitor circuit breaker state to detect service degradation:
+
+<TypeScriptExample>
+```
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox', {
+  circuitBreaker: {
+    onStateChange: (newState, previousState) => {
+      console.log(`Circuit breaker: ${previousState} → ${newState}`);
+
+      if (newState === 'open') {
+        // Alert on circuit opening
+        await metrics.increment('sandbox.circuit.open');
+      }
+    }
+  },
+  requestQueue: {
+    onQueued: (queueLength) => {
+      // Monitor queue depth
+      await metrics.gauge('sandbox.queue.depth', queueLength);
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+---
+
+## Related Resources
+
+- [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - Understanding container lifecycle
+- [Sandbox options](/sandbox/configuration/sandbox-options/) - All configuration options
+- [Error handling guide](/sandbox/guides/error-handling/) - Comprehensive error handling patterns
