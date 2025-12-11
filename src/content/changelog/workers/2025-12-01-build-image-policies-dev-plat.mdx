@@ -8,8 +8,8 @@ date: 2025-12-01
 
 We've published build image policies for [Workers Builds](/workers/ci-cd/builds/build-image/#build-image-policy) and [Cloudflare Pages](/pages/configuration/build-image/#build-image-policy) that establish:
 
-- **Minor version updates**: Default versions are updated to the latest available minor version without notice 
-- **Major version updates**: When language runtimes or tools reach end-of-life, we update to the next stable LTS version with at least 3 months advance notice via Changelog and dashboard notifications
+- **Minor version updates**: Default versions are updated to the latest available minor version without notice. For tools that don't follow semantic versioning (e.g., Bun, Hugo), minor updates that may contain breaking changes will receive 3 months notice via Changelog, dashboard notifications, and email
+- **Major version updates**: When language runtimes or tools reach end-of-life, we update to the next stable LTS version with 3 months notice via Changelog, dashboard notifications, and email
 - **Build image version deprecation** (Pages only): Build image versions are supported for at least 2 years and receive 6 months notice before removal via Changelog, dashboard notifications, and email
 
 To prepare for updates and avoid unexpected build failures:

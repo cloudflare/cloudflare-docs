@@ -96,11 +96,12 @@ Workers Builds are run in the following environment:
 
 Default versions of languages and tools are updated as they reach end-of-life (EOL). These updates only apply if you have not [overridden the default version](/pages/configuration/build-image/#override-default-versions).
 
-- **Minor version updates**: Updated to the latest available minor version without notice.
+- **Minor version updates**: Updated to the latest available minor version without notice. For tools that don't follow semantic versioning (e.g., Bun, Hugo), minor updates that may contain breaking changes will receive 3 months notice via Changelog, dashboard notifications, and email.
 
-- **Major version updates**: Updated to the next stable, long-term support (LTS) version with at least 3 months advance notice via:
+- **Major version updates**: Updated to the next stable, long-term support (LTS) version with 3 months notice via:
   - [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
   - Dashboard notifications to projects that will receive the default version update
+  - Email notifications to project owners
 
 To maintain a specific version and avoid automatic updates, [override the default version](/workers/ci-cd/builds/build-image/#overriding-default-versions).
 
