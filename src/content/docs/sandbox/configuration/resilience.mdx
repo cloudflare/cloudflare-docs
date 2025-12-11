@@ -1,0 +1,330 @@
+---
+title: Resilience configuration
+pcx_content_type: configuration
+sidebar:
+  order: 5
+---
+
+import { TypeScriptExample } from "~/components";
+
+Configure resilience features to protect your application from cascading failures and handle traffic bursts gracefully.
+
+The Sandbox SDK includes circuit breaker and request queue features that automatically manage request flow to containers, preventing overload and improving reliability in production environments.
+
+## Overview
+
+Resilience features are configured when creating a `SandboxClient`:
+
+<TypeScriptExample>
+```ts
+import { SandboxClient } from '@cloudflare/sandbox';
+
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    circuitBreaker: {
+      failureThreshold: 5,
+      recoveryTimeout: 10_000
+    },
+    requestQueue: {
+      maxConcurrent: 10,
+      maxQueueSize: 100
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+:::note[Automatic integration]
+When using `getSandbox()`, resilience features are automatically configured with sensible defaults. You only need explicit configuration for advanced use cases or when using `SandboxClient` directly.
+:::
+
+## Circuit breaker
+
+The circuit breaker protects against cascading failures by failing fast when the container is experiencing issues. It tracks failures over time and temporarily blocks requests when failures exceed a threshold.
+
+### How it works
+
+The circuit breaker operates in three states:
+
+- **Closed** - Normal operation. Requests pass through to the container.
+- **Open** - Failures exceeded threshold. Requests fail immediately without reaching the container.
+- **Half-open** - Testing recovery. Limited requests are allowed to check if the container has recovered.
+
+When failures exceed the threshold, the circuit opens and rejects requests immediately. After a recovery timeout, it enters half-open state to test if the container has recovered. If test requests succeed, the circuit closes and normal operation resumes.
+
+### Configuration options
+
+<TypeScriptExample>
+```ts
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    circuitBreaker: {
+      // Number of failures before opening circuit
+      failureThreshold: 5,
+
+      // Time window for counting failures (milliseconds)
+      failureWindow: 30_000,
+
+      // Time to wait before testing recovery (milliseconds)
+      recoveryTimeout: 10_000,
+
+      // Successful requests needed in half-open state to close circuit
+      successThreshold: 2,
+
+      // Optional callback when circuit state changes
+      onStateChange: (state, previousState) => {
+        console.log(`Circuit ${previousState} → ${state}`);
+      }
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+**Configuration options**:
+
+- `failureThreshold` - Number of failures in the window before opening the circuit. **Default**: `5`
+- `failureWindow` - Time window in milliseconds for counting failures. **Default**: `30000` (30 seconds)
+- `recoveryTimeout` - Time in milliseconds to wait before attempting recovery. **Default**: `10000` (10 seconds)
+- `successThreshold` - Number of successful requests needed in half-open state to close the circuit. **Default**: `2`
+- `onStateChange` - Callback function invoked when the circuit state changes
+
+### Disabling the circuit breaker
+
+Set `circuitBreaker: false` to disable the feature entirely:
+
+<TypeScriptExample>
+```ts
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    circuitBreaker: false
+  }
+});
+```
+</TypeScriptExample>
+
+### Handling CircuitOpenError
+
+When the circuit is open, requests throw a `CircuitOpenError`:
+
+<TypeScriptExample>
+```ts
+import { CircuitOpenError } from '@cloudflare/sandbox';
+
+try {
+  await sandbox.exec('ls');
+} catch (error) {
+  if (error instanceof CircuitOpenError) {
+    console.log(`Circuit open. Retry after ${error.remainingMs}ms`);
+    // Implement retry logic or return error to user
+  }
+}
+```
+</TypeScriptExample>
+
+## Request queue
+
+The request queue provides backpressure by limiting concurrent requests to the container and queuing excess requests. This prevents overwhelming the container during traffic bursts.
+
+### How it works
+
+The request queue maintains a FIFO queue of pending requests. When concurrent requests reach the limit, new requests wait in the queue. If the queue fills up or requests wait too long, they are rejected with an error.
+
+This smooths out traffic bursts and ensures the container operates within its capacity.
+
+### Configuration options
+
+<TypeScriptExample>
+```ts
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    requestQueue: {
+      // Maximum concurrent requests to container
+      maxConcurrent: 10,
+
+      // Maximum queued requests waiting for capacity
+      maxQueueSize: 100,
+
+      // Timeout for requests waiting in queue (milliseconds)
+      queueTimeout: 30_000,
+
+      // Optional callback when request is queued
+      onQueued: (queueLength) => {
+        console.log(`Request queued. Queue length: ${queueLength}`);
+      },
+
+      // Optional callback when request is dequeued
+      onDequeued: (waitTime) => {
+        console.log(`Request dequeued after ${waitTime}ms`);
+      }
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+**Configuration options**:
+
+- `maxConcurrent` - Maximum number of concurrent requests allowed. **Default**: `10`
+- `maxQueueSize` - Maximum number of requests waiting in queue. When exceeded, oldest requests are rejected. **Default**: `100`
+- `queueTimeout` - Timeout in milliseconds for requests waiting in queue. **Default**: `30000` (30 seconds)
+- `onQueued` - Callback function invoked when a request is queued
+- `onDequeued` - Callback function invoked when a request is dequeued
+
+### Disabling the request queue
+
+Set `requestQueue: false` to disable the feature entirely:
+
+<TypeScriptExample>
+```ts
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    requestQueue: false
+  }
+});
+```
+</TypeScriptExample>
+
+### Handling queue errors
+
+The request queue can throw two types of errors:
+
+<TypeScriptExample>
+```ts
+import { QueueFullError, QueueTimeoutError } from '@cloudflare/sandbox';
+
+try {
+  await sandbox.exec('ls');
+} catch (error) {
+  if (error instanceof QueueFullError) {
+    console.log(`Queue full with ${error.queueSize} pending requests`);
+    // Implement backoff or return 503 to client
+  } else if (error instanceof QueueTimeoutError) {
+    console.log(`Request timed out after ${error.waitTime}ms in queue`);
+    // Implement retry or return timeout error to client
+  }
+}
+```
+</TypeScriptExample>
+
+## When to use resilience features
+
+### Use circuit breaker when
+
+- **Production deployments** - Protect your application from cascading failures
+- **High-traffic applications** - Prevent overload during traffic spikes
+- **External dependencies** - Isolate failures from affecting the entire application
+- **Monitoring and alerting** - Use `onStateChange` callback to track container health
+
+### Use request queue when
+
+- **Bursty traffic** - Smooth out traffic spikes by queuing excess requests
+- **Rate limiting** - Control the rate of requests to the container
+- **Capacity planning** - Understand and manage container concurrency
+- **Graceful degradation** - Queue requests during brief overload periods
+
+### Tuning for your workload
+
+The default settings work well for most applications, but you may need to tune based on your specific workload:
+
+**High-throughput applications**:
+<TypeScriptExample>
+```ts
+// Allow more concurrent requests and larger queue
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    requestQueue: {
+      maxConcurrent: 50,
+      maxQueueSize: 500
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+**Sensitive to latency**:
+<TypeScriptExample>
+```ts
+// Fail fast with lower limits
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    requestQueue: {
+      maxConcurrent: 5,
+      maxQueueSize: 20,
+      queueTimeout: 5_000  // 5 seconds
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+**Aggressive failure detection**:
+<TypeScriptExample>
+```ts
+// Open circuit faster during issues
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    circuitBreaker: {
+      failureThreshold: 3,
+      failureWindow: 15_000,
+      recoveryTimeout: 5_000
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Monitoring resilience features
+
+Use the callback options to monitor resilience behavior in production:
+
+<TypeScriptExample>
+```ts
+const client = new SandboxClient({
+  baseUrl: containerUrl,
+  resilience: {
+    circuitBreaker: {
+      onStateChange: (state, previousState) => {
+        // Log to your monitoring system
+        console.log(`Circuit breaker: ${previousState} → ${state}`);
+
+        if (state === 'open') {
+          // Alert on circuit opening
+          // This indicates the container is experiencing failures
+        }
+      }
+    },
+    requestQueue: {
+      onQueued: (queueLength) => {
+        // Track queue depth
+        if (queueLength > 50) {
+          // Alert on high queue depth
+          // This indicates the container is near capacity
+        }
+      },
+      onDequeued: (waitTime) => {
+        // Track queue wait times
+        if (waitTime > 10_000) {
+          // Alert on high latency
+          // This indicates sustained high load
+        }
+      }
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Sandbox options](/sandbox/configuration/sandbox-options/) - Configure sandbox behavior
+- [Production deployment guide](/sandbox/guides/production-deployment/) - Deploy sandboxes to production
+- [Lifecycle API](/sandbox/api/lifecycle/) - Manage sandbox lifecycle
