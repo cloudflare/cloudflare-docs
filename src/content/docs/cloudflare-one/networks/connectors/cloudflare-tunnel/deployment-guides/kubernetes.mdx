@@ -5,9 +5,13 @@ sidebar:
   order: 6
 ---
 
+import { Render } from "~/components";
+
 [Kubernetes](https://kubernetes.io/) is a container orchestration tool that is used to deploy applications onto physical or virtual machines, scale the deployment to meet traffic demands, and push updates without downtime. The Kubernetes cluster, or environment, where the application instances are running is connected internally through a private network. You can install the `cloudflared` daemon inside of the Kubernetes cluster in order to connect applications inside of the cluster to Cloudflare.
 
 This guide will cover how to expose a Kubernetes service to the public Internet using a [remotely-managed](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#remotely-managed-tunnel) Cloudflare Tunnel. For the purposes of this example, we will deploy a basic web application alongside `cloudflared` in Google Kubernetes Engine (GKE). The same principles apply to any other Kubernetes environment (such as `minikube`, `kubeadm`, or a cloud-based Kubernetes service) where `cloudflared` can connect to Cloudflare's network.
+
+<Render file="tunnel/connectivity-prechecks-note" product="cloudflare-one" />
 
 :::note[Locally-managed tunnels]
 If you are looking to set up a [locally-managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#locally-managed-tunnel) in Kubernetes, refer to the [example code in GitHub](https://github.com/cloudflare/argo-tunnel-examples/tree/master/named-tunnel-k8s).
