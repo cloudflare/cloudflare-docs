@@ -24,7 +24,7 @@ To prevent this replay attack, a user could add a packet number to each command 
 
 ## IPsec anti-replay protection
 
-IPsec anti-replay protection works similarly to the prevention example in the scenario above. Each IPsec packet sent is assigned a sequence number by the sender. The receiver tracks which sequence numbers it has already seen and only accepts packets in a small window around the highest value the receiver has seen, and the window is typically 64-1024 packets. A window is used instead of strict sequencing because the Internet sometimes reorders or loses packets - having a range of acceptable packet sequence numbers helps absorb these issues.
+IPsec anti-replay protection works similarly to the prevention example in the scenario above. Each IPsec packet sent is assigned a sequence number by the sender. The receiver tracks which sequence numbers it has already seen and only accepts packets in a small window around the highest value the receiver has seen, and the window is typically 64-1024 packets. A window is used instead of strict sequencing because sometimes packets are reordered or lost on the Internet - having a range of acceptable packet sequence numbers helps absorb these issues.
 
 ## {props.productName} and anti-replay protection
 
