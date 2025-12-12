@@ -191,9 +191,13 @@ If your organization blocks traffic by default with a Network policy and you wan
 
 ## Restrict private network access to proxy endpoint users
 
-When using [source IP proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#source-ip-endpoint), by default all devices added to the proxy endpoint can access your internal applications and services connected through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). To restrict access to only users connecting through the proxy endpoint from specific source IPs, create the following policies.
+When using proxy endpoints, by default all devices added to the proxy endpoint can access your internal applications and services connected through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). To restrict access and add an additional layer of security, create the following policies.
 
-### 1. Allow proxy endpoint traffic from specific source IPs
+### Source IP proxy endpoints
+
+When using [source IP proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#source-ip-endpoint), restrict access to only users connecting through the proxy endpoint from specific source IPs.
+
+#### 1. Allow proxy endpoint traffic from specific source IPs
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -228,7 +232,7 @@ Replace `<PROXY_ENDPOINT_ID>` with your proxy endpoint ID.
 
 </TabItem> </Tabs>
 
-### 2. Block all other proxy endpoint traffic to private network
+#### 2. Block all other proxy endpoint traffic to private network
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -248,6 +252,79 @@ Replace `<PROXY_ENDPOINT_ID>` with your proxy endpoint ID.
 		name: "Block all other proxy endpoint traffic",
 		description:
 			"Block any other proxy endpoint traffic from accessing the private network",
+		enabled: true,
+		action: "block",
+		filters: ["l4"],
+		traffic:
+			'net.proxy_endpoint.ids[*] in {"<PROXY_ENDPOINT_ID>"} and net.dst.ip in {10.0.0.0/8}',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+Replace `<PROXY_ENDPOINT_ID>` with your proxy endpoint ID.
+
+</TabItem> </Tabs>
+
+### Authorization proxy endpoints
+
+When using [authorization proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#authorization-endpoint), add an additional layer of security by restricting access to only users connecting from specific source IPs. This prevents unauthorized access even if user credentials are compromised.
+
+#### 1. Allow proxy endpoint traffic from specific source IPs
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector       | Operator | Value            | Logic | Action |
+| -------------- | -------- | ---------------- | ----- | ------ |
+| Proxy Endpoint | in       | _Proxy Endpoint_ | And   | Allow  |
+| Source IP      | in       | `203.0.113.0/24` | And   |        |
+| Destination IP | in       | `10.0.0.0/8`     |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Allow authorized proxy endpoint traffic from specific source IPs",
+		description:
+			"Allow traffic from authorization proxy endpoint users with specific source IPs to reach private network",
+		enabled: true,
+		action: "allow",
+		filters: ["l4"],
+		traffic:
+			'net.proxy_endpoint.ids[*] in {"<PROXY_ENDPOINT_ID>"} and net.src.ip in {203.0.113.0/24} and net.dst.ip in {10.0.0.0/8}',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+Replace `<PROXY_ENDPOINT_ID>` with your proxy endpoint ID.
+
+</TabItem> </Tabs>
+
+#### 2. Block all other proxy endpoint traffic to private network
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector       | Operator | Value            | Logic | Action |
+| -------------- | -------- | ---------------- | ----- | ------ |
+| Proxy Endpoint | in       | _Proxy Endpoint_ | And   | Block  |
+| Destination IP | in       | `10.0.0.0/8`     |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block all other authorized proxy endpoint traffic",
+		description:
+			"Block any other authorization proxy endpoint traffic from accessing the private network",
 		enabled: true,
 		action: "block",
 		filters: ["l4"],
