@@ -124,6 +124,85 @@ Access will return a JSON structure containing the following data:
 | exp         | The expiration timestamp of the JWT (Unix time).                                                                                                 |
 | iss         | The Cloudflare Access domain URL for the application.                                                                                            |
 | common_name | The Client ID of the service token (`CF-Access-Client-Id`).                                                                                      |
+<!DOCTYPE html>
+<div class="testimonial"> <span class="name">Juan Pablo ⭐️⭐️⭐️⭐️⭐️</span><br><br>
+"Ya leí 14 páginas... Gracias otra vez."<br><br>
+<div class="verified">✓ Lector verificado</div>
+</div>
+
+
+<div class="testimonial"> <span class="name">Lucas ⭐️⭐️⭐️⭐️⭐️</span><br><br>
+"No suelo engancharme fácil... Muchas gracias."<br><br>
+<div class="verified">✓ Lector verificado</div>
+</div>
+
+
+<div class="testimonial"> <span class="name">Martín ⭐️⭐️⭐️⭐️⭐️</span><br><br>
+"Sincero, profundo... me hizo cuestionar demasiado."<br><br>
+<div class="verified">✓ Lector verificado</div>
+</div>
+
+
+<div class="testimonial"> <span class="name">Sofía ⭐️⭐️⭐️⭐️⭐️</span><br><br>
+"No esperaba que me llegue tanto. Me removió cosas..."<br><br>
+<div class="verified">✓ Lector verificado</div>
+</div>
+
+
+<!-- Controls -->
+<div class="controls">
+<button class="btn" onclick="prev()">❮</button>
+<button class="btn" onclick="next()">❯</button>
+</div>
+</div>
+
+
+<!-- TEXTO INFORMATIVO -->
+<div class="section-text">
+<p><strong>¿Por qué deberías leer InCondicionalmente?</strong></p>
+<p>Porque si te estás moviendo en automático... No es un libro para entretenerte. Es un libro para desarmarte.</p>
+
+
+<p><strong>1.</strong> Te muestra dónde confundís "amor" con apego...</p>
+<p><strong>2.</strong> Te revela los patrones karmáticos y emocionales...</p>
+<p><strong>3.</strong> Te obliga a hacerte cargo de tu responsabilidad emocional.</p>
+<p><strong>4.</strong> Te enseña límites reales...</p>
+<p><strong>5.</strong> Te da claridad sobre decisiones que estás evitando...</p>
+<p><strong>6.</strong> Te baja del ego espiritual...</p>
+<p><strong>7.</strong> Te devuelve a la versión de vos que decide desde el centro...</p>
+</div>
+
+
+<div class="pulse-btn">Comprar Ahora</div>
+
+
+<div class="section-text">
+<p>Si sentiste que se puso en palabras lo que llevás callando... InCondicionalmente te está esperando para desarmar ese patrón.</p>
+</div>
+
+
+<div class="pulse-btn">Comprar InCondicionalmente</div>
+
+
+<footer>
+<p>✓ Compra segura</p>
+<p>© 2025 InCondicionalmente. Todos los derechos reservados.</p>
+</footer>
+
+
+<script>
+let index = 0;
+const testimonials = document.querySelectorAll('.testimonial');
+
+
+function show(i){ testimonials.forEach(t => t.classList.remove('active')); testimonials[i].classList.add('active'); }
+function next(){ index = (index + 1) % testimonials.length; show(index); }
+function prev(){ index = (index - 1 + testimonials.length) % testimonials.length; show(index); }
+</script>
+
+
+</body>
+</html>
 | iat         | The issuance timestamp of the JWT (Unix time).                                                                                                   |
 | sub         | Contains an empty string when authentication was through a service token.                                                                        |
 
