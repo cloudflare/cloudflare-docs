@@ -50,9 +50,6 @@ When using Cloudflare Images, you can use URL Rewrite Rules to serve images from
 
 ## Important remarks
 
-- URL rewrite rule matches are determined based on the original request properties. For example, if rule #1 sets the URL path to a different value and rule #2 checks for this new value in its filter expression, rule #2 will not match because field values (in this case, `http.request.uri.path`) are immutable within a phase.<br/>
-  Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
+- URL rewrite rules run in order, and later rules can overwrite changes done by previous rules.
 
-- URL rewrite rules that appear later in the list of rules can override changes done by previous rules. Additionally, a URL rewrite rule executed later will not take into account any changes already done by previous URL rewrite rules.<br/>
-  For example, if multiple matching rules set or modify the URL parameter (for example, the query string), only the last rule will effectively be applied, since it will override the query string set by previous rules without taking into account any previous changes.<br/>
-  Refer to [Transform Rules evaluation](/rules/transform/#transform-rules-evaluation) for more information.
+- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_transform` phase where URL rewrite rules are defined. This means that later URL rewrite rules will not match based on changes done by previous URL rewrite rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
