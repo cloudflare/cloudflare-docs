@@ -8,7 +8,7 @@ import {
 	autoUpdate,
 } from "@floating-ui/react";
 import { useState } from "react";
-import { PiCaretDownBold } from "react-icons/pi";
+import { PiCaretDown, PiCaretDownBold } from "react-icons/pi";
 
 const links = [
 	{ label: "Docs Directory", href: "/directory/" },
@@ -51,23 +51,23 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="hover:bg-cl1-white dark:hover:bg-cl1-gray-0 flex cursor-pointer items-center justify-center gap-2 rounded-sm bg-transparent p-2 font-medium hover:shadow-md"
+				className="hover:bg-cl1-white dark:hover:bg-cl1-gray-0 flex cursor-pointer items-center justify-center gap-1.5 rounded-sm bg-transparent p-2 font-medium hover:shadow-md"
 			>
 				{label}
-				<PiCaretDownBold />
+				<PiCaretDown />
 			</button>
 			{isOpen && (
 				<ul
 					ref={refs.setFloating}
 					style={floatingStyles}
 					{...getFloatingProps()}
-					className="border-cl1-gray-8 bg-cl1-white dark:border-cl1-gray-1 dark:bg-cl1-gray-0 max-w-80 min-w-60 list-none rounded-sm border pl-0 shadow-md"
+					className="border-cl1-gray-8 bg-cl1-white dark:border-zinc-800 dark:bg-cl1-gray-0 max-w-80 min-w-60 list-none rounded-sm border pl-0 shadow-md"
 				>
 					{pages.map((page) => (
 						<li key={page.href}>
 							<a
 								href={page.href}
-								className="8 hover:bg-cl1-gray-9 dark:hover:bg-cl1-gray-1 block p-3 text-black no-underline"
+								className="text-sm hover:bg-cl1-gray-9 dark:hover:bg-zinc-800 block p-3 text-black no-underline"
 								target={page.href.startsWith("https") ? "_blank" : undefined}
 							>
 								{page.label}

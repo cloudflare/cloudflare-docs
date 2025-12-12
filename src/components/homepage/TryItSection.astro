@@ -4,7 +4,7 @@ import Render from "~/components/Render.astro";
 ---
 
 <div>
-	<h2>Build with Cloudflare</h2>
+	<h2 class="mb-8">Build with Cloudflare</h2>
 	<div class="sl-flex">
 		<input type="radio" id="section1" name="sections" checked />
 		<input type="radio" id="section2" name="sections" />
@@ -12,7 +12,7 @@ import Render from "~/components/Render.astro";
 		<input type="radio" id="section4" name="sections" />
 		<input type="radio" id="section5" name="sections" />
 
-		<div class="tryit-sidebar">
+		<div class="tryit-sidebar *:!p-4 *:!pt-1">
 			<Card title="">
 				<div class="*:block *:rounded-sm *:p-2">
 					<label for="section1" id="section1Label">
@@ -52,6 +52,7 @@ import Render from "~/components/Render.astro";
 			</div>
 		</div>
 	</div>
+	<div class="mt-8"></div>
 	<LinkCard title="Learn more about Workers" href="/workers/" />
 </div>
 

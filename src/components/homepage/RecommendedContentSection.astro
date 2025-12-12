@@ -22,13 +22,15 @@ const props = z.object({
 const { title, cards } = props.parse(Astro.props);
 ---
 
-<h2>{title}</h2>
+<h2 class="mb-8">{title}</h2>
 <CardGrid>
 	{
 		cards.map((card) => (
 			<Card title={card.title}>
 				<span set:html={marked.parse(card.text)} />
 				<br />
+
+				{/* <div class="flex-1" /> */}
 				<LinkCard title={card.cta.title} href={card.cta.href} />
 			</Card>
 		))

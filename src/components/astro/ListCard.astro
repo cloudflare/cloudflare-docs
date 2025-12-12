@@ -4,7 +4,7 @@ export type Props = Parameters<typeof Card>[0];
 ---
 
 <Card {...Astro.props}>
-	<div class="link-list">
+	<div class="link-list flex flex-col">
 		<slot />
 	</div>
 </Card>

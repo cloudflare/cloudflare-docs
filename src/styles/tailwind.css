@@ -7,7 +7,57 @@
 @source "../**/*.{astro,html,js,jsx,ts,tsx,css}";
 @source not "../content/";
 
+
+html[data-theme='dark'] {
+	--sl-color-bg-nav: rgba(18, 18, 18, 0.92);
+	--sl-color-bg: #121212;
+	--sl-color-bg-sidebar: #181818 !important;
+	--sl-color-hairline-shade: #191919;
+	/* --sl-color-hairline-shade: transparent; */
+	--sl-color-hairline: var(--sl-color-hairline-shade);
+}
+
+.content-panel {
+	@apply last:pt-0;
+	/* @apply first:pb-0 last:border-t-0; */
+}
+
+#starlight__sidebar {
+	@apply dark:!bg-transparent;
+}
+
+.header {
+	@apply backdrop-blur-lg;
+}
+
+.card {
+	@apply rounded-lg p-6;
+	@apply dark:bg-neutral-900 dark:border-neutral-800/80;
+}
+
+.DocSearch-Button {
+	@apply dark:!border-neutral-800 dark:!bg-neutral-900 dark:!placeholder-gray-400;
+}
+
+.DocSearch-Button-Placeholder, .DocSearch-Search-Icon {
+	@apply dark:!text-neutral-600;
+}
+
+.DocSearch-Button-Key {
+	@apply dark:!text-neutral-500 dark:!border-neutral-700;
+}
+
+.card > .body {
+	flex: 1;
+	@apply flex flex-col;
+}
+
+.sidebar-content {
+	@apply !gap-4;
+}
+
 @theme {
+	--font-display: 'Lexend Peta Variable';
 	--color-black: var(--sl-color-white);
 
 	--color-accent-200: var(--tw-accent-200);

@@ -214,7 +214,7 @@ const recommendedSection = {
 		{
 			topCards.map((card) => (
 				<ListCard title={card.title}>
-					<ul>
+					<ul class="flex-1">
 						{card.links.map((link) => (
 							<li>
 								<a
@@ -227,7 +227,7 @@ const recommendedSection = {
 							</li>
 						))}
 					</ul>
-					<p>
+					<p class="text-sm leading-normal">
 						<strong>
 							<a href={card.cta.href}>{card.cta.text}</a>
 						</strong>
@@ -236,10 +236,10 @@ const recommendedSection = {
 			))
 		}
 	</FourCardGrid>
-	<div class="hidden md:block">
-		<hr />
+	<div class="hidden py-10 md:block">
+		<hr class="mb-10" />
 		<TryItSection />
-		<hr />
+		<hr class="my-10" />
 		{
 			featuredSections.map((section) => (
 				<>
@@ -258,7 +258,7 @@ const recommendedSection = {
 			title={recommendedSection.title}
 			cards={recommendedSection.cards}
 		/>
-		<hr />
+		<hr class="mt-16" />
 		<FooterHeroBlock />
 	</div>
 </StarlightPage>

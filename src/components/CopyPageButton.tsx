@@ -18,6 +18,9 @@ import {
 	PiChatCircleLight,
 	PiLinkLight,
 	PiPlugsConnectedLight,
+	PiTagChevron,
+	PiArrowDown,
+	PiCaretDown,
 } from "react-icons/pi";
 import ClaudeIcon from "./icons/ClaudeIcon";
 import ChatGPTIcon from "./icons/ChatGPTIcon";
@@ -202,16 +205,16 @@ export default function CopyPageButton() {
 			<div className="flex justify-end">
 				<button
 					onClick={handleCopyMarkdown}
-					className="inline-flex min-h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-l-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black transition-colors duration-300 hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
+					className="inline-flex min-h-8 min-w-30 cursor-pointer items-center justify-center gap-2 rounded-l-md border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black transition-colors duration-300 hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-neutral-900"
 				>
 					{getButtonContent()}
 				</button>
 				<button
 					ref={refs.setReference}
 					{...getReferenceProps()}
-					className="inline-flex min-h-8 w-8 cursor-pointer items-center justify-center rounded-r-sm border-t border-r border-b border-(--sl-color-hairline) bg-transparent text-sm text-black transition-colors duration-300 hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
+					className="inline-flex min-h-8 w-8 cursor-pointer items-center justify-center rounded-r-md border-t border-r border-b border-(--sl-color-hairline) bg-transparent text-sm text-black transition-colors duration-300 hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-neutral-900"
 				>
-					<PiTriangleFill className="rotate-180 text-xs" />
+					<PiCaretDown className="text-xs" />
 				</button>
 			</div>
 			{isOpen && (
@@ -226,7 +229,7 @@ export default function CopyPageButton() {
 							<li key={label}>
 								<button
 									onClick={onClick}
-									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
+									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-neutral-900"
 								>
 									<div className="flex items-center gap-2 text-sm">
 										<Icon />

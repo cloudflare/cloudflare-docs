@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
-import { MdOutlineThumbUp, MdOutlineThumbDown } from "react-icons/md";
+import { MdOutlineThumbUp, MdOutlineThumbDown, MdThumbsUpDown } from "react-icons/md";
 import { track } from "~/util/zaraz";
+import { PiThumbsDown, PiThumbsDownLight, PiThumbsUp } from "react-icons/pi";
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -38,7 +39,7 @@ function Buttons({
 				}}
 				className="cursor-pointer bg-transparent"
 			>
-				<MdOutlineThumbUp className="text-sl hover:text-accent text-2xl" />
+				<PiThumbsUp className="text-sl hover:text-accent text-2xl" />
 			</button>
 			<button
 				onClick={() => {
@@ -47,7 +48,7 @@ function Buttons({
 				}}
 				className="cursor-pointer bg-transparent"
 			>
-				<MdOutlineThumbDown className="text-sl hover:text-accent text-2xl" />
+				<PiThumbsDown className="text-sl hover:text-accent text-2xl" />
 			</button>
 		</>
 	);
