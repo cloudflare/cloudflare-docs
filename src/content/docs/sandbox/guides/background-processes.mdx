@@ -110,6 +110,49 @@ console.log('Server is ready:', result.line);
 ```
 </TypeScriptExample>
 
+## Wait for process completion
+
+For short-lived processes like builds or tests, wait for the process to exit and check the exit code:
+
+<TypeScriptExample>
+```
+const build = await sandbox.startProcess('npm run build');
+
+// Wait for build to complete
+const result = await build.waitForExit();
+
+if (result.exitCode === 0) {
+  console.log('Build succeeded');
+
+  // Get the output
+  const logs = await sandbox.getProcessLogs(build.id);
+  console.log('Build output:', logs);
+} else {
+  console.error('Build failed with exit code:', result.exitCode);
+}
+```
+</TypeScriptExample>
+
+With a timeout to prevent waiting indefinitely:
+
+<TypeScriptExample>
+```
+const test = await sandbox.startProcess('npm test');
+
+try {
+  // Wait up to 60 seconds for tests to complete
+  const result = await test.waitForExit(60000);
+
+  console.log('Tests completed with exit code:', result.exitCode);
+} catch (error) {
+  if (error.code === 'PROCESS_READY_TIMEOUT') {
+    console.error('Tests timed out after 60 seconds');
+    await sandbox.killProcess(test.id);
+  }
+}
+```
+</TypeScriptExample>
+
 ## Monitor process logs
 
 Stream logs in real-time:
@@ -226,6 +269,7 @@ When using `keepAlive: true`, containers will not automatically timeout. You **m
 ## Best practices
 
 - **Wait for readiness** - Use `waitForPort()` or `waitForLog()` to detect when services are ready
+- **Wait for completion** - Use `waitForExit()` for build processes and scripts to check exit codes
 - **Clean up** - Always stop processes when done
 - **Handle failures** - Monitor logs for errors and restart if needed
 - **Use try/finally** - Ensure cleanup happens even on errors
