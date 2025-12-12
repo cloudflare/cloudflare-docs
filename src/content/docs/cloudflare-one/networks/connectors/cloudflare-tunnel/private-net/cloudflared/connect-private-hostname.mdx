@@ -104,7 +104,7 @@ If the machine running `cloudflared` can already resolve `wiki.internal.local` t
 
 #### Scenario B: Use a specific private DNS server (Advanced)
 
-If you need `cloudflared` to use a specific internal DNS server that is different from the host's default resolver (for example, if you are routing DNS traffic through a separate tunnel for split-horizon DNS), you must explicitly connect that DNS server to Cloudflare via an [IP/CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
+If you need `cloudflared` to use a specific internal DNS server that is different from the host's default resolver (for example, if you are routing DNS traffic through a separate tunnel for split-horizon DNS), you must explicitly connect that DNS server to Cloudflare via an [IP/CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) and configure a [Gateway resolver policy](/cloudflare-one/traffic-policies/resolver-policies/).
 
 1.  **Create a Tunnel Route for the DNS Server:**
     1. Go to **Networks** > **Routes** > **CIDR**.
