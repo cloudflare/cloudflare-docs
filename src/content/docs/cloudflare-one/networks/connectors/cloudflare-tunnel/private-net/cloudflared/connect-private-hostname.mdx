@@ -78,15 +78,17 @@ Configuration steps vary depending on your [device on-ramp](#device-connectivity
 
 9. In the **Hostname routes** tab, enter the fully qualified domain name (FQDN) that represents your application (for example, `wiki.internal.local`).
 
-  <Details header="Hostname format restrictions">
-      - **Length:** Must be less than 255 characters.
-      - **Full subdomains only:** Wildcards (`*`) are supported but must represent a full DNS label (e.g., `*.internal.local`). Partial wildcards (e.g., `*-dev.internal.local`) are not supported.
-      - **Trimming:** Leading wildcards (`*`) are trimmed off and an implicit dot (`.`) is assumed.
-        - Example: `*.internal.local` is treated as "any subdomain of `internal.local`".
-        - Example: `*-dev.internal.local` will **not** match `app-dev.internal.local`.
-      - **Formatting:** Leading and ending dots (`.`) are allowed but trimmed off.
-      - **Placement:** No wildcards (`*`) in the middle of a label. For example, `foo*bar.internal.local` is not allowed.
-  </Details>
+	<Details header="Hostname format restrictions">
+			- **Character limit:** Must be less than 255 characters.
+			- **Supported wildcards:** A single wildcard (`*`) is allowed, and it must represent a full DNS label.
+						Examples: `*.internal.local`, `foo.*.internal.local`
+			- **Unsupported wildcards:** The following wildcard formats are not supported:
+					- Partial wildcards such as `*-dev.internal.local` or `dev-*.internal.local`.
+					- Wildcards in the middle of a label, such as `foo*bar.internal.local`.
+					- Multiple wildcards in the hostname, such as `*.*.internal.local`.
+			- **Wildcard trimming**: Leading wildcards (`*`) are trimmed off and an implicit dot (`.`) is assumed. For example, `*.internal.local` is saved as `internal.local` but will match all subdomains at the wildcard level (covers `foo.internal.local` but not `foo.bar.internal.local`).
+			- **Dot trimming:** Leading and ending dots (`.`) are allowed but trimmed off.
+	</Details>
 
 10. Select **Complete setup**.
 
