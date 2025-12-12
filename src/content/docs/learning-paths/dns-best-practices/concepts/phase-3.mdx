@@ -16,7 +16,7 @@ Complete one last check of all DNS records in your Cloudflare dashboard for accu
 
    1. Log in to your domain registrar's control panel for each domain.  
    2. Navigate to the section for managing nameservers.  
-   3. Remove your current on-prem BIND nameserver entries.  
+   3. Replace your current on-prem BIND nameserver entries with your Cloudflare nameservers.  
    4. Add the Cloudflare nameservers assigned to your domain (Cloudflare will provide at least two).  
    5. Save the changes.  
 
@@ -24,15 +24,16 @@ Complete one last check of all DNS records in your Cloudflare dashboard for accu
 
 - DNS nameserver changes can take time to propagate globally, typically anywhere from a few minutes to 48 hours (though often much faster due to lowered TTLs).  
 - Use tools like:  
-   - `dig <yourdomain.com> NS @8.8.8.8` (query Google's DNS)  
-   - `dig <yourdomain.com> NS @1.1.1.1` (query Cloudflare's DNS)  
-   - Online DNS propagation checkers (for example, [dnschecker.org](https://dnschecker.org/), [whatsmydns.net](https://www.whatsmydns.net/)) to see which nameservers global resolvers are reporting.  
+   - `dig yourdomain.com NS @8.8.8.8` (query Google's DNS)  
+   - `dig yourdomain.com NS @1.1.1.1` (query Cloudflare's DNS)
+   - `whois yourdomain.com` (`yourdomain.com` is your domain)
+   - `dig yourdomain.com @tld.nameserver.com` (`tld.nameserver.com` is the nameserver of your domain's TLD. You can find this information by querying it as `dig com ns +short` where `.com` is the example.)
    
-   You are looking for the Cloudflare nameservers to be reported consistently.  
+   You are looking for the Cloudflare nameservers to be reported consistently. 
 
 ## 4. Initial testing
 
 Once propagation appears to be widespread, perform basic resolution tests for critical records (for example, your website's `A` record, `MX` records).
 
-- `dig <yourdomain.com> A +short`  
-- `dig <yourdomain.com> MX +short`
+- `dig yourdomain.com A +short`  
+- `dig yourdomain.com MX +short`

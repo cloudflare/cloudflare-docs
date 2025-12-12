@@ -50,7 +50,7 @@ Use Cloudflare's **Import and Export** feature (under **DNS** > **Records**) to 
 Complete this step before you change your nameservers at the registrar.  
 
 - **Action at registrar:** Log in to your domain registrar and delete the existing DS records associated with your on-prem BIND DNSSEC keys for each domain.  
-- **Wait for DS TTL:** Wait at least the full DS record TTL published at the parent zone, and preferably up to 1.5 times that TTL, before you change nameservers. This ensures that validating resolvers stop expecting the old DNSSEC chain.  
+- **Wait for DS TTL:** Wait at least the full DS record TTL published at the parent zone, and preferably up to 1.5 times that TTL, before you change nameservers. This ensures that validating resolvers stop expecting the old DNSSEC chain. The typical TTL duration for DS records is set to +24 hours (86,400 seconds).
 - **Impact of incorrect timing:** If you change nameservers while resolvers still expect the old DS record, DNSSEC validation will fail and your domain may become unreachable for validating resolvers.  
 
 For more detailed guidance, refer to [DNSSEC](/dns/dnssec/) and [Migrate an existing zone with DNSSEC enabled](/dns/dnssec/dnssec-active-migration/).
