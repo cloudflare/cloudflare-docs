@@ -35,6 +35,8 @@ Hyperdrive also supports databases that are compatible with the Postgres or MySQ
 
 ## Supported TLS (SSL) modes
 
+### PostgreSQL
+
 Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.org/docs/current/libpq-ssl.html) connection modes when connecting to your origin database:
 
 | Mode          | Supported          | Details                                                                                                                                   |
@@ -45,12 +47,19 @@ Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.
 | `verify-ca`   | Yes                | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
 | `verify-full` | Yes                | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
 
-Refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) documentation for details on how to configure `verify-ca` or `verify-full` TLS (SSL) modes for Hyperdrive.
-:::note
+### MySQL
 
-Hyperdrive support for `verify-ca` and `verify-full` is not available for MySQL (beta).
+Hyperdrive supports the following [MySQL TLS (SSL)](https://dev.mysql.com/doc/refman/8.0/en/connection-options.html#option_general_ssl-mode) connection modes when connecting to your origin database:
 
-:::
+| Mode              | Supported          | Details                                                                                                                                |
+| ----------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `DISABLED`        | No                 | Hyperdrive does not support insecure plain text connections.                                                                           |
+| `PREFERRED`       | No (use `REQUIRED`) | Hyperdrive will always use TLS.                                                                                                       |
+| `REQUIRED`        | Yes (default)      | TLS is required, and server certificates are validated (based on WebPKI).                                                              |
+| `VERIFY_CA`       | Yes                | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts. |
+| `VERIFY_IDENTITY` | Yes                | Identical to `VERIFY_CA`, but also requires the database hostname must match the certificate's Common Name (CN).                        |
+
+Refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) documentation for details on how to configure these TLS (SSL) modes for Hyperdrive.
 
 ## Supported PostgreSQL authentication modes
 
