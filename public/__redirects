@@ -2230,6 +2230,7 @@
 /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
+/cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
 /cloudflare-one/applications/app-library/ /cloudflare-one/team-and-resources/app-library/ 301
 /cloudflare-one/applications/block-page/ /cloudflare-one/reusable-components/custom-pages/access-block-page/ 301
