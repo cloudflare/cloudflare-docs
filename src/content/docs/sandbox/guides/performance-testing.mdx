@@ -1,0 +1,212 @@
+---
+title: Performance testing
+pcx_content_type: how-to
+sidebar:
+  order: 11
+description: Measure sandbox latency, throughput, and behavior under load with performance tests.
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+Performance tests help you understand how your sandbox behaves under different load conditions. The Sandbox SDK includes a performance testing framework that measures latency, throughput, and concurrent behavior.
+
+## Run performance tests
+
+Use the performance test suite to measure sandbox behavior:
+
+<PackageManagers type="run test:perf" />
+
+The test suite includes four scenarios that measure different aspects of performance:
+
+| Scenario | Duration | What it measures |
+| --- | --- | --- |
+| **Cold start** | ~30s | Time to create sandbox and execute first command (10 iterations) |
+| **Sustained throughput** | ~1 min | Command latency over 60 seconds at 5 requests/second |
+| **Bursty traffic** | ~2 min | 3 bursts of 50 concurrent requests with cooldown periods |
+| **Concurrent creation** | ~5 min | 25 sandboxes created simultaneously |
+
+### Run individual scenarios
+
+Run specific scenarios to focus on particular performance characteristics:
+
+<PackageManagers type="run test:perf:cold-start" />
+
+<PackageManagers type="run test:perf:sustained" />
+
+<PackageManagers type="run test:perf:burst" />
+
+<PackageManagers type="run test:perf:concurrent" />
+
+## Test against deployed workers
+
+By default, performance tests run locally using `wrangler dev` (requires Docker). To test against a deployed worker:
+
+```sh
+TEST_WORKER_URL=https://your-worker.workers.dev npm run test:perf
+```
+
+This is useful for:
+- Measuring production performance
+- Comparing local vs production behavior
+- Testing different deployment configurations
+
+:::note
+Local Docker performance differs from Cloudflare production. Use local tests for regression detection and production tests for baseline metrics.
+:::
+
+## Understand test results
+
+Performance tests generate detailed metrics for each scenario:
+
+### Console output
+
+The console shows a summary with key percentiles:
+
+```txt
+SCENARIO: cold-start
+Duration: 26s
+
+  cold-start-latency (n=10):
+    P50: 1.37s  P95: 1.59s  P99: 1.59s
+  Success Rate: 100.0% (10/10)
+```
+
+### JSON reports
+
+Results are written to `perf-results/`:
+
+- `latest.json` - Full metrics with percentiles and success rates
+- `vitest-output.json` - Vitest test results
+
+The JSON schema includes detailed statistics:
+
+```json
+{
+  "version": "1.0.0",
+  "timestamp": "2025-12-12T10:30:00.000Z",
+  "environment": {
+    "workerUrl": "https://sandbox-perf.workers.dev",
+    "mode": "ci"
+  },
+  "scenarios": [{
+    "name": "cold-start",
+    "duration": 26000,
+    "metrics": [{
+      "name": "cold-start-latency",
+      "unit": "ms",
+      "count": 10,
+      "min": 1280,
+      "max": 1590,
+      "mean": 1410,
+      "p50": 1370,
+      "p95": 1590,
+      "p99": 1590,
+      "stdDev": 98
+    }],
+    "successRates": {
+      "cold-start-latency": {
+        "total": 10,
+        "success": 10,
+        "failure": 0,
+        "rate": 1.0
+      }
+    }
+  }]
+}
+```
+
+## Write custom performance tests
+
+Create custom performance tests using the provided helpers:
+
+<TypeScriptExample>
+```
+import { describe, test, beforeAll, afterAll } from 'vitest';
+import { PerfSandboxManager } from '../helpers/perf-sandbox-manager';
+import { MetricsCollector } from '../helpers/metrics-collector';
+
+describe('Custom Performance Test', () => {
+  let manager: PerfSandboxManager;
+  let metrics: MetricsCollector;
+
+  beforeAll(async () => {
+    manager = new PerfSandboxManager(workerUrl);
+    metrics = new MetricsCollector('custom-scenario');
+  });
+
+  afterAll(async () => {
+    await manager.destroyAll();
+    metrics.printReport();
+  });
+
+  test('should measure custom operation', async () => {
+    const sandbox = await manager.createSandbox();
+
+    // Time an async operation (automatically tracks success/failure)
+    const latency = await metrics.timeAsync('operation', async () => {
+      return sandbox.exec('echo test');
+    });
+
+    expect(latency).toBeLessThan(5000);
+  });
+});
+```
+</TypeScriptExample>
+
+### MetricsCollector API
+
+The `MetricsCollector` class tracks timing and success rates:
+
+<TypeScriptExample>
+```
+const metrics = new MetricsCollector('scenario-name');
+
+// Time an async operation (automatically tracks success/failure)
+const result = await metrics.timeAsync('operation-name', async () => {
+  return await doSomething();
+});
+
+// Record a raw value with success tracking in metadata
+metrics.record('custom-metric', 123.45, 'ms', { success: true });
+
+// Get success rate for a metric
+const rate = metrics.getSuccessRate('operation-name');
+// Returns: { total, success, failure, rate }
+```
+</TypeScriptExample>
+
+Statistics calculated per metric:
+
+- **Count** - Number of samples
+- **Min/Max/Mean** - Basic statistics
+- **StdDev** - Standard deviation
+- **Percentiles** - p50, p75, p90, p95, p99
+
+## CI integration
+
+Performance tests run automatically in GitHub Actions via the workflow at `.github/workflows/performance.yml`:
+
+- **Manual trigger** - Run via workflow_dispatch with optional parameters
+- **Weekly baseline** - Runs Sunday midnight UTC for trend tracking
+- **Pre-release** - Runs before each release for validation
+
+Results are stored as GitHub Actions artifacts with 90-day retention (365 days for baseline comparisons).
+
+## Local vs production performance
+
+Performance characteristics differ between local and production environments:
+
+| Aspect | Local (Docker) | Production (Cloudflare) |
+| --- | --- | --- |
+| Cold start | ~1.3s | Varies by region and load |
+| Concurrent limits | Limited by laptop resources | Account-based limits |
+| Capacity errors | Never occur | Can occur under heavy load |
+| Network latency | Negligible | Varies by region |
+
+**Recommendation**: Use local tests for regression detection during development. Use production tests to establish performance baselines and validate production behavior.
+
+## Related resources
+
+- [Get started with Sandbox SDK](/sandbox/get-started/) - Installation and setup
+- [Execute commands](/sandbox/guides/execute-commands/) - Command execution patterns
+- [Background processes](/sandbox/guides/background-processes/) - Long-running process management
