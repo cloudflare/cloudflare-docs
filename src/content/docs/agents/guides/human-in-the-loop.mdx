@@ -141,15 +141,33 @@ export const tools = {
 };
 
 // Export AITool format for client-side use
+// AITool uses JSON Schema (not Zod) because it needs to be serialized over the wire.
+// Only tools with `execute` need `parameters` - they get extracted and sent to the server.
+// Tools without `execute` are server-side only and just need description for display.
 export const clientTools: Record<string, AITool> = {
-  getLocalTime: getLocalTimeTool as AITool,
+  getLocalTime: {
+    description: "get the local time for a specified location",
+    parameters: {
+      type: "object",
+      properties: {
+        location: { type: "string" }
+      },
+      required: ["location"]
+    },
+    execute: async (input) => {
+      const { location } = input as { location: string };
+      console.log(`Getting local time for ${location}`);
+      await new Promise((res) => setTimeout(res, 2000));
+      return "10am";
+    }
+  },
+  // Server-side tools: no execute, no parameters needed (schema lives on server)
   getWeatherInformation: {
-    description: getWeatherInformationTool.description,
-    inputSchema: getWeatherInformationTool.inputSchema
+    description:
+      "Get the current weather information for a specific city. Always use this tool when the user asks about weather."
   },
   getLocalNews: {
-    description: getLocalNewsTool.description,
-    inputSchema: getLocalNewsTool.inputSchema
+    description: "get local news for a specified location"
   }
 };
 ````
@@ -249,18 +267,44 @@ export class HumanInTheLoop extends AIChatAgent<Env> {
     const startTime = Date.now();
     const lastMessage = this.messages[this.messages.length - 1];
 
-    // Check if the last message contains tool confirmations
     if (hasToolConfirmation(lastMessage)) {
-      // Process tool confirmations using UI stream
-      const stream = createUIMessageStream({
-        execute: async ({ writer }) => {
-          await processToolCalls(
-            { writer, messages: this.messages, tools },
-            { getWeatherInformation }
-          );
+      // Process tool confirmations - execute the tool and update messages
+      const updatedMessages = await processToolCalls(
+        { messages: this.messages, tools },
+        { getWeatherInformation }
+      );
+
+      // Update the agent's messages with the actual tool results
+      // This replaces "Yes, confirmed." with the actual tool output
+      this.messages = updatedMessages;
+      await this.persistMessages(this.messages);
+
+      // Now continue with streamText so the LLM can respond to the tool result
+      const result = streamText({
+        messages: convertToModelMessages(this.messages),
+        model: openai("gpt-4o"),
+        onFinish,
+        tools,
+        stopWhen: stepCountIs(5)
+      });
+
+      return result.toUIMessageStreamResponse({
+        messageMetadata: ({ part }) => {
+          if (part.type === "start") {
+            return {
+              model: "gpt-4o",
+              createdAt: Date.now(),
+              messageCount: this.messages.length
+            };
+          }
+          if (part.type === "finish") {
+            return {
+              responseTime: Date.now() - startTime,
+              totalTokens: part.totalUsage?.totalTokens
+            };
+          }
         }
       });
-      return createUIMessageStreamResponse({ stream });
     }
 
     // Normal message flow - stream AI response
@@ -330,7 +374,9 @@ export default function Chat() {
     agent,
     experimental_automaticToolResolution: true,
     toolsRequiringConfirmation,
-    tools: clientTools satisfies Record<string, AITool>
+    tools: clientTools satisfies Record<string, AITool>,
+    // Enable server auto-continuation after tool results for seamless UX
+    autoContinueAfterToolResult: true
   });
 
   const [input, setInput] = useState("");
@@ -528,11 +574,12 @@ The human-in-the-loop pattern works by intercepting tool calls before execution:
 
 ### Message streaming with confirmations
 
-The agent uses the Vercel AI SDK's streaming capabilities:
+The agent uses the Vercel AI SDK streaming capabilities combined with client-side tool execution:
 
-- `createUIMessageStream` creates a stream for processing tool confirmations.
-- `streamText` handles normal AI responses with tool calls.
-- The `hasToolConfirmation` function detects when a message contains a tool confirmation response.
+- When `autoContinueAfterToolResult: true` is enabled, tool results trigger automatic server continuation
+- `streamText` handles both normal AI responses and post-tool-execution continuations
+- The `hasToolConfirmation` function detects when a message contains a tool confirmation response
+- After tool execution, the server updates messages with actual tool results and continues the LLM response seamlessly
 
 ### State persistence
 

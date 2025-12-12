@@ -947,6 +947,14 @@ type UseAgentChatOptions = Omit<
 	Parameters<typeof useChat>[0] & {
 		// Agent connection from useAgent
 		agent: ReturnType<typeof useAgent>;
+		// Client-side tools that can be executed in the browser
+		tools?: Record<string, AITool>;
+		// List of tool names that require human confirmation before execution
+		toolsRequiringConfirmation?: string[];
+		// Enable automatic continuation after client tool execution
+		// When true, the server will automatically continue the conversation
+		// after a client tool returns a result, creating a seamless experience
+		autoContinueAfterToolResult?: boolean;
 	},
 	"fetch"
 >;
@@ -1007,6 +1015,77 @@ function useAgentChat(options: UseAgentChatOptions): {
 	error: Error | undefined;
 };
 ```
+
+##### Client-defined tools
+
+You can define tools that execute on the client side using the `tools` option. Client-side tools allow you to:
+
+- Access browser APIs and local resources
+- Execute logic without server round-trips
+- Implement human-in-the-loop patterns with approval workflows
+
+Client tools are defined using the `AITool` type and can optionally include an `execute` function for client-side execution:
+
+```ts
+import type { AITool } from "agents/ai-react";
+
+const clientTools: Record<string, AITool> = {
+	// Client-side tool with execution logic
+	getLocalTime: {
+		description: "get the local time for a specified location",
+		parameters: {
+			type: "object",
+			properties: {
+				location: { type: "string" }
+			},
+			required: ["location"]
+		},
+		execute: async (input) => {
+			const { location } = input as { location: string };
+			// Client-side logic here
+			return new Date().toLocaleTimeString();
+		}
+	},
+	// Server-side tool reference (no execute function)
+	getWeatherInformation: {
+		description: "Get weather information for a city"
+		// No parameters or execute - handled by server
+	}
+};
+```
+
+##### Tool confirmation workflows
+
+Use `toolsRequiringConfirmation` to specify which tools need user approval before execution:
+
+```ts
+const { messages, addToolResult } = useAgentChat({
+	agent,
+	tools: clientTools,
+	toolsRequiringConfirmation: ["getLocalTime", "getWeatherInformation"]
+});
+```
+
+When a tool requiring confirmation is called, you can handle the approval in your UI by checking for `part.state === "input-available"` and calling `addToolResult` with the user's decision.
+
+##### Auto-continuation after tool results
+
+By default, client-executed tools require a new request to continue the conversation. Enable `autoContinueAfterToolResult` to make client tools behave like server tools:
+
+```ts
+const { messages, addToolResult } = useAgentChat({
+	agent,
+	tools: clientTools,
+	autoContinueAfterToolResult: true
+});
+```
+
+When enabled:
+
+1. Client executes the tool and sends the result to the server
+2. Server automatically calls `onChatMessage()` to continue
+3. The LLM continuation is merged into the same assistant message
+4. User sees a single, seamless response
 
 <TypeScriptExample>
 
