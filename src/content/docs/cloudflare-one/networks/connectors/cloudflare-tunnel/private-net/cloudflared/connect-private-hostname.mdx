@@ -7,7 +7,7 @@ sidebar:
     text: Beta
 ---
 
-import { Render, Details, GlossaryTooltip, Checkbox } from "~/components";
+import { Render, Details, GlossaryTooltip } from "~/components";
 
 Instead of managing static IP lists and routes, you can connect users to private HTTP and non-HTTP applications using their hostnames (for example, `wiki.internal.local`). Private hostname routes are especially useful when the application has an unknown or ephemeral IP, which often occurs when infrastructure is provisioned by a third-party cloud provider.
 
@@ -46,16 +46,15 @@ This section covers how to enable remote access to a private hostname applicatio
 
 To connect to private hostnames, your devices must forward the following traffic to Cloudflare:
 
-<Checkbox label="Initial resolved IPs" />
+- Initial resolved IPs:
 	<Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one"/>
-<Checkbox label="DNS queries for your private hostname" />
+- DNS queries for your private hostname
 
 Configuration steps vary depending on your [device on-ramp](#device-connectivity):
 
 <Details header="WARP clients">
-1. In [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above route through the WARP tunnel. For example, if you are using the default Split Tunnels Exclude configuration, delete `100.64.0.0/10` from the Split Tunnels list.
+1. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
 2. In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
-
 </Details>
 
 <Details header="WARP Connector">
