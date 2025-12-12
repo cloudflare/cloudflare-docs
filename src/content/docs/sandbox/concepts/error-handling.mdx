@@ -1,0 +1,122 @@
+---
+title: Error handling
+pcx_content_type: concept
+sidebar:
+  order: 7
+---
+
+The Sandbox SDK uses HTTP status codes to communicate error types and guide client retry behavior. Understanding these codes helps you build resilient applications.
+
+## HTTP status codes
+
+The SDK returns different status codes based on error type:
+
+| Status | Meaning                                        | Client behavior        |
+| ------ | ---------------------------------------------- | ---------------------- |
+| **503** | Transient (container starting, port not ready) | Retry automatically    |
+| **500** | Permanent (config error, missing image)        | Fail immediately       |
+| **400** | Client error (capacity limits, validation)     | Fail immediately       |
+
+### 503 Service Unavailable
+
+Indicates transient errors that resolve automatically:
+
+- Container is starting up
+- Port not yet mapped
+- Application not ready on port
+- Network transients during startup
+
+The SDK automatically retries these errors with exponential backoff.
+
+### 500 Internal Server Error
+
+Indicates permanent errors that will not resolve with retry:
+
+- Missing Docker image
+- Container name collision
+- Invalid configuration
+- Unexpected runtime errors
+
+These require investigation and code changes to fix.
+
+### 400 Bad Request
+
+Indicates client errors or resource limits:
+
+- Capacity limit exceeded
+- Invalid parameters
+- Validation failures
+
+## Automatic retry behavior
+
+The SDK includes built-in retry logic for transient errors:
+
+- **Total budget**: 2 minutes maximum
+- **Backoff strategy**: 3s → 6s → 12s → 24s → 30s (capped)
+- **Only retries**: 503 status code
+
+This automatic retry handles normal container startup delays without requiring application code changes.
+
+## Capacity limit errors
+
+In production, you may encounter capacity errors when your account reaches concurrent resource limits. These return 400 status with specific error codes:
+
+| Error code                       | Meaning                           |
+| -------------------------------- | --------------------------------- |
+| `SURPASSED_BASE_LIMITS`          | Exceeded per-deployment limits    |
+| `SURPASSED_TOTAL_LIMITS`         | Exceeded account-wide limits      |
+| `LOCATION_SURPASSED_BASE_LIMITS` | Exceeded location-specific limits |
+
+These errors only occur in production and cannot be reproduced locally.
+
+### Account limits
+
+Workers Paid accounts have the following concurrent resource limits:
+
+| Resource          | Limit   |
+| ----------------- | ------- |
+| Concurrent Memory | 400 GiB |
+| Concurrent vCPU   | 100     |
+| Concurrent Disk   | 2 TB    |
+
+Refer to [Containers limits](/containers/platform-details/limits/) for current values and instance types.
+
+## Best practices
+
+Follow these practices to handle errors effectively:
+
+- **Clean up resources**: Call `destroy()` when done to free resources
+- **Use auto-timeout**: Keep `keepAlive: false` (default) for automatic cleanup
+- **Monitor usage**: Track concurrent container usage in production
+- **Handle capacity errors**: Implement fallback behavior for capacity limits
+- **Log errors**: Capture error details for debugging production issues
+
+## Error sources
+
+The SDK handles errors from multiple layers:
+
+### Platform errors (workerd)
+
+These errors come from the container runtime:
+
+- Port mapping race conditions
+- Container monitor failures
+- Missing Docker images
+- Container name collisions
+
+### Container startup errors
+
+These errors come from the container lifecycle:
+
+- Port health check failures
+- Application not listening on port
+- Container startup timeouts
+- Network connection issues
+
+The SDK automatically classifies these errors and returns appropriate HTTP status codes.
+
+## Related resources
+
+- [Containers limits](/containers/platform-details/limits/) - Account and resource limits
+- [Production deployment](/sandbox/guides/production-deployment/) - Deploy sandboxes to production
+- [Security model](/sandbox/concepts/security/) - Understand isolation and validation
