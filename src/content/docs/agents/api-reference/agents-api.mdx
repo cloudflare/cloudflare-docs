@@ -18,7 +18,7 @@ This page provides an overview of the Agent SDK API, including the `Agent` class
 The Agents SDK exposes two main APIs:
 
 - The server-side `Agent` class. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, how to call AI models, and any error handling.
-- The client-side `AgentClient` class, which allows you to connect to an Agent instance from a client-side application. The client APIs also include React hooks, including `useAgent` and `useAgentChat`, and allow you to automatically synchronize state between each unique Agent (running server-side) and your client applications.
+- The client-side `AgentClient` class, which allows you to connect to an Agent instance from a client-side application. The client APIs also include React hooks, including `useAgent` and `useChat`, and allow you to automatically synchronize state between each unique Agent (running server-side) and your client applications.
 
 :::note
 
@@ -635,7 +635,7 @@ For complete MCP client API documentation, including OAuth configuration and adv
 
 The Agents SDK provides a set of client APIs for interacting with Agents from client-side JavaScript code, including:
 
-- React hooks, including `useAgent` and `useAgentChat`, for connecting to Agents from client applications.
+- React hooks, including `useAgent` and `useChat`, for connecting to Agents from client applications.
 - Client-side [state syncing](/agents/api-reference/store-and-sync-state/) that allows you to subscribe to state updates between the Agent and any connected client(s) when calling `this.setState` within your Agent's code.
 - The ability to call remote methods (Remote Procedure Calls; RPC) on the Agent from client-side JavaScript code using the `@callable` method decorator.
 
@@ -804,7 +804,7 @@ function useAgent<State = unknown>(
 
 The Agents SDK exposes an `AIChatAgent` class that extends the `Agent` class and exposes an `onChatMessage` method that simplifies building interactive chat agents.
 
-You can combine this with the `useAgentChat` React hook from the `agents/ai-react` package to manage chat state and messages between a user and your Agent(s).
+You can combine this with the `useChat` React hook from the `agents/react` package to manage chat state and messages between a user and your Agent(s).
 
 #### AIChatAgent
 
@@ -886,7 +886,7 @@ The `AIChatAgent` class provides **automatic resumable streaming** out of the bo
 
 ##### How it works
 
-When you use `AIChatAgent` with `useAgentChat`:
+When you use `AIChatAgent` with `useChat`:
 
 1. **During streaming**: All chunks are automatically persisted to SQLite
 2. **On disconnect**: The stream continues server-side, buffering chunks
@@ -923,9 +923,9 @@ If you don't want automatic resume (for example, for short responses), disable i
 <TypeScriptExample>
 
 ```tsx
-const { messages } = useAgentChat({
-	agent,
-	resume: false, // Disable automatic stream resumption
+const { messages } = useChat({
+	agent: "my-agent",
+	// Stream resumption is enabled by default
 });
 ```
 
@@ -933,134 +933,186 @@ const { messages } = useAgentChat({
 
 ### Chat Agent React API
 
-#### useAgentChat
+#### useChat
 
-React hook for building AI chat interfaces using an Agent.
+Unified React hook for building AI chat interfaces with human-in-the-loop tool approval. This hook replaces the previous two-hook pattern (`useAgent` + `useAgentChat`) with a single, declarative API.
 
 ```ts
-import { useAgentChat } from "agents/ai-react";
-import { useAgent } from "agents/react";
-import type { Message } from "ai";
+import { useChat } from "agents/react";
+import type { UIMessage } from "ai";
+import type { PartySocket } from "partysocket";
 
-// Options for the useAgentChat hook
-type UseAgentChatOptions = Omit<
-	Parameters<typeof useChat>[0] & {
-		// Agent connection from useAgent
-		agent: ReturnType<typeof useAgent>;
-	},
-	"fetch"
->;
+// Tool definition for client-side tools
+type Tool<TInput = any, TOutput = any> = {
+	// Tool description for the LLM
+	description?: string;
+	// Client-side execution function (optional)
+	execute?: (input: TInput) => TOutput | Promise<TOutput>;
+	// Whether to require human approval before execution
+	confirm?: boolean;
+};
+
+// Pending tool call awaiting user approval
+type PendingToolCall = {
+	toolCallId: string;
+	toolName: string;
+	input: unknown;
+	messageId: string;
+};
+
+// Options for the useChat hook
+type UseChatOptions = {
+	// Name of the agent to connect to
+	agent: string;
+	// Name of the specific Agent instance (optional)
+	name?: string;
+	// Client-side tool definitions with confirmation behavior
+	tools?: Record<string, Tool>;
+	// Error handler
+	onError?: (error: Error) => void;
+	// State update callback
+	onStateUpdate?: (state: unknown, source: "server" | "client") => void;
+};
 
 // React hook for building AI chat interfaces using an Agent
-function useAgentChat(options: UseAgentChatOptions): {
+function useChat(options: UseChatOptions): {
 	// Current chat messages
-	messages: Message[];
+	messages: UIMessage[];
+	// Send a message to the agent
+	sendMessage: (message: UIMessage) => void;
 	// Set messages and synchronize with the Agent
-	setMessages: (messages: Message[]) => void;
+	setMessages: (messages: UIMessage[]) => void;
 	// Clear chat history on both client and Agent
 	clearHistory: () => void;
-	// Append a new message to the conversation
-	append: (
-		message: Message,
-		chatRequestOptions?: any,
-	) => Promise<string | null | undefined>;
-	// Reload the last user message
-	reload: (chatRequestOptions?: any) => Promise<string | null | undefined>;
-	// Stop the AI response generation
-	stop: () => void;
-	// Current input text
-	input: string;
-	// Set the input text
-	setInput: React.Dispatch<React.SetStateAction<string>>;
-	// Handle input changes
-	handleInputChange: (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-	) => void;
-	// Submit the current input
-	handleSubmit: (
-		event?: { preventDefault?: () => void },
-		chatRequestOptions?: any,
-	) => void;
-	// Additional metadata
-	metadata?: Object;
+	// Tool calls awaiting approval
+	pendingToolCalls: PendingToolCall[];
+	// Approve a tool execution
+	approve: (toolCallId: string) => Promise<void>;
+	// Deny a tool execution with optional reason
+	deny: (toolCallId: string, reason?: string) => Promise<void>;
 	// Whether a response is currently being generated
 	isLoading: boolean;
-	// Current status of the chat
-	status: "submitted" | "streaming" | "ready" | "error";
-	// Tool data from the AI response
-	data?: any[];
-	// Set tool data
-	setData: (
-		data: any[] | undefined | ((data: any[] | undefined) => any[] | undefined),
-	) => void;
-	// Unique ID for the chat
-	id: string;
-	// Add a tool result for a specific tool call
-	addToolResult: ({
-		toolCallId,
-		result,
-	}: {
-		toolCallId: string;
-		result: any;
-	}) => void;
+	// Unique session ID
+	sessionId: string;
+	// WebSocket connection to the agent
+	connection: PartySocket;
 	// Current error if any
 	error: Error | undefined;
 };
 ```
 
+:::note
+The `useChat` hook simplifies the human-in-the-loop pattern by:
+- Combining agent connection and chat management in a single hook
+- Automatically detecting tools that require confirmation based on the `confirm` property
+- Providing a simple `approve(id)` and `deny(id)` API instead of manual `addToolResult()` calls
+- Exposing `pendingToolCalls` to track which tools are awaiting approval
+- Handling both client-side and server-side tool execution automatically
+:::
+
 <TypeScriptExample>
 
 ```tsx
-// Example of using useAgentChat in a React component
-import { useAgentChat } from "agents/ai-react";
-import { useAgent } from "agents/react";
-import { useState } from "react";
+// Example of using useChat in a React component
+import { useChat, type PendingToolCall } from "agents/react";
+import { getToolName, isToolUIPart } from "ai";
 
 function ChatInterface() {
-	// Connect to the chat agent
-	const agentConnection = useAgent({
-		agent: "customer-support",
-		name: "session-12345",
-	});
-
-	// Use the useAgentChat hook with the agent connection
 	const {
 		messages,
-		input,
-		handleInputChange,
-		handleSubmit,
+		sendMessage,
+		pendingToolCalls,
+		approve,
+		deny,
+		clearHistory,
 		isLoading,
 		error,
-		clearHistory,
-	} = useAgentChat({
-		agent: agentConnection,
-		initialMessages: [
-			{ role: "system", content: "You're chatting with our AI assistant." },
-			{ role: "assistant", content: "Hello! How can I help you today?" },
-		],
+		sessionId,
+	} = useChat({
+		agent: "customer-support",
+		name: "session-12345",
+		tools: {
+			getWeather: {
+				description: "Get weather for a city",
+				confirm: true, // Requires approval
+			},
+			getCurrentTime: {
+				description: "Get current time",
+				execute: async () => new Date().toISOString(),
+				// No confirm = auto-executes (default when execute is present)
+			},
+		},
+		onError: (error) => console.error("Chat error:", error),
 	});
 
 	return (
 		<div className="chat-container">
+			<div className="session-info">Session: {sessionId}</div>
+
 			<div className="message-history">
-				{messages.map((message, i) => (
-					<div key={i} className={`message ${message.role}`}>
-						{message.role === "user" ? "👤" : "🤖"} {message.content}
+				{messages.map((message) => (
+					<div key={message.id} className={`message ${message.role}`}>
+						{message.parts?.map((part, i) => {
+							if (part.type === "text") {
+								return <div key={i}>{part.text}</div>;
+							}
+
+							if (isToolUIPart(part)) {
+								const toolCallId = part.toolCallId;
+								const toolName = getToolName(part);
+
+								// Check if this tool is pending approval
+								const pending = pendingToolCalls.find(
+									(p: PendingToolCall) => p.toolCallId === toolCallId,
+								);
+
+								if (pending) {
+									return (
+										<div key={toolCallId} className="tool-approval">
+											<p>Approve {toolName}?</p>
+											<button onClick={() => approve(toolCallId)}>Yes</button>
+											<button onClick={() => deny(toolCallId)}>No</button>
+										</div>
+									);
+								}
+
+								// Show tool results
+								if (part.state === "output-available") {
+									return (
+										<div key={toolCallId}>
+											{toolName}: {JSON.stringify(part.output)}
+										</div>
+									);
+								}
+							}
+							return null;
+						})}
 					</div>
 				))}
 
-				{isLoading && <div className="loading">AI is typing...</div>}
+				{isLoading && <div className="loading">AI is responding...</div>}
 				{error && <div className="error">Error: {error.message}</div>}
 			</div>
 
-			<form onSubmit={handleSubmit} className="message-input">
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					const input = e.currentTarget.message.value;
+					if (input.trim()) {
+						sendMessage({
+							role: "user",
+							parts: [{ type: "text", text: input }],
+						});
+						e.currentTarget.reset();
+					}
+				}}
+			>
 				<input
-					value={input}
-					onChange={handleInputChange}
+					name="message"
 					placeholder="Type your message..."
-					disabled={isLoading}
+					disabled={isLoading || pendingToolCalls.length > 0}
 				/>
-				<button type="submit" disabled={isLoading || !input.trim()}>
+				<button type="submit" disabled={isLoading}>
 					Send
 				</button>
 				<button type="button" onClick={clearHistory}>
@@ -1073,6 +1125,51 @@ function ChatInterface() {
 ```
 
 </TypeScriptExample>
+
+##### Tool Configuration
+
+Tools are configured using the `Tool` type with `execute` and `confirm` properties:
+
+```ts
+// Client-side tool with approval
+{
+  execute: async (input) => { /* implementation */ },
+  confirm: true  // Requires approval before execution
+}
+
+// Client-side tool without approval (auto-executes)
+{
+  execute: async (input) => { /* implementation */ },
+  // confirm defaults to false when execute is present
+}
+
+// Server-side tool with approval (default)
+{
+  description: "Tool description",
+  confirm: true  // Requires approval, then runs on server
+}
+
+// Server-side tool without approval
+{
+  description: "Tool description",
+  execute: async (input) => { /* implementation */ },
+  confirm: false  // Auto-executes on server
+}
+```
+
+##### Protocol Constants
+
+The SDK exports `TOOL_CONFIRMATION` constants for the human-in-the-loop protocol:
+
+```ts
+import { TOOL_CONFIRMATION } from "agents/react";
+
+// Protocol constants used between client and server
+TOOL_CONFIRMATION.APPROVED; // "Yes, confirmed."
+TOOL_CONFIRMATION.DENIED; // "No, denied."
+```
+
+These constants are sent between client and server to signal user approval or denial of tool execution.
 
 ### Next steps
 
