@@ -78,6 +78,16 @@ example.com CAA 0 issuewild "ssl.com"
 
 More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubleshooting/caa-records/).
 
+***
+
+## Custom hostname matches zone name (403 Forbidden)
+
+<Render file="same-name-as-zone" product="cloudflare-for-platforms" />
+
+This limitation affects Worker Routes making subrequests, as well as other configurations where DNS overrides are applied.
+
+***
+
 ## Older devices have issues connecting
 
 As Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) used by Cloudflare - has announced changes in its [chain of trust](/ssl/concepts/#chain-of-trust), starting September 9, 2024, there may be issues with older devices trying to connect to your custom hostname certificate.
