@@ -460,19 +460,22 @@ You can modify proxy endpoint settings after creation.
 
 ### Traffic limitations
 
-Source IP proxy endpoints do not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
+Each type of proxy endpoint supports the following features:
 
-Source IP proxy endpoints support TCP traffic, but authorization proxy endpoints only support HTTP/HTTPS. Source IP endpoints support non-HTTP TCP traffic.
+| Feature                                                                             | Source IP endpoint | Authorization endpoint |
+| ----------------------------------------------------------------------------------- | ------------------ | ---------------------- |
+| **HTTP/HTTPS traffic**                                                              | ✅[^1]             | ✅[^1]                 |
+| **Non-HTTP TCP traffic**                                                            | ✅                 | —                      |
+| **UDP traffic**                                                                     | —                  | —                      |
+| **[HTTP3](/cloudflare-one/traffic-policies/http-policies/http3/)**                  | —                  | —                      |
+| **[Identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/)** | —                  | ✅                     |
+| **mTLS authentication**                                                             | —                  | —                      |
+| **[Happy Eyeballs](https://datatracker.ietf.org/doc/html/rfc6555)**                 | —                  | —                      |
+| **Browser HTTPS auto-upgrade**                                                      | —[^2]              | —[^2]                  |
 
-Authorization endpoints do not support anything that is not HTTP/HTTPS. That means no other TCP or UDP protocol is supported, including [HTTP3](/cloudflare-one/traffic-policies/http-policies/http3/).
+[^1]: To access plaintext HTTP (non-HTTPS) origins through proxy endpoints, configure them as [self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). This allows users to access HTTP resources while maintaining security through Access policies.
 
-[Happy Eyeballs](https://datatracker.ietf.org/doc/html/rfc6555) is not supported with proxy endpoints.
-
-Proxy endpoints do not support HTTPS when browsers automatically upgrade HTTP requests to HTTPS (such as Chrome's automatic HTTPS upgrades). If you encounter connection issues with sites that are being auto-upgraded, you may need to disable automatic HTTPS upgrades in your browser settings or configure the site as an exception.
-
-:::note
-To access plaintext HTTP (non-HTTPS) origins through proxy endpoints, configure them as [self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). This allows users to access HTTP resources while maintaining security through Access policies.
-:::
+[^2]: Proxy endpoints do not support HTTPS when browsers automatically upgrade HTTP requests to HTTPS (such as Chrome's automatic HTTPS upgrades). If you encounter connection issues with sites that are being auto-upgraded, you may need to disable automatic HTTPS upgrades in your browser settings or configure the site as an exception.
 
 ### Session duration
 
