@@ -17,7 +17,7 @@ import {
 :::note
 PAC files are only available on Enterprise plans.
 
-Authorization endpoints and PAC file hosting are available to all Enterprise plans during the closed beta period. For access, contact your account team.
+Authorization endpoints and PAC file hosting are in beta for Enterprise plans. To opt in, contact your account team.
 :::
 
 Proxy endpoints allow you to apply Gateway policies without installing a client on your devices. By configuring a Proxy Auto-Configuration (PAC) file at the browser level, you can route traffic through Gateway for filtering and policy enforcement. Cloudflare supports configuring two types of proxy endpoints: identity-based [authorization endpoints](#authorization-endpoint) and [source IP proxy endpoints](#source-ip-endpoint).
@@ -228,7 +228,7 @@ A PAC file is a text file written in JavaScript that specifies which traffic sho
 For detailed instructions and examples for creating a PAC file, refer to [PAC file best practices](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/).
 :::
 
-### Create a hosted PAC file
+### Create a hosted PAC file <Badge text="Beta" variant="caution" />
 
 When you create a PAC file in Cloudflare One, Cloudflare will host it in a publicly accessible Worker. Hosted PAC files are automatically distributed through Cloudflare's global network.
 
