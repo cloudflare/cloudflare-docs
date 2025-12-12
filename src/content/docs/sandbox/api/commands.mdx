@@ -106,7 +106,7 @@ const process = await sandbox.startProcess(command: string, options?: ProcessOpt
 - `getLogs()` - Get accumulated logs
 - `waitForPort()` - Wait for process to listen on a port
 - `waitForLog()` - Wait for pattern in process output
-- `waitForExit()` - Wait for process to exit
+- `waitForExit()` - Wait for process to exit and get exit code
 
 <TypeScriptExample>
 ```
@@ -329,9 +329,7 @@ const result = await process.waitForExit(timeout?: number): Promise<WaitForExitR
 - `timeout` - Maximum wait time in milliseconds (optional)
 
 **Returns**: `Promise<WaitForExitResult>` with:
-- `exitCode` - The process exit code
-
-Use `getProcessLogs()` or `streamProcessLogs()` to retrieve output after the process exits.
+- `exitCode` - The process exit code (0 for success, non-zero for errors)
 
 <TypeScriptExample>
 ```
@@ -342,15 +340,22 @@ const result = await build.waitForExit();
 
 if (result.exitCode === 0) {
   console.log('Build succeeded');
-  const logs = await sandbox.getProcessLogs(build.id);
-  console.log('Output:', logs);
 } else {
-  console.error('Build failed with code:', result.exitCode);
+  console.error('Build failed with exit code:', result.exitCode);
+
+  // Get logs to see what went wrong
+  const logs = await build.getLogs();
+  console.error('Build logs:', logs);
 }
 
 // With timeout
 const test = await sandbox.startProcess('npm test');
-const result = await test.waitForExit(60000); // 60 second timeout
+try {
+  const result = await test.waitForExit(60000); // 60 second timeout
+  console.log('Tests completed with exit code:', result.exitCode);
+} catch (error) {
+  console.error('Tests timed out after 60 seconds');
+}
 ```
 </TypeScriptExample>
 
