@@ -109,31 +109,25 @@ Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) containe
 
 ## Build Image Policy
 
-New build image versions bring improvements to tooling, security, and performance.
+### Build Image Version Migration
 
-### Image Version Deprecation
+If you are currently using the v1 or v2 build image, your project will be automatically moved to v3:
 
-Build image versions are supported for at least 2 years from their initial release before a deprecation is announced.
+- **v1 build image**: if you are on the Pages v1 build image, you will be moved automatcially to v3 on [date]
+- **v2 build image**: if you are on the Pages v2 build image, you will be moved automatcially to v3 on [date]
 
-**Deprecation timeline**: We provide 6 months notice before removing support for a build image version.
+Going forward, the v3 build image will receive rolling updates to preinstalled software per the policy below. There will be no further build image version changes.
 
-**Deprecation process**:
-1. **Announcement** via [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
-2. **Deprecation warnings** displayed in dashboard for projects using the build image version scheduled for deprecation
-3. **Email notifications** to project owners 
-4. **Final removal** on the announced date:
-   - The deprecated image version will no longer be available for selection
-   - Projects that have not migrated will be automatically upgraded to the latest supported version
+### Preinstalled Software Updates
 
-### Default Version Updates
+Preinstalled software (languages and tools) may be updated before they reach end-of-life (EOL). These updates only apply if you have not [overridden the default version](/pages/configuration/build-image/#override-default-versions).
 
-Default versions of languages and tools are updated as they reach end-of-life (EOL). These updates only apply if you have not [overridden the default version](/pages/configuration/build-image/#override-default-versions).
-
-- **Minor version updates**: Updated to the latest available minor version without notice. For tools that don't follow semantic versioning (e.g., Bun, Hugo), minor updates that may contain breaking changes will receive 3 months notice via Changelog, dashboard notifications, and email.
+- **Minor version updates**: May be updated to the latest available minor version without notice. 
+   - For tools that don't follow semantic versioning (e.g., Bun, Hugo), minor updates that may contain breaking changes will receive 3 months notice via Changelog, dashboard notifications, and email.
 
 - **Major version updates**: Updated to the next stable, long-term support (LTS) version with 3 months notice via:
   - [Cloudflare Changelog](https://developers.cloudflare.com/changelog/)
-  - Dashboard notifications to projects that will receive the default version update
+  - Dashboard notifications to projects that will receive the update
   - Email notifications to project owners
 
 To maintain a specific version and avoid automatic updates, [override the default version](/pages/configuration/build-image/#override-default-versions).
@@ -141,6 +135,6 @@ To maintain a specific version and avoid automatic updates, [override the defaul
 ### Best Practices
 
 To avoid unexpected build failures:
-- **Monitor announcements** via the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/) and dashboard notifications
-- **Plan for migration** when you receive deprecation notices
-- **Pin specific versions** of critical dependencies by [overriding default versions](/pages/configuration/build-image/#override-default-versions) to maintain full control over when versions change
+- **Monitor announcements** via the [Cloudflare Changelog](https://developers.cloudflare.com/changelog/), dashboard notifications, and email
+- **Plan for migration** when you receive update notices
+- **Pin specific versions** of critical preinstalled software by [overriding default versions](/pages/configuration/build-image/#override-default-versions) to maintain full control over when versions change
