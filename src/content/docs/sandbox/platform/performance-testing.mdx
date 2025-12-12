@@ -1,0 +1,234 @@
+---
+title: Performance testing
+pcx_content_type: concept
+sidebar:
+  order: 5
+description: Measure sandbox latency, throughput, and behavior under load with the performance test suite.
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+The Sandbox SDK includes a comprehensive performance test suite to measure latency, throughput, and behavior under different load conditions. These tests help ensure consistent performance and identify regressions during development.
+
+## Run performance tests
+
+Run all performance scenarios:
+
+<PackageManagers pkg="npm" args="run test:perf" />
+
+Run individual scenarios (fastest to slowest):
+
+<PackageManagers pkg="npm" args="run test:perf:sustained" comment="~1 min - commands on warm sandbox" />
+
+<PackageManagers pkg="npm" args="run test:perf:cold-start" comment="~30s - fresh sandbox creation" />
+
+<PackageManagers pkg="npm" args="run test:perf:burst" comment="~2 min - concurrent request spikes" />
+
+<PackageManagers pkg="npm" args="run test:perf:concurrent" comment="~5 min - multiple sandbox creation" />
+
+## Test scenarios
+
+The performance test suite includes four scenarios that measure different aspects of sandbox behavior:
+
+| Scenario | What it measures |
+|----------|------------------|
+| **Cold start** | Time to create a sandbox and execute the first command (10 iterations) |
+| **Sustained throughput** | Command latency over 60 seconds at 5 requests per second |
+| **Bursty traffic** | Performance during 3 bursts of 50 concurrent requests with cooldown periods |
+| **Concurrent creation** | Spinning up 25 sandboxes simultaneously |
+
+## Test environments
+
+Performance tests can run in two environments:
+
+### Local testing
+
+Uses `wrangler dev` with Docker containers. Requires Docker to be installed and running.
+
+The local environment is useful for:
+- Detecting performance regressions during development
+- Quick iteration on performance improvements
+- Validating changes before deployment
+
+:::note
+Local Docker performance differs from Cloudflare production. Use local tests for regression detection and production for baseline metrics.
+:::
+
+### CI testing
+
+Set the `TEST_WORKER_URL` environment variable to test against a deployed worker:
+
+```bash
+TEST_WORKER_URL=https://your-worker.workers.dev npm run test:perf
+```
+
+The CI environment provides:
+- Real production performance metrics
+- Testing against actual Cloudflare infrastructure
+- Validation of production deployments
+
+## Metrics collection
+
+The `MetricsCollector` class tracks timing and success rates for all operations:
+
+<TypeScriptExample>
+```
+import { MetricsCollector } from '../helpers/metrics-collector';
+
+const metrics = new MetricsCollector('scenario-name');
+
+// Time an async operation
+const result = await metrics.timeAsync('operation-name', async () => {
+  return await doSomething();
+});
+
+// Record a raw value
+metrics.record('custom-metric', 123.45, 'ms');
+
+// Track success/failure
+metrics.recordSuccess('operation-name', succeeded);
+```
+</TypeScriptExample>
+
+### Statistics calculated
+
+The metrics collector calculates these statistics for each metric:
+
+- **Count** - Number of samples collected
+- **Min/Max/Mean** - Basic statistical measures
+- **Standard deviation** - Measure of variability
+- **Percentiles** - p50, p75, p90, p95, p99 for latency distribution
+
+## Performance results
+
+Test results are written to the `perf-results/` directory:
+
+- `latest.json` - Full metrics with percentiles and success rates
+- `vitest-output.json` - Vitest test results
+
+### JSON schema
+
+Results follow this schema (version 1.0.0):
+
+```typescript
+{
+  version: string;
+  timestamp: string;
+  environment: {
+    workerUrl: string;
+    mode: 'local' | 'ci';
+  };
+  scenarios: [{
+    name: string;
+    duration: number;
+    metrics: [{
+      name: string;
+      unit: string;
+      count: number;
+      min: number;
+      max: number;
+      mean: number;
+      p50: number;
+      p95: number;
+      p99: number;
+      stdDev: number;
+    }];
+    successRates: {
+      [name: string]: {
+        total: number;
+        success: number;
+        failure: number;
+        rate: number;
+      };
+    };
+  }];
+}
+```
+
+### Console output
+
+The test suite displays a summary after each scenario:
+
+```
+SCENARIO: cold-start
+Duration: 26s
+
+  cold-start-latency (n=10):
+    P50: 1.37s  P95: 1.59s  P99: 1.59s
+  Success Rate: 100.0% (10/10)
+```
+
+## GitHub Actions workflow
+
+The performance test workflow (`.github/workflows/performance.yml`) runs automatically:
+
+- **Manual** - Trigger via workflow dispatch in GitHub Actions UI
+- **Scheduled** - Weekly baseline tracking (Sunday midnight UTC)
+- **On release** - Pre-release validation when packages are published
+
+## Write custom scenarios
+
+Create new performance scenarios by following this pattern:
+
+<TypeScriptExample>
+```
+import { describe, test, beforeAll, afterAll } from 'vitest';
+import { PerfSandboxManager } from '../helpers/perf-sandbox-manager';
+import { MetricsCollector } from '../helpers/metrics-collector';
+
+describe('My Scenario', () => {
+  let manager: PerfSandboxManager;
+  let metrics: MetricsCollector;
+
+  beforeAll(async () => {
+    manager = new PerfSandboxManager(workerUrl);
+    metrics = new MetricsCollector('my-scenario');
+  });
+
+  afterAll(async () => {
+    await manager.destroyAll();
+    metrics.printReport();
+  });
+
+  test('should measure something', async () => {
+    const sandbox = await manager.createSandbox();
+
+    const latency = await metrics.timeAsync('operation', async () => {
+      return sandbox.execute('echo test');
+    });
+
+    expect(latency).toBeLessThan(5000);
+  });
+});
+```
+</TypeScriptExample>
+
+## Performance characteristics
+
+### Local vs production
+
+Local Docker performance differs from Cloudflare production in several ways:
+
+- **Cold start** - Approximately 1.3 seconds locally, varies in production
+- **Concurrent operations** - Limited by laptop resources locally
+- **Capacity errors** - Only occur in production due to account limits
+
+Use local tests for regression detection and production tests for baseline metrics.
+
+### Expected performance
+
+Typical performance characteristics observed in testing:
+
+- **Cold start latency** - P50: 1.3-1.5s, P95: 1.5-1.6s
+- **Warm command execution** - P50: 50-100ms, P95: 150-200ms
+- **Concurrent sandbox creation** - 25 sandboxes in 5-10 minutes
+- **Sustained throughput** - 5 requests/second for 60 seconds with <1% failure rate
+
+:::note
+These metrics are examples from local testing and may vary based on your environment and workload.
+:::
+
+## Related resources
+
+- [Limits](/sandbox/platform/limits/) - Resource limits and quotas
+- [Pricing](/sandbox/platform/pricing/) - Cost considerations for performance testing
