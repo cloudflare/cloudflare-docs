@@ -9,13 +9,9 @@ sidebar:
 
 import { Render, Details, GlossaryTooltip, Checkbox } from "~/components";
 
-`cloudflared` can route to HTTP and non-HTTP applications on your private network using their private hostname (for example, `wiki.internal.local`). Private hostname routes are especially useful when the application has an unknown or ephemeral IP, which often occurs when infrastructure is provisioned by a third-party cloud provider.
+Instead of managing static IP lists and routes, you can connect users to private HTTP and non-HTTP applications using their hostnames (for example, `wiki.internal.local`). Private hostname routes are especially useful when the application has an unknown or ephemeral IP, which often occurs when infrastructure is provisioned by a third-party cloud provider.
 
-## How private hostname routing works
-
-Instead of managing static IP lists and routes, you can connect users to private resources using their hostnames. When a user requests a private hostname, Cloudflare Gateway assigns an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> from a CGNAT range to route the traffic through your tunnel to the correct private IP address.
-
-For a deep dive into the architecture and packet flow, refer to our [announcement blog post](https://blog.cloudflare.com/tunnel-hostname-routing/).
+When a user requests a private hostname, Cloudflare Gateway assigns an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> from a CGNAT range to route the traffic through your tunnel to the correct private IP address. For a deep dive into the architecture and packet flow, refer to our [announcement blog post](https://blog.cloudflare.com/tunnel-hostname-routing/).
 
 ## Supported on-ramps/off-ramps
 
