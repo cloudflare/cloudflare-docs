@@ -22,7 +22,7 @@ To review how many device registrations are associated with a device:
 | Concept | Definition |
 |--------|------------|
 | User | An identity provider (IdP)-backed human identity that can connect new devices to your Zero Trust organization. |
-| Seat | A unique, billable user within your Zero Trust organization who has performed [an authentication event](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). |
+| Seat | A unique, billable user within your Zero Trust organization who has performed [an authentication event](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). Service tokens do not consume seats. |
 | [Service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) | Used by automated systems (a non-human identity) to authenticate against your Cloudflare One policies. |
 | Device registration | A public key, associated to a user and device, used by WARP to connect to Cloudflare's network. |
 | [Session](/cloudflare-one/access-controls/access-settings/session-management/) | JSON Web Tokens (JWTs) that are generated when Access validates user identity against your Access policies and determines how long a user can access an Access application without re-authenticating. |
@@ -43,28 +43,40 @@ Registrations can have the following statuses:
 | **Active** | Registered and able to connect via WARP. This is the expected operational state. |
 | **Revoked** | The registration's public key is invalidated. |
 
-A deleted device registration is permanently removed from the account and no longer appears in your device list. Deletion is permanent and requires re-registering the device. 
+A deleted device registration is permanently removed from the account and no longer appears in your device list. Deletion is permanent and requires re-registering the device.
 
-## Device and device registration management
+:::caution
 
-:::caution[Seat usage and offboarding]
-
-Deleting a device or device registration does not change a user's seat usage. To stop a user from consuming a seat, you must remove the user from your Access policies and/or delete the user from your Zero Trust organization. If you need to decommission an employee's access completely, the recommended steps are:
-
-1. Delete the employee/user in Access. This should automatically delete all their associated registrations on all devices.
-2. Review and, if necessary, remove any service tokens the device may have used from Access.
+Deleting or revoking a device without [updating your device enrollment policies or removing the user]((/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication)) from your Identity Provider (IdP) is not permanent. If the user can successfully re-authenticate (re-enroll), a new device registration will be automatically created or the revoked status will be cleared.
 
 :::
 
-### Delete a device 
+## Delete a device registration
+
+Devices can have multiple device registrations. Deleting one registration does not affect other registrations on the same device. 
+
+To delete a device registration:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Devices**.
+2. Select the device > **View details**.
+3. Go to **Users** and mark the checkbox next to the device registration you want to delete.
+4. Select **Action** > _Delete access_.
+
+:::caution[Automatic device re-registration]
+
+If you delete a device registation, but the WARP client remains installed and is successfully able to re-authenticate, a new device registration will be created for the user. For long-term, permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication).
+
+:::
+
+## Delete a device
 
 Deleting a device removes the physical device from your Cloudflare Zero Trust account. This action automatically deletes all associated device registrations.
 
 Devices that have zero active registrations (because all registrations deleted) are hidden by default in Cloudflare One > **Teams & Resources** > **Devices** table. You may need to adjust the filter to view devices with zero device registrations.
 
-:::caution[Device re-creation]
+:::caution[Automatic device re-creation]
 
-If you delete a device record, but the WARP client remains installed and is successfully able to re-authenticate, the device record will be automatically recreated in your dashboard with a new device registration. For long-term, permanent denial of access, you should ______
+If you delete a device record, but the WARP client remains installed and is successfully able to re-authenticate, the device record will be automatically recreated in your dashboard with a new device registration. For long-term, permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication).
 
 :::
 
@@ -74,13 +86,13 @@ To delete a device:
 2. Select the device and select **View details**.
 3. Select **Delete**.
 
-### Revoke a registration
+## Revoke a device registration
 
 Revoking a registration invalidates its associated public key, disallowing the specific registration from connecting to Cloudflare's network.
 
-:::caution
+:::caution[Automatic unrevocation]
 
-If a user re-authenticates while the device registration is revoked, the public key will automatically validate making the device registration active again. For long-term, permanent denial of access, you should ______
+If a user re-authenticates while the device registration is revoked, the public key will automatically validate and the device registration will become active again. For long-term, permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication).
 
 :::
 
@@ -103,19 +115,26 @@ TODO: add revoke and unrevoke instructions
 </TabItem>
 </Tabs>
 
-### Delete a registration
+## Device management
 
-Deleting a registration permanently removes it from your account. If you delete a registration, you will need to re-register the device to connect to your organization.
+Seat management (billing) and access management (offboarding) are separate actions. Deleting a device registration does not remove seat usage nor access to internal company resources.
 
-:::caution
+### Remove user access and prevent re-authentication
 
-If a user re-authenticates while their device registration is deleted, a new public key and device registration will be automatically created for that user. For long-term, permanent denial of access, you should ______
+Deleting or revoking a registration will not be permanent if the user can re-authenticate. To prevent a user from re-authenticating and creating new device registrations, you must remove them from your [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) or from your Identity Provider (IdP).
 
-:::
+* If your device enrollment policies allow a broad domain (for example, `@company.com`), remove the user from your IdP. This prevents the user from authenticating through Access, effectively blocking them from enrolling devices.
+* If your device enrollment policies list specific user emails (for example, `sally@company.com`), you must remove that specific email from the policy. Additionally, you can add an explicit Exclude rule for that user to the policy.
 
-You can delete a registration by: TODO: add delete instructions
+Review and remove any service tokens associated with the user or their devices, if applicable.
 
-- Using the Zero Trust dashboard.
-- Running `warp-cli registration delete` on the device.
-- Using the [API](/api/resources/zero_trust/subresources/devices/subresources/devices/methods/delete/).
-- Uninstalling the WARP client (may automatically delete the registration).
+### Seat management (billing)
+
+Deleting a device or device registration does not change a user's seat usage. Seats are tied to the user identity, not to individual devices.
+
+To stop a user from consuming a seat:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Users**.
+2. Remove the user with one of the following methods:
+    - (Option A) Select the checkbox next to the user's name > **Action** > **Remove user**.
+   - (Option B) Select the user > find Seat Management > select **Remove user**.
