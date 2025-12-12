@@ -186,21 +186,6 @@ When using PAC files for public Internet browsing (not just internal services), 
 These bypass rules are optional and depend on your organization's security requirements. Evaluate each bypass rule against your security policies before implementation. You can also use [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to selectively filter traffic from these domains while still routing them through the proxy.
 :::
 
-### Content delivery networks and performance services
-
-Many websites rely on CDNs and performance optimization services. Bypassing these can improve page load times:
-
-```js
-// Bypass common CDNs
-if (
-	shExpMatch(host, "*.cloudfront.net") ||
-	shExpMatch(host, "*.akamaiedge.net") ||
-	shExpMatch(host, "*.fastly.net")
-) {
-	return "DIRECT";
-}
-```
-
 ### Font and static asset providers
 
 Font APIs and static asset providers should typically bypass the proxy to prevent rendering issues:
