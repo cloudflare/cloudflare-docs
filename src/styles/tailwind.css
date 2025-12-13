@@ -188,7 +188,7 @@
 	--sl-color-bg-nav: rgba(18, 18, 18, 0.92);
 	--sl-color-bg: #121212;
 	--sl-color-bg-sidebar: #181818 !important;
-	--sl-color-hairline-shade: #191919;
+	--sl-color-hairline-shade: #222;
 	--sl-color-hairline: var(--sl-color-hairline-shade);
 }
 
@@ -229,6 +229,10 @@
 .DocSearch-Button-Key {
 	@apply !text-neutral-500 !border-neutral-300;
 	@apply dark:!text-neutral-500 dark:!border-neutral-700;
+}
+
+.DocSearch-Footer {
+	@apply !py-2.5 !gap-2 !h-auto;
 }
 
 .sidebar-content {
@@ -277,12 +281,33 @@
 	@apply dark:border-zinc-800;
 }
 
-.expressive-code .frame.has-title:not(.is-terminal) .header, .expressive-code .frame.has-title:not(.is-terminal) .header::before{
+.expressive-code .frame.has-title:not(.is-terminal) .header,
+.expressive-code .frame.has-title:not(.is-terminal) .header::before {
 	@apply dark:!border-zinc-800;
 }
 
 .expressive-code .wrapper {
 	@apply shadow-none;
+}
+
+.expressive-code .frame {
+	box-shadow: none;
+}
+
+.expressive-code .frame pre {
+	@apply dark:!bg-zinc-900;
+}
+
+.expressive-code .frame.is-terminal .header {
+	@apply !bg-zinc-100 dark:!bg-zinc-800 dark:!border-zinc-800;
+}
+
+.expressive-code .frame.is-terminal .header::after {
+	@apply border-b-zinc-200;
+}
+
+html[data-theme="dark"] .expressive-code .frame.is-terminal .header::after {
+	@apply border-b-zinc-700;
 }
 
 .sl-link-card {

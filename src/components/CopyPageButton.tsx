@@ -18,8 +18,6 @@ import {
 	PiChatCircleLight,
 	PiLinkLight,
 	PiPlugsConnectedLight,
-	PiTagChevron,
-	PiArrowDown,
 	PiCaretDown,
 } from "react-icons/pi";
 import ClaudeIcon from "./icons/ClaudeIcon";
