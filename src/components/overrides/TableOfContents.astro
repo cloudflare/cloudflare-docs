@@ -9,6 +9,9 @@ const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
 ---
 
 <Default />
+
+<div class="flex-1"></div>
+
 {
 	tags && (
 		<>
@@ -46,7 +49,7 @@ const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
 				{Astro.locals.starlightRoute.editUrl && (
 					<a
 						href={Astro.locals.starlightRoute.editUrl}
-						class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-black"
+						class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-neutral-800 dark:text-neutral-400"
 					>
 						<Icon name="pencil" />
 						Edit
@@ -54,7 +57,7 @@ const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
 				)}
 				<a
 					href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
-					class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-black"
+					class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-neutral-800 dark:text-neutral-400"
 				>
 					<Icon name="github" />
 					Issue

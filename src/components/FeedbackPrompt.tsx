@@ -39,7 +39,7 @@ function Buttons({
 				}}
 				className="cursor-pointer bg-transparent"
 			>
-				<PiThumbsUp className="text-sl hover:text-accent text-2xl" />
+				<PiThumbsUp className="text-neutral-500 dark:text-neutral-500 hover:text-accent text-2xl" />
 			</button>
 			<button
 				onClick={() => {
@@ -48,13 +48,13 @@ function Buttons({
 				}}
 				className="cursor-pointer bg-transparent"
 			>
-				<PiThumbsDown className="text-sl hover:text-accent text-2xl" />
+				<PiThumbsDown className="text-neutral-500 dark:text-neutral-500 hover:text-accent text-2xl" />
 			</button>
 		</>
 	);
 }
 
-function Form({
+function 	Form({
 	option,
 	setTitle,
 	setSubmitted,
@@ -130,7 +130,7 @@ export default function FeedbackPrompt() {
 
 	return (
 		<div id="feedback-form">
-			<h2>{title}</h2>
+			<h2 className="text-neutral-500 dark:text-neutral-500 text-sm font-normal">{title}</h2>
 			{!option && <Buttons setTitle={setTitle} setOption={setOption} />}
 			{!submitted && (
 				<Form setTitle={setTitle} setSubmitted={setSubmitted} option={option} />
