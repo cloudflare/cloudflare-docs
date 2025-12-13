@@ -236,7 +236,7 @@
 }
 
 .sidebar-content {
-	@apply !gap-4;
+	@apply !gap-2.5;
 }
 
 .sidebar-content .top-level li a:hover, .sidebar-content .top-level > li summary:hover, .sidebar-content .top-level > li ul > li > a:hover {
