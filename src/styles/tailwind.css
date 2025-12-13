@@ -9,6 +9,8 @@
 
 
 @theme {
+	--breakpoint-desktop: 800px;
+
 	--color-black: var(--sl-color-white);
 
 	--color-accent-200: var(--tw-accent-200);
@@ -217,8 +219,8 @@
 
 .DocSearch-Button {
 	@apply !border-neutral-200 !bg-neutral-100 !placeholder-gray-600;
-	@apply !bg-transparent;
-	@apply dark:!border-neutral-800 dark:!bg-neutral-900 dark:!placeholder-gray-400;
+	@apply !bg-transparent desktop:!bg-neutral-200 desktop:dark:!bg-neutral-900;
+	@apply dark:!border-neutral-800  dark:!placeholder-gray-400;
 }
 
 .DocSearch-Button-Placeholder, .DocSearch-Search-Icon {
