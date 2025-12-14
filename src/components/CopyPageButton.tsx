@@ -10,7 +10,6 @@ import {
 } from "@floating-ui/react";
 import { useState } from "react";
 import {
-	PiTriangleFill,
 	PiCopyDuotone,
 	PiArrowSquareOutLight,
 	PiCheckCircleLight,

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
-import { MdOutlineThumbUp, MdOutlineThumbDown, MdThumbsUpDown } from "react-icons/md";
 import { track } from "~/util/zaraz";
-import { PiThumbsDown, PiThumbsDownLight, PiThumbsUp } from "react-icons/pi";
+import { PiThumbsDown, PiThumbsUp } from "react-icons/pi";
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 

@@ -8,7 +8,7 @@ import {
 	autoUpdate,
 } from "@floating-ui/react";
 import { useState } from "react";
-import { PiCaretDown, PiCaretDownBold } from "react-icons/pi";
+import { PiCaretDown } from "react-icons/pi";
 
 const links = [
 	{ label: "Docs Directory", href: "/directory/" },
