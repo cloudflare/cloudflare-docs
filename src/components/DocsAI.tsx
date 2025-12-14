@@ -344,7 +344,7 @@ export default function SupportAI({
 
 export function AskAIOverlay() {
 	const [maximized, setMaximized] = useState<boolean>(false);
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		const handleToggleAskAI = () => {
