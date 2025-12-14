@@ -4,6 +4,9 @@ import Default from "@astrojs/starlight/components/Page.astro";
 import { generateDescription, generateTableOfContents } from "~/util/props";
 import { getSidebar, flattenSidebar } from "~/util/sidebar";
 
+import { ClientRouter } from "astro:transitions";
+import { AskAIOverlay } from "../DocsAI.tsx";
+
 const props = Astro.locals.starlightRoute;
 const data = props.entry.data;
 
@@ -63,6 +66,12 @@ if (data.reviewed) {
 ---
 
 <Default set:html={html} />
+
+<!-- Added to prevent DocsAI from being unmounted and mounted on every navigation within docs -->
+<ClientRouter transition:animate="initial" />
+
+<!-- `transition:persist` added so the component persists during navigation -->
+<AskAIOverlay client:load transition:persist />
 
 <style>
 	html:not([data-has-toc]) {

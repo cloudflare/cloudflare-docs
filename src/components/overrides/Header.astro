@@ -5,20 +5,32 @@ import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
 import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 
 import HeaderDropdowns from "../HeaderDropdowns.tsx";
+import { PiSparkle } from "react-icons/pi";
 ---
 
 <div class="flex h-full items-center justify-between gap-4">
 	<SiteTitle />
 	<div class="flex gap-8">
-		<div id="docsearch">
-			<DocSearch />
+		<div class="flex items-center gap-2">
+			<div id="docsearch">
+				<DocSearch />
+			</div>
+
+			<button
+				class="flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-neutral-300 px-3 text-sm font-medium text-black dark:bg-neutral-900 dark:text-white"
+				onclick="window.dispatchEvent(new CustomEvent('toggle-ask-ai'))"
+			>
+				<PiSparkle />
+				Ask AI</button
+			>
 		</div>
+
 		<div id="right-group" class="hidden h-10 flex-wrap gap-x-2 overflow-hidden">
 			<HeaderDropdowns client:idle />
 			<a
 				id="header-login-button"
 				href="https://dash.cloudflare.com/"
-				class="mr-2 flex items-center justify-center rounded-sm bg-cl1-brand-orange px-6 font-medium text-cl1-black no-underline"
+				class="bg-cl1-brand-orange text-cl1-black mr-2 flex items-center justify-center rounded-sm px-6 font-medium no-underline"
 			>
 				Log in
 			</a>
