@@ -159,7 +159,7 @@ import { getSandbox } from '@cloudflare/sandbox';
 
 export { Sandbox } from '@cloudflare/sandbox';
 
-const initialized = new Set<string>();
+let initialized = false;
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -173,7 +173,7 @@ export default {
 
     if (upgrade === 'websocket') {
       // Initialize server on first connection
-      if (!initialized.has('websocket-app')) {
+      if (!initialized) {
         await sandbox.writeFile(
           '/workspace/server.js',
           `Bun.serve({
@@ -191,7 +191,7 @@ export default {
         await sandbox.startProcess(
           'bun /workspace/server.js'
         );
-        initialized.add('websocket-app');
+        initialized = true;
       }
       // Connect to WebSocket server
       return await sandbox.wsConnect(request, 8080);
