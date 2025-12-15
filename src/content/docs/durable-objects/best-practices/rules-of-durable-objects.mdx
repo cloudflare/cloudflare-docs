@@ -757,7 +757,7 @@ To handle this, use optimistic locking (check-and-set) patterns: read a version 
 
 :::note
 
-With the legacy KV storage backend, use the [`transaction()`](/durable-objects/api/storage-api/#transaction) method for atomic read-modify-write operations across async boundaries.
+With the legacy KV storage backend, use the [`transaction()`](/durable-objects/api/sqlite-storage-api/#transaction) method for atomic read-modify-write operations across async boundaries.
 
 :::
 
@@ -814,7 +814,7 @@ export class ChatRoom extends DurableObject<Env> {
 
 Because `blockConcurrencyWhile()` blocks *all* concurrency unconditionally, it significantly reduces throughput. If each call takes ~5ms, that individual Durable Object is limited to approximately 200 requests/second. Reserve it for initialization and migrations, not regular request handling. For normal operations, rely on input/output gates and write coalescing instead.
 
-For atomic read-modify-write operations during request handling, prefer [`transaction()`](/durable-objects/api/storage-api/#transaction) over `blockConcurrencyWhile()`. Transactions provide atomicity for storage operations without blocking unrelated concurrent requests.
+For atomic read-modify-write operations during request handling, prefer [`transaction()`](/durable-objects/api/sqlite-storage-api/#transaction) over `blockConcurrencyWhile()`. Transactions provide atomicity for storage operations without blocking unrelated concurrent requests.
 
 :::caution
 
