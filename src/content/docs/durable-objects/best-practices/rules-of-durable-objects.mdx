@@ -142,6 +142,12 @@ export default {
 ```
 </TypeScriptExample>
 
+:::note
+
+If you have global application or user configuration that you need to access frequently (on every request), consider using [Workers KV](/kv/) instead.
+
+:::
+
 Do not create a single "global" Durable Object that handles all requests:
 
 <TypeScriptExample filename="index.ts">
@@ -179,9 +185,9 @@ export default {
 ```
 </TypeScriptExample>
 
-### Use deterministic IDs with `idFromName()` for predictable routing
+### Use deterministic IDs for predictable routing
 
-Use `idFromName()` with meaningful, deterministic strings for consistent routing. The same input always produces the same Durable Object ID, ensuring requests for the same logical entity always reach the same instance.
+Use `getByName()` with meaningful, deterministic strings for consistent routing. The same input always produces the same Durable Object ID, ensuring requests for the same logical entity always reach the same instance.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -208,8 +214,7 @@ export default {
 
 		// ✅ Good: Deterministic ID from a meaningful string
 		// All requests for "game-abc123" go to the same Durable Object
-		const id = env.GAME_SESSION.idFromName(gameId);
-		const stub = env.GAME_SESSION.get(id);
+		const stub = env.GAME_SESSION.getByName(gameId);
 
 		await stub.join("player-xyz");
 		return new Response("Joined game");
@@ -217,6 +222,8 @@ export default {
 };
 ```
 </TypeScriptExample>
+
+Creating a stub does not instantiate or wake up the Durable Object. The Durable Object is only activated when you call a method on the stub.
 
 Use `newUniqueId()` only when you need a new, random instance and will store the mapping externally:
 
@@ -498,10 +505,10 @@ export class ChatRoom extends DurableObject<Env> {
 
 ### Understand the difference between in-memory state and persistent storage
 
-Durable Objects provide multiple storage layers, each with different characteristics:
+Durable Objects provide multiple state management layers, each with different characteristics:
 
-| Storage Type | Speed | Persistence | Use Case |
-|-------------|-------|-------------|----------|
+| Type | Speed | Persistence | Use Case |
+|------|-------|-------------|----------|
 | In-memory (class properties) | Fastest | Lost on eviction or crash | Caching, active connections |
 | SQLite storage | Fast | Durable across restarts | Primary data storage |
 | External (R2, D1) | Variable | Durable, cross-DO accessible | Large files, shared data |
@@ -615,11 +622,11 @@ export class ChatRoom extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
-### Understand how input and output gates prevent data races
+### Understand how input and output gates work
 
-While Durable Objects are single-threaded, JavaScript's `async`/`await` can allow multiple requests to interleave execution. Cloudflare's runtime uses **input gates** and **output gates** to prevent data races and ensure correctness by default.
+While Durable Objects are single-threaded, JavaScript's `async`/`await` can allow multiple requests to interleave execution while a request waits for the result of an asynchronous operation. Cloudflare's runtime uses **input gates** and **output gates** to prevent data races and ensure correctness by default.
 
-**Input gates** block new events (incoming requests, fetch responses) while storage operations are in progress. This prevents concurrent requests from interleaving during critical storage operations:
+**Input gates** block new events (incoming requests, fetch responses) while synchronous execution or storage operations are in progress. This prevents concurrent requests from interleaving during critical storage operations:
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -642,7 +649,7 @@ export class Counter extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
-**Output gates** hold outgoing network messages (responses, fetch requests) until pending storage writes complete. This ensures clients never see confirmation of data that hasn't been persisted:
+**Output gates** hold outgoing network messages (responses, fetch requests) until pending storage writes complete. This ensures clients never see confirmation of data that has not been persisted:
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -670,61 +677,7 @@ export class ChatRoom extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
-However, input gates only protect during storage operations. Non-storage I/O like `fetch()` or writing to R2 allows other requests to interleave:
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	PROCESSOR: DurableObjectNamespace<Processor>;
-}
-
-export class Processor extends DurableObject<Env> {
-	// ⚠️ Potential race condition: fetch() allows interleaving
-	async processWithExternalCall(id: string) {
-		const item = await this.ctx.storage.get<{ status: string }>(`item:${id}`);
-
-		if (item?.status === "pending") {
-			// During this fetch, other requests CAN execute and modify storage
-			const result = await fetch("https://api.example.com/process");
-
-			// Another request may have already processed this item!
-			await this.ctx.storage.put(`item:${id}`, { status: "completed" });
-		}
-	}
-
-	// ✅ Better: Use optimistic locking or check-and-set patterns
-	async processWithCheck(id: string) {
-		const item = await this.ctx.storage.get<{ status: string; version: number }>(
-			`item:${id}`
-		);
-
-		if (item?.status !== "pending") {
-			return; // Already processed
-		}
-
-		const expectedVersion = item.version;
-		const result = await fetch("https://api.example.com/process");
-
-		// Re-check version before updating
-		const current = await this.ctx.storage.get<{ status: string; version: number }>(
-			`item:${id}`
-		);
-		if (current?.version !== expectedVersion) {
-			throw new Error("Item was modified by another request");
-		}
-
-		await this.ctx.storage.put(`item:${id}`, {
-			status: "completed",
-			version: expectedVersion + 1,
-		});
-	}
-}
-```
-</TypeScriptExample>
-
-**Write coalescing:** Multiple storage writes without intervening `await` calls are automatically batched into a single atomic transaction:
+**Write coalescing:** Multiple storage writes without intervening `await` calls are automatically batched into a single atomic implicit transaction:
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -757,19 +710,13 @@ export class Account extends DurableObject<Env> {
 		// All three writes commit together atomically
 	}
 
-	async transferBroken(fromId: string, toId: string, amount: number) {
-		// 🔴 Bad: await breaks coalescing - each write is a separate transaction
-		await this.ctx.storage.sql.exec(
-			"UPDATE accounts SET balance = balance - ? WHERE id = ?",
-			amount,
-			fromId
-		);
+	// 🔴 Bad: await on KV operations breaks coalescing
+	async transferBrokenKV(fromId: string, toId: string, amount: number) {
+		const fromBalance = (await this.ctx.storage.get<number>(`balance:${fromId}`)) ?? 0;
+		await this.ctx.storage.put(`balance:${fromId}`, fromBalance - amount);
 		// If the next write fails, the debit already committed!
-		await this.ctx.storage.sql.exec(
-			"UPDATE accounts SET balance = balance + ? WHERE id = ?",
-			amount,
-			toId
-		);
+		const toBalance = (await this.ctx.storage.get<number>(`balance:${toId}`)) ?? 0;
+		await this.ctx.storage.put(`balance:${toId}`, toBalance + amount);
 	}
 }
 ```
@@ -777,7 +724,46 @@ export class Account extends DurableObject<Env> {
 
 For more details, see [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) and the [glossary](/durable-objects/reference/glossary/).
 
-**Use `blockConcurrencyWhile()` sparingly:** The [`blockConcurrencyWhile()`](/durable-objects/api/state/#blockconcurrencywhile) method guarantees that no other events are processed until the provided callback completes. This is useful for operations that must be atomic, such as schema migrations in the constructor:
+### Avoid race conditions with non-storage I/O
+
+Input gates only protect during storage operations. Non-storage I/O like `fetch()` or writing to R2 allows other requests to interleave, which can cause race conditions:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	PROCESSOR: DurableObjectNamespace<Processor>;
+}
+
+export class Processor extends DurableObject<Env> {
+	// ⚠️ Potential race condition: fetch() allows interleaving
+	async processItem(id: string) {
+		const item = await this.ctx.storage.get<{ status: string }>(`item:${id}`);
+
+		if (item?.status === "pending") {
+			// During this fetch, other requests CAN execute and modify storage
+			const result = await fetch("https://api.example.com/process");
+
+			// Another request may have already processed this item!
+			await this.ctx.storage.put(`item:${id}`, { status: "completed" });
+		}
+	}
+}
+```
+</TypeScriptExample>
+
+To handle this, use optimistic locking (check-and-set) patterns: read a version number before the external call, then verify it has not changed before writing.
+
+:::note
+
+With the legacy KV storage backend, use the [`transaction()`](/durable-objects/api/storage-api/#transaction) method for atomic read-modify-write operations across async boundaries.
+
+:::
+
+### Use `blockConcurrencyWhile()` sparingly
+
+The [`blockConcurrencyWhile()`](/durable-objects/api/state/#blockconcurrencywhile) method guarantees that no other events are processed until the provided callback completes, even if the callback performs asynchronous I/O. This is useful for operations that must be atomic, such as state initialization from storage in the constructor:
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -827,6 +813,8 @@ export class ChatRoom extends DurableObject<Env> {
 </TypeScriptExample>
 
 Because `blockConcurrencyWhile()` blocks *all* concurrency unconditionally, it significantly reduces throughput. If each call takes ~5ms, that individual Durable Object is limited to approximately 200 requests/second. Reserve it for initialization and migrations, not regular request handling. For normal operations, rely on input/output gates and write coalescing instead.
+
+For atomic read-modify-write operations during request handling, prefer [`transaction()`](/durable-objects/api/storage-api/#transaction) over `blockConcurrencyWhile()`. Transactions provide atomicity for storage operations without blocking unrelated concurrent requests.
 
 :::caution
 
@@ -1164,7 +1152,7 @@ export interface Env {
 }
 
 type ConnectionState = {
-	oderId: string;
+	userId: string;
 	username: string;
 	joinedAt: number;
 };
@@ -1462,7 +1450,7 @@ export class ChatRoom extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
-This is not a hard rule. Short external calls are fine. Consider offloading when operations consistently take more than a few hundred milliseconds.
+This is not a hard rule. Short external calls are fine. Consider offloading when operations consistently take more than a few hundred milliseconds. Streaming external API responses is another strategy to avoid blocking.
 
 ## Testing and migrations
 
