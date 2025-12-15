@@ -16,10 +16,11 @@ import {
 
 This guide walks you through building a Durable Object from scratch. You will learn how to:
 
-- Write a Durable Object class with SQLite storage
-- Communicate with your Durable Object using RPC methods
-- Configure bindings and migrations
-- Deploy your Durable Object to Cloudflare
+- Write a Durable Object class
+- Call methods and make requests to your Durable Objects
+- Write and query data within a Durable Object
+- Bind your Durable Object to your Worker and call it
+- Deploy it
 
 **What you'll build:** A persistent counter where each unique ID gets its own counter instance. Requests to `/my-counter` always reach the same globally-unique Durable Object, no matter where in the world the request originates.
 
