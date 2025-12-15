@@ -113,6 +113,8 @@ By default the [`cloudflared` Docker container](https://github.com/cloudflare/cl
 
 ## Turn on the Gateway proxy
 
+The Gateway proxy toggle only applies to traffic from WARP devices. Gateway will always proxy traffic sent with [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) or [Browser Isolation](/cloudflare-one/remote-browser-isolation/) regardless of this setting.
+
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
 2. In **Proxy and inspection settings**, turn on **Allow Secure Web Gateway to proxy traffic**.
 3. Select **TCP**.
