@@ -108,7 +108,7 @@ Get a public URL for your WebSocket server:
 ```ts
 import { getSandbox, proxyToSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from "@cloudflare/sandbox";
+export { Sandbox } from '@cloudflare/sandbox';
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -157,7 +157,7 @@ Your Worker can connect to a WebSocket service to get real-time data, even when 
 ```ts
 import { getSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from "@cloudflare/sandbox";
+export { Sandbox } from '@cloudflare/sandbox';
 
 const initialized = new Set<string>();
 
