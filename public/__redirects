@@ -1151,12 +1151,15 @@
 /partners/ /fundamentals/reference/partners/ 301
 /partners/analytics/ /fundamentals/reference/partners/#analytics-integrations 301
 /partners/email-security/ /email-security/partners/ 301
+
 # page-shield
 /page-shield/use-dashboard/monitor-connections/ /page-shield/detection/monitor-connections-scripts/ 301
 /page-shield/use-dashboard/monitor-scripts/ /page-shield/detection/monitor-connections-scripts/ 301
 /support/firewall/tools/troubleshooting-page-shield/ /page-shield/troubleshooting/ 301
 /page-shield/reference/alerts/ /page-shield/alerts/alert-types/ 301
 /page-shield/detection/configure-alerts/ /page-shield/alerts/configure/ 301
+/page-shield/changelog/ /page-shield/release-notes/ 301
+/page-shield/changelog/index.xml /page-shield/release-notes/index.xml 301
 
 # pipelines
 /pipelines/concepts/how-pipelines-work/ /pipelines/ 301
