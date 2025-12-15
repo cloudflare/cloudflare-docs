@@ -13,71 +13,34 @@ import { Render, Details } from "~/components";
 
 This guide helps you choose the right storage products for your application. Most applications use multiple storage types to handle different data patterns effectively.
 
-## Storage for common architectures
+## Storage products reference
 
-Here are proven storage patterns for common application types:
+<Render file="storage-products-table" product="workers" />
 
-### SaaS application
-**Stack**: D1 + Workers KV + R2
+## Common storage requirements
 
-- **D1** - Customer data, user profiles, subscription plans, billing history
-- **Workers KV** - Feature flags, session data, configuration settings  
-- **R2** - Customer uploads, backups, exported reports
-
-**Why this works**: D1 handles transactional customer data with strong consistency. KV provides fast global access to frequently-read config data. R2 stores large files cost-effectively.
-
-### E-commerce platform
-**Stack**: Hyperdrive + Workers KV + R2
-
-- **Hyperdrive** - Product catalog, inventory, orders, customer data (connects to existing Postgres/MySQL)
-- **Workers KV** - Product recommendations, A/B test configurations, feature flags
-- **R2** - Product images, user-generated content, order documents
-
-**Why this works**: Hyperdrive accelerates your existing e-commerce database globally. KV caches frequently-accessed data near users. R2 delivers media assets without egress fees.
-
-### Real-time collaboration tool
-**Stack**: Durable Objects + D1 + R2
-
-- **Durable Objects** - Live document state, WebSocket connections, real-time coordination
-- **D1** - User accounts, document metadata, access permissions
-- **R2** - Document versions, exported files, user avatars
-
-**Why this works**: Durable Objects provide the coordination and consistency needed for real-time features. D1 handles user management. R2 stores large document assets.
-
-### Content management system
-**Stack**: D1 + R2 + Workers KV
-
-- **D1** - Articles, comments, user accounts, publishing workflow
-- **R2** - Images, videos, document attachments  
-- **Workers KV** - Published content cache, site configuration, CDN cache keys
-
-**Why this works**: D1 manages structured content with full SQL capabilities. R2 handles media storage and delivery. KV caches published content globally for fast page loads.
-
-## Common architectural requirements
-
-Most applications need to solve these core storage challenges. Use these opinionated recommendations:
+Most applications need to solve these core storage challenges:
 
 ### User and customer data
-**Use D1 for new applications** or **Hyperdrive for existing databases**
 
-D1 when:
-- Building a new application
-- Customer data under 10GB per database
-- Need global read replicas
-- Want serverless simplicity
+**Use D1** when you have a **per-user data model**:
+- Each user has isolated data (user profiles, settings, private files)
+- Data naturally partitions by user or tenant
+- Under 10GB per database
+- Want global read replicas
 
-Hyperdrive when:
-- Have existing Postgres or MySQL database
-- Database size exceeds 10GB
-- Using existing database tools and ORMs  
-- Need maximum compatibility
+**Use Hyperdrive** when you have a **traditional relational model**:
+- Shared tables across all users (product catalog, inventory)
+- Complex relationships and joins across entities
+- Existing Postgres or MySQL database
+- Database size exceeds 10GB or need existing tooling
 
 ### Configuration and feature flags
 **Use Workers KV**
 
 Use for:
 - Application settings read on every request
-- Feature flags and A/B test configurations
+- Feature flags and A/B test configurations  
 - API keys and external service credentials
 - Data that changes infrequently
 
@@ -99,61 +62,69 @@ Use for:
 
 Use for:
 - Email sending and notifications
-- Data processing and transformations  
+- Data processing and transformations
 - Third-party API calls that can be deferred
 - Batch operations and cleanup tasks
 
 **Why**: Queues handle retries and failures automatically, letting you build resilient async workflows.
 
-## Choose your storage pattern
+### Real-time coordination and state
+**Use Durable Objects**
 
-Use this decision framework to select the right product for your specific need:
+Use for:
+- Chat rooms, collaborative editing, multiplayer games
+- WebSocket connections that need to coordinate
+- Per-entity state that requires strong consistency
+- Global ordering of operations
+
+**Why**: Each Durable Object provides single-threaded consistency and can maintain WebSocket connections.
+
+### High-volume data writes  
+**Use Analytics Engine**
+
+Use for:
+- Time-series metrics and events
+- High-cardinality data (millions of unique dimensions)
+- Usage analytics and billing data
+- Data that doesn't need immediate querying
+
+**Why**: Designed for write-heavy workloads that would overwhelm other storage types.
+
+## Choose your storage pattern
 
 ### For structured, relational data
 
-**Start here**: Do you have an existing database?
+**What's your data model?**
 
-**Yes** → Use **Hyperdrive**
-- Connects to existing Postgres or MySQL
-- Reduces connection overhead and latency globally
-- Works with your existing tools and queries
+**Per-user/tenant isolation** → Use **D1**
+- User profiles, settings, private documents
+- Data naturally partitions by user
+- Each user gets their own database or clear isolation
 
-**No** → Use **D1**
-- Serverless SQL database  
-- Automatic scaling and read replicas
-- No connection management required
+**Shared relational model** → Use **Hyperdrive**  
+- Product catalogs, shared inventory, complex joins
+- Traditional normalized database design
+- Cross-user analytics and reporting
 
 ### For key-value data
 
-**How often is this data read vs. written?**
+**What's the use case?**
 
-**Read-heavy (100:1 or higher)** → Use **Workers KV**  
-- Global edge caching
-- Microsecond read latency
-- Limited to 1 write/second per key
+**Configuration and rarely-changing data** → Use **Workers KV**
+- Feature flags, API keys, application settings
+- Read thousands of times, written rarely
+- Can tolerate eventual consistency
 
-**Write-heavy or need consistency** → Use **Durable Objects**
-- Strong consistency guarantees  
-- No write rate limits
-- Single-threaded per object for coordination
+**Coordination and stateful logic** → Use **Durable Objects**
+- Chat room state, game sessions, collaborative documents
+- Need strong consistency and coordination
+- Per-entity isolated state
 
-### For large files and media
+### For files and media
+**Use R2** - S3-compatible storage without egress fees
 
-**Use R2** - This is the clear choice
-- S3-compatible APIs
-- No egress charges  
-- Global CDN integration
-
-### For real-time coordination
-
-**Use Durable Objects** - The only option for this use case
-- WebSocket support with hibernation
-- Global ordering of operations
-- Strong consistency guarantees
-
-## Storage products reference
-
-<Render file="storage-products-table" product="workers" />
+### For background processing  
+**Use Queues** - Reliable async job processing with retries
 
 ## When to use each product
 
