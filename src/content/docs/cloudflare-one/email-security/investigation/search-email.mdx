@@ -159,7 +159,15 @@ Email security displays the following details:
    - Country
 4. **Links identified**: A list of malicious links identified by Email security. Refer to [Open links](#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
 5. **Attachments**: If an email has an attachment, the Cloudflare dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/remote-browser-isolation/). Only PDF files are currently supported.
-6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam.
+6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam. The dashboard also displays [Cloudy summaries](/cloudflare-one/email-security/investigation/search-email/#cloudy-summaries).
+
+#### Cloudy summaries
+
+The Cloudflare dashboard uses [Cloudy](/fundamentals/reference/cloudy-ai-agent/) to explain why an email was classified as unwanted. 
+
+Cloudy analyzes the underlying detection code and generates a description of the specific detection logic that led to an email final disposition. Each summary provides a rating option that allows you to provide feedback to the Email security team. Cloudy summaries are only available for emails with a final [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/#available-values). 
+
+**View all signatures** allows you to view all the detections that triggered on the email, including detections that did not determine the final disposition.
 
 #### Open links
 
