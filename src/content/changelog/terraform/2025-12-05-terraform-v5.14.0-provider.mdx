@@ -36,7 +36,7 @@ The corresponding public API endpoint of [discovered operations](https://develop
 - **zero_trust_dlp_custom_profile**: Adds sweepers for `dlp_custom_profile`
 - **zone_subscription|account_subscription**: Adds `partners_ent` as valid enum for `rate_plan.id` ([#6505](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6505))
 - **zone**: Ensures datasource model schema parity ([#6487](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6487)) 
-* **subscription:** Update import signature to accept account_id/subscription_id in order to import account subscription ([#6510](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6510)) 
+- **subscription**: Updates import signature to accept account_id/subscription_id to import account subscription ([#6510](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6510)) 
 
 ### Upgrade to newer version
 We suggest waiting to migrate to v5 while we work on stabilization. This helps with avoiding any blocking issues while the Terraform resources are actively being [stabilized](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6237). We will be releasing a new migration tool in March 2026 to help support v4 to v5 transitions for our most popular resources.
