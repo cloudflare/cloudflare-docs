@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - tunnelHealthCheckUrl
   - magicFirewallUrl
   - gatewayUrl
@@ -20,7 +19,7 @@ Note that north-south traffic routed through Cloudflare's Secure Web Gateway is 
 
 Before setting up a connection between EdgeConnect and Cloudflare, you must have:
 
-- A contract that includes {props.productName} and Secure Web Gateway.
+- A contract that includes Magic WAN and Secure Web Gateway.
 - Received two Cloudflare endpoints (anycast IP address).
 - Determined a private static /31 IP pair to use with each tunnel. The /31 pairs should be from a different private subnet, separate from the private subnets used behind each EdgeConnect appliance.
 - The EdgeConnect devices used in this tutorial and on v9.0.
@@ -321,7 +320,7 @@ The traceroute shows the path going from the client (`10.3.0.3`) to:
 - the GCP West lan0 IP on the West EdgeConnect (`10.30.0.3`)
 - the GCP West client (`10.30.0.4`)
 
-This validates the east-west traffic flow through Cloudflare {props.productName}.
+This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 </Details>
 
@@ -351,7 +350,7 @@ The traceroute shows the path going from the client (`10.22.0.9`) to:
 - the GCP West EdgeConnect private IPsec endpoint IP (`192.168.15.10`)
 - the GCP West client (`10.77.0.10`)
 
-This validates the east-west traffic flow through Cloudflare {props.productName}.
+This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 </Details>
 

@@ -47,7 +47,24 @@ export class MyDurableObject extends DurableObject {
 }
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+# Durable Object
+class MyDurableObject(DurableObject):
+  # DurableObjectState is accessible via the ctx instance property
+  def __init__(self, ctx, env):
+    super().__init__(ctx, env)
+  # ...
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Methods and Properties
 
@@ -93,6 +110,10 @@ In practice, this is quite rare, and most use cases do not need `blockConcurrenc
 
 :::
 
+<Tabs>
+
+<TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 // Durable Object
 export class MyDurableObject extends DurableObject {
@@ -109,6 +130,28 @@ export class MyDurableObject extends DurableObject {
   ...
 }
 ```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+# Durable Object
+class MyDurableObject(DurableObject):
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+		self.initialized = False
+
+		# blockConcurrencyWhile will ensure that initialized will always be true
+		async def set_initialized():
+			self.initialized = True
+		self.ctx.blockConcurrencyWhile(set_initialized)
+	# ...
+```
+
+</TabItem>
+
+</Tabs>
 
 #### Parameters
 
@@ -253,6 +296,10 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 `abort` is used to forcibly reset a Durable Object. A JavaScript `Error` with the message passed as a parameter will be logged. This error is not able to be caught within the application code.
 
+<Tabs>
+
+<TabItem label="TypeScript" icon="seti:typescript">
+
 ```js
 // Durable Object
 export class MyDurableObject extends DurableObject {
@@ -266,6 +313,25 @@ export class MyDurableObject extends DurableObject {
   }
 }
 ```
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+# Durable Object
+class MyDurableObject(DurableObject):
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+
+	async def say_hello(self):
+		# Error: Hello, World! will be logged
+		self.ctx.abort("Hello, World!")
+```
+
+</TabItem>
+
+</Tabs>
 
 :::caution[Not available in local development]
 

@@ -1,0 +1,1110 @@
+---
+pcx_content_type: navigation
+title: Local Participant
+slug: realtime/realtimekit/core/local-participant
+sidebar:
+  order: 4
+---
+
+import { Tabs, TabItem } from "~/components";
+
+This guide covers how to manage the local user's media devices, control audio/video/screenshare, handle events, and work with media tracks in your RealtimeKit meetings.
+
+:::note[Prerequisites]
+This page assumes you've already initialized the SDK and understand the meeting object structure. Refer to [Initialize SDK](/realtime/realtimekit/core/) and [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) if needed.
+:::
+
+## Introduction
+
+The local user is accessible via `meeting.self` and contains all information and methods related to the current participant. This includes media controls, device management, participant metadata, and state information.
+
+## Properties
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Metadata Properties
+
+```js
+// Participant identifiers
+meeting.self.id; // Peer ID (unique per session)
+meeting.self.userId; // User ID (persistent across sessions)
+meeting.self.customParticipantId; // Custom identifier set by developer
+meeting.self.name; // Display name
+meeting.self.picture; // Display picture URL
+```
+
+### Media Properties
+
+The local user's media tracks and states:
+
+```js
+// Media state flags
+meeting.self.audioEnabled; // Boolean: Is audio enabled?
+meeting.self.videoEnabled; // Boolean: Is video enabled?
+meeting.self.screenShareEnabled; // Boolean: Is screen share active?
+
+// Media tracks (MediaStreamTrack objects)
+meeting.self.audioTrack; // Audio MediaStreamTrack (available when audioEnabled is true)
+meeting.self.videoTrack; // Video MediaStreamTrack (available when videoEnabled is true)
+meeting.self.screenShareTracks; // Object: { video: MediaStreamTrack, audio?: MediaStreamTrack }
+
+// Permissions granted by user
+meeting.self.mediaPermissions; // Current audio/video permissions
+```
+
+### State Properties
+
+```js
+// Room state
+meeting.self.roomJoined; // Boolean: Has joined the meeting?
+meeting.self.roomState; // Current room state (see possible values below)
+meeting.self.isPinned; // Boolean: Is the local user pinned?
+
+// Permissions and config
+meeting.self.permissions; // Capabilities defined by preset
+meeting.self.config; // Configuration for meeting appearance
+```
+
+**Room State Values:**
+
+The `roomState` property can have the following values:
+
+- `'init'` - Initialized but not joined
+- `'joined'` - Successfully joined the meeting
+- `'waitlisted'` - Waiting in the waiting room
+- `'rejected'` - Entry rejected
+- `'kicked'` - Removed from meeting
+- `'left'` - Left the meeting
+- `'ended'` - Meeting has ended
+- `'disconnected'` - Disconnected from meeting
+
+</TabItem>
+<TabItem label="React">
+
+### Metadata Properties
+
+```jsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+
+// Participant identifiers
+const id = useRealtimeKitSelector((m) => m.self.id);
+const userId = useRealtimeKitSelector((m) => m.self.userId);
+const customParticipantId = useRealtimeKitSelector(
+	(m) => m.self.customParticipantId,
+);
+const name = useRealtimeKitSelector((m) => m.self.name);
+const picture = useRealtimeKitSelector((m) => m.self.picture);
+```
+
+### Media Properties
+
+The local user's media tracks and states:
+
+```jsx
+// Media state flags
+const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
+const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+const screenShareEnabled = useRealtimeKitSelector(
+	(m) => m.self.screenShareEnabled,
+);
+
+// Media tracks (MediaStreamTrack objects)
+const audioTrack = useRealtimeKitSelector((m) => m.self.audioTrack);
+const videoTrack = useRealtimeKitSelector((m) => m.self.videoTrack);
+const screenShareTracks = useRealtimeKitSelector(
+	(m) => m.self.screenShareTracks,
+);
+
+// Permissions granted by user
+const mediaPermissions = useRealtimeKitSelector((m) => m.self.mediaPermissions);
+```
+
+### State Properties
+
+```jsx
+// Room state
+const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
+const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+const isPinned = useRealtimeKitSelector((m) => m.self.isPinned);
+
+// Permissions and config
+const permissions = useRealtimeKitSelector((m) => m.self.permissions);
+const config = useRealtimeKitSelector((m) => m.self.config);
+```
+
+**Example: Conditional rendering based on room state**
+
+```jsx
+const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+
+return (
+	<>
+		{roomState === "disconnected" && <div>You are disconnected</div>}
+		{roomState === "waitlisted" && <div>Waiting for host to admit you</div>}
+		{roomState === "joined" && <div>You are in the meeting</div>}
+	</>
+);
+```
+
+**Room State Values:**
+
+The `roomState` property can have the following values:
+
+- `'init'` - Initialized but not joined
+- `'joined'` - Successfully joined the meeting
+- `'waitlisted'` - Waiting in the waiting room
+- `'rejected'` - Entry rejected
+- `'kicked'` - Removed from meeting
+- `'left'` - Left the meeting
+- `'ended'` - Meeting has ended
+- `'disconnected'` - Disconnected from meeting
+
+</TabItem>
+</Tabs>
+
+## Media Controls
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Audio Control
+
+Mute and unmute the microphone:
+
+```js
+// Enable audio (unmute)
+await meeting.self.enableAudio();
+
+// Disable audio (mute)
+await meeting.self.disableAudio();
+
+// Check current status
+const isAudioEnabled = meeting.self.audioEnabled;
+```
+
+### Video Control
+
+Enable and disable the camera:
+
+```js
+// Enable video
+await meeting.self.enableVideo();
+
+// Disable video
+await meeting.self.disableVideo();
+
+// Check current status
+const isVideoEnabled = meeting.self.videoEnabled;
+```
+
+### Screen Share Control
+
+Start and stop screen sharing:
+
+```js
+// Enable screen share
+await meeting.self.enableScreenShare();
+
+// Disable screen share
+await meeting.self.disableScreenShare();
+
+// Check current status
+const isScreenShareEnabled = meeting.self.screenShareEnabled;
+```
+
+### Change Display Name
+
+Change the user's display name (only works before joining):
+
+```js
+await meeting.self.setName("New Name");
+```
+
+:::note
+The name change will only reflect across all participants if done **before** joining the meeting.
+:::
+
+</TabItem>
+<TabItem label="React">
+
+### Audio Control
+
+Mute and unmute the microphone:
+
+```jsx
+import { useRealtimeKitClient } from "@cloudflare/realtimekit-react";
+
+function AudioControls() {
+	const [meeting] = useRealtimeKitClient();
+	const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
+
+	const toggleAudio = async () => {
+		if (audioEnabled) {
+			await meeting.self.disableAudio();
+		} else {
+			await meeting.self.enableAudio();
+		}
+	};
+
+	return (
+		<button onClick={toggleAudio}>{audioEnabled ? "Mute" : "Unmute"}</button>
+	);
+}
+```
+
+### Video Control
+
+Enable and disable the camera:
+
+```jsx
+function VideoControls() {
+	const [meeting] = useRealtimeKitClient();
+	const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+
+	const toggleVideo = async () => {
+		if (videoEnabled) {
+			await meeting.self.disableVideo();
+		} else {
+			await meeting.self.enableVideo();
+		}
+	};
+
+	return (
+		<button onClick={toggleVideo}>
+			{videoEnabled ? "Stop Video" : "Start Video"}
+		</button>
+	);
+}
+```
+
+### Screen Share Control
+
+Start and stop screen sharing:
+
+```jsx
+function ScreenShareControls() {
+	const [meeting] = useRealtimeKitClient();
+	const screenShareEnabled = useRealtimeKitSelector(
+		(m) => m.self.screenShareEnabled,
+	);
+
+	const toggleScreenShare = async () => {
+		if (screenShareEnabled) {
+			await meeting.self.disableScreenShare();
+		} else {
+			await meeting.self.enableScreenShare();
+		}
+	};
+
+	return (
+		<button onClick={toggleScreenShare}>
+			{screenShareEnabled ? "Stop Sharing" : "Share Screen"}
+		</button>
+	);
+}
+```
+
+### Change Display Name
+
+Change the user's display name (only works before joining):
+
+```jsx
+await meeting.self.setName("New Name");
+```
+
+:::note
+The name change will only reflect across all participants if done **before** joining the meeting.
+:::
+
+</TabItem>
+</Tabs>
+
+## Manage Media Devices
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Get Available Devices
+
+```js
+// Get all media devices
+const devices = await meeting.self.getAllDevices();
+
+// Get all audio input devices (microphones)
+const audioDevices = await meeting.self.getAudioDevices();
+
+// Get all video input devices (cameras)
+const videoDevices = await meeting.self.getVideoDevices();
+
+// Get all audio output devices (speakers)
+const speakerDevices = await meeting.self.getSpeakerDevices();
+
+// Get device by ID
+const device = await meeting.self.getDeviceById("device-id", "audio");
+
+// Get current devices being used
+const currentDevices = meeting.self.getCurrentDevices();
+// Returns: { audio: MediaDeviceInfo, video: MediaDeviceInfo, speaker: MediaDeviceInfo }
+```
+
+### Change Device
+
+Switch to a different media device:
+
+```js
+// Get all devices
+const devices = await meeting.self.getAllDevices();
+
+// Set a specific device (replaces device of the same kind)
+await meeting.self.setDevice(devices[0]);
+```
+
+</TabItem>
+<TabItem label="React">
+
+### Get Available Devices
+
+```jsx
+import { useRealtimeKitClient } from "@cloudflare/realtimekit-react";
+import { useState, useEffect } from "react";
+
+function DeviceSelector() {
+	const [meeting] = useRealtimeKitClient();
+	const [audioDevices, setAudioDevices] = useState([]);
+	const [videoDevices, setVideoDevices] = useState([]);
+
+	useEffect(() => {
+		if (!meeting) return;
+
+		const loadDevices = async () => {
+			const audio = await meeting.self.getAudioDevices();
+			const video = await meeting.self.getVideoDevices();
+			setAudioDevices(audio);
+			setVideoDevices(video);
+		};
+
+		loadDevices();
+	}, [meeting]);
+
+	const handleDeviceChange = async (device) => {
+		await meeting.self.setDevice(device);
+	};
+
+	return (
+		<div>
+			<select
+				onChange={(e) => {
+					const device = audioDevices.find(
+						(d) => d.deviceId === e.target.value,
+					);
+					handleDeviceChange(device);
+				}}
+			>
+				{audioDevices.map((device) => (
+					<option key={device.deviceId} value={device.deviceId}>
+						{device.label}
+					</option>
+				))}
+			</select>
+		</div>
+	);
+}
+```
+
+### Get Current Devices
+
+```jsx
+// Get current devices being used
+const currentDevices = meeting.self.getCurrentDevices();
+// Returns: { audio: MediaDeviceInfo, video: MediaDeviceInfo, speaker: MediaDeviceInfo }
+```
+
+</TabItem>
+</Tabs>
+
+## Display Local Video
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Register Video Element
+
+Play the local user's video track on a `<video>` element:
+
+```html
+<video id="local-video" autoplay playsinline></video>
+```
+
+```js
+const videoElement = document.getElementById("local-video");
+
+// Register the video element to display video
+meeting.self.registerVideoElement(videoElement);
+
+// For local preview (not sent to other users), pass true as second argument
+meeting.self.registerVideoElement(videoElement, true);
+```
+
+### Deregister Video Element
+
+Clean up when the video element is no longer needed:
+
+```js
+meeting.self.deregisterVideoElement(videoElement);
+```
+
+</TabItem>
+<TabItem label="React">
+
+### Using UI Kit Component
+
+The simplest way to display local video in React is using the UI Kit's video tile component:
+
+```jsx
+import { RtkParticipantTile } from "@cloudflare/realtimekit-react-ui";
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+
+function LocalVideo() {
+	const localUser = useRealtimeKitSelector((m) => m.self);
+
+	return <RtkParticipantTile participant={localUser} />;
+}
+```
+
+### Manual Video Element Management
+
+For custom implementations:
+
+```jsx
+import {
+	useRealtimeKitClient,
+	useRealtimeKitSelector,
+} from "@cloudflare/realtimekit-react";
+import { useEffect, useRef } from "react";
+
+function LocalVideoCustom() {
+	const [meeting] = useRealtimeKitClient();
+	const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+	const videoTrack = useRealtimeKitSelector((m) => m.self.videoTrack);
+	const videoRef = useRef(null);
+
+	useEffect(() => {
+		if (!videoRef.current || !meeting) return;
+
+		// Register video element
+		meeting.self.registerVideoElement(videoRef.current);
+
+		return () => {
+			// Cleanup: deregister on unmount
+			meeting.self.deregisterVideoElement(videoRef.current);
+		};
+	}, [meeting]);
+
+	return (
+		<video
+			ref={videoRef}
+			autoPlay
+			playsInline
+			muted
+			style={{ display: videoEnabled ? "block" : "none" }}
+		/>
+	);
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Events
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Room Joined
+
+Triggered when the local user successfully joins the meeting:
+
+```js
+meeting.self.on("roomJoined", () => {
+	console.log("Successfully joined the meeting");
+});
+```
+
+### Room Left
+
+Triggered when the local user leaves the meeting:
+
+```js
+meeting.self.on("roomLeft", ({ state }) => {
+	console.log("Left the meeting with state:", state);
+
+	// Handle different leave states
+	if (state === "left") {
+		console.log("User voluntarily left");
+	} else if (state === "kicked") {
+		console.log("User was kicked from the meeting");
+	} else if (state === "ended") {
+		console.log("Meeting has ended");
+	} else if (state === "disconnected") {
+		console.log("Lost connection to meeting");
+	}
+});
+```
+
+**Possible state values:** `'left'`, `'kicked'`, `'ended'`, `'rejected'`, `'disconnected'`, `'failed'`
+
+### Video Update
+
+Triggered when video is enabled or disabled:
+
+```js
+meeting.self.on("videoUpdate", ({ videoEnabled, videoTrack }) => {
+	console.log("Video state:", videoEnabled);
+
+	if (videoEnabled) {
+		// Video track is available, can display it
+		const videoElement = document.getElementById("my-video");
+		const stream = new MediaStream();
+		stream.addTrack(videoTrack);
+		videoElement.srcObject = stream;
+		videoElement.play();
+	}
+});
+```
+
+### Audio Update
+
+Triggered when audio is enabled or disabled:
+
+```js
+meeting.self.on("audioUpdate", ({ audioEnabled, audioTrack }) => {
+	console.log("Audio state:", audioEnabled);
+
+	if (audioEnabled) {
+		// Audio track is available
+		console.log("Microphone is on");
+	}
+});
+```
+
+### Screen Share Update
+
+Triggered when screen sharing starts or stops:
+
+```js
+meeting.self.on(
+	"screenShareUpdate",
+	({ screenShareEnabled, screenShareTracks }) => {
+		console.log("Screen share state:", screenShareEnabled);
+
+		if (screenShareEnabled) {
+			// Screen share tracks are available
+			const screenElement = document.getElementById("my-screen-share");
+			const stream = new MediaStream();
+			stream.addTrack(screenShareTracks.video);
+			if (screenShareTracks.audio) {
+				stream.addTrack(screenShareTracks.audio);
+			}
+			screenElement.srcObject = stream;
+			screenElement.play();
+		}
+	},
+);
+```
+
+### Device Update
+
+Triggered when the active device changes:
+
+```js
+meeting.self.on("deviceUpdate", ({ device }) => {
+	// Handle device change
+	if (device.kind === "audioinput") {
+		console.log("Microphone changed:", device.label);
+	} else if (device.kind === "videoinput") {
+		console.log("Camera changed:", device.label);
+	} else if (device.kind === "audiooutput") {
+		console.log("Speaker changed:", device.label);
+	}
+});
+```
+
+### Device List Update
+
+Triggered when the list of available devices changes (device plugged in/out):
+
+```js
+meeting.self.on("deviceListUpdate", ({ added, removed, devices }) => {
+	console.log("Device list updated");
+	console.log("Added devices:", added);
+	console.log("Removed devices:", removed);
+	console.log("All devices:", devices);
+});
+```
+
+### Network Quality Score
+
+Monitor your own network quality:
+
+```js
+meeting.self.on(
+	"mediaScoreUpdate",
+	({ kind, isScreenshare, score, scoreStats }) => {
+		if (kind === "video") {
+			console.log(
+				`Your ${isScreenshare ? "screenshare" : "video"} quality score is`,
+				score,
+			);
+		}
+
+		if (kind === "audio") {
+			console.log("Your audio quality score is", score);
+		}
+
+		if (score < 5) {
+			console.log("Your media quality is poor");
+		}
+	},
+);
+```
+
+The `scoreStats` object provides detailed statistics:
+
+```js
+// Audio Producer
+{
+  "kind": "audio",
+  "isScreenshare": false,
+  "score": 10,
+  "participantId": "meeting.self.id",
+  "scoreStats": {
+    "score": 10,
+    "bitrate": 22452,
+    "packetsLostPercentage": 0,
+    "jitter": 0,
+    "isScreenShare": false
+  }
+}
+
+// Video Producer
+{
+  "kind": "video",
+  "isScreenshare": false,
+  "score": 10,
+  "participantId": "meeting.self.id",
+  "scoreStats": {
+    "score": 10,
+    "frameWidth": 640,
+    "frameHeight": 480,
+    "framesPerSecond": 24,
+    "jitter": 0,
+    "isScreenShare": false,
+    "packetsLostPercentage": 0,
+    "bitrate": 576195,
+    "cpuLimitations": false,
+    "bandwidthLimitations": false
+  }
+}
+```
+
+### Permission Updates
+
+Triggered when permissions are updated dynamically:
+
+```js
+// Listen to specific permission updates
+meeting.self.permissions.on("chatUpdate", () => {
+	console.log("Chat permissions updated");
+	// Check meeting.self.permissions for updated permissions
+});
+
+meeting.self.permissions.on("pollsUpdate", () => {
+	console.log("Polls permissions updated");
+});
+
+meeting.self.permissions.on("pluginsUpdate", () => {
+	console.log("Plugins permissions updated");
+});
+
+// Listen to all permission updates
+meeting.self.permissions.on("*", () => {
+	console.log("Permissions updated");
+});
+```
+
+### Media Permission Errors
+
+Triggered when media permissions are denied or media capture fails:
+
+```js
+meeting.self.on("mediaPermissionError", ({ message, kind }) => {
+	console.log(`Failed to capture ${kind}: ${message}`);
+
+	// Handle different error types
+	if (message === "DENIED") {
+		console.log("User denied permission");
+	} else if (message === "SYSTEM_DENIED") {
+		console.log("System denied permission");
+	} else if (message === "COULD_NOT_START") {
+		console.log("Failed to start media stream");
+	}
+});
+```
+
+**Possible values:**
+
+- `message`: `'DENIED'`, `'SYSTEM_DENIED'`, `'COULD_NOT_START'`
+- `kind`: `'audio'`, `'video'`, `'screenshare'`
+
+</TabItem>
+<TabItem label="React">
+
+### Room Joined
+
+```jsx
+const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
+
+useEffect(() => {
+	if (roomJoined) {
+		console.log("Successfully joined the meeting");
+	}
+}, [roomJoined]);
+```
+
+Or use event listener:
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleRoomJoined = () => {
+		console.log("Successfully joined the meeting");
+	};
+
+	meeting.self.on("roomJoined", handleRoomJoined);
+
+	return () => {
+		meeting.self.off("roomJoined", handleRoomJoined);
+	};
+}, [meeting]);
+```
+
+### Room Left
+
+```jsx
+const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
+
+useEffect(() => {
+	if (!roomJoined) {
+		console.log("Left the meeting");
+	}
+}, [roomJoined]);
+```
+
+Or use event listener for detailed state:
+
+```jsx
+meeting.self.on("roomLeft", ({ state }) => {
+	if (state === "left") {
+		console.log("User voluntarily left");
+	} else if (state === "kicked") {
+		console.log("User was kicked");
+	}
+});
+```
+
+### Video Update
+
+```jsx
+const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+const videoTrack = useRealtimeKitSelector((m) => m.self.videoTrack);
+
+useEffect(() => {
+	if (videoEnabled && videoTrack) {
+		console.log("Video is enabled");
+		// Handle video track
+	}
+}, [videoEnabled, videoTrack]);
+```
+
+### Audio Update
+
+```jsx
+const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
+const audioTrack = useRealtimeKitSelector((m) => m.self.audioTrack);
+
+useEffect(() => {
+	if (audioEnabled && audioTrack) {
+		console.log("Audio is enabled");
+		// Handle audio track
+	}
+}, [audioEnabled, audioTrack]);
+```
+
+### Screen Share Update
+
+```jsx
+const screenShareEnabled = useRealtimeKitSelector(
+	(m) => m.self.screenShareEnabled,
+);
+const screenShareTracks = useRealtimeKitSelector(
+	(m) => m.self.screenShareTracks,
+);
+
+useEffect(() => {
+	if (screenShareEnabled && screenShareTracks) {
+		console.log("Screen sharing is active");
+		// Handle screen share tracks
+	}
+}, [screenShareEnabled, screenShareTracks]);
+```
+
+### Device Update
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleDeviceUpdate = ({ device }) => {
+		if (device.kind === "audioinput") {
+			console.log("Microphone changed:", device.label);
+		} else if (device.kind === "videoinput") {
+			console.log("Camera changed:", device.label);
+		}
+	};
+
+	meeting.self.on("deviceUpdate", handleDeviceUpdate);
+
+	return () => {
+		meeting.self.off("deviceUpdate", handleDeviceUpdate);
+	};
+}, [meeting]);
+```
+
+### Network Quality Score
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleMediaScoreUpdate = ({
+		kind,
+		isScreenshare,
+		score,
+		scoreStats,
+	}) => {
+		if (kind === "video") {
+			console.log(
+				`Your ${isScreenshare ? "screenshare" : "video"} quality score is`,
+				score,
+			);
+		}
+
+		if (score < 5) {
+			console.log("Your media quality is poor");
+		}
+	};
+
+	meeting.self.on("mediaScoreUpdate", handleMediaScoreUpdate);
+
+	return () => {
+		meeting.self.off("mediaScoreUpdate", handleMediaScoreUpdate);
+	};
+}, [meeting]);
+```
+
+### Media Permission Errors
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handlePermissionError = ({ message, kind }) => {
+		console.log(`Failed to capture ${kind}: ${message}`);
+
+		if (message === "DENIED") {
+			// Show UI to guide user to grant permissions
+		}
+	};
+
+	meeting.self.on("mediaPermissionError", handlePermissionError);
+
+	return () => {
+		meeting.self.off("mediaPermissionError", handlePermissionError);
+	};
+}, [meeting]);
+```
+
+</TabItem>
+</Tabs>
+
+## Advanced Features
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Update Media Resolution
+
+Change video or screen share resolution at runtime:
+
+```js
+// Update camera resolution
+await meeting.self.updateVideoConstraints({
+	width: { ideal: 1920 },
+	height: { ideal: 1080 },
+});
+
+// Update screen share resolution
+await meeting.self.updateScreenshareConstraints({
+	width: { ideal: 1920 },
+	height: { ideal: 1080 },
+});
+```
+
+### Video Middlewares
+
+Add effects and filters to your video stream:
+
+```js
+// Create a middleware (e.g., retro filter)
+function RetroTheme() {
+	return (canvas, ctx) => {
+		ctx.filter = "grayscale(1)";
+		ctx.shadowColor = "#000";
+		ctx.shadowBlur = 20;
+		ctx.lineWidth = 50;
+		ctx.strokeStyle = "#000";
+		ctx.strokeRect(0, 0, canvas.width, canvas.height);
+	};
+}
+
+// Add the video middleware
+meeting.self.addVideoMiddleware(RetroTheme);
+
+// Remove the video middleware
+meeting.self.removeVideoMiddleware(RetroTheme);
+```
+
+### Audio Middlewares
+
+Process audio streams with custom middlewares:
+
+```js
+// Add audio middleware
+meeting.self.addAudioMiddleware(YourAudioMiddleware);
+
+// Remove audio middleware
+meeting.self.removeAudioMiddleware(YourAudioMiddleware);
+```
+
+### Pin/Unpin Self
+
+Pin or unpin yourself in the meeting:
+
+```js
+// Pin yourself
+await meeting.self.pin();
+
+// Unpin yourself
+await meeting.self.unpin();
+
+// Check pinned status
+const isPinned = meeting.self.isPinned;
+```
+
+</TabItem>
+<TabItem label="React">
+
+### Update Media Resolution
+
+Change video or screen share resolution at runtime:
+
+```jsx
+// Update camera resolution
+await meeting.self.updateVideoConstraints({
+	width: { ideal: 1920 },
+	height: { ideal: 1080 },
+});
+
+// Update screen share resolution
+await meeting.self.updateScreenshareConstraints({
+	width: { ideal: 1920 },
+	height: { ideal: 1080 },
+});
+```
+
+### Video Middlewares
+
+Add effects and filters to your video stream:
+
+```jsx
+// Create a middleware (e.g., retro filter)
+function RetroTheme() {
+	return (canvas, ctx) => {
+		ctx.filter = "grayscale(1)";
+		ctx.shadowColor = "#000";
+		ctx.shadowBlur = 20;
+		ctx.lineWidth = 50;
+		ctx.strokeStyle = "#000";
+		ctx.strokeRect(0, 0, canvas.width, canvas.height);
+	};
+}
+
+function VideoEffects() {
+	const [meeting] = useRealtimeKitClient();
+
+	const addRetroEffect = () => {
+		meeting.self.addVideoMiddleware(RetroTheme);
+	};
+
+	const removeRetroEffect = () => {
+		meeting.self.removeVideoMiddleware(RetroTheme);
+	};
+
+	return (
+		<>
+			<button onClick={addRetroEffect}>Add Retro Effect</button>
+			<button onClick={removeRetroEffect}>Remove Effect</button>
+		</>
+	);
+}
+```
+
+### Audio Middlewares
+
+Process audio streams with custom middlewares:
+
+```jsx
+// Add audio middleware
+meeting.self.addAudioMiddleware(YourAudioMiddleware);
+
+// Remove audio middleware
+meeting.self.removeAudioMiddleware(YourAudioMiddleware);
+```
+
+### Pin/Unpin Self
+
+Pin or unpin yourself in the meeting:
+
+```jsx
+function PinControls() {
+	const [meeting] = useRealtimeKitClient();
+	const isPinned = useRealtimeKitSelector((m) => m.self.isPinned);
+
+	const togglePin = async () => {
+		if (isPinned) {
+			await meeting.self.unpin();
+		} else {
+			await meeting.self.pin();
+		}
+	};
+
+	return (
+		<button onClick={togglePin}>{isPinned ? "Unpin Self" : "Pin Self"}</button>
+	);
+}
+```
+
+</TabItem>
+</Tabs>

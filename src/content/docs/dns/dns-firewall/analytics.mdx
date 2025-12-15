@@ -3,7 +3,6 @@ pcx_content_type: navigation
 title: Analytics and logs
 sidebar:
   order: 3
-
 ---
 
 import { Badge, FeatureTable, Details, DashButton } from "~/components";
@@ -22,11 +21,9 @@ The historical data available covers 62 days and the maximum time interval you c
 
 For a quick summary, view your DNS Firewall analytics on the dashboard. The DNS analytics dashboard contains [four main panels](#panels). The filters and time frame that you specify at the top of the page apply to all of them.
 
-1. In the Cloudflare dashboard, go to the **DNS Firewall** page.
+In the Cloudflare dashboard, go to the **DNS Firewall Analytics** page.
 
-   <DashButton url="/?to=/:account/dns-firewall" />
-
-2. Go to **Analytics**.
+<DashButton url="/?to=/:account/dns-firewall/analytics" />
 
 #### Available dimensions
 
@@ -52,9 +49,16 @@ The filters and time frame that you specify at the top of the page apply to all 
 
 - **Query statistics**: an overview of query metrics. Namely, **Total queries**, **Cached queries**, **Uncached queries**, and **Stale cache queries**.
 
-    <Details header="Processing time and response time"> Processing time refers to the total time taken to handle a query within DNS Firewall, meaning cached queries served directly from Cloudflare's servers. For uncached queries, the metric used is response time, which considers the time to get the answers from your upstream nameservers. The processing and response times are displayed in milliseconds.</Details>
+  <Details header="Processing time and response time">
+  	{" "}
+  	Processing time refers to the total time taken to handle a query within DNS
+  	Firewall, meaning cached queries served directly from Cloudflare's servers.
+  	For uncached queries, the metric used is response time, which considers the
+  	time to get the answers from your upstream nameservers. The processing and
+  	response times are displayed in milliseconds.
+  </Details>
 
-		<Details header="90th percentile (p90)"> Aside from the average for both processing and response times, `p90` values show you the maximum time that 90% of queries took to resolve. For example, if the p90 is 1 millisecond, it means 90% of the queries were resolved in 1 millisecond or less.</Details>
+      <Details header="90th percentile (p90)"> Aside from the average for both processing and response times, `p90` values show you the maximum time that 90% of queries took to resolve. For example, if the p90 is 1 millisecond, it means 90% of the queries were resolved in 1 millisecond or less.</Details>
 
 - **DNS queries by data center**: a map indicating which Cloudflare data centers have handled DNS queries to your account. You can also find a list of the top ten results and quickly filter for or exclude a certain data center from the results by hovering over it and selecting **Filter** or **Exclude**.
 
@@ -66,8 +70,8 @@ Use the [GraphQL API](/analytics/graphql-api/) to access DNS Firewall analytics.
 
 The DNS Firewall analytics has two [schemas](/analytics/graphql-api/getting-started/querying-basics/):
 
-* `dnsFirewallAnalyticsAdaptive`: Retrieve information about individual DNS Firewall queries.
-* `dnsFirewallAnalyticsAdaptiveGroups`: Get reports on aggregate information only.
+- `dnsFirewallAnalyticsAdaptive`: Retrieve information about individual DNS Firewall queries.
+- `dnsFirewallAnalyticsAdaptiveGroups`: Get reports on aggregate information only.
 
 ### API <Badge text="Legacy" variant="caution" size="medium" />
 
@@ -98,4 +102,5 @@ The following table provides a description for each of the values that might be 
 | `unknown`                 | There was an unknown error.                                                                                                                                    |
 
 [^1]: the total time taken to handle a query within DNS Firewall.
+
 [^2]: the time it takes when an answer is not cached and Cloudflare has to get the answer from your upstream nameservers.

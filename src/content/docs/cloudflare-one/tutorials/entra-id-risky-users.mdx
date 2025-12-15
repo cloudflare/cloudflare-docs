@@ -32,7 +32,7 @@ Refer to [our IdP setup instructions](/cloudflare-one/integrations/identity-prov
 
 :::note
 
-- When you configure the IdP in Zero Trust, be sure to select **Enable group membership change reauthentication**.
+- When you configure the IdP in Cloudflare One, be sure to select **Enable group membership change reauthentication**.
 - Save the **Application (client) ID**, **Directory (tenant) ID**, and **Client secret** as you will need them again in a later step.
   :::
 
@@ -151,7 +151,7 @@ Cloudflare Access will now synchronize changes in group membership with Entra ID
 
 Finally, create a [Gateway HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to isolate traffic for risky user groups.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies** > **HTTP**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies** > **HTTP**.
 
 2. Select **Add a policy**.
 

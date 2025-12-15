@@ -1,0 +1,329 @@
+---
+pcx_content_type: how-to
+title: Connectivity pre-checks
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+This guide helps you validate connectivity between your environment and [Cloudflare Tunnel endpoints](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) before deploying [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). You will run DNS and network checks from the same host machine that will run `cloudflared` to help you identify issues that may prevent `cloudflared` from connecting to Cloudflare Tunnel endpoints.
+
+Running these checks before you install `cloudflared` sets your deployment up for success and narrows down the cause of any later connectivity issues.
+
+This guide is structured as follows:
+
+1. [Before you start](#before-you-start): Read prerequisites and terminology.
+
+2. [DNS test with dig](#2-dns-test-with-dig): Confirm that DNS resolves Cloudflare Tunnel endpoints to the expected IPs.
+
+3. [Test network connectivity](#3-test-network-connectivity): Verify that your firewall allows outbound traffic on port `7844` (TCP and UDP).
+
+4. [Get help](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/connectivity-prechecks/#4-get-help): What to collect and who to contact if tests fail.
+
+## 1. Before you start
+
+### Prerequisites
+
+You must have:
+
+- A host machine connected to the Internet where you plan to run `cloudflared`. The tests must run from the same environment where `cloudflared` will run (same network, same firewall path).  
+
+- A terminal session with permission to run `dig` and `nc` (netcat), or similar software.
+
+`cloudflared` is platform-agnostic and supports a wide range of operating systems. For details, refer to [Tunnel system requirements](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/).
+
+### Terminology
+
+When troubleshooting connectivity to Cloudflare, it is important to distinguish between:
+
+- Host machine: The server or virtual machine (VM) where you will run `cloudflared`.
+
+- Environment: The broader setup containing the host machine (network and firewall configuration).
+
+Cloudflare Tunnel errors can originate from the environment (for example, DNS or firewall policies), even though they surface as `cloudflared` errors on the host machine. This guide focuses on the environment, not on `cloudflared` itself.
+
+`cloudflared` establishes [outbound-only connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/#outbound-only-connection) to Cloudflare's global network over port `7844`. The specific destinations and ports are documented in [Tunnel with firewall](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/).
+
+## 2. DNS test with dig
+
+Cloudflare Tunnel requires outbound connectivity to `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com` (or to the equivalent `us-region1` and `us-region2` endpoints when using only the [US region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#region-us)).  
+
+For a successful and healthy deployment, `cloudflared` should have [four active replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) with connectivity to both regions (that is, both `region1.v2.argotunnel.com` and `region2.v2.argotunnel.com`, or both `us-region1` and `us-region2`).
+
+First, you need to verify that your DNS resolver returns the expected IP addresses for Cloudflare Tunnel endpoints.
+
+### 2.1. Test DNS with your current resolver
+
+Depending on whether you are testing a global region or the US region, run one of the following commands:
+
+<Tabs>
+<TabItem label="Global region">
+
+```sh
+dig A region1.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.167
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.67
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.57
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.107
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.27
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.7
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.227
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.47
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.37
+region1.v2.argotunnel.com. 86400 IN	A	198.41.192.77
+...
+```
+
+```sh
+dig AAAA region1.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::1
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::2
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::3
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::4
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::5
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::6
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::7
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::8
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::9
+region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a0::10
+...
+```
+
+```sh
+dig A region2.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.13
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.193
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.33
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.233
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.53
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.63
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.113
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.73
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.43
+region2.v2.argotunnel.com. 86400 IN	A	198.41.200.23
+...
+```
+
+```sh
+dig AAAA region2.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::1
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::2
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::3
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::4
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::5
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::6
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::7
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::8
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::9
+region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a8::10
+...
+```
+
+</TabItem>
+<TabItem label="US region">
+
+```sh
+dig A us-region1.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.1
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.2
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.3
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.4
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.5
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.6
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.7
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.8
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.9
+us-region1.v2.argotunnel.com. 86400 IN	A	198.41.218.10
+...
+```
+
+```sh
+dig AAAA us-region1.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::1
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::2
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::3
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::4
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::5
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::6
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::7
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::8
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::9
+us-region1.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a1::10
+...
+```
+
+```sh
+dig A us-region2.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.1
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.2
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.3
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.4
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.5
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.6
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.7
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.8
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.9
+us-region2.v2.argotunnel.com. 86400 IN	A	198.41.219.10
+...
+```
+
+```sh
+dig AAAA us-region2.v2.argotunnel.com
+```
+
+```sh output
+;; ANSWER SECTION:
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::1
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::2
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::3
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::4
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::5
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::6
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::7
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::8
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::9
+us-region2.v2.argotunnel.com. 86400 IN	AAAA	2606:4700:a9::10
+...
+```
+
+</TabItem>
+</Tabs>
+
+The `ANSWER SECTION` should include the expected IP addresses for Cloudflare Tunnel endpoints.
+
+If you receive:
+
+- Status `NOERROR` with valid IP addresses - Your DNS resolver is successfully returning addresses for the Tunnel hostname. Continue to [Test network connectivity](#3-test-network-connectivity).
+
+- Status `SERVFAIL`, `NXDOMAIN`, or an empty answer - Your DNS resolver cannot resolve the Tunnel endpoint. Continue to [Compare against `1.1.1.1`](#compare-against-1111).
+
+### 2.2. Compare against `1.1.1.1`
+
+If your original `dig` response is empty or does not match the documented IPs, test again using Cloudflare's public resolver `1.1.1.1`:
+
+```sh
+dig A region1.v2.argotunnel.com @1.1.1.1
+```
+#### If only `1.1.1.1` works
+
+If `1.1.1.1` returns the correct IPs, but your original resolver does not, your local DNS resolver is misconfigured or blocked.
+
+To resolve:
+
+- Configure the host machine to use `1.1.1.1` as its resolver.
+- If you must keep using your existing resolver, then investigate with your system administrator or ISP why it is returning different IPs. A recursive resolver should return the same response as the authoritative DNS server. If this cannot be fixed, the issue lies within your local environment and must be resolved before deploying Cloudflare Tunnel.
+
+#### If neither resolver works
+
+If neither your original resolver nor `1.1.1.1` returns an answer, your firewall may be blocking DNS queries to Cloudflare Tunnel endpoints.
+
+To resolve:
+
+- Check for firewall rules blocking DNS traffic altogether (UDP on port `53`) or specific DNS queries related to Cloudflare.
+- If you are behind a managed DNS or security appliance, contact that provider to understand why queries to `region1.v2.argotunnel.com` and other Cloudflare Tunnel endpoints are blocked.
+
+Once DNS resolution returns the expected IPs from your DNS resolver, proceed to connectivity testing in step 3.
+
+## 3. Test network connectivity
+
+After confirming that your DNS resolver returns the correct IPs, test whether your host machine can send packets to Cloudflare on port `7844` using both UDP and TCP.
+
+Choose one of the IPs from your `dig` output (for example, `198.41.192.167`) and run the following tests.
+
+### 3.1. Test UDP connectivity
+
+```sh
+nc -uz -w 3 198.41.192.167 7844
+```
+
+Example output:
+
+```sh
+Connection to 198.41.192.167 port 7844 [udp/*] succeeded!
+```
+
+### 3.2. Test TCP connectivity
+
+```sh
+nc -z -w 3 198.41.192.167 7844
+```
+
+Example output:
+
+```sh
+Connection to 198.41.192.167 port 7844 [tcp/*] succeeded!
+```
+
+### 3.3 Interpret results
+
+These tests answer two key questions:
+
+- Can the host machine send a UDP packet to Cloudflare Tunnel endpoints?
+- Can the host machine send a TCP packet to Cloudflare Tunnel endpoints?
+
+If either protocol succeeds, `cloudflared` can use that protocol to establish the tunnel.
+
+You have already confirmed DNS is working in the previous steps. These connectivity tests now verify whether your environment allows traffic to Cloudflare on port `7844`. By default, `cloudflared` automatically falls back to whichever protocol is available.
+
+If a [protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol) is blocked but you force `cloudflared` to use it (for example, forcing QUIC when UDP is blocked), the tunnel will fail to connect.
+
+#### Both UDP and TCP succeed
+
+Your firewall allows outbound traffic and return traffic to Cloudflare's tunnel endpoint on port `7844`. `cloudflared` can connect using either `quic` (UDP) or `http2` (TCP). If both UDP and TCP succeed and your DNS test in the previous section was successful, you can successfully deploy Cloudflare Tunnel in this environment.
+
+#### UDP succeeds, TCP fails
+
+Outbound UDP is allowed, but TCP on port `7844` is blocked or inspected.
+
+`cloudflared` will only be able to connect using `quic`. If you force `http2` in your configuration while TCP is blocked, the tunnel will fail.
+
+To resolve: Either allow TCP on your local network firewall on port `7844` or stop forcing `http2` to allow `cloudflared` to connect over `QUIC` instead. Refer to the [Protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol) parameter documentation for more information.
+
+#### TCP succeeds, UDP fails
+
+Outbound TCP is allowed, but UDP on port `7844` is blocked.
+
+`cloudflared` will only be able to connect using `http2`. If you force `quic` while UDP is blocked, the tunnel will fail.
+
+To resolve: Either allow UDP on the local network firewall on port `7844` or stop forcing QUIC to allow `cloudflared` to connect over HTTP/2 instead. Refer to the [Protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol) parameter documentation for more information.
+
+#### Both UDP and TCP fail
+
+Packets are being dropped somewhere between the host and the [Cloudflare Tunnel endpoints](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/).
+
+This usually indicates a firewall policy or upstream security control that does not allow outbound traffic (or return traffic) on port `7844`.
+
+To resolve: Allow all traffic over port `7844` on the local network firewall. If this does not resolve the issue, troubleshoot with your ISP or service provider.
+
+## 4. Get help
+
+If either DNS or network test failed, it will likely be a problem in your local environment. You will need to debug with your administrator, ISP or cloud provider. If you believe the issue is with Cloudflare, please provide detailed information when contacting support.
+
+<Render file="warp/support-ticket-best-practices" product="cloudflare-one" params={{ tunnelMode: true }} />

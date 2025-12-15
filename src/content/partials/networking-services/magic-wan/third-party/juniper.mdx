@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - creatingTheIpsecTunnelsUrl
   - magicStaticRoutesUrl
   - equalcostMultipathUrl
@@ -9,7 +8,7 @@ params:
   - antireplayUrl
 ---
 
-This tutorial provides information and examples of how to configure Juniper Networks SRX Series Firewalls with {props.productName}.
+This tutorial provides information and examples of how to configure Juniper Networks SRX Series Firewalls with Magic WAN.
 
 The configuration settings in this document are based on JUNOS 23.4R2.13.
 
@@ -25,16 +24,16 @@ Cloudflare supports route-based site-to-site IPsec tunnels, which require the cr
 
 Using a `/31` netmask is a more efficient use of IP addresses as it doubles the number of available subnets compared to a `/30`netmask. This is possible because with a `/31`netmask there is no need to reserve IP addresses for the subnet and broadcast addresses, as there would be if you opt to use a `/30` netmask. Additional details can be found in [RFC 3021 - Using 31-Bit Prefixes on IPv4 Point-to-Point Links](https://datatracker.ietf.org/doc/html/rfc3021).
 
-## Cloudflare {props.productName} configuration
+## Cloudflare Magic WAN configuration
 
 This section of the document will cover the configuration of:
 
 - Magic IPsec tunnels
 - Magic static routes
 
-### {props.productName} topology
+### Magic WAN topology
 
-This documentation assumes there are two locations connected via {props.productName}:
+This documentation assumes there are two locations connected via Magic WAN:
 
 | Site | Local/Remote | Security Zone | Subnet        |
 | ---- | ------------ | ------------- | ------------- |
@@ -70,9 +69,9 @@ This documentation assumes there are two locations connected via {props.productN
 
 ### Magic static routes
 
-Refer to the {props.productName} Topology section above for more details on the IP subnet scheme.
+Refer to the Magic WAN Topology section above for more details on the IP subnet scheme.
 
-<a href={props.magicStaticRoutesUrl}>Magic static routes</a> effectively tell {props.productName} which tunnels to route traffic destined for a given {props.productName} site.
+<a href={props.magicStaticRoutesUrl}>Magic static routes</a> effectively tell Magic WAN which tunnels to route traffic destined for a given Magic WAN site.
 
 Since two tunnels are configured to each endpoint, it is necessary to configure two static routes.
 
@@ -86,7 +85,7 @@ Cloudflare leverages <a href={props.equalcostMultipathUrl}>equal-cost multi-path
 	- **Region code**: Leave set to **All Regions** unless otherwise specified.
 2. Select **Add Static Route** to add a second route for the same subnet. Make sure the second tunnel is selected in **Tunnel/Next hop**.
 3. Select **Test Routes** to ensure the settings are accepted, then select **Add Routes**.
-4. Confirm the routes were added correctly in **{props.productName}** > **Configuration** > **Static Routes**.
+4. Confirm the routes were added correctly in **Magic WAN** > **Configuration** > **Static Routes**.
 
 ## Juniper SRX configuration
 
@@ -412,11 +411,11 @@ Filter-based forwarding is implemented by configuring the following:
 :::note
 Firewall filters must incorporate at least two terms:
 
-- **Term 1**: Classify the traffic to forward to {props.productName}
-- **Term 2**: Permit all other traffic — otherwise, the firewall filters will discard any traffic not intended for {props.productName} destinations.
+- **Term 1**: Classify the traffic to forward to Magic WAN
+- **Term 2**: Permit all other traffic — otherwise, the firewall filters will discard any traffic not intended for Magic WAN destinations.
 :::
 
-This configuration only factors in one local site (`10.1.20.0/24`). In this example, we assume devices in the trust zone must route traffic to a remote subnet at another {props.productName}-protected site (`10.1.100.0/24`).
+This configuration only factors in one local site (`10.1.20.0/24`). In this example, we assume devices in the trust zone must route traffic to a remote subnet at another Magic WAN-protected site (`10.1.100.0/24`).
 
 Define a static route on the SRX to route traffic to `10.1.100.0/24` with redundant routes referencing each of the two tunnels.
 
@@ -424,13 +423,13 @@ Define a static route on the SRX to route traffic to `10.1.100.0/24` with redund
 
 [Routing Instances](https://www.juniper.net/documentation/us/en/software/junos/routing-overview/topics/concept/routing-instances-overview.html) effectively add additional routing tables to the SRX platform.
 
-As mentioned earlier, any traffic destined for other {props.productName} protected sites must be routed over the Magic IPsec tunnels.
+As mentioned earlier, any traffic destined for other Magic WAN protected sites must be routed over the Magic IPsec tunnels.
 
 The example includes two static routes - one to each of the two VTIs on the Cloudflare side of the  Magic IPsec Tunnels (`10.252.2.20` and `10.252.2.22`).
 
 While it is possible to be more prescriptive in terms of the destination subnets, we simply use `0.0.0.0/0` as the firewall filter ensures only traffic destined for `10.1.100.0/24` will be forwarded to the routing instance. Any other traffic not destined for `10.1.100.0/24` will continue to the primary routing table (`inet.0`) as it falls outside the scope of the firewall filter configured in the next section below.
 
-Leaving the destination subnet as `0.0.0.0/0` eases some administrative burden as you only need to modify the firewall filter to specify which traffic is destined for {props.productName}.
+Leaving the destination subnet as `0.0.0.0/0` eases some administrative burden as you only need to modify the firewall filter to specify which traffic is destined for Magic WAN.
 
 ```txt
 set routing-instances MAGIC_WAN_RI instance-type forwarding
@@ -563,7 +562,7 @@ rib-groups {
 
 ### Security policies
 
-Define security policies to permit traffic flows destined for {props.productName}-protected resources. The source/destination zones must incorporate the zone containing the tunnel interfaces.
+Define security policies to permit traffic flows destined for Magic WAN-protected resources. The source/destination zones must incorporate the zone containing the tunnel interfaces.
 
 There are two very simple rules to allow traffic bidirectionally — it is generally recommended to start with a similar policy and then add more stringent rules once general connectivity is established successfully.
 

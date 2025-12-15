@@ -7,6 +7,18 @@ sidebar:
 
 import { Render, DashButton } from "~/components"
 
+## Monitoring
+
+The Cloudflare dashboard shows a list of all previously created interconnects, as well as useful information such as IP addresses, speed, type of interconnect, and status.
+
+The [Status column](https://dash.cloudflare.com/?to=/:account/interconnects/all) in the dashboard shows three different status:
+
+- **Active**: The link operational state at the interconnect port on the Customer Connectivity Router (CCR) is up. This means that the CCR port sees sufficient light levels and has negotiated an Ethernet link.
+- **Unhealthy**: The link operational state at interconnect port is down. This might mean the CCR does not see light, cannot negotiate an Ethernet signal, or the light levels are below -20 dBm. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.
+- **Pending**: The link is not yet active. This is expected and can occur for several reasons: the customer has not received a cross-connect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The `Pending` status will disappear after the customer completes the cross-connect and status moves to `Active`.
+
+## Alerts (v1 dataplane only)
+
 You can configure notifications for upcoming CNI maintenance events using the Notifications feature in the Cloudflare dashboard. It is recommended to subscribe to two types of notifications to stay fully informed.
 
 **CNI Connection Maintenance Alert (beta):** This alert informs you about maintenance events (scheduled, updated, or canceled) that directly impact your CNI circuits used with the Magic Networking overlay only.
@@ -25,7 +37,7 @@ You can configure notifications for upcoming CNI maintenance events using the No
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
 
-<DashButton url="/?to=/:account/notifications" />
+	<DashButton url="/?to=/:account/notifications" />
 
 2. Select **Add**.
 3. From the product drop-down menu, select **Cloudflare Network Interconnect**.
@@ -36,19 +48,24 @@ You can configure notifications for upcoming CNI maintenance events using the No
 
 ### Enable Cloudflare Status Maintenance Notification
 
-1. First, identify the PoP code for your CNI circuit:
-   - In the Cloudflare dashboard, go to the **Configuration** page in Magic Transit or Magic WAN.
-	   - For Magic Transit: <DashButton url="/?to=/:account/magic-transit/configuration" />
-		 - For Magic WAN: <DashButton url="/?to=/:account/magic-wan/configuration" />
-   - Select the **Interconnects** tab.
-   - Select the CNI you want to enable notifications for.
-   - In the menu that appears, note the Data Center code (for example, `gru-b`).
-2. Now, configure the alert:
-   - Go to **Notifications** and select **Add**.
-   - From the product drop-down menu, select **Cloudflare Status**.
-   - Select **Maintenance Notification**.
-   - Give your notification a name and choose your notification method.
-   - Select **Next**.
-   - Optionally, use the **Filter on Event Type** to select only the event types you want to be alerted for (Scheduled, Changed, Canceled).
-   - In **Filter on Points of Presence**, enter the three-letter code for your PoP (for example, for `gru-b`, enter `gru`). You can add multiple PoPs, separated by commas.
-   - Select **Create**.
+First, identify the PoP code for your CNI circuit:
+1. In the Cloudflare dashboard, go to the **Configuration** page in Magic Transit or Magic WAN.
+
+	- **For Magic Transit**: <DashButton url="/?to=/:account/magic-transit/configuration" />
+
+	- **For Magic WAN**: <DashButton url="/?to=/:account/magic-wan/configuration" />
+
+2. Select the **Interconnects** tab.
+3. Select the CNI you want to enable notifications for.
+4. In the menu that appears, note the Data Center code (for example, `gru-b`).
+
+Now, configure the alert:
+
+1. Go to **Notifications** and select **Add**.
+2. From the product drop-down menu, select **Cloudflare Status**.
+3. Select **Maintenance Notification**.
+4. Give your notification a name and choose your notification method.
+5. Select **Next**.
+6. Optionally, use the **Filter on Event Type** to select only the event types you want to be alerted for (Scheduled, Changed, Canceled).
+7. In **Filter on Points of Presence**, enter the three-letter code for your PoP (for example, for `gru-b`, enter `gru`). You can add multiple PoPs, separated by commas.
+8. Select **Create**.

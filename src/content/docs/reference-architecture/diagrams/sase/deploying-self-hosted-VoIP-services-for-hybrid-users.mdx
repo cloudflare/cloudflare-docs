@@ -50,7 +50,7 @@ The above diagram shows the high level signaling and media paths.
 4. The default gateway for the SIP server is `10.50.0.1`, but we have defined a static route such that for destination `100.96.0.0/12`, the next hop is the WARP Connector interface (`10.0.50.10`).
 5. The SIP INVITE message will be routed across the WARP Connector to the Cloudflare network and then received by Bob.
 6. Bob accepts and the SIP server will send SIP/SDP messages to both Alice and Bob specifying which parameters to use for the RTP (audio) data.
-7. For Direct Media paths where the SIP server is not in the audio path and the RTP streams are directly between Alice and Bob, ensure that [WARP-to-WARP connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/#enable-warp-to-warp) has been enabled in Cloudflare. Audio streams in the Direct Media use case will not need to route over the WARP Connector.
+7. For Direct Media paths where the SIP server is not in the audio path and the RTP streams are directly between Alice and Bob, ensure that [**Allow all Cloudflare One traffic to reach enrolled devices**](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/#enable-warp-to-warp) has been enabled in Cloudflare. Audio streams in the Direct Media use case will not need to route over the WARP Connector.
 
 ### Remote user to on-premise user
 

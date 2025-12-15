@@ -1,17 +1,16 @@
 ---
 params:
-  - productName
   - addTunnelsUrl
   - createAStaticRouteUrl
 ---
 
-This tutorial provides information and examples of how to configure IPsec VPN between Cloudflare {props.productName} with a GCP Cloud VPN.
+This tutorial provides information and examples of how to configure IPsec VPN between Cloudflare Magic WAN with a GCP Cloud VPN.
 
 ## Prerequisites
 
-You need to have a GCP VPN gateway created in your GCP account. This is needed to route traffic between your GCP virtual private cloud (VPC) and Cloudflare {props.productName}. Refer to the [GCP documentation](https://cloud.google.com/network-connectivity/docs/vpn/how-to/creating-static-vpns) to learn more about creating a Cloud VPN gateway.
+You need to have a GCP VPN gateway created in your GCP account. This is needed to route traffic between your GCP virtual private cloud (VPC) and Cloudflare Magic WAN. Refer to the [GCP documentation](https://cloud.google.com/network-connectivity/docs/vpn/how-to/creating-static-vpns) to learn more about creating a Cloud VPN gateway.
 
-A Classic VPN Gateway is required to support static routing. Route tables will also need to be manually configured to allow the routing between the VPN and Cloudflare {props.productName} to work. Refer to [GCP routing options](https://cloud.google.com/network-connectivity/docs/vpn/concepts/choosing-networks-routing#ts-tun-routing) to learn more about GCP VPC routing.
+A Classic VPN Gateway is required to support static routing. Route tables will also need to be manually configured to allow the routing between the VPN and Cloudflare Magic WAN to work. Refer to [GCP routing options](https://cloud.google.com/network-connectivity/docs/vpn/concepts/choosing-networks-routing#ts-tun-routing) to learn more about GCP VPC routing.
 
 ## Google Cloud Platform
 
@@ -25,7 +24,7 @@ A Classic VPN Gateway is required to support static routing. Route tables will a
 6. Choose **IPv4** as the IP traffic type that will flow through this Gateway.
 
 :::note
-Cloudflare {props.productName} does not yet support private routing via IPv6.
+Cloudflare Magic WAN does not yet support private routing via IPv6.
 :::
 
 ### Configure the VPN connection
@@ -34,11 +33,11 @@ Cloudflare {props.productName} does not yet support private routing via IPv6.
 2. Select the **Cloud VPN Tunnels** tab > **Create VPN Tunnel**.
 3. Select the VPN Gateway you have created > **Continue**.
 4. Give your tunnel a descriptive name.
-5. For **Remote Peer IP Address**, use one of the public anycast {props.productName} IPs given to you by your account team.
+5. For **Remote Peer IP Address**, use one of the public anycast Magic WAN IPs given to you by your account team.
 6. In **IKE version**, select **IKEv2**.
-7. You can generate an IKE pre-shared key, or add one you already own. If you generate one during this set up, keep it somewhere safe since you will need it in other steps to finish setting up {props.productName} and GCP.
+7. You can generate an IKE pre-shared key, or add one you already own. If you generate one during this set up, keep it somewhere safe since you will need it in other steps to finish setting up Magic WAN and GCP.
 8. Choose **Route-based** as routing option.
-9. In **Remote network IP range** define the network you are going to expose to GCP via Cloudflare {props.productName}.
+9. In **Remote network IP range** define the network you are going to expose to GCP via Cloudflare Magic WAN.
 
 :::note
 You can add new IP ranges once the VPN object is created. They will need to be created as VPC routes using this VPN connection (refer to the **Static Routes** section).
@@ -48,7 +47,7 @@ You can add new IP ranges once the VPN object is created. They will need to be c
 
 ### Static Routes
 
-Static routing is necessary to route traffic between your VPN and Cloudflare {props.productName}. Follow these steps to create them for your VPC. Refer to [VPN route documentation](https://cloud.google.com/vpc/docs/routes) to learn more about VPN routing.
+Static routing is necessary to route traffic between your VPN and Cloudflare Magic WAN. Follow these steps to create them for your VPC. Refer to [VPN route documentation](https://cloud.google.com/vpc/docs/routes) to learn more about VPN routing.
 
 1. Go to **VPN Network** > **Routes**.
 2. Select **Route Management**.
@@ -62,9 +61,9 @@ Static routing is necessary to route traffic between your VPN and Cloudflare {pr
 10. In **Next hop** select the VPN tunnel you created previously.
 11. Select **Create**.
 
-## {props.productName}
+## Magic WAN
 
-After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, go to the Cloudflare dashboard and create the corresponding IPsec tunnels and static routes on the {props.productName} side.
+After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, go to the Cloudflare dashboard and create the corresponding IPsec tunnels and static routes on the Magic WAN side.
 
 ### IPsec tunnels
 
@@ -82,14 +81,14 @@ After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, 
 3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
 
 :::note
-Do not forget to create a route in the corresponding GCP VPC covering for the healthcheck configuration of the tunnel. The route subnet should match the interface address CIDR of the {props.productName} tunnel (`169.254.244.2` in the example above).
+Do not forget to create a route in the corresponding GCP VPC covering for the healthcheck configuration of the tunnel. The route subnet should match the interface address CIDR of the Magic WAN tunnel (`169.254.244.2` in the example above).
 
 Refer to the **Static Routes** section for more detail on how to create a VPC route leading to your newly created tunnel.
 :::
 
 ### Static routes
 
-The static route in {props.productName} should point to the appropriate virtual machine (VM) subnet you created inside your GCP virtual private cloud. For example, if your VM has a subnet of  `192.168.192.0/26`, you should use it as the prefix for your static route.
+The static route in Magic WAN should point to the appropriate virtual machine (VM) subnet you created inside your GCP virtual private cloud. For example, if your VM has a subnet of  `192.168.192.0/26`, you should use it as the prefix for your static route.
 
 To create a static route:
 

@@ -8,6 +8,7 @@ params:
   - cniURL
   - cfTunnelURL
   - warpURL
+  - thirdPartyIntegrationURL
 ---
 
 To on-ramp your network traffic to {props.productNameWAN}, you can use <a href={props.connectorURL}>{props.productNameConnector}</a>, a lightweight software package you can install in corporate network locations to automatically connect, steer, and shape any IP traffic.
@@ -25,8 +26,7 @@ Additional compatible on-ramps include:
     <li>
       <a href="/magic-wan/configuration/magic-cloud-networking/">Magic Cloud Networking</a>: Automatically create on-ramps from your cloud networks to Magic WAN.
     </li>
-		<li>
-			<a href="https://www.cloudflare.com/network-onramp-partners/">Network on-ramp partnerships</a>: Refer to our <a href="/magic-wan/configuration/manually/third-party/">third-party integration tutorials</a> for guidance on configuring the most asked for third-party products.
-		</li>
   </ul>
 )}
+
+- <a href="https://www.cloudflare.com/network-onramp-partners/">Network on-ramp partnerships</a>: Refer to our <a href={props.thirdPartyIntegrationURL}>third-party integration tutorials</a> for guidance on configuring the most asked for third-party products.

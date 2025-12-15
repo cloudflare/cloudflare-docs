@@ -15,25 +15,25 @@ Magic Transit uses endpoint health checks to determine the overall health of you
 
 When choosing which endpoint IP addresses to monitor with health checks, use these guidelines:
 
-- Provide one IP address for each of the prefixes Cloudflare will advertise.
-- Redundant IPs routed via the same ISP and infrastructure are not necessary but are useful when troubleshooting.
+- Provide one IP address for each of the prefixes Cloudflare advertises.
+- Redundant IPs routed through the same ISP (Internet Service Provider) and infrastructure are not necessary but are useful when troubleshooting.
 
-Cloudflare pings health check IPs from within the [published Cloudflare IP range](https://www.cloudflare.com/ips/), which is also available via the [Cloudflare API](/api/resources/ips/methods/list/).
+Cloudflare pings health check IPs from within the [published Cloudflare IP range](https://www.cloudflare.com/ips/), which is also available through the [Cloudflare API](/api/resources/ips/methods/list/).
 
-When configuring an endpoint health check for an IP prefix, you need to select an IP address that is within the range of that IP prefix. Refer to the table below for an example of an endpoint health check configuration.
+When configuring an endpoint health check for an IP prefix, select an IP address within the range of that IP prefix. Refer to the table below for an example of an endpoint health check configuration.
 
 | Prefix            | Endpoint IP address |
 | ----------------- | ------------------- |
 | `103.21.244.0/24` | `103.21.244.100`    |
 | `103.21.245.0/24` | `103.21.245.100`    |
 
-Refer to [Tunnel health checks](/magic-transit/reference/tunnel-health-checks/) for more information on this topic.
+Refer to [Tunnel health checks](/magic-transit/reference/tunnel-health-checks/) for more information.
 
 ## Configure endpoint health checks (beta)
 
-Endpoint health checks can only be configured via the Cloudflare API. Endpoint health checks can not be configured via the dashboard, and they are not shown in the dashboard. Currently, configuring health checks is a beta feature.
+You can only configure endpoint health checks through the Cloudflare API. They are not available in the dashboard. Currently, configuring health checks is a beta feature.
 
-Refer to the [API documentation](/api/resources/diagnostics/subresources/endpoint-healthchecks/) to learn how to create, list, and delete endpoint health checks. Here is an example of an API request which sends a request to the Cloudflare API to create a new endpoint health check.
+Refer to the [API documentation](/api/resources/diagnostics/subresources/endpoint-healthchecks/) to learn how to create, list, and delete endpoint health checks. The following example creates a new endpoint health check.
 
 <Render file="account-id-api-key" product="networking-services" />
 
@@ -61,7 +61,7 @@ Refer to the [API documentation](/api/resources/diagnostics/subresources/endpoin
 
 ## Query GraphQL endpoint health checks
 
-You can also use GraphQL to query endpoints within your network. This allows you to know if an IP within your network is reachable, and also set alerts in case there is a problem.
+You can also use GraphQL to query endpoints within your network. This shows whether an IP within your network is reachable, and also set alerts in case there is a problem.
 
 You can query the following categories:
 
@@ -76,7 +76,7 @@ You can query the following categories:
 - `datetimeMinute`: The health check event timestamp truncated to the minute.
 - `endpoint`: The endpoint of the check associated with the health check.
 
-Refer to the example below on how to create a query to check your endpoint's health:
+Refer to the example below to learn how to create a query to check your endpoint's health:
 
 ```graphql
 query Viewer {
@@ -136,20 +136,20 @@ You can set up alerts to be notified when the state of your endpoint's health is
 ```
 
 2. Take note of the `id` value for the endpoint you want to get alerts for.
-3. In the Cloudflare dash, go to the **Notifications** page.
+3. In the Cloudflare dashboard, go to the **Notifications** page.
 
 <DashButton url="/?to=/:account/notifications" />
 
 4. Select **Add**.
-5. From the drop down menu, select *Magic Transit*.
+5. From the drop-down menu, select *Magic Transit*.
 6. Select **Magic Endpoint Health Check Alert**.
 7. Provide a name for your new notification and optionally provide a description.
-8. In the *Service Level Objective (SLO)* dropdown, select the SLO threshold for your notification. The SLO defines the percentage of endpoint health checks that should be passing. If the number of endpoint health checks passing is less than the SLO, an alert is generated:
-	- **High** - 99% of endpoint health checks
-	- **Medium** - 98% of endpoint health checks
-	- **Low** - 97% of endpoint health checks
-9. In the dropdown menu below SLOs, select the `id` value that matches the `id` you got through the API in step one. This `id` should match the endpoint health check you want to get notifications for.
-10. Select your preferred notification method (like email or Webhooks).
+8. In the *Service Level Objective (SLO)* drop-down menu, select the SLO threshold for your notification. The SLO defines the percentage of endpoint health checks that should be passing. If the number of endpoint health checks passing is less than the SLO, the system generates an alert:
+	- **High** - 99%
+	- **Medium** - 98%
+	- **Low** - 97%
+9. In the drop-down menu below SLOs, select the `id` value that matches the `id` you got through the API in step 1. This `id` should match the endpoint health check you want to get notifications for.
+10. Select your preferred notification method (like email or webhooks).
 11. Select **Save**.
 
-You will now receive notifications via your preferred method whenever the SLO for your endpoint health checks falls below your chosen threshold.
+You will now receive notifications through your preferred method whenever the SLO for your endpoint health checks falls below your chosen threshold.

@@ -10,7 +10,7 @@ head:
 description: Read and write to/from KV within a Durable Object
 ---
 
-import { GlossaryTooltip, WranglerConfig } from "~/components";
+import { GlossaryTooltip, TabItem, Tabs, WranglerConfig } from "~/components";
 
 The following Worker script shows you how to configure a <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> to read from and/or write to a [Workers KV namespace](/kv/concepts/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/best-practices/websockets/).
 
@@ -39,6 +39,8 @@ bindings = [
 ```
 
 </WranglerConfig>
+
+<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
@@ -94,3 +96,50 @@ export class YourDurableObject extends DurableObject {
 	}
 }
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject, Response, WorkerEntrypoint
+from urllib.parse import urlparse, parse_qs
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, req):
+		# Assume each Durable Object is mapped to a roomId in a query parameter
+		# In a production application, this will likely be a roomId defined by your application
+		# that you validate (and/or authenticate) first.
+		url = req.url
+		parsed_url = urlparse(url)
+		room_id_param = parse_qs(parsed_url.query).get('roomId', [None])[0]
+
+		if room_id_param:
+			# Get a stub that allows you to call that Durable Object
+			durable_object_stub = self.env.YOUR_DO_CLASS.getByName(room_id_param)
+
+			# Pass the request to that Durable Object and await the response
+			# This invokes the constructor once on your Durable Object class (defined further down)
+			# on the first initialization, and the fetch method on each request.
+			#
+			# You could pass the original Request to the Durable Object's fetch method
+			# or a simpler URL with just the roomId.
+			response = await durable_object_stub.fetch(f"http://do/{room_id_param}")
+
+			# This would return the value you read from KV *within* the Durable Object.
+			return response
+
+class YourDurableObject(DurableObject):
+	def __init__(self, state, env):
+		super().__init__(state, env)
+
+	async def fetch(self, request):
+		# Error handling elided for brevity.
+		# Write to KV
+		await self.env.YOUR_KV_NAMESPACE.put("some-key", "some-value")
+
+		# Fetch from KV
+		val = await self.env.YOUR_KV_NAMESPACE.get("some-other-key")
+
+		return Response.json(val)
+```
+
+</TabItem> </Tabs>

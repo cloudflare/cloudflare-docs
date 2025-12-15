@@ -1,12 +1,11 @@
 ---
 params:
-  - productName
   - addTunnelsUrl
   - typeId_ipv4_addrUrl
   - configureStaticRoutesUrl
 ---
 
-This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 devices to connect to Cloudflare {props.productName} via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
+This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 devices to connect to Cloudflare Magic WAN via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
 
 ## Testing environment
 
@@ -17,7 +16,7 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 
 ## IPsec configuration
 
-### {props.productName} configuration
+### Magic WAN configuration
 
 1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels with the following options:
 2. For the first IPsec tunnel, ensure the following settings are defined:
@@ -171,7 +170,7 @@ exit
 
 To configure routes for east-west (branch to branch) connections, refer to the following settings.
 
-### {props.productName}
+### Magic WAN
 
 1. Follow the <a href={props.configureStaticRoutesUrl}>Configure static routes</a> instructions to create a static route.
 2. For the first route, ensure the following settings are defined:

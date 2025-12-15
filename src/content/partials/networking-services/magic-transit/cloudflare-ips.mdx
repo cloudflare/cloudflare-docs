@@ -8,14 +8,14 @@ params:
 
 import { GlossaryTooltip } from "~/components"
 
-To use Magic Transit you need to own a publicly routable IP address block with a minimum size of `/24`. If you do not own a `/24` address block, you can use Magic Transit with a Cloudflare-owned IP address. This option is helpful for users who do not meet the `/24` prefix length requirements or who want to protect a smaller network.
+To use Magic Transit, you need to own a publicly routable IP address block with a minimum size of `/24`. If you do not own a `/24` address block, you can use Magic Transit with a Cloudflare-owned IP address. This option is helpful for users who do not meet the `/24` prefix length requirements or who want to protect a smaller network.
 
-To protect your network using a Cloudflare IP address, contact your account manager. After receiving your IP address, you will need to:
+To protect your network with a Cloudflare IP address, contact your account manager. After you receive your IP address:
 
 - <a href={props.mtLpCreateTunnel}>Create a tunnel</a>.
 - <a href={props.mtLpStaticRoute}>Set up static routes</a> or <a href={props.mtLpBgpPeering}>BGP peering</a>.
 - [Configure health checks](/magic-transit/network-health/run-endpoint-health-checks/).
-- Confirm [tunnel](/magic-transit/network-health/update-tunnel-health-checks-frequency/) and endpoint health checks were properly configured.
+- Confirm you properly configured [tunnel](/magic-transit/network-health/update-tunnel-health-checks-frequency/) and endpoint health checks.
 - Update your infrastructure at your own pace to use the allocated Cloudflare IPs.
 
-When you use a Cloudflare-owned IP space, you do not need a <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>. When using Cloudflare-leased IPs, [Magic Transit Egress](/magic-transit/reference/egress/) is automatically enabled — that is, your egress traffic will also be destined to Cloudflare instead of the Internet. Because of this, you will need to set up policy-based routing on your end to make sure that return traffic is properly routed.
+When you use a Cloudflare-owned IP space, you do not need a <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>. When using Cloudflare-leased IPs, Cloudflare automatically enables [Magic Transit Egress](/magic-transit/reference/egress/), which routes your egress traffic to Cloudflare instead of the Internet. Set up policy-based routing on your end to ensure return traffic routes properly.

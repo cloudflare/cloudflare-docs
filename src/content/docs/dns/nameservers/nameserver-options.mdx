@@ -12,11 +12,25 @@ Refer to the sections below to learn about different nameserver options.
 
 ## Assignment method
 
-When you add a domain on a full or secondary setup, Cloudflare automatically assigns your nameservers.
+When you add a domain on a [primary (full)](/dns/zone-setups/full-setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) DNS setup, Cloudflare automatically assigns your nameservers.
 
-The [default assignment method](/dns/zone-setups/reference/nameserver-assignment/) is to use standard nameservers and favor consistent nameserver names across all zones within an account. Nonetheless, in case there are conflicts - for example, if someone else has already added the same zone to a different account - you may get different nameserver names.
+The default assignment method is to use [standard nameservers](/dns/nameservers/#standard-nameservers) and favor consistent nameserver names across all zones within an account. Nonetheless, in case there are conflicts, you may get different nameserver names, even for domains that are within the same account.
 
-To have control over what nameservers are assigned for different zones within an account, you can use [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/).
+:::caution
+To prevent domain hijacking, you can no longer preset Cloudflare nameservers at your registrar before creating the respective zone in Cloudflare. If you preset your nameservers and then add the domain, your domain will be assigned a new pair of nameservers.
+:::
+
+These nameserver assignments cannot be changed. However, depending on your subscription, you may have different options for better nameserver consistency.
+
+### Nameserver consistency
+
+The level of consistency you can expect when adding new zones depends on the configured nameserver type.
+
+- For [standard nameservers](/dns/nameservers/#standard-nameservers), since a conflict can be caused by anyone adding the same zone to any other Cloudflare account, the likelihood of your new zone being assigned different nameserver names than your previously existing zones is higher.
+
+- If you use [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/), the only conflict would be between a parent and a child zone, which makes consistent assignment across new zones more likely.
+
+- With [tenant custom nameservers](/dns/nameservers/custom-nameservers/tenant-custom-nameservers/) or [Foundation DNS advanced nameservers](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment), there can still be conflicts caused by two zones with the same name being added to different accounts, but, since access to these features is more restricted, the likelihood of your new zone being assigned different nameserver names than your previously existing zones is lower.
 
 ### DNS zone defaults
 

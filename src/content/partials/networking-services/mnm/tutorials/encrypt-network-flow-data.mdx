@@ -1,19 +1,16 @@
 ---
-params:
-  - warpURL
-  - productName
-  - splitTunnelsURL
+{}
 ---
 
 import { APIRequest } from "~/components";
 
 Customers can encrypt the network flow data sent from their router to Cloudflare by [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) their network flow traffic through a device running the WARP client. Then, encrypted network flow traffic can be forwarded from the WARP enabled device to Cloudflare's network flow endpoints.
 
-To learn more about the WARP client, and to install the WARP client on Linux, macOS, or Windows, you can visit the <a href={props.warpURL}>WARP client documentation</a>.
+To learn more about the WARP client, and to install the WARP client on Linux, macOS, or Windows, you can visit the [WARP client documentation](/cloudflare-one/team-and-resources/devices/warp/).
 
 ## 1. Configure your WARP devices
 
-Follow the instructions in the [{props.productName} API](/api/resources/magic_network_monitoring/subresources/configs/methods/edit/) to configure your WARP devices.
+Follow the instructions in the [Magic Network Monitoring API](/api/resources/magic_network_monitoring/subresources/configs/methods/edit/) to configure your WARP devices.
 
 The `warp_devices` array at the account level is a list of WARP devices through which you can send encrypted flows. Each WARP device must have:
 
@@ -40,7 +37,7 @@ For example:
 	}}
 />
 
-## 2. Route {props.productName} traffic through WARP
+## 2. Route Magic Network Monitoring traffic through WARP
 
 Depending on where you installed the WARP client, you may need to configure other devices on the subnet to route traffic through WARP. If you have access to your router and it runs a version/OS supported by the WARP client, we recommend using [option one](#option-1-default-gateway) below. The same recommendation applies to users who have a software-based flow exporter, such as `softflowd`, and are not using a physical router to collect and export flows to Cloudflare.
 
@@ -68,4 +65,4 @@ In the machine running WARP, you can redirect this traffic to Cloudflare through
 
 ## 3. (Optional) Configure split tunnels
 
-If you do not want all the traffic in your device to be WARP-enabled, <a href={props.splitTunnelsURL}>configure split tunnels/proxy mode</a> to either only allow {props.productName} traffic towards `162.159.65.1` or exclude everything else.
+If you do not want all the traffic in your device to be WARP-enabled, [configure split tunnels/proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to either only allow Magic Network Monitoring traffic towards `162.159.65.1` or exclude everything else.

@@ -1,5 +1,4 @@
 ---
-
 summary: Set a Cron Trigger for your Worker.
 tags:
   - Middleware
@@ -35,30 +34,30 @@ export default {
 ```ts
 interface Env {}
 export default {
-  async scheduled(
-    controller: ScheduledController,
-    env: Env,
-    ctx: ExecutionContext,
-  ) {
-    console.log("cron processed");
-  },
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		console.log("cron processed");
+	},
 };
 ```
 
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import handler
+from workers import WorkerEntrypoint, Response
 
-@handler
-async def on_scheduled(controller, env, ctx):
-  print("cron processed")
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+  			print("cron processed")
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 interface Env {}
 
@@ -66,27 +65,27 @@ interface Env {}
 const app = new Hono<{ Bindings: Env }>();
 
 // Regular routes for normal HTTP requests
-app.get('/', (c) => c.text('Hello World!'));
+app.get("/", (c) => c.text("Hello World!"));
 
 // Export both the app and a scheduled function
 export default {
-  // The Hono app handles regular HTTP requests
-  fetch: app.fetch,
+	// The Hono app handles regular HTTP requests
+	fetch: app.fetch,
 
-  // The scheduled function handles Cron triggers
-  async scheduled(
-    controller: ScheduledController,
-    env: Env,
-    ctx: ExecutionContext,
-  ) {
-    console.log("cron processed");
+	// The scheduled function handles Cron triggers
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		console.log("cron processed");
 
-    // You could also perform actions like:
-    // - Fetching data from external APIs
-    // - Updating KV or Durable Object storage
-    // - Running maintenance tasks
-    // - Sending notifications
-  },
+		// You could also perform actions like:
+		// - Fetching data from external APIs
+		// - Updating KV or Durable Object storage
+		// - Running maintenance tasks
+		// - Sending notifications
+	},
 };
 ```
 

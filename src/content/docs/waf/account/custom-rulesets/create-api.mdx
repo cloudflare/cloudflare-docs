@@ -15,22 +15,25 @@ import { Render, APIRequest } from "~/components";
 This feature requires an Enterprise plan with a paid add-on.
 :::
 
-To deploy custom rules at the account level, you must create a custom ruleset with one or more rules. Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulesets using the API.
+To deploy custom rules at the account level:
+
+1. Create a custom ruleset with one or more rules. Alternatively, identify the existing custom ruleset you want to deploy using the [List account rulesets](/api/resources/rulesets/methods/list/) API operation.
+2. Deploy the custom ruleset so that it gets executed. To deploy a custom ruleset, create a rule with the `execute` action.
+
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulesets using the API.
 
 If you are using Terraform, refer to [WAF custom rules configuration using Terraform](/terraform/additional-configurations/waf-custom-rules/#create-and-deploy-a-custom-ruleset).
 
 ## Procedure
 
-To deploy a custom ruleset in your account, follow these general steps:
+To deploy a custom ruleset, follow these general steps:
 
 1. Create a custom ruleset in the `http_request_firewall_custom` phase with one or more rules.
-2. Deploy the ruleset to the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_custom` phase at the account level.
-
-Currently, you can only deploy WAF custom rulesets at the account level.
+2. Deploy the ruleset to the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_custom` phase.
 
 ### 1. Create a custom ruleset
 
-The following example creates a custom ruleset with a single rule in the `rules` array.
+The following example creates a custom ruleset at the account level with a single rule in the `rules` array.
 
 <APIRequest
 	path="/accounts/{account_id}/rulesets"
@@ -55,7 +58,7 @@ Save the ruleset ID in the response for the next step.
 
 ### 2. Deploy the custom ruleset
 
-To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http_request_firewall_custom` phase entry point ruleset at the account level.
+To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http_request_firewall_custom` phase entry point ruleset.
 
 1.  <Render
     	file="rulesets/api-account/step1-get-entrypoint"
@@ -118,7 +121,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     />
 
     :::caution
-    You can only apply custom rulesets to incoming traffic of zones on an Enterprise plan. To enforce this requirement, you must include `cf.zone.plan eq "ENT"` in the expression of the `execute` rule deploying the custom ruleset.
+    At the account level, you can only apply custom rulesets to incoming traffic of zones on an Enterprise plan. To enforce this requirement, you must include `cf.zone.plan eq "ENT"` in the expression of the `execute` rule deploying the custom ruleset.
     :::
 
 3.  <Render
@@ -153,7 +156,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
 ## Next steps
 
-Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the custom ruleset you just created and deployed. The following table has a list of common tasks for working with custom rulesets at the account level:
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the custom ruleset you created and deployed. The following table has a list of common tasks for working with custom rulesets at the account level:
 
 | Task                               | Procedure                                                                                                                                                                                                                                                       |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -173,6 +176,6 @@ Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/
 
 ## More resources
 
-For instructions on creating a custom rule at the zone level via API, refer to [Create a custom rule via API](/waf/custom-rules/create-api/).
+For instructions on creating a custom ruleset at the zone level via API, refer to [Custom rulesets (zone level)](/waf/custom-rules/custom-rulesets/).
 
 For more information on working with custom rulesets, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/) in the Ruleset Engine documentation.

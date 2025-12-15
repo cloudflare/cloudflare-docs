@@ -258,4 +258,4 @@ To use claims inside a JSON Web Token (JWT), you must first set up a [token vali
 
 - The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response) and [custom lists](/waf/tools/lists/custom-lists/). If you use custom lists, you must enable the **Also apply rate limiting to cached assets** parameter.
 
-- When creating a rate limiting rule [at the account level](/waf/account/rate-limiting-rulesets/) as part of a rate limiting ruleset, the rule expression cannot contain [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response) or [custom lists](/waf/tools/lists/custom-lists/).
+- When creating a rate limiting ruleset [at the account level](/waf/account/rate-limiting-rulesets/), the ruleset deployment expression (defining the scope) and the filter expression of any rate limiting rules in the ruleset cannot contain [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response) or [custom lists](/waf/tools/lists/custom-lists/).

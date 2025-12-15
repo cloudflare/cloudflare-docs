@@ -198,6 +198,70 @@ export class RateLimiter extends DurableObject {
 }
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject, Response, WorkerEntrypoint
+import time
+
+# Worker
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		# Determine the IP address of the client
+		ip = request.headers.get("CF-Connecting-IP")
+		if ip is None:
+			return Response("Could not determine client IP", status=400)
+
+		try:
+			stub = self.env.RATE_LIMITER.getByName(ip)
+			milliseconds_to_next_request = await stub.getMillisecondsToNextRequest()
+			if milliseconds_to_next_request > 0:
+				# Alternatively one could sleep for the necessary length of time
+				return Response("Rate limit exceeded", status=429)
+		except Exception as error:
+			return Response("Could not connect to rate limiter", status=502)
+
+		# TODO: Implement me
+		return Response("Call some upstream resource...")
+
+# Durable Object
+class RateLimiter(DurableObject):
+	milliseconds_per_request = 1
+	milliseconds_for_updates = 5000
+	capacity = 10000
+
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+		self.tokens = RateLimiter.capacity
+
+	async def getMillisecondsToNextRequest(self):
+		await self.checkAndSetAlarm()
+
+		milliseconds_to_next_request = RateLimiter.milliseconds_per_request
+		if self.tokens > 0:
+			self.tokens -= 1
+			milliseconds_to_next_request = 0
+
+		return milliseconds_to_next_request
+
+	async def checkAndSetAlarm(self):
+		current_alarm = await self.ctx.storage.getAlarm()
+		if current_alarm is None:
+			self.ctx.storage.setAlarm(
+				int(time.time() * 1000)
+				+ RateLimiter.milliseconds_for_updates
+				* RateLimiter.milliseconds_per_request
+			)
+
+	async def alarm(self):
+		if self.tokens < RateLimiter.capacity:
+			self.tokens = min(
+				RateLimiter.capacity,
+				self.tokens + RateLimiter.milliseconds_for_updates,
+			)
+			await self.checkAndSetAlarm()
+```
+
 </TabItem>
 </Tabs>
 
@@ -265,6 +329,34 @@ export class RateLimiter extends DurableObject {
 		return value;
 	}
 }
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject
+import time
+
+# Durable Object
+class RateLimiter(DurableObject):
+	milliseconds_per_request = 1
+	milliseconds_for_grace_period = 5000
+
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+		self.nextAllowedTime = 0
+
+	async def getMillisecondsToNextRequest(self):
+		now = int(time.time() * 1000)
+
+		self.nextAllowedTime = max(now, self.nextAllowedTime)
+		self.nextAllowedTime += RateLimiter.milliseconds_per_request
+
+		value = max(
+			0,
+			self.nextAllowedTime - now - RateLimiter.milliseconds_for_grace_period,
+		)
+		return value
 ```
 
 </TabItem>

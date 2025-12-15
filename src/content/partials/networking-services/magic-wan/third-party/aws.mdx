@@ -1,17 +1,16 @@
 ---
 params:
-  - productName
   - addTunnelsUrl
   - createAStaticRouteUrl
 ---
 
-This tutorial provides information and examples of how to configure IPsec VPN between Cloudflare {props.productName} with an AWS Transit Gateway.
+This tutorial provides information and examples of how to configure IPsec VPN between Cloudflare Magic WAN with an AWS Transit Gateway.
 
 ## Prerequisites
 
-You need to have an AWS transit gateway created in your AWS account. This is needed to route traffic between your AWS virtual private cloud (VPC) and Cloudflare {props.productName}. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html) to learn more about creating a transit gateway.
+You need to have an AWS transit gateway created in your AWS account. This is needed to route traffic between your AWS virtual private cloud (VPC) and Cloudflare Magic WAN. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html) to learn more about creating a transit gateway.
 
-Additionally, you also need to configure the necessary route table entries for the virtual machine (VM) in your AWS virtual private cloud, as well the route table entries for the transit gateway. Otherwise, connectivity between your VM and another VM routed via {props.productName} will not work. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) to learn more about routing tables.
+Additionally, you also need to configure the necessary route table entries for the virtual machine (VM) in your AWS virtual private cloud, as well the route table entries for the transit gateway. Otherwise, connectivity between your VM and another VM routed via Magic WAN will not work. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) to learn more about routing tables.
 
 ## AWS
 
@@ -30,7 +29,7 @@ Additionally, you also need to configure the necessary route table entries for t
 
 1. Select the VPN connection you created > **Download configuration**.
 
-2. This action downloads a text file. Search for the IP range that the AWS Transit Gateway assigned your tunnel. The first IP range should be the one used by the AWS Transit Gateway. Use the second IP range to configure your [Interface address](#ipsec-tunnels) in {props.productName}.
+2. This action downloads a text file. Search for the IP range that the AWS Transit Gateway assigned your tunnel. The first IP range should be the one used by the AWS Transit Gateway. Use the second IP range to configure your [Interface address](#ipsec-tunnels) in Magic WAN.
 
 3. Select the VPN connection you created > **Actions** > **Modify VPN tunnel options**.
 
@@ -65,9 +64,9 @@ Additionally, you also need to configure the necessary route table entries for t
 ECMP over two VPN tunnels is not supported with a static routing configuration. You will need to configure dynamic routing for the VPN between the transit gateway and the customer gateway device. Refer to [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html) for more information.
 :::
 
-## {props.productName}
+## Magic WAN
 
-After configuring the AWS transit gateway VPN connection and the tunnel as mentioned above, go to the Cloudflare dashboard and create the corresponding IPsec tunnel and static routes on the {props.productName} side.
+After configuring the AWS transit gateway VPN connection and the tunnel as mentioned above, go to the Cloudflare dashboard and create the corresponding IPsec tunnel and static routes on the Magic WAN side.
 
 ### IPsec tunnels
 
@@ -85,7 +84,7 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
 
 ### Static routes
 
-The static route in {props.productName} should point to the appropriate virtual machine (VM) subnet you created inside your AWS virtual private cloud. For example, if your VM has a subnet of  `192.168.192.0/26`, you should use it as the prefix for your static route.
+The static route in Magic WAN should point to the appropriate virtual machine (VM) subnet you created inside your AWS virtual private cloud. For example, if your VM has a subnet of  `192.168.192.0/26`, you should use it as the prefix for your static route.
 
 To create a static route:
 

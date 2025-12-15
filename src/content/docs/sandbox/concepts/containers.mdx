@@ -66,10 +66,15 @@ npm install express
 
 **Inbound connections** require port exposure:
 ```typescript
+const { hostname } = new URL(request.url);
 await sandbox.startProcess('python -m http.server 8000');
-const exposed = await sandbox.exposePort(8000);
+const exposed = await sandbox.exposePort(8000, { hostname });
 console.log(exposed.exposedAt); // Public URL
 ```
+
+:::note[Local development]
+When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile for each port. See [Local development with ports](/sandbox/guides/expose-services/#local-development).
+:::
 
 **Localhost** works within sandbox:
 ```bash

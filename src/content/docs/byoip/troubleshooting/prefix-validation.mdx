@@ -1,0 +1,51 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshoot prefix validation
+sidebar:
+  order: 4
+  label: Prefix validation checks
+---
+
+import { APIRequest, GlossaryTooltip } from "~/components";
+
+1. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check if any issues were found during validation.
+
+<APIRequest path= "/accounts/{account_id}/addressing/prefixes/{prefix_id}" method="GET" />
+
+```json title="Response" {17-19}
+
+ "result": {
+    "id": "72823e95d6c64d48a8111fec81179816",
+    "created_at": "2025-02-25T00:34:11.423722Z",
+    "modified_at": "2025-02-25T00:34:11.423722Z",
+    "cidr": "203.0.113.0/24",
+    "account_id": "654c5f71c324478cc9f68d60065d4620",
+    "description": "",
+    "approved": "P",
+    "on_demand_enabled": false,
+    "on_demand_locked": false,
+    "advertised": null,
+    "advertised_modified_at": null,
+    "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
+    "asn": 13335,
+    "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
+    "delegate_loa_creation" : true,
+    "irr_validation_state": "valid",
+    "rpki_validation_state": "valid",
+    "ownership_validation_state": "missing",
+  }
+
+```
+
+2. Consider the states returned in the API response (for example, `missing`, `invalid`, `mismatch_asn`) and review your IRR record, <GlossaryTooltip term="Route Origin Authorization (ROA)">ROA</GlossaryTooltip>, and ownership validation method accordingly.
+
+    - Information in the IRR and ROA records should meet the [onboarding prerequisites](/byoip/get-started/#before-you-begin).
+
+    - [Ownership validation](/byoip/get-started/#validate-prefix-ownership) requires a matching ROA and the correct validation token found in all DNS TXT records or in the IRR record.
+
+3. After applying the necessary changes, use the Validate Prefix endpoint to re-trigger the validation checks.
+
+<APIRequest
+ path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/validate"
+ method="POST"
+/>

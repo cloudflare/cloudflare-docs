@@ -85,7 +85,7 @@ For more options to control the final screenshot, like `clip`, `captureBeyondVie
 ## Advanced usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
 
 ### Capture a screenshot of an authenticated page
@@ -134,6 +134,11 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   }' \
   --output "advanced-screenshot.png"
 ```
+
+<Render
+  file="improve-blurry-screenshot-resolution"
+  product="browser-rendering"
+/>
 
 ### Customize CSS and embed custom JavaScript
 

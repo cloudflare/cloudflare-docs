@@ -31,23 +31,26 @@ The OS Version device posture attribute checks whether the version of a device's
 
 5.  (Optional) Configure additional OS-specific fields:
 
-        <Tabs> <TabItem label="macOS">
+		<Tabs>
+		<TabItem label="Windows">
+		To check that Windows devices have required security patches and features installed, include an Update Build Revision (UBR) number in the OS version check.
+		- **Update Build Revision**: Enter the Windows UBR you want devices to match (for example, `3803`). The UBR is the fourth part of the full Windows version number (for example, in `10.0.19045.3803`, the UBR is `3803`).
+		</TabItem>
 
-        - **Version extra**: Enter the macOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
+		<TabItem label="macOS">
+		- **Rapid Security Response Version**: Enter the macOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
+		</TabItem>
 
-        </TabItem> <TabItem label="iOS">
+		<TabItem label="Linux">
+		- **Distro name** and **Distro revision**: Enter the Linux distribution you want devices to match (for example, `ubuntu 22.04`). The distro version always matches with an equal-to operator (==) regardless of the **Operator** setting.
 
-        - **Version extra**: Enter the iOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
+		- **Patch Version**: Enter the [patch version](#linux) of the kernel. For example, if the kernel is `6.50.0-1007-oem`, enter `1007`.
+		</TabItem>
 
-        </TabItem>
-
-        <TabItem label="Linux">
-
-        - **Distro name** and **Distro revision**: Enter the Linux distribution you want devices to match (for example, `ubuntu 22.04`). The distro version always matches with an equal-to operator (==) regardless of the **Operator** setting.
-
-        - **Version extra**: Enter the [patch version](#linux) of the kernel. For example, if the kernel is `6.50.0-1007-oem`, enter `1007`.
-
-        </TabItem> </Tabs>
+		<TabItem label="iOS">
+		- **Rapid Security Response Version**: Enter the iOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
+		</TabItem>
+		</Tabs>
 
 6.  Select **Save**.
 
@@ -68,12 +71,29 @@ Operating systems display version numbers in different ways. This section covers
 
 ### Windows
 
+Windows version numbers consist of four parts: `Major.Minor.Build.UBR`. For example, `10.0.19045.3803` where:
+- `10.0` is the **Version** (Major.Minor)
+- `19045` is the **Build** number
+- `3803` is the **UBR** (Update Build Revision)
+
+To determine the Windows version on your device:
+
 1. Open a PowerShell window.
-2. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
+2. Get the **Version** (Major.Minor.Build):
 
    ```bash
    (Get-CimInstance Win32_OperatingSystem).version
    ```
+
+   This returns the version in the format `Major.Minor.Build` (for example, `10.0.19045`).
+
+3. Get the **UBR** (Update Build Revision):
+
+   ```bash
+   (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name UBR).UBR
+   ```
+
+   This returns the UBR value (for example, `3803`).
 
 ### Linux
 
@@ -92,7 +112,7 @@ The Linux OS version check reads the system kernel version.
 
 3. **Version** is the first three numbers of the output in SemVer format (`5.14.0`).
 
-4. **Version extra** is the first number after the SemVer (`25`).
+4. **Patch Version** is the first number after the SemVer (`25`).
 
 #### Distro version
 

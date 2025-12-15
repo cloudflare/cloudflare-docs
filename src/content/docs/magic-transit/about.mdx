@@ -11,15 +11,15 @@ head:
 
 import { GlossaryTooltip } from "~/components"
 
-Magic Transit is a network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
+Magic Transit is a network security and performance solution that offers Distributed Denial of Service (DDoS) protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
 
 Magic Transit delivers its connectivity, security, and performance benefits by serving as the front door to your IP network. This means it accepts IP <GlossaryTooltip term="data packet">packets</GlossaryTooltip> destined for your network, processes them, and then outputs them to your origin infrastructure.
 
 The Cloudflare network uses [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) to announce your company's IP address space, extending your network presence globally, and <GlossaryTooltip term="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">anycast</GlossaryTooltip> to ingest your traffic. Today, Cloudflare's anycast global network spans [hundreds of cities worldwide](https://www.cloudflare.com/network/).
 
-Once [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) hit Cloudflare's network, traffic is inspected for attacks, filtered, <GlossaryTooltip term="traffic steering">steered</GlossaryTooltip>, accelerated, and sent onward to your origin. Magic Transit connects to your origin infrastructure using anycast <GlossaryTooltip term="GRE tunnel">Generic Routing Encapsulation (GRE)</GlossaryTooltip> tunnels over the Internet or, with [Cloudflare Network Interconnect (CNI)](/network-interconnect/), via physical or virtual interconnect.
+Once [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) hit Cloudflare's network, Cloudflare inspects traffic for attacks, filters, <GlossaryTooltip term="traffic steering">steers</GlossaryTooltip>, accelerates, and sends it to your origin. Magic Transit connects to your origin infrastructure using anycast <GlossaryTooltip term="GRE tunnel">Generic Routing Encapsulation (GRE)</GlossaryTooltip> tunnels over the Internet or, with [Cloudflare Network Interconnect (CNI)](/network-interconnect/), through physical or virtual interconnect.
 
-Magic Transit users have two options for their implementation: ingress traffic or ingress and [egress traffic](/magic-transit/reference/egress/). Users with an egress implementation will need to set up <GlossaryTooltip term="policy-based routing">policy-based routing (PBR)</GlossaryTooltip> or ensure default routing on their end forwards traffic to Cloudflare via tunnels.
+Magic Transit users have two options for their implementation: ingress traffic or ingress and [egress traffic](/magic-transit/reference/egress/). Users with an egress implementation must set up <GlossaryTooltip term="policy-based routing">policy-based routing (PBR)</GlossaryTooltip> or ensure default routing on their end forwards traffic to Cloudflare through tunnels.
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ A --x B
 E --- B
 B-- Anycast <br> GRE tunnel ---C
 B-- Cloudflare <br> Network <br> Interconnect ---C
-C-- Egress via <br> Direct Server <br> Return --> D
+C-- Egress through <br> Direct Server <br> Return --> D
 D -- Ingress --> B
 
 style A stroke: red,fill: red,color: white

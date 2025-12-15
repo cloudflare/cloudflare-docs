@@ -1,21 +1,17 @@
 ---
 {}
-
 ---
 
-import { Render, Details, GlossaryTooltip } from "~/components"
+import { Render, Details, GlossaryTooltip } from "~/components";
 
-| On-ramp method                                                                             | Compatibility |
-| ------------------------------------------------------------------------------------------ | ------------- |
-| [WARP](/cloudflare-one/team-and-resources/devices/warp/)                                  | ✅            |
-| [PAC files](/cloudflare-one/team-and-resources/devices/agentless/pac-files/)              | ✅            |
-| [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                           | ✅            |
+| On-ramp method                                                                                      | Compatibility |
+| --------------------------------------------------------------------------------------------------- | ------------- |
+| [WARP](/cloudflare-one/team-and-resources/devices/warp/)                                            | ✅            |
+| [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)                        | ✅            |
+| [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                                      | ✅            |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ✅            |
-| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                     | 🚧[^1]        |
+| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                              | 🚧[^1]        |
 
 [^1]: Not compatible with [ECMP routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing). For hostname-based routing to work, DNS queries and the resulting network traffic must reach Cloudflare over the same Magic WAN tunnel. <br/>
 
-<Render
-	file="gateway/egress-selector-warp-version"
-	product="cloudflare-one"
-/>
+<Render file="gateway/egress-selector-warp-version" product="cloudflare-one" />

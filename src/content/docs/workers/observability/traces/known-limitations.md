@@ -34,7 +34,7 @@ Without trace context propagation, calls to separate Workers and to Durable Obje
 
 We are planning to add more detailed attributes on each span. You can find a complete list of what is already instrumented [here](/workers/observability/traces/spans-and-attributes).
 
-Your feedback on any missing information will help us prioritize additions and changes. Please comment on the [Workers tracing GitHub discussion](https://github.com/cloudflare/workers-sdk/discussions/TODO-GET-THE-LINK)
+Your feedback on any missing information will help us prioritize additions and changes. Please comment on the [Workers tracing GitHub discussion](https://github.com/cloudflare/workers-sdk/discussions/11062)
 if specific attributes would be helpful to use tracing effectively.
 
 ### Support for custom spans and attributes

@@ -7,14 +7,14 @@ import { AnchorHeading, Aside, GlossaryTooltip, Markdown, Render } from "~/compo
 
 { props.magicWord === "Magic Transit" && (
   <>
-	<p>Before you can begin using Magic Transit, be sure to complete the onboarding steps below. Cloudflare can significantly accelerate this timeline during active-attack scenarios.</p>
+	<p>Before you can begin using Magic Transit, complete the following onboarding steps. Cloudflare can significantly accelerate this timeline during active-attack scenarios.</p>
   </>
   )
 }
 
 ## Scope your configuration
 
-Magic Transit is not a self-serve product, and as such you need to start by [engaging with our team](https://www.cloudflare.com/network-services/products/magic-transit/) to assess the scope of your needs and a timeline to implement Magic Transit. This is where we assess specific requirements such as your prefix count and how fast you can go through the necessary steps to implement Magic Transit on your network.
+Magic Transit is not a self-serve product. Start by [engaging with our team](https://www.cloudflare.com/network-services/products/magic-transit/) to assess your needs and implementation timeline. This is where we assess specific requirements such as your prefix count and how fast you can go through the necessary steps to implement Magic Transit on your network.
 
 ## IPs
 
@@ -50,18 +50,18 @@ Magic Transit is not a self-serve product, and as such you need to start by [eng
 
 Magic Transit relies on <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels to transmit <GlossaryTooltip term="data packet">packets</GlossaryTooltip> from Cloudflare's global network to your origin network.
 
-The routers at your tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
+The routers at your tunnel endpoints must meet the following requirements for Magic Transit compatibility.
 
 - Support GRE tunnels (or IPsec if GRE is not available).
-- Allow configuration of at least one tunnel per Internet service provider (ISP).
+- Support at least one tunnel per Internet service provider (ISP).
 - Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.
 - Support asymmetric traffic flow (for ingress-only Magic Transit).
 
 ## Draft Letter of Agency
 
-Draft a [Letter of Agency (LOA)](/byoip/concepts/loa/) — sometimes referred to as a Letter of Authorization — that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf.
+Draft a [Letter of Agency (LOA)](/byoip/concepts/loa/) that identifies the prefixes you want to advertise and authorizes Cloudflare to announce them. Cloudflare's transit providers require the LOA so they can accept the routes Cloudflare advertises on your behalf.
 
-If you are an Internet service provider (ISP) and advertising <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> on behalf of a customer, an LOA is required for the ISP and for the customer.
+If you are an Internet service provider (ISP) and advertising <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> on behalf of a customer, you need an LOA for the ISP and for the customer.
 
 If you are using a [Cloudflare IP address](#ips), you do not need to submit an LOA.
 
@@ -81,9 +81,9 @@ If you are using a [Cloudflare IP](#ips), you do not need to verify your IRR ent
 
 ### Optional: RPKI check for prefix validation
 
-You can also use the Resource Public Key Infrastructure (RPKI) as an additional option to validate your prefixes. RPKI is a [security framework method](https://blog.cloudflare.com/rpki/) that associates a route with an autonomous system. It uses cryptography to validate the information before being passed onto the routers.
+You can also use the Resource Public Key Infrastructure (RPKI) as an additional option to validate your prefixes. RPKI is a [security framework method](https://blog.cloudflare.com/rpki/) that associates a route with an autonomous system. It uses cryptography to validate the information before being passed to the routers.
 
-If you operate a network (ISP, cloud provider, enterprise, and others.), using RPKI ensures that your IP prefixes are correctly recognized. This prevents service disruptions and protects your brand's reputation. Without RPKI, attackers could announce your IP space, misdirect your traffic, and potentially harm your business.
+If you operate a network (ISP, cloud provider, enterprise, and others), using RPKI ensures that routers correctly recognize your IP prefixes. This prevents service disruptions and protects your brand's reputation. Without RPKI, attackers could announce your IP space, misdirect your traffic, and potentially harm your business.
 
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
@@ -106,14 +106,14 @@ To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.clou
 <Render file="magic-transit/mtu-mss/mss-clamping-ipsec" product="networking-services" />
 
 :::caution[Important]
-Refer to your device documentation to check if it sets IPsec MSS clamping automatically. If that is not the case and you are using IPsec inside GRE, you have to set MSS clamp manually.
+Refer to your device documentation to check if it sets IPsec MSS clamping automatically. If not and you are using IPsec inside GRE, you must set MSS clamp manually.
 :::
 
 Refer to [Maximum transmission unit and maximum segment size](/magic-transit/reference/mtu-mss/) for more details.
 
 #### Clear Do not fragment (DF)
 
-If you are unable to set the MSS on your physical interfaces to a value lower than 1500 bytes, you can choose to clear the `do not fragment` bit in the IP header. When this option is enabled, Cloudflare fragments [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) greater than 1500 bytes, and the packets are reassembled on your infrastructure after decapsulation. In most environments, enabling this option does not have a significant impact on traffic throughput.
+If you are unable to set the MSS on your physical interfaces to a value lower than 1500 bytes, you can clear the `do not fragment` bit in the IP header. When this option is enabled, Cloudflare fragments [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) greater than 1500 bytes, and the packets are reassembled on your infrastructure after decapsulation. In most environments, enabling this option does not have a significant impact on traffic throughput.
 
 To enable this option for your network, contact your account team.
 
@@ -141,7 +141,7 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 		<li>Internet Routing Registry (IRR)</li>
 		<li><GlossaryTooltip term="maximum segment size (MSS)">Maximum segment size (MSS) configurations</GlossaryTooltip></li>
 	</ul>
-	<p>Configurations for Cloudflare global network are applied and take around one day to rollout.</p>
+	<p>Cloudflare applies configurations to the global network, which takes around one day to roll out.</p>
 
 	<AnchorHeading title="Advertise prefixes" depth={2} />
 	<Render file="magic-transit/advertise-prefixes"	product="networking-services" />
@@ -153,7 +153,7 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 { props.magicWord === "Learning Path" && (
   <>
 	<AnchorHeading title="BGP for Magic Transit prefix advertisement control (optional)" depth={2} />
-	<p>If you want to use <a href="/magic-transit/how-to/advertise-prefixes/#border-gateway-protocol-bgp-control-for-advertisements-optional">BGP for prefix advertisement control</a> then you need to let the account team know the IPs and ASN for your customer premises equipment (CPE) to use for the BGP peerings. You should allow around five working days for Cloudflare to add this to our Route Reflectors.</p>
+	<p>If you want to use <a href="/magic-transit/how-to/advertise-prefixes/#bgp-prefix-advertisement-control-methods">BGP for prefix advertisement control</a>, notify your account team of the IPs and ASN for your customer premises equipment (CPE) to use for the BGP peerings. You should allow around five working days for Cloudflare to add this to our Route Reflectors.</p>
   </>
   )
 }
