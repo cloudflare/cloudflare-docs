@@ -27,12 +27,15 @@ If your platform needs to run code you don't write, isolate customer data, or pr
 
 ![Figure 1: Cloudflare for Platforms Architecture Diagram](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-2.svg)
 
+### Platform Capabilities
+
 You can think of Cloudflare for Platforms as the exact same products and functionality that Cloudflare offers its own customers, structured so that you can offer it to your own customers, embedded within your own product. This includes:
 
-- **Isolation and multitenancy** — each of your customers runs code in their own Worker — a [secure and isolated sandbox](/workers/reference/how-workers-works/)
-- **Programmable routing, ingress, egress and limits** — you write code that dispatches requests to your customers' code, and can control [ingress](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/), [egress](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) and set [per-customer limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/)
-- **Databases and storage** — you can provide [databases, object storage and more](/workers/runtime-apis/bindings/) to your customers as APIs they can call directly, without API tokens, keys, or external dependencies
 - **Custom Domains and Subdomains** — you [call an API](/cloudflare-for-platforms/cloudflare-for-saas/) to create custom subdomains or configure custom domains for each of your customers
+- **Isolation and multitenancy** — each of your customers runs code in their own Worker — a [secure and isolated sandbox](/workers/reference/how-workers-works/)
+- **Programmable routing, ingress, egress and limits** — you write code that dispatches requests to your customers' code, and can control [ingress](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/), [egress](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) and set [per-customer limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/)
+- **Databases and storage** — you can provide [databases, object storage and more](/workers/runtime-apis/bindings/) to your customers as APIs they can call directly, without API tokens, keys, or external dependencies
+- **Infinite scale** — Deploy millions of applications, domains, and resources (e.g. [databases](/d1/)) without managing infrastructure. Cloudflare automatically scales with your platform.
 
 ## Ready to get started?
 
