@@ -11,13 +11,11 @@ description: Storage and database options available on Cloudflare's developer pl
 
 import { Render, Details } from "~/components";
 
-Modern applications require multiple types of storage to handle different data patterns and user needs. This guide helps you choose the right Cloudflare storage products based on your application architecture and requirements.
-
-Start with your use case, get a clear recommendation, and understand why it's the best choice.
+This guide helps you choose the right storage products for your application. Most applications use multiple storage types to handle different data patterns effectively.
 
 ## Storage for common architectures
 
-Real applications combine multiple storage products. Here are proven patterns for common application types:
+Here are proven storage patterns for common application types:
 
 ### SaaS application
 **Stack**: D1 + Workers KV + R2
@@ -32,7 +30,7 @@ Real applications combine multiple storage products. Here are proven patterns fo
 **Stack**: Hyperdrive + Workers KV + R2
 
 - **Hyperdrive** - Product catalog, inventory, orders, customer data (connects to existing Postgres/MySQL)
-- **Workers KV** - Product recommendations, A/B test configurations, cached pricing
+- **Workers KV** - Product recommendations, A/B test configurations, feature flags
 - **R2** - Product images, user-generated content, order documents
 
 **Why this works**: Hyperdrive accelerates your existing e-commerce database globally. KV caches frequently-accessed data near users. R2 delivers media assets without egress fees.
@@ -77,18 +75,18 @@ Hyperdrive when:
 ### Configuration and feature flags
 **Use Workers KV**
 
-Perfect for:
+Use for:
 - Application settings read on every request
 - Feature flags and A/B test configurations
 - API keys and external service credentials
-- Cached data that changes infrequently
+- Data that changes infrequently
 
 **Why**: KV's global edge cache means config data is available in microseconds, and you stay within the 1 write/second per key limit.
 
 ### File and media storage
 **Use R2**
 
-Essential for:
+Use for:
 - User uploads (images, documents, videos)
 - Generated reports and exports
 - Backup storage
@@ -99,7 +97,7 @@ Essential for:
 ### Background job processing
 **Use Queues**
 
-Critical for:
+Use for:
 - Email sending and notifications
 - Data processing and transformations  
 - Third-party API calls that can be deferred
@@ -160,7 +158,7 @@ Use this decision framework to select the right product for your specific need:
 ## When to use each product
 
 ### Workers KV - Configuration and caching
-**Best for**: Data read thousands of times but written rarely
+**Use when**: Data is read thousands of times but written rarely
 
 Use Workers KV when you need:
 - **Sub-10ms global reads** - Config data, feature flags, A/B test settings
@@ -171,7 +169,7 @@ Use Workers KV when you need:
 **Start here**: [Create your first KV namespace](/kv/get-started/)
 
 ### R2 - File and media storage  
-**Best for**: Any files larger than a few kilobytes
+**Use when**: Storing files larger than a few kilobytes
 
 Use R2 when you need:
 - **Cost-effective storage** - No egress fees unlike other cloud providers
@@ -182,7 +180,7 @@ Use R2 when you need:
 **Start here**: [Upload your first object to R2](/r2/get-started/)
 
 ### D1 - Serverless SQL database
-**Best for**: New applications with relational data under 10GB
+**Use when**: Building new applications with relational data under 10GB
 
 Use D1 when you need:
 - **Zero-maintenance SQL** - No connection pooling or server management  
@@ -193,7 +191,7 @@ Use D1 when you need:
 **Start here**: [Create your first D1 database](/d1/get-started/)
 
 ### Hyperdrive - Accelerate existing databases
-**Best for**: Existing Postgres or MySQL databases over 10GB
+**Use when**: You have existing Postgres or MySQL databases over 10GB
 
 Use Hyperdrive when you need:
 - **Existing database compatibility** - Keep using your current database
@@ -204,7 +202,7 @@ Use Hyperdrive when you need:
 **Start here**: [Connect Hyperdrive to your database](/hyperdrive/get-started/)
 
 ### Durable Objects - Stateful coordination
-**Best for**: Real-time features requiring strong consistency  
+**Use when**: Building real-time features that require strong consistency  
 
 Use Durable Objects when you need:
 - **Real-time coordination** - Chat, collaboration, multiplayer games
@@ -215,7 +213,7 @@ Use Durable Objects when you need:
 **Start here**: [Build your first Durable Object](/durable-objects/get-started/)
 
 ### Queues - Background job processing
-**Best for**: Work that can be done asynchronously
+**Use when**: You have work that can be done asynchronously
 
 Use Queues when you need:
 - **Reliable message delivery** - At-least-once guarantees with retries
