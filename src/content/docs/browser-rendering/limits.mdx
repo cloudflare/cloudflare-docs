@@ -82,6 +82,21 @@ If you need sessions to remain open longer, keep them active by sending a comman
 
 If you recently upgraded to the [Workers Paid plan](/workers/platform/pricing/) but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.
 
+### Why is my browser usage higher than expected?
+
+If you are hitting the daily limit or seeing higher usage than expected, the most common cause is browser sessions that are not being closed properly. When a browser session is not explicitly closed with `browser.close()`, it remains open and continues to consume browser time until it times out (60 seconds by default, or up to 10 minutes if you use the `keep_alive` option).
+
+To minimize usage:
+- Always call `browser.close()` when you are finished with a browser session.
+- Wrap your browser code in a `try/finally` block to ensure `browser.close()` is called even if an error occurs.
+- Use [`puppeteer.history()`](/browser-rendering/puppeteer/#list-recent-sessions) or [`playwright.history()`](/browser-rendering/playwright/#list-recent-sessions) to review recent sessions and identify any that closed due to `BrowserIdle` instead of `NormalClosure`. Sessions that close due to idle timeout indicate the browser was not closed explicitly.
+
+You can monitor your usage and view session close reasons in the Cloudflare dashboard on the **Browser Rendering** page:
+
+<DashButton url="/?to=/:account/workers/browser-rendering" />
+
+Refer to [Browser close reasons](/browser-rendering/reference/browser-close-reasons/) for more information.
+
 ### Error: `429 Too many requests`
 
 When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too many requests`.
@@ -148,4 +163,3 @@ You can [increase your limits](/browser-rendering/limits/#workers-paid) by upgra
     <DashButton url="/?to=/:account/workers/plans" />
 
 If you recently upgraded but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.
-
