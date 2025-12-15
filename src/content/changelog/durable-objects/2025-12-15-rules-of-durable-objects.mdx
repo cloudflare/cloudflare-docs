@@ -9,14 +9,14 @@ date: 2025-12-15
 
 import { TypeScriptExample } from "~/components";
 
-A new [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) guide is now available, providing opinionated best practices for building effective Durable Objects applications. This guide covers design patterns, storage strategies, and common anti-patterns to avoid.
+A new [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) guide is now available, providing opinionated best practices for building effective Durable Objects applications. This guide covers design patterns, storage strategies, concurrency, and common anti-patterns to avoid.
 
 Key guidance includes:
 
 - **Design around your "atom" of coordination** — Create one Durable Object per logical unit (chat room, game session, user) instead of a global singleton that becomes a bottleneck.
 - **Use SQLite storage with RPC methods** — SQLite-backed Durable Objects with typed RPC methods provide the best developer experience and performance.
+- **Understand input and output gates** — Learn how Cloudflare's runtime prevents data races by default, how write coalescing works, and when to use `blockConcurrencyWhile()`.
 - **Leverage Hibernatable WebSockets** — Reduce costs for real-time applications by allowing Durable Objects to sleep while maintaining WebSocket connections.
-- **Handle errors with exception boundaries** — Uncaught exceptions can leave your Durable Object in an unknown state. Wrap risky operations and implement retry logic for transient failures.
 
 The [testing documentation](/durable-objects/examples/testing-with-durable-objects/) has also been updated with modern patterns using `@cloudflare/vitest-pool-workers`, including examples for testing SQLite storage, alarms, and direct instance access:
 
@@ -26,8 +26,7 @@ import { env, runDurableObjectAlarm } from "cloudflare:test";
 import { it, expect } from "vitest";
 
 it("can test Durable Objects with isolated storage", async () => {
-	const id = env.COUNTER.idFromName("test");
-	const stub = env.COUNTER.get(id);
+	const stub = env.COUNTER.getByName("test");
 
 	// Call RPC methods directly on the stub
 	await stub.increment();
