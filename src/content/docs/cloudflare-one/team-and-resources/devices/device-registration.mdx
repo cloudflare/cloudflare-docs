@@ -47,7 +47,7 @@ A deleted device registration is permanently removed from the account and no lon
 
 :::caution
 
-Deleting or revoking a device without [updating your device enrollment policies or removing the user]((/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication)) from your Identity Provider (IdP) is not permanent. If the user can successfully re-authenticate (re-enroll), a new device registration will be automatically created or the revoked status will be cleared.
+Deleting or revoking a device without [updating your device enrollment policies or removing the user]((/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication)) from your Identity Provider (IdP) is not permanent. If the user can successfully re-authenticate, a new device registration will be automatically created or the revoked device registration will be reactivated.
 
 :::
 
@@ -88,7 +88,7 @@ To delete a device:
 
 ## Revoke a device registration
 
-Revoking a registration invalidates its associated public key, disallowing the specific registration from connecting to Cloudflare's network.
+Revoking a device registration invalidates its associated public key which disallows the specific device registration from connecting to Cloudflare's network.
 
 :::caution[Automatic unrevocation]
 
@@ -124,9 +124,7 @@ Seat management (billing) and access management (offboarding) are separate actio
 Deleting or revoking a registration will not be permanent if the user can re-authenticate. To prevent a user from re-authenticating and creating new device registrations, you must remove them from your [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) or from your Identity Provider (IdP).
 
 * If your device enrollment policies allow a broad domain (for example, `@company.com`), remove the user from your IdP. This prevents the user from authenticating through Access, effectively blocking them from enrolling devices.
-* If your device enrollment policies list specific user emails (for example, `sally@company.com`), you must remove that specific email from the policy. Additionally, you can add an explicit Exclude rule for that user to the policy.
-
-Review and remove any service tokens associated with the user or their devices, if applicable.
+* If your device enrollment policies list specific user emails (for example, `sally@company.com`), you must remove that specific email from your device enrollment policies. Additionally, you can add an explicit Exclude rule for that user to the policy.
 
 ### Seat management (billing)
 
