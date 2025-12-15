@@ -1,0 +1,45 @@
+---
+title: Terraform v5.14.0 now available
+description: Terraform v5.14.0 stabilizes a number of resources and known issues
+products:
+  - fundamentals
+date: 2025-12-05
+---
+
+Earlier this year, we announced the launch of the new Terraform v5 Provider. We are aware of the high number of issues reported by the Cloudflare community related to the v5 release. We have committed to releasing improvements on a [2-3 week cadence](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5774) to ensure its stability and reliability, including the v5.14 release. We have also pivoted from an [issue-to-issue approach to a resource-per-resource approach](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6237) - we will be focusing on specific resources to not only stabilize the resource but also ensure it is migration-friendly for those migrating from v4 to v5. 
+
+Thank you for continuing to raise issues. They make our provider stronger and help us build products that reflect your needs.
+
+This release includes bug fixes, the stabilization of even more popular resources, and more.
+
+### Deprecation Notice
+Resource affected: `api_shield_discovery_operation` 
+
+Cloudflare continuously discovers and updates API endpoints and web assets of your web applications. To improve the maintainability of these dynamic resources, we are working on reducing the need to actively engage with discovered operations.
+
+The corresponding public API endpoint of [discovered operations](https://developers.cloudflare.com/api/resources/api_gateway/subresources/discovery/subresources/operations/) is not affected and will continue to be supported.
+
+### Features
+
+* **pages_project:** Add v4->v5 migration tests ([#6506](https://github.com/cloudflare/terraform-provider-cloudflare/pull/6506))
+
+### Bug Fixes
+
+* **account_members:** Making member policies a set ([#6488](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6488)) 
+* **pages_project:** Ensuring non empty refresh plans ([#6515](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6515))
+* **r2** Improve sweeper ([#6512](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6512)) 
+* **workers_kv:** Ignore value import state for verify ([#6521](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6521)) 
+* **workers_script:** No longer treating the migrations attribute as WriteOnly ([#6489](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6489)) 
+* **workers_script:** Resolve resource drift when worker has unmanaged secret ([#6504](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6504)) 
+* **zero_trust_device_posture_rule:** Preserve input.version and other fields ([#6500](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6500)) & ([#6503](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6503)) 
+* **zero_trust_dlp_custom_profile:** Add sweepers for dlp_custom_profile 
+* **zone_subscription|account_subscription:** Add partners_ent as valid enum for rate_plan.id ([#6505](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6505))
+* **zone:** ensure datasource model schema parity ([#6487](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6487)) 
+* **subscription:** Update import signature to accept account_id/subscription_id in order to import account subscription ([#6510](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6510)) 
+
+### Upgrading
+We suggest holding off on migration to v5 while we work on stabilization. This help will you avoid any blocking issues while the Terraform resources are actively being [stabilized](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6237). We will be releasing a new migration tool in March 2026 to help support v4 to v5 transitions for our most popular resources.
+
+### For more info
+- [Terraform Provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
+- [Documentation on using Terraform with Cloudflare](https://developers.cloudflare.com/terraform/)
