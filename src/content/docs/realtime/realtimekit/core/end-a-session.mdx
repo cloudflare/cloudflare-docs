@@ -1,0 +1,178 @@
+---
+pcx_content_type: how-to
+title: End a session
+slug: realtime/realtimekit/core/end-a-session
+sidebar:
+  order: 6
+---
+
+import { Render } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+To end the current [session](/realtime/realtimekit/concepts/meeting/#session/) for all participants, remove all participants using `kickAll()`. This stops any ongoing recording for that session and sets the session status to `ENDED`.
+
+Ending a session is different from leaving a meeting. Leaving disconnects only the current participant. The session remains active if other participants are still present.
+
+## Prerequisites
+
+- Ensure your participant's preset has the **Kick Participants** (`kick_participant`) host permission enabled.
+
+## Steps
+
+<RTKSDKSelector />
+
+1.  Check that the local participant has permission to remove participants.
+
+    <RTKCodeSnippet id="web-react">
+
+    ```ts
+    const canEndSession = meeting.self.permissions.kickParticipant === true;
+
+    if (!canEndSession) {
+    	// Disable the "End meeting/session" control in your UI.
+    	// You can also show a message to explain why the action is not available.
+    }
+    ```
+
+    </RTKCodeSnippet>
+
+    <RTKCodeSnippet id="web-web-components">
+
+    ```ts
+    const canEndSession = meeting.self.permissions.kickParticipant === true;
+
+    if (!canEndSession) {
+    	// Disable the "End meeting/session" control in your UI.
+    	// You can also show a message to explain why the action is not available.
+    }
+    ```
+
+    </RTKCodeSnippet>
+
+    <RTKCodeSnippet id="web-angular">
+
+    ```ts
+    const canEndSession = meeting.self.permissions.kickParticipant === true;
+
+    if (!canEndSession) {
+    	// Disable the "End meeting/session" control in your UI.
+    	// You can also show a message to explain why the action is not available.
+    }
+    ```
+
+    </RTKCodeSnippet>
+
+2.  End the session by removing all participants.
+
+    <RTKCodeSnippet id="web-react">
+
+    If the participant does not have the required permission, `kickAll()` throws a ClientError with error code `1201`.
+
+    ```ts
+    try {
+    	await meeting.participants.kickAll();
+    } catch (err) {
+    	if (err?.code === 1201) {
+    		// The participant does not have permission to end the session.
+    		// Update your UI to indicate that the action is not allowed.
+    		return;
+    	}
+    	throw err;
+    }
+    ```
+
+    </RTKCodeSnippet>
+
+    <RTKCodeSnippet id="web-web-components">
+
+    If the participant does not have the required permission, `kickAll()` throws a ClientError with error code `1201`.
+
+    ```ts
+    try {
+    	await meeting.participants.kickAll();
+    } catch (err) {
+    	if (err?.code === 1201) {
+    		// The participant does not have permission to end the session.
+    		// Update your UI to indicate that the action is not allowed.
+    		return;
+    	}
+    	throw err;
+    }
+    ```
+
+    </RTKCodeSnippet>
+
+    <RTKCodeSnippet id="web-angular">
+
+    If the participant does not have the required permission, `kickAll()` throws a ClientError with error code `1201`.
+
+    ```ts
+    try {
+    	await meeting.participants.kickAll();
+    } catch (err) {
+    	if (err?.code === 1201) {
+    		// The participant does not have permission to end the session.
+    		// Update your UI to indicate that the action is not allowed.
+    		return;
+    	}
+    	throw err;
+    }
+    ```
+
+    </RTKCodeSnippet>
+
+3.  Listen for the session end event.
+
+    <RTKCodeSnippet id="web-react">
+
+    When the session ends, all participants leave the session. The SDK emits a `roomLeft` event with `state` set to `ended`.
+
+    ```ts
+    meeting.self.on("roomLeft", ({ state }) => {
+    	if (state === "ended") {
+    		// Update your UI to show that the meeting session has ended.
+    	}
+    });
+    ```
+
+    </RTKCodeSnippet>
+
+    <RTKCodeSnippet id="web-web-components">
+
+    When the session ends, all participants leave the session. The SDK emits a `roomLeft` event with `state` set to `ended`.
+
+    ```ts
+    meeting.self.on("roomLeft", ({ state }) => {
+    	if (state === "ended") {
+    		// Update your UI to show that the meeting session has ended.
+    	}
+    });
+    ```
+
+    </RTKCodeSnippet>
+
+    <RTKCodeSnippet id="web-angular">
+
+    When the session ends, all participants leave the session. The SDK emits a `roomLeft` event with `state` set to `ended`.
+
+    ```ts
+    meeting.self.on("roomLeft", ({ state }) => {
+    	if (state === "ended") {
+    		// Update your UI to show that the meeting session has ended.
+    	}
+    });
+    ```
+
+    </RTKCodeSnippet>
+
+You can also end a session from your backend by removing all participants using the [Kick all participants](/api/resources/realtime_kit/subresources/active-session/methods/kick_all_participants/) API.
+
+<Render file="realtimekit/end-a-session-backend" product="realtime" />
+
+<Render file="realtimekit/disable-a-meeting" product="realtime" />
+
+## Next steps
+
+- Review how presets control permissions in [Preset](/realtime/realtimekit/concepts/preset/).
+- Review the possible values of the local participant room state in [Local Participant](/realtime/realtimekit/core/local-participant/#state-properties/).
