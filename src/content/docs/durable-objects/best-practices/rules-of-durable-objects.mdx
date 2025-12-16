@@ -970,9 +970,66 @@ export default {
 ```
 </TypeScriptExample>
 
+### Use promise pipelining to guarantee initialization
+
+You can use [promise pipelining](/workers/runtime-apis/rpc/#promise-pipelining) to make multiple calls to a Durable Object in a single round trip by omitting `await` on intermediate RPC calls. This is useful for ensuring initialization runs before subsequent methods without the latency cost of separate requests. A common pattern is to create a helper function that retrieves a stub and pipelines an `init()` call. The Durable Object processes the RPC calls in order, guaranteeing initialization completes first.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+export class ChatRoom extends DurableObject<Env> {
+	private roomId: string | null = null;
+
+    // Static helper that pipelines initialization
+    static getChatRoom(env: Env, roomId: string) {
+    	const id = env.CHAT_ROOM.idFromName(roomId);
+    	const stub = env.CHAT_ROOM.get(id);
+    	// No await — pipelines init() with subsequent calls
+    	stub.init(roomId);
+    	return stub;
+    }
+
+    async init(roomId: string) {
+    	const existing = await this.ctx.storage.get("roomId");
+    	if (existing) return;
+
+    	await this.ctx.storage.put("roomId", roomId);
+    	this.roomId = roomId;
+    }
+
+    async sendMessage(userId: string, content: string) {
+    	// Chat room logic
+    }
+
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const roomId = "lobby";
+
+    	// init() is pipelined
+    	const room = ChatRoom.getById(env, roomId);
+    	// await this promise to send all of the chained RPC calls in a single round trip
+    	await room.sendMessage("user-123", "Hello!");
+
+    	return new Response("Message sent");
+    },
+
+};
+
+````
+</TypeScriptExample>
+
 ### Always `await` RPC calls
 
 When calling methods on a Durable Object stub, always use `await`. Unawaited calls create dangling promises, causing errors to be swallowed and return values to be lost.
+
+The exception is [promise pipelining](#use-promise-pipelining-to-guarantee-initialization), where you intentionally omit `await` on an intermediate call to batch multiple RPC calls into a single round trip. In that case, you must still `await` the final call in the chain.
 
 <TypeScriptExample filename="index.ts">
 ```ts
