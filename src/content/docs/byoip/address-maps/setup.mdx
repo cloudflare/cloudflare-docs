@@ -32,7 +32,24 @@ If you are using BYOIP, refer to the following steps. If you have [static IPs](/
 
 </TabItem> <TabItem label="API">
 
-(placeholder)
+<APIRequest
+  path="/accounts/{account_id}/addressing/address_maps"
+  method="POST"
+  json={{
+    description: "Example address map",
+    enabled: true,
+    ips: [
+      "203.0.113.1",
+      "203.0.113.2"
+    ],
+    memberships: [
+      {
+        identifier: "<ZONE_ID>",
+        kind: "zone",
+      },
+    ],
+  }}
+/>
 
 </TabItem> </Tabs>
 
