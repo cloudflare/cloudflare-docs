@@ -27,7 +27,15 @@ jobs:
             node_modules/.astro/assets
           key: static
 
-      - run: |
+      - name: Check for CRLF line endings
+        run: |
+          if git grep -Il $'\r' -- '*.mdx' '*.md' '*.json' '*.yml' '*.yaml' '*.ts' '*.js' '*.astro' '*.css'; then
+            echo "::error::CRLF line endings detected. Configure your editor to use LF line endings (this repo has an .editorconfig file that most editors respect automatically)."
+            exit 1
+          fi
+
+      - name: Check for invalid file extensions
+        run: |
           FILES=$(
             find src/content \
               -type f \
