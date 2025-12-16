@@ -251,7 +251,7 @@ These parameters control the size of each upload batch — not how quickly data 
 | --- | --- | --- |
 | `max_upload_bytes` | Maximum uncompressed file size of a batch of logs. | Varies by destination |
 | `max_upload_records` | Maximum number of log lines per batch. | 100,000 |
-| `max_upload_interval_seconds` | Maximum interval between log batches. | 30 |
+| `max_upload_interval_seconds` | Maximum time-span of log data per batch (used during catch-up scenarios). | Varies by destination |
 
 :::note
 These settings influence upload size, not delivery latency. Logpush processes data approximately once per minute, regardless of these parameter values. Adjusting these settings results in smaller or larger uploads per batch, which can help you avoid overloading destinations that have memory or request-size constraints.
