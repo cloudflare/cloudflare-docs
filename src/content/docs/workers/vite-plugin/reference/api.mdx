@@ -93,7 +93,7 @@ Auxiliary Workers require a `configPath`, a `config` option, or both.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
-- `config` <Type text='Partial<WorkerConfig> | ((config: WorkerConfig) => Partial<WorkerConfig> | void)' /> <MetaInfo text='optional' />
+- `config` <Type text='Partial<WorkerConfig> | ((config: WorkerConfig, entryWorkerConfig: ResolvedAssetsOnlyConfig) => Partial<WorkerConfig> | void)' /> <MetaInfo text='optional' />
 
   Customize or override Worker configuration programmatically.
   When used without `configPath`, this allows defining auxiliary Workers entirely in code.
