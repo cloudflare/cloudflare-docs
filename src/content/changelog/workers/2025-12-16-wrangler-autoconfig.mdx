@@ -12,7 +12,7 @@ Previously, if you wanted to deploy an application using a popular web framework
 
 Now `wrangler deploy` does this for you. Starting with Wrangler 4.55, you can use `npx wrangler deploy --x-autoconfig` in the directory of any web application using one of the supported frameworks. Wrangler will then proceed to configure and deploy it to your Cloudflare account.
 
-You can also configure your application without deploying it by the new `npx wrangler setup` command. This enables you to easily review what changes we are making so your application is ready for Cloudflare Workers.
+You can also configure your application without deploying it by using the new `npx wrangler setup` command. This enables you to easily review what changes we are making so your application is ready for Cloudflare Workers.
 
 The following application frameworks are supported starting today:
 
@@ -29,4 +29,4 @@ The following application frameworks are supported starting today:
 
 Automatic configuration also supports static sites by automatically detecting the assets directory. From a single index.html file to the output of a generator like Jekyll or Hugo, you can just run `npx wrangler deploy --x-autoconfig` to upload to Cloudflare.
 
-We're really excited to bring you automatic configuration so you can do more with Workers. Please let us know if you run into challenges using this experimentally. We’ve opened a GitHub discussion and would love to hear your feedback.
+We're really excited to bring you automatic configuration so you can do more with Workers. Please let us know if you run into challenges using this experimentally. We’ve opened a [GitHub discussion](https://github.com/cloudflare/workers-sdk/discussions/11667) and would love to hear your feedback.
