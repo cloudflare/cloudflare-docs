@@ -99,14 +99,14 @@ For Zero Trust datasets, users or tokens must have both of the following permiss
 
 ### How can I estimate the total volume before setting up a Logpush job?
 
-The volume pushed to your SIEM will depend on your traffic and the size of an average request.
+The volume pushed to your SIEM will depend on your traffic, selected fields, and compression.
 A quick sizing for an [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) dataset could be:
 
-* ~0.25 KB per request (compressed)
-* 1M requests/day → ~250 MB/day
-* 30M requests/month → ~7.5 GB/month
+* ~100–250 bytes per request (compressed, depending on fields selected)
+* 1M requests/day → ~100–250 MB/day
+* 30M requests/month → ~3–7.5 GB/month
 
-Rough daily storage by traffic
+Rough daily storage by traffic:
 
 * 100k req/day → ~25–50 MB/day
 * 1M req/day → ~250–500 MB/day
@@ -114,3 +114,4 @@ Rough daily storage by traffic
 * 100M req/day → ~25–50 GB/day
 
 Range reflects field selection, compression, and whether you include extra fields or [custom fields](/logs/logpush/logpush-job/custom-fields/). Other datasets (Firewall, Workers, Load Balancing) add volume separately.
+For precise estimates, you can [sample your logs via Logpull](/logs/logpull/additional-details/#estimating-daily-data-volume) using a 1-hour sample.
