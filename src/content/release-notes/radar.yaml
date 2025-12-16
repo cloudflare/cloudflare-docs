@@ -4,8 +4,9 @@ productName: Radar
 productLink: "/radar/"
 entries:
   - publish_date: "2025-11-26"
-    title: New client type dimension in Web Crawlers
+    title: New client type dimension in Web Crawlers and Mixed Purpose entry
     description: |-
+      * Added new Mixed Purpose entry to the `crawl_purpose` dimension of the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API, which as of this release includes Googlebot and Bingbot.
       * Added new dimension `client_type` to the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API.
   - publish_date: "2025-11-24"
     title: Add HTTP origins insights
