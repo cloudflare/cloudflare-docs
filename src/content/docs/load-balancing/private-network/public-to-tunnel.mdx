@@ -14,7 +14,7 @@ Consider the following steps to learn how to configure Private Network Load Bala
 The specific configuration steps can vary depending on your infrastructure and services you are looking to connect. If you are not familiar with Cloudflare Tunnel, the pages linked on each step provide more guidance.
 
 1. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel) to connect your data center to Cloudflare.
-2. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
+2. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous step.
 
 <Tabs> <TabItem label="Dashboard">
 
@@ -47,6 +47,7 @@ cloudflared tunnel route ip add --vnet <VNET_NAME> <IP_RANGE> <TUNNEL_NAME>
 ```
 
 </TabItem> </Tabs>
+
 ## 2. Configure Cloudflare Load Balancing
 
 Once you have Cloudflare tunnels with associated virtual networks (VNets) configured, the VNets can be specified for each endpoint when you [create or edit a pool](/load-balancing/pools/create-pool/#create-a-pool). This will enable Cloudflare load balancers to use the correct tunnel and securely reach the private IP endpoints.
