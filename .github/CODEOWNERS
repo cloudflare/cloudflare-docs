@@ -117,7 +117,6 @@
 /src/content/docs/kv/ @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
 /src/content/release-notes/kv.yaml @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/kv/ @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
-/src/content/docs/pub-sub/ @elithrar @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/queues/ @elithrar @jonesphillip @harshil1712 @mia303 @cloudflare/pcx-technical-writing
 /src/content/release-notes/queues.yaml @elithrar @jonesphillip @cloudflare/pcx-technical-writing
 /src/content/docs/r2/ @oxyjun @elithrar @jonesphillip @aninibread @harshil1712 @cloudflare/workers-docs @cloudflare/pcx-technical-writing

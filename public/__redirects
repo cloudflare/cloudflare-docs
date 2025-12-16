@@ -383,6 +383,8 @@
 
 # Constellation
 /constellation/ /workers-ai/ 301
+# Pub/Sub (removed product)
+/pub-sub/* / 301
 # Containers
 /containers/image-management/ /containers/platform-details/image-management/ 301
 /containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
