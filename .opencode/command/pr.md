@@ -13,9 +13,9 @@ $ARGUMENTS
 ## Instructions
 
 1. **Gather context**: Run these commands to understand the changes:
-   - `git log --oneline main..HEAD` to see commits on this branch
-   - `git diff main...HEAD --stat` to see files changed
-   - `git diff main...HEAD` to see the actual changes
+   - `git log --oneline production..HEAD` to see commits on this branch
+   - `git diff production...HEAD --stat` to see files changed
+   - `git diff production...HEAD` to see the actual changes
 
 2. **Identify the product**: Determine which Cloudflare product(s) the changes relate to. Common products include:
    - Workers, KV, R2, D1, Queues, Durable Objects (DO), Hyperdrive, Containers, Pipelines
