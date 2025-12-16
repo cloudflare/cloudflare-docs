@@ -37,6 +37,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`r2 sql`](#r2-sql) - Query tables in R2 Data Catalog with R2 SQL.
+- [`setup`](#setup) - Configure your framework for Cloudflare automatically.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret bulk`](#secret-bulk) - Manage multiple secret variables for a Worker.
 - [`secrets-store secret`](#secrets-store-secret) - Manage account secrets within a secrets store.
@@ -139,7 +140,7 @@ Interact with Cloudflare's Container Platform.
 
 Interact with Cloudflare's D1 service.
 
-<WranglerNamespace namespace="d1" headingLevel={3}/>
+<WranglerNamespace namespace="d1" headingLevel={3} />
 
 ---
 
@@ -376,13 +377,15 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 
 ---
 
+<WranglerCommand command="setup" headingLevel={2} />
+
 ## `secret`
 
 Manage the secret variables for a Worker.
 
 This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](/workers/wrangler/commands/#versions-secret-put) commands.
 
-<WranglerCommand command="secret put" headingLevel={3}/>
+<WranglerCommand command="secret put" headingLevel={3} />
 
 When running this command, you will be prompted to input the secret's value:
 
@@ -402,9 +405,9 @@ The `put` command can also receive piped input. For example:
 echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangler secret put PRIVATE_KEY
 ```
 
-<WranglerCommand command="secret delete" headingLevel={3}/>
+<WranglerCommand command="secret delete" headingLevel={3} />
 
-<WranglerCommand command="secret list" headingLevel={3}/>
+<WranglerCommand command="secret list" headingLevel={3} />
 
 The following is an example of listing the secrets for the current Worker.
 
@@ -423,7 +426,7 @@ npx wrangler secret list
 
 ---
 
-<WranglerCommand command="secret bulk" headingLevel={3}/>
+<WranglerCommand command="secret bulk" headingLevel={3} />
 
 The following is an example of uploading secrets from a JSON file redirected to `stdin`. When complete, the output summary will show the number of secrets uploaded and the number of secrets that failed to upload.
 
@@ -458,7 +461,7 @@ With the release of [Secrets Store](/secrets-store/) in open beta, you can use t
 In order to interact with Secrets Store in production, you should append `--remote` to your command. Without it, your command will default to [local development mode](/workers/development-testing/).
 :::
 
-<WranglerCommand command="secrets-store secret create" headingLevel={3}/>
+<WranglerCommand command="secrets-store secret create" headingLevel={3} />
 
 The following is an example of using the `create` command to create an account-level secret.
 
@@ -474,11 +477,11 @@ npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name
 ✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
 ```
 
-<WranglerCommand command="secrets-store secret update" headingLevel={3}/>
+<WranglerCommand command="secrets-store secret update" headingLevel={3} />
 
-<WranglerCommand command="secrets-store secret duplicate" headingLevel={3}/>
+<WranglerCommand command="secrets-store secret duplicate" headingLevel={3} />
 
-<WranglerCommand command="secrets-store secret get" headingLevel={3}/>
+<WranglerCommand command="secrets-store secret get" headingLevel={3} />
 
 The following is an example with the expected output:
 
@@ -494,9 +497,9 @@ npx wrangler secrets-store secret get 8f7a1cdced6342c18d223ece462fd88d --secret-
 | ServiceA_key-1          | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
 ```
 
-<WranglerCommand command="secrets-store secret delete" headingLevel={3}/>
+<WranglerCommand command="secrets-store secret delete" headingLevel={3} />
 
-<WranglerCommand command="secrets-store secret list" headingLevel={3}/>
+<WranglerCommand command="secrets-store secret list" headingLevel={3} />
 
 ## `secrets-store store`
 
@@ -506,7 +509,7 @@ Use the following commands to manage your store.
 [Secrets Store](/secrets-store/) is in open beta. Currently, you can only have one store per Cloudflare account.
 :::
 
-<WranglerCommand command="secrets-store store create" headingLevel={3}/>
+<WranglerCommand command="secrets-store store create" headingLevel={3} />
 
 The following is an example of using the `create` command to create a store.
 
@@ -519,7 +522,7 @@ npx wrangler secrets-store store create default --remote
 ✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
 ```
 
-<WranglerCommand command="secrets-store store delete" headingLevel={3}/>
+<WranglerCommand command="secrets-store store delete" headingLevel={3} />
 
 The following is an example of using the `delete` command to delete a store.
 
@@ -532,7 +535,7 @@ npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211 --remot
 ✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
 ```
 
-<WranglerCommand command="secrets-store store list" headingLevel={3}/>
+<WranglerCommand command="secrets-store store list" headingLevel={3} />
 
 The following is an example of using the `list` command to list stores.
 
@@ -559,7 +562,7 @@ The `wrangler workflows` command requires Wrangler version `3.83.0` or greater. 
 
 Manage and configure [Workflows](/workflows/).
 
-<WranglerNamespace namespace="workflows" headingLevel={3}/>
+<WranglerNamespace namespace="workflows" headingLevel={3} />
 
 <WranglerCommand command="tail" />
 
@@ -580,7 +583,7 @@ If sampling persists after using options to filter messages, consider using [ins
 
 Configure Cloudflare Pages.
 
-<WranglerNamespace namespace="pages" headingLevel={3}/>
+<WranglerNamespace namespace="pages" headingLevel={3} />
 
 {/* :::note[Deployment tail]
 Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
@@ -588,8 +591,7 @@ Filtering with `--ip self` will allow tailing your deployed Functions beyond the
 
 :::[Deploy]
 Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter a project name in your terminal after you run the command.
-::: */}
-
+::: \*/}
 
 ---
 
@@ -597,7 +599,7 @@ Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `
 
 Manage your [Pipelines](/pipelines/).
 
-<WranglerNamespace namespace="pipelines" headingLevel={3}/>
+<WranglerNamespace namespace="pipelines" headingLevel={3} />
 
 ---
 
@@ -605,7 +607,7 @@ Manage your [Pipelines](/pipelines/).
 
 Manage your Workers [Queues](/queues/) configurations.
 
-<WranglerNamespace namespace="queues" headingLevel={3}/>
+<WranglerNamespace namespace="queues" headingLevel={3} />
 
 ---
 
@@ -723,10 +725,7 @@ For example:
 	headingLevel={3}
 />
 
-<WranglerCommand
-	command="versions view"
-	headingLevel={3}
-/>
+<WranglerCommand command="versions view" headingLevel={3} />
 
 <WranglerCommand command="versions secret put" headingLevel={3} />
 
@@ -781,20 +780,20 @@ wrangler rollback [<VERSION_ID>] [OPTIONS]
 
 ## dispatch namespace
 
-<WranglerCommand command="dispatch-namespace list" headingLevel={3}/>
+<WranglerCommand command="dispatch-namespace list" headingLevel={3} />
 
-<WranglerCommand command="dispatch-namespace get" headingLevel={3}/>
+<WranglerCommand command="dispatch-namespace get" headingLevel={3} />
 
-<WranglerCommand command="dispatch-namespace create" headingLevel={3}/>
+<WranglerCommand command="dispatch-namespace create" headingLevel={3} />
 
-<WranglerCommand command="dispatch-namespace delete" headingLevel={3}/>
+<WranglerCommand command="dispatch-namespace delete" headingLevel={3} />
 
 :::note
 
 You must delete all user Workers in the dispatch namespace before it can be deleted.
 :::
 
-<WranglerCommand command="dispatch-namespace rename" headingLevel={3}/>
+<WranglerCommand command="dispatch-namespace rename" headingLevel={3} />
 
 ---
 
@@ -804,7 +803,7 @@ Manage client certificates used for mTLS connections in subrequests.
 
 These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/bindings/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
 
-<WranglerCommand command="mtls-certificate upload" headingLevel={3}/>
+<WranglerCommand command="mtls-certificate upload" headingLevel={3} />
 
 The following is an example of using the `upload` command to upload an mTLS certificate.
 
@@ -834,7 +833,7 @@ mtls_certificates = [
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 
-<WranglerCommand command="mtls-certificate list" headingLevel={3}/>
+<WranglerCommand command="mtls-certificate list" headingLevel={3} />
 
 The following is an example of using the `list` command to upload an mTLS certificate.
 
@@ -855,7 +854,7 @@ Created on: 1/01/2023
 Expires: 1/01/2025
 ```
 
-<WranglerCommand command="mtls-certificate delete" headingLevel={3}/>
+<WranglerCommand command="mtls-certificate delete" headingLevel={3} />
 
 The following is an example of using the `delete` command to delete an mTLS certificate.
 
@@ -878,7 +877,7 @@ Manage mTLS client certificates and Certificate Authority (CA) chain certificate
 
 These certificates can be used in Hyperdrive configurations, enabling them to present the certificate when connecting to an origin database that requires client authentication (mTLS) or a custom Certificate Authority (CA).
 
-<WranglerCommand command="cert upload mtls-certificate" headingLevel={3}/>
+<WranglerCommand command="cert upload mtls-certificate" headingLevel={3} />
 
 The following is an example of using the `upload` command to upload an mTLS certificate.
 
@@ -896,7 +895,7 @@ Expires: 1/01/2025
 
 Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 
-<WranglerCommand command="cert upload certificate-authority" headingLevel={3}/>
+<WranglerCommand command="cert upload certificate-authority" headingLevel={3} />
 
 The following is an example of using the `upload` command to upload an CA certificate.
 
@@ -913,7 +912,7 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-<WranglerCommand command="cert list" headingLevel={3}/>
+<WranglerCommand command="cert list" headingLevel={3} />
 
 The following is an example of using the `list` command to upload an mTLS or CA certificate.
 
@@ -934,7 +933,7 @@ Created on: 1/01/2023
 Expires: 1/01/2025
 ```
 
-<WranglerCommand command="cert delete" headingLevel={3}/>
+<WranglerCommand command="cert delete" headingLevel={3} />
 
 The following is an example of using the `delete` command to delete an mTLS or CA certificate.
 
