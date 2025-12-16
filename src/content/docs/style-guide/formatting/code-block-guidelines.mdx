@@ -99,7 +99,7 @@ Here is a list of supported languages:
 - `xml`
 - `yaml` (alias: `yml`)
 
-#### Terminal commands
+### Terminal commands
 
 Use `sh` for one-line commands executed in the Linux/macOS terminal.
 - Each command must be in a single line
@@ -136,7 +136,7 @@ Use the `txt` language for Windows console commands.
   - C:\Program Files> command-to-run.exe
   - C:\Users\JohnDoe> command-to-run.exe
 
-#### JSON
+### JSON
 
 Use `json` for JSON code blocks or JSON fragments.
 
@@ -198,3 +198,87 @@ function demo() {
 :::caution
 Do not use the `$` sign in your code blocks before the command.
 :::
+
+## Workers Playground
+
+If you add the `playground` option to the opening code fence for a Worker example, it will
+add a "Run Worker in Playground" link that will take the user to the [Worker's playground](/workers/playground/)
+
+### Live demo
+
+```js playground
+export default {
+	fetch() {
+		return new Response("Test!");
+	},
+};
+```
+
+### How to use
+
+````mdx "playground"
+```js playground
+export default {
+	fetch() {
+		return new Response("Test!");
+	},
+};
+```
+````
+
+## GraphQL API Explorer
+
+Add `graphql-api-explorer` to the opening code fence to create a `graphql` code block with a **Run in GraphQL API Explorer** button that leads to [GraphQL API Explorer](https://graphql.cloudflare.com/explorer).
+
+:::note
+This button only works if the person selecting it is logged in or has an API token saved.
+:::
+
+````mdx live
+```graphql graphql-api-explorer title="A GraphQL query"
+query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			firewallEventsAdaptive(
+				filter: { datetime_gt: $start, datetime_lt: $end }
+				limit: 2
+				orderBy: [datetime_DESC]
+			) {
+				action
+				datetime
+				host: clientRequestHTTPHost
+			}
+		}
+	}
+}
+```
+````
+
+### Variables
+
+In the GraphQL API Explorer, the **Variables** section is automatically filled based on the names and types of the variables defined in your query:
+- Variables that include `start` and are of type `Time` are set to six hours before the current time
+- Variables that include `end` and are of type `Time` are set to the current time
+- Variables that include `start` and are of type `Date` are set to 24 hours before the current date
+- Variables that include `end` and are of type `Date` are set to the current date
+- Variables that include `zoneTag` and are of type `string` are set to "ZONE_ID"
+- Variables that include `accountTag` and are of type `string` are set to "ACCOUNT_ID"
+- Variables that include `id` and are of type `string` are set to "REPLACE_WITH_ID"
+- Variables that include `limit` and are of type `int` are set to 100
+- Any other variable with a type of `string` is set to "REPLACE_WITH_STRING"
+
+You can also add custom variables by setting their values as a JSON string in the `graphql-api-explorer` metadata. The custom variables will be merged with the automatically populated variables.
+
+In the following example, the custom value is `custom-variable`:
+
+````mdx
+```graphql graphql-api-explorer='{"uID": "custom-variable"}' title="A GraphQL query"
+query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
+ viewer {
+   zones(filter: { zoneTag: $zoneTag }) {
+     ...
+   }
+ }
+}
+```
+````
