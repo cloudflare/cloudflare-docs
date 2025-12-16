@@ -3,14 +3,14 @@ title: New Placement Hints for Workers
 description: You can now explicitly place Workers close to your existing cloud infrastructure in order to minimize network latency to existing services and databases.
 products:
   - workers
-date: 2025-11-20
+date: 2025-12-22
 ---
 
 import { WranglerConfig } from "~/components";
 
 You can now configure Workers to run close to your infrastructure in legacy cloud regions in order to minimize latency to existing services and databases, especially in cases where you have multiple round-trips.
 
-To set a placement hint, set the `placement.region` property in your `wrangler.jsonc` (or `wrangler.toml`) configuration file:
+To [set a placement hint](/workers/configuration/smart-placement/#placement-hints), set the `placement.region` property in your `wrangler.jsonc` (or `wrangler.toml`) configuration file:
 
 <WranglerConfig>
 
