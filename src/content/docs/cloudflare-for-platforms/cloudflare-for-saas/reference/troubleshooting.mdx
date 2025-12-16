@@ -84,7 +84,7 @@ More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubl
 
 <Render file="same-name-as-zone" product="cloudflare-for-platforms" />
 
-This limitation affects Worker Routes making subrequests, as well as other configurations where DNS overrides are applied.
+This configuration will cause a 403 Forbidden error due to DNS override restrictions applied for security reasons. This limitation also affects Worker Routes making subrequests.
 
 ***
 
