@@ -385,6 +385,105 @@ When `Enabled`, the operating system will register WARP's [local interface IP](#
 
 If you use on-premise DNS infrastructure (such as Active Directory), we recommend turning this setting on for remote [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) and turning it off for [managed network](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) device profiles. In this configuration, remote devices will register their WARP interface IP, while on-premise devices will only register their local DHCP address. This allows the on-premise DNS server to resolve device hostnames no matter where the device is located.
 
+### NetBIOS over TCPIP (NetBT) Support
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.11.481.3        |
+| macOS    | ❌           |                      |
+| Linux    | ❌           |                      |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+NetBIOS over TCPIP (NetBT) is a legacy feature in Windows primarily used for name resolution in some rare scenarios (e.g., SMBv1). It has been deprecated for decades, but Windows has not removed or disabled it by default. Cloudflare WARP disables NetBT on the tunnel interface by default for security reasons and to align with modern best practices, as the vast majority of customers are not using anything requiring NetBIOS over the WARP tunnel.
+
+If your organization still relies on legacy applications that require NetBT over the WARP tunnel, this setting allows you to override the default behavior and enable the feature.
+
+**Value**
+
+* `Disabled`: (default) NetBT is disabled on the WARP tunnel interface. This is the recommended state for security reasons.
+
+* `Enabled`: Turns on the setting to have the WARP client enable NetBT on the tunnel interface. This is used in case you are still using NetBT over WARP.
+
+
+#### Configuration Methods
+
+You can control the state of the NetBT setting using the following methods:
+
+#### Dashboard
+
+a. Turn on **NetBIOS over TCPIP** for remote [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
+
+b. Turn off **NetBIOS over TCPIP** for [on-prem device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/#4-configure-device-profile).
+
+c. (Optional) Verify device settings:
+
+<Details header="Verify NetBIOS over TCPIP enablement">
+To check if **NetBIOS over TCPIP** is enabled on the tunnel interface, run the following command:
+
+ ```cmd
+warp-cli settings | findstr "NetBT"
+ ```
+
+```cmd output
+(network policy) NetBT: true
+```
+
+You can also verify network interface details for the `CloudflareWARP` adapter:
+
+```cmd
+ipconfig /all
+```
+
+```cmd output {8}
+Windows IP Configuration
+...
+
+Unknown adapter CloudflareWARP:
+
+    Connection-specific DNS Suffix  . :
+    Description . . . . . . . . . . . : Cloudflare WARP Interface Tunnel
+    Physical Address. . . . . . . . . :
+    DHCP Enabled. . . . . . . . . . . : No
+    Autoconfiguration Enabled . . . . : Yes
+    IPv6 Address. . . . . . . . . . . : 2606:4700:110:8f79:145:f180:fc4:8106(Preferred)
+    Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%49(Preferred)
+    IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
+    Subnet Mask . . . . . . . . . . . : 255.255.255.255
+    Default Gateway . . . . . . . . . :
+    DNS Servers . . . . . . . . . . . : 127.0.2.2
+    																		127.0.2.3
+    NetBIOS over Tcpip. . . . . . . . : Enabled
+```
+</Details>
+
+#### Mobile Device Management (MDM)
+
+The setting can be managed through your organization's MDM solution.
+
+When configuring your MDM policy for the WARP client, the following example shows how to set the enable\_netbt key to **true** to enable the feature for devices, necessary for legacy scenarios (e.g., **SMBv1** name resolution).
+
+| Setting Key | Value Type | Default | Description |
+| :---- | :---- | :---- | :---- |
+| **enable\_netbt** | **Boolean** | false | Controls whether NetBT is **enabled** (true) or **disabled** (false) on the WARP tunnel interface. |
+
+```
+<dict>
+    <key>organization</key>
+    <string>your-team-name</string>
+    <key>enable_netbt</key>
+    <true/>
+</dict>
+```
+
 ### SCCM VPN boundary support
 
 <Details header="Feature availability">
