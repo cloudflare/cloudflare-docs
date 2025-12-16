@@ -2,6 +2,60 @@
 pcx_content_type: navigation
 title: Examples
 sidebar:
-  order: 3
+  order: 9
 ---
 
+import { CardGrid, LinkCard } from "~/components"
+
+<CardGrid>
+    <LinkCard
+        title="Fetch rendered HTML from a URL"
+        description="Learn how to fetch and retrieve the fully rendered HTML content from any URL using browser rendering."
+        href="/browser-rendering/fetch-html/"
+    />
+    <LinkCard
+        title="Take a screenshot from custom HTML"
+        description="Generate screenshots by providing custom HTML content directly to the browser rendering service."
+        href="/browser-rendering/screenshot-custom-html/"
+    />
+    <LinkCard
+        title="Convert a URL to PDF"
+        description="Transform any web page into a PDF document with customizable formatting and layout options."
+        href="/browser-rendering/url-to-pdf/"
+    />
+    <LinkCard
+        title="Capture a snapshot from a URL"
+        description="Create visual snapshots of web pages with various capture options and configurations."
+        href="/browser-rendering/capture-snapshot/"
+    />
+    <LinkCard
+        title="With a Prompt and JSON schema"
+        description="Use structured prompts and JSON schemas to extract specific data from rendered web pages."
+        href="/browser-rendering/prompt-json-schema/"
+    />
+    <LinkCard
+        title="Convert a URL to Markdown"
+        description="Extract and convert web page content into clean, structured Markdown format."
+        href="/browser-rendering/url-to-markdown/"
+    />
+    <LinkCard
+        title="Capture a screenshot of an authenticated page"
+        description="Take screenshots of pages that require authentication using cookies, headers, or login credentials."
+        href="/browser-rendering/authenticated-screenshot/"
+    />
+    <LinkCard
+        title="Navigate and capture a full-page screenshot"
+        description="Perform navigation actions and capture complete full-page screenshots including scrollable content."
+        href="/browser-rendering/full-page-screenshot/"
+    />
+    <LinkCard
+        title="Capture a specific element using the selector option"
+        description="Target and capture specific elements on a page using CSS selectors for precise screenshots."
+        href="/browser-rendering/element-selector/"
+    />
+    <LinkCard
+        title="Customize page headers and footers"
+        description="Add custom headers and footers to your rendered pages and PDF outputs with personalized content."
+        href="/browser-rendering/custom-headers-footers/"
+    />
+</CardGrid>
