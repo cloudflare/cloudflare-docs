@@ -4,9 +4,9 @@ title: Message Broadcast APIs
 slug: realtime/realtimekit/broadcast-apis
 sidebar_position: 2
 ---
-The broadcast APIs allow a user to send messages to all other users in a meeting.
+The broadcast APIs allow a user to send custom messages to all other users in a meeting.
 ### Broadcasting a Message
-The Participants Module on the meeting object allows you to broadcast messages to all other users in a meeting (or to other meetings in case of connected meetings) over the signaling channel.
+The Participants module on the meeting object allows you to broadcast messages to all other users in a meeting (or to other meetings in case of connected meetings) over the signaling channel.
 
 | Param   | Type                               | Description                                                                 | Required |
 | ------- | ---------------------------------- | --------------------------------------------------------------------------- | -------- |
@@ -47,7 +47,7 @@ meeting.participants.on('broadcastedMessage', ({ type, payload, timestamp }) => 
 });
 ```
 
-### Rate Limitting & Constraints
+### Rate Limiting & Constraints
 
 - The method is rate‑limited (server‑side + client‑side) to prevent abuse.
 - Default client‑side config in the deprecated module: maxInvocations = 5 per period = 1s.
