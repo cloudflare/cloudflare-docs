@@ -85,11 +85,9 @@ export default {
     }
 
     return new Response('WebSocket endpoint');
-
-}
+  }
 };
-
-````
+```
 </TypeScriptExample>
 
 **Client connects:**
@@ -98,7 +96,7 @@ export default {
 const ws = new WebSocket('wss://your-worker.com');
 ws.onmessage = (event) => console.log(event.data);
 ws.send('Hello!'); // Receives: "Echo: Hello!"
-````
+```
 
 ## Expose WebSocket service via preview URL
 
@@ -129,11 +127,9 @@ export default {
     }
 
     return new Response('Not found', { status: 404 });
-
-}
+  }
 };
-
-````
+```
 </TypeScriptExample>
 
 **Client connects to preview URL:**
@@ -147,7 +143,7 @@ const { url } = await response.json();
 const ws = new WebSocket(url);
 ws.onmessage = (event) => console.log(event.data);
 ws.send('Hello!'); // Receives: "Echo: Hello!"
-````
+```
 
 ## Connect from Worker to get real-time data
 
@@ -198,14 +194,140 @@ export default {
     }
 
     return new Response('Processed real-time data');
-
-}
+  }
 };
-
-````
+```
 </TypeScriptExample>
 
 This pattern is useful when you need streaming data from sandbox services but want to return HTTP responses to clients.
+
+## Custom WebSocket routing with proxyToSandbox
+
+When implementing custom routing logic with `proxyToSandbox()`, WebSocket upgrade requests require special handling. The SDK's `containerFetch()` method cannot handle WebSocket upgrades due to JSRPC serialization boundaries.
+
+<TypeScriptExample>
+```ts
+import { getSandbox, type Sandbox } from '@cloudflare/sandbox';
+import { switchPort } from '@cloudflare/containers';
+
+export async function proxyToSandbox<E extends SandboxEnv>(
+  request: Request,
+  env: E
+): Promise<Response | null> {
+  const url = new URL(request.url);
+  const routeInfo = extractSandboxRoute(url);
+
+  if (!routeInfo) {
+    return null;
+  }
+
+  const { sandboxId, port } = routeInfo;
+  const sandbox = getSandbox(env.Sandbox, sandboxId);
+
+  // Detect WebSocket upgrade request
+  const upgradeHeader = request.headers.get('Upgrade');
+  if (upgradeHeader?.toLowerCase() === 'websocket') {
+    // WebSocket path: Must use fetch() not containerFetch()
+    // This bypasses JSRPC serialization boundary
+    return await sandbox.fetch(switchPort(request, port));
+  }
+
+  // Regular HTTP requests use containerFetch()
+  const proxyRequest = new Request(
+    `http://localhost:${port}${url.pathname}${url.search}`,
+    {
+      method: request.method,
+      headers: request.headers,
+      body: request.body,
+    }
+  );
+
+  return await sandbox.containerFetch(proxyRequest, port);
+}
+```
+</TypeScriptExample>
+
+:::note[Important]
+For WebSocket connections, always use `sandbox.fetch()` with `switchPort()` instead of `containerFetch()`. The JSRPC serialization boundary used by `containerFetch()` cannot handle WebSocket protocol upgrades.
+:::
+
+## Common configuration issues
+
+### Missing port in preview URLs
+
+When constructing preview URLs, use `url.host` instead of `url.hostname` to include the port number. This is critical for local development where Workers run on non-standard ports.
+
+```typescript
+// Wrong - hostname excludes port
+const hostname = url.hostname; // "localhost"
+
+// Correct - host includes port
+const hostname = url.host; // "localhost:8787"
+```
+
+**Example for session creation:**
+
+<TypeScriptExample>
+```ts
+app.post("/api/sessions", async (c) => {
+  const requestUrl = new URL(c.req.url);
+
+  // Use .host to include port for local development
+  const requestHost = requestUrl.host;
+
+  const previewHostname = (
+    requestUrl.hostname === "localhost" ||
+    requestUrl.hostname.startsWith("127.")
+  )
+    ? requestHost // For localhost, use full host with port
+    : (c.env.PREVIEW_HOSTNAME ?? requestUrl.hostname);
+
+  // Now preview URLs will include correct port:
+  // http://3333-sandbox-xxx.localhost:8787/
+});
+```
+</TypeScriptExample>
+
+### Static assets served before Worker
+
+With the Cloudflare Vite plugin, static assets are served before the Worker's fetch handler by default. This causes subdomain preview URLs to serve your app's `index.html` instead of routing through `proxyToSandbox()`.
+
+**Fix:** Add `run_worker_first: true` to your `wrangler.json`:
+
+```json title="wrangler.json"
+{
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  }
+}
+```
+
+This ensures the Worker's fetch handler runs first and can intercept subdomain requests for sandbox routing.
+
+### Vite HMR configuration
+
+For Vite-based projects running inside sandboxes, configure the dev server to accept connections from proxy/tunnel domains:
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  server: {
+    host: '0.0.0.0',
+    port: 3333,
+    strictPort: true,
+    allowedHosts: true, // Required for proxy/tunnel support
+  },
+  // Keep base path as '/' for subdomain routing
+  base: '/',
+});
+```
+
+| Option | Value | Purpose |
+|--------|-------|---------|
+| `host` | `'0.0.0.0'` | Accept connections from any interface |
+| `allowedHosts` | `true` | Allow connections from proxy/tunnel domains |
+| `base` | `'/'` | Keep paths relative (required for subdomain routing) |
 
 ## Troubleshooting
 
@@ -217,9 +339,29 @@ Verify request has WebSocket headers:
 ```ts
 console.log(request.headers.get('Upgrade'));    // 'websocket'
 console.log(request.headers.get('Connection')); // 'Upgrade'
-````
-
+```
 </TypeScriptExample>
+
+### WebSocket connection fails with containerFetch
+
+If you're using custom routing and WebSocket connections fail, ensure you're using `sandbox.fetch()` with `switchPort()` for WebSocket requests instead of `containerFetch()`:
+
+```typescript
+// Wrong - containerFetch cannot handle WebSocket upgrades
+return await sandbox.containerFetch(request, port);
+
+// Correct - use fetch with switchPort for WebSockets
+return await sandbox.fetch(switchPort(request, port));
+```
+
+### HMR not working in development
+
+Check the following:
+
+1. **Vite config**: Ensure `allowedHosts: true` is set
+2. **Preview URL port**: Verify URL includes the correct port (e.g., `:8787`)
+3. **Worker routing**: Confirm `run_worker_first: true` is set in `wrangler.json`
+4. **WebSocket routing**: Ensure WebSocket upgrades use `fetch()` not `containerFetch()`
 
 ### Local development
 
