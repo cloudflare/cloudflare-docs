@@ -101,7 +101,7 @@ You can access the polls functionality in a meeting using the `meeting.polls` ob
 
 To retrieve all polls created during a meeting, use `meeting.polls.items`. This returns an array where each element is an object of type `com.cloudflare.realtimekit.polls.Poll`.
 
-### Poll Type
+### Poll type
 
 The `Poll` type represents a poll within a meeting:
 
@@ -165,7 +165,7 @@ The meetings polls object can be accessed using `meeting.polls`. It provides met
 
 `meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
 
-### Poll Type
+### Poll type
 
 The `Poll` type is defined as follows:
 
@@ -221,7 +221,7 @@ The meetings polls object can be accessed using `meeting.polls`. It provides met
 
 `meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
 
-### Poll Type
+### Poll type
 
 The `Poll` type is defined as follows:
 
@@ -295,7 +295,7 @@ The meetings polls object can be accessed using `meeting.polls`. It provides met
 
 `meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
 
-### Poll Type
+### Poll type
 
 The `Poll` type is defined as follows:
 
@@ -657,7 +657,7 @@ const polls = useRealtimeKitSelector((m) => m.polls.items);
 </TabItem>
 <TabItem label="Android">
 
-### View Poll Results
+### View poll results
 
 The total votes on a poll can be accessed in the following manner:
 
@@ -680,7 +680,7 @@ val options = poll.options
 </TabItem>
 <TabItem label="iOS">
 
-### View Poll Results
+### View poll results
 
 The total votes on a poll can be accessed in the following manner:
 
@@ -703,7 +703,7 @@ let options = poll.options
 </TabItem>
 <TabItem label="Flutter">
 
-### View Poll Results
+### View poll results
 
 The total votes on a poll can be accessed in the following manner:
 
@@ -726,7 +726,7 @@ final options = poll.options;
 </TabItem>
 <TabItem label="React Native">
 
-### View Poll Results
+### View poll results
 
 The total votes on a poll can be accessed in the following manner:
 
@@ -746,7 +746,7 @@ const options = poll.options;
 
 `options` returns an array of objects, where each object is of type `PollOption`.
 
-### Get Notified When a Poll is Created or Updated
+### Get notified when a poll is created or updated
 
 An event is fired each time `meeting.polls.items` is updated or created. You can listen for this to get the updated list of polls. The response object contains the following properties:
 
