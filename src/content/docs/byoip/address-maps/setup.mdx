@@ -6,7 +6,7 @@ sidebar:
   label: Setup
 ---
 
-import { GlossaryTooltip, APIRequest, DashButton } from "~/components";
+import { GlossaryTooltip, APIRequest, DashButton, Tabs, TabItem } from "~/components";
 
 Consider the sections below to learn how to set up address maps.
 
@@ -18,6 +18,8 @@ There is **no expected downtime** when setting up or updating your address maps.
 
 If you are using BYOIP, refer to the following steps. If you have [static IPs](/byoip/concepts/static-ips/), Cloudflare creates an address map during the static IP onboarding process, meaning you may only [edit](#manage-address-maps) the Cloudflare-created map.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In the Cloudflare dashboard, go to the **Address Maps** page.
 
    <DashButton url="/?to=/:account/ip-addresses/proxy-ips" />
@@ -28,11 +30,19 @@ If you are using BYOIP, refer to the following steps. If you have [static IPs](/
 5. Name your address map.
 6. Review the information and select **Save and Deploy**.
 
+</TabItem> <TabItem label="API">
+
+(placeholder)
+
+</TabItem> </Tabs>
+
 :::note
 Creating an address map does not automatically change DNS configuration. DNS responses only begin to change when a zone or account is added to a map. Additionally, address maps that are not yet enabled will not take effect in DNS responses.
 :::
 
 ## Manage address maps
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the Cloudflare dashboard, go to the **Address Maps** page.
 
@@ -41,6 +51,12 @@ Creating an address map does not automatically change DNS configuration. DNS res
 2. Go to your address map and select **Review**.
 3. Edit your address map.
 4. Review the information and select **Save**.
+
+</TabItem> <TabItem label="API">
+
+(placeholder)
+
+</TabItem> </Tabs>
 
 :::note
 You can also enable, disable, and delete address maps. This will likely change the IP addresses used for your zones.
