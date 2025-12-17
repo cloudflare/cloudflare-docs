@@ -1,0 +1,141 @@
+---
+title: 'Gateway Troubleshooting Guide'
+pcx_content_type: troubleshooting
+sidebar:
+  order: 16
+---
+
+import { Render } from "~/components"
+
+This guide helps you troubleshoot common issues with Cloudflare Gateway policies. The issues are ordered by the most frequently seen problems.
+
+## 1. Egress policies are not working as expected
+
+This is the most common category of issues for Gateway. Symptoms include traffic not using your dedicated egress IP, incorrect failover behavior, or high latency due to being routed through a distant data center.
+
+### Symptom: Traffic is not using your dedicated egress IP
+
+Even with an active egress policy, you may find that traffic is egressing from a default Cloudflare IP address instead of your dedicated one.
+
+**Common Causes and Solutions:**
+
+*   **DNS Resolution to CGNAT:** When an egress policy uses a **Domain** or **Host** selector, Gateway must first resolve that domain. For traffic proxied through Cloudflare, this often resolves to a CGNAT IP address (from the `100.64.0.0/10` range). Because this IP is internal to Cloudflare's network, it may not be subject to egress policies, which apply to traffic leaving the network.
+    *   **Solution:** Change the selector in your egress policy from `Domain` or `Host` to **`Destination IP`**. Use the public IP address(es) of the service you are trying to reach.
+
+*   **Policy Precedence:** A different egress policy with a higher precedence (a lower number) is matching the traffic first. Remember that egress policies follow the same "first match wins" logic.
+    *   **Solution:** Review all enabled egress policies. Ensure your intended policy has the highest precedence (lowest number) for the traffic it needs to control. Check for a broad, "catch-all" policy that might be overriding it.
+
+*   **Split Tunnel Configuration:** The destination IP or domain is excluded from the WARP tunnel via your Split Tunnel configuration. Traffic that is excluded from the tunnel will not be subject to any Gateway policies, including egress.
+    *   **Solution:** Navigate to **Settings** > **WARP Client** > **Device settings** and review the Split Tunnel configuration for the user's profile. Ensure the destination is *not* in the "Exclude" list.
+
+*   **No Egress Logs:** You cannot find logs for egress policies in the main Gateway dashboards.
+    *   **Solution:** Egress logging is available via Logpush with the "Gateway Egress" dataset. This is essential for troubleshooting. You can also use a third-party "what is my IP" service to verify the egress IP from a test device.
+
+### Symptom: Failover is not working or is using the wrong IP
+
+Your primary dedicated egress IP becomes unavailable, but instead of using your configured secondary dedicated IP, traffic fails over to a default Cloudflare shared IP.
+
+**Common Cause and Solution:**
+
+This often indicates a routing or configuration issue on the Cloudflare side. While you should check that your egress policy correctly specifies both a primary and secondary IP, this issue frequently requires support intervention.
+
+*   **Action:** Document the time of the incident and collect Request IDs from Gateway HTTP or DNS logs for affected users. Open a support ticket and provide this information. Temporarily, you can edit the egress policy to set your secondary IP as the primary to restore service.
+
+### Symptom: Users are egressing from a geographically distant location
+
+Your users in one country (e.g., Australia) are being routed through a dedicated egress IP located in another region (e.g., Germany), causing high latency and breaking access to geo-restricted content.
+
+**Common Causes and Solutions:**
+
+*   **Single Egress Policy:** You may have one broad egress policy that applies to all users regardless of their location.
+    *   **Solution:** Create location-aware egress policies. Use the **User Location** selector in your policy to tie specific user locations to their nearest dedicated egress IP. For example:
+        *   Policy 1: If `User Location` is `United Kingdom`, egress via London IP.
+        *   Policy 2: If `User Location` is `Australia`, egress via Sydney IP.
+
+*   **Incorrect Geolocation Data:** The IP address of the user's ISP may not be correctly geolocated.
+    *   **Action:** Check the user's location as seen by Cloudflare in the Gateway logs. If it appears incorrect, you can report it to Cloudflare Support.
+
+---
+
+## 2. Policies are not being applied in the correct order
+
+A common point of confusion is how Gateway evaluates its different policy types and the rules within them.
+
+### Symptom: A Block policy is overriding a more specific Allow or Bypass policy
+
+You have a high-precedence `Allow` or `Bypass` rule for a specific application (e.g., `Allow finance.example.com`), but traffic is still being blocked by a low-precedence `Block` rule (e.g., `Block All High-Risk Sites`).
+
+**Understanding Policy Evaluation:**
+
+&lt;Render file="gateway-policy-evaluation" /&gt;
+
+The most important concept is **precedence**, which is determined by the policy's order number. **A lower number means higher precedence.** Gateway stops processing at the first rule that matches.
+
+**Solution:**
+
+1.  Navigate to **Gateway** > **Firewall Policies**.
+2.  Review the order of your DNS, Network, and HTTP policies.
+3.  Ensure that your most specific `Allow`, `Bypass`, or `Do Not Inspect` policies have a **lower order number** than your general `Block` policies.
+4.  Drag and drop policies to reorder them as needed. An `Allow` for `teams.microsoft.com` should be placed before a general `Block` for "File Sharing" applications.
+
+---
+
+## 3. TLS decryption (HTTPS inspection) is breaking applications
+
+Enabling TLS decryption is essential for many Gateway features like DLP, Browser Isolation, and application-aware HTTP policies. However, it can cause issues with certain types of software.
+
+### Symptom: CLI tools or native applications fail with certificate errors
+
+After enabling TLS decryption, command-line tools (`git`, `aws`, `kubectl`, `terraform`) or desktop applications (ChatGPT, Docker) stop working, showing errors like `SSL: CERTIFICATE_VERIFY_FAILED`, `self-signed certificate in certificate chain`, or similar TLS errors.
+
+**Cause:**
+
+These applications do not use the operating system's trust store and therefore do not trust the Cloudflare root certificate that you installed. They often have their own certificate trust store or use certificate pinning, which expects the server's original certificate, not one re-signed by Cloudflare.
+
+**Solutions:**
+
+*   **Recommended: Create a "Do Not Inspect" Policy.** Create a targeted HTTP policy to bypass decryption for the specific domains these tools need to access. Place this policy at a higher precedence (lower order number) than your main TLS decryption policy.
+
+| Selector | Operator | Value                      | Action          |
+|----------|----------|----------------------------|-----------------|
+| Domain   | in list  | `CLI Tool Domains` (a list) | Do Not Inspect  |
+
+    Create a list that includes hosts like `github.com`, `*.amazonaws.com`, `*.docker.io`, etc.
+
+*   **Workaround: Configure the Application.** Some tools can be configured to trust a custom CA or disable SSL verification. This is less secure and harder to manage at scale.
+
+### Symptom: The custom block page is not displayed
+
+When a user's request is blocked by an HTTP policy, they see a generic browser error (`ERR_SSL_PROTOCOL_ERROR`) instead of your configured Gateway block page.
+
+**Cause:**
+
+The browser does not trust the certificate presented by the block page, which is signed by the Cloudflare root certificate. This means the certificate is not installed or not trusted on the user's device.
+
+**Solution:**
+
+1.  Confirm that the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) is installed on the device.
+2.  Ensure the certificate is placed in the correct system-level trust store (e.g., Keychain's "System" store on macOS, or "Trusted Root Certification Authorities" for the Local Computer on Windows).
+3.  If you are using an MDM, verify that your deployment script is correctly installing and trusting the certificate.
+
+---
+
+## 4. Private DNS and internal resources are not working
+
+You have configured Gateway to resolve internal hostnames, but users are unable to access them.
+
+### Symptom: Internal hostnames cannot be resolved
+
+A user connected to WARP tries to access an internal service like `jira.mycompany.local`, but the DNS query fails.
+
+**Common Causes and Solutions:**
+
+*   **Missing or Incorrect Resolver Policy:** You need a Resolver Policy to tell Gateway where to send DNS queries for your internal domains.
+    *   **Solution:** Go to **Gateway** > **Resolver Policies**. Create a policy that matches your internal domain suffix and forwards queries to your internal DNS servers' IP addresses.
+
+*   **Split Tunnel Excludes the Private IP Range:** If your internal resources are in a private IP range (e.g., `10.0.0.0/8`), that range must be included in the tunnel. If it's in the "Exclude" list of your Split Tunnel configuration, WARP will not proxy the traffic.
+    *   **Solution:** Go to **Settings** > **WARP Client** > **Device settings**. Edit the relevant profile and ensure your private IP ranges are in the "Include" list (or that the mode is "Exclude" and the private IPs are *not* listed).
+
+*   **Local Domain Fallback Misconfiguration:** The Local Domain Fallback feature is designed for domains that must be resolved by a DNS server on the user's *local* network (e.g., a printer at home). Putting your corporate domain here can cause inconsistent resolution behavior.
+    *   **Solution:** Use **Resolver Policies** for corporate DNS. Only use Local Domain Fallback for domains specific to a user's immediate physical network.
+
