@@ -123,14 +123,12 @@ To verify that the IP geolocation has updated, check your dedicated egress IP in
 
 Your users' physical egress location will vary depending on whether their connection is over IPv4 or IPv6.
 
-| Destination IP | Destination proxied by Cloudflare | Physical egress location                      |
-| -------------- | --------------------------------- | --------------------------------------------- |
-| IPv4           | No                                | Egresses data center with dedicated egress IP |
-| IPv4           | Yes                               | Egresses locally connected data center        |
-| IPv6           | No                                | Egresses locally connected data center        |
-| IPv6           | Yes                               | Egresses locally connected data center        |
-
-Regardless of egress location, the IP geolocation will match the assigned dedicated egress IP.
+| Protocol | Destination proxied by Cloudflare | Physical egress location             | IP geolocation                       |
+| -------- | --------------------------------- | ------------------------------------ | ------------------------------------ |
+| IPv4     | No                                | Data center with dedicated egress IP | Matches dedicated egress IP location |
+| IPv4     | Yes                               | Locally connected data center        | Matches dedicated egress IP location |
+| IPv6     | No                                | Locally connected data center        | Matches dedicated egress IP location |
+| IPv6     | Yes                               | Locally connected data center        | Matches dedicated egress IP location |
 
 #### IPv4
 
@@ -140,9 +138,21 @@ We are able to offer better IPv4 performance when users visit domains proxied by
 
 For example, assume you have a primary dedicated egress IP in Los Angeles and a secondary dedicated egress IP in New York. A user in Las Vegas would see Las Vegas as their connected data center. If they go to a site not proxied by Cloudflare ([gray-clouded](/dns/proxy-status/#dns-only-records)), such as `espn.com`, they will egress from Los Angeles (or whichever city is in the matching egress policy). If they go to an orange-clouded site such as `cloudflare.com`, they will physically egress from Las Vegas but use Los Angeles as their IP geolocation.
 
+:::note[IPv4 and IPv6 behavior]
+IPv4 addresses are limited, so Cloudflare must physically route traffic to the data center where your dedicated IPv4 address is provisioned. IPv6 has virtually unlimited address space, so Cloudflare can assign IPv6 ranges from all geolocations to every data center. This means IPv6 traffic can egress locally while still appearing to originate from your configured geolocation.
+:::
+
 #### IPv6
 
-Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected data center but logically egress with one of your dedicated IP geolocations. In the example above, the Las Vegas user would egress from Las Vegas but IP geolocate from Los Angeles.
+Traffic proxied via IPv6, unlike IPv4, will physically egress from the connected data center but logically egress with one of your dedicated IP geolocations. This is possible because IPv6 has significantly more address space available, allowing Cloudflare to assign IPv6 ranges from all possible geolocations to every data center. Each account receives a /64 IPv6 range, which provides ample space for this approach.
+
+In the example above, the Las Vegas user would physically egress from Las Vegas but their traffic would IP geolocate to Los Angeles. This means:
+
+| Attribute       | Value                                                                                                         |
+| --------------- | ------------------------------------------------------------------------------------------------------------- |
+| Physical egress | User's closest Cloudflare data center (Las Vegas)                                                             |
+| IP geolocation  | Dedicated egress IP location configured in your egress policy (Los Angeles)                                   |
+| Logs            | Correct IP geolocation (Los Angeles) even though the physical egress is from a different location (Las Vegas) |
 
 ## Frequently asked questions (FAQ)
 
