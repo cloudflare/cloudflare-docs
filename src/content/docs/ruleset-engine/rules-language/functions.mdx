@@ -134,6 +134,26 @@ Returns `true` when the source ends with a given substring. Returns `false` othe
 
 For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
+### `join`
+
+{/* prettier-ignore */}
+<code>join(items <Type text="Array<String>" />, separator <Type text="String" />)</code>: <Type text="String" />
+
+Returns a string which is the concatenation of the strings in `items` with the `separator` between each item.
+
+If any of the arguments is nil, the returned value will be nil.
+
+Example:
+
+```txt
+# Joins all HTTP request header names into a single string, with names separated by commas
+join(http.request.headers.names, ",")
+```
+
+:::note
+The `join()` function is only available in [Transform Rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [Custom Error Rules](/rules/custom-errors/#custom-error-rules).
+:::
+
 ### `len`
 
 {/* prettier-ignore */}
