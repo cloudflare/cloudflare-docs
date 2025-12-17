@@ -179,6 +179,27 @@ has_key(http.request.headers, "x-my-header")
 has_key(http.request.headers, lower(http.request.uri.args.names[0]))
 ```
 
+### `has_value`
+
+{/* prettier-ignore */}
+<code>has_value(collection: <Type text="Map<T> | Array<T>" />, value: <Type text="T" />)</code>: <Type text="Boolean" />
+
+Returns true if the `value` specified in the second argument, which can be a literal or a dynamic value, is found in the `collection` provided as first argument; returns false otherwise.
+
+The data type of the values in the `collection` (indicated by `T`) must match the data type of the provided `value`. Additionally, `T` must be a primitive data type, that is, it must be one of `Boolean`, `Integer`, `String`, `Bytes`, or `IP address`.
+
+If any of the arguments is nil, the returned value will be nil.
+
+Examples:
+
+```txt
+# Check if there is an HTTP request header with the exact name 'X-My-Header'
+has_value(http.request.headers.name, "X-My-Header")
+
+# Check if there is a request header with the exact name provided as the first query argument:
+has_value(http.request.headers.name, http.request.uri.args.names[0])
+```
+
 ### `len`
 
 {/* prettier-ignore */}
