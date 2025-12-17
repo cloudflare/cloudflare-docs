@@ -2,7 +2,6 @@
 params:
   - magicWord?
   - productName
-  - analyticsAnchorHeading
   - networkAnalyticsURL
   - traceRoutes
   - graphQlTunnelBandwidthURL
@@ -23,7 +22,7 @@ Use these troubleshooting options to gather information at the start of your tro
   </>
   )
 }
-- Analyze network traffic over time in <a href={props.analyticsAnchorHeading}>{props.productName} Network Analytics</a>
+- Analyze network traffic over time in <a href="#network-analytics">{props.productName} Network Analytics</a>
 - Perform more detailed troubleshooting with:
   - [Traceroutes](#traceroutes)
   - [Packet captures](#packet-captures)
@@ -43,7 +42,7 @@ Use these troubleshooting options to gather information at the start of your tro
   )
 }
 
-<AnchorHeading depth={2} title={`${props.productName} Network Analytics`} />
+<AnchorHeading depth={2} title="Network Analytics" />
 
 Network Analytics provides detailed analytics on your {props.productName} traffic over time. You can filter data by traffic characteristics and review traffic trends over time.
 
