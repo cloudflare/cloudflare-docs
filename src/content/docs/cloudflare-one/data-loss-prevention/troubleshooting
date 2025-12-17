@@ -1,0 +1,90 @@
+---
+title: 'Troubleshooting DLP'
+pcx_content_type: troubleshooting
+sidebar:
+  order: 5
+head:
+  - tag: title
+    content: Troubleshooting DLP
+---
+
+## Troubleshooting
+
+### 1. DLP Policy is Not Triggering or Blocking Content
+
+This is the most common issue reported. If you have configured a DLP policy but it fails to inspect or block traffic, the cause is nearly always that the traffic is not being decrypted. DLP inspection requires an active **TLS Decryption** policy to scan the content of HTTPS requests.
+
+**Incorrect Configuration (Will Not Work):** A policy that does not explicitly enable decryption.
+
+| Selector      | Operator | Value          | Logic | Action  |
+|---------------|----------|----------------|-------|---------|
+| Domain        | in       | `box.com`      | AND   | Block   |
+| DLP Profile   | in       | `Credit Cards` |       |         |
+
+**Correct Configuration:** To fix this, create a Gateway HTTP policy that enables TLS Decryption for the traffic you intend to inspect. Ensure this decryption policy has a higher precedence (is ordered before) your DLP policy.
+
+**Step 1: Create a Decryption Policy**
+
+| Selector        | Operator | Value          | Logic | Action    |
+|-----------------|----------|----------------|-------|-----------|
+| Domain          | in       | `box.com`      |       | Decrypt   |
+
+**Step 2: Create Your DLP Block Policy**
+
+| Selector      | Operator | Value          | Logic | Action  |
+|---------------|----------|----------------|-------|---------|
+| Domain        | in       | `box.com`      | AND   | Block   |
+| DLP Profile   | in       | `Credit Cards` |       |         |
+
+<Aside type='note'>
+For a detailed guide, refer to the documentation on [configuring TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+</Aside>
+
+---
+
+### 2. DLP Scans are Triggering False Positives or Blocking Legitimate Sites
+
+If your DLP policy is blocking access to business-critical applications (like Zoho, Google, internal domains) or generating a high number of false positives, your policy is likely too broad. Profiles like **Credentials and Secrets** are powerful but can be overly aggressive if not scoped correctly.
+
+**Problematic Configuration (Too Broad):** Applying a sensitive profile to all traffic.
+
+| Selector      | Operator | Value                      | Logic | Action  |
+|---------------|----------|----------------------------|-------|---------|
+| DLP Profile   | in       | `Credentials and Secrets`  |       | Block   |
+
+**Recommended Solution:** Make your policies more specific. Instead of a blanket block, create granular policies that target high-risk destinations or user groups.
+
+**Example: A More Specific Policy**
+
+This policy only blocks uploads of financial data to file-sharing websites for a specific user group, reducing the risk of false positives on other sites.
+
+| Selector          | Operator | Value                            | Logic | Action  |
+|-------------------|----------|----------------------------------|-------|---------|
+| User Group        | in       | `Finance Team`                   | AND   | Block   |
+| Destination Domain| in       | `dropbox.com`, `wetransfer.com`  | AND   |         |
+| DLP Profile       | in       | `Financial Information`          |       |         |
+
+You can also use the **Do Not Scan** action for trusted applications that are known to cause false positives.
+
+---
+
+### 3. Inconsistent Detection (e.g., Works for Text but Not Images)
+
+If you find that DLP detects sensitive data in plain text but not within images or certain applications, check the following:
+
+- **OCR Is Enabled:** For DLP to scan text within images (like a picture of a credit card), you must enable **Optical Character Recognition (OCR)** in your DLP Profile. This feature is available on the Enterprise plan.
+- **Application-Specific Behavior:** Some applications, like WhatsApp Web, use protocols or encryption methods (such as WebSockets) that may not be fully inspected by standard HTTP policies.
+- **Supported File Types:** Ensure the content is in a [supported file type](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#supported-file-types) for DLP inspection.
+
+**Example: Enabling OCR in a DLP Profile**
+
+When editing a custom DLP profile, ensure the **"Scan with OCR"** option is checked.
+
+---
+
+### 4. "Enable DLP Inspection" Option is Missing or I Cannot Create Custom Profiles
+
+If you cannot find the **"Enable DLP inspection"** option when creating an HTTP policy or are blocked from creating a custom DLP Profile, it typically means one of two things:
+
+1.  **Incorrect Plan:** These features require a Zero Trust Enterprise plan. If you believe your account should have this entitlement, please contact your account team to confirm your subscription details.
+2.  **Permissions Issue:** You may not have the required administrative privileges to configure DLP settings. Check with your Cloudflare account administrator.
