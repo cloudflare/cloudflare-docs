@@ -108,6 +108,78 @@ For demonstration purposes, we will create a TightVNC server on an Ubuntu virtua
 
 	You should see the Ubuntu VM desktop.
 
+7. (Optional) Configure the VNC server to start on boot:
+
+	a. Find the full path to the `vncserver` command:
+
+		```sh
+		which vncserver
+		```
+		```sh output
+		/usr/bin/vncserver
+		```
+	b. Create a new service configuration file:
+
+	```sh
+	sudo vim /etc/systemd/system/vncserver@.service
+	```
+
+	c. Copy and paste the following content. Replace `[YOUR_USERNAME]` with the VNC server user. If needed, update `/usr/bin/vncserver` to your `vncserver` path.
+
+		```toml
+		[Unit]
+		Description=Start TightVNC server at startup
+		After=syslog.target network.target
+
+		[Service]
+		Type=forking
+		User=[YOUR_USERNAME]
+		WorkingDirectory=/home/[YOUR_USERNAME]
+
+		PIDFile=/home/[YOUR_USERNAME]/.vnc/%H:%i.pid
+
+		ExecStartPre=-/usr/bin/vncserver -kill :%i > /dev/null 2>&1
+		ExecStart=/usr/bin/vncserver -localhost :%i
+		ExecStop=/usr/bin/vncserver -kill :%i
+
+		[Install]
+		WantedBy=multi-user.target
+		```
+
+		c. Reload `systemd` to read in the new service file:
+
+		```sh
+		sudo systemctl daemon-reload
+		```
+
+		e. Enable the service to start at boot:
+
+		```sh
+		sudo systemctl enable vncserver@1.service
+		```
+
+		The `1` variable configures the VNC service to use display `:1` (which runs on port `5901`).
+
+		f. By default, `systemd` user services only run when that user is logged in. To allow your VNC service to start on boot (before you log in), enable user linger for your user:
+
+		```sh
+		sudo loginctl enable-linger [YOUR_USERNAME]
+		```
+
+		g. Start the service:
+
+		```sh
+		sudo systemctl start vncserver@1.service
+		```
+
+		h. Check its status:
+
+		```sh
+		sudo systemctl status vncserver@1.service
+		```
+
+		The VNC server will now start automatically every time the VM boots.
+
 ## 2. Connect the server to Cloudflare
 
 1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
