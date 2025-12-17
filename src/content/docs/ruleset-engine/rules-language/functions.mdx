@@ -141,7 +141,11 @@ For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(ht
 
 Returns a string which is the concatenation of the strings in `items` with the `separator` between each item.
 
-If any of the arguments is nil, the returned value will be nil.
+If any of the arguments is nil, the returned value will be nil.<br/>
+If the `items` array is empty, the returned value will be an empty string.<br/>
+If the `items` array contains a single item, then no concatenation occurs and the (single) item will be returned as is.
+
+This function does the opposite of the [`split()`](#split) function.
 
 Example:
 
@@ -336,6 +340,8 @@ The `limit` is mandatory, and it must be a literal integer between 1 to 128.
 
 If `input` is nil, the returned value will be an empty array.
 
+This function does the opposite of the [`join()`](#join) function.
+
 Examples:
 
 ```txt
@@ -345,7 +351,7 @@ Examples:
 x-categories: groceries,electronics,diy,auto
 
 split(http.request.headers["x-categories"][0], ",", 64)  will return ["groceries", "electronics", "diy", "auto"]
-split(http.request.headers["x-categories"][0], ",", 2)   will return ["groceries", "electronics", "diy,auto"]
+split(http.request.headers["x-categories"][0], ",", 3)   will return ["groceries", "electronics", "diy,auto"]
 
 # B) Consider the following HTTP request header:
 x-categories: groceries,,electronics
