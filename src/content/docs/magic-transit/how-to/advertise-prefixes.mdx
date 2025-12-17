@@ -79,7 +79,7 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 
   <TabItem label="Dashboard">
 		:::note
-		You can only advertise your prefix after running pre-flight checks with Cloudflare. If your prefix status is greyed out and shows a Withdrawn status, Cloudflare locks your prefix. Contact your account team to close the pre-flight checks phase and unlock your prefixes.
+		You can only advertise your prefix after running pre-flight checks with Cloudflare. If your prefix status is grayed out and shows a Withdrawn status, Cloudflare locks your prefix. Contact your account team to close the pre-flight checks phase and unlock your prefixes.
 
 		Currently, only the default BGP prefix (that matches the IP prefix) can be controlled through the Cloudflare dashboard.
 		:::
@@ -89,7 +89,7 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 		<DashButton url="/?to=/:account/magic-transit/configuration" />
 
 		2. From the **IP Prefixes** tab, select the prefix to modify > **Edit**.
-		3. From the **Status** drop-down menu, select **Advertised** or **Withdrawn**.
+		3. From the **Status** drop-down menu, select *Advertised* or *Withdrawn*.
 		4. (Optional) Edit the description for your prefix.
 		5. Select **Edit IP Prefix** to save your changes.
   </TabItem>
@@ -101,7 +101,7 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
   path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes/{bgp_prefix_id}"
   method="PATCH"
   json={{
-    "on_demand":{ "advertised": "true" }
+    "on_demand": { "advertised": true }
   }}
 	/>
   </TabItem>
@@ -228,7 +228,7 @@ If you use Direct CNI as a way to on-ramp your network traffic to Magic Transit,
 
 Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (for GRE and IPsec tunnels). For CNI, both static routing and BGP options are available. Cloudflare does not currently support advertisement of routes for traffic engineering purposes. As a best practice to reduce last-hop latency, consider scoping your routes regionally.
 
-<Render file="traffic-steering-region-codes" product="networking-services/reference" />
+<Render file="reference/traffic-steering-region-codes" product="networking-services" />
 
 The default setting for static route regions is **All Regions**. Configure scoping for your traffic in the **Region code** section when [adding](/magic-transit/how-to/configure-routes/#create-a-static-route) or [editing](/magic-transit/how-to/configure-routes/#edit-a-static-route) a static route.
 
