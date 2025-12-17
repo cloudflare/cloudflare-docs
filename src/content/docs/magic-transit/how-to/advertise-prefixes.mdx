@@ -166,7 +166,7 @@ If you use Direct CNI with the 2.0 CNI dataplane, you can:
 - Automatically withdraw your prefixes from Cloudflare's global edge infrastructure when you withdraw all matching BGP learned prefixes from the Magic routing table.
 - Automatically advertise your prefixes through Cloudflare's global edge infrastructure when you have at least one matching BGP learned prefix in the Magic routing table.
 
-To automatically control the withdrawal of the BGP session globally you must enable this feature on the BGP prefix using the [Addressing API](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/). For example:
+To enable automatic global announcement and withdrawal, enable this feature on the BGP prefix using the [Addressing API](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/). For example:
 
 <APIRequest
   path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes/{bgp_prefix_id}"
@@ -188,7 +188,7 @@ When you withdraw a prefix using BGP, you must ensure you withdraw all matching 
 
 ### Use communities to set AS prepends on an anycast prefix
 
-As an alternative to setting [AS prepends on any anycast prefix with the API](#use-the-api-to-set-as-prepends-on-a-bgp-prefix) you can instead use BGP Communities to control the number of AS prepends that Cloudflare announces from its edge for your prefix. The community values are:
+As an alternative to setting [AS prepends on an anycast prefix with the API](#use-the-api-to-set-as-prepends-on-a-bgp-prefix), you can use BGP communities to control the number of AS prepends that Cloudflare announces from its edge for your prefix. The community values are:
 
 - `13335:50101`: Prepends one time with the 13335 ASN
 - `13335:50102`: Prepends two times with the 13335 ASN
