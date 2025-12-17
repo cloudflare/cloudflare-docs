@@ -16,3 +16,11 @@ entries:
   - term: In-band pricing
     general_definition: |-
       A pricing model where pricing information is transmitted within the same communication channel as the content itself. In Pay Per Crawl, in-band pricing means the price is included in the HTTP response headers (`crawler-price`) alongside the actual content, rather than being retrieved from a separate system or API call. When custom pricing is enabled, Cloudflare sets the `cf-pay-per-crawl` header to `pricing=in-band`, indicating that the origin server or Worker can dynamically set prices by including a `crawler-price` header in the response.
+
+  - term: Operator
+    general_definition: |-
+      The company or organization that owns and operates an AI crawler. Examples include OpenAI, Microsoft, Google, ByteDance, Anthropic, and Meta. In AI Crawl Control, crawlers are grouped by their operators.
+
+  - term: Referrals
+    general_definition: |-
+      Traffic referred to your website by AI services, identified by the referrer URL and whether it is owned by an AI operator.
