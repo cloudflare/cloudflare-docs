@@ -164,7 +164,16 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		}
 
 		if (filters.search) {
-			if (!model.name.toLowerCase().includes(filters.search.toLowerCase())) {
+			const searchTerm = filters.search.toLowerCase();
+			const matchesName = model.name.toLowerCase().includes(searchTerm);
+			const matchesDescription = model.description
+				.toLowerCase()
+				.includes(searchTerm);
+			const matchesTags = model.tags?.some((tag) =>
+				tag.toLowerCase().includes(searchTerm),
+			);
+
+			if (!matchesName && !matchesDescription && !matchesTags) {
 				return false;
 			}
 		}
