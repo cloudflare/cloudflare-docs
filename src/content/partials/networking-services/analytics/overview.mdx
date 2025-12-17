@@ -15,10 +15,11 @@ Use these troubleshooting options to gather information at the start of your tro
 
 <Markdown
 	text={`
-	${props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)\n" : ""}- Analyze network traffic over time in [Network Analytics](#network-analytics)
-	- Perform more detailed troubleshooting with:
-	  - [Traceroutes](#traceroutes)
-	  - [Packet captures](#packet-captures)
+		${props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)" : ""}
+		- Analyze network traffic over time in [${props.productName} Network Analytics](${props.analyticsAnchorHeading})
+		- Perform more detailed troubleshooting with:
+		  - [Traceroutes](#traceroutes)
+		  - [Packet captures](#packet-captures)
 	`}
 	inline={false}
 />
