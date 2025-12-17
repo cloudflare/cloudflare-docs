@@ -9,46 +9,46 @@ import { APIRequest, Details, GlossaryTooltip, Render, Tabs, TabItem, DashButton
 
 ## Onboard prefixes
 
-You can bring your own public IPs to Cloudflare to use with Magic Transit. This process requires two steps:
+You can bring your own public IP addresses to Cloudflare to use with Magic Transit. This is also known as bring your own IP (BYOIP). This process requires two steps:
 
 1. Add IP <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letter of Agency or LOA</GlossaryTooltip>) that allows Cloudflare to announce the network or its subnets. You can also define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
 2. Define additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default, there is always one BGP prefix that is identical to the IP prefix. You can optionally configure additional, more-specific BGP prefixes (subnets of the IP prefix), up to a maximum prefix length of `/24`.
 
 ### IP prefixes
 
-Cloudflare measures the Magic Transit prefix count based on the number of BGP prefixes a customer defines. Each prefix is billed separately, even if they overlap. For example, both a `/16` and any `/24` within it are counted individually. Onboarding a larger aggregate prefix does not automatically include its smaller subnets for announcement or billing purposes.
+Cloudflare measures the Magic Transit prefix count based on the number of BGP prefixes you define. Each prefix is billed separately, even if they overlap. For example, both a `/16` and any `/24` within it are counted individually. Onboarding a larger aggregate prefix does not automatically include its smaller subnets for announcement or billing purposes.
 
 There is no billing limit on the accepted prefix sizes. However, only prefixes up to `/24` are accepted for onboarding because longer prefixes (like `/25`, `/26`) are not globally routable.
 
 Provide all IP prefixes you plan to onboard, along with the ASNs from which you will advertise them. When specifying prefixes, observe these guidelines:
 
-- Prefixes must support at least 256 hosts (`/24` in CIDR ([Classless Inter-Domain Routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/)) notation). If you do not meet the `/24` prefix length requirement, refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/).
+- Prefixes must include at least 256 IP addresses (`/24` in CIDR ([Classless Inter-Domain Routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/)) notation). If you do not meet the `/24` prefix length requirement, refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/).
 - Internet Routing Registry entries and Letters of Agency (LOA) must match the prefixes and originating prefixes you submit to Cloudflare.
 - When using contiguous prefixes, specify aggregate prefixes where possible.
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
 - If you do not own an ASN, you can use the Cloudflare Customer ASN (AS13335).
 
-#### Choose between Cloudflare's ASN and your ASN
+#### Cloudflare ASN vs. your own ASN
 
-As a part of your IP prefix onboarding process, you need to decide the ASN Cloudflare will use to announce your prefixes. If you supply your own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP `AS_PATH`. For example, if your ASN is `AS64496`, anyone directly peering with Cloudflare sees the path as `13335 64496`.
+As part of your IP prefix onboarding process, you need to decide which ASN Cloudflare will use to announce your prefixes. If you supply your own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP `AS_PATH`. For example, if your ASN is `AS64496`, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
 If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS13335).
 
 :::note
-For all future onboardings, you must use AS13335. Current customers who are already using Cloudflare's AS209242 do not need to make any changes and can continue using that ASN.
+For all future onboardings, you must use AS13335. If you already use Cloudflare's AS209242, you do not need to make changes and can continue using that ASN.
 :::
 
 ### BGP prefixes
 
 BGP prefixes represent the prefix that Cloudflare will announce through anycast from Cloudflare's global network. By default, there is always at least one BGP prefix that is identical to the onboarded IP prefix.
 
-For example, if a customer onboards a `/20` IP prefix to Magic Transit, it can only be announced as a `/20` because there is only the default `/20` BGP prefix. Smaller sub-prefixes (such as `/24s`) within that `/20` cannot be announced individually unless they are configured as separate BGP prefixes.
+For example, if you onboard a `/20` IP prefix to Magic Transit, it can only be announced as a `/20` because there is only the default `/20` BGP prefix. Smaller sub-prefixes (such as `/24s`) within that `/20` cannot be announced individually unless they are configured as separate BGP prefixes.
 
-Note that for billing purposes, Cloudflare measures the Magic Transit prefix count based on the number of BGP prefixes a customer defines.
+Note that for billing purposes, Cloudflare measures the Magic Transit prefix count based on the number of BGP prefixes you define.
 
 ### BGP prefix advertisement control methods
 
-Cloudflare offers multiple mechanisms for customers to control the announcement and withdrawal of on-demand prefixes. Customers can choose to manage advertisements through one of the following methods:
+Cloudflare offers multiple mechanisms to control the announcement and withdrawal of on-demand prefixes. You can manage advertisements through one of the following methods:
 
 - The [Addressing API](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/).
 - BGP peering with Cloudflare's route reflectors: Either over the Internet or over a Classic CNI connection. Contact your Cloudflare account team if you need this option.
@@ -162,7 +162,7 @@ For example, if you have a CDN zone onboarded with a Magic Transit-protected ori
 
 ### Automatically announce and withdraw anycast-based Magic BGP routes
 
-If you are a Magic Transit customer using Direct CNI with the 2.0 CNI dataplane, you can:
+If you use Direct CNI with the 2.0 CNI dataplane, you can:
 - Automatically withdraw your prefixes from Cloudflare's global edge infrastructure when you withdraw all matching BGP learned prefixes from the Magic routing table.
 - Automatically advertise your prefixes through Cloudflare's global edge infrastructure when you have at least one matching BGP learned prefix in the Magic routing table.
 
