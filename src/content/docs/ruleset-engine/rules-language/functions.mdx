@@ -321,6 +321,42 @@ remove_query_args(http.request.uri.query, "category") will return "order=desc"
 You can only use the `remove_query_args()` function in [rewrite expressions of Transform Rules](/rules/transform/).
 :::
 
+### `split`
+
+{/* prettier-ignore */}
+<code>split(input <Type text="String" />, separator <Type text="String" />, limit <Type text="Integer" />)</code>: <Type text="Array<String>" />
+
+Splits the `input` string into an array of strings by breaking the initial string at every occurrence of the `separator` string. The returned array will contain at most `limit` number of elements.
+
+If you provide a `limit` value lower than the actual number of substrings in the split string, the last element of the returned array will contain the remainder of the string.
+
+The `separator` must be a non-empty literal string.
+
+The `limit` is mandatory, and it must be a literal integer between 1 to 128.
+
+If `input` is nil, the returned value will be an empty array.
+
+Examples:
+
+```txt
+# Split a comma-separated list of categories obtained from an HTTP request header.
+
+# A) Consider the following HTTP request header:
+x-categories: groceries,electronics,diy,auto
+
+split(http.request.headers["x-categories"][0], ",", 64)  will return ["groceries", "electronics", "diy", "auto"]
+split(http.request.headers["x-categories"][0], ",", 2)   will return ["groceries", "electronics", "diy,auto"]
+
+# B) Consider the following HTTP request header:
+x-categories: groceries,,electronics
+
+split(http.request.headers["x-categories"][0], ",", 64)  will return ["groceries", "", "electronics"]
+```
+
+:::note
+The `split()` function is only available in [response header transform rules](/rules/transform/response-header-modification/) and [Custom Error Rules](/rules/custom-errors/#custom-error-rules).
+:::
+
 ### `starts_with`
 
 {/* prettier-ignore */}
