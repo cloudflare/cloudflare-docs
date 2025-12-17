@@ -158,6 +158,27 @@ join(http.request.headers.names, ",")
 The `join()` function is only available in [Transform Rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [Custom Error Rules](/rules/custom-errors/#custom-error-rules).
 :::
 
+### `has_key`
+
+{/* prettier-ignore */}
+<code>has_key(map: <Type text="Map<T>" />, key: <Type text="String" />)</code>: <Type text="Boolean" />
+
+Returns true if the `key` specified in the second argument, which can be a literal or a dynamic string, is an existing key in the `map` provided as first argument; returns false otherwise.
+
+The data type of the values in `map` (indicated by `T`) can be any type.
+
+If any of the arguments is nil, the returned value will be nil.
+
+Examples:
+
+```txt
+# Check if an HTTP request header exists:
+has_key(http.request.headers, "x-my-header")
+
+# Check if a request header exists based on the name of the first query argument:
+has_key(http.request.headers, lower(http.request.uri.args.names[0]))
+```
+
 ### `len`
 
 {/* prettier-ignore */}
