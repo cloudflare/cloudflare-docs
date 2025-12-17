@@ -1479,6 +1479,7 @@
 				"super_bot_fight_mode": {
 					"title": "Super Bot Fight Mode",
 					"free": "No",
+					"lite": "Yes",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
@@ -1765,6 +1766,7 @@
 					"summary": "Available on paid plans",
 					"link": "/waf/managed-rules/reference/cloudflare-managed-ruleset/",
 					"free": "No",
+					"lite": "Yes",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
@@ -1774,6 +1776,7 @@
 					"summary": "Available on paid plans",
 					"link": "/waf/managed-rules/reference/owasp-core-ruleset/",
 					"free": "No",
+					"lite": "Yes",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
