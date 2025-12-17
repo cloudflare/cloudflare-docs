@@ -109,14 +109,14 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 </Tabs>
 
 :::caution[Warning: ISP route refresh delays may impact traffic]
-Announcing or withdrawing a prefix means Cloudflare will begin or stop advertising routes, impacting traffic flow to or from that IP range. Changes propagate across our global network almost instantly, typically taking effect within minutes. However, Cloudflare has no control over how quickly ISPs refresh their routes.
+Announcing or withdrawing a prefix means Cloudflare will begin or stop advertising routes, impacting traffic flow to or from that IP range. Changes propagate across Cloudflare's global network almost instantly, typically taking effect within minutes. However, Cloudflare has no control over how quickly ISPs refresh their routes.
 
 Refer to [Safely withdraw a BYOIP prefix](#safely-withdraw-a-byoip-prefix) for more information on how to prevent blackholing during prefix withdrawals.
 :::
 
 ### Delete an IP prefix
 
-You can only delete a prefix with an **Unapproved** status. To delete prefixes with a different status, contact your administrator or account manager.
+You can only delete a prefix with an *Unapproved* status. To delete prefixes with a different status, contact your administrator or account manager.
 
 1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Delete**.
 2. Confirm your choice from the modal by selecting **Delete**.
@@ -135,7 +135,7 @@ json={{
 
 AS prepending helps you gracefully transition traffic between network providers. By adding prepends to Cloudflare's advertisement, you make the route through Cloudflare less preferred for some Internet network providers. This allows you to simultaneously advertise the same prefix from an alternate provider with a shorter, more desirable `AS_PATH`. Advertising from both providers at once provides a smoother traffic migration and minimizes packet loss during a change of provider.
 
-The `"asn_prepend_count"` parameter accepts values from `0` to `3`. A higher value makes the route less preferred.  This parameter can also be changed using BGP — refer to [Use communities to set AS prepends on an anycast prefix](#use-communities-to-set-as-prepends-on-an-anycast-prefix).
+The `"asn_prepend_count"` parameter accepts values from `0` to `3`. A higher value makes the route less preferred. You can also change this parameter using BGP. Refer to [Use communities to set AS prepends on an anycast prefix](#use-communities-to-set-as-prepends-on-an-anycast-prefix).
 
 When you use AS prepending to migrate traffic away from Magic Transit, the typical sequence of events is as follows:
 
