@@ -11,6 +11,14 @@ Sandbox SDK lets you execute untrusted code safely from your Workers. It combine
 - **Durable Objects** - Persistent sandbox instances with unique identities
 - **Containers** - Isolated Linux environments where code actually runs
 
+## Three-layer architecture
+
+The SDK is organized into three distinct layers, each with specific responsibilities:
+
+1. **`@cloudflare/sandbox` (SDK package)** - Public SDK exported to npm
+2. **Sandbox Durable Object** - Manages container lifecycle and state
+3. **Container Runtime** - Executes commands in isolated Linux environment
+
 ## Architecture overview
 
 ```mermaid
@@ -96,9 +104,35 @@ await sandbox.exec("python script.py");
 3. **Container Runtime** validates inputs, executes command, captures output
 4. **Response flows back** through all layers with proper error transformation
 
+## Client architecture pattern
+
+The SDK uses a modular client pattern where `SandboxClient` aggregates specialized clients for different operations:
+
+- **CommandClient** - Execute commands (exec, streaming)
+- **FileClient** - File operations (read, write, list, delete)
+- **ProcessClient** - Background process management
+- **PortClient** - Expose services via preview URLs
+- **GitClient** - Git repository operations
+- **UtilityClient** - Sessions and health checks
+- **InterpreterClient** - Code execution with structured outputs
+
+All clients extend `BaseHttpClient` which provides HTTP communication with automatic retry on transient errors and error response parsing into typed SDK errors.
+
+## Container runtime architecture
+
+The container runtime uses dependency injection for service management:
+
+- **Router** - HTTP router with middleware support
+- **Handlers** - Route handlers for each operation domain
+- **Services** - Business logic layer
+- **Managers** - Stateful managers for processes, ports, and sessions
+
+The container HTTP server runs on port 3000 using Bun runtime, handling concurrent requests efficiently.
+
 ## Related resources
 
 - [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - How sandboxes are created and managed
 - [Container runtime](/sandbox/concepts/containers/) - Inside the execution environment
 - [Security model](/sandbox/concepts/security/) - How isolation and validation work
 - [Session management](/sandbox/concepts/sessions/) - Advanced state management
+- [Concurrency model](/sandbox/concepts/concurrency/) - How requests are handled concurrently

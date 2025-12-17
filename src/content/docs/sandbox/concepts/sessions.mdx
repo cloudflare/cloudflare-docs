@@ -183,7 +183,51 @@ await session.exec('rm -rf /workspace/*');
 const userSandbox = getSandbox(env.Sandbox, userId);
 ```
 
+## Command execution model
+
+Sessions execute commands in a bash shell, preserving state between commands. Understanding the execution model helps explain command behavior:
+
+### Foreground execution
+
+Regular commands (`exec`) run in the main shell so state persists:
+
+```typescript
+await sandbox.exec("cd /app");
+await sandbox.exec("export MY_VAR=hello");
+await sandbox.exec("pwd");  // /app - state preserved
+```
+
+The shell captures stdout and stderr separately, prefixes each line with a binary marker, and merges them into a single log. This ensures clean separation of output streams while maintaining command ordering.
+
+### Background execution
+
+Background processes (`startProcess`, `execStream`) run in a subshell to avoid blocking the main shell:
+
+```typescript
+const proc = await sandbox.startProcess("python server.py");
+// Main shell is not blocked - other commands can run
+```
+
+Background processes use named pipes (FIFOs) with separate readers that prefix stdout/stderr lines, enabling concurrent streaming output without blocking command execution.
+
+### Command serialization
+
+Commands in the same session execute sequentially to preserve shell state consistency. Commands in different sessions can run in parallel:
+
+```typescript
+// These run sequentially (same session)
+await sandbox.exec("command1");
+await sandbox.exec("command2");
+
+// These can run in parallel (different sessions)
+await session1.exec("command1");
+await session2.exec("command2");
+```
+
+For background processes, the session is released after the process starts (not after it exits), allowing subsequent commands to run while the background process continues.
+
 ## Related resources
 
 - [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - Understanding sandbox management
 - [Sessions API](/sandbox/api/sessions/) - Complete session API reference
+- [Concurrency model](/sandbox/concepts/concurrency/) - How requests are handled concurrently
