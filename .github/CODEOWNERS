@@ -136,7 +136,7 @@
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @cloudflare/pcx-technical-writing @cloudflare/workers-runtime-1
 /src/content/docs/pages/framework-guides/ @igorminar @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/pcx-technical-writing
-/src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
+/src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @nevikashah @WalshyDev @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @cloudflare/pcx-technical-writing
