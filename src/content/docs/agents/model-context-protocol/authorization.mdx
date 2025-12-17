@@ -24,7 +24,7 @@ You can use the OAuth Provider Library in three ways:
 
 1. **Your Worker handles authorization itself.** Your MCP server, running on Cloudflare, handles the complete OAuth flow. ([Example](/agents/guides/remote-mcp-server/))
 2. **Integrate directly with a third-party OAuth provider**, such as GitHub or Google.
-3. **Integrate with your own OAuth provider**, including authorization-as-a-service providers you might already rely on, such as Stytch, Auth0, or WorkOS.
+3. **Integrate with your own OAuth provider**, including authorization-as-a-service providers you might already rely on, such as Stytch, Auth0, WorkOS, or Scalekit.
 
 The following sections describe each of these options and link to runnable code examples for each.
 
@@ -174,6 +174,12 @@ Get started with a remote MCP server that uses WorkOS's AuthKit to authenticate 
 Get started with a remote MCP server that uses [Descope](https://www.descope.com/) Inbound Apps to authenticate and authorize users (for example, email, social login, SSO) to interact with their data through AI agents. Leverage Descope custom scopes to define and manage permissions for more fine-grained control.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server-descope-auth)
+
+#### Scalekit
+
+Get started with a remote MCP server that uses [Scalekit's MCP Auth](https://docs.scalekit.com/authenticate/mcp/overview/) to authenticate and authorize users through OAuth 2.1 with support for dynamic client registration and CIMD (Client-Initiated Metadata Discovery). Deploy a full-stack TODO application that demonstrates how to extend a traditional application for use by AI agents, with a React frontend, REST API, and MCP server all running on Cloudflare Workers.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/mcp-scalekit-todo-list)
 
 ## Using Authentication Context in Your MCP Server
 
