@@ -13,19 +13,15 @@ import { AnchorHeading, Markdown } from "~/components";
 
 Use these troubleshooting options to gather information at the start of your troubleshooting process. Then, use more detailed network data collection and analysis to identify the root cause.
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
-  <>
-	<Markdown
-		text="- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)"
-		inline={false}
-	/>
-  </>
-  )
-}
-- Analyze network traffic over time in <a href="#network-analytics">Network Analytics</a>
-- Perform more detailed troubleshooting with:
-  - [Traceroutes](#traceroutes)
-  - [Packet captures](#packet-captures)
+<Markdown
+	text={`
+	${props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)\n" : ""}- Analyze network traffic over time in [Network Analytics](#network-analytics)
+	- Perform more detailed troubleshooting with:
+	  - [Traceroutes](#traceroutes)
+	  - [Packet captures](#packet-captures)
+	`}
+	inline={false}
+/>
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
