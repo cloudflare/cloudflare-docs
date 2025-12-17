@@ -6,11 +6,10 @@ title: Code block guidelines
 To create a code block:
 - Use triple-grave characters (` ``` `) as a fence, and enter a [language](#languages) name after the first ` ``` ` fence
 - Indent lines by four spaces or one tab
-- Enter a [language](#languages) name after the first ``` fence
 
-[Learn about basic code block formatting and syntax](/style-guide/formatting/code-conventions-and-format/)
+[Learn about conventions for code blocks](/style-guide/formatting/code-conventions-and-format/)
 
-[Learn about special formatting and functionality](#add-special-formatting)
+[Learn about code block special formatting and functionality](#add-special-formatting)
 
 Here is an example of a JSON code block:
 
@@ -42,7 +41,7 @@ To add the output of your code block, create a second code block below the first
 npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
 ```
 
-```sh output
+```txt output
 ✅ Successfully created index 'tutorial-index'
 
 [[vectorize]]
@@ -55,7 +54,7 @@ index_name = "tutorial-index"
 npx wrangler vectorize create tutorial-index --dimensions=3 --metric=cosine
 ```
 
-```sh output
+```txt output
 ✅ Successfully created index 'tutorial-index'
 
 [[vectorize]]
@@ -70,7 +69,7 @@ To define the language of your code block, enter the name of the language after 
 
 If there is no appropriate syntax language, use `txt` (for example, a fragment of an Apache configuration file).
 
-Different capitalizations of these languages are also supported (but not recommended). For example, `JavaScript` will use the `javascript` language, and `HTML` will use the `html` language.
+Make sure you enter the language name in lower case, since other capitalizations of these names are not supported. For example, entering `JavaScript` would use the `txt` language.
 
 Here is a list of supported languages:
 - `bash` (alias: `curl`) [Learn more about terminal commands](#terminal-commands)
@@ -95,7 +94,7 @@ Here is a list of supported languages:
 - `swift`
 - `toml`
 - `ts` (alias: `typescript`)
-- `txt` (aliases: `text`, `plaintext`) [Learn more about terminal commands](#terminal-commands)
+- `txt` (aliases: `text`, `plaintext`, no language name)
 - `xml`
 - `yaml` (alias: `yml`)
 
@@ -151,7 +150,7 @@ JSON fragments may appear with a red background in GitHub because they are not v
 You can add special formatting to code blocks, such as collapsed sections, line numbers, and highlighting. Here is a showcase of some of the functionality. You can find more options at [Expressive Code](https://expressive-code.com/), a project by Astro.
 
 ````mdx live
-```powershell title="PowerShell"
+```powershell title="Write string example"
 Write-Output "This one has a title"
 ```
 
@@ -196,13 +195,12 @@ function demo() {
 ````
 
 :::caution
-Do not use the `$` sign in your code blocks before the command.
+Do not use the `$` sign in your code blocks before a command.
 :::
 
 ## Workers Playground
 
-If you add the `playground` option to the opening code fence for a Worker example, it will
-add a "Run Worker in Playground" link that will take the user to the [Worker's playground](/workers/playground/)
+If you add the `playground` option to the opening code fence for a Worker example, it will add a "Run Worker in Playground" link that will take the user to the [Worker's playground](/workers/playground/).
 
 ### Live demo
 
@@ -282,3 +280,9 @@ query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
 }
 ```
 ````
+
+So, the **Variables** would look something like this:
+
+```
+{"zoneTag":"ZONE_ID", "start":"2025-09-11T14:00:00Z", "end":"2025-09-11T20:00:00Z", "uId": "custom-variable"}
+```
