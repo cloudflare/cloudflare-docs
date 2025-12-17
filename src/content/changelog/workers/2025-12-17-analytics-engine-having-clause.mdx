@@ -1,0 +1,41 @@
+---
+title: HAVING clause support in Workers Analytics Engine
+description: Workers Analytics Engine now supports the HAVING clause for filtering aggregated results in SQL queries
+date: 2025-12-17
+products:
+  - workers-analytics-engine
+---
+
+You can now use the `HAVING` clause in [Workers Analytics Engine](https://developers.cloudflare.com/analytics/analytics-engine/) to filter results after grouping and aggregation.
+
+Workers Analytics Engine allows you to ingest and store high-cardinality data at scale and query your data through a simple SQL API.
+
+The `HAVING` clause complements the `WHERE` clause by enabling you to filter groups based on aggregate values. While `WHERE` filters rows before aggregation, `HAVING` filters groups after aggregation is complete.
+
+## Example queries
+
+Filter groups where the average exceeds a threshold:
+
+```sql
+SELECT
+    blob1 AS probe_name,
+    avg(double1) AS average_temp
+FROM temperature_readings
+GROUP BY probe_name
+HAVING average_temp > 10
+```
+
+Filter groups based on count:
+
+```sql
+SELECT
+    blob1 AS probe_name,
+    count() AS num_readings
+FROM temperature_readings
+GROUP BY probe_name
+HAVING num_readings > 100
+```
+
+## Ready to get started?
+
+Learn more about the `HAVING` clause and other SQL capabilities in the [Workers Analytics Engine SQL reference documentation](/analytics/analytics-engine/sql-reference/statements/#having-clause).
