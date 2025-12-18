@@ -11,7 +11,7 @@ import { APIRequest, Details, GlossaryTooltip, Render, Tabs, TabItem, DashButton
 
 You can bring your own public IP addresses to Cloudflare to use with Magic Transit. This is also known as bring your own IP (BYOIP). This process involves two distinct types of prefixes:
 
-1. **IP prefixes**: Each IP address block you bring to Cloudflare requires an IP prefix entry. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>) that allows Cloudflare to announce the network or its subnets. You can also define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
+1. **IP prefixes**: Each IP address block you bring to Cloudflare requires an IP prefix entry. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>) that allows Cloudflare to announce the network or its subnets. You can also define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in our advertised AS path.
 2. **BGP prefixes**: These control which prefixes Cloudflare announces from its global network. By default, each IP prefix has one matching BGP prefix. You can configure additional, more-specific BGP prefixes (subnets of the IP prefix), up to a maximum prefix length of `/24`.
 
 ### IP prefixes
