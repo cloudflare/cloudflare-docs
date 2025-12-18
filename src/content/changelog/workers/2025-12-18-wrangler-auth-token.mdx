@@ -20,4 +20,17 @@ Use the `--json` flag to get structured output including the token type:
 wrangler auth token --json
 ```
 
-This also enables retrieving API key/email credentials from `CLOUDFLARE_API_KEY` and `CLOUDFLARE_EMAIL`, which requires the `--json` flag since this method uses two values instead of a single token.
+The JSON output includes the authentication type:
+
+```jsonc
+// API token
+{ "type": "api_token", "token": "..." }
+
+// OAuth token
+{ "type": "oauth", "token": "..." }
+
+// API key/email (only available with --json)
+{ "type": "api_key", "key": "...", "email": "..." }
+```
+
+API key/email credentials from `CLOUDFLARE_API_KEY` and `CLOUDFLARE_EMAIL` require the `--json` flag since this method uses two values instead of a single token.
