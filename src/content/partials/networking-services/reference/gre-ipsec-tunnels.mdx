@@ -15,7 +15,7 @@ import { AnchorHeading, GlossaryTooltip, Markdown, Details } from "~/components"
 
 To accommodate additional header data introduced by encapsulation, you must adjust the <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> to comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-For instructions, refer to <a href={props.mssURL}>Set Maximum segment size</a>.
+For instructions, refer to <a href={props.mssURL}>Set maximum segment size</a>.
 
 This diagram illustrates the flow of traffic with {props.productName}.
 
@@ -43,7 +43,7 @@ By default, your Internet Service Provider (ISP) interface routes egress packets
 
 {props.productName} uses <GlossaryTooltip term="anycast" link="https://www.cloudflare.com/learning/cdn/glossary/anycast-network/">anycast</GlossaryTooltip> IP addresses for Cloudflare's tunnel endpoints. In the anycast model, any server in any data center can receive traffic and must be capable of encapsulating and decapsulating packets for any tunnel.
 
-This works with <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> tunnels because the GRE protocol is stateless. Cloudflare processes each packet independently without requiring any negotiation or coordination between tunnel endpoints. Tunnel endpoints are technically bound to IP addresses but do not need to be bound to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
+This works with <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> tunnels because the GRE protocol is stateless. Cloudflare processes each packet independently without requiring any negotiation or coordination between tunnel endpoints. Tunnel endpoints bind to IP addresses but not to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
 
 For <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels, the customer's router negotiates the creation of an IPsec tunnel with Cloudflare using the <GlossaryTooltip term="Internet key exchange (IKE)">Internet Key Exchange (IKE)</GlossaryTooltip> protocol. Next, the Cloudflare server that handled that negotiation will propagate the details of that newly created IPsec tunnel (traffic selectors, keys, etc.) across Cloudflare's data centers. The result is that any Cloudflare server can then handle traffic for that IPsec tunnel, even though only one Cloudflare server actually negotiated the setup of that tunnel.
 
@@ -84,7 +84,7 @@ a --> 1== Cloudflare anycast GRE <br> single endpoint ==>i --> j
 
 ## IPsec tunnels
 
-[IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) is a group of protocols that work together to set up encrypted connections between devices. It helps keep data you send over public networks secure. Organizations often use IPsec to set up VPNs, and it works by encrypting IP packets and authenticating the source where the packets come from.
+[IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) is a group of protocols that work together to set up encrypted connections between devices. It helps keep data you send over public networks secure. Organizations often use IPsec to set up Virtual Private Networks (VPNs), and it works by encrypting IP packets and authenticating the source where the packets come from.
 
 For information on how to set up an IPsec tunnel, refer to <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>. To learn more about the configuration parameters {props.productName} uses to create an IPsec tunnel, keep reading.
 
@@ -92,7 +92,7 @@ For information on how to set up an IPsec tunnel, refer to <a href={props.tunnel
 
 {props.productName} uses the following stages to establish an IPsec tunnel:
 
-- **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret for key derivation. After this exchange, the peers have a secure communication channel but they have not yet authenticated each other. If supported, the peers will also perform NAT detection in this exchange.
+- **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret for key derivation. After this exchange, the peers have a secure communication channel but they have not yet authenticated each other. If supported, the peers will also perform Network Address Translation (NAT) detection in this exchange.
 - **Auth Exchange** (`IKE_AUTH`): Using the secure tunnel from the initial exchange, IKE peers mutually authenticate each other. After authentication, they establish the IKE security association (SA). Next, the peers negotiate and establish an IPsec tunnel, known as a Child SA.
 
 :::note
@@ -155,7 +155,7 @@ The Child SA. Documentation sometimes refers to this as Phase 2 as per IKEv1 lan
   - SHA-1
 
   :::note
-  When using AES-GCM-16, you do not need an integrity algorithm because AES GCM includes integrity checking (since it is an AEAD algorithm). Even when using an AEAD algorithm, however, some routers still require you to select an integrity algorithm.
+  When using AES-GCM-16, you do not need an integrity algorithm because AES GCM includes integrity checking (since it is an Authenticated Encryption with Associated Data (AEAD) algorithm). Even when using an AEAD algorithm, however, some routers still require you to select an integrity algorithm.
   :::
 
 - **Perfect Forward Secrecy (PFS) group**
@@ -178,7 +178,7 @@ The Child SA. Documentation sometimes refers to this as Phase 2 as per IKEv1 lan
 - The IKE authentication method must be Pre-Shared Key (PSK).
 - If your router is behind Network Address Translation (NAT) and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). Cloudflare does not support NAT-T for IKE sessions which begin on port `500` and then switch to port `4500`.
 - (Uncommon) You must disable Extended Sequence Numbers (ESN).
-- If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not expose this setting, check the router documentation for its dead peer detection behavior.
+- If your tunnels need replay protection, enable Dead Peer Detection (DPD) in your router and select the option that restarts your IKE session when a DPD timeout occurs. This "restart" option ensures that the connection can recover in the event that a Cloudflare server goes offline. If your router does not offer this setting, check the router documentation for its dead peer detection behavior.
 
 </Details>
 
