@@ -21,23 +21,23 @@ SLOs are the threshold for the SLI and set a target level of reliability for Mag
 
 The error budget is the amount of unsuccessful events that can happen over the course of the SLO time window while maintaining the service at the level of availability the SLO defines.
 
-The SLO is a target percentage, and the error budget is defined as 100% minus the SLO. For example, assume that during 30 days there were one million Magic Tunnel health checks in your account, and your SLO is set to 99.9%. The error budget for this case would be:
+The SLO is a target percentage, and the error budget equals 100% minus the SLO. For example, assume that during 30 days there were one million Magic Tunnel health checks in your account, and your SLO is set to 99.9%. The error budget for this case would be:
 
 ```txt
 number of events x (1 - SLO) = 1,000,000 x (1-0.999) = 1,000
 ```
 
-This means the SLO allows for 1,000 unsuccessful Magic health checks over the course of 30 days. However, what happens if all errors happen in one hour instead of 30 days? This leads us to the concept of burn rate.
+This means the SLO allows for 1,000 unsuccessful Magic health checks over the course of 30 days. However, what happens if all errors happen in one hour instead of 30 days? This leads to the concept of burn rate.
 
 ### Burn rate
 
 The burn rate measures how fast you expend the error budget over a given time window relative to the SLO window. In the example, an SLO of 99.9% means you can observe 1,000 Magic health check failures over the course of 30 days. However, those same 1,000 health check failures are not acceptable during one hour.
 
-## How does Cloudflare decide when to alert
+## When Cloudflare alerts you
 
 To determine when to send Magic Tunnel health alerts, Cloudflare relies on a multi-window, multi-burn rate approach. Every five minutes, Cloudflare analyzes the last hour and the last five minutes of data. Cloudflare calculates the SLI for the short window (five minutes) and long window (one hour) of data.
 
 Cloudflare only alerts you when both the short and long windows fall below the configured threshold. This means both windows must fail the threshold for an alert to trigger. For example, if you defined a threshold of 99%:
 
-- 99.2% (short window) + 99% (long window) = 99%. Cloudflare would not trigger an alert because the short window is above the threshold.
-- 98% (short window) + 98% (long window) = 98%. Cloudflare would trigger an alert because both windows are below the threshold.
+- Short window: 99.2%, Long window: 99%. Cloudflare would not trigger an alert because the short window is above the 99% threshold.
+- Short window: 98%, Long window: 98%. Cloudflare would trigger an alert because both windows are below the 99% threshold.
