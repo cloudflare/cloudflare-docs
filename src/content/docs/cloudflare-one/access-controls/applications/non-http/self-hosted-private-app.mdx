@@ -106,4 +106,10 @@ An Access application defined by a private hostname takes precedence over an Acc
 
 ## Limitations
 
-- Browser Isolation is only compatible with self-hosted applications on port `443`. For more information, refer to the [Browser Isolation documentation](/cloudflare-one/remote-browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).
+### Browser Isolation is not compatible with apps on non-`443` ports
+
+<Render file="access/self-hosted-app/browser-isolation-non-443" product="cloudflare-one"/>
+
+### Google Chrome restricts access to private hostnames
+
+<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one"/>
