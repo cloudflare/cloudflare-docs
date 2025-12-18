@@ -691,7 +691,9 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
 ---
 
-## `auth token`
+## `auth`
+
+### `auth token`
 
 Retrieve your current authentication token or credentials for use with other tools and scripts.
 
@@ -702,10 +704,10 @@ wrangler auth token [OPTIONS]
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
   - Return output as JSON with token type information. This also enables retrieving API key/email credentials.
 
-The command returns whichever authentication method is currently configured:
+The command returns whichever authentication method is currently configured, in the following order of precedence:
 - API token from `CLOUDFLARE_API_TOKEN` environment variable
-- OAuth token from `wrangler login` (automatically refreshed if expired)
 - API key/email from `CLOUDFLARE_API_KEY` and `CLOUDFLARE_EMAIL` environment variables (requires `--json` flag, since this method uses two values instead of a single token)
+- OAuth token from `wrangler login` (automatically refreshed if expired)
 
 When using `--json`, the output includes the token type:
 
@@ -720,7 +722,7 @@ When using `--json`, the output includes the token type:
 { "type": "api_key", "key": "...", "email": "..." }
 ```
 
-This allows you to easily retrieve your authentication token without having to manually locate the config file or handle token refresh.
+An error is returned if no authentication method is available, or if API key/email is requested without `--json`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
