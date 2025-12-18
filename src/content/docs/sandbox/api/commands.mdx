@@ -228,7 +228,7 @@ The `Process` object returned by `startProcess()` includes methods to wait for t
 
 ### `process.waitForPort()`
 
-Wait for a process to listen on a port.
+Wait for a process to listen on a port. Uses Server-Sent Events (SSE) streaming internally for efficient port readiness detection without repeated HTTP requests.
 
 ```ts
 await process.waitForPort(port: number, options?: WaitForPortOptions): Promise<void>
@@ -239,7 +239,7 @@ await process.waitForPort(port: number, options?: WaitForPortOptions): Promise<v
 - `options` (optional):
   - `mode` - Check mode: `'http'` (default) or `'tcp'`
   - `timeout` - Maximum wait time in milliseconds
-  - `interval` - Check interval in milliseconds (default: `100`)
+  - `interval` - Server-side polling interval in milliseconds (default: `500`)
   - `path` - HTTP path to check (default: `'/'`, HTTP mode only)
   - `status` - Expected HTTP status range (default: `{ min: 200, max: 399 }`, HTTP mode only)
 
