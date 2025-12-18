@@ -703,23 +703,23 @@ wrangler auth token [OPTIONS]
   - Return output as JSON with token type information. This also enables retrieving API key/email credentials.
 
 The command returns whichever authentication method is currently configured:
-- OAuth token from `wrangler login` (automatically refreshed if expired)
 - API token from `CLOUDFLARE_API_TOKEN` environment variable
+- OAuth token from `wrangler login` (automatically refreshed if expired)
 
 When using `--json`, the output includes the token type:
 
-```json
-// OAuth token
-{ "type": "oauth", "token": "..." }
-
+```jsonc
 // API token
 { "type": "api_token", "token": "..." }
+
+// OAuth token
+{ "type": "oauth", "token": "..." }
 
 // API key/email (only available with --json)
 { "type": "api_key", "key": "...", "email": "..." }
 ```
 
-This is similar to `gh auth token` in the GitHub CLI and allows you to easily retrieve your authentication token without having to manually locate the config file or handle token refresh.
+This allows you to easily retrieve your authentication token without having to manually locate the config file or handle token refresh.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
