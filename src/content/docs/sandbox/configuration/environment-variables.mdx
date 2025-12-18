@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { WranglerConfig } from "~/components";
+
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
 
 ## Three ways to set environment variables
@@ -145,6 +147,56 @@ await Promise.all([
 	stagingSession.exec("python migrate.py"),
 ]);
 ```
+
+### Transport configuration
+
+The SDK communicates with containers using either HTTP or WebSocket transport. WebSocket transport multiplexes all operations over a single persistent connection, avoiding sub-request limits when running inside Workers or Durable Objects.
+
+Set the `SANDBOX_TRANSPORT` environment variable in your Worker:
+
+```typescript
+interface Env {
+	Sandbox: DurableObjectNamespace;
+	SANDBOX_TRANSPORT: 'websocket' | 'http';
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const sandbox = getSandbox(env.Sandbox, 'user-sandbox');
+		// All sandbox operations use the configured transport
+		await sandbox.exec('python analyze.py');
+		return Response.json({ success: true });
+	},
+};
+```
+
+Configure in wrangler configuration:
+
+<WranglerConfig>
+```toml
+[vars]
+SANDBOX_TRANSPORT = "websocket"
+```
+</WranglerConfig>
+
+**Transport comparison:**
+
+- **HTTP** (default): Each SDK call makes a separate HTTP request to the container. Simple and reliable, but each request counts toward Worker sub-request limits.
+- **WebSocket**: All SDK calls multiplex over a single persistent connection. Reduces sub-request count to one connection per sandbox, avoiding limit issues in Workers and Durable Objects.
+
+**When to use WebSocket transport:**
+- Your Worker makes many sandbox operations per request
+- Running inside Durable Objects with sub-request constraints
+- Need to optimize request count and connection overhead
+
+**When to use HTTP transport (default):**
+- Simple use cases with few operations per request
+- Debugging or development (easier to inspect individual requests)
+- No sub-request limit concerns
+
+:::note[Automatic fallback]
+If the WebSocket connection fails to establish, the SDK will log an error. Ensure your container image supports WebSocket connections (all official images do).
+:::
 
 ### Bucket mounting credentials
 

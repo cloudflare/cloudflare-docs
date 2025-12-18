@@ -91,10 +91,19 @@ When you execute a command:
 await sandbox.exec("python script.py");
 ```
 
-1. **Client SDK** validates parameters and sends HTTP request to Durable Object
+1. **Client SDK** validates parameters and sends request to Durable Object via HTTP or WebSocket transport
 2. **Durable Object** authenticates and routes to container runtime
 3. **Container Runtime** validates inputs, executes command, captures output
 4. **Response flows back** through all layers with proper error transformation
+
+## Transport layer
+
+The SDK supports two transport mechanisms for communication between the Durable Object and container:
+
+- **HTTP** (default): Each SDK operation makes a separate HTTP request. Simple and reliable.
+- **WebSocket**: All operations multiplex over a single persistent connection, reducing sub-request count.
+
+WebSocket transport is particularly useful when running inside Workers or Durable Objects with many operations, as it avoids hitting sub-request limits. Configure via the `SANDBOX_TRANSPORT` environment variable. See [Environment variables](/sandbox/configuration/environment-variables/#transport-configuration) for details.
 
 ## Related resources
 
