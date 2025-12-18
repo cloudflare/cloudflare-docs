@@ -219,12 +219,12 @@ Make sure each IPsec tunnel has a unique combination of a <a href={props.tunnelE
 
 ### Route-based vs. policy-based VPNs
 
-Although Cloudflare supports both route-based and policy-based VPNs, route-based VPNs are preferred.
+Although Cloudflare supports both route-based and policy-based VPNs, we recommend route-based VPNs.
 
 If route-based VPNs are not an option and you must use policy-based VPNs, be aware of the following limitations:
 
 - Cloudflare only supports a single set of traffic selectors per Child SA.
-- Reply-style health checks must be covered by a policy — that is, they must match traffic selectors — otherwise, they will be dropped, just like any other traffic from an IPsec tunnel that does not match a policy.
+- A policy must cover reply-style health checks — that is, they must match traffic selectors — otherwise, Cloudflare drops them, just like any other traffic from an IPsec tunnel that does not match a policy.
 - A single IPsec tunnel can only contain around 100 Child SAs. Therefore, there is effectively a limit on the number of different policies per tunnel.
 
 { props.magicWord === "Magic Transit" && (
