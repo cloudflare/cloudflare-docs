@@ -175,7 +175,28 @@ Requires `@tanstack/react-start` v1.138.0 or later.
 
 :::caution
 
-Prerendering runs during the build step and uses your local environment variables, secrets, and bindings storage data. Ensure your local environment is configured correctly, and use [remote bindings](/workers/development-testing/#remote-bindings) to prerender with production data. If using [Workers Builds](/workers/ci-cd/builds/), update your [build settings](/workers/ci-cd/builds/configuration/#build-settings) to include any required environment variables and secrets.
+Prerendering runs during the build step and uses your local environment variables, secrets, and bindings storage data. Ensure your build environment is configured correctly, and use [remote bindings](/workers/development-testing/#remote-bindings) to prerender with production data.
 
 :::
 
+### Prerendering in CI environments
+
+When prerendering in CI (e.g., [Workers Builds](/workers/ci-cd/builds/)), your Worker code may need access to environment variables or secrets that are not available in the build environment. One way to handle this is to include a `.env` file with variable references, which resolve to values provided by your CI environment:
+																								
+```sh title=".env"
+API_KEY=${API_KEY}
+DATABASE_URL=${DATABASE_URL}
+```
+
+In your CI environment, set `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` and provide the required values as environment variables. If using [Workers Builds](/workers/ci-cd/builds/), update your [build settings](/workers/ci-cd/builds/configuration/#build-settings) accordingly.
+
+:::note
+
+For local development, create a `.env.local` file with actual secret values. Do not commit this file to your repository. Values in `.env.local` override the references in `.env`:
+
+```sh title=".env.local"                                                                                                                                         
+API_KEY=my-local-dev-key                                                                                                                                   
+DATABASE_URL=postgres://localhost/mydb                                                                                                                     
+```
+
+:::
