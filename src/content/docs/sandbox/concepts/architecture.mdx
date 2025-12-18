@@ -83,6 +83,40 @@ Executes code in isolation with full Linux capabilities.
 - **VM-based isolation** - Each sandbox runs in its own VM
 - **Full environment** - Ubuntu Linux with Python, Node.js, Git, etc.
 
+## Communication transports
+
+The SDK supports two transport protocols for communication between the Durable Object and container:
+
+### HTTP transport (default)
+
+Each SDK method makes a separate HTTP request to the container API. Simple, reliable, and works for most use cases.
+
+```typescript
+// Default behavior - uses HTTP
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+await sandbox.exec("python script.py");
+```
+
+### WebSocket transport
+
+Multiplexes all SDK calls over a single persistent WebSocket connection. Avoids sub-request limits when making many concurrent operations.
+
+Enable WebSocket transport by setting the `SANDBOX_TRANSPORT` environment variable:
+
+```toml
+# wrangler.jsonc
+[vars]
+SANDBOX_TRANSPORT = "websocket"
+```
+
+**When to use WebSocket transport**:
+
+- High-frequency SDK calls from a single Worker or Durable Object
+- Complex workflows with numerous file operations and command executions
+- Applications approaching Workers' sub-request limits
+
+The transport layer is transparent to your application code - all SDK methods work identically regardless of transport. See [Environment variables configuration](/sandbox/configuration/environment-variables/) for details.
+
 ## Request flow
 
 When you execute a command:
@@ -91,19 +125,21 @@ When you execute a command:
 await sandbox.exec("python script.py");
 ```
 
-1. **Client SDK** validates parameters and sends request to Durable Object via HTTP or WebSocket transport
-2. **Durable Object** authenticates and routes to container runtime
+**HTTP transport flow**:
+
+1. **Client SDK** validates parameters and sends HTTP request to Durable Object
+2. **Durable Object** authenticates and forwards HTTP request to container
 3. **Container Runtime** validates inputs, executes command, captures output
 4. **Response flows back** through all layers with proper error transformation
 
-## Transport layer
+**WebSocket transport flow**:
 
-The SDK supports two transport mechanisms for communication between the Durable Object and container:
+1. **Client SDK** validates parameters and sends request over persistent WebSocket connection
+2. **Durable Object** maintains WebSocket connection, multiplexes concurrent requests
+3. **Container Runtime** adapts WebSocket messages to HTTP-style request/response
+4. **Response flows back** over same WebSocket connection with proper error transformation
 
-- **HTTP** (default): Each SDK operation makes a separate HTTP request. Simple and reliable.
-- **WebSocket**: All operations multiplex over a single persistent connection, reducing sub-request count.
-
-WebSocket transport is particularly useful when running inside Workers or Durable Objects with many operations, as it avoids hitting sub-request limits. Configure via the `SANDBOX_TRANSPORT` environment variable. See [Environment variables](/sandbox/configuration/environment-variables/#transport-configuration) for details.
+The WebSocket connection is established on first SDK call and reused for all subsequent operations, reducing overhead for high-frequency operations.
 
 ## Related resources
 

@@ -9,6 +9,42 @@ import { WranglerConfig } from "~/components";
 
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
 
+## SDK Configuration Variables
+
+These environment variables configure how the Sandbox SDK communicates with containers. Set these in your Worker's `wrangler.jsonc` file.
+
+### SANDBOX_TRANSPORT
+
+**Type**: `string`
+**Values**: `http` (default) | `websocket`
+**Default**: `http`
+
+Choose the transport protocol for SDK-container communication:
+
+- **`http`** - Each SDK method makes a separate HTTP request to the container. Simple and reliable.
+- **`websocket`** - Multiplexes all SDK calls over a single persistent WebSocket connection. Avoids sub-request limits in Workers and Durable Objects.
+
+```toml
+# wrangler.jsonc
+[vars]
+SANDBOX_TRANSPORT = "websocket"
+```
+
+**When to use WebSocket transport**:
+
+Use WebSocket transport when you need to avoid sub-request limits:
+
+- **High-frequency SDK calls** - Applications making many concurrent sandbox operations
+- **Complex workflows** - Multi-step pipelines with numerous file operations and command executions
+- **Durable Objects with heavy SDK usage** - Sandboxes making many SDK calls from within a single Durable Object
+
+**Performance characteristics**:
+
+- **HTTP transport** - Each call is independent. No connection overhead after the first request.
+- **WebSocket transport** - Initial connection setup, then minimal overhead per call. More efficient for many consecutive operations.
+
+For most use cases, the default HTTP transport is sufficient. Use WebSocket transport when you encounter sub-request limits or need to optimize for high-frequency operations.
+
 ## Three ways to set environment variables
 
 The Sandbox SDK provides three methods for setting environment variables, each suited for different use cases:
