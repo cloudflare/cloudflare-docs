@@ -24,11 +24,21 @@ Choose the transport protocol for SDK-container communication:
 - **`http`** - Each SDK method makes a separate HTTP request to the container. Simple and reliable.
 - **`websocket`** - Multiplexes all SDK calls over a single persistent WebSocket connection. Avoids sub-request limits in Workers and Durable Objects.
 
-```toml
-# wrangler.jsonc
-[vars]
-SANDBOX_TRANSPORT = "websocket"
+<WranglerConfig>
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+			"environment": {
+				"SANDBOX_TRANSPORT": "websocket"
+			}
+		},
+	],
+}
 ```
+</WranglerConfig>
 
 **When to use WebSocket transport**:
 
@@ -44,6 +54,8 @@ Use WebSocket transport when you need to avoid sub-request limits:
 - **WebSocket transport** - Initial connection setup, then minimal overhead per call. More efficient for many consecutive operations.
 
 For most use cases, the default HTTP transport is sufficient. Use WebSocket transport when you encounter sub-request limits or need to optimize for high-frequency operations.
+
+See [Transport modes](/sandbox/configuration/transport/) for complete documentation including configuration examples, performance considerations, and migration guide.
 
 ## Three ways to set environment variables
 
@@ -329,6 +341,7 @@ await sandbox.exec("node app.js", {
 
 ## Related resources
 
+- [Transport modes](/sandbox/configuration/transport/) - Configure HTTP vs WebSocket transport
 - [Wrangler configuration](/sandbox/configuration/wrangler/) - Setting Worker-level environment
 - [Secrets](/workers/configuration/secrets/) - Managing sensitive data
 - [Sessions API](/sandbox/api/sessions/) - Session-level environment variables
