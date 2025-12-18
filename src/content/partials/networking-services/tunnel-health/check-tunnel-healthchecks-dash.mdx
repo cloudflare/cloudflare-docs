@@ -9,7 +9,7 @@ params:
   - magicWord?
 ---
 
-import { Aside, GlossaryTooltip, Markdown, Tabs, TabItem } from "~/components";
+import { Aside, AnchorHeading, GlossaryTooltip, Markdown, Tabs, TabItem } from "~/components";
 
 The Cloudflare dashboard monitors the health of all <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels on your account that route traffic from Cloudflare to your origin network.
 
@@ -42,10 +42,10 @@ Not all data centers are relevant to you at all times. You can refer to the **Av
 	<>
 
 <Aside type="note">
-To change between the new dashboard experience and the old one, find the banner at the top of the screen.
+The steps below cover both the old and new dashboard experiences. To switch dashboard experiences, use the banner at the top of the dashboard.
 </Aside>
 
-To check for anycast tunnel health:
+<AnchorHeading title="Check tunnel health" depth={2} />
 
 <Tabs syncKey="dasNewNav">
 	<TabItem label="Old dashboard">
