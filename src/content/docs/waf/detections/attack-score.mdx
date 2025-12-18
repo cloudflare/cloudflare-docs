@@ -46,7 +46,9 @@ You can use these fields in expressions of [custom rules](/waf/custom-rules/) an
 - A score of `1` indicates that the request is almost certainly malicious.
 - A score of `99` indicates that the request is likely clean.
 
-The special score `100` indicates that the Cloudflare WAF did not score the request.
+The special score `100` indicates that the request reached the Cloudflare WAF attack score classification system, but the system decided not to score the request.
+
+In [Logpush](/logs/logpush/) you may also get the special score `0`, which means that the request did not reach the attack score classification system. The value `0` is not available in the Cloudflare dashboard.
 
 The global WAF Attack Score is mathematically derived from individual attack scores (for example, from SQLi Attack Score and XSS Attack Score), reflecting their interdependence. However, the global score is not a sum of individual scores. A low global score usually indicates medium to low individual scores, while a high global score suggests higher individual scores.
 
