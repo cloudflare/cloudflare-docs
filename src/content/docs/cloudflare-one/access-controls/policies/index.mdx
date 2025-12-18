@@ -79,6 +79,12 @@ When applying a Bypass action, security settings revert to the defaults configur
 
 :::
 
+:::note
+
+Bypass can not be used with Warp posture check based selectors when Zaraz is enabled for the zone protected by Access, or when a worker intercepts the request as the posture results will not be passed to Access leading to the rule failing. Instead of using a Bypass action, please use the Service Auth action for these rules.
+
+:::
+
 ### Service Auth
 
 Service Auth rules enforce authentication flows that do not require an identity provider IdP login, such as service tokens and mutual TLS.
