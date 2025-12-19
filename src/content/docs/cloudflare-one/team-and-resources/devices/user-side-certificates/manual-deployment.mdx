@@ -503,6 +503,34 @@ To use a Cloudflare certificate with the version of cURL preinstalled on Windows
 
 To use a Cloudflare root certificate with cURL on Linux, [install the certificate to your distribution's certificate store](#linux). cURL will use the Linux root certificate by default.
 
+### GNU Wget
+
+By default, GNU Wget will use your operating system's native certificate store. To force Wget to use your default certificate, add the `--ca-certificate` flag to the command.
+
+#### Wget on macOS
+
+To use a Cloudflare root certificate with Wget on macOS, [install the certificate to the operating system keychain](#macos). Wget will use the macOS root certificate by default.
+
+#### Wget on Windows
+
+To use a Cloudflare certificate with Wget on Windows, [install the certificate to the Windows certificate store](#windows). Wget will use the Windows root certificate by default.
+
+#### Wget on Linux
+
+To use a Cloudflare root certificate with Wget on Linux, [install the certificate to your distribution's certificate store](#linux). Wget will use the Linux root certificate by default.
+
+Alternatively, you can specify a certificate file directly:
+
+```sh
+wget --ca-certificate=[PATH_TO_CLOUDFLARE_CERT.pem] https://example.com
+```
+
+To make this permanent, add the following to your `~/.wgetrc` file:
+
+```sh
+ca_certificate = [PATH_TO_CLOUDFLARE_CERT.pem]
+```
+
 ### npm
 
 1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
@@ -516,6 +544,61 @@ On some systems you may need to set the following in your path/export list:
 ```sh
 export NODE_EXTRA_CA_CERTS='[PATH_TO_CLOUDFLARE_CERT.pem]'
 ```
+
+### Android Studio
+
+Android Studio uses its own JVM and certificate store. To install a Cloudflare root certificate:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate).
+
+2. Find the `java.home` value for your Android Studio installation.
+   1. In Android Studio, go to **Help** > **About** (or **Android Studio** > **About Android Studio** on macOS).
+   2. Copy the JRE path shown in the dialog. For example:
+      ```txt
+      /Applications/Android Studio.app/Contents/jbr/Contents/Home
+      ```
+
+3. Add the Cloudflare certificate to Android Studio's JVM:
+
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
+
+1. In a terminal, add the JRE path you copied as an environment variable.
+
+   ```sh
+   export JAVA_HOME="/path/to/jre"
+   ```
+
+2. Run `keytool` to install and trust the Cloudflare certificate.
+
+   ```sh
+   "$JAVA_HOME/bin/keytool" -import -file ~/Downloads/certificate.crt -alias CloudflareRootCA -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit -trustcacerts -noprompt
+   ```
+
+3. Restart Android Studio.
+
+</TabItem>
+
+<TabItem label="Windows" icon="seti:windows">
+
+1. In an administrator PowerShell terminal, add the JRE path you copied as an environment variable.
+
+   ```powershell
+   $env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"
+   ```
+
+2. Run `keytool` to install and trust the Cloudflare certificate.
+
+   ```powershell
+   & "$env:JAVA_HOME\bin\keytool.exe" -import -file "$env:USERPROFILE\Downloads\certificate.crt" -alias CloudflareRootCA -keystore "$env:JAVA_HOME\lib\security\cacerts" -storepass changeit -trustcacerts -noprompt
+   ```
+
+3. Restart Android Studio.
+
+</TabItem>
+</Tabs>
+
+For Gradle builds within Android Studio, you may also need to configure the Gradle JVM to trust the certificate by following the same steps for the Gradle JVM location.
 
 ### Docker
 
@@ -804,10 +887,7 @@ For more information, refer to the [Google documentation](https://support.google
 
 ### AWS CLI
 
-To use a Cloudflare root certificate with AWS CLI, configure it in your AWS configuration files:
-
-<Tabs>
-<TabItem label="Global config">
+#### Global config
 
 To persistently set the location of the certificate:
 
@@ -815,17 +895,16 @@ To persistently set the location of the certificate:
 2. Locate and open your [AWS configuration file](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html#cli-configure-files-where).
 3. Configure the [`ca_bundle` setting](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html#cli-configure-files-settings) with the location of your certificate. For example:
 
-   ```diff lang="ini" title=".aws\config"
+   ```diff lang="ini" title=".aws/config"
    [default]
    region = us-west-1
 
-   +ca_bundle = C:\certificate.pem
+   +ca_bundle = /path/to/certificate.pem
    ```
 
 4. Restart your terminal.
 
-</TabItem>
-<TabItem label="Environment variable">
+#### Environment variable
 
 To set the location of the certificate for use as an environment variable:
 
@@ -833,8 +912,119 @@ To set the location of the certificate for use as an environment variable:
 2. In a terminal, set the [`AWS_CA_BUNDLE` environment variable](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) to the location of your certificate depending on your operating system.
 3. Restart your terminal.
 
+### Azure CLI
+
+#### Global config
+
+To persistently set the location of the certificate:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Set the `REQUESTS_CA_BUNDLE` environment variable to point to your certificate depending on your operating system.
+
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
+
+Add the following to your shell's configuration file (such as `~/.zshrc` or `~/.bash_profile`):
+
+```sh
+export REQUESTS_CA_BUNDLE="$HOME/Downloads/certificate.pem"
+```
+
+</TabItem>
+
+<TabItem label="Windows" icon="seti:windows">
+
+In PowerShell:
+
+```powershell
+[System.Environment]::SetEnvironmentVariable('REQUESTS_CA_BUNDLE', "$HOME\Downloads\certificate.pem", 'User')
+```
+
 </TabItem>
 </Tabs>
+
+3. Restart your terminal.
+
+#### Per-command
+
+To set the location of the certificate for a single command:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Set the `REQUESTS_CA_BUNDLE` environment variable when running the command:
+
+   ```sh
+   REQUESTS_CA_BUNDLE=/path/to/certificate.pem az <command>
+   ```
+
+For more information, refer to the [Azure CLI documentation](https://learn.microsoft.com/cli/azure/use-cli-effectively#work-behind-a-proxy).
+
+### Boto3
+
+Boto3, the AWS SDK for Python, can be configured to use a Cloudflare certificate in several ways.
+
+#### Environment variable
+
+To set the location of the certificate using an environment variable:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Set the `AWS_CA_BUNDLE` environment variable depending on your operating system.
+
+<Tabs>
+<TabItem label="macOS and Linux" icon="seti:shell">
+
+Add the following to your shell's configuration file (such as `~/.zshrc` or `~/.bash_profile`):
+
+```sh
+export AWS_CA_BUNDLE="$HOME/Downloads/certificate.pem"
+```
+
+</TabItem>
+
+<TabItem label="Windows" icon="seti:windows">
+
+In PowerShell:
+
+```powershell
+[System.Environment]::SetEnvironmentVariable('AWS_CA_BUNDLE', "$HOME\Downloads\certificate.pem", 'User')
+```
+
+</TabItem>
+</Tabs>
+
+3. Restart your terminal.
+
+#### AWS config file
+
+To persistently set the location of the certificate in your AWS configuration:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Locate and open your [AWS configuration file](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html#cli-configure-files-where).
+3. Configure the [`ca_bundle` setting](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html#cli-configure-files-settings) with the location of your certificate. For example:
+
+   ```diff lang="ini" title=".aws/config"
+   [default]
+   region = us-west-1
+
+   +ca_bundle = /path/to/certificate.pem
+   ```
+
+#### In code
+
+To specify the certificate directly in your Python code:
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Pass the certificate path when creating a Boto3 client or resource:
+
+   ```python
+   import boto3
+
+   client = boto3.client(
+       's3',
+       verify='/path/to/certificate.pem'
+   )
+   ```
+
+For more information, refer to the [Boto3 documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html).
 
 ### PHP Composer
 
@@ -1002,6 +1192,42 @@ To trust a Cloudflare root certificate in RubyGems, follow the procedure for you
 
 </TabItem>
 </Tabs>
+
+### Rust
+
+Rust's package manager Cargo uses the system certificate store by default on most platforms. However, you may need to configure it explicitly in some cases.
+
+#### Rust on Windows
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Set the `CARGO_HTTP_CAINFO` environment variable to point to the certificate. In PowerShell:
+   ```powershell
+   [System.Environment]::SetEnvironmentVariable('CARGO_HTTP_CAINFO', "$HOME\Downloads\certificate.pem", 'User')
+   ```
+3. Restart your terminal.
+
+Alternatively, you can configure this in your Cargo configuration file at `%USERPROFILE%\.cargo\config.toml`:
+
+```toml
+[http]
+cainfo = "C:\\Users\\<username>\\Downloads\\certificate.pem"
+```
+
+#### Rust on macOS and Linux
+
+1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.
+2. Set the `CARGO_HTTP_CAINFO` environment variable by adding it to your shell's configuration file (such as `~/.zshrc` or `~/.bash_profile`):
+   ```sh
+   export CARGO_HTTP_CAINFO="$HOME/Downloads/certificate.pem"
+   ```
+3. Restart your terminal.
+
+Alternatively, you can configure this in your Cargo configuration file at `~/.cargo/config.toml`:
+
+```toml
+[http]
+cainfo = "/path/to/certificate.pem"
+```
 
 ### Minikube
 
