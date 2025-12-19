@@ -14,6 +14,18 @@ Below, you will find information on devices, software, and configurations that a
 
 <Render file="warp/troubleshooting-guide-reference" product="cloudflare-one" />
 
+## Always-On VPN with Lockdown Mode in Microsoft Intune
+
+If you are using Microsoft Intune to deploy the WARP client on Android with Always-On VPN and Lockdown mode enabled, the Cloudflare One agent may fail to register. This is because Lockdown mode prevents the app from accessing the underlying network to complete the registration process.
+
+This is a known limitation of the Android OS, which has been reported to Google. You can track the status of the feature request on the [Google Issue Tracker](https://issuetracker.google.com/issues/238109298?pli=1).
+
+To work around this issue, you can disable Lockdown mode while keeping Always-On VPN enabled. This can be done by:
+
+1.  In your Intune profile, disable **Lockdown mode** while keeping **Always-On VPN** enabled.
+2.  Use the `auto_connect` and `switch_locked` [parameters](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#switch_locked) in the managed configuration for seamless connectivity.
+3.  Instruct users to launch the app and complete the one-time registration manually.
+
 ## Windows Server
 
 The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/) for a list of supported operating systems.
@@ -211,4 +223,4 @@ If your DNS server uses an IPv6 address, you must manually exclude it using [spl
 
 ## Troubleshooting
 
-- [Troubleshooting](/cloudflare-one/faq/troubleshooting/) - Review Troubleshooting for other WARP-related troubleshooting errors and solutions.
+- [Troubleshooting](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/) - Review Troubleshooting for other WARP-related troubleshooting errors and solutions.
