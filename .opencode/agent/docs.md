@@ -11,11 +11,17 @@ Ensure language is not overly verbose, LLM-like, or inconsistent with existing d
 - Use active voice and present tense
 - Use second person ("you") to address the reader
 - Write in plain language (8-12 words per sentence)
-- Do not use contractions
+- Do not use contractions or exclamation marks
 - Avoid future tense except for actions that have not happened yet
+- Spell out numbers (write "seven" not "7")
+- Use spaces around em dashes (write "word — word" not "word—word")
+- End bullet points with a period
+- Communicate confidently — avoid hedging words like "might," "could," "should be able to"
+- Lead with the objective — write "To create X, do Y" not "Do Y to create X"
+- Use consistent terminology — use the same term for the same concept throughout
 - Do not use marketing-centric language in technical documentation - e.g.
 - "Perfect for" → "Use for"
-- "Essential for" → "Use for" 
+- "Essential for" → "Use for"
 - "Critical for" → "Use for"
 - "Best for" → "Use when"
 - "Modern $THING" → just say $THING
@@ -34,6 +40,19 @@ Every page must have valid frontmatter including:
 - One short line (5-10 words)
 - Should not start with "The"
 - Avoid repeating the page title
+
+### Sidebar Configuration
+
+```yaml
+sidebar:
+  order: 1 # Controls sort order (lower = higher in list)
+  label: Custom Label # Overrides title in sidebar
+  hidden: true # Hides page from sidebar (use for non-index pages)
+  group:
+    label: Group Name # Label for the folder/group
+    hideIndex: true # Hides the index page but keeps group
+    badge: Beta # Badge next to group label
+```
 
 ## Content Guidelines
 
@@ -111,6 +130,32 @@ Refer to https://developers.cloudflare.com/style-guide/components/ for code comp
 - Use `powershell` for Windows PowerShell
 - Use `txt` for Windows console or when no syntax highlighting applies
 
+### Code block titles and highlighting
+
+Add titles to code blocks:
+
+````mdx
+```js title="src/index.js"
+export default {
+	async fetch(request) {
+		return new Response("Hello!");
+	},
+};
+```
+````
+
+Highlight specific lines:
+
+````mdx
+```js {3}
+export default {
+	async fetch(request) {
+		return new Response("Hello!"); // Line 3 highlighted
+	},
+};
+```
+````
+
 Every code example should include a description of what it does and any relevant context or assumptions.
 
 ## Notes and Warnings
@@ -151,3 +196,28 @@ Refer to https://developers.cloudflare.com/style-guide/components/ for full comp
 - Filenames: lowercase, dash-separated, semantically meaningful (e.g., `create-api-token.mdx`)
 - Every folder must have an `index.mdx` file
 - Images go in `/src/assets/images/{product_folder}/`
+
+## Review Checklist
+
+When reviewing documentation, verify:
+
+- [ ] Frontmatter includes required `title` field (one to three words)
+- [ ] Description is five to ten words, does not start with "The"
+- [ ] `pcx_content_type` matches the page purpose
+- [ ] File name is lowercase with dashes
+- [ ] Components are imported below frontmatter
+- [ ] Section titles use imperative mood (no gerunds or questions)
+- [ ] Internal links use relative paths with trailing slashes
+- [ ] Link text is meaningful (not "click here" or "here")
+- [ ] No contractions, exclamation marks, or non-standard quotes
+- [ ] Numbers are spelled out
+- [ ] Spaces around em dashes
+- [ ] Bullet points end with periods
+- [ ] Active voice and present tense used
+- [ ] Confident tone (no hedging words)
+- [ ] Objective-first phrasing
+- [ ] Consistent terminology throughout
+- [ ] No Latin abbreviations
+- [ ] No time-sensitive language outside changelogs
+- [ ] Code blocks have appropriate language tags
+- [ ] Notes/asides limited to one per type per section
