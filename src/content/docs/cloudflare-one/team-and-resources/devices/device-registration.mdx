@@ -47,9 +47,9 @@ A deleted device registration is permanently removed from the account and no lon
 
 :::caution[Device registrations will automatically re-register]
 
-Deleting or revoking a device registration is not permanent without [removing service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication) or [removing user access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication).
+Deleting or revoking a device registration is not permanent without [removing user access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access) and [removing service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access).
 
-If the user or service token can successfully re-authenticate, a new device registration will be automatically created or the revoked device registration will be reactivated. 
+If the user or service token can successfully re-authenticate, a new device registration will be automatically created following a deletion or revocation. 
 
 :::
 
@@ -66,7 +66,7 @@ To delete a device registration:
 
 :::caution[Automatic device re-registration]
 
-If you delete a device registation, but the WARP client remains installed and is successfully able to re-authenticate, a new device registration will be created for the user or service token. For long-term, permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication) or [remove service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access).
+If you delete a device registration, but the WARP client remains installed and is successfully able to re-authenticate, a new device registration will be created for the user or service token. For long-term, permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access) or [remove service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access).
 
 :::
 
@@ -74,11 +74,11 @@ If you delete a device registation, but the WARP client remains installed and is
 
 Deleting a device removes the physical device from your Cloudflare Zero Trust account. This action automatically deletes all associated device registrations.
 
-Devices that have zero active registrations (because all registrations deleted) are hidden by default in Cloudflare One > **Teams & Resources** > **Devices** table. You may need to adjust the filter to view devices with zero device registrations.
+Devices that have zero active registrations (because all registrations were deleted) are hidden by default in Cloudflare One > **Teams & Resources** > **Devices** table. You may need to adjust the filter to view devices with zero device registrations.
 
 :::caution[Automatic device re-creation]
 
-If you delete a device record, but the WARP client remains installed and a user or service token is successfully able to re-authenticate, a device record will be automatically created in your dashboard with a new device registration. For permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication) and delete any service tokens associated with the device.
+If you delete a device record, but the WARP client remains installed and a user or service token is successfully able to re-authenticate, a device record will be automatically created in your dashboard with a new device registration. For permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access) and [remove service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access).
 
 :::
 
@@ -90,60 +90,46 @@ To delete a device:
 
 ## Revoke a device registration
 
-Revoking a device registration invalidates its associated public key which disallows the specific device registration from connecting to Cloudflare's network. Revoking a device registration does not release the virtual IPs that are assigned to the registration. Because virtual IPs are a finite resource, Cloudflare strongly advises deleting a registration rather than revoking it
+Revoking a device registration invalidates its associated public key which disallows the specific device registration from connecting to Cloudflare's network. Revoking a device registration does not release the virtual IPs that are assigned to the registration. Because virtual IPs are a finite resource, Cloudflare strongly advises deleting a registration rather than revoking it.
 
 :::caution[Automatic unrevocation]
 
-If a user re-authenticates while the device registration is revoked, a new device registration will be created for the user. For long-term, permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access-and-prevent-re-authentication).
+If a user re-authenticates while the device registration is revoked, a new device registration will be created for the user. For long-term, permanent denial of access, you should [remove the user from your device enrollment policies or your IdP](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access) and [remove service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access).
 
 :::
-
-TODO: add revoke and unrevoke instructions
-
-<Tabs>
-<TabItem label="Dashboard">
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Devices**.
 2. Select the device and select **View details**.
 3. To revoke access, select **Revoke access**. This revokes access for all associated registrations on the device.
 4. To unrevoke access, scroll down to the **Users** section and select one or more users using the checkbox. Select **Actions** > **Unrevoke access**.
 
-</TabItem>
-<TabItem label="API">
-
-- [Revoke a device](/api/resources/zero_trust/subresources/devices/subresources/revoke/)
-- [Revoke a registration](/api/resources/zero_trust/subresources/devices/subresources/registrations/methods/revoke/)
-
-</TabItem>
-</Tabs>
-
 ## Device management
 
-Seat management (billing) and access management (offboarding) are separate actions. Deleting a device registration does not remove seat usage nor access to internal company resources.
+Seat management (billing) and access management are separate actions. Deleting a device registration does not remove seat usage nor access to internal company resources.
 
-### Remove user access and prevent re-authentication
+### Remove user access
 
 Deleting or revoking a registration will not be permanent if the user can re-authenticate. To prevent a user from re-authenticating and creating new device registrations, you must remove them from your [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) or from your Identity Provider (IdP).
 
 * If your device enrollment policies allow a broad domain (for example, `@company.com`), remove the user from your IdP. This prevents the user from authenticating through Access, effectively blocking them from enrolling devices.
 * If your device enrollment policies list specific user emails (for example, `sally@company.com`), you must remove that specific email from your device enrollment policies. Additionally, you can add an explicit Exclude rule for that user to the policy.
 
-After you have removed user access, to fully decommission a device, [remove service token access](), if any exists. Devices with existing registrations will remain connected to Cloudflare until those specific device registrations are manually deleted.
+After you have removed user access, to fully decommission a device, [remove service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access), if any exists. Devices with existing registrations will remain connected to Cloudflare until those specific device registrations are manually deleted.
 
 ### Remove service token access
 
 If you delete a service token's device registration, a new device registration for the service token will be automatically created without user interaction. For device registration deletion to be permanent, you must update your device enrollment policies to remove the service token. If desired, you can then delete the token. You cannot delete a service token while it is attached to a policy.
 
-To prevent a service token from re-authenticating and automatically creating new device registration, you must either:
+To prevent a service token from re-authenticating and automatically creating a new device registration, you must either:
 
 - Delete the enrollment policy associated with the token.
 - Modify the enrollment policy to no longer include the token (by removing its specific Include rule).
 
-You can then delete the service token, if desired. You cannot use this service token to create new registrations.
+You can then [delete the service token](https://developers.cloudflare.com/cloudflare-one/access-controls/service-credentials/service-tokens/), if desired. You cannot use this service token to create new registrations.
 
 Modifying a device enrollment policy or deleting a service token does not invalidate the existing service token device registration. You must then complete the process by deleting the service token device registration for permanent denial of access.
 
-After you have removed service token access, to fully decommission a device, [remove user access](), if any exists. Devices with existing registrations will remain connected to Cloudflare until those specific device registrations are manually deleted.
+After you have removed service token access, to fully decommission a device, [remove user access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access), if any exists. Devices with existing registrations will remain connected to Cloudflare until those specific device registrations are manually deleted.
 
 :::caution[Impact on existing registrations]
 
@@ -153,71 +139,12 @@ If a single service token was used to enroll multiple devices, removing that tok
 
 ### Seat management (billing)
 
-Deleting a device or device registration does not affect seat usage. Seats are tied to the user identity, not to individual devices.
+Deleting a device or device registration does not affect [seat usage](/cloudflare-one/team-and-resources/users/seat-management/). Seats are tied to the user identity, not to individual devices.
 
 To stop a user from consuming a seat:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Users**.
 2. Remove the user with one of the following methods:
   - (Option A) Select the checkbox next to the user's name > **Action** > **Remove user**.
-  - (Option B) Select the user > find Seat Management > select **Remove user**.
+  - (Option B) Select the user > find **Seat Management** > select **Remove user**.
 
-## How it all works together
-
-UNFINISHED
-
-```mermaid
-flowchart TD
-    A["Need to stop a device from connecting via WARP"] --> B{"Which identity enrolled the device?"}
-
-    %% =====================
-    %% User-based enrollment
-    %% =====================
-    B -- "User (IdP-backed)" --> U0["Locate device registration(s)<br/>Teams & Resources → Devices → View details → Users"]
-
-    U0 --> U1{"Action taken on the registration"}
-
-    U1 -- "Revoke registration" --> UR["Status: Revoked<br/>Public key invalidated<br/>Virtual IPs retained"]
-    U1 -- "Delete registration" --> UD["Registration deleted<br/>Removed from device list"]
-    U1 -- "Delete device record" --> UDEV["Device record deleted<br/>All registrations removed"]
-
-    UR --> U2{"Can the user still authenticate<br/>via IdP or enrollment policy?"}
-    UD --> U2
-    UDEV --> U2
-
-    U2 -- "Yes" --> U3["User re-authenticates<br/>→ Revoked registration reactivates<br/>or new registration is created"]
-    U3 --> U4["Access restored<br/>Seat usage unchanged"]
-
-    U2 -- "No" --> U5["User removed from IdP or enrollment policy"]
-    U5 --> U6["Delete remaining registrations<br/>→ Permanent denial for this user"]
-
-    %% =====================
-    %% Service token enrollment
-    %% =====================
-    B -- "Service token" --> S0["Locate token-backed registration(s)<br/>Teams & Resources → Devices → View details → Users"]
-
-    S0 --> S1{"Action taken on the registration"}
-
-    S1 -- "Revoke registration" --> SR["Status: Revoked<br/>Public key invalidated<br/>Virtual IPs retained"]
-    S1 -- "Delete registration" --> SD["Registration deleted<br/>Removed from device list"]
-    S1 -- "Delete device record" --> SDEV["Device record deleted<br/>All registrations removed"]
-
-    SR --> S2{"Is the service token still allowed<br/>by enrollment policy?"}
-    SD --> S2
-    SDEV --> S2
-
-    S2 -- "Yes" --> S3["Token re-authenticates automatically<br/>→ New registration created<br/>or revoked registration reactivated"]
-    S3 --> S4["Access restored<br/>No seat impact"]
-
-    S2 -- "No" --> S5["Token removed from enrollment policy<br/>and/or deleted"]
-    S5 --> S6["Delete remaining token registrations<br/>→ Permanent denial for this token"]
-
-    %% =====================
-    %% Shared clarifiers
-    %% =====================
-    U4 --> C1["Deleting or revoking registrations<br/>does NOT remove user seats"]
-    U6 --> C1
-
-    S4 --> C2["Service tokens never consume seats"]
-    S6 --> C2
-```
