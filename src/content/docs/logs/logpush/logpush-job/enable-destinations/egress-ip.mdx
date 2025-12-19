@@ -121,7 +121,7 @@ ASN filtering alone is insufficient because other Cloudflare customers' traffic 
 
 ### Use Access Service Tokens for high-security environments
 
-For stronger authentication, use [Cloudflare Access Service Tokens](/cloudflare-one/identity/service-tokens/) for machine-to-machine authentication. Create a Service Token in the Zero Trust dashboard, then configure Logpush with the Access headers:
+For stronger authentication, use [Cloudflare Access Service Tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) for machine-to-machine authentication. Create a Service Token in the Zero Trust dashboard, then configure Logpush with the Access headers:
 
 ```txt
 https://logpush.yourdestinationendpoint.com?header_CF-Access-Client-Id=YOUR_CLIENT_ID&header_CF-Access-Client-Secret=YOUR_CLIENT_SECRET
