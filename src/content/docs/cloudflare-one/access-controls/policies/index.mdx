@@ -79,11 +79,9 @@ When applying a Bypass action, security settings revert to the defaults configur
 
 :::
 
-:::note
+#### Product compatibility
 
-Bypass can not be used with Warp posture check based selectors when Zaraz is enabled for the zone protected by Access, or when a worker intercepts the request as the posture results will not be passed to Access leading to the rule failing. Instead of using a Bypass action, please use the Service Auth action for these rules.
-
-:::
+Bypass policies which contain [WARP device posture check](/cloudflare-one/reusable-components/posture-checks/) rules will not function when [Zaraz](/zaraz/) is enabled for the zone protected by Access, or if a [Worker](/workers/) intercepts the request. To work around this limitation and bypass Access, change the policy action to [Service Auth](#service-auth).
 
 ### Service Auth
 
