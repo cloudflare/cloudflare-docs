@@ -181,7 +181,7 @@ Prerendering runs during the build step and uses your local environment variable
 
 ### Prerendering in CI environments
 
-When prerendering in CI (e.g., [Workers Builds](/workers/ci-cd/builds/)), your Worker code may need access to environment variables or secrets that are not available in the build environment. One way to handle this is to include a `.env` file with variable references, which resolve to values provided by your CI environment:
+When prerendering in CI, your Worker code may need access to environment variables or secrets that are not available in the build environment. One way to handle this is to include a `.env` file with variable references, which resolve to values provided by your CI environment:
 																								
 ```sh title=".env"
 API_KEY=${API_KEY}
