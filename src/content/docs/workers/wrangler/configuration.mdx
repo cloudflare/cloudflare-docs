@@ -1024,7 +1024,8 @@ The following options are available:
 
 - `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
   - Public keys that should be added to the Container's `authorized_keys` file. 
-
+- `trusted_user_ca_keys` <Type text="object[]" /> <MetaInfo text="optional" />
+  - Public keys that will be used with the `TrustedUserCAKeys` sshd option
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
@@ -1088,7 +1089,7 @@ The following options are available:
 - `port` <Type text="number" /> <MetaInfo text="optional" />
   - The port for the SSH service to run on. Defaults to `22`.
 
-### Authorized Key
+### Authorized Keys
 
 An authorized key is a public key that can be used to SSH into a Container.
 
@@ -1100,6 +1101,12 @@ The following are properties of a key:
 - `public_key` <Type text="string">
   - The public key itself.
   - Currently only the `ssh-ed25519` key type is supported.
+  
+### Trusted User CA Keys
+
+Trusted user CA keys are public keys used to sign another key. Any key signed by a trusted user CA key will be authorized by SSH. For more details, see https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/deployment_guide/sec-creating_ssh_ca_certificate_signing-keys.
+
+The format of the `trusted_user_ca_keys` option is the same as `authorized_keys`.
 
 ## Bundling
 
