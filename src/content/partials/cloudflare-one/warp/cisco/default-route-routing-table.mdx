@@ -1,0 +1,5 @@
+| Where is the destination of the default route? | Required WARP configuration | Required Cisco AnyConnect configuration | Outcome |
+|---------------------|---------------------------|---------------------------------|---------|
+| Internet (neither WARP nor Cisco) | Include IPs and domains | Split tunnel | Both clients are limited to specific routes; general internet traffic bypasses both tunnels. |
+| WARP | Exclude IPs and domains | Split tunnel | WARP asserts the default route and captures all traffic not explicitly excluded. Any Cisco-routed traffic must be excluded from WARP. |
+| Cisco AnyConnect | Include IPs and domains | Full tunnel or split tunnel | Cisco asserts the default route. WARP is used only for explicitly included traffic, which must be excluded from Cisco. |
