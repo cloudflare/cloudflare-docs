@@ -308,7 +308,7 @@ Messages can be delayed by default at the queue level, or per-message (or batch)
 
 You can apply a backoff algorithm to increasingly delay messages based on the current number of attempts to deliver the message.
 
-Each message delivered to a consumer includes an `attempts` property that tracks the number of delivery attempts made.
+Each message delivered to a consumer includes an `attempts` property that tracks the number of delivery attempts made (including the current attempt).
 
 For example, to generate an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) for a message, you can create a helper function that calculates this for you:
 
