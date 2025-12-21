@@ -24,8 +24,15 @@ Agents can communicate with AI models hosted on any provider, including:
 - [OpenAI](https://platform.openai.com/docs/quickstart?language=javascript)
 - [Anthropic](https://docs.anthropic.com/en/api/client-sdks#typescript)
 - [Google's Gemini](https://ai.google.dev/gemini-api/docs/openai)
+- And many more through AI SDK providers
 
 You can also use the model routing features in [AI Gateway](/ai-gateway/) to route across providers, eval responses, and manage AI provider rate limits.
+
+:::note
+
+The AI SDK supports over 15 AI providers out-of-the-box, including Amazon Bedrock, Azure, Cerebras, Cohere, Deepgram, Deepseek, ElevenLabs, Fireworks, Google Vertex, Groq, Mistral, OpenRouter, Perplexity, and xAI. Refer to the [AI SDK providers documentation](https://sdk.vercel.ai/providers/ai-sdk-providers) for the full list.
+
+:::
 
 Because Agents are built on top of [Durable Objects](/durable-objects/), each Agent or chat session is associated with a stateful compute instance. Traditional serverless architectures often present challenges for persistent connections needed in real-time applications like chat.
 
@@ -195,6 +202,110 @@ binding = "AI"
 </WranglerConfig>
 
 Visit the [AI Gateway documentation](/ai-gateway/) to learn how to configure a gateway and retrieve a gateway ID.
+
+### AI Gateway with external providers {/* ai-gateway-external-providers */}
+
+AI Gateway can route requests to external AI providers (OpenAI, Anthropic, Google, and more) using unified billing. Instead of managing API keys for each provider separately, you can use Cloudflare credits to pay for API calls across all providers.
+
+To use external providers with AI Gateway:
+
+1. Install the necessary packages:
+
+<PackageManagers pkg="ai ai-gateway-provider @ai-sdk/openai @ai-sdk/anthropic @ai-sdk/google" />
+
+2. Use the `ai-gateway-provider` package to create a gateway client:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { generateText } from "ai";
+import { createAiGateway } from "ai-gateway-provider";
+import { createOpenAI } from "ai-gateway-provider/providers/openai";
+
+interface Env {
+	CLOUDFLARE_API_KEY: string;
+	CLOUDFLARE_ACCOUNT_ID: string;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		// Create AI Gateway client
+		const gateway = createAiGateway({
+			accountId: this.env.CLOUDFLARE_ACCOUNT_ID,
+			gateway: "my-gateway",
+			apiKey: this.env.CLOUDFLARE_API_KEY,
+		});
+
+		// Create provider without an API key (unified billing)
+		const openai = createOpenAI();
+
+		// Wrap the model with the gateway
+		const model = gateway(openai.chat("gpt-5-mini"));
+
+		const { text } = await generateText({
+			model,
+			prompt: "Build me an AI agent on Cloudflare Workers",
+		});
+
+		return Response.json({ modelResponse: text });
+	}
+}
+```
+
+</TypeScriptExample>
+
+You can use any supported provider with unified billing:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { createAnthropic } from "ai-gateway-provider/providers/anthropic";
+import { createGoogleGenerativeAI } from "ai-gateway-provider/providers/google";
+
+// Anthropic
+const anthropic = createAnthropic();
+const claudeModel = gateway(anthropic.chat("claude-sonnet-4-5-20250929"));
+
+// Google
+const google = createGoogleGenerativeAI();
+const geminiModel = gateway(google.chat("gemini-3-pro-preview"));
+```
+
+</TypeScriptExample>
+
+:::note
+
+When using unified billing with AI Gateway, you do not need to provide API keys for individual providers. All requests are authenticated using your Cloudflare API key, and charges are deducted from your Cloudflare credits. Load credits in your [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway).
+
+:::
+
+Alternatively, you can use provider API keys directly (bring your own key):
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { generateText } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		// Use provider SDK directly with your API key
+		const openai = createOpenAI({
+			apiKey: this.env.OPENAI_API_KEY,
+		});
+
+		const { text } = await generateText({
+			model: openai("gpt-5-mini"),
+			prompt: "Build me an AI agent on Cloudflare Workers",
+		});
+
+		return Response.json({ modelResponse: text });
+	}
+}
+```
+
+</TypeScriptExample>
 
 ### AI SDK
 
