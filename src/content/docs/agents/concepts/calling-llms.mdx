@@ -34,3 +34,88 @@ Models like GPT-4 and Claude Instant are optimized for following straightforward
 - Text transformation
 
 These models are often more cost-effective for straightforward tasks that do not require complex reasoning.
+
+### Using AI Gateway with multiple providers
+
+[AI Gateway](/ai-gateway/) provides a unified interface to access multiple AI providers through a single integration. You can use AI Gateway with the Agents SDK to route requests to different LLM providers while maintaining consistent logging, caching, and rate limiting.
+
+#### Supported providers
+
+Through AI Gateway, Agents can access models from the following providers:
+
+- **OpenAI** - GPT-4, GPT-5, and other OpenAI models
+- **Anthropic** - Claude models (Sonnet, Opus, Haiku)
+- **Google** - Gemini models and Google Vertex AI
+- **Amazon Bedrock** - Access to multiple models through AWS Bedrock
+- **Azure OpenAI** - Azure-hosted OpenAI models
+- **Cohere** - Command and other Cohere models
+- **Mistral** - Mistral AI models
+- **Groq** - High-performance inference
+- **Perplexity** - Perplexity AI models
+- **xAI** - Grok and other xAI models
+- **DeepSeek** - DeepSeek models
+- **Cerebras** - Cerebras inference
+- **Fireworks** - Fireworks AI models
+- **Deepgram** - Speech-to-text models
+- **ElevenLabs** - Text-to-speech models
+
+#### Using the AI Playground
+
+The [AI Playground](https://playground.ai.cloudflare.com) demonstrates how to integrate AI Gateway with multiple providers. When building agents, you can use the same pattern:
+
+1. Configure AI Gateway with your provider API keys using [Bring Your Own Key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/)
+2. Route requests through AI Gateway using the `ai-gateway-provider` package
+3. Switch between providers without changing your agent code
+
+#### Example: Using AI Gateway in an agent
+
+```ts
+import { createAiGateway } from "ai-gateway-provider";
+import { createOpenAI } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { streamText } from "ai";
+
+// Create AI Gateway binding
+const aiGateway = createAiGateway({
+  binding: env.AI.gateway("my-gateway")
+});
+
+// Choose your provider and model
+const provider = "openai"; // or "anthropic", "google", etc.
+let baseModel;
+
+if (provider === "openai") {
+  const openai = createOpenAI({
+    apiKey: env.OPENAI_API_KEY
+  });
+  baseModel = openai("gpt-4");
+} else if (provider === "anthropic") {
+  const anthropic = createAnthropic({
+    apiKey: env.ANTHROPIC_API_KEY
+  });
+  baseModel = anthropic("claude-sonnet-4-5-20250929");
+}
+
+// Wrap the model with AI Gateway
+const model = aiGateway(baseModel);
+
+// Use the model in your agent
+const result = await streamText({
+  model,
+  messages: [{ role: "user", content: "Hello!" }]
+});
+```
+
+#### Benefits of using AI Gateway
+
+When routing LLM requests through AI Gateway, you gain:
+
+- **Unified logging**: Track all requests across providers in one place
+- **Cost tracking**: Monitor spending across multiple AI providers
+- **Caching**: Reduce costs by caching responses
+- **Rate limiting**: Protect against runaway costs
+- **Fallback support**: Automatically fall back to alternative providers
+- **Analytics**: View performance metrics and usage patterns
+
+For more information, refer to the [AI Gateway documentation](/ai-gateway/).
