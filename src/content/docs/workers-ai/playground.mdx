@@ -1,8 +1,276 @@
 ---
-pcx_content_type: navigation
-title: Playground
-external_link: https://playground.ai.cloudflare.com
+pcx_content_type: how-to
+title: AI Playground
 sidebar:
   order: 8
-
 ---
+
+import { Render, Tabs, TabItem } from "~/components";
+
+The [Cloudflare AI Playground](https://playground.ai.cloudflare.com/) is an interactive web interface for testing and experimenting with AI models. You can chat with AI models, connect MCP servers for enhanced functionality, and export code snippets for your applications.
+
+## Features
+
+The AI Playground provides:
+
+- **Multiple AI providers**: Choose between Workers AI models or external providers like OpenAI, Anthropic, and Google.
+- **MCP integration**: Connect [Model Context Protocol (MCP) servers](/agents/model-context-protocol/) to extend AI capabilities with custom tools.
+- **Code generation**: Export ready-to-use code snippets for Cloudflare Workers.
+- **Real-time streaming**: See AI responses as they are generated.
+- **Model comparison**: Test different models and configurations side-by-side.
+
+## Choose an AI provider
+
+The Playground supports two modes:
+
+1. **Workers AI**: Use Cloudflare's [Workers AI](/workers-ai/) models directly.
+2. **Other Providers**: Use external AI providers like OpenAI, Anthropic, or Google.
+
+### Workers AI models
+
+Workers AI models run on Cloudflare's infrastructure and provide a cost-effective way to access AI capabilities.
+
+To use Workers AI models:
+
+1. Visit the [AI Playground](https://playground.ai.cloudflare.com/).
+2. Ensure **Workers AI** mode is selected in the model selector.
+3. Choose a model from the dropdown list.
+4. Filter models by capabilities using the tag buttons (Beta, LoRA, MCP).
+
+Workers AI models are billed according to [Workers AI pricing](/workers-ai/platform/pricing/).
+
+### External AI providers
+
+The Playground supports external AI providers, giving you access to the latest models from OpenAI, Anthropic, and Google. You can authenticate using either your provider's API key or through Cloudflare AI Gateway for unified billing.
+
+Supported providers:
+
+- **OpenAI**: GPT-5.2, GPT-5.2 Pro, GPT-5 Mini, and more
+- **Anthropic**: Claude Sonnet 4.5, Claude Opus 4.5, Claude Haiku 4.5
+- **Google**: Gemini 3 Pro, Gemini 3 Flash, Gemini 2.5 models
+
+## Authentication methods
+
+When using external AI providers, choose between two authentication methods:
+
+### Provider API key (BYOK)
+
+Bring Your Own Key (BYOK) lets you use your own API key from the AI provider.
+
+To use provider API keys:
+
+1. In the Playground, select **Other Providers** mode.
+2. Choose your provider (OpenAI, Anthropic, or Google).
+3. Select **Provider API Key** as the authentication method.
+4. Enter your API key for the selected provider.
+5. Choose a model from the list.
+
+Your API key is stored only in your browser session and is not sent to Cloudflare servers. Costs are billed directly by the AI provider.
+
+:::note
+
+To get an API key:
+- **OpenAI**: Visit [platform.openai.com](https://platform.openai.com/)
+- **Anthropic**: Visit [console.anthropic.com](https://console.anthropic.com/)
+- **Google**: Visit [ai.google.dev](https://ai.google.dev/)
+:::
+
+### AI Gateway (Unified Billing)
+
+[AI Gateway](/ai-gateway/) provides unified billing through Cloudflare. Instead of managing separate API keys for each provider, you load credits into your Cloudflare account and use them across all supported providers.
+
+To use AI Gateway:
+
+1. In the Playground, select **Other Providers** mode.
+2. Choose your provider (OpenAI, Anthropic, or Google).
+3. Select **AI Gateway** as the authentication method.
+4. Enter your configuration:
+   - **Account ID**: Your Cloudflare account ID
+   - **Gateway ID**: The name of your AI Gateway
+   - **Cloudflare API Key**: Your Cloudflare API key for authentication
+5. Choose a model from the list.
+
+Benefits of AI Gateway:
+
+- **Unified billing**: Pay for all AI providers through one Cloudflare account
+- **Centralized logging**: Track usage across all providers in one place
+- **Caching and rate limiting**: Reduce costs with built-in caching
+- **Analytics**: Monitor API usage, costs, and performance
+
+To set up AI Gateway:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway) and select your account.
+2. Go to **AI** > **AI Gateway**.
+3. Create a new gateway or use an existing one.
+4. Load credits for the providers you want to use.
+
+Refer to the [AI Gateway documentation](/ai-gateway/) for detailed setup instructions.
+
+## Connect MCP servers
+
+[Model Context Protocol (MCP)](/agents/model-context-protocol/) servers provide tools, prompts, and resources that extend AI model capabilities.
+
+To connect an MCP server:
+
+1. In the Playground, click the **MCP Servers** panel.
+2. Enter the URL of your MCP server.
+3. Click **Connect**.
+4. If your server requires authentication, complete the OAuth flow.
+
+Once connected, the AI model can use the tools provided by your MCP server. For example, you might connect an MCP server that provides:
+
+- Database query tools
+- File system access
+- API integration capabilities
+- Custom business logic
+
+Refer to [Test a Remote MCP Server](/agents/guides/test-remote-mcp-server/) for more information on testing MCP servers in the Playground.
+
+## Export code
+
+The Playground can generate code snippets for your selected configuration, making it easy to deploy the same setup as a Cloudflare Worker.
+
+To export code:
+
+1. Configure your model, authentication, and messages as desired.
+2. Click the **View Code** button.
+3. Copy the generated code snippet.
+
+The generated code includes:
+
+- Model initialization with your selected provider
+- Authentication configuration
+- Your system prompt and messages
+- Temperature and other parameters
+
+### Example code snippets
+
+<Tabs>
+<TabItem label="Workers AI">
+
+```typescript
+import { streamText } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+
+const workersAi = createWorkersAI(env);
+
+const result = streamText({
+  model: workersAi("@cf/qwen/qwen3-30b-a3b-fp8"),
+  system: "You are a helpful assistant.",
+  temperature: 1,
+  messages: [
+    { role: "user", content: "What is Cloudflare Workers?" }
+  ],
+});
+
+return result.toDataStreamResponse();
+```
+
+</TabItem>
+<TabItem label="Provider API Key">
+
+```typescript
+import { streamText } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+
+const openai = createOpenAI({
+  apiKey: env.OPENAI_API_KEY, // Store in .dev.vars or secrets
+});
+
+const result = streamText({
+  model: openai("gpt-5.2"),
+  system: "You are a helpful assistant.",
+  temperature: 1,
+  messages: [
+    { role: "user", content: "What is Cloudflare Workers?" }
+  ],
+});
+
+return result.toDataStreamResponse();
+```
+
+</TabItem>
+<TabItem label="AI Gateway">
+
+```typescript
+import { streamText } from "ai";
+import { createAiGateway } from "ai-gateway-provider";
+import { createOpenAI } from "ai-gateway-provider/providers/openai";
+
+const gateway = createAiGateway({
+  accountId: "YOUR_ACCOUNT_ID",
+  gateway: "YOUR_GATEWAY_ID",
+  apiKey: env.CLOUDFLARE_API_KEY, // Store in .dev.vars or secrets
+});
+
+const openai = createOpenAI();
+const model = openai.chat("gpt-5.2");
+
+const result = streamText({
+  model: gateway(model),
+  system: "You are a helpful assistant.",
+  temperature: 1,
+  messages: [
+    { role: "user", content: "What is Cloudflare Workers?" }
+  ],
+});
+
+return result.toDataStreamResponse();
+```
+
+</TabItem>
+</Tabs>
+
+## Configuration options
+
+### System prompt
+
+The system prompt provides instructions and context to the AI model. It is sent before user messages and helps shape the model's behavior and responses.
+
+To set a system prompt:
+
+1. Click the **Settings** icon in the Playground.
+2. Enter your system prompt in the **System** field.
+3. Click **Save**.
+
+Example system prompts:
+
+- `You are a helpful coding assistant that explains complex topics simply.`
+- `You are a technical writer. Respond in clear, concise markdown format.`
+- `You are a code reviewer. Analyze code for bugs, performance issues, and best practices.`
+
+### Temperature
+
+Temperature controls the randomness of the model's responses:
+
+- **Lower values (0-0.5)**: More deterministic and focused responses
+- **Higher values (0.5-2)**: More creative and varied responses
+
+To adjust temperature:
+
+1. Click the **Settings** icon in the Playground.
+2. Adjust the **Temperature** slider.
+3. Click **Save**.
+
+### Model filtering
+
+For Workers AI models, use the filter tags to find models with specific capabilities:
+
+- **Beta**: Models in beta testing (may have limited availability)
+- **LoRA**: Models that support [fine-tuning with LoRA](/workers-ai/features/fine-tunes/)
+- **MCP**: Models with [function calling](/workers-ai/features/function-calling/) support for MCP integration
+
+Click a tag to filter:
+- **First click**: Show only models with this capability (green checkmark)
+- **Second click**: Hide models with this capability (red X)
+- **Third click**: Clear the filter
+
+Hold Shift while clicking to filter by multiple tags simultaneously.
+
+## Related resources
+
+- [Workers AI documentation](/workers-ai/)
+- [AI Gateway documentation](/ai-gateway/)
+- [Model Context Protocol](/agents/model-context-protocol/)
+- [Vercel AI SDK with AI Gateway](/ai-gateway/integrations/vercel-ai-sdk/)
+- [Cloudflare Agents SDK](/agents/)
