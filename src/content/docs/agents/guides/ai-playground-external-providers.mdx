@@ -1,0 +1,146 @@
+---
+pcx_content_type: how-to
+title: Use external AI providers in the Playground
+tags:
+  - AI Playground
+  - External Providers
+sidebar:
+  order: 7
+---
+
+import { Tabs, TabItem } from "~/components";
+
+The [Workers AI Playground](https://playground.ai.cloudflare.com/) allows you to test and experiment with AI models from multiple providers, including Workers AI, OpenAI, Anthropic, and Google. You can switch between providers and choose from various authentication methods to suit your needs.
+
+## Provider options
+
+The AI Playground supports two types of providers:
+
+- **Workers AI**: Cloudflare's native AI inference platform with access to a wide range of open-source models
+- **External Providers**: Third-party AI providers including OpenAI, Anthropic, and Google
+
+## Authentication methods
+
+When using external AI providers, you can choose between two authentication approaches:
+
+### Provider API Key
+
+Use your provider's API key directly for authentication. This is the simplest approach if you already have API keys from OpenAI, Anthropic, or Google.
+
+**When to use:**
+- You have existing API keys from the provider
+- You want direct billing relationship with the provider
+- You prefer to manage keys separately for each provider
+
+### AI Gateway
+
+Route your requests through Cloudflare AI Gateway with unified billing. This approach provides centralized request management, caching, rate limiting, and analytics across all providers.
+
+**When to use:**
+- You want unified billing across multiple providers using Cloudflare credits
+- You need advanced features like caching, rate limiting, and fallbacks
+- You want centralized observability and analytics for all AI requests
+
+## Use external providers in the Playground
+
+### Configure provider authentication
+
+1. Navigate to the [Workers AI Playground](https://playground.ai.cloudflare.com/).
+
+2. In the model selector, toggle to **Other Providers**.
+
+3. Select your preferred provider (OpenAI, Anthropic, or Google).
+
+4. Choose an authentication method:
+
+<Tabs>
+<TabItem label="Provider API Key">
+
+Enter your provider's API key directly:
+
+1. Select **Provider API Key** as the authentication method.
+2. Enter your API key in the field provided.
+3. The key will be used directly with the provider's API.
+
+</TabItem>
+<TabItem label="AI Gateway">
+
+Configure AI Gateway authentication:
+
+1. Select **AI Gateway** as the authentication method.
+2. Enter your **Account ID** (found in your Cloudflare dashboard URL).
+3. Enter your **Gateway ID** (the name of your AI Gateway).
+4. Enter your **Cloudflare API Key** for gateway authentication.
+
+Your requests will be routed through AI Gateway, which handles provider authentication using either:
+- Stored API keys (BYOK)
+- Unified billing credits
+
+For unified billing, ensure you have loaded credits in your [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/ai-gateway).
+
+</TabItem>
+</Tabs>
+
+### Select a model
+
+After configuring authentication, select a model from the available options:
+
+#### OpenAI models
+
+- **gpt-5.2**: Premier model for coding and agentic tasks
+- **gpt-5.2-pro**: Enhanced GPT-5.2 with improved precision
+- **gpt-5-mini**: Cost-efficient version for well-defined tasks
+- **gpt-5-nano**: Fastest and most cost-efficient
+- **gpt-5**: Intelligent reasoning model
+
+#### Anthropic models
+
+- **claude-sonnet-4-5-20250929** (Recommended): Best balance of intelligence, speed, and cost
+- **claude-opus-4-5-20251101**: Maximum intelligence with practical performance
+- **claude-haiku-4-5-20251001**: Fastest model with near-frontier intelligence
+- **claude-opus-4-1-20250805**: Legacy advanced model (migrate to Opus 4.5)
+- **claude-sonnet-4-20250514**: Legacy balanced model (migrate to Sonnet 4.5)
+
+#### Google models
+
+- **gemini-3-pro-preview**: Most intelligent for multimodal understanding
+- **gemini-3-flash-preview**: Intelligence built for speed with superior search
+- **gemini-2.5-pro**: State-of-the-art for complex problems in code, math, and STEM
+- **gemini-2.5-flash**: Best price-performance for large-scale processing
+- **gemini-2.5-flash-lite**: Fastest for cost-efficiency and high throughput
+
+### Test your configuration
+
+1. Adjust the **System Message** to define the AI assistant's behavior.
+2. Configure the **Temperature** (0-1) to control response randomness.
+3. Enter a message in the chat interface.
+4. Click **Run** to send your request.
+
+## Use MCP servers with external providers
+
+The AI Playground supports Model Context Protocol (MCP) servers with both Workers AI and external providers. MCP servers extend the AI model's capabilities with custom tools.
+
+To connect an MCP server:
+
+1. Ensure your selected model supports function calling (MCP-compatible models are indicated in the interface).
+2. In the MCP Servers section, enter your MCP server URL.
+3. Click **Connect** to authenticate and load available tools.
+4. The connected tools will be available to the AI model during conversations.
+
+For more information about MCP servers, refer to [Test a Remote MCP Server](/agents/guides/test-remote-mcp-server/).
+
+## AI Gateway features with external providers
+
+When using AI Gateway authentication, your requests benefit from additional features:
+
+- **Caching**: Reduce latency and costs by caching common requests. Refer to [Caching](/ai-gateway/features/caching/).
+- **Rate Limiting**: Control request rates to manage costs and prevent abuse. Refer to [Rate Limiting](/ai-gateway/features/rate-limiting/).
+- **Fallbacks**: Automatically fallback to alternative models if a request fails. Refer to [Dynamic Routing](/ai-gateway/features/dynamic-routing/).
+- **Analytics**: Monitor usage, costs, and performance across all providers. Refer to [Observability](/ai-gateway/observability/).
+
+## Related resources
+
+- [AI Gateway Getting Started](/ai-gateway/get-started/)
+- [AI Gateway Unified Billing](/ai-gateway/features/unified-billing/)
+- [AI Gateway BYOK](/ai-gateway/configuration/bring-your-own-keys/)
+- [Build a Remote MCP Server](/agents/guides/remote-mcp-server/)
