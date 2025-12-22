@@ -43,7 +43,7 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 
 ### GRE and IPsec tunnels
 
-You can use GRE or IPsec tunnels to onboard your traffic to {props.productName}, and set them up via the Cloudflare dashboard or the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
+You can use GRE or IPsec tunnels to onboard your traffic to {props.productName}, and set them up through the Cloudflare dashboard or the API. If you use the API, you need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -62,7 +62,7 @@ IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
 
 #### Anti-replay protection
 
-If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare's side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> IPsec tunnels, we recommend disabling anti-replay protection. Cloudflare disables this setting by default. However, you can enable it through the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
 Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
 
@@ -121,30 +121,30 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 
 <Details header="GRE tunnel">
 
-4. In **Name**, give your tunnel a descriptive name. This name must be unique, and must not contain spaces or special characters. Hover the mouse over `i` in the dashboard for more information.
+4. In **Name**, give your tunnel a descriptive name. This name must be unique, and must not contain spaces or special characters. Hover over `i` in the dashboard for more information.
 5. Give your tunnel a description in **Description**. You do not have character restrictions here.
 6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
-7. In **Customer GRE endpoint**, enter your router's public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
+7. In **Customer GRE endpoint**, enter your router's public IP address. You do not need this value if you use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare provides it.
 8. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team. { props.magicWord === "Magic Transit" && (<>Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information on where to find your Cloudflare IP addresses.</>)}
 9. Leave the default values for **TTL** and **MTU**.
-10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare keeps sending traffic through the tunnel, without the means to detect if the tunnel goes down. You must set up your own system to detect down tunnels, as Cloudflare cannot warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
 11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose a <a href={props.updateHCFrequencyPage}>health check rate</a> for your tunnel. Available options are _Low_, _Medium_, and _High_.
-12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+12. The **Health check type** defaults to _Reply_ and to creating an ICMP (Internet Control Message Protocol) reply. If your firewall drops this type of packet because it assumes the packet is an attack, change this option to _Request_ which creates an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
 13. The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 14. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
 15. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
 { props.magicWord !== "Magic Transit" && (<Markdown text={`16. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "17" : "16"}. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. After adding your tunnel information, select **Add tunnels** to save your changes.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
 
 </Details>
 
 <Details header="IPsec tunnel">
 
-4. In **Name**, give your tunnel a descriptive name. This name must be unique, and must not contain spaces or special characters. Hover the mouse over `i` in the dashboard for more information.
+4. In **Name**, give your tunnel a descriptive name. This name must be unique, and must not contain spaces or special characters. Hover over `i` in the dashboard for more information.
 5. Give your tunnel a description in **Description**. You do not have character restrictions here.
 6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
-7. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
+7. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router uses an IKE (Internet Key Exchange) ID of type `ID_IPV4_ADDR`.
 8. In **Cloudflare endpoint**, enter the anycast address you received from your account team. { props.magicWord === "Magic Transit" && (<>Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information on where to find your Cloudflare IP addresses.</>)}
 9. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
 10. _(Optional)_ If you keep **Tunnel health checks** enabled, choose a <a href={props.updateHCFrequencyPage}>health check rate</a> for your tunnel. Available options are _Low_, _Medium_ and _High_.
@@ -174,7 +174,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 16. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information.
 { props.magicWord !== "Magic Transit" && (<Markdown text={`17. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. To add multiple tunnels, select **Add IPsec tunnel** for each new tunnel.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. After adding your tunnel information, select **Add tunnels** to save your changes.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
 
 </Details>
 

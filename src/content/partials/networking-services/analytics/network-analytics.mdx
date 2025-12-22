@@ -8,7 +8,7 @@ import { GlossaryTooltip, Markdown, DashButton } from "~/components"
 { props.magicWord === "Magic Transit" && (
   <>
     <Markdown
-      text="[Network Analytics](/analytics/network-analytics/) gives you real-time visibility into Magic Transit traffic entering and leaving Cloudflare's network through GRE or IPsec tunnels."
+      text="[Network Analytics](/analytics/network-analytics/) provides real-time visibility into Magic Transit traffic that enters and leaves Cloudflare's network through GRE or IPsec tunnels."
       inline={false}
     />
   </>
@@ -17,15 +17,15 @@ import { GlossaryTooltip, Markdown, DashButton } from "~/components"
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
     <Markdown
-      text="Magic WAN customers can view their real-time and historical network data in Network Analytics. Customers can see their network data in a time series that shows Magic WAN traffic (in packets or bytes) over time, and can filter the time series data by different types of [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) characteristics."
+      text="Magic WAN customers can access real-time and historical network data in Network Analytics. Customers can explore Magic WAN traffic (in packets or bytes) over time in a time series, and can filter the data by different [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) characteristics."
       inline={false}
     />
   </>
 )}
 
-Data is aggregated over time intervals that vary based on your selected zoom level. For example, a daily view shows 24-hour averages, which can flatten out short-term traffic spikes. As a result, longer time intervals will display lower peak bandwidth values compared to more granular views like five-minute intervals.
+Data is aggregated into time intervals that vary based on the selected zoom level. For example, a daily view shows 24-hour averages, which can flatten short-term traffic spikes. As a result, longer time intervals display lower peak bandwidth values compared to more granular views like five-minute intervals.
 
-Refer to [Network Analytics](/analytics/network-analytics/) documentation to learn more.
+Refer to the [Network Analytics](/analytics/network-analytics/) documentation to learn more.
 
 ## Network traffic data filters
 
@@ -33,7 +33,7 @@ Refer to [Network Analytics](/analytics/network-analytics/) documentation to lea
   <>
 	<Markdown
 	text={`
-	Magic Transit customers can account for all traffic flows that ingresses Cloudflare's network, is blocked by DDoS rules or Magic Firewall, and egresses Cloudflare's network. This allows customers to track the total packets and bytes that traverse Cloudflare's network and are ultimately destined for their own network. This will also give Magic Transit customers increased visibility into any traffic flows that are unaccounted for.
+	Magic Transit customers can account for all traffic flows that enter Cloudflare's network, are blocked by DDoS rules or Magic Firewall, and leave Cloudflare's network. This visibility allows customers to track the total packets and bytes that traverse Cloudflare's network and are ultimately destined for their own network. It also provides increased visibility into any traffic flows that are unaccounted for.
 	`}
 	inline={false}
 	/>
@@ -45,11 +45,11 @@ Refer to [Network Analytics](/analytics/network-analytics/) documentation to lea
   <>
 	<Markdown
 	text={`
-	Magic WAN customers have increased visibility into the various traffic flows across Cloudflare One products including:
+	Magic WAN customers have increased visibility into traffic flows across Cloudflare One products, including:
 
-	- Traffic ingressing to Cloudflare's network via WARP
-	- Traffic egressing Cloudflare's network via WARP
-	- Traffic egressing Cloudflare's network via Cloudflare Tunnel (cloudflared)
+	- Traffic entering Cloudflare's network via WARP
+	- Traffic leaving Cloudflare's network via WARP
+	- Traffic leaving Cloudflare's network via Cloudflare Tunnel (\`cloudflared\`)
 
 	`}
 	inline={false}
@@ -61,13 +61,13 @@ Refer to [Network Analytics](/analytics/network-analytics/) documentation to lea
 The complete list of filters includes:
 
 - A list of your top tunnels by traffic volume.
-- Traffic source and destination for type of traffic, on-ramps and off-ramps, <GlossaryTooltip term="IP address">IP addresses</GlossaryTooltip>, and ports.
+- Traffic source and destination by traffic type, on-ramps and off-ramps, <GlossaryTooltip term="IP address">IP addresses</GlossaryTooltip>, and ports.
 - Destination IP ranges and ASNs.
 - Protocols and packet sizes.
 - Samples of all GRE or IPsec tunnel traffic entering or leaving Cloudflare's network.
-- Mitigations applied (such as DDoS and Magic Firewall) to traffic entering Cloudflare.
+- Mitigations applied (such as DDoS and Magic Firewall) to traffic entering Cloudflare's network.
 
-Refer below to [Access Magic Tunnel traffic analytics](#access-magic-tunnel-traffic-analytics) to learn how to access these filters.
+Refer to [Access Magic Tunnel traffic analytics](#access-magic-tunnel-traffic-analytics) below to learn how to access these filters.
 
 ## Access Magic Tunnel traffic analytics
 
@@ -75,10 +75,10 @@ Refer below to [Access Magic Tunnel traffic analytics](#access-magic-tunnel-traf
 
 	<DashButton url="/?to=/:account/network-analytics" />
 
-2. In the **All Traffic** tab, scroll to **Top Insights** to access network traffic filters. By default, the dashboard shows five items, but you can display up to 25 items at once. Select the drop-down menu to make your change.
-3. (Optional) Hover your mouse over one of the types of traffic. You can then choose to filter for that type of traffic, or exclude it from the results.
-4. You can also apply filters to adjust the scope of information displayed. Scroll to **All traffic** > **Add filter**.
-5. In the **New filter** popover, choose what type of data you want to display from the left dropdown menu, an operator from the middle dropdown menu, and an action from the right dropdown menu. For example:
+2. In the **All Traffic** tab, scroll to **Top Insights** to access network traffic filters. By default, the dashboard shows five items, but you can display up to 25 items at once. To change the number of items, select the drop-down menu.
+3. (Optional) Hover over a traffic type. You can then choose to filter for that traffic, or exclude it from the results.
+4. To adjust the scope of information displayed, scroll to **All traffic** > **Add filter**.
+5. In the **New filter** popover, choose the data type from the left drop-down menu, an operator from the middle drop-down menu, and an action from the right drop-down menu. For example:
 
    ```txt
    <DESTINATION_TUNNELS> | _equals_ | <NAME_OF_YOUR_TUNNEL>
@@ -88,11 +88,11 @@ Refer below to [Access Magic Tunnel traffic analytics](#access-magic-tunnel-traf
 
 ## Feature notes
 
-- For Magic Transit customers, `Non-tunnel traffic` will often represent traffic from the public Internet or traffic via [CNIs](/network-interconnect/).
-- For Magic WAN / WAN tunnels customers, `Non-tunnel traffic` refers to traffic outside of GRE or IPsec tunnels. This can include traffic from:
+- For Magic Transit customers, `Non-Tunnel traffic` often represents traffic from the public Internet or traffic via [CNIs](/network-interconnect/).
+- For Magic WAN / WAN tunnels customers, `Non-Tunnel traffic` refers to traffic outside GRE or IPsec tunnels. This can include traffic from:
   - [WARP](/cloudflare-one/team-and-resources/devices/warp/)
   - [CNIs](/network-interconnect/)
   - Traffic destined for the public Internet via [Gateway](/cloudflare-one/traffic-policies/)
   - Traffic destined for applications behind [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 
-The label `Non-Tunnel traffic` is a placeholder, and more specific labels will be applied to this category of traffic in the near future.
+The label `Non-Tunnel traffic` is a placeholder, and more specific labels will be applied to this category of traffic in the future.

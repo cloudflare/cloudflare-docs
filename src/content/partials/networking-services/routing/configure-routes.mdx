@@ -18,7 +18,7 @@ params:
 
 import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
+Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (only available over Direct CNI).
 
 Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more information about all the technical aspects related to:
 - Routes' priorities and weights
@@ -90,7 +90,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 3. Enter a descriptive name for your route in **Description**.
 4. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
-5. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
+5. In **Tunnel/Next hop**, select a tunnel for your route from the tunnels you created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
 6. Choose the **Priority** for your route. Lower numbers have higher priorities.
 	:::note
 	<Render file="longest-prefix-match" product="networking-services/reference" /> Have this in mind when configuring priorities for your routes. Refer to <a href={props.routePrioritization}>Route prioritization</a> for more information.
@@ -98,7 +98,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 7. (Optional) Choose a **Weight** for your route. Refer to <a href={props.chooseWeights}>Set priority and weights for static routes</a> for examples.
 8. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
 9. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
-10. Select **Add routes** when you are done.
+10. Select **Add routes**.
 
 </TabItem> <TabItem label="API">
 
@@ -178,7 +178,7 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes** > **WAN Routes** find the route you want to modify.
+			1. In **Routes** > **WAN Routes**, locate the route to modify.
 			2. Select the three dots next to it > **Edit**.
 		`}
 		inline={false}
@@ -192,7 +192,7 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes** find the route you want to modify.
+			1. In **Routes**, locate the route to modify.
 			2. Select the three dots next to it > **Edit**.
 		`}
 		inline={false}
@@ -203,7 +203,7 @@ Example:
 
 3. Enter the updated route information.
 4. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
-5. Select **Edit routes** to save the new information when you are done.
+5. Select **Edit routes**.
 
 </TabItem> <TabItem label="API">
 
@@ -282,7 +282,7 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes** > **WAN Routes**, locate the static route you want to modify.
+			1. In **Routes** > **WAN Routes**, locate the static route to delete.
 			2. Select the three dots next to it > **Delete**.
 		`}
 		inline={false}
@@ -296,7 +296,7 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes**, locate the static route you want to modify.
+			1. In **Routes**, locate the static route to delete.
 			2. Select the three dots next to it > **Delete**.
 		`}
 		inline={false}
@@ -411,9 +411,9 @@ BGP peering is available when using a [Direct CNI](/network-interconnect/) as an
 
 ### Choose an ASN for BGP peering
 
-The Magic routing table is managed by the customer, who can select both the Cloudflare-side ASN and the ASN for their customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
+The Magic routing table is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
 
-By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`).
+By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (for example, any value between `64512` and `65534`).
 
 To set this ASN:
 
@@ -498,7 +498,7 @@ You need to configure two ASNs:
 - The Cloudflare [account-scoped ASN](#choose-an-asn-for-bgp-peering) named **CF Account ASN**.
 - One ASN for each interconnect you want to configure with BGP.
 
-If you already have set up your Cloudflare account ASN, you can skip steps two and three below.
+If you have already set up your Cloudflare account ASN, skip steps two and three below.
 
 {/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
 { props.magicWord === "WAN Tunnels" && (
@@ -538,7 +538,7 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 )
 }
 
-5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
+5. Locate the Direct CNI interconnect to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
 
 	{ props.magicWord !== "Magic Transit" && (
@@ -549,7 +549,7 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 	}
 
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
-8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
+8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect. These prefixes advertise alongside your existing routes. Leave this blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
 	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/#add-ip-route-to-router).
 9. Select **Save**.
