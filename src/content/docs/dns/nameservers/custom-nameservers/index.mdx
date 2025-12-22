@@ -27,3 +27,9 @@ Custom nameservers are organized in different sets (`ns_set`). Each namesever se
 
 <Render file="ns-advanced-vs-custom" product="dns" />
 <br />
+
+:::warning
+Custom nameservers configuration don't apply automaticallw to newly added zone if they were previously added to Cloudflare. 
+Reviving a zone will require the account custom nameservers configuration to be applied to the zone manually.
+Please contact your account team in this case.
+:::
