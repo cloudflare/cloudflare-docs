@@ -26,10 +26,11 @@ Furthermore, we have an escape hatch in the form of [Custom Builds](/workers/wra
 Bundling your Worker code takes multiple modules and bundles them into one file.
 Sometimes, you might have modules that cannot be inlined directly into the bundle.
 For example, instead of bundling a Wasm file into your JavaScript Worker, you would want to upload the Wasm file as a separate module that can be imported at runtime.
-Wrangler supports this for the following file types:
+Wrangler supports this by default for the following file types:
 
 - `.txt`
 - `.html`
+- `.sql`
 - `.bin`
 - `.wasm` and `.wasm?module`
 
