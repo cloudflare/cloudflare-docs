@@ -7,6 +7,12 @@ import { getReleaseNotes } from "~/util/release-notes";
 import AnchorHeading from "~/components/AnchorHeading.astro";
 import RSSButton from "~/components/RSSButton.astro";
 
+export interface Props {
+	releaseNotesFileName?: string;
+}
+
+const { releaseNotesFileName } = Astro.props;
+
 const page = await getEntry("docs", Astro.params.slug!);
 
 if (!page) {
@@ -15,25 +21,29 @@ if (!page) {
 	);
 }
 
-if (
-	!page.data.release_notes_file_name
-) {
-	throw new Error(
-		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' frontmatter property.`,
-	);
-}
+// Use prop if provided, otherwise fall back to frontmatter
+let name: string | undefined;
 
-if (
-	page.data.release_notes_file_name &&
-	page.data.release_notes_file_name.length > 1
-) {
-	throw new Error(
-		`[ProductReleaseNotes] This component cannot be used on files that have more than 1 entry in their 'release_notes_file_name' frontmatter property.`,
-	);
-}
+if (releaseNotesFileName) {
+	name = releaseNotesFileName;
+} else {
+	if (!page.data.release_notes_file_name) {
+		throw new Error(
+			`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' frontmatter property and no 'releaseNotesFileName' prop was provided.`,
+		);
+	}
 
-const name =
-	page.data.release_notes_file_name?.[0];
+	if (
+		page.data.release_notes_file_name &&
+		page.data.release_notes_file_name.length > 1
+	) {
+		throw new Error(
+			`[ProductReleaseNotes] This component cannot be used on files that have more than 1 entry in their 'release_notes_file_name' frontmatter property.`,
+		);
+	}
+
+	name = page.data.release_notes_file_name?.[0];
+}
 
 let releaseNotes;
 
