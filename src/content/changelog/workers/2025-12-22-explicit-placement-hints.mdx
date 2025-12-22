@@ -1,6 +1,6 @@
 ---
 title: New Placement Hints for Workers
-description: You can now explicitly place Workers close to your existing cloud infrastructure in order to minimize network latency to existing services and databases.
+description: You can now explicitly place Workers close to your existing infrastructure in order to minimize network latency to existing services and databases.
 products:
   - workers
 date: 2025-12-22
@@ -24,7 +24,36 @@ To [set a placement hint](/workers/configuration/smart-placement/#placement-hint
 
 </WranglerConfig>
 
-Placement hints support GCP and AWS region identifiers, and will run your Workers in the [Cloudflare datacenter](https://www.cloudflare.com/network/) with the lowest latency to the specified cloud region.
+Placement hints support GCP, AWS, and Azure region identifiers, and will run your Workers in the [Cloudflare datacenter](https://www.cloudflare.com/network/) with the lowest latency to the specified cloud region.
+
+If your existing infrastructure is not in one of these legacy clouds, you may instead expose it to placement probes by setting the `placement.host` field for layer 4 probes, or `placement.hostname` field for layer 7 probes.
+
+Note that these probes are designed to locate single-homed infrastructure, and so are not suitable for anycasted or multicasted resources.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"placement": {
+		"host": "my_database_host.com:5432"
+	}
+}
+```
+
+</WranglerConfig>
+
+<WranglerConfig>
+
+```jsonc
+{
+	"placement": {
+		"hostname": "my_api_server.com"
+	}
+}
+```
+
+</WranglerConfig>
+
 
 This is an extension of [Smart Placement](/workers/configuration/smart-placement/), which automatically places your Workers closer to the backend APIs based on measured latency. When you don't know the location of your backend APIs, and/or where there are multiple backend APIs, we recommend setting `mode: "smart"`:
 

@@ -218,6 +218,8 @@ The `main` key is optional for assets-only Workers.
   - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/smart-placement/).
   - `mode` <Type text="string"/> — Set to `"smart"` to automatically place your Worker near back-end services based on observed latency.
   - `region` <Type text="string"/> — Specify a cloud region (for example, `"aws:us-east-1"` or `"gcp:europe-west1"`) to place your Worker near infrastructure in that region.
+  - `host` <Type text="string"/> — Specify a hostname and port for a single-homed layer 4 service (for example, `"my_database_host.com:5432"`) to place your Worker near that service.
+  - `hostname` <Type text="string"/> — Specify a hostname for a single-homed layer 7 service (for example, `"my_api_server.com"`) to place your Worker near that service.
 
 ## Non-inheritable keys
 
