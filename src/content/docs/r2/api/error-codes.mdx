@@ -89,4 +89,4 @@ For the **S3-compatible API**, errors are returned as XML in the response body:
 | 10001 | InternalError | 500 | An internal error occurred. | Retry the request. If persistent, check [Cloudflare Status](https://www.cloudflarestatus.com) or contact support. |
 | 10043 | ServiceUnavailable | 503 | Service is temporarily unavailable. | Retry with exponential backoff. Check [Cloudflare Status](https://www.cloudflarestatus.com). |
 | 10054 | ClientDisconnect | 400 | Client disconnected before request completed. | Check network connectivity and retry. |
-| 10058 | TooManyRequests | 429 | Rate limit exceeded. Often caused by multiple concurrent requests to the same object key (limit: 1 write/second per key). | Check if multiple clients or workers are accessing the same object key. See [R2 limits](/r2/platform/limits/). |
+| 10058 | TooManyRequests | 429 | Rate limit exceeded. Often caused by multiple concurrent requests to the same object key (limit: 1 write/second per key). | Check if multiple clients are accessing the same object key. See [R2 limits](/r2/platform/limits/). |
