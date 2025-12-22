@@ -1,0 +1,139 @@
+---
+link: "/realtime/realtimekit/release-notes/"
+productName: RealtimeKit Web Core
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2025-11-18"
+    title: RealtimeKit Web Core 1.2.1
+    description: |-
+      **Fixes**
+
+      - Resolved an issue preventing default media device selection.
+      - Fixed SDK bundle to include `browser.js` instead of incorrectly shipping `index.iife.js` in 1.2.0.
+
+      **Enhancements**
+
+      - External media devices are now prioritized over internal devices when no preferred device is set.
+
+  - publish_date: "2025-10-30"
+    title: RealtimeKit Web Core 1.2.0
+    description: |-
+      **Features**
+
+      - Added support for configuring simulcast via `initMeeting`:
+
+        ```ts
+        initMeeting({
+          overrides: {
+            simulcastConfig: {
+              disable: false,
+              encodings: [{ scaleResolutionDownBy: 2 }],
+            },
+          },
+        });
+        ```
+
+      **Fixes**
+
+      - Resolved an issue where remote participants' video feeds were not visible during grid pagination in certain edge cases.
+      - Fixed a bug preventing participants from switching microphones if the first listed microphone was non-functional.
+
+      **Breaking changes**
+
+      - Legacy media engine support has been removed. If your organization was created before March 1, 2025 and you are upgrading to this SDK version or later, you may experience recording issues. Contact support to migrate to the new Cloudflare SFU media engine to ensure continued recording functionality.
+
+  - publish_date: "2025-08-26"
+    title: RealtimeKit Web Core 1.1.7
+    description: |-
+      **Fixes**
+
+      - Prevented speaker change events from being emitted when the active speaker does not change.
+      - Addressed a behavioral change in microphone switching on recent versions of Google Chrome.
+      - Added `deviceInfo` logs to improve debugging capabilities for React Native.
+      - Fixed an issue that queued multiple media consumers for the same peer, optimizing resource usage.
+
+  - publish_date: "2025-08-14"
+    title: RealtimeKit Web Core 1.1.6
+    description: |-
+      **Enhancements**
+
+      - Internal changes to make debugging of media consumption issues easier and faster.
+
+  - publish_date: "2025-08-04"
+    title: RealtimeKit Web Core 1.1.5
+    description: |-
+      **Fixes**
+
+      - Improved React Native support for `AudioActivityReporter` with proper audio sampling.
+      - Resolved issue preventing users from creating polls.
+      - Fixed issue where leaving a meeting took more than 20 seconds.
+
+  - publish_date: "2025-07-17"
+    title: RealtimeKit Web Core 1.1.4
+    description: |-
+      **Fixes**
+
+      - Livestream feature is now available to all beta users.
+      - Fixed livestream stage functionality where hosts were not consuming peer videos upon participants' stage join.
+      - Resolved issues with viewer joins and leaves in livestream stage.
+
+  - publish_date: "2025-07-08"
+    title: RealtimeKit Web Core 1.1.3
+    description: |-
+      **Fixes**
+
+      - Fixed issue where users could not enable video mid-meeting if they joined without video initially.
+
+  - publish_date: "2025-07-02"
+    title: RealtimeKit Web Core 1.1.2
+    description: |-
+      **Fixes**
+
+      - Fixed edge case in large meetings where existing participants could not hear or see newly joined users.
+
+  - publish_date: "2025-06-30"
+    title: RealtimeKit Web Core 1.1.0–1.1.1
+    description: |-
+      **Features**
+
+      - Added methods to toggle self tile visibility.
+      - Introduced broadcast functionality across connected meetings (breakout rooms).
+
+      **New API**
+
+      - Broadcast messages across meetings:
+
+        ```ts
+        meeting.participants.broadcastMessage("<message_type>", { message: "Hi" }, {
+          meetingIds: ["<connected_meeting_id>"],
+        });
+        ```
+
+      **Enhancements**
+
+      - Reduced time to display videos of newly joined participants when joining in bulk.
+      - Added support for multiple meetings on the same page in RealtimeKit Core SDK.
+
+  - publish_date: "2025-06-17"
+    title: RealtimeKit Web Core 1.0.2
+    description: |-
+      **Fixes**
+
+      - Enhanced error handling for media operations.
+      - Fixed issue where active participants with audio or video were not appearing in the active participant list.
+
+  - publish_date: "2025-05-29"
+    title: RealtimeKit Web Core 1.0.1
+    description: |-
+      **Fixes**
+
+      - Resolved initial setup issues with Cloudflare RealtimeKit integration.
+      - Fixed meeting join and media connectivity issues.
+      - Enhanced media track handling.
+
+  - publish_date: "2025-05-29"
+    title: RealtimeKit Web Core 1.0.0
+    description: |-
+      **Features**
+
+      - Initial release of Cloudflare RealtimeKit with support for group calls, webinars, livestreaming, polls, and chat.

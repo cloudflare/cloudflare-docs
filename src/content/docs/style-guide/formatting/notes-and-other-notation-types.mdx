@@ -4,8 +4,59 @@ title: Notes and other notation types
 
 ---
 
-Use a **warning** to alert a reader to behavior that could impact the security of a users network or break functionality. You can call out product requirements, limitations, and specifications so that users see them loud and clearly.
+When adding a note to a page, always use this special note formatting. There are three types of formatted notes: `note`, `caution`, and `tip`.
 
-Use a **note** to alert a reader to additional useful information that you cannot integrate into the text. You can provide context for a topic that would be a digression if added directly to the discussion at hand.
+Here is some additional information about notes:
+- The color of the note depends on the type of note: `note` is blue, `caution` is yellow, and `tip` is purple.
+- For every note type, the header text is optional.
+- All note types can contain text and additional formatting like lists, code blocks, and images.
 
-Refer to [notes/tips/warnings](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/) for details on the Markdown syntax.
+To learn how notes fit into our content strategy, refer to [Notes/tips/warnings](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/).
+
+## Note
+
+Use Note for small additions or when you need to provide extra context that is not essential to the main content.
+
+If you do not provide a header, this aside will default to `Note`.
+
+```mdx
+:::note[Header]
+Hello, world!
+:::
+```
+
+:::note[Header]
+Hello, world!
+:::
+
+## Caution/Warning
+
+Use Caution to highlight actions that could cause issues for a user.
+
+If you do not provide a header, this aside will default to `Warning`.
+
+```mdx
+:::caution[Feature conflict]
+If you use feature A and feature B together, your configuration will not work.
+:::
+```
+
+:::caution[Feature conflict]
+If you use feature A and feature B together, your configuration will not work.
+:::
+
+## Tip
+
+Use Tip to share best practices or opinionated use cases that do not fit into the main documentation.
+
+If you do not provide a header, this aside will default to `Tip`.
+
+```mdx
+:::tip[Best practice]
+Cloudflare recommends you use [1.1.1.1](/1.1.1.1/) as your DNS resolver.
+:::
+```
+
+:::tip[Best practice]
+Cloudflare recommends you use [1.1.1.1](/1.1.1.1/) as your DNS resolver.
+:::

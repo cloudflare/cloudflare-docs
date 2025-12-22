@@ -25,8 +25,8 @@ Cloudflare transports IPv6 traffic over an IPv6-over-IPv4 GRE tunnel. Here is ho
 
 ## Current known limitations
 
-- The IPv6 beta is not available for accounts with CNI links configured.
-- MTU is 1420 bytes for egress traffic (does not impact Direct Server Return).
+- The IPv6 beta is not available for accounts with CNI (Cloudflare Network Interconnect) links configured.
+- MTU (Maximum Transmission Unit) is 1,420 bytes for egress traffic (does not impact Direct Server Return).
 - Magic Firewall supports two matching fields for IPv6 traffic: source IP address and destination IP address.
 - Cloudflare supports the advertisement of IPv6 prefixes ranging from `/48` to `/32`.
 - Limited to IPv4-based [tunnel health checks](/magic-transit/reference/tunnel-health-checks/) only.
@@ -34,9 +34,9 @@ Cloudflare transports IPv6 traffic over an IPv6-over-IPv4 GRE tunnel. Here is ho
 
 ## How to configure IPv6
 
-Since IPv6 works over an existing IPv4 tunnel you will need to choose either an existing IPv4 GRE tunnel or create a new one to test IPv6. All settings that apply to the IPv4 GRE tunnel apply to the IPv6 tunnel as well, except for any MSS clamping you might need to configure — refer to [MSS clamping recommendations](#mss-clamping-recommendations) below for more information.
+Since IPv6 works over an existing IPv4 tunnel, you need to choose either an existing IPv4 GRE tunnel or create a new one to test IPv6. All settings that apply to the IPv4 GRE tunnel apply to the IPv6 tunnel as well, except for any MSS clamping you might need to configure — refer to [MSS clamping recommendations](#mss-clamping-recommendations) below for more information.
 
-To test and set up IPv6 in the Cloudflare dashboard there is only one new field you need to fill out when creating a new IPv4 GRE tunnel or editing an existing one: **IPv6 Interface address**. This is where you enter the Cloudflare-assigned IPv6 address for the Cloudflare side of the tunnel. Each tunnel is assigned a `/127` subnet from your allocated `/96` range. You will configure one address on the Cloudflare side and the other address on your router.
+To test and set up IPv6 in the Cloudflare dashboard, complete one new field when creating a new IPv4 GRE tunnel or editing an existing one: **IPv6 Interface address**. Enter the Cloudflare-assigned IPv6 address for the Cloudflare side of the tunnel. Each tunnel is assigned a `/127` subnet from your allocated `/96` range. You configure one address on the Cloudflare side and the other address on your router.
 
 :::caution
 Cloudflare allocates a `/96` IPv6 prefix for each account. The first two addresses in this range are reserved for Cloudflare. The remaining addresses are available for customer GRE tunnels, starting from `:2`, with two IPv6 addresses assigned per tunnel.
@@ -66,4 +66,4 @@ After the first two reserved addresses, you can continue allocating `/127` subne
 
 ### MSS clamping recommendations
 
-Customers using Magic Transit ingress-only traffic (DSR) should apply a TCP MSS clamp with a maximum of 1,416 bytes to their edge router's transit ports to account for the larger IPv6 header.
+If you use Magic Transit ingress-only traffic (DSR), apply a TCP MSS (Maximum Segment Size) clamp with a maximum of 1,416 bytes to your edge router's transit ports to account for the larger IPv6 header.

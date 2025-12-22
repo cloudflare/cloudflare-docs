@@ -67,7 +67,7 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.date()
 			.optional()
 			.describe(
-				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end. This is used to automatically add the [LastReviewed component](/style-guide/components/last-reviewed/). Commonly related to [tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/) and [reference architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/).",
+				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end.",
 			),
 		release_notes_file_name: z
 			.string()
