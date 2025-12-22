@@ -1,0 +1,26 @@
+---
+pcx_content_type: how-to
+title: Change Super Administrator
+---
+
+## Change Super Administrator
+
+If a Super Administrator leaves your organization or loses access to their email address, another Super Administrator with a verified email address can transfer administrative ownership.
+
+To prevent administrative lockout, ensure at least one active Super Administrator remains on the account at all times.
+
+### Prerequisites
+
+- An existing Super Administrator with a verified email address  
+- The new administrator must be an account member
+
+### Procedure
+
+1. Add a new member to your account.
+2. Assign the **Super Administrator** role to the member.
+3. Confirm the member has accepted the role and has full administrative access.
+4. Remove the previous Super Administrator, if required.
+
+### Outcome
+
+The Super Administrator role is successfully reassigned, ensuring uninterrupted account ownership, governance continuity, and administrative control.
