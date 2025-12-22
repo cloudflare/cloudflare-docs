@@ -1,5 +1,5 @@
 ---
-link: "/realtime/realtimekit/web-ui-kit/release-notes/"
+link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
@@ -79,4 +79,3 @@ entries:
       **Features**
 
       - Initial release of Cloudflare RealtimeKit with support for group calls, webinars, livestreaming, polls, and chat.
-
