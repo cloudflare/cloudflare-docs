@@ -1,24 +1,65 @@
 ---
-title: Manage active sessions
+title: Recover your account
 pcx_content_type: how-to
+description: Learn how to recover access to your Cloudflare account if you lose login credentials, administrative access, or active sessions.
 sidebar:
-  order: 4
+  order: 5
 ---
 
-import { DashButton, Render } from "~/components";
+## Recover your account
 
-<Render file="account-manage-active-sessions" product="fundamentals" />
+If you lose access to your Cloudflare account due to forgotten credentials, revoked sessions, or unavailable administrators, you can take the steps below to regain access while maintaining account security.
 
-## View active sessions
+### Common recovery scenarios
 
-To view the active sessions associated with your email address:
+Account recovery may be required if:
 
-1. In the Cloudflare dashboard, go to the **Account home** page.
+- You no longer have access to the email address associated with your account
+- All active sessions were revoked
+- The only Super Administrator is unavailable
+- You are locked out due to authentication issues
 
-    <DashButton url="/?to=/:account/home" />
+### Recovery options
 
-2. Go to **My Profile** > **Sessions**.
+#### Recover access using email
 
-## Revoke active sessions
+If you still have access to your account email address:
 
-<Render file="revoke-active-sessions" product="fundamentals" />
+1. Go to the Cloudflare login page.
+2. Select **Forgot your password?**
+3. Follow the password reset instructions sent to your email.
+
+#### Recover access without email access
+
+If you no longer have access to the email address on the account:
+
+- Ensure another **Super Administrator** exists who can update your email address or role.
+- If no Super Administrator is available, contact Cloudflare Support and provide proof of account ownership.
+
+#### Recover from administrative lockout
+
+To prevent lockout scenarios:
+
+- Maintain at least two active Super Administrators on the account.
+- Ensure all Super Administrators have verified email addresses.
+- Regularly review active sessions and account members.
+
+### Contact Cloudflare Support
+
+If self-service recovery is not possible, submit a support request with the following information:
+
+- Account name or account ID
+- Affected email address
+- Description of the access issue
+- Any relevant verification details requested by Support
+
+### Outcome
+
+Account access is restored or escalated through Cloudflare Support, ensuring secure reestablishment of administrative control.
+
+---
+
+If you want, I can:
+- Align this **exactly** with an existing Cloudflare recovery page  
+- Add **support plan–specific language**  
+- Break this into **multiple recovery subpages** for navigation clarity
