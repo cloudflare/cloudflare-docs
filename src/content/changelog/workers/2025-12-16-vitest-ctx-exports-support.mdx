@@ -8,6 +8,31 @@ date: 2025-12-16
 
 The [`@cloudflare/vitest-pool-workers`](/workers/testing/vitest-integration/) package now supports the [`ctx.exports` API](/workers/runtime-apis/context/#exports), allowing you to access your Worker's top-level exports during tests.
 
+You can access `ctx.exports` in unit tests by calling `createExecutionContext()`:
+
+```ts
+import { createExecutionContext } from "cloudflare:test";
+import { it, expect } from "vitest";
+
+it("can access ctx.exports", async () => {
+  const ctx = createExecutionContext();
+  const result = await ctx.exports.MyEntryPoint.myMethod();
+  expect(result).toBe("expected value");
+});
+```
+
+Alternatively, you can import `exports` directly from `cloudflare:workers`:
+
+```ts
+import { exports } from "cloudflare:workers";
+import { it, expect } from "vitest";
+
+it("can access imported exports", async () => {
+  const result = await exports.MyEntryPoint.myMethod();
+  expect(result).toBe("expected value");
+});
+```
+
 Due to the dynamic nature of Vitest, the integration infers the exports of the main Worker by statically analyzing the Worker source using esbuild. In cases where it is not possible to infer the exports (for example, a wildcard re-export of a virtual module), you can declare these in the vitest-pool-workers config via the `additionalExports` setting.
 
 See the [context-exports fixture](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/context-exports) for a complete example, and refer to the [known issues](/workers/testing/vitest-integration/known-issues/) documentation for more details on the `additionalExports` workaround.
