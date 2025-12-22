@@ -16,7 +16,7 @@ This is helpful when:
 
 ### How to use remote dispatch namespaces
 
-In the dynamic dispatch Worker's Wrangler file, configure the [dispatch namespace binding](/workers/wrangler/configuration/#dispatch-namespace-bindings-workers-for-platforms) to connect to the remote namespace by setting [`experimental_remote = true`](/workers/development-testing/#remote-bindings):
+In the dynamic dispatch Worker's Wrangler file, configure the [dispatch namespace binding](/workers/wrangler/configuration/#dispatch-namespace-bindings-workers-for-platforms) to connect to the remote namespace by setting [`remote = true`](/workers/development-testing/#remote-bindings):
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -25,7 +25,7 @@ In the dynamic dispatch Worker's Wrangler file, configure the [dispatch namespac
     {
       "binding": "DISPATCH_NAMESPACE",
       "namespace": "production",
-      "experimental_remote": true
+      "remote": true
 		}
   ]
 }
