@@ -552,7 +552,7 @@ entries:
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
   - name: cf.bot_management.static_resource
-    data_type: Number
+    data_type: Boolean
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor]
     plan_info_label: Enterprise add-on
