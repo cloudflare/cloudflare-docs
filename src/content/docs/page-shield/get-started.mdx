@@ -11,7 +11,7 @@ description: Learn how to get started with client-side resource monitoring.
 
 import { Tabs, TabItem, Render, Steps, DashButton } from "~/components";
 
-## Activate client-side resource monitoring
+## 1. Activate client-side resource monitoring
 
 To enable client-side resource monitoring:
 
@@ -44,7 +44,7 @@ If you do not have access to resource monitoring in the Cloudflare dashboard, ch
 
 </TabItem> </Tabs>
 
-## Review detected resources
+## 2. Review detected resources
 
 When you enable client-side resource monitoring, it may take a while to get the list of detected scripts in your domain.
 
@@ -74,7 +74,7 @@ To review the scripts detected by Cloudflare:
 2. Review the list of detected scripts, checking for any unknown or unexpected scripts.<br/>
    [Depending on your plan](/page-shield/#availability), Cloudflare will also:
    - Inform you if a script is [considered malicious](/page-shield/how-it-works/malicious-script-detection/).
-   - [Show the details](/page-shield/detection/monitor-connections-scripts/#script-and-connection-details) about each detected script.
+   - [Show the details](/page-shield/detection/monitor-connections-scripts/#view-details) about each detected script.
 
 {/* prettier-ignore-end */}
 
@@ -82,7 +82,7 @@ To review the scripts detected by Cloudflare:
 
 Depending on your plan, you may be able to also review the connections made by scripts in your domain's pages and check them for malicious activity.
 
-## Configure alerts
+## 3. (Optional) Configure alerts
 
 <Render
 	file="alerts-intro"
@@ -95,7 +95,9 @@ Depending on your plan, you may be able to also review the connections made by s
 
 <Render file="alerts-configure" product="page-shield" />
 
-## Define policies
+To learn how you can handle an alert, refer to [Handle a client-side resource alert](/page-shield/best-practices/handle-an-alert/).
+
+## 4. (Optional) Define policies
 
 :::note
 Only available to Enterprise customers with a paid add-on.
@@ -105,7 +107,7 @@ Only available to Enterprise customers with a paid add-on.
 
 [^1]: A positive security model is one that defines what is allowed and rejects everything else. In contrast, a negative security model defines what will be rejected and accepts the rest.
 
-### 1. Create a policy with the Log action
+### 4.1. Create a policy with the Log action
 
 When you create a policy with the [_Log_ action](/page-shield/policies/#policy-actions), Cloudflare logs any resources not covered by the policy, without blocking any resources. Use this action to validate a new policy before deploying it.
 
@@ -115,7 +117,7 @@ When you create a policy with the [_Log_ action](/page-shield/policies/#policy-a
 	product="page-shield"
 />
 
-### 2. Review policy violations
+### 4.2. Review policy violations
 
 Resources not covered by the policy you created will be reported as [policy violations](/page-shield/policies/violations/). After some time, review the list of policy violations to make sure the policy is correct.
 
@@ -123,7 +125,7 @@ Resources not covered by the policy you created will be reported as [policy viol
 
 Update the policy if needed.
 
-### 3. Change policy action to Allow
+### 4.3. Change policy action to Allow
 
 Once you have verified that your policy is correct, change the policy action from _Log_ to _Allow_.
 

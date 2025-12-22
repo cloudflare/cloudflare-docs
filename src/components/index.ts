@@ -5,6 +5,7 @@ export { Icon as StarlightIcon } from "@astrojs/starlight/components";
 export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
+export { default as AnimatedWorkflowDiagram } from "./AnimatedWorkflowDiagram.astro";
 export { default as APIRequest } from "./APIRequest.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
 export { default as Checkbox } from "./Checkbox.astro";

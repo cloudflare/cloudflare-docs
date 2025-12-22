@@ -2,43 +2,63 @@
 title: Cloudflare for Platforms
 order: 1
 pcx_content_type: overview
-
 ---
 
-import { Description, Feature } from "~/components"
+import { Description, Feature } from "~/components";
 
 <Description>
 
 Build your own multitenant platform using Cloudflare as infrastructure
+
 </Description>
 
 Cloudflare for Platforms lets you run untrusted code written by your customers, or by AI, in a secure, hosted sandbox, and give each customer their own subdomain or custom domain.
 
+## Who is Cloudflare for Platforms for?
+
+Cloudflare for Platforms is designed for teams building products where end users need to run code, store data, or get their own domain. Common use cases include:
+
+- **AI coding platforms** — Let users describe apps in natural language, generate code with AI, and deploy instantly
+- **E-commerce and website builders** — Power storefronts where merchants customize behavior, add integrations, or write their own logic
+- **Low-code / no-code platforms** — Let non-developers build and deploy applications without managing infrastructure
+- **Developer tools and SaaS products** — Allow customers to extend your product with custom scripts, webhooks, or plugins
+
 ![Figure 1: Cloudflare for Platforms Architecture Diagram](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-2.svg)
+
+### Platform Capabilities
 
 You can think of Cloudflare for Platforms as the exact same products and functionality that Cloudflare offers its own customers, structured so that you can offer it to your own customers, embedded within your own product. This includes:
 
+- **Custom Domains and Subdomains** — you [call an API](/cloudflare-for-platforms/cloudflare-for-saas/) to create custom subdomains or configure custom domains for each of your customers
 - **Isolation and multitenancy** — each of your customers runs code in their own Worker — a [secure and isolated sandbox](/workers/reference/how-workers-works/)
-- **Programmable routing, ingress, egress and limits** — you write code that dispatches requests to your customers' code, and can control [ingress](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/), [egress](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) and set [per-customer limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/)
-- **Databases and storage** — you can provide [databases, object storage and more](/workers/runtime-apis/bindings/) to your customers as APIs they can call directly, without API tokens, keys, or external dependencies
-- **Custom Domains and Subdomains** — you [call an API](/cloudflare-for-platforms/cloudflare-for-saas/) to create custom subdomains or configure custom domains for each of your customers
+- **Programmable routing, ingress, egress and limits** — you write code that dispatches requests to your customers' code, and can control [ingress](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/), [egress](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) and set [per-customer limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/)
+- **Databases and storage** — you can provide [databases, object storage and more](/workers/runtime-apis/bindings/) to your customers as APIs they can call directly, without API tokens, keys, or external dependencies
+- **Infinite scale** — Deploy millions of applications, domains, and resources (e.g. [databases](/d1/)) without managing infrastructure. Cloudflare automatically scales with your platform.
 
-Cloudflare for Platforms is used by leading platforms big and small to:
+## Ready to get started?
 
-- Build application development platforms tailored to specific domains, like ecommerce storefronts or mobile apps
-- Power AI coding platforms that let anyone build and deploy software
-- Customize product behavior by allowing any user to write a short code snippet
-- Offer every customer their own isolated database
-- Provide each customer with their own subdomain
+### Deploy your own AI vibe coding platform
 
-***
+To get started with a reference implementation of an AI vibe coding platform immediately, deploy this starter template to your Cloudflare account:
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/vibesdk)
+
+---
 
 ## Products
 
-<Feature header="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms/">
-Let your customers build and deploy their own applications to your platform, using Cloudflare's developer platform.
+<Feature
+	header="Workers for Platforms"
+	href="/cloudflare-for-platforms/workers-for-platforms/"
+>
+	Let your customers build and deploy their own applications to your platform,
+	using Cloudflare's developer platform.
 </Feature>
 
-<Feature header="Cloudflare for SaaS" href="/cloudflare-for-platforms/cloudflare-for-saas/">
-Give your customers their own subdomain or custom domain, protected and accelerated by Cloudflare.
+<Feature
+	header="Cloudflare for SaaS"
+	href="/cloudflare-for-platforms/cloudflare-for-saas/"
+>
+	Give your customers their own subdomain or custom domain, protected and
+	accelerated by Cloudflare.
 </Feature>

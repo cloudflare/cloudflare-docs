@@ -2,4 +2,4 @@
 {}
 ---
 
-Cloudflare routing applies longest-prefix match. A more specific static route (like `/30`) will always be preferred over a less specific one (like `/29`), regardless of tunnel priority — unless the more specific route is removed.
+Cloudflare routing applies longest-prefix match. A more specific static route (like `/30`) always takes precedence over a less specific one (like `/29`), regardless of tunnel priority — unless you remove the more specific route.

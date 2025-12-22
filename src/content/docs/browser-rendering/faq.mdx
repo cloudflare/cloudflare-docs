@@ -57,6 +57,10 @@ No. Browser Rendering requests originate from Cloudflare's global network and yo
 
 There is no fixed limit on the number of requests per browser session. A single browser can handle multiple requests as long as it stays within available compute and memory limits.
 
+### Can I use custom fonts in Browser Rendering?
+
+Yes. If your webpage or PDF requires a font that is not pre-installed, you can load custom fonts at render time using `addStyleTag`. This works with both the [REST API](/browser-rendering/rest-api/) and [Workers Bindings](/browser-rendering/workers-bindings/). For instructions and examples, refer to [Use your own custom font](/browser-rendering/reference/supported-fonts/#use-your-own-custom-font).
+
 <Render
   file="manage-concurrency-faq"
   product="browser-rendering"

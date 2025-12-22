@@ -4,40 +4,44 @@ title: Pricing
 sidebar:
   order: 13
 ---
-import { DashButton } from "~/components"
+import { DashButton, Plan } from "~/components"
+
+<Plan type="workers-all" />
 
 There are two ways to use Browser Rendering. Depending on the method you use, here is how billing works:
-- [**REST API**](/browser-rendering/rest-api/): Charged for **Duration** only ($/browser hour)
-- [**Workers Bindings**](/browser-rendering/workers-bindings/): Charged for both **Duration** and **Concurrency** ($/browser hour and # of concurrent browsers)
+- [**REST API**](/browser-rendering/rest-api/): Charged for browser hours only
+- [**Workers Bindings**](/browser-rendering/workers-bindings/): Charged for both browser hours and concurrent browsers
 
-| Plan           | Included duration                                                                 | Included concurrency                                                 | Price (beyond included) |
-|----------------|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|----------|
-| **Workers Free** | 10 minutes per day | 3 concurrent browsers | N/A |
-| **Workers Paid** | 10 hours per month | 10 concurrent browsers (averaged monthly) | **1. REST API**: $0.09 per additional browser hour <br />**2. Workers Bindings**: $0.09 per additional browser hour <br /> $2.00 per additional concurrent browser |
+Browser hours are shared across both methods (REST API and Workers Bindings).
+
+|                                                        | Workers Free                | Workers Paid |
+|--------------------------------------------------------|-----------------------------|--------------|
+| Browser hours                                          | 10 minutes per day          | 10 hours per month, then $0.09 per additional hour |
+| Concurrent browsers (Workers Bindings only)            | 3 browsers                  | 10 browsers ([averaged monthly](#how-is-the-number-of-concurrent-browsers-calculated)), then $2.00 per additional browser |
 
 ## Examples of Workers Paid pricing
 <br/>
 #### Example: REST API pricing
 If a Workers Paid user uses the REST API for 50 hours during the month, the estimated cost for the month is as follows.
 
-For **browser duration**:
+For browser hours:
 <br/>50 hours - 10 hours (included in plan) = 40 hours
 <br/>40 hours × $0.09 per hour = $3.60
 
 #### Example: Workers Bindings pricing
-If a Workers paid user uses the Workers Bindings method for 50 hours during the month, and uses 10 concurrent browsers for the first 15 days and 20 concurrent browsers the last 15 days, the estimated cost for the month is as follows.
+If a Workers Paid plan user uses the Workers Bindings method for 50 hours during the month, and uses 10 concurrent browsers for the first 15 days and 20 concurrent browsers the last 15 days, the estimated cost for the month is as follows.
 
-For **browser duration**:
+For browser hours:
 <br/>50 hours - 10 hours (included in plan) = 40 hours
 <br/>40 hours × $0.09 per hour = $3.60
 
-For **concurrent browsers**:
+For concurrent browsers:
 <br/>((10 browsers × 15 days) + (20 browsers × 15 days)) = 450 total browsers used in month
 <br />450 browsers used in month ÷ 30 days in month = 15 browsers (averaged monthly)
 <br/>15 browsers (averaged monthly) − 10 (included in plan) = 5 browsers
 <br/>5 browsers × $2.00 per browser = $10.00
 
-For **browser duration** and **concurrent browsers**:
+For browser hours and concurrent browsers:
 <br/>$3.60 + $10.00 = $13.60
 
 ## Pricing FAQ
@@ -60,7 +64,7 @@ You can monitor Browser Rendering usage in two ways:
    const browserMsUsed = parseInt(contentRes.headers.get('X-Browser-Ms-Used') || '');
    ```
 
-Then, you can use [the pricing page](/browser-rendering/pricing/) to estimate your costs based on your usage.
+You can then use the tables above to estimate your costs based on your usage.
 
 ###  Do failed API calls, such as those that time out, add to billable browser hours?
 No. If a request to the Browser Rendering REST API fails with a `waitForTimeout` error, the browser session is not charged.

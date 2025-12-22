@@ -47,3 +47,9 @@ When using Cloudflare Images, you can use URL Rewrite Rules to serve images from
 	product="rules"
 	params={{ rulesFeatureName: "URL Rewrite Rules" }}
 />
+
+## Important remarks
+
+- URL rewrite rules run in order, and later rules can overwrite changes done by previous rules.
+
+- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_transform` phase where URL rewrite rules are defined. This means that later URL rewrite rules will not match based on changes done by previous URL rewrite rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.

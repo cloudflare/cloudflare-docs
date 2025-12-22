@@ -134,6 +134,51 @@ Returns `true` when the source ends with a given substring. Returns `false` othe
 
 For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
+### `join`
+
+{/* prettier-ignore */}
+<code>join(items <Type text="Array<String>" />, separator <Type text="String" />)</code>: <Type text="String" />
+
+Returns a string which is the concatenation of the strings in `items` with the `separator` between each item.
+
+If any of the arguments is nil, the returned value will be nil.<br/>
+If the `items` array is empty, the returned value will be an empty string.<br/>
+If the `items` array contains a single item, then no concatenation occurs and the (single) item will be returned as is.
+
+This function does the opposite of the [`split()`](#split) function.
+
+Example:
+
+```txt
+# Joins all HTTP request header names into a single string, with names separated by commas
+join(http.request.headers.names, ",")
+```
+
+:::note
+The `join()` function is only available in [Transform Rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [Custom Error Rules](/rules/custom-errors/#custom-error-rules).
+:::
+
+### `has_key`
+
+{/* prettier-ignore */}
+<code>has_key(map: <Type text="Map<T>" />, key: <Type text="String" />)</code>: <Type text="Boolean" />
+
+Returns true if the `key` specified in the second argument, which can be a literal or a dynamic string, is an existing key in the `map` provided as first argument; returns false otherwise.
+
+The data type of the values in `map` (indicated by `T`) can be any type.
+
+If any of the arguments is nil, the returned value will be nil.
+
+Examples:
+
+```txt
+# Check if an HTTP request header exists:
+has_key(http.request.headers, "x-my-header")
+
+# Check if a request header exists based on the name of the first query argument:
+has_key(http.request.headers, lower(http.request.uri.args.names[0]))
+```
+
 ### `len`
 
 {/* prettier-ignore */}
@@ -299,6 +344,44 @@ remove_query_args(http.request.uri.query, "category") will return "order=desc"
 
 :::note
 You can only use the `remove_query_args()` function in [rewrite expressions of Transform Rules](/rules/transform/).
+:::
+
+### `split`
+
+{/* prettier-ignore */}
+<code>split(input <Type text="String" />, separator <Type text="String" />, limit <Type text="Integer" />)</code>: <Type text="Array<String>" />
+
+Splits the `input` string into an array of strings by breaking the initial string at every occurrence of the `separator` string. The returned array will contain at most `limit` number of elements.
+
+If you provide a `limit` value lower than the actual number of substrings in the split string, the last element of the returned array will contain the remainder of the string.
+
+The `separator` must be a non-empty literal string.
+
+The `limit` is mandatory, and it must be a literal integer between 1 and 128.
+
+If `input` is nil, the returned value will be nil.
+
+This function does the opposite of the [`join()`](#join) function.
+
+Examples:
+
+```txt
+# Split a comma-separated list of categories obtained from an HTTP request header.
+
+# A) Consider the following HTTP request header:
+x-categories: groceries,electronics,diy,auto
+
+split(http.request.headers["x-categories"][0], ",", 64)  will return ["groceries", "electronics", "diy", "auto"]
+split(http.request.headers["x-categories"][0], ",", 3)   will return ["groceries", "electronics", "diy,auto"]
+
+# B) Consider the following HTTP request header:
+x-categories: groceries,,electronics
+
+split(http.request.headers["x-categories"][0], ",", 64)  will return ["groceries", "", "electronics"]
+```
+
+:::note
+The `split()` function is only available in [response header transform rules](/rules/transform/response-header-modification/) and [Custom Error Rules](/rules/custom-errors/#custom-error-rules).
 :::
 
 ### `starts_with`

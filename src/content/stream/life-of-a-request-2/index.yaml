@@ -1,5 +1,5 @@
 ---
-id: 789b42ba4403b32caf54d09a5e5987fd
+id: 118647d8259c8d0121db228d16c0aa54
 url: life-of-a-request-2
 title: "Life of a Request: The Fast Lane - Caching and Smart Routing"
 description: After your request hits Cloudflare's secure network at the nearest data center where it's checked for security threats with a clean bill of health, it's time to get it to its destination at lightning speed.
