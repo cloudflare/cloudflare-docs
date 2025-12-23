@@ -31,7 +31,7 @@ To adjust rule behavior, use one of the following methods:
 - [Configure the managed ruleset via Cloudflare API](/ddos-protection/managed-rulesets/network/network-overrides/configure-api/).
 - [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-configure-network-layer-ddos-attack-protection).
 
-You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
+You can only configure the behavior of the managed ruleset to set a stronger or weaker mitigation action (depending on the default action of a specific rule, you can change it to `Block` if the default action is `DDoS Dynamic` or `Log`.), or a lower default sensitivity for all rules. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 
 Overrides can apply to all <GlossaryTooltip term="data packet">packets</GlossaryTooltip> or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/network-overrides/override-expressions/) for more information.
 

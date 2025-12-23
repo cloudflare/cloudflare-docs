@@ -36,15 +36,15 @@ This guide will instruct you through:
 <Steps>
 1. If not already logged in, run:
 
-	```
-	npx wrangler login
-	```
+    ```
+    npx wrangler login
+    ```
 
 2. Create an R2 bucket:
 
-	```
-	npx wrangler r2 bucket create pipelines-tutorial
-	```
+   ```
+   npx wrangler r2 bucket create pipelines-tutorial
+   ```
 
 </Steps>
 
@@ -60,8 +60,9 @@ This guide will instruct you through:
 3. Enter the bucket name: pipelines-tutorial
 
 4. Select **Create bucket**.
+
 </Steps>
-</TabItem>
+      </TabItem>
 </Tabs>
 
 ## 2. Enable R2 Data Catalog
@@ -89,8 +90,9 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
 
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
+
 </Steps>
-</TabItem>
+   </TabItem>
 </Tabs>
 
 ## 3. Create an API token
@@ -127,30 +129,31 @@ This token also includes the R2 SQL Read permission, which allows you to query y
 First, create a schema file that defines your ecommerce data structure:
 
 **Create `schema.json`:**
+
 ```json
 {
-  "fields": [
-    {
-      "name": "user_id",
-      "type": "string",
-      "required": true
-    },
-    {
-      "name": "event_type",
-      "type": "string",
-      "required": true
-    },
-    {
-      "name": "product_id",
-      "type": "string",
-      "required": false
-    },
-    {
-      "name": "amount",
-      "type": "float64",
-      "required": false
-    }
-  ]
+	"fields": [
+		{
+			"name": "user_id",
+			"type": "string",
+			"required": true
+		},
+		{
+			"name": "event_type",
+			"type": "string",
+			"required": true
+		},
+		{
+			"name": "product_id",
+			"type": "string",
+			"required": false
+		},
+		{
+			"name": "amount",
+			"type": "float64",
+			"required": false
+		}
+	]
 }
 ```
 
@@ -193,7 +196,7 @@ After setup completes, note the HTTP endpoint URL displayed in the final output.
 
 <Steps>
 1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
-   <DashButton url="/?to=/:account/pipelines" />
+   <DashButton url="/?to=/:account/pipelines/overview" />
 
 2. Select **Create Pipeline**.
 
@@ -208,28 +211,28 @@ After setup completes, note the HTTP endpoint URL displayed in the final output.
    - Copy in the schema:
      ```json
      {
-       "fields": [
-         {
-           "name": "user_id",
-           "type": "string",
-           "required": true
-         },
-         {
-           "name": "event_type",
-           "type": "string",
-           "required": true
-         },
-         {
-           "name": "product_id",
-           "type": "string",
-           "required": false
-         },
-         {
-           "name": "amount",
-           "type": "f64",
-           "required": false
-         }
-       ]
+     	"fields": [
+     		{
+     			"name": "user_id",
+     			"type": "string",
+     			"required": true
+     		},
+     		{
+     			"name": "event_type",
+     			"type": "string",
+     			"required": true
+     		},
+     		{
+     			"name": "product_id",
+     			"type": "string",
+     			"required": false
+     		},
+     		{
+     			"name": "amount",
+     			"type": "f64",
+     			"required": false
+     		}
+     	]
      }
      ```
    - Select **Next**
@@ -255,6 +258,7 @@ After setup completes, note the HTTP endpoint URL displayed in the final output.
    - Select **Create Pipeline**
 
 8. After pipeline creation, note the **Stream ID** for the next step.
+
 </Steps>
 
 </TabItem>
@@ -300,6 +304,7 @@ Replace `{stream-id}` with your actual stream endpoint from the pipeline setup.
 3. You should see Iceberg metadata files and data files created by your pipeline. Note: If you aren't seeing any files in your bucket, try waiting a couple of minutes and trying again.
 
 4. The data is organized in the Apache Iceberg format with metadata tracking table versions.
+
 </Steps>
 
 ## 7. Query your data using R2 SQL

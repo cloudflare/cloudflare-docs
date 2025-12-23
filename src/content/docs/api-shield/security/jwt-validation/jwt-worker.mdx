@@ -132,7 +132,7 @@ curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq 
 	*/
 	async function updateCredentials(bearer) {
 		// Cloudflare API endpoint for credentials update
-		const url = `https://api.cloudflare.com/client/v4/zones/${zone_id}/api_gateway/token_validation/${token_config_id}/credentials`;
+		const url = `https://api.cloudflare.com/client/v4/zones/${zone_id}/token_validation/config/${token_config_id}/credentials`;
 		const init = {
 			body: await fetchCredentials(),
 			method: "PUT",

@@ -26,13 +26,16 @@ import (
 
 func main() {
 	var bucketName = "sdk-example"
-	var accountId = "<accountid>"
-	var accessKeyId = "<access_key_id>"
-	var accessKeySecret = "<access_key_secret>"
+	// Provide your Cloudflare account ID
+	var accountId = "<ACCOUNT_ID>"
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens
+	// (see: https://developers.cloudflare.com/r2/api/tokens)
+	var accessKeyId = "<ACCESS_KEY_ID>"
+	var accessKeySecret = "<SECRET_ACCESS_KEY>"
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKeyId, accessKeySecret, "")),
-		config.WithRegion("auto"),
+		config.WithRegion("auto"), // Required by SDK but not used by R2
 	)
 	if err != nil {
 		log.Fatal(err)

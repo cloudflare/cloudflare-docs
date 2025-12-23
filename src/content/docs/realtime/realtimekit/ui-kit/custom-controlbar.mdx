@@ -1,0 +1,174 @@
+---
+pcx_content_type: how-to
+title: Add Custom Controlbar
+slug: realtime/realtimekit/ui-kit/custom-controlbar
+sidebar:
+  order: 6
+---
+
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+:::note[Prerequisite]
+This guide builds on top of the [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/). It is recommended to read that guide first. Portions of the code will not be repeated here for brevity.
+
+For a complete list of available UI Kit components, refer to the [Component Library](/realtime/realtimekit/ui-kit/component-library/).
+:::
+
+In this guide, we will learn how to add a custom controlbar for your RealtimeKit meeting experience.
+
+<RTKSDKSelector />
+
+<RTKCodeSnippet id="web-react">
+
+RealtimeKit UI Kit provides the [`RtkControlbar`](https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-controlbar/rtk-controlbar.tsx) component for a default controlbar.
+
+If you need additional controls, replace `RtkControlbar` with individual UI Kit components and custom elements.
+
+Import the required components and React hook:
+
+```jsx
+import { useRef } from 'react';
+import {
+	RtkFullscreenToggle,
+	RtkSettingsToggle,
+	RtkScreenShareToggle,
+	RtkMicToggle,
+	RtkCameraToggle,
+	RtkStageToggle,
+	RtkLeaveButton,
+	RtkMoreToggle,
+	RtkPipToggle,
+	RtkMuteAllButton,
+	RtkBreakoutRoomsToggle,
+	RtkRecordingToggle,
+	RtkChatToggle,
+	RtkPollsToggle,
+	RtkParticipantsToggle,
+	RtkPluginsToggle,
+} from '@cloudflare/realtimekit-ui';
+```
+
+In your `RtkUIProvider` from [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/), replace:
+
+```jsx
+<RtkControlbar />
+```
+
+with:
+
+```jsx
+<div style={{ display: "flex", width: "100%", padding: "8px 12px", color: "white", justifyContent: "space-between" }}>
+	<div id="controlbar-left" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+		<RtkFullscreenToggle targetElement={fullScreenRef.current} />
+		<RtkSettingsToggle />
+		<RtkScreenShareToggle />
+	</div>
+	<div id="controlbar-center" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+		<RtkMicToggle />
+		<RtkCameraToggle />
+		<RtkStageToggle />
+		<RtkLeaveButton />
+		<RtkMoreToggle>
+			<div slot="more-elements">
+				<RtkPipToggle variant="horizontal" />
+				<RtkMuteAllButton variant="horizontal" />
+				<RtkBreakoutRoomsToggle variant="horizontal" />
+				<RtkRecordingToggle variant="horizontal" />
+			</div>
+		</RtkMoreToggle>
+	</div>
+	<div id="controlbar-right" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+		<RtkChatToggle />
+		<RtkPollsToggle />
+		<RtkParticipantsToggle />
+		<RtkPluginsToggle />
+	</div>
+</div>
+```
+
+Define a ref for the fullscreen target and attach it to your container element:
+
+```jsx
+const fullScreenRef = useRef<HTMLDivElement>(null);
+
+// In your RtkUIProvider, add the ref to the container
+<RtkUIProvider
+	ref={fullScreenRef}
+	meeting={meeting}
+	showSetupScreen={false}
+	style={{
+		display: "flex",
+		flexDirection: "column",
+		height: "100vh",
+		margin: 0,
+	}}
+>
+	{/* Your controlbar and other components */}
+</RtkUIProvider>
+
+// Pass the ref's current element to RtkFullscreenToggle
+<RtkFullscreenToggle targetElement={fullScreenRef.current} />
+```
+
+A complete example to build your own UI with custom controlbar can be found [here](https://github.com/cloudflare/realtimekit-web-examples/tree/main/react-examples/examples/create-your-own-ui) with the custom controlbar component [here](https://github.com/cloudflare/realtimekit-web-examples/blob/main/react-examples/examples/create-your-own-ui/src/components/meeting-control-bar.tsx).
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+RealtimeKit UI Kit provides the [`rtk-controlbar`](/realtime/realtimekit/ui-kit/component-library/#rtk-controlbar) component for a default controlbar.
+
+If you need additional controls, replace `rtk-controlbar` with individual UI Kit components and custom elements. In the `renderJoinedScreen` function from [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/), replace:
+
+```html
+<rtk-controlbar style="display: flex; justify-content: space-between;"></rtk-controlbar>
+```
+
+with:
+
+```html
+<div style="display: flex; width: 100%; padding: 8px 12px; color: white; justify-content: space-between;">
+	<div id="controlbar-left" style="display: flex; align-items: center; justify-content: center;">
+		<rtk-fullscreen-toggle id="fullscreen-toggle"></rtk-fullscreen-toggle>
+		<rtk-settings-toggle></rtk-settings-toggle>
+		<rtk-screen-share-toggle></rtk-screen-share-toggle>
+	</div>
+	<div id="controlbar-center" style="display: flex; align-items: center; justify-content: center;">
+		<rtk-mic-toggle></rtk-mic-toggle>
+		<rtk-camera-toggle></rtk-camera-toggle>
+		<rtk-stage-toggle></rtk-stage-toggle>
+		<rtk-leave-button></rtk-leave-button>
+		<rtk-more-toggle>
+			<div slot="more-elements">
+				<rtk-pip-toggle variant="horizontal"></rtk-pip-toggle>
+				<rtk-mute-all-button variant="horizontal"></rtk-mute-all-button>
+				<rtk-breakout-rooms-toggle variant="horizontal"></rtk-breakout-rooms-toggle>
+				<rtk-recording-toggle variant="horizontal"></rtk-recording-toggle>
+			</div>
+		</rtk-more-toggle>
+	</div>
+	<div id="controlbar-right" style="display: flex; align-items: center; justify-content: center;">
+		<rtk-chat-toggle></rtk-chat-toggle>
+		<rtk-polls-toggle></rtk-polls-toggle>
+		<rtk-participants-toggle></rtk-participants-toggle>
+		<rtk-plugins-toggle></rtk-plugins-toggle>
+	</div>
+</div>
+```
+
+Register the fullscreen target after rendering:
+
+```javascript
+const fullscreenToggle = document.querySelector('#fullscreen-toggle');
+if (fullscreenToggle) {
+	const targetElement = document.querySelector('rtk-ui-provider');
+	if (targetElement) {
+		fullscreenToggle.targetElement = targetElement;
+	}
+}
+```
+
+A complete example to build your own UI with custom controlbar can be found [here](https://github.com/cloudflare/realtimekit-web-examples/tree/main/html-examples/examples/create-your-own-ui) with the custom controlbar component [here](https://github.com/cloudflare/realtimekit-web-examples/blob/main/html-examples/examples/create-your-own-ui/components/meeting-control-bar.js).
+
+</RTKCodeSnippet>

@@ -1,11 +1,13 @@
 ---
-title: WAF Release - Scheduled changes for 2025-10-06
-description: WAF managed ruleset changes scheduled for 2025-10-06
-date: 2025-09-29
+title: WAF Release - Scheduled changes for 2026-01-05
+description: WAF managed ruleset changes scheduled for 2026-01-05
+date: 2025-12-22
 scheduled: true
 ---
 
 import { RuleID } from "~/components";
+
+The planned release has been postponed to ensure a smooth deployment.
 
 <table style="width: 100%">
   <thead>
@@ -21,59 +23,93 @@ import { RuleID } from "~/components";
   </thead>
   <tbody>
    <tr>
-      <td>2025-09-29</td>
-      <td>2025-10-06</td>
+      <td>2025-12-01</td>
+      <td>2026-01-05</td>
       <td>Log</td>
-      <td>100882</td>
+      <td>N/A</td>
       <td>
-        <RuleID id="0c9bf31ab6fa41fc8f12daaf8650f52f" />
+        <RuleID id="72963b917ef74697b5bde02f48a1841a" />
       </td>
-      <td>Chaos Mesh - Missing Authentication - CVE:CVE-2025-59358</td>
-      <td>This is a New Detection</td>
+      <td>SQLi - AND/OR MAKE_SET/ELT - Beta</td>
+      <td>This is a beta detection and will replace the action on original detection "SQLi - AND/OR MAKE_SET/ELT" (ID: <RuleID id="0f41a593c8fe42c38a26f709252d3934" />)</td>
    </tr>
    <tr>
-      <td>2025-09-29</td>
-      <td>2025-10-06</td>
+      <td>2025-12-01</td>
+      <td>2026-01-05</td>
       <td>Log</td>
-      <td>100883</td>
+      <td>N/A</td>
       <td>
-        <RuleID id="5d459ed434ed446c9580c73c2b8c3680" />
+        <RuleID id="adf076af09b2484ca9e7881f9e553ad3" />
       </td>
-      <td>Chaos Mesh - Command Injection - CVE:CVE-2025-59359</td>
-      <td>This is a New Detection</td>
+      <td>SQLi - Benchmark Function - Beta</td>
+      <td>This is a beta detection and will replace the action on original detection "SQLi - Benchmark Function" (ID: <RuleID id="ac4e9ebfb43a4f3998f6072d2ebc44ad" />)</td>
    </tr>
    <tr>
-      <td>2025-09-29</td>
-      <td>2025-10-06</td>
+      <td>2025-12-01</td>
+      <td>2026-01-05</td>
       <td>Log</td>
-      <td>100884</td>
+      <td>N/A</td>
       <td>
-        <RuleID id="a2591ba5befa4815a6861aefef859a04" />
+        <RuleID id="a291bd530fa346d18cc1ce5a68d90c8f" />
       </td>
-      <td>Chaos Mesh - Command Injection - CVE:CVE-2025-59361</td>
-      <td>This is a New Detection</td>
+      <td>SQLi - Comment - Beta</td>
+      <td>This is a beta detection and will replace the action on original detection "SQLi - Comment" (ID: <RuleID id="42c424998d2a42c9808ab49c6d8d8fe4" />)</td>
    </tr>
    <tr>
-      <td>2025-09-29</td>
-      <td>2025-10-06</td>
+      <td>2025-12-01</td>
+      <td>2026-01-05</td>
       <td>Log</td>
-      <td>100886</td>
+      <td>N/A</td>
       <td>
-        <RuleID id="05eea4fabf6f4cf3aac1094b961f26a7" />
+        <RuleID id="da289f9e692e4f5397d915fbfaa045cf" />
       </td>
-      <td>Form-Data - Parameter Pollution - CVE:CVE-2025-7783</td>
-      <td>This is a New Detection</td>
+      <td>SQLi - Comparison - Beta</td>
+      <td>This is a beta detection and will replace the action on original detection "8166da327a614849bfa29317e7907480" (ID: <RuleID id="8166da327a614849bfa29317e7907480" />)</td>
    </tr>
-   <tr>
-      <td>2025-09-29</td>
-      <td>2025-10-06</td>
+    <tr>
+      <td>2025-12-01</td>
+      <td>2026-01-05</td>
       <td>Log</td>
-      <td>100888</td>
+      <td>N/A</td>
       <td>
-        <RuleID id="90514c7810694b188f56979826a4074c" />
+        <RuleID id="eb3f44c07266448b9fa54ee7ad7dad3e" />
       </td>
-      <td>Chaos Mesh - Command Injection - CVE:CVE-2025-59360</td>
-      <td>This is a New Detection</td>
+      <td>SQLi - String Function - Beta</td>
+      <td>This is a beta detection and will replace the action on original detection "SQLi - String Function" (ID: <RuleID id="63e03eecddfc4b3fb0cad587d32b798c" />)</td>
    </tr>
+    <tr>
+      <td>2025-12-01</td>
+      <td>2026-01-05</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="aa776a8f1be84c05afd9f801307a9e8f" />
+      </td>
+      <td>SQLi - Sub Query - Beta</td>
+      <td>This is a beta detection and will replace the action on original detection "SQLi - Sub Query" (ID: <RuleID id="6ec5ecf52c094330aff99a38743e66b1" />)</td>
+   </tr>
+
+    <tr>
+      <td>2025-12-01</td>
+      <td>2026-01-05</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="7a47683eacce4abd870ab2c630698ff3" />
+      </td>
+      <td>XWiki - Remote Code Execution - CVE:CVE-2025-24893 - Beta</td>
+      <td>This is a new detection.</td>
+   </tr>
+    <tr>
+      <td>2025-12-01</td>
+      <td>2026-01-05</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="ad5c52f6ca334ef4a844e5e5da8ba7e6" />
+      </td>
+      <td>Django SQLI - CVE:CVE-2025-64459</td>
+      <td>This is a new detection.</td>
+   </tr> 
   </tbody>
 </table>

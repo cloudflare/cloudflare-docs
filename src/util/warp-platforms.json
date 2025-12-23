@@ -32,14 +32,6 @@
 		"display_name": "Ubuntu 20.04 (arm64)"
 	},
 	{
-		"platform": "buster-intel",
-		"display_name": "Debian 10 (x86-64)"
-	},
-	{
-		"platform": "buster-arm",
-		"display_name": "Debian 10 (arm64)"
-	},
-	{
 		"platform": "bullseye-intel",
 		"display_name": "Debian 11 (x86-64)"
 	},

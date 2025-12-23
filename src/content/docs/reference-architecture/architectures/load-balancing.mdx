@@ -1,12 +1,13 @@
 ---
 title: Load Balancing Reference Architecture
 pcx_content_type: reference-architecture
-products:
-  - Load Balancing
+products: [load-balancing]
 sidebar:
   order: 1
   label: Load Balancing
 reviewed: 2024-02-26
+description: >-
+  This reference architecture is for organizations looking to deploy both global and local traffic management load balancing solutions. It is designed for IT, web hosting, and network professionals with some responsibility over or familiarity with their organization's existing infrastructure.
 ---
 
 import { Render, PublicStats } from "~/components";
@@ -377,7 +378,7 @@ By default, health monitor probes are sent directly to the endpoint address, byp
 
 The Simulate Zone feature ensures that health monitor probes follow the same path as actual requests, passing through the entire layer 7 stack. This ensures health monitors take the exact same path through the network and through other layer 7 processes to reach the endpoint.
 
-The Simulate Zone feature is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also ensures health monitor probes use the same path provided by [Argo Smart Routing](/argo-smart-routing/) and the same dedicated egress IPs when organizations leverage [Aegis](https://blog.cloudflare.com/cloudflare-aegis/) to restrict the edge IP addresses that Cloudflare uses to reach their endpoints.
+The Simulate Zone feature is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also ensures health monitor probes use the same path provided by [Argo Smart Routing](/argo-smart-routing/) and the same [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) when organizations leverage [Smart Shield Advanced](/smart-shield/get-started/#packages-and-availability) to restrict the edge IP addresses that Cloudflare uses to reach their endpoints.
 
 ![HTTPS health monitor to monitor the status of an endpoint](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-16.png "Figure 16: HTTPS health monitor configuration")
 
@@ -459,9 +460,9 @@ The public endpoint method allows organizations to define a tunnel that points t
 
 When configured via the Dashboard, Cloudflare automatically creates a CNAME record in the DNS zone that refers to the cfargotunnel.com hostname. For example, a CNAME record of myTunnelService.example.com could be created to point the A record of d74b3a46-f3a3-4596-9049-da7e72c876f5.cfargotunnel.com. The main benefit being the ease of use and administration as the CNAME record is much more suggestive about its purpose and belongs to the customer DNS zone.
 
-Another option is to create these tunnels and services on the host running cloudflared. This is called a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/). When working with locally-managed tunnels, the CNAME entry is not created automatically however, so the organization would have to configure this manually, after the tunnel and service is defined.
+Another option is to create these tunnels and services on the host running cloudflared. This is called a [locally-managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/). When working with locally-managed tunnels, the CNAME entry is not created automatically however, so the organization would have to configure this manually, after the tunnel and service is defined.
 
-From a load balancer perspective, it's very important to understand how these tunnels can be used as an endpoint. An endpoint can only be defined by using the cfargotunnel.com hostname. Using a public CNAME record that points to the cfargotunnel.com address will not work properly and is not supported. This is especially important for endpoint services that don’t operate on ports 80 or 443. Cloudflare Load Balancers default to these two ports to access the services running on the endpoints. If an organization has services running on other ports, they will need to configure a Cloudflare Tunnel with a [catch-all rule](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/#how-traffic-is-matched) to reach that port. This configuration allows a Cloudflare Load Balancer to reach the service via port 443 while having Cloudflare tunnel proxy the connection to the desired port on the endpoint.
+From a load balancer perspective, it's very important to understand how these tunnels can be used as an endpoint. An endpoint can only be defined by using the cfargotunnel.com hostname. Using a public CNAME record that points to the cfargotunnel.com address will not work properly and is not supported. This is especially important for endpoint services that don’t operate on ports 80 or 443. Cloudflare Load Balancers default to these two ports to access the services running on the endpoints. If an organization has services running on other ports, they will need to configure a Cloudflare Tunnel with a [catch-all rule](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/#how-traffic-is-matched) to reach that port. This configuration allows a Cloudflare Load Balancer to reach the service via port 443 while having Cloudflare tunnel proxy the connection to the desired port on the endpoint.
 
 ###### Private IP
 
@@ -497,7 +498,7 @@ _Endpoint address_ can be defined in one of the following ways:
 
 Using public IPs and hostnames of any type require no additional configuration. In those scenarios, the virtual network should be set to the default value of “_none_”. The “_none_” setting signals that these resources will be accessible on the public Internet, routed via Cloudflare’s global edge network.
 
-The use of the _virtual network_ option is reserved for private IP resources. This setting maps to IP subnets that are hosted behind [Cloudflare Tunnel configurations](/cloudflare-one/connections/connect-networks/configure-tunnels/). A virtual network should be selected that has a route to the IP address of the endpoint. To navigate to this setting in the Cloudflare Dashboard, select _Networks - Routes_ from the Zero Trust page.
+The use of the _virtual network_ option is reserved for private IP resources. This setting maps to IP subnets that are hosted behind [Cloudflare Tunnel configurations](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/). A virtual network should be selected that has a route to the IP address of the endpoint. To navigate to this setting in the Cloudflare Dashboard, select _Networks - Routes_ from the Zero Trust page.
 
 ##### Endpoint weight
 

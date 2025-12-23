@@ -3,6 +3,8 @@ reviewed: 2025-05-16
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrate from Netlify to Workers
+description: >-
+  Migrate your Netlify application to Cloudflare Workers. You should already have an existing project deployed on Netlified that you would like to host on Workers.
 ---
 
 import { WranglerConfig } from "~/components";
@@ -35,11 +37,11 @@ For a **static site**, you will need to add the following to your wrangler file.
 
 ```jsonc
 {
-  "name": "<your-project-name>",
-  "compatibility_date": "$today",
-  "assets": {
-    "directory": "<your-build-directory>",
-  }
+	"name": "<your-project-name>",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "<your-build-directory>",
+	},
 }
 ```
 
@@ -51,12 +53,12 @@ For a **Single Page Application**, you will need to add the following to your Wr
 
 ```jsonc
 {
-  "name": "<your-project-name>",
-  "compatibility_date": "2025-04-23",
-  "assets": {
-    "directory": "<your-build-directory>",
-		"not_found_handling": "single-page-application"
-  }
+	"name": "<your-project-name>",
+	"compatibility_date": "2025-04-23",
+	"assets": {
+		"directory": "<your-build-directory>",
+		"not_found_handling": "single-page-application",
+	},
 }
 ```
 

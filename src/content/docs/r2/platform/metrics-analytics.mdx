@@ -43,7 +43,7 @@ R2 currently has two datasets:
 Metrics can be queried (and are retained) for the past 31 days. These datasets require an `accountTag` filter with your Cloudflare account ID.
 
 :::caution[Querying buckets with jurisdiction restriction]
-In you account, you may have two buckets of the same name, one with a specified jurisdiction, and one without.
+In your account, you may have two buckets of the same name, one with a specified jurisdiction, and one without.
 
 Therefore, if you want to query metrics about a bucket which has a specified jurisdiction, you must include the [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) followed by an underscore before the bucket name. For example: `eu_bucket-name`. This ensures you query the correct bucket.
 :::

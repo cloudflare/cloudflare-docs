@@ -1,0 +1,23 @@
+---
+title: Larger Container instance types
+description: New Container instance types provide more resources for your container applications
+products:
+  - containers
+date: 2025-10-01
+---
+
+New instance types provide up to 4 vCPU, 12 GiB of memory, and 20 GB of disk per container instance.
+
+| Instance Type | vCPU | Memory  | Disk  |
+| ------------- | ---- | ------  | ----  |
+| lite          | 1/16 | 256 MiB | 2 GB  |
+| basic         | 1/4  | 1 GiB   | 4 GB  |
+| standard-1    | 1/2  | 4 GiB   | 8 GB  |
+| standard-2    | 1    | 6 GiB   | 12 GB |
+| standard-3    | 2    | 8 GiB   | 16 GB |
+| standard-4    | 4    | 12 GiB  | 20 GB |
+
+The `dev` and `standard` instance types are preserved for backward compatibility and are aliases for `lite` and `standard-1`, respectively. The `standard-1` instance type now provides up to 8 GB of disk instead of only 4 GB.
+
+See the [getting started guide](/containers/get-started/) to deploy your first Container,
+and the [limits documentation](/containers/platform-details/limits/) for more details on the available instance types and limits.

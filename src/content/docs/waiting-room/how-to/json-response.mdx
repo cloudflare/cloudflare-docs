@@ -12,7 +12,11 @@ If you need to manage traffic in a non-browser environment such as a mobile app 
 1. When a user is queued, we return our own JSON response.
 2. When a user leaves the waiting room, we forward the request to your origin server and return the response from your origin server (be it JSON, XML, an HTML page, etc.).
 
-In order to consume the waiting room response in the JSON format, the following steps must be taken:
+:::note[Important]
+Turnstile is not supported for Waiting Room JSON responses. Turnstile challenges are only enforced for browser-based (HTML) responses. If your application relies on JSON responses (for example, mobile apps, APIs, or other non-browser traffic), Turnstile will be disabled and cannot be enabled for these requests.
+:::
+
+In order to consume the waiting room response in the JSON format, take the following steps:
 
 ## Step 1 – Enable JSON response
 

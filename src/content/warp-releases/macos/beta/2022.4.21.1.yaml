@@ -1,10 +1,10 @@
 releaseNotes: |-
-  *PLEASE NOTE* If you are a Zero Trust customer and have strict firewall rules, you must visit https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api and explicitly allow our new Client Orchestration API Endpoints.
-   
+  *PLEASE NOTE* If you are a Zero Trust customer and have strict firewall rules, you must visit https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#client-orchestration-api and explicitly allow our new Client Orchestration API Endpoints.
+
   This release contains new features and improvements from the last release
-   
+
   **Notable updates**
-   
+
   - Added support for Cloudflare Tunnels users to route traffic to distinct Virtual Networks with overlapping IP ranges
   - Added ability for users to manually refresh Zero Trust authentication via the Preferences->Account menu
   - Modified Client Orchestration API Endpoint the client connects to in Zero Trust mode
@@ -14,9 +14,9 @@ releaseNotes: |-
   - Fixed issue where Zero Trust users would receive a notification to update the client even though upgrades were disabled in settings
   - Fixed issue where the GUI would show disconnected when it should show Paused
   - Fixed various issues with warp-diag and improve overall stability
-   
-   
-  **Known issues** 
+
+
+  **Known issues**
   - UI incorrectly Shows Virtual Networks selector when there is only 1 default network. This UI should be hidden unless there are actually multiple networks to choose from.
 version: 2022.4.21.1
 packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.4.21.1

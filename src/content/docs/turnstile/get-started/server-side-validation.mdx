@@ -52,6 +52,10 @@ The API accepts both `application/x-www-form-urlencoded` and `application/json` 
 - Single use: Each token can only be validated once
 - Automatic expiry: Tokens automatically expire and cannot be reused
 
+The validation token issued by Turnstile is valid for five minutes. If a user submits the form after this period, the token is considered expired. In this scenario, the server-side verification API will return a failure, and the `error-codes` field in the response will include `timeout-or-duplicate`. 
+
+To ensure a successful validation, the visitor must initiate the request and submit the token to your backend within the five-minute window. Otherwise, the Turnstile widget needs to be refreshed to generate a new token. This can be done using the `turnstile.reset` function.
+
 ---
 
 ## Basic validation examples
@@ -684,6 +688,7 @@ if (result.success) {
 - Check additional fields. Validate the action and hostname when specified.
 - Monitor for abuse and log failed validations and unusual patterns.
 - Use HTTPS. Always validate over secure connections.
+- Only call the Siteverify API in your backend environment. If you expose the secret key in the front-end client code to call Siteverify, attackers can bypass the security check. Ensure that your client-side code sends the validation token to your backend, and that your backend is the sole caller of the Siteverify API.
 
 ### Performance
 

@@ -22,6 +22,7 @@ import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
+import Flux2Dev from "~/components/models/code/Flux-2-Dev.astro";
 import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
 import MelottsCode from "~/components/models/code/MelottsCode.astro";
 import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
@@ -31,6 +32,7 @@ import { authorData } from "~/components/models/data";
 import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
 import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
 import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
+import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
 
 export const getStaticPaths = (async () => {
 	const models = await getCollection("workers-ai-models");
@@ -95,6 +97,10 @@ if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 	CodeExamples = Flux1Schnell;
 }
 
+if (model.name === "@cf/black-forest-labs/flux-2-dev") {
+	CodeExamples = Flux2Dev;
+}
+
 if (model.name === "@cf/openai/whisper-large-v3-turbo") {
 	CodeExamples = WhisperBase64Code;
 }
@@ -124,6 +130,10 @@ if (model.name === "@cf/deepgram/aura-1") {
 
 if (model.name === "@cf/deepgram/nova-3") {
 	CodeExamples = DeepgramNova;
+}
+
+if (model.name === "@cf/deepgram/flux") {
+	CodeExamples = DeepgramFlux;
 }
 
 const description = model.description;
@@ -227,7 +237,8 @@ const starlightPageProps = {
 			<Aside>
 				<p>
 					The <a href="/workers-ai/platform/pricing">pricing of this model</a>{" "}
-					is different based on transport. Transport-based pricing does not apply to all models.
+					is different based on transport. Transport-based pricing does not
+					apply to all models.
 				</p>
 				<p>
 					<ul>

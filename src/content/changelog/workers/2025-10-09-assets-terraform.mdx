@@ -1,0 +1,91 @@
+---
+title: You can now deploy full-stack apps on Workers using Terraform
+description: The Cloudflare Terraform provider v5.11.0 now lets you define a directory of static assets, and handles the heavy lifting of uploading them and detecting changes.
+products:
+  - workers
+date: 2025-10-09
+---
+import { Code } from 'astro-expressive-code/components';
+
+You can now upload Workers with [static assets](/workers/static-assets/) (like HTML, CSS, JavaScript, images) with the [Cloudflare Terraform provider v5.11.0](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs), making it even easier to deploy and manage full-stack apps with IaC.
+
+**Previously**, you couldn't use Terraform to upload static assets without writing custom scripts to handle generating an [asset manifest](/workers/static-assets/direct-upload/#upload-manifest), calling the [Cloudflare API to upload assets in chunks](/workers/static-assets/direct-upload/#upload-static-assets), and handling change detection.
+
+**Now**, you simply define the directory where your assets are built, and we handle the rest. Check out the [examples](/changelog/#examples) for what this looks like in Terraform configuration.
+
+You can get started today with [the Cloudflare Terraform provider (v5.11.0)](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs), using either the existing [`cloudflare_workers_script` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script), or the beta [`cloudflare_worker_version` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_version).
+
+
+## Examples
+
+#### With `cloudflare_workers_script`
+
+Here's how you can use the existing [`cloudflare_workers_script`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/workers_script) resource to upload your Worker code and assets in one shot.
+
+
+```hcl
+resource "cloudflare_workers_script" "my_app" {
+  account_id  = var.account_id
+  script_name = "my-app"
+
+  content_file   = "./dist/worker/index.js"
+  content_sha256 = filesha256("./dist/worker/index.js")
+  main_module    = "index.js"
+
+  # Just point to your assets directory - that's it!
+  assets = {
+    directory = "./dist/static"
+  }
+}
+```
+
+#### With `cloudflare_worker`, `cloudflare_worker_version`, and `cloudflare_workers_deployment`
+
+And here's an example using the beta [`cloudflare_worker_version`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/worker_version) resource, alongside the [`cloudflare_worker`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker) and [`cloudflare_workers_deployment`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/workers_deployment) resources:
+
+```hcl
+
+# This tracks the existence of your Worker, so that you
+# can upload code and assets separately from tracking Worker state.
+
+resource "cloudflare_worker" "my_app" {
+  account_id = var.account_id
+  name       = "my-app"
+}
+
+resource "cloudflare_worker_version" "my_app_version" {
+  account_id = var.account_id
+  worker_id  = cloudflare_worker.my_app.id
+
+  # Just point to your assets directory - that's it!
+  assets = {
+    directory = "./dist/static"
+  }
+
+  modules = [{
+    name         = "index.js"
+    content_file = "./dist/worker/index.js"
+    content_type = "application/javascript+module"
+  }]
+}
+
+resource "cloudflare_workers_deployment" "my_app_deployment" {
+  account_id  = var.account_id
+  script_name = cloudflare_worker.my_app.name
+
+  strategy = "percentage"
+  versions = [{
+    version_id = cloudflare_worker_version.my_app_version.id
+    percentage = 100
+  }]
+}
+```
+
+## What's changed
+Under the hood, the Cloudflare Terraform provider now handles the same logic that Wrangler uses for static asset uploads. This includes scanning your assets directory, computing hashes for each file, generating a manifest with file metadata, and calling the Cloudflare API to upload any missing files in chunks. We support large directories with parallel uploads and chunking, and when the asset manifest hash changes, we detect what's changed and trigger an upload for *only* those changed files.
+
+
+## Try it out
+-  Get started with [the Cloudflare Terraform provider (v5.11.0)](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs)
+- You can use either the existing [`cloudflare_workers_script` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script) to upload your Worker code and assets in one resource.
+- Or you can use the new beta [`cloudflare_worker_version` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_version) (along with the [`cloudflare_worker`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker) and [`cloudflare_workers_deployment`](https://registry.terraform.io/providers/cloudflare/cloudflare/5.11.0/docs/resources/workers_deployment)) resources to more granularly control the lifecycle of each Worker resource.

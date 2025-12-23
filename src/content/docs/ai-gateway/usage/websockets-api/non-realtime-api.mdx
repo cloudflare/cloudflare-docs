@@ -34,25 +34,27 @@ const ws = new WebSocket(
 	},
 );
 
-ws.send(
-	JSON.stringify({
-		type: "universal.create",
-		request: {
-			eventId: "my-request",
-			provider: "workers-ai",
-			endpoint: "@cf/meta/llama-3.1-8b-instruct",
-			headers: {
-				Authorization: "Bearer WORKERS_AI_TOKEN",
-				"Content-Type": "application/json",
+ws.on("open", () => {
+	ws.send(
+		JSON.stringify({
+			type: "universal.create",
+			request: {
+				eventId: "my-request",
+				provider: "workers-ai",
+				endpoint: "@cf/meta/llama-3.1-8b-instruct",
+				headers: {
+					Authorization: "Bearer WORKERS_AI_TOKEN",
+					"Content-Type": "application/json",
+				},
+				query: {
+					prompt: "tell me a joke",
+				},
 			},
-			query: {
-				prompt: "tell me a joke",
-			},
-		},
-	}),
-);
+		}),
+	);
+})
 
-ws.on("message", function incoming(message) {
+ws.on("message", (message) => {
 	console.log(message.toString());
 });
 ```

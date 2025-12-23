@@ -60,9 +60,9 @@ For more information about Vite's configuration options, see [Configuring Vite](
 
 The default behavior of using the Worker name as the environment name is appropriate when you have a standalone Worker, such as an API that is accessed from your front-end application, or an [auxiliary Worker](/workers/vite-plugin/reference/api/#interface-pluginconfig) that is accessed via service bindings.
 
-## React Router v7
+## Full-stack frameworks
 
-If you are using the Cloudflare Vite plugin with [React Router v7](https://reactrouter.com/), then your Worker is used for server-side rendering and tightly integrated with the framework.
+If you are using the Cloudflare Vite plugin with [TanStack Start](https://tanstack.com/start/) or [React Router v7](https://reactrouter.com/), then your Worker is used for server-side rendering and tightly integrated with the framework.
 To support this, you should assign it to the `ssr` environment by setting `viteEnvironment.name` in the plugin config.
 
 ```ts title="vite.config.ts"

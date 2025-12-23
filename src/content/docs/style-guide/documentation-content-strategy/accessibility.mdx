@@ -1,0 +1,329 @@
+---
+pcx_content_type: concept
+title: Accessibility guidelines
+sidebar:
+  order: 6
+---
+
+Create documentation that is accessible to all users, including disabled users. Following accessibility best practices ensures that everyone can access, understand, and use the Cloudflare docs effectively.
+
+These guidelines align with Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards and focus on aspects relevant to documentation.
+
+---
+
+## Page structure and navigation
+
+### Provide informative, unique page titles
+
+Each page must have a descriptive title that clearly identifies its content and distinguishes it from other pages.
+
+- Put the most specific information first in the title.
+- Make titles concise but descriptive.
+- Avoid generic titles like "Overview" or "Introduction" without context.
+
+| Do                                 | Do not          |
+| ---------------------------------- | --------------- |
+| Configure SSL/TLS encryption modes | SSL Settings    |
+| Troubleshoot DNS resolution errors | Troubleshooting |
+
+**WCAG reference**: [2.4.2 Page Titled (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/page-titled)
+
+---
+
+### Use headings to convey meaning and structure
+
+Headings provide a hierarchical structure that helps all users navigate and understand content. Screen reader users rely on headings to navigate pages efficiently.
+
+- Use headings in sequential order. Do not skip levels.
+- Make headings descriptive of the content that follows.
+- Use only one H1 per page (the page title).
+- Do not use headings for visual styling purposes only.
+
+:::note
+Our docs site framework, Astro, automatically creates headings for each page based on the page title and sidebar order. You do not need to add an initial H1 heading to the page content.
+:::
+
+| Do                                                | Do not                        |
+| ------------------------------------------------- | ----------------------------- |
+| Use H2 for main sections, H3 for subsections      | Skip from H2 to H4            |
+| **Configure DNS records** (describes the section) | **Important** (vague heading) |
+
+**WCAG reference**: [2.4.6 Headings and Labels (Level AA)](https://www.w3.org/WAI/WCAG21/Understanding/headings-and-labels)
+
+---
+
+### Ensure logical reading order
+
+Content must be presented in a meaningful sequence that makes sense when read linearly.
+
+- Structure content so it flows logically from top to bottom.
+- Ensure code examples appear after their explanatory text.
+- Place prerequisite information before procedural steps.
+
+**WCAG reference**: [1.3.2 Meaningful Sequence (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/meaningful-sequence)
+
+---
+
+## Links and navigation
+
+### Write descriptive link text
+
+Link text must clearly describe the destination or purpose of the link. Avoid ambiguous phrases that provide no context.
+
+- Use the title of the destination page as link text when possible.
+- Describe what the user will find when they follow the link.
+- Avoid generic phrases like "click here", "read more", or "this page".
+
+:::note
+To provide accessibility across all devices, Cloudflare recommends using "select" instead of "click" when referring to a button or link action.
+:::
+
+| Do                                                                                                | Do not                                                           |
+| ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| For common issues, refer to the [DNS troubleshooting guide](/dns/troubleshooting/).               | For common issues, click [here](/dns/troubleshooting/).          |
+| Learn more about [configuring SSL certificates](/ssl/edge-certificates/).                         | [Read more](/ssl/edge-certificates/) about SSL.                  |
+| Download the [Wrangler CLI installation guide](/workers/wrangler/install-and-update/) (PDF, 2MB). | [Click here](/workers/wrangler/install-and-update/) to download. |
+
+**WCAG reference**: [2.4.4 Link Purpose (In Context) (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context)
+
+---
+
+### Avoid directional language
+
+Do not use directional or spatial language that relies on visual layout, as this creates barriers for screen reader users and does not always work across different devices.
+
+- Avoid terms like "above", "below", "left", "right", "top", "bottom" unless it is necessary to describe the location of an element.
+- Reference specific elements by name instead of location.
+- Use section headings or labels to identify content.
+
+| Do                                                       | Do not                                               |
+| -------------------------------------------------------- | ---------------------------------------------------- |
+| In the **DNS** section, select your domain.              | On the right side of the screen, select your domain. |
+| Refer to the **Prerequisites** section for requirements. | See the information above for requirements.          |
+| Select the **Add rule** button.                          | Click the button below.                              |
+
+**WCAG reference**: [1.3.3 Sensory Characteristics (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/sensory-characteristics)
+
+---
+
+## Images and multimedia
+
+### Write meaningful alt text for images
+
+All images that convey information must have alternative text that describes the content or function of the image.
+
+- Describe what the image shows and why it matters.
+- Keep alt text concise but informative (typically under 150 characters).
+- For complex diagrams, provide a longer description in the surrounding text.
+- Use empty alt text (empty brackets `![]`) only for purely decorative images.
+- Do not include phrases like "image of" or "picture of" in alt text.
+- Avoid keyword stuffing for SEO purposes.
+- Do not repeat captions or adjacent text in the alt text.
+- For functional images (like buttons or links), describe the action, not the appearance.
+
+| Image type                               | Alt text approach                                  |
+| ---------------------------------------- | -------------------------------------------------- |
+| Screenshot showing a specific UI element | Describe what the screenshot shows and its purpose |
+| Diagram illustrating a concept           | Summarize the key information conveyed             |
+| Logo or icon with adjacent text          | Use empty alt text to avoid redundancy             |
+| Decorative image                         | Use empty alt text (empty brackets `![]`)          |
+
+**Examples**:
+
+| Do                                                                                                     | Do not                                                                         |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `![Cloudflare dashboard showing the DNS records page with an A record highlighted](path/to/image.png)` | `![Screenshot](path/to/image.png)`                                             |
+| `![Network diagram showing traffic flow from client through Cloudflare to origin server](diagram.svg)` | `![Diagram of network](diagram.svg)`                                           |
+| `![](path/to/decorative-image.png)` (for decorative images)                                            | `![Blue line decoration](path/to/decorative-image.png)`                        |
+| `![Diagram of a DNS request going to a DNS resolver](dns-diagram.svg)`                                 | `![DNS, DNS resolver, DNS request, how DNS works](dns-diagram.svg)` (keywords) |
+| `![Submit button](submit-icon.png)`                                                                    | `![Blue rectangular button](submit-icon.png)` (describes appearance)           |
+
+**WCAG Reference** [1.1.1 Non-text Content (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content)
+
+**Additional resources**:
+
+- [W3C Images Tutorial](https://www.w3.org/WAI/tutorials/images/)
+
+---
+
+### Provide captions and transcripts for multimedia
+
+All video and audio content must include captions and transcripts to ensure accessibility for users who are deaf or hard of hearing.
+
+- **Captions:** Provide synchronized captions for all video content that includes audio.
+- **Transcripts:** Provide text transcripts for audio-only content (such as podcasts).
+- **Audio descriptions:** For videos where visual information is essential, provide audio descriptions of important visual content.
+
+Captions and transcripts must include:
+
+- All spoken dialogue and narration.
+- Speaker identification when multiple speakers are present.
+- Important sound effects (for example, "door closes" or "alert notification").
+- Musical cues when relevant to understanding the content.
+
+**WCAG reference**:
+
+- [1.2.2 Captions (Prerecorded) (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/captions-prerecorded)
+- [1.2.3 Audio Description or Media Alternative (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/audio-description-or-media-alternative-prerecorded)
+
+---
+
+## Content clarity and readability
+
+### Keep content clear and concise
+
+Use simple, straightforward language that is easy to understand. This benefits all users, including those with cognitive disabilities, non-native English speakers, and users with limited technical knowledge.
+
+- Write in short, clear sentences (aim for 8-12 words per sentence when possible).
+- Break content into short paragraphs (3-4 sentences maximum).
+- Use simple words instead of complex alternatives.
+- Avoid jargon, idioms, and colloquialisms.
+- Use active voice and present tense.
+
+| Do                                                  | Do not                                                                                                            |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Cloudflare protects your website from DDoS attacks. | Cloudflare provides comprehensive protection mechanisms to mitigate distributed denial-of-service attack vectors. |
+| Complete these steps to configure your settings.    | In order to facilitate the configuration of your settings, it is necessary to complete the following steps.       |
+
+**WCAG reference**: [3.1.5 Reading Level (Level AAA)](https://www.w3.org/WAI/WCAG21/Understanding/reading-level)
+
+---
+
+### Expand acronyms and abbreviations
+
+Define all acronyms and abbreviations on first use to ensure clarity for all readers.
+
+- Spell out the full term on first use, followed by the acronym in parentheses.
+- Use the acronym consistently throughout the rest of the document.
+- Consider providing a glossary for documents with many technical terms.
+
+| Do                                                                                        | Do not                                              |
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Web Content Accessibility Guidelines (WCAG) provide standards for accessible web content. | WCAG provides standards for accessible web content. |
+| A Distributed Denial of Service (DDoS) attack overwhelms servers with traffic.            | A DDoS attack overwhelms servers with traffic.      |
+
+**WCAG reference**: [3.1.4 Abbreviations (Level AAA)](https://www.w3.org/WAI/WCAG21/Understanding/abbreviations)
+
+---
+
+### Define technical terms
+
+When using technical terms that may be unfamiliar to your audience, provide clear definitions, use the [`GlossaryDefinition` component](/style-guide/components/glossary-definition/), or link to the relevant glossary.
+
+- Define terms inline when first introduced.
+- Link to detailed explanations in a glossary or separate page.
+- Consider your audience's technical level when determining which terms need definition.
+
+**WCAG reference**: [3.1.3 Unusual Words (Level AAA)](https://www.w3.org/WAI/WCAG21/Understanding/unusual-words)
+
+---
+
+### Use lists for multiple items
+
+Present multiple related items as bulleted or numbered lists rather than in paragraph form. Lists are easier to scan and understand.
+
+- Use numbered lists for sequential steps or ordered items.
+- Use bulleted lists for non-sequential items.
+- Keep list items parallel in structure.
+- Introduce lists with a clear lead-in sentence.
+
+---
+
+## Instructions and user guidance
+
+### Provide clear instructions
+
+Ensure that all instructions, guidance, and error messages are clear, specific, and easy to understand.
+
+- Describe input requirements explicitly (for example, date formats and character limits).
+- Provide examples when helpful.
+- Use clear, specific error messages that explain what went wrong and how to fix it.
+- Avoid unnecessarily technical language in user-facing messages.
+
+| Do                                                                                                     | Do not              |
+| ------------------------------------------------------------------------------------------------------ | ------------------- |
+| Enter a valid email address (for example, user@example.com).                                           | Enter email.        |
+| Password must be at least 12 characters and include one number.                                        | Invalid password.   |
+| The API key format is incorrect. Ensure it is 32 characters and contains only alphanumeric characters. | Error: Invalid key. |
+
+**WCAG reference**: [3.3.2 Labels or Instructions (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/labels-or-instructions)
+
+---
+
+### Do not rely on color alone in diagrams
+
+When creating Mermaid diagrams or other visual content, do not use color as the only way to convey information or distinguish elements.
+
+- Use labels, patterns, or shapes in addition to color.
+- Ensure text within diagrams has sufficient contrast.
+- Add descriptive text near the diagram to explain key elements.
+
+| Do                                                              | Do not                                              |
+| --------------------------------------------------------------- | --------------------------------------------------- |
+| Use different shapes and labels for different node types        | Use only color to differentiate node types          |
+| Add a legend that describes elements by name, not just by color | Refer to "the green box" without additional context |
+
+**WCAG reference**: [1.4.1 Use of Color (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color)
+
+---
+
+## Tables and data presentation
+
+### Use tables for tabular data only
+
+Use tables only to present data that has a logical relationship between rows and columns. Do not use tables for layout purposes.
+
+- Include clear, descriptive headers for all columns and rows.
+- Keep tables simple when possible.
+- For complex tables, consider breaking them into multiple simpler tables.
+- Provide a caption or introductory text that describes the table's purpose.
+
+**WCAG reference**: [1.3.1 Info and Relationships (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships)
+
+---
+
+## Code examples and technical content
+
+### Make code examples accessible
+
+Ensure that code examples are accessible to screen reader users and easy to understand.
+
+- Always specify the programming language for syntax highlighting.
+- Provide context before code examples explaining what the code does.
+- Use descriptive variable and function names in examples.
+- Add comments to explain complex code sections.
+- Ensure code examples follow a logical order.
+
+---
+
+## Testing and validation
+
+### Test with assistive technology
+
+When possible, test documentation with assistive technologies to ensure accessibility.
+
+- Use a screen reader to navigate the page.
+- Test keyboard navigation (Tab, Enter, arrow keys).
+- Verify that all interactive elements are keyboard accessible.
+- Check that focus indicators are visible.
+
+---
+
+### Use automated accessibility tools
+
+Use automated tools to identify common accessibility issues, but remember that automated tools cannot catch all problems.
+
+- Run automated accessibility checkers during development.
+- Manually review flagged issues.
+- Conduct manual testing for issues that tools cannot detect.
+
+---
+
+## Additional resources
+
+### WCAG guidelines and documentation
+
+- [Web Content Accessibility Guidelines (WCAG) 2.1](https://www.w3.org/TR/WCAG21/)
+- [How to Meet WCAG (Quick Reference)](https://www.w3.org/WAI/WCAG21/quickref/)
+- [Understanding WCAG 2.1](https://www.w3.org/WAI/WCAG21/Understanding/)
+- [Writing for Web Accessibility](https://www.w3.org/WAI/tips/writing/)

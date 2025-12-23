@@ -109,7 +109,7 @@ Follow this workflow to create a custom error rule for a given zone via API:
 1. Use the [List zone rulesets](/api/resources/rulesets/methods/list/) operation to check if there is already a ruleset for the `http_custom_errors` phase at the zone level.
 2. If the phase ruleset does not exist, create it using the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, which allows you to create a ruleset if it does not exist and update all the rules in the ruleset. Create the ruleset in the `http_custom_errors` phase.
 
-   If the phase ruleset already exists, use the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation to replace all the rules in the ruleset, or the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) operation to add a rule to the existing rules in the ruleset.
+   If the phase ruleset already exists, use the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation to replace all the rules in the ruleset, or the [Add a rule to a ruleset](/ruleset-engine/rulesets-api/add-rule/) operation to add a rule to the existing rules in the ruleset.
 
 </Steps>
 

@@ -6,14 +6,17 @@ sidebar:
 
 ---
 
-import { AvailableNotifications, Render } from "~/components"
+import { AvailableNotifications, Render, DashButton } from "~/components"
+
+<Render file="smart-shield-callout" product="smart-shield" />
 
 Once you have set up a standalone Health Check including notification emails, use Health Check Analytics to debug possible origin issues.
 
 To access health check analytics:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **Traffic** > **Health Check Analytics**.
+1. In the Cloudflare dashboard, go to the **Health Check Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/traffic/health-check-analytics" />
 
 <Render file="health-checks-analytics" product="smart-shield" />
 

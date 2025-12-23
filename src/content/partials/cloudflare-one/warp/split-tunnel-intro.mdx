@@ -5,7 +5,7 @@
 Split Tunnels can be configured to exclude or include IP addresses or domains from going through WARP. This feature is commonly used to run WARP alongside a VPN (in Exclude mode) or to provide access to a specific private network (in Include mode).
 
 :::caution
-Split Tunnels only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration.
+Split Tunnels only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) configuration.
 :::
 
 Because Split Tunnels controls what Gateway has visibility on at the network level, we recommend testing all changes before rolling out updates to end users.

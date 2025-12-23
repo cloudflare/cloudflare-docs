@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 In the following sections, we will give you some details about how to configure Load Balancing with Regional Services and Customer Metadata Boundary.
 
@@ -17,12 +17,14 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) throu
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account and zone.
-2. Go to the **Load Balancing** tab.
-3. Follow the steps to [create a load balancer](/load-balancing/load-balancers/create-load-balancer/#create-a-load-balancer).
-4. From the **Data Localization** dropdown, select the region you would like to use on your domain.
-5. Select **Next** and continue with the regular setup.
-6. Select **Save**.
+1. In the Cloudflare dashboard, go to the **Load balancing** page.
+
+   <DashButton url="/?to=/:account/:zone/traffic/load-balancing" />
+
+2. Follow the steps to [create a load balancer](/load-balancing/load-balancers/create-load-balancer/#create-a-load-balancer).
+3. From the **Data Localization** dropdown, select the region you would like to use on your domain.
+4. Select **Next** and continue with the regular setup.
+5. Select **Save**.
 
 </TabItem>
 

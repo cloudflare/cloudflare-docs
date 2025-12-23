@@ -1,0 +1,60 @@
+---
+title: Terraform v5.13.0 now available
+description: Terraform v5.13.0 stabilizes a number of resources and known issues
+products:
+  - fundamentals
+date: 2025-11-20
+---
+
+Earlier this year, we announced the launch of the new Terraform v5 Provider. We are aware of the high number of issues reported by the Cloudflare community related to the v5 release. We have committed to releasing improvements on a [2-3 week cadence](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5774) to ensure its stability and reliability, including the v5.13 release. We have also pivoted from an [issue-to-issue approach to a resource-per-resource approach](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6237) - we will be focusing on specific resources to not only stabilize the resource but also ensure it is migration-friendly for those migrating from v4 to v5. 
+
+Thank you for continuing to raise issues. They make our provider stronger and help us build products that reflect your needs.
+
+This release includes new features, new resources and data sources, bug fixes, updates to our Developer Documentation, and more. 
+
+### Breaking Change
+Please be aware that there are breaking changes for the `cloudflare_api_token` and `cloudflare_account_token` resources. These changes eliminate configuration drift caused by policy ordering differences in the Cloudflare API.
+
+For more specific information about the changes or the actions required, please see the [detailed Repository changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.13.0).
+
+
+### Features
+
+* **New resources and data sources added** 
+	* cloudflare_connectivity_directory
+	* cloudflare_sso_connector
+	* cloudflare_universal_ssl_setting
+* **api_token+account_tokens:** state upgrader and schema bump ([#6472](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6472))
+* **docs:** make docs explicit when a resource does not have import support 
+* **magic_transit_connector:** support self-serve license key ([#6398](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6398))
+* **worker_version:** add content_base64 support
+* **worker_version:** boolean support for run_worker_first ([#6407](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6407))
+* **workers_script_subdomains:** add import support  ([#6375](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6375))
+* **zero_trust_access_application:** add proxy_endpoint for ZT Access Application ([#6453](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6453))
+* **zero_trust_dlp_predefined_profile:** Switch DLP Predefined Profile endpoints, introduce enabled_entries attribut
+
+
+### Bug Fixes
+
+* **account_token:** token policy order and nested resources ([#6440](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6440))
+* allow r2_bucket_event_notification to be applied twice without failing ([#6419](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6419))
+* **cloudflare_worker+cloudflare_worker_version:** import for the resources ([#6357](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6357))
+* **dns_record:** inconsistent apply error ([#6452](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6452))
+* **pages_domain:** resource tests ([#6338](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6338))
+* **pages_project:** unintended resource state drift ([#6377](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6377))
+* **queue_consumer:** id population ([#6181](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6181)) 
+* **workers_kv:** multipart request  ([#6367](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6367))
+* **workers_kv:** updating workers metadata attribute to be read from endpoint ([#6386](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6386)) 
+* **workers_script_subdomain:** add note to cloudflare_workers_script_subdomain about redundancy with cloudflare_worker ([#6383](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6383)) 
+* **workers_script:** allow config.run_worker_first to accept list input 
+* **zero_trust_device_custom_profile_local_domain_fallback:** drift issues ([#6365](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6365))
+* **zero_trust_device_custom_profile:** resolve drift issues ([#6364](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6364))
+* **zero_trust_dex_test:** correct configurability for 'targeted' attribute to fix drift
+* **zero_trust_tunnel_cloudflared_config:** remove warp_routing from cloudflared_config ([#6471](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6471))
+
+### Upgrading
+We suggest holding off on migration to v5 while we work on stabilization. This help will you avoid any blocking issues while the Terraform resources are actively being stabilized. We will be releasing a new migration tool in March 2026 to help support v4 to v5 transitions for our most popular resources.
+
+### For more info
+- [Terraform Provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
+- [Documentation on using Terraform with Cloudflare](https://developers.cloudflare.com/terraform/)

@@ -54,31 +54,32 @@ Use a cron expression in your Wrangler config to specify the schedule:
 Then in your Worker, call your Container from the "scheduled" handler:
 
 ```ts
-import { Container, getContainer } from "@cloudflare/containers";
+import { Container, getContainer } from '@cloudflare/containers';
 
 export class CronContainer extends Container {
-	sleepAfter = "5m";
+  sleepAfter = '10s';
+
+  override onStart() {
+    console.log('Starting container');
+  }
+
+  override onStop() {
+    console.log('Container stopped');
+  }
 }
 
 export default {
-	async fetch(): Promise<Response> {
-		return new Response(
-			"This Worker runs a cron job to execute a container on a schedule.",
-		);
-	},
+  async fetch(): Promise<Response> {
+    return new Response("This Worker runs a cron job to execute a container on a schedule.");
+  },
 
-	// scheduled is called when a cron trigger fires
-	async scheduled(
-		_controller: any,
-		env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> },
-	) {
-		await getContainer(env.CRON_CONTAINER).startAndWaitForPorts({
-			startOptions: {
-				envVars: {
-					MESSAGE: "Start Time: " + new Date().toISOString(),
-				},
-			},
-		});
-	},
+  async scheduled(_controller: any, env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> }) {
+    let container = getContainer(env.CRON_CONTAINER);
+    await container.start({
+      envVars: {
+				MESSAGE: "Start Time: " + new Date().toISOString(),
+      }
+    })
+  },
 };
 ```

@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Example, FeatureTable, TabItem, Tabs } from "~/components";
+import { Example, FeatureTable, TabItem, Tabs, DashButton } from "~/components";
 
 URL prefetching means that Cloudflare pre-populates the cache with content a visitor is likely to request next. This setting — when combined with [additional setup](#setup) — leads to a higher cache hit rate and thus a faster experience for the user.
 
@@ -27,8 +27,11 @@ For Cloudflare to start prefetching URLs, you will need to [enable the feature](
 
 To enable **Prefetch URLs** in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **Speed** > **Optimization** > **Content Optimization**.
+1. In the Cloudflare dashboard, go to the **Speed** > **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to **Content Optimization**.
 3. For **Prefetch URLs**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
@@ -69,7 +72,7 @@ The IP address used to make the prefetch request to the manifest file is logged 
 The prefetch files limits are the following:
 
 - The maximum number of manifest files is 16.
-- The maximum number of files per manifest file is 1024.
+- The maximum number of files per manifest file is 100.
 - A manifest file has a size limit of 1 MB.
 
 ## Limitations

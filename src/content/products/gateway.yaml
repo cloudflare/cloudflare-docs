@@ -3,7 +3,7 @@ name: Gateway
 product:
   title: Gateway
   group: Cloudflare One
-  url: /cloudflare-one/policies/gateway/
+  url: /cloudflare-one/traffic-policies/
 
 meta:
   description: Set up policies to inspect DNS, Network, HTTP, and Egress traffic

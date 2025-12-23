@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, DashButton } from "~/components";
 
 HSTS protects HTTPS web servers from downgrade attacks. These attacks redirect web browsers from an HTTPS web server to an attacker-controlled server, allowing bad actors to compromise user data and cookies.
 
@@ -53,14 +53,15 @@ If you remove HTTPS before disabling HSTS or before waiting for the duration of 
 
 To enable HSTS using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select your website.
-3. Go to **SSL/TLS** > **Edge Certificates**.
-4. For **HTTP Strict Transport Security (HSTS)**, select **Enable HSTS**.
-5. Read the dialog and select **I understand**.
-6. Select **Next**.
-7. Configure the [HSTS settings](#configuration-settings).
-8. Select **Save**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **HTTP Strict Transport Security (HSTS)**, select **Enable HSTS**.
+3. Read the dialog and select **I understand**.
+4. Select **Next**.
+5. Configure the [HSTS settings](#configuration-settings).
+6. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
@@ -78,13 +79,14 @@ To enable HSTS on a specific subdomain only, configure a [subdomain setup](/dns/
 
 To disable HSTS on your website:
 
-1. Log in to the Cloudflare dashboard and select your account.
-2. Select your website.
-3. Go to **SSL/TLS** > **Edge Certificates**.
-4. For **HTTP Strict Transport Security (HSTS)**, select **Enable HSTS**.
-5. Set the **Max Age Header** to **0 (Disable)**.
-6. If you previously enabled the **No-Sniff** header and want to remove it, set it to **Off**.
-7. Select **Save**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **HTTP Strict Transport Security (HSTS)**, select **Enable HSTS**.
+3. Set the **Max Age Header** to **0 (Disable)**.
+4. If you previously enabled the **No-Sniff** header and want to remove it, set it to **Off**.
+5. Select **Save**.
 
 ## Configuration settings
 

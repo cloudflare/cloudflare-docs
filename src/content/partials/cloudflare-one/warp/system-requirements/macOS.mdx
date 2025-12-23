@@ -5,11 +5,11 @@
 
 |                       |                                                   |
 | --------------------- | ------------------------------------------------- |
-| **OS version**        | Big Sur 11.0+, Monterey 12.0+, Ventura 13.0+, Sonoma 14.0+, Sequoia 15.1+ (15.0.x is not supported)                                 |
-| **Processor**         | Intel or M series   |
+| **OS version**        | Sonoma 14.0+, Sequoia 15.1+ (15.0.x is not supported), Tahoe 26.0+                                 |
+| **Processor**         | M series   |
 | **HD space**          | 75 MB                                             |
 | **Memory**            | 35 MB                                             |
-| **Network interface type**  | WIFI or LAN |
-| **Minimum MTU** | 1360 bytes[^1]|
+| **Network interface type**  | Wi-Fi or LAN |
+| **MTU** | 1381 bytes recommended [^1] |
 
-[^1]: WireGuard requires 1360 bytes for IPv6 and 1340 bytes for IPv4. MASQUE requires 1350 bytes for IPv6 and 1330 bytes for IPv4.
+[^1]: Minimum 1281 bytes with [Path MTU Discovery](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/)
