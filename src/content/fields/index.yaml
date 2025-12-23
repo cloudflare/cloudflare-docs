@@ -922,6 +922,9 @@ entries:
     summary: Indicates whether the request contains at least one content object.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint include any content objects
+      cf.waf.content_scan.has_obj and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.has_malicious_obj
     data_type: Boolean
@@ -939,6 +942,9 @@ entries:
     summary: Indicates whether the request contains at least one malicious content object.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint include any malicious content objects
+      cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.num_malicious_obj
     data_type: Integer
@@ -956,6 +962,9 @@ entries:
     summary: The number of malicious content objects detected in the request (zero or greater).
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain more than two malicious content objects
+      cf.waf.content_scan.num_malicious_obj > 2 and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.has_failed
     data_type: Boolean
@@ -973,6 +982,7 @@ entries:
     summary: Indicates whether the file scanner was unable to scan all the content objects detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
   - name: cf.waf.content_scan.num_obj
     data_type: Integer
     categories: [Request]
@@ -989,6 +999,9 @@ entries:
     summary: The number of content objects detected in the request (zero or greater).
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain more than two content objects
+      cf.waf.content_scan.num_obj > 2 and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.obj_sizes
     data_type: Array<Integer>
@@ -1006,6 +1019,9 @@ entries:
     summary: An array of file sizes in bytes, in the order the content objects were detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain any content objects larger than 500 KB (512,000 bytes)
+      any(cf.waf.content_scan.obj_sizes[*] > 512000) and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.obj_types
     data_type: Array<String>
@@ -1025,6 +1041,9 @@ entries:
       If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
 
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain content objects other than PDFs
+      any(cf.waf.content_scan.obj_types[*] != "application/pdf") and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.obj_results
     data_type: Array<String>
@@ -1044,6 +1063,9 @@ entries:
       The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
 
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+    example_block: |-
+      # Check if requests to a specific endpoint contain any suspicious or infected content objects
+      any(cf.waf.content_scan.obj_results[*] in {"suspicious" "infected"}) and http.request.uri.path eq "/upload"
 
   - name: cf.waf.score
     data_type: Number
