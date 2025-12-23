@@ -1,0 +1,22 @@
+---
+link: "/realtime/realtimekit/notice-board/"
+productName: RealtimeKit
+productLink: "/realtime/realtimekit"
+entries:
+  - publish_date: "2025-03-01"
+    title: Support for legacy media engine has been removed
+    description: |-
+      Legacy media engine support has been removed. 
+
+      If your organization was created before March 1, 2025 and you are upgrading to `1.2.0` or above, you may experience recording issues.
+
+      Please contact support to migrate you to the new Cloudflare SFU media engine to ensure continued recording functionality.
+      
+  - publish_date: "2025-11-21"
+    title: Update on meeting join issues in firefox 144+
+    description: |-
+      In firefox 144+, users were not able to join the meetings, due to the browser's datachannel behavior change.
+
+      Error: `x.data.arrayBuffer is not a function`
+
+      Please upgrade to atleast `v1.2.0` to fix this. It is advised to periodically upgrade the SDKs.
