@@ -1325,6 +1325,11 @@
 /cloudflare-for-platforms/workers-for-platforms/reference/observability/ /cloudflare-for-platforms/workers-for-platforms/configuration/observability/ 301
 /cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/ 301
 /cloudflare-for-platforms/workers-for-platforms/reference/tags/ /cloudflare-for-platforms/workers-for-platforms/configuration/tags/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/ /cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/hostname-routing/ /cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/developing-with-wrangler/ /cloudflare-for-platforms/workers-for-platforms/reference/local-development/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/ /cloudflare-for-platforms/workers-for-platforms/get-started/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform-examples/ /cloudflare-for-platforms/workers-for-platforms/reference/platform-examples/ 301
 
 # stream
 /stream/getting-started/ /stream/ 301

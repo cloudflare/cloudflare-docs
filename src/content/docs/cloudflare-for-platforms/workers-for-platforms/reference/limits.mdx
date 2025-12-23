@@ -14,9 +14,9 @@ Cloudflare provides an unlimited number of scripts for Workers for Platforms cus
 
 ## `cf` object
 
-The [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) contains Cloudflare-specific properties of a request. This field is not accessible in [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) by default because some fields in this object are sensitive and can be used to manipulate Cloudflare features (for example, `cacheKey`, `resolveOverride`, `scrapeShield`.)
+The [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) contains Cloudflare-specific properties of a request. This field is not accessible in [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers) by default because some fields in this object are sensitive and can be used to manipulate Cloudflare features (for example, `cacheKey`, `resolveOverride`, `scrapeShield`.)
 
-To access the `cf` object, you need to enable [trusted mode](/cloudflare-for-platforms/workers-for-platforms/platform/worker-isolation/#trusted-mode) for your namespace. Only enable this if you control all Worker code in the namespace.
+To access the `cf` object, you need to enable [trusted mode](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#trusted-mode) for your namespace. Only enable this if you control all Worker code in the namespace.
 
 ## Durable Object namespace limits
 

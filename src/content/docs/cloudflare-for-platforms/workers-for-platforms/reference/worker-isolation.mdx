@@ -12,7 +12,7 @@ By default, Workers inside of a dispatch namespace are considered "untrusted." T
 
 In untrusted mode:
 
-- The [`request.cf`](/workers/runtime-apis/request/#incomingrequestcfproperties) object is not available in Workers (see [limits](/cloudflare-for-platforms/workers-for-platforms/platform/limits/#cf-object) for more information)
+- The [`request.cf`](/workers/runtime-apis/request/#incomingrequestcfproperties) object is not available in Workers (see [limits](/cloudflare-for-platforms/workers-for-platforms/reference/limits/#cf-object) for more information)
 - Each Worker has an isolated cache, when using the [Cache API](/workers/runtime-apis/cache/) or when making subrequests using `fetch()`, which egress via [Cloudflare's cache](/cache/)
 - [`caches.default`](/workers/reference/how-the-cache-works/#cache-api) is disabled for all Workers in the namespace
 
@@ -48,6 +48,6 @@ If you enable trusted mode for a namespace that already has deployed Workers, yo
 If you need access to `request.cf` but want to maintain cache isolation between customers, use customer-specific [cache keys](/workers/examples/cache-using-fetch/#custom-cache-keys) or the [Cache API](/workers/examples/cache-api/) with isolated keys. 
 
 ## Related Resources
-* [Platform Limits](/cloudflare-for-platforms/workers-for-platforms/platform/limits) - Understanding script and API limits
+* [Platform Limits](/cloudflare-for-platforms/workers-for-platforms/reference/limits) - Understanding script and API limits
 * [Cache API Documentation](/workers/runtime-apis/cache/) - Learn about cache behavior in Workers
 * [Request cf object](/workers/runtime-apis/request/#the-cf-property-requestcf) - Details on the cf object properties

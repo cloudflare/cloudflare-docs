@@ -500,17 +500,17 @@ database_id = "<DATABASE_ID>"
 
 ### Dispatch namespace bindings (Workers for Platforms)
 
-Dispatch namespace bindings allow for communication between a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
+Dispatch namespace bindings allow for communication between a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace). Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_NAMESPACE"` or `binding = "productionNamespace"` would both be valid names for the binding.
 
 - `namespace` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
+  - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace).
 
 - `outbound` <Type text="object" /> <MetaInfo text="optional" />
   - `service` <Type text="string" /> <MetaInfo text="required" /> The name of the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to bind to.
-  - `parameters` array optional A list of parameters to pass data from your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
+  - `parameters` array optional A list of parameters to pass data from your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
 
 <WranglerConfig>
 

@@ -7,9 +7,14 @@ sidebar:
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-Test changes to your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) by running the dynamic dispatch Worker locally but connecting it to User Workers deployed in production. 
+Test changes to your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) by running the dynamic dispatch Worker locally but connecting it to user Workers that have been deployed to Cloudflare.
+
+:::note
+Consider using a staging namespace to test changes safely before deploying to production.
+:::
 
 This is helpful when:
+
 - **Testing routing changes** and validating that updates continue to work with deployed User Workers
 - **Adding new middleware** like authentication, rate limiting, or logging to the dynamic dispatch Worker
 - **Debugging issues** in the dynamic dispatcher that may be impacting deployed User Workers
