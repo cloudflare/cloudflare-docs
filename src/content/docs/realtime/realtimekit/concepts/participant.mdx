@@ -16,7 +16,7 @@ You can think of this as enrolling a student into a classroom. The meeting is th
 When you add a participant, you also choose which [preset](/realtime/realtimekit/concepts/preset/) to apply. The preset defines the role, permissions, and
 meeting experience of that participant.
 
-## Participant tokens
+### Participant tokens
 
 When you add a participant to a meeting using the [Add Participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) API endpoint, it returns:
 
@@ -35,7 +35,7 @@ Participant authentication tokens are time bound and eventually expire. When a t
 Instead, your backend can call the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) API endpoint.
 This endpoint issues a new authentication token for the existing participant record, keeping details such as the participant `id` and preset the same.
 
-## Custom participant identifier
+### Custom participant identifier
 
 When adding the participant, you can optionally provide a custom participant identifier, referred to as `custom_participant_id`. This value is purely for your use.
 RealtimeKit stores it and returns it in APIs, but does not use it to control access. It allows you to map your application's user to RealtimeKit participant and
@@ -46,7 +46,7 @@ to correlate RealtimeKit session data, events or analytics with user information
 Use a stable internal identifier from your own system, such as a numeric user id or UUID.
 :::
 
-## Where to Go Next
+### Where to Go Next
 
 After understanding participants, you can explore the following topics:
 

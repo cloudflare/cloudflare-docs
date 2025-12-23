@@ -6,7 +6,8 @@ sidebar:
   order: 8
 ---
 
-import { Tabs, TabItem } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 RealtimeKit's UI Kit provides all the necessary UI components to allow complete customization of all its UI Kit components. You can customize your meeting icons such as chat, clock, leave meeting, mic on and off, and more.
 
@@ -14,12 +15,13 @@ RealtimeKit's UI Kit provides all the necessary UI components to allow complete 
 
 To get started with customizing the icons for your meetings, you need to first integrate RealtimeKit's Web SDK into your web application.
 
-### Install the SDK
+<RTKSDKSelector />
+
+## Install the SDK
 
 Install the package using npm, Yarn, or CDN.
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 To set up UI Kit components and web-core, add the following script tags inside the `<head>` tag:
 
@@ -47,25 +49,32 @@ You can also import utilities or any other export from CDN:
 </head>
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```bash
-npm install @cloudflare/realtimekit-ui @cloudflare/realtimekit
+npm install @cloudflare/realtimekit-react-ui @cloudflare/realtimekit-react
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
-### Set up the meeting
+<RTKCodeSnippet id="web-angular">
+
+```bash
+npm install @cloudflare/realtimekit-angular-ui @cloudflare/realtimekit-angular
+```
+
+</RTKCodeSnippet>
+
+## Set up the meeting
 
 1. Create a meeting room using the [Create Meeting API](/api/resources/realtime_kit/subresources/meetings/methods/create/)
 2. Generate an `authToken` using the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/). An `authToken` is a unique token that is used to identify a user in the meeting
 3. Initialize the RealtimeKit client using `RealtimeKitClient.init({ authToken })`. It returns the meeting object
 4. Pass the meeting object to the UI Kit
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 The `rtk-meeting` component generates the default UI experience.
 
@@ -92,8 +101,9 @@ The `rtk-meeting` component generates the default UI experience.
 </body>
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 import {
@@ -124,8 +134,67 @@ function App() {
 }
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript title="app.component.ts"
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { RTKComponentsModule } from "@cloudflare/realtimekit-angular";
+import { AppComponent } from "./app.component";
+
+@NgModule({
+	declarations: [AppComponent],
+	imports: [BrowserModule, RTKComponentsModule],
+	providers: [],
+	bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+_Optional_: If you are using TypeScript, set allowSyntheticDefaultImports as true in your tsconfig.json.
+
+```typescript
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true
+  }
+}
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true
+  }
+}
+
+```
+
+Load the RtkMeeting component to your template file (component.html).
+
+```html
+<rtk-meeting #myid></rtk-meeting>
+```
+
+Initialise the meeting
+
+```typescript
+class AppComponent {
+	title = "MyProject";
+	@ViewChild("myid") meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
+
+	async ngAfterViewInit() {
+		const meeting = await RealtimeKitClient.init({
+			authToken: "<auth-token>",
+		});
+		meeting.join();
+		this.rtkMeeting = meeting;
+		if (this.meetingComponent) this.meetingComponent.meeting = meeting;
+	}
+}
+```
+
+</RTKCodeSnippet>
 
 ## Customize the default icon pack
 
@@ -133,8 +202,7 @@ RealtimeKit's default icon set is available at [icons.dyte.io](https://icons.dyt
 
 To replace RealtimeKit's default icon set with your own, pass the link to your icon set in the UI component.
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 ```html
 <body>
@@ -162,8 +230,9 @@ To replace RealtimeKit's default icon set with your own, pass the link to your i
 </body>
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 import {
@@ -197,8 +266,31 @@ function App() {
 }
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+```typescript
+class AppComponent {
+	title = "MyProject";
+	@ViewChild("myid") meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
+
+    async ngAfterViewInit() {
+    	const meeting = await RealtimeKitClient.init({
+    		authToken: "<auth-token>",
+    	});
+    	meeting.join();
+    	this.rtkMeeting = meeting;
+    	if (this.meetingComponent) {
+    		this.meetingComponent.meeting = meeting;
+    		this.meetingComponent.iconPackUrl = "https://example.com/my-icon-pack.json";
+    	}
+    }
+
+}
+
+```
+</RTKCodeSnippet>
 
 ## IconPack reference
 
@@ -269,3 +361,4 @@ Explore additional customization options:
 
 - [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) - Complete meeting experience out of the box
 - [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/) - Create custom meeting interfaces
+```
