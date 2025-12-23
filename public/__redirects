@@ -472,6 +472,7 @@
 /ddos-protection/managed-rulesets/network/override-expressions/ /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301
 /ddos-protection/managed-rulesets/adjust-rules/false-positive/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/#legitimate-traffic-is-incorrectly-identified-as-an-attack-and-causes-a-false-positive 301
 /ddos-protection/managed-rulesets/adjust-rules/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/ 301
+/ddos-protection/best-practices/respond-to-ddos-attacks/ /ddos-protection/best-practices/proactive-defense/ 301
 
 # developer spotlight
 /developer-spotlight/tutorials/ /resources/ 301
