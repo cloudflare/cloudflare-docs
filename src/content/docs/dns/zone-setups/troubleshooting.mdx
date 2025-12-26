@@ -1,0 +1,228 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+sidebar:
+  order: 20
+head:
+  - tag: title
+    content: Troubleshooting zone setups
+---
+
+import { Render, Example } from "~/components";
+
+## Cannot add domain to Cloudflare
+
+If you encounter issues [adding a domain](/fundamentals/manage-domains/add-site/) to Cloudflare, follow these troubleshooting steps.
+
+### Disable DNSSEC
+
+Cloudflare cannot provide authoritative DNS resolution for a domain — a [full setup domain](/dns/zone-setups/full-setup/) — when **DNSSEC** is enabled at your domain registrar.
+
+If you do not disable **DNSSEC** before changing your nameservers, you might experience the following issues:
+
+- DNS does not resolve after switching to Cloudflare's nameservers.
+- DNS query response status is `SERVFAIL`.
+- The domain remains in a [Pending status](/dns/zone-setups/reference/domain-status/).
+
+If you experience these issues, refer to [Configuring DNSSEC](/dns/dnssec) and [Troubleshooting DNSSEC](/dns/dnssec/troubleshooting/).
+
+### Register the domain
+
+If the issue is with your registrar, you may receive the following error messages:
+
+- `exampledomain.com is not a registered domain (Code: 1049)`
+- `We were unable to identify bad.psl-example as a registered domain. Please ensure you are providing the root domain and not any subdomains (e.g., example.com, not subdomain.example.com) (Code: 1099)`
+- `Failed to lookup registrar and hosting information of exampledomain.com at this time. Please contact Cloudflare Support or try again later. (Code: 1110)`
+
+If you receive these error messages, make sure that:
+
+- You are providing the apex domain (also known as "root domain", e.g. `example.com`) and not a subdomain (`www.example.com`).
+- You domain is fully registered and its registration data lists its nameservers.
+- Your domain uses a verified [top-level domain (TLD)](https://publicsuffix.org/list/).
+
+### Resolve DNS for apex domain
+
+Before a domain can be added to Cloudflare, the domain must return `NS` records for valid, working nameservers. `NS` records can be checked via third-party online tools such as [https://www.whatsmydns.net](https://www.whatsmydns.net/) or via a command-line terminal using a dig command:
+
+```sh
+dig +short ns cloudflare.com
+```
+
+```sh output
+
+ns3.cloudflare.com.
+ns4.cloudflare.com.
+ns5.cloudflare.com.
+ns6.cloudflare.com.
+ns7.cloudflare.com.
+```
+
+Additionally, the domain must return a valid `SOA` record when queried. `SOA` records can be checked via third-party online tools such as [https://www.whatsmydns.net](https://www.whatsmydns.net/) or via a command-line terminal:
+
+```sh
+dig +short soa cloudflare.com
+```
+
+```sh output
+
+ns3.cloudflare.com. dns.cloudflare.com. 2029202248 10000 2400 604800 300
+```
+
+### Check if the domain is restricted at Cloudflare
+
+If Cloudflare has temporary or permanent restrictions on a domain, you will receive the following errors:
+
+- **Error 1105**
+  - **Message**: `Error with Cloudflare request: [1105] This zone is temporarily restricted and cannot be added to Cloudflare at this time, please contact Cloudflare Support.`
+  - **Cause**: We have seen too many attempts to add a domain to Cloudflare
+  - **Resolution**: Wait 3 hours before attempting to re-add the domain to Cloudflare. Support cannot speed up this process.
+- **Error 1093 or 1116**
+  - **Message**: `This zone cannot be added to Cloudflare at this time, please contact Cloudflare Support. (Code: 1093)`
+  - **Cause**: You may have entered a subdomain (`www.example.com`) instead of the apex domain (also known as "root domain", e.g. `example.com`).
+  - **Resolution**: Verify that you are entering the apex domain. If you are and still experience issues, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+- _**Error 1097**
+  - **Message**: `This web property cannot be added to Cloudflare at this time. If you are an Enterprise customer, contact your Customer Success Manager. Otherwise, email abusereply@cloudflare.com with a detailed explanation of your association with this zone. (Code: 1097)`
+  - **Resolution**: Contact [abusereply@cloudflare.com](mailto:abusereply@cloudflare.com) with a detailed explanation of your association with this zone.
+- **Error: Cannot be found** OR **`<your domain>` is not a registered domain (code: 1049)**
+  - This can happen if the domain has not been registered yet. Some domains, like `.gov` domains, have special requirements that require the domain be added first.
+  - **Resolution:** Please contact [Cloudflare Support](/support/contacting-cloudflare-support/) if you require assistance adding a `.gov` and/or other domains that require manual registration.
+
+### Contact the zone owner in case of zone hold error
+
+Enterprise customers can use the [zone hold](/fundamentals/account/account-security/zone-holds/) feature to prevent domains to be added in any other account.
+If you get the following error when adding your domain, it means that a zone hold is active:
+
+```
+The zone name provided is subject to a hold which disallows the creation of this zone. 
+Please contact the owner of the Cloudflare account that manages this domain to have this hold removed.
+```
+
+In this case you will need to remove the zone hold if you own the Cloudflare account in which the zone is active, or contact the owner of the Cloudflare account which has the zone active.
+
+If you are not the owner of the Cloudflare account that has the hold on the zone, using an online WHOIS tool might help you finding the owner of a website.
+
+See this [external WHOIS tool](https://www.godaddy.com/whois) or this [other external tool](https://www.whois.com/whois/).
+
+The owner might be your hosting provider, or a SaaS service provider.
+
+You can also use the [Cloudflare Forgot Email?](https://dash.cloudflare.com/forgot-email) page, and check the documentation related to the [Forgot Email? feature](/fundamentals/user-profiles/change-password-or-email/#forgot-your-email-address).
+
+---
+
+## Full setup troubleshooting
+
+If you see unexpected results when [changing your nameservers](/dns/zone-setups/full-setup/setup/), review the following troubleshooting questions.
+
+### Is a DS record present at your registrar?
+
+You need to remove any pre-Cloudflare **DS** records at your registrar to update your authoritative nameservers. This will disable DNSSEC and allow Cloudflare to resolve your domain name.
+
+You can then [re-enable DNSSEC](/dns/zone-setups/full-setup/setup/#re-enable-dnssec) in Cloudflare and at your registrar after you have changed your nameservers.
+
+### Do the nameservers at your registrar exactly match the values provided by Cloudflare?
+
+If the nameservers in your registrar do not exactly match those provided by Cloudflare, your domain will not resolve correctly.
+
+### Are additional nameservers listed at your registrar?
+
+If so, you should remove these nameservers.
+
+You should have only Cloudflare nameservers listed at your registrar.
+
+### Have you waited longer than 24 hours?
+
+For some registrars, you will need to wait up to 24 hours for updates to your nameservers.
+
+---
+
+## Zone transfer troubleshooting
+
+When [updating your registrar](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#4-update-registrar) with the Cloudflare secondary nameservers (`nsXXXX.secondary.cloudflare.com`), you get an error.
+
+:::note
+
+
+The exact error message depends on the system. Some examples would be: `Entity reference not found`,` Authorization error`, `Unable to create foreign nameserver`.
+
+
+:::
+
+Upon contacting your registrar, their services confirm that the Cloudflare nameservers cannot be added at this time.
+
+### Root Cause
+
+This issue may arise when one of our nameservers used for secondary setup are removed from the Verisign side.
+
+### Solution
+
+The Cloudflare engineering team needs to be engaged [through Support](/support/contacting-cloudflare-support/) to make sure the nameserver gets registered again manually at Verisign.
+
+---
+
+## Domain deleted from Cloudflare
+
+Domain deletion commonly occurs for the following reasons:
+
+- A user with access to the domain removed it.
+- The nameservers no longer point to Cloudflare. Cloudflare continuously monitors domain registration.
+- The domain was not authenticated (pending for 28 days).
+
+### Check Audit Logs
+
+Cloudflare [Audit Logs](/fundamentals/account/account-security/review-audit-logs/) contain information about domain deletion.
+
+:::note
+
+_Delete_ is an **Action** that denotes domain deletion but is also commonly used for deletion of other various account settings. Therefore, ensure that **Resource** says _Zone_.
+:::
+
+### Check registrar for Cloudflare nameservers
+
+If your domain was using a [full setup](/dns/zone-setups/full-setup/), your registrar needs to use Cloudflare nameservers as the authoritative nameservers for your domain.
+
+1. Use either the command-line based "whois" application provided with your Operating System or a website such as [ICANN Lookup](https://lookup.icann.org/).
+   - If you are unable to find the nameserver details for your domain, reach out to your domain registrar or domain provider to provide the domain registration information.
+   - Ensure Cloudflare's nameservers are the only two nameservers listed in the domain registration details.
+   - Ensure nameservers are spelled correctly in the domain registration.
+
+2. Confirm that the nameservers exactly match the nameservers provided within the **Cloudflare Nameservers** card on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page.
+
+3. If you identify incorrect information, log in to your domain provider's portal to make updates or contact your domain provider for assistance.
+
+### Recover a deleted domain
+
+<Render file="recover-deleted-domain" product="dns" />
+
+---
+
+## Delete all DNS records
+
+When you connect your domain to Cloudflare, the [DNS records quick scan](/dns/zone-setups/reference/dns-quick-scan/) may automatically add several records to your zone.
+
+If you realize most of them are not applicable and want to bulk delete DNS records, follow the steps below. This method assumes you are familiar with [API calls fundamentals](/fundamentals/api/).
+
+:::note[Bulk deletion available in the dashboard]
+You can delete records in bulk via the dashboard, which removes the need for custom scripts as the one below. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/#delete-records-in-bulk) for details.
+:::
+
+1. Make sure you have [an API token](/fundamentals/api/get-started/create-token/) that allows you to edit DNS for your zone.
+2. Get your [zone ID](/fundamentals/account/find-account-and-zone-ids/).
+3. Run the following script, replacing `<ZONE_ID>` and `<API_TOKEN>` with the values you got from the previous steps.
+
+<Example>
+:::caution[Warning]
+This script uses [jq](https://jqlang.github.io/jq/) to format `JSON` outputs for readability. Refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/) for details.
+:::
+
+```bash
+zoneid=<ZONE_ID>
+bearer=<API_TOKEN>
+curl --silent "https://api.cloudflare.com/client/v4/zones/$zoneid/dns_records?per_page=50000" \
+--header "Authorization: Bearer $bearer" \
+| jq --raw-output '.result[].id' | while read id
+do
+  curl --silent --request DELETE "https://api.cloudflare.com/client/v4/zones/$zoneid/dns_records/$id" \
+--header "Authorization: Bearer $bearer"
+done
+```
+</Example>

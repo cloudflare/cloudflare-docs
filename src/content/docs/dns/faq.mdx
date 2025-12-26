@@ -1,0 +1,108 @@
+---
+pcx_content_type: faq
+source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
+title: General FAQ
+sidebar:
+  order: 1
+---
+
+import { Render, GlossaryTooltip } from "~/components";
+
+:::note[Feature-specific FAQs]
+
+For questions about specific DNS features, refer to:
+- [DNS records FAQ](/dns/manage-dns-records/faq/)
+- [Nameservers FAQ](/dns/nameservers/faq/)
+- [Zone setups FAQ](/dns/zone-setups/faq/)
+- [DNSSEC FAQ](/dns/dnssec/faq/)
+- [DNS Firewall FAQ](/dns/dns-firewall/faq/)
+
+:::
+
+## Is Cloudflare a free DNS (domain nameserver) provider?
+
+Yes. Cloudflare offers [free DNS services](https://www.cloudflare.com/dns) to customers on all plans. Note that:
+
+1. You do not need to change your hosting provider to use Cloudflare.
+2. You do not need to move away from your registrar. The only change you make with your registrar is to point the authoritative nameservers to the Cloudflare nameservers.
+
+---
+
+## Does Cloudflare charge for or limit DNS queries?
+
+Cloudflare never limits or caps DNS queries, but the pricing depends on your plan level.
+
+For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries.
+
+For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
+
+---
+
+## Why can't I make ANY queries to Cloudflare DNS servers?
+
+`ANY` queries are special and often misunderstood. They are usually used to get all record types available on a DNS name, but what they return is just any type in the cache of recursive resolvers. This can cause confusion when they are used for debugging.
+
+Because of Cloudflare's many advanced DNS features like CNAME flattening, it can be complex and even impossible to give correct answers to `ANY` queries. For example, when DNS records dynamically come and go or are stored remotely, it can be taxing or even impossible to get all the results at the same time.
+
+`ANY` is rarely used in production, but is often used in DNS reflection attacks, taking advantage of the lengthy answer returned by `ANY`.
+
+Instead of using `ANY` queries to list records, Cloudflare customers can get a better overview of their DNS records by logging in and checking their DNS app settings.
+
+The decision to block `ANY` queries was implemented for all Authoritative DNS customers in September 2015, and does not affect DNS Firewall customers.
+
+Read [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) on the Cloudflare blog.
+
+---
+
+## Why are DNS queries returning incorrect results?
+
+Third-party tools can sometimes fail to return correct DNS results if a recursive DNS cache fails to refresh. In this circumstance, purge your public DNS cache via these methods:
+
+- [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
+- [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
+- [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
+
+---
+
+## Why is my site showing DNS errors like "This site can't be reached"?
+
+In web browsers such as Safari or Chrome, there are several commonly observable DNS errors:
+
+- `This site can't be reached`
+- `This webpage is not available`
+- `err_name_not_resolved`
+- `Can't find the server`
+- [`Error 1001 DNS resolution error`](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1001/)
+
+Below are the most common causes for DNS resolution errors:
+
+**Mistyped domain or subdomain**: Verify that the domain or subdomain was correctly spelled in the request URL.
+
+**Missing DNS records**: Ensure that you have the necessary DNS records in the **DNS** app of your Cloudflare dashboard, including the [zone apex](/dns/manage-dns-records/how-to/create-zone-apex/) (e.g., `example.com`) and [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) records (`www.example.com`, `blog.example.com`).
+
+**DNSSEC not disabled**: DNS resolution failures occur if [DNSSEC is not disabled](/dns/dnssec/#disable-dnssec) at your domain provider before you add the domain to Cloudflare.
+
+**Nameservers changed**: If your domain stops pointing to Cloudflare's nameservers, DNS resolution will stop functioning. [Check whether your domain uses Cloudflare's nameservers](/dns/zone-setups/full-setup/setup/#verify-changes).
+
+**Unresolved IP address**: In rare cases, the DNS resolver in the client requesting the URL might fail to resolve a DNS record to a valid IP address. Reload the page after a short wait. Using [Cloudflare's DNS resolver](/1.1.1.1/setup/) may help.
+
+---
+
+## What is DNS_PROBE_FINISHED_NXDOMAIN?
+
+`DNS_PROBE_FINISHED` means that the DNS request for a resource timed out and `NXDOMAIN` stands for non-existent domain. Together, these messages mean that the DNS query for a specific resource could not locate an associated domain.
+
+Though visitors sometimes encounter this error — or similarly worded messages from Safari, Edge, or Firefox — because of network or local DNS issues, it might point to an issue with your DNS records in Cloudflare.
+
+To resolve this error, verify that you have the necessary DNS records in the **DNS** app of your Cloudflare dashboard. For additional troubleshooting help, refer to the [Community troubleshooting guide](https://community.cloudflare.com/t/community-tip-fixing-the-dns-probe-finished-nxdomain-error/42818).
+
+---
+
+## What is DNS_PROBE_POSSIBLE?
+
+`DNS_PROBE_POSSIBLE` means that the resolver could not find DNS records for the requested hostname.
+
+Though visitors sometimes encounter this error — or similarly worded messages from Safari, Edge, or Firefox — because of network or local DNS issues, it might point to an issue with your DNS records in Cloudflare.
+
+To resolve this error, verify that you have the necessary DNS records in the **DNS** app of your Cloudflare dashboard.
+

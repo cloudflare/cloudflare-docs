@@ -1,0 +1,110 @@
+---
+pcx_content_type: faq
+title: FAQ
+sidebar:
+  order: 13
+head:
+  - tag: title
+    content: DNS records FAQ
+---
+
+import { Render } from "~/components";
+
+## Does Cloudflare limit the number of DNS records a domain can have?
+
+Yes. All customers have a limit on the number of DNS records they can create.
+
+- Free: 200
+- Pro: 3,500
+- Business: 3,500
+- Enterprise: 3,500
+
+Free zones created before 2024-09-01 00:00:00 UTC have an increased limit of 1,000.
+
+:::note[For more DNS records]
+
+If you are an Enterprise customer and require more DNS records, contact your account team. Cloudflare can support millions of DNS records on a single zone.
+
+:::
+
+---
+
+## Which record types can Cloudflare proxy?
+
+Only `A`, `AAAA`, and `CNAME` records can be proxied. Cloudflare will not proxy any other [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+
+---
+
+## How do I add ANAME records on Cloudflare?
+
+<Render file="aname-alias-callout" product="dns" />
+
+---
+
+## Does Cloudflare support wildcard DNS entries?
+
+Cloudflare supports wildcard '\*' DNS records, both proxied and unproxied, on all plans.
+
+---
+
+## How long does it take for a DNS change I made to push out?
+
+By default, any changes or additions you make to your Cloudflare zone file will take effect globally within 5 minutes, usually much less.
+
+Depending on the Time-to-Live (TTL) set on the previous [DNS record](/dns/manage-dns-records/how-to/create-dns-records/), old data may still remain cached until the TTL expires. Proxied records expire after 5 minutes ("Automatic"), but the TTL for unproxied records can be customized.
+
+If changes to records with large TTLs are anticipated, it may make sense to reduce the TTL ahead of time so that the change takes effect as quickly as possible.
+
+---
+
+## What should I do if I change my server IP address or hosting provider?
+
+After switching hosting providers or server IP addresses, update the IP addresses in your Cloudflare **DNS** app. Your new hosting provider will provide the new IP addresses that your DNS should use.  To modify DNS record content in the **DNS** app, click on the IP address, and enter the new IP address.
+
+---
+
+## Why am I getting hundreds of random DNS records after adding my domain?
+
+This can happen when you had a wildcard `*` record configured at your previous authoritative DNS, and for some reason the wildcard record was not detected. You can remove these records in bulk [using the API](/api/resources/dns/subresources/records/methods/delete/).
+
+Alternatively, you can also:
+
+1. [Remove your domain](/fundamentals/manage-domains/remove-domain/) from Cloudflare.
+2. Delete the wildcard record from your authoritative DNS.
+3. [Re-add](/fundamentals/manage-domains/add-site/) the domain.
+
+---
+
+## What IP should I use for parked domain / redirect-only / originless setup?
+
+In the case a placeholder address is needed for "originless" setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/proxy-status/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
+
+---
+
+## Can I CNAME a domain not on Cloudflare to a domain that is on Cloudflare?
+
+No. If you would like to do a redirect for a site not on Cloudflare, then set up a traditional `301` or `302` redirect on your origin web server.
+
+Redirecting non-Cloudflare sites via `CNAME` records would cause a DNS resolution error. Since Cloudflare is a reverse proxy for the domain that is on Cloudflare, the `CNAME` redirect for the domain (not on Cloudflare) would not know where to send the traffic to.
+
+---
+
+## 403 Authentication error when creating DNS records using Terraform
+
+**Problem Description**
+
+`Error: failed to create DNS record: HTTP status 403: Authentication error (10000)` is returned when using Terraform with Cloudflare API.
+
+**Root Cause**
+
+Error seems to be misleading, as the error was found to be in customer code syntax, specifically: `zone_id = data.cloudflare_zones.example_com.id`
+
+**Solution**
+
+Make sure the argument `zone_id = data.cloudflare_zones.example_com.zones[0].id`. A more detailed use case can be found in [this GitHub thread](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913).
+
+---
+
+## Why are Cloudflare's A or AAAA records / IP addresses for my domain's DNS responses appearing?
+
+For DNS records proxied to Cloudflare, Cloudflare's IP addresses are returned in DNS queries instead of your original server IP address. This allows Cloudflare to optimize, cache, and protect all requests for your website.

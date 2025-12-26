@@ -1,0 +1,31 @@
+---
+pcx_content_type: faq
+title: FAQ
+sidebar:
+  order: 10
+head:
+  - tag: title
+    content: DNSSEC FAQ
+---
+
+import { Render } from "~/components";
+
+## Why do I have to remove my DS record when signing up for Cloudflare?
+
+<Render file="dnssec-providers" product="dns" />
+
+For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/dnssec/).
+
+---
+
+## What happens when I remove the DS record?
+
+When you remove your DS record, an invalidation process begins which results in the unsigning of your domain's DNS records. This will allow your authoritative nameservers to be changed. If you are an existing customer, this will not affect your ability to use Cloudflare. New customers will need to complete this step before Cloudflare can be used successfully.
+
+---
+
+## Does Cloudflare support EDNS0 (extension mechanisms for DNS)?
+
+Yes, Cloudflare DNS supports EDNS0. EDNS0 is enabled for all Cloudflare customers. It is a building block for modern DNS implementations that adds support for signaling if the DNS Resolver (recursive DNS provider) supports larger message sizes and DNSSEC.
+
+EDNS0 is the first approved set of mechanisms for [DNS extensions](http://en.wikipedia.org/wiki/Extension_mechanisms_for_DNS), originally published as [RFC 2671](https://datatracker.ietf.org/doc/html/rfc2671).
