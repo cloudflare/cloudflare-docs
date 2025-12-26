@@ -63,6 +63,13 @@ A link will appear in the terminal, `https://localhost:1111/`, where you can pre
 6. Push your commits to your branch and then back to your fork.
 7. Return to GitHub and create a pull request from your committed changes. In the description form, add the product you changed in brackets and a brief description of your changes. For example “[Images] Fixed broken link."
 
+If you are a Nix user, you can use `devShell` defined in `flake.nix` to set up the development environment:
+```bash
+nix develop
+```
+This command provides the environment with `nodejs` installed, so you can run `npm install` and `npm run dev`.
+You can also use `nix-direnv` to set up and enter the development environment.
+
 ## After you create an issue or PR
 After you create an issue or PR, a member of the Cloudflare organization will review your suggestion. Here is what to expect:
 * A member of the Cloudflare organization may tag others for technical or content reviews or feedback.
