@@ -32,3 +32,6 @@ pnpm-debug.log*
 .idea
 
 tools/relevant_changed_files.txt
+
+# nix
+/.direnv
