@@ -35,6 +35,24 @@ You can only configure the behavior of the managed ruleset to set a stronger or 
 
 Overrides can apply to all <GlossaryTooltip term="data packet">packets</GlossaryTooltip> or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/network-overrides/override-expressions/) for more information.
 
+### Network Analytics rule display
+
+Cloudflare regularly deploys new detection rules to the Network-layer DDoS managed ruleset. To ensure high accuracy and minimize false positives, these rules undergo a testing phase before they are fully promoted.
+
+When a rule is in its testing phase, you may notice specific behaviors in the Cloudflare dashboard.
+
+New rules often default to `Log` (visible in **DDoS Managed Rules** > **Browse Rules**). This allows Cloudflare to evaluate the rule's performance against real-world traffic without impacting legitimate packets.
+
+In the [Network Analytics](/analytics/network-analytics/) dashboard, traffic matched by these testing-phase rules is labeled as `Log (rule disabled)`. This is a reporting convention indicating the rule is in a pre-production monitoring state.
+
+While you can manually override a rule from `Log` to `Block`, consider the following before doing so:
+
+- Rules in the testing phase have not yet been fully tuned for broad deployment. Overriding them to a mitigation action (like `Block`) may increase the risk of dropping legitimate traffic.
+
+- The default action of a rule is decided during the testing period. Cloudflare may set its default action to **DDoS Dynamic**, which may use rate-limiting or a multi-step mitigation combination based on traffic factors. By applying a manual `Block` override, you prevent your configuration from automatically inheriting the more nuanced DDoS Dynamic action once it is released.
+
+If you choose to override a testing rule to mitigate an active attack, Cloudflare recommends reviewing that override periodically to see if the rule has been promoted to a permanent default action. 
+
 ## Availability
 
 The Network-layer DDoS Attack Protection managed ruleset is available in all Cloudflare plans for:

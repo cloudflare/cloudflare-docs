@@ -1,0 +1,199 @@
+---
+pcx_content_type: concept
+title: Video production workflow
+sidebar:
+  order: 2
+---
+
+We follow a specific workflow and formatting specifications for our videos to ensure they are accurate, engaging, scalable and align with the Cloudflare Docs style guide.
+
+## Formatting specifications
+
+We use the following formatting specifications to uphold quality and consistency across our videos.
+
+### Resolution
+Videos should be recorded at 4K UHD. If 4K UHD is unavailable, Full HD footage may be accepted on a case-by-case basis. Footage below Full HD will not be used. Final video exports must be at least Full HD.
+
+**Acceptable resolutions:**
+- 4K Ultra HD: 2160p (3840x2160)
+- 2K Quad HD: 1440p (2560x1440)
+- Full HD: 1080p (1920x1080)
+
+**Frame rate:** 25 frames per second (FPS)
+
+### Screen recording resolution
+
+Screen recordings should be done on the largest monitor possible, with the highest resolution available to the recording software (minimum 1920x1080). Ensure that any text visible on your screen is large enough that it can be easily read in the final video.
+
+:::note[Note]
+You may need to modify the zoom of the window you are recording or your monitor's resolution to make sure the visual displayed is visible and legible.
+:::
+
+### Aspect ratios
+
+Aspect ratio is important for the viewing experience. The more a video fills the screen, the more immersive an experience it provides.
+
+**Desktop aspect ratio**
+
+The most common screens and online platforms, such as YouTube and Vimeo, use a 16:9 ratio, so the majority of videos should be produced in a 16:9 ratio.
+
+**Mobile aspect ratio**
+
+Social media platforms, like Instagram or Facebook, are typically accessed on mobile devices and usually require a 9x16 aspect ratio. Efficiency calls for a 1:1 aspect ratio, which works on all, but not as great.
+
+### Subtitles
+Subtitles are always published in English in SubRip format `.srt`.
+
+**Guidelines for subtitles:**
+- Maximum 45 characters per line.
+- Split over 2 lines when necessary.
+- Displayed for no longer than 10 seconds per subtitle.
+
+### Music
+To maintain a balanced audio mix:
+- Music should be about 20dB lower than speaking volume.
+- Background music must be instrumental, ensuring it doesn't overpower the speaker.
+
+## Preparation for your shoot
+### Audio
+
+**Microphone placement**: Clear and high quality audio is key to a good video. When setting up a microphone, it’s best to have it as close to the speakers as possible to capture clear audio, and out of the frame so you cannot see it in the footage.
+
+- **Shotgun microphones**: Place the microphone over your head, just outside of the frame.
+- **Lavalier microphones**: Hide cords and cables, but the microphone can be visible.
+
+**Background noise**:
+Choose a quiet and furnished room with soft surfaces to record your audio. Avoid locations with background noise and echo to the best of your ability. For example, avoid areas with fans, air-conditioning,  and chatters, as these tend to get picked up by microphones.
+
+:::caution[Beware of echoes]
+Echo is extremely difficult to remove in post-production. Avoid empty rooms, or soundproof your recording area with sound-absorbing materials such as carpets, curtains, blankets, or foam panels. 
+:::
+
+:::note[Check for echoes]
+Clap your hands in the room, aim for a "dampened" sound. 
+:::
+
+### Presenter
+**Frame**
+
+When setting up the presenter frame, the presenter should position themselves in the center of the shot with some distance from the wall behind them to create depth. They should ensure their eyeline is directly towards the lens, engaging with the audience, and avoid any reflections on their glasses that could distract from the presentation. This will help maintain a clear and professional look throughout the video.
+
+**Dress Code**
+
+To create the most professional and consistent appearance, the Video Experience team follows these dress code guidelines:
+
+- Wear smart casual tops, like a Cloudflare T-shirt, polo, casual shirt, or sweater. Stick to solid, black and white, and jewel tones (for example, dark orange, emerald green, navy, burgundy).
+- Avoid distracting patterns, accessories, or flashy jewelry.
+- Do not wear non-affiliated branded clothing, especially from non-open-source companies.
+
+:::tip[Best practices]
+Follow your company’s dress code guidelines and, when in doubt, stick to a solid color shirt.
+:::
+
+### Room Atmosphere
+
+For the best video quality, consider the following options for setting up your space:
+
+- Option A: Choose a location with natural light and minimal (echo)[/style-guide/video/#echo]. Add extra lighting if needed.
+- Option B: Set up a green screen. Ensure proper lighting to minimize shadows for the cleanest background.
+
+## Production
+### AI-assisted video production
+
+We use AI as a tool across our workflow to accelerate and remove friction in various production stages (scripting, voiceovers, animations, metadata, and review), not to fully automate. We elaborate on how we use AI in each production stage in the respective pages. Refer to [How we AI](/style-guide/how-we-docs/how-we-ai/) to understand more about our approach. 
+
+### Topic selection
+We create videos strategically when it improves users' understanding of the written documentation. Refer to [Why and when we use videos](/style-guide/how-we-docs/how-we-video/why-and-when-we-use-videos/) to understand our approach to video content. 
+We also consider page views, support tickets, and community feedback when selecting video topics. Our videos always map back to a specific documentation need and refer to written documentation as the source of truth. 
+
+### Script
+Scripts are the blueprint for every video, guiding narration, on-screen text, and visual assets like animated illustration and diagrams. We use Cloudflare documentation as our source material to write scripts.
+
+At Cloudflare, we use Gemini to accelerate script creation, followed by human review and editing the AI-generated draft to align with Cloudflare’s voice, accuracy requirements, and visuals. The high-level process looks like the following:
+
+1. Generate initial script drafts based on an existing doc.
+2. Experiment with tone, style, and length of narration.
+3. Create variations for review, making editing faster than writing from scratch.
+
+:::note[Note]
+AI-generated scripts are starting points. Editing ensures factual correctness, aligns narration with visuals, and fits time constraints.
+:::
+
+### Voiceover
+Voiceovers are an essential part of our video documentation workflow. They provide clarity, pacing, and engagement, complementing on-screen text and visuals. At Cloudflare, we leverage AI-assisted voice generation to streamline this process.
+
+We use ElevenLabs, an AI voice generation tool, to produce natural-sounding voiceovers to: 
+- Quickly hear how your script sounds in real time
+- Understand the cadence, timing, and clarity of narration
+- Speed up the stakeholder review process
+- Allows teams to create videos without a microphone
+- Supports early testing of pacing and integration with on-screen visuals
+
+### Visuals
+Visuals are the core of videos, providing context, reinforcing key concepts, and guiding the viewer through workflows. At Cloudflare, visuals include diagrams, animations, screen recording and talking head footage, all designed to complement the script and voiceover.
+
+#### Diagrams
+Diagrams are used to clarify complex concepts or show relationships that are difficult to convey through text alone. Diagrams are referenced in the script and visually timed to appear alongside the corresponding narration.
+
+#### Animation
+Animations bring diagrams and processes to life, helping users visualize dynamic workflows. Traditionally, creating animations involves keyframing, which requires specifying how objects move frame by frame. This is time-consuming and technical.
+
+To speed up animation creation, we use AI:
+
+- A simple prompt can generate the movement of objects without manually keyframing each frame.
+- AI-generated motion can be reused across multiple animations, saving time.
+- This approach allows motion graphics artists to focus on creative design rather than repetitive technical work.
+
+#### Screen recording
+We use screen recordings when demonstrating real product interactions by capturing UI-driven workflows directly from Cloudflare dashboards or developer tools.
+
+Best practices:
+- Highlight relevant UI elements with callouts or overlays.
+- Voiceover should match to guide the viewer through steps.
+- Make sure UI elements shown are up-to-date.
+- Blur sensitive data.
+
+#### Talking head
+We use talking head footage when a human presence adds clarity, engagement and warmth, such as:
+
+- Introducing a workflow or video segment
+- Providing context, emphasis, or commentary
+- Reinforcing Cloudflare branding and approachability
+
+Talking head footage is especially useful when voiceover alone cannot convey tone or emphasis, helping users connect with the content.
+
+## Review and quality assurance
+
+Every Cloudflare video undergoes a two-stage review process to ensure accuracy, clarity, and consistency with documentation standards. We leverage both human reviewers and AI tools to maintain high quality while enabling scalable production.
+
+Scripts are reviewed before production to ensure:
+- Technical accuracy – Explanations of concepts, workflows, and product behavior are correct.
+- UI and workflow accuracy – Steps described match the actual product.
+- Terminology alignment – Language matches Cloudflare documentation and branding.
+
+Once a video is produced, it undergoes a visual review to verify:
+- Illustration matches narration – Diagrams, animations, and callouts align with spoken content.
+- Diagram accuracy – Architecture and conceptual diagrams correctly reflect the product.
+- Screen recording accuracy – UI navigation, workflows, and system outputs are correct.
+
+Cloudflare uses AI to enhance quality assurance by using saved prompts that remember your review preferences and focus areas, acting as a reviewer to ensuring consistent checks across projects: 
+
+- Immediate turnaround, even when human reviewers are unavailable
+- Reduces risk of errors and outdated information
+- Advanced image recognition supports maintenance by re-checking existing videos to see if UI or information has changed
+
+
+## Metadata and discoverability
+
+Creating videos is only part of the story. To ensure our videos are findable, useful, and accessible, we apply structured metadata and AI-assisted tools to maximize discoverability for both human users and AI systems. 
+
+Before publishing, we generate rich metadata for each video:
+- Title: Clear, descriptive, and aligned with documentation terminology
+- Description: Summarizes the content and context of the video
+- Chapters: Breaks the video into logical segments to improve understanding by AI
+- Transcripts and subtitles: Videos are hosted on Cloudflare Stream, we can generate captions automatically and download caption files `.vtt` as transcripts. 
+
+This enables:
+- Search indexing
+- AI retrieval
+- Generative Engine Optimization (GEO)
