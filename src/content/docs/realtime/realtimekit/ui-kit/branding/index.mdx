@@ -12,6 +12,8 @@ import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnipp
 
 RealtimeKit's UI Kit provides all the necessary UI components to allow complete customization of all its UI Kit components. You can customize your meeting icons such as chat, clock, leave meeting, mic on and off, and more.
 
+## Prerequisites
+
 To get started with customizing the icons for your meetings, you need to first integrate RealtimeKit's Web SDK into your web application.
 
 <RTKSDKSelector />
@@ -89,28 +91,28 @@ function App() {
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
+
 ```typescript
-
 class AppComponent {
-title = "MyProject";
-@ViewChild("myid") meetingComponent: RtkMeeting;
-rtkMeeting: RealtimeKitClient;
+	title = "MyProject";
+	@ViewChild("myid") meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
 
-    async ngAfterViewInit() {
-    	const meeting = await RealtimeKitClient.init({
-    		authToken: "<auth-token>",
-    	});
-    	meeting.join();
-    	this.rtkMeeting = meeting;
-    	if (this.meetingComponent) {
-    		this.meetingComponent.meeting = meeting;
-    		this.meetingComponent.iconPackUrl = "https://example.com/my-icon-pack.json";
-    	}
-    }
-
+	async ngAfterViewInit() {
+		const meeting = await RealtimeKitClient.init({
+			authToken: "<auth-token>",
+		});
+		meeting.join();
+		this.rtkMeeting = meeting;
+		if (this.meetingComponent) {
+			this.meetingComponent.meeting = meeting;
+			this.meetingComponent.iconPackUrl =
+				"https://example.com/my-icon-pack.json";
+		}
+	}
 }
-
 ```
+
 </RTKCodeSnippet>
 
 ## IconPack reference
