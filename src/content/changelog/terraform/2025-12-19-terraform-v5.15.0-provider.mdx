@@ -24,9 +24,9 @@ This release includes bug fixes, the stabilization of even more popular resource
 * **zero_trust_gateway_policy:** Support `forensic_copy` ([5741fd0](https://github.com/cloudflare/terraform-provider-cloudflare/commit/5741fd0ed9f7270d20731cc47ec45eb0403a628b))
 * **zero_trust_list:** Support additional types (category, location, device) ([5741fd0](https://github.com/cloudflare/terraform-provider-cloudflare/commit/5741fd0ed9f7270d20731cc47ec45eb0403a628b))
 
-### Bug Fixes
+### Bug fixes
 
-* **access_rules:** Add validation to prevent state drift. Ideally we'd use Semantic Equality but since that isn't an option, this will remove a foot-gun. ([4457791](https://github.com/cloudflare/terraform-provider-cloudflare/commit/44577911b3cbe45de6279aefa657bdee73c0794d))
+* **access_rules:** Add validation to prevent state drift. Ideally, we'd use Semantic Equality but since that isn't an option, this will remove a foot-gun. ([4457791](https://github.com/cloudflare/terraform-provider-cloudflare/commit/44577911b3cbe45de6279aefa657bdee73c0794d))
 * **cloudflare_pages_project:** Addressing drift issues ([6edffcf](https://github.com/cloudflare/terraform-provider-cloudflare/commit/6edffcfcf187fdc9b10b624b9a9b90aed2fb2b2e)) ([3db318e](https://github.com/cloudflare/terraform-provider-cloudflare/commit/3db318e747423bf10ce587d9149e90edcd8a77b0))
 * **cloudflare_worker:** Can be cleanly imported ([4859b52](https://github.com/cloudflare/terraform-provider-cloudflare/commit/4859b52968bb25570b680df9813f8e07fd50728f))
 * **cloudflare_worker:** Ensure clean imports ([5b525bc](https://github.com/cloudflare/terraform-provider-cloudflare/commit/5b525bc478a4e2c9c0d4fd659b92cc7f7c18016a))
@@ -39,4 +39,4 @@ We suggest waiting to migrate to v5 while we work on stabilization. This helps w
 
 ### For more information
 - [Terraform Provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
-- [Documentation on using Terraform with Cloudflare](https://developers.cloudflare.com/terraform/)
+- [Documentation on using Terraform with Cloudflare](/terraform/)
