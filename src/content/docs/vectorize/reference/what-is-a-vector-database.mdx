@@ -29,9 +29,9 @@ In a traditional vector search use-case, queries are made against a vector datab
 The step-by-step workflow resembles the below:
 
 1. A developer converts their existing dataset (documentation, images, logs stored in R2) into a set of vector embeddings (a one-way representation) by passing them through a machine learning model that is trained for that data type.
-2. The output embeddings are inserted into a Vectorize database index.
+2. The output embeddings are inserted into a vector database index.
 3. A search query, classification request or anomaly detection query is also passed through the same ML model, returning a vector embedding representation of the query.
-4. Vectorize is queried with this embedding, and returns a set of the most similar vector embeddings to the provided query.
+4. The vector database is queried with this embedding, and returns a set of the most similar vector embeddings to the provided query.
 5. The returned embeddings are used to retrieve the original source objects from dedicated storage (for example, R2, KV, and D1) and returned back to the user.
 
 In a workflow without a vector database, you would need to pass your entire dataset alongside your query each time, which is neither practical (models have limits on input size) and would consume significant resources and time.
