@@ -1,0 +1,137 @@
+---
+title: cf-r2-sdk
+pcx_content_type: example
+---
+
+import { Render } from "~/components";
+
+:::note
+
+cf-r2-sdk is a community-maintained Rust SDK. For questions or issues, refer to the [GitHub repository](https://github.com/Myxogastria0808/cf-r2-sdk).
+
+:::
+
+<Render file="keys" product="r2" />
+<br />
+
+This example uses the [cf-r2-sdk](https://crates.io/crates/cf-r2-sdk) crate, an unofficial Cloudflare R2 SDK with built-in support for uploading, downloading, and deleting binary data or files.
+
+## Why use an SDK?
+
+While you can interact with R2 using raw HTTP requests or the [aws-sdk-s3](/r2/examples/aws/aws-sdk-rust/) S3-compatible client, a dedicated SDK provides several advantages:
+
+- **Simplified API** – Provides Rust APIs for common R2 operations such as uploading, downloading, listing, and deleting objects.
+- **Native Rust ergonomics** – Avoids the complexity of configuring an AWS SDK while keeping strong type safety and async support.
+- **Quick setup** – Requires only minimal configuration: bucket name, endpoint, and credentials.
+- **Focused on R2** – Designed specifically around Cloudflare R2’s S3-compatible API surface.
+
+For more details, see the [cf-r2-sdk documentation](https://docs.rs/cf-r2-sdk/).
+
+## Installation
+
+```bash
+cargo add cf-r2-sdk
+```
+
+## How to use
+
+The following example demonstrates how to configure the client and perform basic object operations against Cloudflare R2.
+
+#### 1. Create an R2 client
+
+Set the "bucket name", "access key id", "secret access key", "endpoint url", and "region".
+
+The default value of `region` is `"auto"` (this field is optional).
+
+```rust
+// create a client object
+let object: Result<cf_r2_sdk::operator::Operator, cf_r2_sdk::error::Error> = Builder::new()
+    .set_bucket_name("bucket_name")
+    .set_access_key_id("access_key_id")
+    .set_secret_access_key("secret_access_key")
+    .set_endpoint("endpoint_url")
+    .set_region("region")
+    .create_client_result();
+```
+
+#### 2. Operate R2 object storage
+
+**upload binary data**
+
+```rust
+let _ = object
+    .upload_binary("<file name (key)> as &str", "<mime type> as &str", "<binary data> as &[u8]", "<cache> as Option<&str> (None is 'no-cache')")
+    .await.unwrap();
+```
+
+**upload file**
+
+```rust
+let _ = object
+    .upload_file("<file name (key)> as &str", "<mime type> as &str", "<file path> as &str", "<cache> as Option<&str> (None is "no-cache")")
+    .await.unwrap();
+```
+
+**download binary data**
+
+```rust
+let binary: Vec<u8> = object.download("<file name (key)> as &str").await.unwrap();
+```
+
+**delete file**
+
+```rust
+let _ = object.delete("<file name (key)> as &str").await.unwrap();
+```
+
+**get file names vector (max get file names is 10)**
+
+```rust
+let file_names_list:Vec<String> = object.list_objects().await.unwrap();
+```
+
+## Example
+
+https://github.com/Myxogastria0808/cf-r2-sdk/blob/main/examples/simple.rs
+
+```rust
+use cf_r2_sdk::builder::Builder;
+use cf_r2_sdk::error::Error;
+use dotenvy::dotenv;
+use std::env;
+
+#[tokio::main(flavor = "current_thread")]
+async fn main() -> Result<(), Error> {
+    // load .env file
+    dotenv().expect(".env file not found.");
+    // insert a environment variable
+    let bucket_name = env::var("BUCKET_NAME").expect("BUCKET_NAME not found in .env file.");
+    let endpoint_url: String =
+        env::var("ENDPOINT_URL").expect("ENDPOINT_URL not found in .env file.");
+    let access_key_id: String =
+        env::var("ACCESS_KEY_ID").expect("ACCESS_KEY_ID not found in .env file.");
+    let secret_access_key: String =
+        env::var("SECRET_ACCESS_KEY").expect("SECRET_ACCESS_KEY not found in .env file.");
+    let region: String = env::var("REGION").expect("REGION not found in .env file.");
+
+    let object: cf_r2_sdk::operator::Operator = Builder::new()
+        .set_bucket_name(bucket_name)
+        .set_access_key_id(access_key_id)
+        .set_secret_access_key(secret_access_key)
+        .set_endpoint(endpoint_url)
+        .set_region(region)
+        .create_client_result()?;
+
+    // upload binary data
+    object
+        .upload_binary("simple.txt", "text/plain", b"Hello, World!", None)
+        .await?;
+    Ok(())
+}
+```
+
+## Related resources
+
+- [cf-r2-sdk documentation](https://docs.rs/cf-r2-sdk/)
+- [GitHub repository](https://github.com/Myxogastria0808/cf-r2-sdk)
+- [Crates.io package](https://crates.io/crates/cf-r2-sdk)
