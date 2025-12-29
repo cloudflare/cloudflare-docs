@@ -47,12 +47,12 @@ jobs:
       - name: Run Bonk
         uses: ask-bonk/ask-bonk/github@main
         env:
-          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         with:
-          model: opencode/claude-opus-4-5
+          model: anthropic/claude-opus-4-5
           mentions: '/review'
           permissions: CODEOWNERS
-          agent: docs
+          agent: docs # use the Docs agent for reviews
           prompt: |
             Review PR #${{ steps.pr-number.outputs.number }} (title: ${{ steps.pr-details.outputs.title }}) for documentation quality.
 
@@ -64,7 +64,7 @@ jobs:
 
             1. **Structure & navigation**: Is content logically organized? Are headings clear and hierarchical? Is information easy to find?
 
-            2. **Style guide compliance**: Check against https://developers.cloudflare.com/style-guide/ and .windsurf/rules/general-rules.md. Watch for: contractions, product name capitalization, link formatting (relative paths with trailing slashes), correct component usage.
+            2. **Style guide compliance**: Check against https://developers.cloudflare.com/style-guide/ per the Docs agent. Watch for: contractions, product name capitalization, link formatting (relative paths with trailing slashes), correct component usage.
 
             3. **Cross-linking**: Are related docs linked where helpful? Use meaningful link text (not "click here"). Link to relevant concepts, guides, and API references.
 
