@@ -804,14 +804,14 @@ function useAgent<State = unknown>(
 
 The Agents SDK exposes an `AIChatAgent` class that extends the `Agent` class and exposes an `onChatMessage` method that simplifies building interactive chat agents.
 
-You can combine this with the `useAgentChat` React hook from the `agents/ai-react` package to manage chat state and messages between a user and your Agent(s).
+You can combine this with the `useAgentChat` React hook from the `@cloudflare/ai-chat/react` package to manage chat state and messages between a user and your Agent(s).
 
 #### AIChatAgent
 
 Extension of the `Agent` class with built-in chat capabilities.
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { Message, StreamTextOnFinishCallback, ToolSet } from "ai";
 
 // Base class for chat-specific agents
@@ -834,7 +834,7 @@ class AIChatAgent<Env = unknown, State = unknown> extends Agent<Env, State> {
 
 ```ts
 // Example of extending AIChatAgent
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { Message } from "ai";
 
 interface Env {
@@ -897,7 +897,7 @@ When you use `AIChatAgent` with `useAgentChat`:
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 
@@ -938,7 +938,7 @@ const { messages } = useAgentChat({
 React hook for building AI chat interfaces using an Agent.
 
 ```ts
-import { useAgentChat } from "agents/ai-react";
+import { useAgentChat } from "@cloudflare/ai-chat/react";
 import { useAgent } from "agents/react";
 import type { Message } from "ai";
 
@@ -1012,7 +1012,7 @@ function useAgentChat(options: UseAgentChatOptions): {
 
 ```tsx
 // Example of using useAgentChat in a React component
-import { useAgentChat } from "agents/ai-react";
+import { useAgentChat } from "@cloudflare/ai-chat/react";
 import { useAgent } from "agents/react";
 import { useState } from "react";
 

@@ -1,0 +1,438 @@
+---
+pcx_content_type: concept
+title: Code Mode
+sidebar:
+  order: 9
+description: Learn about Code Mode, which enables LLMs to write executable code that orchestrates tools, enabling complex workflows and multi-step operations.
+---
+
+import { PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
+
+Code Mode is an experimental pattern that lets LLMs write executable code to orchestrate tools, instead of calling tools directly. **LLMs are better at writing code than calling tools** - they have seen millions of lines of real-world TypeScript but only contrived tool-calling examples.
+
+Code Mode converts your tools (especially MCP servers) into TypeScript APIs, enabling complex workflows, error handling, and multi-step operations that are natural in code but difficult with traditional tool calling.
+
+:::note[Experimental Feature]
+
+Code Mode is currently experimental and may have breaking changes in future releases. Use with caution in production environments.
+
+:::
+
+## Why Code Mode?
+
+Traditional tool calling asks LLMs to generate structured JSON that matches predefined schemas. Code Mode leverages what LLMs do best: writing code that orchestrates multiple operations.
+
+### Benefits
+
+- **Natural for LLMs**: Writing code is more natural than generating tool call JSON
+- **Complex Workflows**: Chain multiple operations with conditional logic and error handling
+- **MCP Server Orchestration**: Seamlessly compose operations across multiple MCP servers
+- **Self-Debugging**: LLMs can revise their approach when operations fail
+- **Dynamic Composition**: Combine tools in ways not anticipated by developers
+
+### Code Mode with MCP Servers
+
+Code Mode is particularly powerful when working with MCP (Model Context Protocol) servers. MCP servers provide rich, stateful interfaces to external systems, but traditional tool calling can be limiting when you need to:
+
+- Chain multiple MCP operations in complex workflows
+- Handle stateful interactions requiring multiple round-trips
+- Implement error handling and retry logic across MCP calls
+- Compose different MCP servers in novel ways
+- Perform conditional logic based on MCP server responses
+
+## Installation
+
+Install the package alongside the agents framework:
+
+<PackageManagers type="install" pkg="@cloudflare/codemode agents ai" />
+
+## Configuration
+
+Define the required bindings in your `wrangler.toml` or `wrangler.jsonc`:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "compatibility_flags": ["experimental", "enable_ctx_exports"],
+  "worker_loaders": [
+    {
+      "binding": "LOADER"
+    }
+  ],
+  "services": [
+    {
+      "binding": "globalOutbound",
+      "service": "your-service",
+      "entrypoint": "globalOutbound"
+    },
+    {
+      "binding": "CodeModeProxy",
+      "service": "your-service",
+      "entrypoint": "CodeModeProxy"
+    }
+  ]
+}
+```
+
+</WranglerConfig>
+
+## How It Works
+
+1. **Tool Detection**: When the LLM needs to use tools, it generates a `codemode` tool call
+2. **Code Generation**: The system generates executable JavaScript code that uses your tools
+3. **Safe Execution**: Code runs in an isolated worker environment with controlled access
+4. **Result Return**: The executed code's result is returned to the conversation
+
+## Usage
+
+### Before (Traditional Tool Calling)
+
+<TypeScriptExample>
+
+```ts
+import { streamText, tool } from "ai";
+import { z } from "zod";
+
+const result = streamText({
+  model: openai("gpt-4o"),
+  messages,
+  tools: {
+    getWeather: tool({
+      description: "Get weather for a location",
+      inputSchema: z.object({ location: z.string() }),
+      execute: async ({ location }) => {
+        return `Weather in ${location}: 72°F, sunny`;
+      }
+    }),
+    sendEmail: tool({
+      description: "Send an email",
+      inputSchema: z.object({
+        to: z.string(),
+        subject: z.string(),
+        body: z.string()
+      }),
+      execute: async ({ to, subject, body }) => {
+        return `Email sent to ${to}`;
+      }
+    })
+  }
+});
+```
+
+</TypeScriptExample>
+
+### After (With Code Mode)
+
+<TypeScriptExample>
+
+```ts
+import { experimental_codemode as codemode } from "@cloudflare/codemode/ai";
+import { streamText, tool } from "ai";
+import { z } from "zod";
+
+// Define your tools as usual
+const tools = {
+  getWeather: tool({
+    description: "Get weather for a location",
+    inputSchema: z.object({ location: z.string() }),
+    execute: async ({ location }) => {
+      return `Weather in ${location}: 72°F, sunny`;
+    }
+  }),
+  sendEmail: tool({
+    description: "Send an email",
+    inputSchema: z.object({
+      to: z.string(),
+      subject: z.string(),
+      body: z.string()
+    }),
+    execute: async ({ to, subject, body }) => {
+      return `Email sent to ${to}`;
+    }
+  })
+};
+
+// Configure Code Mode
+const { prompt, tools: wrappedTools } = await codemode({
+  prompt: "You are a helpful assistant...",
+  tools,
+  globalOutbound: env.globalOutbound,
+  loader: env.LOADER,
+  proxy: this.ctx.exports.CodeModeProxy({
+    props: {
+      binding: "MyAgent",
+      name: this.name,
+      callback: "callTool"
+    }
+  })
+});
+
+// Use the wrapped tools - LLM will generate code instead!
+const result = streamText({
+  model: openai("gpt-4o"),
+  system: prompt,
+  messages,
+  tools: wrappedTools // Single "codemode" tool
+});
+```
+
+</TypeScriptExample>
+
+## Agent Integration
+
+### Basic Agent with Code Mode
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { experimental_codemode as codemode } from "@cloudflare/codemode/ai";
+import { streamText, convertToModelMessages } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+export class CodeModeAgent extends Agent<Env> {
+  async onChatMessage() {
+    const { prompt, tools: wrappedTools } = await codemode({
+      prompt: "You are a helpful assistant...",
+      tools: this.tools,
+      globalOutbound: env.globalOutbound,
+      loader: env.LOADER,
+      proxy: this.ctx.exports.CodeModeProxy({
+        props: {
+          binding: "CodeModeAgent",
+          name: this.name,
+          callback: "callTool"
+        }
+      })
+    });
+
+    const result = streamText({
+      model: openai("gpt-4o"),
+      system: prompt,
+      messages: await convertToModelMessages(this.messages),
+      tools: wrappedTools
+    });
+
+    return result.toUIMessageStreamResponse();
+  }
+
+  callTool(functionName: string, args: unknown[]) {
+    return this.tools[functionName]?.execute?.(args, {
+      abortSignal: new AbortController().signal,
+      toolCallId: "codemode",
+      messages: []
+    });
+  }
+}
+
+export { CodeModeProxy } from "@cloudflare/codemode/ai";
+```
+
+</TypeScriptExample>
+
+### With MCP Servers
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { experimental_codemode as codemode } from "@cloudflare/codemode/ai";
+import { streamText, convertToModelMessages } from "ai";
+
+export class CodeModeAgent extends Agent<Env> {
+  async onChatMessage() {
+    const allTools = {
+      ...regularTools,
+      ...this.mcp.getAITools() // Include MCP tools
+    };
+
+    const { prompt, tools: wrappedTools } = await codemode({
+      prompt: "You are a helpful assistant...",
+      tools: allTools,
+      globalOutbound: env.globalOutbound,
+      loader: env.LOADER,
+      proxy: this.ctx.exports.CodeModeProxy({
+        props: {
+          binding: "CodeModeAgent",
+          name: this.name,
+          callback: "callTool"
+        }
+      })
+    });
+
+    const result = streamText({
+      model: openai("gpt-4o"),
+      system: prompt,
+      messages: await convertToModelMessages(this.messages),
+      tools: wrappedTools
+    });
+
+    return result.toUIMessageStreamResponse();
+  }
+
+  callTool(functionName: string, args: unknown[]) {
+    return this.tools[functionName]?.execute?.(args, {
+      abortSignal: new AbortController().signal,
+      toolCallId: "codemode",
+      messages: []
+    });
+  }
+}
+
+export { CodeModeProxy } from "@cloudflare/codemode/ai";
+```
+
+</TypeScriptExample>
+
+## Generated Code Example
+
+Code Mode enables complex workflows that chain multiple operations:
+
+```javascript
+// Example generated code orchestrating multiple MCP servers:
+async function executeTask() {
+  const files = await codemode.listFiles({ path: "/projects" });
+  const recentProject = files
+    .filter((f) => f.type === "directory")
+    .sort((a, b) => new Date(b.modified) - new Date(a.modified))[0];
+
+  const projectStatus = await codemode.queryDatabase({
+    query: "SELECT * FROM projects WHERE name = ?",
+    params: [recentProject.name]
+  });
+
+  if (projectStatus.length === 0 || projectStatus[0].status === "incomplete") {
+    await codemode.createTask({
+      title: `Review project: ${recentProject.name}`,
+      priority: "high"
+    });
+    await codemode.sendEmail({
+      to: "team@company.com",
+      subject: "Project Review Needed"
+    });
+  }
+
+  return { success: true, project: recentProject };
+}
+```
+
+## Security
+
+Code runs in isolated Workers with millisecond startup times:
+
+- No network access by default - only through explicit bindings
+- API keys are hidden in bindings, preventing leaks
+- Custom security policies can be enforced
+
+### Global Outbound Control
+
+<TypeScriptExample>
+
+```ts
+export const globalOutbound = {
+  fetch: async (input: string | URL | RequestInfo, init?: RequestInit) => {
+    const url = new URL(typeof input === "string" ? input : input.toString());
+
+    // Block certain domains
+    if (url.hostname === "example.com") {
+      return new Response("Not allowed", { status: 403 });
+    }
+
+    // Add rate limiting, logging, etc.
+    return fetch(input, init);
+  }
+};
+```
+
+</TypeScriptExample>
+
+## Environment Setup
+
+### Required Bindings
+
+- **LOADER**: Worker Loader for code execution
+- **globalOutbound**: Service for network access control
+- **CodeModeProxy**: Service for tool execution proxy
+
+### Environment Configuration
+
+<TypeScriptExample>
+
+```ts
+export const globalOutbound = {
+  fetch: async (input: string | URL | RequestInfo, init?: RequestInit) => {
+    // Your security policies
+    return fetch(input, init);
+  }
+};
+
+export { CodeModeProxy } from "@cloudflare/codemode/ai";
+```
+
+</TypeScriptExample>
+
+### Proxy Configuration
+
+<TypeScriptExample>
+
+```ts
+proxy: this.ctx.exports.CodeModeProxy({
+  props: {
+    binding: "YourAgentClass",
+    name: this.name,
+    callback: "callTool"
+  }
+});
+```
+
+</TypeScriptExample>
+
+## API Reference
+
+### experimental_codemode
+
+Wraps your tools with Code Mode, converting them into a single code-generating tool.
+
+**Options:**
+
+- `tools: ToolSet` - Your tool definitions (including MCP tools)
+- `prompt: string` - System prompt for the LLM
+- `globalOutbound: Fetcher` - Service binding for network access control
+- `loader: WorkerLoader` - Worker Loader binding for code execution
+- `proxy: Fetcher<CodeModeProxy>` - Proxy binding for tool execution
+
+**Returns:**
+
+- `prompt: string` - Enhanced system prompt
+- `tools: ToolSet` - Wrapped tools (single "codemode" tool)
+
+### CodeModeProxy
+
+Worker entrypoint that routes tool calls back to your agent.
+
+**Props:**
+
+- `binding: string` - Your agent class name
+- `name: string` - Agent instance name
+- `callback: string` - Method name to call for tool execution
+
+## Limitations
+
+- **Experimental**: Subject to breaking changes
+- **Requires Cloudflare Workers**: Uses Worker Loader API (beta)
+- **JavaScript Only**: Python support planned
+- **MCP state updates**: Need refinement
+
+## Examples
+
+Explore these examples to see Code Mode in action:
+
+- [Complete Demo](https://github.com/cloudflare/agents/tree/main/examples/codemode): Full working example with MCP integration
+- [Blog Post](https://blog.cloudflare.com/code-mode/): Deep dive into philosophy and implementation
+
+## Next steps
+
+- Learn about [MCP server integration](/agents/model-context-protocol/)
+- Understand the [Agents framework](/agents/)
+- Explore [tool patterns](/agents/concepts/tools/)

@@ -50,7 +50,7 @@ cd human-in-the-loop
 3. Install the required dependencies:
 
 ```sh
-npm install agents @ai-sdk/openai ai zod react react-dom
+npm install agents @cloudflare/ai-chat @ai-sdk/openai ai zod react react-dom
 ```
 
 ## 2. Set up your environment variables
@@ -96,7 +96,7 @@ Create your tool definitions at `src/tools.ts`. Tools can be configured to eithe
 ```ts
 import { tool } from "ai";
 import { z } from "zod";
-import type { AITool } from "agents/ai-react";
+import type { AITool } from "@cloudflare/ai-chat/react";
 
 // Server-side tool that requires confirmation (no execute function)
 const getWeatherInformationTool = tool({
@@ -224,7 +224,7 @@ Create your agent implementation at `src/server.ts`:
 ```ts
 import { openai } from "@ai-sdk/openai";
 import { routeAgentRequest } from "agents";
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import {
   convertToModelMessages,
   createUIMessageStream,
@@ -311,7 +311,7 @@ import type { UIMessage as Message } from "ai";
 import { getToolName, isToolUIPart } from "ai";
 import { clientTools } from "./tools";
 import { APPROVAL, toolsRequiringConfirmation } from "./utils";
-import { useAgentChat, type AITool } from "agents/ai-react";
+import { useAgentChat, type AITool } from "@cloudflare/ai-chat/react";
 import { useAgent } from "agents/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -612,6 +612,7 @@ if (part.state === "input-available") {
 Replace OpenAI with [Workers AI](/workers-ai/):
 
 ```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { createWorkersAI } from "workers-ai-provider";
 
 export class HumanInTheLoop extends AIChatAgent<Env> {

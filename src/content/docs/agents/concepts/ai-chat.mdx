@@ -1,0 +1,453 @@
+---
+pcx_content_type: concept
+title: AI Chat Package
+sidebar:
+  order: 8
+description: Learn about the @cloudflare/ai-chat package for building AI-powered chat experiences with persistent conversations, streaming responses, and tool support.
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+The `@cloudflare/ai-chat` package provides a specialized framework for building intelligent chat experiences with persistent, stateful AI agents. Built on top of the Agents SDK and integrated with the AI SDK, this package handles the complexities of chat state management, message persistence, streaming, and tool execution.
+
+## Overview
+
+AI chat transcends simple request-response patterns. The `@cloudflare/ai-chat` package enables:
+
+- **Automatic Persistence**: Conversations are automatically saved and restored across sessions
+- **Streaming Responses**: Real-time responses that flow naturally to users
+- **Resumable Streaming**: Automatic recovery from disconnections without losing context
+- **Tool Support**: Seamless integration of client and server-side capabilities
+- **State Management**: Each conversation maintains its own memory and understanding
+
+Built on Cloudflare's global network with Durable Objects, your chat agents persist across time, maintaining context and relationships with users.
+
+## Installation
+
+Install the package alongside the agents framework and AI SDK:
+
+<PackageManagers type="install" pkg="@cloudflare/ai-chat agents ai" />
+
+## Core Components
+
+### AIChatAgent
+
+The `AIChatAgent` class extends the base `Agent` class with chat-specific capabilities:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { openai } from "@ai-sdk/openai";
+import {
+  streamText,
+  convertToModelMessages,
+  createUIMessageStream,
+  createUIMessageStreamResponse
+} from "ai";
+
+export class ChatAgent extends AIChatAgent<Env> {
+  async onChatMessage() {
+    const stream = createUIMessageStream({
+      execute: async ({ writer }) => {
+        const result = streamText({
+          model: openai("gpt-4o"),
+          messages: await convertToModelMessages(this.messages)
+        });
+
+        writer.merge(result.toUIMessageStream());
+      }
+    });
+
+    return createUIMessageStreamResponse({ stream });
+  }
+}
+```
+
+</TypeScriptExample>
+
+The agent automatically:
+- Persists all messages to SQLite
+- Handles message format migrations
+- Manages streaming state
+- Coordinates tool execution
+
+### useAgentChat Hook
+
+The `useAgentChat` React hook provides a simple interface for chat interactions:
+
+<TypeScriptExample>
+
+```tsx
+import { useAgent } from "agents/react";
+import { useAgentChat } from "@cloudflare/ai-chat/react";
+
+function ChatInterface() {
+  const agent = useAgent({
+    agent: "ChatAgent",
+    name: "my-chat"
+  });
+
+  const { messages, sendMessage, clearHistory, status } = useAgentChat({
+    agent
+  });
+
+  const [input, setInput] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    await sendMessage({
+      role: "user",
+      parts: [{ type: "text", text: input }]
+    });
+    setInput("");
+  };
+
+  return (
+    <div>
+      <div>
+        {messages.map((message) => (
+          <div key={message.id}>
+            {message.role}: {message.parts.map((part) =>
+              part.type === "text" ? part.text : null
+            )}
+          </div>
+        ))}
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type your message..."
+        />
+      </form>
+    </div>
+  );
+}
+```
+
+</TypeScriptExample>
+
+## Key Features
+
+### Resumable Streaming
+
+One of the most powerful features is automatic resumable streaming. When a client disconnects during a stream, the response automatically resumes when they reconnect.
+
+#### How it works
+
+1. **During streaming**: All chunks are automatically persisted to SQLite
+2. **On disconnect**: The stream continues server-side, buffering chunks
+3. **On reconnect**: Client receives all buffered chunks and continues streaming
+
+No special configuration needed - it just works.
+
+<TypeScriptExample>
+
+```tsx
+const { messages, status } = useAgentChat({
+  agent
+  // resume: true is the default
+});
+
+// Try it: Start a long response, refresh the page, and watch it resume!
+```
+
+</TypeScriptExample>
+
+To disable resumable streaming:
+
+<TypeScriptExample>
+
+```tsx
+const { messages } = useAgentChat({
+  agent,
+  resume: false
+});
+```
+
+</TypeScriptExample>
+
+### Tool Support
+
+The package supports both server-side and client-side tools for rich interactive experiences.
+
+#### Server-Side Tools
+
+Define tools that execute on the server:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { streamText, convertToModelMessages, tool } from "ai";
+import { z } from "zod";
+import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
+
+export class ToolChat extends AIChatAgent<Env> {
+  async onChatMessage() {
+    const stream = createUIMessageStream({
+      execute: async ({ writer }) => {
+        const result = streamText({
+          model: openai("gpt-4o"),
+          messages: await convertToModelMessages(this.messages),
+          tools: {
+            getWeather: tool({
+              description: "Get weather for a city",
+              parameters: z.object({ city: z.string() }),
+              execute: async ({ city }) => {
+                const weather = await fetch(`https://api.weather.com/${city}`);
+                return { temperature: 72, condition: "sunny" };
+              }
+            })
+          }
+        });
+
+        writer.merge(result.toUIMessageStream());
+      }
+    });
+
+    return createUIMessageStreamResponse({ stream });
+  }
+}
+```
+
+</TypeScriptExample>
+
+#### Client-Side Tools
+
+For tools that need to run in the browser:
+
+<TypeScriptExample>
+
+```tsx
+import { useAgentChat } from "@cloudflare/ai-chat/react";
+
+function ChatWithClientTools() {
+  const { messages, sendMessage, addToolResult } = useAgentChat({
+    agent,
+    onToolCall: async ({ toolCall, addToolOutput }) => {
+      if (toolCall.toolName === "showAlert") {
+        alert(toolCall.input.message);
+        addToolOutput({
+          toolCallId: toolCall.toolCallId,
+          output: { success: true }
+        });
+      }
+    }
+  });
+}
+```
+
+</TypeScriptExample>
+
+### Message Metadata
+
+Attach custom metadata to messages for tracking and analytics:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { streamText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse } from "ai";
+
+export class MetadataChat extends AIChatAgent<Env> {
+  async onChatMessage() {
+    const startTime = Date.now();
+
+    const stream = createUIMessageStream({
+      execute: async ({ writer }) => {
+        const result = streamText({
+          model: openai("gpt-4o"),
+          messages: await convertToModelMessages(this.messages)
+        });
+
+        writer.merge(
+          result.toUIMessageStream({
+            messageMetadata: ({ part }) => {
+              if (part.type === "start") {
+                return {
+                  model: "gpt-4o",
+                  createdAt: Date.now(),
+                  messageCount: this.messages.length
+                };
+              }
+              if (part.type === "finish") {
+                return {
+                  responseTime: Date.now() - startTime,
+                  totalTokens: part.totalUsage?.totalTokens
+                };
+              }
+            }
+          })
+        );
+      }
+    });
+
+    return createUIMessageStreamResponse({ stream });
+  }
+}
+```
+
+</TypeScriptExample>
+
+Access metadata on the client:
+
+<TypeScriptExample>
+
+```tsx
+{messages.map((message) => (
+  <div key={message.id}>
+    {message.metadata?.createdAt && (
+      <span>{new Date(message.metadata.createdAt).toLocaleTimeString()}</span>
+    )}
+    {message.metadata?.totalTokens && (
+      <span>{message.metadata.totalTokens} tokens</span>
+    )}
+  </div>
+))}
+```
+
+</TypeScriptExample>
+
+For more details, refer to the [AI SDK Message Metadata documentation](https://ai-sdk.dev/docs/ai-sdk-ui/message-metadata).
+
+## Advanced Patterns
+
+### Custom Request Preparation
+
+Add custom headers or context to requests:
+
+<TypeScriptExample>
+
+```tsx
+const { messages, sendMessage } = useAgentChat({
+  agent,
+  prepareSendMessagesRequest: ({ id, messages }) => ({
+    body: {
+      currentUrl: window.location.href,
+      userTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    },
+    headers: {
+      "X-Widget-Version": "1.0.0",
+      "X-Request-ID": crypto.randomUUID()
+    }
+  })
+});
+```
+
+</TypeScriptExample>
+
+### Automatic Tool Continuation
+
+Enable automatic continuation after tool results:
+
+<TypeScriptExample>
+
+```tsx
+const { messages, addToolResult } = useAgentChat({
+  agent,
+  autoContinueAfterToolResult: true,
+  onToolCall: async ({ toolCall, addToolOutput }) => {
+    const result = await executeTool(toolCall);
+    addToolOutput({
+      toolCallId: toolCall.toolCallId,
+      output: result,
+      autoContinue: true
+    });
+  }
+});
+```
+
+</TypeScriptExample>
+
+### Human-in-the-Loop Tools
+
+For tools requiring user approval:
+
+<TypeScriptExample>
+
+```tsx
+const { messages, addToolResult } = useAgentChat({
+  agent,
+  toolsRequiringConfirmation: ["sendEmail", "deleteFile"],
+  onToolCall: async ({ toolCall, addToolOutput }) => {
+    if (toolCall.toolName === "sendEmail") {
+      const approved = confirm(`Send email to ${toolCall.input.recipient}?`);
+      if (approved) {
+        const result = await sendEmail(toolCall.input);
+        addToolOutput({
+          toolCallId: toolCall.toolCallId,
+          output: result,
+          autoContinue: true
+        });
+      }
+    }
+  }
+});
+```
+
+</TypeScriptExample>
+
+## Integration with Agents Framework
+
+The `@cloudflare/ai-chat` package is built on top of the [Agents SDK](/agents/). It extends the base `Agent` class with chat-specific capabilities:
+
+- Automatic message persistence in SQLite
+- WebSocket-based real-time communication
+- Resumable streaming infrastructure
+- Tool execution coordination
+
+For more information about the underlying agent framework, refer to the [Agents documentation](/agents/).
+
+## API Reference
+
+### AIChatAgent
+
+Base class for chat agents that extends `Agent`.
+
+**Methods:**
+
+- `onChatMessage(onFinish, options?)`: Override this method to handle chat messages and return a `Response`
+- `persistMessages(messages, excludeBroadcastIds?)`: Manually persist messages (usually automatic)
+- `messages`: Array of current chat messages
+
+**Properties:**
+
+- `messages: ChatMessage[]`: The current conversation messages
+
+### useAgentChat
+
+React hook for chat interactions.
+
+**Options:**
+
+- `agent`: Agent connection from `useAgent()`
+- `onToolCall`: Callback for handling client-side tool execution
+- `toolsRequiringConfirmation`: Array of tool names that need user approval
+- `autoContinueAfterToolResult`: Automatically continue conversation after tool results
+- `resume`: Enable automatic stream resumption (default: `true`)
+- `prepareSendMessagesRequest`: Customize request headers/body
+
+**Returns:**
+
+- `messages`: Array of chat messages
+- `sendMessage`: Function to send a new message
+- `clearHistory`: Function to clear conversation history
+- `addToolResult`: Function to provide tool output
+- `status`: Current status ("idle" | "streaming" | "error")
+
+## Examples
+
+- [Basic Chat](/agents/getting-started/build-a-chat-agent/): Simple streaming chat
+- [Resumable Streaming](https://github.com/cloudflare/agents/tree/main/examples/resumable-stream-chat): Automatic stream resumption
+- [Human-in-the-Loop](/agents/guides/human-in-the-loop/): Tools requiring user approval
+
+## Next steps
+
+- Learn more about [building a chat agent](/agents/getting-started/build-a-chat-agent/)
+- Explore [human-in-the-loop patterns](/agents/guides/human-in-the-loop/)
+- Understand the [underlying Agent class](/agents/concepts/agent-class/)
