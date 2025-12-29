@@ -29,7 +29,9 @@ Custom nameservers are organized in different sets (`ns_set`). Each namesever se
 <br />
 
 :::warning
-Custom nameservers configuration don't apply automaticallw to newly added zone if they were previously added to Cloudflare. 
+Custom nameservers configuration don't apply automatically to newly added zone if they were previously added to Cloudflare. 
 Reviving a zone will require the account custom nameservers configuration to be applied to the zone manually.
 Please contact your account team in this case.
+
+The [Zone Details](/api/resources/zones/methods/get/) API call returns the `created_on`, confirming whether a zone was newly created or revived.
 :::
