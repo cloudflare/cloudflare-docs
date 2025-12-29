@@ -27,5 +27,6 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         with:
           model: "anthropic/claude-opus-4-5"
+          agent: docs # use our Docs agent by default in this repo
           mentions: "/bonk,@ask-bonk"
           permissions: write
