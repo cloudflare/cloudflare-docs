@@ -329,7 +329,7 @@ None of the options for this command are required. Also, many can be set in your
   - If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
   - Secrets are never deleted by a deployment whether this flag is true or false.
 - `--dispatch-namespace` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
+  - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) to upload this Worker to.
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />
   - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
 - `--containers-rollout` <Type text="immediate | gradual" /> <MetaInfo text="optional" />

@@ -1330,6 +1330,9 @@
 /cloudflare-for-platforms/workers-for-platforms/get-started/developing-with-wrangler/ /cloudflare-for-platforms/workers-for-platforms/reference/local-development/ 301
 /cloudflare-for-platforms/workers-for-platforms/get-started/configuration/ /cloudflare-for-platforms/workers-for-platforms/get-started/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform-examples/ /cloudflare-for-platforms/workers-for-platforms/reference/platform-examples/ 301
+/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/ /cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/user-workers/ /cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/bindings/ /cloudflare-for-platforms/workers-for-platforms/configuration/bindings/ 301
 
 # stream
 /stream/getting-started/ /stream/ 301
