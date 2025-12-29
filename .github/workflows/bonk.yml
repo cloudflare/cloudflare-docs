@@ -29,4 +29,4 @@ jobs:
           model: "anthropic/claude-opus-4-5"
           agent: docs # use our Docs agent by default in this repo
           mentions: "/bonk,@ask-bonk"
-          permissions: write
+          permissions: CODEOWNERS
