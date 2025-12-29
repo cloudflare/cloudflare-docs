@@ -28,10 +28,8 @@ Custom nameservers are organized in different sets (`ns_set`). Each namesever se
 <Render file="ns-advanced-vs-custom" product="dns" />
 <br />
 
-:::warning
-Custom nameservers configuration don't apply automatically to newly added zone if they were previously added to Cloudflare. 
-Reviving a zone will require the account custom nameservers configuration to be applied to the zone manually.
-Please contact your account team in this case.
+:::caution
+Custom nameservers configuration does not apply automatically to a newly added zone if it has been previously added to Cloudflare. Reviving a zone requires the account custom nameservers configuration to be applied to the zone manually. Contact your account team in this case.
 
-The [Zone Details](/api/resources/zones/methods/get/) API call returns the `created_on`, confirming whether a zone was newly created or revived.
+To confirm whether a zone was newly created or revived, consider the `created_on` field in the [Zone Details](/api/resources/zones/methods/get/) API response.
 :::
