@@ -26,10 +26,3 @@ To use custom nameservers, a zone must be using Cloudflare as [Primary (Full set
 Custom nameservers are organized in different sets (`ns_set`). Each namesever set must have at least two and no more than five custom nameserver names.
 
 <Render file="ns-advanced-vs-custom" product="dns" />
-<br />
-
-:::caution
-Custom nameservers configuration does not apply automatically to a newly added zone if it has been previously added to Cloudflare. Reviving a zone requires the account custom nameservers configuration to be applied to the zone manually. Contact your account team in this case.
-
-To confirm whether a zone was newly created or revived, consider the `created_on` field in the [Zone Details](/api/resources/zones/methods/get/) API response.
-:::
