@@ -1334,6 +1334,11 @@
 /cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/ /cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/ 301
 /cloudflare-for-platforms/workers-for-platforms/get-started/user-workers/ /cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers 301
 /cloudflare-for-platforms/workers-for-platforms/get-started/bindings/ /cloudflare-for-platforms/workers-for-platforms/configuration/bindings/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/pricing/ /cloudflare-for-platforms/workers-for-platforms/reference/pricing/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/limits/ /cloudflare-for-platforms/workers-for-platforms/reference/limits/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/worker-isolation/ /cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/ 301
+/cloudflare-for-platforms/workers-for-platforms/demos/ /cloudflare-for-platforms/workers-for-platforms/platform-templates/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/ /cloudflare-for-platforms/workers-for-platforms/reference/ 301
 
 # stream
 /stream/getting-started/ /stream/ 301
