@@ -7,19 +7,25 @@ products:
 date: 2025-12-30
 ---
 
+import { TypeScriptExample } from "~/components";
+
 Wrangler now supports querying [Workers Analytics Engine](/analytics/analytics-engine/) directly from the command line, allowing you to quickly explore your datasets without writing code or ad-hoc `curl` commands.
 
 Workers Analytics Engine lets you ingest high-cardinality data at scale and query it using SQL. Use it to build custom analytics, usage-based billing, or observability tools. With the new `wrangler analytics-engine` command, you can run ad-hoc queries, debug data pipelines, and automate reports from your terminal.
 
 For example, if your Worker tracks product usage:
 
-```js
+<TypeScriptExample>
+
+```ts
 env.USAGE.writeDataPoint({
   indexes: ["customer_12345"],
   blobs: ["acme-app", "user_789", "file.upload", "enterprise"],
   doubles: [1, 2048000], // count, bytes
 });
 ```
+
+</TypeScriptExample>
 
 You can query that data directly from your terminal:
 
