@@ -61,16 +61,17 @@ Currently, the `writeDataPoint()` API accepts ordered arrays of values. This mea
 
 ## 3. Query data using the SQL API
 
-You can query the data you have written in two ways:
+You can query the data you have written in several ways:
 
-* [**SQL API**](/analytics/analytics-engine/sql-api) — Best for writing your own queries and integrating with external tools like Grafana.
-* [**GraphQL API**](/analytics/graphql-api/) — This is the same API that powers the Cloudflare dashboard.
+* [**Wrangler CLI**](/analytics/analytics-engine/cli-querying/) — Query directly from the command line using `wrangler analytics-engine`.
+* [**SQL API**](/analytics/analytics-engine/sql-api/) — Best for writing your own queries and integrating with external tools like Grafana.
+* [**GraphQL API**](/analytics/graphql-api/) — This is the same API that powers the Cloudflare dashboard.
 
-For the purpose of this example, we will use the SQL API.
+For the purpose of this example, we will use Wrangler or the SQL API.
 
 ### Create an API token
 
-Create an [API Token](https://dash.cloudflare.com/profile/api-tokens) that has the `Account Analytics Read` permission.
+Create an [API Token](https://dash.cloudflare.com/profile/api-tokens) that has the `Account Analytics Read` permission. If you are using Wrangler and have already run `wrangler login`, you can skip this step.
 
 ### Write your first query
 
@@ -92,7 +93,13 @@ LIMIT 10
 We are using a custom averaging function to take [sampling](/analytics/analytics-engine/sql-api/#sampling) into account.
 :::
 
-You can run this query by making an HTTP request to the SQL API:
+You can run this query using Wrangler:
+
+```sh
+npx wrangler analytics-engine run "SELECT blob1 AS city, SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
+```
+
+Or by making an HTTP request to the SQL API:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/analytics_engine/sql" \

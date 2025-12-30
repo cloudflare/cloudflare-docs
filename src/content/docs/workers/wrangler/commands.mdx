@@ -47,6 +47,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`pages`](#pages) - Configure Cloudflare Pages.
 - [`pipelines`](#pipelines) - Configure Cloudflare Pipelines.
 - [`queues`](#queues) - Configure Workers Queues.
+- [`analytics-engine`](#analytics-engine) - Query Workers Analytics Engine datasets.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler's authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
@@ -610,6 +611,45 @@ Manage your [Pipelines](/pipelines/).
 Manage your Workers [Queues](/queues/) configurations.
 
 <WranglerNamespace namespace="queues" headingLevel={3} />
+
+---
+
+## `analytics-engine`
+
+Query [Workers Analytics Engine](/analytics/analytics-engine/) datasets using the SQL API.
+
+```txt
+wrangler analytics-engine run <QUERY> [OPTIONS]
+```
+
+- `QUERY` <Type text="string" /> <MetaInfo text="optional" />
+  - The SQL query to execute. Required if `--file` is not provided.
+- `--file` <Type text="string" /> <MetaInfo text="optional" />
+  - Path to a file containing the SQL query to execute. Required if `QUERY` is not provided.
+- `--format` <Type text="'json' | 'table'" /> <MetaInfo text="optional" />
+  - Output format for query results. Defaults to `table` when running in a TTY, `json` otherwise.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### Examples
+
+Query a dataset directly:
+
+```sh
+npx wrangler analytics-engine run "SELECT * FROM my_dataset LIMIT 10"
+```
+
+Query from a file:
+
+```sh
+npx wrangler analytics-engine run --file=query.sql
+```
+
+Output as JSON:
+
+```sh
+npx wrangler analytics-engine run "SELECT * FROM my_dataset" --format=json
+```
 
 ---
 

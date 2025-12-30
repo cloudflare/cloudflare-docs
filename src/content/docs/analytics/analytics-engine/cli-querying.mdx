@@ -1,0 +1,113 @@
+---
+title: Querying from CLI
+pcx_content_type: reference
+sidebar:
+  order: 5
+head:
+  - tag: title
+    content: Querying Workers Analytics Engine from CLI
+---
+
+import { PackageManagers } from "~/components";
+
+You can query Workers Analytics Engine datasets directly from the command line using Wrangler. This is useful for ad-hoc queries, debugging, and scripting.
+
+## Prerequisites
+
+Before you can query Analytics Engine from the CLI, you need:
+
+1. [Wrangler installed](/workers/wrangler/install-and-update/) (version 4.0.0 or later)
+2. Authentication configured via `wrangler login` or a `CLOUDFLARE_API_TOKEN` environment variable with the `Account Analytics Read` permission
+
+## Basic usage
+
+Run a query directly:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args='analytics-engine run "SELECT * FROM my_dataset LIMIT 10"'
+/>
+
+Run a query from a file:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="analytics-engine run --file=query.sql"
+/>
+
+## Output formats
+
+By default, results are displayed as a table when running interactively, or as JSON when piped to another command.
+
+You can explicitly set the output format:
+
+```sh
+# Table format (default for interactive)
+npx wrangler analytics-engine run "SELECT * FROM my_dataset" --format=table
+
+# JSON format (default for non-interactive)
+npx wrangler analytics-engine run "SELECT * FROM my_dataset" --format=json
+```
+
+JSON output is useful for piping to other tools like `jq`:
+
+```sh
+npx wrangler analytics-engine run "SELECT * FROM my_dataset" --format=json | jq '.data[0]'
+```
+
+## Example queries
+
+### List all datasets
+
+```sh
+npx wrangler analytics-engine run "SHOW TABLES"
+```
+
+### Query with time filtering
+
+```sh
+npx wrangler analytics-engine run "SELECT blob1 AS city, AVG(double1) AS avg_temp FROM weather WHERE timestamp > NOW() - INTERVAL '1' DAY GROUP BY city"
+```
+
+### Query from a file
+
+Create a file `query.sql`:
+
+```sql
+SELECT
+    intDiv(toUInt32(timestamp), 300) * 300 AS t,
+    blob1 AS city,
+    SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_temp
+FROM weather
+WHERE timestamp >= NOW() - INTERVAL '1' DAY
+GROUP BY t, city
+ORDER BY t, city
+```
+
+Then run:
+
+```sh
+npx wrangler analytics-engine run --file=query.sql
+```
+
+## Using in scripts
+
+The CLI is useful for automation and scripting. For example, you can create a daily report:
+
+```bash
+#!/bin/bash
+
+# Query yesterday's data and save to a file
+npx wrangler analytics-engine run \
+  "SELECT blob1 AS endpoint, SUM(_sample_interval) AS request_count FROM api_requests WHERE timestamp >= NOW() - INTERVAL '1' DAY GROUP BY endpoint ORDER BY request_count DESC" \
+  --format=json > daily_report.json
+```
+
+## Related resources
+
+- [SQL API reference](/analytics/analytics-engine/sql-api/) - Direct HTTP API access
+- [SQL reference](/analytics/analytics-engine/sql-reference/) - Full SQL syntax documentation
+- [Querying from a Worker](/analytics/analytics-engine/worker-querying/) - Query from within a Worker
+- [Querying from Grafana](/analytics/analytics-engine/grafana/) - Visualize data in Grafana
