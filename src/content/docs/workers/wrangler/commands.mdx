@@ -618,14 +618,18 @@ Manage your Workers [Queues](/queues/) configurations.
 
 Query [Workers Analytics Engine](/analytics/analytics-engine/) datasets using the SQL API.
 
+:::note
+`ae` is available as a shorthand alias for `analytics-engine`.
+:::
+
 ```txt
-wrangler analytics-engine run <QUERY> [OPTIONS]
+wrangler analytics-engine run [QUERY] [OPTIONS]
 ```
 
 - `QUERY` <Type text="string" /> <MetaInfo text="optional" />
-  - The SQL query to execute. Required if `--file` is not provided.
+  - The SQL query to execute. Either `QUERY` or `--file` must be provided.
 - `--file` <Type text="string" /> <MetaInfo text="optional" />
-  - Path to a file containing the SQL query to execute. Required if `QUERY` is not provided.
+  - Path to a file containing the SQL query to execute. Either `--file` or `QUERY` must be provided.
 - `--format` <Type text="'json' | 'table'" /> <MetaInfo text="optional" />
   - Output format for query results. Defaults to `table` when running in a TTY, `json` otherwise.
 

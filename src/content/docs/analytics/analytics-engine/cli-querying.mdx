@@ -8,8 +8,6 @@ head:
     content: Querying Workers Analytics Engine from CLI
 ---
 
-import { PackageManagers } from "~/components";
-
 You can query Workers Analytics Engine datasets directly from the command line using Wrangler. This is useful for ad-hoc queries, debugging, and scripting.
 
 ## Prerequisites
@@ -23,19 +21,15 @@ Before you can query Analytics Engine from the CLI, you need:
 
 Run a query directly:
 
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args='analytics-engine run "SELECT * FROM my_dataset LIMIT 10"'
-/>
+```sh
+npx wrangler analytics-engine run "SELECT * FROM my_dataset LIMIT 10"
+```
 
 Run a query from a file:
 
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="analytics-engine run --file=query.sql"
-/>
+```sh
+npx wrangler analytics-engine run --file=query.sql
+```
 
 ## Output formats
 
@@ -92,7 +86,7 @@ Then run:
 npx wrangler analytics-engine run --file=query.sql
 ```
 
-## Using in scripts
+## Use in scripts
 
 The CLI is useful for automation and scripting. For example, you can create a daily report:
 
