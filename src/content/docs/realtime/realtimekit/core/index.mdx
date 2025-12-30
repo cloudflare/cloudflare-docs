@@ -87,6 +87,144 @@ class AppComponent {
 }
 ```
 Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+	Initialize the RealtimeKit SDK by obtaining an instance of `RealtimeKitClient` using the `RealtimeKitMeetingBuilder` helper.
+
+    ```kotlin
+    val rtkClient = RealtimeKitMeetingBuilder.build(activity)
+    ```
+
+    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Create Participant API](/api/resources/realtime_kit/#create-a-participant).
+
+    ```kotlin
+    val meetingInfo =
+      RtkMeetingInfo(
+        authToken = authToken,
+        enableAudio = true,
+        enableVideo = true,
+      )
+    ```
+
+    Initialize the meeting by calling the `init()` method. This establishes a connection with the RealtimeKit meeting server.
+
+    ```kotlin
+    rtkClient.init(
+      meetingInfo,
+      onInitCompleted = { ... },
+      onInitFailed = { ... },
+    )
+    ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+	Initialize the RealtimeKit SDK by creating an instance of `RealtimeKitClient`.
+
+    ```swift
+    let meeting = RealtimeKitiOSClientBuilder().build()
+    ```
+
+    Add the required listeners to receive callbacks for meeting events.
+
+    ```swift
+    meeting.addMeetingRoomEventListener(meetingRoomEventListener: self)
+    meeting.addParticipantsEventListener(participantsEventListener: self)
+    meeting.addSelfEventListener(selfEventListener: self)
+    ```
+
+    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Create Participant API](/api/resources/realtime_kit/#create-a-participant).
+
+    ```swift
+    let meetingInfo = RtkMeetingInfo(authToken: authToken,
+                                      enableAudio: true,
+                                      enableVideo: true)
+    ```
+
+    Initialize the meeting by calling the `doInit()` method. This establishes a connection with the RealtimeKit meeting server.
+
+    ```swift
+    meeting.doInit(meetingInfo: meetingInfo, onSuccess: {}, onFailure: {_ in})
+    ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+	Initialize the RealtimeKit SDK by creating an instance of `RealtimeKitClient`.
+
+    ```dart
+    final meeting = RealtimeKitClient();
+    ```
+
+    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Create Participant API](/api/resources/realtime_kit/#create-a-participant).
+
+    ```dart
+    final meetingInfo = RtkMeetingInfo(
+                        authToken: authToken,
+                        enableAudio: false,
+                        enableVideo: false,
+                      );
+    ```
+
+    Initialize the connection by calling the `init()` method. This establishes a connection with the RealtimeKit meeting server.
+
+    ```dart
+    meeting.init(meetingInfo);
+    ```
+
+    Subscribe to the `RtkMeetingRoomEventListener` to receive callbacks for meeting events.
+
+    ```dart
+    meeting.addMeetingRoomEventListener(RoomStateNotifier());
+    ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+	Initialize the RealtimeKit SDK using the `useRealtimeKitClient` hook.
+
+    ```js
+    import React from 'react';
+    import { View, Text } from 'react-native';
+    import { useRealtimeKitClient, RealtimeKitProvider } from '@cloudflare/realtimekit-react-native';
+
+    export default function App() {
+      const [meeting, initMeeting] = useRealtimeKitClient();
+      React.useEffect(() => {
+        const init = async () => {
+          const meetingOptions = {
+            audio: true,
+            video: true,
+          };
+          await initMeeting({
+            authToken: 'YourAuthToken',
+            defaults: meetingOptions,
+          });
+        };
+        init();
+        // next - if (meeting) meeting.joinRoom();
+      }, []);
+
+      if (meeting) {
+        return (
+          <RealtimeKitProvider value={meeting}>
+            {/* Render your components here */}
+          </RealtimeKitProvider>
+        );
+      } else {
+        return (
+          <View>
+            <Text>Loading...</Text>
+          <View>
+        )
+      }
+    }
+    ```
+
+    Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+
 </RTKCodeSnippet>
 
 ### Advanced Options

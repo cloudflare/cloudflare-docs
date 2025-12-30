@@ -1,0 +1,32 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements including an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025.  Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com/).
+
+  **Changes and improvements**
+  - The [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) feature has been fixed for devices running WARP client version 2025.4.929.0 and newer. Previously, these devices could experience failures with Local Domain Fallback unless a fallback server was explicitly configured. This configuration is no longer a requirement for the feature to function correctly.
+  - Linux [disk encryption posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/disk-encryption/) now supports non-filesystem encryption types like `dm-crypt`.
+  - [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode) now supports transparent HTTP proxying in addition to CONNECT-based proxying.
+  - Fixed an issue where the GUI becomes unresponsive when the **Re-Authenticate in browser** button is clicked.
+version: 2025.10.118.1
+releaseDate: 2025-12-08T19:35:40.098Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/bookworm-intel/version/2025.10.118.1
+packageSize: 52311268
+platformName: Linux
+linuxPlatforms:
+  bookworm-intel: 52311268
+  focal-intel: 52635784
+  fedora34-intel: 55222536
+  fedora34-arm: 54611172
+  focal-arm: 51929622
+  bullseye-intel: 52540162
+  bullseye-arm: 51846550
+  noble-arm: 52006654
+  fedora35-intel: 54881593
+  trixie-arm: 51821888
+  trixie-intel: 52112132
+  centos8-arm: 54396552
+  jammy-arm: 51599760
+  jammy-intel: 52311848
+  centos8-intel: 54771777
+  noble-intel: 52115042
+  bookworm-arm: 51588540
+  fedora35-arm: 54175457

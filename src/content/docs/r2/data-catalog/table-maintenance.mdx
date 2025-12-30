@@ -1,0 +1,131 @@
+---
+pcx_content_type: configuration
+title: Table maintenance
+description: Learn how R2 Data Catalog automates table maintenance
+sidebar:
+  order: 4
+---
+
+Table maintenance encompasses a set of operations that keep your Apache Iceberg tables performant and cost-efficient over time. As data is written, updated, and deleted, tables accumulate metadata and files that can degrade query performance over time.
+
+R2 Data Catalog automates two critical maintenance operations:
+
+- **Compaction**: Combines small data files into larger, more efficient files to improve query performance
+- **Snapshot expiration**: Removes old table snapshots to reduce metadata overhead and storage costs
+
+Without regular maintenance, tables can suffer from:
+
+- **Query performance degradation**: More files to scan means slower queries and higher compute costs
+- **Increased storage costs**: Accumulation of small files and old snapshots consumes unnecessary storage
+- **Metadata overhead**: Large metadata files slow down query planning and table operations
+
+By enabling automatic table maintenance, R2 Data Catalog ensures your tables remain optimized without having to manually run them yourself.
+
+## Why do I need compaction?
+
+Every write operation in [Apache Iceberg](https://iceberg.apache.org/), no matter how small or large, results in a series of new files being generated. As time goes on, the number of files can grow unbounded. This can lead to:
+
+- Slower queries and increased I/O operations: Without compaction, query engines will have to open and read each individual file, resulting in longer query times and increased costs.
+- Increased metadata overhead: Query engines must scan metadata files to determine which ones to read. With thousands of small files, query planning takes longer even before data is accessed.
+- Reduced compression efficiency: Smaller files compress less efficiently than larger files, leading to higher storage costs and more data to transfer during queries.
+
+## R2 Data Catalog automatic compaction
+
+R2 Data Catalog can now [manage compaction](/r2/data-catalog/manage-catalogs/) for Apache Iceberg tables stored in R2. When enabled, compaction runs automatically and combines new files that have not been compacted yet.
+
+Compacted files are prefixed with `compacted-` in the `/data/` directory of a respective table.
+
+### Examples
+
+```bash
+# Enable catalog-level compaction (all tables)
+npx wrangler r2 bucket catalog compaction enable my-bucket \
+  --target-size 128 \
+  --token $R2_CATALOG_TOKEN
+
+# Enable compaction for a specific table
+npx wrangler r2 bucket catalog compaction enable my-bucket my-namespace my-table \
+  --target-size 256
+
+# Disable catalog-level compaction
+npx wrangler r2 bucket catalog compaction disable my-bucket
+
+# Disable compaction for a specific table
+npx wrangler r2 bucket catalog compaction disable my-bucket my-namespace my-table
+```
+
+For more details on managing compaction, refer to [Manage catalogs](/r2/data-catalog/manage-catalogs/).
+
+### Choose the right target file size
+
+You can configure the target file size for compaction. Currently, the minimum is 64 MB and the maximum is 512 MB.
+
+Different compute engines have different optimal file sizes, so check their documentation.
+
+Performance tradeoffs depend on your use case. For example, queries that return small amounts of data may perform better with smaller files, as larger files could result in reading unnecessary data.
+
+- For workloads that are more latency sensitive, consider a smaller target file size (for example, 64 MB - 128 MB)
+- For streaming ingest workloads, consider medium file sizes (for example, 128 MB - 256 MB)
+- For OLAP style queries that need to scan a lot of data, consider larger file sizes (for example, 256 MB - 512 MB)
+
+## Why do I need snapshot expiration?
+
+Every write to an Iceberg table—whether an insert, update, or delete—creates a new snapshot. Over time, these snapshots can accumulate and cause performance issues:
+
+- **Metadata overhead**: Each snapshot adds entries to the table's metadata files. As the number of snapshots grows, metadata files become larger, slowing down query planning and table operations
+- **Increased storage costs**: Old snapshots reference data files that may no longer be needed, preventing them from being cleaned up and consuming unnecessary storage
+- **Slower table operations**: Operations like listing snapshots or accessing table history become slower over time
+
+## R2 Data Catalog automatic snapshot expiration
+
+### Configure snapshot expiration
+
+Snapshot expiration uses two parameters to determine which snapshots to remove:
+
+- `--older-than-days`: Remove snapshots older than this many days (default: 30 days)
+- `--retain-last`: Always keep this minimum number of recent snapshots (default: 5 snapshots)
+
+Both conditions must be met for a snapshot to be expired. This ensures you always retain recent snapshots even if they are older than the age threshold.
+
+### Examples
+
+```bash
+# Enable snapshot expiration for entire catalog
+# Keep minimum 10 snapshots, expire those older than 7 days
+npx wrangler r2 bucket catalog snapshot-expiration enable my-bucket \
+  --token $R2_CATALOG_TOKEN \
+  --older-than-days 7 \
+  --retain-last 10
+
+# Enable for specific table
+# Keep minimum 5 snapshots, expire those older than 2 days
+npx wrangler r2 bucket catalog snapshot-expiration enable my-bucket my-namespace my-table \
+  --token $R2_CATALOG_TOKEN \
+  --older-than-days 2 \
+  --retain-last 5
+
+# Disable snapshot expiration for a catalog
+npx wrangler r2 bucket catalog snapshot-expiration disable my-bucket
+```
+
+### Choose the right retention policy
+
+Different workloads require different snapshot retention strategies:
+
+- **Development/testing tables**: Shorter retention (2-7 days, 5 snapshots) to minimize storage costs
+- **Production analytics tables**: Medium retention (7-30 days, 10-20 snapshots) for debugging and analysis
+- **Compliance/audit tables**: Longer retention (30-90 days, 50+ snapshots) to meet regulatory requirements
+- **High-frequency ingest**: Higher minimum snapshot count to preserve more granular history
+
+These are generic recommendations, make sure to consider:
+
+- Time travel requirements
+- Compliance requirements
+- Storage costs
+
+## Current limitations
+
+- During open beta, compaction will compact up to 2 GB worth of files once per hour for each table.
+- Only data files stored in parquet format are currently supported with compaction.
+- Orphan file cleanup is not supported yet.
+- Minimum target file size for compaction is 64 MB and maximum is 512 MB.

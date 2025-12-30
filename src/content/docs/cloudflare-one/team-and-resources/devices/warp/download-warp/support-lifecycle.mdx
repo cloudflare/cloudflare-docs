@@ -1,0 +1,157 @@
+---
+pcx_content_type: reference
+title: WARP lifecycle and support policy
+sidebar:
+  order: 5
+  label: Support lifecycle
+---
+
+This page details the technical support policies for the WARP client, which operating systems and their versions are supported and for how long, and the process by which WARP features will be deprecated.
+
+:::note
+Both the WARP client and the OS it is installed on must be in support as defined in this document for their combined use to be supported.
+:::
+
+## WARP client lifecycle
+
+### Desktop platforms
+
+WARP client releases for Windows, macOS, and Linux come in two forms: beta and stable. Occasionally, a stable release will be declared a Long-Term Support release (LTS).
+
+- [Beta releases](/cloudflare-one/team-and-resources/devices/warp/download-warp/beta-releases/) allow for early testing of new features before the features ship in the next stable release. Beta releases are not guaranteed to get security fixes and are not recommended for production environments.
+- [Stable releases](/cloudflare-one/team-and-resources/devices/warp/download-warp/), including those labeled as LTS releases, are production-ready and will include the latest features as well as functional and security bug fixes. Functional and security bugs found in non-LTS stable releases will be fixed in later stable releases; they are not backported to previous versions. Therefore, Cloudflare recommends regularly deploying the latest stable release.
+- [LTS releases](/cloudflare-one/team-and-resources/devices/warp/download-warp/lts-releases/) are guaranteed to continue receiving security bug fixes for at least 12 months or 90 days after the next LTS release, whichever is greater. For example, if there are 15 months between two consecutive LTS releases, the earlier LTS release will receive security fixes for 18 months (from its release until 90 days after the later LTS release). An upcoming stable release will be declared an LTS release in advance to notify customers of the upcoming 90-day migration period.
+
+	To ensure timely security fixes with less frequent [version testing](/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/#test-before-updates), customers may choose to deploy only LTS releases and skip the stable releases in between. This approach is recommended for large or risk-averse organizations where stability is more important than rapid adoption of the latest features.
+
+### Mobile platforms
+
+WARP client releases for iOS, iPadOS, Android, ChromeOS, and ChromeOS Flex are limited to stable releases released via the iOS App Store or Google Play Store. Therefore, security fixes will be shipped via the latest release.
+
+### Feature deprecation policy
+
+Major features included in a specific WARP client version will remain supported for the entire lifecycle of that version. In other words, Cloudflare will not remove features from a client version that is still within its security support window.
+
+Cloudflare will provide a minimum 90-day notice prior to removing major features in future releases. This allows customers on the stable release track to prepare for feature removal without delaying the adoption of the latest release. Customers on the LTS release track already have a 90-day overlap period between LTS releases.
+
+### Release schedule
+
+Cloudflare does not operate on a fixed release schedule; all releases for the WARP client are incremental. When a new WARP client version is released, Cloudflare will publish release notes on the [Downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/) and in the [changelog](/cloudflare-one/changelog/warp/).
+
+## Supported operating systems
+
+WARP is guaranteed to support operating systems for the primary maintenance timespan provided by the vendors or maintainers. This is to ensure that security fixes in the WARP client are always supported by security fixes in the underlying operating system.
+
+### Windows
+
+The WARP client support policy for Windows follows [Microsoft's Lifecycle Policy](https://learn.microsoft.com/en-us/lifecycle/).
+- **Windows 10 and 11**: WARP supports [Windows client versions](https://learn.microsoft.com/en-us/windows/release-health/supported-versions-windows-client) as long as they remain in active servicing under Microsoft's Modern Lifecycle Policy. Enterprise LTSC editions must remain under Mainstream Support.
+- **Windows Server**: WARP support for Windows Server is pending. Once testing is complete, our policy will be to support [Windows Server LTSC releases](https://learn.microsoft.com/en-us/windows/release-health/windows-server-release-info) within their Mainstream Support window. Annual Channel releases of Windows Server will not be supported.
+
+:::note
+There is only one version of Windows 10 still supported by the WARP client: the latest LTSC release. Standard Windows 10 releases are no longer supported. We strongly encourage customers to deploy Windows 11 for desktop devices.
+:::
+
+As of December 2025, the following versions of Windows are supported:
+
+| Windows version          | Supported until                                                                               |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| Windows&nbsp;10&nbsp;21H2&nbsp;LTSC     | January 2027                                                                                  |
+| Windows&nbsp;11&nbsp;24H2&nbsp;LTSC     | October 2029                                                                                  |
+| Windows&nbsp;11&nbsp;25H2          | October 2027                                                                                  |
+| Windows&nbsp;11&nbsp;24H2          | October 2026                                                                                  |
+| Windows&nbsp;Server&nbsp;2025&nbsp;LTSC | Pending full testing. Once complete, will be supported until November 2029.                   |
+| Windows&nbsp;Server&nbsp;2022&nbsp;LTSC | Pending full testing. Once complete, will be supported until October 2026.                    |
+| Windows&nbsp;Server&nbsp;2019&nbsp;LTSC | [To be determined](#older-versions-of-windows-server) as it is currently out of mainstream Microsoft support. Usage is highly discouraged. |
+
+#### Older versions of Windows Server
+
+The WARP client will support the most recent Windows Server version that has left Microsoft's Mainstream Support window, as migration of Windows Server has been observed to take significantly longer than most operating systems. Once Windows Server releases have left Mainstream Support, the WARP client does not guarantee an amount of time it will continue to be supported, though end of support will be announced 90 days in advance. We strongly recommend migrating as quickly as possible to supported versions of Windows Server to avoid incidents caused by unfixed bugs in the operating system. In all cases, the WARP client will not attempt to fix security issues in the underlying operating system.
+
+#### Windows Subsystem for Linux (WSL)
+
+Windows Subsystem for Linux v2 (WSLv2) is supported by the WARP client that is installed on the Windows host (not a WARP client running inside WSLv2), so long as the host version of Windows is supported.
+
+### macOS
+
+The WARP client supports the current major version of macOS and the two previous major versions. Devices on a previous major version must have the latest minor and patch updates installed (for example, `14.8.3`) to receive support. This policy aligns with Apple's standard security update cycle, as well as the comparatively rapid release of new macOS versions compared to other desktop operating systems.
+
+As of December 2025, the following major versions of macOS are supported:
+
+| macOS version | Supported until |
+| --- | --- |
+| macOS&nbsp;26&nbsp;(Tahoe) | Release of 2028 major version |
+| macOS&nbsp;15&nbsp;(Sequoia) | Release of 2027 major version |
+| macOS&nbsp;14&nbsp;(Sonoma) | Release of 2026 major version |
+
+### Debian
+
+The WARP client supports all Debian releases within their [standard EOL window](https://www.debian.org/releases/). Devices must be updated to the latest point release (for example, `12.12`) to receive support.
+
+As of December 2025, the following versions of Debian are supported:
+
+| Debian version | Supported until |
+| --- | --- |
+| Debian&nbsp;13&nbsp;(Trixie) | August 2028 |
+| Debian&nbsp;12&nbsp;(Bookworm) | June 2026 |
+
+### Ubuntu
+
+The WARP client supports all Ubuntu releases within their [Standard Security Maintenance window](https://www.debian.org/releases/). Devices must be updated to the latest point release (for example, `22.04.5`) to receive support.
+
+As of December 2025, the following versions of Ubuntu are supported:
+
+
+| Ubuntu version | Supported until |
+| --- | --- |
+| Ubuntu&nbsp;25.10&nbsp;(Questing&nbsp;Quokka) | July 2026 |
+| Ubuntu&nbsp;25.04&nbsp;(Plucky&nbsp;Puffin) | January 2026 |
+| Ubuntu&nbsp;24.04&nbsp;LTSC&nbsp;(Noble&nbsp;Numbat) | April 2029 |
+| Ubuntu&nbsp;22.04&nbsp;LTSC&nbsp;(Jammy&nbsp;Jellyfish) | April 2027 |
+
+### Red Hat Enterprise Linux (RHEL)
+
+WARP client support for RHEL is pending. Once testing is complete, our policy will be to support all major versions of RHEL within their [Full Support window](https://access.redhat.com/product-life-cycles). Devices must be updated to the latest minor release (for example, `9.4`) to receive support.
+
+As of December 2025, only RHEL 8 has completed full compatibility testing, which is now out of the Red Hat Full Support window. This section will be updated as we add RHEL support to match Red Hat's support lifecyle.
+
+| RHEL version | Supported until |
+| --- | --- |
+| RHEL&nbsp;10 | Pending full testing. Once complete, will be supported until May 2030. |
+| RHEL&nbsp;9 | Pending full testing. Once complete, will be supported until May 2027. |
+
+### iOS and iPadOS
+
+The WARP client supports the current major version of iOS and iPadOS as well as the two previous major versions. Devices must have the latest available update installed (for example, `17.7.2`) to receive support. This policy aligns with Apple's standard security update cycle, as well as the comparatively rapid release of new iOS and iPadOS versions compared to other mobile operating systems.
+
+As of December 2025, the following versions of iOS and iPadOS are supported:
+
+| iOS or iPadOS version | Supported until |
+| --- | --- |
+| iOS&nbsp;and&nbsp;iPadOS&nbsp;26 | Release of 2028 major version |
+| iOS&nbsp;and&nbsp;iPadOS&nbsp;18 | Release of 2027 major version |
+| iOS&nbsp;and&nbsp;iPadOS&nbsp;17 | Release of 2026 major version |
+
+### Android
+
+The WARP client supports the current major Android release and the three previous major releases. Devices must have the latest available [Android Security Patch Level](https://source.android.com/docs/security/bulletin/asb-overview) installed to receive support.
+
+:::note
+The WARP client is regularly tested on much older versions of Android to maximize compatibility with common devices, which tend to lag behind newer versions of Android. While security fixes are not guaranteed from a support contract perspective, the WARP client is currently expected to generally work on Android 9 or later.
+:::
+
+As of December 2025, the following versions of Android are supported:
+
+| Android version | Supported until |
+| --- | --- |
+| Android&nbsp;16 | Release of 2029 major version |
+| Android&nbsp;15 | Release of 2028 major version |
+| Android&nbsp;14 | Release of 2027 major version |
+| Android&nbsp;13 | Release of 2026 major version |
+| Android&nbsp;9-12 | Not officially supported, but expected to generally work. |
+
+### ChromeOS
+
+The WARP client supports only the current ChromeOS release on the Stable, LTS, and LTSC channels.
+
+Unlike other operating systems listed in this document, specific ChromeOS version numbers are not tracked here due to the rapid release cadence of the platform (approximately every four weeks to six months). Refer to the official [ChromeOS Release Schedule](https://chromiumdash.appspot.com/schedule) to verify the current version for your channel.

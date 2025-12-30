@@ -1,45 +1,84 @@
 ---
 pcx_content_type: concept
 title: Tags
-
 ---
 
-To help you manage your customers’ Workers, use tags to better perform create, read, update, delete (CRUD) operations at scale. Tag user Worker scripts based on user ID, account ID, project ID, and environment. After you tag user Workers, when a user deletes their project, you will be able to delete all Workers associated with that project simultaneously.
+import { APIRequest } from "~/components";
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts/{script_name}/tags" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/javascript" \
---data "['TAG1', 'TAG2', 'TAG3']"
-```
+Use tags to organize, search, and filter user Workers at scale. Tag Workers based on customer ID, plan type, project ID, or environment. After you tag user Workers, you can perform bulk operations like deleting all Workers for a specific customer.
 
 :::note
 
-
 You can set a maximum of eight tags per script. Avoid special characters like `,` and `&` when naming your tag.
-
 
 :::
 
-You can include script tags and bindings on multipart script uploads in the metadata blob.
+## Add tags via dashboard
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts/{script_name}" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: multipart/form-data" \
---form 'metadata="{\"main_module\": \"worker.js\", \"bindings\": [{\"name\": \"KV\", \"type\": \"kv_namespace\", \"namespace_id\": \"<KV_NAMESPACE_ID>\"}], \"tags\": [\"customer-123\", \"staging\", \"free-user\"]}"' \
---form 'worker.js=@"/path/to/worker.js";type=application/javascript+module'
-```
+1. Go to **Workers for Platforms** in the Cloudflare dashboard and select your namespace.
+2. Select a user Worker from the list.
+3. Go to **Settings** > **Tags**.
+4. Add your tags (for example, `customer-123`, `pro-plan`, `production`).
+5. Select **Save**.
 
-### Tags API reference
+You can also search and filter Workers by tags in the namespace view.
 
-| Method and endpoint                                                                                                                                    | Description                                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GET https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts/{script_name}/tags`               | Lists tags through a response body of a list of tag strings.                                                                                                                                                     |
-| `GET https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts?tags={filter}`                    | Gets all Worker scripts that have tags that match the filter specified. The filter must be comma separated pairs of tag names to a yes or no value depending if the tag should act as an allowlist or blocklist. |
-| `PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts/{script_name}/tags`               | Sets the tags associated with the worker to match the tags specified in the body. If there are tags already associated with the Worker script that are not in the request, they will be removed.                 |
-| `PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts/{script_name}/tags/{tag}`         | Adds the single specified tag to the list of tags associated with the Worker script.                                                                                                                             |
-| `DELETE https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts/{script_name}/tags/{tag}`      | Deletes the single specified tag from the list of tags associated with the Worker script.                                                                                                                        |
-| `DELETE https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{namespace_name}/scripts?tags={filter}`                 | Deletes all Worker scripts matching the filter. For example, `tags=testing:yes` would delete all scripts tagged with `testing`.                                                                                  |
+## Tags API reference
+
+For complete API documentation, refer to [Workers for Platforms API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/subresources/tags/).
+
+### Get script tags
+
+Fetch all tags for a Worker script.
+
+<APIRequest
+	method="GET"
+	path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/tags"
+/>
+
+### Set script tags
+
+Replace all tags on a Worker script. Existing tags not in the request are removed.
+
+<APIRequest
+	method="PUT"
+	path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/tags"
+/>
+
+### Add a single tag
+
+Add one tag to a Worker script without affecting existing tags.
+
+<APIRequest
+	method="PUT"
+	path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/tags/{tag}"
+/>
+
+### Delete a single tag
+
+Remove one tag from a Worker script.
+
+<APIRequest
+	method="DELETE"
+	path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/tags/{tag}"
+/>
+
+### Filter Workers by tag
+
+List all Workers that match a tag filter. Use `tag:yes` to include or `tag:no` to exclude.
+
+<APIRequest
+	method="GET"
+	path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts"
+	parameters={{ tags: "production:yes" }}
+/>
+
+### Delete Workers by tag
+
+Delete all Workers matching a tag filter. Use this to bulk delete Workers when a customer leaves your platform.
+
+<APIRequest
+	method="DELETE"
+	path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts"
+	parameters={{ tags: "customer-123:yes" }}
+/>

@@ -1,3 +1,15 @@
+button#scroll-to-top-button svg:not(.scroll-progress-ring) {
+	width: 20px !important;
+	height: 20px !important;
+}
+
+button#scroll-to-top-button .scroll-progress-ring {
+	transform: scale(0.85) !important;
+	left: 50% !important;
+	top: 50% !important;
+	transform: translate(-50%, -50%) scale(0.85) !important;
+}
+
 :root[data-theme="dark"] {
 	button#scroll-to-top-button {
 		background-color: var(--color-cl1-brand-orange);

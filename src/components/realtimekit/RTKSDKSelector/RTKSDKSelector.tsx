@@ -35,9 +35,8 @@ export default function SDKSelector() {
 					{platforms.map((p) => (
 						<button
 							type="button"
-							className={`m-0 ${p.id === "mobile" ? "cursor-not-allowed opacity-45" : "cursor-pointer"} ${p.id === platform ? "rounded-t-md bg-neutral-50 text-blue-500 dark:bg-neutral-700" : "bg-blue-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"} px-2 py-1 font-medium`}
+							className={`m-0 ${p.id === platform ? "rounded-t-md bg-neutral-50 text-blue-500 dark:bg-neutral-700" : "bg-blue-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"} px-2 py-1 font-medium`}
 							onClick={() => {
-								if (p.id === "mobile") return;
 								const nextPlatform = p.id;
 								const nextFramework =
 									nextPlatform === "web"

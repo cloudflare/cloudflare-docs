@@ -13,6 +13,12 @@ Ensure language is not overly verbose, LLM-like, or inconsistent with existing d
 - Write in plain language (8-12 words per sentence)
 - Do not use contractions
 - Avoid future tense except for actions that have not happened yet
+- Do not use marketing-centric language in technical documentation - e.g.
+- "Perfect for" → "Use for"
+- "Essential for" → "Use for" 
+- "Critical for" → "Use for"
+- "Best for" → "Use when"
+- "Modern $THING" → just say $THING
 
 ## Page Structure
 

@@ -491,3 +491,13 @@ Use this selector to apply policies to the source internal IP address of a DNS q
 ### Magic WAN forwarding
 
 To apply DNS policies to queries forwarded through [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/), you can either point your organization's DNS resolver to an IPv6, DoH, or DoT endpoint or request a dedicated resolver IPv4 address. For more information, refer to [DNS resolver IPs and hostnames](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/).
+
+### Fallback DNS
+
+Some apps, such as WhatsApp and Android Studio, use hard-coded fallback DNS servers. Fallback DNS can cause unexpected behavior with Gateway DNS policies. For example, if you have a Block DNS policy, Gateway will initially block DNS queries from those apps, but the queries can resolve correctly afterward using the fallback DNS. To mitigate this behavior, you create a [Gateway Network policy](/cloudflare-one/traffic-policies/network-policies/) to block outbound DNS traffic on TCP/UDP port `53` to the fallback DNS servers. For example, to block Google's fallback DNS servers:
+
+| Selector         | Operator | Value                | Logic | Action |
+| ---------------- | -------- | -------------------- | ----- | ------ |
+| Protocol         | in       | _TCP_, _UDP_         | And   | Block  |
+| Destination Port | in       | `53`                 | And   |        |
+| Destination IP   | in       | `8.8.8.8`, `8.8.4.4` |       |        |

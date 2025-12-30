@@ -197,19 +197,19 @@ You must include `rtk-notifications`, `rtk-participants-audio`, and `rtk-dialog-
 
 </TabItem>
 <TabItem label="React">
-Similar to `RtkMeeting`, `RtkUIProvider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/meeting-lifecycle/) and syncs them with the UI Kit components.
+Similar to `RtkMeeting`, `RtkUiProvider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/meeting-lifecycle/) and syncs them with the UI Kit components.
 
-Unlike `RtkMeeting`, `RtkUIProvider` allows you to pass any child components to it. If any one of the child components is a RealtimeKit component starting with `Rtk`, `RtkUIProvider` will coordinate with the RealtimeKit component to sync the states.
+Unlike `RtkMeeting`, `RtkUiProvider` allows you to pass any child components to it. If any one of the child components is a RealtimeKit component starting with `Rtk`, `RtkUiProvider` will coordinate with the RealtimeKit component to sync the states.
 
 ### Example Code
 
-```jsx
+```tsx
 import {
 	RealtimeKitProvider,
 	useRealtimeKitClient,
 } from "@cloudflare/realtimekit-react";
 import {
-	RtkUIProvider,
+	RtkUiProvider,
 	RtkHeader,
 	RtkStage,
 	RtkGrid,
@@ -221,6 +221,7 @@ import {
 	RtkSetupScreen,
 	RtkWaitingScreen,
 	RtkEndedScreen,
+	States,
 } from "@cloudflare/realtimekit-react-ui";
 import { useEffect, useState } from "react";
 
@@ -270,30 +271,33 @@ function MeetingContainer() {
 		return <RtkEndedScreen />;
 	};
 
-	// Listen for state updates from RtkUIProvider
-	const handleStatesUpdate = (states) => {
+	// Listen for state updates from RtkUiProvider
+	const handleStatesUpdate = (event: {detail: States}) => {
+		const meetingState = event.detail.meeting;
+		const states = event.detail;
+
 		// Store states to update your custom UI
-		if (states.meeting === "idle" && currentState !== "idle") {
-			setCurrentState("idle");
-		} else if (states.meeting === "setup" && currentState !== "setup") {
-			setCurrentState("setup");
-		} else if (states.meeting === "waiting" && currentState !== "waiting") {
-			setCurrentState("waiting");
-		} else if (states.meeting === "joined" && currentState !== "joined") {
-			setCurrentState("joined");
-		} else if (states.meeting === "ended" && currentState !== "ended") {
-			setCurrentState("ended");
+		if (meetingState === "idle" && currentState !== "idle") {
+		setCurrentState("idle");
+		} else if (meetingState === "setup" && currentState !== "setup") {
+		setCurrentState("setup");
+		} else if (meetingState === "waiting" && currentState !== "waiting") {
+		setCurrentState("waiting");
+		} else if (meetingState === "joined" && currentState !== "joined") {
+		setCurrentState("joined");
+		} else if (meetingState === "ended" && currentState !== "ended") {
+		setCurrentState("ended");
 		}
 
 		// Update sidebar visibility based on state
 		if (states.activeSidebar !== undefined) {
-			setShowSidebar(states.activeSidebar);
+		setShowSidebar(states.activeSidebar);
 		}
 	};
 
 	return (
 		<RealtimeKitProvider value={meeting}>
-			<RtkUIProvider
+			<RtkUiProvider
 				meeting={meeting}
 				showSetupScreen={true}
 				onRtkStatesUpdate={handleStatesUpdate}
@@ -323,7 +327,7 @@ function MeetingContainer() {
 				<RtkParticipantsAudio />
 				<RtkDialogManager />
 				<RtkNotifications />
-			</RtkUIProvider>
+			</RtkUiProvider>
 		</RealtimeKitProvider>
 	);
 }
@@ -334,9 +338,9 @@ function App() {
 ```
 
 :::note
-It is advised to always use `RtkUIProvider` to render a custom UI. Without `RtkUIProvider`, you will have to set props, such as `meeting`, to all the UI Kit components manually.
+It is advised to always use `RtkUiProvider` to render a custom UI. Without `RtkUiProvider`, you will have to set props, such as `meeting`, to all the UI Kit components manually.
 
-`RtkUIProvider` helps you go from
+`RtkUiProvider` helps you go from
 
 ```jsx
 <RtkHeader meeting={meeting} />
@@ -348,11 +352,11 @@ to just
 <RtkHeader />
 ```
 
-It is recommended to use either `RtkMeeting` or `RtkUIProvider` to render a meeting. Using both will result in unexpected behavior.
-For custom UIs, it is recommended to use `RtkUIProvider` always.
+It is recommended to use either `RtkMeeting` or `RtkUiProvider` to render a meeting. Using both will result in unexpected behavior.
+For custom UIs, it is recommended to use `RtkUiProvider` always.
 :::
 
-First level split of `RtkMeeting` using `RtkUIProvider` has the following components:
+First level split of `RtkMeeting` using `RtkUiProvider` has the following components:
 
 [`RtkHeader`](/realtime/realtimekit/ui-kit/component-library/#rtkheader) is the header component that shows the session name and the session controls.<br/>
 [`RtkStage`](/realtime/realtimekit/ui-kit/component-library/#rtkstage) is the container component that contains the grid and sidebar components.<br/>

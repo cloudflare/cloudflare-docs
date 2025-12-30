@@ -6,7 +6,7 @@ description: Write your Worker code in ES modules syntax for an optimized experi
 
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, TypeScriptExample } from "~/components";
 
 This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) format to the [ES modules](https://blog.cloudflare.com/workers-javascript-modules/) format.
 
@@ -177,7 +177,7 @@ addEventListener("fetch", async (event) => {
 
 ### Environment variables in ES modules format
 
-In ES modules format, environment variables are only available inside the `env` parameter that is provided at the entrypoint to your Worker application.
+In ES modules format, environment variables are available through the `env` parameter provided at the entrypoint to your Worker application:
 
 ```js
 export default {
@@ -187,6 +187,28 @@ export default {
   },
 };
 ```
+
+You can also import `env` from `cloudflare:workers` to access environment variables from anywhere in your code, including the top-level scope:
+
+<TypeScriptExample>
+
+```ts
+import { env } from "cloudflare:workers";
+
+// Access environment variables at the top level
+const accountId = env.API_ACCOUNT_ID;
+
+export default {
+  async fetch(request: Request): Promise<Response> {
+    console.log(accountId) // Logs "<EXAMPLE-ACCOUNT-ID>"
+    return new Response("Hello, world!")
+  },
+};
+```
+
+</TypeScriptExample>
+
+This approach is useful for initializing configuration or accessing environment variables from deeply nested functions without passing `env` through every function call. For more details, refer to [Importing `env` as a global](/workers/runtime-apis/bindings/#importing-env-as-a-global).
 
 ## Cron Triggers
 

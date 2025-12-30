@@ -6,7 +6,7 @@ sidebar:
   order: 14
 ---
 
-import { Tabs, TabItem } from '~/components';
+import { Tabs, TabItem } from "~/components";
 
 This page describes RealtimeKit error codes to help you identify and troubleshoot issues.
 
@@ -552,6 +552,318 @@ await meeting.leave();
 - **Error message**: Unknown error
 - **Possible reason**: An unexpected error occurred that doesn't fall into other categories.
 - **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+</TabItem>
+
+<TabItem label="Mobile">
+
+:::note
+React Native shares the same error codes as Web Frameworks. Refer to the Web Frameworks tab for the complete list of error codes and solutions.
+:::
+
+All mobile platforms (iOS, Android, Flutter) share the same error codes. All fallible APIs in RealtimeKit mobile SDKs return an operation-specific error type that implements the `RtkError` interface with `code: Int` (or `ErrorCode` for iOS) and `message: String` fields.
+
+## Meeting
+
+#### Error code: 1000
+
+- **Error message**: Invalid auth token
+- **Possible reason**: The authentication token provided is invalid or malformed.
+- **Possible solution**: Ensure that the passed auth token is a valid JWT auth token that is not expired yet.
+
+#### Error code: 1001
+
+- **Error message**: Failed to initialize meeting
+- **Possible reason**: Meeting initialization encountered an error.
+- **Possible solution**: Check your initialization parameters and network connectivity. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 1002
+
+- **Error message**: Invalid base URL
+- **Possible reason**: The base URL provided is invalid or inaccessible.
+- **Possible solution**: Verify the base URL configuration in your initialization code.
+
+#### Error code: 1003
+
+- **Error message**: Failed to join room
+- **Possible reason**: Indicates a problem joining the meeting room.
+- **Possible solution**: Ensure the meeting is active and the token has not expired. Check network connectivity and try again.
+
+#### Error code: 1004
+
+- **Error message**: Unauthorised participant
+- **Possible reason**: The participant does not have authorization to join the meeting.
+- **Possible solution**: Verify the participant's auth token and ensure they have the required permissions.
+
+#### Error code: 1005
+
+- **Error message**: Meeting is in the `INACTIVE` state
+- **Possible reason**: The meeting is not currently active.
+- **Possible solution**: Ensure the meeting has been started before attempting to join.
+
+#### Error code: 1006
+
+- **Error message**: Unknown error
+- **Possible reason**: An unexpected error occurred.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+## Audio
+
+#### Error code: 2100
+
+- **Error message**: No permission to share audio in the meeting
+- **Possible reason**: The participant does not have permission to enable audio.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 2101
+
+- **Error message**: Microphone permission denied by the OS
+- **Possible reason**: The operating system has denied microphone access.
+- **Possible solution**: Grant microphone permissions in your device settings and restart the application.
+
+#### Error code: 2102
+
+- **Error message**: Transient error in enabling microphone access
+- **Possible reason**: A temporary error occurred while enabling the microphone.
+- **Possible solution**: Try enabling the microphone again. If you continue to experience issues, please reach out to Cloudflare support.
+
+## Video
+
+#### Error code: 2200
+
+- **Error message**: No permission to share camera in the meeting
+- **Possible reason**: The participant does not have permission to enable video.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 2201
+
+- **Error message**: Camera permission denied by the OS
+- **Possible reason**: The operating system has denied camera access.
+- **Possible solution**: Grant camera permissions in your device settings and restart the application.
+
+#### Error code: 2202
+
+- **Error message**: Transient error in enabling camera access
+- **Possible reason**: A temporary error occurred while enabling the camera.
+- **Possible solution**: Try enabling the camera again. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 2203
+
+- **Error message**: Cannot share video in this meeting type
+- **Possible reason**: Video sharing is not allowed for this meeting type.
+- **Possible solution**: Check the meeting configuration and preset settings.
+
+## Screen Share
+
+#### Error code: 2300
+
+- **Error message**: No permission to enable screen share in the meeting
+- **Possible reason**: The participant does not have permission to share their screen.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 2301
+
+- **Error message**: Screen share permission denied by the OS
+- **Possible reason**: The operating system has denied screen share access.
+- **Possible solution**: Grant screen share permissions in your device settings and restart the application.
+
+#### Error code: 2302
+
+- **Error message**: Screen share operation failed
+- **Possible reason**: An error occurred during screen sharing.
+- **Possible solution**: Try starting screen share again. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 2303
+
+- **Error message**: Maximum limit of screen shares has been reached
+- **Possible reason**: The meeting has reached the maximum number of concurrent screen shares.
+- **Possible solution**: Wait for other participants to stop sharing or upgrade your plan for higher limits.
+
+#### Error code: 2304
+
+- **Error message**: Cannot screen share in this meeting type
+- **Possible reason**: Screen sharing is not allowed for this meeting type.
+- **Possible solution**: Check the meeting configuration and preset settings.
+
+## Participant Control
+
+#### Error code: 3000
+
+- **Error message**: Pin permission denied to host
+- **Possible reason**: The participant does not have permission to pin other participants.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 3002
+
+- **Error message**: Mute video permission denied to host
+- **Possible reason**: The participant does not have permission to mute other participants' video.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 3003
+
+- **Error message**: Mute audio permission denied to host
+- **Possible reason**: The participant does not have permission to mute other participants' audio.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 3006
+
+- **Error message**: Kick permission denied to host
+- **Possible reason**: The participant does not have permission to remove other participants.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+## Chat
+
+#### Error code: 4000
+
+- **Error message**: No permission to send chat messages in the meeting
+- **Possible reason**: The participant does not have permission to send chat messages.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 4001
+
+- **Error message**: Host tried to apply an invalid value to the chat configuration
+- **Possible reason**: The chat configuration contains invalid settings.
+- **Possible solution**: Review the chat configuration and ensure all settings are valid.
+
+#### Error code: 4002
+
+- **Error message**: Rate limit breached for chat messages
+- **Possible reason**: Too many chat messages were sent in a short period.
+- **Possible solution**: Reduce the frequency of chat messages and try again.
+
+#### Error code: 4101
+
+- **Error message**: Chat message cannot be blank
+- **Possible reason**: An empty message was sent.
+- **Possible solution**: Ensure the message contains text before sending.
+
+#### Error code: 4102
+
+- **Error message**: Chat message exceeded character limit
+- **Possible reason**: The message is too long.
+- **Possible solution**: Reduce the message length and try again.
+
+#### Error code: 4201
+
+- **Error message**: File format cannot be sent in chat
+- **Possible reason**: The file type is not supported.
+- **Possible solution**: Check the supported file formats and convert the file if necessary.
+
+#### Error code: 4202
+
+- **Error message**: Failed to read the file to send in chat
+- **Possible reason**: The file could not be read from the device.
+- **Possible solution**: Ensure the file exists and is accessible, then try again.
+
+#### Error code: 4203
+
+- **Error message**: Failed to upload the file to chat
+- **Possible reason**: File upload encountered an error.
+- **Possible solution**: Check network connectivity and try uploading the file again.
+
+## Polls
+
+#### Error code: 5000
+
+- **Error message**: No permission to create polls in the meeting
+- **Possible reason**: The participant does not have permission to create polls.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 5001
+
+- **Error message**: Poll question cannot be blank
+- **Possible reason**: An empty poll question was provided.
+- **Possible solution**: Ensure the poll question contains text before creating the poll.
+
+#### Error code: 5002
+
+- **Error message**: Poll does not have enough options
+- **Possible reason**: The poll needs at least two options.
+- **Possible solution**: Add more options to the poll before creating it.
+
+#### Error code: 5003
+
+- **Error message**: Poll option cannot be blank
+- **Possible reason**: One or more poll options are empty.
+- **Possible solution**: Ensure all poll options contain text before creating the poll.
+
+#### Error code: 5004
+
+- **Error message**: Cannot vote in this poll
+- **Possible reason**: The participant does not have permission to vote or the poll is closed.
+- **Possible solution**: Check the poll status and participant permissions.
+
+#### Error code: 5005
+
+- **Error message**: Poll ID was invalid
+- **Possible reason**: The specified poll does not exist.
+- **Possible solution**: Verify the poll ID and ensure the poll exists.
+
+## Plugin
+
+#### Error code: 6000
+
+- **Error message**: User does not have permissions to launch/close plugins
+- **Possible reason**: The participant does not have permission to manage plugins.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 6001
+
+- **Error message**: Cannot send data to an inactive plugin
+- **Possible reason**: The plugin is not currently active.
+- **Possible solution**: Ensure the plugin is activated before attempting to send data to it.
+
+## Recording
+
+#### Error code: 7000
+
+- **Error message**: User does not have permission to start recording
+- **Possible reason**: The participant does not have permission to start recording.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 7001
+
+- **Error message**: Recording operation failed
+- **Possible reason**: An error occurred during the recording operation.
+- **Possible solution**: Try starting the recording again. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 7002
+
+- **Error message**: There is no recording in progress
+- **Possible reason**: Attempted to stop a recording that is not active.
+- **Possible solution**: Verify that a recording is in progress before attempting to stop it.
+
+#### Error code: 7003
+
+- **Error message**: Invalid recording state
+- **Possible reason**: The recording is in an unexpected state.
+- **Possible solution**: Check the recording status and try again. If you continue to experience issues, please reach out to Cloudflare support.
+
+## Stage
+
+#### Error code: 8000
+
+- **Error message**: Stage is disabled for this meeting type
+- **Possible reason**: The stage feature is not enabled for this meeting.
+- **Possible solution**: Enable the stage feature in your preset configuration.
+
+#### Error code: 8001
+
+- **Error message**: Permission denied for stage operation
+- **Possible reason**: The participant does not have permission to perform stage operations.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 8003
+
+- **Error message**: User has not requested stage access
+- **Possible reason**: The participant has not requested to join the stage.
+- **Possible solution**: Request stage access before attempting to join.
+
+#### Error code: 8004
+
+- **Error message**: Action is invalid for user's current stage status
+- **Possible reason**: The action cannot be performed in the current stage status.
+- **Possible solution**: Check the participant's stage status and perform the appropriate action.
 
 </TabItem>
 </Tabs>

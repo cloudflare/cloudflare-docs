@@ -321,5 +321,88 @@ this.videoBackgroundTransformer = await RealtimeKitVideoBackgroundTransformer.in
 ```
 
 </TabItem>
-</Tabs>
+<TabItem label="Android">
 
+## Installation
+
+You can add the pre-packaged filters to your project by adding the following dependency to your `build.gradle` file:
+
+```java
+dependencies {
+    // (other dependencies)
+    implementation 'com.cloudflare.realtimekit:filters:0.1.0'
+}
+```
+
+## Usage
+
+This package currently exposes `VirtualBackgroundVideoFilter` which can be used with `FilterVideoProcessor`:
+
+```kotlin
+// Create a virtual background filter with a custom background image.
+val bgFilter = VirtualBackgroundVideoFilter(context, R.drawable.background)
+
+// Initialize the video processor with the filter.
+val processor = FilterVideoProcessor(eglBase, bgFilter)
+
+// // Set the video processor on the meeting builder.
+val meeting = RealtimeKitMeetingBuilder
+  .setVideoProcessor(eglBase, processor)
+  .build(activity)
+```
+
+## Advanced configuration
+
+You can also create your own custom filters to apply effects, filters, or analytics directly to a live video stream. Our **VideoProcessor APIs** provide flexible and powerful ways to manipulate video frames.
+
+### Types of Video Processors
+
+We provide three types of video processors:
+
+- **NoDropVideoProcessor**: Allows custom video processing without dropping frames.
+- **ChainVideoProcessor**: Chains multiple frame processors together, useful for applying multiple effects or filters to a video stream.
+- **FilterVideoProcessor**: Simpler and more efficient way to apply a single effect or filter to a video stream.
+
+Nonetheless, you can also create your own custom video processors by implementing the `VideoProcessor` interface directly:
+
+```kotlin
+import realtimekit.org.webrtc.VideoFrame
+import realtimekit.org.webrtc.VideoProcessor
+import realtimekit.org.webrtc.VideoSink
+
+class CustomVideoProcessor : VideoProcessor {
+  override fun onCapturerStarted(started: Boolean) {}
+
+  override fun onCapturerStopped() {}
+
+  override fun onFrameCaptured(frame: VideoFrame?) {}
+
+  override fun setSink(sink: VideoSink?) {}
+}
+```
+
+### Usage example
+
+Once you have created and configured your `VideoProcessor`, pass it to the `RealtimeKitMeetingBuilder` object. This will process video frames captured by the camera before they are sent to other participants or rendered locally:
+
+```kotlin
+// Assuming 'myCustomProcessor' is an instance of any VideoProcessor implementation
+// (for example, ChainVideoProcessor, FilterVideoProcessor, and more).
+
+val myCustomProcessor = CustomProcessor()
+
+// Set the video processor on the meeting builder.
+val meeting = RealtimeKitMeetingBuilder
+  .setVideoProcessor(processor = myCustomProcessor)
+  .build(activity)
+
+// You can also pass an EglBase to the builder
+// This is useful when using FilterVideoProcessor
+val eglBase = EglBase.create()
+val meeting = RealtimeKitMeetingBuilder
+  .setVideoProcessor(eglBase = eglBase, processor = myCustomProcessor)
+  .build(activity)
+```
+
+</TabItem>
+</Tabs>

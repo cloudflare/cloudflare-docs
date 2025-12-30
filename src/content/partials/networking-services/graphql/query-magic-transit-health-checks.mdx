@@ -9,7 +9,7 @@ This example uses the GraphQL Analytics API to query {props.productName} tunnel 
 
 The following API call requests tunnel health checks for a specific account over a one-day period for a specific Cloudflare data center and outputs the requested fields. Replace `<CLOUDFLARE_ACCOUNT_TAG>` and `<API_TOKEN>`[^1] with your API credentials, and adjust the `datetimeStart` and `datetimeEnd` variables as needed.
 
-The API call returns tunnel health check results by Cloudflare data center. Each data center's result is aggregated from health checks conducted on individual servers. The `tunnelState` field represents the state of the tunnel. {props.productName} uses these states for routing. A `tunnelState` value of `0` represents a down tunnel, `0.5` represents a degraded tunnel, and `1` represents a healthy tunnel.
+The API call returns tunnel health check results by Cloudflare data center. Cloudflare aggregates each data center's result from health checks conducted on individual servers. The `tunnelState` field represents the state of the tunnel. {props.productName} uses these states for routing. A `tunnelState` value of `0` represents a down tunnel, `0.5` represents a degraded tunnel, and `1` represents a healthy tunnel.
 
 ## API Call
 

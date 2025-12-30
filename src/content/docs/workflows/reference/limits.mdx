@@ -49,7 +49,9 @@ Many limits are inherited from those applied to Workers scripts and as documente
 
 ### `waiting` instances do not count towards instance concurrency limits
 
-Instances that are on a `waiting` state - either sleeping, waiting for a retry, or waiting for an event - do **not** count towards concurrency limits. This means that other `queued` instances will be scheduled when an instance goes from a `running` state to a `waiting` one, usually the oldest instance queued, on a best-effort basis. This state transition - `running` to `waiting` - may not occur if the wait duration is too short.
+Instances that are in a `waiting` state — either sleeping via `step.sleep`, waiting for a retry, or waiting for an event via `step.waitForEvent` — do **not** count towards concurrency limits. This means you can have millions of Workflow instances sleeping or waiting for events simultaneously, as only actively `running` instances count toward the 10,000 concurrent instance limit.
+However, if there are 10,000 concurrent instances actively running, an instance that has been in a `waiting` state will be queued instead of resuming immediately. 
+When an instance transitions from `running` to `waiting`, other `queued` instances will be scheduled (usually the oldest queued instance, on a best-effort basis). This state transition may not occur if the wait duration is very short.
 
 For example, consider a Workflow that does some work, waits for 30 days, and then continues with more work:
 

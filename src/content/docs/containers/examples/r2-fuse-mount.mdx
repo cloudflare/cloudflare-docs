@@ -37,8 +37,9 @@ This example uses [tigrisfs](https://github.com/tigrisdata/tigrisfs), which supp
 FROM alpine:3.20
 
 # Install FUSE and dependencies
-RUN apk update && \
-    apk add --no-cache ca-certificates fuse curl bash
+RUN apk add --no-cache \ 
+    --repository http://dl-cdn.alpinelinux.org/alpine/v3.20/main \
+    ca-certificates fuse curl bash
 
 # Install tigrisfs
 RUN ARCH=$(uname -m) && \
@@ -57,14 +58,15 @@ RUN printf '#!/bin/sh\n\
     mkdir -p /mnt/r2\n\
     \n\
     R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
-    echo "Mounting bucket ${BUCKET_NAME}..."\n\
-    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${BUCKET_NAME}" /mnt/r2 &\n\
+    echo "Mounting bucket ${R2_BUCKET_NAME}..."\n\
+    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
     sleep 3\n\
     \n\
     echo "Contents of mounted bucket:"\n\
     ls -lah /mnt/r2\n\
     ' > /startup.sh && chmod +x /startup.sh
 
+EXPOSE 8080
 CMD ["/startup.sh"]
 ```
 </Details>
@@ -93,7 +95,7 @@ export class FUSEDemo extends Container<Env> {
   envVars = {
     AWS_ACCESS_KEY_ID: this.env.AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY: this.env.AWS_SECRET_ACCESS_KEY,
-    BUCKET_NAME: this.env.R2_BUCKET_NAME,
+    R2_BUCKET_NAME: this.env.R2_BUCKET_NAME,
     R2_ACCOUNT_ID: this.env.R2_ACCOUNT_ID,
   };
 }
@@ -102,6 +104,9 @@ export class FUSEDemo extends Container<Env> {
 
 The `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be stored as secrets, while `R2_BUCKET_NAME` and `R2_ACCOUNT_ID` can be configured as variables in your `wrangler.jsonc`:
 
+:::note[Creating your R2 AWS API keys]
+To get your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`, [head to your R2 dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview) and create a new R2 Access API key. Use the generated the `Access Key ID` as your `AWS_ACCESS_KEY_ID` and `Secret Access Key` is the `AWS_SECRET_ACCESS_KEY`.
+:::
 ```json
 {
   "vars": {
@@ -128,7 +133,7 @@ RUN printf '#!/bin/sh\n\
     mkdir -p /mnt/r2\n\
     \n\
     R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
-    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${BUCKET_NAME}" /mnt/r2 &\n\
+    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
     sleep 3\n\
     \n\
     echo "Accessing prefix: ${BUCKET_PREFIX}"\n\
@@ -149,7 +154,7 @@ RUN printf '#!/bin/sh\n\
     mkdir -p /mnt/r2\n\
     \n\
     R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
-    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -o ro -f "${BUCKET_NAME}" /mnt/r2 &\n\
+    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -o ro -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
     sleep 3\n\
     \n\
     ls -lah /mnt/r2\n\

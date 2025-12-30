@@ -7,7 +7,7 @@ params:
 
 import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 
-{props.productName} customers can run traceroutes to analyze the hop-by-hop Internet path and latency between Cloudflare's network and their own network.
+You can run traceroutes to analyze the hop-by-hop Internet path and latency between Cloudflare's network and your network.
 
 { props.magicWord === "WAN Tunnels" && (
   <>
@@ -16,7 +16,7 @@ import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 To run a traceroute from a specific Cloudflare data center to your network:
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
-2. Go to **Network visibility** > **WAN connector health**.
+2. Go to **Network health** > **WAN connector health**.
 3. Select the tunnel for the traceroute.
 4. Select the three dots > **Traceroute details**.
       `}
@@ -28,7 +28,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
 { props.magicWord !== "WAN Tunnels" && (
   <>
     <Aside type="note">
-      To change between the new dashboard experience and the old one, find the banner at the top of the screen.
+      The steps below cover both the old and new dashboard experiences. To switch dashboard experiences, use the banner at the top of the dashboard.
     </Aside>
 
     To run a traceroute from a specific Cloudflare data center to your network:
@@ -77,8 +77,8 @@ To run a traceroute from a specific Cloudflare data center to your network:
 
 You can access detailed data from the traceroute, including:
 
-- TTL Host
-- AS Number
+- Time to live (TTL) and host
+- Autonomous system (AS) number
 - [Packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) sent in the traceroute
 - Average, minimum, and maximum latency
 - Standard deviation of latency

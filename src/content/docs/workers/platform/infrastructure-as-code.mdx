@@ -92,6 +92,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"kv_namespace"`
 - `name`: The variable name for the binding, accessible via `env.MY_KV`
 - `namespace_id`: The ID of your KV namespace
@@ -109,6 +110,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"r2_bucket"`
 - `name`: The binding name to access via `env.MY_BUCKET`
 - `bucket_name`: The name of your R2 bucket
@@ -126,6 +128,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"d1"`
 - `name`: The binding name to access via `env.DB`
 - `id`: The ID of your D1 database
@@ -143,6 +146,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"durable_object_namespace"`
 - `name`: The binding name to access via `env.MY_DURABLE_OBJECT`
 - `class_name`: The exported class name of the Durable Object
@@ -161,6 +165,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"service"`
 - `name`: The binding name to access via `env.MY_SERVICE`
 - `service`: The name of the target Worker
@@ -181,6 +186,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"queue"`
 - `name`: The binding name to access via `env.MY_QUEUE`
 - `queue_name`: The name of your Queue
@@ -200,6 +206,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"vectorize"`
 - `name`: The binding name to access via `env.VECTORIZE_INDEX`
 - `index_name`: The name of your Vectorize index
@@ -216,6 +223,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"ai"`
 - `name`: The binding name to access via `env.AI`
 
@@ -232,6 +240,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"hyperdrive"`
 - `name`: The binding name to access via `env.HYPERDRIVE`
 - `id`: The ID of your Hyperdrive configuration
@@ -249,6 +258,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"analytics_engine"`
 - `name`: The binding name to access via `env.ANALYTICS`
 - `dataset`: The name of your Analytics Engine dataset
@@ -266,6 +276,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"plain_text"`
 - `name`: The binding name to access via `env.MY_VARIABLE`
 - `text`: The value of the environment variable
@@ -283,6 +294,7 @@ bindings = [{
 ```
 
 **Properties:**
+
 - `type`: `"secret_text"`
 - `name`: The binding name to access via `env.API_KEY`
 - `text`: The secret value (will be encrypted)
@@ -297,13 +309,13 @@ resource "cloudflare_worker_version" "my_worker_version" {
   worker_id = cloudflare_worker.my_worker.id
   compatibility_date = "2025-08-06"
   main_module = "worker.js"
-  
+
   modules = [{
     name = "worker.js"
     content_type = "application/javascript+module"
     content_file = "worker.js"
   }]
-  
+
   bindings = [
     {
       type = "kv_namespace"
@@ -573,7 +585,7 @@ EOF
 </TabItem>
 <TabItem icon="cloudflare-for-platforms" label="Workers for Platforms">
 
-For [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms), you can upload a [User Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/user-workers) to a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). Note the [API endpoint](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) is on `/workers/dispatch/namespaces/$DISPATCH_NAMESPACE/scripts/$SCRIPT_NAME`.
+For [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms), you can upload a [User Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers) to a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace). Note the [API endpoint](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) is on `/workers/dispatch/namespaces/$DISPATCH_NAMESPACE/scripts/$SCRIPT_NAME`.
 
 ```bash
 account_id="replace_me"

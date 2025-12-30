@@ -472,6 +472,7 @@
 /ddos-protection/managed-rulesets/network/override-expressions/ /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301
 /ddos-protection/managed-rulesets/adjust-rules/false-positive/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/#legitimate-traffic-is-incorrectly-identified-as-an-attack-and-causes-a-false-positive 301
 /ddos-protection/managed-rulesets/adjust-rules/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/ 301
+/ddos-protection/best-practices/respond-to-ddos-attacks/ /ddos-protection/best-practices/proactive-defense/ 301
 
 # developer spotlight
 /developer-spotlight/tutorials/ /resources/ 301
@@ -1151,12 +1152,15 @@
 /partners/ /fundamentals/reference/partners/ 301
 /partners/analytics/ /fundamentals/reference/partners/#analytics-integrations 301
 /partners/email-security/ /email-security/partners/ 301
+
 # page-shield
 /page-shield/use-dashboard/monitor-connections/ /page-shield/detection/monitor-connections-scripts/ 301
 /page-shield/use-dashboard/monitor-scripts/ /page-shield/detection/monitor-connections-scripts/ 301
 /support/firewall/tools/troubleshooting-page-shield/ /page-shield/troubleshooting/ 301
 /page-shield/reference/alerts/ /page-shield/alerts/alert-types/ 301
 /page-shield/detection/configure-alerts/ /page-shield/alerts/configure/ 301
+/page-shield/changelog/ /page-shield/release-notes/ 301
+/page-shield/changelog/index.xml /page-shield/release-notes/index.xml 301
 
 # pipelines
 /pipelines/concepts/how-pipelines-work/ /pipelines/ 301
@@ -1322,6 +1326,19 @@
 /cloudflare-for-platforms/workers-for-platforms/reference/observability/ /cloudflare-for-platforms/workers-for-platforms/configuration/observability/ 301
 /cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/ 301
 /cloudflare-for-platforms/workers-for-platforms/reference/tags/ /cloudflare-for-platforms/workers-for-platforms/configuration/tags/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/ /cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/hostname-routing/ /cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/developing-with-wrangler/ /cloudflare-for-platforms/workers-for-platforms/reference/local-development/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/ /cloudflare-for-platforms/workers-for-platforms/get-started/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform-examples/ /cloudflare-for-platforms/workers-for-platforms/reference/platform-examples/ 301
+/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/ /cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/user-workers/ /cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/bindings/ /cloudflare-for-platforms/workers-for-platforms/configuration/bindings/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/pricing/ /cloudflare-for-platforms/workers-for-platforms/reference/pricing/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/limits/ /cloudflare-for-platforms/workers-for-platforms/reference/limits/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/worker-isolation/ /cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/ 301
+/cloudflare-for-platforms/workers-for-platforms/demos/ /cloudflare-for-platforms/workers-for-platforms/platform-templates/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/ /cloudflare-for-platforms/workers-for-platforms/reference/ 301
 
 # stream
 /stream/getting-started/ /stream/ 301
@@ -1356,6 +1373,10 @@
 /docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
 /docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
 /style-guide/components/asides/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/checkbox/ /style-guide/formatting/structure/lists/ 301
+/style-guide/components/code/ /style-guide/formatting/code-block-guidelines/ 301
+/style-guide/components/compatibility-flag/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/footnotes/ /style-guide/formatting/footnotes/ 301
 /style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
 /style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
 
@@ -2063,7 +2084,7 @@
 
 # argo-tunnel
 /argo-tunnel/getting-started/installation/ /cloudflare-one/connections/connect-networks/get-started/ 301
-/argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/ 301
+/argo-tunnel/reference/load-balancing/ /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/ 301
 /argo-tunnel/configuration/ingress/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/ 301
 /argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
@@ -2117,6 +2138,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/installation/ /cloudflare-one/connections/connect-networks/downloads/update-cloudflared/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/lb/ /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/installation/ /cloudflare-one/connections/connect-networks/downloads/ 301
@@ -2229,6 +2251,7 @@
 /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
+/cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
 /cloudflare-one/applications/app-library/ /cloudflare-one/team-and-resources/app-library/ 301
 /cloudflare-one/applications/block-page/ /cloudflare-one/reusable-components/custom-pages/access-block-page/ 301
@@ -2258,6 +2281,9 @@
 # ============================================================================
 # DYNAMIC REDIRECTS
 # ============================================================================
+
+# Pub/Sub (removed product)
+/pub-sub/* / 301
 
 # AI Gateway
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301

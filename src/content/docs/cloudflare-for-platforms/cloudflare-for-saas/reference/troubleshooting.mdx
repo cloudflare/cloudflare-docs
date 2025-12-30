@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 ## Rate limits
 
@@ -77,6 +77,16 @@ example.com CAA 0 issuewild "ssl.com"
 ```
 
 More details can be found on the [CAA records FAQ](/ssl/edge-certificates/troubleshooting/caa-records/).
+
+***
+
+## Custom hostname matches zone name (403 Forbidden)
+
+<Render file="same-name-as-zone" product="cloudflare-for-platforms" />
+
+This configuration will cause a 403 Forbidden error due to DNS override restrictions applied for security reasons. This limitation also affects Worker Routes making subrequests.
+
+***
 
 ## Older devices have issues connecting
 

@@ -17,10 +17,10 @@ The following scenarios detail how you can make use of override rules as a solut
 
 ### VPN traffic is blocked by a UDP rule
 
-If you have VPN traffic concentrated to a single or a few single destination IP addresses and the traffic is being blocked by a UDP rule, you can create an override rule for the UDP rule to the destination IPs or ranges. 
+If you have VPN traffic concentrated to a single or a few single destination IP addresses and the traffic is being blocked by a UDP rule, you can create an override rule for the UDP rule to the destination IPs or ranges.
 
 :::note
-The override only applies to the fingerprint and not the detection. Refer to [Important remarks](/ddos-protection/managed-rulesets/network/network-overrides/override-expressions/#important-remarks) for more information.
+The override only applies to the detection and not the fingerprint generated and used for mitigation. Refer to [Important remarks](/ddos-protection/managed-rulesets/network/network-overrides/override-expressions/#important-remarks) for more information.
 :::
 
 ### Attack traffic is flagged by the adaptive rule based on UDP and destination port

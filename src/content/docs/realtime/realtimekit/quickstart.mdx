@@ -36,7 +36,7 @@ Select a framework based on the platform you are building for.
 <RTKSDKSelector />
 
 <RTKCodeSnippet id="web-react">
-	Please install the following dependancies into your project repository:
+	Please install the following dependencies into your project repository:
   
 	```bash 
   npm i @cloudflare/realtimekit-react @cloudflare/realtimekit-react-ui
@@ -79,6 +79,285 @@ Select a framework based on the platform you are building for.
     git clone https://github.com/cloudflare/realtimekit-web-examples.git
     cd realtimekit-web-examples/angular-examples/examples/default-meeting-ui
     ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+	Add the following dependencies to your `build.gradle` file:
+
+    ```java
+    dependencies {
+      implementation 'com.cloudflare.realtimekit:core:1.5.5'
+      // Optional: Add UI components for Android
+      implementation 'com.cloudflare.realtimekit:ui-android:0.3.0'
+    }
+    ```
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+	Install the RealtimeKit SDK using Swift Package Manager:
+
+	1. In Xcode, go to **File > Add Package Dependencies**.
+	2. Enter the package URL: `https://github.com/dyte-in/RealtimeKitCoreiOS.git`.
+	3. Select the version and add the package to your project.
+
+	:::note[Optional]
+	You can also add the RealtimeKit UI components by adding the package URL: `https://github.com/dyte-in/RealtimeKitUI`
+	:::
+
+	Add the following entries to the `Info.plist` file. This gives your app permissions to access the camera and microphone, access photos, and install the required fonts and icons.
+
+    ```xml
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Access Bluetooth to connect to headphones and audio devices during calls.</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Access Bluetooth to connect to headphones and audio devices during calls.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Access camera to enable video during meetings.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Access microphone to enable audio during meetings.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Access photos to share images during meetings.</string>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>audio</string>
+      <string>voip</string>
+      <string>fetch</string>
+      <string>remote-notification</string>
+    </array>
+    ```
+
+	The `UIBackgroundModes` key is used in the `Info.plist` file of an iOS app to declare the app's supported background execution modes. This key is an array of strings that specifies the types of background tasks that the app supports. By declaring the background modes, the app can continue to run in the background and perform specific tasks even when it is not in the foreground.
+
+	:::note
+	The use of background modes should be justified and comply with Apple's App Store Review Guidelines. Apps that misuse background modes or unnecessarily run in the background may be rejected during the app review process.
+
+	Source: [Apple Developer Documentation: Declaring Your App's Supported Background Tasks](https://developer.apple.com/documentation/xcode/configuring-background-execution-modes)
+	:::
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+	Install the RealtimeKit Core Flutter SDK by adding the dependency to your `pubspec.yaml` file:
+
+	```bash
+	flutter pub add realtimekit_core
+	```
+
+	Then import the package into your project:
+
+	```dart
+	import 'package:realtimekit_core/realtimekit_core.dart';
+	```
+
+	:::note[Optional]
+	You can also add the RealtimeKit UI components:
+
+	```bash
+	flutter pub add realtimekit_ui
+	```
+	:::
+
+	<Tabs syncKey="flutter-platform">
+	<TabItem label="Android">
+
+	Set `compileSdkVersion 36` and `minSdkVersion 24` in your `build.gradle` file at `<project root>/android/app/build.gradle`:
+
+	```java
+	defaultConfig {
+	  ...
+	  compileSdkVersion 36
+	  minSdkVersion 24
+	  ...
+	}
+	```
+
+	Change the Kotlin version to `1.9.0`:
+
+	```java
+	ext.kotlin_version = '1.9.0'
+	```
+
+	</TabItem>
+	<TabItem label="iOS">
+
+	Set your platform to iOS 13.0 or above in your `Podfile`:
+
+	```txt
+	platform :ios, '13.0'
+	```
+
+	Add the following entries to the `Info.plist` file. This gives your app permissions to access the camera and microphone, access photos, and install the required fonts and icons.
+
+	```xml
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Access Bluetooth to connect to headphones and audio devices during calls.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Access Bluetooth to connect to headphones and audio devices during calls.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Access camera to enable video during meetings.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access microphone to enable audio during meetings.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access photos to share images during meetings.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+	  <string>audio</string>
+	  <string>voip</string>
+	  <string>fetch</string>
+	  <string>remote-notification</string>
+	</array>
+	```
+
+	**Optional:** If you are allowing users to download attachments in chat, add the following permissions to your `Info.plist`:
+
+	```xml
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	```
+
+	</TabItem>
+	</Tabs>
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+	<Tabs syncKey="rn-package-manager">
+	<TabItem label="React Native">
+
+	Install the core dependencies:
+
+	```bash
+	npm install @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc
+	```
+
+	**Optional:** For UI components, install additional dependencies:
+
+	```bash
+	npm install @cloudflare/realtimekit-react-native-ui @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg
+	```
+
+	Install `react-native-safe-area-context` based on your React Native version:
+	- React Native 0.64 - 0.74: `npm install react-native-safe-area-context@^4.0.0`
+	- React Native >= 0.74: `npm install react-native-safe-area-context@^5.0.0`
+
+	Refer to the [react-native-svg installation guide](https://github.com/software-mansion/react-native-svg) for setup.
+
+	**Optional:** For interactive livestream functionality:
+
+	```bash
+	npm install amazon-ivs-react-native-player
+	```
+
+	</TabItem>
+	<TabItem label="Expo">
+
+	Install the core and UI dependencies:
+
+	```bash
+	npx expo install @cloudflare/realtimekit-react-native-ui @cloudflare/realtimekit-react-native @cloudflare/react-native-webrtc @react-native-documents/picker react-native-file-viewer react-native-fs react-native-sound-player react-native-webview react-native-svg
+	```
+
+	Install `react-native-safe-area-context` based on your React Native version:
+	- React Native 0.64 - 0.74: `npm install react-native-safe-area-context@^4.0.0`
+	- React Native >= 0.74: `npm install react-native-safe-area-context@^5.0.0`
+
+	Install Expo config plugins:
+
+	```bash
+	npx expo install @expo/config-plugins
+	```
+
+	Add the plugins to your `app.json`:
+
+	```json
+	{
+	  "expo": {
+	    "plugins": [
+	      "@cloudflare/realtimekit-react-native",
+	      "@cloudflare/react-native-webrtc"
+	    ]
+	  }
+	}
+	```
+
+	Run `prebuild` to set up native modules:
+
+	```bash
+	npx expo prebuild
+	```
+
+	</TabItem>
+	</Tabs>
+
+	<Tabs syncKey="rn-platform">
+	<TabItem label="Android">
+
+	The following instructions are for release builds. Debug builds should work without additional steps.
+
+	Edit your `android/gradle.properties` and add the following lines:
+
+	```txt
+	newArchEnabled=false
+	android.useFullClasspathForDexingTransform=true
+	```
+
+	**Note:** Starting from version `>=0.2.0`, add a required `blob_provider_authority` string resource in the `strings.xml` file:
+
+	```xml
+	<resources>
+	  ...
+	  <string name="blob_provider_authority">YOUR_APP_RESOURCE_NAME</string>
+	  ...
+	</resources>
+	```
+
+	Create or append to the file `android/app/proguard-rules.pro`:
+
+	```txt
+	-keep class realtimekit.org.webrtc.** { *; }
+	-dontwarn org.chromium.build.BuildHooksAndroid
+	```
+
+	In your `android/app/build.gradle`, edit the release configuration and add the following line importing the ProGuard configuration:
+
+	```java
+	buildTypes {
+	  release {
+	    ...
+	    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+	  }
+	}
+	```
+
+	</TabItem>
+	<TabItem label="iOS">
+
+	**Note:** The minimum supported iOS version is **14.0**.
+
+	Open your `Podfile` and set the platform to iOS 14:
+
+	```txt
+	platform :ios, '14.0'
+	```
+
+	Add the following permission entries to your `Info.plist` file:
+
+	```xml
+	<key>NSCameraUsageDescription</key>
+	<string>Access camera to enable video during meetings.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access microphone to enable audio during meetings.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access photos to share images during meetings.</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	```
+
+	</TabItem>
+	</Tabs>
 
 </RTKCodeSnippet>
 

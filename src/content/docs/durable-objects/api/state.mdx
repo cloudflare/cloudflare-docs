@@ -76,11 +76,11 @@ Contains loopback bindings to the Worker's own top-level exports. This has exact
 
 `waitUntil` waits until the promise which is passed as a parameter resolves, and can extend a request context even after the last client disconnects. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
 
-:::note[`waitUntil` is not necessary]
+:::note[`waitUntil` has no effect in Durable Objects]
 
-If a Durable Object is still waiting on any ongoing work or outbound I/O, it will remain active for a period of time. Therefore, `waitUntil` is not necessary. It remains part of the `DurableObjectState` interface to remain compatible with [Workers Runtime APIs](/workers/runtime-apis/context/#waituntil).
+Unlike in Workers, `waitUntil` has no effect in Durable Objects. It exists only for API compatibility with the [Workers Runtime APIs](/workers/runtime-apis/context/#waituntil).
 
-Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
+Durable Objects automatically remain active as long as there is ongoing work or pending I/O, so `waitUntil` is not needed. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
 :::
 
 #### Parameters

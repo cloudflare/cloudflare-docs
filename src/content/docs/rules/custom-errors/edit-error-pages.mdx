@@ -32,7 +32,7 @@ To display a custom page for each error, create a separate page per error. For e
 
 :::note[Notes]
 
-- Your custom error page should include a page-specific custom error token if applicable and cannot exceed 1.5 MB. Also, it must include HTML `<head>` and `</head>` tags.
+- Your custom error page should include a page-specific custom error token if applicable and cannot exceed 1.5 MB (1,500,000 bytes). Also, it must include HTML `<head>` and `</head>` tags.
 - Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/cloudflare-challenges/): `<meta name="referrer" (...) />`
 
 :::
