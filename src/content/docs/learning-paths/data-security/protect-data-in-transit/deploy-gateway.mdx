@@ -1,5 +1,5 @@
 ---
-title: Deploy Gateway and enable TLS inspection
+title: Deploy Gateway and turn on TLS inspection
 pcx_content_type: learning-unit
 sidebar:
   order: 2
@@ -9,23 +9,25 @@ import { Render } from "~/components";
 
 Gateway must be deployed and configured with TLS inspection before you can apply data protection policies to encrypted traffic.
 
-## Enable Gateway proxy
+## Turn on Gateway proxy
 
 Gateway proxy intercepts HTTP and HTTPS traffic from your users, allowing you to inspect and apply policies.
 
-<Render file="cloudflare-one/gateway/enable-gateway-proxy" />
+<Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
 
-## Enable TLS decryption
+## Turn on TLS decryption
 
 TLS decryption (HTTPS inspection) is required to inspect encrypted traffic for sensitive data and security threats.
 
-<Render file="cloudflare-one/gateway/enable-tls-decryption" />
+<Render file="gateway/enable-tls-decryption" product="cloudflare-one" />
 
-## Enable antivirus scanning
+## Turn on antivirus scanning
 
 Antivirus scanning protects against malware in file uploads and downloads.
 
-<Render file="cloudflare-one/gateway/enable-av-scanning" />
+<Render file="gateway/enable-av-scanning" product="cloudflare-one" />
+
+For more information, refer to [AV scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/).
 
 ## Certificate management
 
@@ -33,7 +35,9 @@ For TLS inspection to work, user devices must trust the Cloudflare root certific
 
 ### Download the Cloudflare certificate
 
-<Render file="cloudflare-one/gateway/download-cert" />
+<Render file="gateway/download-cert" product="cloudflare-one" />
+
+For more information, refer to [Install certificate manually](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/).
 
 ### Install the certificate on devices
 
@@ -48,7 +52,7 @@ You can install the certificate manually or deploy it through device management 
 
 ## Configure TLS inspection settings
 
-After enabling TLS decryption, configure which traffic to inspect:
+After turning on TLS decryption, configure which traffic to inspect:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
 2. Under **TLS decryption**, configure:
@@ -67,7 +71,7 @@ Test that Gateway is working correctly:
 
 ## Next steps
 
-With Gateway deployed and TLS inspection enabled, you can now:
+With Gateway deployed and TLS inspection turned on, you can now:
 
 - Deploy the WARP client to user devices
 - Build HTTP policies to control application access
