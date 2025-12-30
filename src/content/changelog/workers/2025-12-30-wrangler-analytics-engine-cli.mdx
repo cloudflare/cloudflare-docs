@@ -7,12 +7,24 @@ products:
 date: 2025-12-30
 ---
 
-Wrangler now supports querying [Workers Analytics Engine](/analytics/analytics-engine/) directly from the command line, allowing you to quickly explore your datasets without writing code, plugins or ad-hoc `curl` commands.
+Wrangler now supports querying [Workers Analytics Engine](/analytics/analytics-engine/) directly from the command line, allowing you to quickly explore your datasets without writing code or ad-hoc `curl` commands.
 
 Workers Analytics Engine lets you ingest high-cardinality data at scale and query it using SQL. Use it to build custom analytics, usage-based billing, or observability tools. With the new `wrangler analytics-engine` command, you can run ad-hoc queries, debug data pipelines, and automate reports from your terminal.
 
+For example, if your Worker tracks product usage:
+
+```js
+env.USAGE.writeDataPoint({
+  indexes: ["customer_12345"],
+  blobs: ["acme-app", "user_789", "file.upload", "enterprise"],
+  doubles: [1, 2048000], // count, bytes
+});
+```
+
+You can query that data directly from your terminal:
+
 ```sh
-npx wrangler analytics-engine run "SELECT blob1 AS city, AVG(double1) AS avg_temp FROM weather GROUP BY city"
+npx wrangler analytics-engine run "SELECT blob1 AS app, blob3 AS action, SUM(double1) AS total FROM usage GROUP BY app, action ORDER BY total DESC"
 ```
 
 Output defaults to table format in interactive terminals and JSON when piped to other tools like `jq`. Use `--file` to run queries from a SQL file.
