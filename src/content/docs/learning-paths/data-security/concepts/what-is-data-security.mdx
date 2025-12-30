@@ -1,0 +1,100 @@
+---
+title: What is data security?
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+import { GlossaryDefinition } from "~/components";
+
+Data security is the practice of protecting digital information from unauthorized access, corruption, or theft throughout its entire lifecycle. Organizations face increasing challenges in securing sensitive data as employees access cloud applications, use generative AI tools, and work from various locations and devices.
+
+## Why protect your data?
+
+Protecting your organization's data is critical for several reasons:
+
+- **Regulatory compliance**: Many industries require strict data protection measures to comply with regulations such as [GDPR](https://gdpr.eu/), [HIPAA](https://www.hhs.gov/hipaa/for-individuals/index.html), and [PCI DSS](https://www.pcisecuritystandards.org/).
+- **Intellectual property protection**: Prevent unauthorized access to proprietary information, source code, trade secrets, and competitive advantages.
+- **Customer trust**: Maintain customer confidence by safeguarding your customers' personal and financial information.
+- **Financial security**: Avoid costly data breaches, ransomware attacks, and associated legal penalties.
+- **Operational continuity**: Prevent business disruptions caused by data loss or security incidents.
+
+## States of data
+
+Data exists in three primary states, each requiring different protection strategies:
+
+### Data in transit
+
+Data in transit refers to information actively moving from one location to another, such as across the Internet or through a private network. This includes:
+
+- Web traffic between users and SaaS applications
+- File uploads and downloads
+- Email communications
+- API calls between services
+
+To protect this data, use [secure web gateways](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/), TLS inspection, and inline security policies to monitor and control data as it moves through your network.
+
+### Data at rest
+
+Data at rest is information stored in a relatively static state, such as in databases, file storage systems, or cloud applications. This includes:
+
+- Files stored in cloud collaboration platforms (such as Google Drive, SharePoint, and OneDrive)
+- Data in SaaS applications (such as Salesforce and Workday)
+- Cloud infrastructure storage (such as AWS S3 and Azure Blob Storage)
+- Archived documents and backups
+
+To protect this data, use [cloud access security brokers (CASB)](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) to scan stored data, identify misconfigurations, detect sensitive information, and monitor for security threats.
+
+### Data in use
+
+Data in use refers to information being actively processed, viewed, or modified by users or applications. This includes:
+
+- Users viewing sensitive documents in web browsers
+- Employees interacting with customer data in CRM systems
+- Contractors accessing internal applications
+- Users copying and pasting information between applications
+
+To protect this data, use [browser isolation](https://www.cloudflare.com/learning/access-management/what-is-browser-isolation/) to control how users interact with data, restricting actions like copy/paste, downloads, and keyboard input based on context and risk.
+
+## Cloudflare One data security
+
+<GlossaryDefinition term="Cloudflare One" prepend="Cloudflare One is " />
+
+Cloudflare One includes comprehensive data security across all three states with the following products:
+
+- [Gateway](/cloudflare-one/traffic-policies/): Secure web gateway that protects data in transit with inline inspection, filtering, and data loss prevention.
+- [Cloud Access Security Broker (CASB)](/cloudflare-one/cloud-and-saas-findings/): Cloud access security broker that protects data at rest by scanning SaaS applications and cloud storage for security risks.
+- [Browser Isolation](/cloudflare-one/remote-browser-isolation/): Remote browser isolation that protects data in use by controlling user interactions with web applications.
+- [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/): Detects and prevents sensitive data from leaving your organization through both inline (data in transit) and API-based (data at rest) scanning.
+
+## Choosing your starting point
+
+Depending on how your organization is currently structured, you can approach data security in different ways.
+
+### Digital-native companies
+
+If your organization primarily uses cloud-based SaaS applications and has minimal on-premises infrastructure:
+
+1. Start with **data at rest** protection using CASB integrations.
+2. Identify what sensitive data exists in your cloud applications.
+3. Discover shadow IT and unsanctioned application usage.
+4. Expand to **data in transit** protection with Gateway policies.
+
+### Traditional enterprises
+
+If your organization has existing network infrastructure and is transitioning to the cloud:
+
+1. Start with **data in transit** protection using Gateway.
+2. Deploy WARP client to devices and enable TLS inspection.
+3. Analyze traffic patterns and shadow IT discovery.
+4. Build DLP policies based on observed usage.
+5. Expand to **data at rest** protection with CASB integrations.
+
+### Hybrid approach
+
+Most organizations benefit from implementing both approaches simultaneously:
+
+1. Deploy Gateway for immediate visibility into data in transit.
+2. Connect CASB integrations to scan data at rest.
+3. Use analytics from both sources to inform policy decisions.
+4. Gradually expand coverage and policy enforcement.

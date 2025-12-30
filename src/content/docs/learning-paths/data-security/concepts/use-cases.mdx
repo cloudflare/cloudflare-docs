@@ -5,11 +5,11 @@ sidebar:
   order: 3
 ---
 
-Cloudflare One addresses a wide range of data security challenges. This page outlines the most common use cases and how Cloudflare helps solve them.
+Cloudflare One addresses a wide range of data security challenges. This module outlines the most common use cases and how Cloudflare helps solve them.
 
 ## Generative AI security
 
-Prevent sensitive data from being uploaded to generative AI tools and identify unsanctioned AI usage across your organization.
+Prevent sensitive data from being uploaded to generative AI tools and identify unsanctioned AI usage across your organization. For example, a security team needs to stop sensitive data from being sent to ChatGPT while still allowing general research.
 
 ### Challenges
 
@@ -20,18 +20,14 @@ Prevent sensitive data from being uploaded to generative AI tools and identify u
 
 ### Cloudflare solutions
 
-- **Block AI applications**: Use Gateway policies to block access to specific AI tools entirely
-- **Isolate AI applications**: Allow access to AI tools through Browser Isolation with restrictions on copy/paste and data input
-- **DLP for AI**: Apply data loss prevention policies to detect and block sensitive data uploads to AI services
-- **Shadow IT discovery**: Identify all AI applications being used across your organization through Gateway analytics
-
-**Example scenario**: "I do not want my data to go to ChatGPT. How do I do that?"
-
-Use Gateway HTTP policies to block ChatGPT, or isolate it with Browser Isolation to prevent users from pasting sensitive information while still allowing general use.
+- **Block AI applications**: Use Gateway policies to block access to specific AI tools entirely.
+- **Isolate AI applications**: Allow access to AI tools through Browser Isolation with restrictions on copy/paste and data input.
+- **DLP for AI**: Apply data loss prevention policies to detect and block sensitive data uploads to AI services.
+- **Shadow IT discovery**: Identify all AI applications being used across your organization through Gateway analytics.
 
 ## Preventing data exfiltration
 
-Stop sensitive data from leaving your organization through unauthorized channels or applications.
+Stop sensitive data from leaving your organization through unauthorized channels or applications. For example, a financial services company needs to prevent source code from being uploaded to personal GitHub accounts or cloud storage services.
 
 ### Challenges
 
@@ -42,18 +38,14 @@ Stop sensitive data from leaving your organization through unauthorized channels
 
 ### Cloudflare solutions
 
-- **DLP profiles**: Use predefined or custom DLP profiles to detect sensitive data patterns (credit cards, social security numbers, source code, etc.)
-- **Exact Data Match (EDM)**: Create datasets of specific sensitive information to detect exact matches
-- **File type controls**: Block uploads of specific file types to unauthorized applications
-- **Tenant control**: Ensure users only access corporate instances of SaaS applications
-
-**Example scenario**: A financial services company needs to prevent source code from being uploaded to personal GitHub accounts or cloud storage services.
-
-Configure custom DLP profiles to detect source code patterns and apply Gateway policies to block uploads to non-corporate repositories.
+- **DLP profiles**: Use predefined or custom DLP profiles to detect sensitive data patterns such as credit cards, social security numbers, and source code.
+- **Exact Data Match (EDM)**: Create datasets of specific sensitive information to detect exact matches.
+- **File type controls**: Block uploads of specific file types to unauthorized applications.
+- **Tenant control**: Ensure users only access corporate instances of SaaS applications.
 
 ## Shadow IT and unsanctioned application discovery
 
-Gain visibility into all applications being used across your organization, including those not approved by IT.
+Gain visibility into all applications being used across your organization, including those not approved by IT. For example, a chief information security officer (CISO) needs to identify all AI applications being used across their organization.
 
 ### Challenges
 
@@ -64,16 +56,14 @@ Gain visibility into all applications being used across your organization, inclu
 
 ### Cloudflare solutions
 
-- **Gateway analytics**: View all applications accessed by your users
-- **Shadow IT dashboard**: Identify unsanctioned applications and assess their risk
-- **Application control**: Block or isolate risky applications
-- **CASB integration**: Discover third-party applications connected to your SaaS platforms
-
-**Example scenario**: Analyze Gateway Analytics and Shadow IT Discovery to understand what applications your users are accessing, identify the highest-risk applications, and determine which DLP policies to apply.
+- **Gateway analytics**: View all applications accessed by your users.
+- **Shadow IT dashboard**: Identify unsanctioned applications and assess their risk.
+- **Application control**: Block or isolate risky applications.
+- **CASB integration**: Discover third-party applications connected to your SaaS platforms.
 
 ## SaaS data exposure and misconfigurations
 
-Identify and remediate security risks in your cloud applications, including publicly exposed files and misconfigured permissions.
+Identify and remediate security risks in your cloud applications, including publicly exposed files and misconfigured permissions. For example, employees have accidentally shared confidential documents publicly in Google Drive or SharePoint.
 
 ### Challenges
 
@@ -84,16 +74,13 @@ Identify and remediate security risks in your cloud applications, including publ
 
 ### Cloudflare solutions
 
-- **CASB security findings**: Automatically scan SaaS applications for misconfigurations
-- **File exposure detection**: Identify files shared publicly or with external domains
-- **Third-party app discovery**: See which third-party applications have access to your SaaS data
-- **Automated remediation**: Configure policies to automatically fix common misconfigurations (coming 2025)
-
-**Example scenario**: Discover that employees have accidentally shared confidential documents publicly in Google Drive or SharePoint, and receive alerts to remediate the exposure.
+- **CASB security findings**: Automatically scan SaaS applications for misconfigurations.
+- **File exposure detection**: Identify files shared publicly or with external domains.
+- **Third-party app discovery**: See which third-party applications have access to your SaaS data.
 
 ## Tenant control
 
-Ensure users only access corporate instances of SaaS applications and prevent data leakage to personal accounts.
+Ensure users only access corporate instances of SaaS applications and prevent data leakage to personal accounts. For example, an administrator needs to allow employees to access only the corporate Microsoft 365 tenant while blocking access to personal Microsoft accounts during work hours.
 
 ### Challenges
 
@@ -104,16 +91,14 @@ Ensure users only access corporate instances of SaaS applications and prevent da
 
 ### Cloudflare solutions
 
-- **Tenant restrictions**: Configure policies to allow access only to corporate tenants
-- **Identity-based controls**: Enforce tenant restrictions based on user identity
-- **Application-specific policies**: Apply different tenant controls for different applications
-- **Audit logging**: Track when users attempt to access non-corporate tenants
-
-**Example scenario**: Allow employees to access only the corporate Microsoft 365 tenant while blocking access to personal Microsoft accounts during work hours.
+- **Tenant restrictions**: Configure policies to allow access only to corporate tenants.
+- **Identity-based controls**: Enforce tenant restrictions based on user identity.
+- **Application-specific policies**: Apply different tenant controls for different applications.
+- **Audit logging**: Track when users attempt to access non-corporate tenants.
 
 ## User risk scoring
 
-Identify high-risk user behavior and apply adaptive security controls based on risk levels.
+Identify high-risk user behavior and apply adaptive security controls based on risk levels. For example, a user who typically accesses applications from the United States suddenly attempts to upload large amounts of data from a different, risky country, triggering additional security controls.
 
 ### Challenges
 
@@ -124,29 +109,25 @@ Identify high-risk user behavior and apply adaptive security controls based on r
 
 ### Cloudflare solutions
 
-- **Behavioral analytics**: Monitor user activity patterns across Gateway and CASB
-- **Risk-based policies**: Apply stricter controls to high-risk users or sessions
-- **Integration with identity providers**: Combine Cloudflare risk signals with IdP risk scores
-- **Automated response**: Trigger additional authentication or isolation based on risk level
-
-**Example scenario**: A user who typically accesses applications from the United States suddenly attempts to upload large amounts of data from an unusual location, triggering additional security controls.
+- **Behavioral analytics**: Monitor user activity patterns across Gateway and CASB.
+- **Risk-based policies**: Apply stricter controls to high-risk users or sessions.
+- **Integration with identity providers**: Combine Cloudflare risk signals with IdP risk scores.
+- **Automated response**: Trigger additional authentication or isolation based on risk level.
 
 ## Legal and regulatory compliance
 
-Meet industry-specific compliance requirements for data protection.
+Meet industry-specific compliance requirements for data protection. For example, a healthcare organization uses DLP profiles to detect and block unauthorized transmission of protected health information (PHI) while maintaining audit logs for HIPAA compliance.
 
 ### Challenges
 
 - GDPR, HIPAA, PCI DSS, and other regulatory requirements
 - Demonstrating compliance during audits
-- Protecting specific types of regulated data (PHI, PII, financial data)
+- Protecting specific types of regulated data (such as PHI, PII, and financial data)
 - Maintaining audit trails of data access and transfers
 
 ### Cloudflare solutions
 
-- **Predefined DLP profiles**: Use compliance-focused profiles for HIPAA, PCI, and other standards
-- **Data localization**: Control where data is processed and stored
-- **Audit logging**: Maintain detailed logs of all data access and policy enforcement
-- **CASB compliance checks**: Identify compliance violations in SaaS applications
-
-**Example scenario**: A healthcare organization uses DLP profiles to detect and block unauthorized transmission of protected health information (PHI) while maintaining audit logs for HIPAA compliance.
+- **Predefined DLP profiles**: Use compliance-focused profiles for HIPAA, PCI, and other standards.
+- **Data localization**: Control where data is processed and stored.
+- **Audit logging**: Maintain detailed logs of all data access and policy enforcement.
+- **CASB compliance checks**: Identify compliance violations in SaaS applications.

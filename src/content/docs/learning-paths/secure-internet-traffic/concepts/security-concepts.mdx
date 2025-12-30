@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryDefinition } from "~/components";
+import { GlossaryDefinition, Render } from "~/components";
 
 Review concepts related to Cloudflare Internet traffic and SaaS app security.
 
@@ -17,38 +17,20 @@ For more information, refer to the [Learning Center](https://www.cloudflare.com/
 
 ## What is a secure web gateway (SWG)?
 
-A secure web gateway (SWG) is a cyber security product that protects company data and enforces security policies.
-
-<GlossaryDefinition term="Cloudflare Gateway" />
-
-For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) and [Gateway documentation](/cloudflare-one/traffic-policies/).
+<Render file="zero-trust/what-is-swg" product="learning-paths" />
 
 ## What is HTTPS inspection?
 
-HTTPS inspection (also known as TLS decryption) is the process of filtering traffic by decrypting traffic sent to or from your organization, inspecting it and applying policies, then re-encrypting the traffic as it ingresses or egresses.
-
-For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/security/what-is-https-inspection/) and [TLS decryption documentation](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+<Render file="zero-trust/what-is-https-inspection" product="learning-paths" />
 
 ## What is data loss prevention (DLP)?
 
-Data loss prevention checks for sensitive data sent in uploads and downloads.
-
-<GlossaryDefinition term="Cloudflare Data Loss Prevention (DLP)" />
-
-For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-dlp/) and [DLP documentation](/cloudflare-one/data-loss-prevention/).
+<Render file="zero-trust/what-is-dlp" product="learning-paths" />
 
 ## What is a cloud access security broker (CASB)?
 
-A cloud access security broker protects cloud services from security threats.
-
-<GlossaryDefinition term="Cloudflare CASB" />
-
-For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) and [CASB documentation](/cloudflare-one/integrations/cloud-and-saas/).
+<Render file="zero-trust/what-is-casb" product="learning-paths" />
 
 ## What is browser isolation?
 
-Browser isolation prevents users from interacting directly with malicious websites by rendering pages in an isolated browser offsite.
-
-<GlossaryDefinition term="Cloudflare Browser Isolation" />
-
-For more information, refer to the [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) and [Browser Isolation documentation](/cloudflare-one/remote-browser-isolation/).
+<Render file="zero-trust/what-is-browser-isolation" product="learning-paths" />

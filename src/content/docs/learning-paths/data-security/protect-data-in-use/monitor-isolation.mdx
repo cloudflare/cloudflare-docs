@@ -229,7 +229,7 @@ Configure Logpush to send isolation logs to your SIEM:
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
 2. Create a Logpush job for Gateway HTTP logs.
 3. Configure filters to include isolation events.
-4. Set destination (Splunk, Datadog, S3, etc.).
+4. Set destination such as Splunk, Datadog, or S3.
 
 For more information, refer to [Logpush](/cloudflare-one/insights/logs/logpush/).
 
@@ -292,26 +292,13 @@ If clipboard logging is enabled:
   - Establish retention policies
   - Inform users about clipboard logging
 
-### Session recording
-
-If session recording is enabled (future feature):
-
-- **What is recorded**: Visual recording of isolated sessions
-- **Privacy concern**: Captures all user activity in detail
-- **Best practice**:
-  - Only enable for specific high-risk applications or users
-  - Establish clear policies on recording
-  - Inform users about recording
-  - Limit access to recordings
-  - Define retention and deletion policies
-
 ### Compliance
 
 Ensure logging practices comply with:
 
 - **GDPR**: User consent and data minimization
 - **CCPA**: User notification and data access rights
-- **Industry regulations**: HIPAA, PCI DSS, etc.
+- **Industry regulations**: HIPAA, PCI DSS
 - **Company policies**: Employee monitoring policies
 
 ## Troubleshooting with logs
