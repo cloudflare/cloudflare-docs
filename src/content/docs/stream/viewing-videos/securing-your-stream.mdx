@@ -196,7 +196,9 @@ The response will return `pem` and `jwk` values.
 }
 ```
 
-Save these values as they won't be shown again. You will use these values later to generate the tokens. The pem and jwk fields are base64-encoded, you must decode them before using them (an example of this is shown in step 2).
+These values will not be shown again so we recommend saving them securely right away. If you are using Cloudflare Workers, you can store them using [Secrets](/workers/configuration/secrets/). If you are using another platform, store them in secure environment variables.
+
+You will use these values later to generate the tokens. The pem and jwk fields are base64-encoded, you must decode them before using them (an example of this is shown in step 2).
 
 ### Step 2: Generate tokens using the key
 
