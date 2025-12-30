@@ -6,7 +6,7 @@ sidebar:
 description: Split a single application into independently deployable frontends, using a router worker and service bindings
 ---
 
-import { Description, Details, Tabs, TabItem } from "~/components";
+import { WranglerConfig } from "~/components";
 
 Microfrontends let you split a single application into smaller, independently deployable units that render as one cohesive application. Different teams using different technologies can develop, test, and deploy each microfrontend.
 
@@ -251,9 +251,9 @@ To add a new microfrontend to your application after initial setup:
 
 	<WranglerConfig>
 	```toml
-   [[services]]
-   binding = "MICROFRONTEND_C"
-   service = "my-new-microfrontend"
+	[[services]]
+	binding = "MICROFRONTEND_C"
+	service = "my-new-microfrontend"
 	```
 	</WranglerConfig>
 
