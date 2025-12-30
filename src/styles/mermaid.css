@@ -1,3 +1,75 @@
+/* Hide unprocessed diagrams to prevent flash of unstyled content */
 pre.mermaid:not([data-processed]) {
 	visibility: hidden;
+}
+
+/* Container wrapper for diagram + annotation */
+.mermaid-container {
+	background: transparent;
+	overflow: hidden;
+	margin: 1rem 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+/* The diagram itself */
+pre.mermaid[data-processed] {
+	padding: 1.5rem;
+	margin: 0;
+	background: transparent;
+	border-radius: 0;
+	box-shadow: none;
+	display: block;
+	line-height: 0;
+	border-color: var(--sl-color-hairline) !important;
+}
+
+/* Ensure SVG fills the width nicely */
+pre.mermaid[data-processed] svg {
+	max-width: 100%;
+	height: auto;
+	display: block;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+}
+
+/* Remove any box shadow from SVG elements */
+pre.mermaid[data-processed] svg * {
+	box-shadow: none !important;
+}
+
+/* Annotation footer */
+.mermaid-annotation {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.75rem 1rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--sl-color-gray-3);
+	background: rgba(0, 0, 0, 0.02);
+	margin: 0;
+}
+
+.mermaid-annotation-title {
+	flex: 1;
+}
+
+.mermaid-annotation-logo {
+	height: 16px;
+	width: auto;
+	opacity: 0.7;
+}
+
+/* Dark mode adjustments */
+:root[data-theme="dark"] .mermaid-annotation {
+	background: rgba(255, 255, 255, 0.03);
+	color: var(--sl-color-gray-2);
+}
+
+:root[data-theme="dark"] .mermaid-annotation-logo {
+	opacity: 0.8;
 }
