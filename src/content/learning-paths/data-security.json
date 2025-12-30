@@ -1,0 +1,7 @@
+{
+	"title": "Protect your organization's sensitive data",
+	"path": "/learning-paths/data-security/concepts/",
+	"pcx_content_type": "learning-path",
+	"description": "Learn how to protect sensitive data across all states with Cloudflare One's data security features including DLP, CASB, and Browser Isolation.",
+	"products": ["gateway", "casb", "dlp", "browser-isolation", "zero-trust-warp"]
+}
