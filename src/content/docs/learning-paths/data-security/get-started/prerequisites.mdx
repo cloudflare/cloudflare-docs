@@ -5,11 +5,13 @@ sidebar:
   order: 2
 ---
 
+import { GlossaryDefinition } from "~/components";
+
 Before you begin implementing data security with Cloudflare One, review the following requirements and considerations.
 
 ## Cloudflare account requirements
 
-- A Cloudflare account with Zero Trust enabled
+- A Cloudflare account with a [Zero Trust organization](/cloudflare-one/setup/)
 - Appropriate plan level for desired features:
   - **Gateway**: Available on all Zero Trust plans
   - **DLP**: Available on Enterprise plans
@@ -18,34 +20,36 @@ Before you begin implementing data security with Cloudflare One, review the foll
 
 ## Identity provider
 
-You will need an identity provider (IdP) to authenticate users and enforce identity-based policies. Cloudflare integrates with:
+<GlossaryDefinition term="identity provider" />
 
-- Azure AD / Microsoft Entra ID
-- Okta
-- Google Workspace
-- OneLogin
-- Generic SAML 2.0 or OIDC providers
+You will need an IdP to authenticate users and enforce identity-based policies. Cloudflare integrates with common IdPs, including:
+
+- [Microsoft Entra ID (formerly Azure AD)](/cloudflare-one/integrations/identity-providers/entra-id/)
+- [Okta](/cloudflare-one/integrations/identity-providers/okta-saml/)
+- [Google Workspace](/cloudflare-one/integrations/identity-providers/google-workspace/)
+- [OneLogin](/cloudflare-one/integrations/identity-providers/onelogin-saml/)
+- [Generic SAML 2.0](/cloudflare-one/integrations/identity-providers/generic-saml/) or [OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/) providers
+
+For more information, refer to [Identity providers](/cloudflare-one/integrations/identity-providers/).
 
 ## Network and device considerations
 
 ### For data in transit protection (Gateway)
 
-- Ability to deploy the WARP client to user devices, or
-- Ability to configure DNS/proxy settings on devices or network equipment
+- Ability to deploy the WARP client to user devices, or ability to configure DNS/proxy settings on devices or network equipment
 - Network connectivity to Cloudflare's global network
-- Ability to install and trust a root certificate on user devices (for TLS inspection)
+- Ability to install and trust a root certificate on user devices for TLS inspection
 
 ### For data at rest protection (CASB)
 
 - Administrator access to SaaS applications you want to scan
-- API access enabled for your SaaS applications
+- API access turned on for your SaaS applications
 - Appropriate permissions to create service accounts or OAuth applications
 
 ### For data in use protection (Browser Isolation)
 
-- Modern web browsers (Chrome, Edge, Firefox, Safari)
-- For clientless isolation: No additional requirements
-- For client-based isolation: WARP client installed on devices
+- Modern web browsers in use by your organization (Chrome, Edge, Firefox, Safari)
+- For client-based isolation, WARP client installed on devices
 
 ## Technical knowledge
 
@@ -53,8 +57,10 @@ This guide assumes familiarity with:
 
 - Basic networking concepts (DNS, HTTP/HTTPS, proxies)
 - Identity and access management
-- Your organization's SaaS application landscape
+- Your organization's SaaS applications
 - Security policy concepts
+
+For more information on Zero Trust concepts, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/).
 
 ## Planning considerations
 
