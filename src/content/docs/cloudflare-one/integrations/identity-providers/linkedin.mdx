@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: LinkedIn
 ---
 
+import { Render } from "~/components";
+
 Cloudflare Access allows your users to use LinkedIn as their identity provider (IdP).
 
 ## Prerequisites
@@ -51,7 +53,7 @@ To configure LinkedIn as an IdP:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    You can find your team name by going to [Cloudflare One](https://one.dash.cloudflare.com/) > **Settings** > **Team name**.
+    <Render file="find-team-name" product="cloudflare-one" />
 
 To test that your connection is working, go to [Cloudflare One](https://one.dash.cloudflare.com/) > **Integrations** > **Identity providers** > select **Test** next to your LinkedIn login method.
 

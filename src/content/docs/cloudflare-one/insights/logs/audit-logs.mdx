@@ -35,7 +35,7 @@ Authentication logs do not capture the user's actions during a self-hosted or Sa
 
 To view logs for identity-based authentication events:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Access**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights** > **Logs** > **Access authentication logs**.
 2. Select a row to view details such as the login method, the IP address of the user, and more.
 
 </TabItem> <TabItem label="API">
@@ -43,15 +43,15 @@ To view logs for identity-based authentication events:
 The [Access authentication logs](/api/resources/zero_trust/subresources/access/subresources/logs/subresources/access_requests/methods/list/) API endpoint provides a custom URL to export audit log events for your account.
 
 <APIRequest
-  path="/accounts/{account_id}/access/logs/access_requests"
-  method="GET"
-  parameters={{
-    account_id: "$ACCOUNT_ID",
-    limit: 25,
-    direction: "desc",
-    since: "2020-07-01T05:20:00Z",
-    until: "2020-10-01T05:20:00Z",
-  }}
+	path="/accounts/{account_id}/access/logs/access_requests"
+	method="GET"
+	parameters={{
+		account_id: "$ACCOUNT_ID",
+		limit: 25,
+		direction: "desc",
+		since: "2020-07-01T05:20:00Z",
+		until: "2020-10-01T05:20:00Z",
+	}}
 />
 
 ```json title="Response"
@@ -83,31 +83,31 @@ Identity-based authentication logs contain the following fields:
 
 ##### Basic information
 
-| Field            | Description                                                                           |
-| ---------------- | ------------------------------------------------------------------------------------- |
-| **App**          | Name of the Access application.                                                       |
-| **User email**   | Email address of the authenticating user.                                             |
-| **User ID**      | UUID of the authenticating user.                                                      |
-| **IP address**   | IP address of the authenticating user.                                                |
-| **App UID**      | UUID of the Access application.                                                       |
-| **App domain**   | URL of the Access application.                                                        |
+| Field            | Description                                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **App**          | Name of the Access application.                                                                                        |
+| **User email**   | Email address of the authenticating user.                                                                              |
+| **User ID**      | UUID of the authenticating user.                                                                                       |
+| **IP address**   | IP address of the authenticating user.                                                                                 |
+| **App UID**      | UUID of the Access application.                                                                                        |
+| **App domain**   | URL of the Access application.                                                                                         |
 | **App type**     | Specifies the type of Access application: self-hosted, browser SSH, browser VNC, browser RDP, SaaS, or infrastructure. |
-| **Event**        | Type of authentication event, such as a login attempt.                                |
-| **Connection**   | IdP used to authenticate.                                                             |
-| **Allow**        | Result of the authentication event.                                                   |
-| **Request time** | Timestamp of the authentication event.                                                |
-| **Ray ID**       | A unique identifier for every request through Cloudflare.                             |
-| **Country**      | Country associated with the user's IP address.                                        |
+| **Event**        | Type of authentication event, such as a login attempt.                                                                 |
+| **Connection**   | IdP used to authenticate.                                                                                              |
+| **Allow**        | Result of the authentication event.                                                                                    |
+| **Request time** | Timestamp of the authentication event.                                                                                 |
+| **Ray ID**       | A unique identifier for every request through Cloudflare.                                                              |
+| **Country**      | Country associated with the user's IP address.                                                                         |
 
 ##### Infrastructure applications
 
 Cloudflare Access logs the following information when the user authenticates to an [infrastructure application](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/):
 
-| Field         | Description                                                                                                                                                                                                                   |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Hostname**  | Hostname of the infrastructure target.                                                                                                                                                                                        |
-| **Target ID** | UUID of the infrastructure target.                                                                                                                                                                                            |
-| **SSH user**  | The UNIX user, such as `root`, that the authenticating user specified when connecting to the infrastructure target.                                                                                                           |
+| Field         | Description                                                                                                                                                                                                                            |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Hostname**  | Hostname of the infrastructure target.                                                                                                                                                                                                 |
+| **Target ID** | UUID of the infrastructure target.                                                                                                                                                                                                     |
+| **SSH user**  | The UNIX user, such as `root`, that the authenticating user specified when connecting to the infrastructure target.                                                                                                                    |
 | **SSH logs**  | SSH commands that the user ran on the target. Requires configuring an [SSH encryption key](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs) before the session begins. |
 
 ### Non-identity authentication

@@ -3,7 +3,7 @@ link: "/d1/platform/release-notes/"
 productName: D1
 productLink: "/d1/"
 entries:
-  - publish_date: "2025-10-05"
+  - publish_date: "2025-11-05"
     title: D1 can configure jurisdictions for data localization
     description: |-
       You can now set a [jurisdiction](/d1/configuration/data-location/) when creating a D1 database to guarantee where your database runs and stores data.

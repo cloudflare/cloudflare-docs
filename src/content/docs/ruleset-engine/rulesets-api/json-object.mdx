@@ -1,5 +1,5 @@
 ---
-title: JSON object
+title: JSON objects
 pcx_content_type: reference
 tags:
   - JSON
@@ -8,6 +8,8 @@ sidebar:
 ---
 
 import { Type, MetaInfo } from "~/components";
+
+This page describes the JSON objects used in API requests creating or updating rulesets and their rules via Rulesets API, as well as the objects returned by the API.
 
 ## Ruleset object
 
@@ -33,6 +35,8 @@ A fully populated ruleset object has the following JSON structure.
 	"last_updated": "2022-07-20T10:44:29.124515Z"
 }
 ```
+
+For details on the properties of rules items in the `rules` array, refer to the [Rule object structure and properties](#rule-object-structure-and-properties) section.
 
 ### Properties
 
@@ -60,7 +64,7 @@ The ruleset object has the following properties:
   - Read-only value starting at `1` and incremented by `1` each time the ruleset is modified.
 
 - `rules` <Type text="Array<Rule>" />
-  - A list of rules to include in the ruleset. Refer to [Rule object structure and properties](/ruleset-engine/rulesets-api/json-object/#rule-object-structure-and-properties) for details.
+  - A list of rules to include in the ruleset. Refer to [Rule object structure and properties](#rule-object-structure-and-properties) for details.
 
 - `last_updated` <Type text="Timestamp" />
   - The time (UTC) when the ruleset was last updated in ISO 8601 format: `YYYY-MM-DDThh:mm:ss.TZD`.

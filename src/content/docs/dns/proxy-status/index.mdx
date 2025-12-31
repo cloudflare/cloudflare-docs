@@ -66,6 +66,7 @@ If you have multiple A or AAAA records on the same name and at least one of them
 <Details header="Example">
 
 <Example>
+
 DNS management for **example.com**:
 
 | Type | Name   | Content     | Proxy status | TTL  |
@@ -73,11 +74,55 @@ DNS management for **example.com**:
 | A    | `blog` | `192.0.2.1` | Proxied      | Auto |
 | A    | `blog` | `192.0.2.5` | DNS only     | Auto |
 
+</Example>
+
 In this example, all traffic intended for `blog.example.com` will be treated as if both records were **Proxied**.
+
+</Details>
+
+Cloudflare will also proxy a request if a hostname on a CNAME chain is proxied.
+
+<Details header="Example">
+
+Consider that the same Cloudflare account has two different zones, `example.com` and `example.net`.
+
+<Example>
+
+DNS management for **example.com**:
+
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| CNAME   | `example.com` | `origin.example.net` | DNS only     | Auto |
 
 </Example>
 
+<Example>
+
+DNS management for **example.net**:
+
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| CNAME   | `origin.example.net` | `<origin>` | Proxied     | Auto |
+
+</Example>
+
+In this example, all traffic intended for `example.com` will be treated as **Proxied**.
+
+:::note
+CNAME to a different Cloudflare account is prohibited and will result in a [Error 1014 (CNAME Cross-User Banned)](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1014/)
+:::
+
 </Details>
+
+### CNAME records
+
+Proxied [CNAME records](/dns/manage-dns-records/reference/dns-record-types/#cname) are flattened by default, as they return Cloudflare anycast IPs. With CNAME flattening, Cloudflare finds the IP address that a CNAME points to, helping DNS queries resolve faster. Refer to [CNAME flattening](/dns/cname-flattening/) for details.
+
+In some cases, Cloudflare will show a warning message or [prevent](/dns/proxy-status/limitations/#proxy-eligibility) you from proxying a CNAME record. This happens to avoid misconfigurations and is generally related to other CDN providers or to specific records used for DKIM validation.
+
+:::note
+Specific CNAME record values with traffic proxied through Cloudflare will enable Orange-to-Orange (O2O) routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
+:::
 
 ### Protocol optimization
 

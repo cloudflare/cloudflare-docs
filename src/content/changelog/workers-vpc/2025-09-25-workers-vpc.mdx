@@ -1,15 +1,29 @@
 ---
-title: Workers VPC Services (Beta)
+title: Announcing Workers VPC Services (Beta)
 description: Access private resources in your VPC from Cloudflare Workers
 date: 2025-11-05
 ---
 
-We're excited to announce the beta release of **Workers VPC Services**, enabling Cloudflare Workers to securely access resources in your private networks.
+**Workers VPC Services** is now available, enabling your Workers to securely access resources in your private networks, without having to expose them on the public Internet.
 
 ## What's new
 
-- **VPC Services**: Create secure connections to internal APIs, databases, and services through Cloudflare Tunnel using familiar Worker binding syntax
-- **Multi-cloud Support**: Connect to resources across AWS, Azure, GCP, and on-premise infrastructure
+- **VPC Services**: Create secure connections to internal APIs, databases, and services using familiar Worker binding syntax
+- **Multi-cloud Support**: Connect to resources in private networks in any external cloud (AWS, Azure, GCP, etc.) or on-premise using Cloudflare Tunnels
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		// Perform application logic in Workers here
+
+		// Sample call to an internal API running on ECS in AWS using the binding
+		const response = await env.AWS_VPC_ECS_API.fetch("https://internal-host.example.com");
+
+		// Additional application logic in Workers
+		return new Response();
+	},
+};
+```
 
 ## Getting started
 

@@ -15,14 +15,18 @@ The Sandbox SDK uses a Ubuntu-based Linux container with Python, Node.js (via Bu
 FROM docker.io/cloudflare/sandbox:0.3.3
 ```
 
-:::note
+:::caution[Version synchronization required]
 Always match the Docker image version to your npm package version. If you're using `@cloudflare/sandbox@0.3.3`, use `docker.io/cloudflare/sandbox:0.3.3` as your base image.
+
+**Why this matters**: The SDK automatically checks version compatibility on startup. Mismatched versions can cause features to break or behave unexpectedly. If versions don't match, you'll see warnings in your logs.
+
+See [Version compatibility](/sandbox/concepts/sandboxes/#version-compatibility) for troubleshooting version mismatch warnings.
 :::
 
 **What's included:**
 
 - Ubuntu 22.04 LTS base
-- Python 3.11 with pip and venv
+- Python 3.11.14 with pip and venv
 - Node.js 20 LTS with npm
 - Bun 1.x (JavaScript/TypeScript runtime)
 - Pre-installed Python packages: matplotlib, numpy, pandas, ipython
@@ -65,6 +69,44 @@ Update `wrangler.jsonc` to reference your Dockerfile:
 ```
 
 When you run `wrangler dev` or `wrangler deploy`, Wrangler automatically builds your Docker image and pushes it to Cloudflare's container registry. You don't need to manually build or publish images.
+
+## Custom startup scripts
+
+Run services automatically when the container starts by creating a custom startup script:
+
+```dockerfile title="Dockerfile"
+FROM docker.io/cloudflare/sandbox:0.3.3
+
+COPY my-app.js /workspace/my-app.js
+COPY startup.sh /workspace/startup.sh
+RUN chmod +x /workspace/startup.sh
+CMD ["/workspace/startup.sh"]
+```
+
+```bash title="startup.sh"
+#!/bin/bash
+
+# Start your services in the background
+node /workspace/my-app.js &
+
+# Must end with this command
+exec bun /container-server/dist/index.js
+```
+
+Your startup script must end with `exec bun /container-server/dist/index.js` to start the SDK's control plane.
+
+### Multiple services
+
+```bash title="startup.sh"
+#!/bin/bash
+
+redis-server --daemonize yes
+until redis-cli ping; do sleep 1; done
+
+node /workspace/api-server.js &
+
+exec bun /container-server/dist/index.js
+```
 
 ## Related resources
 

@@ -56,7 +56,7 @@ To help this better match the needs of your organization, you can also build a c
 		name: "Secrets and AWS keys",
 		precedence: 0,
 		traffic:
-			"any(dlp.profiles[] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[] in <AWS_DLP_PROFILE_UUID>)",
+			"any(dlp.profiles[*] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[*] in <AWS_DLP_PROFILE_UUID>)",
 	}}
 />
 
@@ -162,7 +162,7 @@ Many organizations want to detect and log financial information egressing from u
 		name: "Block AI financial info",
 		precedence: 0,
 		traffic:
-			"any(dlp.profiles[] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[] in {184})",
+			"any(dlp.profiles[*] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[*] in {184})",
 	}}
 />
 

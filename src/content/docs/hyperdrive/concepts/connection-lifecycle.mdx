@@ -1,0 +1,69 @@
+---
+pcx_content_type: concept
+title: Connection lifecycle
+sidebar:
+  order: 2
+---
+
+Understanding how connections work between Workers, Hyperdrive, and your origin database is essential for building efficient applications with Hyperdrive.
+
+By maintaining a connection pool to your database within Cloudflare's network, Hyperdrive reduces seven round-trips to your database before you can even send a query: the TCP handshake (1x), TLS negotiation (3x), and database authentication (3x).
+
+## How connections are managed
+
+When you use a database client in a Cloudflare Worker, the connection lifecycle works differently than in traditional server environments. Here's what happens:
+
+![Hyperdrive connection](~/assets/images/hyperdrive/configuration/hyperdrive-connection-lifecycle.svg)
+
+Without Hyperdrive, every Worker invocation would need to establish a new connection directly to your origin database. This connection setup process requires multiple roundtrips across the Internet to complete the TCP handshake, TLS negotiation, and database authentication — that's 7x round trips and added latency before your query can even execute.
+
+Hyperdrive solves this by splitting the connection setup into two parts: a fast edge connection and an optimized path to your database.
+
+1. **Connection setup on the edge**: The database driver in your Worker code establishes a connection to the Hyperdrive instance. This happens at the edge, colocated with your Worker, making it extremely fast to create connections. This is why you use Hyperdrive's special connection string.
+
+2. **Single roundtrip across regions**: Since authentication has already been completed at the edge, Hyperdrive only needs a single round trip across regions to your database, instead of the multiple roundtrips that would be incurred during connection setup.
+
+3. **Get existing connection from pool**: Hyperdrive uses an existing connection from the pool that is colocated close to your database, minimizing latency.
+
+4. **If no available connections, create new**: When needed, new connections are created from a region close to your database to reduce the latency of establishing new connections.
+
+5. **Run query**: Your query is executed against the database and results are returned to your Worker through Hyperdrive.
+
+6. **Connection teardown**: When your Worker finishes processing the request, the database client connection in your Worker is automatically garbage collected. However, Hyperdrive keeps the connection to your origin database open in the pool, ready to be reused by the next Worker invocation. This means subsequent requests will still perform the fast edge connection setup, but will reuse one of the existing connections from Hyperdrive's pool near your database.
+
+:::note
+
+In a Cloudflare Worker, database client connections within the Worker are only kept alive for the duration of a single invocation. With Hyperdrive, creating a new client on each invocation is fast and recommended because Hyperdrive maintains the underlying database connections for you, pooled in an optimal location and shared across Workers to maximize scale.
+
+:::
+
+## Connection lifecycle considerations
+
+### Durable Objects and persistent connections
+
+Unlike regular Workers, [Durable Objects](/durable-objects/) can maintain state across multiple requests. If you keep a database client open in a Durable Object, the connection will remain allocated from Hyperdrive's connection pool. Long-lived Durable Objects can exhaust available connections if many objects keep connections open simultaneously.
+
+:::caution
+
+Be careful when maintaining persistent database connections in Durable Objects. Each open connection consumes resources from Hyperdrive's connection pool, which could impact other parts of your application. Close connections when not actively in use, use connection timeouts, and limit the number of Durable Objects that maintain database connections.
+
+:::
+
+### Long-running transactions
+
+Hyperdrive operates in [transaction pooling mode](/hyperdrive/concepts/how-hyperdrive-works/#pooling-mode), where a connection is held for the duration of a transaction. Long-running transactions that contain multiple queries can exhaust Hyperdrive's available connections more quickly because each transaction holds a connection from the pool until it completes.
+
+:::tip
+
+Keep transactions as short as possible. Perform only the essential queries within a transaction, and avoid including non-database operations (like external API calls or complex computations) inside transaction blocks.
+
+:::
+
+Refer to [Limits](/hyperdrive/platform/limits/) to understand how many connections are available for your Hyperdrive configuration based on your Workers plan.
+
+## Related resources
+
+- [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/)
+- [Connection pooling](/hyperdrive/concepts/connection-pooling/)
+- [Limits](/hyperdrive/platform/limits/)
+- [Durable Objects](/durable-objects/)

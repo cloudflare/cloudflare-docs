@@ -18,9 +18,15 @@ Containers are billed for every 10ms that they are actively running at the follo
 
 You only pay for what you use — charges start when a request is sent to the container or when it is manually started. Charges stop after the container instance goes to sleep, which can happen automatically after a timeout. This makes it easy to scale to zero, and allows you to get high utilization even with bursty traffic.
 
+Memory and disk usage are based on the *provisioned resources* for the instance type you select, while CPU usage is based on *active usage* only.
+
 #### Instance Types
 
-When you add containers to your Worker, you specify an [instance type](/containers/platform-details/#instance-types). The instance type you select will impact your bill — larger instances include more vCPUs, memory and disk, and therefore incur additional usage costs. The following instance types are currently available, and larger instance types are coming soon:
+When you deploy a container, you specify an [instance type](/containers/platform-details/#instance-types).
+
+The instance type you select will impact your bill — larger instances include more memory and disk, incurring additional costs, and higher CPU capacity, which allows you to incur higher CPU costs based on active usage.
+
+The following instance types are currently available:
 
 <Render product="containers" file="instance-types" />
 

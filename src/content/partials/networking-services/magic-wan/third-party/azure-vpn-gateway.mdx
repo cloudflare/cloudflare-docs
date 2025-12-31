@@ -70,7 +70,7 @@ The time it takes for Azure to fully provision the Virtual Network Gateway depen
    10. **Replay protection**: **Enable**.
 3. If you are using the Active/Active configuration, select **Add IPsec tunnel** and repeat step 2 to create the second Magic WAN IPsec tunnel. Use the same **Cloudflare endpoint** as for the first tunnel.
 4. Select **Add Tunnels** when you are finished.
-5.The Cloudflare dashboard will show you a list of your tunnels. Edit the tunnel(s) you have created > select **Generate a new pre-shared key** > copy the generated key. If using the Active/Active configuration, select **Change to a new custom pre-shared key** on the second tunnel and use the PSK generated for the first tunnel.
+5. The Cloudflare dashboard will show you a list of your tunnels. Edit the tunnel(s) you have created > select **Generate a new pre-shared key** > copy the generated key. If using the Active/Active configuration, select **Change to a new custom pre-shared key** on the second tunnel and use the PSK generated for the first tunnel.
 6. Create <a href={props.staticRoutesUrl}>static routes</a> for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
 
 :::note
@@ -123,7 +123,7 @@ To configure the Address Space for the Local Network Gateway to support Tunnel H
 1. Edit the Local Network Gateway configured in the previous section.
 2. Select **Connections**.
 3. Under **Address Space(s)** add the Interface Address of the Magic IPsec Tunnel from the Cloudflare dashboard in CIDR notation (for example, `10.252.3.55/32`).
-4. If using an Active/Active configuration, add the Interface Address of the second Magic IPsec Tunnel from the Cloudflare Dashboard in CIDR notation (for example, `10.252.3.55/32`) under **Address Space(s)**.
+4. If using an Active/Active configuration, also add the Interface Address of the second Magic IPsec Tunnel from the Cloudflare Dashboard in CIDR notation (for example, `10.252.3.56/32`) under **Address Space(s)**. Both tunnel interface addresses must be configured in the Local Network Gateway Address Space to ensure both tunnels remain healthy.
 4. Select **Save**.
 
 :::note

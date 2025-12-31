@@ -62,7 +62,7 @@ console.log(content);
 ## Advanced usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/content/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/content/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
   
 ### Block specific resource types
@@ -82,6 +82,11 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 ```
 
 Many more options exist, like setting HTTP headers using `setExtraHTTPHeaders`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/content/methods/create/) for all available parameters.
+
+<Render
+  file="javascript-heavy-pages"
+  product="browser-rendering"
+/>
 
 <Render
   file="setting-custom-user-agent"

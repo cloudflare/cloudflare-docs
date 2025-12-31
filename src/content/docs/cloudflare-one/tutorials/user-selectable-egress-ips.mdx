@@ -37,12 +37,11 @@ First, create [virtual networks](/cloudflare-one/networks/connectors/cloudflare-
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-2. In **Network locations**, go to **Virtual networks** and select **Manage**.
-3. Select **Create virtual network**.
-4. Name your virtual network. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
-5. Select **Save**.
-6. Repeat Steps 3-5 for each dedicated egress IP you want users to switch between. For example, you can create another virtual network called `vnet-EMEA` for egress from Europe, the Middle East, and Africa.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
+2. In **Virtual networks**, select **Create virtual network**.
+3. Name your virtual network. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
+4. Select **Save**.
+5. Repeat Steps 2-4 for each dedicated egress IP you want users to switch between. For example, you can create another virtual network called `vnet-EMEA` for egress from Europe, the Middle East, and Africa.
 
 </TabItem>
 
@@ -72,7 +71,7 @@ After creating your virtual networks, route your private network CIDRs over each
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Networks** > **Tunnels**.
+1. Go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
 2. Select your tunnel routing `10.0.0.0/8`, then select **Configure**.
 3. Go to **Private Networks**. Select the `10.0.0.0/8` route.
 4. In **Additional settings**, choose your first virtual network. For example, `vnet-AMER`.
@@ -132,7 +131,7 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Egress policies**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Egress policies**.
 
 2. Select **Add a policy**.
 

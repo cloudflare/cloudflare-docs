@@ -12,7 +12,7 @@ A [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-rulese
 
 To add one or more rules to a phase entry point ruleset, use one of the [ruleset update operations](/ruleset-engine/rulesets-api/update/) of the [Rulesets API](/ruleset-engine/rulesets-api/). When you add a rule to an entry point ruleset, the entry point ruleset is created automatically if it does not exist. This API method requires that you include in the request all rules you want to keep in the ruleset, or else they will be removed.
 
-If you are adding a **single** rule to a ruleset, consider using one of the [rule creation operations](/ruleset-engine/rulesets-api/add-rule/) instead. In this case, the request will only include the definition of the new rule.
+If you are adding a single rule to a ruleset, consider using one of the [rule creation operations](/ruleset-engine/rulesets-api/add-rule/) instead. In this case, the request only includes the definition of the new rule.
 
 :::note[Creating an entry point ruleset]
 Instead of relying on the automatic creation of an entry point ruleset, you can also create this ruleset explicitly using one of the [ruleset creation operations](/ruleset-engine/rulesets-api/create/).

@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-import { Render, Type, MetaInfo, GlossaryTooltip, TypeScriptExample, Details } from "~/components";
+import { Render, Type, MetaInfo, GlossaryTooltip, TypeScriptExample, Details, Tabs, TabItem } from "~/components";
 
 :::note
 This page documents the storage API for legacy KV-backed Durable Objects.
@@ -23,7 +23,9 @@ Durable Objects gain access to Storage API via the `DurableObjectStorage` interf
 
 The following code snippet shows you how to store and retrieve data using the Durable Object Storage API.
 
-<TypeScriptExample>
+<Tabs>
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class Counter extends DurableObject {
   constructor(ctx: DurableObjectState, env: Env) {
@@ -39,6 +41,26 @@ export class Counter extends DurableObject {
 }
 ```
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class Counter(DurableObject):
+  def __init__(self, ctx, env):
+    super().__init__(ctx, env)
+
+  async def increment(self):
+    value = (await self.ctx.storage.get("value")) or 0
+    value += 1
+    await self.ctx.storage.put("value", value)
+    return value
+```
+
+</TabItem>
+
+</Tabs>
 
 JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes, by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations. Learn more in our [blog post](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
 

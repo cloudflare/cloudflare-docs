@@ -35,7 +35,7 @@ To retrieve those values:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    In [Cloudflare One](https://one.dash.cloudflare.com), go to **Settings** > **Team name** to find your team name.
+    <Render file="find-team-name" product="cloudflare-one" />
 
     ![Registering an application in Azure](~/assets/images/cloudflare-one/identity/azure/name-app.png)
 
@@ -152,18 +152,19 @@ By default, Cloudflare will first look for the unique claim name you created and
 
 To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
-1. In the [Microsoft Entra admin center](https://entra.microsoft.com/), go to **Application** > **App registration** > **All applications** > select the relevant application > under **Manage**, select **Token configuration**.
-2. Add a claim for email.
+1.  In the [Microsoft Entra admin center](https://entra.microsoft.com/), go to **Application** > **App registration** > **All applications** and select the relevant application.
+2.  Under **Manage**, select **Token configuration**.
+3.  Add a claim for email.
 
-   ![Email claim for Entra](~/assets/images/cloudflare-one/identity/azure/entra-email-claim.png)
+    ![Email claim for Entra](~/assets/images/cloudflare-one/identity/azure/entra-email-claim.png)
 
-   The example above includes both a UPN claim and an email claim. Because an email claim was created in the Microsoft Entra configuration, Cloudflare will look for the `email` key-value pair in the JSON response.
+    The example above includes both a UPN claim and an email claim. Because an email claim was created in the Microsoft Entra configuration, Cloudflare will look for the `email` key-value pair in the JSON response.
 
-3. If you gave your email claim another name than `email`, you must update your configuration in Cloudflare One:
+4.  If you gave your email claim another name than `email`, you must update your configuration in Cloudflare One:
 
-		a. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers** > **Azure AD** > **Edit**.
+        a. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers** > **Azure AD** > **Edit**.
 
-		b. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
+        b. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
 
 #### Object ID
 
@@ -233,12 +234,12 @@ Provisioning attributes define the user properties that Entra ID will synchroniz
 
 If not already configured, Cloudflare recommends enabling the following user attribute mappings:
 
-| customappsso Attribute         | Entra ID Attribute | Recommendation |
-| ------------------------------ | ------------------ | -------------- |
-| `userName`  									 | `userPrincipalName` or `mail` | Required. Must match the user's email address in Cloudflare One.  |
-| `emails[type eq "work"].value` | `mail`             | Required. Must match the user's email address in Cloudflare One.      |
-| `name.givenName`               | `givenName`        | Recommended    |
-| `name.familyName`              | `surname`          | Recommended    |
+| customappsso Attribute         | Entra ID Attribute            | Recommendation                                                   |
+| ------------------------------ | ----------------------------- | ---------------------------------------------------------------- |
+| `userName`                     | `userPrincipalName` or `mail` | Required. Must match the user's email address in Cloudflare One. |
+| `emails[type eq "work"].value` | `mail`                        | Required. Must match the user's email address in Cloudflare One. |
+| `name.givenName`               | `givenName`                   | Recommended                                                      |
+| `name.familyName`              | `surname`                     | Recommended                                                      |
 
 ## Entra groups in Zero Trust policies
 

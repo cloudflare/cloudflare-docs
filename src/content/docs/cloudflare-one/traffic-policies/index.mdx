@@ -9,7 +9,7 @@ import { Render, Stream } from "~/components";
 
 Cloudflare Gateway, our comprehensive [Secure Web Gateway](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/), allows you to set up policies to inspect DNS, Network, HTTP, and Egress traffic.
 
-- **Packet filtering** inspect and filter unwanted traffic based on packet attributes. Packet filtering policies block threats regardless of user or session context. Traffic is matched in the order the configured rules.
+- **Packet filtering** inspects and filters unwanted traffic based on packet attributes. Packet filtering policies block threats regardless of user or session context.
 - **DNS policies** inspect DNS queries. You can block domains and IP addresses from resolving on your devices. For more information on DNS filtering, refer to our [Learning Center article](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/).
 - **Network policies** inspect individual TCP/UDP/GRE packets. You can block access to specific ports on your origin server, including non-HTTP resources.
 - **HTTP policies** inspect HTTP requests. You can block specific URLs from loading, not just the domain itself. For more information on URL filtering, refer to our [Learning Center article](https://www.cloudflare.com/learning/access-management/what-is-url-filtering/).
@@ -42,8 +42,8 @@ To get started with specific Gateway filtering types, refer to the initial setup
 The recommended policy type depends on what kind of traffic you are trying to filter. For example:
 
 - To block websites, create an HTTP policy.
-- To block non-HTTP traffic such as SSH and RDP, create a network policy.
+- To block non-HTTP traffic such as SSH and RDP, create a Network policy.
 - To block malware and other security threats, create both DNS and HTTP policies.
 - To assign static IP addresses to your organization's egress traffic, create an egress policy.
 
-Refer to the [DNS](/cloudflare-one/traffic-policies/dns-policies/), [network](/cloudflare-one/traffic-policies/network-policies/), [HTTP](/cloudflare-one/traffic-policies/http-policies/), and [egress](/cloudflare-one/traffic-policies/egress-policies/) configuration pages to see the available filtering options within each policy builder.
+Refer to the [Packet filtering](/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/), [DNS](/cloudflare-one/traffic-policies/dns-policies/), [Network](/cloudflare-one/traffic-policies/network-policies/), [HTTP](/cloudflare-one/traffic-policies/http-policies/), and [egress](/cloudflare-one/traffic-policies/egress-policies/) configuration pages to see the available filtering options within each policy builder.

@@ -17,7 +17,7 @@ description: Example of how to use Queues and Browser Rendering to power a web c
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/platform/puppeteer/).
+This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/puppeteer/).
 
 Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to `cloudflare.com` and take a screenshot of the site, saving results to [Workers KV](/kv/).
 
@@ -104,7 +104,7 @@ kv_namespaces = [
 
 Now, you need to set up your Worker for Browser Rendering.
 
-In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
+In your current directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 

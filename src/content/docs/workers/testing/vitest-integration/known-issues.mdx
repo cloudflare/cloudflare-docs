@@ -69,6 +69,40 @@ test('check if file exists', async () => {
 });
 ```
 
+### Missing properties on `ctx.exports`
+
+The `ctx.exports` property provides access to the exports of the main (`SELF`) Worker. The Workers Vitest integration attempts to automatically infer these exports by statically analyzing the Worker source code using esbuild. However, complex build setups, such as those using virtual modules or wildcard re-exports that esbuild cannot follow, may result in missing properties on the `ctx.exports` object.
+
+For example, consider a Worker that re-exports an entrypoint from a virtual module using a wildcard export:
+
+```ts
+// index.ts
+export * from "@virtual-module";
+```
+
+In this case, any exports from `@virtual-module` (such as `MyEntrypoint`) cannot be automatically inferred and will be missing from `ctx.exports`.
+
+To work around this, add the `additionalExports` option to your Vitest configuration:
+
+```ts
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersConfig({
+	test: {
+		poolOptions: {
+			workers: {
+				wrangler: { configPath: "./wrangler.toml" },
+				additionalExports: {
+					MyEntrypoint: "WorkerEntrypoint",
+				},
+			},
+		},
+	},
+});
+```
+
+The `additionalExports` option is a map where keys are the export names and values are the type of export (`"WorkerEntrypoint"`, `"DurableObject"`, or `"WorkflowEntrypoint"`).
+
 ### Module resolution
 
 If you encounter module resolution issues such as: `Error: Cannot use require() to import an ES Module` or `Error: No such module`, you can bundle these dependencies using the [deps.optimizer](https://vitest.dev/config/#deps-optimizer) option:

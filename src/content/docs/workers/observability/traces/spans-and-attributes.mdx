@@ -67,12 +67,37 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 #### [`cache_put`](/workers/runtime-apis/cache/#put)
 
-- `cache_control.expiration`
-- `cache_control.revalidation`
+- `cache.request.url`
+- `cache.request.method`
+- `cache.request.payload.status_code`
+- `cache.request.payload.header.cache_control`
+- `cache.request.payload.header.cache_tag`
+- `cache.request.payload.header.etag`
+- `cache.request.payload.header.expires`
+- `cache.request.payload.header.last_modified`
+- `cache.request.payload.size`
+- `cache.response.success`
 
 #### [`cache_match`](/workers/runtime-apis/cache/#match)
 
+- `cache.request.ignore_method`
+- `cache.request.url`
+- `cache.request.method`
+- `cache.request.header.range`
+- `cache.request.header.if_modified_since`
+- `cache.request.header.if_none_match`
+- `cache.response.status_code`
+- `cache.response.body.size`
+- `cache.response.cache_status`
+- `cache.response.success`
+
 #### [`cache_delete`](/workers/runtime-apis/cache/#delete)
+
+- `cache.request.ignore_method`
+- `cache.request.url`
+- `cache.request.method`
+- `cache.response.status_code`
+- `cache.response.success`
 
 ---
 

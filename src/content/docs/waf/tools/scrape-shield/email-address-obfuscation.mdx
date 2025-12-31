@@ -52,7 +52,7 @@ To prevent Cloudflare from obfuscating specific email addresses, you can:
 
 - Add the following comment in the page HTML code:
 
-  ```
+  ```html
   <!--email_off-->contact@example.com<!--/email_off-->
   ```
 
@@ -66,20 +66,20 @@ To prevent Cloudflare from obfuscating specific email addresses, you can:
 
 To prevent unexpected website behavior, email addresses are not obfuscated when they appear in:
 
-- Any HTML tag attribute, except for the _href_ attribute of the _a_ tag.
+- Any HTML tag attribute, except for the `href` attribute of the `a` tag.
 - Other HTML tags:
-  - _script_ tags: `<script></script>`
-  - _noscript_ tags: `<noscript></noscript>`
-  - _textarea_ tags: `<textarea></textarea>`
-  - _xmp_ tags: `<xmp></xmp>`
-  - _head_ tags: `<head></head>`
+  - `<script></script>`
+  - `<noscript></noscript>`
+  - `<textarea></textarea>`
+  - `<xmp></xmp>`
+  - `<head></head>`
 - Any page that does not have a MIME type of `text/html` or `application/xhtml+xml`.
 
-:::note
+:::note[Notes]
 
-Email Obfuscation will not apply in the following cases:
-
-- You are using the `Cache-Control: no-transform` header.
-- The HTML/JS code is specifically added by a [Worker](/workers/).
+- Email Obfuscation will not apply in the following cases:
+  - You are using the `Cache-Control: no-transform` header.
+  - The HTML/JavaScript code is specifically added by a [Worker](/workers/).
+- Email Obfuscation might not work as expected when the HTML page includes `<template></template>` tags.
 
 :::
