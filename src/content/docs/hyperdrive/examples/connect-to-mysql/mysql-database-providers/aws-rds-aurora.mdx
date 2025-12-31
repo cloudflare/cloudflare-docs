@@ -63,7 +63,7 @@ Support for AWS Aurora MySQL databases is coming soon. Join our early preview su
 
 Once your database is created, you will need to create a user for Hyperdrive to connect as. Although you can use the **Master username** configured during initial database creation, best practice is to create a less privileged user.
 
-To create a new user, log in to the database and use the `CREATE ROLE` command:
+To create a new user, log in to the database and use the `CREATE USER` command:
 
 ```sh
 # Log in to the database
@@ -77,16 +77,16 @@ Run the following SQL statements:
 CREATE ROLE hyperdrive;
 
 -- Allow Hyperdrive to connect
-GRANT CONNECT ON DATABASE mysql_db TO hyperdrive;
+GRANT USAGE ON mysql_db.* TO hyperdrive;
 
 -- Grant database privileges to the hyperdrive role
-GRANT ALL PRIVILEGES ON DATABASE mysql_db to hyperdrive;
+GRANT ALL PRIVILEGES ON mysql_db.* to hyperdrive;
 
 -- Create a specific user for Hyperdrive to log in as
-CREATE ROLE hyperdrive_user LOGIN PASSWORD 'sufficientlyRandomPassword';
+CREATE USER 'hyperdrive_user'@'%' IDENTIFIED WITH caching_sha2_password BY 'sufficientlyRandomPassword';
 
 -- Grant this new user the hyperdrive role privileges
-GRANT hyperdrive to hyperdrive_user;
+GRANT hyperdrive to 'hyperdrive_user'@'%';
 ```
 
 Refer to AWS' [documentation on user roles in MySQL](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.MySQL.CommonDBATasks.privilege-model.html) for more details.
