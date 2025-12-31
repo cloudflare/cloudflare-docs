@@ -1,8 +1,6 @@
 name: Review
 
 on:
-  issue_comment:
-    types: [created]
   pull_request_review_comment:
     types: [created]
 
@@ -19,18 +17,36 @@ jobs:
       - name: Get PR number
         id: pr-number
         run: |
-          if [ "${{ github.event_name }}" = "pull_request_review_comment" ]; then
-            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+
+      - name: Verify PR exists
+        id: verify-pr
+        run: |
+          if gh api /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
           else
-            echo "number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "::warning::PR #${{ github.event.pull_request.number }} not found, skipping review"
           fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout repository
+        if: steps.verify-pr.outputs.exists == 'true'
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
+      - name: Setup Bun
+        if: steps.verify-pr.outputs.exists == 'true'
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        if: steps.verify-pr.outputs.exists == 'true'
+        run: bun install --frozen-lockfile
+
       - name: Get PR details
+        if: steps.verify-pr.outputs.exists == 'true'
         id: pr-details
         run: |
           gh api /repos/${{ github.repository }}/pulls/${{ steps.pr-number.outputs.number }} > /tmp/pr_data.json
