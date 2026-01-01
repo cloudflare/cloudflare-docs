@@ -28,7 +28,7 @@ const sandbox = getSandbox(
 - `sandboxId` - Unique identifier for this sandbox. The same ID always returns the same sandbox instance
 - `options` (optional) - See [SandboxOptions](/sandbox/configuration/sandbox-options/) for all available options:
   - `sleepAfter` - Duration of inactivity before automatic sleep (default: `"10m"`)
-  - `keepAlive` - Prevent automatic sleep entirely (default: `false`)
+  - `keepAlive` - Prevent automatic sleep entirely. Persists across hibernation (default: `false`)
   - `containerTimeouts` - Configure container startup timeouts
   - `normalizeId` - Lowercase sandbox IDs for preview URL compatibility (default: `false`)
 

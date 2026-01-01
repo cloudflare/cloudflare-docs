@@ -24,6 +24,8 @@ const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
 
 Keep the container alive indefinitely by preventing automatic shutdown. When `true`, the container will never auto-timeout and must be explicitly destroyed using `destroy()`.
 
+The `keepAlive` flag persists across Durable Object hibernation and wakeup cycles. Once enabled, you do not need to re-set it after the sandbox wakes from hibernation.
+
 <TypeScriptExample>
 ```ts
 // For long-running processes that need the container to stay alive
