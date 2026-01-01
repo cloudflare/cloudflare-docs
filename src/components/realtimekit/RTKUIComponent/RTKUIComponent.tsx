@@ -42,7 +42,7 @@ const RTKUIComponent = ({ id, imagePath, name, componentName }: Props) => {
 					<button
 						onClick={toggleImageSize}
 						style={{ border: "solid 4px #fff" }}
-						className={`left-0" } absolute bottom-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-md bg-black/70 p-1 text-xs text-white`}
+						className={`absolute bottom-0 left-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-md p-1 text-black`}
 					>
 						⛶
 					</button>
@@ -72,17 +72,21 @@ const RTKUIComponent = ({ id, imagePath, name, componentName }: Props) => {
 						<button
 							onClick={toggleImageSize}
 							style={{ border: "solid 4px #fff" }}
-							className={`left-0" } absolute bottom-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-md bg-black/70 p-1 text-xs text-white`}
+							className={`absolute bottom-0 left-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-md p-1 text-black`}
 						>
 							−
 						</button>
 					</div>
-					<code className="w-fit rounded-sm bg-gray-100 p-1">{component}</code>
+					<code className="w-fit rounded-sm bg-gray-100 p-1 dark:bg-neutral-700">
+						{component}
+					</code>
 				</div>
 			)}
 
 			{!isExpanded && (
-				<code className="w-fit rounded-sm bg-gray-100 p-1">{component}</code>
+				<code className="w-fit rounded-sm bg-gray-100 p-1 dark:bg-neutral-700">
+					{component}
+				</code>
 			)}
 		</div>
 	);

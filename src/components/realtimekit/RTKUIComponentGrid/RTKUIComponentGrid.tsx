@@ -418,12 +418,10 @@ const RTKUIComponentGrid = () => {
 		<div>
 			<h2 className="mb-2 text-2xl font-bold">Component Gallery</h2>
 			<p className="mb-4">
-				{" "}
 				Search through the comoponent gallery for the component you need.
 			</p>
 			<input
-				className="mb-6 w-full rounded-md bg-neutral-50 p-1 px-2"
-				style={{ border: "solid 1px #ccc" }}
+				className="mb-2 w-full rounded-md border bg-neutral-50 p-1 px-2 dark:border-neutral-600 dark:bg-neutral-800"
 				placeholder="Search for 'Chat'"
 				value={searchTerm}
 				onChange={(e) => setSearchTerm(e.target.value)}
@@ -450,9 +448,7 @@ const RTKUIComponentGrid = () => {
 			{filteredBasicComponents.length > 0 && (
 				<>
 					<h2 className="mb-2 text-2xl font-bold">Basic Components</h2>
-					<p className="mb-4 text-gray-600">
-						Small, reusable building blocks for your UI.
-					</p>
+					<p className="mb-4">Small, reusable building blocks for your UI.</p>
 					<div className="flex flex-wrap items-start gap-4">
 						{filteredBasicComponents.map((component) => (
 							<RTKUIComponent
@@ -471,9 +467,7 @@ const RTKUIComponentGrid = () => {
 			{filteredUiComponents.length > 0 && (
 				<>
 					<h2 className="mb-2 text-2xl font-bold">UI Components</h2>
-					<p className="mb-4 text-gray-600">
-						Interactive controls and interface elements.
-					</p>
+					<p className="mb-4">Interactive controls and interface elements.</p>
 					<div className="flex flex-wrap items-start gap-4">
 						{filteredUiComponents.map((component) => (
 							<RTKUIComponent
@@ -492,7 +486,7 @@ const RTKUIComponentGrid = () => {
 			{filteredCompositeComponents.length > 0 && (
 				<>
 					<h2 className="mb-2 text-2xl font-bold">Composite Components</h2>
-					<p className="mb-4 text-gray-600">
+					<p className="mb-4">
 						Complete, feature-rich components combining multiple elements.
 					</p>
 					<div className="flex flex-wrap items-start gap-4">
@@ -513,7 +507,7 @@ const RTKUIComponentGrid = () => {
 			{filteredScreenComponents.length > 0 && (
 				<>
 					<h2 className="mb-2 text-2xl font-bold">Screen Components</h2>
-					<p className="mb-4 text-gray-600">
+					<p className="mb-4">
 						Full-screen views for different meeting states.
 					</p>
 					<div className="flex flex-wrap items-start gap-4">
