@@ -625,7 +625,7 @@ entries:
       This field is only meaningful for [BYOIP customers](/byoip/).
 
   - name: cf.edge.server_port
-    data_type: IP address
+    data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, client, visitor]
     summary: Represents the port number at which the Cloudflare global network received the request.
