@@ -1,0 +1,725 @@
+---
+pcx_content_type: how-to
+title: Integrate Cloudflare Workflows with Agents
+sidebar:
+  order: 8
+description: Learn how to use Cloudflare Workflows with Agents for durable, long-running tasks with automatic retries, human approval, and scheduled work
+---
+
+import { Details, Render, PackageManagers, WranglerConfig, TypeScriptExample } from "~/components";
+
+## Overview
+
+This guide demonstrates how to integrate [Cloudflare Workflows](/workflows/) with the Agents SDK to run durable, long-running background tasks. You will learn how to dispatch workflows from an Agent, handle workflow lifecycle events, and implement advanced patterns like human-in-the-loop approval and scheduled follow-ups.
+
+Cloudflare Workflows provide capabilities that are impossible in a standard Durable Object:
+
+- **Durable execution**: Workflows survive restarts, deployments, and failures with automatic retries
+- **Long-running operations**: Tasks can run for hours or days without timeout concerns
+- **Step-based checkpointing**: Completed steps are never re-executed after a restart
+- **Hibernation**: Use `step.sleep()` to pause for hours or days with zero compute cost
+- **Human approval**: Use `step.waitForEvent()` to pause execution indefinitely while waiting for external input
+
+This guide will show you how to build two analysis patterns:
+1. **Quick Analysis** - Runs directly in the Agent using `ctx.waitUntil()`, suitable for tasks under 30 seconds
+2. **Deep Analysis** - Runs in a Cloudflare Workflow, enabling durable execution, human approval, and scheduled work
+
+You can view the full code for this example in the [task-runner example](https://github.com/cloudflare/agents/tree/main/examples/task-runner).
+
+## Prerequisites
+
+Before you begin, you will need:
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- [Node.js](https://nodejs.org/) installed (v18 or later)
+- An [OpenAI API key](https://platform.openai.com/api-keys) (or another LLM provider)
+- Basic understanding of [Cloudflare Workflows](/workflows/)
+
+## 1. Create your project
+
+Create a new project directory and install dependencies:
+
+<PackageManagers
+  type="create"
+  pkg="cloudflare@latest"
+  args={"task-runner"}
+/>
+
+Navigate into your project and install required dependencies:
+
+```sh
+cd task-runner
+npm install openai
+```
+
+## 2. Configure your Worker
+
+Create your Wrangler configuration file:
+
+<WranglerConfig>
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "task-runner-example",
+  "main": "src/server.ts",
+  "compatibility_date": "2025-02-11",
+  "compatibility_flags": ["nodejs_compat", "enable_ctx_exports"],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "task-runner",
+        "class_name": "TaskRunner"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["TaskRunner"]
+    }
+  ],
+  "workflows": [
+    {
+      "name": "analysis-workflow",
+      "binding": "ANALYSIS_WORKFLOW",
+      "class_name": "AnalysisWorkflow"
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+Create a `.dev.vars` file for your API key:
+
+```sh
+OPENAI_API_KEY=sk-...
+```
+
+## 3. Implement the Agent
+
+Create `src/server.ts` to define your Agent with methods that dispatch to workflows:
+
+<TypeScriptExample>
+```ts
+import {
+  Agent,
+  routeAgentRequest,
+  callable
+} from "@cloudflare/agents";
+import OpenAI from "openai";
+
+export { AnalysisWorkflow } from "./workflows/analysis";
+
+interface WorkflowInstance {
+  id: string;
+  pause: () => Promise<void>;
+  resume: () => Promise<void>;
+  terminate: () => Promise<void>;
+  status: () => Promise<{
+    status: "queued" | "running" | "paused" | "complete" | "errored" | "terminated" | "waiting";
+    error?: string;
+    output?: unknown;
+  }>;
+  sendEvent: (event: { type: string; payload: unknown }) => Promise<void>;
+}
+
+interface Workflow {
+  create: (opts?: {
+    id?: string;
+    params?: unknown;
+  }) => Promise<WorkflowInstance>;
+  get: (id: string) => Promise<WorkflowInstance>;
+}
+
+type Env = {
+  "task-runner": DurableObjectNamespace<TaskRunner>;
+  ANALYSIS_WORKFLOW: Workflow;
+  OPENAI_API_KEY: string;
+};
+
+interface TaskState {
+  id: string;
+  type: "quick" | "deep";
+  status: "pending" | "running" | "awaiting-approval" | "completed" | "failed";
+  progress?: number;
+  result?: unknown;
+  error?: string;
+  workflowInstanceId?: string;
+  events: Array<{ type: string; data?: unknown; timestamp: number }>;
+}
+
+export class TaskRunner extends Agent<
+  Env,
+  { tasks: Record<string, TaskState> }
+> {
+  initialState = { tasks: {} as Record<string, TaskState> };
+
+  /**
+   * Start a quick analysis using ctx.waitUntil().
+   * Good for tasks under 30 seconds with no durability requirements.
+   */
+  @callable()
+  async quickAnalysis(input: { repoUrl: string; branch?: string }) {
+    const taskId = `task_${crypto.randomUUID().slice(0, 12)}`;
+
+    this.updateTask(taskId, {
+      id: taskId,
+      type: "quick",
+      status: "running",
+      progress: 0,
+      events: [{ type: "started", timestamp: Date.now() }]
+    });
+
+    // Run in background without blocking response
+    this.ctx.waitUntil(this.runQuickAnalysis(taskId, input.repoUrl, input.branch));
+
+    return { id: taskId };
+  }
+
+  /**
+   * Start a deep analysis using Cloudflare Workflow.
+   * Enables durable execution, human approval, and scheduled work.
+   */
+  @callable()
+  async startAnalysis(input: {
+    repoUrl: string;
+    branch?: string;
+    requireApproval?: boolean;
+    scheduleFollowUp?: boolean;
+  }) {
+    const taskId = `task_${crypto.randomUUID().slice(0, 12)}`;
+
+    // Create workflow instance with parameters
+    const instance = await this.env.ANALYSIS_WORKFLOW.create({
+      id: taskId,
+      params: {
+        repoUrl: input.repoUrl,
+        branch: input.branch || "main",
+        requireApproval: input.requireApproval,
+        scheduleFollowUp: input.scheduleFollowUp,
+        _agentBinding: "task-runner",
+        _agentName: this.name
+      }
+    });
+
+    this.updateTask(taskId, {
+      id: taskId,
+      type: "deep",
+      status: "pending",
+      progress: 0,
+      workflowInstanceId: instance.id,
+      events: [{ type: "workflow-created", data: { instanceId: instance.id }, timestamp: Date.now() }]
+    });
+
+    return { id: taskId, workflowInstanceId: instance.id };
+  }
+
+  /**
+   * Handle approval/rejection for tasks awaiting human input.
+   * Sends an event to the workflow to resume execution.
+   */
+  @callable()
+  async approveTask(input: {
+    taskId: string;
+    approved: boolean;
+    approver: string;
+    comment?: string;
+  }) {
+    const task = this.state.tasks[input.taskId];
+    if (!task || task.status !== "awaiting-approval" || !task.workflowInstanceId) {
+      throw new Error("Task not found or not awaiting approval");
+    }
+
+    // Send approval event to workflow
+    const instance = await this.env.ANALYSIS_WORKFLOW.get(task.workflowInstanceId);
+    await instance.sendEvent({
+      type: "security-approval",
+      payload: {
+        approved: input.approved,
+        approver: input.approver,
+        comment: input.comment
+      }
+    });
+
+    this.updateTask(input.taskId, {
+      status: "running",
+      events: [
+        ...task.events,
+        {
+          type: input.approved ? "approved" : "rejected",
+          data: { approver: input.approver },
+          timestamp: Date.now()
+        }
+      ]
+    });
+
+    return { success: true };
+  }
+
+  /**
+   * Abort a running task.
+   */
+  @callable()
+  async abortTask(taskId: string) {
+    const task = this.state.tasks[taskId];
+    if (!task) throw new Error("Task not found");
+
+    if (task.workflowInstanceId) {
+      const instance = await this.env.ANALYSIS_WORKFLOW.get(task.workflowInstanceId);
+      await instance.terminate();
+    }
+
+    this.updateTask(taskId, {
+      status: "failed",
+      error: "Aborted by user"
+    });
+
+    return { success: true };
+  }
+
+  /**
+   * Called by workflow to send progress updates.
+   * This is an RPC call from the workflow back to the agent.
+   */
+  @callable()
+  async handleWorkflowUpdate(update: {
+    taskId: string;
+    event?: { type: string; data?: unknown };
+    progress?: number;
+    status?: "completed" | "failed";
+    result?: unknown;
+    error?: string;
+  }) {
+    const task = this.state.tasks[update.taskId];
+    if (!task) return;
+
+    const updates: Partial<TaskState> = {};
+
+    if (update.progress !== undefined) {
+      updates.progress = update.progress;
+    }
+
+    if (update.status) {
+      updates.status = update.status;
+    }
+
+    if (update.result) {
+      updates.result = update.result;
+    }
+
+    if (update.error) {
+      updates.error = update.error;
+    }
+
+    if (update.event) {
+      // Check for awaiting-approval status
+      if (update.event.type === "phase" &&
+          update.event.data &&
+          typeof update.event.data === "object" &&
+          "name" in update.event.data &&
+          update.event.data.name === "awaiting-approval") {
+        updates.status = "awaiting-approval";
+      }
+
+      updates.events = [
+        ...task.events,
+        { ...update.event, timestamp: Date.now() }
+      ];
+    }
+
+    this.updateTask(update.taskId, updates);
+  }
+
+  private updateTask(taskId: string, updates: Partial<TaskState>) {
+    const existing = this.state.tasks[taskId];
+    this.state.tasks[taskId] = { ...existing, ...updates } as TaskState;
+  }
+
+  private async runQuickAnalysis(taskId: string, repoUrl: string, branch = "main") {
+    try {
+      // Simplified quick analysis implementation
+      // In production, this would fetch and analyze the repository
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      this.updateTask(taskId, {
+        status: "completed",
+        progress: 100,
+        result: {
+          repoUrl,
+          branch,
+          summary: "Quick analysis completed",
+          fileCount: 42,
+          analyzedAt: new Date().toISOString()
+        }
+      });
+    } catch (error) {
+      this.updateTask(taskId, {
+        status: "failed",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  }
+}
+
+// Worker fetch handler
+export default {
+  async fetch(request: Request, env: Env) {
+    return routeAgentRequest(request, env);
+  }
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
+## 4. Implement the Workflow
+
+Create `src/workflows/analysis.ts` to define your durable workflow:
+
+<TypeScriptExample>
+```ts
+import {
+  WorkflowEntrypoint,
+  type WorkflowStep,
+  type WorkflowEvent
+} from "cloudflare:workers";
+import OpenAI from "openai";
+import type { TaskRunner } from "../server";
+
+interface AnalysisParams {
+  repoUrl: string;
+  branch?: string;
+  requireApproval?: boolean;
+  scheduleFollowUp?: boolean;
+  _agentBinding?: string;
+  _agentName?: string;
+}
+
+interface SecurityIssue {
+  severity: "low" | "medium" | "high" | "critical";
+  file: string;
+  description: string;
+  recommendation: string;
+}
+
+interface AnalysisResult {
+  repoUrl: string;
+  branch: string;
+  summary: string;
+  securityIssues: SecurityIssue[];
+  fileCount: number;
+  analyzedFiles: number;
+  analyzedAt: string;
+  approvalStatus?: "pending" | "approved" | "rejected" | "auto-approved";
+  approvedBy?: string;
+  followUpScheduled?: boolean;
+  workflowDuration?: string;
+}
+
+type Env = {
+  "task-runner": DurableObjectNamespace<TaskRunner>;
+  OPENAI_API_KEY: string;
+};
+
+export class AnalysisWorkflow extends WorkflowEntrypoint<Env, AnalysisParams> {
+  async run(
+    event: WorkflowEvent<AnalysisParams>,
+    step: WorkflowStep
+  ): Promise<AnalysisResult> {
+    const startTime = Date.now();
+    const {
+      repoUrl,
+      branch = "main",
+      requireApproval = true,
+      scheduleFollowUp = false,
+      _agentBinding,
+      _agentName
+    } = event.payload;
+
+    const taskId = event.instanceId;
+
+    /**
+     * Notify agent of task updates via RPC.
+     */
+    const notifyAgent = async (update: {
+      event?: { type: string; data?: unknown };
+      progress?: number;
+      status?: "completed" | "failed";
+      result?: AnalysisResult;
+      error?: string;
+    }) => {
+      if (!_agentBinding || !_agentName) return;
+
+      try {
+        const agentNS = this.env["task-runner"];
+        const agentId = agentNS.idFromName(_agentName);
+        const agent = agentNS.get(agentId);
+        await agent.handleWorkflowUpdate({ taskId, ...update });
+      } catch (error) {
+        console.error("[AnalysisWorkflow] Failed to notify agent:", error);
+      }
+    };
+
+    // PHASE 1: Fetch repository data (durable step with retries)
+    const files = await step.do(
+      "fetch-repo-tree",
+      {
+        retries: { limit: 3, delay: "5 seconds", backoff: "exponential" }
+      },
+      async () => {
+        await notifyAgent({
+          event: { type: "phase", data: { name: "fetching", message: "Fetching repository..." } },
+          progress: 10
+        });
+
+        // Fetch GitHub repo tree
+        const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
+        if (!match) throw new Error("Invalid GitHub URL");
+
+        const [, owner, repo] = match;
+        const url = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
+
+        const response = await fetch(url, {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            "User-Agent": "Agents-Task-Runner"
+          }
+        });
+
+        if (!response.ok) throw new Error(`GitHub API error: ${response.status}`);
+
+        const data = await response.json() as { tree: Array<{ path: string }> };
+        return data.tree;
+      }
+    );
+
+    await notifyAgent({
+      event: { type: "files", data: { count: files.length } },
+      progress: 30
+    });
+
+    // Rate limit pause - workflow hibernates with zero compute cost
+    await step.sleep("rate-limit-pause", "3 seconds");
+
+    // PHASE 2: Security analysis with AI
+    const securityAnalysis = await step.do(
+      "security-analysis",
+      {
+        retries: { limit: 3, delay: "15 seconds", backoff: "exponential" },
+        timeout: "5 minutes"
+      },
+      async () => {
+        await notifyAgent({
+          event: { type: "phase", data: { name: "security", message: "Analyzing security..." } },
+          progress: 60
+        });
+
+        const openai = new OpenAI({ apiKey: this.env.OPENAI_API_KEY });
+
+        // Simplified security scan
+        const completion = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "system",
+              content: `You are a security auditor. Return JSON with security issues: {"issues": [{"severity": "low|medium|high|critical", "file": "path", "description": "issue", "recommendation": "fix"}]}`
+            },
+            {
+              role: "user",
+              content: `Security scan for ${repoUrl}: ${files.slice(0, 50).map(f => f.path).join(", ")}`
+            }
+          ],
+          temperature: 0.2,
+          max_tokens: 2000
+        });
+
+        const text = completion.choices[0]?.message?.content || "{}";
+        const parsed = JSON.parse(text.replace(/^```json?\s*/i, "").replace(/```\s*$/i, ""));
+        return { issues: Array.isArray(parsed.issues) ? parsed.issues : [] };
+      }
+    );
+
+    const criticalIssues = securityAnalysis.issues.filter(
+      (i: SecurityIssue) => i.severity === "critical" || i.severity === "high"
+    );
+
+    await notifyAgent({
+      event: { type: "securityComplete", data: { critical: criticalIssues.length } },
+      progress: 70
+    });
+
+    // PHASE 3: Human-in-the-loop approval (workflow-only feature!)
+    let approvalStatus: "pending" | "approved" | "rejected" | "auto-approved" = "auto-approved";
+    let approvedBy: string | undefined;
+
+    if (requireApproval && criticalIssues.length > 0) {
+      await notifyAgent({
+        event: {
+          type: "phase",
+          data: {
+            name: "awaiting-approval",
+            message: `Found ${criticalIssues.length} critical issues. Awaiting approval...`
+          }
+        },
+        progress: 75
+      });
+
+      try {
+        // Workflow pauses here - can wait up to 7 days with zero compute cost
+        const approvalEvent = await step.waitForEvent<{
+          approved: boolean;
+          approver: string;
+          comment?: string;
+        }>("await-security-approval", {
+          type: "security-approval",
+          timeout: "7 days"
+        });
+
+        const payload = approvalEvent.payload;
+
+        if (payload.approved) {
+          approvalStatus = "approved";
+          approvedBy = payload.approver;
+
+          await notifyAgent({
+            event: { type: "phase", data: { name: "approved", message: `Approved by ${payload.approver}` } },
+            progress: 80
+          });
+        } else {
+          approvalStatus = "rejected";
+          approvedBy = payload.approver;
+
+          await notifyAgent({
+            event: { type: "phase", data: { name: "rejected", message: `Rejected by ${payload.approver}` } },
+            progress: 80
+          });
+        }
+      } catch {
+        approvalStatus = "auto-approved";
+      }
+    }
+
+    // PHASE 4: Schedule follow-up (workflow-only feature!)
+    let followUpScheduled = false;
+
+    if (scheduleFollowUp) {
+      await notifyAgent({
+        event: { type: "phase", data: { name: "scheduling", message: "Scheduling follow-up..." } },
+        progress: 90
+      });
+
+      // Workflow hibernates for the specified duration
+      await step.sleep("follow-up-delay", "10 seconds");
+
+      await step.do("send-follow-up", async () => {
+        await notifyAgent({
+          event: {
+            type: "follow-up",
+            data: { message: `Follow-up: Review ${criticalIssues.length} security issues` }
+          }
+        });
+      });
+
+      followUpScheduled = true;
+    }
+
+    // Complete workflow
+    const endTime = Date.now();
+    const durationStr = `${Math.round((endTime - startTime) / 1000)} seconds`;
+
+    const result: AnalysisResult = {
+      repoUrl,
+      branch,
+      summary: `Analysis found ${securityAnalysis.issues.length} security issues`,
+      securityIssues: securityAnalysis.issues,
+      fileCount: files.length,
+      analyzedFiles: 20,
+      analyzedAt: new Date().toISOString(),
+      approvalStatus,
+      approvedBy,
+      followUpScheduled,
+      workflowDuration: durationStr
+    };
+
+    await step.do("notify-complete", async () => {
+      await notifyAgent({
+        event: { type: "phase", data: { name: "complete", message: "Analysis complete!" } },
+        progress: 100,
+        status: "completed",
+        result
+      });
+    });
+
+    return result;
+  }
+}
+```
+</TypeScriptExample>
+
+## 5. Test locally
+
+Start the development server:
+
+```sh
+npm run dev
+```
+
+Test the quick analysis endpoint:
+
+```sh
+curl -X POST http://localhost:8787/agent/task-runner/default/call/quickAnalysis \
+  -H "Content-Type: application/json" \
+  -d '{"args": [{"repoUrl": "https://github.com/cloudflare/agents"}]}'
+```
+
+Test the deep analysis with workflow:
+
+```sh
+curl -X POST http://localhost:8787/agent/task-runner/default/call/startAnalysis \
+  -H "Content-Type: application/json" \
+  -d '{"args": [{"repoUrl": "https://github.com/cloudflare/agents", "requireApproval": true}]}'
+```
+
+## 6. Deploy to Cloudflare
+
+Deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Set your production secrets:
+
+```sh
+npx wrangler secret put OPENAI_API_KEY
+```
+
+## Key concepts
+
+### When to use ctx.waitUntil() vs Workflows
+
+| Feature | ctx.waitUntil() | Cloudflare Workflow |
+|---------|-----------------|---------------------|
+| Duration | Seconds to minutes | Minutes to days |
+| Execution | In Durable Object | Separate Workflow engine |
+| Durability | Lost on eviction | Survives restarts |
+| Retries | Manual | Automatic per-step |
+| Sleep | Not durable | Durable (hibernates) |
+| Human approval | Complex to implement | Built-in with `step.waitForEvent()` |
+
+### Workflow features demonstrated
+
+1. **Durable steps with `step.do()`**: Each step is checkpointed. If the workflow restarts, completed steps are skipped.
+
+2. **Automatic retries**: Configure exponential backoff and retry limits per step.
+
+3. **Hibernation with `step.sleep()`**: Pause execution for hours or days with zero compute cost.
+
+4. **Human-in-the-loop with `step.waitForEvent()`**: Wait indefinitely for external events like approval.
+
+5. **RPC communication**: Workflows can call back to Agents using Durable Object RPC.
+
+## Related resources
+
+- [Cloudflare Workflows documentation](/workflows/)
+- [Agents SDK documentation](/agents/)
+- [Task runner example source code](https://github.com/cloudflare/agents/tree/main/examples/task-runner)
+- [Human-in-the-loop guide](/agents/guides/human-in-the-loop/)

@@ -29,3 +29,23 @@ Workflows manage how external tools and services are accessed. They handle authe
 The workflow maintains the state of ongoing processes, tracking progress through multiple steps and ensuring consistency across operations.
 4. **Output Handling**
 Results from the agent's actions are processed according to defined rules, whether that means storing data, triggering notifications, or formatting responses.
+
+## Cloudflare Workflows integration
+
+The Agents SDK can be integrated with [Cloudflare Workflows](/workflows/) to enable durable, long-running tasks that go beyond what is possible with standard Durable Objects. Cloudflare Workflows provide:
+
+- **Durable execution** that survives restarts, deployments, and failures
+- **Automatic retries** with configurable backoff strategies
+- **Step-based checkpointing** to avoid re-executing completed work
+- **Long-running operations** that can span hours or days
+- **Hibernation** with `step.sleep()` to pause execution without compute costs
+- **Human-in-the-loop approval** with `step.waitForEvent()` to pause indefinitely
+
+When building with Agents, you can dispatch workflows from Agent methods and receive updates via RPC callbacks. This enables patterns like:
+
+- Background analysis tasks that run for extended periods
+- Multi-phase operations with human approval gates
+- Scheduled follow-up tasks that trigger after delays
+- Resilient data processing pipelines with automatic retry logic
+
+To learn how to integrate Cloudflare Workflows with your Agent, refer to the [Workflows integration guide](/agents/guides/workflows-integration/).
