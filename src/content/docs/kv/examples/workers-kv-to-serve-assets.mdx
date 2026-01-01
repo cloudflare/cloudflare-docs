@@ -72,7 +72,7 @@ export default {
 
     	// Get the mimetype from the key path
     	const extension = key.split('.').pop();
-    	let mimeType = mime.getType(key) || "text/plain";
+    	let mimeType = mime.getType(extension) || "text/plain";
     	if (mimeType.startsWith("text") || mimeType === "application/javascript") {
     		mimeType += "; charset=utf-8";
     	}
@@ -248,7 +248,7 @@ export default {
 
     // Get the mimetype from the key path
     const extension = key.split('.').pop();
-    let mimeType = mime.getType(key) || "text/plain";
+    let mimeType = mime.getType(extension) || "text/plain";
     if (mimeType.startsWith("text") || mimeType === "application/javascript") {
       mimeType += "; charset=utf-8";
     }
