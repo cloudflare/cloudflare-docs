@@ -54,6 +54,10 @@ When `keepAlive: true` is set, containers will not automatically timeout. They m
 
 Duration of inactivity before the sandbox automatically sleeps. Accepts duration strings (`"30s"`, `"5m"`, `"1h"`) or numbers (seconds).
 
+:::note[Bug fix in v0.2.17]
+Prior to v0.2.17, the `sleepAfter` option passed to `getSandbox()` was ignored due to a timing issue. The option is now properly applied when creating sandbox instances.
+:::
+
 <TypeScriptExample>
 ```ts
 // Sleep after 30 seconds of inactivity
