@@ -17,33 +17,28 @@ Start with these essential HTTP policies for data protection:
 
 Block access to known malicious and high-risk sites:
 
-<Render file="gateway/block-security-categories" product="cloudflare-one" />
+<Render
+	file="gateway/policies/block-security-categories"
+	product="cloudflare-one"
+/>
 
 ### Block or isolate AI applications
 
-Control access to generative AI tools to prevent data leakage:
+Control access to generative AI tools to prevent data leakage.
 
 **Option 1: Block AI applications entirely**
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **HTTP**.
-2. Select **Add a policy**.
-3. Configure the policy:
-   - **Name**: Block AI applications
-   - **Traffic**: Application is in `Artificial Intelligence`
-   - **Action**: Block
-4. Select **Create policy**.
+| Selector    | Operator | Value                     | Action |
+| ----------- | -------- | ------------------------- | ------ |
+| Application | in       | _Artificial Intelligence_ | Block  |
 
 **Option 2: Isolate AI applications with restrictions**
 
-1. Create an HTTP policy with:
-   - **Name**: Isolate AI applications
-   - **Traffic**: Application is in `Artificial Intelligence`
-   - **Action**: Isolate
-2. Configure isolation settings:
-   - Disable copy/paste
-   - Disable file downloads
-   - Disable keyboard input (optional)
-3. Select **Create policy**.
+| Selector    | Operator | Value                     | Action  |
+| ----------- | -------- | ------------------------- | ------- |
+| Application | in       | _Artificial Intelligence_ | Isolate |
+
+When using the Isolate action, configure isolation settings to disable copy/paste, file downloads, and optionally keyboard input.
 
 For more information, refer to [Isolate policies](/cloudflare-one/traffic-policies/http-policies/isolate-policies/).
 
@@ -51,15 +46,12 @@ For more information, refer to [Isolate policies](/cloudflare-one/traffic-polici
 
 Restrict file transfers to risky or unsanctioned applications:
 
-1. Create an HTTP policy:
-   - **Name**: Block file uploads to personal cloud storage
-   - **Traffic**:
-     - Application is in `Cloud Storage`
-     - AND Application is not `Google Drive` (corporate)
-     - AND Application is not `Microsoft OneDrive` (corporate)
-     - AND Upload Mime Type is in `All File Types`
-   - **Action**: Block
-2. Select **Create policy**.
+| Selector         | Operator | Value                | Logic | Action |
+| ---------------- | -------- | -------------------- | ----- | ------ |
+| Application      | in       | _Cloud Storage_      | And   | Block  |
+| Application      | not in   | _Google Drive_       | And   |        |
+| Application      | not in   | _Microsoft OneDrive_ | And   |        |
+| Upload Mime Type | in       | _All File Types_     |       |        |
 
 ### Block personal SaaS instances
 
@@ -94,31 +86,27 @@ Before enforcing policies broadly:
 
 ### Block specific applications
 
-```
-Traffic: Application is `ChatGPT`
-Action: Block
-```
+| Selector    | Operator | Value     | Action |
+| ----------- | -------- | --------- | ------ |
+| Application | in       | _ChatGPT_ | Block  |
 
 ### Allow only approved applications (allowlist)
 
-```
-Traffic: Application is not in `Corporate Approved Apps` (custom list)
-Action: Block
-```
+| Selector    | Operator | Value                     | Action |
+| ----------- | -------- | ------------------------- | ------ |
+| Application | not in   | _Corporate Approved Apps_ | Block  |
 
 ### Block by domain
 
-```
-Traffic: Domain matches regex `.*\.example\.com`
-Action: Block
-```
+| Selector | Operator      | Value           | Action |
+| -------- | ------------- | --------------- | ------ |
+| Domain   | matches regex | `*.example.com` | Block  |
 
 ### Block by content category
 
-```
-Traffic: Content Categories is in `Adult Content`, `Gambling`, `Illegal Activities`
-Action: Block
-```
+| Selector           | Operator | Value                                             | Action |
+| ------------------ | -------- | ------------------------------------------------- | ------ |
+| Content Categories | in       | _Adult Content_, _Gambling_, _Illegal Activities_ | Block  |
 
 ## Next steps
 
