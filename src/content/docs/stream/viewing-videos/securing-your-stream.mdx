@@ -74,7 +74,7 @@ You will see a response similar to this if the request succeeds:
 }
 ```
 
-To render the video, insert the `token` value in place of the `video id`:
+To render the video, insert the `token` value in place of the `video id`, replacing the entire string located between `cloudflarestream.com/` and `/iframe`:
 
 ```html
 <iframe
@@ -280,7 +280,7 @@ function objectToBase64url(payload) {
 
 ### Step 3: Rendering the video
 
-If you are using the Stream Player, insert the token returned by the Worker in Step 2 in place of the video id:
+If you are using the Stream Player, insert the `token` value returned by the Worker in Step 2 in place of the `video id`, replacing the entire string located between `cloudflarestream.com/` and `/iframe`:
 
 ```html
 <iframe
