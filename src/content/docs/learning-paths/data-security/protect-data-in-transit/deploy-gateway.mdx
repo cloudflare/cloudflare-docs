@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
 Gateway must be deployed and configured with TLS inspection before you can apply data protection policies to encrypted traffic.
 
@@ -33,41 +33,68 @@ For more information, refer to [AV scanning](/cloudflare-one/traffic-policies/ht
 
 For TLS inspection to work, user devices must trust the Cloudflare root certificate.
 
-### Download the Cloudflare certificate
+### Install certificate using WARP
+
+Cloudflare recommends deploying certificates automatically through the WARP client. WARP installs the certificate to the device's system certificate store without requiring manual user intervention.
+
+For more information, refer to [Install certificate using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/).
+
+### Install certificate manually
+
+For devices that do not support automated certificate installation through WARP, or for specific applications that require manual certificate installation, you can download and install the certificate manually.
 
 <Render file="gateway/download-cert" product="cloudflare-one" />
 
-For more information, refer to [Install certificate manually](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/).
-
-### Install the certificate on devices
-
-You can install the certificate manually or deploy it through device management tools:
-
-- [Windows certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#windows)
-- [macOS certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#macos)
-- [iOS certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#ios)
-- [Android certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#android)
-- [Linux certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#linux)
-- [ChromeOS certificate installation](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#chromeos)
-
-## Configure TLS inspection settings
-
-After turning on TLS decryption, configure which traffic to inspect:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
-2. Under **TLS decryption**, configure:
-   - **Do Not Inspect**: Add applications that should bypass TLS inspection (for example, applications with certificate pinning)
-   - **Inspection mode**: Choose between full inspection or certificate-only inspection
-
-For more information, refer to [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+For detailed instructions on installing the certificate on different operating systems and applications, refer to [Install certificate manually](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/).
 
 ## Verify Gateway deployment
 
-Test that Gateway is working correctly:
+To verify that Gateway is deployed properly, test it with a device in your organization:
 
-1. On a device with WARP connected, visit a test website.
-2. Check the certificate details in your browser — you should see the Cloudflare certificate.
-3. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway** > **HTTP** to verify traffic is being logged.
+{/* prettier-ignore-start */}
+
+1. On a device with WARP connected, visit a test website, such as [https://cloudflare.com](https://cloudflare.com).
+2. Check the certificate details in your browser:
+
+	<Tabs>
+	<TabItem label="Chrome">
+
+	1. Select the site information icon in the address bar.
+	2. Select **Connection is secure**.
+	3. Select **Certificate is valid**.
+
+	</TabItem>
+	<TabItem label="Firefox">
+
+	1. Select the lock icon in the address bar.
+	2. Select **Connection secure**.
+	3. Select **More information**.
+	4. Select **View Certificate**.
+
+	</TabItem>
+	<TabItem label="Safari">
+
+	1. Select the lock icon in the address bar.
+	2. Select **Show Details**.
+	3. Select **View Certificate**.
+
+	</TabItem>
+	<TabItem label="Edge">
+
+	1. Select the site information icon in the address bar.
+	2. Select **Connection is secure**.
+	3. Select **Certificate is valid**.
+
+	</TabItem>
+	</Tabs>
+
+	The certificate issued by Cloudflare should be in use.
+
+{/* prettier-ignore-end */}
+
+3. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
+4. Choose **HTTP request logs**.
+5. Verify that Gateway logs are available.
 
 ## Next steps
 
