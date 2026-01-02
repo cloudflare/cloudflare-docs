@@ -77,6 +77,64 @@ async def run(self, event, step):
     await step.wait_for_event("my-wait-for-event-step", "my-event-type")
 ```
 
+## Rollback (Saga Pattern)
+
+The Python SDK supports the [saga pattern](https://microservices.io/patterns/data/saga.html) for distributed transactions using the `with_rollback` decorator. When a step fails, you can roll back previously completed steps by executing compensating actions (undo functions) in reverse order (LIFO - last-in, first-out).
+
+### step.with_rollback
+
+* <code>step.with_rollback(name, config=None)</code> - decorator that allows you to define a step with a rollback handler.
+  * `name` - the name of the step.
+  * `config` - an optional `WorkflowStepConfig` dictionary.
+
+### @do_fn.undo
+
+* <code>@do_fn.undo(config=None)</code> - decorator to register an undo function for a `with_rollback` step.
+  * `config` - optional separate config for the undo function. If not provided, inherits from the do step's config.
+
+### step.rollback_all
+
+* <code>await step.rollback_all(error=None)</code> - executes all registered undo functions in LIFO order.
+  * `error` - optional error to pass to each undo function.
+  * Each undo is wrapped in `step.do()` for durability and retry.
+  * Stops on first undo failure.
+
+### Example
+
+```python
+class OrderWorkflow(WorkflowEntrypoint):
+    async def run(self, event, step):
+        try:
+            @step.with_rollback("create order")
+            async def create_order():
+                return await env.DB.orders.insert({"user_id": event["payload"]["user_id"], "items": event["payload"]["items"]})
+
+            @create_order.undo
+            async def undo_create_order(err, order):
+                await env.DB.orders.delete(order["id"])
+
+            order = await create_order()
+
+            @step.with_rollback("charge payment")
+            async def charge_payment():
+                return await env.STRIPE.charges.create(amount=order["total"], customer=event["payload"]["user_id"])
+
+            @charge_payment.undo
+            async def undo_charge_payment(err, charge):
+                await env.STRIPE.refunds.create(charge=charge["id"])
+
+            await charge_payment()
+
+            @step.do("send confirmation")
+            async def send_confirmation():
+                await env.EMAIL.send(to=event["payload"]["email"], template="order-confirmed", order_id=order["id"])
+
+            await send_confirmation()
+
+        except Exception as e:
+            await step.rollback_all(e)
+            raise
+```
 
 ### `event` parameter
 

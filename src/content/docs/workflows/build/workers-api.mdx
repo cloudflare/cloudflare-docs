@@ -152,6 +152,75 @@ export type WorkflowStepConfig = {
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
+## Rollback (Saga Pattern)
+
+Workflows supports the [saga pattern](https://microservices.io/patterns/data/saga.html) for handling distributed transactions. When a step fails, you can roll back previously completed steps by executing compensating actions (undo functions) in reverse order (LIFO - last-in, first-out).
+
+### step.withRollback
+
+{/* prettier-ignore */}
+- <code>step.withRollback&lt;T&gt;(name: string, handler: RollbackHandler&lt;T&gt;, config?: RollbackStepConfig): Promise&lt;T&gt;</code>
+  - `name` - the name of the step.
+  - `handler` - an object containing `do` and `undo` functions.
+  - `config` (optional) - configuration for the step, optionally including separate `undoConfig` for the undo function.
+
+### step.rollbackAll
+
+{/* prettier-ignore */}
+- <code>step.rollbackAll(error?: unknown): Promise&lt;void&gt;</code>
+  - `error` (optional) - the error that triggered the rollback, passed to each undo function.
+  - Executes all registered undo functions in LIFO (last-in, first-out) order.
+  - Each undo is wrapped in `step.do()` for durability and retry.
+  - Stops on first undo failure.
+
+### RollbackHandler
+
+```ts
+export type RollbackHandler<T> = {
+  do: () => Promise<T>;
+  undo: (err: unknown, value: T) => Promise<void>;
+};
+```
+
+### RollbackStepConfig
+
+```ts
+export type RollbackStepConfig = WorkflowStepConfig & {
+  undoConfig?: WorkflowStepConfig;
+};
+```
+
+### Example
+
+<TypeScriptExample>
+
+```ts
+export class OrderWorkflow extends WorkflowEntrypoint<Env, Params> {
+  async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+    try {
+      const order = await step.withRollback("create order", {
+        do: async () => env.DB.orders.insert({ userId: event.payload.userId, items: event.payload.items }),
+        undo: async (err, order) => env.DB.orders.delete(order.id),
+      });
+
+      await step.withRollback("charge payment", {
+        do: async () => env.STRIPE.charges.create({ amount: order.total, customer: event.payload.userId }),
+        undo: async (err, charge) => env.STRIPE.refunds.create({ charge: charge.id }),
+      });
+
+      await step.do("send confirmation", async () => {
+        await env.EMAIL.send({ to: event.payload.email, template: "order-confirmed", orderId: order.id });
+      });
+    } catch (e) {
+      await step.rollbackAll(e);
+      throw e;
+    }
+  }
+}
+```
+
+</TypeScriptExample>
+
 ## NonRetryableError
 
 {/* prettier-ignore */}
