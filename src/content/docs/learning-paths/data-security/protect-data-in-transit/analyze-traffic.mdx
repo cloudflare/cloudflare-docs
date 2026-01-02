@@ -5,56 +5,77 @@ sidebar:
   order: 4
 ---
 
-Before building data protection policies, analyze your traffic to understand what applications users are accessing and where sensitive data may be at risk.
+Before building data protection policies, analyze your traffic to understand what applications your users are accessing and where sensitive data may be at risk.
 
-## Gateway Analytics
+## Discover shadow IT
 
-Gateway Analytics provides visibility into all traffic flowing through your network.
-
-### Access Gateway Analytics
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics** > **Gateway**.
-2. Review the available dashboards:
-   - **Overview**: High-level traffic statistics
-   - **DNS**: DNS query patterns and blocked requests
-   - **HTTP**: Web traffic, application usage, and policy actions
-   - **Network**: Layer 4 traffic patterns
-
-### Key metrics to review
-
-When planning data protection policies, focus on:
-
-- **Top applications**: Which SaaS applications are most used
-- **Top categories**: What types of sites users access such as Cloud Storage, Collaboration, and AI
-- **Blocked requests**: What is already being blocked by existing policies
-- **File uploads/downloads**: Where data is being transferred
-- **Risky categories**: Access to potentially dangerous or policy-violating sites
-
-## Shadow IT Discovery
-
-Shadow IT Discovery helps identify unsanctioned applications and services being used across your organization.
+Use Shadow IT Discovery to identify unsanctioned applications and services being used across your organization. Shadow IT Discovery analyzes your HTTP traffic to detect SaaS applications and provides insights into application usage, data transfers, and user activity.
 
 ### Access Shadow IT Discovery
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics** > **Gateway** > **Shadow IT Discovery**.
-2. Review discovered applications organized by:
-   - **Risk level**: High, medium, or low risk applications
-   - **Category**: Application type such as Cloud Storage, Collaboration, and AI
-   - **Usage**: Number of users and requests
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Dashboards**.
+2. Select **Shadow IT: SaaS analytics**.
+3. Review discovered applications organized by:
+   - **Application type**: Cloud Storage, Collaboration, AI, and other categories
+   - **Status**: Approved, Unapproved, In review, or Unreviewed
+   - **Users**: Number of users accessing each application
+   - **Data transfers**: Upload and download volumes per application
+
+## Mark application approval status
+
+The [Application Library](/cloudflare-one/team-and-resources/app-library/) consolidates all SaaS applications discovered in your traffic and allows you to mark their approval status.
+
+:::note
+Reviewing applications does not enforce any policies. It only marks the approval status of applications in the Application Library. To filter traffic based on approval status, create Gateway HTTP policies with the [Application Approval Status selector](/cloudflare-one/traffic-policies/http-policies/#application-approval-status).
+:::
+
+### Mark individual applications
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Application library**.
+2. Locate the application you want to mark.
+3. Select the three-dot menu on the application card.
+4. Select the approval status:
+   - **Approved**: Sanctioned applications that users can access
+   - **Unapproved**: Applications that should be blocked
+   - **In review**: Applications under evaluation
+   - **Unreviewed**: Applications that have not been assessed
+
+### Use confidence scorecards to assess risk
+
+Before marking an application, review its confidence scorecard:
+
+1. Select an application card in the Application Library.
+2. Review the scores:
+   - **Application Posture Score**: Evaluates security, compliance, and operational maturity (out of 5 points)
+   - **Generative AI Posture Score**: Assesses AI-specific risks and data governance (out of 5 points)
+3. Use these scores to inform your approval decision.
+
+### Mark applications in bulk
+
+To mark multiple applications at once:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Dashboards**.
+2. Select **Shadow IT: SaaS analytics**.
+3. Select **Set application statuses**.
+4. Review the list of applications your users are accessing.
+5. For each application, select the desired approval status from the dropdown menu.
+6. Select **Save** to apply the status changes.
+
+The approval status for each application will update in the Application Library within one hour.
 
 ### Identify high-risk applications
 
-Look for:
+When reviewing applications in the Application Library, pay attention to the following types of applications that may pose a risk to your organization:
 
-- **Personal cloud storage**: Dropbox, personal Google Drive, personal OneDrive
-- **Unsanctioned AI tools**: ChatGPT, Claude, Gemini, and other AI services
-- **File sharing services**: WeTransfer, SendAnywhere, and similar services
-- **Personal communication tools**: Personal Slack workspaces, Discord, Telegram
-- **Code repositories**: Personal GitHub, GitLab, or Bitbucket accounts
+| Application type             | Examples                                          |
+| ---------------------------- | ------------------------------------------------- |
+| Personal cloud storage       | Dropbox, personal Google Drive, personal OneDrive |
+| Unsanctioned AI tools        | ChatGPT, Claude, Gemini, and other AI services    |
+| File sharing services        | WeTransfer, SendAnywhere, and similar services    |
+| Personal communication tools | Personal Slack workspaces, Discord, Telegram      |
+| Code repositories            | Personal GitHub, GitLab, or Bitbucket accounts    |
 
-### Assess application risk
-
-For each discovered application, consider:
+To assess the risk for each discovered application, consider:
 
 - **Data sensitivity**: What type of data might be shared with this application?
 - **User count**: How many users are accessing this application?
@@ -74,7 +95,7 @@ Based on your traffic analysis, determine:
 
 ## Document your findings
 
-Create a prioritized list of actions:
+To build your data security plan, create a prioritized list of actions:
 
 - **Immediate blocks**: Applications that pose unacceptable risk
 - **Tenant controls**: Corporate vs. personal SaaS instances
