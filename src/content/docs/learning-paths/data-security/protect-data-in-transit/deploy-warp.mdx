@@ -9,52 +9,46 @@ import { Render } from "~/components";
 
 The WARP client routes traffic from user devices through Cloudflare's network for inspection and policy enforcement.
 
-## Install WARP on devices
-
-<Render file="warp/install-warp" product="cloudflare-one" />
-
 ## Configure WARP settings
 
-After deploying WARP, configure settings appropriate for data protection:
+Before you deploy WARP, enroll your organization's devices and optionally configure [Split Tunnels](#split-tunnels) and [Local Domain Fallback](#local-domain-fallback).
 
 ### Device enrollment
 
 <Render file="warp/device-enrollment" product="cloudflare-one" />
 
-### Split tunneling
-
-Configure which traffic routes through Cloudflare:
+### Split Tunnels
 
 <Render file="warp/split-tunnel-intro" product="cloudflare-one" />
 
-For data protection, consider:
+To protect sensitive data in transit, consider:
 
-- **Include mode**: Route only specific applications or domains through Cloudflare (recommended for initial deployments)
-- **Exclude mode**: Route all traffic except specified applications through Cloudflare (recommended for comprehensive protection)
+| Mode                        | Description                                                        | Recommendation           |
+| --------------------------- | ------------------------------------------------------------------ | ------------------------ |
+| **Include IPs and domains** | Route only specific applications or domains through Cloudflare     | Initial deployments      |
+| **Exclude IPs and domains** | Route all traffic except specified applications through Cloudflare | Comprehensive protection |
 
-For more information, refer to [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+For more information, refer to [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
 
 ### Local Domain Fallback
 
-Configure Local Domain Fallback if you need to resolve internal domain names:
+If you need to resolve internal domain names using your private DNS servers, you can configure [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/).
 
-<Render file="warp/local-domain-fallback" product="cloudflare-one" />
+<Render file="warp/add-local-domain" product="cloudflare-one" />
 
 ## Deploy at scale
 
-For enterprise deployments, use device management tools to deploy WARP:
+To deploy WARP at scale, you can use device management tools such as [Intune](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/partners/intune/) or [Jamf](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/partners/jamf/). For a full list of supported MDM providers, refer to [WARP managed deployment](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/).
 
-- [Deploy WARP with Intune](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/intune/)
-- [Deploy WARP with Jamf](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/jamf/)
-- [Deploy WARP with other MDM providers](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/)
+Alternatively, you can deploy WARP manually on each device. To download the WARP client, refer to [Download WARP](/cloudflare-one/team-and-resources/devices/warp/download-warp/).
 
 ## Verify WARP deployment
 
-Confirm that WARP is working correctly:
+To confirm that WARP is deployed and working correctly:
 
-1. Check that the WARP client shows as **Connected** on user devices.
-2. Visit [https://help.teams.cloudflare.com/](https://help.teams.cloudflare.com/) to verify the device is connected to your Zero Trust organization.
-3. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices** to see enrolled devices.
+1. On your users' devices, check that the WARP client displays **Connected** for Zero Trust.
+2. In a browser, visit [https://help.teams.cloudflare.com/](https://help.teams.cloudflare.com/) to verify the device is connected to your Zero Trust organization.
+3. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Your devices**. Cloudflare One should list your enrolled devices.
 
 ## Troubleshooting
 
@@ -63,7 +57,7 @@ If users experience connectivity issues:
 - Verify the Cloudflare certificate is installed and trusted
 - Check split tunneling configuration
 - Review firewall rules to ensure Cloudflare IPs are allowed
-- Consult [WARP troubleshooting](/cloudflare-one/connections/connect-devices/warp/troubleshooting/)
+- Consult [WARP troubleshooting](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/)
 
 ## Next steps
 
