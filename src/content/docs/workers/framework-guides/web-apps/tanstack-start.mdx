@@ -109,9 +109,11 @@ This can help you making sure that your application will work as intended once i
 If you need to export additional declarations from your Worker file, for example class definitions for other Cloudflare primitives such as [Durable Objects](/durable-objects/get-started/#2-write-a-durable-object-class-using-sql-api), or handlers for [Queues](/queues/) or [Cron Triggers](/workers/configuration/cron-triggers/), you can specify a custom entrypoint using the `main` property in your Wrangler configuration file.
 
 <WranglerConfig>
+
 ```toml
 main = "worker-entry.ts"
 ```
+
 </WranglerConfig>
 
 Export the `RequestHandler` from `@tanstack/react-start/server-entry` and wrap it as the default fetch handler.
