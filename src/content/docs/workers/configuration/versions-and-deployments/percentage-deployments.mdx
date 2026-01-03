@@ -1,0 +1,150 @@
+---
+pcx_content_type: configuration
+title: Percentage-based deployments
+head: []
+description: Split traffic randomly between Worker versions based on configured percentages.
+sidebar:
+  order: 2
+---
+
+import { DashButton } from "~/components";
+
+Percentage-based deployments split traffic randomly between two versions. Each request has an X% probability of being routed to a given version, regardless of user or session.
+
+```json
+{
+	"strategy": "percentage",
+	"versions": [
+		{ "version_id": "abc123...", "percentage": 10 },
+		{ "version_id": "def456...", "percentage": 90 }
+	]
+}
+```
+
+Use percentage-based deployments when you want to gradually shift traffic without distinguishing between user types. For deploying to specific user groups first (employees, beta testers), use [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-deployments/).
+
+## Create a percentage-based deployment
+
+### Via Wrangler
+
+:::note
+Minimum required Wrangler version: 3.40.0. Versions before 3.73.0 require the `--x-versions` flag.
+:::
+
+#### 1. Create and deploy a Worker
+
+Create a new Worker using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) and deploy it:
+
+```sh
+npm create cloudflare@latest <NAME> -- --type=hello-world
+```
+
+Answer `yes` to deploy. This creates the first version of your Worker.
+
+#### 2. Upload a new version
+
+Edit the Worker code, then upload without deploying:
+
+```sh
+npx wrangler versions upload
+```
+
+This creates a new version that is not yet serving traffic.
+
+#### 3. Create a split deployment
+
+Run `wrangler versions deploy` and follow the prompts to split traffic between versions:
+
+```sh
+npx wrangler versions deploy
+```
+
+Select both versions and assign percentages (for example, 10% new version, 90% old version).
+
+#### 4. Test the deployment
+
+Send multiple requests to see responses from both versions:
+
+```bash
+for i in {1..10}; do
+  curl -s https://$WORKER_NAME.$SUBDOMAIN.workers.dev
+done
+```
+
+Responses vary based on the configured percentages.
+
+#### 5. Complete the rollout
+
+Run `wrangler versions deploy` again and set the new version to 100%:
+
+```sh
+npx wrangler versions deploy
+```
+
+### Via the Dashboard
+
+1. Go to **Workers & Pages** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select **Create application** > **Hello World** template > deploy your Worker.
+3. Select **Edit code**, make changes, then select the dropdown next to **Deploy** > **Save**. This creates a new version without deploying.
+4. Go to **Deployments** > **Deploy Version**.
+5. Select both versions and assign percentages.
+6. Test with multiple requests, then increase the new version to 100% when ready.
+
+### Via REST API
+
+Create a deployment with the [Deployments API](https://developers.cloudflare.com/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/):
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/deployments" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "strategy": "percentage",
+    "versions": [
+      { "version_id": "{new_version_id}", "percentage": 10 },
+      { "version_id": "{stable_version_id}", "percentage": 90 }
+    ]
+  }'
+```
+
+## Advance the rollout
+
+Create a new deployment with updated percentages:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/deployments" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "strategy": "percentage",
+    "versions": [
+      { "version_id": "{new_version_id}", "percentage": 50 },
+      { "version_id": "{stable_version_id}", "percentage": 50 }
+    ]
+  }'
+```
+
+## Complete the rollout
+
+Deploy the new version to 100% of traffic:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/deployments" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "strategy": "percentage",
+    "versions": [
+      { "version_id": "{new_version_id}", "percentage": 100 }
+    ]
+  }'
+```
+
+## Related
+
+- [Version affinity](/workers/configuration/versions-and-deployments/gradual-deployments/#version-affinity) - ensure consistent version selection per user
+- [Version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) - test a specific version
+- [Observability](/workers/configuration/versions-and-deployments/gradual-deployments/#observability) - track which version handled each request

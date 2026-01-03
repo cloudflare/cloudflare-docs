@@ -1,0 +1,81 @@
+---
+title: Cohort-based gradual deployments (Beta)
+description: Deploy Worker versions to specific user groups before rolling out to all traffic.
+products:
+  - workers
+date: 2026-01-03
+---
+
+You can now deploy Worker versions to specific groups of users — employees, beta testers, free tier, enterprise — before deploying to everyone. Cohort-based deployments extend [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) with named cohorts, each with its own version configuration.
+
+With percentage-based deployments, all users have equal probability of hitting a new version. You cannot test with employees first, then free users, then paid users. Cohort-based deployments solve this by letting you define named groups and route requests to them using the `Cloudflare-Workers-Cohort` header.
+
+## Create a deployment with cohorts
+
+Use the REST API to create a cohort-based deployment:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/deployments" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "strategy": "cohorts",
+    "versions": [
+      { "version_id": "{stable_version_id}", "percentage": 100 }
+    ],
+    "cohorts": [
+      {
+        "name": "employee",
+        "versions": [{ "version_id": "{new_version_id}", "percentage": 100 }]
+      },
+      {
+        "name": "beta",
+        "versions": [
+          { "version_id": "{new_version_id}", "percentage": 50 },
+          { "version_id": "{stable_version_id}", "percentage": 50 }
+        ]
+      }
+    ]
+  }'
+```
+
+This deployment routes 100% of `employee` traffic to the new version, 50% of `beta` traffic to the new version, and all other traffic to the stable version.
+
+## Route requests to cohorts
+
+Set the `Cloudflare-Workers-Cohort` header from an upstream Worker or using Transform Rules:
+
+```js
+export default {
+	async fetch(request, env) {
+		const user = await getUser(request);
+
+		const headers = new Headers(request.headers);
+		if (user.email.endsWith("@yourcompany.com")) {
+			headers.set("Cloudflare-Workers-Cohort", "employee");
+		} else if (user.betaTester) {
+			headers.set("Cloudflare-Workers-Cohort", "beta");
+		}
+
+		return env.API_SERVICE.fetch(new Request(request, { headers }));
+	},
+};
+```
+
+## Observability
+
+The cohort that served each request is available in:
+
+- [Workers Logpush](/workers/observability/logs/logpush/) via the `ScriptVersion.cohort` field
+- [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) via `env.CF_VERSION_METADATA.cohort`
+- [Workers Traces](/workers/observability/traces/) via the `cloudflare.cohort` attribute
+- [Workers Logs](/workers/observability/logs/workers-logs/) via the `$workers.cohort` filter in Query Builder
+
+## Current limitations
+
+- Cohort deployments are API-only. Wrangler CLI support is not yet available.
+
+## Learn more
+
+- [Cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-deployments/)
+- [Gradual deployments overview](/workers/configuration/versions-and-deployments/gradual-deployments/)

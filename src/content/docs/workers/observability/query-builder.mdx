@@ -5,10 +5,18 @@ head: []
 description: Write structured queries to investigate and visualize your telemetry data.
 sidebar:
   order: 4
-
 ---
 
-import { TabItem, Tabs, Render, WranglerConfig, YouTube, Markdown, DashButton, Steps } from "~/components"
+import {
+	TabItem,
+	Tabs,
+	Render,
+	WranglerConfig,
+	YouTube,
+	Markdown,
+	DashButton,
+	Steps,
+} from "~/components";
 
 The Query Builder helps you write structured queries to investigate and visualize your telemetry data. The Query Builder searches the Workers Observability dataset, which currently includes all logs stored by [Workers Logs](/workers/observability/logs/workers-logs/).
 
@@ -27,10 +35,11 @@ The Query Builder is available to all developers and requires no enablement. Que
 	[observability]
 	enabled = true
 
-	[observability.logs]
-	invocation_logs = true
-	head_sampling_rate = 1 # optional. default = 1.
-	```
+    [observability.logs]
+    invocation_logs = true
+    head_sampling_rate = 1 # optional. default = 1.
+    ```
+
 </WranglerConfig>
 
 ## Write a query in the Cloudflare dashboard
@@ -52,27 +61,27 @@ The Query Builder is available to all developers and requires no enablement. Que
 
 The Query Builder supports many visualization operators, including:
 
-| Function                   | Arguments | Description |
-| ---                        | --- | --- |
-| **Count**                  | n/a           | The total number of rows matching the query conditions        |
-| **Count Distinct**         | any field     | The number of occurrences of the unique values in the dataset |
-| **Min**                    | numeric field | The smallest value for the field in the dataset               |
-| **Max**                    | numeric field | The largest value for the field in the dataset                |
-| **Sum**                    | numeric field | The total of all of the values for the field in the dataset   |
-| **Average**                | numeric field | The average of the field in the dataset                       |
-| **Standard Deviation**     | numeric field | The standard deviation of the field in the dataset            |
-| **Variance**               | numeric field | The variance of the field in the dataset                      |
-| **P001**                   | numeric field | The value of the field below which 0.1% of the data falls     |
-| **P01**                    | numeric field | The value of the field below with 1% of the data falls        |
-| **P05**                    | numeric field | The value of the field below with 5% of the data falls        |
-| **P10**                    | numeric field | The value of the field below with 10% of the data falls       |
-| **P25**                    | numeric field | The value of the field below with 25% of the data falls       |
-| **Median (P50)**           | numeric field | The value of the field below with 50% of the data falls       |
-| **P75**                    | numeric field | The value of the field below with 75% of the data falls       |
-| **P90**                    | numeric field | The value of the field below with 90% of the data falls       |
-| **P95**                    | numeric field | The value of the field below with 95% of the data falls       |
-| **P99**                    | numeric field | The value of the field below with 99% of the data falls       |
-| **P999**                   | numeric field | The value of the field below with 99.9% of the data falls     |
+| Function               | Arguments     | Description                                                   |
+| ---------------------- | ------------- | ------------------------------------------------------------- |
+| **Count**              | n/a           | The total number of rows matching the query conditions        |
+| **Count Distinct**     | any field     | The number of occurrences of the unique values in the dataset |
+| **Min**                | numeric field | The smallest value for the field in the dataset               |
+| **Max**                | numeric field | The largest value for the field in the dataset                |
+| **Sum**                | numeric field | The total of all of the values for the field in the dataset   |
+| **Average**            | numeric field | The average of the field in the dataset                       |
+| **Standard Deviation** | numeric field | The standard deviation of the field in the dataset            |
+| **Variance**           | numeric field | The variance of the field in the dataset                      |
+| **P001**               | numeric field | The value of the field below which 0.1% of the data falls     |
+| **P01**                | numeric field | The value of the field below with 1% of the data falls        |
+| **P05**                | numeric field | The value of the field below with 5% of the data falls        |
+| **P10**                | numeric field | The value of the field below with 10% of the data falls       |
+| **P25**                | numeric field | The value of the field below with 25% of the data falls       |
+| **Median (P50)**       | numeric field | The value of the field below with 50% of the data falls       |
+| **P75**                | numeric field | The value of the field below with 75% of the data falls       |
+| **P90**                | numeric field | The value of the field below with 90% of the data falls       |
+| **P95**                | numeric field | The value of the field below with 95% of the data falls       |
+| **P99**                | numeric field | The value of the field below with 99% of the data falls       |
+| **P999**               | numeric field | The value of the field below with 99.9% of the data falls     |
 
 You can add multiple visualizations in a single query. Each visualization renders a graph. A single summary table is also returned, which shows the raw query results.
 
@@ -90,22 +99,33 @@ The operator is a logical condition that evaluates to true or false. See the tab
 | Data Type | Valid Conditions (Operators) |
 | --- | --- |
 | Numeric | Equals, Does not equal, Greater, Greater or equals, Less, Less or equals, Exists, Does not exist |
-| String  | Equals, Does not equal, Includes, Does not include, Regex, Exists, Does not exist, Starts with   |
+| String | Equals, Does not equal, Includes, Does not include, Regex, Exists, Does not exist, Starts with |
 
 The value for a numeric field is an integer. The value for a string field is any string.
 
 To add a filter:
 
 <Steps>
-1. Select **+** in the **Filter** section.
-2. Select **Select key...** and input a key name. For example, `$workers.cpuTimeMs`.
-3. Select the operator and change it to the operator best suited. For example, `Greater than`.
-4. Select **Select value...** and input a value. For example, `100`.
+	1. Select **+** in the **Filter** section. 2. Select **Select key...** and
+	input a key name. For example, `$workers.cpuTimeMs`. 3. Select the operator
+	and change it to the operator best suited. For example, `Greater than`. 4.
+	Select **Select value...** and input a value. For example, `100`.
 </Steps>
 
 When you run the query with the filter specified above, only log events where `$workers.cpuTimeMs > 100` will be returned.
 
 Adding multiple filters combines them with an AND operator, meaning that only events matching all the filters will be returned.
+
+#### Filter by cohort
+
+When using [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-deployments/), you can filter logs by cohort using `$workers.cohort`. This lets you compare error rates, latency, or other metrics across different user segments during a rollout.
+
+For example, to see all logs from the `employee` cohort:
+
+1. Select **+** in the **Filter** section.
+2. Select **Select key...** and input `$workers.cohort`.
+3. Select the operator **Equals**.
+4. Select **Select value...** and input `employee`.
 
 ### Search
 

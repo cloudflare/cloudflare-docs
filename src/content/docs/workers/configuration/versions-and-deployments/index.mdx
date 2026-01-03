@@ -1,109 +1,115 @@
 ---
-pcx_content_type: concept
-title: Versions & Deployments
+pcx_content_type: overview
+title: Versions and deployments
 head: []
 description: Upload versions of Workers and create deployments to release new versions.
 ---
-import { DashButton } from "~/components";
 
-Versions track changes to your Worker. Deployments configure how those changes are deployed to your traffic.
+import {
+	CardGrid,
+	Description,
+	DirectoryListing,
+	LinkButton,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
 
-You can upload changes (versions) to your Worker independent of changing the version that is actively serving traffic (deployment).
-
-![Versions and Deployments](~/assets/images/workers/platform/versions-and-deployments/versions-and-deployments.png)
-
-Using versions and deployments is useful if:
-
-- You are running critical applications on Workers and want to reduce risk when deploying new versions of your Worker using a rolling deployment strategy.
-- You want to monitor for performance differences when deploying new versions of your Worker.
-- You have a CI/CD pipeline configured for Workers but want to cut manual releases.
+Versions and deployments separate uploading code from deploying it. You can upload changes to your Worker without affecting live traffic, then control exactly how those changes roll out — by deploying to [a percentage of traffic](/workers/configuration/versions-and-deployments/percentage-deployments/) or to [specific cohorts of users](/workers/configuration/versions-and-deployments/cohort-deployments/).
 
 ## Versions
 
-A version is defined by the state of code as well as the state of configuration in a Worker's [Wrangler configuration file](/workers/wrangler/configuration/). Versions track historical changes to [bundled code](/workers/wrangler/bundling/), [static assets](/workers/static-assets/) and changes to configuration like [bindings](/workers/runtime-apis/bindings/) and [compatibility date and compatibility flags](/workers/configuration/compatibility-dates/) over time.
+A version is a snapshot of your Worker's code and configuration at a point in time. Each version includes:
 
-Versions also track metadata associated with a version, including: the version ID, the user that created the version, deploy source, and timestamp. Optionally, a version message and version tag can be configured on version upload.
-
-:::note
-State changes for associated Workers [storage resources](/workers/platform/storage-options/) such as [KV](/kv/), [R2](/r2/), [Durable Objects](/durable-objects/) and [D1](/d1/) are not tracked with versions.
-:::
+- [Bundled code](/workers/wrangler/bundling/) and [static assets](/workers/static-assets/)
+- [Bindings](/workers/runtime-apis/bindings/) configuration
+- [Compatibility date and flags](/workers/configuration/compatibility-dates/)
+- Metadata (version ID, author, timestamp, optional message and tag)
 
 ## Deployments
 
-Deployments track the version(s) of your Worker that are actively serving traffic. A deployment can consist of one or two versions of a Worker.
+A deployment determines which version(s) of your Worker serve traffic. A deployment can include one or two versions.
 
-By default, Workers supports an all-at-once deployment model where traffic is immediately shifted from one version to the newly deployed version automatically. Alternatively, you can use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) to create a rolling deployment strategy.
+By default, `wrangler deploy` uploads a new version and immediately deploys it to 100% of traffic. For more control, you can:
 
-You can also track metadata associated with a deployment, including: the user that created the deployment, deploy source, timestamp and the version(s) in the deployment. Optionally, you can configure a deployment message when you create a deployment.
+1. Upload a version without deploying it using `wrangler versions upload`
+2. Deploy it later using `wrangler versions deploy` or [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/)
 
-## Use versions and deployments
+## Gradual deployments
 
-### Create a new version
+Instead of deploying to 100% of traffic immediately, gradual deployments let you split traffic across versions. This reduces risk by limiting exposure to potential bugs, and lets you monitor error rates before full rollout.
 
-Review the different ways you can create versions of your Worker and deploy them.
+Gradual deployments support two strategies:
 
-#### Upload a new version and deploy it immediately
+| Strategy                                                                                    | Use when                                                                              |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [Percentage-based](/workers/configuration/versions-and-deployments/percentage-deployments/) | You want to split traffic randomly (for example, 10% new version, 90% old version)    |
+| [Cohort-based](/workers/configuration/versions-and-deployments/cohort-deployments/)         | You want to deploy to specific user groups first (employees, beta testers, free tier) |
 
-A new version that is automatically deployed to 100% of traffic when:
+Refer to [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) for an overview of both strategies and shared concepts like version affinity, version overrides, and observability.
 
-- Changes are uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy) via the Cloudflare Dashboard
-- Changes are deployed with the command [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) via [Workers Builds](/workers/ci-cd/builds)
-- Changes are uploaded with the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)
+## Create and view versions
 
-#### Upload a new version to be gradually deployed or deployed at a later time
+### Create a version
 
-:::note
-
-Wrangler versions before 3.73.0 require you to specify a `--x-versions` flag.
-
-:::
-
-To create a new version of your Worker that is not deployed immediately, use the [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) command or create a new version via the Cloudflare dashboard using the **Save** button. You can find the **Save** option under the down arrow beside the "Deploy" button.
-
-Versions created in this way can then be deployed all at once or gradually deployed using the [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) command or via the Cloudflare dashboard under the **Deployments** tab.
-
-:::note
-When using [Wrangler](/workers/wrangler/), changes made to a Worker's triggers [routes, domains](/workers/configuration/routing/) or [cron triggers](/workers/configuration/cron-triggers/) need to be applied with the command [`wrangler triggers deploy`](/workers/wrangler/commands/#triggers).
-:::
+| Method                                                                                   | Deploys immediately? |
+| ---------------------------------------------------------------------------------------- | -------------------- |
+| `wrangler deploy`                                                                        | Yes (100% traffic)   |
+| `wrangler versions upload`                                                               | No                   |
+| Dashboard **Deploy** button                                                              | Yes (100% traffic)   |
+| Dashboard **Save** button                                                                | No                   |
+| [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/) | Yes (100% traffic)   |
 
 :::note
-New versions are not created when you make changes to [resources connected to your Worker](/workers/runtime-apis/bindings/). For example, if two Workers (Worker A and Worker B) are connected via a [service binding](/workers/runtime-apis/bindings/service-bindings/), changing the code of Worker B will not create a new version of Worker A. Changing the code of Worker B will only create a new version of Worker B. Changes to the service binding (such as, deleting the binding or updating the [environment](/workers/wrangler/environments/) it points to) on Worker A will also not create a new version of Worker B.
+You must use `wrangler deploy` or the Dashboard for your first upload. `wrangler versions upload` fails on new Workers.
 :::
-
-#### Directly manage Versions and Deployments
-
-See examples of creating a Worker, Versions, and Deployments directly with the API, library SDKs, and Terraform in [Infrastructure as Code](/workers/platform/infrastructure-as-code/).
 
 ### View versions and deployments
 
-#### Via Wrangler
+Use `wrangler versions list` and `wrangler deployments list` to view the 100 most recent versions and deployments. In the Dashboard, go to **Workers & Pages** > select your Worker > **Deployments**.
 
-Wrangler allows you to view the 100 most recent versions and deployments. Refer to the [`versions list`](/workers/wrangler/commands/#list-4) and [`deployments`](/workers/wrangler/commands/#list-5) documentation to view the commands.
+## Next steps
 
-#### Via the Cloudflare dashboard
+<CardGrid>
 
-To view your deployments in the Cloudflare dashboard:
+<LinkTitleCard
+	header="Gradual deployments"
+	href="/workers/configuration/versions-and-deployments/gradual-deployments/"
+>
+	Overview of deployment strategies, version affinity, and observability.
+</LinkTitleCard>
 
-1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+<LinkTitleCard
+	header="Percentage-based deployments"
+	href="/workers/configuration/versions-and-deployments/percentage-deployments/"
+>
+	Split traffic randomly between versions using Wrangler, Dashboard, or API.
+</LinkTitleCard>
 
-   <DashButton url="/?to=/:account/workers-and-pages" />
+<LinkTitleCard
+	header="Cohort-based deployments"
+	href="/workers/configuration/versions-and-deployments/cohort-deployments/"
+>
+	Deploy to specific user groups before rolling out to everyone.
+</LinkTitleCard>
 
-2. Select your Worker > **Deployments**.
+<LinkTitleCard
+	header="Rollbacks"
+	href="/workers/configuration/versions-and-deployments/rollbacks/"
+>
+	Revert to a previous version of your Worker.
+</LinkTitleCard>
+
+</CardGrid>
 
 ## Limits
 
-### First upload
+| Limit                             | Value             |
+| --------------------------------- | ----------------- |
+| Versions available for deployment | Last 100 uploaded |
+| Versions per deployment           | 2                 |
 
-You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) the first time you upload a Worker will fail.
+### Unsupported features
 
-### Service worker syntax
-
-Service worker syntax is not supported for versions that are uploaded through [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload). You must use ES modules format.
-
-Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate-to-module-workers/#advantages-of-migrating) to learn how to migrate your Workers from the service worker format to the ES modules format.
-
-### Durable Object migrations
-
-Uploading a version with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
-
-This will be supported in the near future.
+- **Service worker syntax**: Use [ES modules format](/workers/reference/migrate-to-module-workers/) with `wrangler versions upload`
+- **Durable Object migrations**: Use `wrangler deploy` for [DO migrations](/durable-objects/reference/durable-objects-migrations/)

@@ -4,20 +4,20 @@ title: Version metadata
 head:
   - tag: title
     content: Version metadata binding
-description: Exposes Worker version metadata (`versionID` and `versionTag`).
+description:
+  Exposes Worker version metadata (`versionID`, `versionTag`, and `cohort`).
   These fields can be added to events emitted from the Worker to send to
   downstream observability systems.
 sidebar:
   badge:
     text: Beta
-
 ---
 
-import { TabItem, Tabs, WranglerConfig } from "~/components"
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 The version metadata binding can be used to access metadata associated with a [version](/workers/configuration/versions-and-deployments/#versions) from inside the Workers runtime.
 
-Worker version ID, version tag and timestamp of when the version was created are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version.
+Worker version ID, version tag, timestamp of when the version was created, and cohort (when using [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-deployments/)) are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version or cohort.
 
 To use the version metadata binding, update your Worker's Wrangler file:
 
@@ -30,23 +30,38 @@ binding = "CF_VERSION_METADATA"
 
 </WranglerConfig>
 
-### Interface
+## Properties
 
-An example of how to access the version ID and version tag from within a Worker to send events to [Workers Analytics Engine](/analytics/analytics-engine/):
+| Property    | Type             | Description                                                                                                                                                                                            |
+| ----------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`        | `string`         | The version UUID                                                                                                                                                                                       |
+| `tag`       | `string`         | The version tag (if set during upload)                                                                                                                                                                 |
+| `timestamp` | `string`         | ISO 8601 timestamp of when the version was created                                                                                                                                                     |
+| `cohort`    | `string \| null` | The matched cohort name when using [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-deployments/), or `null` if no cohort matched or for percentage-based deployments |
+
+## Interface
+
+An example of how to access the version ID, version tag, and cohort from within a Worker to send events to [Workers Analytics Engine](/analytics/analytics-engine/):
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    const { id: versionId, tag: versionTag, timestamp: versionTimestamp } = env.CF_VERSION_METADATA;
-    env.WAE.writeDataPoint({
-      indexes: [versionId],
-      blobs: [versionTag, versionTimestamp],
-      //...
-    });
-    //...
-  },
+	async fetch(request, env, ctx) {
+		const {
+			id: versionId,
+			tag: versionTag,
+			timestamp: versionTimestamp,
+			cohort,
+		} = env.CF_VERSION_METADATA;
+
+		env.WAE.writeDataPoint({
+			indexes: [versionId],
+			blobs: [versionTag, versionTimestamp, cohort],
+			//...
+		});
+		//...
+	},
 };
 ```
 
@@ -54,21 +69,48 @@ export default {
 
 ```ts
 interface Environment {
-  CF_VERSION_METADATA: WorkerVersionMetadata;
-  WAE: AnalyticsEngineDataset;
+	CF_VERSION_METADATA: WorkerVersionMetadata;
+	WAE: AnalyticsEngineDataset;
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    const { id: versionId, tag: versionTag } = env.CF_VERSION_METADATA;
-    env.WAE.writeDataPoint({
-      indexes: [versionId],
-      blobs: [versionTag],
-      //...
-    });
-    //...
-  },
+	async fetch(request, env, ctx) {
+		const {
+			id: versionId,
+			tag: versionTag,
+			timestamp: versionTimestamp,
+			cohort,
+		} = env.CF_VERSION_METADATA;
+
+		env.WAE.writeDataPoint({
+			indexes: [versionId],
+			blobs: [versionTag, versionTimestamp, cohort],
+			//...
+		});
+		//...
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
 </TabItem> </Tabs>
+
+## Example: Log cohort for debugging
+
+You can use the `cohort` property to add context to your logs during [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/):
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		const { id, cohort } = env.CF_VERSION_METADATA;
+
+		console.log({
+			message: "Request received",
+			versionId: id,
+			cohort: cohort ?? "default",
+		});
+
+		// Your Worker logic...
+		return new Response("OK");
+	},
+};
+```
