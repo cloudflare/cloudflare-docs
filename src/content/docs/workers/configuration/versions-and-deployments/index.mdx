@@ -15,7 +15,7 @@ import {
 	RelatedProduct,
 } from "~/components";
 
-Versions and deployments separate uploading code from deploying it. You can upload changes to your Worker without affecting live traffic, then control exactly how those changes roll out — by deploying to [a percentage of traffic](/workers/configuration/versions-and-deployments/percentage-deployments/) or to [specific cohorts of users](/workers/configuration/versions-and-deployments/cohort-deployments/).
+Versions and deployments separate uploading code from deploying it. You can upload changes to your Worker without affecting live traffic, then control exactly how those changes roll out — by deploying to [a percentage of traffic](/workers/configuration/versions-and-deployments/gradual-deployments/percentage-deployments/) or to [specific cohorts of users](/workers/configuration/versions-and-deployments/gradual-deployments/cohort-deployments/).
 
 ## Versions
 
@@ -41,10 +41,10 @@ Instead of deploying to 100% of traffic immediately, gradual deployments let you
 
 Gradual deployments support two strategies:
 
-| Strategy                                                                                    | Use when                                                                              |
-| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [Percentage-based](/workers/configuration/versions-and-deployments/percentage-deployments/) | You want to split traffic randomly (for example, 10% new version, 90% old version)    |
-| [Cohort-based](/workers/configuration/versions-and-deployments/cohort-deployments/)         | You want to deploy to specific user groups first (employees, beta testers, free tier) |
+| Strategy                                                                                                        | Use when                                                                              |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [Percentage-based](/workers/configuration/versions-and-deployments/gradual-deployments/percentage-deployments/) | You want to split traffic randomly (for example, 10% new version, 90% old version)    |
+| [Cohort-based](/workers/configuration/versions-and-deployments/gradual-deployments/cohort-deployments/)         | You want to deploy to specific user groups first (employees, beta testers, free tier) |
 
 Refer to [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) for an overview of both strategies and shared concepts like version affinity, version overrides, and observability.
 
@@ -81,14 +81,14 @@ Use `wrangler versions list` and `wrangler deployments list` to view the 100 mos
 
 <LinkTitleCard
 	header="Percentage-based deployments"
-	href="/workers/configuration/versions-and-deployments/percentage-deployments/"
+	href="/workers/configuration/versions-and-deployments/gradual-deployments/percentage-deployments/"
 >
 	Split traffic randomly between versions using Wrangler, Dashboard, or API.
 </LinkTitleCard>
 
 <LinkTitleCard
 	header="Cohort-based deployments"
-	href="/workers/configuration/versions-and-deployments/cohort-deployments/"
+	href="/workers/configuration/versions-and-deployments/gradual-deployments/cohort-deployments/"
 >
 	Deploy to specific user groups before rolling out to everyone.
 </LinkTitleCard>

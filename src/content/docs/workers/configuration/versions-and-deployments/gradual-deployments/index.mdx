@@ -19,33 +19,13 @@ Gradual deployments let you incrementally roll out new [versions](/workers/confi
 
 ## Choose a strategy
 
-Gradual deployments support two strategies:
+Gradual deployments support two strategies, Percentage-based deployments, and Cohort-based deployments, which can be used for different scenarios:
 
-| Scenario                                                                  | Strategy                                                                                    |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Split traffic randomly between versions                                   | [Percentage-based](/workers/configuration/versions-and-deployments/percentage-deployments/) |
-| Deploy to specific user groups first (employees, beta testers, free tier) | [Cohort-based](/workers/configuration/versions-and-deployments/cohort-deployments/)         |
-| Different rollout speeds for different user segments                      | [Cohort-based](/workers/configuration/versions-and-deployments/cohort-deployments/)         |
-
-<CardGrid>
-
-<LinkTitleCard
-	header="Percentage-based deployments"
-	href="/workers/configuration/versions-and-deployments/percentage-deployments/"
->
-	Split traffic randomly between versions. Each request has an X% probability of
-	hitting each version.
-</LinkTitleCard>
-
-<LinkTitleCard
-	header="Cohort-based deployments"
-	href="/workers/configuration/versions-and-deployments/cohort-deployments/"
->
-	Route traffic based on named user groups. Deploy to employees first, then beta
-	users, then everyone.
-</LinkTitleCard>
-
-</CardGrid>
+| Scenario                                                                  | Strategy                                                                                                        |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Split traffic randomly between versions                                   | [Percentage-based](/workers/configuration/versions-and-deployments/gradual-deployments/percentage-deployments/) |
+| Deploy to specific user groups first (employees, beta testers, free tier) | [Cohort-based](/workers/configuration/versions-and-deployments/gradual-deployments/cohort-deployments/)         |
+| Different rollout speeds for different user segments                      | [Cohort-based](/workers/configuration/versions-and-deployments/gradual-deployments/cohort-deployments/)         |
 
 ## Version affinity
 

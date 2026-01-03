@@ -40,7 +40,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.outcome` - The outcome of the Worker invocation (e.g., `ok`, `exception`, `exceededCpu`, `exceededMemory`)
 - `cloudflare.cpu_time_ms` - The CPU time used by the Worker invocation, in milliseconds
 - `cloudflare.wall_time_ms` - The wall time used by the Worker invocation, in milliseconds
-- `cloudflare.cohort` - The cohort that served this request when using [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-deployments/), or `null` if no cohort matched or for percentage-based deployments
+- `cloudflare.cohort` - The cohort that served this request when using [cohort-based deployments](/workers/configuration/versions-and-deployments/gradual-deployments/cohort-deployments/), or `null` if no cohort matched or for percentage-based deployments
 
 ---
 

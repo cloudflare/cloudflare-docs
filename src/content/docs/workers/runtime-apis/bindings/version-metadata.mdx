@@ -17,7 +17,7 @@ import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 The version metadata binding can be used to access metadata associated with a [version](/workers/configuration/versions-and-deployments/#versions) from inside the Workers runtime.
 
-Worker version ID, version tag, timestamp of when the version was created, and cohort (when using [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-deployments/)) are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version or cohort.
+Worker version ID, version tag, timestamp of when the version was created, and cohort (when using [cohort-based deployments](/workers/configuration/versions-and-deployments/gradual-deployments/cohort-deployments/)) are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version or cohort.
 
 To use the version metadata binding, update your Worker's Wrangler file:
 
@@ -32,12 +32,12 @@ binding = "CF_VERSION_METADATA"
 
 ## Properties
 
-| Property    | Type             | Description                                                                                                                                                                                            |
-| ----------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `id`        | `string`         | The version UUID                                                                                                                                                                                       |
-| `tag`       | `string`         | The version tag (if set during upload)                                                                                                                                                                 |
-| `timestamp` | `string`         | ISO 8601 timestamp of when the version was created                                                                                                                                                     |
-| `cohort`    | `string \| null` | The matched cohort name when using [cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-deployments/), or `null` if no cohort matched or for percentage-based deployments |
+| Property    | Type             | Description                                                                                                                                                                                                                |
+| ----------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`        | `string`         | The version UUID                                                                                                                                                                                                           |
+| `tag`       | `string`         | The version tag (if set during upload)                                                                                                                                                                                     |
+| `timestamp` | `string`         | ISO 8601 timestamp of when the version was created                                                                                                                                                                         |
+| `cohort`    | `string \| null` | The matched cohort name when using [cohort-based deployments](/workers/configuration/versions-and-deployments/gradual-deployments/cohort-deployments/), or `null` if no cohort matched or for percentage-based deployments |
 
 ## Interface
 
