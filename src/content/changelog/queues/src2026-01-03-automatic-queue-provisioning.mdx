@@ -1,0 +1,40 @@
+---
+title: Automatic queue provisioning
+description: Wrangler now creates queues automatically when you deploy Workers with queue bindings.
+products:
+  - queues
+  - workers
+date: 2026-01-03
+---
+
+import { WranglerConfig } from "~/components";
+
+You no longer need to create queues manually before deploying. When you run `wrangler deploy` with queue bindings in your config, Wrangler creates any missing queues automatically.
+
+To add a queue to your Worker, just define the binding in your configuration file:
+
+<WranglerConfig>
+
+```toml
+[[queues.producers]]
+binding = "MY_QUEUE"
+queue = "my-queue"
+
+[[queues.consumers]]
+queue = "my-queue"
+max_batch_size = 10
+```
+
+</WranglerConfig>
+
+Then deploy:
+
+```sh
+npx wrangler deploy
+```
+
+If no queue named `my-queue` exists, Wrangler will create one before deploying your Worker. This works for both producer and consumer bindings. When the same queue appears in both, Wrangler creates it once.
+
+This matches how [KV, D1, and R2 provisioning](/changelog/workers/2025-10-24-automatic-resource-provisioning/) works. To disable automatic provisioning, use the `--no-x-provision` flag.
+
+For more on queue configuration, refer to [Configure Queues](/queues/configuration/configure-queues/).
