@@ -14,52 +14,52 @@ For dynamic, multi-step automation, see our guides on integrating Cloudflare Bro
 <CardGrid>
     <LinkCard
         title="Fetch rendered HTML from a URL"
-        description="Instruct the browser to navigate to a website and capture the fully rendered HTML of a page after JavaScript execution."
+        description="Capture fully rendered HTML from a webpage after JavaScript execution."
         href="/browser-rendering/rest-api/content-endpoint/#fetch-rendered-html-from-a-url"
     />
     <LinkCard
-        title="Take a screenshot from custom HTML"
-        description="Render raw HTML and JavaScript to capture a screenshot of the output."
-        href="/browser-rendering/rest-api/screenshot-endpoint/#take-a-screenshot-from-custom-html"
+        title="Take a screenshot"
+        description="Capture a screenshot of a fully rendered webpage from a URL or custom HTML."
+        href="/browser-rendering/rest-api/screenshot-endpoint/#basic-usage"
     />
     <LinkCard
-        title="Take a screenshot from a URL"
-        description="Render a webpage from any public URL to capture a screenshot of the output."
-        href="/browser-rendering/rest-api/screenshot-endpoint/#take-a-screenshot-from-a-url"
+        title="Capture a full-page screenshot"
+        description="Capture a screenshot of an entire scrollable webpage, not just the visible viewport."
+        href="/browser-rendering/rest-api/screenshot-endpoint/#navigate-and-capture-a-full-page-screenshot"
     />
     <LinkCard
-        title="Render a PDF from a URL"
-        description="Instruct the browser to generate a PDF of a webpage using any public URL."
-        href="/browser-rendering/rest-api/pdf-endpoint/#convert-a-url-to-pdf"
+        title="Screenshot an authenticated page"
+        description="Capture a screenshot of a webpage that requires login by providing session cookies."
+        href="/browser-rendering/rest-api/screenshot-endpoint/#capture-a-screenshot-of-an-authenticated-page"
     />
     <LinkCard
-        title="Render a PDF from HTML"
-        description="Instruct the browser to generate a PDF from raw HTML and custom CSS."
-        href="/browser-rendering/rest-api/pdf-endpoint/#convert-custom-html-to-pdf"
+        title="Generate a PDF"
+        description="Generate a PDF from a URL or custom HTML and CSS."
+        href="/browser-rendering/rest-api/pdf-endpoint/#basic-usage"
+    />
+    <LinkCard
+        title="Extract Markdown from a URL"
+        description="Convert a webpage's content into Markdown format."
+        href="/browser-rendering/rest-api/markdown-endpoint/#convert-a-url-to-markdown"
     />
     <LinkCard
         title="Capture a snapshot from a URL"
-        description="Capture a webpage's HTML as a string and its screenshot as a Base64-encoded image from any public URL."
+        description="Capture both the rendered HTML and a screenshot from a webpage in a single request."
         href="/browser-rendering/rest-api/snapshot/#capture-a-snapshot-from-a-url"
     />
     <LinkCard
         title="Scrape headings and links from a URL"
-        description="Extract data from specific elements on a webpage, such as headings and links, using CSS selectors."
+        description="Extract structured data from specific elements on a webpage using CSS selectors."
         href="/browser-rendering/rest-api/scrape-endpoint/#extract-headings-and-links-from-a-url"
     />
     <LinkCard
         title="Capture structured data with an AI prompt and JSON schema"
-        description="Extract custom structured data in JSON from a webpage with Workers AI, or your own AI model, using a prompt and JSON schema."
+        description="Extract structured data from a webpage using AI using a prompt or JSON schema."
         href="/browser-rendering/rest-api/json-endpoint/#with-a-prompt-and-json-schema"
     />
     <LinkCard
         title="Retrieve links from a URL"
-        description="Retrieve all links from a webpage, including hidden ones, from any public URL."
+        description="Retrieve all links from a webpage, including hidden ones."
         href="/browser-rendering/rest-api/links-endpoint/#get-all-links-on-a-page"
-    />
-    <LinkCard
-        title="Extract Markdown from a URL"
-        description="Retrieve the content of any public URL, converted into Markdown format, with optional parameters."
-        href="/browser-rendering/rest-api/markdown-endpoint/#convert-a-url-to-markdown"
     />
 </CardGrid>
