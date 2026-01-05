@@ -94,10 +94,11 @@ The Python SDK supports the [saga pattern](https://microservices.io/patterns/dat
 
 ### step.rollback_all
 
-* <code>await step.rollback_all(error=None)</code> - executes all registered undo functions in LIFO order.
+* <code>await step.rollback_all(error=None, *, continue_on_error=False)</code> - executes all registered undo functions in LIFO order.
   * `error` - optional error to pass to each undo function.
+  * `continue_on_error` - if `True`, continue executing remaining undos after a failure and raise `ExceptionGroup` at end. Default: `False`.
   * Each undo is wrapped in `step.do()` for durability and retry.
-  * Stops on first undo failure.
+  * By default, stops on first undo failure.
 
 ### Example
 

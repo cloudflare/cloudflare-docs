@@ -167,11 +167,21 @@ Workflows supports the [saga pattern](https://microservices.io/patterns/data/sag
 ### step.rollbackAll
 
 {/* prettier-ignore */}
-- <code>step.rollbackAll(error?: unknown): Promise&lt;void&gt;</code>
+- <code>step.rollbackAll(error?: unknown, options?: RollbackAllOptions): Promise&lt;void&gt;</code>
   - `error` (optional) - the error that triggered the rollback, passed to each undo function.
+  - `options` (optional) - configuration options for the rollback behavior.
   - Executes all registered undo functions in LIFO (last-in, first-out) order.
   - Each undo is wrapped in `step.do()` for durability and retry.
-  - Stops on first undo failure.
+  - By default, stops on first undo failure. Use `continueOnError: true` to execute all undos and collect failures into an `AggregateError`.
+
+### RollbackAllOptions
+
+```ts
+export type RollbackAllOptions = {
+  /** If true, continue executing remaining undos after a failure and throw AggregateError at end. Default: false */
+  continueOnError?: boolean;
+};
+```
 
 ### RollbackHandler
 
