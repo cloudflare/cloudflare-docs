@@ -9,11 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Cannot delete queue (queue) because it is still bound to Workers: (workers). Remove the queue bindings first, then delete the queue.
+
+
 **Category:** [Bindings - Queues](/workers/platform/error-codes/#bindings--queues)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Cannot delete queue '{queue}' because it is still bound to Workers: {workers}. Remove the queue bindings first, then delete the queue.`
 
 **When this occurs:**
 Attempting to delete a queue that's bound to Workers.

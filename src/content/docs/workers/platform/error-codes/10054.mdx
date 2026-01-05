@@ -9,16 +9,14 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Text binding (name) is too large ((sizeBytes) bytes). The limit is (limitBytes) bytes. Reduce the binding size and try again.
+
 **Category:** [Bindings - General](/workers/platform/error-codes/#bindings--general)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Text binding '{name}' is too large ({sizeBytes} bytes). The limit is {limitBytes} bytes. Reduce the binding size and try again.`
-
 **When this occurs:**
-A plain text or secret binding exceeds the size limit.
-
-**Limit:** 5 KB per text/secret binding
+A plain text or secret binding exceeds the [size limit](/workers/platform/limits/#environment-variables).
 
 **How to fix:**
 
@@ -27,4 +25,3 @@ A plain text or secret binding exceeds the size limit.
 3. For configuration, consider storing JSON in KV and parsing at runtime
 
 ---
-

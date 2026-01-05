@@ -9,11 +9,11 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Your account does not have access to this feature. Verify it is enabled on your plan or upgrade at https://dash.cloudflare.com/?to=/:account/workers/plans
+
 **Category:** [Authentication & Authorization](/workers/platform/error-codes/#authentication-authorization)
 
 **HTTP Status:** 401 Unauthorized
-
-**Message:** `Your account does not have access to this feature. Verify it is enabled on your plan or upgrade at https://dash.cloudflare.com/?to=/:account/workers/plans`
 
 **When this occurs:**
 Your API token is valid but lacks permission for the requested operation.
@@ -38,20 +38,13 @@ Your API token is valid but lacks permission for the requested operation.
 wrangler whoami
 ```
 
-2. Verify your token includes the required [permission scopes](/fundamentals/api/reference/permissions/):
-
-| Operation        | Required Permission       |
-| ---------------- | ------------------------- |
-| Deploy Worker    | `Workers Scripts:Edit`    |
-| Read Worker      | `Workers Scripts:Read`    |
-| Configure routes | `Workers Routes:Edit`     |
-| Manage KV        | `Workers KV Storage:Edit` |
-| Manage R2        | `Workers R2 Storage:Edit` |
-| Manage D1        | `D1:Edit`                 |
+2. Verify your token includes the required [permission scopes](/fundamentals/api/reference/permissions/). For example:
+   - Deploy Worker requires `Workers Scripts:Edit`
+   - Read Worker requires `Workers Scripts:Read`
+   - Manage KV requires `Workers KV Storage:Edit`
 
 3. Ensure the token is scoped to the correct account/zone (not a different account)
 
 4. [Create a new token](/fundamentals/api/get-started/create-token/) with the required permissions if needed
 
 ---
-

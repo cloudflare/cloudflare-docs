@@ -9,11 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Hostname (hostname) is already configured as a custom domain. Delete the existing custom domain first, or use 'override_existing_origin: true' to replace it.
+
+
 **Category:** [Custom Domains](/workers/platform/error-codes/#custom-domains)
 
 **HTTP Status:** 409 Conflict
 
-**Message:** `Hostname '{hostname}' is already configured as a custom domain. Delete the existing custom domain first, or use 'override_existing_origin: true' to replace it.`
 
 **When this occurs:**
 The hostname is already configured as a custom domain for another Worker.
@@ -27,12 +29,12 @@ The hostname is already configured as a custom domain for another Worker.
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
-  --data '{
+  --data (
     "hostname": "api.example.com",
     "service": "my-worker",
     "environment": "production",
     "override_existing_origin": true
-  }'
+  )
 ```
 
 See [Custom Domains](/workers/configuration/routing/custom-domains/) for configuration options.

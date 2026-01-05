@@ -9,21 +9,14 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Too many text bindings ((count)). The limit is (limit). Remove some bindings and try again.
+
 **Category:** [Bindings - General](/workers/platform/error-codes/#bindings--general)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Too many text bindings ({count}). The limit is {limit}. Remove some bindings and try again.`
-
 **When this occurs:**
-Your Worker has too many text/secret bindings (environment variables).
-
-**Limits:**
-
-| Plan | Text/Secret Bindings |
-| ---- | -------------------- |
-| Free | 64                   |
-| Paid | 128                  |
+Your Worker has too many text/secret bindings (environment variables). Refer to [environment variable limits](/workers/platform/limits/#environment-variables) for current plan limits.
 
 **How to fix:**
 
@@ -36,13 +29,12 @@ Your Worker has too many text/secret bindings (environment variables).
 
 // Use a single JSON binding:
 {
-  "vars": {
-    "CONFIG": "{\"apiKeys\": [\"key1\", \"key2\", \"key3\"]}",
-  },
+	"vars": {
+		"CONFIG": "{\"apiKeys\": [\"key1\", \"key2\", \"key3\"]}",
+	},
 }
 ```
 
 3. Use [KV](/kv/) for large numbers of configuration values
 
 ---
-

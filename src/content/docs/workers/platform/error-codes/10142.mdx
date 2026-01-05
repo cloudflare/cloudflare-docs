@@ -9,11 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Cannot delete Worker (service) because it is still referenced by service bindings in Workers: (workers). Remove the service bindings first, then delete the Worker.
+
+
 **Category:** [Bindings - Service Bindings](/workers/platform/error-codes/#bindings--service-bindings)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Cannot delete Worker '{service}' because it is still referenced by service bindings in Workers: {workers}. Remove the service bindings first, then delete the Worker.`
 
 **When this occurs:**
 Attempting to delete a Worker that other Workers have service bindings to.

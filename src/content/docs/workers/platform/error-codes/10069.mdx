@@ -9,13 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** The uploaded Worker contains event handlers unsupported by the Workers runtime.
+
 import { TypeScriptExample } from "~/components";
 
 **Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
 
 **HTTP Status:** 400 Bad Request
-
-**Message:** `The uploaded Worker contains event handlers unsupported by the Workers runtime.`
 
 **When this occurs:**
 
@@ -25,19 +25,13 @@ Your Worker exports an event handler that is not recognized or supported by the 
 - Using an event handler that requires a specific configuration or binding
 - Using experimental handlers that are not yet generally available
 
-**Supported event handlers:**
+**Common handlers include:**
 
-| Handler            | Purpose                        | Documentation                                                    |
-| ------------------ | ------------------------------ | ---------------------------------------------------------------- |
-| `fetch`            | Handle HTTP requests           | [Fetch Handler](/workers/runtime-apis/handlers/fetch/)           |
-| `scheduled`        | Handle Cron Triggers           | [Scheduled Handler](/workers/runtime-apis/handlers/scheduled/)   |
-| `queue`            | Handle Queue messages          | [Queue Handler](/queues/configuration/javascript-apis/#consumer) |
-| `tail`             | Handle Tail Worker logs        | [Tail Handler](/workers/observability/logs/tail-workers/)        |
-| `trace`            | Handle trace events            | [Tail Workers](/workers/observability/logs/tail-workers/)        |
-| `alarm`            | Handle Durable Object alarms   | [Alarms](/durable-objects/api/alarms/)                           |
-| `webSocketMessage` | Handle WebSocket messages (DO) | [WebSockets](/durable-objects/api/websockets/)                   |
-| `webSocketClose`   | Handle WebSocket close (DO)    | [WebSockets](/durable-objects/api/websockets/)                   |
-| `webSocketError`   | Handle WebSocket errors (DO)   | [WebSockets](/durable-objects/api/websockets/)                   |
+- `fetch` - Handle HTTP requests
+- `scheduled` - Handle Cron Triggers
+- `queue` - Handle Queue messages
+
+Refer to [Event Handlers](/workers/runtime-apis/handlers/) for the complete list of supported handlers.
 
 **How to fix:**
 
@@ -76,5 +70,3 @@ export default {
 4. **Review compatibility** - Some handlers may require specific [compatibility flags](/workers/configuration/compatibility-flags/)
 
 ---
-
-**See also:** [Event Handlers](/workers/runtime-apis/handlers/)

@@ -9,20 +9,25 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Route not found. Verify the route ID is correct and the route exists on this zone, then try again.
+
 **Category:** [Routing](/workers/platform/error-codes/#routing)
 
 **HTTP Status:** 404 Not Found
-
-**Message:** `Route not found. Verify the route ID is correct and the route exists on this zone, then try again.`
 
 **When this occurs:**
 The requested route does not exist on this zone.
 
 **How to fix:**
 
-1. List routes: `wrangler routes list`
-2. Verify the route ID
+1. List routes in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/workers/routes) or via the API:
+
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/workers/routes" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+2. Verify the route ID exists in the response
 3. Check you're querying the correct zone
 
 ---
-

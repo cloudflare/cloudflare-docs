@@ -9,11 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Cannot delete Durable Object namespace (name) because Worker (script) still references it via binding (binding). Remove the binding from the Worker first, then delete the namespace.
+
+
 **Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Cannot delete Durable Object namespace '{name}' because Worker '{script}' still references it via binding '{binding}'. Remove the binding from the Worker first, then delete the namespace.`
 
 **When this occurs:**
 Attempting to delete a Durable Object namespace that's still bound to a Worker.

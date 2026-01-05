@@ -9,25 +9,14 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Your account does not have access to this feature. Verify it is enabled on your plan or upgrade at https://dash.cloudflare.com/?to=/:account/workers/plans
+
 **Category:** [Authentication & Authorization](/workers/platform/error-codes/#authentication-authorization)
 
 **HTTP Status:** 403 Forbidden
 
-**Message:** `Your account does not have access to this feature. Verify it is enabled on your plan or upgrade at https://dash.cloudflare.com/?to=/:account/workers/plans`
-
 **When this occurs:**
-Your account lacks the required entitlement or subscription for this feature.
-
-**Features requiring Workers Paid:**
-
-| Feature                                                                                    | Description                                 |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| [Queues](/queues/)                                        | Message queuing between Workers             |
-| [Tail Workers](/workers/observability/logs/tail-workers/) | Real-time log streaming to another Worker   |
-| [Logpush](/workers/observability/logs/logpush/)           | Log export to R2, S3, or other destinations |
-| [Browser Rendering](/browser-rendering/)                  | Headless Chromium browser API               |
-| Extended CPU limits                                                                        | CPU time beyond 10ms per request            |
-| [Durable Objects](/durable-objects/) (non-SQLite)         | Legacy in-memory storage class              |
+Your account lacks the required entitlement or subscription for this feature. Some features, such as [Queues](/queues/), [Tail Workers](/workers/observability/logs/tail-workers/), [Logpush](/workers/observability/logs/logpush/), and [Browser Rendering](/browser-rendering/), require Workers Paid.
 
 **How to fix:**
 
@@ -36,4 +25,3 @@ Your account lacks the required entitlement or subscription for this feature.
 3. See [Workers Pricing](/workers/platform/pricing/) for feature availability by plan
 
 ---
-

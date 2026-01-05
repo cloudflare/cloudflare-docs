@@ -9,11 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Hostname (hostname) has existing DNS records that conflict. Delete the existing DNS records first, or use 'override_existing_dns_record: true' to replace them.
+
+
 **Category:** [Custom Domains](/workers/platform/error-codes/#custom-domains)
 
 **HTTP Status:** 409 Conflict
 
-**Message:** `Hostname '{hostname}' has existing DNS records that conflict. Delete the existing DNS records first, or use 'override_existing_dns_record: true' to replace them.`
 
 **When this occurs:**
 The hostname has A, AAAA, or CNAME records that conflict with the custom domain configuration.
@@ -33,11 +35,11 @@ The hostname has A, AAAA, or CNAME records that conflict with the custom domain 
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
-  --data '{
+  --data (
     "hostname": "api.example.com",
     "service": "my-worker",
     "override_existing_dns_record": true
-  }'
+  )
 ```
 
 See [Custom Domains](/workers/configuration/routing/custom-domains/) for configuration options.

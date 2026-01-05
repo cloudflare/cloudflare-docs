@@ -9,24 +9,22 @@ sidebar:
   hidden: true
 ---
 
+**Message:** (migration error details)
+
 **Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `{migration error details}`
-
 **When this occurs:**
 A Durable Object migration failed.
 
-**Migration types:**
+**Common migration types include:**
 
-| Migration             | Use case                                                         |
-| --------------------- | ---------------------------------------------------------------- |
-| `new_sqlite_classes`  | Create new DO class with SQLite storage (required for free plan) |
-| `new_classes`         | Create new DO class with in-memory storage (paid plan only)      |
-| `deleted_classes`     | Delete a DO class                                                |
-| `renamed_classes`     | Rename a DO class                                                |
-| `transferred_classes` | Transfer DO class between Workers                                |
+- `new_sqlite_classes` - Create new DO class with SQLite storage
+- `new_classes` - Create new DO class with in-memory storage
+- `deleted_classes` - Delete a DO class
+
+Refer to [Durable Objects Migrations](/durable-objects/reference/durable-objects-migrations/) for the complete migration specification.
 
 **How to fix:**
 
@@ -34,21 +32,21 @@ A Durable Object migration failed.
 
 ```jsonc
 {
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_sqlite_classes": ["MyDurableObject"],
-    },
-    {
-      "tag": "v2",
-      "renamed_classes": [
-        {
-          "from": "MyDurableObject",
-          "to": "RenamedDurableObject",
-        },
-      ],
-    },
-  ],
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyDurableObject"],
+		},
+		{
+			"tag": "v2",
+			"renamed_classes": [
+				{
+					"from": "MyDurableObject",
+					"to": "RenamedDurableObject",
+				},
+			],
+		},
+	],
 }
 ```
 
@@ -56,7 +54,4 @@ A Durable Object migration failed.
 3. Check the migration tag matches the expected state on the server
 4. Verify class names match exported classes exactly
 
-See [Durable Objects Migrations](/durable-objects/reference/durable-objects-migrations/) for the complete migration specification.
-
 ---
-

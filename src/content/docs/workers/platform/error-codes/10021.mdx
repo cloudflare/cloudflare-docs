@@ -9,47 +9,105 @@ sidebar:
   hidden: true
 ---
 
+**Message:** (validation error details)
+
 import { TypeScriptExample } from "~/components";
 
 **Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `{validation error details}`
-
 **When this occurs:**
-Worker script validation failed during upload. The error message contains specific details about what failed.
 
-**Common causes:**
+Worker script validation failed during upload. The 10021 error code includes all errors that occur when you attempt to deploy a Worker, and Cloudflare then attempts to load and run the top-level scope (everything that happens before your Worker's [handler](/workers/runtime-apis/handlers/) is invoked).
 
-- JavaScript/TypeScript syntax errors
-- Missing required handler exports (`fetch`, `scheduled`, etc.)
-- Invalid bindings configuration in metadata
-- Incompatible [compatibility flags](/workers/configuration/compatibility-flags/)
-- Startup time exceeded (must complete in less than 1 second)
-- Memory limit exceeded during startup (greater than 128 MB)
-- Invalid module imports or circular dependencies
+For example, if you attempt to deploy a Worker with invalid JavaScript that would throw a `SyntaxError`, Cloudflare will not deploy your Worker and will return this error with details about what failed.
+
+---
+
+## Common validation error types
+
+### Script startup exceeded CPU time limit
+
+Your Worker is doing work in the top-level scope that exceeds the [startup time limit](/workers/platform/limits/#worker-startup-time). This commonly happens when:
+
+- Initializing large objects or data structures at startup
+- Parsing or generating large schemas
+- Running expensive computations outside of handlers
 
 **How to fix:**
 
-1. Check the error message for the specific validation failure
-2. Test locally before deploying:
+1. Move expensive initialization into your handler or use lazy initialization
+2. Use [`wrangler check startup`](/workers/wrangler/commands/#startup) to generate a CPU profile and identify slow code
+3. Consider pre-computing values at build time instead of runtime
+
+```js
+// Bad: Expensive work at startup
+const largeData = computeExpensiveData(); // Runs on every cold start
+
+export default {
+	async fetch(request) {
+		return new Response(JSON.stringify(largeData));
+	},
+};
+```
+
+```js
+// Good: Lazy initialization
+let largeData = null;
+
+function getData() {
+	if (!largeData) {
+		largeData = computeExpensiveData();
+	}
+	return largeData;
+}
+
+export default {
+	async fetch(request) {
+		return new Response(JSON.stringify(getData()));
+	},
+};
+```
+
+### Script startup exceeded memory limit
+
+Your Worker is exceeding the [memory limit](/workers/platform/limits/#memory) during startup. This can happen when:
+
+- Loading very large datasets into memory
+- Creating many objects in the top-level scope
+- Importing large dependencies
+
+**How to fix:**
+
+1. Reduce the amount of data loaded at startup
+2. Use streaming APIs instead of buffering large data
+3. Store large datasets in [KV](/kv/), [R2](/r2/), or [D1](/d1/) instead of bundling them in your Worker
+4. Use [Chrome DevTools](/workers/observability/dev-tools/memory-usage/) to profile memory usage
+
+### JavaScript or TypeScript syntax errors
+
+Your Worker code contains syntax errors that prevent it from being parsed. The error message will include details about the syntax error location.
+
+**How to fix:**
+
+1. Check the error message for the specific syntax error and line number
+2. Test your code locally before deploying:
 
 ```bash
 npx wrangler dev
 ```
 
-3. Verify your `wrangler.jsonc` configuration is valid:
+3. Use a linter or TypeScript compiler to catch errors before deployment
+4. If using TypeScript, run `npx tsc --noEmit` to check for type errors
 
-```jsonc
-{
-	"name": "my-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "2024-01-01",
-}
-```
+### Missing or invalid handler exports
 
-4. Ensure you export at least one handler:
+Your Worker must export at least one valid handler. Workers use ES Modules syntax and require a default export with handler methods.
+
+**How to fix:**
+
+Ensure you export a default object with at least one handler:
 
 <TypeScriptExample>
 
@@ -58,14 +116,153 @@ export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		return new Response("Hello!");
 	},
+
+	// Optional: Add other handlers as needed
+	async scheduled(event, env, ctx): Promise<void> {
+		console.log("Cron triggered");
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
 
-5. Check [compatibility dates](/workers/configuration/compatibility-dates/) and [compatibility flags](/workers/configuration/compatibility-flags/) for breaking changes
+**Common mistakes:**
 
-See [Validation Errors (10021)](/workers/observability/errors/#validation-errors-10021) for detailed scenarios.
+| Mistake                      | Correct                    |
+| ---------------------------- | -------------------------- |
+| `export { fetch }`           | `export default { fetch }` |
+| `module.exports = { fetch }` | `export default { fetch }` |
+| `handle(request)`            | `fetch(request)`           |
+| `cron(event)`                | `scheduled(event)`         |
+
+See [Handlers](/workers/runtime-apis/handlers/) for all available handler types including `fetch`, `scheduled`, `queue`, `tail`, `email`, and `alarm`.
+
+### Invalid bindings configuration
+
+Your Worker's bindings configuration contains errors. This can include:
+
+- Referencing a binding that doesn't exist (KV namespace, R2 bucket, D1 database, etc.)
+- Using invalid binding names (must be valid JavaScript identifiers)
+- Missing required binding properties
+- Duplicate binding names
+
+**How to fix:**
+
+1. Verify all referenced resources exist in your Cloudflare account
+2. Check your `wrangler.toml` or `wrangler.jsonc` for typos in binding names or IDs
+3. Ensure binding names are valid JavaScript variable names
+4. Review the [Wrangler configuration](/workers/wrangler/configuration/) documentation for correct syntax
+
+```jsonc
+// Example wrangler.jsonc with bindings
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-01-01",
+	"kv_namespaces": [
+		{
+			"binding": "MY_KV", // Must be valid JS identifier
+			"id": "abc123...", // Must be valid namespace ID
+		},
+	],
+}
+```
+
+See [Bindings](/workers/runtime-apis/bindings/) for more information on configuring bindings.
+
+### Incompatible compatibility flags
+
+Your Worker uses [compatibility flags](/workers/configuration/compatibility-flags/) or a [compatibility date](/workers/configuration/compatibility-dates/) that conflicts with your code. Some compatibility flags change runtime behavior in ways that can break existing code.
+
+**How to fix:**
+
+1. Review the error message for which compatibility flag is causing the issue
+2. Check the [compatibility flags documentation](/workers/configuration/compatibility-flags/) for details on the specific flag
+3. Test your Worker after changing `compatibility_date`:
+
+```bash
+npx wrangler dev
+```
+
+4. Consider pinning to an older compatibility date if you need more time to migrate:
+
+```jsonc
+{
+	"compatibility_date": "2024-01-01",
+	"compatibility_flags": ["nodejs_compat"],
+}
+```
+
+### Invalid module imports or circular dependencies
+
+Your Worker has issues with module imports, such as:
+
+- Circular dependencies between modules
+- Importing modules that don't exist
+- Using unsupported module formats
+- Missing the `nodejs_compat` flag when importing Node.js built-in modules
+
+**How to fix:**
+
+1. Check for circular imports between your modules
+2. Verify all imported modules exist and are spelled correctly
+3. If using Node.js APIs, enable the `nodejs_compat` compatibility flag:
+
+```jsonc
+{
+	"compatibility_flags": ["nodejs_compat"],
+}
+```
+
+4. Review the [bundling documentation](/workers/wrangler/bundling/) for supported module types
+5. If migrating from Service Worker syntax, see [Migrate to ES Modules](/workers/reference/migrate-to-module-workers/)
 
 ---
 
+## How to debug
+
+1. **Check the error message** - The validation error includes specific details about what failed. Look for line numbers, file names, or specific error types.
+
+2. **Test locally before deploying:**
+
+```bash
+npx wrangler dev
+```
+
+3. **Profile startup time** - If you're hitting startup limits, use `wrangler check startup` to generate a CPU profile:
+
+```bash
+npx wrangler check startup
+```
+
+Import the generated profile into [Chrome DevTools](https://developer.chrome.com/docs/devtools/performance/reference) or open it in VS Code to see a flamegraph of your Worker's startup phase.
+
+4. **Use DevTools for profiling:**
+   - [CPU profiling](/workers/observability/dev-tools/cpu-usage/) to identify slow code
+   - [Memory profiling](/workers/observability/dev-tools/memory-usage/) to find memory issues
+
+5. **Verify configuration** - Ensure your `wrangler.toml` or `wrangler.jsonc` is valid:
+
+```bash
+npx wrangler deploy --dry-run
+```
+
+6. **Check Worker size** - Large Workers take longer to start. Check your bundle size:
+
+```bash
+npx wrangler deploy --outdir bundled/ --dry-run
+```
+
+---
+
+## See also
+
+- [Limits](/workers/platform/limits/) - Worker startup time, memory, and size limits
+- [Compatibility Dates](/workers/configuration/compatibility-dates/) - How compatibility dates work
+- [Compatibility Flags](/workers/configuration/compatibility-flags/) - Available flags and their effects
+- [Handlers](/workers/runtime-apis/handlers/) - Available handler types and how to export them
+- [Bindings](/workers/runtime-apis/bindings/) - Configuring KV, R2, D1, and other bindings
+- [Wrangler Configuration](/workers/wrangler/configuration/) - Configuration file reference
+- [Bundling](/workers/wrangler/bundling/) - How Wrangler bundles your Worker
+- [DevTools](/workers/observability/dev-tools/) - Debugging with Chrome DevTools
+- [Errors and Exceptions](/workers/observability/errors/) - Overview of Workers errors

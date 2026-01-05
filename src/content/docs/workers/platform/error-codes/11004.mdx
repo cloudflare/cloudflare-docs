@@ -9,11 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Queue (queue) already has a consumer. A queue can only have one consumer. Remove the existing consumer or use a different queue.
+
+
 **Category:** [Bindings - Queues](/workers/platform/error-codes/#bindings--queues)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Queue '{queue}' already has a consumer. A queue can only have one consumer. Remove the existing consumer or use a different queue.`
 
 **When this occurs:**
 The queue already has a Worker consuming from it.

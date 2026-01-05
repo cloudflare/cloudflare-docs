@@ -9,23 +9,16 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Worker exceeds the size limit of (mib) MiB. Reduce your script size or upgrade your plan, then try again.
+
 import { TypeScriptExample } from "~/components";
 
 **Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Worker exceeds the size limit of {mib} MiB. Reduce your script size or upgrade your plan, then try again.`
-
 **When this occurs:**
-The Worker script exceeds the maximum allowed size after compression.
-
-**Size limits:**
-
-| Plan | Compressed | Uncompressed |
-| ---- | ---------- | ------------ |
-| Free | 3 MB       | 10 MB        |
-| Paid | 10 MB      | 10 MB        |
+The Worker script exceeds the maximum allowed size after compression. Refer to [Worker size limits](/workers/platform/limits/#worker-size) for current plan limits.
 
 **Check your Worker's size:**
 
@@ -51,7 +44,4 @@ const heavyModule = await import("./heavy-module");
 4. Use tree-shaking with your bundler (esbuild, webpack)
 5. [Upgrade to Workers Paid](https://dash.cloudflare.com/?to=/:account/workers/plans) for higher limits
 
-See [Worker Size Limits](/workers/platform/limits/#worker-size) for current limits.
-
 ---
-

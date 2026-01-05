@@ -9,21 +9,14 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Cron trigger limit reached: your account allows (max) cron triggers. Delete unused triggers or upgrade your plan.
+
 **Category:** [Routing](/workers/platform/error-codes/#routing)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Cron trigger limit reached: your account allows {max} cron triggers. Delete unused triggers or upgrade your plan.`
-
 **When this occurs:**
-Your account has reached the maximum number of cron triggers.
-
-**Limits:**
-
-| Plan | Cron Triggers |
-| ---- | ------------- |
-| Free | 5             |
-| Paid | 250           |
+Your account has reached the maximum number of cron triggers. Refer to [account plan limits](/workers/platform/limits/#account-plan-limits) for current limits.
 
 **How to fix:**
 
@@ -31,9 +24,9 @@ Your account has reached the maximum number of cron triggers.
 
 ```jsonc
 {
-  "triggers": {
-    "crons": ["0 * * * *", "0 0 * * *"],
-  },
+	"triggers": {
+		"crons": ["0 * * * *", "0 0 * * *"],
+	},
 }
 ```
 
@@ -44,4 +37,3 @@ Your account has reached the maximum number of cron triggers.
 See [Cron Triggers](/workers/configuration/cron-triggers/) for configuration details.
 
 ---
-

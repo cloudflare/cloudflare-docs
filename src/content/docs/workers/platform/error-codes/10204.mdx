@@ -9,11 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** A Worker with only a tail handler cannot tail itself. Configure a different Worker as the tail consumer.
+
+
 **Category:** [Observability](/workers/platform/error-codes/#observability)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `A Worker with only a tail handler cannot tail itself. Configure a different Worker as the tail consumer.`
 
 **When this occurs:**
 A Tail Worker with only a `tail()` handler is configured as its own tail consumer, creating a circular reference.

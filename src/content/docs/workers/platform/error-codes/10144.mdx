@@ -9,11 +9,13 @@ sidebar:
   hidden: true
 ---
 
+**Message:** Service binding (binding) references environment (env) on Worker (target), but that environment does not exist. Create the environment or correct the binding configuration.
+
+
 **Category:** [Bindings - Service Bindings](/workers/platform/error-codes/#bindings--service-bindings)
 
 **HTTP Status:** 400 Bad Request
 
-**Message:** `Service binding '{binding}' references environment '{env}' on Worker '{target}', but that environment does not exist. Create the environment or correct the binding configuration.`
 
 **When this occurs:**
 The service binding specifies an environment that doesn't exist on the target Worker.
