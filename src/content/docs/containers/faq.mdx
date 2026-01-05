@@ -9,6 +9,14 @@ import { WranglerConfig } from "~/components";
 
 Frequently Asked Questions:
 
+## Why am I getting "container is not listening" errors?
+
+If you see an error like `Error proxying request to container: The container is not listening in the TCP address 10.0.0.1:8080`, this means your Worker attempted to send a request to a container that has not finished starting up.
+
+Use `startAndWaitForPorts()` to ensure your container application is ready before making requests, or call `fetch()` directly on the container (which automatically waits for ports to be ready).
+
+Refer to the [troubleshooting guide](/containers/troubleshooting/#container-not-listening-on-tcp-address) for detailed solutions.
+
 ## How do Container logs work?
 
 To get logs in the Dashboard, including live tailing of logs, toggle `observability` to true

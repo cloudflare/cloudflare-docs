@@ -1,0 +1,273 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+sidebar:
+  order: 9
+---
+
+import { Tabs, TabItem } from "~/components";
+
+This guide covers common issues you may encounter when using Containers and how to resolve them.
+
+## Container not listening on TCP address
+
+### Error message
+
+```txt
+Error proxying request to container: The container is not listening in the TCP address 10.0.0.1:8080
+```
+
+### Problem
+
+This error occurs when your Worker attempts to send a request to a container that has not finished starting up. The container status may show as healthy, but the application inside the container is not yet ready to accept connections on the specified port.
+
+This commonly happens when using `binding.get()` to retrieve a container instance and immediately calling `fetch()` without waiting for the application to be fully initialized.
+
+### Solution
+
+Use `startAndWaitForPorts()` instead of `start()` to ensure your container application is ready before making requests.
+
+<Tabs>
+  <TabItem label="Recommended">
+
+```javascript
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "10m";
+}
+
+export default {
+	async fetch(request, env) {
+		const container = env.MY_CONTAINER.getByName("session-123");
+
+		// Ensure the container is started and port 8080 is ready
+		await container.startAndWaitForPorts();
+
+		// Now safe to send requests
+		return container.fetch(request);
+	},
+};
+```
+
+  </TabItem>
+  <TabItem label="Not recommended">
+
+```javascript
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "10m";
+}
+
+export default {
+	async fetch(request, env) {
+		const container = env.MY_CONTAINER.getByName("session-123");
+
+		// Only starts the container, does not wait for application readiness
+		await container.start();
+
+		// May fail if application is not ready yet
+		return container.fetch(request);
+	},
+};
+```
+
+  </TabItem>
+</Tabs>
+
+### Understanding the difference
+
+- **`start()`**: Starts the container but does not wait for your application to be ready. The container begins booting, but your application may not yet be listening on its ports.
+
+- **`startAndWaitForPorts()`**: Starts the container and waits until the specified ports are ready to accept connections before returning. This ensures your application is fully initialized.
+
+### Performance considerations
+
+Using `startAndWaitForPorts()` may add a couple hundred milliseconds of overhead during cold starts. This is expected and necessary behavior - there is a natural delay between when the container runtime starts and when your application is ready to serve requests.
+
+This overhead only occurs during:
+
+- **Cold starts**: When a container instance is started for the first time
+- **Rollouts**: When a container is restarted due to deployment updates
+- **Host shutdowns**: When a container needs to be restarted on a different host
+
+Subsequent requests to an already-running container do not incur this overhead.
+
+## Container lifecycle best practices
+
+### When to use fetch() directly
+
+The `fetch()` method on a container automatically starts the container if it is not already running and waits for ports to be ready. For most use cases, you can call `fetch()` directly without manually calling `startAndWaitForPorts()`:
+
+```javascript
+export default {
+	async fetch(request, env) {
+		const container = env.MY_CONTAINER.getByName("session-123");
+		// fetch() handles starting the container and waiting for readiness
+		return container.fetch(request);
+	},
+};
+```
+
+### When to manually start containers
+
+You may want to explicitly call `startAndWaitForPorts()` when:
+
+- You need to perform initialization logic after the container starts but before sending requests
+- You want to start multiple containers in parallel before making requests
+- You need fine-grained control over the startup process
+
+```javascript
+export default {
+	async fetch(request, env) {
+		const container = env.MY_CONTAINER.getByName("session-123");
+
+		// Manually start and wait
+		await container.startAndWaitForPorts();
+
+		// Perform custom initialization
+		await container.containerFetch("/health");
+
+		// Now handle the actual request
+		return container.fetch(request);
+	},
+};
+```
+
+### Checking multiple ports
+
+If your container application exposes multiple ports that need to be ready, specify them when calling `startAndWaitForPorts()`:
+
+```javascript
+await container.startAndWaitForPorts({
+	ports: [8080, 9090],
+});
+```
+
+## Container takes long time to start
+
+### Problem
+
+Container instances take several seconds to start on first request.
+
+### Explanation
+
+Container cold starts typically take 2-3 seconds, but this depends on:
+
+- Image size
+- Application initialization time
+- Resource requirements
+
+This is expected behavior for containers, which have longer cold start times compared to Workers.
+
+### Solutions
+
+1. **Keep containers warm**: Set an appropriate `sleepAfter` value to keep containers alive longer between requests:
+
+```javascript
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "30m"; // Keep container alive for 30 minutes of inactivity
+}
+```
+
+2. **Use load balancing**: Distribute requests across multiple container instances to reduce the impact of cold starts:
+
+```javascript
+import { getRandom } from "@cloudflare/containers";
+
+export default {
+	async fetch(request, env) {
+		// Route to one of 5 container instances
+		const container = await getRandom(env.MY_CONTAINER, 5);
+		return container.fetch(request);
+	},
+};
+```
+
+3. **Optimize your container image**: Reduce image size and minimize application startup time.
+
+## Container stops unexpectedly
+
+### Problem
+
+Container instances shut down even though you are actively using them.
+
+### Explanation
+
+Containers automatically sleep after the timeout specified by `sleepAfter` if they do not receive requests or have their activity timeout renewed.
+
+### Solution
+
+Ensure you set an appropriate `sleepAfter` value for your use case:
+
+```javascript
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "1h"; // Adjust based on your needs
+}
+```
+
+For background tasks that do not involve HTTP requests, manually renew the activity timeout:
+
+```javascript
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "10m";
+
+	async performBackgroundTask() {
+		// Do some work...
+
+		// Renew the timeout to prevent sleep
+		await this.renewActivityTimeout();
+	}
+}
+```
+
+## Container logs not appearing
+
+### Problem
+
+Container logs are not visible in the Containers Dashboard.
+
+### Solution
+
+Enable observability in your `wrangler.toml` or `wrangler.json` configuration:
+
+```json
+{
+	"observability": {
+		"enabled": true
+	}
+}
+```
+
+Refer to [Container logs documentation](/containers/faq/#how-do-container-logs-work) for details on retention periods and costs.
+
+## Container out of memory errors
+
+### Problem
+
+Container instances restart with Out of Memory (OOM) errors.
+
+### Solution
+
+1. **Choose a larger instance type**: Select an instance type with more memory. Refer to [instance types documentation](/containers/platform-details/limits/#instance-types).
+
+2. **Optimize memory usage**: Review your application code to reduce memory consumption.
+
+3. **Monitor memory usage**: Add logging to track memory consumption in your container application.
+
+Containers do not use swap memory, so you must ensure your application fits within the instance's memory limits.
+
+## Getting additional help
+
+If you continue to experience issues:
+
+- Review the [Container examples](/containers/examples/) for reference implementations
+- Check the [Containers FAQ](/containers/faq/) for common questions
+- Visit the [Cloudflare Discord](https://discord.cloudflare.com) and ask in the Containers channel
+- Review the [Container class documentation](https://github.com/cloudflare/containers) on GitHub

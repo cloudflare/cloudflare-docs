@@ -45,3 +45,50 @@ such as:
 
 See the [Containers GitHub repo](https://github.com/cloudflare/containers) for more details
 and the complete API.
+
+## Starting containers
+
+When working with containers, you have two main methods for starting them:
+
+### `startAndWaitForPorts()` (recommended)
+
+This method starts the container and waits until your application is ready to accept connections on the specified ports. Use this method to ensure your application is fully initialized before sending requests.
+
+```javascript
+const container = env.MY_CONTAINER.getByName("session-123");
+await container.startAndWaitForPorts();
+return container.fetch(request);
+```
+
+This is the recommended approach because it prevents errors that occur when attempting to connect to a container that has not finished starting up.
+
+**When to use**: Use this method when you need to ensure the container application is ready before proceeding. This is especially important when routing requests to specific container instances.
+
+**Performance**: Adds a couple hundred milliseconds during cold starts, which is expected and necessary. This overhead only occurs when starting a new container instance, not on subsequent requests.
+
+### `start()`
+
+This method starts the container but does not wait for your application to be ready. The container begins booting immediately, but your application may not yet be listening on its ports.
+
+```javascript
+const container = env.MY_CONTAINER.getByName("session-123");
+await container.start();
+// May fail if application is not ready yet
+return container.fetch(request);
+```
+
+**When to use**: Only use this method if you do not need to immediately connect to the container, or if you want to start a container without blocking until ports are available.
+
+**Caution**: Using `start()` followed immediately by `fetch()` may result in connection errors if your application has not finished initializing.
+
+### Using `fetch()` directly
+
+For most use cases, you can call `fetch()` directly on the container without manually calling `startAndWaitForPorts()`. The `fetch()` method automatically handles starting the container and waiting for ports to be ready:
+
+```javascript
+const container = env.MY_CONTAINER.getByName("session-123");
+// fetch() handles starting and waiting for readiness
+return container.fetch(request);
+```
+
+Refer to [troubleshooting documentation](/containers/troubleshooting/#container-not-listening-on-tcp-address) for more details on container startup patterns.
