@@ -1,12 +1,10 @@
-name: PR - Label and assign
+name: PR - Label
 
-# **What it does**: Labels PRs with size and associated products. Updates assignees to match our CODEOWNERS file.
+# **What it does**: Labels PRs with size and associated products.
 # **Why we have it**: Easier scanning of repo PRs && backend reporting on our team's work.
 # **Who does it impact**: PCX team
-
-# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, reopened]
 
 concurrency:
