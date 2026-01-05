@@ -1,0 +1,228 @@
+---
+title: Working with attachments
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+You can process incoming email attachments and for instance save them to R2 storage using Email Workers. This allows you to programmatically process your attachments.
+
+In this example we will use the [`postal-mime`](https://www.npmjs.com/package/postal-mime) library, which parses the raw email message and extracts attachments with their metadata. Here is how it works:
+
+```typescript
+import { EmailMessage } from "cloudflare:email";
+import * as PostalMime from "postal-mime";
+
+interface Env {
+  EMAIL_ATTACHMENTS: R2Bucket;
+}
+
+export default {
+  async email(message: EmailMessage, env: Env, ctx: ExecutionContext) {
+    // Parse the email using postal-mime
+    const parser = new PostalMime.default();
+    const rawEmail = new Response(message.raw);
+    const email = await parser.parse(await rawEmail.arrayBuffer());
+
+    // Check if there are any attachments
+    if (!email.attachments || email.attachments.length === 0) {
+      console.log("No attachments found");
+      await message.forward("inbox@example.com");
+      return;
+    }
+
+    console.log(`Found ${email.attachments.length} attachment(s)`);
+
+    // Process each attachment
+    for (const attachment of email.attachments) {
+      // Generate a unique key for the attachment
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+      const key = `${timestamp}/${attachment.filename}`;
+
+      // Get attachment content
+      const content = attachment.content;
+
+      // Save to R2
+      await env.EMAIL_ATTACHMENTS.put(key, content, {
+        httpMetadata: {
+          contentType: attachment.mimeType,
+        },
+        customMetadata: {
+          originalFilename: attachment.filename || "unknown",
+          contentId: attachment.contentId || "",
+          disposition: attachment.disposition || "attachment",
+          from: email.from?.address || "",
+          subject: email.subject || "",
+          date: email.date || "",
+        },
+      });
+
+      console.log(`Saved attachment: ${key} (${content.length} bytes)`);
+    }
+
+    // Forward the email after processing attachments
+    await message.forward("inbox@example.com");
+  },
+};
+```
+
+## Attachment metadata
+
+The `postal-mime` library provides detailed information about each attachment:
+
+- **`filename`**: The original filename of the attachment
+- **`mimeType`**: The MIME type (e.g., `text/csv`, `image/png`, `application/pdf`)
+- **`content`**: The attachment content as a `Uint8Array`
+- **`contentId`**: The Content-ID header value (useful for inline images)
+- **`disposition`**: Either `"attachment"` or `"inline"`
+
+## Filtering attachments
+
+You can filter attachments by type or size before saving them:
+
+```typescript
+// Only save CSV files
+const csvAttachments = email.attachments.filter(
+  (attachment) =>
+    attachment.mimeType === "text/csv" ||
+    attachment.filename?.toLowerCase().endsWith(".csv")
+);
+
+// Only save attachments smaller than 10MB
+const smallAttachments = email.attachments.filter(
+  (attachment) => attachment.content.length < 10 * 1024 * 1024
+);
+
+// Only save image attachments
+const imageAttachments = email.attachments.filter((attachment) =>
+  attachment.mimeType?.startsWith("image/")
+);
+```
+
+
+## Complete example with error handling
+
+Here is a more complete example with error handling and validation:
+
+```typescript
+import { EmailMessage } from "cloudflare:email";
+import * as PostalMime from "postal-mime";
+
+interface Env {
+  EMAIL_ATTACHMENTS: R2Bucket;
+}
+
+export default {
+  async email(message: EmailMessage, env: Env, ctx: ExecutionContext) {
+    try {
+      // Parse email
+      const parser = new PostalMime.default();
+      const rawEmail = new Response(message.raw);
+      const email = await parser.parse(await rawEmail.arrayBuffer());
+
+      // Validate sender (optional security check)
+      const allowedSenders = ["trusted@example.com"];
+      if (!allowedSenders.includes(email.from?.address || "")) {
+        console.log(`Rejected email from: ${email.from?.address}`);
+        message.setReject("Unauthorized sender");
+        return;
+      }
+
+      // Check for attachments
+      if (!email.attachments || email.attachments.length === 0) {
+        console.log("No attachments to process");
+        await message.forward("inbox@example.com");
+        return;
+      }
+
+      console.log(`Processing ${email.attachments.length} attachment(s)`);
+
+      // Process each attachment
+      for (const attachment of email.attachments) {
+        try {
+          // Validate attachment
+          if (!attachment.filename) {
+            console.log("Skipping attachment without filename");
+            continue;
+          }
+
+          // Check file size (limit to 10MB)
+          const maxSize = 10 * 1024 * 1024;
+          if (attachment.content.length > maxSize) {
+            console.log(
+              `Skipping large attachment: ${attachment.filename} (${attachment.content.length} bytes)`
+            );
+            continue;
+          }
+
+          // Generate unique key
+          const timestamp = Date.now();
+          const sanitizedFilename = attachment.filename.replace(
+            /[^a-zA-Z0-9.-]/g,
+            "_"
+          );
+          const key = `${timestamp}/${sanitizedFilename}`;
+
+          // Save to R2
+          await env.EMAIL_ATTACHMENTS.put(key, attachment.content, {
+            httpMetadata: {
+              contentType: attachment.mimeType || "application/octet-stream",
+            },
+            customMetadata: {
+              originalFilename: attachment.filename,
+              from: email.from?.address || "unknown",
+              subject: email.subject || "no subject",
+              receivedDate: new Date().toISOString(),
+            },
+          });
+
+          console.log(
+            `✓ Saved: ${key} (${attachment.content.length} bytes, ${attachment.mimeType})`
+          );
+        } catch (error) {
+          console.error(
+            `Failed to save attachment ${attachment.filename}:`,
+            error
+          );
+        }
+      }
+
+      // Forward email after processing
+      await message.forward("inbox@example.com");
+    } catch (error) {
+      console.error("Error processing email:", error);
+      // Forward anyway to avoid losing email
+      await message.forward("inbox@example.com");
+    }
+  },
+};
+```
+
+## Best practices
+
+When working with email attachments:
+
+- **Validate senders**: Check the sender's email address to prevent unauthorized uploads
+- **Check attachment sizes**: Set limits to avoid storage issues and costs
+- **Sanitize filenames**: Remove or replace special characters that might cause issues
+- **Use unique keys**: Include timestamps or UUIDs to prevent overwrites
+- **Handle errors gracefully**: Log errors but still forward the email to avoid data loss
+- **Set appropriate metadata**: Store information about the email for easier retrieval later
+- **Consider malware scanning**: For production systems, consider integrating malware scanning services
+
+## Security considerations
+
+To mitigate security risks when processing attachments:
+
+- Only accept emails from trusted senders or domains with valid [DMARC](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
+- Implement file type allowlists rather than blocklists
+- Set maximum file size limits
+- Never execute or render attachment content without proper validation
+- Log all attachment operations for audit purposes
+
+## Resources
+
+- [Email Workers Runtime API](https://developers.cloudflare.com/email-routing/email-workers/runtime-api/)
+- [R2 Documentation](https://developers.cloudflare.com/r2/)
+- [postal-mime library](https://www.npmjs.com/package/postal-mime)
+
