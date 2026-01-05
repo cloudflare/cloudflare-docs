@@ -1,0 +1,80 @@
+---
+pcx_content_type: reference
+title: "10069"
+head:
+  - tag: title
+    content: "Error 10069 - Unsupported Event Handler"
+sidebar:
+  order: 10069
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `The uploaded Worker contains event handlers unsupported by the Workers runtime.`
+
+**When this occurs:**
+
+Your Worker exports an event handler that is not recognized or supported by the Workers runtime. This can happen when:
+
+- Using an event handler name that doesn't exist (typo or incorrect name)
+- Using an event handler that requires a specific configuration or binding
+- Using experimental handlers that are not yet generally available
+
+**Supported event handlers:**
+
+| Handler            | Purpose                        | Documentation                                                    |
+| ------------------ | ------------------------------ | ---------------------------------------------------------------- |
+| `fetch`            | Handle HTTP requests           | [Fetch Handler](/workers/runtime-apis/handlers/fetch/)           |
+| `scheduled`        | Handle Cron Triggers           | [Scheduled Handler](/workers/runtime-apis/handlers/scheduled/)   |
+| `queue`            | Handle Queue messages          | [Queue Handler](/queues/configuration/javascript-apis/#consumer) |
+| `tail`             | Handle Tail Worker logs        | [Tail Handler](/workers/observability/logs/tail-workers/)        |
+| `trace`            | Handle trace events            | [Tail Workers](/workers/observability/logs/tail-workers/)        |
+| `alarm`            | Handle Durable Object alarms   | [Alarms](/durable-objects/api/alarms/)                           |
+| `webSocketMessage` | Handle WebSocket messages (DO) | [WebSockets](/durable-objects/api/websockets/)                   |
+| `webSocketClose`   | Handle WebSocket close (DO)    | [WebSockets](/durable-objects/api/websockets/)                   |
+| `webSocketError`   | Handle WebSocket errors (DO)   | [WebSockets](/durable-objects/api/websockets/)                   |
+
+**How to fix:**
+
+1. **Check handler names** - Ensure you're using the correct handler name:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	// Correct handler names
+	async fetch(request, env, ctx): Promise<Response> {
+		return new Response("Hello!");
+	},
+
+	async scheduled(event, env, ctx): Promise<void> {
+		// Handle cron trigger
+	},
+
+	async queue(batch, env): Promise<void> {
+		// Handle queue messages
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+2. **Verify required bindings** - Some handlers require specific bindings:
+   - `queue` handler requires a Queue consumer binding
+   - `alarm` handler is only valid in Durable Objects
+
+3. **Check for typos** - Common mistakes include:
+   - `handle` instead of `fetch`
+   - `cron` instead of `scheduled`
+   - `message` instead of `queue`
+
+4. **Review compatibility** - Some handlers may require specific [compatibility flags](/workers/configuration/compatibility-flags/)
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/), [Event Handlers](/workers/runtime-apis/handlers/)

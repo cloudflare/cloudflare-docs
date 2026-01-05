@@ -1,0 +1,54 @@
+---
+pcx_content_type: reference
+title: "10085"
+head:
+  - tag: title
+    content: "Error 10085 - R2 Bucket Not Found"
+sidebar:
+  order: 10085
+  hidden: true
+---
+
+**Category:** [Bindings - R2](/workers/platform/error-codes/#bindings--r2)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `R2 bucket '{bucket}' not found. Verify the bucket name is correct and try again.`
+
+**When this occurs:**
+The R2 bucket specified in your binding doesn't exist or belongs to a different account.
+
+**How to fix:**
+
+1. List existing buckets:
+
+```bash
+wrangler r2 bucket list
+```
+
+2. Create a new bucket if needed:
+
+```bash
+wrangler r2 bucket create my-bucket
+```
+
+3. Configure the binding in `wrangler.jsonc`:
+
+```jsonc
+{
+  "r2_buckets": [
+    {
+      "binding": "MY_BUCKET",
+      "bucket_name": "my-bucket",
+    },
+  ],
+}
+```
+
+4. Verify the bucket name matches exactly (case-sensitive)
+
+See [R2 from Workers](/r2/api/workers/workers-api-usage/) for usage examples.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

@@ -1,0 +1,67 @@
+---
+pcx_content_type: reference
+title: "10035"
+head:
+  - tag: title
+    content: "Error 10035 - Concurrent Modification"
+sidebar:
+  order: 10035
+  hidden: true
+---
+
+**Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
+
+**HTTP Status:** 409 Conflict
+
+**Message:** `Multiple attempts to modify a resource at the same time. Wait a moment and retry your request.`
+
+**When this occurs:**
+
+Multiple requests attempted to modify the same Worker, route, or other resource simultaneously. This commonly happens when:
+
+- Running multiple deployments in parallel (e.g., from CI/CD pipelines)
+- Multiple team members deploying the same Worker at the same time
+- Rapid successive API calls to update the same resource
+- Automated scripts making concurrent modifications
+
+**How to fix:**
+
+1. **Wait and retry** - The simplest fix is to wait a few seconds and retry your request
+
+2. **Serialize deployments** - If deploying from CI/CD, ensure deployments run sequentially:
+
+```yaml
+# GitHub Actions example - use concurrency to prevent parallel runs
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+```
+
+3. **Add retry logic** - If using the API directly, implement exponential backoff:
+
+```ts
+async function deployWithRetry<T>(
+	fn: () => Promise<T>,
+	maxRetries = 3,
+): Promise<T> {
+	for (let i = 0; i < maxRetries; i++) {
+		try {
+			return await fn();
+		} catch (error) {
+			const apiError = error as { code?: number };
+			if (apiError.code === 10035 && i < maxRetries - 1) {
+				await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, i)));
+				continue;
+			}
+			throw error;
+		}
+	}
+	throw new Error("Max retries exceeded");
+}
+```
+
+4. **Coordinate team deployments** - Use deployment locks or communication channels to prevent simultaneous deploys
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

@@ -1,0 +1,29 @@
+---
+pcx_content_type: reference
+title: "10071"
+head:
+  - tag: title
+    content: "Error 10071 - Worker Version Not Found"
+sidebar:
+  order: 10071
+  hidden: true
+---
+
+**Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
+
+**HTTP Status:** 404 Not Found
+
+**Message:** `Worker version not found. Verify the version ID is correct and try again.`
+
+**When this occurs:**
+The requested Worker version does not exist.
+
+**How to fix:**
+
+1. List available versions: `wrangler versions list`
+2. Verify the version ID is correct
+3. Check if the version was deleted
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

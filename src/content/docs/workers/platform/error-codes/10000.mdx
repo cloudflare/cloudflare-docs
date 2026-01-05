@@ -1,0 +1,59 @@
+---
+pcx_content_type: reference
+title: "10000"
+head:
+  - tag: title
+    content: "Error 10000 - Authentication Failed"
+sidebar:
+  order: 10000
+  hidden: true
+---
+
+**Category:** [Authentication & Authorization](/workers/platform/error-codes/#authentication-authorization)
+
+**HTTP Status:** 403 Forbidden
+
+**Message:** `Authentication failed. Verify your API token or credentials are valid and not expired, then try again.`
+
+**Common causes:**
+
+- API token is missing from the request
+- API token has been revoked or expired
+- Malformed `Authorization` header
+- Using Global API Key format instead of API Token
+
+**How to fix:**
+
+1. Verify your token format and test it:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+2. Ensure your `Authorization` header uses the correct format:
+
+```bash
+# Correct format (API Token)
+Authorization: Bearer <API_TOKEN>
+
+# Legacy format (Global API Key) - not recommended
+X-Auth-Email: <EMAIL>
+X-Auth-Key: <GLOBAL_API_KEY>
+```
+
+3. Ensure your API token has the required [permissions](/fundamentals/api/reference/permissions/) for Workers operations:
+
+| Permission                | Required for                      |
+| ------------------------- | --------------------------------- |
+| `Workers Scripts:Edit`    | Deploy and manage Workers         |
+| `Workers Routes:Edit`     | Configure routes                  |
+| `Workers KV Storage:Edit` | Manage KV namespaces and bindings |
+| `Workers Tail:Read`       | Use `wrangler tail`               |
+| `Account Settings:Read`   | Read account information          |
+
+4. [Create a new API token](/fundamentals/api/get-started/create-token/) if your current token is invalid or missing permissions
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

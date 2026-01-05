@@ -1,0 +1,50 @@
+---
+pcx_content_type: reference
+title: "10087"
+head:
+  - tag: title
+    content: "Error 10087 - No D1 Access"
+sidebar:
+  order: 10087
+  hidden: true
+---
+
+**Category:** [Bindings - D1](/workers/platform/error-codes/#bindings--d1)
+
+**HTTP Status:** 403 Forbidden
+
+**Message:** `Your account does not have access to D1. Enable D1 from the Cloudflare dashboard or verify your API token has the required permissions.`
+
+**When this occurs:**
+Your account doesn't have D1 access or your API token lacks D1 permissions.
+
+**How to fix:**
+
+D1 is generally available on all plans. If you see this error:
+
+1. Verify your API token has `D1:Edit` permission
+2. Create a D1 database:
+
+```bash
+wrangler d1 create my-database
+```
+
+3. Configure the binding in `wrangler.jsonc`:
+
+```jsonc
+{
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "my-database",
+      "database_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    },
+  ],
+}
+```
+
+See [D1 Getting Started](/d1/get-started/) for setup instructions.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

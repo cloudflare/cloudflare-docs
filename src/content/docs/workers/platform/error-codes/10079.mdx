@@ -1,0 +1,96 @@
+---
+pcx_content_type: reference
+title: "10079"
+head:
+  - tag: title
+    content: "Error 10079 - Ambiguous DO Binding"
+sidebar:
+  order: 10079
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Ambiguous binding: multiple namespaces match class '{className}'. Specify the namespace_id explicitly in your binding configuration.`
+
+**When this occurs:**
+
+Multiple Durable Object namespaces on your account have the same class name. When you create a binding using only the `class_name`, Cloudflare cannot determine which namespace you intend to use.
+
+This commonly happens when:
+
+- You have multiple Workers with the same Durable Object class name
+- You deployed the same Worker multiple times, creating duplicate namespaces
+- You have old namespaces from previous deployments
+
+**How to fix:**
+
+1. **Find your namespaces** - Check the Cloudflare dashboard under Workers & Pages to see which Workers have Durable Objects with the same class name, or use the [Durable Objects API](/api/resources/durable_objects/subresources/namespaces/methods/list/) to list all namespaces.
+
+2. **Specify the script_name explicitly** in your binding to disambiguate:
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DO",
+				"class_name": "MyDurableObject",
+				// Specify which Worker's namespace to use
+				"script_name": "my-worker-name",
+			},
+		],
+	},
+}
+```
+
+3. **Or use namespace_id for external bindings:**
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DO",
+				"class_name": "MyDurableObject",
+				// Use the specific namespace ID
+				"namespace_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+			},
+		],
+	},
+}
+```
+
+4. **Clean up duplicate namespaces** - Delete old Durable Object classes you no longer need:
+
+```bash
+npx wrangler deploy --delete-class OldClassName
+```
+
+5. **Use unique class names** across different Workers to prevent this issue:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+// worker-v1/src/index.ts
+export class MyDurableObjectV1 extends DurableObject {
+	// ...
+}
+
+// worker-v2/src/index.ts
+export class MyDurableObjectV2 extends DurableObject {
+	// ...
+}
+```
+
+</TypeScriptExample>
+
+---
+
+**See also:** [Durable Objects Configuration](/durable-objects/configuration/), [Durable Objects Migrations](/durable-objects/reference/durable-objects-migrations/), [Error Code Reference](/workers/platform/error-codes/)

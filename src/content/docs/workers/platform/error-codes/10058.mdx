@@ -1,0 +1,26 @@
+---
+pcx_content_type: reference
+title: "10058"
+head:
+  - tag: title
+    content: "Error 10058 - Tail Session Expired"
+sidebar:
+  order: 10058
+  hidden: true
+---
+
+**Category:** [Observability](/workers/platform/error-codes/#observability)
+
+**HTTP Status:** 403 Forbidden
+
+**Message:** `Tail session has expired. Start a new tail session to continue.`
+
+**When this occurs:**
+The tail session has exceeded the maximum duration.
+
+**How to fix:**
+Start a new tail session: `wrangler tail`
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

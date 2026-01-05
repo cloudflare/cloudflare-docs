@@ -1,0 +1,36 @@
+---
+pcx_content_type: reference
+title: "10013"
+head:
+  - tag: title
+    content: "Error 10013 - Unexpected Error"
+sidebar:
+  order: 10013
+  hidden: true
+---
+
+**Category:** [Internal Errors](/workers/platform/error-codes/#internal-errors)
+
+**HTTP Status:** 500 Internal Server Error
+
+**Message:** `An unexpected error occurred while processing your request. Retry the request. If this error persists, report to workers-sdk (https://github.com/cloudflare/workers-sdk/issues) or contact support.`
+
+**When this occurs:**
+
+This error indicates an unexpected failure on Cloudflare's infrastructure. It is functionally identical to [error 10002](/workers/platform/error-codes/10002/) and should be handled the same way.
+
+**How to fix:**
+
+1. **Retry the request** - These errors are typically transient. Wait a few seconds and try again.
+
+2. **Implement retry logic** - For automated systems, add exponential backoff to handle temporary failures gracefully.
+
+3. **Check Cloudflare Status** - If errors persist, check the [Cloudflare Status Page](https://www.cloudflarestatus.com/) for any ongoing incidents.
+
+4. **Report persistent issues** - If the error continues:
+   - [Open an issue on workers-sdk](https://github.com/cloudflare/workers-sdk/issues) for Wrangler-related problems
+   - [Contact Cloudflare Support](https://dash.cloudflare.com/?to=/:account/support) for API issues
+
+---
+
+**See also:** [Error 10002](/workers/platform/error-codes/10002/), [Error Code Reference](/workers/platform/error-codes/)

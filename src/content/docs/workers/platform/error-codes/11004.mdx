@@ -1,0 +1,28 @@
+---
+pcx_content_type: reference
+title: "11004"
+head:
+  - tag: title
+    content: "Error 11004 - Queue Already Has Consumer"
+sidebar:
+  order: 11004
+  hidden: true
+---
+
+**Category:** [Bindings - Queues](/workers/platform/error-codes/#bindings--queues)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Queue '{queue}' already has a consumer. A queue can only have one consumer. Remove the existing consumer or use a different queue.`
+
+**When this occurs:**
+The queue already has a Worker consuming from it.
+
+**How to fix:**
+
+1. Remove the existing consumer binding
+2. Or use a different queue
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

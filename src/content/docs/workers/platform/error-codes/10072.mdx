@@ -1,0 +1,48 @@
+---
+pcx_content_type: reference
+title: "10072"
+head:
+  - tag: title
+    content: "Error 10072 - Cron Trigger Limit Reached"
+sidebar:
+  order: 10072
+  hidden: true
+---
+
+**Category:** [Routing](/workers/platform/error-codes/#routing)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Cron trigger limit reached: your account allows {max} cron triggers. Delete unused triggers or upgrade your plan.`
+
+**When this occurs:**
+Your account has reached the maximum number of cron triggers.
+
+**Limits:**
+
+| Plan | Cron Triggers |
+| ---- | ------------- |
+| Free | 5             |
+| Paid | 250           |
+
+**How to fix:**
+
+1. List existing cron triggers in your `wrangler.jsonc`:
+
+```jsonc
+{
+  "triggers": {
+    "crons": ["0 * * * *", "0 0 * * *"],
+  },
+}
+```
+
+2. Remove unused cron triggers
+3. Consolidate multiple triggers into a single Worker that handles different schedules
+4. [Upgrade to Workers Paid](https://dash.cloudflare.com/?to=/:account/workers/plans) for higher limits
+
+See [Cron Triggers](/workers/configuration/cron-triggers/) for configuration details.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

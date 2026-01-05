@@ -1,0 +1,56 @@
+---
+pcx_content_type: reference
+title: "10066"
+head:
+  - tag: title
+    content: "Error 10066 - DO Namespace Not Found"
+sidebar:
+  order: 10066
+  hidden: true
+---
+
+**Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
+
+**HTTP Status:** 404 Not Found
+
+**Message:** `Durable Object namespace '{namespaceId}' not found. Verify the namespace ID is correct and try again.`
+
+**When this occurs:**
+
+The Durable Object namespace ID specified in your binding configuration does not exist or belongs to a different account. This is similar to [error 10061](/workers/platform/error-codes/10061/).
+
+**How to fix:**
+
+1. **Find the correct namespace ID** - Check the Cloudflare dashboard under Workers & Pages > your Worker > Settings > Bindings, or use the [Durable Objects API](/api/resources/durable_objects/subresources/namespaces/methods/list/) to list namespaces on your account.
+
+2. **Verify the namespace ID** in your `wrangler.jsonc`:
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DO",
+				"class_name": "MyDurableObject",
+				"id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+			},
+		],
+	},
+}
+```
+
+3. **Create the namespace** if it doesn't exist. Namespaces are created automatically when you deploy a Worker with a Durable Object class:
+
+```bash
+npx wrangler deploy
+```
+
+4. **Check for common issues:**
+   - Using a namespace ID from a different account
+   - Mixing up namespace IDs between environments (production vs preview)
+   - Using an old ID from a deleted namespace
+   - Typos in the namespace ID
+
+---
+
+**See also:** [Error 10061](/workers/platform/error-codes/10061/), [Durable Objects](/durable-objects/), [Error Code Reference](/workers/platform/error-codes/)

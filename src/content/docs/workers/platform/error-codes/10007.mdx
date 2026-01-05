@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: "10007"
+head:
+  - tag: title
+    content: "Error 10007 - Worker Not Found"
+sidebar:
+  order: 10007
+  hidden: true
+---
+
+**Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
+
+**HTTP Status:** 404 Not Found
+
+**Message:** `This Worker does not exist on your account. Verify the Worker name is correct and try again. To create a new Worker, use wrangler deploy or the dashboard.`
+
+**When this occurs:**
+The requested Worker script does not exist on your account.
+
+**Common causes:**
+
+- Typo in the Worker name
+- Worker was deleted
+- Accessing Worker on wrong account
+- Using wrong environment name
+
+**How to fix:**
+
+1. Verify you're on the correct account:
+
+```bash
+wrangler whoami
+```
+
+2. List your Workers to find the correct name:
+
+```bash
+wrangler deployments list
+```
+
+3. Check you're using the correct account ID in API requests
+4. If using environments, verify the environment exists: `wrangler deploy --env <environment>`
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

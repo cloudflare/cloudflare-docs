@@ -1,0 +1,75 @@
+---
+pcx_content_type: reference
+title: "10070"
+head:
+  - tag: title
+    content: "Error 10070 - DO Class Not Exported"
+sidebar:
+  order: 10070
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
+
+**HTTP Status:** 404 Not Found
+
+**Message:** `Durable Object class '{className}' is not exported by this Worker. Verify the class name and ensure it is exported from your script.`
+
+**When this occurs:**
+The specified Durable Object class isn't exported from your Worker.
+
+**How to fix:**
+
+1. Ensure the Durable Object class is exported from your Worker:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+// Durable Object class must be exported
+export class MyDurableObject extends DurableObject {
+	async fetch(request: Request): Promise<Response> {
+		return new Response("Hello from DO!");
+	}
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const id = env.MY_DO.idFromName("example");
+		const stub = env.MY_DO.get(id);
+		return stub.fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+2. Configure the binding in `wrangler.jsonc`:
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DO",
+				"class_name": "MyDurableObject",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyDurableObject"],
+		},
+	],
+}
+```
+
+3. Verify the class name in your binding matches the exported class exactly (case-sensitive)
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

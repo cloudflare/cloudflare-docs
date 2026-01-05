@@ -1,0 +1,46 @@
+---
+pcx_content_type: reference
+title: "100153"
+head:
+  - tag: title
+    content: "Error 100153 - Invalid Binding Type"
+sidebar:
+  order: 100153
+  hidden: true
+---
+
+**Category:** [Bindings - General](/workers/platform/error-codes/#bindings--general)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Binding type '{type}' is not valid. Use a supported binding type and try again.`
+
+**When this occurs:**
+The binding type specified is not recognized.
+
+**Valid binding types:**
+
+| Type                       | Description                       | Documentation                                                                                           |
+| -------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `kv_namespace`             | Workers KV storage                | [KV Bindings](/kv/concepts/kv-bindings/)                               |
+| `durable_object_namespace` | Durable Objects                   | [Durable Objects](/durable-objects/)                                   |
+| `r2_bucket`                | R2 object storage                 | [R2 Bindings](/r2/api/workers/workers-api-usage/)                      |
+| `d1`                       | D1 database                       | [D1 Bindings](/d1/get-started/)                                        |
+| `queue`                    | Queues                            | [Queue Bindings](/queues/get-started/)                                 |
+| `service`                  | Service binding to another Worker | [Service Bindings](/workers/runtime-apis/bindings/service-bindings/)   |
+| `secret_text`              | Encrypted secret                  | [Secrets](/workers/configuration/secrets/)                             |
+| `plain_text`               | Plain text variable               | [Environment Variables](/workers/configuration/environment-variables/) |
+| `ai`                       | Workers AI                        | [Workers AI](/workers-ai/)                                             |
+| `vectorize`                | Vectorize index                   | [Vectorize](/vectorize/)                                               |
+| `hyperdrive`               | Hyperdrive connection             | [Hyperdrive](/hyperdrive/)                                             |
+| `browser`                  | Browser Rendering                 | [Browser Rendering](/browser-rendering/)                               |
+| `mtls_certificate`         | mTLS certificate                  | [mTLS](/workers/runtime-apis/bindings/mtls/)                           |
+| `assets`                   | Static assets                     | [Static Assets](/workers/static-assets/)                               |
+| `analytics_engine`         | Analytics Engine                  | [Analytics Engine](/analytics/analytics-engine/)                       |
+| `version_metadata`         | Version metadata                  | [Version Metadata](/workers/runtime-apis/bindings/version-metadata/)   |
+
+See [Multipart Upload Metadata - Bindings](/workers/configuration/multipart-upload-metadata/#bindings) for the complete binding specification.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

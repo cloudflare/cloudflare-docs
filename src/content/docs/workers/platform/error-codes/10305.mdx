@@ -1,0 +1,59 @@
+---
+pcx_content_type: reference
+title: "10305"
+head:
+  - tag: title
+    content: "Error 10305 - Assets Binding Without Assets"
+sidebar:
+  order: 10305
+  hidden: true
+---
+
+**Category:** [Assets](/workers/platform/error-codes/#assets)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Cannot use an assets binding without uploading assets. Upload assets or remove the assets binding from your configuration.`
+
+**When this occurs:**
+Your Worker has an assets binding configured but no assets directory was uploaded.
+
+**How to fix:**
+
+1. Create an assets directory and add static files:
+
+```
+my-worker/
+├── public/
+│   ├── index.html
+│   ├── styles.css
+│   └── script.js
+├── src/
+│   └── index.ts
+└── wrangler.jsonc
+```
+
+2. Configure assets in `wrangler.jsonc`:
+
+```jsonc
+{
+  "name": "my-worker",
+  "main": "src/index.ts",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS", // Optional: access assets from Worker code
+  },
+}
+```
+
+3. Deploy with assets:
+
+```bash
+wrangler deploy
+```
+
+See [Static Assets](/workers/static-assets/) for configuration options.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

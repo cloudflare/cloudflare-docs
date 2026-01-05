@@ -1,0 +1,29 @@
+---
+pcx_content_type: reference
+title: "10142"
+head:
+  - tag: title
+    content: "Error 10142 - Cannot Delete Worker with Bindings"
+sidebar:
+  order: 10142
+  hidden: true
+---
+
+**Category:** [Bindings - Service Bindings](/workers/platform/error-codes/#bindings--service-bindings)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Cannot delete Worker '{service}' because it is still referenced by service bindings in Workers: {workers}. Remove the service bindings first, then delete the Worker.`
+
+**When this occurs:**
+Attempting to delete a Worker that other Workers have service bindings to.
+
+**How to fix:**
+
+1. Remove service bindings from dependent Workers
+2. Redeploy those Workers
+3. Then delete the target Worker
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

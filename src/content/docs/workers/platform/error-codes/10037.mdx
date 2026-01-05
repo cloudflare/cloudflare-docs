@@ -1,0 +1,48 @@
+---
+pcx_content_type: reference
+title: "10037"
+head:
+  - tag: title
+    content: "Error 10037 - Worker Limit Reached"
+sidebar:
+  order: 10037
+  hidden: true
+---
+
+**Category:** [Workers.dev Subdomains](/workers/platform/error-codes/#workers.dev-subdomains)
+
+**HTTP Status:** 403 Forbidden
+
+**Message:** `Worker limit reached: your account allows {max} Workers. Delete unused Workers or upgrade your plan for a higher limit. See limits documentation: https://developers.cloudflare.com/workers/platform/limits/#number-of-workers`
+
+**When this occurs:**
+Your account has reached the maximum number of Workers.
+
+**Limits:**
+
+| Plan | Workers per Account |
+| ---- | ------------------- |
+| Free | 100                 |
+| Paid | 500                 |
+
+**How to fix:**
+
+1. List your Workers:
+
+```bash
+wrangler deployments list
+```
+
+2. Delete unused Workers:
+
+```bash
+wrangler delete <worker-name>
+```
+
+3. [Upgrade to Workers Paid](https://dash.cloudflare.com/?to=/:account/workers/plans) for higher limits
+
+See [Number of Workers](/workers/platform/limits/#number-of-workers) for current limits.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

@@ -1,0 +1,72 @@
+---
+pcx_content_type: reference
+title: "10021"
+head:
+  - tag: title
+    content: "Error 10021 - Validation Failed"
+sidebar:
+  order: 10021
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `{validation error details}`
+
+**When this occurs:**
+Worker script validation failed during upload. The error message contains specific details about what failed.
+
+**Common causes:**
+
+- JavaScript/TypeScript syntax errors
+- Missing required handler exports (`fetch`, `scheduled`, etc.)
+- Invalid bindings configuration in metadata
+- Incompatible [compatibility flags](/workers/configuration/compatibility-flags/)
+- Startup time exceeded (must complete in less than 1 second)
+- Memory limit exceeded during startup (greater than 128 MB)
+- Invalid module imports or circular dependencies
+
+**How to fix:**
+
+1. Check the error message for the specific validation failure
+2. Test locally before deploying:
+
+```bash
+npx wrangler dev
+```
+
+3. Verify your `wrangler.jsonc` configuration is valid:
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-01-01",
+}
+```
+
+4. Ensure you export at least one handler:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		return new Response("Hello!");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+5. Check [compatibility dates](/workers/configuration/compatibility-dates/) and [compatibility flags](/workers/configuration/compatibility-flags/) for breaking changes
+
+See [Validation Errors (10021)](/workers/observability/errors/#validation-errors-10021) for detailed scenarios.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

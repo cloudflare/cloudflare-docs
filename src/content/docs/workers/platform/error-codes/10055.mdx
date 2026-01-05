@@ -1,0 +1,49 @@
+---
+pcx_content_type: reference
+title: "10055"
+head:
+  - tag: title
+    content: "Error 10055 - Too Many Text Bindings"
+sidebar:
+  order: 10055
+  hidden: true
+---
+
+**Category:** [Bindings - General](/workers/platform/error-codes/#bindings--general)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Too many text bindings ({count}). The limit is {limit}. Remove some bindings and try again.`
+
+**When this occurs:**
+Your Worker has too many text/secret bindings (environment variables).
+
+**Limits:**
+
+| Plan | Text/Secret Bindings |
+| ---- | -------------------- |
+| Free | 64                   |
+| Paid | 128                  |
+
+**How to fix:**
+
+1. Remove unused bindings
+2. Consolidate related values into a single JSON binding:
+
+```jsonc
+// Instead of many separate bindings:
+// API_KEY_1, API_KEY_2, API_KEY_3...
+
+// Use a single JSON binding:
+{
+  "vars": {
+    "CONFIG": "{\"apiKeys\": [\"key1\", \"key2\", \"key3\"]}",
+  },
+}
+```
+
+3. Use [KV](/kv/) for large numbers of configuration values
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

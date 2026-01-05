@@ -1,0 +1,66 @@
+---
+pcx_content_type: reference
+title: "10041"
+head:
+  - tag: title
+    content: "Error 10041 - KV Namespace Not Found"
+sidebar:
+  order: 10041
+  hidden: true
+---
+
+**Category:** [Bindings - KV](/workers/platform/error-codes/#bindings--kv)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `KV namespace '{namespaceId}' not found. Verify the namespace ID is correct and try again.`
+
+**When this occurs:**
+The KV namespace ID in your binding doesn't exist or belongs to a different account.
+
+**How to fix:**
+
+1. List existing namespaces:
+
+```bash
+wrangler kv namespace list
+```
+
+2. Create a new namespace if needed:
+
+```bash
+wrangler kv namespace create "MY_KV"
+```
+
+3. Update your `wrangler.jsonc` with the correct namespace ID:
+
+```jsonc
+{
+  "kv_namespaces": [
+    {
+      "binding": "MY_KV",
+      "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    },
+  ],
+}
+```
+
+4. For preview environments, add a preview namespace:
+
+```jsonc
+{
+  "kv_namespaces": [
+    {
+      "binding": "MY_KV",
+      "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "preview_id": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    },
+  ],
+}
+```
+
+See [KV Bindings](/kv/concepts/kv-bindings/) for configuration details.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

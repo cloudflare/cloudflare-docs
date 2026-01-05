@@ -1,0 +1,57 @@
+---
+pcx_content_type: reference
+title: "10068"
+head:
+  - tag: title
+    content: "Error 10068 - No Event Handlers"
+sidebar:
+  order: 10068
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Worker has no event handlers. Export a fetch handler, scheduled handler, or other supported handler and try again.`
+
+**When this occurs:**
+Your Worker doesn't export any event handlers.
+
+**How to fix:**
+
+Export at least one handler using ES Modules syntax:
+
+<TypeScriptExample>
+
+```ts
+// Worker must export at least one handler
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		return new Response("Hello!");
+	},
+
+	// Optional: scheduled handler for cron triggers
+	async scheduled(event, env, ctx): Promise<void> {
+		console.log("Cron triggered");
+	},
+
+	// Optional: queue handler for queue consumers
+	async queue(batch, env): Promise<void> {
+		for (const message of batch.messages) {
+			console.log(message.body);
+			message.ack();
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+See [Handlers](/workers/runtime-apis/handlers/) for all available handler types.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

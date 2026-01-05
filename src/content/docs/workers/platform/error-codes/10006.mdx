@@ -1,0 +1,55 @@
+---
+pcx_content_type: reference
+title: "10006"
+head:
+  - tag: title
+    content: "Error 10006 - Failed to Parse Upload"
+sidebar:
+  order: 10006
+  hidden: true
+---
+
+**Category:** [Request Validation](/workers/platform/error-codes/#request-validation)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Failed to parse Worker upload. The upload format is invalid or corrupted. Verify your script is valid JavaScript/TypeScript and the multipart form is correctly structured, then try again.`
+
+**When this occurs:**
+The uploaded Worker script bundle could not be parsed.
+
+**Common causes:**
+
+- Invalid multipart form data structure
+- Corrupted or truncated script content
+- Missing required parts in multipart upload
+- `main_module` field doesn't match uploaded file name
+
+**Required multipart parts:**
+
+| Part                            | Required | Description                               |
+| ------------------------------- | -------- | ----------------------------------------- |
+| Main module (e.g., `worker.js`) | Yes      | Your Worker script                        |
+| Metadata JSON                   | Yes      | Must include `main_module` field          |
+| Additional modules              | No       | Other JS/TS files imported by main module |
+
+**Example metadata:**
+
+```json
+{
+  "main_module": "worker.js",
+  "bindings": []
+}
+```
+
+**How to fix:**
+
+1. Verify your multipart form includes both the script and metadata
+2. Ensure `main_module` in metadata matches your script's filename exactly
+3. Use Wrangler for reliable uploads: `wrangler deploy`
+
+See [Multipart Upload Metadata](/workers/configuration/multipart-upload-metadata/) for the complete specification.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

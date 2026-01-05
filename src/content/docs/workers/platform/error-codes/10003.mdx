@@ -1,0 +1,39 @@
+---
+pcx_content_type: reference
+title: "10003"
+head:
+  - tag: title
+    content: "Error 10003 - Missing URL Parameter"
+sidebar:
+  order: 10003
+  hidden: true
+---
+
+**Category:** [Request Validation](/workers/platform/error-codes/#request-validation)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Request is missing a required URL parameter. Verify the URL matches the API specification and try again.`
+
+**When this occurs:**
+A required URL parameter is missing from the request path.
+
+**How to fix:**
+
+1. Check the API documentation for required parameters
+2. Verify the URL path matches the expected format
+3. Ensure parameter values are properly URL-encoded
+
+**Example:**
+
+```bash
+# Wrong - missing script name
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/
+
+# Correct
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/my-worker
+```
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

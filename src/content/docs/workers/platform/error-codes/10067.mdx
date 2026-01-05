@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: "10067"
+head:
+  - tag: title
+    content: "Error 10067 - DO Namespace Limit Reached"
+sidebar:
+  order: 10067
+  hidden: true
+---
+
+**Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Durable Object namespace limit reached: your account allows {limit} namespaces. Delete unused namespaces or upgrade your plan.`
+
+**When this occurs:**
+
+Your account has reached the maximum number of Durable Object namespaces allowed. Each Durable Object class in your Workers creates a namespace, and there's a limit per account.
+
+**How to fix:**
+
+1. **Review your namespaces** - Check the Cloudflare dashboard under Workers & Pages to see all your Workers with Durable Objects, or use the [Durable Objects API](/api/resources/durable_objects/subresources/namespaces/methods/list/) to list all namespaces.
+
+2. **Identify unused namespaces** - Look for:
+   - Namespaces from old or deleted Workers
+   - Test or development namespaces no longer needed
+   - Duplicate namespaces from previous deployments
+
+3. **Delete unused Durable Object classes** - Use the `--delete-class` flag when deploying:
+
+```bash
+npx wrangler deploy --delete-class OldDurableObjectClass
+```
+
+Note: You must first remove the binding from your `wrangler.jsonc` before using `--delete-class`.
+
+4. **Consolidate Durable Object classes** - If possible, combine related functionality into fewer classes to reduce namespace count.
+
+5. **Contact support** - If you have a legitimate need for more namespaces, [contact Cloudflare Support](https://dash.cloudflare.com/?to=/:account/support) to discuss increasing your limit.
+
+**Warning:** Deleting a Durable Object class will permanently delete all Durable Objects and their stored data within that namespace. Ensure you have backups of any important data before deletion.
+
+---
+
+**See also:** [Durable Objects Limits](/durable-objects/platform/limits/), [Durable Objects Migrations](/durable-objects/reference/durable-objects-migrations/), [Error Code Reference](/workers/platform/error-codes/)

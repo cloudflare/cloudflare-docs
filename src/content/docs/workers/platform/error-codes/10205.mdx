@@ -1,0 +1,26 @@
+---
+pcx_content_type: reference
+title: "10205"
+head:
+  - tag: title
+    content: "Error 10205 - CPU Limits Require Standard Model"
+sidebar:
+  order: 10205
+  hidden: true
+---
+
+**Category:** [Limits & Quotas](/workers/platform/error-codes/#limits-quotas)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `CPU limits are only supported with the 'standard' usage model. Switch to the standard usage model to set CPU limits.`
+
+**When this occurs:**
+Attempting to set CPU limits with bundled/unbound usage model.
+
+**How to fix:**
+Use the `standard` usage model.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

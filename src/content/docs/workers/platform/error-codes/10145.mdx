@@ -1,0 +1,26 @@
+---
+pcx_content_type: reference
+title: "10145"
+head:
+  - tag: title
+    content: "Error 10145 - Target Worker Not Deployed"
+sidebar:
+  order: 10145
+  hidden: true
+---
+
+**Category:** [Bindings - Service Bindings](/workers/platform/error-codes/#bindings--service-bindings)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Service binding '{binding}' references Worker '{target}' which has no deployments. Deploy the target Worker first.`
+
+**When this occurs:**
+The target Worker exists but has never been deployed.
+
+**How to fix:**
+Deploy the target Worker: `wrangler deploy`
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

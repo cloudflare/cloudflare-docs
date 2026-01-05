@@ -1,0 +1,60 @@
+---
+pcx_content_type: reference
+title: "11001"
+head:
+  - tag: title
+    content: "Error 11001 - Missing Queue Handler"
+sidebar:
+  order: 11001
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Bindings - Queues](/workers/platform/error-codes/#bindings--queues)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Queue consumer is missing a queue handler. Export a queue handler from your Worker script.`
+
+**When this occurs:**
+Your Worker is configured as a queue consumer but doesn't export a `queue` handler.
+
+**How to fix:**
+
+Export a queue handler:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async queue(batch, env): Promise<void> {
+		for (const message of batch.messages) {
+			console.log("Processing:", message.body);
+
+			// Process the message...
+
+			// Acknowledge successful processing
+			message.ack();
+
+			// Or retry later:
+			// message.retry();
+		}
+	},
+
+	// You can also have a fetch handler
+	async fetch(request, env, ctx): Promise<Response> {
+		// Send a message to the queue
+		await env.MY_QUEUE.send({ hello: "world" });
+		return new Response("Message sent!");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+See [Queue Handler](/queues/configuration/javascript-apis/#consumer) for the complete API.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

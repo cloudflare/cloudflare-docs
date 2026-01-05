@@ -1,0 +1,26 @@
+---
+pcx_content_type: reference
+title: "10339"
+head:
+  - tag: title
+    content: "Error 10339 - Cannot Delete Latest Version"
+sidebar:
+  order: 10339
+  hidden: true
+---
+
+**Category:** [Versions & Deployments](/workers/platform/error-codes/#versions-deployments)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Cannot delete the latest version of this Worker. Upload a new version first, then delete the previous version.`
+
+**When this occurs:**
+Attempting to delete the most recent Worker version or a currently deployed version.
+
+**How to fix:**
+Upload a new version first, then delete old versions. If deleting a deployed version, deploy a different version first.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

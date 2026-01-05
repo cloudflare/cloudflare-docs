@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: "100117"
+head:
+  - tag: title
+    content: "Error 100117 - DNS Record Conflict"
+sidebar:
+  order: 100117
+  hidden: true
+---
+
+**Category:** [Custom Domains](/workers/platform/error-codes/#custom-domains)
+
+**HTTP Status:** 409 Conflict
+
+**Message:** `Hostname '{hostname}' has existing DNS records that conflict. Delete the existing DNS records first, or use 'override_existing_dns_record: true' to replace them.`
+
+**When this occurs:**
+The hostname has A, AAAA, or CNAME records that conflict with the custom domain configuration.
+
+**Common conflicting record types:**
+
+- `A` records (IPv4 address)
+- `AAAA` records (IPv6 address)
+- `CNAME` records
+
+**How to fix:**
+
+1. Delete the existing DNS records from your zone
+2. Or use the `override` option in your API request:
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "hostname": "api.example.com",
+    "service": "my-worker",
+    "override_existing_dns_record": true
+  }'
+```
+
+See [Custom Domains](/workers/configuration/routing/custom-domains/) for configuration options.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

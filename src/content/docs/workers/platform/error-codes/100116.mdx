@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: "100116"
+head:
+  - tag: title
+    content: "Error 100116 - Hostname Already Configured"
+sidebar:
+  order: 100116
+  hidden: true
+---
+
+**Category:** [Custom Domains](/workers/platform/error-codes/#custom-domains)
+
+**HTTP Status:** 409 Conflict
+
+**Message:** `Hostname '{hostname}' is already configured as a custom domain. Delete the existing custom domain first, or use 'override_existing_origin: true' to replace it.`
+
+**When this occurs:**
+The hostname is already configured as a custom domain for another Worker.
+
+**How to fix:**
+
+1. Delete the existing custom domain from the other Worker
+2. Or use the `override` option in your API request to replace it:
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "hostname": "api.example.com",
+    "service": "my-worker",
+    "environment": "production",
+    "override_existing_origin": true
+  }'
+```
+
+See [Custom Domains](/workers/configuration/routing/custom-domains/) for configuration options.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

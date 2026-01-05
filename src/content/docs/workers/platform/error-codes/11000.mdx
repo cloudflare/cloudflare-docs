@@ -1,0 +1,68 @@
+---
+pcx_content_type: reference
+title: "11000"
+head:
+  - tag: title
+    content: "Error 11000 - Queue Not Found"
+sidebar:
+  order: 11000
+  hidden: true
+---
+
+**Category:** [Bindings - Queues](/workers/platform/error-codes/#bindings--queues)
+
+**HTTP Status:** 404 Not Found
+
+**Message:** `Queue '{queue}' not found. Verify the queue name is correct and try again.`
+
+**When this occurs:**
+The queue specified in your binding doesn't exist or belongs to a different account.
+
+**How to fix:**
+
+1. List existing queues:
+
+```bash
+wrangler queues list
+```
+
+2. Create a new queue if needed:
+
+```bash
+wrangler queues create my-queue
+```
+
+3. Configure the producer binding in `wrangler.jsonc`:
+
+```jsonc
+{
+  "queues": {
+    "producers": [
+      {
+        "binding": "MY_QUEUE",
+        "queue": "my-queue",
+      },
+    ],
+  },
+}
+```
+
+4. For consumers, add a consumer binding:
+
+```jsonc
+{
+  "queues": {
+    "consumers": [
+      {
+        "queue": "my-queue",
+      },
+    ],
+  },
+}
+```
+
+See [Queues Getting Started](/queues/get-started/) for setup instructions.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

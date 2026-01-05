@@ -1,0 +1,52 @@
+---
+pcx_content_type: reference
+title: "10001"
+head:
+  - tag: title
+    content: "Error 10001 - Content-Type Mismatch"
+sidebar:
+  order: 10001
+  hidden: true
+---
+
+**Category:** [Request Validation](/workers/platform/error-codes/#request-validation)
+
+**HTTP Status:** 415 Unsupported Media Type
+
+**Message:** `Content-Type must be one of: {types}. Update the Content-Type header and try again.`
+
+**When this occurs:**
+The `Content-Type` header doesn't match expected values for the endpoint.
+
+**Correct Content-Type by endpoint:**
+
+| Endpoint                      | Content-Type                    | When to use                               |
+| ----------------------------- | ------------------------------- | ----------------------------------------- |
+| Upload Worker (single file)   | `application/javascript`        | Simple Worker with no bindings            |
+| Upload Worker (with bindings) | `multipart/form-data`           | Worker with KV, R2, DO, or other bindings |
+| Update settings/routes        | `application/json`              | Configuration changes                     |
+| Upload module                 | `application/javascript+module` | ES module upload                          |
+
+**How to fix:**
+
+Match the `Content-Type` header to the request body format:
+
+```bash
+# Single-file Worker (no bindings)
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/javascript" \
+  --data 'export default { fetch() { return new Response("Hello"); } }'
+
+# Worker with bindings (multipart)
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --form 'worker.js=@worker.js;type=application/javascript+module' \
+  --form 'metadata={"main_module": "worker.js"};type=application/json'
+```
+
+For Workers with bindings, see [Multipart Upload Metadata](/workers/configuration/multipart-upload-metadata/).
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

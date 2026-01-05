@@ -1,0 +1,32 @@
+---
+pcx_content_type: reference
+title: "100150"
+head:
+  - tag: title
+    content: "Error 100150 - Tail Workers Require Paid Plan"
+sidebar:
+  order: 100150
+  hidden: true
+---
+
+**Category:** [Observability](/workers/platform/error-codes/#observability)
+
+**HTTP Status:** 403 Forbidden
+
+**Message:** `Tail Workers require a Workers Paid plan. Upgrade at https://dash.cloudflare.com/?to=/:account/workers/plans`
+
+**How to fix:**
+
+[Upgrade to Workers Paid](https://dash.cloudflare.com/?to=/:account/workers/plans) to use Tail Workers.
+
+**Alternatives for free plan:**
+
+- Use `wrangler tail` for real-time debugging during development
+- Export logs via [OpenTelemetry](/workers/observability/otel/) to your observability platform
+- Use `console.log()` and view in the Workers dashboard
+
+See [Tail Workers](/workers/observability/logs/tail-workers/) for setup instructions.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

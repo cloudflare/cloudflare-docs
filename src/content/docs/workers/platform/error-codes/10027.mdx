@@ -1,0 +1,52 @@
+---
+pcx_content_type: reference
+title: "10027"
+head:
+  - tag: title
+    content: "Error 10027 - Size Limit Exceeded"
+sidebar:
+  order: 10027
+  hidden: true
+---
+
+**Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Worker exceeds the size limit of {mib} MiB. Reduce your script size or upgrade your plan, then try again.`
+
+**When this occurs:**
+The Worker script exceeds the maximum allowed size after compression.
+
+**Size limits:**
+
+| Plan | Compressed | Uncompressed |
+| ---- | ---------- | ------------ |
+| Free | 3 MB       | 10 MB        |
+| Paid | 10 MB      | 10 MB        |
+
+**Check your Worker's size:**
+
+```bash
+npx wrangler deploy --dry-run --outdir=dist
+# Then check the size of files in ./dist
+```
+
+**How to fix:**
+
+1. Remove unused dependencies from `package.json`
+2. Use dynamic imports for code splitting:
+
+```ts
+const heavyModule = await import("./heavy-module");
+```
+
+3. Move large static assets to [R2](/r2/) or [KV](/kv/)
+4. Use tree-shaking with your bundler (esbuild, webpack)
+5. [Upgrade to Workers Paid](https://dash.cloudflare.com/?to=/:account/workers/plans) for higher limits
+
+See [Worker Size Limits](/workers/platform/limits/#worker-size) for current limits.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

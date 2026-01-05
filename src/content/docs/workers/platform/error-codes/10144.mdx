@@ -1,0 +1,26 @@
+---
+pcx_content_type: reference
+title: "10144"
+head:
+  - tag: title
+    content: "Error 10144 - Target Environment Not Found"
+sidebar:
+  order: 10144
+  hidden: true
+---
+
+**Category:** [Bindings - Service Bindings](/workers/platform/error-codes/#bindings--service-bindings)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Service binding '{binding}' references environment '{env}' on Worker '{target}', but that environment does not exist. Create the environment or correct the binding configuration.`
+
+**When this occurs:**
+The service binding specifies an environment that doesn't exist on the target Worker.
+
+**How to fix:**
+Remove the environment specification or create the environment on the target Worker.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

@@ -1,0 +1,33 @@
+---
+pcx_content_type: reference
+title: "10061"
+head:
+  - tag: title
+    content: "Error 10061 - DO Namespace Not Found"
+sidebar:
+  order: 10061
+  hidden: true
+---
+
+**Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Durable Object namespace '{namespaceId}' not found. Verify the namespace ID is correct and try again.`
+
+**When this occurs:**
+The Durable Object namespace specified in the binding doesn't exist.
+
+**How to fix:**
+
+1. Verify the namespace ID or class name
+2. Ensure the Durable Object class is exported from your Worker
+3. Run migrations if needed
+
+**Related:**
+
+- [Durable Objects](/durable-objects/)
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

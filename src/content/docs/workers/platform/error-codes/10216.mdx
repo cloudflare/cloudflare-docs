@@ -1,0 +1,61 @@
+---
+pcx_content_type: reference
+title: "10216"
+head:
+  - tag: title
+    content: "Error 10216 - ES Modules Required"
+sidebar:
+  order: 10216
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Versions & Deployments](/workers/platform/error-codes/#versions-deployments)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Version uploads require ES Modules syntax. Migrate your Worker from Service Worker syntax to ES Modules syntax first.`
+
+**When this occurs:**
+Attempting to use versions with a Service Worker syntax script.
+
+**Service Worker syntax (not supported for versions):**
+
+```ts
+addEventListener("fetch", (event) => {
+	event.respondWith(new Response("Hello"));
+});
+```
+
+**ES Modules syntax (required):**
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		return new Response("Hello");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+**How to fix:**
+
+1. Convert your Worker to ES Modules syntax
+2. Update your `wrangler.jsonc` to use modules:
+
+```jsonc
+{
+	"main": "src/index.ts",
+	// No "type": "service-worker" needed - modules is the default
+}
+```
+
+See [Migrate to ES Modules](/workers/reference/migrate-to-module-workers/) for a complete migration guide.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

@@ -1,0 +1,58 @@
+---
+pcx_content_type: reference
+title: "10002"
+head:
+  - tag: title
+    content: "Error 10002 - Internal Error"
+sidebar:
+  order: 10002
+  hidden: true
+---
+
+**Category:** [Internal Errors](/workers/platform/error-codes/#internal-errors)
+
+**HTTP Status:** 500 Internal Server Error
+
+**Message:** `Request failed due to an internal error. Retry the request. If this error persists, report to workers-sdk (https://github.com/cloudflare/workers-sdk/issues) or contact support.`
+
+**When this occurs:**
+
+An unexpected error occurred on Cloudflare's infrastructure while processing your request. This is not caused by your Worker code. These errors are typically transient and resolve themselves.
+
+**How to fix:**
+
+1. **Retry the request** - Most internal errors are temporary. Wait a few seconds and try again.
+
+2. **Implement retry logic** - For programmatic API access, add exponential backoff:
+
+```ts
+async function apiCallWithRetry<T>(
+	fn: () => Promise<T>,
+	maxRetries = 3,
+): Promise<T> {
+	for (let attempt = 0; attempt < maxRetries; attempt++) {
+		try {
+			return await fn();
+		} catch (error) {
+			const apiError = error as { code?: number };
+			if (apiError.code === 10002 && attempt < maxRetries - 1) {
+				// Wait 1s, 2s, 4s between retries
+				await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, attempt)));
+				continue;
+			}
+			throw error;
+		}
+	}
+	throw new Error("Max retries exceeded");
+}
+```
+
+3. **Check Cloudflare Status** - If errors persist, check the [Cloudflare Status Page](https://www.cloudflarestatus.com/) for any ongoing incidents.
+
+4. **Report the issue** - If the error continues after retries and there's no known incident:
+   - [Open an issue on workers-sdk](https://github.com/cloudflare/workers-sdk/issues) for Wrangler-related issues
+   - [Contact Cloudflare Support](https://dash.cloudflare.com/?to=/:account/support) for API issues
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

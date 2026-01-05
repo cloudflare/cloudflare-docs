@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: "10211"
+head:
+  - tag: title
+    content: "Error 10211 - DO Migrations via Versions API"
+sidebar:
+  order: 10211
+  hidden: true
+---
+
+**Category:** [Versions & Deployments](/workers/platform/error-codes/#versions-deployments)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Versions with Durable Object migrations cannot be uploaded via this API. Use 'wrangler deploy' to apply Durable Object migrations.`
+
+**When this occurs:**
+Attempting to upload a version with DO migrations via the versions API.
+
+**Why this happens:**
+Durable Object migrations are atomic and cannot be gradually deployed. When you add, rename, or delete a Durable Object class, all traffic must immediately use the new version.
+
+**How to fix:**
+
+Use `wrangler deploy` instead of the versions API:
+
+```bash
+wrangler deploy
+```
+
+If you need gradual deployments for a Worker with Durable Objects, deploy the DO migration separately:
+
+1. Deploy the Worker with the new DO class (100% traffic)
+2. Then use gradual deployments for subsequent code changes
+
+See [Gradual Deployments for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) for details.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

@@ -1,0 +1,31 @@
+---
+pcx_content_type: reference
+title: "10054"
+head:
+  - tag: title
+    content: "Error 10054 - Text Binding Too Large"
+sidebar:
+  order: 10054
+  hidden: true
+---
+
+**Category:** [Bindings - General](/workers/platform/error-codes/#bindings--general)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Text binding '{name}' is too large ({sizeBytes} bytes). The limit is {limitBytes} bytes. Reduce the binding size and try again.`
+
+**When this occurs:**
+A plain text or secret binding exceeds the size limit.
+
+**Limit:** 5 KB per text/secret binding
+
+**How to fix:**
+
+1. Reduce the binding value size
+2. For larger data, use [KV](/kv/) or [R2](/r2/) instead
+3. For configuration, consider storing JSON in KV and parsing at runtime
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

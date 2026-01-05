@@ -1,0 +1,38 @@
+---
+pcx_content_type: reference
+title: "10004"
+head:
+  - tag: title
+    content: "Error 10004 - Malformed Parameter"
+sidebar:
+  order: 10004
+  hidden: true
+---
+
+**Category:** [Request Validation](/workers/platform/error-codes/#request-validation)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Parameter '{param}' is malformed. Verify this parameter matches the expected format and try again.`
+
+**When this occurs:**
+A URL parameter has an invalid format or contains illegal characters.
+
+**Common parameter formats:**
+
+| Parameter    | Format                          | Example                            |
+| ------------ | ------------------------------- | ---------------------------------- |
+| Account ID   | 32-character hex                | `023e105f4ecef8ad9ca31a8372d0c353` |
+| Zone ID      | 32-character hex                | `023e105f4ecef8ad9ca31a8372d0c353` |
+| Namespace ID | UUID                            | `0f2ac74b498b48028cb68387c421e279` |
+| Script name  | lowercase alphanumeric + dashes | `my-worker-v2`                     |
+
+**How to fix:**
+
+1. Verify UUIDs match format: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` or `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+2. URL-encode special characters: space → `%20`, `@` → `%40`
+3. Check IDs are complete (not truncated)
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

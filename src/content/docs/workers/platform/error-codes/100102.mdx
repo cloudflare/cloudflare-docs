@@ -1,0 +1,57 @@
+---
+pcx_content_type: reference
+title: "100102"
+head:
+  - tag: title
+    content: "Error 100102 - Tag Too Large"
+sidebar:
+  order: 100102
+  hidden: true
+---
+
+**Category:** [Limits & Quotas](/workers/platform/error-codes/#limits-quotas)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Tag value is too large. Tags must be {max} bytes or less. Use a shorter tag value and try again.`
+
+**When this occurs:**
+
+A tag you're trying to apply to a Worker exceeds the maximum allowed size. Worker tags are used for organizing and filtering Workers in your account.
+
+**Tag limits:**
+
+- Maximum tag length: 128 bytes
+- Tags must be UTF-8 encoded strings
+
+**How to fix:**
+
+1. **Shorten the tag value** - Use abbreviations or shorter identifiers:
+
+```bash
+# Instead of
+wrangler deploy --tag "my-very-long-descriptive-production-environment-tag-name"
+
+# Use
+wrangler deploy --tag "prod-env"
+```
+
+2. **Use multiple shorter tags** instead of one long tag:
+
+```jsonc
+// wrangler.jsonc
+{
+	"name": "my-worker",
+	// Use multiple concise tags
+	"tags": ["production", "api", "v2"],
+}
+```
+
+3. **Move metadata elsewhere** - If you need to store longer descriptions, consider:
+   - Using Worker environment variables for metadata
+   - Storing descriptions in your deployment documentation
+   - Using a naming convention that encodes information concisely
+
+---
+
+**See also:** [Error 100103](/workers/platform/error-codes/100103/), [Error Code Reference](/workers/platform/error-codes/)

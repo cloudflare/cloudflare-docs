@@ -1,0 +1,90 @@
+---
+pcx_content_type: reference
+title: "10052"
+head:
+  - tag: title
+    content: "Error 10052 - Binding Missing Name"
+sidebar:
+  order: 10052
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Bindings - General](/workers/platform/error-codes/#bindings--general)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Binding must have a name. Add a name property to the binding and try again.`
+
+**When this occurs:**
+
+A binding in your Worker configuration is missing the required `name` (or `binding`) property. Every binding must have a name that your Worker code uses to access it.
+
+**How to fix:**
+
+1. **Add the binding name** to your `wrangler.jsonc`:
+
+```jsonc
+{
+	// KV namespace binding
+	"kv_namespaces": [
+		{
+			"binding": "MY_KV", // This name is required
+			"id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		},
+	],
+
+	// R2 bucket binding
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET", // This name is required
+			"bucket_name": "my-bucket",
+		},
+	],
+
+	// D1 database binding
+	"d1_databases": [
+		{
+			"binding": "MY_DB", // This name is required
+			"database_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+		},
+	],
+}
+```
+
+2. **Use the binding name in your Worker code:**
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Access bindings via env using the binding name
+		const value = await env.MY_KV.get("key");
+		const object = await env.MY_BUCKET.get("file.txt");
+		const result = await env.MY_DB.prepare("SELECT * FROM users").all();
+
+		return new Response("OK");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+3. **Check for empty binding names** - Ensure the binding name is not an empty string:
+
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "", // Invalid - must have a non-empty name
+			"id": "...",
+		},
+	],
+}
+```
+
+---
+
+**See also:** [Bindings](/workers/runtime-apis/bindings/), [Error Code Reference](/workers/platform/error-codes/)

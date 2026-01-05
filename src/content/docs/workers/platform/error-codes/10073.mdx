@@ -1,0 +1,50 @@
+---
+pcx_content_type: reference
+title: "10073"
+head:
+  - tag: title
+    content: "Error 10073 - Route Limit Reached"
+sidebar:
+  order: 10073
+  hidden: true
+---
+
+**Category:** [Routing](/workers/platform/error-codes/#routing)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Route limit reached: zone '{zone}' allows {max} routes. Delete unused routes or use wildcard patterns.`
+
+**When this occurs:**
+The zone has reached the maximum number of Worker routes.
+
+**Limit:** 1,000 routes per zone (all plans)
+
+**How to fix:**
+
+1. List existing routes:
+
+```bash
+wrangler routes list
+```
+
+2. Remove unused routes
+3. Use wildcard patterns to consolidate multiple routes:
+
+```jsonc
+// Instead of many specific routes:
+// "example.com/api/v1/users", "example.com/api/v1/posts", etc.
+
+// Use a single wildcard route:
+{
+  "routes": ["example.com/api/*"],
+}
+```
+
+4. Consider using [Custom Domains](/workers/configuration/routing/custom-domains/) instead of routes for dedicated hostnames
+
+See [Route Limits](/workers/platform/limits/#number-of-routes-per-zone) for current limits.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

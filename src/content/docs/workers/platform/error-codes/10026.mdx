@@ -1,0 +1,29 @@
+---
+pcx_content_type: reference
+title: "10026"
+head:
+  - tag: title
+    content: "Error 10026 - Invalid Request Body"
+sidebar:
+  order: 10026
+  hidden: true
+---
+
+**Category:** [Request Validation](/workers/platform/error-codes/#request-validation)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Could not parse request body. Verify the request format matches the API specification and try again.`
+
+**When this occurs:**
+The request body could not be parsed as valid JSON or expected format.
+
+**How to fix:**
+
+1. Verify JSON syntax is valid
+2. Check `Content-Type` header matches the body format
+3. Ensure request body is not empty when required
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

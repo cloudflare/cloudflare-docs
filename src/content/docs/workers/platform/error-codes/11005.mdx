@@ -1,0 +1,29 @@
+---
+pcx_content_type: reference
+title: "11005"
+head:
+  - tag: title
+    content: "Error 11005 - Cannot Delete Queue with Bindings"
+sidebar:
+  order: 11005
+  hidden: true
+---
+
+**Category:** [Bindings - Queues](/workers/platform/error-codes/#bindings--queues)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Cannot delete queue '{queue}' because it is still bound to Workers: {workers}. Remove the queue bindings first, then delete the queue.`
+
+**When this occurs:**
+Attempting to delete a queue that's bound to Workers.
+
+**How to fix:**
+
+1. Remove queue bindings from all Workers
+2. Redeploy those Workers
+3. Then delete the queue
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

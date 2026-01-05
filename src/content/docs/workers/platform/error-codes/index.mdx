@@ -1,0 +1,285 @@
+---
+pcx_content_type: navigation
+title: Error codes
+sidebar:
+  order: 7
+description: Reference for REST API error codes returned by the Cloudflare Workers REST API.
+---
+
+Reference for REST API error codes returned by the Cloudflare Workers REST API.
+
+## Understanding Error Responses
+
+All Workers REST API errors follow this JSON structure:
+
+```json
+{
+	"success": false,
+	"errors": [
+		{
+			"code": 10021,
+			"message": "Worker validation failed: syntax error at line 5",
+			"documentation_url": "https://developers.cloudflare.com/workers/platform/error-codes/10021"
+		}
+	],
+	"result": null
+}
+```
+
+**Key fields:**
+
+- `code` - Unique identifier for the error type (10000-100999 range)
+- `message` - Human-readable error description
+- `documentation_url` - Link to detailed documentation (when available)
+
+## Categories
+
+- [Authentication & Authorization](#authentication--authorization)
+- [Request Validation](#request-validation)
+- [Scripts & Workers](#scripts--workers)
+- [Routing](#routing)
+- [Workers.dev Subdomains](#workersdev-subdomains)
+- [Bindings - General](#bindings---general)
+- [Bindings - KV](#bindings---kv)
+- [Bindings - Durable Objects](#bindings---durable-objects)
+- [Bindings - Service Bindings](#bindings---service-bindings)
+- [Bindings - R2](#bindings---r2)
+- [Bindings - D1](#bindings---d1)
+- [Bindings - Queues](#bindings---queues)
+- [Bindings - Other](#bindings---other)
+- [Custom Domains](#custom-domains)
+- [Versions & Deployments](#versions--deployments)
+- [Observability](#observability)
+- [Assets](#assets)
+- [Limits & Quotas](#limits--quotas)
+- [Internal Errors](#internal-errors)
+
+---
+
+## Authentication & Authorization
+
+| Code                                          | Message                                                      |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| [10000](/workers/platform/error-codes/10000/) | Authentication failed. Verify your API token or credentia... |
+| [10015](/workers/platform/error-codes/10015/) | Your account does not have access to this feature. Verify... |
+| [10023](/workers/platform/error-codes/10023/) | Your account does not have access to this feature. Verify... |
+
+## Request Validation
+
+| Code                                          | Message                                                        |
+| --------------------------------------------- | -------------------------------------------------------------- |
+| [10001](/workers/platform/error-codes/10001/) | Content-Type must be one of: `{types}`. Update the Content-... |
+| [10003](/workers/platform/error-codes/10003/) | Request is missing a required URL parameter. Verify the U...   |
+| [10004](/workers/platform/error-codes/10004/) | Parameter '`{param}`' is malformed. Verify this parameter m... |
+| [10005](/workers/platform/error-codes/10005/) | Request is missing required URL parameter 'name'. Include...   |
+| [10006](/workers/platform/error-codes/10006/) | Failed to parse Worker upload. The upload format is inval...   |
+| [10026](/workers/platform/error-codes/10026/) | Could not parse request body. Verify the request format m...   |
+
+## Scripts & Workers
+
+| Code                                          | Message                                                        |
+| --------------------------------------------- | -------------------------------------------------------------- |
+| [10007](/workers/platform/error-codes/10007/) | This Worker does not exist on your account. Verify the Wo...   |
+| [10016](/workers/platform/error-codes/10016/) | Invalid Worker name. Names must start with a letter, be l...   |
+| [10021](/workers/platform/error-codes/10021/) | `{validation error details}`                                   |
+| [10027](/workers/platform/error-codes/10027/) | Worker exceeds the size limit of `{mib}` MiB. Reduce your s... |
+| [10035](/workers/platform/error-codes/10035/) | Multiple attempts to modify a resource at the same time. ...   |
+| [10040](/workers/platform/error-codes/10040/) | A Worker named '`{name}`' already exists on this account. C... |
+| [10069](/workers/platform/error-codes/10069/) | The uploaded Worker contains event handlers unsupported b...   |
+| [10071](/workers/platform/error-codes/10071/) | Worker version not found. Verify the version ID is correc...   |
+| [10090](/workers/platform/error-codes/10090/) | This Worker does not exist on your account. Verify the Wo...   |
+| [10092](/workers/platform/error-codes/10092/) | Environment not found on this Worker. Verify the environm...   |
+| [10093](/workers/platform/error-codes/10093/) | Invalid Worker name. Names must start with a letter, be l...   |
+| [10094](/workers/platform/error-codes/10094/) | Invalid environment name. Names must start with a letter,...   |
+
+## Routing
+
+| Code                                          | Message                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------- |
+| [10009](/workers/platform/error-codes/10009/) | Route not found. Verify the route ID is correct and the r...     |
+| [10019](/workers/platform/error-codes/10019/) | Cannot configure route because the Worker does not exist....     |
+| [10020](/workers/platform/error-codes/10020/) | A route with this pattern already exists on this zone. De...     |
+| [10022](/workers/platform/error-codes/10022/) | `{validation details}`                                           |
+| [10072](/workers/platform/error-codes/10072/) | Cron trigger limit reached: your account allows `{max}` cro...   |
+| [10073](/workers/platform/error-codes/10073/) | Route limit reached: zone '`{zone}`' allows `{max}` routes. D... |
+
+## Workers.dev Subdomains
+
+| Code                                          | Message                                                        |
+| --------------------------------------------- | -------------------------------------------------------------- |
+| [10031](/workers/platform/error-codes/10031/) | Subdomain '`{subdomain}`' is unavailable. Choose a differen... |
+| [10032](/workers/platform/error-codes/10032/) | Subdomain '`{subdomain}`' is available but not configured....  |
+| [10033](/workers/platform/error-codes/10033/) | Subdomain '`{subdomain}`' is invalid. Use a DNS-compliant n... |
+| [10034](/workers/platform/error-codes/10034/) | Email verification required. Verify your email address to...   |
+| [10037](/workers/platform/error-codes/10037/) | Worker limit reached: your account allows `{max}` Workers....  |
+| [10063](/workers/platform/error-codes/10063/) | A workers.dev subdomain is required. Visit the Workers da...   |
+
+## Bindings - General
+
+| Code                                            | Message                                                          |
+| ----------------------------------------------- | ---------------------------------------------------------------- |
+| [10052](/workers/platform/error-codes/10052/)   | Binding must have a name. Add a name property to the bind...     |
+| [10053](/workers/platform/error-codes/10053/)   | Binding name '`{name}`' is already in use. Choose a differe...   |
+| [10054](/workers/platform/error-codes/10054/)   | Text binding '`{name}`' is too large (`{sizeBytes}` bytes). T... |
+| [10055](/workers/platform/error-codes/10055/)   | Too many text bindings (`{count}`). The limit is `{limit}`. R... |
+| [10056](/workers/platform/error-codes/10056/)   | Binding '`{name}`' not found. Verify the binding name is co...   |
+| [10100](/workers/platform/error-codes/10100/)   | Binding name '`{name}`' exceeds the `{limit}` character limit... |
+| [100153](/workers/platform/error-codes/100153/) | Binding type '`{type}`' is not valid. Use a supported bindi...   |
+
+## Bindings - KV
+
+| Code                                          | Message                                                        |
+| --------------------------------------------- | -------------------------------------------------------------- |
+| [10041](/workers/platform/error-codes/10041/) | KV namespace '`{namespaceId}`' not found. Verify the namesp... |
+| [10042](/workers/platform/error-codes/10042/) | KV namespace '`{namespaceId}`' is invalid. Verify the names... |
+| [10043](/workers/platform/error-codes/10043/) | Your account does not have access to Workers KV. Enable K...   |
+
+## Bindings - Durable Objects
+
+| Code                                          | Message                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------- |
+| [10061](/workers/platform/error-codes/10061/) | Durable Object namespace '`{namespaceId}`' not found. Verif...   |
+| [10062](/workers/platform/error-codes/10062/) | Durable Object namespace ID '`{namespaceId}`' is invalid. N...   |
+| [10065](/workers/platform/error-codes/10065/) | Durable Object namespace name '`{name}`' already exists on...    |
+| [10066](/workers/platform/error-codes/10066/) | Durable Object namespace '`{namespaceId}`' not found. Verif...   |
+| [10067](/workers/platform/error-codes/10067/) | Durable Object namespace limit reached: your account allo...     |
+| [10068](/workers/platform/error-codes/10068/) | Worker has no event handlers. Export a fetch handler, sch...     |
+| [10070](/workers/platform/error-codes/10070/) | Durable Object class '`{className}`' is not exported by thi...   |
+| [10074](/workers/platform/error-codes/10074/) | `{migration error details}`                                      |
+| [10079](/workers/platform/error-codes/10079/) | Ambiguous binding: multiple namespaces match class `{clas...`    |
+| [10086](/workers/platform/error-codes/10086/) | Cannot delete Durable Object namespace '`{name}`' because W...   |
+| [10097](/workers/platform/error-codes/10097/) | Durable Objects on the free plan require SQLite storage....      |
+| [10098](/workers/platform/error-codes/10098/) | Worker '`{script}`' has no environment named '`{environment}`... |
+
+## Bindings - Service Bindings
+
+| Code                                          | Message                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------- |
+| [10142](/workers/platform/error-codes/10142/) | Cannot delete Worker '`{service}`' because it is still refe...   |
+| [10143](/workers/platform/error-codes/10143/) | Service binding '`{binding}`' references Worker '`{target}`'...  |
+| [10144](/workers/platform/error-codes/10144/) | Service binding '`{binding}`' references environment '`{env}`... |
+| [10145](/workers/platform/error-codes/10145/) | Service binding '`{binding}`' references Worker '`{target}`'...  |
+
+## Bindings - R2
+
+| Code                                          | Message                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------- |
+| [10084](/workers/platform/error-codes/10084/) | Your account does not have access to R2. Enable R2 at htt...     |
+| [10085](/workers/platform/error-codes/10085/) | R2 bucket '`{bucket}`' not found. Verify the bucket name is...   |
+| [10136](/workers/platform/error-codes/10136/) | R2 binding error for bucket '`{bucket}`': `{details}`. Review... |
+
+## Bindings - D1
+
+| Code                                          | Message                                                      |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| [10087](/workers/platform/error-codes/10087/) | Your account does not have access to D1. Enable D1 from t... |
+
+## Bindings - Queues
+
+| Code                                            | Message                                                          |
+| ----------------------------------------------- | ---------------------------------------------------------------- |
+| [11000](/workers/platform/error-codes/11000/)   | Queue '`{queue}`' not found. Verify the queue name is corre...   |
+| [11001](/workers/platform/error-codes/11001/)   | Queue consumer is missing a queue handler. Export a queue...     |
+| [11002](/workers/platform/error-codes/11002/)   | Your account does not have access to Queues. Enable Queue...     |
+| [11003](/workers/platform/error-codes/11003/)   | Queue name '`{name}`' is invalid: `{reason}`. Use a valid que... |
+| [11004](/workers/platform/error-codes/11004/)   | Queue '`{queue}`' already has a consumer. A queue can only...    |
+| [11005](/workers/platform/error-codes/11005/)   | Cannot delete queue '`{queue}`' because it is still bound t...   |
+| [11008](/workers/platform/error-codes/11008/)   | Queue limit reached: your account allows `{limit}` queues....    |
+| [11009](/workers/platform/error-codes/11009/)   | Queue name '`{name}`' already exists on this account. Choos...   |
+| [100129](/workers/platform/error-codes/100129/) | Queues are not available on the free plan. Upgrade to Wor...     |
+
+## Bindings - Other
+
+| Code                                            | Message                                                          |
+| ----------------------------------------------- | ---------------------------------------------------------------- |
+| [10088](/workers/platform/error-codes/10088/)   | Your account does not have access to Browser Rendering. U...     |
+| [10089](/workers/platform/error-codes/10089/)   | Your account does not have access to Analytics Engine. En...     |
+| [100138](/workers/platform/error-codes/100138/) | Analytics Engine dataset name cannot be empty. Specify a...      |
+| [100144](/workers/platform/error-codes/100144/) | Analytics Engine dataset name '`{name}`' is invalid: `{reaso...` |
+| [10156](/workers/platform/error-codes/10156/)   | Invalid Hyperdrive configuration ID '`{id}`'. IDs must be v...   |
+| [10157](/workers/platform/error-codes/10157/)   | Hyperdrive configuration '`{id}`' not found. Verify the con...   |
+| [10159](/workers/platform/error-codes/10159/)   | Vectorize index '`{name}`' not found. Verify the index name...   |
+| [100141](/workers/platform/error-codes/100141/) | mTLS certificate '`{id}`' is missing the leaf certificate....    |
+| [100142](/workers/platform/error-codes/100142/) | mTLS certificate '`{id}`' is missing the private key. Uploa...   |
+| [100143](/workers/platform/error-codes/100143/) | mTLS certificate '`{id}`' not found. Verify the certificate...   |
+
+## Custom Domains
+
+| Code                                            | Message                                                          |
+| ----------------------------------------------- | ---------------------------------------------------------------- |
+| [100111](/workers/platform/error-codes/100111/) | Missing hostname for custom domain. Include the hostname...      |
+| [100112](/workers/platform/error-codes/100112/) | Hostname '`{hostname}`' does not belong to zone '`{zone}`'. U... |
+| [100113](/workers/platform/error-codes/100113/) | Hostname '`{hostname}`' is invalid. Use a DNS-compliant hos...   |
+| [100114](/workers/platform/error-codes/100114/) | Custom domain '`{origin}`' not found. Verify the custom dom...   |
+| [100116](/workers/platform/error-codes/100116/) | Hostname '`{hostname}`' is already configured as a custom d...   |
+| [100117](/workers/platform/error-codes/100117/) | Hostname '`{hostname}`' has existing DNS records that confl...   |
+| [100118](/workers/platform/error-codes/100118/) | Cannot change the Worker for a custom domain using this e...     |
+| [100122](/workers/platform/error-codes/100122/) | Custom domain limit reached: zone '`{zone}`' allows `{max}` c... |
+
+## Versions & Deployments
+
+| Code                                          | Message                                                      |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| [10210](/workers/platform/error-codes/10210/) | Invalid deployment: `{reason}`                               |
+| [10211](/workers/platform/error-codes/10211/) | Versions with Durable Object migrations cannot be uploade... |
+| [10216](/workers/platform/error-codes/10216/) | Version uploads require ES Modules syntax. Migrate your W... |
+| [10222](/workers/platform/error-codes/10222/) | This Worker has no versions. Deploy the Worker first usin... |
+| [10336](/workers/platform/error-codes/10336/) | Deployment not found on this Worker. Verify the deploymen... |
+| [10338](/workers/platform/error-codes/10338/) | Cannot delete the active deployment. Deploy a different v... |
+| [10339](/workers/platform/error-codes/10339/) | Cannot delete the latest version of this Worker. Upload a... |
+
+## Observability
+
+| Code                                            | Message                                                      |
+| ----------------------------------------------- | ------------------------------------------------------------ |
+| [10058](/workers/platform/error-codes/10058/)   | Tail session has expired. Start a new tail session to con... |
+| [10076](/workers/platform/error-codes/10076/)   | Tails have been temporarily disabled for your account. Co... |
+| [10104](/workers/platform/error-codes/10104/)   | Trace producer Worker not found. Verify the Worker name i... |
+| [10105](/workers/platform/error-codes/10105/)   | Trace consumer (Tail Worker) not found. Verify the Tail W... |
+| [10108](/workers/platform/error-codes/10108/)   | Trace not found. Verify the trace ID is correct and try a... |
+| [100137](/workers/platform/error-codes/100137/) | Tracing is not enabled for your account. Enable Logpush t... |
+| [100150](/workers/platform/error-codes/100150/) | Tail Workers require a Workers Paid plan. Upgrade at http... |
+| [10203](/workers/platform/error-codes/10203/)   | Tail Worker not found on this account. Verify the Tail Wo... |
+| [10204](/workers/platform/error-codes/10204/)   | A Worker with only a tail handler cannot tail itself. Con... |
+
+## Assets
+
+| Code                                          | Message                                                        |
+| --------------------------------------------- | -------------------------------------------------------------- |
+| [10301](/workers/platform/error-codes/10301/) | Asset partial not found. Verify the partial ID is correct...   |
+| [10304](/workers/platform/error-codes/10304/) | Asset manifest is invalid: `{reason}`. Verify your manifest... |
+| [10305](/workers/platform/error-codes/10305/) | Cannot use an assets binding without uploading assets. Up...   |
+| [10343](/workers/platform/error-codes/10343/) | Asset manifest not found. Verify the manifest exists and...    |
+
+## Limits & Quotas
+
+| Code                                            | Message                                                        |
+| ----------------------------------------------- | -------------------------------------------------------------- |
+| [100102](/workers/platform/error-codes/100102/) | Tag value is too large. Tags must be `{max}` bytes or less.... |
+| [100103](/workers/platform/error-codes/100103/) | Tag limit reached: Workers can have at most `{max}` tags. R... |
+| [10205](/workers/platform/error-codes/10205/)   | CPU limits are only supported with the 'standard' usage m...   |
+| [10206](/workers/platform/error-codes/10206/)   | CPU limit of `{max_ms}` ms exceeds the maximum allowed valu... |
+| [100132](/workers/platform/error-codes/100132/) | Worker name is too long to be used as a workers.dev subdo...   |
+| [100149](/workers/platform/error-codes/100149/) | Routed zone limit reached: this Worker has routes on `{max...` |
+| [100328](/workers/platform/error-codes/100328/) | CPU limits are not available on the free plan. Upgrade to...   |
+
+## Internal Errors
+
+| Code                                          | Message                                                      |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| [10002](/workers/platform/error-codes/10002/) | Request failed due to an internal error. Retry the reques... |
+| [10013](/workers/platform/error-codes/10013/) | An unexpected error occurred while processing your reques... |
+| [10014](/workers/platform/error-codes/10014/) | Failed to verify account entitlements due to an internal...  |
+| [10017](/workers/platform/error-codes/10017/) | This feature is not yet implemented. Check the Workers do... |
+
+---
+
+## Getting Help
+
+If you encounter an error not listed here or need further assistance:
+
+1. **Check related documentation** - Links provided in each error section
+2. **Search existing issues** - [workers-sdk GitHub](https://github.com/cloudflare/workers-sdk/issues)
+3. **Report a bug** - [Create an issue](https://github.com/cloudflare/workers-sdk/issues/new)
+4. **Community support** - [Cloudflare Discord](https://discord.cloudflare.com)
+5. **Cloudflare support** - [Cloudflare Support](https://dash.cloudflare.com/?to=/:account/support)

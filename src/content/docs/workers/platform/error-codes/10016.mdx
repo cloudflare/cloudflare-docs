@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: "10016"
+head:
+  - tag: title
+    content: "Error 10016 - Invalid Worker Name"
+sidebar:
+  order: 10016
+  hidden: true
+---
+
+**Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Invalid Worker name. Names must start with a letter, be lowercase, and contain only alphanumeric characters and dashes.`
+
+**When this occurs:**
+The Worker name contains invalid characters or format.
+
+**Requirements:**
+
+- Pattern: `^[a-z][a-z0-9-]{0,62}$`
+- Must start with a lowercase letter
+- Lowercase letters, numbers, and dashes only
+- Maximum 63 characters
+- Cannot end with a dash
+
+**Examples:**
+
+| Valid            | Invalid        | Reason                   |
+| ---------------- | -------------- | ------------------------ |
+| `my-worker`      | `My-Worker`    | Must be lowercase        |
+| `api-v2`         | `api_v2`       | No underscores allowed   |
+| `worker123`      | `123worker`    | Must start with a letter |
+| `a`              | `-worker`      | Cannot start with a dash |
+| `api-handler`    | `api--handler` | Avoid consecutive dashes |
+| `my-worker-prod` | `my worker`    | No spaces allowed        |
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

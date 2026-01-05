@@ -1,0 +1,89 @@
+---
+pcx_content_type: reference
+title: "10053"
+head:
+  - tag: title
+    content: "Error 10053 - Duplicate Binding Name"
+sidebar:
+  order: 10053
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Bindings - General](/workers/platform/error-codes/#bindings--general)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Binding name '{name}' is already in use. Choose a different binding name and try again.`
+
+**When this occurs:**
+
+Two or more bindings in your Worker configuration have the same name. Each binding must have a unique name within a Worker.
+
+**How to fix:**
+
+1. **Find the duplicate bindings** in your `wrangler.jsonc`:
+
+```jsonc
+{
+	// This configuration has a conflict - "DATA" is used twice
+	"kv_namespaces": [
+		{
+			"binding": "DATA", // First use of "DATA"
+			"id": "abc123",
+		},
+	],
+	"r2_buckets": [
+		{
+			"binding": "DATA", // Conflict! Same name as KV binding
+			"bucket_name": "my-bucket",
+		},
+	],
+}
+```
+
+2. **Rename one of the bindings** to be unique:
+
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "KV_DATA", // Renamed to be unique
+			"id": "abc123",
+		},
+	],
+	"r2_buckets": [
+		{
+			"binding": "R2_DATA", // Renamed to be unique
+			"bucket_name": "my-bucket",
+		},
+	],
+}
+```
+
+3. **Update your Worker code** to use the new binding names:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Use the renamed bindings
+		const kvValue = await env.KV_DATA.get("key");
+		const r2Object = await env.R2_DATA.get("file.txt");
+
+		return new Response("OK");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+4. **Use a consistent naming convention** to avoid conflicts:
+   - Prefix with the binding type: `KV_USERS`, `R2_ASSETS`, `D1_MAIN`
+   - Use descriptive names: `USER_CACHE`, `STATIC_FILES`, `APP_DATABASE`
+
+---
+
+**See also:** [Error 10052](/workers/platform/error-codes/10052/), [Bindings](/workers/runtime-apis/bindings/), [Error Code Reference](/workers/platform/error-codes/)

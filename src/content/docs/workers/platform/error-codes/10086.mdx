@@ -1,0 +1,29 @@
+---
+pcx_content_type: reference
+title: "10086"
+head:
+  - tag: title
+    content: "Error 10086 - Cannot Delete DO Namespace"
+sidebar:
+  order: 10086
+  hidden: true
+---
+
+**Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Cannot delete Durable Object namespace '{name}' because Worker '{script}' still references it via binding '{binding}'. Remove the binding from the Worker first, then delete the namespace.`
+
+**When this occurs:**
+Attempting to delete a Durable Object namespace that's still bound to a Worker.
+
+**How to fix:**
+
+1. Remove the binding from the Worker
+2. Redeploy the Worker
+3. Then delete the namespace
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

@@ -1,0 +1,57 @@
+---
+pcx_content_type: reference
+title: "10062"
+head:
+  - tag: title
+    content: "Error 10062 - Invalid DO Namespace ID"
+sidebar:
+  order: 10062
+  hidden: true
+---
+
+**Category:** [Bindings - Durable Objects](/workers/platform/error-codes/#bindings--durable-objects)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Durable Object namespace ID '{namespaceId}' is invalid. Namespace IDs must be valid UUIDs. Verify the ID and try again.`
+
+**When this occurs:**
+
+The Durable Object namespace ID you provided is not a valid UUID format. Namespace IDs are 32-character hexadecimal strings with hyphens (e.g., `a1b2c3d4-e5f6-7890-abcd-ef1234567890`).
+
+**How to fix:**
+
+1. **Get the correct namespace ID** - You can find namespace IDs in the Cloudflare dashboard under Workers & Pages > your Worker > Settings > Bindings, or use the [Durable Objects API](/api/resources/durable_objects/subresources/namespaces/methods/list/) to list namespaces.
+
+2. **Check your wrangler.jsonc** - Ensure the `id` field contains a valid UUID:
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject",
+				// Must be a valid UUID format
+				"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+			},
+		],
+	},
+}
+```
+
+3. **Common mistakes to avoid:**
+   - Using the namespace name instead of the ID
+   - Copying an incomplete ID (missing characters)
+   - Including extra whitespace or quotes in the ID
+   - Using an ID from a different account
+
+4. **Deploy your Worker** - Durable Object namespaces are created automatically when you deploy a Worker with a Durable Object class for the first time:
+
+```bash
+npx wrangler deploy
+```
+
+---
+
+**See also:** [Error 10061](/workers/platform/error-codes/10061/), [Durable Objects](/durable-objects/), [Error Code Reference](/workers/platform/error-codes/)

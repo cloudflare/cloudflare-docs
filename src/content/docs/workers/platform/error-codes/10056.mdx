@@ -1,0 +1,89 @@
+---
+pcx_content_type: reference
+title: "10056"
+head:
+  - tag: title
+    content: "Error 10056 - Binding Not Found"
+sidebar:
+  order: 10056
+  hidden: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+**Category:** [Bindings - General](/workers/platform/error-codes/#bindings--general)
+
+**HTTP Status:** 404 Not Found
+
+**Message:** `Binding '{name}' not found. Verify the binding name is correct and try again.`
+
+**When this occurs:**
+
+You're referencing a binding that doesn't exist on this Worker. This can happen when:
+
+- The binding name is misspelled
+- The binding was removed from the configuration
+- You're accessing a binding that exists in a different environment
+
+**How to fix:**
+
+1. **Check your wrangler.jsonc** to see what bindings are configured:
+
+```jsonc
+{
+	"kv_namespaces": [{ "binding": "MY_KV", "id": "..." }],
+	"r2_buckets": [{ "binding": "MY_BUCKET", "bucket_name": "..." }],
+	"d1_databases": [{ "binding": "MY_DB", "database_id": "..." }],
+}
+```
+
+2. **Verify the binding name matches** what you're using in your code:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Make sure these names match your wrangler.jsonc
+		await env.MY_KV.get("key"); // Must match "binding": "MY_KV"
+		await env.MY_BUCKET.get("file"); // Must match "binding": "MY_BUCKET"
+		await env.MY_DB.prepare("..."); // Must match "binding": "MY_DB"
+
+		return new Response("OK");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+3. **Add the missing binding** if it doesn't exist:
+
+```bash
+# For KV
+npx wrangler kv namespace create MY_KV
+
+# For R2
+npx wrangler r2 bucket create my-bucket
+
+# For D1
+npx wrangler d1 create my-database
+```
+
+4. **Check environment-specific bindings** - If using environments, ensure bindings are defined for each:
+
+```jsonc
+{
+	"env": {
+		"production": {
+			"kv_namespaces": [{ "binding": "MY_KV", "id": "prod-namespace-id" }],
+		},
+		"staging": {
+			"kv_namespaces": [{ "binding": "MY_KV", "id": "staging-namespace-id" }],
+		},
+	},
+}
+```
+
+---
+
+**See also:** [Bindings](/workers/runtime-apis/bindings/), [Error Code Reference](/workers/platform/error-codes/)

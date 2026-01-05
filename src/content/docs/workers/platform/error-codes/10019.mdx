@@ -1,0 +1,29 @@
+---
+pcx_content_type: reference
+title: "10019"
+head:
+  - tag: title
+    content: "Error 10019 - Worker Does Not Exist for Route"
+sidebar:
+  order: 10019
+  hidden: true
+---
+
+**Category:** [Routing](/workers/platform/error-codes/#routing)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Cannot configure route because the Worker does not exist. Create the Worker first, then configure the route.`
+
+**When this occurs:**
+Attempting to create a route pointing to a non-existent Worker.
+
+**How to fix:**
+
+1. Deploy the Worker first: `wrangler deploy`
+2. Then create the route
+3. Verify the Worker name in your route configuration
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

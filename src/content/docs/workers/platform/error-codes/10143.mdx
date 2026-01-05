@@ -1,0 +1,58 @@
+---
+pcx_content_type: reference
+title: "10143"
+head:
+  - tag: title
+    content: "Error 10143 - Target Worker Not Found"
+sidebar:
+  order: 10143
+  hidden: true
+---
+
+**Category:** [Bindings - Service Bindings](/workers/platform/error-codes/#bindings--service-bindings)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Service binding '{binding}' references Worker '{target}' which does not exist. Deploy the target Worker first or correct the binding configuration.`
+
+**When this occurs:**
+A service binding points to a Worker that doesn't exist.
+
+**Deployment order matters:**
+
+1. Deploy the target Worker first
+2. Then deploy the Worker with the service binding
+
+**How to fix:**
+
+1. Deploy the target Worker:
+
+```bash
+cd auth-worker && wrangler deploy
+```
+
+2. Configure the service binding in `wrangler.jsonc`:
+
+```jsonc
+{
+  "services": [
+    {
+      "binding": "AUTH_SERVICE",
+      "service": "auth-worker",
+      "environment": "production", // optional
+    },
+  ],
+}
+```
+
+3. Deploy the Worker with the binding:
+
+```bash
+wrangler deploy
+```
+
+See [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) for usage examples.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

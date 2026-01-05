@@ -1,0 +1,48 @@
+---
+pcx_content_type: reference
+title: "100103"
+head:
+  - tag: title
+    content: "Error 100103 - Tag Limit Reached"
+sidebar:
+  order: 100103
+  hidden: true
+---
+
+**Category:** [Limits & Quotas](/workers/platform/error-codes/#limits-quotas)
+
+**HTTP Status:** 403 Forbidden
+
+**Message:** `Tag limit reached: Workers can have at most {max} tags. Remove existing tags before adding new ones.`
+
+**When this occurs:**
+
+Your Worker has reached the maximum number of tags allowed. Tags help organize and filter Workers but are limited per Worker.
+
+**How to fix:**
+
+1. **Review existing tags** - Check what tags are currently applied:
+
+```bash
+wrangler deploy --dry-run
+```
+
+2. **Remove unnecessary tags** - Edit your `wrangler.jsonc` to remove tags you no longer need:
+
+```jsonc
+{
+	"name": "my-worker",
+	// Remove tags you don't need
+	"tags": ["production", "api"], // Keep only essential tags
+}
+```
+
+3. **Consolidate tags** - Combine related tags into fewer, more meaningful ones:
+   - Instead of: `["env-prod", "region-us", "team-backend", "version-2"]`
+   - Consider: `["prod-us-backend"]`
+
+4. **Use naming conventions** - Encode information in your Worker name instead of tags when possible.
+
+---
+
+**See also:** [Error 100102](/workers/platform/error-codes/100102/), [Error Code Reference](/workers/platform/error-codes/)

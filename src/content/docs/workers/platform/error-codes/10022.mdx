@@ -1,0 +1,55 @@
+---
+pcx_content_type: reference
+title: "10022"
+head:
+  - tag: title
+    content: "Error 10022 - Invalid Route Pattern"
+sidebar:
+  order: 10022
+  hidden: true
+---
+
+**Category:** [Routing](/workers/platform/error-codes/#routing)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `{validation details}`
+
+**When this occurs:**
+The route pattern is invalid or violates routing rules.
+
+**Pattern rules:**
+
+- Only `*` wildcard is supported (matches zero or more characters)
+- No infix wildcards: `example.com/*.jpg` is **invalid**
+- No query parameters: `example.com/?foo=*` is **invalid**
+- Hostname wildcards must be at start: `*example.com/*` or `*.example.com/*`
+- Pattern must include a hostname from your zone
+- All domains/subdomains must have DNS records in your zone
+
+**Valid vs invalid patterns:**
+
+| Pattern              | Valid | Notes                             |
+| -------------------- | ----- | --------------------------------- |
+| `example.com/*`      | Yes   | Matches all paths on root domain  |
+| `*.example.com/*`    | Yes   | Matches all subdomains (not root) |
+| `*example.com/*`     | Yes   | Matches root and all subdomains   |
+| `example.com/api/*`  | Yes   | Matches paths starting with /api/ |
+| `example.com/*.jpg`  | No    | Infix wildcards not allowed       |
+| `example.com/**`     | No    | Double wildcards not allowed      |
+| `example.com/?foo=*` | No    | Query parameters not allowed      |
+
+**Pattern matching examples:**
+
+| Pattern             | Matches                                                | Does Not Match                   |
+| ------------------- | ------------------------------------------------------ | -------------------------------- |
+| `example.com/*`     | `example.com/`, `example.com/api/v1`                   | `www.example.com/`               |
+| `*.example.com/*`   | `www.example.com/`, `api.example.com/v1`               | `example.com/`                   |
+| `*example.com/*`    | `example.com/`, `www.example.com/`, `api.example.com/` | —                                |
+| `example.com/api/*` | `example.com/api/`, `example.com/api/v1/users`         | `example.com/`, `example.com/v1` |
+
+See [Route Matching Behavior](/workers/configuration/routing/routes/#matching-behavior) for detailed pattern documentation.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)

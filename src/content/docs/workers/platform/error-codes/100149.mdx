@@ -1,0 +1,56 @@
+---
+pcx_content_type: reference
+title: "100149"
+head:
+  - tag: title
+    content: "Error 100149 - Routed Zone Limit Reached"
+sidebar:
+  order: 100149
+  hidden: true
+---
+
+**Category:** [Limits & Quotas](/workers/platform/error-codes/#limits-quotas)
+
+**HTTP Status:** 400 Bad Request
+
+**Message:** `Routed zone limit reached: this Worker has routes on {max} zones. Remove routes from some zones before adding new ones.`
+
+**When this occurs:**
+
+A single Worker can only have routes configured on a limited number of zones (domains). You've exceeded this limit by trying to add routes on too many different zones.
+
+**Current limit:** 1,000 zones per Worker
+
+**How to fix:**
+
+1. **Review current routes** - List all routes for your Worker:
+
+```bash
+wrangler routes list
+```
+
+2. **Remove routes from unused zones:**
+
+```bash
+wrangler routes delete <route-id>
+```
+
+3. **Consolidate Workers** - If you need to serve many zones:
+   - Use [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) for multi-tenant scenarios
+   - Create separate Workers for different zone groups
+   - Use [Custom Domains](/workers/configuration/routing/custom-domains/) instead of routes where possible
+
+4. **Use wildcard routes** - Instead of creating separate routes for each subdomain, use wildcards:
+
+```jsonc
+{
+	"routes": [
+		// Instead of routes for each subdomain
+		{ "pattern": "*.example.com/*", "zone_name": "example.com" },
+	],
+}
+```
+
+---
+
+**See also:** [Routes and Domains Limits](/workers/platform/limits/#routes-and-domains), [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/), [Error Code Reference](/workers/platform/error-codes/)

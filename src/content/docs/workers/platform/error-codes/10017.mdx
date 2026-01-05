@@ -1,0 +1,44 @@
+---
+pcx_content_type: reference
+title: "10017"
+head:
+  - tag: title
+    content: "Error 10017 - Not Implemented"
+sidebar:
+  order: 10017
+  hidden: true
+---
+
+**Category:** [Internal Errors](/workers/platform/error-codes/#internal-errors)
+
+**HTTP Status:** 501 Not Implemented
+
+**Message:** `This feature is not yet implemented. Check the Workers documentation for updates on availability.`
+
+**When this occurs:**
+
+You attempted to use an API endpoint or feature that exists in the API schema but is not yet fully implemented. This typically happens when:
+
+- Using a newly announced feature before it's generally available
+- Accessing beta or experimental API endpoints
+- Using deprecated endpoints that have been disabled
+
+**How to fix:**
+
+1. **Check documentation** - Review the [Workers documentation](/workers/) to verify the feature is available and you're using the correct API endpoint.
+
+2. **Check for beta requirements** - Some features require:
+   - Joining a beta program
+   - Enabling specific account flags
+   - Using a paid plan
+
+3. **Use alternative approaches** - If the feature isn't available yet, consider:
+   - Using Wrangler CLI instead of direct API calls
+   - Using the Cloudflare dashboard for the operation
+   - Implementing the functionality differently in your Worker
+
+4. **Stay updated** - Follow the [Workers changelog](/workers/platform/changelog/) for announcements about new features and API availability.
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/), [Workers Changelog](/workers/platform/changelog/)

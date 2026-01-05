@@ -1,0 +1,58 @@
+---
+pcx_content_type: reference
+title: "10023"
+head:
+  - tag: title
+    content: "Error 10023 - Unauthorized"
+sidebar:
+  order: 10023
+  hidden: true
+---
+
+**Category:** [Authentication & Authorization](/workers/platform/error-codes/#authentication-authorization)
+
+**HTTP Status:** 401 Unauthorized
+
+**Message:** `Your account does not have access to this feature. Verify it is enabled on your plan or upgrade at https://dash.cloudflare.com/?to=/:account/workers/plans`
+
+**When this occurs:**
+Your API token is valid but lacks permission for the requested operation.
+
+**Difference from [10000](/workers/platform/error-codes/10000/):**
+
+- **10000** = Authentication failure (invalid/expired token)
+- **10023** = Authorization failure (valid token, insufficient permissions)
+
+**Common causes:**
+
+- Token has `Read` permission but operation requires `Edit`
+- Token scoped to a specific zone but operation requires account-level access
+- Token scoped to wrong account
+- Attempting to access resources on another account
+
+**How to fix:**
+
+1. Check your token's current permissions:
+
+```bash
+wrangler whoami
+```
+
+2. Verify your token includes the required [permission scopes](/fundamentals/api/reference/permissions/):
+
+| Operation        | Required Permission       |
+| ---------------- | ------------------------- |
+| Deploy Worker    | `Workers Scripts:Edit`    |
+| Read Worker      | `Workers Scripts:Read`    |
+| Configure routes | `Workers Routes:Edit`     |
+| Manage KV        | `Workers KV Storage:Edit` |
+| Manage R2        | `Workers R2 Storage:Edit` |
+| Manage D1        | `D1:Edit`                 |
+
+3. Ensure the token is scoped to the correct account/zone (not a different account)
+
+4. [Create a new token](/fundamentals/api/get-started/create-token/) with the required permissions if needed
+
+---
+
+**See also:** [Error Code Reference](/workers/platform/error-codes/)
