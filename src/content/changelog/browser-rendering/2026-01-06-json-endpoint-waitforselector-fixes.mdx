@@ -1,0 +1,10 @@
+---
+title: Bug fixes for JSON endpoint and waitForSelector timeout
+description: Improved error handling for /json endpoint and fixed waitForSelector timeout behavior in REST API
+products:
+  - browser-rendering
+date: 2026-01-06T12:00:00Z
+---
+
+- **Bug fix to JSON endpoint**: Updated the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) fallback model and improved error handling for when plan limits of Workers Free plan users are reached.
+- **waitForSelector timeout fix**: REST API requests will now correctly fail if the specified selector is not found within the time limit.
