@@ -39,16 +39,3 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     continue-on-error: true
-
-  assign:
-    name: Update assignees
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/assign-pr
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    continue-on-error: true
