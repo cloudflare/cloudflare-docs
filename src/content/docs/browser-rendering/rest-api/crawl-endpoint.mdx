@@ -156,16 +156,16 @@ The following optional parameters can be used in your crawl request, in addition
 
 | Optional parameter | Type | Description |
 | --- | --- | --- |
-| `limit` | Number | Maximum number of pages to crawl (default is 10, maximum is 100,000) |
-| `depth` | Number | Maximum link depth to crawl from the starting URL (default is 100,000, maximum is 100,000) |
-| `formats` | Array of strings | Response format (default is HTML, other options are Markdown and JSON) |
-| `render` | Boolean | If false, does a fast HTML fetch without executing Javascript (default is true, [learn more about `render`](#render-parameter)) |
-| `maxAge` | Number | Maximum length of time the crawler can use a cached resource before it must re-fetch it from the origin server, in second (default is one day or 86,400 seconds, maximum is seven days or 604,800 seconds). Cache served from R2 storage only if URL and parameters exactly match the crawl request.|
-| `jsonOptions` | Object | Only required if `formats` includes `json`. Contains `prompt`, `response_format`, and `custom_ai` properties (same types as the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/)) |
-| `options.includeExternalLinks` | Boolean | If true, follows links to external domains (default is false) |
-| `options.includeSubdomains` | Boolean | If true, follows links to subdomains of the starting URL (default is false) |
-| `options.includePatterns` | Array of strings | Only visits URLs that match one of these patterns |
-| `options.excludePatterns` | Array of strings | Does not visit URLs that match any of these patterns |
+| `limit` | Number | Maximum number of pages to crawl (default is 10, maximum is 100,000). |
+| `depth` | Number | Maximum link depth to crawl from the starting URL (default is 100,000, maximum is 100,000). |
+| `formats` | Array of strings | Response format (default is HTML, other options are Markdown and JSON). |
+| `render` | Boolean | If false, does a fast HTML fetch without executing Javascript (default is true, [learn more about `render`](#render-parameter)). |
+| `maxAge` | Number | Maximum length of time the crawler can use a cached resource before it must re-fetch it from the origin server, in seconds (default is one day or 86,400 seconds, maximum is seven days or 604,800 seconds). Cache served from R2 storage only if URL and parameters exactly match the crawl request.|
+| `jsonOptions` | Object | Only required if `formats` includes `json`. Contains `prompt`, `response_format`, and `custom_ai` properties (same types as the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/)). |
+| `options.includeExternalLinks` | Boolean | If true, follows links to external domains (default is false). |
+| `options.includeSubdomains` | Boolean | If true, follows links to subdomains of the starting URL (default is false). |
+| `options.includePatterns` | Array of strings | Only visits URLs that match one of these patterns. |
+| `options.excludePatterns` | Array of strings | Does not visit URLs that match any of these patterns. |
 
 Example `crawl` request with all optional parameters:
 
