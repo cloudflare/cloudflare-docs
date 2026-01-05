@@ -9,6 +9,8 @@ sidebar:
   hidden: true
 ---
 
+import { TypeScriptExample } from "~/components";
+
 **Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
 
 **HTTP Status:** 409 Conflict
@@ -39,6 +41,8 @@ concurrency:
 
 3. **Add retry logic** - If using the API directly, implement exponential backoff:
 
+<TypeScriptExample>
+
 ```ts
 async function deployWithRetry<T>(
 	fn: () => Promise<T>,
@@ -60,8 +64,9 @@ async function deployWithRetry<T>(
 }
 ```
 
+</TypeScriptExample>
+
 4. **Coordinate team deployments** - Use deployment locks or communication channels to prevent simultaneous deploys
 
 ---
 
-**See also:** [Error Code Reference](/workers/platform/error-codes/)

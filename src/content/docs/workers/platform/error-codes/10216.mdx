@@ -22,11 +22,15 @@ Attempting to use versions with a Service Worker syntax script.
 
 **Service Worker syntax (not supported for versions):**
 
+<TypeScriptExample>
+
 ```ts
 addEventListener("fetch", (event) => {
 	event.respondWith(new Response("Hello"));
 });
 ```
+
+</TypeScriptExample>
 
 **ES Modules syntax (required):**
 
@@ -58,4 +62,3 @@ See [Migrate to ES Modules](/workers/reference/migrate-to-module-workers/) for a
 
 ---
 
-**See also:** [Error Code Reference](/workers/platform/error-codes/)

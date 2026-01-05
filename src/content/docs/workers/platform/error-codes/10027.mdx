@@ -9,6 +9,8 @@ sidebar:
   hidden: true
 ---
 
+import { TypeScriptExample } from "~/components";
+
 **Category:** [Scripts & Workers](/workers/platform/error-codes/#scripts-workers)
 
 **HTTP Status:** 400 Bad Request
@@ -37,9 +39,13 @@ npx wrangler deploy --dry-run --outdir=dist
 1. Remove unused dependencies from `package.json`
 2. Use dynamic imports for code splitting:
 
+<TypeScriptExample>
+
 ```ts
 const heavyModule = await import("./heavy-module");
 ```
+
+</TypeScriptExample>
 
 3. Move large static assets to [R2](/r2/) or [KV](/kv/)
 4. Use tree-shaking with your bundler (esbuild, webpack)
@@ -49,4 +55,3 @@ See [Worker Size Limits](/workers/platform/limits/#worker-size) for current limi
 
 ---
 
-**See also:** [Error Code Reference](/workers/platform/error-codes/)
