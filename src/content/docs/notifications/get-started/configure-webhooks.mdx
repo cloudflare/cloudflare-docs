@@ -42,6 +42,17 @@ You can only edit the name of webhooks and/or delete them.
 
 You can delete a webhook after selecting **Edit** or by selecting **Delete** in the list of webhooks displayed in the **Destinations** card.
 
+## Firewall settings
+
+Webhook notifications are sent from [Cloudflare's IP ranges](https://www.cloudflare.com/ips/). If your webhook endpoint is protected by a firewall, you must allowlist these IP addresses to receive notifications.
+
+To programmatically retrieve the current list of Cloudflare IP addresses, use the [Cloudflare API](/api/resources/cloudflare_ips/methods/list/).
+
+:::note
+
+Cloudflare's IP ranges are shared across multiple services and may change over time. Periodically check the [IP list](https://www.cloudflare.com/ips/) and update your firewall rules accordingly.
+:::
+
 ## Generic webhooks
 
 If you use a service that is not covered by Cloudflare's currently available webhooks, you can [configure your own](#configure-webhooks), and enter a valid webhook URL.
