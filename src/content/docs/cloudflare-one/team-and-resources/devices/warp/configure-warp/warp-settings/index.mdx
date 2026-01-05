@@ -502,7 +502,7 @@ NetBIOS over TCPIP (NetBT) is a legacy protocol used for name resolution and oth
 
 You should turn on **NetBIOS over TCPIP** only if devices need to access internal resources over NetBT. Example scenarios include:
 
-- **Legacy name resolution**: You rely on NetBIOS names (such as `\\SERVER01`) rather than Fully Qualified Domain Names (such as `\\server01.corp.internal`) to access resources.
+- **Legacy name resolution**: You rely on NetBIOS to resolve single-label names (such as `\\SERVER01`) to access resources, rather than relying on mDNS for single-label names or DNS using Fully Qualified Domain Names (such as `\\server01.corp.internal`).
 - **SMBv1**: You are accessing very old file shares or printers that do not support modern SMB (v2/v3) and require NetBT for discovery.
 - **Legacy applications**: You use specialized internal software that hard-codes NetBIOS for node-to-node communication.
 
