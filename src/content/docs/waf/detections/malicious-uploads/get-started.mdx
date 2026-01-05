@@ -59,6 +59,12 @@ Use a `POST` request similar to the following:
 
 </TabItem> </Tabs>
 
+:::note
+
+<Render file="content-scanning-latency" product="waf" />
+
+:::
+
 ## 2. Validate the content scanning behavior
 
 Use [Security Analytics](/waf/analytics/security-analytics/) and HTTP logs to validate that malicious content objects are being detected correctly.
@@ -66,10 +72,6 @@ Use [Security Analytics](/waf/analytics/security-analytics/) and HTTP logs to va
 You can use the [EICAR anti-malware test file](https://www.eicar.org/download-anti-malware-testfile/) to test content scanning (select the ZIP format).
 
 Alternatively, create a custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
-
-:::note
-Enabling Malicious uploads detection can introduce latency as files will be scanned. Latency can vary depending on file size.
-:::
 
 ## 3. Create a custom rule
 
