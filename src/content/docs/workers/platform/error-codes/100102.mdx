@@ -11,11 +11,9 @@ sidebar:
 
 **Message:** Tag value is too large. Tags must be (max) bytes or less. Use a shorter tag value and try again.
 
-
-**Category:** [Limits & Quotas](/workers/platform/error-codes/#limits-quotas)
+**Category:** [Limits](/workers/platform/error-codes/#limits)
 
 **HTTP Status:** 400 Bad Request
-
 
 **When this occurs:**
 
@@ -28,28 +26,23 @@ A tag you're trying to apply to a Worker exceeds the maximum allowed size. Worke
 
 **How to fix:**
 
-1. **Shorten the tag value** - Use abbreviations or shorter identifiers:
+1. **Shorten the tag value** - Use abbreviations or shorter identifiers when using `wrangler versions upload`:
 
 ```bash
 # Instead of
-wrangler deploy --tag "my-very-long-descriptive-production-environment-tag-name"
+npx wrangler versions upload --tag "my-very-long-descriptive-production-environment-tag-name"
 
 # Use
-wrangler deploy --tag "prod-env"
+npx wrangler versions upload --tag "prod-env"
 ```
 
-2. **Use multiple shorter tags** instead of one long tag:
+Then deploy the version:
 
-```jsonc
-// wrangler.jsonc
-{
-	"name": "my-worker",
-	// Use multiple concise tags
-	"tags": ["production", "api", "v2"],
-}
+```bash
+npx wrangler versions deploy
 ```
 
-3. **Move metadata elsewhere** - If you need to store longer descriptions, consider:
+2. **Move metadata elsewhere** - If you need to store longer descriptions, consider:
    - Using Worker environment variables for metadata
    - Storing descriptions in your deployment documentation
    - Using a naming convention that encodes information concisely

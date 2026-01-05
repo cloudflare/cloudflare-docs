@@ -11,11 +11,9 @@ sidebar:
 
 **Message:** A route with this pattern already exists on this zone. Delete the existing route first, or use a different URL pattern.
 
-
 **Category:** [Routing](/workers/platform/error-codes/#routing)
 
 **HTTP Status:** 409 Conflict
-
 
 **When this occurs:**
 
@@ -23,34 +21,39 @@ You're trying to create a route with a pattern that's already assigned to a Work
 
 **How to fix:**
 
-1. **List existing routes** to find the conflict:
+1. **List existing routes** to find the conflict in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/workers/routes) or via the API:
 
 ```bash
-wrangler routes list
+curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/workers/routes" \
+  -H "Authorization: Bearer {api_token}"
 ```
 
-Example output:
+Example response:
 
-```
-┌──────────────────────────────────────┬─────────────────────┬──────────────┐
-│ Route ID                             │ Pattern             │ Worker       │
-├──────────────────────────────────────┼─────────────────────┼──────────────┤
-│ abc123def456                         │ example.com/api/*   │ my-worker    │
-└──────────────────────────────────────┴─────────────────────┴──────────────┘
+```json
+{
+	"result": [
+		{
+			"id": "abc123def456",
+			"pattern": "example.com/api/*",
+			"script": "my-worker"
+		}
+	]
+}
 ```
 
-2. **Delete the existing route** if it's no longer needed:
+2. **Delete the existing route** if it's no longer needed via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/workers/routes) or the API:
 
 ```bash
-wrangler routes delete abc123def456
+curl -X DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/workers/routes/{route_id}" \
+  -H "Authorization: Bearer {api_token}"
 ```
 
-3. **Or update the existing route** to point to the new Worker:
+3. **Or update the existing route** to point to the new Worker by deleting it and redeploying:
 
 ```bash
-# Delete old route and create new one
-wrangler routes delete abc123def456
-wrangler deploy
+# After deleting the old route via dashboard or API
+npx wrangler deploy
 ```
 
 4. **Use a different route pattern** if both routes are needed:

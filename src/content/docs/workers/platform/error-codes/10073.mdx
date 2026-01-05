@@ -11,11 +11,9 @@ sidebar:
 
 **Message:** Route limit reached: zone (zone) allows (max) routes. Delete unused routes or use wildcard patterns.
 
-
 **Category:** [Routing](/workers/platform/error-codes/#routing)
 
 **HTTP Status:** 400 Bad Request
-
 
 **When this occurs:**
 The zone has reached the maximum number of Worker routes.
@@ -24,13 +22,20 @@ The zone has reached the maximum number of Worker routes.
 
 **How to fix:**
 
-1. List existing routes:
+1. List existing routes in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/workers/routes) or via the API:
 
 ```bash
-wrangler routes list
+curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/workers/routes" \
+  -H "Authorization: Bearer {api_token}"
 ```
 
-2. Remove unused routes
+2. Remove unused routes via the dashboard or the API:
+
+```bash
+curl -X DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/workers/routes/{route_id}" \
+  -H "Authorization: Bearer {api_token}"
+```
+
 3. Use wildcard patterns to consolidate multiple routes:
 
 ```jsonc
@@ -39,7 +44,7 @@ wrangler routes list
 
 // Use a single wildcard route:
 {
-  "routes": ["example.com/api/*"],
+	"routes": ["example.com/api/*"],
 }
 ```
 
@@ -48,4 +53,3 @@ wrangler routes list
 See [Route Limits](/workers/platform/limits/#number-of-routes-per-zone) for current limits.
 
 ---
-

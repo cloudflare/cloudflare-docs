@@ -11,11 +11,9 @@ sidebar:
 
 **Message:** Routed zone limit reached: this Worker has routes on (max) zones. Remove routes from some zones before adding new ones.
 
-
-**Category:** [Limits & Quotas](/workers/platform/error-codes/#limits-quotas)
+**Category:** [Limits](/workers/platform/error-codes/#limits)
 
 **HTTP Status:** 400 Bad Request
-
 
 **When this occurs:**
 
@@ -25,16 +23,18 @@ A single Worker can only have routes configured on a limited number of zones (do
 
 **How to fix:**
 
-1. **Review current routes** - List all routes for your Worker:
+1. **Review current routes** - List all routes for your Worker in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/workers/routes) or via the API:
 
 ```bash
-wrangler routes list
+curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/workers/routes" \
+  -H "Authorization: Bearer {api_token}"
 ```
 
-2. **Remove routes from unused zones:**
+2. **Remove routes from unused zones** via the dashboard or the API:
 
 ```bash
-wrangler routes delete <route-id>
+curl -X DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/workers/routes/{route_id}" \
+  -H "Authorization: Bearer {api_token}"
 ```
 
 3. **Consolidate Workers** - If you need to serve many zones:
