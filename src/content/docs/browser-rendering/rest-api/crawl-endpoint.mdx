@@ -37,7 +37,9 @@ There are two separate steps to using the `/crawl` endpoint:
 Crawl jobs have a maximum run time of seven days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
 
 :::note[Free plan limitation]
-If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 10 minutes per day](/browser-rendering/pricing/). To avoid this, you can either [upgrade to a Workers Paid plan](/workers/platform/pricing/) or you can [put limitations on timeouts](/browser-rendering/reference/timeouts/) to get the most out of the 10 minutes of your crawl request.
+Users on the Workers Free plan are limited to [10 minutes of browser time per day](/browser-rendering/pricing/). If a crawl exceeds this daily allocation, it will fail. To manage this limit, you can [put limitations on timeouts](/browser-rendering/reference/timeouts/) or [upgrade to a Workers Paid plan](/workers/platform/pricing/).
+
+Additionally, Free plan users are [limited to six requests per minute](/browser-rendering/limits/#workers-free). To increase your crawl throughput and finish jobs faster, [upgrade to a Workers Paid plan](/workers/platform/pricing/).
 :::
 
 ### Initiate the crawl job
