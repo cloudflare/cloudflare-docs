@@ -406,7 +406,7 @@ To begin, install the `@anthropic-ai/sdk` package:
 
 <PackageManagers pkg="@anthropic-ai/sdk" />
 
-In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it's set, we can generate text using the Anthropic SDK. If it isn't set, we'll fall back to the existing Workers AI code:
+In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it is set, we can generate text using the Anthropic SDK. If it is not set, we'll fall back to the existing Workers AI code:
 
 ```js
 import Anthropic from '@anthropic-ai/sdk';
