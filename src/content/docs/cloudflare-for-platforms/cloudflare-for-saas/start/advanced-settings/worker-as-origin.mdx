@@ -46,13 +46,17 @@ You do not need to add individual Worker routes for each custom hostname. The wi
 
      This pattern routes all traffic entering your zone to the Worker, including requests from custom hostnames (for example, `mystore.customer.com`) and requests to your own subdomains (for example, `app.saasprovider.com`).
 
-   - **Route only custom hostname traffic to the Worker**:
+   - **Route all but specific routes to worker**:
      - **Route**: `*/*`
      - **Worker**: Select the Worker used for your SaaS application.
      - Add a second route for your zone's own hostnames with **Worker** set to **None** to exclude them.
 
      For example, if your zone is `saasprovider.com` and you want `api.saasprovider.com` to bypass the Worker, create an additional route `api.saasprovider.com/*` with no Worker assigned. More specific routes take precedence over wildcard routes.
 
+    - **Route only custom hostname traffic to the Worker**:
+     - **Route**: `vanity.customer.com`
+     - **Worker**: Select the Worker used for your SaaS application.
+     - Add a second route for your zone's own hostnames with **Worker** set to **None** to exclude them.
 5. Click **Save**.
 
 ---
