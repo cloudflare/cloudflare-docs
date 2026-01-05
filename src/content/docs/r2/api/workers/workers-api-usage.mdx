@@ -125,7 +125,7 @@ export default class extends WorkerEntrypoint<Env> {
 
         // When no body is present, preconditions have failed
         return new Response("body" in object ? object.body : undefined, {
-          status: "body" in object ? 200 : 412,
+          status: "body" in object ? 200 : 304,
           headers,
         });
       }
