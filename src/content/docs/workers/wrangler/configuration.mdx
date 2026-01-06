@@ -416,13 +416,16 @@ watch_dir = "build_watch_dir"
 ## Limits
 
 You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#example-pricing-standard-usage-model).
-Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit
-can be set to a maximum of 300,000 milliseconds (5 minutes).
+Limits are only enforced when deployed to Cloudflare's network, not in local development.
 
 <Render file="isolate-cpu-flexibility" product="workers" /> <br />
 
 - `cpu_ms` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum CPU time allowed per invocation, in milliseconds.
+  - The limit can be set to a maximum of 300,000 milliseconds (5 minutes).
+
+- `subrequests` <Type text="number" /> <MetaInfo text="optional" />
+  - The maximum allowed number of fetch requests per invocation.
 
 Example:
 
@@ -431,6 +434,7 @@ Example:
 ```toml title="wrangler.toml"
 [limits]
 cpu_ms = 100
+subrequests = 100
 ```
 
 </WranglerConfig>
