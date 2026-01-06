@@ -341,16 +341,23 @@ To pin applications to a WAN port:
 			</>
 		) : (
 			<>
-				<Markdown
-			text={`
-				1. Go to the **Connector on-ramps** page.
-				`}
+			<Markdown
+				text={`
+					1. Go to the **Appliances** page.
+					`}
 				inline={false}
-			/>
-				<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
+				/>
+					<DashButton url="/?to=/:account/magic-wan/mconn-onramp" buttonName="Appliances" />
+
+					<Markdown
+				text={`
+					2. Go to **Profiles**.
+					`}
+				inline={false}
+				/>
 				<Markdown
 			text={`
-				2. Select your Connector > **Edit**.
+				3. Select your Connector > **Edit**.
 			`}
 			inline={false}
 			/>
