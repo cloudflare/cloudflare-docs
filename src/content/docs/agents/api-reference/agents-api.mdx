@@ -596,6 +596,57 @@ Visit the [state management API documentation](/agents/api-reference/store-and-s
 
 :::
 
+#### SQL error handling
+
+When a SQL query fails, the Agents SDK throws a `SqlError` that is passed to your `onError` method. The `SqlError` class provides access to the failed query, making it easier to debug and handle SQL-specific errors.
+
+```ts
+// Error class for SQL execution failures
+class SqlError extends Error {
+	// The SQL query that failed
+	readonly query: string;
+
+	constructor(query: string, cause: unknown);
+}
+```
+
+<TypeScriptExample>
+
+```ts
+export class YourAgent extends Agent {
+	// Override onError to handle SQL errors
+	onError(error: unknown): Error {
+		// Check if the error is a SQL error
+		if (error instanceof SqlError) {
+			console.error(`SQL query failed: ${error.query}`);
+			console.error(`Error details:`, error.cause);
+
+			// You can handle specific SQL errors differently
+			return new Error(`Database operation failed: ${error.message}`);
+		}
+
+		// Handle other errors
+		return error instanceof Error ? error : new Error(String(error));
+	}
+
+	async getUserData(userId: string) {
+		// SQL errors are automatically caught and passed to onError
+		const users = this.sql<User>`
+			SELECT * FROM users WHERE id = ${userId}
+		`;
+		return users[0];
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `SqlError` class includes:
+
+- `query`: The SQL query string that failed
+- `cause`: The underlying error that caused the SQL query to fail
+- `message`: A formatted error message combining the cause
+
 ### MCP Client API
 
 The Agents SDK allows your Agent to act as an MCP (Model Context Protocol) client, connecting to remote MCP servers and using their tools, resources, and prompts.
