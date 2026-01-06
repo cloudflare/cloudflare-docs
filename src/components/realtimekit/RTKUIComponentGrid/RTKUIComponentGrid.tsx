@@ -1,246 +1,287 @@
 import { useState, useMemo } from "react";
 import RTKUIComponent from "../RTKUIComponent/RTKUIComponent";
 
+import rtkAvatar from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-avatar.svg";
+import rtkAudioVisualizer from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-audio-visualizer.svg";
+import rtkButton from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-button.svg";
+import rtkClock from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-clock.svg";
+import rtkHeader from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-header.svg";
+import rtkLogo from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-logo.svg";
+import rtkMeetingTitle from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-meeting-title.svg";
+import rtkRecordingIndicator from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-recording-indicator.svg";
+import rtkSpinner from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-spinner.svg";
+import rtkSwitch from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-switch.svg";
+import rtkTooltip from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-tooltip.svg";
+
+import rtkControlbar from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-controlbar.svg";
+import rtkControlbarButton from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-controlbar-button.svg";
+import rtkDialog from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-dialog.svg";
+import rtkEmojiPicker from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-emoji-picker.svg";
+import rtkGridPagination from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-grid-pagination.svg";
+import rtkMenu from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-menu.svg";
+import rtkNameTag from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-name-tag.svg";
+import rtkNotification from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-notification.svg";
+import rtkParticipantCount from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-participant-count.svg";
+import rtkParticipantTile from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-participant-tile.svg";
+import rtkPluginMain from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-plugin-main.svg";
+
+import rtkChat from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-chat.svg";
+import rtkGrid from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-grid.svg";
+import rtkImageViewer from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-image-viewer.svg";
+import rtkLeaveMeeting from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-leave-meeting.svg";
+import rtkMixedGrid from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-mixed-grid.svg";
+import rtkParticipants from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-participants.svg";
+import rtkParticipantsAudio from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-participants-audio.svg";
+import rtkPlugins from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-plugins.svg";
+import rtkPolls from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-polls.svg";
+import rtkScreenshareView from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-screenshare-view.svg";
+import rtkSettings from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-settings.svg";
+import rtkSettingsAudio from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-settings-audio.svg";
+import rtkSettingsVideo from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-settings-video.svg";
+import rtkSidebar from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-sidebar.svg";
+import rtkSimpleGrid from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-simple-grid.svg";
+import rtkSpotlightGrid from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-spotlight-grid.svg";
+
+import rtkEndedScreen from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-ended-screen.svg";
+import rtkIdleScreen from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-idle-screen.svg";
+import rtkMeeting from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-meeting.svg";
+import rtkSetupScreen from "../../../assets/images/realtime/realtimekit/web/components-gallery/rtk-setup-screen.svg";
+
 const RTKUIComponentGrid = () => {
 	const [searchTerm, setSearchTerm] = useState("");
-	const imagePath = (fileName: string) => {
-		return `~/assets/images/realtime/realtimekit/web/components-gallery/${fileName}`;
-	};
 	const basicComponents = [
 		{
 			id: "rtk-avatar",
 			name: "Avatar",
-			imagePath: imagePath("rtk-avatar.svg"),
+			imagePath: rtkAvatar.src,
 			componentName: "rtk-avatar",
 			tags: ["participant", "tile", "grid"],
 		},
 		{
 			id: "rtk-audio-visualizer",
 			name: "Audio Visualizer",
-			imagePath: imagePath("rtk-audio-visualizer.svg"),
+			imagePath: rtkAudioVisualizer.src,
 			componentName: "rtk-audio-visualizer",
 			tags: ["participant", "audio", "visualizer", "grid"],
 		},
 		{
 			id: "rtk-button",
 			name: "Button",
-			imagePath: imagePath("rtk-button.svg"),
+			imagePath: rtkButton.src,
 			componentName: "rtk-button",
 			tags: ["button", "controlbar", "controlbar-button"],
 		},
 		{
 			id: "rtk-clock",
 			name: "Clock",
-			imagePath: imagePath("rtk-clock.svg"),
+			imagePath: rtkClock.src,
 			componentName: "rtk-clock",
 			tags: ["clock", "header", "sidebar"],
 		},
 		{
 			id: "rtk-header",
 			name: "Header",
-			imagePath: imagePath("rtk-header.svg"),
+			imagePath: rtkHeader.src,
 			componentName: "rtk-header",
 			tags: ["header", "sidebar"],
 		},
 		{
 			id: "rtk-logo",
 			name: "Logo",
-			imagePath: imagePath("rtk-logo.svg"),
+			imagePath: rtkLogo.src,
 			componentName: "rtk-logo",
 			tags: ["logo", "header", "sidebar"],
 		},
 		{
 			id: "rtk-meeting-title",
 			name: "Meeting Title",
-			imagePath: imagePath("rtk-meeting-title.svg"),
+			imagePath: rtkMeetingTitle.src,
 			componentName: "rtk-meeting-title",
 			tags: ["meeting-title", "header", "sidebar"],
 		},
 		{
 			id: "rtk-recording-indicator",
 			name: "Recording Indicator",
-			imagePath: imagePath("rtk-recording-indicator.svg"),
+			imagePath: rtkRecordingIndicator.src,
 			componentName: "rtk-recording-indicator",
 			tags: ["recording", "indicator", "header", "sidebar", "controlbar"],
 		},
 		{
 			id: "rtk-spinner",
 			name: "Spinner",
-			imagePath: imagePath("rtk-spinner.svg"),
+			imagePath: rtkSpinner.src,
 			componentName: "rtk-spinner",
 			tags: ["spinner", "controlbar", "controlbar-button"],
 		},
 		{
 			id: "rtk-switch",
 			name: "Switch",
-			imagePath: imagePath("rtk-switch.svg"),
+			imagePath: rtkSwitch.src,
 			componentName: "rtk-switch",
 			tags: ["switch", "controlbar", "button"],
 		},
 		{
 			id: "rtk-tooltip",
 			name: "Tooltip",
-			imagePath: imagePath("rtk-tooltip.svg"),
+			imagePath: rtkTooltip.src,
 			componentName: "rtk-tooltip",
 			tags: ["tooltip", "controlbar", "button"],
 		},
 	];
-
 	const uiComponents = [
 		{
 			id: "rtk-controlbar",
 			name: "Control Bar",
-			imagePath: imagePath("rtk-controlbar.svg"),
+			imagePath: rtkControlbar.src,
 			componentName: "rtk-controlbar",
 			tags: ["controlbar", "button"],
 		},
 		{
 			id: "rtk-controlbar-button",
 			name: "Control Bar Button",
-			imagePath: imagePath("rtk-controlbar-button.svg"),
+			imagePath: rtkControlbarButton.src,
 			componentName: "rtk-controlbar-button",
 			tags: ["controlbar", "button"],
 		},
 		{
 			id: "rtk-dialog",
 			name: "Dialog",
-			imagePath: imagePath("rtk-dialog.svg"),
+			imagePath: rtkDialog.src,
 			componentName: "rtk-dialog",
 			tags: ["dialog", "modal", "popup"],
 		},
 		{
 			id: "rtk-emoji-picker",
 			name: "Emoji Picker",
-			imagePath: imagePath("rtk-emoji-picker.svg"),
+			imagePath: rtkEmojiPicker.src,
 			componentName: "rtk-emoji-picker",
 			tags: ["emoji-picker", "sidebar", "chat", "message"],
 		},
 		{
 			id: "rtk-grid-pagination",
 			name: "Grid Pagination",
-			imagePath: imagePath("rtk-grid-pagination.svg"),
+			imagePath: rtkGridPagination.src,
 			componentName: "rtk-grid-pagination",
 			tags: ["pagination", "grid", "participant", "tile", "header"],
 		},
 		{
 			id: "rtk-menu",
 			name: "Menu",
-			imagePath: imagePath("rtk-menu.svg"),
+			imagePath: rtkMenu.src,
 			componentName: "rtk-menu",
 			tags: ["menu", "sidebar", "controlbar", "button"],
 		},
 		{
 			id: "rtk-name-tag",
 			name: "Name Tag",
-			imagePath: imagePath("rtk-name-tag.svg"),
+			imagePath: rtkNameTag.src,
 			componentName: "rtk-name-tag",
 			tags: ["name-tag", "participant", "tile", "grid"],
 		},
 		{
 			id: "rtk-notification",
 			name: "Notification",
-			imagePath: imagePath("rtk-notification.svg"),
+			imagePath: rtkNotification.src,
 			componentName: "rtk-notification",
 			tags: ["notification", "sidebar", "popup", "chat"],
 		},
 		{
 			id: "rtk-participant-count",
 			name: "Participant Count",
-			imagePath: imagePath("rtk-participant-count.svg"),
+			imagePath: rtkParticipantCount.src,
 			componentName: "rtk-participant-count",
 			tags: ["participant-count", "header", "sidebar"],
 		},
 		{
 			id: "rtk-participant-tile",
 			name: "Participant Tile",
-			imagePath: imagePath("rtk-participant-tile.svg"),
+			imagePath: rtkParticipantTile.src,
 			componentName: "rtk-participant-tile",
 			tags: ["participant-tile", "participant", "tile", "grid"],
 		},
 		{
 			id: "rtk-plugin-main",
 			name: "Plugin Main View",
-			imagePath: imagePath("rtk-plugin-main.svg"),
+			imagePath: rtkPluginMain.src,
 			componentName: "rtk-plugin-main",
 			tags: ["plugin-main", "plugin", "sidebar", "controlbar", "button"],
 		},
 	];
-
 	const compositeComponents = [
 		{
 			id: "rtk-chat",
 			name: "Chat",
-			imagePath: imagePath("rtk-chat.svg"),
+			imagePath: rtkChat.src,
 			componentName: "rtk-chat",
 			tags: ["chat", "message", "sidebar"],
 		},
 		{
 			id: "rtk-grid",
 			name: "Grid",
-			imagePath: imagePath("rtk-grid.svg"),
+			imagePath: rtkGrid.src,
 			componentName: "rtk-grid",
 			tags: ["grid", "participant", "tile", "layout"],
 		},
 		{
 			id: "rtk-image-viewer",
 			name: "Image Viewer",
-			imagePath: imagePath("rtk-image-viewer.svg"),
+			imagePath: rtkImageViewer.src,
 			componentName: "rtk-image-viewer",
 			tags: ["image-viewer", "media", "chat", "sidebar"],
 		},
 		{
 			id: "rtk-leave-meeting",
 			name: "Leave Meeting",
-			imagePath: imagePath("rtk-leave-meeting.svg"),
+			imagePath: rtkLeaveMeeting.src,
 			componentName: "rtk-leave-meeting",
 			tags: ["leave", "dialog", "modal", "controlbar", "button", "end"],
 		},
 		{
 			id: "rtk-mixed-grid",
 			name: "Mixed Grid",
-			imagePath: imagePath("rtk-mixed-grid.svg"),
+			imagePath: rtkMixedGrid.src,
 			componentName: "rtk-mixed-grid",
 			tags: ["mixed", "grid", "participant", "tile", "layout"],
 		},
 		{
 			id: "rtk-participants",
 			name: "Participants",
-			imagePath: imagePath("rtk-participants.svg"),
+			imagePath: rtkParticipants.src,
 			componentName: "rtk-participants",
 			tags: ["participants", "sidebar", "list", "participant", "tile"],
 		},
 		{
 			id: "rtk-participants-audio",
 			name: "Participants Audio",
-			imagePath: imagePath("rtk-participants-audio.svg"),
+			imagePath: rtkParticipantsAudio.src,
 			componentName: "rtk-participants-audio",
 			tags: ["participants-audio", "audio", "sidebar", "participant", "list"],
 		},
 		{
 			id: "rtk-plugins",
 			name: "Plugins",
-			imagePath: imagePath("rtk-plugins.svg"),
+			imagePath: rtkPlugins.src,
 			componentName: "rtk-plugins",
 			tags: ["plugins", "sidebar", "list", "plugin"],
 		},
 		{
 			id: "rtk-polls",
 			name: "Polls",
-			imagePath: imagePath("rtk-polls.svg"),
+			imagePath: rtkPolls.src,
 			componentName: "rtk-polls",
 			tags: ["polls", "sidebar", "voting", "interactive"],
 		},
 		{
 			id: "rtk-screenshare-view",
 			name: "Screenshare View",
-			imagePath: imagePath("rtk-screenshare-view.svg"),
+			imagePath: rtkScreenshareView.src,
 			componentName: "rtk-screenshare-view",
 			tags: ["screenshare-view", "screenshare", "media", "grid"],
 		},
 		{
 			id: "rtk-settings",
 			name: "Settings",
-			imagePath: imagePath("rtk-settings.svg"),
+			imagePath: rtkSettings.src,
 			componentName: "rtk-settings",
 			tags: [
 				"settings",
@@ -254,7 +295,7 @@ const RTKUIComponentGrid = () => {
 		{
 			id: "rtk-settings-audio",
 			name: "Settings Audio",
-			imagePath: imagePath("rtk-settings-audio.svg"),
+			imagePath: rtkSettingsAudio.src,
 			componentName: "rtk-settings-audio",
 			tags: [
 				"settings-audio",
@@ -269,7 +310,7 @@ const RTKUIComponentGrid = () => {
 		{
 			id: "rtk-settings-video",
 			name: "Settings Video",
-			imagePath: imagePath("rtk-settings-video.svg"),
+			imagePath: rtkSettingsVideo.src,
 			componentName: "rtk-settings-video",
 			tags: [
 				"settings-video",
@@ -284,52 +325,51 @@ const RTKUIComponentGrid = () => {
 		{
 			id: "rtk-sidebar",
 			name: "Sidebar",
-			imagePath: imagePath("rtk-sidebar.svg"),
+			imagePath: rtkSidebar.src,
 			componentName: "rtk-sidebar",
 			tags: ["sidebar", "layout", "navigation", "panel"],
 		},
 		{
 			id: "rtk-simple-grid",
 			name: "Simple Grid",
-			imagePath: imagePath("rtk-simple-grid.svg"),
+			imagePath: rtkSimpleGrid.src,
 			componentName: "rtk-simple-grid",
 			tags: ["simple", "grid", "participant", "tile", "layout", "basic"],
 		},
 		{
 			id: "rtk-spotlight-grid",
 			name: "Spotlight Grid",
-			imagePath: imagePath("rtk-spotlight-grid.svg"),
+			imagePath: rtkSpotlightGrid.src,
 			componentName: "rtk-spotlight-grid",
 			tags: ["spotlight", "grid", "participant", "tile", "layout", "pinned"],
 		},
 	];
-
 	const screenComponents = [
 		{
 			id: "rtk-ended-screen",
 			name: "Ended Screen",
-			imagePath: imagePath("rtk-ended-screen.svg"),
+			imagePath: rtkEndedScreen.src,
 			componentName: "rtk-ended-screen",
 			tags: ["ended", "screen", "meeting", "end", "leave"],
 		},
 		{
 			id: "rtk-idle-screen",
 			name: "Idle Screen",
-			imagePath: imagePath("rtk-idle-screen.svg"),
+			imagePath: rtkIdleScreen.src,
 			componentName: "rtk-idle-screen",
 			tags: ["idle", "screen", "waiting", "lobby", "standby"],
 		},
 		{
 			id: "rtk-meeting",
 			name: "Meeting Screen",
-			imagePath: imagePath("rtk-meeting.svg"),
+			imagePath: rtkMeeting.src,
 			componentName: "rtk-meeting",
 			tags: ["meeting", "screen", "main", "active"],
 		},
 		{
 			id: "rtk-setup-screen",
 			name: "Setup Screen",
-			imagePath: imagePath("rtk-setup-screen.svg"),
+			imagePath: rtkSetupScreen.src,
 			componentName: "rtk-setup-screen",
 			tags: ["setup", "screen", "configuration", "preview"],
 		},
