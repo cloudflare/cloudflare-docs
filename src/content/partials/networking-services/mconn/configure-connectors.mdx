@@ -337,12 +337,15 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
   )
 }
 
+### Create a new profile
+
+You need to create a profile for your appliance before connecting it to the Internet.
+
+To create a profile:
+
 {/* WAN Tunnels section */}
 { props.dashName === "WAN Tunnels" && (
 	<>
-		<AnchorHeading title="Create a new profile" depth={3} />
-		<p>You need to create a profile for your appliance before connecting it to the Internet.</p>
-		<p>To create a profile:</p>
 		<ol>
 			<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
 			<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong>.</li>
@@ -355,9 +358,6 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 {/* Magic WAN section */}
 { props.dashName !== "WAN Tunnels" && (
 	<>
-		<AnchorHeading title="Add a Connector on-ramp" depth={3} />
-		<p>You need to add your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to your Cloudflare dashboard and configure its settings before connecting it to the Internet.</p>
-		<p>To add a { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:</p>
 		<ol>
 			<li>Log in to the <a href="https://dash.cloudflare.com/">Cloudflare dashboard</a> and select your account.</li>
 			<li>Go to <strong>Networking</strong> &gt; <strong>Magic WAN</strong> &gt; <strong>Connector on-ramps (beta)</strong>.</li>
