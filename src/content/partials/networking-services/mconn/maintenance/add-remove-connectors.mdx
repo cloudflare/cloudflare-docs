@@ -9,6 +9,8 @@ When adding or removing Magic WAN Connectors, you need to be aware of the differ
 
 You can have more than one Magic WAN Connector in one profile if you initially enabled high availability during the configuration of the profile. If you did not enabled high availability, you need to delete the profile associated with a site before adding a new Magic WAN Connector.
 
+## Remove a profile
+
 { props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
@@ -38,7 +40,39 @@ You can have more than one Magic WAN Connector in one profile if you initially e
 	</>
 )
 }
-3. Find the Magic WAN Connector that you want to edit > select the three dots next to it > **Edit**.
-4. In **{props.dashName === "WAN Tunnels" ? "Appliances" : "Connectors"}**, remove the Magic WAN Connector associated with the on-ramp.
-5. Select **{props.dashName === "WAN Tunnels" ? "Add appliance" : "Add Connector"}** to add a different Magic WAN Connector to your on-ramp.
-6. Select **Save**.
+3. Find the profile that you want to edit > select the three dots next to it > **Delete**.
+
+## Remove a physical device
+
+To remove a Magic WAN Connector from your account:
+
+{ props.dashName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Appliances**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+<Markdown
+	text={`
+		1. Go to the **Appliances** page.
+		`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" buttonName="Appliances" />
+
+		<Markdown
+	text={`
+		2. Go to **Appliances**.
+		`}
+	inline={false}
+	/>
+	</>
+)
+}
+3. Find the Magic WAN Connector that you want to delete > select the three dots next to it > **Delete**.
