@@ -590,15 +590,15 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		{/* Instructions for Magic WAN */}
 		<Markdown
 	text={`
-		1. Go to Magic WAN's **Configuration** page.`}
+		1. Go to **Connectors** page.`}
 	inline={false}
 	/>
 
-   <DashButton url="/?to=/:account/magic-wan/configuration" />
+   <DashButton url="/?to=/:account/magic-wan/configuration" buttonName="Connectors" />
 
 		<Markdown
 	text={`
-		2. Go to **Connectors**.
+		2. Go to **Appliances** > **Appliances**.
 		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
 		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
@@ -832,10 +832,10 @@ inline={false}
 />
 2. After naming your site, select **Turn on high availability**.
 3. Select **Create and continue**.
-4. Select **Add {props.deviceTypeName}**.
-5. From the list, choose your first { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add {props.deviceTypeName}**.
-6. Back on the previous screen, select **Add secondary {props.deviceTypeName}**.
-7. From the list, choose your second { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add {props.deviceTypeName}**.
+4. Select **Add Appliance**.
+5. From the list, choose your first { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add Appliance**.
+6. Back on the previous screen, select **Add secondary appliance**.
+7. From the list, choose your second { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add Appliance**.
 8. Select **Continue** to create a WAN. If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
 9. To create a LAN, follow the steps mentioned above in [Create a LAN](#create-a-lan) up until step 4.
 10. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
