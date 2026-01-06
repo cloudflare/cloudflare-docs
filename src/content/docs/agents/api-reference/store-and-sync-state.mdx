@@ -229,6 +229,8 @@ Learn more about the zero-latency SQL storage that powers both Agents and Durabl
 
 The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/sqlite-storage-api/#sql-api): Durable Object SQL methods available on `this.ctx.storage.sql`. You can use the same SQL queries with the Agent's database, create tables, and query data, just as you would with Durable Objects or [D1](/d1/).
 
+When a SQL query fails, the error is automatically wrapped in a `SqlError` class and passed to your Agent's `onError` method. The `SqlError` class includes the `query` property, allowing you to inspect which SQL query failed. Refer to the [SQL error handling documentation](/agents/api-reference/agents-api/#sql-error-handling) to learn more about handling SQL errors.
+
 ### Use Agent state as model context
 
 You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/api-reference/using-ai-models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.

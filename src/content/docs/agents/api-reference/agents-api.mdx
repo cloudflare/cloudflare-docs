@@ -536,6 +536,55 @@ class Agent<Env, State = unknown> {
 }
 ```
 
+#### SQL error handling
+
+When a SQL query fails, the error is wrapped in a `SqlError` and passed to your Agent's [`onError` method](/agents/api-reference/agents-api/#websocket-api). The `SqlError` class provides access to the failed query, making it easier to debug and handle SQL-related errors.
+
+```ts
+// Error class for SQL execution failures
+class SqlError extends Error {
+	// The SQL query that failed
+	readonly query: string;
+
+	constructor(query: string, cause: unknown);
+}
+```
+
+You can handle SQL errors specifically in your `onError` method by checking if the error is an instance of `SqlError`:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, SqlError } from "agents";
+
+export class YourAgent extends Agent {
+	// Handle SQL errors specifically
+	async onError(connection: Connection | unknown, error?: unknown) {
+		const err = error || connection;
+
+		if (err instanceof SqlError) {
+			// SQL-specific error handling
+			console.error("SQL query failed:", err.query);
+			console.error("Error:", err.message);
+			// Optionally access the original cause
+			console.error("Cause:", err.cause);
+		} else {
+			// Handle other errors
+			console.error("Error:", err);
+		}
+
+		throw err;
+	}
+
+	async someMethod() {
+		// SQL errors are automatically caught and passed to onError
+		const users = this.sql`SELECT * FROM users WHERE invalid_syntax`;
+	}
+}
+```
+
+</TypeScriptExample>
+
 <TypeScriptExample>
 
 ```ts

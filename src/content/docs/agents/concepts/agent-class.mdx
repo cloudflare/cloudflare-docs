@@ -411,10 +411,20 @@ function someUtilityFunction() {
 
 `Agent` extends `Server`'s `onError` so it can be used to handle errors that are not necessarily WebSocket errors. It is called with a `Connection` or `unknown` error.
 
+When SQL queries fail, the error is wrapped in a `SqlError` class and passed to this method, allowing you to distinguish SQL errors from other error types and access the failed query.
+
 ```ts
+import { Agent, SqlError } from "agents";
+
 class MyAgent extends Agent {
   onError(connectionOrError: Connection | unknown, error?: unknown) {
-    if (error) {
+    const err = error || connectionOrError;
+
+    if (err instanceof SqlError) {
+      // SQL query error - access the failed query
+      console.error("SQL query failed:", err.query);
+      console.error("Error:", err.message);
+    } else if (error) {
       // WebSocket connection error
       console.error("Connection error:", error);
     } else {
@@ -423,7 +433,7 @@ class MyAgent extends Agent {
     }
 
     // Optionally throw to propagate the error
-    throw connectionOrError;
+    throw err;
   }
 }
 ```
