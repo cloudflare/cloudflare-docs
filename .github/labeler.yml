@@ -1,476 +1,384 @@
+product:changelog:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/**
 product:1.1.1.1:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/1.1.1.1/**
-product:access:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/access/**
+          - src/content/docs/1.1.1.1/**
 product:agents:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/agents/**
-        - src/content/changelog/agents/**
+          - src/content/docs/agents/**
 product:ai-crawl-control:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/ai-crawl-control/**
-        - src/content/changelog/ai-crawl-control/**
+          - src/content/docs/ai-crawl-control/**
 product:ai-gateway:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/ai-gateway/**
-        - src/content/changelog/ai-gateway/**
+          - src/content/docs/ai-gateway/**
 product:ai-search:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/ai-search/**
-        - src/content/changelog/ai-search/**
+          - src/content/docs/ai-search/**
 product:analytics:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/analytics/**
-        - src/content/changelog/analytics/**
+          - src/content/docs/analytics/**
 product:api-shield:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/api-shield/**
-        - src/content/changelog/api-shield/**
+          - src/content/docs/api-shield/**
 product:argo-smart-routing:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/argo-smart-routing/**
-product:audit-logs:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/audit-logs/**
+          - src/content/docs/argo-smart-routing/**
 product:automatic-platform-optimization:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/automatic-platform-optimization/**
+          - src/content/docs/automatic-platform-optimization/**
 product:billing:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/billing/**
+          - src/content/docs/billing/**
 product:bots:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/bots/**
-product:browser-isolation:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/browser-isolation/**
+          - src/content/docs/bots/**
 product:browser-rendering:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/browser-rendering/**
-        - src/content/changelog/browser-rendering/**
-        - src/content/changelog/browser-renchangelog/**
+          - src/content/docs/browser-rendering/**
 product:byoip:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/byoip/**
+          - src/content/docs/byoip/**
 product:cache:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/cache/**
-        - src/content/changelog/cache/**
-product:casb:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/casb/**
+          - src/content/docs/cache/**
 product:china-network:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/china-network/**
+          - src/content/docs/china-network/**
 product:client-ip-geolocation:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/client-ip-geolocation/**
+          - src/content/docs/client-ip-geolocation/**
 product:cloudflare-challenges:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/cloudflare-challenges/**
+          - src/content/docs/cloudflare-challenges/**
 product:cloudflare-for-platforms:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/cloudflare-for-platforms/**
+          - src/content/docs/cloudflare-for-platforms/**
 product:cloudflare-one:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/cloudflare-one/**
-        - src/content/changelog/cloudflare-one/**
-product:cloudflare-tunnel:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/cloudflare-tunnel/**
+          - src/content/docs/cloudflare-one/**
 product:constellation:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/constellation/**
+          - src/content/docs/constellation/**
 product:containers:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/containers/**
-        - src/content/changelog/containers/**
+          - src/content/docs/containers/**
 product:d1:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/d1/**
-        - src/content/changelog/d1/**
+          - src/content/docs/d1/**
 product:data-localization:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/data-localization/**
+          - src/content/docs/data-localization/**
 product:ddos-protection:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/ddos-protection/**
-product:dex:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/dex/**
-product:dlp:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/dlp/**
+          - src/content/docs/ddos-protection/**
 product:dmarc-management:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/dmarc-management/**
+          - src/content/docs/dmarc-management/**
 product:dns:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/dns/**
-        - src/content/changelog/dns/**
+          - src/content/docs/dns/**
 product:durable-objects:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/durable-objects/**
-        - src/content/changelog/durable-objects/**
+          - src/content/docs/durable-objects/**
 product:email-routing:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/email-routing/**
-        - src/content/changelog/email-routing/**
+          - src/content/docs/email-routing/**
 product:email-security:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/email-security/**
-product:email-security-cf1:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/email-security-cf1/**
+          - src/content/docs/email-security/**
 product:firewall:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/firewall/**
+          - src/content/docs/firewall/**
 product:fundamentals:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/fundamentals/**
-        - src/content/changelog/fundamentals/**
-product:gateway:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/gateway/**
+          - src/content/docs/fundamentals/**
 product:google-tag-gateway:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/google-tag-gateway/**
+          - src/content/docs/google-tag-gateway/**
 product:health-checks:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/health-checks/**
+          - src/content/docs/health-checks/**
 product:hyperdrive:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/hyperdrive/**
-        - src/content/changelog/hyperdrive/**
+          - src/content/docs/hyperdrive/**
 product:images:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/images/**
-        - src/content/changelog/images/**
+          - src/content/docs/images/**
 product:key-transparency:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/key-transparency/**
+          - src/content/docs/key-transparency/**
 product:kv:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/kv/**
-        - src/content/changelog/kv/**
+          - src/content/docs/kv/**
 product:learning-paths:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/learning-paths/**
+          - src/content/docs/learning-paths/**
 product:load-balancing:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/load-balancing/**
-        - src/content/changelog/load-balancing/**
+          - src/content/docs/load-balancing/**
 product:log-explorer:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/log-explorer/**
-        - src/content/changelog/log-explorer/**
+          - src/content/docs/log-explorer/**
 product:logs:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/logs/**
-        - src/content/changelog/logs/**
+          - src/content/docs/logs/**
 product:magic-cloud-networking:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/magic-cloud-networking/**
-        - src/content/changelog/magic-cloud-networking/**
+          - src/content/docs/magic-cloud-networking/**
 product:magic-firewall:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/magic-firewall/**
-        - src/content/changelog/magic-firewall/**
+          - src/content/docs/magic-firewall/**
 product:magic-network-monitoring:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/magic-network-monitoring/**
-        - src/content/changelog/magic-network-monitoring/**
+          - src/content/docs/magic-network-monitoring/**
 product:magic-transit:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/magic-transit/**
-        - src/content/changelog/magic-transit/**
+          - src/content/docs/magic-transit/**
 product:magic-wan:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/magic-wan/**
-        - src/content/changelog/magic-wan/**
+          - src/content/docs/magic-wan/**
 product:migration-guides:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/migration-guides/**
+          - src/content/docs/migration-guides/**
 product:moq:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/moq/**
+          - src/content/docs/moq/**
 product:network:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/network/**
+          - src/content/docs/network/**
 product:network-error-logging:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/network-error-logging/**
+          - src/content/docs/network-error-logging/**
 product:network-interconnect:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/network-interconnect/**
-        - src/content/changelog/network-interconnect/**
+          - src/content/docs/network-interconnect/**
 product:notifications:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/notifications/**
+          - src/content/docs/notifications/**
 product:page-shield:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/page-shield/**
+          - src/content/docs/page-shield/**
 product:pages:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/pages/**
-        - src/content/changelog/pages/**
+          - src/content/docs/pages/**
 product:pipelines:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/pipelines/**
-        - src/content/changelog/pipelines/**
+          - src/content/docs/pipelines/**
 product:privacy-gateway:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/privacy-gateway/**
+          - src/content/docs/privacy-gateway/**
 product:pulumi:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/pulumi/**
+          - src/content/docs/pulumi/**
 product:queues:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/queues/**
-        - src/content/changelog/queues/**
+          - src/content/docs/queues/**
 product:r2:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/r2/**
-        - src/content/changelog/r2/**
+          - src/content/docs/r2/**
 product:r2-sql:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/r2-sql/**
-        - src/content/changelog/r2-sql/**
+          - src/content/docs/r2-sql/**
 product:radar:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/radar/**
-        - src/content/changelog/radar/**
+          - src/content/docs/radar/**
 product:randomness-beacon:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/randomness-beacon/**
+          - src/content/docs/randomness-beacon/**
 product:realtime:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/realtime/**
+          - src/content/docs/realtime/**
 product:reference-architecture:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/reference-architecture/**
+          - src/content/docs/reference-architecture/**
 product:registrar:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/registrar/**
-        - src/content/changelog/registrar/**
-product:risk-score:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/risk-score/**
+          - src/content/docs/registrar/**
 product:rules:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/rules/**
-        - src/content/changelog/rules/**
+          - src/content/docs/rules/**
 product:ruleset-engine:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/ruleset-engine/**
+          - src/content/docs/ruleset-engine/**
 product:sandbox:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/sandbox/**
+          - src/content/docs/sandbox/**
 product:secrets-store:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/secrets-store/**
+          - src/content/docs/secrets-store/**
 product:security:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/security/**
+          - src/content/docs/security/**
 product:security-center:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/security-center/**
-        - src/content/changelog/security-center/**
+          - src/content/docs/security-center/**
 product:smart-shield:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/smart-shield/**
+          - src/content/docs/smart-shield/**
 product:spectrum:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/spectrum/**
+          - src/content/docs/spectrum/**
 product:speed:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/speed/**
+          - src/content/docs/speed/**
 product:ssl:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/ssl/**
-        - src/content/changelog/ssl/**
+          - src/content/docs/ssl/**
 product:stream:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/stream/**
-        - src/content/changelog/stream/**
+          - src/content/docs/stream/**
 product:style-guide:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/style-guide/**
+          - src/content/docs/style-guide/**
 product:support:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/support/**
+          - src/content/docs/support/**
 product:tenant:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/tenant/**
+          - src/content/docs/tenant/**
 product:terraform:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/terraform/**
-        - src/content/changelog/terraform/**
+          - src/content/docs/terraform/**
 product:time-services:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/time-services/**
+          - src/content/docs/time-services/**
 product:turnstile:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/turnstile/**
+          - src/content/docs/turnstile/**
 product:use-cases:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/use-cases/**
+          - src/content/docs/use-cases/**
 product:vectorize:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/vectorize/**
-        - src/content/changelog/vectorize/**
+          - src/content/docs/vectorize/**
 product:version-management:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/version-management/**
+          - src/content/docs/version-management/**
 product:waf:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/waf/**
-        - src/content/changelog/waf/**
+          - src/content/docs/waf/**
 product:waiting-room:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/waiting-room/**
+          - src/content/docs/waiting-room/**
 product:warp-client:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/warp-client/**
+          - src/content/docs/warp-client/**
 product:web-analytics:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/web-analytics/**
-        - src/content/changelog/web-analytics/**
+          - src/content/docs/web-analytics/**
 product:web3:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/web3/**
+          - src/content/docs/web3/**
 product:workers:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/workers/**
-        - src/content/changelog/workers/**
+          - src/content/docs/workers/**
 product:workers-ai:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/workers-ai/**
-        - src/content/changelog/workers-ai/**
-product:workers-for-platforms:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/workers-for-platforms/**
+          - src/content/docs/workers-ai/**
 product:workers-vpc:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/workers-vpc/**
-        - src/content/changelog/workers-vpc/**
+          - src/content/docs/workers-vpc/**
 product:workflows:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/workflows/**
-        - src/content/changelog/workflows/**
+          - src/content/docs/workflows/**
 product:zaraz:
   - changed-files:
       - any-glob-to-any-file:
-        - src/content/docs/zaraz/**
-        - src/content/changelog/zaraz/**
-product:zero-trust-warp:
-  - changed-files:
-      - any-glob-to-any-file:
-          - src/content/changelog/zero-trust-warp/**
+          - src/content/docs/zaraz/**
