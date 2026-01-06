@@ -8,7 +8,8 @@ params:
   - routePrioritization
   - chooseWeights
   - productGatewayOrEgress
-  - dashRoutesPath?
+  - dashRoutesPath
+  - dashWanPath
   - cfTunnelURL?
   - sitesURL?
   - addTunnelsURL?
@@ -430,10 +431,9 @@ To set this ASN:
 	<>
 		<Markdown
 			text={`
-			1. Go to ${props.productName}'s <a href="${props.dashRoutesPath}">**Routes**</a> page.
-			2. Go to **WAN configuration**.
-			3. In **CF Account ASN**, enter Cloudflare's ASN.
-			4. Select **Update**.
+			1. Go to ${props.productName}'s <a href="${props.dashWanPath}">**WAN configuration**</a> page.
+			2. In **CF Account ASN**, enter Cloudflare's ASN.
+			3. Select **Update**.
 			`}
 			inline={false}
 		/>
