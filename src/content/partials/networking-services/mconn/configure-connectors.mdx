@@ -640,11 +640,11 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		<Markdown
 		text={`
 		1. Connect ${props.productName} to a DHCP port with access to the Internet.
-		2. ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
+		2. [Create a new profile](#create-a-new-profile) in the dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
 		4. [Activate](#activate-appliance) and power on your ${props.productName}.
 		5. Wait 60 seconds.
-		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
+		6. Make changes to the [WAN settings](#create-a-wan) in the dashboard to a static IP set up.
 		7. Wait 60 seconds again.
 		8. ${props.productName} will go offline. This is normal and expected behavior.
 		9. Adjust your physical connections as required to match the static configuration.
@@ -665,11 +665,11 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		<Markdown
 		text={`
 		1. Connect the machine where you installed the VM with ${props.productNameVirtual} to a DHCP port with access to the Internet.
-		2. ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
+		2. [Create a new profile](#create-a-new-profile) in the dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
 		4. [Activate](#activate-appliance) and boot your ${props.productNameVirtual}.
 		5. Wait 60 seconds.
-		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
+		6. Make changes to the [WAN settings](#create-a-wan) in the dashboard to a static IP set up.
 		7. Wait 60 seconds again.
 		8. Modify your [Port Groups](#configure-a-virtual-machine) as needed to change the source from which the WAN port obtains its IP address.
 		9. Reboot your virtual machine.
@@ -825,7 +825,7 @@ To set up a high availability configuration:
 
 <Markdown
 text={`
-1. Follow the steps in ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} up until step 4.
+1. Follow the steps in [Create a new profile](#create-a-new-profile) up until step 4.
 `}
 inline={false}
 />
