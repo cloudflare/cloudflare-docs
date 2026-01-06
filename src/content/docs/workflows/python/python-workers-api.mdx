@@ -79,7 +79,9 @@ async def run(self, event, step):
 
 ## Rollback (Saga Pattern)
 
-The Python SDK supports the [saga pattern](https://microservices.io/patterns/data/saga.html) for distributed transactions using the `with_rollback` decorator. When a step fails, you can roll back previously completed steps by executing compensating actions (undo functions) in reverse order (LIFO - last-in, first-out).
+The Python SDK supports the [saga pattern](https://microservices.io/patterns/data/saga.html) for distributed transactions using the `with_rollback` decorator. When a workflow throws an uncaught error, you can automatically roll back previously completed steps by executing compensating actions (undo functions) in reverse order (LIFO - last-in, first-out).
+
+To enable automatic rollback, pass a `rollback` configuration when creating the workflow instance. When an uncaught error occurs, all registered undo functions will execute automatically before the workflow enters the errored state.
 
 ### step.with_rollback
 
@@ -92,49 +94,58 @@ The Python SDK supports the [saga pattern](https://microservices.io/patterns/dat
 * <code>@do_fn.undo(config=None)</code> - decorator to register an undo function for a `with_rollback` step.
   * `config` - optional separate config for the undo function. If not provided, inherits from the do step's config.
 
-### step.rollback_all
+### Enabling Rollback
 
-* <code>await step.rollback_all(error=None, *, continue_on_error=False)</code> - executes all registered undo functions in LIFO order.
-  * `error` - optional error to pass to each undo function.
-  * `continue_on_error` - if `True`, continue executing remaining undos after a failure and raise `ExceptionGroup` at end. Default: `False`.
-  * Each undo is wrapped in `step.do()` for durability and retry.
-  * By default, stops on first undo failure.
+Pass a `rollback` configuration when creating the workflow instance:
+
+```python
+instance = await self.env.MY_WORKFLOW.create(
+    params={"user_id": "123", "items": ["item1", "item2"]},
+    rollback={"continueOnError": True}  # Enable auto-rollback
+)
+```
+
+* `continueOnError` - if `True`, continue executing remaining undos after a failure and raise `ExceptionGroup` at end. Default: `False`.
 
 ### Example
 
 ```python
 class OrderWorkflow(WorkflowEntrypoint):
     async def run(self, event, step):
-        try:
-            @step.with_rollback("create order")
-            async def create_order():
-                return await env.DB.orders.insert({"user_id": event["payload"]["user_id"], "items": event["payload"]["items"]})
+        @step.with_rollback("create order")
+        async def create_order():
+            return await env.DB.orders.insert({"user_id": event["payload"]["user_id"], "items": event["payload"]["items"]})
 
-            @create_order.undo
-            async def undo_create_order(err, order):
-                await env.DB.orders.delete(order["id"])
+        @create_order.undo
+        async def undo_create_order(err, order):
+            await env.DB.orders.delete(order["id"])
 
-            order = await create_order()
+        order = await create_order()
 
-            @step.with_rollback("charge payment")
-            async def charge_payment():
-                return await env.STRIPE.charges.create(amount=order["total"], customer=event["payload"]["user_id"])
+        @step.with_rollback("charge payment")
+        async def charge_payment():
+            return await env.STRIPE.charges.create(amount=order["total"], customer=event["payload"]["user_id"])
 
-            @charge_payment.undo
-            async def undo_charge_payment(err, charge):
-                await env.STRIPE.refunds.create(charge=charge["id"])
+        @charge_payment.undo
+        async def undo_charge_payment(err, charge):
+            await env.STRIPE.refunds.create(charge=charge["id"])
 
-            await charge_payment()
+        await charge_payment()
 
-            @step.do("send confirmation")
-            async def send_confirmation():
-                await env.EMAIL.send(to=event["payload"]["email"], template="order-confirmed", order_id=order["id"])
+        # If this step throws, the undo functions above will run automatically
+        # (in reverse order) if the instance was created with rollback config enabled
+        @step.do("send confirmation")
+        async def send_confirmation():
+            await env.EMAIL.send(to=event["payload"]["email"], template="order-confirmed", order_id=order["id"])
 
-            await send_confirmation()
+        await send_confirmation()
 
-        except Exception as e:
-            await step.rollback_all(e)
-            raise
+
+# Creating the workflow instance with rollback enabled:
+# instance = await env.MY_WORKFLOW.create(
+#     params=order_params,
+#     rollback={"continueOnError": False}  # Stop on first undo failure
+# )
 ```
 
 ### `event` parameter

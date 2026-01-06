@@ -154,7 +154,9 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 
 ## Rollback (Saga Pattern)
 
-Workflows supports the [saga pattern](https://microservices.io/patterns/data/saga.html) for handling distributed transactions. When a step fails, you can roll back previously completed steps by executing compensating actions (undo functions) in reverse order (LIFO - last-in, first-out).
+Workflows supports the [saga pattern](https://microservices.io/patterns/data/saga.html) for handling distributed transactions. When a workflow throws an uncaught error, you can automatically roll back previously completed steps by executing compensating actions (undo functions) in reverse order (LIFO - last-in, first-out).
+
+To enable automatic rollback, pass a `rollback` configuration when creating the workflow instance. When an uncaught error occurs, all registered undo functions will execute automatically before the workflow enters the errored state.
 
 ### step.withRollback
 
@@ -163,25 +165,6 @@ Workflows supports the [saga pattern](https://microservices.io/patterns/data/sag
   - `name` - the name of the step.
   - `handler` - an object containing `do` and `undo` functions.
   - `config` (optional) - configuration for the step, optionally including separate `undoConfig` for the undo function.
-
-### step.rollbackAll
-
-{/* prettier-ignore */}
-- <code>step.rollbackAll(error?: unknown, options?: RollbackAllOptions): Promise&lt;void&gt;</code>
-  - `error` (optional) - the error that triggered the rollback, passed to each undo function.
-  - `options` (optional) - configuration options for the rollback behavior.
-  - Executes all registered undo functions in LIFO (last-in, first-out) order.
-  - Each undo is wrapped in `step.do()` for durability and retry.
-  - By default, stops on first undo failure. Use `continueOnError: true` to execute all undos and collect failures into an `AggregateError`.
-
-### RollbackAllOptions
-
-```ts
-export type RollbackAllOptions = {
-  /** If true, continue executing remaining undos after a failure and throw AggregateError at end. Default: false */
-  continueOnError?: boolean;
-};
-```
 
 ### RollbackHandler
 
@@ -200,6 +183,24 @@ export type RollbackStepConfig = WorkflowStepConfig & {
 };
 ```
 
+### RollbackConfig
+
+```ts
+export type RollbackConfig = {
+  /** If true, continue executing remaining undos after a failure and throw AggregateError at end. Default: false */
+  continueOnError?: boolean;
+};
+```
+
+Pass this configuration to `workflow.create()` to enable automatic rollback on uncaught errors:
+
+```ts
+let instance = await env.MY_WORKFLOW.create({
+  params: { userId: "123", items: ["item1", "item2"] },
+  rollback: { continueOnError: true }, // Enable auto-rollback
+});
+```
+
 ### Example
 
 <TypeScriptExample>
@@ -207,26 +208,29 @@ export type RollbackStepConfig = WorkflowStepConfig & {
 ```ts
 export class OrderWorkflow extends WorkflowEntrypoint<Env, Params> {
   async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-    try {
-      const order = await step.withRollback("create order", {
-        do: async () => env.DB.orders.insert({ userId: event.payload.userId, items: event.payload.items }),
-        undo: async (err, order) => env.DB.orders.delete(order.id),
-      });
+    const order = await step.withRollback("create order", {
+      do: async () => env.DB.orders.insert({ userId: event.payload.userId, items: event.payload.items }),
+      undo: async (err, order) => env.DB.orders.delete(order.id),
+    });
 
-      await step.withRollback("charge payment", {
-        do: async () => env.STRIPE.charges.create({ amount: order.total, customer: event.payload.userId }),
-        undo: async (err, charge) => env.STRIPE.refunds.create({ charge: charge.id }),
-      });
+    await step.withRollback("charge payment", {
+      do: async () => env.STRIPE.charges.create({ amount: order.total, customer: event.payload.userId }),
+      undo: async (err, charge) => env.STRIPE.refunds.create({ charge: charge.id }),
+    });
 
-      await step.do("send confirmation", async () => {
-        await env.EMAIL.send({ to: event.payload.email, template: "order-confirmed", orderId: order.id });
-      });
-    } catch (e) {
-      await step.rollbackAll(e);
-      throw e;
-    }
+    // If this step throws, the undo functions above will run automatically
+    // (in reverse order) if the instance was created with rollback config enabled
+    await step.do("send confirmation", async () => {
+      await env.EMAIL.send({ to: event.payload.email, template: "order-confirmed", orderId: order.id });
+    });
   }
 }
+
+// Creating the workflow instance with rollback enabled:
+// const instance = await env.MY_WORKFLOW.create({
+//   params: orderParams,
+//   rollback: { continueOnError: false }, // Stop on first undo failure
+// });
 ```
 
 </TypeScriptExample>
@@ -449,8 +453,16 @@ interface WorkflowInstanceCreateOptions {
 	 * The event payload the Workflow instance is triggered with
 	 */
 	params?: unknown;
+	/**
+	 * Enable automatic rollback on uncaught errors.
+	 * When enabled, all registered undo functions will execute in LIFO order
+	 * if the workflow throws an uncaught error.
+	 */
+	rollback?: RollbackConfig;
 }
 ```
+
+Refer to the [Rollback (Saga Pattern)](#rollback-saga-pattern) section for details on `RollbackConfig`.
 
 ## WorkflowInstance
 
