@@ -6,7 +6,6 @@
 
 /.github/ @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing @cloudflare/content-engineering @kodster28
-/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @kodster28
 /src/components/ @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
 *.js @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
 *.ts @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
