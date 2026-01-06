@@ -8,7 +8,7 @@ params:
   - routePrioritization
   - chooseWeights
   - productGatewayOrEgress
-  - dashButtonPath?
+  - dashRoutesPath?
   - cfTunnelURL?
   - sitesURL?
   - addTunnelsURL?
@@ -73,7 +73,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 	<>
 		<Markdown
 			text={`
-			1. Go to ${props.productName}'s <a href="${props.dashButtonPath}">**Connectors**</a> page.
+			1. Go to ${props.productName}'s <a href="${props.dashRoutesPath}">**Routes**</a> page.
 			2. From the **Routes** tab, select **Create static route** to add a new route.
 			`}
 			inline={false}
@@ -430,14 +430,8 @@ To set this ASN:
 	<>
 		<Markdown
 			text={`
-			1. Go to ${props.productName}'s **Configuration** page.
-			`}
-			inline={false}
-		/>
-
-		<Markdown
-			text={`
-			2. Go to **BGP configuration**.
+			1. Go to ${props.productName}'s <a href="${props.dashRoutesPath}">**Routes**</a> page.
+			2. Go to **WAN configuration**.
 			3. In **CF Account ASN**, enter Cloudflare's ASN.
 			4. Select **Update**.
 			`}
