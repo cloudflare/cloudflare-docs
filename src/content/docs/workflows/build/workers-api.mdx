@@ -514,9 +514,10 @@ Restart a Workflow instance.
 
 ### terminate
 
-Terminate a Workflow instance.
+Terminate a Workflow instance. Optionally run rollback handlers before terminating.
 
-- <code>terminate(): Promise&lt;void&gt;</code>
+- <code>terminate(options?: TerminateOptions): Promise&lt;void&gt;</code>
+  - `options.rollback` (optional) - if `true`, execute all registered undo handlers before terminating. Only works for `running`, `waiting`, or `paused` instances.
 
 ### sendEvent
 
@@ -571,6 +572,7 @@ type InstanceStatus = {
 		| "complete"
 		| "waiting" // instance is hibernating and waiting for sleep or event to finish
 		| "waitingForPause" // instance is finishing the current work to pause
+		| "rollingBack" // rollback in progress (manual or via terminate with rollback)
 		| "unknown";
 	error?: { 
 		name: string,

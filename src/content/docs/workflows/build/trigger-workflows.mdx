@@ -114,6 +114,7 @@ The possible values of status are as follows:
     | "complete"
     | "waiting" // instance is hibernating and waiting for sleep or event to finish
     | "waitingForPause" // instance is finishing the current work to pause
+    | "rollingBack" // rollback in progress (manual or via terminate with rollback)
     | "unknown";
   error?: {
     name: string,
