@@ -5,171 +5,125 @@ sidebar:
   order: 6
 ---
 
-Tenant control ensures users only access corporate instances of SaaS applications, preventing data leakage to personal accounts.
+import { Render } from "~/components";
 
-## What is tenant control?
+Tenant control ensures your users only access corporate instances of SaaS applications while blocking access to personal accounts. This helps prevent the loss of sensitive or confidential data from a corporate network.
 
-Many SaaS applications allow users to have both personal and corporate accounts. Without tenant control, users might:
+## How tenant control works
 
-- Upload work files to personal cloud storage
-- Send work emails from personal accounts
-- Access personal Microsoft 365 or Google Workspace accounts during work hours
-- Save data to personal instances that are not backed up or secured
+Gateway uses custom HTTP headers to control SaaS application access. When you create an HTTP policy with an Allow action and configure custom headers, Gateway will:
 
-Tenant control policies restrict access to only approved corporate tenants of these applications.
+- Approve requests headed to your organization's account for the SaaS application
+- Block requests that do not match the information in the header
+
+This prevents users from:
+
+- Uploading work files to personal cloud storage
+- Sending work emails from personal accounts
+- Accessing personal Microsoft 365 or Google Workspace accounts during work hours
+- Saving data to personal instances that are not backed up or secured
 
 ## Supported applications
 
-Cloudflare supports tenant control for:
+Cloudflare supports tenant control for the following integrations:
 
-- Microsoft 365 (Azure AD tenants)
-- Google Workspace (domains)
-- Slack (workspaces)
-- GitHub (organizations)
-- And other applications with tenant identifiers
+- Microsoft 365
+- Google Workspace
+- Slack
+- Dropbox
+- ChatGPT
+- Other applications that support custom headers for tenant restrictions
 
 ## Configure tenant control
 
-### Identify your corporate tenants
+To create an HTTP policy with custom headers:
 
-First, determine your organization's tenant identifiers:
-
-**For Microsoft 365:**
-
-- Azure AD Tenant ID (found in Azure Portal > Azure Active Directory > Properties)
-
-**For Google Workspace:**
-
-- Your corporate domain(s) (for example, `example.com`)
-
-**For Slack:**
-
-- Your Slack workspace URL (for example, `example.slack.com`)
-
-### Create a tenant control policy
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **HTTP**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**. Select **HTTP**.
 2. Select **Add a policy**.
-3. Configure the policy:
-   - **Name**: Restrict Microsoft 365 to corporate tenant
-   - **Traffic**:
-     - Application is `Microsoft 365`
-     - AND Microsoft 365 Tenant ID is not `YOUR_TENANT_ID`
-   - **Action**: Block
-4. Select **Create policy**.
+3. Build an expression to match the SaaS traffic you want to control.
+4. In **Action**, select _Allow_. In **Untrusted certificate action**, select _Block_.
+5. Under **Add headers to matched requests**, select **Add a header**.
+6. Add the custom header names and values corresponding to your SaaS application.
+7. Select **Create policy**.
 
-### Example policies
+When your users attempt to authenticate the configured SaaS application with a personal account, authentication will fail.
 
-**Block personal Google Workspace:**
+### Microsoft 365
 
-```
-Traffic:
-  - Application is `Google Workspace`
-  - AND Google Workspace Domain is not `example.com`
-Action: Block
-```
+<Render file="gateway/tenant-control/microsoft-365" product="cloudflare-one" />
 
-**Block personal Slack workspaces:**
+### Google Workspace
 
-```
-Traffic:
-  - Application is `Slack`
-  - AND Slack Workspace is not `example.slack.com`
-Action: Block
-```
+<Render
+	file="gateway/tenant-control/google-workspace"
+	product="cloudflare-one"
+/>
 
-**Block personal GitHub:**
+### Slack
 
-```
-Traffic:
-  - Application is `GitHub`
-  - AND GitHub Organization is not `example-org`
-Action: Block
-```
+<Render file="gateway/tenant-control/slack" product="cloudflare-one" />
 
-## Advanced tenant control
+### Dropbox
 
-### Allow multiple corporate tenants
+<Render file="gateway/tenant-control/dropbox" product="cloudflare-one" />
 
-If your organization has multiple tenants:
+### ChatGPT
 
-```
-Traffic:
-  - Application is `Microsoft 365`
-  - AND Microsoft 365 Tenant ID is not in `TENANT_ID_1`, `TENANT_ID_2`, `TENANT_ID_3`
-Action: Block
-```
+<Render file="gateway/tenant-control/chatgpt" product="cloudflare-one" />
 
-### Tenant control with user groups
+## Verify custom headers
 
-Apply different tenant restrictions to different user groups:
+<Render file="gateway/tenant-control/verify-headers" product="cloudflare-one" />
 
-```
-Traffic:
-  - Application is `Google Workspace`
-  - AND Google Workspace Domain is not `example.com`
-  - AND User Group is `Contractors`
-Action: Block
-```
+## Use tenant control with Browser Isolation
 
-### Isolate instead of block
+<Render
+	file="gateway/tenant-control/browser-isolation"
+	product="cloudflare-one"
+/>
 
-For applications where users may need personal access occasionally:
+## Customize block pages
 
-```
-Traffic:
-  - Application is `Microsoft 365`
-  - AND Microsoft 365 Tenant ID is not `YOUR_TENANT_ID`
-Action: Isolate
-Isolation settings:
-  - Disable file downloads
-  - Disable copy/paste
-```
+When a user attempts to access a non-corporate tenant, Gateway will return a block page. You can customize the block page to include information about why the request was blocked and how to access the corporate tenant.
 
-## User experience
-
-When a user attempts to access a non-corporate tenant:
-
-- **Block action**: User sees a block page explaining the policy
-- **Isolate action**: User can view content but cannot download files or copy data
-
-### Customize block pages
-
-Provide helpful information on block pages:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
-2. Customize the block page to include:
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Reusable components** > **Custom pages**.
+2. In **Account Gateway block page**, select **Manage**.
+3. Customize the block page to include:
    - Why the request was blocked
    - How to access the corporate tenant
    - Who to contact for exceptions
 
-## Testing tenant control
+## Test tenant control
 
-Before enforcing tenant control:
+Before you deploy and enforce tenant control for your organization, test the policies with a small group of users.
 
-1. **Verify tenant identifiers**: Ensure you have the correct tenant IDs/domains
-2. **Test with pilot users**: Apply policies to a small group first
-3. **Monitor for false positives**: Check if legitimate corporate access is being blocked
-4. **Communicate changes**: Inform users about tenant restrictions and how to comply
+1. Verify tenant identifiers: Ensure you have the correct domains, workspace IDs, or team IDs for your organization.
+2. Test with pilot users: Apply policies to a small group first.
+3. Monitor for false positives: Check if legitimate corporate access is being blocked.
+4. Communicate changes: Inform users about tenant restrictions and how to comply.
+5. Use HTTPBin: Verify custom headers are being applied correctly using the verification method above.
 
 ## Troubleshooting
 
-**Users cannot access corporate tenant:**
+If your users cannot access the corporate tenant:
 
-- Verify the tenant ID/domain is correct
-- Check policy ordering — allow policies should come before block policies
+- Verify the custom header values match your organization's identifiers
+- Check policy ordering — ensure policies follow [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence)
 - Ensure TLS inspection is enabled
+- Verify the custom headers are being applied using HTTPBin
 
-**Personal tenant access not being blocked:**
+If Gateway is not blocking tenant access to personal accounts:
 
 - Confirm TLS inspection is enabled and working
 - Verify the application is correctly identified in Gateway logs
-- Check that the tenant identifier selector is supported for that application
+- Check that custom headers are configured correctly
+- Ensure the **Untrusted certificate action** is set to _Block_
 
 ## Next steps
 
-With tenant control implemented, you can now:
+With tenant control implemented, you can:
 
 - Build DLP policies to detect sensitive data in allowed applications
 - Monitor compliance through Gateway Analytics
 - Expand tenant control to additional applications
+- Combine tenant control with [Browser Isolation](/cloudflare-one/remote-browser-isolation/) for enhanced security

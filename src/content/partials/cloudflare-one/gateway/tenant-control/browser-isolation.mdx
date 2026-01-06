@@ -1,0 +1,25 @@
+---
+{}
+---
+
+You can configure [Browser Isolation](/cloudflare-one/remote-browser-isolation/) to send custom headers. This is useful for implementing tenant control for isolated SaaS applications or sending arbitrary custom request headers to isolated websites.
+
+To use custom headers with Browser Isolation, create two HTTP policies targeting the same domain or application group:
+
+1. Create an Isolate policy for the application.
+
+   | Selector | Operator | Value         | Action  |
+   | -------- | -------- | ------------- | ------- |
+   | Domain   | in       | `httpbin.org` | Isolate |
+
+2. Create an Allow policy for the application with a custom header.
+
+   | Selector | Operator | Value         | Action |
+   | -------- | -------- | ------------- | ------ |
+   | Domain   | in       | `httpbin.org` | Allow  |
+
+   | Custom header name | Custom header value |
+   | ------------------ | ------------------- |
+   | `Example-Header`   | `example-value`     |
+
+3. Go to the application. Cloudflare will render the site in an isolated browser with your custom header applied.
