@@ -1,0 +1,46 @@
+---
+pcx_content_type: reference
+source: https://support.cloudflare.com/hc/en-us/articles/219178057-Configuring-Cloudflare-Mirage
+title: Cloudflare Mirage (deprecated)
+learning_center:
+  title: What is lazy loading?
+  link: https://www.cloudflare.com/learning/performance/what-is-lazy-loading/
+sidebar:
+  order: 3
+  label: Mirage
+  badge:
+    text: Deprecated
+---
+
+:::caution[Deprecation notice]
+Mirage was deprecated on September 15, 2025 and is no longer available.
+
+As an alternative, Cloudflare recommends using [lazy loading](/images/tutorials/optimize-mobile-viewing/) and [responsive images](/images/transform-images/make-responsive-images/) to optimize image performance for all devices.
+:::
+
+## What was Mirage?
+
+Cloudflare Mirage was a mobile image optimization feature that reduced bandwidth usage and accelerated image loading on slow mobile connections and HTTP/1.
+
+Mirage worked by:
+
+- Replacing images with low-resolution thumbnails bundled together into one file.
+- Acting as a lazy loader, deferring loading of higher-resolution images until they become visible.
+
+## Why was it deprecated?
+
+Modern web standards and browser capabilities have evolved to provide native support for many of Mirage's features:
+
+- Native lazy loading with the `loading="lazy"` HTML attribute.
+- Responsive images using `srcset` and `<picture>` elements.
+- HTTP/2 and HTTP/3 providing better performance.
+- Improved mobile networks reducing the need for aggressive optimization.
+
+## Migration path
+
+Instead of Mirage, use:
+
+- **[Polish](/images/polish/)** - Seamlessly optimizes images for all browsers, not only mobile, and keeps images at full resolution.
+- **[Image Resizing](/images/transform-images/)** - Combined with `loading="lazy"` and `srcset` HTML attributes, provides modern responsive image delivery.
+- **[Lazy loading guide](/images/tutorials/optimize-mobile-viewing/)** - Learn how to implement native lazy loading.
+- **[Responsive images guide](/images/transform-images/make-responsive-images/)** - Create images that adapt to different devices.
