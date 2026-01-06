@@ -5,13 +5,13 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 HTTP policies control access to web applications and enforce security rules on web traffic. Build baseline policies to establish foundational security before implementing more specific data protection controls.
 
 ## Recommended baseline policies
 
-Start with these essential HTTP policies for data protection:
+Start with essential HTTP policies for data protection.
 
 ### Block high-risk security categories
 
@@ -26,87 +26,368 @@ Block access to known malicious and high-risk sites:
 
 Control access to generative AI tools to prevent data leakage.
 
-**Option 1: Block AI applications entirely**
+You can block or isolate all AI applications with a single policy:
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector    | Operator | Value                     | Action |
 | ----------- | -------- | ------------------------- | ------ |
 | Application | in       | _Artificial Intelligence_ | Block  |
 
-**Option 2: Isolate AI applications with restrictions**
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block AI applications",
+		description: "Block access to generative AI tools to prevent data leakage",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: "any(app.type.ids[] in {23})",
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_ai_applications" {
+  account_id  = var.cloudflare_account_id
+  name        = "Block AI applications"
+  description = "Block access to generative AI tools to prevent data leakage"
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "any(app.type.ids[*] in {23})"
+  identity    = ""
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+Alternatively, [Browser Isolation](/cloudflare-one/remote-browser-isolation/) users can isolate AI applications with copy/paste and download restrictions:
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector    | Operator | Value                     | Action  |
 | ----------- | -------- | ------------------------- | ------- |
 | Application | in       | _Artificial Intelligence_ | Isolate |
 
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Isolate AI applications",
+		description:
+			"Isolate AI applications with copy/paste and download restrictions",
+		enabled: true,
+		action: "isolate",
+		filters: ["http"],
+		traffic: "any(app.type.ids[*] in {23})",
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "isolate_ai_applications" {
+  account_id  = var.cloudflare_account_id
+  name        = "Isolate AI applications"
+  description = "Isolate AI applications with copy/paste and download restrictions"
+  enabled     = true
+  action      = "isolate"
+  filters     = ["http"]
+  traffic     = "any(app.type.ids[*] in {23})"
+  identity    = ""
+}
+```
+
+</TabItem>
+
+</Tabs>
+
 When using the Isolate action, configure isolation settings to disable copy/paste, file downloads, and optionally keyboard input.
 
-For more information, refer to [Isolate policies](/cloudflare-one/traffic-policies/http-policies/isolate-policies/).
+For more information, refer to [Isolation policies](/cloudflare-one/remote-browser-isolation/isolation-policies/).
 
 ### Control file uploads and downloads
 
 Restrict file transfers to risky or unsanctioned applications:
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector         | Operator | Value                | Logic | Action |
 | ---------------- | -------- | -------------------- | ----- | ------ |
-| Application      | in       | _Cloud Storage_      | And   | Block  |
+| Application      | in       | _File Sharing_       | And   | Block  |
 | Application      | not in   | _Google Drive_       | And   |        |
 | Application      | not in   | _Microsoft OneDrive_ | And   |        |
 | Upload Mime Type | in       | _All File Types_     |       |        |
 
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block file uploads to personal cloud storage",
+		description:
+			"Restrict file transfers to risky or unsanctioned cloud storage applications",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(app.type.ids[*] in {17}) and not(any(app.ids[*] in {478 505})) and http.upload.mime_type != ""',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_file_uploads_personal_cloud" {
+  account_id  = var.cloudflare_account_id
+  name        = "Block file uploads to personal cloud storage"
+  description = "Restrict file transfers to risky or unsanctioned cloud storage applications"
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "any(app.type.ids[*] in {17}) and not(any(app.ids[*] in {478 505})) and http.upload.mime_type != \"\""
+  identity    = ""
+}
+```
+
+</TabItem>
+</Tabs>
+
 ### Block personal SaaS instances
 
-Prevent users from accessing personal accounts of corporate applications:
-
-This is covered in detail in the [Tenant control](/learning-paths/data-security/protect-data-in-transit/tenant-control/) section.
+To prevent users from accessing personal accounts of corporate applications, refer to [Tenant control](/learning-paths/data-security/protect-data-in-transit/tenant-control/).
 
 ## Policy ordering
 
-<Render file="gateway/order-of-enforcement" product="cloudflare-one" />
-
 Order your policies from most specific to most general:
 
-1. Allow policies for approved applications
+1. HTTP Allow policies for approved applications
 2. Tenant control policies
 3. DLP policies
-4. Isolation policies
-5. Block policies for specific applications
-6. Block policies for categories
+4. Browser Isolation policies
+5. HTTP Block policies for specific applications
+6. HTTP Block policies for categories
 7. Default allow (if using allowlist approach)
+
+For more information, refer to [Order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/).
 
 ## Testing policies
 
-Before enforcing policies broadly:
+Before deploying and enforcing your Gateway HTTP policies broadly, test them in a trial environment:
 
-1. **Start in audit mode**: Set action to **Allow** with logging enabled to see what would be blocked
-2. **Test with a pilot group**: Apply policies to a small group of users first
-3. **Review logs**: Check Gateway logs for false positives and user impact
-4. **Adjust and expand**: Refine policies based on feedback, then expand to more users
+1. Set action to _Allow_ with logging turned on to see what would be blocked.
+2. Apply policies to a trial group of users first.
+3. Review logs for false positives and user impact.
+4. Adjust and expand based on feedback.
 
 ## Common policy patterns
 
+The following policies are commonly applied to HTTP traffic after baseline policies. You can adapt these policies to your organization's specific needs.
+
+For a full list of common HTTP policies, refer to [Common HTTP policies](/cloudflare-one/traffic-policies/network-policies/common-policies/).
+
 ### Block specific applications
+
+Block access to specific [applications](/cloudflare-one/traffic-policies/application-app-types/).
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector    | Operator | Value     | Action |
 | ----------- | -------- | --------- | ------ |
 | Application | in       | _ChatGPT_ | Block  |
 
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block ChatGPT",
+		description: "Block access to ChatGPT",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: "any(app.ids[*] in {2009})",
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_chatgpt" {
+  account_id  = var.cloudflare_account_id
+  name        = "Block ChatGPT"
+  description = "Block access to ChatGPT"
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "any(app.ids[*] in {2009})"
+  identity    = ""
+}
+```
+
+</TabItem>
+
+</Tabs>
+
 ### Allow only approved applications (allowlist)
+
+Allow access to only approved applications.
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector    | Operator | Value                     | Action |
 | ----------- | -------- | ------------------------- | ------ |
 | Application | not in   | _Corporate Approved Apps_ | Block  |
 
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Allow only approved applications",
+		description: "Block access to applications not in the approved list",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: "not(any(app.ids[*] in $<LIST_UUID>))",
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/list/) endpoint.
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "allow_only_approved_apps" {
+  account_id  = var.cloudflare_account_id
+  name        = "Allow only approved applications"
+  description = "Block access to applications not in the approved list"
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "not(any(app.ids[*] in $<LIST_UUID>))"
+  identity    = ""
+}
+```
+
+To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/list/) endpoint.
+
+</TabItem>
+
+</Tabs>
+
 ### Block by domain
+
+Block access to a specific domain and all subdomains.
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector | Operator      | Value           | Action |
 | -------- | ------------- | --------------- | ------ |
 | Domain   | matches regex | `*.example.com` | Block  |
 
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block domain",
+		description: "Block access to a specific domain and all subdomains",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: 'http.request.host matches ".*example\\.com"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_domain" {
+  account_id  = var.cloudflare_account_id
+  name        = "Block domain"
+  description = "Block access to a specific domain and all subdomains"
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "http.request.host matches \".*example\\.com\""
+  identity    = ""
+}
+```
+
+</TabItem>
+
+</Tabs>
+
 ### Block by content category
 
-| Selector           | Operator | Value                                             | Action |
-| ------------------ | -------- | ------------------------------------------------- | ------ |
-| Content Categories | in       | _Adult Content_, _Gambling_, _Illegal Activities_ | Block  |
+Block access to specific [content categories](/cloudflare-one/traffic-policies/domain-categories/#content-categories). To review the categories for a specific domain, use [Cloudflare Radar](/radar/glossary/#content-categories).
+
+<Render
+	file="gateway/policies/dash-plus-api/http/block-content-categories"
+	product="cloudflare-one"
+/>
 
 ## Next steps
 
