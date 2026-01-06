@@ -348,8 +348,7 @@ To create a profile:
 	<>
 		<ol>
 			<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
-			<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong>.</li>
-			<li>Select <strong>Create a profile</strong>.</li>
+			<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong> &gt; <strong>Create a profile</strong>.</li>
 		</ol>
 	</>
 )
@@ -359,20 +358,22 @@ To create a profile:
 { props.dashName !== "WAN Tunnels" && (
 	<>
 		<ol>
-			<li>Log in to the <a href="https://dash.cloudflare.com/">Cloudflare dashboard</a> and select your account.</li>
-			<li>Go to <strong>Networking</strong> &gt; <strong>Magic WAN</strong> &gt; <strong>Connector on-ramps (beta)</strong>.</li>
-			<li>Select <strong>Add</strong>.</li>
+			<li>Go to <strong>Connectors</strong> page.
+			<br />
+			<DashButton url="/?to=/:account/magic-wan/configuration" buttonName="Connectors" />
+			</li>
+			<li>Go to <strong>Appliances</strong> &gt; <strong>Create a new profile</strong>.</li>
 		</ol>
 	</>
 )
 }
-4. In **Name**, enter a descriptive name for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Optionally, you can also add a description for it.
-5. You need to decide if you want to turn on high availability for the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
-6. Select **Create and continue**.
-7. Select **Add {props.deviceTypeName}**. This will show you a list of devices associated with your account. <Markdown text={props.noConnectorShows} />
-8. If you have more than one { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, choose the one that corresponds to the on-ramp you are creating. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices are identified by a serial number, also known as a service tag. Use this information to choose the right { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. <br /> Select **Add Connector** when you are ready to proceed.
-9. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. You can change this later. Refer to <a href={props.interruptWindowURL}>Interrupt window</a> for more details on how to define when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
-10. Select **Continue** to proceed to creating your WAN and LAN networks.
+3. In **Name**, enter a descriptive name for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Optionally, you can also add a description for it.
+4. You need to decide if you want to turn on high availability for the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+5. Select **Create and continue**.
+6. Select **Add {props.deviceTypeName}**. This will show you a list of devices associated with your account. <Markdown text={props.noConnectorShows} />
+7. If you have more than one { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, choose the one that corresponds to the on-ramp you are creating. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices are identified by a serial number, also known as a service tag. Use this information to choose the right { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. <br /> Select **Add Connector** when you are ready to proceed.
+8. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. You can change this later. Refer to <a href={props.interruptWindowURL}>Interrupt window</a> for more details on how to define when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
+9. Select **Continue** to proceed to creating your WAN and LAN networks.
 
 ### Create a WAN
 
