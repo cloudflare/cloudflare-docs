@@ -19,6 +19,13 @@ A user who authenticates will hold their seat until you [remove the user](#remov
 
 If you notice a number of accounts greater than the number of your users, you may need to configure an Access [bypass policy](/cloudflare-one/access-controls/policies/#bypass). Alternatively, you can use Access [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) to allow access to applications without consuming seats.
 
+### Relationship to devices and access
+
+Seat management controls billing, not device or network access.
+
+[Removing a user](/cloudflare-one/team-and-resources/users/seat-management/#remove-a-user) determines whether that user consumes a billable seat, but it does not directly manage device registrations or [prevent users from accessing resources](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access) behind Cloudflare Access.
+
+For more information about managing device registrations, refer to [Device registration](/cloudflare-one/team-and-resources/devices/device-registration/).
 
 ## Manage users
 
