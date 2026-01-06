@@ -357,11 +357,11 @@ To create a profile:
 { props.dashName !== "WAN Tunnels" && (
 	<>
 		<ol>
-			<li>Go to <strong>Connectors</strong> page.
+			<li>Go to <strong>Appliances</strong> page.
 			<br />
-			<DashButton url="/?to=/:account/magic-wan/configuration" buttonName="Connectors" />
+			<DashButton url="/?to=/:account/magic-wan/mconn-onramp" buttonName="Appliances" />
 			</li>
-			<li>Go to <strong>Appliances</strong> &gt; <strong>Create a new profile</strong>.</li>
+			<li>Go to <strong>Profiles</strong> &gt; <strong>Create a new profile</strong>.</li>
 		</ol>
 	</>
 )
@@ -589,15 +589,15 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		{/* Instructions for Magic WAN */}
 		<Markdown
 	text={`
-		1. Go to **Connectors** page.`}
+		1. Go to **Appliances** page.`}
 	inline={false}
 	/>
 
-   <DashButton url="/?to=/:account/magic-wan/configuration" buttonName="Connectors" />
+   <DashButton url="/?to=/:account/magic-wan/mconn-onramp" buttonName="Appliances" />
 
 		<Markdown
 	text={`
-		2. Go to **Appliances** > **Appliances**.
+		2. Go to **Appliances**.
 		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
 		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
