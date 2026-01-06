@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-import { Render } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
 Data Loss Prevention (DLP) policies detect and prevent sensitive data from leaving your organization through web traffic.
 
@@ -29,12 +29,14 @@ DLP profiles define what types of sensitive data to detect.
 	product="cloudflare-one"
 />
 
-Common predefined profiles for data in transit:
+Common predefined profiles used to protect sensitive data in transit include:
 
-- **Financial Information**: Credit card numbers, bank account numbers
-- **Personally Identifiable Information (PII)**: Social Security numbers, driver's license numbers
-- **Credentials**: API keys, passwords, authentication tokens
-- **Source Code**: Programming language patterns
+| Profile name                              | Example detections                                |
+| ----------------------------------------- | ------------------------------------------------- |
+| Financial Information                     | Credit card numbers, bank account numbers         |
+| Personally Identifiable Information (PII) | Social Security numbers, driver's license numbers |
+| Credentials                               | API keys, passwords, authentication tokens        |
+| Source Code                               | Programming language patterns                     |
 
 ### Create custom profiles
 
@@ -46,104 +48,352 @@ After creating DLP profiles, build Gateway HTTP policies to enforce them.
 
 ### Block sensitive data uploads to AI applications
 
-Prevent users from sharing sensitive information with AI tools:
+Prevent users from sharing sensitive information with AI tools.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall Policies** > **HTTP**.
-2. Select **Add a policy**.
-3. Configure the policy:
-   - **Name**: Block sensitive data uploads to AI
-   - **Traffic**:
-     - Application is in `Artificial Intelligence`
-     - AND DLP Profile is `Financial Information` or `PII`
-     - AND Upload Mime Type is in `All File Types`
-   - **Action**: Block
-4. Select **Create policy**.
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator | Value                          | Logic | Action |
+| ---------------- | -------- | ------------------------------ | ----- | ------ |
+| Application      | in       | _Artificial Intelligence_      | And   | Block  |
+| DLP Profile      | in       | _Financial Information_, _PII_ | And   |        |
+| Upload Mime Type | in       | _All File Types_               |       |        |
+
+</TabItem> <TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Block sensitive data uploads to AI",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "any(app.ids[*] in {\"b0694d0e-b5e5-4e4f-8d5e-1e4e4e4e4e4e\"}) and any(dlp.profiles[*] in {\"financial_information\", \"pii\"}) and any(http.request.mime_types[*] in {\"*/*\"})"
+    }
+  ],
+  "action": "block",
+  "enabled": true
+}'
+```
+
+</TabItem> <TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_ai_sensitive_data" {
+  account_id  = var.account_id
+  name        = "Block sensitive data uploads to AI"
+  description = "Prevent users from sharing sensitive information with AI tools"
+  action      = "block"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "any(app.ids[*] in {\"b0694d0e-b5e5-4e4f-8d5e-1e4e4e4e4e4e\"}) and any(dlp.profiles[*] in {\"financial_information\", \"pii\"}) and any(http.request.mime_types[*] in {\"*/*\"})"
+}
+```
+
+</TabItem> </Tabs>
 
 ### Block source code uploads to personal repositories
 
-Prevent intellectual property leakage:
+Prevent intellectual property leakage.
 
-1. Create an HTTP policy:
-   - **Name**: Block source code uploads to personal GitHub
-   - **Traffic**:
-     - Application is `GitHub`
-     - AND GitHub Organization is not `your-corporate-org`
-     - AND DLP Profile is `Source Code`
-   - **Action**: Block
-2. Select **Create policy**.
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector            | Operator | Value                | Logic | Action |
+| ------------------- | -------- | -------------------- | ----- | ------ |
+| Application         | in       | _GitHub_             | And   | Block  |
+| GitHub Organization | not in   | `your-corporate-org` | And   |        |
+| DLP Profile         | in       | _Source Code_        |       |        |
+
+</TabItem> <TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Block source code uploads to personal GitHub",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "app.id == \"github\" and not(github.org == \"your-corporate-org\") and any(dlp.profiles[*] in {\"source_code\"})"
+    }
+  ],
+  "action": "block",
+  "enabled": true
+}'
+```
+
+</TabItem> <TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_personal_github_source_code" {
+  account_id  = var.account_id
+  name        = "Block source code uploads to personal GitHub"
+  description = "Prevent intellectual property leakage to personal repositories"
+  action      = "block"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "app.id == \"github\" and not(github.org == \"your-corporate-org\") and any(dlp.profiles[*] in {\"source_code\"})"
+}
+```
+
+</TabItem> </Tabs>
 
 ### Detect sensitive data in file uploads
 
-Monitor and optionally block sensitive data uploads to cloud storage:
+Monitor and optionally block sensitive data uploads to cloud storage.
 
-1. Create an HTTP policy:
-   - **Name**: Block PII uploads to cloud storage
-   - **Traffic**:
-     - Application is in `Cloud Storage`
-     - AND DLP Profile is `PII`
-     - AND Upload Mime Type is in `All File Types`
-   - **Action**: Block (or Allow with logging for monitoring)
-2. Select **Create policy**.
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator | Value            | Logic | Action |
+| ---------------- | -------- | ---------------- | ----- | ------ |
+| Application      | in       | _File Sharing_   | And   | Block  |
+| DLP Profile      | in       | _PII_            | And   |        |
+| Upload Mime Type | in       | _All File Types_ |       |        |
+
+:::note
+Before you enforce blocks, you can set the action to _Allow_ with logging enabled to monitor uploads and understand false positives.
+:::
+
+</TabItem> <TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Block PII uploads to cloud storage",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "any(app.ids[*] in {\"cloud_storage\"}) and any(dlp.profiles[*] in {\"pii\"}) and any(http.request.mime_types[*] in {\"*/*\"})"
+    }
+  ],
+  "action": "block",
+  "enabled": true
+}'
+```
+
+</TabItem> <TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_pii_cloud_storage" {
+  account_id  = var.account_id
+  name        = "Block PII uploads to cloud storage"
+  description = "Monitor and block sensitive data uploads to cloud storage"
+  action      = "block"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "any(app.ids[*] in {\"cloud_storage\"}) and any(dlp.profiles[*] in {\"pii\"}) and any(http.request.mime_types[*] in {\"*/*\"})"
+}
+```
+
+</TabItem> </Tabs>
 
 ## DLP policy patterns
 
+Cloudflare recommends implementing the following DLP policies after building baseline DLP policies and custom profiles. You can configure these policies to match your organization's specific needs.
+
 ### Monitor before blocking
 
-Start with audit mode to understand data flows:
+To understand data flows before enforcing blocks, set the action for a DLP profile to _Allow_ with logging turned on. After you review your logs to identify false positives, you can refine the policy and change the action to _Block_.
 
-```
-Traffic:
-  - DLP Profile is `Financial Information`
-Action: Allow
-Enable logging: Yes
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector    | Operator | Value                   | Action |
+| ----------- | -------- | ----------------------- | ------ |
+| DLP Profile | in       | _Financial Information_ | Allow  |
+
+</TabItem> <TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Monitor financial information",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "any(dlp.profiles[*] in {\"financial_information\"})"
+    }
+  ],
+  "action": "allow",
+  "enabled": true
+}'
 ```
 
-Review logs to identify false positives before changing action to Block.
+</TabItem> <TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "monitor_financial_info" {
+  account_id  = var.account_id
+  name        = "Monitor financial information"
+  description = "Audit mode to understand data flows"
+  action      = "allow"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "any(dlp.profiles[*] in {\"financial_information\"})"
+}
+```
+
+</TabItem> </Tabs>
 
 ### Scope DLP to specific applications
 
-Apply DLP only to high-risk applications:
+Apply DLP only to high-risk applications.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector    | Operator | Value                                     | Logic | Action |
+| ----------- | -------- | ----------------------------------------- | ----- | ------ |
+| Application | in       | _Artificial Intelligence_, _File Sharing_ | And   | Block  |
+| DLP Profile | in       | _Source Code_                             |       |        |
+
+</TabItem> <TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Block source code to high-risk apps",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "any(app.ids[*] in {\"cloud_storage\", \"ai\", \"file_sharing\"}) and any(dlp.profiles[*] in {\"source_code\"})"
+    }
+  ],
+  "action": "block",
+  "enabled": true
+}'
 ```
-Traffic:
-  - Application is in `Cloud Storage`, `Artificial Intelligence`, `File Sharing`
-  - AND DLP Profile is `Source Code`
-Action: Block
+
+</TabItem> <TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "scope_dlp_high_risk_apps" {
+  account_id  = var.account_id
+  name        = "Block source code to high-risk apps"
+  description = "Apply DLP only to high-risk applications"
+  action      = "block"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "any(app.ids[*] in {\"cloud_storage\", \"ai\", \"file_sharing\"}) and any(dlp.profiles[*] in {\"source_code\"})"
+}
 ```
+
+</TabItem> </Tabs>
 
 ### Combine DLP with tenant control
 
-Block sensitive data uploads to personal tenants:
+Block sensitive data uploads to personal tenants.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector                | Operator | Value              | Logic | Action |
+| ----------------------- | -------- | ------------------ | ----- | ------ |
+| Application             | in       | _Google Workspace_ | And   | Block  |
+| Google Workspace Domain | not in   | `example.com`      | And   |        |
+| DLP Profile             | in       | _PII_              |       |        |
+
+</TabItem> <TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Block PII to personal Google Workspace",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "app.id == \"google_workspace\" and not(google_workspace.domain == \"example.com\") and any(dlp.profiles[*] in {\"pii\"})"
+    }
+  ],
+  "action": "block",
+  "enabled": true
+}'
 ```
-Traffic:
-  - Application is `Google Workspace`
-  - AND Google Workspace Domain is not `example.com`
-  - AND DLP Profile is `PII`
-Action: Block
+
+</TabItem> <TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dlp_tenant_control" {
+  account_id  = var.account_id
+  name        = "Block PII to personal Google Workspace"
+  description = "Combine DLP with tenant control"
+  action      = "block"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "app.id == \"google_workspace\" and not(google_workspace.domain == \"example.com\") and any(dlp.profiles[*] in {\"pii\"})"
+}
 ```
+
+</TabItem> </Tabs>
 
 ### Apply DLP to specific user groups
 
-Enforce stricter DLP for contractors or high-risk users:
+Enforce stricter DLP for contractors or high-risk users.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator | Value               | Logic | Action |
+| ---------------- | -------- | ------------------- | ----- | ------ |
+| User Group       | in       | `Contractors`       | And   | Block  |
+| DLP Profile      | in       | _Confidential Data_ | And   |        |
+| Upload Mime Type | in       | _All File Types_    |       |        |
+
+</TabItem> <TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Block confidential data for contractors",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "identity.groups.name == \"Contractors\" and any(dlp.profiles[*] in {\"confidential_data\"}) and any(http.request.mime_types[*] in {\"*/*\"})"
+    }
+  ],
+  "action": "block",
+  "enabled": true
+}'
 ```
-Traffic:
-  - User Group is `Contractors`
-  - AND DLP Profile is `Confidential Data`
-  - AND Upload Mime Type is in `All File Types`
-Action: Block
+
+</TabItem> <TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dlp_user_groups" {
+  account_id  = var.account_id
+  name        = "Block confidential data for contractors"
+  description = "Enforce stricter DLP for contractors or high-risk users"
+  action      = "block"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "identity.groups.name == \"Contractors\" and any(dlp.profiles[*] in {\"confidential_data\"}) and any(http.request.mime_types[*] in {\"*/*\"})"
+}
 ```
+
+</TabItem> </Tabs>
 
 ## Configure DLP settings
 
-### Enable OCR
+You can configure settings for DLP profiles to adjust how DLP detects and blocks sensitive data. These settings apply to all DLP policies that use the profile.
 
-Optical Character Recognition (OCR) detects text in images:
+To configure settings for a DLP profile:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP Profiles**.
-2. Select a profile and edit **Advanced settings**.
-3. Enable **Scan images with OCR**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
+2. Choose a profile and select **Edit**.
+3. In **Settings**, adjust your settings.
+4. Select **Save profile**.
+
+### Turn on Optical Character Recognition (OCR)
+
+Optical Character Recognition (OCR) detects and applies DLP policies to text in images in your users' traffic.
 
 OCR is useful for detecting:
 
@@ -153,18 +403,17 @@ OCR is useful for detecting:
 
 ### Adjust match count
 
-Configure how many matches trigger a detection:
+Match count determines how many DLP matches trigger a valid detection:
 
-- **Low threshold** (1-2 matches): More sensitive, may have false positives
-- **Medium threshold** (3-5 matches): Balanced approach
-- **High threshold** (6+ matches): Less sensitive, fewer false positives
+| Match count | Threshold level | Description                              |
+| ----------- | --------------- | ---------------------------------------- |
+| 1-2 matches | Low             | More sensitive, may have false positives |
+| 3-5 matches | Medium          | Balanced approach                        |
+| 6+ matches  | High            | Less sensitive, fewer false positives    |
 
-### Use context analysis
+### Use AI context analysis
 
-Enable AI-powered context analysis to reduce false positives:
-
-1. Edit a DLP profile's **Advanced settings**.
-2. Enable **Context analysis**.
+When you turn on AI context analysis, DLP uses AI-powered context analysis to reduce false positives. Your data is only kept in memory and not used for training AI models.
 
 Context analysis helps distinguish between:
 
@@ -172,67 +421,55 @@ Context analysis helps distinguish between:
 - Actual SSNs vs. random number sequences
 - Sensitive data vs. test data
 
-## Integration with other applications
+### Set confidence threshold
 
-### Slack DLP
+When you set the confidence threshold, you define the validation level required for predefined entry matches to trigger a policy action. Setting levels include _Low_, _Medium_, and _High_. Lower levels indicate a higher tolerance for false positives.
 
-Apply DLP to Slack messages:
+| Setting level | Description                                                               |
+| ------------- | ------------------------------------------------------------------------- |
+| Low           | Regex-based detection with high tolerance for false positives             |
+| Medium        | Additional contextual detection with medium tolerance for false positives |
+| High          | Rigorous contextual detection with low tolerance for false positives      |
 
-```
-Traffic:
-  - Application is `Slack`
-  - AND DLP Profile is `Financial Information`
-Action: Block
-```
+## Email DLP
 
-### Zoom DLP
-
-Prevent sensitive data sharing in Zoom chats:
-
-```
-Traffic:
-  - Application is `Zoom`
-  - AND DLP Profile is `PII`
-  - AND Upload Mime Type is in `All File Types`
-Action: Block
-```
-
-### Email DLP
-
-For email DLP, consider integrating with [Email Security](/email-security/) or using CASB for Microsoft 365 and Google Workspace.
+To integrate DLP with Cloudflare Email Security, refer to [Secure Microsoft 365 email with Email security](/learning-paths/secure-o365-email/concepts/).
 
 ## Monitor DLP effectiveness
 
-### Review DLP logs
+Once you have implemented DLP policies, you can monitor their effectiveness to ensure they are working as intended.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Gateway** > **HTTP**.
-2. Filter by:
-   - **DLP Profile**: See which profiles are triggering
-   - **Action**: View blocked vs. allowed requests
-   - **Application**: Identify which applications have the most DLP events
+To check your DLP logs:
 
-### Analyze DLP trends
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
+2. Choose **HTTP request logs**.
+3. Filter your logs by the following fields:
+   - **DLP profiles** - See which profiles are triggering
+   - **Action** - View blocked vs. allowed requests
+   - **Application type** or **Application name** - Identify which applications have the most DLP events
 
-1. Go to **Analytics** > **Gateway** > **HTTP**.
-2. Review:
+To get more information on DLP effectiveness over time:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Dashboards**.
+2. Choose **HTTP request analytics**.
+3. Select **Add filter** and filter by your desired HTTP policy action.
+4. Review the following criteria:
    - DLP detections over time
    - Most common data types detected
    - Applications with the most DLP events
    - Users triggering the most DLP policies
 
-## Fine-tune DLP policies
+Based on logs and analytics, you can:
 
-Based on logs and analytics:
-
-1. **Reduce false positives**: Adjust match counts, enable context analysis, or refine custom profiles
-2. **Expand coverage**: Add more applications or data types to DLP policies
-3. **Adjust actions**: Move from Allow (monitoring) to Block (enforcement)
-4. **Create exceptions**: Allow specific users or applications to bypass certain DLP rules
+1. Reduce false positives by adjusting match counts, enabling context analysis, or refining custom profiles.
+2. Expand coverage by adding more applications or data types to DLP policies.
+3. Adjust actions by moving from _Allow_ (monitoring) to _Block_ (enforcement).
+4. Create exceptions by allowing specific users or applications to bypass certain DLP rules.
 
 ## Next steps
 
 With DLP policies protecting data in transit, you can now:
 
+- Monitor and refine policies based on ongoing analytics
 - Implement data at rest protection with CASB
 - Configure Browser Isolation for additional data in use controls
-- Monitor and refine policies based on ongoing analytics
