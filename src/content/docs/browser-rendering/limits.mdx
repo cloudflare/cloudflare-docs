@@ -16,7 +16,7 @@ Users on the [Workers Free plan](/workers/platform/pricing/) are limited to **10
 
 To increase this limit, go to the **Compute (Workers) > Workers plans** page in the Cloudflare dashboard:
 
-    <DashButton url="/?to=/:account/workers/plans" />
+<DashButton url="/?to=/:account/workers/plans" />
 
 [Learn more about Workers Plans](/workers/platform/pricing).
 
@@ -61,7 +61,7 @@ While the limits above define the maximum number of concurrent browser sessions 
 
 To upgrade, go to the **Compute (Workers) > Workers plans** page in the Cloudflare dashboard:
 
-    <DashButton url="/?to=/:account/workers/plans" />
+<DashButton url="/?to=/:account/workers/plans" />
 
 <Render
   file="manage-concurrency-faq"
@@ -70,7 +70,7 @@ To upgrade, go to the **Compute (Workers) > Workers plans** page in the Cloudfla
 
 ### Can I increase the browser timeout?
 
-By default, a browser instance will time out after 60 seconds of inactivity. If you want to keep the browser open longer, you can use the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive) which allows you to extend the timeout to up to 10 minutes.
+By default, a browser instance will time out after 60 seconds of inactivity. If you want to keep the browser open longer, you can use the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive), which allows you to extend the timeout to up to 10 minutes.
 
 ### Is there a maximum session duration?
 
@@ -100,7 +100,9 @@ Refer to [Browser close reasons](/browser-rendering/reference/browser-close-reas
 ### Error: `429 Too many requests`
 
 When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too many requests`.
-The response includes a `Retry-After` header, which specifies how many seconds to wait before retrying. You can view your account's rate limits on the [Limits](/browser-rendering/limits/) page.
+The response includes a `Retry-After` header, which specifies how many seconds to wait before retrying. You can view your account's rate limits in the [Workers Free](#workers-free) and [Workers Paid](#workers-paid) sections above.
+
+Rate limits are enforced with a fixed per-second fill rate. For example, a limit of 180 requests per minute translates to three requests per second. You cannot send all requests at once; the API expects them to be spread evenly over the minute.
 
 The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
 
@@ -156,10 +158,10 @@ try {
 
 ### Error: `429 Browser time limit exceeded for today`
 
-This `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today` indicates you have hit the daily browser limit on the Workers Free plan. [Workers Free plan accounts are limited](/browser-rendering/limits/#workers-free) to 10 minutes of browser rendering usage per day. If you exceed that limit, you will receive a `429` error until the next UTC day.
+This `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today` indicates you have hit the daily browser limit on the Workers Free plan. [Workers Free plan accounts are limited](#workers-free) to 10 minutes of browser rendering usage per day. If you exceed that limit, you will receive a `429` error until the next UTC day.
 
-You can [increase your limits](/browser-rendering/limits/#workers-paid) by upgrading to a Workers Paid plan on the **Workers plans** page of the Cloudflare dashboard:
+You can [increase your limits](#workers-paid) by upgrading to a Workers Paid plan on the **Workers plans** page of the Cloudflare dashboard:
 
-    <DashButton url="/?to=/:account/workers/plans" />
+<DashButton url="/?to=/:account/workers/plans" />
 
 If you recently upgraded but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.
