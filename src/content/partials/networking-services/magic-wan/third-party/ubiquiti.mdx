@@ -24,12 +24,8 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. Go to Magic WAN's **Configuration** page.`}
-			inline={false}
-		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
-		<Markdown
-			text={`2. Go to **Tunnels**, and select **Create**.`}
+			text={`
+			1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) to learn how to add IPsec tunnels.`}
 			inline={false}
 		/>
 	</>
@@ -40,7 +36,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 		inline={false}
 	/>
 )}
-3. Select **IPsec tunnel** > **Next**, and fill in the following settings:
+2. Select **IPsec tunnel** > **Next**, and fill in the following settings:
 	   - **Name**: `unifi-gw-primary`
 	   - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
 	   - **Customer Endpoint**: This should be your UniFi Gateway's WAN IP (for example, `203.0.113.10`)
@@ -87,12 +83,9 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
-			inline={false}
-		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
-		<Markdown
-			text={`2. In **Tunnels**, find the IPsec tunnel you have just created.`}
+			text={`
+			1. Go to the [**IPsec/GRE tunnels**](https://dash.cloudflare.com/?to=/:account/magic-networks/connections/tunnels) page.
+			2. From the list, find the IPsec tunnel you have just created.`}
 			inline={false}
 		/>
 	</>
@@ -112,12 +105,8 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
-			inline={false}
-		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
-		<Markdown
-			text={`2. Go to **Routes** > **Create static route**.`}
+			text={`1. Go to the [**Routes**](https://dash.cloudflare.com/?to=/:account/magic-networks/routes/route-config) page.
+			2. Select **Create static route**.`}
 			inline={false}
 		/>
 	</>
