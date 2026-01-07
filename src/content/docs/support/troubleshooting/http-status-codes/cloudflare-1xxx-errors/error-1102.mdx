@@ -14,5 +14,15 @@ A Cloudflare Worker exceeds a [CPU time limit](/workers/observability/errors/). 
 
 ### Resolution
 
-Contact the developer of your Workers code to optimize code for a reduction in CPU usage in the active Workers scripts.
+Contact the developer of your Workers code to optimize code for a reduction in CPU usage in the active Workers scripts. Common optimization strategies include:
+
+- Reducing the number of iterations in loops
+- Optimizing JSON parsing operations
+- Caching computed values
+- Breaking up large operations into smaller chunks
+
+### Related errors
+
+- [Error 1101](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1101/) - Workers JavaScript runtime exception
+- [Error 500](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-500/) - Internal server error (can be caused by Workers CPU limits)
 
