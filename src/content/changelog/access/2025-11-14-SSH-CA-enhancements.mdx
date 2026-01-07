@@ -1,0 +1,13 @@
+---
+title: Generate Cloudflare Access SSH certificate authority (CA) directly from the Cloudflare dashboard
+description: Rather than generating the SSH CA using Cloudflare's API, you can now generate it directly from the dashboard.
+date: 2025-11-14
+products:
+	- access
+---
+
+SSH with [Cloudflare Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) allows you to use short-lived SSH certificates to eliminate SSH key management and reduce security risks associated with lost or stolen keys.
+
+Previously, users had to generate this certificate by using the Cloudflare API directly. With this update, certificates can now be created and referenced directly from the dashboard.
+
+![Navigate to Access controls and then Service credentials to see where you can generate an SSH CA](~/assets/images/changelog/access/SSH-CA-generation.png)
