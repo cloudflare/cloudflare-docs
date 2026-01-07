@@ -1,5 +1,4 @@
 ---
-
 summary: Learn how to query D1 from a Python Worker
 tags:
   - Python
@@ -87,10 +86,37 @@ class Default(WorkerEntrypoint):
     async def fetch(self, request):
         # Do anything else you'd like on request here!
 
-        # Query D1 - we'll list all tables in our database in this example
-        results = await self.env.DB.prepare("PRAGMA table_list").run()
-        # Return a JSON response
-        return Response.json(results)
+        try:
+            # Query D1 - we'll list all tables in our database in this example
+            # The run() method returns a dict with 'success', 'results', and 'error' keys
+            result = await self.env.DB.prepare("PRAGMA table_list").run()
+
+            # Always check if the query was successful before processing results
+            # This prevents returning undefined or partial data to the client
+            if not result.get("success"):
+                error_msg = result.get("error", "Unknown database error")
+                print(f"Database query failed: {error_msg}")
+                # Return an error response with appropriate status code
+                # Status 500 indicates a server error that the client can't fix
+                return Response.json(
+                    {"error": "Database query failed"},
+                    status=500
+                )
+
+            # Return a JSON response with the successful results
+            # Wrap results in an object for better API structure and future extensibility
+            return Response.json({"results": result.get("results")})
+
+        except Exception as e:
+            # Catch any unexpected errors (network issues, binding problems, etc.)
+            # Log the error for debugging but return a generic message to clients
+            print(f"Unexpected error: {str(e)}")
+            # Return a generic error message to avoid leaking implementation details
+            # This is a security best practice to prevent information disclosure
+            return Response.json(
+                {"error": "An unexpected error occurred"},
+                status=500
+            )
 
 ```
 

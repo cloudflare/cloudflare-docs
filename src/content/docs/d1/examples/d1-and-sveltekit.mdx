@@ -1,5 +1,4 @@
 ---
-
 summary: Query a D1 database from a SvelteKit application.
 tags:
   - SvelteKit
@@ -33,14 +32,51 @@ The example also shows you how to configure both your app-wide types within `src
 
 ```ts
 import type { RequestHandler } from "@sveltejs/kit";
+import { json, error } from "@sveltejs/kit";
 
-/** @type {import('@sveltejs/kit').RequestHandler} */
-export async function GET({ request, platform }) {
-	let result = await platform.env.DB.prepare(
-		"SELECT * FROM users LIMIT 5",
-	).run();
-	return new Response(JSON.stringify(result));
-}
+// Use the proper TypeScript type - remove incorrect JSDoc comment
+// The RequestHandler type already provides all the necessary type information
+export const GET: RequestHandler = async ({ platform }) => {
+	// Check if platform exists - it may be undefined during SSR or in development
+	// This prevents runtime errors when the Cloudflare adapter isn't active
+	if (!platform?.env?.DB) {
+		console.error("D1 database binding not found");
+		// Use SvelteKit's error helper for consistent error handling
+		// This provides proper status codes and error formatting
+		throw error(500, "Database not available");
+	}
+
+	try {
+		// Execute the query and destructure the response
+		// D1 returns success, error, and results properties
+		const {
+			results,
+			success,
+			error: dbError,
+		} = await platform.env.DB.prepare("SELECT * FROM users LIMIT 5").run();
+
+		// Always check the success flag before processing results
+		// This ensures the query executed without errors
+		if (!success) {
+			console.error("Database query failed:", dbError);
+			throw error(500, "Failed to query database");
+		}
+
+		// Use SvelteKit's json helper instead of raw Response
+		// This automatically sets correct headers and serializes data properly
+		return json({ results });
+	} catch (e) {
+		// Log the error for debugging
+		console.error("Error querying D1:", e);
+
+		// Re-throw if it's already a SvelteKit error, otherwise create a new one
+		// This maintains proper error handling through SvelteKit's error system
+		if (e && typeof e === "object" && "status" in e) {
+			throw e;
+		}
+		throw error(500, "An unexpected error occurred");
+	}
+};
 ```
 
 ```ts

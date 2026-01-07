@@ -1,5 +1,4 @@
 ---
-
 summary: Query your D1 database from a Remix application.
 tags:
   - Remix
@@ -28,7 +27,9 @@ The following example shows you how to define a Remix [`loader`](https://remix.r
 <Tabs> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-import type { LoaderFunction } from "@remix-run/cloudflare";
+// Use LoaderFunctionArgs for better type inference instead of the older LoaderFunction type
+// This allows TypeScript to automatically infer return types and improves type safety
+import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
@@ -36,21 +37,55 @@ interface Env {
   DB: D1Database;
 }
 
-export const loader: LoaderFunction = async ({ context, params }) => {
-  let env = context.cloudflare.env as Env;
+// Using async function instead of const with LoaderFunction provides better type inference
+// TypeScript will automatically infer the return type, making useLoaderData fully typed
+export async function loader({ context }: LoaderFunctionArgs) {
+  const env = context.cloudflare.env as Env;
 
-  let { results } = await env.DB.prepare("SELECT * FROM users LIMIT 5").run();
-  return json(results);
-};
+  try {
+    // Always wrap database queries in try-catch to handle potential errors gracefully
+    // D1 queries can fail due to network issues, syntax errors, or database constraints
+    const { results, success, error } = await env.DB.prepare(
+      "SELECT * FROM users LIMIT 5"
+    ).run();
+
+    // Check the success flag returned by D1 to ensure the query executed properly
+    // This prevents returning undefined or partial data to the client
+    if (!success) {
+      throw new Error(error || "Database query failed");
+    }
+
+    return json({ results });
+  } catch (error) {
+    // Return a proper error response with appropriate status code
+    // This helps clients distinguish between successful and failed requests
+    console.error("Database error:", error);
+    return json(
+      { error: "Failed to fetch users" },
+      { status: 500 }
+    );
+  }
+}
 
 export default function Index() {
-  const results = useLoaderData<typeof loader>();
+  // With the improved loader types, useLoaderData is now fully typed
+  // TypeScript knows the shape of the data returned from the loader
+  const data = useLoaderData<typeof loader>();
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Welcome to Remix</h1>
       <div>
-        A value from D1:
-        <pre>{JSON.stringify(results)}</pre>
+        {/* Check if we have an error before trying to display results */}
+        {/* This prevents runtime errors when the database query fails */}
+        {"error" in data ? (
+          <p style={{ color: "red" }}>Error: {data.error}</p>
+        ) : (
+          <>
+            A value from D1:
+            <pre>{JSON.stringify(data.results, null, 2)}</pre>
+          </>
+        )}
       </div>
     </div>
   );
