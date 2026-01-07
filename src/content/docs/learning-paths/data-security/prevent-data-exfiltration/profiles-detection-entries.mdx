@@ -1,0 +1,188 @@
+---
+title: Understanding profiles and detection entries
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+Data Loss Prevention (DLP) scans traffic flowing through Gateway to detect sensitive data patterns such as credit card numbers, Social Security numbers, and API keys. When DLP finds sensitive data, it triggers the action defined in your Gateway HTTP policy, such as blocking the request, allowing it with logging, or isolating it in a remote browser.
+
+To implement DLP:
+
+1. Define what to detect by creating detection entries using regular expressions, keywords, or exact data matches to identify specific sensitive data patterns.
+2. Group detections into profiles by adding detection entries to a DLP profile (for example, add credit card, bank account, and routing number detections to a _Financial Information_ profile).
+3. Enforce your DLP profiles with policies by creating a Gateway HTTP policy that uses the _DLP Profile_ selector to enforce the profile.
+
+This modular approach allows you to reuse profiles across multiple policies and easily adjust detection sensitivity by modifying the profile's detection entries.
+
+## DLP profiles
+
+A DLP profile is a collection of regular expressions and detection entries that define what sensitive data to look for. You can implement DLP profiles in Gateway HTTP policies to enforce data protection rules.
+
+DLP profiles can include:
+
+| Detection method            | Description                                                                                                |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Regular expressions (regex) | Pattern-based matching for structured data (for example, `\d{3}-\d{2}-\d{4}` for Social Security numbers). |
+| Keywords                    | Simple text matching (for example, "CONFIDENTIAL" or "INTERNAL ONLY").                                     |
+| Predefined detectors        | Built-in detectors for common data types like credit card numbers and API keys.                            |
+| Detection entries           | Custom uploaded data including:                                                                            |
+| Exact Data Match (EDM)      | Hashes sensitive data (like names or credit cards) before upload to protect privacy.                       |
+| Custom Wordlist (CWL)       | Uses plaintext lists for non-sensitive data (like project names or SKUs).                                  |
+| Documents                   | Document fingerprints for similarity matching.                                                             |
+| AI prompt topics            | Predefined AI prompt protection detections.                                                                |
+
+For more information on creating and uploading detection entries, refer to [Detection entries](/cloudflare-one/data-loss-prevention/detection-entries/).
+
+### Predefined profiles
+
+<Render
+	file="data-loss-prevention/predefined-profile"
+	product="cloudflare-one"
+/>
+
+Cloudflare provides predefined profiles for common data types, including:
+
+| Predefined profile                                      | Example detections                                                      |
+| ------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Financial Information                                   | Credit card numbers, bank account numbers, and routing numbers          |
+| Social Security, Insurance, Tax, and Identifier Numbers | Social Security numbers, driver's license numbers, and passport numbers |
+| Credentials and Secrets                                 | API keys, passwords, authentication tokens, and private keys            |
+| Health Information                                      | Medical diagnosis codes and drug names                                  |
+| AI Prompt                                               | Generative AI prompts containing PII, secrets, or financial data        |
+| Source Code                                             | Programming language patterns such as Python, JavaScript, and Java      |
+
+### Custom profiles
+
+<Render file="data-loss-prevention/custom-profile" product="cloudflare-one" />
+
+You can create custom profiles for:
+
+- Organization-specific data formats
+- Industry-specific sensitive information
+- Proprietary data patterns
+- Custom compliance requirements
+
+## How DLP profiles work
+
+When DLP scans content:
+
+1. DLP evaluates each detection method in the profile (including regex, keywords, predefined detectors, and other detection entries).
+2. If DLP finds a match in the traffic, it counts toward the match threshold.
+3. When DLP reaches the match threshold, the profile triggers.
+4. Gateway will apply the action defined in the policy (such as _Allow_, _Block_, or _Isolate_).
+
+## Profile settings
+
+Each DLP profile has configurable settings that affect how detection works.
+
+To change settings for a DLP profile:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Data loss prevention** > **Profiles**.
+2. Create a new profile or select the profile you want to modify and select **Edit**.
+3. In **Settings**, adjust the settings as needed.
+4. Select **Save profile**.
+
+### Match count
+
+Match count defines the number of detection entry matches required to trigger the profile. Matches do not have to be unique; the same pattern can appear multiple times and still count toward the threshold.
+
+| Match count | Threshold level  | Description                              |
+| ----------- | ---------------- | ---------------------------------------- |
+| 1-2         | Low threshold    | More sensitive, may have false positives |
+| 3-5         | Medium threshold | Balanced approach (recommended)          |
+| 6+          | High threshold   | Less sensitive, fewer false positives    |
+
+For example, a profile with a match count of 3 will trigger if it finds three instances of the same credit card number or three instances of different credit card numbers.
+
+To set match count, adjust the setting under **Match count greater than**.
+
+### OCR (Optical Character Recognition)
+
+Optical Character Recognition (OCR) detects text in images to apply DLP policies. OCR is useful for detecting sensitive data in screenshots, scanned documents, and photos of documents or screens.
+
+OCR supports files in `.jpg`, `.jpeg`, and `.png` formats with a size limit of 4 KB to 1 MB per image.
+
+To turn on OCR, turn on **Optical Character Recognition (OCR)**.
+
+### AI context analysis
+
+AI-powered analysis that considers the context around detected data to reduce false positives. DLP does not use your data to train the AI model. Data is only stored in memory.
+
+Context analysis helps distinguish:
+
+- Real credit card numbers vs. example numbers in documentation
+- Actual SSNs vs. random number sequences that match the pattern
+- Sensitive data vs. test data or placeholder values
+
+For example, `"Example credit card: 4111-1111-1111-1111"` would not trigger with context analysis enabled, but `"Payment card: 4111-1111-1111-1111"` would.
+
+To turn on AI context analysis, turn on **AI context analysis**.
+
+### Confidence threshold
+
+Confidence threshold defines the minimum confidence threshold required for a match to count. Cloudflare calculates confidence based on the presence of proximity keywords and validation checks.
+
+| Confidence threshold | Description                                                                                                                                   |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Low                  | Matches all confidence levels (low, medium, and high). Use this for maximum detection coverage, though it may result in more false positives. |
+| Medium               | Matches medium and high-confidence detections.                                                                                                |
+| High                 | Matches only high-confidence detections. Use this to minimize false positives.                                                                |
+
+For example, setting confidence threshold to **Medium** means DLP will ignore low-confidence matches, but medium and high-confidence matches will trigger the profile.
+
+To modify confidence threshold, adjust the setting under **Confidence threshold**.
+
+## DLP best practices
+
+When creating DLP profiles, consider the following best practices.
+
+### Start with predefined profiles
+
+1. Use predefined profiles for common data types
+2. Monitor detection rates and false positives
+3. Adjust match counts and confidence levels as needed
+4. Create custom profiles only when predefined profiles are insufficient
+
+### Organize profiles by use case
+
+Create separate profiles for different scenarios:
+
+| Use case                       | Description                       |
+| ------------------------------ | --------------------------------- |
+| Compliance profiles            | PCI, HIPAA, GDPR-specific data    |
+| Intellectual property profiles | Source code, trade secrets        |
+| Customer data profiles         | Customer PII, payment information |
+| Employee data profiles         | Employee SSNs, salary information |
+
+### Layer detection entries
+
+Combine multiple detection entry types in a single profile:
+
+- Regex patterns for structured data
+- Keywords for contextual clues
+- EDM for specific known values
+
+For example, a "Customer Data" profile might include:
+
+- Credit card regex pattern
+- Customer ID EDM dataset
+- Keywords like "customer" and "account number"
+
+### Test before enforcing
+
+1. Create the profile
+2. Use the profile in an _Allow_ policy with logging turned on
+3. Review logs for false positives
+4. Adjust settings based on results
+5. Change the policy action to _Block_ when ready
+
+## Next steps
+
+Now that you understand profiles and detection entries, you can:
+
+- Configure advanced DLP settings for optimal detection
+- Create Exact Data Match datasets for specific sensitive data
+- Integrate with Microsoft Information Protection labels
