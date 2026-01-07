@@ -1,0 +1,17 @@
+---
+pcx_content_type: configuration
+title: Block traffic based on the user agent
+head:
+  - tag: title
+    content: Block traffic from a specific user agent
+---
+
+This example custom rule blocks incoming requests based on the user agent by using the [`http.user_agent`](/ruleset-engine/rules-language/fields/reference/http.user_agent/) field in the rule expression.
+
+- **Expression**: `(http.user_agent eq "BadBot/1.0.2 (+http://bad.bot)")`
+- **Action**: _Block_
+
+To create a broader rule, you could use the `wildcard` operator, so that the custom rule matches similar user agent strings:
+
+- **Expression**: `(http.user_agent wildcard "*BadBot/*")`
+- **Action**: _Block_
