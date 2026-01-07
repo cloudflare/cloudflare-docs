@@ -507,15 +507,9 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 	<>
 		<Markdown
 			text={`
-			1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
-			`}
-			inline={false}
-		/>
-
-		<Markdown
-			text={`
-			2. Go to **BGP configuration**.
-			3. In **CF Account ASN**, enter Cloudflare's ASN.
+			1. Go to ${props.productName}'s <a href="${props.dashWanPath}">**WAN configuration**</a> page.
+			2. In **CF Account ASN**, enter Cloudflare's ASN.
+			3. Select **Update**.
 			4. Go to **Interconnects**.
 			`}
 			inline={false}
