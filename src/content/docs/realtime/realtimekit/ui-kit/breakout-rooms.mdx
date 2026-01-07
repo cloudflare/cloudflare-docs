@@ -5,106 +5,15 @@ sidebar:
   order: 10
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Render } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 <Render file="realtimekit/common/default-meeting-examples" product="realtime" />
 
-The breakout rooms feature, also known as connected meetings, is currently in beta, which means it is still being tested and evaluated, and may undergo some changes.
+<Render file="realtimekit/web/breakout-room-preface" product="realtime" />
 
-Breakout rooms allow participants of a meeting to split into smaller groups for targeted discussions and collaboration. With the rise of remote work and online learning, breakout rooms have become an essential tool for enhancing engagement and building community in virtual settings. They are an ideal choice for workshops, online classrooms, or when you need to speak privately with select participants outside the main meeting.
-
-:::note
-
-Breakout rooms are currently supported on web only.
-
-:::
-
-## Key features
-
-The following are some of the key features of RealtimeKit's breakout rooms:
-
-- Manage permissions and privileges of hosts and participants using presets
-- Hosts can create breakout rooms, assign participants, start and close the breakout rooms, and switch between rooms
-- Participants can start and stop video, interact with other participants using chat and polls, and mute/unmute audio
-- Record all breakout sessions individually like any other RealtimeKit meeting
-
-## Roles in a breakout room
-
-Roles in the breakout room are managed by presets.
-
-### Host
-
-Hosts can create breakout rooms, assign participants, start and close the breakout rooms, and switch between rooms.
-
-### Participants
-
-As a participant in a breakout room, you can:
-
-- **Switch to Parent Meeting** - Switch back to the main meeting (if you have the required permissions)
-- **Switch Connected Meetings** - Move from the main meeting to smaller, focused discussion groups (breakout rooms) for collaboration
-- **Collaborate** - Use tools such as chat and polls during breakout sessions
-
-## Audio and video
-
-Each breakout room functions as an independent meeting. When you switch to a breakout room from the main meeting, it automatically switches to the audio and video of the breakout session. You can mute or unmute your audio and start or stop your video at any time during the breakout session, just as you can in the main meeting.
-
-When the breakout session ends, your audio and video automatically switch back to the main meeting.
-
-- If your video was turned on during a breakout session, it will remain on when you return to the main session
-- Your audio will be muted when you switch back to the main meeting
-
-## Recording breakout sessions
-
-Each breakout session is a separate session. Each breakout session's recording is stored and managed separately, just like any other RealtimeKit meeting. For more information, refer to [Recording](/realtime/realtimekit/recording-guide/).
-
-## Prerequisites
-
-Before creating breakout rooms:
-
-- **For hosts** - Create a preset with Full Access permissions in Connected Meetings
-- **For participants** - Create a preset with Switch to Parent Meeting and/or Switch Connected Meetings permissions in Connected Meetings
-
-## Create a breakout room
-
-Breakout rooms allow the participants to split into separate sessions. The host can create breakout rooms, assign participants, start and close the breakout rooms.
-
-### Step 1: Create presets
-
-A preset is a set of permissions and UI configurations that are applied to hosts and participants. They determine the look, feel, and behavior of the breakout room.
-
-For breakout rooms, you must provide the following permissions for hosts and participants in Connected Meetings:
-
-#### Host
-
-The host preset should have **Full Access** permission in Connected Meetings. This allows the host to:
-
-- Create breakout rooms
-- Assign participants to rooms
-- Start and close breakout rooms
-- Switch between rooms
-
-#### Participants
-
-You can choose to provide the following permissions to participants:
-
-- **Switch Connected Meetings** - Allows participants to move between breakout rooms
-- **Switch to Parent Meeting** - Allows participants to return to the main meeting
-
-### Step 2: Save the preset
-
-1. Once you have made all the changes to your preset, click **Save**
-2. Enter a name for your preset and click **Save**
-3. Your preset is listed - click **Edit** to make any changes
-
-### Step 3: Create a meeting
-
-Create a RealtimeKit meeting using the [Create Meeting API](/api/resources/realtime_kit/subresources/meetings/). This API returns a unique identifier for your meeting.
-
-### Step 4: Add participants
-
-After creating the meeting, add each participant using the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/). The `presetName` created earlier must be passed in the body of the Add Participant API request.
-
-### Step 5: Start breakout room
+### Start breakout room
 
 1. In your RealtimeKit meeting, click **Breakout Rooms**
 2. In the Create Breakout dialog, add the number of rooms you want and click **Create**
@@ -139,59 +48,13 @@ To assign participants manually:
 
 After setting up breakout rooms via the API, you need to integrate them into your application using the RealtimeKit SDK.
 
-### Step 1: Install the SDK
+<RTKSDKSelector />
 
-Install the RealtimeKit SDK:
-
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
-Add this script tag to your HTML file:
-
-```html
-<script type="module">
-	import { defineCustomElements } from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui@latest/loader/index.es2017.js";
-	defineCustomElements();
-</script>
-```
-
-</TabItem>
-<TabItem label="React">
-
-```bash
-npm install @cloudflare/realtimekit-react @cloudflare/realtimekit-react-ui
-```
-
-</TabItem>
-</Tabs>
-
-### Step 2: Initialize the SDK with breakout rooms support
+### Initialize the SDK with breakout rooms support
 
 Initialize the SDK and add an event handler for breakout rooms:
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
-```html
-<script type="module">
-	import RealtimeKitClient from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js";
-
-	let meeting = await RealtimeKitClient.init({
-		authToken: "<participant_auth_token>",
-	});
-
-	// Add event handler for breakout rooms
-	meeting.connectedMeetings.on("meetingChanged", (newMeeting) => {
-		meeting = newMeeting;
-		document.querySelector("rtk-meeting").meeting = meeting;
-	});
-</script>
-```
-
-The `meetingChanged` event is triggered when a participant switches between the main meeting and breakout rooms. Update the meeting object reference when this event fires.
-
-</TabItem>
-<TabItem label="React">
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 import {
@@ -233,47 +96,75 @@ function App() {
 
 The `meetingChanged` event is triggered when a participant switches between the main meeting and breakout rooms. In React, the meeting object is automatically managed by the provider.
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
-### Step 3: Render the meeting UI
-
-Use the default meeting UI component which includes built-in breakout room support:
-
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 ```html
-<body>
-	<rtk-meeting id="my-meeting"></rtk-meeting>
+<script type="module">
+	import RealtimeKitClient from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js";
 
-	<script type="module">
-		import RealtimeKitClient from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js";
+	let meeting = await RealtimeKitClient.init({
+		authToken: "<participant_auth_token>",
+	});
 
+	// Add event handler for breakout rooms
+	meeting.connectedMeetings.on("meetingChanged", (newMeeting) => {
+		meeting = newMeeting;
+		document.querySelector("rtk-meeting").meeting = meeting;
+	});
+</script>
+```
+
+The `meetingChanged` event is triggered when a participant switches between the main meeting and breakout rooms. Update the meeting object reference when this event fires.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```ts
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import RealtimeKitClient from '@cloudflare/realtimekit';
+import { RtkMeeting } from '@cloudflare/realtimekit-angular';
+
+@Component({
+	selector: 'app-root',
+	template: `<rtk-meeting #myid [showSetupScreen]="true"></rtk-meeting>`
+})
+export class AppComponent implements AfterViewInit {
+	@ViewChild('myid') meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
+
+	async ngAfterViewInit() {
 		let meeting = await RealtimeKitClient.init({
-			authToken: "<participant_auth_token>",
+			authToken: '<participant_auth_token>',
 		});
 
 		// Add event handler for breakout rooms
-		meeting.connectedMeetings.on("meetingChanged", (newMeeting) => {
+		meeting.connectedMeetings.on('meetingChanged', (newMeeting) => {
 			meeting = newMeeting;
-			document.querySelector("rtk-meeting").meeting = meeting;
+			if (this.meetingComponent) {
+				this.meetingComponent.meeting = meeting;
+			}
 		});
 
-		document.querySelector("rtk-meeting").showSetupScreen = true;
-		document.querySelector("rtk-meeting").meeting = meeting;
-	</script>
-</body>
+		this.rtkMeeting = meeting;
+		if (this.meetingComponent) {
+			this.meetingComponent.meeting = meeting;
+		}
+	}
+}
 ```
 
-:::note
+The `meetingChanged` event is triggered when a participant switches between the main meeting and breakout rooms. Update the meeting object reference when this event fires.
 
-The Default Meeting UI (`rtk-meeting` component) automatically joins the session, so you do not need to call `meeting.join()`.
+</RTKCodeSnippet>
 
-:::
+### Render the meeting UI
 
-</TabItem>
-<TabItem label="React">
+Use the default meeting UI component which includes built-in breakout room support:
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 import {
@@ -317,10 +208,94 @@ The Default Meeting UI (`RtkMeeting` component) automatically joins the session,
 
 :::
 
-</TabItem>
-</Tabs>
+The `showSetupScreen` property controls whether the setup screen is displayed, allowing participants to preview their audio and video before joining the session.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```html
+<body>
+	<rtk-meeting id="my-meeting"></rtk-meeting>
+
+	<script type="module">
+		import RealtimeKitClient from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js";
+
+		let meeting = await RealtimeKitClient.init({
+			authToken: "<participant_auth_token>",
+		});
+
+		// Add event handler for breakout rooms
+		meeting.connectedMeetings.on("meetingChanged", (newMeeting) => {
+			meeting = newMeeting;
+			document.querySelector("rtk-meeting").meeting = meeting;
+		});
+
+		document.querySelector("rtk-meeting").showSetupScreen = true;
+		document.querySelector("rtk-meeting").meeting = meeting;
+	</script>
+</body>
+```
+
+:::note
+
+The Default Meeting UI (`rtk-meeting` component) automatically joins the session, so you do not need to call `meeting.join()`.
+
+:::
 
 The `showSetupScreen` property controls whether the setup screen is displayed, allowing participants to preview their audio and video before joining the session.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```html
+<rtk-meeting #myid [showSetupScreen]="true"></rtk-meeting>
+```
+
+```ts
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import RealtimeKitClient from '@cloudflare/realtimekit';
+import { RtkMeeting } from '@cloudflare/realtimekit-angular';
+
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html'
+})
+export class AppComponent implements AfterViewInit {
+	@ViewChild('myid') meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
+
+	async ngAfterViewInit() {
+		let meeting = await RealtimeKitClient.init({
+			authToken: '<participant_auth_token>',
+		});
+
+		// Add event handler for breakout rooms
+		meeting.connectedMeetings.on('meetingChanged', (newMeeting) => {
+			meeting = newMeeting;
+			if (this.meetingComponent) {
+				this.meetingComponent.meeting = meeting;
+			}
+		});
+
+		this.rtkMeeting = meeting;
+		if (this.meetingComponent) {
+			this.meetingComponent.meeting = meeting;
+		}
+	}
+}
+```
+
+:::note
+
+The Default Meeting UI (`rtk-meeting` component) automatically joins the session, so you do not need to call `meeting.join()`.
+
+:::
+
+The `showSetupScreen` property controls whether the setup screen is displayed, allowing participants to preview their audio and video before joining the session.
+
+</RTKCodeSnippet>
 
 ## Next steps
 

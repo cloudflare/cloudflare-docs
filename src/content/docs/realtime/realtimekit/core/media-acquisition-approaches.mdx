@@ -1,0 +1,337 @@
+---
+pcx_content_type: how-to
+title: Media Acquisition Approaches
+slug: realtime/realtimekit/core/media-acquisition-approaches
+sidebar:
+  order: 16
+---
+
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+:::note
+This guide assumes that you are already familiar with [initializing the RealtimeKit SDK](/realtime/realtimekit/core/).
+:::
+
+RealtimeKit provides flexible approaches for acquiring and managing participant media (audio and video tracks). By default, the SDK handles media acquisition automatically when you initialize it. However, certain use cases require accessing media tracks before or independently of SDK initialization.
+
+## When to use custom media acquisition
+
+Custom media acquisition is useful when you need to:
+
+- **Validate participants before joining**: Pass audio and video through verification services (for example, proctoring systems in EdTech assessments).
+- **Pre-process media streams**: Apply filters, transformations, or quality checks before the session starts.
+- **Integrate with external services**: Send media to third-party APIs for analysis or compliance checks.
+- **Reuse existing tracks**: Use media tracks acquired elsewhere in your application.
+
+:::caution
+Most applications do not need custom media acquisition. If you are unsure whether your use case requires this feature, use the standard SDK initialization approach. Custom media management adds complexity and requires careful handling of browser media APIs.
+:::
+
+## Approach 1: SDK-first (recommended)
+
+Initialize the SDK first, then access media tracks from the meeting object. This is the simplest approach and suitable for most use cases.
+
+**When to use**: You need to access media tracks after SDK initialization for logging, analysis, or integration with other services.
+
+<RTKSDKSelector />
+
+<RTKCodeSnippet id="web-react">
+
+```ts
+import { useEffect } from 'react';
+import { useRealtimeKitClient } from '@cloudflare/realtimekit-react';
+
+export default function App() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+
+    useEffect(() => {
+    	initMeeting({ authToken: "<auth-token>" });
+    }, []);
+
+    useEffect(() => {
+        if(meeting){
+            console.log('audioTrack:: ', meeting.self.audioTrack);
+            console.log('videoTrack:: ', meeting.self.videoTrack);
+        }
+
+    }, [meeting])
+
+    return <div>Your meeting component comes here</div>;
+
+}
+
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+const authToken = "<auth-token>";
+const meeting = await RealtimeKitClient.init({
+	authToken,
+});
+
+console.log("audioTrack:: ", meeting.self.audioTrack);
+console.log("videoTrack:: ", meeting.self.videoTrack);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```ts
+class AppComponent {
+	title = "MyProject";
+	@ViewChild("myid") meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
+
+	async ngAfterViewInit() {
+		const meeting = await RealtimeKitClient.init({
+			authToken: "<auth-token>",
+		});
+
+		console.log("audioTrack:: ", meeting.self.audioTrack);
+		console.log("videoTrack:: ", meeting.self.videoTrack);
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+## Approach 2: Media-first
+
+<RTKSDKSelector />
+
+<RTKCodeSnippet id="web-react">
+
+Initialize the media handler first using `RealtimeKitClient.initMedia()`, then pass it to the SDK during initialization. The SDK reuses the acquired media tracks without requesting permissions again.
+
+**When to use**: You need to acquire media tracks minutes in advance before joining a session. This is particularly useful for EdTech assessment platforms where you want to enable proctoring or tracking systems early without managing WebSocket connections or handling media disconnects that come with full SDK initialization.
+
+**Benefits**:
+
+- SDK manages media acquisition and browser compatibility.
+- Participants are not prompted for permissions twice.
+- Media tracks are automatically synchronized between your validation service and the SDK.
+- Acquire media early without the complexity of managing SDK connection state.
+
+```ts
+import { useEffect, useState } from 'react';
+import RealtimeKitClient from '@cloudflare/realtimekit';
+import type { RTKSelfMedia } from '@cloudflare/realtimekit';
+import { useRealtimeKitClient } from '@cloudflare/realtimekit-react';
+
+export default function App() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+    const [media, setMedia] = useState<RTKSelfMedia>();
+    const [readyToInitializeSDK, setReadyToInitializeSDK] = useState(false);
+
+    useEffect(() => {
+        async function initMediaWithoutSDKInitialization(){
+            const mediaFromSDK = await RealtimeKitClient.initMedia({
+              video : true,
+              audio: true,
+            });
+
+            setMedia(mediaFromSDK);
+
+            console.log('audioTrack', mediaFromSDK.audioTrack);
+            console.log('videoTrack', mediaFromSDK.videoTrack);
+
+            setTimeout(() => {
+                // Once you are ready to initialize the SDK, set this to true
+                // To mimic a real world scenario, we are setting it to true after 5 seconds
+                setReadyToInitializeSDK(true);
+            }, 5000);
+        }
+        if(!media){
+            initMediaWithoutSDKInitialization();
+        }
+    }, [media]);
+
+    useEffect(() => {
+        if(meeting){
+            return;
+        }
+        if(!readyToInitializeSDK){
+            return;
+        }
+        if(!media){
+            return;
+        }
+    	initMeeting({ authToken: "<auth-token>", defaults: { mediaHandler: media } });
+    }, [meeting, readyToInitializeSDK, media]);
+
+    return <div>Your meeting component comes here</div>;
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+Initialize the media handler first using `RealtimeKitClient.initMedia()`, then pass it to the SDK during initialization. The SDK reuses the acquired media tracks without requesting permissions again.
+
+**When to use**: You need to acquire media tracks minutes in advance before joining a session. This is particularly useful for EdTech assessment platforms where you want to enable proctoring or tracking systems early without managing WebSocket connections or handling media disconnects that come with full SDK initialization.
+
+**Benefits**:
+
+- SDK manages media acquisition and browser compatibility.
+- Participants are not prompted for permissions twice.
+- Media tracks are automatically synchronized between your validation service and the SDK.
+- Acquire media early without the complexity of managing SDK connection state.
+
+```js
+const mediaFromSDK = await RealtimeKitClient.initMedia({
+	video: true,
+	audio: true,
+});
+
+setTimeout(() => {
+	const authToken = "<auth-token>";
+	RealtimeKitClient.init({
+		authToken,
+		defaults: {
+			mediaHandler: mediaFromSDK,
+		},
+	}).then((meeting) => {
+		// next - meeting.join();
+	});
+}, 5000);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+Initialize the media handler first using `RealtimeKitClient.initMedia()`, then pass it to the SDK during initialization. The SDK reuses the acquired media tracks without requesting permissions again.
+
+**When to use**: You need to acquire media tracks minutes in advance before joining a session. This is particularly useful for EdTech assessment platforms where you want to enable proctoring or tracking systems early without managing WebSocket connections or handling media disconnects that come with full SDK initialization.
+
+**Benefits**:
+
+- SDK manages media acquisition and browser compatibility.
+- Participants are not prompted for permissions twice.
+- Media tracks are automatically synchronized between your validation service and the SDK.
+- Acquire media early without the complexity of managing SDK connection state.
+
+```ts
+class AppComponent {
+	title = "MyProject";
+	@ViewChild("myid") meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
+
+	async ngAfterViewInit() {
+		const mediaFromSDK = await RealtimeKitClient.initMedia({
+			video: true,
+			audio: true,
+		});
+
+		setTimeout(() => {
+			const authToken = "<auth-token>";
+			RealtimeKitClient.init({
+				authToken,
+				defaults: {
+					mediaHandler: mediaFromSDK,
+				},
+			}).then((meeting) => {
+				// next - meeting.join();
+			});
+		}, 5000);
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+## Approach 3: Self-managed (advanced)
+
+Acquire and manage media tracks independently using browser APIs, then pass them to the SDK when enabling audio and video.
+
+**When to use**: You have existing media management infrastructure or need complete control over media acquisition.
+
+**Considerations**:
+
+- You are responsible for handling browser compatibility and API changes.
+- SDK updates will not automatically fix media acquisition issues in your code.
+- Requires deeper knowledge of WebRTC and browser media APIs.
+
+Initialize the SDK with audio and video disabled, then enable them with your custom tracks:
+
+<RTKSDKSelector />
+
+<RTKCodeSnippet id="web-react">
+
+```ts
+import { useEffect } from 'react';
+import { useRealtimeKitClient } from '@cloudflare/realtimekit-react';
+
+export default function App() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+
+    useEffect(() => {
+    	initMeeting({ authToken: "<auth-token>" });
+    }, []);
+
+    useEffect(() => {
+        async function setupMediaTracks(){
+            if (meeting) {
+                let audioTrack; // Put the audioTrack that you acquired from browser here
+                let videoTrack; // Put the videoTrack that you acquired from browser here
+                await meeting.self.enableAudio(audioTrack);
+                await meeting.self.enableVideo(videoTrack);
+                // await meeting.self.join();
+            }
+        }
+        setupMediaTracks();
+
+    }, [meeting])
+
+    return <div>Your meeting component comes here</div>;
+
+}
+
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+const authToken = "<auth-token>";
+const meeting = await RealtimeKitClient.init({
+	authToken,
+});
+
+let audioTrack; // Put the audioTrack that you acquired from browser here
+let videoTrack; // Put the videoTrack that you acquired from browser here
+await meeting.self.enableAudio(audioTrack);
+await meeting.self.enableVideo(videoTrack);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```ts
+class AppComponent {
+	title = "MyProject";
+	@ViewChild("myid") meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
+
+	async ngAfterViewInit() {
+		const meeting = await RealtimeKitClient.init({
+			authToken: "<auth-token>",
+		});
+
+		let audioTrack; // Put the audioTrack that you acquired from browser here
+		let videoTrack; // Put the videoTrack that you acquired from browser here
+		await meeting.self.enableAudio(audioTrack);
+		await meeting.self.enableVideo(videoTrack);
+	}
+}
+```
+
+</RTKCodeSnippet>
