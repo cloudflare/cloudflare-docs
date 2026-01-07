@@ -32,34 +32,26 @@ The following examples show how to access a D1 database bound to `DB` from both 
 ```ts
 import { Hono } from "hono";
 
-// This ensures c.env.DB is correctly typed
 type Bindings = {
 	DB: D1Database;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-// Accessing D1 is via the c.env.YOUR_BINDING property
 app.get("/query/users/:id", async (c) => {
 	const userId = c.req.param("id");
 
-	// Validate input: user IDs should be numeric to prevent SQL injection attempts
-	// Even though we use prepared statements with bind(), validating input is a best practice
 	if (!userId || isNaN(Number(userId))) {
 		return c.json({ error: "Invalid user ID" }, 400);
 	}
 
 	try {
-		// Destructure all relevant properties from the D1 response
-		// The success flag tells us if the query executed without errors
 		const { results, success, error } = await c.env.DB.prepare(
 			"SELECT * FROM users WHERE user_id = ?",
 		)
 			.bind(userId)
 			.run();
 
-		// Always check the success flag before returning results
-		// This ensures we don't return undefined or partial data
 		if (!success) {
 			console.error("Database query failed:", error);
 			return c.json({ error: "Database query failed" }, 500);
@@ -67,15 +59,11 @@ app.get("/query/users/:id", async (c) => {
 
 		return c.json(results);
 	} catch (e) {
-		// Log the full error for debugging but return a generic message to clients
-		// This prevents leaking implementation details that could be security risks
 		console.error("Unexpected error querying database:", e);
 		return c.json({ error: "An unexpected error occurred" }, 500);
 	}
 });
 
-// Export our Hono app: Hono automatically exports a
-// Workers 'fetch' handler for you
 export default app;
 ```
 
@@ -85,35 +73,26 @@ export default app;
 import { Hono } from "hono";
 import { handle } from "hono/cloudflare-pages";
 
-// Add TypeScript types for Pages Functions bindings
-// This ensures type safety when accessing environment bindings
 type Bindings = {
 	DB: D1Database;
 };
 
 const app = new Hono<{ Bindings: Bindings }>().basePath("/api");
 
-// Accessing D1 is via the c.env.YOUR_BINDING property
 app.get("/query/users/:id", async (c) => {
 	const userId = c.req.param("id");
 
-	// Validate input: user IDs should be numeric to prevent SQL injection attempts
-	// Even though we use prepared statements with bind(), validating input is a best practice
 	if (!userId || isNaN(Number(userId))) {
 		return c.json({ error: "Invalid user ID" }, 400);
 	}
 
 	try {
-		// Destructure all relevant properties from the D1 response
-		// The success flag tells us if the query executed without errors
 		const { results, success, error } = await c.env.DB.prepare(
 			"SELECT * FROM users WHERE user_id = ?",
 		)
 			.bind(userId)
 			.run();
 
-		// Always check the success flag before returning results
-		// This ensures we don't return undefined or partial data
 		if (!success) {
 			console.error("Database query failed:", error);
 			return c.json({ error: "Database query failed" }, 500);
@@ -121,14 +100,11 @@ app.get("/query/users/:id", async (c) => {
 
 		return c.json(results);
 	} catch (e) {
-		// Log the full error for debugging but return a generic message to clients
-		// This prevents leaking implementation details that could be security risks
 		console.error("Unexpected error querying database:", e);
 		return c.json({ error: "An unexpected error occurred" }, 500);
 	}
 });
 
-// Export the Hono instance as a Pages onRequest function
 export const onRequest = handle(app);
 ```
 
