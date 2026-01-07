@@ -3,6 +3,8 @@ pcx_content_type: reference
 title: Scans and penetration testing policy
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 Customers may conduct scans and penetration tests (with certain restrictions) on application and network-layer aspects of their own assets, such as their [zones](/fundamentals/concepts/accounts-and-zones/#zones) within their Cloudflare accounts, provided they adhere to Cloudflare's policy.
 
 ## Permitted targets
@@ -33,12 +35,14 @@ Before starting a penetration test on your [zones](/fundamentals/concepts/accoun
    - **Paranoia Level**: _PL4_
    - **Score threshold**: _High - 25 and higher_
 
-3. [Create a custom rule](/waf/custom-rules/create-dashboard/) based on the WAF attack score to block requests considered as an attack (WAF attack score between 1 and 20). Refer to the [WAF attack score](/waf/detections/attack-score/#1-create-a-custom-rule) documentation for an example.
+3. [Create a custom rule](/waf/custom-rules/create-dashboard/) based on the [WAF attack score](/waf/detections/attack-score/) to block requests considered as an attack (WAF attack score between 1 and 20). Refer to the [WAF attack score](/waf/detections/attack-score/#1-create-a-custom-rule) documentation for an example.
 
-4. On Pro and Business plans without Bot Management, [enable Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/#enable-super-bot-fight-mode).<br/>
+4. [Create a custom rule](/waf/custom-rules/create-dashboard/) based on [malicious uploads detection](/waf/detections/malicious-uploads/example-rules/) to block requests containing <GlossaryTooltip term="content object">content objects</GlossaryTooltip> considered malicious. Refer to [Example rules](/waf/detections/malicious-uploads/example-rules/#block-requests-to-uri-path-with-a-malicious-content-object) for examples of custom rules used to mitigate this kind of threat.
+
+5. On Pro and Business plans without Bot Management, [enable Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/#enable-super-bot-fight-mode).<br/>
    Customers with access to Bot Management should make sure that [Bot Management is enabled](/bots/get-started/bot-management/#enable-bot-management-for-enterprise) (it is enabled by default on entitled zones).
 
-5. [Create rate limiting rules](/waf/rate-limiting-rules/create-zone-dashboard/) to protect key endpoints of the zone being tested. Refer to [Rate limiting rule examples](/waf/rate-limiting-rules/use-cases/) and [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) for example configurations.
+6. [Create rate limiting rules](/waf/rate-limiting-rules/create-zone-dashboard/) to protect key endpoints of the zone being tested. Refer to [Rate limiting rule examples](/waf/rate-limiting-rules/use-cases/) and [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) for example configurations.
 
 Be aware that other Cloudflare security and performance features, configurations, and rules active on your account or zone can influence test results.
 
