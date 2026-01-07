@@ -167,6 +167,8 @@ Snapshot expiration automatically removes old table snapshots to reduce metadata
 Snapshot expiration commands are available as of Wrangler version 4.56.0.
 :::
 
+To enable snapshot expiration on your catalog, run the [`r2 bucket catalog snapshot-expiration enable` command](/workers/wrangler/commands/#r2-bucket-catalog-snapshot-expiration-enable):
+
 ```bash
 # Enable catalog-level snapshot expiration (all tables)
 npx wrangler r2 bucket catalog snapshot-expiration enable <BUCKET_NAME> \
