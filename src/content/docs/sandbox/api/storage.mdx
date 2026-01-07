@@ -43,6 +43,12 @@ await sandbox.mountBucket('my-r2-bucket', '/data', {
 await sandbox.exec('ls', { args: ['/data'] });
 await sandbox.writeFile('/data/results.json', JSON.stringify(data));
 
+// Mount subdirectory within bucket using prefix
+await sandbox.mountBucket('my-bucket', '/uploads', {
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+	prefix: '/user-data/uploads/'
+});
+
 // Mount with explicit credentials
 await sandbox.mountBucket('my-bucket', '/storage', {
 	endpoint: 'https://s3.amazonaws.com',
@@ -112,6 +118,7 @@ interface MountBucketOptions {
 	provider?: BucketProvider;
 	credentials?: BucketCredentials;
 	readOnly?: boolean;
+	prefix?: string;
 	s3fsOptions?: Record<string, string>;
 }
 ```
@@ -131,6 +138,11 @@ interface MountBucketOptions {
 
 - `readOnly` (optional) - Mount in read-only mode
   - Default: `false`
+
+- `prefix` (optional) - Subdirectory within the bucket to mount
+  - Only contents under this prefix will be visible at the mount point
+  - Must start and end with `/` (e.g., `/data/uploads/`)
+  - Default: Mount entire bucket
 
 - `s3fsOptions` (optional) - Advanced s3fs mount flags
   - Example: `{ 'use_cache': '/tmp/cache' }`
