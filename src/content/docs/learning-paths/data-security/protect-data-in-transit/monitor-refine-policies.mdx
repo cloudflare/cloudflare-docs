@@ -2,90 +2,77 @@
 title: Monitor and refine policies
 pcx_content_type: learning-unit
 sidebar:
-  order: 8
+  order: 7
 ---
 
 Continuous monitoring and refinement ensures your data protection policies remain effective while minimizing false positives and user friction.
 
 ## Monitor policy effectiveness
 
+Cloudflare One provides multiple ways to monitor policy effectiveness.
+
 ### Gateway Analytics
 
-Use Gateway Analytics to track policy performance:
+To use Gateway Analytics to track policy performance:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics** > **Gateway**.
-2. Review key metrics:
-   - **Total requests**: Overall traffic volume
-   - **Blocked requests**: How many requests are being blocked
-   - **Top blocked categories**: What types of content are being blocked most
-   - **DLP detections**: How often sensitive data is detected
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights**.
+2. Select **Dashboards**.
+3. Select **HTTP request analytics**.
+4. Review key metrics:
+
+   | Metric                  | Description                                    |
+   | ----------------------- | ---------------------------------------------- |
+   | HTTP Requests over time | Time series view of HTTP requests              |
+   | Top Actions             | Most common policy actions                     |
+   | Top Blocked Users       | Users triggering blocks most frequently        |
+   | Top Bandwidth Consumers | Users or applications using the most bandwidth |
+   | Top Devices             | Devices generating the most traffic            |
 
 ### HTTP logs
 
-Review detailed logs for specific policy actions:
+To review detailed logs for specific policy actions:
 
-1. Go to **Logs** > **Gateway** > **HTTP**.
-2. Filter logs by:
-   - **Policy name**: See activity for specific policies
-   - **Action**: View blocked, allowed, or isolated requests
-   - **DLP Profile**: See which data types are being detected
-   - **User**: Identify users triggering policies most frequently
+1. Go to **Insights** > **Logs**.
+2. Choose **HTTP request logs**.
+3. Filter logs by:
+
+   | Filter | Description                                 |
+   | ------ | ------------------------------------------- |
+   | Action | View blocked, allowed, or isolated requests |
+   | Policy | See activity for specific policies          |
 
 ### Create custom filters
 
-Save common log queries for quick access:
+You can save common log queries for quick access. For example:
 
-- All DLP blocks in the last 24 hours
 - Tenant control violations by user
 - AI application access attempts
 - File uploads to personal cloud storage
+- Blocked requests by application
 
 ## Identify false positives
 
-False positives occur when legitimate activity is incorrectly flagged or blocked.
+False positives occur when Gateway incorrectly flags or blocks legitimate activity.
 
 ### Common false positive scenarios
 
-- **DLP detections**: Test data or example numbers flagged as sensitive
-- **Tenant control**: Legitimate access to personal accounts blocked
-- **Application blocking**: Business-critical applications incorrectly categorized
-- **File type blocking**: Necessary file transfers blocked
+Common false positive scenarios include:
+
+| Scenario             | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| Tenant control       | Legitimate access to personal accounts blocked         |
+| Application blocking | Business-critical applications incorrectly categorized |
+| File type blocking   | Necessary file transfers blocked                       |
+| Content filtering    | Legitimate content incorrectly categorized             |
 
 ### Investigate false positives
+
+To investigate false positives for Gateway:
 
 1. Review the specific log entry
 2. Examine the matched content (if available)
 3. Determine if the detection was correct but the action was too strict
 4. Identify if the policy needs refinement or if an exception is needed
-
-## Refine DLP policies
-
-### Adjust detection sensitivity
-
-**Reduce false positives:**
-
-- Increase match count thresholds
-- Enable context analysis
-- Add exceptions for specific applications or users
-- Refine custom regex patterns
-
-**Increase detection accuracy:**
-
-- Use Exact Data Match (EDM) for specific datasets
-- Combine multiple DLP profiles in a single policy
-- Add application-specific context to policies
-
-### Create DLP exceptions
-
-Allow specific scenarios while maintaining overall protection:
-
-1. Create an allow policy that comes before your block policy:
-   - **Name**: Allow test data uploads to development environment
-   - **Traffic**:
-     - Application is `Internal Dev Portal`
-     - AND DLP Profile is `Financial Information`
-   - **Action**: Allow
-2. Ensure this policy is ordered before the broader DLP block policy
 
 ## Refine HTTP policies
 
@@ -101,7 +88,7 @@ Based on monitoring, you may need to:
 
 Maintain lists of approved and blocked applications:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Lists**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Gateway** > **Lists**.
 2. Update lists based on:
    - New approved applications
    - Newly discovered shadow IT
@@ -112,7 +99,7 @@ Maintain lists of approved and blocked applications:
 
 ### Investigate high-risk events
 
-When users trigger DLP or security policies:
+When users trigger security policies:
 
 1. Review the specific event in Gateway logs
 2. Determine if it was:
@@ -139,7 +126,7 @@ Send Gateway logs to your Security Information and Event Management (SIEM) syste
 
 ### Configure Logpush
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
 2. Create a Logpush job for Gateway HTTP logs.
 3. Configure destination such as Splunk, Datadog, or S3.
 

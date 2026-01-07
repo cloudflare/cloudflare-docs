@@ -2,7 +2,7 @@
 title: Configure advanced DLP settings
 pcx_content_type: learning-unit
 sidebar:
-  order: 3
+  order: 4
 ---
 
 Advanced DLP settings help you fine-tune detection accuracy, reduce false positives, and optimize performance for your specific use cases.
@@ -36,9 +36,11 @@ Enable OCR when:
 
 ### Configure OCR
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP Profiles**.
-2. Select a profile or create a new one.
-3. In **Advanced settings**, enable **Scan images with OCR**.
+To configure settings for a DLP profile:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
+2. Choose a profile and select **Edit**.
+3. In **Settings**, enable **Scan images with OCR**.
 4. Select **Save profile**.
 
 ### OCR best practices
@@ -48,38 +50,34 @@ Enable OCR when:
 - Combine with other detection methods for comprehensive coverage
 - Consider file size limits to avoid processing very large images
 
-## Confidence levels
+## Confidence threshold
 
-Confidence levels indicate how certain the DLP engine is that detected content is actually sensitive data.
+When you set the confidence threshold, you define the validation level required for predefined entry matches to trigger a policy action. Setting levels include _Low_, _Medium_, and _High_. Lower levels indicate a higher tolerance for false positives.
 
-### Understanding confidence scores
+| Setting level | Description                                                               |
+| ------------- | ------------------------------------------------------------------------- |
+| Low           | Regex-based detection with high tolerance for false positives             |
+| Medium        | Additional contextual detection with medium tolerance for false positives |
+| High          | Rigorous contextual detection with low tolerance for false positives      |
 
-- **High (80-100)**: Very likely to be real sensitive data
-  - Example: Valid credit card number that passes Luhn check
-- **Medium (50-79)**: Probably sensitive data
-  - Example: Number sequence matching SSN pattern in a business context
-- **Low (0-49)**: Possibly sensitive data
-  - Example: Number sequence matching SSN pattern in a test file
+### Configure confidence threshold
 
-### Configure confidence thresholds
+To configure settings for a DLP profile:
 
-Set the minimum confidence level required for a match:
-
-1. Edit a DLP profile's **Advanced settings**.
-2. Set **Minimum confidence level**:
-   - **High (80)**: Fewer false positives, may miss some real data
-   - **Medium (50)**: Balanced approach (recommended)
-   - **Low (0)**: Maximum coverage, more false positives
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
+2. Choose a profile and select **Edit**.
+3. In **Settings**, set your desired confidence threshold.
+4. Select **Save profile**.
 
 ### When to adjust confidence levels
 
-**Increase confidence threshold (to 80+) when:**
+**Increase confidence threshold (to High) when:**
 
 - Experiencing too many false positives
 - Users complain about legitimate content being blocked
 - Operating in audit mode and seeing mostly non-sensitive matches
 
-**Decrease confidence threshold (to 50 or lower) when:**
+**Decrease confidence threshold (to Low) when:**
 
 - Missing real sensitive data in logs
 - Operating in highly regulated environment
@@ -87,13 +85,22 @@ Set the minimum confidence level required for a match:
 
 ## Match count
 
-Match count determines how many detection entry matches are required to trigger a DLP profile.
+Match count determines how many DLP matches trigger a valid detection:
+
+| Match count | Threshold level | Description                              |
+| ----------- | --------------- | ---------------------------------------- |
+| 1-2 matches | Low             | More sensitive, may have false positives |
+| 3-5 matches | Medium          | Balanced approach                        |
+| 6+ matches  | High            | Less sensitive, fewer false positives    |
 
 ### Configure match count
 
-1. Edit a DLP profile.
-2. Set **Match count** to the desired number (typically 1-10).
-3. Select **Save profile**.
+To configure settings for a DLP profile:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
+2. Choose a profile and select **Edit**.
+3. In **Settings**, set **Match count** to the desired number (typically 1-10).
+4. Select **Save profile**.
 
 ### Match count strategies
 
@@ -128,9 +135,9 @@ Different detection entries can count toward the threshold:
 
 If a file contains a credit card, an SSN, and the word "confidential", the match count of 3 is reached and the profile triggers.
 
-## Context analysis
+## AI context analysis
 
-Context analysis uses AI to understand the context around detected data, significantly reducing false positives.
+When you turn on AI context analysis, DLP uses AI-powered context analysis to reduce false positives. Your data is only kept in memory and not used for training AI models.
 
 ### How context analysis works
 
@@ -157,9 +164,12 @@ The AI examines:
 
 ### Enable context analysis
 
-1. Edit a DLP profile's **Advanced settings**.
-2. Enable **Context analysis**.
-3. Select **Save profile**.
+To configure settings for a DLP profile:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
+2. Choose a profile and select **Edit**.
+3. In **Settings**, enable **Context analysis**.
+4. Select **Save profile**.
 
 ### When to use context analysis
 

@@ -1,15 +1,15 @@
 ---
-title: Build DLP policies for data in transit
+title: Build DLP policies
 pcx_content_type: learning-unit
 sidebar:
-  order: 7
+  order: 3
 ---
 
 import { Render, TabItem, Tabs } from "~/components";
 
-Data Loss Prevention (DLP) policies detect and prevent sensitive data from leaving your organization through web traffic.
+After understanding DLP profiles and detection entries, you can build Gateway HTTP policies that use DLP to detect and prevent sensitive data exfiltration.
 
-## DLP overview
+## How DLP works with Gateway
 
 Cloudflare DLP scans traffic inline as it flows through Gateway, detecting sensitive data patterns in:
 
@@ -18,33 +18,11 @@ Cloudflare DLP scans traffic inline as it flows through Gateway, detecting sensi
 - API requests and responses
 - Copy/paste operations (when using Browser Isolation)
 
-## Create DLP profiles
-
-DLP profiles define what types of sensitive data to detect.
-
-### Use predefined profiles
-
-<Render
-	file="data-loss-prevention/predefined-profile"
-	product="cloudflare-one"
-/>
-
-Common predefined profiles used to protect sensitive data in transit include:
-
-| Profile name                              | Example detections                                |
-| ----------------------------------------- | ------------------------------------------------- |
-| Financial Information                     | Credit card numbers, bank account numbers         |
-| Personally Identifiable Information (PII) | Social Security numbers, driver's license numbers |
-| Credentials                               | API keys, passwords, authentication tokens        |
-| Source Code                               | Programming language patterns                     |
-
-### Create custom profiles
-
-<Render file="data-loss-prevention/custom-profile" product="cloudflare-one" />
+When DLP detects sensitive data that matches a profile, the associated Gateway HTTP policy action is taken (Block, Allow, Isolate).
 
 ## Build DLP policies
 
-After creating DLP profiles, build Gateway HTTP policies to enforce them.
+Create Gateway HTTP policies that reference your DLP profiles to enforce data protection.
 
 ### Block sensitive data uploads to AI applications
 
@@ -193,7 +171,7 @@ resource "cloudflare_zero_trust_gateway_policy" "block_pii_cloud_storage" {
 
 ## DLP policy patterns
 
-Cloudflare recommends implementing the following DLP policies after building baseline DLP policies and custom profiles. You can configure these policies to match your organization's specific needs.
+The following DLP policy patterns help you implement more sophisticated data protection strategies.
 
 ### Monitor before blocking
 
@@ -380,96 +358,24 @@ resource "cloudflare_zero_trust_gateway_policy" "dlp_user_groups" {
 
 </TabItem> </Tabs>
 
-## Configure DLP settings
+## Monitor DLP effectiveness
 
-You can configure settings for DLP profiles to adjust how DLP detects and blocks sensitive data. These settings apply to all DLP policies that use the profile.
+Once you have implemented DLP policies, monitor their effectiveness in Gateway logs:
 
-To configure settings for a DLP profile:
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
+2. Choose **HTTP request logs**.
+3. Filter by **DLP profiles** to see which data types are being detected.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
-2. Choose a profile and select **Edit**.
-3. In **Settings**, adjust your settings.
-4. Select **Save profile**.
-
-### Turn on Optical Character Recognition (OCR)
-
-Optical Character Recognition (OCR) detects and applies DLP policies to text in images in your users' traffic.
-
-OCR is useful for detecting:
-
-- Screenshots of sensitive data
-- Scanned documents
-- Images containing text
-
-### Adjust match count
-
-Match count determines how many DLP matches trigger a valid detection:
-
-| Match count | Threshold level | Description                              |
-| ----------- | --------------- | ---------------------------------------- |
-| 1-2 matches | Low             | More sensitive, may have false positives |
-| 3-5 matches | Medium          | Balanced approach                        |
-| 6+ matches  | High            | Less sensitive, fewer false positives    |
-
-### Use AI context analysis
-
-When you turn on AI context analysis, DLP uses AI-powered context analysis to reduce false positives. Your data is only kept in memory and not used for training AI models.
-
-Context analysis helps distinguish between:
-
-- Real credit card numbers vs. example numbers in documentation
-- Actual SSNs vs. random number sequences
-- Sensitive data vs. test data
-
-### Set confidence threshold
-
-When you set the confidence threshold, you define the validation level required for predefined entry matches to trigger a policy action. Setting levels include _Low_, _Medium_, and _High_. Lower levels indicate a higher tolerance for false positives.
-
-| Setting level | Description                                                               |
-| ------------- | ------------------------------------------------------------------------- |
-| Low           | Regex-based detection with high tolerance for false positives             |
-| Medium        | Additional contextual detection with medium tolerance for false positives |
-| High          | Rigorous contextual detection with low tolerance for false positives      |
+Review your logs regularly to identify false positives and adjust your DLP profiles and policies accordingly.
 
 ## Email DLP
 
 To integrate DLP with Cloudflare Email Security, refer to [Secure Microsoft 365 email with Email security](/learning-paths/secure-o365-email/concepts/).
 
-## Monitor DLP effectiveness
-
-Once you have implemented DLP policies, you can monitor their effectiveness to ensure they are working as intended.
-
-To check your DLP logs:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
-2. Choose **HTTP request logs**.
-3. Filter your logs by the following fields:
-   - **DLP profiles** - See which profiles are triggering
-   - **Action** - View blocked vs. allowed requests
-   - **Application type** or **Application name** - Identify which applications have the most DLP events
-
-To get more information on DLP effectiveness over time:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Dashboards**.
-2. Choose **HTTP request analytics**.
-3. Select **Add filter** and filter by your desired HTTP policy action.
-4. Review the following criteria:
-   - DLP detections over time
-   - Most common data types detected
-   - Applications with the most DLP events
-   - Users triggering the most DLP policies
-
-Based on logs and analytics, you can:
-
-1. Reduce false positives by adjusting match counts, enabling context analysis, or refining custom profiles.
-2. Expand coverage by adding more applications or data types to DLP policies.
-3. Adjust actions by moving from _Allow_ (monitoring) to _Block_ (enforcement).
-4. Create exceptions by allowing specific users or applications to bypass certain DLP rules.
-
 ## Next steps
 
-With DLP policies protecting data in transit, you can now:
+With DLP policies configured, you can now:
 
-- Monitor and refine policies based on ongoing analytics
-- Implement data at rest protection with CASB
-- Configure Browser Isolation for additional data in use controls
+- Configure advanced DLP settings to optimize detection accuracy
+- Create Exact Data Match datasets for specific sensitive data
+- Integrate with Microsoft Information Protection
