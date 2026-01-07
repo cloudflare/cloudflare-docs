@@ -77,16 +77,17 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 			<>
 				<Markdown
 				text={`
-1. Go to the **Network overview** page.
+1. Go to the **Appliances** page.
 				`}
 				inline={false}
 				/>
 
-				<DashButton url="/?to=/:account/magic-wan/network" />
+				<DashButton url="/?to=/:account/magic-wan/mconn-onramp" buttonName="Appliances"/>
 
 				<Markdown
 				text={`
-2. Select your site > **Edit**.
+2. In **Profiles**, find the Connector profile you want to edit > select the three dots > **Edit**.
+3. In **Network Configuration** > **WAN configuration** > select your WAN > **Edit**.
 				`}
 				inline={false}
 				/>
@@ -95,7 +96,8 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 			<Markdown
 			text={`
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
-2. In **Network overview**, select your site > **Edit**
+2. In **Network overview**, select your site > **Edit**.
+3. In **Network** > **WAN configuration** > select your WAN > **Edit**.
 			`}
 			inline={false}
 			/>
@@ -103,7 +105,7 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 
 		<Markdown
 		text={`
-3. In **Network** > **WAN configuration** > select your WAN > **Edit**.
+
 4. Change the **Health check rate** to your desired rate.
 5. Select **Save**.
 		`}
