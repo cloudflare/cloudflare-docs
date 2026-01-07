@@ -1,0 +1,257 @@
+---
+title: Temporary storage with lifecycle rules
+pcx_content_type: example
+---
+
+Use a single R2 bucket with prefixes and [object lifecycle rules](/r2/buckets/object-lifecycles/) to manage temporary data with different retention periods.
+
+This pattern is useful for storing:
+
+- Build artifacts and CI/CD outputs
+- Session data and cache files
+- Log files with tiered retention
+- Temporary user uploads
+
+## Directory structure
+
+Organize objects into prefix-based "directories" that map to retention periods:
+
+```txt
+temp/
+├── daily/     # Objects deleted after 1 day
+├── weekly/    # Objects deleted after 7 days
+└── monthly/   # Objects deleted after 30 days
+```
+
+## Configure lifecycle rules
+
+### Wrangler
+
+Create a `lifecycle.json` file with rules for each prefix:
+
+```json title="lifecycle.json"
+{
+	"rules": [
+		{
+			"id": "delete-daily",
+			"enabled": true,
+			"conditions": {
+				"prefix": "temp/daily/"
+			},
+			"deleteObjectsTransition": {
+				"condition": {
+					"type": "Age",
+					"maxAge": 86400
+				}
+			}
+		},
+		{
+			"id": "delete-weekly",
+			"enabled": true,
+			"conditions": {
+				"prefix": "temp/weekly/"
+			},
+			"deleteObjectsTransition": {
+				"condition": {
+					"type": "Age",
+					"maxAge": 604800
+				}
+			}
+		},
+		{
+			"id": "delete-monthly",
+			"enabled": true,
+			"conditions": {
+				"prefix": "temp/monthly/"
+			},
+			"deleteObjectsTransition": {
+				"condition": {
+					"type": "Age",
+					"maxAge": 2592000
+				}
+			}
+		}
+	]
+}
+```
+
+The `maxAge` value is specified in seconds (86400 = 1 day, 604800 = 7 days, 2592000 = 30 days).
+
+Apply the configuration:
+
+```sh
+npx wrangler r2 bucket lifecycle set <BUCKET_NAME> --file lifecycle.json
+```
+
+### S3 API
+
+```js
+import S3 from "aws-sdk/clients/s3.js";
+
+const client = new S3({
+	endpoint: "https://<ACCOUNT_ID>.r2.cloudflarestorage.com",
+	credentials: {
+		accessKeyId: "<ACCESS_KEY_ID>",
+		secretAccessKey: "<ACCESS_KEY_SECRET>",
+	},
+	region: "auto",
+});
+
+await client
+	.putBucketLifecycleConfiguration({
+		Bucket: "temp-storage",
+		LifecycleConfiguration: {
+			Rules: [
+				{
+					ID: "delete-daily",
+					Status: "Enabled",
+					Filter: {
+						Prefix: "temp/daily/",
+					},
+					Expiration: {
+						Days: 1,
+					},
+				},
+				{
+					ID: "delete-weekly",
+					Status: "Enabled",
+					Filter: {
+						Prefix: "temp/weekly/",
+					},
+					Expiration: {
+						Days: 7,
+					},
+				},
+				{
+					ID: "delete-monthly",
+					Status: "Enabled",
+					Filter: {
+						Prefix: "temp/monthly/",
+					},
+					Expiration: {
+						Days: 30,
+					},
+				},
+			],
+		},
+	})
+	.promise();
+```
+
+## Upload objects to a retention tier
+
+When uploading objects, include the appropriate prefix to assign them to a retention tier.
+
+```js
+// Upload a file that will be deleted after 1 day
+await client
+	.putObject({
+		Bucket: "temp-storage",
+		Key: "temp/daily/build-output-123.tar.gz",
+		Body: fileContents,
+	})
+	.promise();
+
+// Upload a file that will be deleted after 7 days
+await client
+	.putObject({
+		Bucket: "temp-storage",
+		Key: "temp/weekly/session-abc.json",
+		Body: sessionData,
+	})
+	.promise();
+
+// Upload a file that will be deleted after 30 days
+await client
+	.putObject({
+		Bucket: "temp-storage",
+		Key: "temp/monthly/analytics-report.pdf",
+		Body: reportData,
+	})
+	.promise();
+```
+
+## Combine with storage class transitions
+
+For objects that need longer retention but infrequent access, combine expiration with [Infrequent Access storage](/r2/buckets/storage-classes/) transitions:
+
+```json title="lifecycle.json"
+{
+	"rules": [
+		{
+			"id": "archive-then-delete",
+			"enabled": true,
+			"conditions": {
+				"prefix": "temp/archive/"
+			},
+			"storageClassTransitions": [
+				{
+					"condition": {
+						"type": "Age",
+						"maxAge": 2592000
+					},
+					"storageClass": "InfrequentAccess"
+				}
+			],
+			"deleteObjectsTransition": {
+				"condition": {
+					"type": "Age",
+					"maxAge": 7776000
+				}
+			}
+		}
+	]
+}
+```
+
+This rule transitions objects to Infrequent Access storage after 30 days (2592000 seconds), then deletes them after 90 days (7776000 seconds).
+
+## Trigger events
+
+Use [event notifications](/r2/buckets/event-notifications/) to process data as it is written to each retention tier. Event notifications can filter by prefix, so you can trigger different processing logic for each tier.
+
+### Configure event notifications per tier
+
+```sh
+# Notify when objects are created in the daily tier
+npx wrangler r2 bucket notification create <BUCKET_NAME> \
+  --event-type object-create \
+  --queue <QUEUE_NAME> \
+  --prefix "temp/daily/"
+
+# Notify when objects are created in the weekly tier
+npx wrangler r2 bucket notification create <BUCKET_NAME> \
+  --event-type object-create \
+  --queue <QUEUE_NAME> \
+  --prefix "temp/weekly/"
+```
+
+### Process uploads with a consumer Worker
+
+Create a [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) to handle notifications from each tier:
+
+```js
+export default {
+	async queue(batch, env) {
+		for (const message of batch.messages) {
+			const event = message.body;
+			const key = event.object.key;
+
+			if (key.startsWith("temp/daily/")) {
+				// Process short-lived data (for example, validate and forward)
+				await processDaily(env, key);
+			} else if (key.startsWith("temp/weekly/")) {
+				// Process medium-term data (for example, index for search)
+				await processWeekly(env, key);
+			} else if (key.startsWith("temp/monthly/")) {
+				// Process longer-term data (for example, generate reports)
+				await processMonthly(env, key);
+			}
+
+			message.ack();
+		}
+	},
+};
+```
+
+For a complete walkthrough, refer to [Log and store upload events in R2 with event notifications](/r2/tutorials/upload-logs-event-notifications/).
