@@ -93,6 +93,32 @@ await sandbox.mountBucket('my-r2-bucket', '/data', {
 ```
 </TypeScriptExample>
 
+## Mount bucket subdirectories
+
+Mount a specific subdirectory within a bucket using the `prefix` option. Only contents under the prefix are visible at the mount point:
+
+<TypeScriptExample>
+```typescript
+// Mount only /uploads/images/ subdirectory
+await sandbox.mountBucket('my-bucket', '/images', {
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+	prefix: '/uploads/images/'
+});
+
+// Access files directly under the prefix
+await sandbox.exec('ls', { args: ['/images'] });
+// Shows files from my-bucket:/uploads/images/ subdirectory
+
+// Write to subdirectory
+await sandbox.writeFile('/images/photo.jpg', imageData);
+// Creates my-bucket:/uploads/images/photo.jpg
+```
+</TypeScriptExample>
+
+:::note[Prefix format]
+The `prefix` must start and end with `/` (e.g., `/data/`, `/logs/2024/`). This is required by the underlying s3fs tool.
+:::
+
 ## Read-only mounts
 
 Protect data by mounting buckets in read-only mode:
@@ -298,6 +324,7 @@ await sandbox.exec('cp', { args: ['/workspace/results.json', '/data/results/outp
 - **Use R2 for Cloudflare** - Zero egress fees and optimized configuration
 - **Secure credentials** - Always use Worker secrets, never hardcode
 - **Read-only when possible** - Protect data with read-only mounts
+- **Use prefixes for isolation** - Mount subdirectories when working with specific datasets
 - **Mount paths** - Use `/data`, `/storage`, or `/mnt/*` (avoid `/workspace`, `/tmp`)
 - **Handle errors** - Wrap mount operations in try/catch blocks
 - **Optimize access** - Copy frequently accessed files locally

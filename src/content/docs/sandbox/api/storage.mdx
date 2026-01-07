@@ -63,6 +63,12 @@ await sandbox.mountBucket('datasets', '/datasets', {
 	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
 	readOnly: true
 });
+
+// Mount subdirectory with prefix
+await sandbox.mountBucket('my-bucket', '/data', {
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+	prefix: '/uploads/images/'
+});
 ```
 </TypeScriptExample>
 
@@ -140,7 +146,7 @@ interface MountBucketOptions {
   - Default: `false`
 
 - `prefix` (optional) - Subdirectory within the bucket to mount
-  - Only contents under this prefix will be visible at the mount point
+  - When specified, only contents under this prefix are visible at the mount point
   - Must start and end with `/` (e.g., `/data/uploads/`)
   - Default: Mount entire bucket
 
