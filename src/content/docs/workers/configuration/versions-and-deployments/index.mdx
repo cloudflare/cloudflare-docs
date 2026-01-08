@@ -74,6 +74,20 @@ New versions are not created when you make changes to [resources connected to yo
 
 See examples of creating a Worker, Versions, and Deployments directly with the API, library SDKs, and Terraform in [Infrastructure as Code](/workers/platform/infrastructure-as-code/).
 
+### Delete a version
+
+To delete a version that is not currently deployed, use the [`wrangler versions delete`](/workers/wrangler/commands/#versions-delete) command:
+
+```sh
+npx wrangler versions delete <VERSION_ID> --name <WORKER_NAME>
+```
+
+You will be prompted to confirm the deletion. Use `--yes` to skip the confirmation prompt in CI environments.
+
+:::note
+You cannot delete a version that is actively serving traffic. Remove the version from the active deployment first.
+:::
+
 ### View versions and deployments
 
 #### Via Wrangler
