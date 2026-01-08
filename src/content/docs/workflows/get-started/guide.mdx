@@ -15,7 +15,7 @@ import {
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
 
-You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger user lifecycle emails using your favorite email API.
+You can build Workflows to post-process file uploads to [R2 object storage](/r2/), automate generation of [Workers AI](/workers-ai/) embeddings into a [Vectorize](/vectorize/) vector database, or to trigger user lifecycle emails using [Email Service](/email-routing/).
 
 :::note
 The term "Durable Execution" is widely used to describe this programming model.
@@ -150,9 +150,11 @@ Open `wrangler.jsonc`, which is your [Wrangler configuration file](/workers/wran
 
 </WranglerConfig>
 
-The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.MY_WORKFLOW`). You can also access [bindings](/workers/runtime-apis/bindings/) (such as [KV](/kv/), [R2](/r2/), or [D1](/d1/)) via `this.env` within your Workflow. For more information on bindings within Workers, refer to [Bindings (env)](/workers/runtime-apis/bindings/).
+The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.MY_WORKFLOW`).
 
-Generate types for your bindings:
+You can also access [bindings](/workers/runtime-apis/bindings/) (such as [KV](/kv/), [R2](/r2/), or [D1](/d1/)) via `this.env` within your Workflow. For more information on bindings within Workers, refer to [Bindings (env)](/workers/runtime-apis/bindings/).
+
+Now, generate types for your bindings:
 
 ```sh
 npx wrangler types
@@ -224,6 +226,14 @@ Once deployed, you can also inspect Workflow instances with the CLI:
 ```sh
 npx wrangler workflows instances describe my-workflow latest
 ```
+
+The output of `instances describe` shows:
+
+- The status (success, failure, running) of each step
+- Any state emitted by the step
+- Any `sleep` state, including when the Workflow will wake up
+- Retries associated with each step
+- Errors, including exception messages
 
 ## Learn more
 
