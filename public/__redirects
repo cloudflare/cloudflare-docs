@@ -2012,7 +2012,9 @@
 /workers-ai/markdown-conversion/ /workers-ai/features/markdown-conversion/ 301
 
 # workflows
-/workflows/get-started/cli-quick-start/ /workflows/get-started/ 301
+/workflows/get-started/cli-quick-start/ /workflows/guide/ 301
+/workflows/get-started/guide/ /workflows/guide/ 301
+/workflows/get-started/ /workflows/guide/ 301
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
 /workflows/tutorials/ /workflows/examples 301
 
