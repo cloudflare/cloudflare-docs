@@ -24,6 +24,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a new project from a variety of web frameworks and templates.
+- [`complete`](#complete) - Generate shell completion scripts for Wrangler commands.
 - [`containers`](#containers) - Interact with Containers.
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
@@ -1052,5 +1053,69 @@ wrangler check startup
   - If you don't use Wrangler to deploy your Worker, you can use this argument to provide a Worker bundle to analyse. This should be a file path to a serialized multipart upload, with the exact same format as [the API expects](/api/resources/workers/subresources/scripts/methods/update/).
 - `--pages` <Type text="boolean" /> <MetaInfo text="optional" />
   - If you don't use a Wrangler config file with your Pages project (i.e. a Wrangler config file containing `pages_build_output_dir`), use this flag to force `wrangler check startup` to treat your project as a Pages project.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+## `complete`
+
+Generate shell completion scripts for Wrangler commands. Shell completions allow you to autocomplete commands, subcommands, and flags by pressing Tab as you type.
+
+```txt
+wrangler complete <SHELL>
+```
+
+- `SHELL` <Type text="string" /> <MetaInfo text="required" />
+  - The shell to generate completions for. Supported values: `bash`, `zsh`, `fish`, `powershell`.
+
+### Setup
+
+Generate and add the completion script to your shell configuration file:
+
+<Tabs>
+<TabItem label="Bash">
+```sh
+wrangler complete bash >> ~/.bashrc
+```
+
+Then restart your terminal or run `source ~/.bashrc`.
+
+</TabItem>
+<TabItem label="Zsh">
+```sh
+wrangler complete zsh >> ~/.zshrc
+```
+
+Then restart your terminal or run `source ~/.zshrc`.
+
+</TabItem>
+<TabItem label="Fish">
+```sh
+wrangler complete fish >> ~/.config/fish/config.fish
+```
+
+Then restart your terminal or run `source ~/.config/fish/config.fish`.
+
+</TabItem>
+<TabItem label="PowerShell">
+```powershell
+wrangler complete powershell >> $PROFILE
+```
+
+Then restart PowerShell or run `. $PROFILE`.
+
+</TabItem>
+</Tabs>
+
+### Usage
+
+After setup, press Tab to autocomplete commands, subcommands, and flags:
+
+```sh
+wrangler d<TAB>          # completes to 'deploy', 'dev', 'd1', etc.
+wrangler deploy --<TAB>  # shows available flags like --name, --env, etc.
+wrangler kv <TAB>        # shows subcommands: namespace, key, bulk
+```
 
 <Render file="wrangler-commands/global-flags" product="workers" />
