@@ -26,7 +26,7 @@
 	},
 	{
 		"name": "Routes",
-		"deeplink": "/?to=/:account/magic-networks/routes/route-config",
+		"deeplink": "/?to=/:account/magic-networks/routes",
 		"parent": ["Networking"]
 	},
 	{
