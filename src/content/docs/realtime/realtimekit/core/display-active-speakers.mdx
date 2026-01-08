@@ -1,0 +1,265 @@
+---
+pcx_content_type: how-to
+title: Display active speakers
+slug: realtime/realtimekit/core/display-active-speakers
+sidebar:
+  order: 6
+---
+
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+RealtimeKit automatically detects and tracks participants who are actively speaking in a meeting. You can display either a single active speaker or multiple active speakers in your application UI, depending on your design requirements.
+
+An active speaker in RealtimeKit is a remote participant with prominent audio activity at any given moment. The SDK maintains two types of data to help you build your UI:
+
+- **Active speaker** — A single remote participant who is currently speaking most prominently, tracked via `meeting.participants.lastActiveSpeaker`.
+- **Active participants** — A set of remote participants with the most prominent audio activity, tracked via `meeting.participants.active`.
+
+The SDK automatically updates these properties and subscribes to participant media as speaking activity changes. It prioritizes prominent audio activity, so a participant not currently visible in your UI can replace a visible participant if their audio becomes more active.
+
+:::note
+The SDK tracks active speakers only when the local participant is viewing or rendering participants in ACTIVE mode (page 0). Refer to the [Remote participants](/realtime/realtimekit/core/remote-participant/#participant-view-modes) page to learn about participant view modes.
+
+Active speaker properties contain only remote participants. Use `meeting.self` to display the local participant.
+:::
+
+The maximum number of participants in the `active` map is one less than the grid size configured in the local participant's [Preset](/realtime/realtimekit/concepts/preset/).
+This reserves space for the local participant in your UI. For example, if the grid size is 6, the `active` map contains a maximum of 5 remote participants.
+
+<RTKSDKSelector />
+
+## Display a single active speaker
+
+<RTKCodeSnippet id="web-react">
+
+Use `lastActiveSpeaker` to show the most recently active participant in your UI. Access the current active speaker with the `useRealtimeKitSelector` hook:
+
+```ts
+const activeSpeaker = useRealtimeKitSelector((meeting) => {
+	const activeSpeakerId = meeting.participants.lastActiveSpeaker;
+	return meeting.participants.joined.get(activeSpeakerId);
+});
+
+if (activeSpeaker) {
+	// Render the active speaker video
+}
+```
+
+The `useRealtimeKitSelector` hook automatically updates your component when the active speaker changes.
+
+Refer to [Display participant videos](/realtime/realtimekit/core/remote-participant/#display-participant-videos) to learn how to render the participant video in your UI.
+
+The SDK also emits an `activeSpeaker` event on `meeting.participants` when a different participant becomes the active speaker. For imperative updates or side effects, listen to this event:
+
+```ts
+meeting.participants.on("activeSpeaker", ({ peerId, volume }) => {
+	const activeSpeaker = meeting.participants.joined.get(peerId);
+	// Update your UI or trigger side effects
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+Use `lastActiveSpeaker` to show the most recently active participant in your UI.
+
+Access the `lastActiveSpeaker` property to get the participant ID, then retrieve the participant object from the joined participants map:
+
+```ts
+const activeSpeakerId = meeting.participants.lastActiveSpeaker;
+const activeSpeaker = meeting.participants.joined.get(activeSpeakerId);
+
+if (activeSpeaker) {
+	// Render the active speaker video
+}
+```
+
+Refer to [Display participant videos](/realtime/realtimekit/core/remote-participant/#display-participant-videos) to learn how to render the participant video in your UI.
+
+The SDK emits an `activeSpeaker` event on `meeting.participants` when a different participant becomes the active speaker:
+
+```ts
+meeting.participants.on("activeSpeaker", ({ peerId, volume }) => {
+	const activeSpeaker = meeting.participants.joined.get(peerId);
+	// Update your UI to display the new active speaker
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+Use `lastActiveSpeaker` to show the most recently active participant in your UI.
+
+Access the `lastActiveSpeaker` property to get the participant ID, then retrieve the participant object from the joined participants map:
+
+```ts
+const activeSpeakerId = meeting.participants.lastActiveSpeaker;
+const activeSpeaker = meeting.participants.joined.get(activeSpeakerId);
+
+if (activeSpeaker) {
+	// Render the active speaker video
+}
+```
+
+Refer to [Display participant videos](/realtime/realtimekit/core/remote-participant/#display-participant-videos) to learn how to render the participant video in your UI.
+
+The SDK emits an `activeSpeaker` event on `meeting.participants` when a different participant becomes the active speaker:
+
+```ts
+meeting.participants.on("activeSpeaker", ({ peerId, volume }) => {
+	const activeSpeaker = meeting.participants.joined.get(peerId);
+	// Update your UI to display the new active speaker
+});
+```
+
+</RTKCodeSnippet>
+
+## Display multiple active speakers
+
+<RTKCodeSnippet id="web-react">
+
+Use the `active` map to show multiple participants with prominent audio activity, typically in a grid layout. Access the current active participants with the `useRealtimeKitSelector` hook:
+
+```ts
+const activeMap = useRealtimeKitSelector(
+	(meeting) => meeting.participants.active,
+);
+
+const activeParticipants = activeMap.toArray();
+
+// Render active participants in your grid
+activeParticipants.forEach((participant) => {
+	// Render participant video tile
+});
+```
+
+The `useRealtimeKitSelector` hook automatically updates your component when the set of active speakers changes.
+
+Refer to [Display participant videos](/realtime/realtimekit/core/remote-participant/#display-participant-videos) to learn how to render the participant video in your UI.
+
+The SDK also emits a `participantsUpdate` event on the `active` map when the set of active speakers changes. For imperative updates or side effects when the `active` map changes, listen to this event:
+
+```ts
+meeting.participants.active.on("participantsUpdate", () => {
+	const activeParticipants = meeting.participants.active.toArray();
+	// Perform side effects
+});
+```
+
+(Optional) If your application needs to respond when a specific participant is added to or removed from the active map, listen for `participantJoined` and `participantLeft` on `meeting.participants.active` map.
+
+```ts
+meeting.participants.active.on("participantJoined", (participant) => {
+	console.log("Participant added to active map:", participant.id);
+});
+
+meeting.participants.active.on("participantLeft", (participant) => {
+	console.log("Participant removed from active map:", participant.id);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+Use the `active` map to show multiple participants with prominent audio activity, typically in a grid layout.
+
+```ts
+const activeParticipants = meeting.participants.active.toArray();
+
+// Render active participants in your grid
+activeParticipants.forEach((participant) => {
+	// Render participant video tile
+});
+```
+
+Refer to [Display participant videos](/realtime/realtimekit/core/remote-participant/#display-participant-videos) to learn how to render the participant video in your UI.
+
+The SDK emits a `participantsUpdate` event on the `active` map when the set of active speakers changes. Listen to this event, retrieve the updated array, and re-render your grid:
+
+```ts
+meeting.participants.active.on("participantsUpdate", () => {
+	const activeParticipants = meeting.participants.active.toArray();
+	// Update your grid UI with the new active participants
+});
+```
+
+(Optional) If your application needs to respond when a specific participant is added to or removed from the active map, listen for `participantJoined` and `participantLeft` on `meeting.participants.active` map.
+
+```ts
+meeting.participants.active.on("participantJoined", (participant) => {
+	console.log("Participant added to active map:", participant.id);
+});
+
+meeting.participants.active.on("participantLeft", (participant) => {
+	console.log("Participant removed from active map:", participant.id);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+Use the `active` map to show multiple participants with prominent audio activity, typically in a grid layout.
+
+```ts
+const activeParticipants = meeting.participants.active.toArray();
+
+// Render active participants in your grid
+activeParticipants.forEach((participant) => {
+	// Render participant video tile
+});
+```
+
+Refer to [Display participant videos](/realtime/realtimekit/core/remote-participant/#display-participant-videos) to learn how to render the participant video in your UI.
+
+The SDK emits a `participantsUpdate` event on the `active` map when the set of active speakers changes. Listen to this event, retrieve the updated array, and re-render your grid:
+
+```ts
+meeting.participants.active.on("participantsUpdate", () => {
+	const activeParticipants = meeting.participants.active.toArray();
+	// Update your grid UI with the new active participants
+});
+```
+
+(Optional) If your application needs to respond when a specific participant is added to or removed from the active map, listen for `participantJoined` and `participantLeft` on `meeting.participants.active` map.
+
+```ts
+meeting.participants.active.on("participantJoined", (participant) => {
+	console.log("Participant added to active map:", participant.id);
+});
+
+meeting.participants.active.on("participantLeft", (participant) => {
+	console.log("Participant removed from active map:", participant.id);
+});
+```
+
+</RTKCodeSnippet>
+
+## Visualize audio activity
+
+<RTKCodeSnippet id="web-react">
+
+You can create custom audio visualizations using audio data from a participant's audio track. Extract volume information from the audio track to calculate amplitude series. Use this data to render waveforms, speech indicators, or audio level meters in your UI.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+You can create custom audio visualizations using audio data from a participant's audio track. Extract volume information from the audio track to calculate amplitude series. Use this data to render waveforms, speech indicators, or audio level meters in your UI.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+You can create custom audio visualizations using audio data from a participant's audio track. Extract volume information from the audio track to calculate amplitude series. Use this data to render waveforms, speech indicators, or audio level meters in your UI.
+
+</RTKCodeSnippet>
+
+## Related resources
+
+- [Meeting object explained](/realtime/realtimekit/core/meeting-object-explained/) - Understand the meeting object structure and available properties.
+- [Remote participant](/realtime/realtimekit/core/remote-participant/) - Learn more about remote participants in a session and how to display their video.

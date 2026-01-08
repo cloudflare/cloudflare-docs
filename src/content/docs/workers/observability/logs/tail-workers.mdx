@@ -108,10 +108,32 @@ Workers added to the `tail_consumers` array must have a `tail()` handler defined
 
 :::
 
+## Use Analytics Engine for aggregated metrics
+
+If you need aggregated analytics rather than individual log events, consider writing to [Workers Analytics Engine](/analytics/analytics-engine/) from your Tail Worker. Analytics Engine is optimized for high-cardinality, time-series data that you can query with SQL.
+
+For example, you can use a Tail Worker to count errors by endpoint, track response times by customer, or build usage metrics, then write those aggregates to Analytics Engine for querying and visualization.
+
+```js
+export default {
+	async tail(events, env) {
+		for (const event of events) {
+			env.ANALYTICS.writeDataPoint({
+				blobs: [event.scriptName, event.outcome],
+				doubles: [1],
+				indexes: [event.event?.request?.cf?.colo ?? "unknown"],
+			});
+		}
+	},
+};
+```
+
+Refer to the [Analytics Engine documentation](/analytics/analytics-engine/) for more details on writing and querying data.
+
 ## Related resources
 
 - [`tail()`](/workers/runtime-apis/handlers/tail/) Handler API docs - Learn how to set up a `tail()` handler in your Worker.
-
-* [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
-* [Local development and testing](/workers/development-testing/) - Develop and test you Workers locally.
-* [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.
+- [Analytics Engine](/analytics/analytics-engine/) - Write custom analytics from your Worker for high-cardinality, time-series queries.
+- [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
+- [Local development and testing](/workers/development-testing/) - Develop and test you Workers locally.
+- [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.
