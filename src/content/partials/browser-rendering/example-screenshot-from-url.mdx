@@ -3,7 +3,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "html": "Hello World!",
+    "url": "https://example.com/page",
     "screenshotOptions": {
       "omitBackground": true
     }
