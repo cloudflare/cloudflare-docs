@@ -2,9 +2,11 @@
 import { z } from "astro:schema";
 import SDKSelector from "./RTKSDKSelector";
 
+const platform = z.enum(["web", "mobile"]);
+
 const props = z.object({
 	disabledPlatforms: z
-		.union([z.string(), z.array(z.string())])
+		.union([platform, z.array(platform)])
 		.optional()
 		.transform((value) => (typeof value === "string" ? [value] : value)),
 });
