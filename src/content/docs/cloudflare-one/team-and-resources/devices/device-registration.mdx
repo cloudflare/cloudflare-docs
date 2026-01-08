@@ -93,7 +93,7 @@ Devices that have zero active registrations (because all registrations were dele
 
 :::caution[Automatic device re-creation]
 
-If you delete a device record, but the WARP client remains installed and a user or service token is successfully able to re-authenticate, a device record will be automatically created in your dashboard with a new device registration. For permanent denial of access, you should [remove service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access).
+If you delete a device record, but the WARP client remains installed and a user or service token is successfully able to re-authenticate, a device record will be automatically created in your dashboard with a new device registration. For permanent deletion, you should [remove service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access).
 
 :::
 
@@ -142,21 +142,3 @@ Deleting a device or a device registration does not affect [seat usage](/cloudfl
 To stop a user from consuming a seat, you must remove the user from your Zero Trust Organization.
 
 <Render file="users/remove-user-from-seat" product="cloudflare-one" />
-
-## Offboard users and/or devices
-
-### Offboard a user
-
-To offboard a user and prevent the user from accessing company resources behind Cloudflare One (such as applications behind Access, Gateway policies):
-
-1. [Remove the user's access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access) by updating your device enrollment policies or your Identity Provider (IdP).
-2. [Remove the user](/cloudflare-one/team-and-resources/users/seat-management/) from your Zero Trust organization. This action will delete all device registrations associated with the user.
-
-User is successfully offboarded (prevented from accessing company resources and not consuming a billable seat.)
-
-### Decommission a device
-
-To decommission a device and remove it from your Zero Trust organization:
-
-1. [Delete the service token](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access) associated with the device, if any.
-2. [Delete the device](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device). This action deletes all device registrations associated with the device.
