@@ -8,7 +8,6 @@ params:
   - routePrioritization
   - chooseWeights
   - productGatewayOrEgress
-  - dashRoutesPath?
   - dashWanPath?
   - cfTunnelURL?
   - sitesURL?
@@ -17,7 +16,7 @@ params:
   - arrReferenceURL?
 ---
 
-import { AnchorHeading, Aside, APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
+import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (only available over CNI with Dataplane v2 (beta)).
 
@@ -74,7 +73,15 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 	<>
 		<Markdown
 			text={`
-			1. Go to ${props.productName}'s <a href="${props.dashRoutesPath}">**Routes**</a> page.
+			1. Go to **Routes** page.
+			`}
+			inline={false}
+		/>
+
+		<DashButton url="/?to=/:account/magic-networks/routes/route-config" />
+
+		<Markdown
+			text={`
 			2. From the **Routes** tab, select **Create static route** to add a new route.
 			`}
 			inline={false}
