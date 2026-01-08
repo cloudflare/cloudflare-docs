@@ -35,12 +35,14 @@ import type { RequestHandler } from "@sveltejs/kit";
 import { json, error } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({ platform }) => {
+	// Verify the platform binding exists
 	if (!platform?.env?.DB) {
 		console.error("D1 database binding not found");
 		throw error(500, "Database not available");
 	}
 
 	try {
+		// Destructure the success flag from D1 response
 		const {
 			results,
 			success,
@@ -52,10 +54,12 @@ export const GET: RequestHandler = async ({ platform }) => {
 			throw error(500, "Failed to query database");
 		}
 
+		// Use SvelteKit's json helper for proper response formatting
 		return json({ results });
 	} catch (e) {
 		console.error("Error querying D1:", e);
 
+		// Re-throw SvelteKit errors, wrap others
 		if (e && typeof e === "object" && "status" in e) {
 			throw e;
 		}

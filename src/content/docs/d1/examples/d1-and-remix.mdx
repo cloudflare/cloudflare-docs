@@ -35,10 +35,12 @@ interface Env {
   DB: D1Database;
 }
 
+// Use LoaderFunctionArgs for automatic return type inference
 export async function loader({ context }: LoaderFunctionArgs) {
   const env = context.cloudflare.env as Env;
 
   try {
+    // Destructure the success flag to check query execution
     const { results, success, error } = await env.DB.prepare(
       "SELECT * FROM users LIMIT 5"
     ).run();
@@ -50,6 +52,7 @@ export async function loader({ context }: LoaderFunctionArgs) {
     return json({ results });
   } catch (error) {
     console.error("Database error:", error);
+    // Return errors with proper status codes
     return json(
       { error: "Failed to fetch users" },
       { status: 500 }
@@ -64,6 +67,7 @@ export default function Index() {
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Welcome to Remix</h1>
       <div>
+        {/* Handle both success and error states */}
         {"error" in data ? (
           <p style={{ color: "red" }}>Error: {data.error}</p>
         ) : (

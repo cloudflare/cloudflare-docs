@@ -85,8 +85,10 @@ from workers import Response, WorkerEntrypoint
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
         try:
+            # Query D1 using the DB binding
             result = await self.env.DB.prepare("PRAGMA table_list").run()
 
+            # Check the success flag from the D1 response dict
             if not result.get("success"):
                 error_msg = result.get("error", "Unknown database error")
                 print(f"Database query failed: {error_msg}")
@@ -95,6 +97,7 @@ class Default(WorkerEntrypoint):
                     status=500
                 )
 
+            # Return structured response with results
             return Response.json({"results": result.get("results")})
 
         except Exception as e:

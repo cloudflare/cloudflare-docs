@@ -41,17 +41,20 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.get("/query/users/:id", async (c) => {
 	const userId = c.req.param("id");
 
+	// Validate input parameters
 	if (!userId || isNaN(Number(userId))) {
 		return c.json({ error: "Invalid user ID" }, 400);
 	}
 
 	try {
+		// Use prepared statements with bind() for SQL injection protection
 		const { results, success, error } = await c.env.DB.prepare(
 			"SELECT * FROM users WHERE user_id = ?",
 		)
 			.bind(userId)
 			.run();
 
+		// Check the success flag from D1
 		if (!success) {
 			console.error("Database query failed:", error);
 			return c.json({ error: "Database query failed" }, 500);
@@ -73,6 +76,7 @@ export default app;
 import { Hono } from "hono";
 import { handle } from "hono/cloudflare-pages";
 
+// Define your bindings for type safety
 type Bindings = {
 	DB: D1Database;
 };
@@ -82,17 +86,20 @@ const app = new Hono<{ Bindings: Bindings }>().basePath("/api");
 app.get("/query/users/:id", async (c) => {
 	const userId = c.req.param("id");
 
+	// Validate input parameters
 	if (!userId || isNaN(Number(userId))) {
 		return c.json({ error: "Invalid user ID" }, 400);
 	}
 
 	try {
+		// Use prepared statements with bind() for SQL injection protection
 		const { results, success, error } = await c.env.DB.prepare(
 			"SELECT * FROM users WHERE user_id = ?",
 		)
 			.bind(userId)
 			.run();
 
+		// Check the success flag from D1
 		if (!success) {
 			console.error("Database query failed:", error);
 			return c.json({ error: "Database query failed" }, 500);
@@ -105,6 +112,7 @@ app.get("/query/users/:id", async (c) => {
 	}
 });
 
+// Export for Cloudflare Pages
 export const onRequest = handle(app);
 ```
 
