@@ -4,7 +4,7 @@ params:
   - magicWord
 ---
 
-import { Aside, Markdown, Tabs, TabItem } from "~/components";
+import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 
 You can run traceroutes to analyze the hop-by-hop Internet path and latency between Cloudflare's network and your network.
 
@@ -30,12 +30,21 @@ To run a traceroute from a specific Cloudflare data center to your network:
       text={`
 To run a traceroute from a specific Cloudflare data center to your network:
 
-1. Go to ${props.productName}'s [**Connector health**](https://dash.cloudflare.com/?to=/:account/networking-insights/health/tunnel-health/list) page.
-2. Select the tunnel for the traceroute.
-3. Select the three dots > **Traceroute details**.
+1. Go to the **Network health** page.
       `}
       inline={false}
     />
+
+<DashButton url="/?to=/:account/networking-insights/health/network-health" />
+
+	<Markdown
+		text={`
+2. Select **Connector health**.
+3. Select the tunnel for the traceroute.
+4. Select the three dots > **Traceroute details**.
+      `}
+		inline={false}
+	/>
 
   </>
 )}
