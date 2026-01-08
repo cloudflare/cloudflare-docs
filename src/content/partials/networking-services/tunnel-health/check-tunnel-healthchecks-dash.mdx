@@ -1,7 +1,6 @@
 ---
 params:
   - dashInfo
-  - productPath
   - graphQL
   - notificationsPath
   - packetCaptures
@@ -9,7 +8,7 @@ params:
   - magicWord?
 ---
 
-import { Aside, AnchorHeading, GlossaryTooltip, Markdown } from "~/components";
+import { Aside, AnchorHeading, DashButton, GlossaryTooltip, Markdown } from "~/components";
 
 The Cloudflare dashboard monitors the health of all <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels on your account that route traffic from Cloudflare to your origin network.
 
@@ -43,12 +42,21 @@ Not all data centers are relevant to you at all times. You can refer to the **Tr
 
 		<Markdown
 			text={`
-			1. Go to the [**Connector health**](https://dash.cloudflare.com/?to=/:account/networking-insights/health/tunnel-health/list) page.
-			2. In this screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
-			3. Find the tunnel you want to inspect, select the three dots next to it, and select:
+			1. Go to the **Network health** page.
+				`}
+			inline={false}
+		/>
+
+		<DashButton url="/?to=/:account/networking-insights/health/network-health" />
+
+		<Markdown
+			text={`
+			2. Select the **Connector health** tab.
+			3. In this screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
+			4. Find the tunnel you want to inspect, select the three dots next to it, and select:
 				- **Create alert**: Opens the ${props.notificationsPath} so you can create specific alerts for that tunnel when specific conditions are met.
 				- **Network Analytics**: Opens the Analytics section of the dash, prefiltered with the tunnel you want to inspect.
-			4. Alternatively, from the list of tunnels, select the tunnel you want to inspect to access details about it.
+			5. Alternatively, from the list of tunnels, select the tunnel you want to inspect to access details about it.
 			`}
 			inline={false}
 		/>
@@ -60,8 +68,12 @@ Not all data centers are relevant to you at all times. You can refer to the **Tr
 
 You can drill down into a specific tunnel to check its health status and other information.
 
-1. Go to <Markdown text={props.productPath} />.
-2. Find and select the tunnel you want to inspect.
+1. Go to the **Network health** page.
+
+	<DashButton url="/?to=/:account/networking-insights/health/network-health" />
+
+2. Select the **Connector health** tab.
+3. Find and select the tunnel you want to inspect.
 
 The next screen shows you detailed information about the tunnel, including:
 - Status information
