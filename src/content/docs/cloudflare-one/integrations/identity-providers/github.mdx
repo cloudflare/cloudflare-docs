@@ -33,19 +33,21 @@ To configure GitHub access in both GitHub and Cloudflare One:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-7. Select **Register application**.
+7. Go to **Account permissions** > **Email addresses** and add **Read-only** access.
 
-8. Find the **Client ID** and **Client Secret**.
+8. Select **Register application**.
 
-9. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+9. Find the **Client ID** and **Client Secret**.
 
-10. Select **Add new identity provider** and select **GitHub**.
+10. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
 
-11. Choose **GitHub** on the next page.
+11. Select **Add new identity provider** and select **GitHub**.
 
-12. In the **App ID** field, copy and paste the **Client ID** you found in step 8. In the **Client secret** field, copy and paste the **Client secret** you found in step 8. You will need to select **Generate a new client secret** if one is not already displayed.
+12. Choose **GitHub** on the next page.
 
-13. Select **Save**.
+13. In the **App ID** field, copy and paste the **Client ID** you found in step 9. In the **Client secret** field, copy and paste the **Client secret** you found in step 9. You will need to select **Generate a new client secret** if one is not already displayed.
+
+14. Select **Save**.
 
 To test that your connection is working, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Integrations** > **Identity providers** and select **Test** next to your GitHub login method.
 If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
