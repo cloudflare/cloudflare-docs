@@ -84,8 +84,16 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 	<>
 		<Markdown
 			text={`
-			1. Go to the [**IPsec/GRE tunnels**](https://dash.cloudflare.com/?to=/:account/magic-networks/connections/tunnels) page.
-			2. From the list, find the IPsec tunnel you have just created.`}
+			1. Go to the **Connectors** page.
+			`}
+				inline={false}
+		/>
+
+			<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
+		<Markdown
+			text={`
+			2. In the **IPsec/GRE tunnels** tab, find the IPsec tunnel you have just created.`}
 			inline={false}
 		/>
 	</>
@@ -105,7 +113,16 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. Go to the [**Routes**](https://dash.cloudflare.com/?to=/:account/magic-networks/routes/route-config) page.
+			text={`
+			1. Go to the **Routes** page.
+			`}
+			inline={false}
+		/>
+
+			<DashButton url="/?to=/:account/magic-networks/routes" />
+
+		<Markdown
+			text={`
 			2. Select **Create static route**.`}
 			inline={false}
 		/>
