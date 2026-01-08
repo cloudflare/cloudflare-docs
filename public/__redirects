@@ -1235,6 +1235,7 @@
 /rules/custom-errors/create-api/ /rules/custom-errors/create-rules/ 301
 /rules/custom-errors/error-tokens/ /rules/custom-errors/reference/error-tokens/ 301
 /rules/custom-errors/parameters/ /rules/custom-errors/reference/parameters/ 301
+/rules/reference/esc-deprecation/ /rules/ 301
 
 # ruleset engine
 /ruleset-engine/rules-language/fields/standard-fields/ /ruleset-engine/rules-language/fields/reference/ 301
