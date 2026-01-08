@@ -126,10 +126,10 @@
 /src/content/docs/r2/ @oxyjun @elithrar @jonesphillip @aninibread @harshil1712 @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /src/content/partials/r2/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
 /src/content/release-notes/r2.yaml @oxyjun @elithrar @aninibread @cloudflare/workers-docs @cloudflare/pcx-technical-writing
-/src/content/docs/realtime/ @cloudflare/pcx-technical-writing @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-dyte
-/src/assets/images/realtime/ @cloudflare/pcx-technical-writing @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-dyte
-/src/content/partials/realtime/ @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-dyte @cloudflare/pcx-technical-writing
-/public/realtime/ @cloudflare/pcx-technical-writing @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-dyte
+/src/content/docs/realtime/ @cloudflare/pcx-technical-writing @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
+/src/assets/images/realtime/ @cloudflare/pcx-technical-writing @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
+/src/content/partials/realtime/ @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare @cloudflare/pcx-technical-writing
+/public/realtime/ @cloudflare/pcx-technical-writing @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
 /src/content/docs/stream/ @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/release-notes/stream.yaml @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing
 /src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @cloudflare/workers-runtime-1 @mattietk

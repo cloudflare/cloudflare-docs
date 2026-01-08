@@ -3,7 +3,7 @@ pcx_content_type: content
 title: Breakout Rooms
 slug: realtime/realtimekit/core/breakout-rooms
 sidebar:
-  order: 15
+  order: 16
 ---
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
@@ -17,15 +17,24 @@ import { Render } from "~/components";
 Before creating breakout rooms, validate the permissions of the current participant to ensure that the participant has the required permissions to create breakout rooms. Incorrect permissions can lead to errors being thrown.
 
 <RTKCodeSnippet id="web-web-components">
-  <Render file="realtimekit/web/breakout-room-permission-check" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-permission-check"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
-  <Render file="realtimekit/web/breakout-room-permission-check" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-permission-check"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-  <Render file="realtimekit/web/breakout-room-permission-check" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-permission-check"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 ### Create breakout rooms
@@ -33,15 +42,24 @@ Before creating breakout rooms, validate the permissions of the current particip
 <RTKSDKSelector />
 
 <RTKCodeSnippet id="web-web-components">
-  <Render file="realtimekit/web/breakout-room-creation-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-creation-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
-  <Render file="realtimekit/web/breakout-room-creation-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-creation-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-  <Render file="realtimekit/web/breakout-room-creation-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-creation-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 ### Retrieve list of breakout rooms and their participants
@@ -49,15 +67,24 @@ Before creating breakout rooms, validate the permissions of the current particip
 If there are more than one host in the room creating breakouts, you can retrieve consolidated list of breakout rooms using the following API.
 
 <RTKCodeSnippet id="web-web-components">
-  <Render file="realtimekit/web/breakout-room-fetch-meetings-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-fetch-meetings-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
-  <Render file="realtimekit/web/breakout-room-fetch-meetings-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-fetch-meetings-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-  <Render file="realtimekit/web/breakout-room-creation-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-creation-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 ### Move participants to breakout rooms
@@ -65,15 +92,24 @@ If there are more than one host in the room creating breakouts, you can retrieve
 Once you have created breakout rooms, assign participants to the rooms.
 
 <RTKCodeSnippet id="web-web-components">
-  <Render file="realtimekit/web/breakout-room-move-participant-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-move-participant-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
-  <Render file="realtimekit/web/breakout-room-move-participant-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-move-participant-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-<Render file="realtimekit/web/breakout-room-move-participant-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-move-participant-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 ### Move participants, with a specific preset, to breakout rooms
@@ -81,15 +117,24 @@ Once you have created breakout rooms, assign participants to the rooms.
 Once you have created breakout rooms, assign participants to the rooms.
 
 <RTKCodeSnippet id="web-web-components">
-  <Render file="realtimekit/web/breakout-room-move-preset-participant-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-move-preset-participant-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
-  <Render file="realtimekit/web/breakout-room-move-preset-participant-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-move-preset-participant-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-  <Render file="realtimekit/web/breakout-room-move-preset-participant-sdk-api" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-move-preset-participant-sdk-api"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 ### Move local participant to breakout room
@@ -101,15 +146,24 @@ To move the local participant to a different breakout room or back to the parent
 If a participant has been moved to a breakout room, the `changingMeeting` event is triggered, followed by the `meetingChanged` event. These events are also triggered when a participant switches between the main meeting and breakout rooms. Participants will autojoin the breakout room if they are assigned to it. You won't have to join meeting explicitly.
 
 <RTKCodeSnippet id="web-web-components">
-  <Render file="realtimekit/web/breakout-room-handle-breakout-events" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-handle-breakout-events"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
-  <Render file="realtimekit/web/breakout-room-handle-breakout-events" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-handle-breakout-events"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-  <Render file="realtimekit/web/breakout-room-handle-breakout-events" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-handle-breakout-events"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 ### Close breakout rooms
@@ -117,15 +171,24 @@ If a participant has been moved to a breakout room, the `changingMeeting` event 
 You can close/delete the breakout rooms. This will force participants in those meetings to come to the main room.
 
 <RTKCodeSnippet id="web-web-components">
-  <Render file="realtimekit/web/breakout-room-close-breakout" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-close-breakout"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
-  <Render file="realtimekit/web/breakout-room-close-breakout" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-close-breakout"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-  <Render file="realtimekit/web/breakout-room-close-breakout" product="realtime" />
+	<Render
+		file="realtimekit/web/breakout-room-close-breakout"
+		product="realtime"
+	/>
 </RTKCodeSnippet>
 
 ## Next steps
@@ -140,5 +203,5 @@ You have successfully integrated breakout rooms into your RealtimeKit applicatio
 For more advanced customization, explore the following:
 
 - [UI Kit Components Library](/realtime/realtimekit/ui-kit/component-library/) - Browse available components
-- [UI Kit States](/realtime/realtimekit/ui-kit/meeting-lifecycle/) - Learn how components synchronize
+- [UI Kit States](/realtime/realtimekit/ui-kit/state-management/) - Learn how components synchronize
 - [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/) - Create custom meeting interfaces

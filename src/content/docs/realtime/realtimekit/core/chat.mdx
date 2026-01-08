@@ -3,7 +3,7 @@ pcx_content_type: navigation
 title: Chat
 slug: realtime/realtimekit/core/chat
 sidebar:
-  order: 11
+  order: 12
 ---
 
 import { Tabs, TabItem } from "~/components";
@@ -599,7 +599,7 @@ There is a method in `meeting.chat` to send a message of each type.
 To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
 
 ```jsx
-const message = 'Is this the real life?';
+const message = "Is this the real life?";
 await meeting.chat.sendTextMessage(message);
 ```
 
@@ -608,20 +608,20 @@ await meeting.chat.sendTextMessage(message);
 You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type File, and sends it to the participants in the meeting.
 
 ```jsx
-import DocumentPicker from '@react-native-documents/picker';
+import DocumentPicker from "@react-native-documents/picker";
 
 async function onSendImage() {
-  // Get the image uri and create an object with the following fields
-  const res = await DocumentPicker.pickSingle({
-    type: [DocumentPicker.types.images],
-  });
-  const image = {
-    uri: res.uri,
-    name: res.name,
-    size: res.size,
-    type: res.type,
-  };
-  await meeting.chat.sendImageMessage(image);
+	// Get the image uri and create an object with the following fields
+	const res = await DocumentPicker.pickSingle({
+		type: [DocumentPicker.types.images],
+	});
+	const image = {
+		uri: res.uri,
+		name: res.name,
+		size: res.size,
+		type: res.type,
+	};
+	await meeting.chat.sendImageMessage(image);
 }
 ```
 
@@ -630,20 +630,20 @@ async function onSendImage() {
 Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
 
 ```jsx
-import DocumentPicker from '@react-native-documents/picker';
+import DocumentPicker from "@react-native-documents/picker";
 
 async function onSendFile() {
-  // Get the file uri and create an object with the following fields
-  const res = await DocumentPicker.pickSingle({
-    type: [DocumentPicker.types.allFiles],
-  });
-  const file = {
-    uri: res.uri,
-    name: res.name,
-    size: res.size,
-    type: res.type,
-  };
-  await meeting.chat.sendFileMessage(file);
+	// Get the file uri and create an object with the following fields
+	const res = await DocumentPicker.pickSingle({
+		type: [DocumentPicker.types.allFiles],
+	});
+	const file = {
+		uri: res.uri,
+		name: res.name,
+		size: res.size,
+		type: res.type,
+	};
+	await meeting.chat.sendFileMessage(file);
 }
 ```
 
@@ -653,20 +653,20 @@ There is also a common method called `meeting.chat.sendMessage()` that can be us
 
 ```typescript
 async function sendMessage(
-  message:
-    | { type: "text"; message: string }
-    | { type: "image"; image: File }
-    | { type: "file"; file: File },
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
 ) {
-  // ...
+	// ...
 }
 ```
 
 Here is how you would use the `sendMessage()` method to send a text message:
 
 ```jsx
-const message = 'Is this just fantasy?';
-await meeting.chat.sendMessage({ type: 'text', message });
+const message = "Is this just fantasy?";
+await meeting.chat.sendMessage({ type: "text", message });
 ```
 
 </TabItem>
@@ -836,9 +836,9 @@ Whenever a chat message is received, the `meeting.chat.messages` list is automat
 The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
 
 ```jsx
-meeting.chat.on('chatUpdate', ({ message, messages }) => {
-  console.log(`Received message ${message}`);
-  console.log(`All messages in chat: ${messages.join(', ')}`);
+meeting.chat.on("chatUpdate", ({ message, messages }) => {
+	console.log(`Received message ${message}`);
+	console.log(`All messages in chat: ${messages.join(", ")}`);
 });
 ```
 
@@ -849,8 +849,8 @@ When a chat message is received, the `meeting.chat.messages` list is also update
 ```jsx
 console.log(JSON.stringify(meeting.chat.messages));
 
-meeting.chat.on('chatUpdate', () => {
-  console.log(JSON.stringify(meeting.chat.messages));
+meeting.chat.on("chatUpdate", () => {
+	console.log(JSON.stringify(meeting.chat.messages));
 });
 ```
 
@@ -1051,7 +1051,7 @@ To edit a text message, use the `meeting.chat.editTextMessage()` method. This ac
 ```jsx
 const message = meeting.chat.messages[0];
 const messageId = message?.id;
-const newMessage = 'Is this the real life?';
+const newMessage = "Is this the real life?";
 await meeting.chat.editTextMessage(messageId, newMessage);
 ```
 
@@ -1060,21 +1060,21 @@ await meeting.chat.editTextMessage(messageId, newMessage);
 You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type File.
 
 ```jsx
-import DocumentPicker from '@react-native-documents/picker';
+import DocumentPicker from "@react-native-documents/picker";
 
 async function onEditImage() {
-  const messageId = '...';
-  // Get the image uri and create an object with the following fields
-  const res = await DocumentPicker.pickSingle({
-    type: [DocumentPicker.types.images],
-  });
-  const image = {
-    uri: res.uri,
-    name: res.name,
-    size: res.size,
-    type: res.type,
-  };
-  await meeting.chat.editImageMessage(messageId, image);
+	const messageId = "...";
+	// Get the image uri and create an object with the following fields
+	const res = await DocumentPicker.pickSingle({
+		type: [DocumentPicker.types.images],
+	});
+	const image = {
+		uri: res.uri,
+		name: res.name,
+		size: res.size,
+		type: res.type,
+	};
+	await meeting.chat.editImageMessage(messageId, image);
 }
 ```
 
@@ -1083,21 +1083,21 @@ async function onEditImage() {
 Editing a file is similar to editing an image. To edit a file, use `meeting.chat.editFileMessage()`.
 
 ```jsx
-import DocumentPicker from '@react-native-documents/picker';
+import DocumentPicker from "@react-native-documents/picker";
 
 async function onEditFile() {
-  const messageId = '...';
-  // Get the file uri and create an object with the following fields
-  const res = await DocumentPicker.pickSingle({
-    type: [DocumentPicker.types.allFiles],
-  });
-  const file = {
-    uri: res.uri,
-    name: res.name,
-    size: res.size,
-    type: res.type,
-  };
-  await meeting.chat.editFileMessage(messageId, file);
+	const messageId = "...";
+	// Get the file uri and create an object with the following fields
+	const res = await DocumentPicker.pickSingle({
+		type: [DocumentPicker.types.allFiles],
+	});
+	const file = {
+		uri: res.uri,
+		name: res.name,
+		size: res.size,
+		type: res.type,
+	};
+	await meeting.chat.editFileMessage(messageId, file);
 }
 ```
 
@@ -1107,22 +1107,22 @@ There is also a common method called `meeting.chat.editMessage()` that can be us
 
 ```typescript
 async function editMessage(
-  messageId: string,
-  message:
-    | { type: "text"; message: string }
-    | { type: "image"; image: File }
-    | { type: "file"; file: File },
+	messageId: string,
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
 ) {
-  // ...
+	// ...
 }
 ```
 
 Here is how you would use the `editMessage()` method to edit a text message:
 
 ```jsx
-const messageId = '...';
-const message = 'Is this just fantasy?';
-await meeting.chat.editMessage(messageId, { type: 'text', message });
+const messageId = "...";
+const message = "Is this just fantasy?";
+await meeting.chat.editMessage(messageId, { type: "text", message });
 ```
 
 </TabItem>

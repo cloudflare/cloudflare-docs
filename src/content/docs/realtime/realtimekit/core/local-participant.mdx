@@ -6,12 +6,13 @@ sidebar:
   order: 4
 ---
 
-import { Tabs, TabItem } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
-This guide covers how to manage the local user's media devices, control audio/video/screenshare, handle events, and work with media tracks in your RealtimeKit meetings.
+Manage local user media devices, control audio, video, and screenshare, and handle events in RealtimeKit meetings.
 
 :::note[Prerequisites]
-This page assumes you've already initialized the SDK and understand the meeting object structure. Refer to [Initialize SDK](/realtime/realtimekit/core/) and [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) if needed.
+Initialize the SDK and understand the meeting object structure. Refer to [Initialize SDK](/realtime/realtimekit/core/) and [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/).
 :::
 
 ## Introduction
@@ -20,10 +21,13 @@ The local user is accessible via `meeting.self` and contains all information and
 
 ## Properties
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKSDKSelector />
 
 ### Metadata Properties
+
+Access participant identifiers and display information:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 // Participant identifiers
@@ -34,9 +38,81 @@ meeting.self.name; // Display name
 meeting.self.picture; // Display picture URL
 ```
 
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
+
+```jsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+
+// Participant identifiers
+const id = useRealtimeKitSelector((m) => m.self.id);
+const userId = useRealtimeKitSelector((m) => m.self.userId);
+const customParticipantId = useRealtimeKitSelector(
+	(m) => m.self.customParticipantId,
+);
+const name = useRealtimeKitSelector((m) => m.self.name);
+const picture = useRealtimeKitSelector((m) => m.self.picture);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+// Participant identifiers
+meeting.localUser.id // Peer ID (unique per session)
+meeting.localUser.userId // User ID (persistent across sessions)
+meeting.localUser.customParticipantId // Custom identifier set by developer
+meeting.localUser.name // Display name
+meeting.localUser.picture // Display picture URL
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Participant identifiers
+meeting.localUser.id // Peer ID (unique per session)
+meeting.localUser.userId // User ID (persistent across sessions)
+meeting.localUser.customParticipantId // Custom identifier set by developer
+meeting.localUser.name // Display name
+meeting.localUser.picture // Display picture URL
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react-native";
+
+// Participant identifiers
+const id = useRealtimeKitSelector((m) => m.self.id);
+const userId = useRealtimeKitSelector((m) => m.self.userId);
+const customParticipantId = useRealtimeKitSelector(
+	(m) => m.self.customParticipantId,
+);
+const name = useRealtimeKitSelector((m) => m.self.name);
+const picture = useRealtimeKitSelector((m) => m.self.picture);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+// Participant identifiers
+meeting.localUser.id // Peer ID (unique per session)
+meeting.localUser.userId // User ID (persistent across sessions)
+meeting.localUser.customParticipantId // Custom identifier set by developer
+meeting.localUser.name // Display name
+meeting.localUser.picture // Display picture URL
+```
+
+</RTKCodeSnippet>
+
 ### Media Properties
 
-The local user's media tracks and states:
+Access the local user's media tracks and states:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 // Media state flags
@@ -53,53 +129,8 @@ meeting.self.screenShareTracks; // Object: { video: MediaStreamTrack, audio?: Me
 meeting.self.mediaPermissions; // Current audio/video permissions
 ```
 
-### State Properties
-
-```js
-// Room state
-meeting.self.roomJoined; // Boolean: Has joined the meeting?
-meeting.self.roomState; // Current room state (see possible values below)
-meeting.self.isPinned; // Boolean: Is the local user pinned?
-
-// Permissions and config
-meeting.self.permissions; // Capabilities defined by preset
-meeting.self.config; // Configuration for meeting appearance
-```
-
-**Room State Values:**
-
-The `roomState` property can have the following values:
-
-- `'init'` - Initialized but not joined
-- `'joined'` - Successfully joined the meeting
-- `'waitlisted'` - Waiting in the waiting room
-- `'rejected'` - Entry rejected
-- `'kicked'` - Removed from meeting
-- `'left'` - Left the meeting
-- `'ended'` - Meeting has ended
-- `'disconnected'` - Disconnected from meeting
-
-</TabItem>
-<TabItem label="React">
-
-### Metadata Properties
-
-```jsx
-import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
-
-// Participant identifiers
-const id = useRealtimeKitSelector((m) => m.self.id);
-const userId = useRealtimeKitSelector((m) => m.self.userId);
-const customParticipantId = useRealtimeKitSelector(
-	(m) => m.self.customParticipantId,
-);
-const name = useRealtimeKitSelector((m) => m.self.name);
-const picture = useRealtimeKitSelector((m) => m.self.picture);
-```
-
-### Media Properties
-
-The local user's media tracks and states:
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 // Media state flags
@@ -120,7 +151,102 @@ const screenShareTracks = useRealtimeKitSelector(
 const mediaPermissions = useRealtimeKitSelector((m) => m.self.mediaPermissions);
 ```
 
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+// Media state flags
+meeting.localUser.audioEnabled // Boolean: Is audio enabled?
+meeting.localUser.videoEnabled // Boolean: Is video enabled?
+meeting.localUser.screenShareEnabled // Boolean: Is screen share active?
+
+// Permissions granted by user
+meeting.localUser.isCameraPermissionGranted // Camera permission status
+meeting.localUser.isMicrophonePermissionGranted // Microphone permission status
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Media state flags
+meeting.localUser.audioEnabled // Boolean: Is audio enabled?
+meeting.localUser.videoEnabled // Boolean: Is video enabled?
+meeting.localUser.screenShareEnabled // Boolean: Is screen share active?
+
+// Permissions granted by user
+meeting.localUser.isCameraPermissionGranted // Camera permission status
+meeting.localUser.isMicrophonePermissionGranted // Microphone permission status
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+// Media state flags
+const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
+const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+const screenShareEnabled = useRealtimeKitSelector(
+	(m) => m.self.screenShareEnabled,
+);
+
+// Media tracks (MediaStreamTrack objects)
+const audioTrack = useRealtimeKitSelector((m) => m.self.audioTrack);
+const videoTrack = useRealtimeKitSelector((m) => m.self.videoTrack);
+const screenShareTracks = useRealtimeKitSelector(
+	(m) => m.self.screenShareTracks,
+);
+
+// Permissions granted by user
+const mediaPermissions = useRealtimeKitSelector((m) => m.self.mediaPermissions);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+// Media state flags
+meeting.localUser.audioEnabled // Boolean: Is audio enabled?
+meeting.localUser.videoEnabled // Boolean: Is video enabled?
+meeting.localUser.screenShareEnabled // Boolean: Is screen share active?
+
+// Permissions granted by user
+meeting.localUser.isCameraPermissionGranted // Camera permission status
+meeting.localUser.isMicrophonePermissionGranted // Microphone permission status
+```
+
+</RTKCodeSnippet>
+
 ### State Properties
+
+Access room state and participant status:
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+// Room state
+meeting.self.roomJoined; // Boolean: Has joined the meeting?
+meeting.self.roomState; // Current room state (see possible values below)
+meeting.self.isPinned; // Boolean: Is the local user pinned?
+
+// Permissions and config
+meeting.self.permissions; // Capabilities defined by preset
+meeting.self.config; // Configuration for meeting appearance
+```
+
+**Room state values:**
+
+- `'init'` - Initialized but not joined
+- `'joined'` - Successfully joined the meeting
+- `'waitlisted'` - Waiting in the waiting room
+- `'rejected'` - Entry rejected
+- `'kicked'` - Removed from meeting
+- `'left'` - Left the meeting
+- `'ended'` - Meeting has ended
+- `'disconnected'` - Disconnected from meeting
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 // Room state
@@ -147,9 +273,7 @@ return (
 );
 ```
 
-**Room State Values:**
-
-The `roomState` property can have the following values:
+**Room state values:**
 
 - `'init'` - Initialized but not joined
 - `'joined'` - Successfully joined the meeting
@@ -160,17 +284,97 @@ The `roomState` property can have the following values:
 - `'ended'` - Meeting has ended
 - `'disconnected'` - Disconnected from meeting
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+// Room state
+meeting.localUser.roomJoined // Boolean: Has joined the meeting?
+meeting.localUser.waitListStatus // Waitlist status (None, Waiting, Accepted, Rejected)
+meeting.localUser.isPinned // Boolean: Is the local user pinned?
+
+// Permissions and config
+meeting.localUser.permissions // Capabilities defined by preset
+meeting.localUser.presetName // Name of preset for local user
+meeting.localUser.presetInfo // Typed object representing preset information
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Room state
+meeting.localUser.roomJoined // Boolean: Has joined the meeting?
+meeting.localUser.waitListStatus // Waitlist status (None, Waiting, Accepted, Rejected)
+meeting.localUser.isPinned // Boolean: Is the local user pinned?
+
+// Permissions and config
+meeting.localUser.permissions // Capabilities defined by preset
+meeting.localUser.presetName // Name of preset for local user
+meeting.localUser.presetInfo // Typed object representing preset information
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+// Room state
+const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
+const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+const isPinned = useRealtimeKitSelector((m) => m.self.isPinned);
+
+// Permissions and config
+const permissions = useRealtimeKitSelector((m) => m.self.permissions);
+const config = useRealtimeKitSelector((m) => m.self.config);
+```
+
+**Example: Conditional rendering based on room state**
+
+```jsx
+const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+
+return (
+	<>
+		{roomState === "disconnected" && <Text>You are disconnected</Text>}
+		{roomState === "waitlisted" && <Text>Waiting for host to admit you</Text>}
+		{roomState === "joined" && <Text>You are in the meeting</Text>}
+	</>
+);
+```
+
+**Room state values:**
+
+- `'init'` - Initialized but not joined
+- `'joined'` - Successfully joined the meeting
+- `'waitlisted'` - Waiting in the waiting room
+- `'rejected'` - Entry rejected
+- `'kicked'` - Removed from meeting
+- `'left'` - Left the meeting
+- `'ended'` - Meeting has ended
+- `'disconnected'` - Disconnected from meeting
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+// Room state
+meeting.localUser.isHost // Boolean: Is the local user a host?
+meeting.localUser.isPinned // Boolean: Is the local user pinned?
+meeting.localUser.stageStatus // Stage status of the local user
+
+// Permissions and flags
+meeting.localUser.flags // ParticipantFlags (recorder, hidden)
+```
+
+</RTKCodeSnippet>
 
 ## Media Controls
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
-### Audio Control
+### Audio control
 
 Mute and unmute the microphone:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 // Enable audio (unmute)
@@ -183,54 +387,8 @@ await meeting.self.disableAudio();
 const isAudioEnabled = meeting.self.audioEnabled;
 ```
 
-### Video Control
-
-Enable and disable the camera:
-
-```js
-// Enable video
-await meeting.self.enableVideo();
-
-// Disable video
-await meeting.self.disableVideo();
-
-// Check current status
-const isVideoEnabled = meeting.self.videoEnabled;
-```
-
-### Screen Share Control
-
-Start and stop screen sharing:
-
-```js
-// Enable screen share
-await meeting.self.enableScreenShare();
-
-// Disable screen share
-await meeting.self.disableScreenShare();
-
-// Check current status
-const isScreenShareEnabled = meeting.self.screenShareEnabled;
-```
-
-### Change Display Name
-
-Change the user's display name (only works before joining):
-
-```js
-await meeting.self.setName("New Name");
-```
-
-:::note
-The name change will only reflect across all participants if done **before** joining the meeting.
-:::
-
-</TabItem>
-<TabItem label="React">
-
-### Audio Control
-
-Mute and unmute the microphone:
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 import { useRealtimeKitClient } from "@cloudflare/realtimekit-react";
@@ -253,9 +411,100 @@ function AudioControls() {
 }
 ```
 
-### Video Control
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+// Enable audio (unmute)
+meeting.localUser.enableAudio { error: AudioError? -> }
+
+// Disable audio (mute)
+meeting.localUser.disableAudio { error: AudioError? -> }
+
+// Check current status
+val isAudioEnabled = meeting.localUser.audioEnabled
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Enable audio (unmute)
+meeting.localUser.enableAudio { err in }
+
+// Disable audio (mute)
+meeting.localUser.disableAudio { err in }
+
+// Check current status
+let isAudioEnabled = meeting.localUser.audioEnabled
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+import { useRealtimeKitClient, useRealtimeKitSelector } from "@cloudflare/realtimekit-react-native";
+import { TouchableHighlight, Text } from "react-native";
+
+function AudioControls() {
+	const [meeting] = useRealtimeKitClient();
+	const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
+
+	const toggleAudio = async () => {
+		if (audioEnabled) {
+			await meeting.self.disableAudio();
+		} else {
+			await meeting.self.enableAudio();
+		}
+	};
+
+	return (
+		<TouchableHighlight onPress={toggleAudio}>
+			<Text>{audioEnabled ? "Mute" : "Unmute"}</Text>
+		</TouchableHighlight>
+	);
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+// Enable audio (unmute)
+meeting.localUser.enableAudio(onResult: (e) {
+  // handle error if any
+});
+
+// Disable audio (mute)
+meeting.localUser.disableAudio(onResult: (e) {
+  // handle error if any
+});
+
+// Check current status
+final isAudioEnabled = meeting.localUser.audioEnabled;
+```
+
+</RTKCodeSnippet>
+
+### Video control
 
 Enable and disable the camera:
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+// Enable video
+await meeting.self.enableVideo();
+
+// Disable video
+await meeting.self.disableVideo();
+
+// Check current status
+const isVideoEnabled = meeting.self.videoEnabled;
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 function VideoControls() {
@@ -278,9 +527,97 @@ function VideoControls() {
 }
 ```
 
-### Screen Share Control
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+// Enable video
+meeting.localUser.enableVideo { error: VideoError? -> }
+
+// Disable video
+meeting.localUser.disableVideo { error: VideoError? -> }
+
+// Check current status
+val isVideoEnabled = meeting.localUser.videoEnabled
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Enable video
+meeting.localUser.enableVideo { err in }
+
+// Disable video
+meeting.localUser.disableVideo { err in }
+
+// Check current status
+let isVideoEnabled = meeting.localUser.videoEnabled
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+function VideoControls() {
+	const [meeting] = useRealtimeKitClient();
+	const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+
+	const toggleVideo = async () => {
+		if (videoEnabled) {
+			await meeting.self.disableVideo();
+		} else {
+			await meeting.self.enableVideo();
+		}
+	};
+
+	return (
+		<TouchableHighlight onPress={toggleVideo}>
+			<Text>{videoEnabled ? "Stop Video" : "Start Video"}</Text>
+		</TouchableHighlight>
+	);
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+// Enable video
+meeting.localUser.enableVideo(onResult: (e) {
+  // handle error if any
+});
+
+// Disable video
+meeting.localUser.disableVideo(onResult: (e) {
+  // handle error if any
+});
+
+// Check current status
+final isVideoEnabled = meeting.localUser.videoEnabled;
+```
+
+</RTKCodeSnippet>
+
+### Screen share control
 
 Start and stop screen sharing:
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+// Enable screen share
+await meeting.self.enableScreenShare();
+
+// Disable screen share
+await meeting.self.disableScreenShare();
+
+// Check current status
+const isScreenShareEnabled = meeting.self.screenShareEnabled;
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 function ScreenShareControls() {
@@ -305,27 +642,170 @@ function ScreenShareControls() {
 }
 ```
 
-### Change Display Name
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
 
-Change the user's display name (only works before joining):
+```kotlin
+// Enable screen share
+meeting.localUser.enableScreenShare()
+
+// Disable screen share
+meeting.localUser.disableScreenShare()
+
+// Check current status
+val isScreenShareEnabled = meeting.localUser.screenShareEnabled
+```
+
+:::note[Android API 14 and above]
+Declare the following permission in your app's AndroidManifest.xml to use screenshare on Android devices running Android API 14 and above:
+
+```
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+```
+
+Adding this permission requires extra steps on Google Play Console. Refer to [Google's documentation](https://support.google.com/googleplay/android-developer/answer/13392821?hl=en#declare) for more information.
+:::
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Enable screen share
+let err: ScreenShareError? = meeting.localUser.enableScreenShare()
+
+// Disable screen share
+meeting.localUser.disableScreenShare()
+```
+
+Refer to the [Screen Share Setup (iOS)](#screen-share-setup-ios) section for platform-specific configuration.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+function ScreenShareControls() {
+	const [meeting] = useRealtimeKitClient();
+	const screenShareEnabled = useRealtimeKitSelector(
+		(m) => m.self.screenShareEnabled,
+	);
+
+	const toggleScreenShare = async () => {
+		if (screenShareEnabled) {
+			await meeting.self.disableScreenShare();
+		} else {
+			await meeting.self.enableScreenShare();
+		}
+	};
+
+	return (
+		<TouchableHighlight onPress={toggleScreenShare}>
+			<Text>{screenShareEnabled ? "Stop Sharing" : "Share Screen"}</Text>
+		</TouchableHighlight>
+	);
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+// Enable screen share
+meeting.localUser.enableScreenShare();
+
+// Disable screen share
+meeting.localUser.disableScreenShare();
+```
+
+:::note[Platform-specific setup]
+**Android:** Declare the following permission in your app's AndroidManifest.xml to use screenshare on Android devices running Android API 14 and above:
+
+```xml
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+```
+
+**iOS:** Refer to the [Screen Share Setup (iOS)](#screen-share-setup-ios) section for additional configuration.
+:::
+
+</RTKCodeSnippet>
+
+### Change display name
+
+Update the display name before joining the meeting:
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+await meeting.self.setName("New Name");
+```
+
+:::note
+Name changes only reflect across all participants if done before joining the meeting.
+:::
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 await meeting.self.setName("New Name");
 ```
 
 :::note
-The name change will only reflect across all participants if done **before** joining the meeting.
+Name changes only reflect across all participants if done before joining the meeting.
 :::
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
 
-## Manage Media Devices
+```kotlin
+meeting.localUser.setDisplayName("New Name")
+```
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+:::note
+Name changes only reflect across all participants if done before joining the meeting.
+:::
 
-### Get Available Devices
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+meeting.localUser.setDisplayName(name: "New Name")
+```
+
+:::note
+Name changes only reflect across all participants if done before joining the meeting.
+:::
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+await meeting.self.setName("New Name");
+```
+
+:::note
+Name changes only reflect across all participants if done before joining the meeting.
+:::
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+if (meeting.permissions.miscellaneous.canEditDisplayName) {
+  meeting.localUser.setDisplayName("New Name");
+}
+```
+
+:::note
+Name changes only reflect across all participants if done before joining the meeting and the local user has preset permission to change the name.
+:::
+
+</RTKCodeSnippet>
+
+## Manage media devices
+
+### Get available devices
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 // Get all media devices
@@ -348,22 +828,8 @@ const currentDevices = meeting.self.getCurrentDevices();
 // Returns: { audio: MediaDeviceInfo, video: MediaDeviceInfo, speaker: MediaDeviceInfo }
 ```
 
-### Change Device
-
-Switch to a different media device:
-
-```js
-// Get all devices
-const devices = await meeting.self.getAllDevices();
-
-// Set a specific device (replaces device of the same kind)
-await meeting.self.setDevice(devices[0]);
-```
-
-</TabItem>
-<TabItem label="React">
-
-### Get Available Devices
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 import { useRealtimeKitClient } from "@cloudflare/realtimekit-react";
@@ -412,25 +878,212 @@ function DeviceSelector() {
 }
 ```
 
-### Get Current Devices
+Get current devices being used:
 
 ```jsx
-// Get current devices being used
 const currentDevices = meeting.self.getCurrentDevices();
 // Returns: { audio: MediaDeviceInfo, video: MediaDeviceInfo, speaker: MediaDeviceInfo }
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
 
-## Display Local Video
+```kotlin
+// Get all audio devices
+val audioDevices: List<AudioDevice> = meeting.localUser.getAudioDevices()
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+// Get all video devices
+val videoDevices: List<VideoDevice> = meeting.localUser.getVideoDevices()
 
-### Register Video Element
+// Get currently selected audio device
+val selectedAudioDevice: AudioDevice = meeting.localUser.getSelectedAudioDevice()
 
-Play the local user's video track on a `<video>` element:
+// Get currently selected video device
+val selectedVideoDevice: VideoDevice = meeting.localUser.getSelectedVideoDevice()
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Get all audio devices
+let audioDevices = meeting.localUser.getAudioDevices()
+
+// Get all video devices
+let videoDevices = meeting.localUser.getVideoDevices()
+
+// Get currently selected audio device
+let selectedAudioDevice = meeting.localUser.getSelectedAudioDevice()
+
+// Get currently selected video device
+let selectedVideoDevice = meeting.localUser.getSelectedVideoDevice()
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+import { useRealtimeKitClient } from "@cloudflare/realtimekit-react-native";
+import { useState, useEffect } from "react";
+import { FlatList, TouchableHighlight, Text, View } from "react-native";
+
+function DeviceSelector() {
+	const [meeting] = useRealtimeKitClient();
+	const [audioDevices, setAudioDevices] = useState([]);
+	const [videoDevices, setVideoDevices] = useState([]);
+
+	useEffect(() => {
+		if (!meeting) return;
+
+		const loadDevices = async () => {
+			const audio = await meeting.self.getAudioDevices();
+			const video = await meeting.self.getVideoDevices();
+			setAudioDevices(audio);
+			setVideoDevices(video);
+		};
+
+		loadDevices();
+	}, [meeting]);
+
+	const handleDeviceChange = async (device) => {
+		await meeting.self.setDevice(device);
+	};
+
+	return (
+		<View>
+			<FlatList
+				data={audioDevices}
+				renderItem={({item}) => 
+					<TouchableHighlight onPress={() => handleDeviceChange(item)}>
+						<Text>{item.label}</Text>
+					</TouchableHighlight>
+				}
+				keyExtractor={item => item.deviceId}
+			/>
+		</View>
+	);
+}
+```
+
+Get current devices being used:
+
+```jsx
+const currentDevices = meeting.self.getCurrentDevices();
+// Returns: { audio: MediaDeviceInfo, video: MediaDeviceInfo, speaker: MediaDeviceInfo }
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+// Get all audio devices
+final audioDevices = await meeting.localUser.getAudioDevices();
+
+// Get all video devices
+final videoDevices = await meeting.localUser.getVideoDevices();
+
+// Get currently selected audio device
+final selectedAudioDevice = meeting.localUser.getSelectedAudioDevice();
+
+// Get currently selected video device
+final selectedVideoDevice = meeting.localUser.getSelectedVideoDevice();
+```
+
+</RTKCodeSnippet>
+
+### Change device
+
+Switch to a different media device:
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+// Get all devices
+const devices = await meeting.self.getAllDevices();
+
+// Set a specific device (replaces device of the same kind)
+await meeting.self.setDevice(devices[0]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
+
+Use the device selector example from the previous section. The `handleDeviceChange` function demonstrates how to switch devices.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+// Get all audio devices
+val audioDevices = meeting.localUser.getAudioDevices()
+
+// Set audio device
+meeting.localUser.setAudioDevice(audioDevices[0])
+
+// Get all video devices
+val videoDevices = meeting.localUser.getVideoDevices()
+
+// Set video device
+meeting.localUser.setVideoDevice(videoDevices[0])
+
+// Switch between front and back camera on devices with 2 cameras
+meeting.localUser.switchCamera()
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Set audio device
+meeting.localUser.setAudioDevice(device)
+
+// Set video device
+meeting.localUser.setVideoDevice(videoDevice: device)
+
+// Switch between front and back camera
+meeting.localUser.switchCamera()
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+Use the device selector example from the previous section. The `handleDeviceChange` function demonstrates how to switch devices.
+
+```js
+const handleDeviceChange = async (device) => {
+	await meeting.self.setDevice(device);
+};
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+// Get all available audio devices
+final audioDevices = await meeting.localUser.getAudioDevices();
+
+// Switch audio device
+await meeting.localUser.setAudioDevice(audioDevices[1]);
+
+// Get all available video devices
+final videoDevices = await meeting.localUser.getVideoDevices();
+
+// Switch video device
+await meeting.localUser.setVideoDevice(videoDevices[1]);
+
+// Switch between available camera sources
+meeting.localUser.switchCamera();
+```
+
+</RTKCodeSnippet>
+
+## Display local video
+
+<RTKCodeSnippet id="web-web-components">
+
+### Register video element
+
+Attach the local video track to a `<video>` element:
 
 ```html
 <video id="local-video" autoplay playsinline></video>
@@ -446,20 +1099,20 @@ meeting.self.registerVideoElement(videoElement);
 meeting.self.registerVideoElement(videoElement, true);
 ```
 
-### Deregister Video Element
+### Deregister video element
 
-Clean up when the video element is no longer needed:
+Remove the video element when no longer needed:
 
 ```js
 meeting.self.deregisterVideoElement(videoElement);
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
-### Using UI Kit Component
+### Use UI Kit component
 
-The simplest way to display local video in React is using the UI Kit's video tile component:
+Display local video with the UI Kit video tile component:
 
 ```jsx
 import { RtkParticipantTile } from "@cloudflare/realtimekit-react-ui";
@@ -472,9 +1125,9 @@ function LocalVideo() {
 }
 ```
 
-### Manual Video Element Management
+### Manage video element manually
 
-For custom implementations:
+Create custom video element implementations:
 
 ```jsx
 import {
@@ -513,17 +1166,428 @@ function LocalVideoCustom() {
 }
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+### Get video view
+
+Retrieve a self-preview video view that renders the local camera stream:
+
+```kotlin
+// Get the self-preview video view
+val videoView = meeting.localUser.getSelfPreview()
+```
+
+For rendering other participants' video, use:
+
+```kotlin
+// Get video view for camera stream
+val participantVideoView = participant.getVideoView()
+
+// Get video view for screenshare stream
+val screenshareView = participant.getScreenShareVideoView()
+```
+
+### Manage lifecycle
+
+Control video rendering with lifecycle methods:
+
+```kotlin
+// Start rendering video
+videoView.renderVideo()
+
+// Stop rendering video (but keep the view)
+videoView.stopVideoRender()
+
+// Release native resources when done
+videoView.release()
+```
+
+### Complete Example
+
+```kotlin
+import android.os.Bundle
+import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
+import io.dyte.core.VideoView
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var videoView: VideoView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Get the self-preview video view
+        videoView = meeting.localUser.getSelfPreview()
+
+        // Add to your layout
+        val container = findViewById<FrameLayout>(R.id.video_container)
+        container.addView(videoView)
+
+        // Start rendering
+        videoView.renderVideo()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Stop rendering when activity is paused
+        videoView.stopVideoRender()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Resume rendering when activity is resumed
+        videoView.renderVideo()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Clean up resources
+        videoView.release()
+    }
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+### Get video view
+
+Retrieve video views that render the participant's video streams:
+
+```swift
+// Get video view for local camera stream
+let videoView = meeting.localUser.getVideoView()
+
+// Get video view for screenshare stream
+let screenshareView = meeting.localUser.getScreenShareVideoView()
+```
+
+### Manage lifecycle
+
+The `UIView` handles its own lifecycle automatically and cleans up native resources when it exits the current window. No manual cleanup is required.
+
+### Example
+
+```swift
+import UIKit
+import RealtimeKit
+
+class VideoViewController: UIViewController {
+    private var videoView: UIView?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Get the video view for local camera
+        videoView = meeting.localUser.getVideoView()
+
+        // Add to your view hierarchy
+        if let videoView = videoView {
+            videoView.frame = view.bounds
+            videoView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            view.addSubview(videoView)
+        }
+    }
+}
+```
+
+For screenshare:
+
+```swift
+// Get and display screenshare view
+let screenshareView = meeting.localUser.getScreenShareVideoView()
+if let screenshareView = screenshareView {
+    screenshareView.frame = view.bounds
+    screenshareView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    view.addSubview(screenshareView)
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+import React from "react";
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react-native";
+import { MediaStream, RTCView } from "@cloudflare/react-native-webrtc";
+
+export default function VideoView() {
+	const { videoTrack } = useRealtimeKitSelector(
+		(m) => m.participants.active,
+	).toArray()[0];
+	const stream = new MediaStream(undefined);
+	stream.addTrack(videoTrack);
+	return (
+		<RTCView
+			objectFit={"cover"}
+			style={{ flex: 1 }}
+			streamURL={stream.toURL()}
+			mirror={true}
+			zOrder={1}
+		/>
+	);
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+### VideoView widget
+
+Display video streams with the `VideoView` widget:
+
+```dart
+import 'package:realtimekit_core/realtimekit_core.dart';
+import 'package:flutter/material.dart';
+
+class LocalVideoView extends StatelessWidget {
+  final RtkMeetingParticipant localUser;
+
+  const LocalVideoView({Key? key, required this.localUser}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return VideoView(
+      meetingParticipant: localUser,
+      isSelfParticipant: true,
+    );
+  }
+}
+```
+
+### VideoView parameters
+
+The `VideoView` widget accepts the following parameters:
+
+- `meetingParticipant` (required): The `RtkMeetingParticipant` whose video should be displayed
+- `isSelfParticipant` (optional): Set to `true` for the local participant's self-preview, defaults to `false`
+- `key` (optional): Widget key for Flutter's widget tree management
+
+### Example
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:realtimekit_core/realtimekit_core.dart';
+
+class MeetingScreen extends StatelessWidget {
+  final RtkMeeting meeting;
+
+  const MeetingScreen({Key? key, required this.meeting}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Video Preview')),
+      body: Container(
+        child: VideoView(
+          meetingParticipant: meeting.localUser,
+          isSelfParticipant: true,
+        ),
+      ),
+    );
+  }
+}
+```
+
+For displaying other participants' video:
+
+```dart
+// Display remote participant video
+VideoView(
+  meetingParticipant: remoteParticipant,
+  isSelfParticipant: false,
+)
+```
+
+The `VideoView` widget automatically handles video rendering and resource cleanup based on Flutter's widget lifecycle.
+
+</RTKCodeSnippet>
+
+## Screen share setup (iOS)
+
+<RTKCodeSnippet id="mobile-ios">
+
+### Add broadcast upload extension
+
+In Xcode, add a Broadcast Upload Extension through `File` → `New` → `Target`. Choose `iOS` → `Broadcast Upload Extension` and fill out the required information.
+
+### Configure app groups
+
+Add your extension to an app group:
+
+1. Go to your extension's target in the project
+2. In the Signings & Capabilities tab, click the + button in the top left
+3. Add App Groups
+4. Add App Groups to your main app as well, ensuring the App Group identifier is the same for both
+
+### Configure SampleHandler
+
+Edit your SampleHandler class:
+
+```swift
+import RealtimeKit
+
+class SampleHandler: RtkSampleHandler {}
+```
+
+### Update Info.plist
+
+Ensure **both** App and Extension Info.plist files contain these keys:
+
+```xml
+<key>RTKRTCAppGroupIdentifier</key>
+<string>(name of the group you have created)</string>
+```
+
+Add this key inside the Info.plist of the main App:
+
+```xml
+<key>RTKRTCScreenSharingExtension</key>
+<string>(Bundle Identifier of the Broadcast upload extension)</string>
+```
+
+### Enable screen share
+
+Launch the broadcast extension and enable screen share:
+
+```swift
+meeting.localUser.enableScreenShare()
+```
+
+To stop the screen share:
+
+```swift
+meeting.localUser.disableScreenShare()
+```
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+### Add broadcast upload extension
+
+In Xcode, add a Broadcast Upload Extension through `File` → `New` → `Target`. Choose `iOS` → `Broadcast Upload Extension` and fill out the required information.
+
+### Configure app groups
+
+Add your extension to an app group:
+
+1. Go to your extension's target in the project
+2. In the Signings & Capabilities tab, click the + button in the top left
+3. Add App Groups
+4. Add App Groups to your main app as well, ensuring the App Group identifier is the same for both
+
+### Configure SampleHandler
+
+1. Place the `RtkSampleHandler.swift` file from [GitHub](https://github.com/dyte-io/iOS-ScreenShare/blob/main/RtkSampleHandler.swift) in the `ios/<screenshare-folder>/` folder
+2. Create or replace `SampleHandler.swift`:
+
+```swift
+import ReplayKit
+
+class SampleHandler: RtkSampleHandler {
+}
+```
+
+### Update Info.plist
+
+Ensure **both** App and Extension Info.plist files contain these keys:
+
+```xml
+<key>RTKRTCAppGroupIdentifier</key>
+<string>(name of the group you have created)</string>
+```
+
+Add this key inside the Info.plist of the main App:
+
+```xml
+<key>RTKRTCScreenSharingExtension</key>
+<string>(Bundle Identifier of the Broadcast upload extension)</string>
+```
+
+### Enable screen share
+
+Launch the broadcast extension and enable screen share:
+
+```dart
+meeting.localUser.enableScreenShare()
+```
+
+To stop the screen share:
+
+```dart
+meeting.localUser.disableScreenShare()
+```
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+### Add broadcast upload extension
+
+In Xcode, add a Broadcast Upload Extension through `File` → `New` → `Target`. Choose `iOS` → `Broadcast Upload Extension` and fill out the required information.
+
+### Configure app groups
+
+Add your extension to an app group:
+
+1. Go to your extension's target in the project
+2. In the Signings & Capabilities tab, click the + button in the top left
+3. Add App Groups
+4. Add App Groups to your main app as well, ensuring the App Group identifier is the same for both
+
+### Configure SampleHandler
+
+Edit your SampleHandler class:
+
+```swift
+import RealtimeKitCore
+
+class SampleHandler: RTKScreenshareHandler {
+	override init() {
+   		super.init(appGroupIdentifier: "<YOUR_APP_GROUP_IDENTIFIER>", bundleIdentifier: "<YOUR_APP_BUNDLE_IDENTIFIER>")
+ 	}
+}
+```
+
+### Update Info.plist
+
+Ensure **both** App and Extension Info.plist files contain these keys:
+
+```xml
+<key>RTCAppGroupIdentifier</key>
+<string>(YOUR_APP_GROUP_IDENTIFIER)</string>
+```
+
+Add this key inside the Info.plist of the main App:
+
+```xml
+<key>RTCAppScreenSharingExtension</key>
+<string>(Bundle Identifier of the Broadcast upload extension)</string>
+```
+
+### Enable screen share
+
+Launch the broadcast extension and enable screen share:
+
+```js
+meeting.self.enableScreenShare()
+```
+
+To stop the screen share:
+
+```js
+meeting.self.disableScreenShare()
+```
+
+</RTKCodeSnippet>
 
 ## Events
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+### Room joined
 
-### Room Joined
+Fires when the local user joins the meeting:
 
-Triggered when the local user successfully joins the meeting:
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.self.on("roomJoined", () => {
@@ -531,9 +1595,90 @@ meeting.self.on("roomJoined", () => {
 });
 ```
 
-### Room Left
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
-Triggered when the local user leaves the meeting:
+```jsx
+const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
+
+useEffect(() => {
+	if (roomJoined) {
+		console.log("Successfully joined the meeting");
+	}
+}, [roomJoined]);
+```
+
+Or use event listener:
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleRoomJoined = () => {
+		console.log("Successfully joined the meeting");
+	};
+
+	meeting.self.on("roomJoined", handleRoomJoined);
+
+	return () => {
+		meeting.self.off("roomJoined", handleRoomJoined);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+Android SDK uses a different event model. Monitor `roomJoined` property changes or use listeners for state changes.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+iOS SDK uses a different event model. Monitor `roomJoined` property changes or use listeners for state changes.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
+
+useEffect(() => {
+	if (roomJoined) {
+		console.log("Successfully joined the meeting");
+	}
+}, [roomJoined]);
+```
+
+Or use event listener:
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleRoomJoined = () => {
+		console.log("Successfully joined the meeting");
+	};
+
+	meeting.self.on("roomJoined", handleRoomJoined);
+
+	return () => {
+		meeting.self.off("roomJoined", handleRoomJoined);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+Flutter SDK uses a different event model. Monitor `roomJoined` property changes or use listeners for state changes.
+
+</RTKCodeSnippet>
+
+### Room left
+
+Fires when the local user leaves the meeting:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.self.on("roomLeft", ({ state }) => {
@@ -554,9 +1699,97 @@ meeting.self.on("roomLeft", ({ state }) => {
 
 **Possible state values:** `'left'`, `'kicked'`, `'ended'`, `'rejected'`, `'disconnected'`, `'failed'`
 
-### Video Update
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
-Triggered when video is enabled or disabled:
+```jsx
+const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
+
+useEffect(() => {
+	if (!roomJoined) {
+		console.log("Left the meeting");
+	}
+}, [roomJoined]);
+```
+
+Or use event listener for detailed state:
+
+```jsx
+meeting.self.on("roomLeft", ({ state }) => {
+	if (state === "left") {
+		console.log("User voluntarily left");
+	} else if (state === "kicked") {
+		console.log("User was kicked");
+	}
+});
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+Use `RtkSelfEventListener` to monitor when the local user is removed from the meeting:
+
+```kotlin
+meeting.addSelfEventListener(object : RtkSelfEventListener {
+    override fun onRemovedFromMeeting() {
+        // display alert that user is no longer in the meeting
+    }
+})
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+iOS SDK uses a different event model. Monitor `roomJoined` property changes or use listeners for state changes.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
+
+useEffect(() => {
+	if (!roomJoined) {
+		console.log("Left the meeting");
+	}
+}, [roomJoined]);
+```
+
+Or use event listener for detailed state:
+
+```jsx
+meeting.self.on("roomLeft", ({ state }) => {
+	if (state === "left") {
+		console.log("User voluntarily left");
+	} else if (state === "kicked") {
+		console.log("User was kicked");
+	}
+});
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class MeetingSelfListener extends RtkSelfEventListener {
+  @override
+  void onRemovedFromMeeting() {
+    // User was removed from the meeting (kicked or meeting ended)
+    // Display alert or navigate to exit screen
+  }
+}
+
+// Add the listener
+meeting.addSelfEventListener(MeetingSelfListener());
+```
+
+</RTKCodeSnippet>
+
+### Video update
+
+Fires when video is enabled or disabled:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.self.on("videoUpdate", ({ videoEnabled, videoTrack }) => {
@@ -573,9 +1806,78 @@ meeting.self.on("videoUpdate", ({ videoEnabled, videoTrack }) => {
 });
 ```
 
-### Audio Update
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
-Triggered when audio is enabled or disabled:
+```jsx
+const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+const videoTrack = useRealtimeKitSelector((m) => m.self.videoTrack);
+
+useEffect(() => {
+	if (videoEnabled && videoTrack) {
+		console.log("Video is enabled");
+		// Handle video track
+	}
+}, [videoEnabled, videoTrack]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addSelfEventListener(object : RtkSelfEventListener {
+    override fun onVideoUpdate(isEnabled: Boolean) {
+        if (isEnabled) {
+            // video is enabled, other participants can see local user
+        } else {
+            // video is disabled, other participants cannot see local user
+        }
+    }
+})
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkSelfEventListener {
+    func onVideoUpdate(isEnabled: Bool) {
+        if (isEnabled) {
+            // video is enabled, other participants can see local user
+        } else {
+            // video is disabled, other participants cannot see local user
+        }
+    }
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+const videoTrack = useRealtimeKitSelector((m) => m.self.videoTrack);
+
+useEffect(() => {
+	if (videoEnabled && videoTrack) {
+		console.log("Video is enabled");
+		// Handle video track
+	}
+}, [videoEnabled, videoTrack]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+Flutter SDK uses a different event model. Monitor `videoEnabled` property changes.
+
+</RTKCodeSnippet>
+
+### Audio update
+
+Fires when audio is enabled or disabled:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.self.on("audioUpdate", ({ audioEnabled, audioTrack }) => {
@@ -588,9 +1890,78 @@ meeting.self.on("audioUpdate", ({ audioEnabled, audioTrack }) => {
 });
 ```
 
-### Screen Share Update
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
-Triggered when screen sharing starts or stops:
+```jsx
+const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
+const audioTrack = useRealtimeKitSelector((m) => m.self.audioTrack);
+
+useEffect(() => {
+	if (audioEnabled && audioTrack) {
+		console.log("Audio is enabled");
+		// Handle audio track
+	}
+}, [audioEnabled, audioTrack]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addSelfEventListener(object : RtkSelfEventListener {
+    override fun onAudioUpdate(isEnabled: Boolean) {
+        if (isEnabled) {
+            // audio is enabled, other participants can hear local user
+        } else {
+            // audio is disabled, other participants cannot hear local user
+        }
+    }
+})
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkSelfEventListener {
+    func onAudioUpdate(isEnabled: Bool) {
+        if (isEnabled) {
+            // audio is enabled, other participants can hear local user
+        } else {
+            // audio is disabled, other participants cannot hear local user
+        }
+    }
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
+const audioTrack = useRealtimeKitSelector((m) => m.self.audioTrack);
+
+useEffect(() => {
+	if (audioEnabled && audioTrack) {
+		console.log("Audio is enabled");
+		// Handle audio track
+	}
+}, [audioEnabled, audioTrack]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+Flutter SDK uses a different event model. Monitor `audioEnabled` property changes.
+
+</RTKCodeSnippet>
+
+### Screen share update
+
+Fires when screen sharing starts or stops:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.self.on(
@@ -613,9 +1984,100 @@ meeting.self.on(
 );
 ```
 
-### Device Update
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
-Triggered when the active device changes:
+```jsx
+const screenShareEnabled = useRealtimeKitSelector(
+	(m) => m.self.screenShareEnabled,
+);
+const screenShareTracks = useRealtimeKitSelector(
+	(m) => m.self.screenShareTracks,
+);
+
+useEffect(() => {
+	if (screenShareEnabled && screenShareTracks) {
+		console.log("Screen sharing is active");
+		// Handle screen share tracks
+	}
+}, [screenShareEnabled, screenShareTracks]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addSelfEventListener(object : RtkSelfEventListener {
+    override fun onScreenShareStartFailed(reason: String) {
+        // screen share failed to start
+    }
+
+    override fun onScreenShareUpdate(isEnabled: Boolean) {
+        if (isEnabled) {
+            // screen share is enabled
+        } else {
+            // screen share is disabled
+        }
+    }
+})
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+meeting.addSelfEventListener(self)
+
+extension MeetingViewModel: RtkSelfEventListener {
+    func onRemovedFromMeeting() {
+        // User was removed from the meeting (kicked or meeting ended)
+        // Display alert or navigate to exit screen
+    }
+
+    func onMeetingRoomDisconnected() {
+        // Lost connection to the meeting room
+        // Display reconnection UI or error message
+    }
+}
+```
+
+You can also monitor the `roomJoined` property for state changes:
+
+```swift
+let isInMeeting = meeting.localUser.roomJoined
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+const screenShareEnabled = useRealtimeKitSelector(
+	(m) => m.self.screenShareEnabled,
+);
+const screenShareTracks = useRealtimeKitSelector(
+	(m) => m.self.screenShareTracks,
+);
+
+useEffect(() => {
+	if (screenShareEnabled && screenShareTracks) {
+		console.log("Screen sharing is active");
+		// Handle screen share tracks
+	}
+}, [screenShareEnabled, screenShareTracks]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+Flutter SDK uses a different event model. Monitor `screenShareEnabled` property changes.
+
+</RTKCodeSnippet>
+
+### Device update
+
+Fires when the active device changes:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.self.on("deviceUpdate", ({ device }) => {
@@ -630,9 +2092,116 @@ meeting.self.on("deviceUpdate", ({ device }) => {
 });
 ```
 
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleDeviceUpdate = ({ device }) => {
+		if (device.kind === "audioinput") {
+			console.log("Microphone changed:", device.label);
+		} else if (device.kind === "videoinput") {
+			console.log("Camera changed:", device.label);
+		}
+	};
+
+	meeting.self.on("deviceUpdate", handleDeviceUpdate);
+
+	return () => {
+		meeting.self.off("deviceUpdate", handleDeviceUpdate);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.self.addSelfEventListener(object : RtkSelfEventListener() {
+    override fun onAudioDeviceChanged(device: AudioDevice) {
+        // Handle audio device change
+        println("Audio device changed: ${device.label}")
+    }
+
+    override fun onVideoDeviceChanged(device: VideoDevice) {
+        // Handle video device change
+        println("Video device changed: ${device.label}")
+    }
+})
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+meeting.self.addSelfEventListener(self)
+
+// RtkSelfEventListener implementation
+func onAudioDeviceChanged(device: AudioDevice) {
+    // Handle audio device change
+    print("Audio device changed: \(device.label)")
+}
+
+func onVideoDeviceChanged(device: VideoDevice) {
+    // Handle video device change
+    print("Video device changed: \(device.label)")
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleDeviceUpdate = ({ device }) => {
+		if (device.kind === "audioinput") {
+			console.log("Microphone changed:", device.label);
+		} else if (device.kind === "videoinput") {
+			console.log("Camera changed:", device.label);
+		}
+	};
+
+	meeting.self.on("deviceUpdate", handleDeviceUpdate);
+
+	return () => {
+		meeting.self.off("deviceUpdate", handleDeviceUpdate);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class DeviceChangeListener extends RtkSelfEventListener {
+  @override
+  void onAudioDeviceChanged(AudioDevice audioDevice) {
+    // Handle audio device change
+    print('Audio device changed: ${audioDevice.label}');
+  }
+
+  @override
+  void onVideoDeviceChanged(VideoDevice videoDevice) {
+    // Handle video device change
+    print('Video device changed: ${videoDevice.label}');
+  }
+}
+
+// Add the listener
+meeting.addSelfEventListener(DeviceChangeListener());
+```
+
+</RTKCodeSnippet>
+
 ### Device List Update
 
-Triggered when the list of available devices changes (device plugged in/out):
+Triggered when the list of available devices changes (device plugged in or out):
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.self.on("deviceListUpdate", ({ added, removed, devices }) => {
@@ -643,9 +2212,109 @@ meeting.self.on("deviceListUpdate", ({ added, removed, devices }) => {
 });
 ```
 
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleDeviceListUpdate = ({ added, removed, devices }) => {
+		console.log("Device list updated");
+		console.log("Added devices:", added);
+		console.log("Removed devices:", removed);
+		console.log("All devices:", devices);
+	};
+
+	meeting.self.on("deviceListUpdate", handleDeviceListUpdate);
+
+	return () => {
+		meeting.self.off("deviceListUpdate", handleDeviceListUpdate);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addSelfEventListener(object : RtkSelfEventListener {
+    // Triggered when audio devices are added or removed
+    override fun onAudioDevicesUpdated() {
+        val audioDevices = meeting.localUser.getAudioDevices()
+        // Update UI with new audio device list
+    }
+})
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+meeting.addSelfEventListener(object: RtkSelfEventListener {
+    // Triggered when audio devices are added or removed
+    func onAudioDevicesUpdated() {
+        let audioDevices = meeting.localUser.getAudioDevices()
+        // Update UI with new audio device list
+    }
+})
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleDeviceListUpdate = ({ added, removed, devices }) => {
+		console.log("Device list updated");
+		console.log("Added devices:", added);
+		console.log("Removed devices:", removed);
+		console.log("All devices:", devices);
+	};
+
+	meeting.self.on("deviceListUpdate", handleDeviceListUpdate);
+
+	return () => {
+		meeting.self.off("deviceListUpdate", handleDeviceListUpdate);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class DeviceListListener extends RtkSelfEventListener {
+  final RealtimekitClient meeting;
+
+  DeviceListListener(this.meeting);
+
+  @override
+  void onAudioDevicesUpdated(List<AudioDevice> devices) {
+    // Triggered when audio devices are added or removed
+    // Update UI with new audio device list
+  }
+
+  @override
+  void onVideoDeviceChanged(VideoDevice videoDevice) {
+    // Handle video device change
+    print('Video device changed to: ${videoDevice.label}');
+  }
+}
+
+// Add the listener
+meeting.addSelfEventListener(DeviceListListener(meeting));
+```
+
+</RTKCodeSnippet>
+
 ### Network Quality Score
 
 Monitor your own network quality:
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.self.on(
@@ -708,181 +2377,8 @@ The `scoreStats` object provides detailed statistics:
 }
 ```
 
-### Permission Updates
-
-Triggered when permissions are updated dynamically:
-
-```js
-// Listen to specific permission updates
-meeting.self.permissions.on("chatUpdate", () => {
-	console.log("Chat permissions updated");
-	// Check meeting.self.permissions for updated permissions
-});
-
-meeting.self.permissions.on("pollsUpdate", () => {
-	console.log("Polls permissions updated");
-});
-
-meeting.self.permissions.on("pluginsUpdate", () => {
-	console.log("Plugins permissions updated");
-});
-
-// Listen to all permission updates
-meeting.self.permissions.on("*", () => {
-	console.log("Permissions updated");
-});
-```
-
-### Media Permission Errors
-
-Triggered when media permissions are denied or media capture fails:
-
-```js
-meeting.self.on("mediaPermissionError", ({ message, kind }) => {
-	console.log(`Failed to capture ${kind}: ${message}`);
-
-	// Handle different error types
-	if (message === "DENIED") {
-		console.log("User denied permission");
-	} else if (message === "SYSTEM_DENIED") {
-		console.log("System denied permission");
-	} else if (message === "COULD_NOT_START") {
-		console.log("Failed to start media stream");
-	}
-});
-```
-
-**Possible values:**
-
-- `message`: `'DENIED'`, `'SYSTEM_DENIED'`, `'COULD_NOT_START'`
-- `kind`: `'audio'`, `'video'`, `'screenshare'`
-
-</TabItem>
-<TabItem label="React">
-
-### Room Joined
-
-```jsx
-const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
-
-useEffect(() => {
-	if (roomJoined) {
-		console.log("Successfully joined the meeting");
-	}
-}, [roomJoined]);
-```
-
-Or use event listener:
-
-```jsx
-useEffect(() => {
-	if (!meeting) return;
-
-	const handleRoomJoined = () => {
-		console.log("Successfully joined the meeting");
-	};
-
-	meeting.self.on("roomJoined", handleRoomJoined);
-
-	return () => {
-		meeting.self.off("roomJoined", handleRoomJoined);
-	};
-}, [meeting]);
-```
-
-### Room Left
-
-```jsx
-const roomJoined = useRealtimeKitSelector((m) => m.self.roomJoined);
-
-useEffect(() => {
-	if (!roomJoined) {
-		console.log("Left the meeting");
-	}
-}, [roomJoined]);
-```
-
-Or use event listener for detailed state:
-
-```jsx
-meeting.self.on("roomLeft", ({ state }) => {
-	if (state === "left") {
-		console.log("User voluntarily left");
-	} else if (state === "kicked") {
-		console.log("User was kicked");
-	}
-});
-```
-
-### Video Update
-
-```jsx
-const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
-const videoTrack = useRealtimeKitSelector((m) => m.self.videoTrack);
-
-useEffect(() => {
-	if (videoEnabled && videoTrack) {
-		console.log("Video is enabled");
-		// Handle video track
-	}
-}, [videoEnabled, videoTrack]);
-```
-
-### Audio Update
-
-```jsx
-const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
-const audioTrack = useRealtimeKitSelector((m) => m.self.audioTrack);
-
-useEffect(() => {
-	if (audioEnabled && audioTrack) {
-		console.log("Audio is enabled");
-		// Handle audio track
-	}
-}, [audioEnabled, audioTrack]);
-```
-
-### Screen Share Update
-
-```jsx
-const screenShareEnabled = useRealtimeKitSelector(
-	(m) => m.self.screenShareEnabled,
-);
-const screenShareTracks = useRealtimeKitSelector(
-	(m) => m.self.screenShareTracks,
-);
-
-useEffect(() => {
-	if (screenShareEnabled && screenShareTracks) {
-		console.log("Screen sharing is active");
-		// Handle screen share tracks
-	}
-}, [screenShareEnabled, screenShareTracks]);
-```
-
-### Device Update
-
-```jsx
-useEffect(() => {
-	if (!meeting) return;
-
-	const handleDeviceUpdate = ({ device }) => {
-		if (device.kind === "audioinput") {
-			console.log("Microphone changed:", device.label);
-		} else if (device.kind === "videoinput") {
-			console.log("Camera changed:", device.label);
-		}
-	};
-
-	meeting.self.on("deviceUpdate", handleDeviceUpdate);
-
-	return () => {
-		meeting.self.off("deviceUpdate", handleDeviceUpdate);
-	};
-}, [meeting]);
-```
-
-### Network Quality Score
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 useEffect(() => {
@@ -914,7 +2410,154 @@ useEffect(() => {
 }, [meeting]);
 ```
 
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+Android SDK does not currently expose network quality scores.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+iOS SDK does not currently expose network quality scores.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleMediaScoreUpdate = ({
+		kind,
+		isScreenshare,
+		score,
+		scoreStats,
+	}) => {
+		if (kind === "video") {
+			console.log(
+				`Your ${isScreenshare ? "screenshare" : "video"} quality score is`,
+				score,
+			);
+		}
+
+		if (score < 5) {
+			console.log("Your media quality is poor");
+		}
+	};
+
+	meeting.self.on("mediaScoreUpdate", handleMediaScoreUpdate);
+
+	return () => {
+		meeting.self.off("mediaScoreUpdate", handleMediaScoreUpdate);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+Flutter SDK does not currently expose network quality scores.
+
+</RTKCodeSnippet>
+
+### Permission Updates
+
+Triggered when permissions are updated dynamically:
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+// Listen to specific permission updates
+meeting.self.permissions.on("chatUpdate", () => {
+	console.log("Chat permissions updated");
+	// Check meeting.self.permissions for updated permissions
+});
+
+meeting.self.permissions.on("pollsUpdate", () => {
+	console.log("Polls permissions updated");
+});
+
+meeting.self.permissions.on("pluginsUpdate", () => {
+	console.log("Plugins permissions updated");
+});
+
+// Listen to all permission updates
+meeting.self.permissions.on("*", () => {
+	console.log("Permissions updated");
+});
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
+
+Monitor permissions using selectors:
+
+```jsx
+const permissions = useRealtimeKitSelector((m) => m.self.permissions);
+
+useEffect(() => {
+	console.log("Permissions updated:", permissions);
+}, [permissions]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+Android SDK uses a different permissions model. Refer to the Android-specific documentation.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+iOS SDK uses a different permissions model. Refer to the iOS-specific documentation.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+Monitor permissions using selectors:
+
+```jsx
+const permissions = useRealtimeKitSelector((m) => m.self.permissions);
+
+useEffect(() => {
+	console.log("Permissions updated:", permissions);
+}, [permissions]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+Flutter SDK uses a different permissions model. Refer to the Flutter-specific documentation.
+
+</RTKCodeSnippet>
+
 ### Media Permission Errors
+
+Triggered when media permissions are denied or media capture fails:
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.self.on("mediaPermissionError", ({ message, kind }) => {
+	console.log(`Failed to capture ${kind}: ${message}`);
+
+	// Handle different error types
+	if (message === "DENIED") {
+		console.log("User denied permission");
+	} else if (message === "SYSTEM_DENIED") {
+		console.log("System denied permission");
+	} else if (message === "COULD_NOT_START") {
+		console.log("Failed to start media stream");
+	}
+});
+```
+
+**Possible values:**
+
+- `message`: `'DENIED'`, `'SYSTEM_DENIED'`, `'COULD_NOT_START'`
+- `kind`: `'audio'`, `'video'`, `'screenshare'`
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 useEffect(() => {
@@ -936,175 +2579,321 @@ useEffect(() => {
 }, [meeting]);
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
 
-## Advanced Features
+```kotlin
+meeting.addSelfEventListener(object : RtkSelfEventListener {
+    override fun onMeetingRoomJoinedWithoutCameraPermission() {
+        // meeting joined without camera permission
+    }
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
-### Update Media Resolution
-
-Change video or screen share resolution at runtime:
-
-```js
-// Update camera resolution
-await meeting.self.updateVideoConstraints({
-	width: { ideal: 1920 },
-	height: { ideal: 1080 },
-});
-
-// Update screen share resolution
-await meeting.self.updateScreenshareConstraints({
-	width: { ideal: 1920 },
-	height: { ideal: 1080 },
-});
+    override fun onMeetingRoomJoinedWithoutMicPermission() {
+        // meeting joined without microphone permission
+    }
+})
 ```
 
-### Video Middlewares
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
 
-Add effects and filters to your video stream:
+```swift
+meeting.addSelfEventListener(self)
 
-```js
-// Create a middleware (e.g., retro filter)
-function RetroTheme() {
-	return (canvas, ctx) => {
-		ctx.filter = "grayscale(1)";
-		ctx.shadowColor = "#000";
-		ctx.shadowBlur = 20;
-		ctx.lineWidth = 50;
-		ctx.strokeStyle = "#000";
-		ctx.strokeRect(0, 0, canvas.width, canvas.height);
+extension MeetingViewModel: RtkSelfEventListener {
+    func onMeetingRoomJoinedWithoutCameraPermission() {
+        // meeting joined without camera permission
+    }
+
+    func onMeetingRoomJoinedWithoutMicPermission() {
+        // meeting joined without microphone permission
+    }
+}
+```
+
+You can also check permission status using properties:
+
+```swift
+let hasCameraPermission = meeting.localUser.isCameraPermissionGranted
+let hasMicPermission = meeting.localUser.isMicrophonePermissionGranted
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+useEffect(() => {
+	if (!meeting) return;
+
+	const handlePermissionError = ({ message, kind }) => {
+		console.log(`Failed to capture ${kind}: ${message}`);
+
+		if (message === "DENIED") {
+			// Show UI to guide user to grant permissions
+		}
 	};
+
+	meeting.self.on("mediaPermissionError", handlePermissionError);
+
+	return () => {
+		meeting.self.off("mediaPermissionError", handlePermissionError);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class PermissionListener extends RtkSelfEventListener {
+  @override
+  void onMeetingRoomJoinedWithoutCameraPermission() {
+    // Meeting joined without camera permission
+  }
+
+  @override
+  void onMeetingRoomJoinedWithoutMicPermission() {
+    // Meeting joined without microphone permission
+  }
 }
 
-// Add the video middleware
-meeting.self.addVideoMiddleware(RetroTheme);
-
-// Remove the video middleware
-meeting.self.removeVideoMiddleware(RetroTheme);
+// Add the listener
+meeting.addSelfEventListener(PermissionListener());
 ```
 
-### Audio Middlewares
+You can also check permission status using properties:
 
-Process audio streams with custom middlewares:
-
-```js
-// Add audio middleware
-meeting.self.addAudioMiddleware(YourAudioMiddleware);
-
-// Remove audio middleware
-meeting.self.removeAudioMiddleware(YourAudioMiddleware);
+```dart
+final hasCameraPermission = meeting.localUser.isCameraPermissionGranted;
+final hasMicPermission = meeting.localUser.isMicrophonePermissionGranted;
 ```
 
-### Pin/Unpin Self
+</RTKCodeSnippet>
 
-Pin or unpin yourself in the meeting:
+### Waitlist Status
 
-```js
+For meetings with waiting room enabled:
+
+<RTKCodeSnippet id="web-web-components">
+
+Monitor the `roomState` property for waitlist status. The value `'waitlisted'` indicates the user is in the waiting room.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+
+useEffect(() => {
+	if (roomState === "waitlisted") {
+		console.log("Waiting for host to admit you");
+	}
+}, [roomState]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+// Get current waitlist status
+val waitListStatus = meeting.localUser.waitListStatus
+
+// Listen to waitlist status changes
+meeting.addSelfEventListener(object : RtkSelfEventListener {
+    override fun onWaitListStatusUpdate(waitListStatus: WaitListStatus) {
+        // handle waitlist status here
+    }
+})
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Get current waitlist status
+let waitListStatus = meeting.localUser.waitListStatus
+
+// Listen to waitlist status changes
+extension MeetingViewModel: RtkSelfEventListener {
+    func onWaitlistedUpdate() {
+        // handle waitlist update
+    }
+}
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
+const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+
+useEffect(() => {
+	if (roomState === "waitlisted") {
+		console.log("Waiting for host to admit you");
+	}
+}, [roomState]);
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
+
+Flutter SDK uses a different event model. Monitor `stageStatus` or relevant properties for waitlist status.
+
+</RTKCodeSnippet>
+
+### iOS-Specific Events
+
+The iOS SDK provides additional platform-specific events:
+
+<RTKCodeSnippet id="mobile-ios">
+
+#### Proximity Sensor
+
+Triggered when the proximity sensor detects a change (useful for earpiece detection):
+
+```swift
+extension MeetingViewModel: RtkSelfEventListener {
+    func onProximityChanged() {
+        // Handle proximity sensor change
+        // Useful for detecting when device is near user's ear
+    }
+}
+```
+
+#### Webinar Events
+
+For webinar-specific functionality:
+
+```swift
+extension MeetingViewModel: RtkSelfEventListener {
+    func onWebinarPresentRequestReceived() {
+        // Handle request to present in webinar
+    }
+
+    func onStoppedPresenting() {
+        // Handle stopped presenting in webinar
+    }
+}
+```
+
+#### Room Messages
+
+Listen to broadcast messages in the room:
+
+```swift
+extension MeetingViewModel: RtkSelfEventListener {
+    func onRoomMessage() {
+        // Handle room broadcast message
+    }
+}
+```
+
+</RTKCodeSnippet>
+
+## Pin and Unpin
+
+Pin or unpin yourself in the meeting (requires appropriate permissions):
+
+<RTKCodeSnippet id="web-web-components">
+
+Web SDK does not currently support pinning the local participant.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
+
+Web SDK does not currently support pinning the local participant.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+Android SDK does not currently support pinning the local participant.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+// Pin yourself
+meeting.localUser.pin()
+
+// Unpin yourself
+meeting.localUser.unpin()
+
+// Check if pinned
+let isPinned = meeting.localUser.isPinned
+```
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+```jsx
 // Pin yourself
 await meeting.self.pin();
 
 // Unpin yourself
 await meeting.self.unpin();
 
-// Check pinned status
+// Check if pinned
 const isPinned = meeting.self.isPinned;
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
 
-### Update Media Resolution
+Flutter SDK does not currently support pinning the local participant.
 
-Change video or screen share resolution at runtime:
+</RTKCodeSnippet>
+
+## Update Media Constraints
+
+Update video or screenshare resolution at runtime:
+
+<RTKCodeSnippet id="web-web-components">
+
+Web SDK does not currently expose runtime constraint updates for local participant.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
+
+Web SDK does not currently expose runtime constraint updates for local participant.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
+
+Android SDK does not currently expose runtime constraint updates.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-ios">
+
+iOS SDK does not currently expose runtime constraint updates.
+
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
+
+### Update Video Constraints
+
+Update camera resolution while already streaming:
 
 ```jsx
-// Update camera resolution
-await meeting.self.updateVideoConstraints({
+meeting.self.updateVideoConstraints({
 	width: { ideal: 1920 },
 	height: { ideal: 1080 },
 });
+```
 
-// Update screen share resolution
-await meeting.self.updateScreenshareConstraints({
+### Update Screenshare Constraints
+
+Update screenshare resolution while already streaming:
+
+```jsx
+meeting.self.updateScreenshareConstraints({
 	width: { ideal: 1920 },
 	height: { ideal: 1080 },
 });
 ```
 
-### Video Middlewares
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-flutter">
 
-Add effects and filters to your video stream:
+Flutter SDK does not currently expose runtime constraint updates.
 
-```jsx
-// Create a middleware (e.g., retro filter)
-function RetroTheme() {
-	return (canvas, ctx) => {
-		ctx.filter = "grayscale(1)";
-		ctx.shadowColor = "#000";
-		ctx.shadowBlur = 20;
-		ctx.lineWidth = 50;
-		ctx.strokeStyle = "#000";
-		ctx.strokeRect(0, 0, canvas.width, canvas.height);
-	};
-}
-
-function VideoEffects() {
-	const [meeting] = useRealtimeKitClient();
-
-	const addRetroEffect = () => {
-		meeting.self.addVideoMiddleware(RetroTheme);
-	};
-
-	const removeRetroEffect = () => {
-		meeting.self.removeVideoMiddleware(RetroTheme);
-	};
-
-	return (
-		<>
-			<button onClick={addRetroEffect}>Add Retro Effect</button>
-			<button onClick={removeRetroEffect}>Remove Effect</button>
-		</>
-	);
-}
-```
-
-### Audio Middlewares
-
-Process audio streams with custom middlewares:
-
-```jsx
-// Add audio middleware
-meeting.self.addAudioMiddleware(YourAudioMiddleware);
-
-// Remove audio middleware
-meeting.self.removeAudioMiddleware(YourAudioMiddleware);
-```
-
-### Pin/Unpin Self
-
-Pin or unpin yourself in the meeting:
-
-```jsx
-function PinControls() {
-	const [meeting] = useRealtimeKitClient();
-	const isPinned = useRealtimeKitSelector((m) => m.self.isPinned);
-
-	const togglePin = async () => {
-		if (isPinned) {
-			await meeting.self.unpin();
-		} else {
-			await meeting.self.pin();
-		}
-	};
-
-	return (
-		<button onClick={togglePin}>{isPinned ? "Unpin Self" : "Pin Self"}</button>
-	);
-}
-```
-
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>

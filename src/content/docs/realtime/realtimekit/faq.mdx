@@ -9,6 +9,7 @@ sidebar:
 import { Details } from "~/components";
 
 <Details header="How can I generate the Cloudflare API Token?">
+
 To use RealtimeKit APIs, you must have a [Cloudflare account](https://dash.cloudflare.com).
 
 Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a new token via the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens).
@@ -38,8 +39,6 @@ A common approach is:
 </Details>
 
 <Details header="How do I prevent participants from joining a meeting after a specific date or time?">
-	You can disable the meeting at the required time by setting its status to `INACTIVE` using a `PATCH` request to the 
-  [Update Meeting](/api/resources/realtime_kit/subresources/meetings/methods/update_meeting_by_id/) endpoint.
 
 This prevents participants from joining the meeting and prevents any new Sessions from starting.
 
@@ -77,10 +76,8 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/realtime/kit/{AP
 <Details header="How can I prevent a user from joining a meeting again?">
 	Delete that user's participant for the meeting using the [Delete
 	Participant](/api/resources/realtime_kit/subresources/meetings/methods/delete_meeting_participant/)
-	API endpoint.
-
-Once the participant is deleted and you stop issuing new tokens for them, they will no longer be able to join that meeting.
-
+	API endpoint. Once the participant is deleted and you stop issuing new tokens
+	for them, they will no longer be able to join that meeting.
 </Details>
 
 <Details header="Can the same participant join multiple sessions of a meeting?">
@@ -105,6 +102,7 @@ Once the participant is deleted and you stop issuing new tokens for them, they w
 ### Presets
 
 <Details header="Do I need a new preset for every meeting or participant?">
+
 Presets are **re-usable** set of rules and configurations that are defined at the App level. You can use the same preset for multiple participants.
 
 Read more about presets [here](/realtime/realtimekit/concepts/preset/).
@@ -114,12 +112,13 @@ Read more about presets [here](/realtime/realtimekit/concepts/preset/).
 ### Client Side SDKs
 
 <Details header="How do I decide which SDK to select?">
+	
 	RealtimeKit support all the popular frameworks for web and mobile platforms.
 
-We **recommend using our UI Kits** For most use cases.
+    We **recommend using our UI Kits** For most use cases.
 
-Please Note: When you use our UI Kit, you also get the core SDK with it, which can be used to build additional features based on your needs.
+    Please Note: When you use our UI Kit, you also get the core SDK with it, which can be used to build additional features based on your needs.
 
-For more information please refer to our [SDK Selection Guide](/realtime/realtimekit/sdk-selection/)
+    For more information please refer to our [SDK Selection Guide](/realtime/realtimekit/sdk-selection/)
 
 </Details>

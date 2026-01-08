@@ -3,6 +3,12 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-01-07"
+    title: Bug fixes for JSON endpoint, waitForSelector timeout, and WebSocket rendering
+    description: |-
+      * Updated the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) fallback model and improved error handling for when plan limits of Workers Free plan users are reached.
+      * REST API requests using `waitForSelector` will now correctly fail if the specified selector is not found within the time limit.
+      * Fixed an issue where pages using WebSockets were not rendering correctly.
   - publish_date: "2025-12-04"
     title: Added guidance on allowlisting Browser Rendering in Bot Management
     description: |-
