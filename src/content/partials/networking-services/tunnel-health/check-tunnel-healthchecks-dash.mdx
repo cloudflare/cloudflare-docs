@@ -68,11 +68,39 @@ Not all data centers are relevant to you at all times. You can refer to the **Tr
 
 You can drill down into a specific tunnel to check its health status and other information.
 
-1. Go to the **Network health** page.
+{ props.magicWord === "WAN Tunnels" ? (
+	<>
+	<Markdown
+		text={`
+		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights**.
+		2. Go to **Network health** > **WAN connector health**.
+		`}
+		inline={false}
+	/>
+	</>
+) : (
+	<>
+
+	<Markdown
+			text={`
+			1. Go to the **Network health** page.
+				`}
+			inline={false}
+		/>
 
 	<DashButton url="/?to=/:account/networking-insights/health/network-health" />
 
+	<Markdown
+			text={`
 2. Select the **Connector health** tab.
+			`}
+			inline={false}
+		/>
+	</>
+)
+}
+
+
 3. Find and select the tunnel you want to inspect.
 
 The next screen shows you detailed information about the tunnel, including:
