@@ -66,6 +66,7 @@ For the **S3-compatible API**, errors are returned as XML in the response body:
 
 | Error Code | S3 Code | HTTP Status | Details | Recommended Fix |
 |------------|------|-------------|---------|-----------------|
+| 10001 | InternalConnectionError | 500 | An unexpected error occurred on Cloudflare's side | Retry the request with exponential backoff. If the issue persists, check [the public status page](https://www.cloudflarestatus.com) for incidents and contact Cloudflare support if needed. |
 | 10033 | MissingContentLength | 411 | `Content-Length` header required but missing. | Include the `Content-Length` header in PUT/POST requests. |
 | 10013 | IncompleteBody | 400 | Request body terminated before expected `Content-Length`. | Ensure the full request body is sent. Check for network interruptions or client timeouts. |
 | 10014 | InvalidDigest | 400 | Checksum header format is malformed. | Ensure checksums are properly encoded (base64 for SHA/CRC checksums). |
