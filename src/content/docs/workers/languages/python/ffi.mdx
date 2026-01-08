@@ -1,20 +1,21 @@
 ---
-pcx_content_type: reference
+pcx_content_type: concept
 title: Foreign Function Interface (FFI)
+sidebar:
+  order: 6
 head:
   - tag: title
     content: Work with JavaScript objects, methods, functions and globals from
       Python Workers
-
 ---
 
 import { WranglerConfig } from "~/components";
 
 Via [Pyodide](https://pyodide.org/en/stable/), Python Workers provide a [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) to JavaScript. This allows you to:
 
-* Use [bindings](/workers/runtime-apis/bindings/) to resources on Cloudflare, including [Workers AI](/workers-ai/), [Vectorize](/vectorize/), [R2](/r2/), [KV](/kv/), [D1](/d1/), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
-* Use JavaScript globals, like [`Request`](/workers/runtime-apis/request/), [`Response`](/workers/runtime-apis/response/), and [`fetch()`](/workers/runtime-apis/fetch/).
-* Use the full feature set of Cloudflare Workers — if an API is accessible in JavaScript, you can also access it in a Python Worker, writing exclusively Python code.
+- Use [bindings](/workers/runtime-apis/bindings/) to resources on Cloudflare, including [Workers AI](/workers-ai/), [Vectorize](/vectorize/), [R2](/r2/), [KV](/kv/), [D1](/d1/), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
+- Use JavaScript globals, like [`Request`](/workers/runtime-apis/request/), [`Response`](/workers/runtime-apis/response/), and [`fetch()`](/workers/runtime-apis/fetch/).
+- Use the full feature set of Cloudflare Workers — if an API is accessible in JavaScript, you can also access it in a Python Worker, writing exclusively Python code.
 
 The details of Pyodide's Foreign Function Interface are documented [here](https://pyodide.org/en/stable/usage/type-conversions.html), and Workers written in Python are able to take full advantage of this.
 
@@ -48,6 +49,24 @@ class Default(WorkerEntrypoint):
 ```
 
 Under the hood, `env` is actually a JavaScript object. When you call `.FOO`, you are accessing this property via a [`JsProxy`](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsProxy) — special proxy object that makes a JavaScript object behave like a Python object.
+
+### Converting Python to JavaScript
+
+Occasionally, to interoperate with JavaScript APIs, you may need to convert a Python object to JavaScript. Pyodide provides a `to_js` function to facilitate this conversion.
+
+````python
+from js import Object
+from pyodide.ffi import to_js as _to_js
+
+from workers import WorkerEntrypoint, Response
+
+# to_js converts between Python dictionaries and JavaScript Objects
+def to_js(obj):
+   return _to_js(obj, dict_converter=Object.fromEntries)
+	```
+````
+
+For more details, see out the [documentation on `pyodide.ffi.to_js`](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.to_js).
 
 ## Using JavaScript globals from Python Workers
 

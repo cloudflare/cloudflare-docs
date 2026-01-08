@@ -39,7 +39,6 @@ To install the Cloudflare root certificate, follow [this guide](/cloudflare-one/
 Gateway presents an **HTTP Response Code: 526** error page in the following cases:
 
 - **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
-
   - The server certificate issuer is unknown or is not trusted by the service.
   - The server certificate is revoked and fails a CRL check.
   - There is at least one expired certificate in the certificate chain for the server certificate.
@@ -47,7 +46,6 @@ Gateway presents an **HTTP Response Code: 526** error page in the following case
   - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
 
 - **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
-
   - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
   - Do not support [FIPS-compliant ciphers](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
   - Redirect all HTTPS requests to HTTP.
@@ -67,7 +65,7 @@ For more troubleshooting information, refer to [Support](/support/troubleshootin
 
 You may not see analytics on the Overview page for the following reasons:
 
-- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS locations** and then expanding the location.
+- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Networks** > **Resolvers & Proxies** > **DNS locations** and then expanding the location.
 - **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
 - **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
 - **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, file a support ticket.
@@ -199,23 +197,22 @@ For WARP client versions prior to 2024.12.554.0, certificates had to be marked a
 
 ### What do I need to do?
 
-Before deploying a new certificate, [update WARP](/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/#how-to-update-warp) to version 2024.12.554.0 or newer.
-
 For WARP client versions before and after 2024.12.554.0, certificate propagation will only occur when the WARP client is responsible for automatically installing the certificate on the client device. To enable the WARP client to propogate certificates:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-2. Turn on **Install CA to system certificate store**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices**.
+2. Select the **Management** tab.
+3. Turn on **Install CA to system certificate store**.
 
 If **Install CA to system certificate store** is turned off, you must [manually install the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/), use an [MDM solution](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software) to distribute the Cloudflare certificate to your fleet of devices, or not use the Cloudflare certificate because you do not want to have TLS decryption enabled. [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) must be enabled to enforce Gateway HTTP policies for HTTPS traffic.
 
 After enabling certificate propagation, you must update your certificate:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**, then select **Manage** next to **Cloudflare certificates**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings**, then select **Certificates**.
 2. Select **Generate certificate**.
 3. Select the expiration date for this new certificate (five years is the default, but this can be adjusted) and select **Generate certificate**.
 4. The new certificate will be marked **Inactive** at first. Select the **three dots** to the right of the certificate, then select **Activate** to activate the certificate.
 
-For WARP versions on or above 2024.12.554.0, selecting **Activate** will download the new certificate to end-user devices.
+When you activate a certificate, WARP will download the new certificate to end-user devices.
 
 Certificate propagation to end-user devices can take up to 10 minutes, but can be expedited by resetting the encryption keys.
 
@@ -229,10 +226,10 @@ macOS Big Sur and newer releases do not allow WARP to automatically trust the ce
 
 After confirming that the certificate is installed and trusted on the end-user device, mark the certificate as **In-Use**. To mark the certificate as **In-Use**:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**, then select **Manage** next to **Cloudflare certificates**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings**, then select **Certificates**.
 2. Select a certificate.
 3. In the detailed menu under **Basic Information**, select **Confirm and turn on certificate**.
-4. Once turned on, the new certificate will now show as **In-Use** in Zero Trust. **In-Use** indicates that the certificate is being used for inspection.
+4. Once turned on, the new certificate will now show as **In-Use** in Cloudflare One. **In-Use** indicates that the certificate is being used for inspection.
 
 It is recommended to have end users disconnect and reconnect WARP to expedite this change being reflected on their local machine. To verify the new certificate is being used correctly:
 
@@ -270,7 +267,7 @@ Turning off TLS decryption should be a temporary measure. TLS decryption should 
 
 ## I entered an override code for WARP that was supposed to be valid for 3 hours but the override code expired faster than I expected.
 
-[Admin override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#admin-override) codes are time-sensitive and adhere to fixed-hour time blocks. Override codes can be reused until the end of their timeout. An override code's timeout begins in the hour the override code was generated in. Refer to the following scenarios.
+[Admin override codes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes) are time-sensitive and adhere to fixed-hour time blocks. Override codes can be reused until the end of their timeout. An override code's timeout begins in the hour the override code was generated in. Refer to the following scenarios.
 
 ### Scenario one: Admin generates an override code at 9:00 AM with a timeout of one hour.
 
@@ -294,7 +291,7 @@ If the user attempts to enter the override code at **11:59 AM** the next day, th
 
 ## I disabled WARP using an override code but WARP turned on by itself before my override code expired.
 
-If you are using an [Admin override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#admin-override) code with [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) also enabled, WARP will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
+If you are using an [admin override code](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-admin-override-codes) with [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) also enabled, WARP will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
 
 To prevent WARP from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.
 
@@ -310,13 +307,13 @@ You can also examine logs in your identity provider to identify any denied reque
 
 If your WSL2 environment is losing connectivity while using WARP, check your [split tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
 
-The issue may arise because the IP range that the WSL environment uses to communicate with the host device is included in the split tunnel configuration. Excluding the WSL environment’s IP range should restore connectivity.
+The issue may arise because the IP range that the WSL environment uses to communicate with the host device is included in the split tunnel configuration. Excluding the WSL environment's IP range should restore connectivity.
 
 You must ensure the host device is included in the WARP tunnel while excluding the WSL environment to prevent connectivity issues between WSL and the host device.
 
 To debug this issue:
 
-1. Review the WSL2 environment's IP address and compare it with the laptop’s IP.
+1. Review the WSL2 environment's IP address and compare it with the laptop's IP.
 2. Check if the WSL network is [included in the split tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode).
 3. If the WSL network is included, exclude it from the split tunnel to prevent connectivity issues.
 
@@ -336,7 +333,7 @@ To resolve this error, review the following options:
 | `0` (disabled) | **Disabled**                                      | ✅ Works - browser will use local IP address |
 | `2` (enabled)  | **Enabled / Default**                             | ✅ Works - mDNS resolves successfully        |
 
-## After putting Google Workspace behind Access, I can’t log in. It keeps redirecting between Access and Google without ever completing authentication.
+## After putting Google Workspace behind Access, I can't log in. It keeps redirecting between Access and Google without ever completing authentication.
 
 When you put your Google Workspace behind Access, users will not be able to log in using Google or Google Workspace as an identity provider.
 

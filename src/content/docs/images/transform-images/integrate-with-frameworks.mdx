@@ -34,6 +34,8 @@ module.exports = {
 Next, create the `imageLoader.ts` file in the specified path (relative to the root of your Next.js application).
 
 ```ts
+import type { ImageLoaderProps } from "next/image";
+
 const normalizeSrc = (src: string) => {
     return src.startsWith("/") ? src.slice(1) : src;
 };
@@ -42,16 +44,15 @@ export default function cloudflareLoader({
     src,
     width,
     quality,
-}: { src: string; width: number; quality?: number }) {
-    if (process.env.NODE_ENV === "development") {
-        return src;
-    }
+}: ImageLoaderProps) {
     const params = [`width=${width}`];
     if (quality) {
-        params.push(`quality=${quality}`);
+      params.push(`quality=${quality}`);
     }
-    const paramsString = params.join(",");
-    return `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`;
+    if (process.env.NODE_ENV === "development") {
+      return `${src}?${params.join("&")}`;
+    }
+    return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
 }
 ```
 
@@ -62,23 +63,22 @@ Alternatively, define a loader for each `<Image />` component.
 ```js
 import Image from 'next/image';
 
-const normalizeSrc = src => {
+const normalizeSrc = (src) => {
   return src.startsWith('/') ? src.slice(1) : src;
 };
 
 const cloudflareLoader = ({ src, width, quality }) => {
-  if (process.env.NODE_ENV === "development") {
-  	return src;
-  }
   const params = [`width=${width}`];
   if (quality) {
     params.push(`quality=${quality}`);
   }
-  const paramsString = params.join(',');
-  return `/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`;
+  if (process.env.NODE_ENV === "development") {
+    return `${src}?${params.join("&")}`;
+  }
+  return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
 };
 
-const MyImage = props => {
+const MyImage = (props) => {
   return (
     <Image
       loader={cloudflareLoader}
@@ -86,6 +86,7 @@ const MyImage = props => {
       alt="Picture of the author"
       width={500}
       height={500}
+      {...props}
     />
   );
 };

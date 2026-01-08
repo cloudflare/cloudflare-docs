@@ -25,6 +25,8 @@ function getChangedSubFolders(files: any[]): string[] {
 		if (topLevelFolder === "docs") {
 			const subFolder = getSubFolder(path);
 			changedFolders.add(subFolder);
+		} else if (topLevelFolder === "changelog") {
+			changedFolders.add("changelog");
 		}
 	}
 
@@ -100,15 +102,6 @@ async function labelPRSubFolders(
 			newLabels.push(labelToAdd);
 		}
 	}
-
-	// Add "date labels to PRs"
-
-	const formattedDate: string = new Date().toLocaleDateString("en-US", {
-		month: "long",
-		year: "numeric",
-	});
-
-	newLabels.push(formattedDate);
 
 	if (newLabels.length > 0) {
 		await octokit.rest.issues.addLabels({

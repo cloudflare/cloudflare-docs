@@ -1,0 +1,28 @@
+---
+pcx_content_type: navigation
+title: Component Library
+slug: realtime/realtimekit/ui-kit/component-library
+sidebar:
+  order: 3
+---
+
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKUIComponent from "~/components/realtimekit/RTKUIComponent/RTKUIComponent.astro";
+import RTKUIComponentGrid from "~/components/realtimekit/RTKUIComponentGrid/RTKUIComponentGrid.astro";
+
+The UI Kit components library provides a comprehensive set of pre-built, customizable components that you can use to build your own custom meeting interface.
+
+<RTKSDKSelector />
+
+:::note
+All UI Kit components are built on top of Web Components, regardless of which framework (React/Angular) you use. They render as Web Components in the browser DOM.
+
+**Component naming conventions:**
+
+- **Web Components and Angular**: Use kebab-case (e.g., `rtk-meeting`)
+- **React**: Use PascalCase (e.g., `RtkMeeting`)
+
+React and Angular components are wrappers around the same underlying Web Components, so functionality is identical across all frameworks.
+:::
+
+<RTKUIComponentGrid />

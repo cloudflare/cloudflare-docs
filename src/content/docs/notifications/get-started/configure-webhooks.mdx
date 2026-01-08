@@ -3,14 +3,13 @@ pcx_content_type: how-to
 title: Configure webhooks
 sidebar:
   order: 3
-
 ---
 
 import { DashButton } from "~/components";
 
 :::note
 
-This feature is only available if your account has at least one zone with a pro plan or above. For more information, refer to our [plans](https://www.cloudflare.com/plans/). 
+This feature is only available if your account has at least one zone with a pro plan or above. For more information, refer to our [plans](https://www.cloudflare.com/plans/).
 :::
 
 There are a variety of services you can connect to Cloudflare using webhooks to receive notifications from your Cloudflare account. Refer to the table below to learn how to connect your Cloudflare account to [popular webhook services](#popular-webhook-services).
@@ -18,8 +17,9 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
 ## Configure webhooks
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
+
+   <DashButton url="/?to=/:account/notifications" />
+
 2. Go to **Destinations**.
 3. In the **Webhooks** card, select **Create**.
 4. Give your webhook a name to use for identification later.
@@ -34,13 +34,25 @@ The new webhook will appear in the **Webhooks** card.
 You can only edit the name of webhooks and/or delete them.
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
+
+   <DashButton url="/?to=/:account/notifications" />
+
 2. Go to **Destinations**.
 3. In the **Webhooks** card, select **Edit** on the webhook that you want to edit.
 4. Update the webhook's name and select **Save**.
 
 You can delete a webhook after selecting **Edit** or by selecting **Delete** in the list of webhooks displayed in the **Destinations** card.
+
+## Firewall settings
+
+Webhook notifications are sent from [Cloudflare's IP ranges](https://www.cloudflare.com/ips/). If your webhook endpoint is protected by a firewall, you must allowlist these IP addresses to receive notifications.
+
+To programmatically retrieve the current list of Cloudflare IP addresses, use the [Cloudflare API](/api/resources/cloudflare_ips/methods/list/).
+
+:::note
+
+Cloudflare's IP ranges are shared across multiple services and may change over time. Periodically check the [IP list](https://www.cloudflare.com/ips/) and update your firewall rules accordingly.
+:::
 
 ## Generic webhooks
 
@@ -54,13 +66,13 @@ When Cloudflare sends you a webhook, it will have the following schema:
 
 ```json title="Example schema"
 {
-    "text": "Hello World! This is a test message sent from https://cloudflare.com. If you can see this, your webhook is configured properly."
+	"text": "Hello World! This is a test message sent from https://cloudflare.com. If you can see this, your webhook is configured properly."
 }
 ```
 
 :::note
 
-`"text"` will vary depending on the alert that was fired. 
+`"text"` will vary depending on the alert that was fired.
 :::
 
 ### Limitations of generic webhooks
@@ -117,11 +129,11 @@ For [OpsGenie](https://support.atlassian.com/opsgenie/docs/create-a-default-api-
 For [Splunk](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector):
 
 - **Secret**: The secret is required and has to be entered by the user. This is what Splunk refers to as `token`. Refer to [Splunk’s documentation](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#How_the_Splunk_platform_uses_HTTP_Event_Collector_tokens_to_get_data_in) for details.
-- **URL**: 
-   1. We only support three Splunk endpoints: services/collector, services/collector/raw, and services/collector/event.
-   2. If SSL is enabled on the token, the port must be 443. If SSL is not enabled on the token, the port must be 8088.
-   3. SSL must be enabled on the server.
-   4. **Enable indexer acknowledgement** must be disabled on the Splunk HTTP Event Collector.
+- **URL**:
+  1.  We only support three Splunk endpoints: services/collector, services/collector/raw, and services/collector/event.
+  2.  If SSL is enabled on the token, the port must be 443. If SSL is not enabled on the token, the port must be 8088.
+  3.  SSL must be enabled on the server.
+  4.  **Enable indexer acknowledgement** must be disabled on the Splunk HTTP Event Collector.
 
 ### Feishu
 
@@ -150,7 +162,6 @@ For a Generic webhook:
 
 - **Secret**: User decides.
 - **URL**: User decides.
-
 
 ### Configuration of secrets
 

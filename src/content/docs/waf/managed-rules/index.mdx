@@ -49,6 +49,12 @@ At the zone level, you can only deploy each managed ruleset once. At the [accoun
 
 ## Important remarks
 
-Cloudflare analyzes the body of incoming requests up to a certain maximum size that varies according to your Cloudflare plan. For Enterprise customers, the maximum body size is 128 KB, while for other plans the limit is lower. This means that the behavior of specific managed rules that analyze request bodies can vary according to your current Cloudflare plan.
+Cloudflare analyzes the body of incoming requests up to a certain maximum size that varies according to your Cloudflare plan:
+
+- For Enterprise customers, the maximum body size is 128 KB.
+- For other paid plans, the limit is lower by default — reach out to your account team or to Cloudflare Support to increase the limit.
+- For users in the Free plan, the limit is 1 MB.
+
+This means that the behavior of specific managed rules that analyze request bodies can vary according to your current plan. For example, the OWASP Core Ruleset might have a higher rate of false positives with larger payload sizes because analyzing more data increases the likelihood that the total score exceeds the [threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold).
 
 If included in your plan, you can use [request body fields](/ruleset-engine/rules-language/fields/reference/?field-category=Body) such as `http.request.body.truncated` or `http.request.headers.truncated` in [custom rules](/waf/custom-rules/) that apply appropriate actions to requests that have not been fully analyzed by Cloudflare due to the maximum body size.

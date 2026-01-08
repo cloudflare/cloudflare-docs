@@ -5,15 +5,11 @@ sidebar:
   order: 2
 ---
 
-import { DashButton, Steps } from "~/components"
+import { DashButton, Steps } from "~/components";
 
 The Website data source allows you to connect a domain you own so its pages can be crawled, stored, and indexed.
 
-:::note
-You can only crawl domains that you have onboarded onto the same Cloudflare account.
-
-Refer to [Onboard a domain](/fundamentals/manage-domains/add-site/) for more information on adding a domain to your Cloudflare account.
-:::
+You can only crawl domains that you have onboarded onto the same Cloudflare account. Refer to [Onboard a domain](/fundamentals/manage-domains/add-site/) for more information on adding a domain to your Cloudflare account.
 
 :::caution[Bot protection may block crawling]
 If you use Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the AI Search (AutoRAG) crawler. Make sure to configure an exception or an allow-list for the AutoRAG crawler in your settings.
@@ -21,7 +17,7 @@ If you use Cloudflare products that control or restrict bot traffic such as [Bot
 
 ## How website crawling works
 
-When you connect a domain, the crawler looks for your website’s sitemap to determine which pages to visit:
+When you connect a domain, the crawler looks for your website's sitemap to determine which pages to visit:
 
 1. The crawler first checks the `robots.txt` for listed sitemaps. If it exists, it reads all sitemaps existing inside.
 2. If no `robots.txt` is found, the crawler first checks for a sitemap at `/sitemap.xml`.
@@ -34,7 +30,7 @@ Pages are visited, according to the `<priority>` attribute set on the sitemaps, 
 If you have Security rules configured to block bot activity, you can add a rule to allowlist the crawler bot.
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **Security rules** page of your account and domain.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
      <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
@@ -48,24 +44,71 @@ If you have Security rules configured to block bot activity, you can add a rule 
 </Steps>
 
 ## Parsing options
+
 You can choose how pages are parsed during crawling:
 
 - **Static sites**: Downloads the raw HTML for each page.
 - **Rendered sites**: Loads pages with a headless browser and downloads the fully rendered version, including dynamic JavaScript content. Note that the [Browser Rendering](/browser-rendering/pricing/) limits and billing apply.
 
+## Access protected content
+
+If your website has pages behind authentication or are only visible to logged-in users, you can configure custom HTTP headers to allow the AI Search crawler to access this protected content. You can add up to five custom HTTP headers to the requests AI Search sends when crawling your site.
+
+### Providing access to sites protected by Cloudflare Access
+
+To allow AI Search to crawl a site protected by [Cloudflare Access](/cloudflare-one/access-controls/), you need to create service token credentials and configure them as custom headers.
+
+Service tokens bypass user authentication, so ensure your Access policies are configured appropriately for the content you want to index. The service token will allow the AI Search crawler to access all content covered by the Service Auth policy.
+
+<Steps>
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), [create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token). Once the Client ID and Client Secret are generated, save them for the next steps. For example they can look like:
+
+   ```
+   CF-Access-Client-Id: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.access
+   CF-Access-Client-Secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   ```
+
+2. [Create a policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) with the following configuration:
+   - Add an **Include** rule with **Selector** set to **Service token**.
+   - In **Value**, select the Service Token you created in step 1.
+3. [Add your self-hosted application to Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) and with the following configuration:
+   - In Access policies, click **Select existing policies**.
+   - Select the policy that you have just created and select **Confirm**.
+4. In the Cloudflare dashboard, go to the **AI Search** page.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+5. Select **Create**.
+6. Select **Website** as your data source.
+7. Under **Parse options**, locate **Extra headers** and add the following two headers using your saved credentials:
+   - Header 1:
+     - **Key**: `CF-Access-Client-Id`
+     - **Value**: `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.access`
+   - Header 2:
+     - **Key**: `CF-Access-Client-Secret`
+     - **Value**: `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+
+8. Complete the AI Search setup process to create your search instance.
+
+</Steps>
+
 ## Storage
+
 During setup, AI Search creates a dedicated R2 bucket in your account to store the pages that have been crawled and downloaded as HTML files. This bucket is automatically managed and is used only for content discovered by the crawler. Any files or objects that you add directly to this bucket will not be indexed.
 
 :::note
-We recommend not to modify the bucket as it may distrupt the indexing flow and cause content to not be updated properly.
+We recommend not modifying the bucket as it may disrupt the indexing flow and cause content to not be updated properly.
 :::
 
 ## Sync and updates
-During scheduled or manual [sync jobs](/ai-search/configuration/indexing/), the crawler will check for changes to the `<lastmod>` attribute in your sitemap. If it has been changed to a date occuring after the last sync date, then the page will be crawled, the updated version is stored in the R2 bucket, and automatically reindexed so that your search results always reflect the latest content.
+
+During scheduled or manual [sync jobs](/ai-search/configuration/indexing/), the crawler will check for changes to the `<lastmod>` attribute in your sitemap. If it has been changed to a date occurring after the last sync date, then the page will be crawled, the updated version is stored in the R2 bucket, and automatically reindexed so that your search results always reflect the latest content.
 
 If the `<lastmod>` attribute is not defined, then AI Search will automatically crawl each link defined in the sitemap once a day.
 
 ## Limits
+
 The regular AI Search [limits](/ai-search/platform/limits-pricing/) apply when using the Website data source.
 
 The crawler will download and index pages only up to the maximum object limit supported for an AI Search instance, and it processes the first set of pages it visits until that limit is reached. In addition, any files that are downloaded but exceed the file size limit will not be indexed.

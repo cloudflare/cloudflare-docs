@@ -10,7 +10,7 @@ head:
     content: Overview
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, Tabs, TabItem, LinkButton } from "~/components"
+import { AnimatedWorkflowDiagram, CardGrid, Description, Feature, Flex, LinkTitleCard, Plan, RelatedProduct, Tabs, TabItem, LinkButton } from "~/components"
 
 <Description>
 
@@ -23,74 +23,99 @@ Build durable multi-step applications on Cloudflare Workers with Workflows.
 With Workflows, you can build applications that chain together multiple steps, automatically retry failed tasks,
 and persist state for minutes, hours, or even weeks - with no infrastructure to manage.
 
-Workflows give you:
+Use Workflows to build reliable AI applications, process data pipelines, manage user lifecycle with automated emails and trial expirations, and implement human-in-the-loop approval systems.
 
-- Reliable multi-step operations without worrying about timeouts
+<Flex>
+<div style="flex: 1; min-width: 0;">
+
+<AnimatedWorkflowDiagram
+	steps={[
+		{ id: 'fetch', label: 'fetch image', description: 'State persists between steps', duration: '2s' },
+		{ id: 'analyze', label: 'generate AI description', description: 'Retries automatically on failure', duration: '3s' },
+		{ id: 'wait', label: 'await approval', description: 'Pause until event received', duration: '2s' }
+	]}
+	autoPlay={true}
+	loop={true}
+/>
+
+</div>
+<div style="flex: 1; align-self: center; min-width: 0;">
+
+**Workflows give you:**
+
+- Durable multi-step execution without timeouts
+- The ability to pause for external events or approvals
 - Automatic retries and error handling
-- Built-in observability for long running operations
-- Simple and expressive code for complex processes
+- Built-in observability and debugging
 
-<Tabs>
-<TabItem label="Workflow Code">
+</div>
+</Flex>
+
+## Example
+
+An image processing workflow that fetches from R2, generates an AI description, waits for approval, then publishes:
+
 ```ts
-export class CheckoutWorkflow extends WorkflowEntrypoint {
-	async run (event, step) {
-		const processorResponse = await step.do( 'submit payment', async () => {
-			let resp = await submitToPaymentProcessor(event.params.payment) ;
-			return await resp.json<any>();
-		}) ;
+export class ImageProcessingWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent, step: WorkflowStep) {
+		const imageData = await step.do('fetch image', async () => {
+			const object = await this.env.BUCKET.get(event.params.imageKey);
+			return await object.arrayBuffer();
+		});
 
-		const textResponse = await step.do( 'send confirmation text', sendConfirmation);
-		await step.sleep('wait for feedback', '2 days');
-		await step.do('send feedback email', sendFeedbackEmail);
-		await step.sleep('delay before marketing', '30 days');
-		await step.do( 'send marketing follow up', sendFollowUp);
+		const description = await step.do('generate description', async () => {
+			const imageArray = Array.from(new Uint8Array(imageData));
+			return await this.env.AI.run('@cf/llava-hf/llava-1.5-7b-hf', {
+				image: imageArray,
+				prompt: 'Describe this image in one sentence',
+				max_tokens: 50,
+			});
+		});
+
+		await step.waitForEvent('await approval', {
+			event: 'approved',
+			timeout: '24 hours',
+		});
+
+		await step.do('publish', async () => {
+			await this.env.BUCKET.put(`public/${event.params.imageKey}`, imageData);
+		});
 	}
 }
 ```
-</TabItem>
-<TabItem label="Workflow Config">
-
-```json
-{
-	"name": "my-worker-with-workflow",
-	"main": "src/index.js",
-	"compatibility_date": "2025-02-27",
-	"workflows": [
-		{
-			"name": "checkout-workflow",
-			"binding": "CHECKOUT",
-			"class_name": "CheckoutWorkflow"
-		}
-	]
-}
-```
-</TabItem>
-</Tabs>
 
 <LinkButton href="/workflows/get-started/guide/">
-  Start building with Workflows
+	Get started
+</LinkButton>
+<LinkButton variant="secondary" href="/workflows/examples/">
+	Browse the examples
 </LinkButton>
 
 ***
 
 ## Features
 
-<Feature header="Deploy your first Workflow" href="/workflows/get-started/guide/" cta="Deploy your first Workflow">
+<Feature header="Durable step execution" href="/workflows/build/workers-api/" cta="Learn about steps">
 
-Define your first Workflow, understand how to compose multi-steps, and deploy to production.
-
-</Feature>
-
-<Feature header="Rules of Workflows" href="/workflows/build/rules-of-workflows/" cta="Best practices">
-
-Understand best practices when writing and building applications using Workflows.
+Break complex operations into durable steps with automatic retries and error handling.
 
 </Feature>
 
-<Feature header="Trigger Workflows" href="/workflows/build/trigger-workflows/" cta="Trigger Workflows from Workers">
+<Feature header="Sleep and scheduling" href="/workflows/build/sleeping-and-retrying/" cta="Add delays">
 
-Learn how to trigger Workflows from your Workers applications, via the REST API, and the command-line.
+Pause workflows for seconds, hours, or days with `step.sleep()` and `step.sleepUntil()`.
+
+</Feature>
+
+<Feature header="Wait for external events" href="/workflows/build/events-and-parameters/" cta="Handle events">
+
+Wait for webhooks, user input, or external system responses before continuing execution.
+
+</Feature>
+
+<Feature header="Workflow lifecycle management" href="/workflows/build/trigger-workflows/" cta="Manage instances">
+
+Trigger, pause, resume, and terminate workflow instances programmatically or via API.
 
 </Feature>
 

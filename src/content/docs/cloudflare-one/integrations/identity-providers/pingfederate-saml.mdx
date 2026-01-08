@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: PingFederate
 ---
 
+import { Render } from "~/components";
+
 The PingFederate offering from PingIdentity provides SSO identity management. Cloudflare Access supports PingFederate as a SAML identity provider.
 
 ## Set up PingFederate as an identity provider
@@ -51,7 +53,7 @@ This file shares several fields with Cloudflare Access so you do not have to inp
 https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
 ```
 
-You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+<Render file="find-team-name" product="cloudflare-one" />
 
 15. Fill the other fields with values from your Ping dashboard.
 

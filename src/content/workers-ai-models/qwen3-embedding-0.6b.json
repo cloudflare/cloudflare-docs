@@ -1,0 +1,111 @@
+{
+    "id": "cb254e3b-372b-4d4e-8526-ada79940427a",
+    "source": 1,
+    "name": "@cf/qwen/qwen3-embedding-0.6b",
+    "description": "The Qwen3 Embedding model series is the latest proprietary model of the Qwen family, specifically designed for text embedding and ranking tasks. ",
+    "task": {
+        "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
+        "name": "Text Embeddings",
+        "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
+    },
+    "created_at": "2025-06-18 20:23:22.086",
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.012,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "queries": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "description": "A single query string",
+                            "minLength": 1
+                        },
+                        {
+                            "type": "array",
+                            "description": "An array of query strings",
+                            "items": {
+                                "type": "string",
+                                "minLength": 1
+                            },
+                            "maxItems": 32
+                        }
+                    ]
+                },
+                "instruction": {
+                    "type": "string",
+                    "default": "Given a web search query, retrieve relevant passages that answer the query",
+                    "description": "Optional instruction for the task"
+                },
+                "documents": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "description": "A single document string",
+                            "minLength": 1
+                        },
+                        {
+                            "type": "array",
+                            "description": "An array of document strings",
+                            "items": {
+                                "type": "string",
+                                "minLength": 1
+                            },
+                            "maxItems": 32
+                        }
+                    ]
+                },
+                "text": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "description": "Alias for documents: a single text string",
+                            "minLength": 1
+                        },
+                        {
+                            "type": "array",
+                            "description": "Alias for documents: an array of text strings",
+                            "items": {
+                                "type": "string",
+                                "minLength": 1
+                            },
+                            "maxItems": 32
+                        }
+                    ]
+                }
+            }
+        },
+        "output": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "items": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array"
+                    },
+                    "type": "array"
+                },
+                "shape": {
+                    "items": {
+                        "type": "integer"
+                    },
+                    "type": "array"
+                }
+            }
+        }
+    }
+}

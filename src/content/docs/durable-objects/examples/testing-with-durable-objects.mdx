@@ -1,150 +1,506 @@
 ---
-
-summary: Write tests for Durable Objects.
+summary: Write tests for Durable Objects using the Workers Vitest integration.
 pcx_content_type: example
-title: Testing with Durable Objects
+title: Testing Durable Objects
 sidebar:
   order: 3
-description: Write tests for Durable Objects.
+description: Write tests for Durable Objects using the Workers Vitest integration.
 ---
 
+import { WranglerConfig, TypeScriptExample, Tabs, TabItem } from "~/components";
+
+Use the [`@cloudflare/vitest-pool-workers`](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers) package to write tests for your Durable Objects. This integration runs your tests inside the Workers runtime, giving you direct access to Durable Object bindings and APIs.
+
+## Prerequisites
+
+Install Vitest and the Workers Vitest integration as dev dependencies:
+
+<Tabs>
+<TabItem label="npm">
+```sh
+npm i -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
+```
+</TabItem>
+<TabItem label="pnpm">
+```sh
+pnpm add -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
+```
+</TabItem>
+<TabItem label="yarn">
+```sh
+yarn add -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
+```
+</TabItem>
+</Tabs>
+
+## Example Durable Object
+
+This example tests a simple counter Durable Object with SQLite storage:
+
+<TypeScriptExample filename="src/index.ts">
 ```ts
-import { unstable_dev } from "wrangler";
-import type { UnstableDevWorker } from "wrangler";
-import { describe, expect, it, beforeAll, afterAll } from "vitest";
+import { DurableObject } from "cloudflare:workers";
 
-describe("Worker", () => {
-	let worker: UnstableDevWorker;
+export interface Env {
+	COUNTER: DurableObjectNamespace<Counter>;
+}
 
-	beforeAll(async () => {
-		worker = await unstable_dev("src/index.ts", {
-			experimental: { disableExperimentalWarning: true },
+export class Counter extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(`
+				CREATE TABLE IF NOT EXISTS counters (
+					name TEXT PRIMARY KEY,
+					value INTEGER NOT NULL DEFAULT 0
+				)
+			`);
 		});
-	});
+	}
 
-	afterAll(async () => {
-		await worker.stop();
-	});
+	async increment(name: string = "default"): Promise<number> {
+		this.ctx.storage.sql.exec(
+			`INSERT INTO counters (name, value) VALUES (?, 1)
+			 ON CONFLICT(name) DO UPDATE SET value = value + 1`,
+			name
+		);
+		const result = this.ctx.storage.sql
+			.exec<{ value: number }>("SELECT value FROM counters WHERE name = ?", name)
+			.one();
+		return result.value;
+	}
 
-	it("should deny request for short paths", async () => {
-		const cases = {
-			failures: ["/", "/foo", "/foo/", "/%2F"],
-		};
-		for (const path of cases.failures) {
-			const resp = await worker.fetch(`http://example.com${path}`);
-			if (resp) {
-				const text = await resp.text();
-				expect(text).toMatchInlineSnapshot(
-					'"path must be at least 5 characters"',
-				);
-			}
+	async getCount(name: string = "default"): Promise<number> {
+		const result = this.ctx.storage.sql
+			.exec<{ value: number }>("SELECT value FROM counters WHERE name = ?", name)
+			.toArray();
+		return result[0]?.value ?? 0;
+	}
+
+	async reset(name: string = "default"): Promise<void> {
+		this.ctx.storage.sql.exec("DELETE FROM counters WHERE name = ?", name);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const counterId = url.searchParams.get("id") ?? "default";
+
+		const id = env.COUNTER.idFromName(counterId);
+		const stub = env.COUNTER.get(id);
+
+		if (request.method === "POST") {
+			const count = await stub.increment();
+			return Response.json({ count });
 		}
+
+		const count = await stub.getCount();
+		return Response.json({ count });
+	},
+};
+```
+</TypeScriptExample>
+
+## Configure Vitest
+
+Create a `vitest.config.ts` file that uses `defineWorkersConfig`:
+
+```ts title="vitest.config.ts"
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersConfig({
+	test: {
+		poolOptions: {
+			workers: {
+				wrangler: { configPath: "./wrangler.toml" },
+			},
+		},
+	},
+});
+```
+
+Make sure your Wrangler configuration includes the Durable Object binding and SQLite migration:
+
+<WranglerConfig>
+```jsonc
+{
+  "name": "counter-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-12-01",
+  "durable_objects": {
+    "bindings": [
+      { "name": "COUNTER", "class_name": "Counter" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["Counter"] }
+  ]
+}
+```
+</WranglerConfig>
+
+## Define types for tests
+
+Create a `test/tsconfig.json` to configure TypeScript for your tests:
+
+```jsonc title="test/tsconfig.json"
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"moduleResolution": "bundler",
+		"types": ["@cloudflare/vitest-pool-workers"]
+	},
+	"include": ["./**/*.ts", "../src/worker-configuration.d.ts"]
+}
+```
+
+Create an `env.d.ts` file to type the test environment:
+
+```ts title="test/env.d.ts"
+declare module "cloudflare:test" {
+	interface ProvidedEnv extends Env {}
+}
+```
+
+## Writing tests
+
+### Unit tests with direct Durable Object access
+
+You can get a stub to a Durable Object directly from the `env` object provided by `cloudflare:test`:
+
+<TypeScriptExample filename="test/counter.test.ts">
+```ts
+import { env } from "cloudflare:test";
+import { describe, it, expect, beforeEach } from "vitest";
+
+describe("Counter Durable Object", () => {
+	// Each test gets isolated storage automatically
+	it("should increment the counter", async () => {
+		const id = env.COUNTER.idFromName("test-counter");
+		const stub = env.COUNTER.get(id);
+
+		// Call RPC methods directly on the stub
+		const count1 = await stub.increment();
+		expect(count1).toBe(1);
+
+		const count2 = await stub.increment();
+		expect(count2).toBe(2);
+
+		const count3 = await stub.increment();
+		expect(count3).toBe(3);
 	});
 
-	describe("durable object", () => {
-		it("Should send text from a POST to a matching GET", async () => {
-			const path = "/stuff1";
-			const url = `http://example.com${path}`;
+	it("should track separate counters independently", async () => {
+		const id = env.COUNTER.idFromName("test-counter");
+		const stub = env.COUNTER.get(id);
 
-			// The get request should wait for the post request to complete
-			const getResponsePromise = worker.fetch(url);
+		await stub.increment("counter-a");
+		await stub.increment("counter-a");
+		await stub.increment("counter-b");
 
-			// The post request to the same path should receive a response that the text was consumed
-			const postResponse = await worker.fetch(url, {
-				method: "POST",
-				body: "Hello World 12345",
-			});
-			expect(postResponse.status).toBe(200);
-			const postText = await postResponse.text();
-			expect(postText).toBe("The text was consumed!");
+		expect(await stub.getCount("counter-a")).toBe(2);
+		expect(await stub.getCount("counter-b")).toBe(1);
+		expect(await stub.getCount("counter-c")).toBe(0);
+	});
 
-			// The get request should now receive the text
-			const getResponse = await getResponsePromise;
-			expect(getResponse.status).toBe(200);
-			const text = await getResponse.text();
-			expect(text).toBe("Hello World 12345");
+	it("should reset a counter", async () => {
+		const id = env.COUNTER.idFromName("test-counter");
+		const stub = env.COUNTER.get(id);
+
+		await stub.increment("my-counter");
+		await stub.increment("my-counter");
+		expect(await stub.getCount("my-counter")).toBe(2);
+
+		await stub.reset("my-counter");
+		expect(await stub.getCount("my-counter")).toBe(0);
+	});
+
+	it("should isolate different Durable Object instances", async () => {
+		const id1 = env.COUNTER.idFromName("counter-1");
+		const id2 = env.COUNTER.idFromName("counter-2");
+
+		const stub1 = env.COUNTER.get(id1);
+		const stub2 = env.COUNTER.get(id2);
+
+		await stub1.increment();
+		await stub1.increment();
+		await stub2.increment();
+
+		// Each Durable Object instance has its own storage
+		expect(await stub1.getCount()).toBe(2);
+		expect(await stub2.getCount()).toBe(1);
+	});
+});
+```
+</TypeScriptExample>
+
+### Integration tests with SELF
+
+Use the `SELF` fetcher to test your Worker's HTTP handler, which routes requests to Durable Objects:
+
+<TypeScriptExample filename="test/integration.test.ts">
+```ts
+import { SELF } from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+
+describe("Counter Worker integration", () => {
+	it("should increment via HTTP POST", async () => {
+		const response = await SELF.fetch("http://example.com?id=http-test", {
+			method: "POST",
 		});
 
-		it("Shouldn't send text from a POST to a different GET", async () => {
-			const path1 = "/stuff1";
-			const path2 = "/stuff2";
-			const url = (p: string) => `http://example.com${p}`;
+		expect(response.status).toBe(200);
+		const data = await response.json<{ count: number }>();
+		expect(data.count).toBe(1);
+	});
 
-			// The get request should wait for the post request to complete
-			const getResponsePromise1 = worker.fetch(url(path1));
-			const getResponsePromise2 = worker.fetch(url(path2));
+	it("should get count via HTTP GET", async () => {
+		// First increment the counter
+		await SELF.fetch("http://example.com?id=get-test", { method: "POST" });
+		await SELF.fetch("http://example.com?id=get-test", { method: "POST" });
 
-			// The post request to the same path should receive a response that the text was consumed
-			const postResponse1 = await worker.fetch(url(path1), {
-				method: "POST",
-				body: "Hello World 12345",
-			});
-			expect(postResponse1.status).toBe(200);
-			const postText1 = await postResponse1.text();
-			expect(postText1).toBe("The text was consumed!");
+		// Then get the count
+		const response = await SELF.fetch("http://example.com?id=get-test");
+		const data = await response.json<{ count: number }>();
+		expect(data.count).toBe(2);
+	});
 
-			const postResponse2 = await worker.fetch(url(path2), {
-				method: "POST",
-				body: "Hello World 789",
-			});
-			expect(postResponse2.status).toBe(200);
-			const postText2 = await postResponse2.text();
-			expect(postText2).toBe("The text was consumed!");
+	it("should use different counters for different IDs", async () => {
+		await SELF.fetch("http://example.com?id=counter-a", { method: "POST" });
+		await SELF.fetch("http://example.com?id=counter-a", { method: "POST" });
+		await SELF.fetch("http://example.com?id=counter-b", { method: "POST" });
 
-			// The get request should now receive the text
-			const getResponse1 = await getResponsePromise1;
-			expect(getResponse1.status).toBe(200);
-			const text1 = await getResponse1.text();
-			expect(text1).toBe("Hello World 12345");
+		const responseA = await SELF.fetch("http://example.com?id=counter-a");
+		const responseB = await SELF.fetch("http://example.com?id=counter-b");
 
-			const getResponse2 = await getResponsePromise2;
-			expect(getResponse2.status).toBe(200);
-			const text2 = await getResponse2.text();
-			expect(text2).toBe("Hello World 789");
+		const dataA = await responseA.json<{ count: number }>();
+		const dataB = await responseB.json<{ count: number }>();
+
+		expect(dataA.count).toBe(2);
+		expect(dataB.count).toBe(1);
+	});
+});
+```
+</TypeScriptExample>
+
+### Direct access to Durable Object internals
+
+Use `runInDurableObject()` to access instance properties and storage directly. This is useful for verifying internal state or testing private methods:
+
+<TypeScriptExample filename="test/direct-access.test.ts">
+```ts
+import {
+	env,
+	runInDurableObject,
+	listDurableObjectIds,
+} from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+import { Counter } from "../src";
+
+describe("Direct Durable Object access", () => {
+	it("can access instance internals and storage", async () => {
+		const id = env.COUNTER.idFromName("direct-test");
+		const stub = env.COUNTER.get(id);
+
+		// First, interact normally via RPC
+		await stub.increment();
+		await stub.increment();
+
+		// Then use runInDurableObject to inspect internals
+		await runInDurableObject(stub, async (instance: Counter, state) => {
+			// Access the exact same class instance
+			expect(instance).toBeInstanceOf(Counter);
+
+			// Access storage directly for verification
+			const result = state.storage.sql
+				.exec<{ value: number }>(
+					"SELECT value FROM counters WHERE name = ?",
+					"default"
+				)
+				.one();
+			expect(result.value).toBe(2);
 		});
+	});
 
-		it("Should not send the same POST twice", async () => {
-			const path = "/stuff1";
-			const url = (p: string) => `http://example.com${p}`;
+	it("can list all Durable Object IDs in a namespace", async () => {
+		// Create some Durable Objects
+		const id1 = env.COUNTER.idFromName("list-test-1");
+		const id2 = env.COUNTER.idFromName("list-test-2");
 
-			// The get request should wait for the post request to complete
-			const getResponsePromise1 = worker.fetch(url(path));
+		await env.COUNTER.get(id1).increment();
+		await env.COUNTER.get(id2).increment();
 
-			// The post request to the same path should receive a response that the text was consumed
-			const postResponse1 = await worker.fetch(url(path), {
-				method: "POST",
-				body: "Hello World 12345",
-			});
-			expect(postResponse1.status).toBe(200);
-			const postText1 = await postResponse1.text();
-			expect(postText1).toBe("The text was consumed!");
+		// List all IDs in the namespace
+		const ids = await listDurableObjectIds(env.COUNTER);
+		expect(ids.length).toBe(2);
+		expect(ids.some((id) => id.equals(id1))).toBe(true);
+		expect(ids.some((id) => id.equals(id2))).toBe(true);
+	});
+});
+```
+</TypeScriptExample>
 
-			// The get request should now receive the text
-			const getResponse1 = await getResponsePromise1;
-			expect(getResponse1.status).toBe(200);
-			const text1 = await getResponse1.text();
-			expect(text1).toBe("Hello World 12345");
+### Test isolation
 
-			// The next get request should wait for the next post request to complete
-			const getResponsePromise2 = worker.fetch(url(path));
+Each test automatically gets isolated storage. Durable Objects created in one test do not affect other tests:
 
-			// Send a new POST with different text
-			const postResponse2 = await worker.fetch(url(path), {
-				method: "POST",
-				body: "Hello World 789",
-			});
-			expect(postResponse2.status).toBe(200);
-			const postText2 = await postResponse2.text();
-			expect(postText2).toBe("The text was consumed!");
+<TypeScriptExample filename="test/isolation.test.ts">
+```ts
+import { env, listDurableObjectIds } from "cloudflare:test";
+import { describe, it, expect } from "vitest";
 
-			// The get request should receive the new text, not the old text
-			const getResponse2 = await getResponsePromise2;
-			expect(getResponse2.status).toBe(200);
-			const text2 = await getResponse2.text();
-			expect(text2).toBe("Hello World 789");
+describe("Test isolation", () => {
+	it("first test: creates a Durable Object", async () => {
+		const id = env.COUNTER.idFromName("isolated-counter");
+		const stub = env.COUNTER.get(id);
+
+		await stub.increment();
+		await stub.increment();
+		expect(await stub.getCount()).toBe(2);
+	});
+
+	it("second test: previous Durable Object does not exist", async () => {
+		// The Durable Object from the previous test is automatically cleaned up
+		const ids = await listDurableObjectIds(env.COUNTER);
+		expect(ids.length).toBe(0);
+
+		// Creating the same ID gives a fresh instance
+		const id = env.COUNTER.idFromName("isolated-counter");
+		const stub = env.COUNTER.get(id);
+		expect(await stub.getCount()).toBe(0);
+	});
+});
+```
+</TypeScriptExample>
+
+### Testing SQLite storage
+
+SQLite-backed Durable Objects work seamlessly in tests. The SQL API is available when your Durable Object class is configured with `new_sqlite_classes` in your Wrangler configuration:
+
+<TypeScriptExample filename="test/sqlite.test.ts">
+```ts
+import { env, runInDurableObject } from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+
+describe("SQLite in Durable Objects", () => {
+	it("can query and verify SQLite storage", async () => {
+		const id = env.COUNTER.idFromName("sqlite-test");
+		const stub = env.COUNTER.get(id);
+
+		// Increment the counter a few times via RPC
+		await stub.increment("page-views");
+		await stub.increment("page-views");
+		await stub.increment("api-calls");
+
+		// Verify the data directly in SQLite
+		await runInDurableObject(stub, async (instance, state) => {
+			// Query the database directly
+			const rows = state.storage.sql
+				.exec<{ name: string; value: number }>("SELECT name, value FROM counters ORDER BY name")
+				.toArray();
+
+			expect(rows).toEqual([
+				{ name: "api-calls", value: 1 },
+				{ name: "page-views", value: 2 },
+			]);
+
+			// Check database size is non-zero
+			expect(state.storage.sql.databaseSize).toBeGreaterThan(0);
 		});
 	});
 });
 ```
+</TypeScriptExample>
 
-Find the [full code for this example on GitHub](https://github.com/jahands/do-demo).
+### Testing alarms
+
+Use `runDurableObjectAlarm()` to immediately trigger a scheduled alarm without waiting for the timer. This allows you to test alarm handlers synchronously:
+
+<TypeScriptExample filename="test/alarm.test.ts">
+```ts
+import {
+	env,
+	runInDurableObject,
+	runDurableObjectAlarm,
+} from "cloudflare:test";
+import { describe, it, expect } from "vitest";
+import { Counter } from "../src";
+
+describe("Durable Object alarms", () => {
+	it("can trigger alarms immediately", async () => {
+		const id = env.COUNTER.idFromName("alarm-test");
+		const stub = env.COUNTER.get(id);
+
+		// Increment counter and schedule a reset alarm
+		await stub.increment();
+		await stub.increment();
+		expect(await stub.getCount()).toBe(2);
+
+		// Schedule an alarm (in a real app, this might be hours in the future)
+		await runInDurableObject(stub, async (instance, state) => {
+			await state.storage.setAlarm(Date.now() + 60_000); // 1 minute from now
+		});
+
+		// Immediately execute the alarm without waiting
+		const alarmRan = await runDurableObjectAlarm(stub);
+		expect(alarmRan).toBe(true); // Alarm was scheduled and executed
+
+		// Verify the alarm handler ran (assuming it resets the counter)
+		// Note: You'll need an alarm() method in your Durable Object that handles resets
+		// expect(await stub.getCount()).toBe(0);
+
+		// Trying to run the alarm again returns false (no alarm scheduled)
+		const alarmRanAgain = await runDurableObjectAlarm(stub);
+		expect(alarmRanAgain).toBe(false);
+	});
+});
+```
+</TypeScriptExample>
+
+To test alarms, add an `alarm()` method to your Durable Object:
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class Counter extends DurableObject {
+	// ... other methods ...
+
+	async alarm() {
+		// This method is called when the alarm fires
+		// Reset all counters
+		this.ctx.storage.sql.exec("DELETE FROM counters");
+	}
+
+	async scheduleReset(afterMs: number) {
+		await this.ctx.storage.setAlarm(Date.now() + afterMs);
+	}
+}
+```
+</TypeScriptExample>
+
+## Running tests
+
+Run your tests with:
+
+```sh
+npx vitest
+```
+
+Or add a script to your `package.json`:
+
+```json
+{
+	"scripts": {
+		"test": "vitest"
+	}
+}
+```
+
+## Related resources
+
+- [Workers Vitest integration](/workers/testing/vitest-integration/) - Full documentation for the Vitest integration
+- [Durable Objects testing recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/durable-objects) - Example from the Workers SDK
+- [RPC testing recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc) - Testing JSRPC with Durable Objects

@@ -3,8 +3,8 @@ pcx_content_type: get-started
 title: Getting started
 sidebar:
   order: 2
-
 ---
+
 import { DashButton } from "~/components";
 
 In this guide, you will get started with Cloudflare Images and make your first API request.
@@ -33,25 +33,21 @@ Cloudflare will automatically cache every transformed image on our global networ
 
 To enable transformations on your zone:
 
-1. In the Cloudflare dashboard, go to the **Transformations** page. 
+1. In the Cloudflare dashboard, go to the **Transformations** page.
 
-   <DashButton url="/?to=/:account/images/delivery-zones" />
+   <DashButton url="/?to=/:account/images/transformations" />
 
 2. Go to the specific zone where you want to enable transformations.
 3. Select **Enable for zone**. This will allow you to optimize and deliver remote images.
 
 :::note
 
-
 With **Resize images from any origin** unchecked, only the initial URL passed will be checked. Any redirect returned will be followed, including if it leaves the zone, and the resulting image will be transformed.
-
 
 :::
 
 :::note
 
-
 If you are using transformations in a Worker, you need to include the appropriate logic in your Worker code to prevent resizing images from any origin. Unchecking this option in the dash does not apply to transformation requests coming from Cloudflare Workers.
-
 
 :::

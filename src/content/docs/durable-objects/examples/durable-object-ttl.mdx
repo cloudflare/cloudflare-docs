@@ -89,6 +89,35 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject, Response, WorkerEntrypoint
+import time
+
+# Durable Object
+class MyDurableObject(DurableObject):
+	# Time To Live (TTL) in milliseconds
+	timeToLiveMs = 1000
+
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+
+	async def fetch(self, _request):
+		# Extend the TTL immediately following every fetch request to a Durable Object.
+		await self.ctx.storage.setAlarm(int(time.time() * 1000) + self.timeToLiveMs)
+		...
+
+	async def alarm(self):
+		await self.ctx.storage.deleteAll()
+
+# Worker
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		stub = self.env.MY_DURABLE_OBJECT.getByName("foo")
+		return await stub.fetch(request)
+```
+
 </TabItem> </Tabs>
 
 To test and deploy this example, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.

@@ -1,6 +1,6 @@
 import fs from "fs";
 
-fetch("https://ai.cloudflare.com/api/models")
+fetch("https://ai-cloudflare-com.pages.dev/api/models")
 	.then((res) => res.json())
 	.then((data) => {
 		data.models.map((model) => {

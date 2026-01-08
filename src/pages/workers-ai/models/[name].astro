@@ -22,6 +22,7 @@ import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
+import Flux2Dev from "~/components/models/code/Flux-2-Dev.astro";
 import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
 import MelottsCode from "~/components/models/code/MelottsCode.astro";
 import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
@@ -94,6 +95,10 @@ if (model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
 
 if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 	CodeExamples = Flux1Schnell;
+}
+
+if (model.name === "@cf/black-forest-labs/flux-2-dev") {
+	CodeExamples = Flux2Dev;
 }
 
 if (model.name === "@cf/openai/whisper-large-v3-turbo") {
@@ -226,23 +231,14 @@ const starlightPageProps = {
 		)
 	}
 
-	{
-		model.name === "@cf/deepgram/flux" && (
-			<Aside>
-				<p>
-					For the month of October 2025, Deepgram's Flux model will be free to use on Workers AI. Official pricing will be announced soon and charged after the promotional pricing period ends on October 31, 2025.
-				</p>
-			</Aside>
-		)
-	}
-
 	<ModelFeatures model={model} />
 	{
 		model.name === "@cf/deepgram/nova-3" && (
 			<Aside>
 				<p>
 					The <a href="/workers-ai/platform/pricing">pricing of this model</a>{" "}
-					is different based on transport. Transport-based pricing does not apply to all models.
+					is different based on transport. Transport-based pricing does not
+					apply to all models.
 				</p>
 				<p>
 					<ul>

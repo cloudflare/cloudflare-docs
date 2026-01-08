@@ -2,20 +2,21 @@
 pcx_content_type: concept
 title: How Python Workers Work
 sidebar:
-  order: 1
+  order: 5
 head:
   - tag: title
     content: How Python Workers Work
-
 ---
 
-import { Render, WranglerConfig } from "~/components"
+import { Render, WranglerConfig } from "~/components";
 
 Workers written in Python are executed by [Pyodide](https://pyodide.org/en/stable/index.html). Pyodide is a port of [CPython](https://github.com/python) (the reference implementation of Python — commonly referred to as just "Python") to WebAssembly.
 
 When you write a Python Worker, your code is interpreted directly by Pyodide, within a V8 isolate. Refer to [How Workers works](/workers/reference/how-workers-works/) to learn more.
 
-## Local Development Lifecycle
+## Local Development
+
+A basic Python Worker includes a Python file with a `Default` class extending `WorkerEntrypoint`, such as:
 
 ```python
 from workers import Response, WorkerEntrypoint
@@ -25,7 +26,7 @@ class Default(WorkerEntrypoint):
         return Response("Hello world!")
 ```
 
-…with a [Wrangler configuration file](/workers/wrangler/configuration/) that points to a .py file:
+...and a [Wrangler configuration file](/workers/wrangler/configuration/) that points to this `.py` file:
 
 <WranglerConfig>
 
@@ -37,27 +38,26 @@ compatibility_date = "2024-04-01"
 
 </WranglerConfig>
 
-When you run `npx wrangler@latest dev` in local dev, the Workers runtime will:
+When you run `uv run pywrangler dev` to do local dev, the Workers runtime will:
 
 1. Determine which version of Pyodide is required, based on your compatibility date
-2. Create a new v8 isolate for your Worker, and automatically inject Pyodide
-3. Serve your Python code using Pyodide
+2. Install any packages necessary based on your `pyproject.toml` file
+3. Create a new v8 isolate for your Worker, and automatically inject Pyodide
+4. Serve your Python code using Pyodide
 
-There no extra toolchain or precompilation steps needed. The Python execution environment is provided directly by the Workers runtime, mirroring how Workers written in JavaScript work.
+There are no extra toolchain or precompilation steps needed. The Python execution environment is provided directly by the Workers runtime, mirroring how Workers written in JavaScript work.
 
 Refer to the [Python examples](/workers/languages/python/examples/) to learn how to use Python within Workers.
 
-## Deployment Lifecycle
+## Deployment Lifecycle and Cold Start Optimizations
 
-To reduce cold start times, when you deploy a Python Worker, Cloudflare performs as much of the expensive work as possible upfront, at deploy time. When you run npx `wrangler@latest deploy`, the following happens:
+To reduce cold start times, when you deploy a Python Worker, Cloudflare performs as much of the expensive work as possible upfront, at deploy time. When you run npx `uv run pywrangler deploy`, the following happens:
 
-1. Wrangler uploads your Python code and any vendored packages to the Workers API.
-2. Cloudflare sends your Python code, and any vendored packages to the Workers runtime to be validated.
-3. Cloudflare creates a new v8 isolate for your Worker, and automatically injects Pyodide plus any built-in packages requested by your bundle.
+1. Wrangler uploads your Python code and any packages included in your `pyproject.toml` to the Workers API.
+2. Cloudflare sends your Python code to the Workers runtime to be validated.
+3. Cloudflare creates a new v8 isolate for your Worker, automatically injecting Pyodide.
 4. Cloudflare scans the Worker’s code for import statements, execute them, and then take a snapshot of the Worker’s WebAssembly linear memory. Effectively, we perform the expensive work of importing packages at deploy time, rather than at runtime.
 5. Cloudflare deploys this snapshot alongside your Worker’s Python code to the Cloudflare network.
-
-<Render file="python-workers-beta-packages" product="workers" />
 
 When a request comes in to your Worker, we load this snapshot and use it to bootstrap your Worker in an isolate, avoiding expensive initialization time:
 

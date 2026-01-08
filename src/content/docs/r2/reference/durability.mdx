@@ -6,14 +6,21 @@ sidebar:
 
 ---
 
-R2 was designed for data durability and resilience and provides 99.999999999% (eleven 9s) of annual durability, which describes the likelihood of data loss.
+R2 is designed to provide 99.999999999% (eleven 9s) of annual durability.  This means that if you store 10,000,000 objects on R2, you can expect to lose an object once every 10,000 years on average.
 
-For example, if you store 1,000,000 objects on R2, you can expect to lose an object once every 100,000 years, which is the same level of durability as other major providers.
+## How R2 achieves eleven-nines durability
 
-:::caution
+R2's durability is built on multiple layers of redundancy and data protection:
 
+- **Replication**: When you upload an object, R2 stores multiple "copies" of that object through either full replication and/or erasure coding. This ensures that the full or partial failure of any individual disk does not result in data loss. Erasure coding distributes parts of the object across multiple disks, ensuring that even if some disks fail, the object can still be reconstructed from a subset of the available parts, preventing hardware failure or physical impacts to data centers (such as fire or floods) from causing data loss.
 
-Keep in mind that if you accidentally delete an object, you are responsible for implementing your own solution for backups.
+- **Hardware redundancy**: Storage clusters are comprised of hardware distributed across several data centers within a geographic region. This physical distribution ensures that localized failures—such as power outages, network disruptions, or hardware malfunctions at a single facility—do not result in data loss.
 
+- **Synchronous writes**: R2 returns an `HTTP 200 (OK)` for a write via API or otherwise indicates success only when data has been persisted to disk. We do not rely on asynchronous replication to support underlying durability guarantees. This is critical to R2’s consistency guarantees and mitigates the chance of a client receiving a successful API response without the underlying metadata and storage infrastructure having persisted the change.
 
-:::
+### Considerations
+
+* Durability is not a guarantee of data availability. It is a measure of the likelihood of data loss.
+* R2 provides an availability [SLA of 99.9%](https://www.cloudflare.com/r2-service-level-agreement/)
+* Durability does not prevent intentional or accidental deletion of data. Use [bucket locks](/r2/buckets/bucket-locks/) and/or bucket-scoped [API tokens](/r2/api/tokens/) to limit access to data.
+* Durability is also distinct from [consistency](/r2/reference/consistency/), which describes how reads and writes are reflected in the system's state (e.g. eventual consistency vs. strong consistency).

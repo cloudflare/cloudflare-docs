@@ -25,7 +25,7 @@ All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and 
 
 Users on the Workers Paid plan have access to the Standard usage model. Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, contact your Account Manager.
 
-|              | Requests<sup>1, 2</sup>                                            | Duration                        | CPU time                                                                                                                                                                                                                                                                                                                                                                                                  |
+|              | Requests<sup>1, 2, 3</sup>                                         | Duration                        | CPU time                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ------------ | ------------------------------------------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Free**     | 100,000 per day                                                    | No charge for duration          | 10 milliseconds of CPU time per invocation                                                                                                                                                                                                                                                                                                                                                                |
 | **Standard** | 10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of [5 minutes of CPU time](/workers/platform/limits/#worker-limits) per invocation (default: 30 seconds)<br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation |
@@ -33,7 +33,11 @@ Users on the Workers Paid plan have access to the Standard usage model. Workers 
 <sup>1</sup> Inbound requests to your Worker. Cloudflare does not bill for
 [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
 
-<sup>2</sup> Requests to static assets are free and unlimited.
+<sup>2</sup> WebSocket connections made to a Worker are charged as a request,
+representing the initial `Upgrade` connection made to establish the WebSocket.
+WebSocket messages routed through a Worker do not count as requests.
+
+<sup>3</sup> Requests to static assets are free and unlimited.
 
 ### Example pricing
 
@@ -120,6 +124,7 @@ To change your default account-wide usage model:
 2. Find **Usage Model** on the right-side menu > **Change**.
 
 Usage models may be changed at the individual Worker level:
+
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />

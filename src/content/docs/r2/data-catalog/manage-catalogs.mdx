@@ -22,6 +22,7 @@ import {
 Learn how to:
 
 - Enable and disable [R2 Data Catalog](/r2/data-catalog/) on your buckets.
+- Enable and disable [table maintenance](/r2/data-catalog/table-maintenance/) features like compaction and snapshot expiration.
 - Authenticate Iceberg engines using API tokens.
 
 ## Enable R2 Data Catalog on a bucket
@@ -80,7 +81,7 @@ npx wrangler r2 bucket catalog disable <BUCKET_NAME>
 
 ## Enable compaction
 
-Compaction improves query performance by combining the many small files created during data ingestion into fewer, larger files according to the set `target file size`. For more information about compaction and why it's valuable, refer to [About compaction](/r2/data-catalog/about-compaction/).
+Compaction improves query performance by combining the many small files created during data ingestion into fewer, larger files according to the set `target file size`. For more information about compaction and why it's valuable, refer to [About compaction](/r2/data-catalog/table-maintenance/).
 
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
@@ -159,6 +160,43 @@ npx wrangler r2 bucket catalog compaction disable <BUCKET_NAME> <NAMESPACE> <TAB
 
 </TabItem>
 </Tabs>
+
+## Enable snapshot expiration
+
+Snapshot expiration automatically removes old table snapshots to reduce metadata bloat and storage costs. For more information about snapshot expiration and why it is valuable, refer to [Table maintenance](/r2/data-catalog/table-maintenance/).
+
+To enable snapshot expiration on your catalog, run the [`r2 bucket catalog snapshot-expiration enable` command](/workers/wrangler/commands/#r2-bucket-catalog-snapshot-expiration-enable):
+
+```bash
+# Enable catalog-level snapshot expiration (all tables)
+npx wrangler r2 bucket catalog snapshot-expiration enable <BUCKET_NAME> \
+  --token <API_TOKEN> \
+  --older-than-days 7 \
+  --retain-last 10
+
+# Enable snapshot expiration for a specific table
+npx wrangler r2 bucket catalog snapshot-expiration enable <BUCKET_NAME> <NAMESPACE> <TABLE> \
+  --older-than-days 2 \
+  --retain-last 5
+```
+
+:::note[API token permission requirements]
+Catalog-level snapshot expiration requires a Cloudflare API token with both R2 storage and R2 Data Catalog read/write permissions to act as a service credential. The snapshot expiration process uses this token to update table metadata and remove old snapshots.
+
+Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) for details on creating a token with the required permissions.
+:::
+
+## Disable snapshot expiration
+
+Disabling snapshot expiration prevents the process from running for all tables (catalog level) or a specific table (table level). You can re-enable snapshot expiration at any time.
+
+```bash
+# Disable catalog-level snapshot expiration (all tables)
+npx wrangler r2 bucket catalog snapshot-expiration disable <BUCKET_NAME>
+
+# Disable snapshot expiration for a specific table
+npx wrangler r2 bucket catalog snapshot-expiration disable <BUCKET_NAME> <NAMESPACE> <TABLE>
+```
 
 ## Authenticate your Iceberg engine
 

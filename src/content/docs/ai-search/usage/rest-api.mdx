@@ -43,7 +43,7 @@ This REST API searches for relevant results from your data source and generates 
 
 ```bash
 
-curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/rags/{AUTORAG_NAME}/ai-search \
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/autorag/rags/{AUTORAG_NAME}/ai-search \
 -H 'Content-Type: application/json' \
 -H "Authorization: Bearer {API_TOKEN}" \
 -d '{
@@ -85,7 +85,7 @@ This REST API searches for results from your data source and returns the relevan
 
 ```bash
 
-curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/rags/{AUTORAG_NAME}/search \
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/autorag/rags/{AUTORAG_NAME}/search \
 -H 'Content-Type: application/json' \
 -H "Authorization: Bearer {API_TOKEN}" \
 -d '{
