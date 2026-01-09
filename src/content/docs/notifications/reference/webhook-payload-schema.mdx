@@ -34,13 +34,13 @@ All generic webhook notifications follow this schema:
 | ---------------------- | ------- | ------------------------------------------------------------------------------ |
 | `name`                 | string  | The name of the notification policy.                                           |
 | `text`                 | string  | A human-readable description of the notification with interpolated values.     |
-| `data`                 | object  | Alert-specific data. The structure varies by `alert_type`.                     |
-| `ts`                   | integer | Unix timestamp (seconds since epoch, UTC) when the notification was generated. |
+| `data`                 | object  | The alert-specific data. The structure varies by `alert_type`.                     |
+| `ts`                   | integer | The unix timestamp (seconds since epoch, UTC) when the notification was generated. |
 | `account_id`           | string  | The account ID for which this webhook was fired.                               |
-| `policy_id`            | string  | UUID of the notification policy that triggered this webhook.                   |
-| `policy_name`          | string  | Name of the notification policy.                                               |
-| `alert_type`           | string  | Unique identifier for the alert type (for example, `http_alert_origin_error`). |
-| `alert_correlation_id` | string  | UUID that groups related alerts together.                                      |
+| `policy_id`            | string  | The UUID of the notification policy that triggered this webhook.                   |
+| `policy_name`          | string  | The name of the notification policy.                                               |
+| `alert_type`           | string  | The unique identifier for the alert type (for example, `http_alert_origin_error`). |
+| `alert_correlation_id` | string  | The UUID that groups related alerts together.                                      |
 | `alert_event`          | string  | The event state, such as `ALERT_STATE_EVENT_START` or `ALERT_STATE_EVENT_END`. |
 
 :::note
