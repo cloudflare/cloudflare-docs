@@ -73,5 +73,5 @@ You can use the following commands to validate if the posture check is working a
 
 	Both parameters must be `True` for the antivirus posture check to pass.
 
-4. If you configured a maximum antivirus signature age, compare the `timestamp` against the current system time. If the difference exceeds this number of days, the posture check will fail.
+4. If you configured a maximum antivirus signature age in your posture check, compare the `timestamp` in the PowerShell output against the current system time. If the difference exceeds the configured number of days, the posture check will fail.
 
