@@ -6,13 +6,20 @@ sidebar:
   order: 10
 ---
 
-import { Tabs, TabItem } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 This guide explains how to use stage management APIs for Webinar (WebRTC) use cases in Cloudflare RealtimeKit.
 
+<RTKSDKSelector />
 ## Overview
 
-Instead of a traditional publish-subscribe model, where a user can publish their media and others can choose to subscribe, RealtimeKit comes with an optional managed configuration. In this managed configuration, a less privileged user can be configured with a default behavior to not publish media. The user can then request permission to be allowed to publish their media, where a privileged user can choose to grant or deny access.
+Instead of a traditional publish-subscribe model, where a user can publish their
+media and others can choose to subscribe, RealtimeKit comes with an optional
+managed configuration. In this managed configuration, a less privileged user can
+be configured with a default behavior to not publish media. The user can then
+request permission to be allowed to publish their media, where a privileged user
+can choose to grant or deny access.
 
 Using RealtimeKit's stage management APIs, a user can perform actions such as:
 
@@ -22,8 +29,7 @@ Using RealtimeKit's stage management APIs, a user can perform actions such as:
 
 ## Access the Stage APIs
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 The stage module can be accessed under the `meeting.stage` namespace.
 
@@ -31,8 +37,8 @@ The stage module can be accessed under the `meeting.stage` namespace.
 console.log("Stage object:", meeting.stage);
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 The stage module can be accessed under the `meeting.stage` namespace.
 
@@ -40,13 +46,11 @@ The stage module can be accessed under the `meeting.stage` namespace.
 console.log("Stage object:", meeting.stage);
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Properties
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 ### Status
 
@@ -67,8 +71,8 @@ console.log("Stage status:", meeting.stage.status);
 A user with permission to join stage directly can only assume `ON_STAGE` and `ACCEPTED_TO_JOIN_STAGE` status values.
 :::
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ### Status
 
@@ -89,15 +93,13 @@ console.log("Stage status:", meeting.stage.status);
 A user with permission to join stage directly can only assume `ON_STAGE` and `ACCEPTED_TO_JOIN_STAGE` status values.
 :::
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Host Controls
 
 RealtimeKit's stage management APIs allow hosts to receive and manage stage requests as well as leave and join the stage.
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 ### Join Stage
 
@@ -151,8 +153,8 @@ await meeting.stage.kick(userIds);
 
 - `userIds` (string[]) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ### Join Stage
 
@@ -206,15 +208,13 @@ await meeting.stage.kick(userIds);
 
 - `userIds` (string[]) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Participant Controls
 
 RealtimeKit's stage management APIs allow participants to request and manage stage access.
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 ### Request Access
 
@@ -234,8 +234,8 @@ You can call this method to cancel your stage request.
 await meeting.stage.cancelRequestAccess();
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ### Request Access
 
@@ -255,13 +255,11 @@ You can call this method to cancel your stage request.
 await meeting.stage.cancelRequestAccess();
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Events
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id="web-web-components">
 
 The `meeting.stage` module emits the following events:
 
@@ -325,8 +323,8 @@ meeting.stage.on("stageRequestRejected", (data) => {
 });
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 The `meeting.stage` module emits the following events:
 
@@ -399,5 +397,4 @@ import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
 const stageStatus = useRealtimeKitSelector((m) => m.stage.status);
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>

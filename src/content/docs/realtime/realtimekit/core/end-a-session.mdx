@@ -10,13 +10,14 @@ import { Render } from "~/components";
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
+:::note[Prerequisites]
+
+Ensure your participant's preset has the **Kick Participants** (`kick_participant`) host permission enabled.
+:::
+
 To end the current [session](/realtime/realtimekit/concepts/meeting/#session/) for all participants, remove all participants using `kickAll()`. This stops any ongoing recording for that session and sets the session status to `ENDED`.
 
 Ending a session is different from leaving a meeting. Leaving disconnects only the current participant. The session remains active if other participants are still present.
-
-## Prerequisites
-
-- Ensure your participant's preset has the **Kick Participants** (`kick_participant`) host permission enabled.
 
 ## Steps
 
