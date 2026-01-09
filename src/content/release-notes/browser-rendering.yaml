@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-01-08"
+    title: "@cloudflare/playwright v1.1.0 released"
+    description: |-
+      * Released version 1.1.0 of [`@cloudflare/playwright`](https://github.com/cloudflare/playwright), now upgraded to [Playwright v1.57.0](https://playwright.dev/docs/release-notes#version-157).
   - publish_date: "2026-01-07"
     title: Bug fixes for JSON endpoint, waitForSelector timeout, and WebSocket rendering
     description: |-
