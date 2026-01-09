@@ -20,14 +20,7 @@ User Agent Blocking allows you to block specific browser or web application [`Us
 User agent rules are applied after [zone lockdown rules](/waf/tools/zone-lockdown/). If you allow an IP address via Zone Lockdown, it will skip any user agent rules.
 
 :::note
-
-Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of user agent rules to block specific user agents.
-
-For example, a custom rule equivalent to the user agent [example rule](#create-a-user-agent-blocking-rule) provided in this page could have the following configuration:
-
-- **Expression**: `http.user_agent eq "BadBot/1.0.2 (+http://bad.bot)"`
-- **Action**: (a block or challenge action)
-
+Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of user agent rules to block specific user agents. For more information, refer to the [upgrade guide](/waf/reference/upgrade-guides/ua-blocking-to-custom-rules/).
 :::
 
 ## Availability

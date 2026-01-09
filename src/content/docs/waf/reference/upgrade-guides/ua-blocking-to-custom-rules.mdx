@@ -1,0 +1,211 @@
+---
+title: User Agent Blocking to custom rules
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  label: User Agent Blocking to custom rules
+---
+
+import { Steps, DashButton, Tabs, TabItem } from "~/components";
+
+Follow this guide to upgrade your existing [User Agent Blocking](/waf/tools/user-agent-blocking/) configuration — known as user agent rules in the new [application security dashboard](/security/) — to [custom rules](/waf/custom-rules/).
+
+Custom rules are powered by the Ruleset Engine and support the [Rules language](/ruleset-engine/rules-language/) in their filter expressions to match incoming traffic.
+
+For examples of using custom rules to mitigate traffic based on the user agent, refer to the [examples](#3-map-each-legacy-rule-to-an-expression) in this guide and to the [Block traffic based on the user agent](/waf/custom-rules/use-cases/block-specific-user-agent/) use case.
+
+## General steps
+
+The general upgrade steps are the following:
+
+<Steps>
+
+1. **Identify rules to upgrade and collect their configuration.**<br/>
+   Sometimes you can condense several user agent blocking rules into a single custom rule. Take note of the configuration of your existing user agent blocking rules so that you can replicate them using custom rules.
+
+2. **Decide the configuration strategy for custom rules.**<br/>
+   Decide how you will address user agent blocking in custom rules: one rule per agent or multiple agents in a single custom rule.
+
+3. **Map each legacy rule to an expression.**<br/>
+   For each existing user agent blocking rule, define the equivalent custom rules expression.
+
+4. **Define the new rules scope: zone or account level.**<br/>
+   If your new custom rules will apply to all the zones (or many zones) in your Cloudflare account, consider creating them at the account level as part of a custom ruleset, instead of for each zone.
+
+5. **Create the equivalent custom rules.**<br/>
+   Create the new custom rules. Use the _Log_ action (if available) to test your configuration without impacting your live traffic. If you do not have access to the _Log_ action, use a challenge action like _Managed Challenge_.
+
+6. **Compare the behavior of user agent blocking rules and custom rules.**<br/>
+   If you are using the _Log_ action, check how your new custom rules are handling traffic and compare their behavior with your user agent blocking rules.
+
+7. **Turn off or delete old user agent blocking rules.**<br/>
+   If you used the _Log_ action in your custom rules, change the action to a challenge action or _Block_. Turn off or delete the old rules you replaced with custom rules.
+
+8. **Update any automation processes and documentation.**<br/>
+   Review internal documentation and runbooks to document the new custom rules, including their expressions and intended behavior.
+
+</Steps>
+
+## 1. Identify rules to upgrade and collect their configuration
+
+1. Go to the Cloudflare dashboard and review your existing user agent blocking rules:
+   - Old dashboard: Go to **Security** > **WAF**, and then go to the **Tools** tab.
+   - New dashboard: Go to **Security** > **Security rules** and filter by **User agent rules**.
+
+2. Decide which rules you want to upgrade to custom rules.
+
+3. Take note of the configuration of the user agent blocking rules you will upgrade, namely the following rule parameters:
+   - Name/Description
+   - User-Agent string (exact value)
+   - Action (Block / Managed Challenge / JS Challenge / Allow / Log)
+
+## 2. Decide the configuration strategy for custom rules
+
+You can perform user agent blocking with custom rules using the following strategies:
+
+- Create one custom rule per user agent (easier to understand and simple per-bot tuning).
+- Create a single custom rule where the rule filter expression handles multiple user agents using the `or` operator.
+
+You can mix both strategies for different user agent blocking rules you are migrating.
+
+Your custom rules expressions will use the [`http.user_agent`](/ruleset-engine/rules-language/fields/reference/http.user_agent/) field and the standard Rules language. To perform case-insensitive matches, use the [`wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) operator or the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function.
+
+## 3. Map each legacy rule to an expression
+
+For each existing user agent blocking rule, define the equivalent custom rules expression. This could mean updating an expression you already wrote down for another user agent blocking rule.
+
+A few common expression patterns:
+
+- **Exact user agent match** (equivalent to user agent blocking rule matching)<br/>
+  User agent blocking rule: `Block BadBot/1.0.2 (+http://bad.bot)`<br/>
+  Custom rule expression: `http.user_agent eq "BadBot/1.0.2 (+http://bad.bot)"`
+
+- **Contains/substring match**<br/>
+  Custom rule expression: `lower(http.user_agent) contains "curl"`
+
+- **Wildcard matching** (case-insensitive match in this example)<br/>
+  `http.user_agent wildcard "*curl/*"`
+
+- **Check for empty user agent**<br/>
+  `http.user_agent eq ""`
+
+- **Multi-user-agent rule** (group multiple rules into one custom rule)<br/>
+  `lower(http.user_agent) contains "ahrefsbot" or lower(http.user_agent) contains "semrushbot" or lower(http.user_agent) contains "mj12bot"`
+
+## 4. Define the custom rules scope: zone or account level
+
+The instructions in this guide cover upgrading user agent blocking rules to custom rules at the zone level.
+
+However, if your new custom rules will apply to all the zones (or many zones) in your Cloudflare account, consider creating them at the account level as part of a custom ruleset, instead of for each zone.
+
+For more information on creating custom rulesets, refer to [Work with custom rulesets in the dashboard](/waf/account/custom-rulesets/create-dashboard/#create-and-deploy-a-custom-ruleset).
+
+:::note
+Custom rules at the account-level require access to [account-level WAF configuration](/waf/account/).
+:::
+
+## 5. Create the equivalent custom rules in the dashboard
+
+For each expression you defined based on one or more user agent blocking rules, create the equivalent custom rule.
+
+<Tabs syncKey="dashNewNav">
+<TabItem label="Old dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Custom rules**.
+
+3. Select **Create rule**.
+
+4. Enter a descriptive name for the rule in **Rule name**, such as `Block legacy bad bots`.
+
+5. Under **When incoming requests match**, define your rule expression. For example:
+   - **Field**: _User Agent_ (enter `http.user_agent` when using the Expression Editor).
+   - **Operator**: `equals`, `contains`, or `wildcard`.
+   - **Value**: User agent string you want to match (leave empty to match an empty user agent).
+
+   If your expression should match additional conditions, add additional clauses joined with the [`or`](/ruleset-engine/rules-language/operators/#supported-logical-operators) logical operator.
+
+6. Set **Action** to one of the following values:
+   - _Block_ for a hard mitigation action
+   - _Managed Challenge_ for a softer mitigation action
+   - _Log_ when testing your custom rule (only available on Enterprise plans)
+
+</TabItem>
+<TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Create rule** > **Custom rules**.
+
+3. Enter a descriptive name for the rule in **Rule name**, such as `Block legacy bad bots`.
+
+4. Under **When incoming requests match**, define your rule expression. For example:
+   - **Field**: _User Agent_ (enter `http.user_agent` when using the Expression Editor).
+   - **Operator**: `equals`, `contains`, or `wildcard`.
+   - **Value**: User agent string you want to match (leave empty to match an empty user agent).
+
+   If your expression should match additional conditions, add additional clauses joined with the [`or`](/ruleset-engine/rules-language/operators/#supported-logical-operators) logical operator.
+
+5. Set **Action** to one of the following values:
+   - _Log_ when testing your custom rule (only available on Enterprise plans)
+   - _Managed Challenge_ for a soft mitigation action
+   - _Block_ for a hard mitigation action (blocks the request)
+
+</TabItem> </Tabs>
+
+Repeat until you have mapped every expression to a custom rule.
+
+:::tip[Rule order and precedence]
+
+Custom rules are evaluated in order. To avoid unintended blocks:
+
+- Use the _Skip_ action, possibly with several clauses in the rule expression — for example:
+  - Expression: `(ip.src in {203.0.113.1} and http.user_agent eq "FriendlyMonitor/1.0")`
+  - Action: _Skip_ > _Skip remaining custom rules_
+- Place rules with allowlists and the _Skip_ action before broad rules blocking requests based on the user agent.
+
+Even when using skip rules, some security checks for malicious `User-Agent` HTTP header patterns might still happen, since they are evaluated earlier in the request evaluation workflow.
+
+:::
+
+## 6. Run both types of rules in parallel and validate
+
+Before removing old user agent blocking rules:
+
+1. Keep user agent blocking rules active.
+2. Set the action of the corresponding custom rules to _Log_ or _Managed Challenge_.
+3. Monitor rule behavior in [Security Events](/waf/analytics/security-events/):
+   - Filter by the new custom rule name.
+   - Compare the hit volume of the custom rule with the user agent blocking rule(s) you replaced.
+   - Check that:
+     - Unwanted bots are being consistently matched by the custom rule.
+     - Clients that should be allowed are not being affected (that is, you have no false positives).
+
+## 7. Turn off or delete old user agent blocking rules
+
+Once you have verified the correct behavior of the new custom rules:
+
+1. If you were using the _Log_ action, change the action of your custom rules to their final mitigation action (for example, _Block_ or _Managed Challenge_).
+
+2. Turn off or delete your old user agent blocking rules:
+   1. Go to the user agent blocking rules page in the Cloudflare dashboard:
+      - Old dashboard: Go to **Security** > **WAF**, and then go to the **Tools** tab.
+      - New dashboard: Go to **Security** > **Security rules** and filter by **User agent rules**.
+   2. Turn off the existing user agent blocking rules you replaced, or delete them.
+
+3. After some time, to make sure you receive additional traffic in your zone, confirm that:
+   - Security Events show only hits for the new custom rules you created.
+   - There are no traces of user agent blocking rules (if you have replaced them all).
+
+## 8. Update any automation processes and documentation
+
+1. If you are invoking the Cloudflare API in your scripts or automation processes, make sure you replace any calls to the [User Agent Blocking Rules API](/api/resources/firewall/subresources/ua_rules/) (`/zones/{zone_id}/firewall/ua_rules` operations) with [Rulesets API](/ruleset-engine/rulesets-api/) calls for the `http_request_firewall_custom` phase.<br/>
+   Refer to [Create a custom rule via API](/waf/custom-rules/create-api/) for zone-level examples or to Create a custom ruleset using the API for account-level instructions.
+
+2. If you are using Terraform, replace any [`cloudflare_user_agent_blocking_rule`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/user_agent_blocking_rule) resources with [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) resources.<br/>
+   For more information on creating custom rules using Terraform, refer to [WAF custom rules configuration using Terraform](/terraform/additional-configurations/waf-custom-rules/).
+
+3. Review your internal documentation and runbooks to document the new custom rules, including their expressions and intended behavior. When adding new logic to handle specific user agents in your zones, use custom rules and not user agent blocking rules.
