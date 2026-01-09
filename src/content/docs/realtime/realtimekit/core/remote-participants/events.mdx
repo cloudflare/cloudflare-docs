@@ -23,7 +23,7 @@ These events allow users to monitor changes to the grid.
 
 ### View Mode Change
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 Triggered when the type of grid changes:
 
@@ -61,7 +61,7 @@ meeting.participants.on(
 
 Triggered when the page changes in paginated mode:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 meeting.participants.on(
@@ -95,7 +95,7 @@ meeting.participants.on("activeSpeaker", (participant) => {
 
 Triggered when a participant starts speaking:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 meeting.participants.on("activeSpeaker", (participant) => {
@@ -131,7 +131,7 @@ These events allow users to monitor changes to remote participant maps. Ideal if
 
 Triggered when any participant joins the meeting:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 meeting.participants.joined.on("participantJoined", (participant) => {
@@ -161,7 +161,7 @@ meeting.participants.joined.on("participantJoined", (participant) => {
 
 Triggered when any participant leaves the meeting:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 meeting.participants.joined.on("participantLeft", (participant) => {
@@ -191,7 +191,7 @@ meeting.participants.joined.on("participantLeft", (participant) => {
 
 Triggered when a participant is pinned:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 meeting.participants.joined.on("pinned", (participant) => {
@@ -221,7 +221,7 @@ meeting.participants.joined.on("pinned", (participant) => {
 
 Triggered when a participant is unpinned:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 meeting.participants.joined.on("unpinned", (participant) => {
@@ -253,7 +253,7 @@ You can monitor changes to a specific participant using the following events:
 
 ### Video Update
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 Triggered when any participant starts/stops video:
 
@@ -303,7 +303,7 @@ meeting.participants.joined.on("videoUpdate", (participant) => {
 
 ### Audio Update
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 Triggered when any participant starts/stops audio:
 
@@ -355,7 +355,7 @@ meeting.participants.joined.on("audioUpdate", (participant) => {
 
 Triggered when any participant starts/stops screen share:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 meeting.participants.joined.on("screenShareUpdate", (participant) => {
@@ -405,7 +405,7 @@ meeting.participants.joined.on("screenShareUpdate", (participant) => {
 
 ### Network Quality Score
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 Monitor participant network quality:
 

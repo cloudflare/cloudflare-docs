@@ -31,7 +31,7 @@ The participant object contains all information related to a particular particip
 - `isPinned` - Set to `true` if the participant is pinned
 - `presetName` - Name of the preset associated with the participant
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 // Number of participants joined in the meeting
@@ -85,7 +85,7 @@ These properties are available on each participant in `meeting.participants`.
 
 You can fetch a participant from the [Participant Maps]().
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 const participant = meeting.participants.joined.get(participantId);
@@ -116,7 +116,7 @@ console.log(participant.audioEnabled);
 
 ## Participant Maps
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 All participants are stored under `meeting.participants`. These do not include the local user.
 
@@ -150,7 +150,7 @@ Each participant in these maps is of type `RTKParticipant`.
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 // Get all joined participants
@@ -206,7 +206,7 @@ The `viewMode` property indicates which grid type is currently active, It can as
 
 ### Set View Mode
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 // Set the view mode to paginated
@@ -232,7 +232,7 @@ await meeting.participants.setViewMode("ACTIVE_GRID");
 
 ### Set Page in Paginated Mode
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 // Switch to second page
@@ -252,7 +252,7 @@ await meeting.participants.setPage(2);
 
 ### Fetch View Mode
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```jsx
 const viewMode = meeting.participants.viewMode;
@@ -278,7 +278,7 @@ The participant object allows the host, several controls. These can be selected 
 
 With the correct permissions, the host can disable media for remote participants like so:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 const participant = meeting.participants.joined.get(participantId);
@@ -319,7 +319,7 @@ You can also automate this flow so that users join the meeting automatically whe
 
 #### Accept Waiting Room Request
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 await meeting.participants.acceptWaitingRoomRequest(participantId);
@@ -337,7 +337,7 @@ await meeting.participants.acceptWaitingRoomRequest(participantId);
 
 #### Reject Waiting Room Request
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 await meeting.participants.rejectWaitingRoomRequest(participantId);
@@ -357,7 +357,7 @@ await meeting.participants.rejectWaitingRoomRequest(participantId);
 
 The host can choose to pin/unpin participants to the grid. The current limit on pinning is 1 participant.
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 const participant = meeting.participants.joined.get(participantId);
@@ -397,7 +397,7 @@ When the host updates the permissions for a participant, the preset is not modif
 
 First, you need to find the participant(s) you want to update.
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 const participantIds = meeting.participants.joined
@@ -421,7 +421,7 @@ const participantIds = meeting.participants.joined
 
 You can use the `updatePermission` method like so to modify the permissions for the participant.
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 // Allow file upload permissions in public chat
@@ -457,7 +457,7 @@ meeting.participants.updatePermissions(participantIds, newPermissions);
 
 The following permissions can be modified
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```typescript
 interface UpdatedPermissions {
@@ -523,7 +523,7 @@ Optionally, you can use the `RtkGrid` component from the UI Kit to display parti
 
 ### Register Video Element
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 To play a participant's video track on a `<video>` element:
 
@@ -552,7 +552,7 @@ meeting.self.registerVideoElement(videoElement, true);
 
 ### Deregister Video Element
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 Clean up when the video element is no longer needed:
 
@@ -584,6 +584,75 @@ The `RtkGrid` component handles all grid-related events and data automatically. 
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="web-angular">
+
+RealtimeKit provides ready-to-use grid components for displaying participant videos:
+
+```typescript title="meeting-grid.component.ts"
+import { Component, Input } from "@angular/core";
+
+@Component({
+	selector: "app-meeting-grid",
+	templateUrl: "./meeting-grid.component.html",
+})
+export class MeetingGridComponent {
+	@Input() meeting: any;
+}
+```
+
+```html title="meeting-grid.component.html"
+<rtk-grid meeting="meeting"></rtk-grid>
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+RealtimeKit provides ready-to-use grid components for displaying participant videos:
+
+```jsx
+
+	<head>
+		<!-- Import RealtimeKit Core via CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/browser.js"></script>
+		<!-- Import RealtimeKit UI via CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui@latest/dist/browser.js"></script>
+	</head>
+	<body>
+	<rtk-ui-provider
+			id="rtk-ui-provider"
+			style="display: flex; flex-direction: column; height: 100vh; margin: 0;"
+		>
+		<rtk-grid id="my-grid" />
+	</rtk-ui-provider>
+	</body>
+	<script>
+      const searchParams = new URL(window.location.href).searchParams;
+      const authToken = searchParams.get('authToken');
+
+      if (!authToken) {
+        alert(
+          "An authToken wasn't passed, please pass an authToken in the URL query to join a meeting."
+        );
+      }
+
+      // Initialize a meeting
+      RealtimeKitClient.init({
+        authToken,
+      }).then((meeting) => {
+		document.querySelector("rtk-ui-provider").meeting = meeting;
+      });
+	</script>
+```
+
+The `rtk-grid` component handles all grid-related events and data automatically. It supports:
+
+- **`rtk-simple-grid`** - Renders participant tiles in a simple grid
+- **`rtk-spotlight-grid`** - Renders pinned participants in a spotlight area with others in a smaller grid
+- **`rtk-mixed-grid`** - Renders screenshares and plugins in the main view with a configurable smaller grid
+
+</RTKCodeSnippet>
+
 ### Custom Grid using UI Kit
 
 <RTKCodeSnippet id="web-react">
@@ -612,6 +681,83 @@ function CustomVideoGrid() {
 		</div>
 	);
 }
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+For custom video rendering, use the `rtk-participant-tile` component.
+
+```typescript title="custom-video-grid.component.ts"
+import { Component, Input, OnInit } from "@angular/core";
+
+@Component({
+	selector: "app-custom-video-grid",
+	templateUrl: "./custom-video-grid.component.html",
+})
+export class CustomVideoGridComponent implements OnInit {
+	@Input() meeting: any;
+
+	participants: any[] = [];
+
+	ngOnInit() {
+		this.participants = this.meeting?.participants?.active?.toArray?.() ?? [];
+	}
+}
+```
+
+```html title="custom-video-grid.component.html"
+<div
+	style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));"
+>
+	<rtk-participant-tile
+		*ngFor="let participant of participants"
+		[participant]="participant"
+	></rtk-participant-tile>
+</div>
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+For custom video rendering, use the `rtk-participant-tile` component:
+
+```jsx
+
+	<head>
+		<!-- Import RealtimeKit Core via CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/browser.js"></script>
+		<!-- Import RealtimeKit UI via CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui@latest/dist/browser.js"></script>
+	</head>
+	<body>
+		<rtk-ui-provider
+			id="rtk-ui-provider"
+			style="display: flex; flex-direction: column; height: 100vh; margin: 0;"
+		>
+			<rtk-participant-tile id="my-tile" />
+		</rtk-ui-provider>
+	</body>
+	<script>
+      const searchParams = new URL(window.location.href).searchParams;
+      const authToken = searchParams.get('authToken');
+
+      if (!authToken) {
+        alert(
+          "An authToken wasn't passed, please pass an authToken in the URL query to join a meeting."
+        );
+      }
+
+      // Initialize a meeting
+      const meeting = await RealtimeKitClient.init({
+        authToken,
+      }).then((meeting) => {
+		document.querySelector("rtk-ui-provider").meeting = meeting;
+        document.getElementById('my-tile').participant = meeting.self;
+      });
+	</script>
 ```
 
 </RTKCodeSnippet>

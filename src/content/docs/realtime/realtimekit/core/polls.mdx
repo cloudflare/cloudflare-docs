@@ -15,7 +15,7 @@ This guide explains how to create, vote on, and interact with polls in a meeting
 
 ## Introduction
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
 
@@ -81,7 +81,7 @@ The meetings polls object can be accessed using `meeting.polls`. It provides met
 
 ### Poll Type
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `Poll` type is defined as follows:
 
@@ -280,7 +280,7 @@ interface PollOption {
 
 ## Creating a Poll
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create()` method accepts the following parameters:
 
@@ -419,7 +419,7 @@ await meeting.poll.create(
 
 ## Voting on a Poll
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
 
@@ -533,7 +533,7 @@ await meeting.poll.vote(poll.id, 0);
 
 ### View Poll Results
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The total votes on a poll can be accessed in the following manner:
 
@@ -667,7 +667,7 @@ const options = poll.options;
 
 ### Get Notified When a Poll is Created or Updated
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 An event is fired each time `meeting.polls.items` is updated or created. You can listen for this to get the updated list of polls. The response object contains the following properties:
 

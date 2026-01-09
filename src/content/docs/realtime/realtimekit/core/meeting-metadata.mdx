@@ -16,7 +16,7 @@ All metadata pertaining to a meeting is stored in `meeting.meta`. This includes 
 
 Select a framework based on the platform you are building for.
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `meeting.meta` object contains the following properties:
 
@@ -105,7 +105,7 @@ The `meeting.meta` object contains the following properties:
 
 To access meeting metadata, use the `meeting.meta` object.
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```javascript
 // Destructure the metadata to get meetingTitle
@@ -199,7 +199,7 @@ The `meta` object also emits events for indicating changes in the connection sta
 
 ### Media connection updates
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 Updates to the media connection (WebRTC connection used for the transfer of actual media) are sent via the `mediaConnectionUpdate` event.
 
@@ -306,7 +306,7 @@ The `mediaConnectionUpdate` event provides:
 
 ### Socket connection updates
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 Updates to the WebSocket connection (used for chat, polls, and other basic signaling) are sent via the `socketConnectionUpdate` event.
 

@@ -15,9 +15,11 @@ Picture-in-Picture API allows you to render `meeting.participants.active` partic
 Supported in Chrome/Edge/Chromium-based browsers only.
 :::
 
-### Check if Supported
+### Check Support
 
-<RTKCodeSnippet id="web-web-components">
+Picture-in-Picture API might not be supported for your browser. It is important to always check for support.
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 const isSupported = meeting.participants.pip.isSupported();
@@ -35,7 +37,7 @@ const isSupported = meeting.participants.pip.isSupported();
 
 ### Enable Picture-in-Picture
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 await meeting.participants.pip.enable();
@@ -53,7 +55,7 @@ await meeting.participants.pip.enable();
 
 ### Disable Picture-in-Picture
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
 await meeting.participants.pip.disable();

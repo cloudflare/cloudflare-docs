@@ -40,10 +40,12 @@ export default function SDKSelector({ disabledPlatforms }: SDKSelectorProps) {
 
 	return (
 		<>
-			<div className="flex flex-row gap-1 rounded-md bg-blue-100 p-2 text-blue-900 dark:bg-neutral-800 dark:text-neutral-300">
-				This page is not available for the <b>{disabledPlatformsString}</b>
-				platform.
-			</div>
+			{disabledPlatforms && (
+				<div className="flex flex-row gap-1 rounded-md bg-blue-100 p-2 text-blue-900 dark:bg-neutral-800 dark:text-neutral-300">
+					This page is not available for the <b>{disabledPlatformsString}</b>
+					platform.
+				</div>
+			)}
 			<div className="my-5 flex flex-col gap-0 rounded-md bg-blue-100 p-2 dark:bg-neutral-800">
 				<div className="flex w-full flex-row items-start justify-start gap-2">
 					{platforms.map((p) => {

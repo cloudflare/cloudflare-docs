@@ -14,7 +14,7 @@ This guide explains how to send and receive chat messages in a meeting using Clo
 <RTKSDKSelector />
 ## Introduction
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 There are three types of messages that can be sent in chat:
 
@@ -148,7 +148,7 @@ meeting.chat.messages;
 
 ### Message Type
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `Message` type is defined as follows:
 
@@ -370,7 +370,7 @@ type Message = TextMessage | ImageMessage | FileMessage;
 
 ### Send a Text Message
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 There is a method in `meeting.chat` to send a message of each type.
 
@@ -450,7 +450,7 @@ await meeting.chat.sendTextMessage(message);
 
 ### Send an Image
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting.
 
@@ -567,7 +567,7 @@ async function onSendImage() {
 
 ### Send a File
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
 
@@ -678,7 +678,7 @@ async function onSendFile() {
 
 ### Send Any Message Type
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
 
@@ -752,7 +752,7 @@ await meeting.chat.sendMessage({ type: "text", message });
 
 ## Receiving Chat Messages
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
 
@@ -942,7 +942,7 @@ meeting.chat.on("chatUpdate", () => {
 
 ### Edit a Text Message
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 There is a method in `meeting.chat` to edit a message of each type.
 
@@ -991,7 +991,7 @@ await meeting.chat.editTextMessage(messageId, newMessage);
 
 ### Edit an Image
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`.
 
@@ -1074,7 +1074,7 @@ async function onEditImage() {
 
 ### Edit a File
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 Editing a file is similar to editing an image. To edit a file, use `meeting.chat.editFileMessage()`.
 
@@ -1151,7 +1151,7 @@ async function onEditFile() {
 
 ### Edit Any Message Type
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
 
@@ -1233,7 +1233,7 @@ await meeting.chat.editMessage(messageId, { type: "text", message });
 
 ### Get Messages by a User
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `meeting.chat` object exposes certain other methods for convenience when working with chat.
 
@@ -1286,7 +1286,7 @@ const messages = meeting.chat.getMessagesByUser(userId);
 
 ### Get Messages of a Particular Type
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
 
@@ -1318,7 +1318,7 @@ const imageMessages = meeting.chat.getMessagesByType("image");
 
 ### Pinning a Chat Message
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
 
@@ -1452,7 +1452,7 @@ meeting.chat.on("unpinMessage", ({ message }) => {
 
 ### Deleting a Chat Message
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `meeting.chat` namespace exposes a method called `deleteMessage()`. It takes a parameter `messageId` of type `string`.
 
