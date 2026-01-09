@@ -83,7 +83,7 @@ These properties are available on each participant in `meeting.participants`.
 - `audioTrack` - The audio track of the participant
 - `screenShareTracks` - The video and audio tracks of the participant's screen share
 
-You can fetch a participant from the [Participant Maps]().
+You can fetch a participant from the [Participant Maps](/realtime/realtimekit/core/remote-participants/#participant-maps/).
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
@@ -272,7 +272,7 @@ const currentPage = useRealtimeKitSelector((m) => m.participants.currentPage);
 
 ## Host Controls
 
-The participant object allows the host, several controls. These can be selected while creating the host [preset]().
+The participant object allows the host, several controls. These can be selected while creating the host [preset](/api/resources/realtime_kit/subresources/presets/methods/create/).
 
 ### Media controls
 
@@ -315,7 +315,7 @@ participant.kick();
 
 The waiting room allows the host to control which users can join your meeting and when. They can either choose to accept or reject the request.
 
-You can also automate this flow so that users join the meeting automatically when the host joins the meeting, using [presets]().
+You can also automate this flow so that users join the meeting automatically when the host joins the meeting, using [presets](/api/resources/realtime_kit/subresources/presets/methods/create/).
 
 #### Accept Waiting Room Request
 
