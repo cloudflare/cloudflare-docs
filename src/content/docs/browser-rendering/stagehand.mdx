@@ -51,6 +51,11 @@ Install the necessary dependencies:
 ### 2. Configure your Worker
 
 Update your wrangler configuration file to include the bindings for Browser Rendering and [Workers AI](/workers-ai/):
+
+:::note
+Your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later.
+:::
+
 	<WranglerConfig>
 		```jsonc
 			{

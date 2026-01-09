@@ -50,12 +50,16 @@ Follow these steps to deploy `@cloudflare/playwright-mcp`:
 
 2. Make sure you have the [browser rendering](/browser-rendering/) and [durable object](/durable-objects/) bindings and [migrations](/durable-objects/reference/durable-objects-migrations/) in your wrangler configuration file.
 
+:::note
+Your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later.
+:::
+
 <WranglerConfig>
 
 ```toml
 name = "playwright-mcp-example"
 main = "src/index.ts"
-compatibility_date = "2025-03-10"
+compatibility_date = "2025-09-17"
 compatibility_flags = ["nodejs_compat"]
 
 [browser]
