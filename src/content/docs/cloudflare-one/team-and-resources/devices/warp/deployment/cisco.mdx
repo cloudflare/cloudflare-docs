@@ -49,9 +49,9 @@ Third draft:
 
 Cisco AnyConnect's Tunnel All Networks `tunnelall` option enforces unconditional full tunneling, where all traffic is routed through the VPN tunnel without the ability to define exclusions.
 
-More importantly, `tunnelall` mode cannot operate alongside Cloudflare WARP. WARP relies on explicit Include or Exclude routing rules to determine how traffic is handled, and an unconditional full-tunnel configuration would conflict with WARP's routing model.
+More importantly, `tunnelall` mode cannot operate alongside the Cloudflare WARP tunnel. WARP relies on explicit Include or Exclude routing rules to determine how traffic is handled, and an unconditional full-tunnel configuration would conflict with WARP's routing model.
 
-As a result, environments using `tunnelall` must transition to explicit Include or Exclude routing when deploying Cloudflare WARP.
+As a result, environments using `tunnelall` must transition to explicit Include or Exclude routing when deploying a Cloudflare WARP mode that uses a tunnel for IP or application-based filtering.
 :::
 
 Refer to [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) to review how to select a WARP split tunnel mode in the Cloudflare One dashboard or through Terraform.
@@ -64,19 +64,6 @@ In networking, the default route dictates where traffic flows when no other spec
 
 The following table outlines the supported routing combinations.
 
-First draft (to be deleted): 
-
-| Cloudflare WARP | Cisco AnyConnect | Compatibility |
-|------------------------------|-------------------------|---------------|
-| Include IPs and domains | Exclude Network List Below <br /> `excludespecified` | ✅ Supported |
-| Include IPs and domains | Tunnel Network List Below <br /> `tunnelspecified` | ✅ Supported |
-| Include IPs and domains | Tunnel All Networks <br /> `tunnelall` | ❌ Not supported |
-| Exclude IPs and domains | Exclude Network List Below <br /> `excludespecified` | ❌ Not supported |
-| Exclude IPs and domains | Tunnel Network List Below <br /> `tunnelspecified` | ✅ Supported |
-| Exclude IPs and domains | Tunnel All Networks <br /> `tunnelall` | ❌ Not supported |
-
-Second draft (in progress):
-
 | Cisco AnyConnect | Cloudflare WARP | Compatibility |
 |------------------|-----------------|---------------|
 | Tunnel Network List Below <br /> `tunnelspecified` | Include IPs and domains | ✅ Supported |
@@ -86,11 +73,20 @@ Second draft (in progress):
 | Tunnel All Networks <br /> `tunnelall` | Include IPs and domains | ❌ Not supported |
 | Tunnel All Networks <br /> `tunnelall` | Exclude IPs and domains | ❌ Not supported |
 
+| Cisco AnyConnect | Cloudflare WARP | Compatibility | Behavior |
+|------------------|-----------------|---------------|----------|
+| Tunnel Network List Below <br /> `tunnelspecified` | Include IPs and domains | ✅ Supported | Only traffic explicitly configured in **AnyConnect** or **WARP** is tunneled. Any traffic not matched by either tunnel is sent directly to the Internet using the user's local connection. |
+| Tunnel Network List Below <br /> `tunnelspecified` | Exclude IPs and domains | ✅ Supported | All traffic is sent through the WARP tunnel except traffic explicitly configured for the Cisco AnyConnect tunnel. Traffic excluded from the WARP tunnel and not configured for the Cisco AnyConnect tunnel will go to the Internet. |
+| Exclude Network List Below <br /> `excludespecified` | Include IPs and domains | ✅ Supported | All traffic is sent through Cisco AnyConnect tunnel except traffic explicitly configured for the WARP tunnel. Traffic excluded from the Cisco AnyConnect tunnel and not configured for the WARP tunnel will go to the Internet. |
+| Exclude Network List Below <br /> `excludespecified` | Exclude IPs and domains | ❌ Not supported | Both clients attempt to exclude traffic, resulting in ambiguous routing behavior. This configuration is not supported. |
+| Tunnel All Networks <br /> `tunnelall` | Include IPs and domains | ❌ Not supported | Cisco AnyConnect's `tunnelall` configuration will attempt to tunnel WARP's traffic, leading to a tunnel-in-a-tunnel conflict. |
+| Tunnel All Networks <br /> `tunnelall` | Exclude IPs and domains | ❌ Not supported | Cisco AnyConnect's `tunnelall` configuration will attempt to tunnel WARP's traffic, leading to a tunnel-in-a-tunnel conflict. |
+
 <Render file="warp/cisco/exclude-include-definition" product="cloudflare-one" />
 
-Running WARP in `Exclude IPs and domains` (essentially, a full tunnel) and Cisco AnyConnect as a full tunnel at the same time will lead to a tunnel-in-a-tunnel conflict.
+Running WARP in `Exclude IPs and domains` and Cisco AnyConnect in `tunnelall` or `excludespecified` at the same time will lead to a tunnel-in-a-tunnel conflict.
 
-A tunnel-in-a-tunnel conflict occurs when the destination of one tunnel is configured in the other tunnel. For example, Cisco AnyConnect is configured for a full tunnel and is not configured to exclude the [WARP ingress IPs](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip). Similarly, WARP is configured to `Exclude IPs and domains` but is not configured to exclude the public IP address of the Cisco AnyConnect firewall. 
+A tunnel-in-a-tunnel conflict occurs when the destination of one tunnel is configured in the other tunnel. For example, Cisco AnyConnect is configured in `tunnelall` or `excludespecified` and is not configured to exclude the [WARP ingress IPs](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip). Similarly, WARP is configured to `Exclude IPs and domains` but is not configured to exclude the public IP address of the Cisco AnyConnect firewall. 
 
 ### WARP modes
 
@@ -140,9 +136,9 @@ flowchart TD
     subgraph ST[" "]
         direction TB
         STLabel["WARP Split Tunnels"]:::sgLabel
-        J["Set WARP tunnel to **Include IPs and domains** (split tunnel)"]
-        K["Set WARP tunnel to **Exclude IPs and domains** (full tunnel)"]
-        L["Set WARP tunnel to **Include IPs and domains** (split tunnel)"]
+        J["Set WARP tunnel to **Include IPs and domains**"]
+        K["Set WARP tunnel to **Exclude IPs and domains**"]
+        L["Set WARP tunnel to **Include IPs and domains**"]
     end
 
     I -- Internet --> J
@@ -150,14 +146,13 @@ flowchart TD
     I -- Cisco AnyConnect --> L
 
     %% Shared constraint
-    J --> S["Cisco must be split tunnel"]
+    J --> S["Cisco must be set to `tunnelspecified`"]
     K --> S
 
-    L --> L1["Cisco can be full tunnel or split tunnel"]
+    L --> L1["Cisco must be set to `excludespecified`"]
 
     %% Styling
     classDef sgLabel font-weight:bold,stroke:none,fill:none;
-
 ```
 
 ## 3. Configuration instructions by WARP mode
