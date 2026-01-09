@@ -140,7 +140,7 @@ for (const proc of processes) {
 
 ### `killProcess()`
 
-Terminate a specific process.
+Terminate a specific process and all of its child processes.
 
 ```ts
 await sandbox.killProcess(processId: string, signal?: string): Promise<void>
@@ -150,10 +150,17 @@ await sandbox.killProcess(processId: string, signal?: string): Promise<void>
 - `processId` - The process ID (from `startProcess()` or `listProcesses()`)
 - `signal` - Signal to send (default: `"SIGTERM"`)
 
+Sends the signal to the entire process group, ensuring that both the main process and any child processes it spawned are terminated. This prevents orphaned processes from continuing to run after the parent is killed.
+
 <TypeScriptExample>
 ```
 const server = await sandbox.startProcess('python -m http.server 8000');
 await sandbox.killProcess(server.id);
+
+// Example with a process that spawns children
+const script = await sandbox.startProcess('bash -c "sleep 10 & sleep 10 & wait"');
+// killProcess terminates both sleep commands and the bash process
+await sandbox.killProcess(script.id);
 ```
 </TypeScriptExample>
 
