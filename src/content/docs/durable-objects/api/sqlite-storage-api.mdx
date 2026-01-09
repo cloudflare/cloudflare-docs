@@ -278,7 +278,7 @@ This method returns a special bookmark representing the point in time immediatel
 <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-const DAYS = 24*60*60*1000;
+const DAY_MS = 24*60*60*1000;
 // restore to 2 days ago
 let bookmark = ctx.storage.getBookmarkForTime(Date.now() - 2 * DAYS);
 ctx.storage.onNextSessionRestoreBookmark(bookmark);
