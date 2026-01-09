@@ -280,7 +280,7 @@ This method returns a special bookmark representing the point in time immediatel
 ```ts
 const DAY_MS = 24*60*60*1000;
 // restore to 2 days ago
-let bookmark = ctx.storage.getBookmarkForTime(Date.now() - 2 * DAYS);
+let bookmark = ctx.storage.getBookmarkForTime(Date.now() - 2 * DAYS_MS);
 ctx.storage.onNextSessionRestoreBookmark(bookmark);
 ```
 
