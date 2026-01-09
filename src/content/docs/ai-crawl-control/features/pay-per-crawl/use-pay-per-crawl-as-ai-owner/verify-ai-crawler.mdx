@@ -2,16 +2,17 @@
 title: Verify your AI crawler
 pcx_content_type: concept
 sidebar:
-  order: 10
+  order: 2
 ---
 
 import { Steps, DashButton } from "~/components";
 
 ```mermaid
 graph LR
-A[Set up your<br>Cloudflare Account] --> B[Connect to<br>Stripe]
-B --> C[Verify your<br>AI crawler]:::highlight
-C --> D[Crawl pages]
+A[Set up your<br>Cloudflare Account] --> B[Verify your<br>AI crawler]:::highlight
+B --> C[Discover<br>payable content]
+C --> D[Connect to<br>Stripe]
+D --> E[Crawl pages]
 classDef highlight fill:#F6821F,color:white
 ```
 
@@ -51,9 +52,15 @@ Submit a form to add your AI crawler to Cloudflare's list of verified bots.
 <Steps>
 1. In the Cloudflare dashboard, go to **Manage Account** > **Settings**.
 
-   <DashButton url="/?to=/:account/configurations" />
+	<DashButton url="/?to=/:account/configurations" />
 
 2. Go to the **Bot Submission Form** tab.
-3. Fill out the form.
+
+3. Fill out the form with the following required information:
+   - **Select bot type**: Choose either **Verified Bot** or **Signed Agent**.
+   - **Verification Method**: Select **Request Signature**.
+   - **User-Agents header values**: Provide the User-Agent string(s) your bot uses.
+   - **User-Agents Match Pattern**: Provide substring patterns that match your User-Agent (for example, `GoogleBot | GoogleScraper`).
+
 4. Select **Submit**.
 </Steps>

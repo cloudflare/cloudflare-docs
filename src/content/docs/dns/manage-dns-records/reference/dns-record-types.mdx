@@ -125,7 +125,7 @@ DNS management for **example.com**:
 
 | Type  | Name | Content                | Proxy status |
 | ----- | ---- | ---------------------- | ------------ |
-| CNAME | abc  | `target.external.test` | DNS Only     |
+| CNAME | abc  | `target.external.test` | Proxied     |
 
 </Example>
 
@@ -144,6 +144,8 @@ In this example, a query for TXT in `abc.example.com` will **not** return the TX
 </Details>
 
 - Cloudflare uses a process called CNAME flattening to deliver better performance. This process supports a few features and can interact with [different setups that depend on CNAME records](/dns/cname-flattening/#aspects-to-keep-in-mind). Refer to the [CNAME flattening section](/dns/cname-flattening/) to learn more about this.
+
+- If you encounter a CNAME record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration. Refer to [proxying limitations](/dns/proxy-status/limitations/#proxy-eligibility) for details.
 
 :::note
 Specific CNAME record values with traffic proxied through Cloudflare will enable Orange-to-Orange (O2O) routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.

@@ -3,14 +3,21 @@ pcx_content_type: configuration
 title: Require known IP addresses in site admin area
 ---
 
-If an attack compromises the administrative area of your website, the consequences can be severe. With custom rules, you can protect your site’s admin area by blocking requests for access to admin paths that do not come from a known IP address.
+If an attack compromises the administrative area of your website, the consequences can be severe. With custom rules, you can protect your site's admin area by blocking requests for access to admin paths that do not come from a known IP address.
 
-This example custom rule limits access to the WordPress admin area, `/wp-admin/`, by blocking requests that do not originate from a specified set of IP addresses:
+This example [custom rule](/waf/custom-rules/create-dashboard/) limits access to the WordPress admin area, `/wp-admin/`, by blocking requests that do not originate from a specified set of IP addresses:
 
-- **Expression**: `(not ip.src in {10.20.30.40 192.168.1.0/24} and starts_with(lower(http.request.uri.path), "/wp-admin"))`
+- **When incoming requests match**:
+
+  | Field             | Operator  | Value                          |     |
+  | ----------------- | --------- | ------------------------------ | --- |
+  | IP Source Address | is not in | `10.20.30.40` `192.168.1.0/24` | And |
+  | URI Path          | wildcard  | `/wp-admin/*`                  |     |
+
+  If you are using the Expression Editor:<br/>
+  `(not ip.src in {10.20.30.40 192.168.1.0/24} and http.request.uri.path wildcard "/wp-admin/*")`
+
 - **Action**: _Block_
-
-To prevent attackers from successfully using a permutation of `/wp-admin/` such as `/wP-AdMiN/`, the expression uses the [`lower()`](/ruleset-engine/rules-language/functions/#lower) transformation function to convert the URI path to lowercase.
 
 ## Other resources
 

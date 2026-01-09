@@ -449,7 +449,7 @@ When combining this selector with the [Download and Upload File Types selectors]
 <Render
 	file="gateway/selectors/net-http-content-categories"
 	product="cloudflare-one"
-	params={{ APIendpoint: "http.conn.content_category" }}
+	params={{ APIendpoint: "http.request.uri.content_category" }}
 />
 
 ### Destination Continent
@@ -497,7 +497,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/team-and-
 <Render
 	file="gateway/selectors/domain-http"
 	product="cloudflare-one"
-	params={{ APIendpoint: "http.conn.domains" }}
+	params={{ APIendpoint: "http.request.domains" }}
 />
 
 ### Download and Upload File Size
@@ -624,7 +624,7 @@ Use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention
 <Render
 	file="gateway/selectors/host-http"
 	product="cloudflare-one"
-	params={{ APIendpoint: "http.conn.hostname" }}
+	params={{ APIendpoint: "http.request.host" }}
 />
 
 ### HTTP Method
@@ -652,7 +652,7 @@ The HTTP response status code received by the traffic.
 <Render
 	file="gateway/selectors/security-risks"
 	product="cloudflare-one"
-	params={{ APIendpoint: "http.conn.security_category" }}
+	params={{ APIendpoint: "http.request.uri.security_category" }}
 />
 
 ### Source Continent
@@ -683,9 +683,9 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render file="gateway/url-slash" product="cloudflare-one" />
 
-| UI name | API example                                             |
-| ------- | ------------------------------------------------------- |
-| URL     | `not(any(http.request.uri.content_category[*] in {1}))` |
+| UI name | API example                            |
+| ------- | -------------------------------------- |
+| URL     | `http.request.uri matches "/r/gaming"` |
 
 ### URL Path
 

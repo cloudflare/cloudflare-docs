@@ -62,13 +62,17 @@ The table below provides a summary of the Data Localization Suite product's beha
 | ------------------------------ | --------------- | ----------------- | -------------------------- |
 | Cloudflare Images              | ⚫️             | ✅ [^36]          | 🚧 [^35]                   |
 | AI Gateway                     | ✘               | ✘                 | 🚧 [^39]                   |
+| AI Search                      | ✘ [^46]         | ✘ [^47]           | 🚧 [^48]                   |
 | Cloudflare Pages               | ✅ [^11]        | ✅ [^11]          | 🚧 [^1]                    |
 | Cloudflare D1                  | ⚫️             | ⚫️               | 🚧 [^40]                   |
 | Durable Objects                | ⚫️             | ✅ [^7]           | 🚧 [^1]                    |
 | Email Routing                  | ⚫️             | ⚫️               | ✅                         |
+| Firewall for AI                | ✘              | ✘                | ✘                          |
+| Remote MCP Server              | ✅ [^44]        | ✅ [^45]           | 🚧 [^1]                   |
 | R2                             | ✅ [^27]        | ✅ [^8]           | ✅ [^28]                   |
 | Smart Placement                | ⚫️             | ✘                 | ✘                          |
 | Stream                         | ⚫️             | ✘                 | 🚧 [^1]                    |
+| Vectorize                      | ⚫️             | ✘                 | ✘                    			 |
 | Workers (deployed on a Zone)   | ✅              | ✅                | 🚧 [^41]                   |
 | Workers AI                     | ⚫️             | ✘                 | ✅                         |
 | Workers KV                     | ⚫️             | ✘                 | ✅ [^34]                   |
@@ -192,3 +196,13 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^42]: Only applies to HTTP/S Spectrum applications.
 
 [^43]: Web Analytics collects the [minimum amount of information](/web-analytics/data-metrics/data-origin-and-collection/). Alternatively, you can [exclude EU Visitors from RUM](/speed/observatory/rum-beacon/#rum-excluding-eeaeu).
+
+[^44]: Only when using Workers Routes & Domains and Custom Certificate.
+
+[^45]: Only when using Workers Routes & Domains.
+
+[^46]: Only R2 Custom Domains and Custom Certificate are supported.
+
+[^47]: Only R2 Custom Domains are supported.
+
+[^48]: The following are exceptions and are supported: AI Gateway Analytics (GraphQL Analytics datasets) and Logs (Logpush), R2 Dashboard Metrics & Analytics, Workers AI GraphQL Analytics datasets like aiInferenceAdaptive.

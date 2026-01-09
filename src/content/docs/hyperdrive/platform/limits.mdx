@@ -5,29 +5,58 @@ sidebar:
   order: 2
 ---
 
-The following limits apply to Hyperdrive configuration, connections, and queries made to your configured origin databases.
+The following limits apply to Hyperdrive configurations, connections, and queries made to your configured origin databases.
 
-| Feature                                            | Free                     | Paid                      |
-| -------------------------------------------------- | ------------------------ | ------------------------- |
-| Maximum configured databases                       | 10 per account           | 25 per account            |
-| Initial connection timeout                         | 15 seconds               | 15 seconds                |
-| Idle connection timeout                            | 10 minutes               | 10 minutes                |
-| Maximum cached query response size                 | 50 MB                    | 50 MB                     |
-| Maximum query (statement) duration                 | 60 seconds               | 60 seconds                |
-| Maximum username length [^1]                       | 63 characters (bytes)    | 63 characters (bytes)     |
-| Maximum database name length [^1]                  | 63 characters (bytes)    | 63 characters (bytes)     |
-| Maximum potential origin database connections (per configuration) [^2] | approx. \~20 connections | approx. \~100 connections |
+## Configuration limits
 
-:::note
-Hyperdrive does not have a hard limit on the number of concurrent _client_ connections made from your Workers.
+These limits apply when creating or updating Hyperdrive configurations.
 
-As many hosted databases have limits on the number of unique connections they can manage, Hyperdrive attempts to keep number of concurrent pooled connections to your origin database lower.
-:::
+| Limit                          | Free                  | Paid                  |
+| ------------------------------ | --------------------- | --------------------- |
+| Maximum configured databases   | 10 per account        | 25 per account        |
+| Maximum username length [^1]   | 63 characters (bytes) | 63 characters (bytes) |
+| Maximum database name length [^1] | 63 characters (bytes) | 63 characters (bytes) |
 
 [^1]: This is a limit enforced by PostgreSQL. Some database providers may enforce smaller limits.
 
-[^2]: Hyperdrive is a distributed system, so it is possible for a client to be unable to reach an existing pool. In this scenario, a new pool will be established, with its own allocation of connections. This favors availability over strictly enforcing limits, but does mean that it is possible in edge cases to overshoot the normal connection limit.
+## Connection limits
 
-:::note
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. Not all limits can be increased. To request an increase, submit a [Limit Increase Request](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps. We also regularly monitor the Hyperdrive channel in [Cloudflare's Discord community](https://discord.cloudflare.com/) and can answer questions regarding limits and requests.
-:::
+These limits apply to connections between Hyperdrive and your origin database.
+
+| Limit                              | Free                     | Paid                      |
+| ---------------------------------- | ------------------------ | ------------------------- |
+| Initial connection timeout         | 15 seconds               | 15 seconds                |
+| Idle connection timeout            | 10 minutes               | 10 minutes                |
+| Maximum origin database connections (per configuration) [^2] | ~20 connections | ~100 connections |
+
+Hyperdrive does not limit the number of concurrent client connections from your Workers. However, Hyperdrive limits connections to your origin database because most hosted databases have connection limits.
+
+[^2]: Hyperdrive is a distributed system, so a client may be unable to reach an existing pool. In this scenario, a new pool is established with its own connection allocation. This prioritizes availability over strict limit enforcement, which means connection counts may occasionally exceed the listed limits.
+
+### Connection errors
+
+When Hyperdrive cannot acquire a connection to your origin database, you may see one of the following errors:
+
+| Error message | Cause |
+| ------------- | ----- |
+| `Failed to acquire a connection from the pool.` | The connection pool is exhausted because connections are held open too long. Long-running queries or transactions are a common cause. |
+| `Server connection attempt failed: connection_refused` | Your origin database is rejecting connections. This can occur when a firewall blocks Hyperdrive, or when your database provider's connection limit is exceeded. |
+
+For a complete list of error codes, refer to [Troubleshoot and debug](/hyperdrive/observability/troubleshooting/).
+
+## Query limits
+
+These limits apply to queries sent through Hyperdrive.
+
+| Limit                              | Free      | Paid      |
+| ---------------------------------- | --------- | --------- |
+| Maximum query (statement) duration | 60 seconds | 60 seconds |
+| Maximum cached query response size | 50 MB     | 50 MB     |
+
+Queries exceeding the maximum duration are terminated. Query responses larger than 50 MB are not cached but are still returned to your Worker.
+
+## Request a limit increase
+
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. Not all limits can be increased.
+
+To request an increase, submit a [Limit Increase Request form](https://forms.gle/ukpeZVLWLnKeixDu7). You can also ask questions in the Hyperdrive channel on [Cloudflare's Discord community](https://discord.cloudflare.com/).

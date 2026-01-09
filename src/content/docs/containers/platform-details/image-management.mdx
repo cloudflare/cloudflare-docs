@@ -155,11 +155,7 @@ using the `wrangler containers push` command.
 
 ## Registry Limits
 
-Images are limited to 2 GB in size and you are limited to 50 total GB in your account's registry.
-
-:::note
-These limits will likely increase in the future.
-:::
+Images are limited in size by available disk of the configured [instance type](/containers/platform-details/limits/#instance-types) for a Container.
 
 Delete images with `wrangler containers images delete` to free up space, but reverting a
 Worker to a previous version that uses a deleted image will then error.

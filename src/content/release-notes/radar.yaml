@@ -3,7 +3,14 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-12-16"
+    title: New client type dimension in Web Crawlers and Mixed Purpose entry
+    description: |-
+      * Added new Mixed Purpose entry to the `crawl_purpose` dimension of the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API, which as of this release includes Googlebot and Bingbot.
+      * Added new dimension `client_type` to the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API.
+        * Added new **HTML page requests by client type graph** to the [AI Insights page](https://radar.cloudflare.com/ai-insights#html-page-requests-by-client-type).
   - publish_date: "2025-11-24"
+
     title: Add HTTP origins insights
     description: |-
       * Added new [`Origins`](/api/resources/radar/subresources/origins/) API.

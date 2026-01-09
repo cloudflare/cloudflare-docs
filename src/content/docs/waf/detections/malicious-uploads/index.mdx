@@ -7,7 +7,7 @@ sidebar:
     label: Malicious uploads
 ---
 
-import { GlossaryTooltip, Type } from "~/components";
+import { GlossaryTooltip, Type, Render } from "~/components";
 
 The malicious uploads detection, also called uploaded content scanning, is a WAF [traffic detection](/waf/concepts/#detection-versus-mitigation) that scans content being uploaded to your application.
 
@@ -25,11 +25,11 @@ For every request with one or more detected content objects, the content scanner
 
 Cloudflare uses the same [anti-virus (AV) scanner used in Cloudflare Zero Trust](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/) for WAF content scanning.
 
-:::note
+:::note[Notes]
 
-Content scanning will not apply any mitigation actions to requests with content objects considered malicious. It only provides a signal that you can use to define your attack mitigation strategy. You must create rules — [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) — to perform actions based on detected signals.
+Content scanning will not apply any mitigation actions to requests with content objects considered malicious. It only provides a signal that you can use to define your attack mitigation strategy. You must create rules — [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) — to perform actions based on detected signals.<br/>For more information on detection versus mitigation, refer to [Concepts](/waf/concepts/#detection-versus-mitigation).
 
-For more information on detection versus mitigation, refer to [Concepts](/waf/concepts/#detection-versus-mitigation).
+<Render file="content-scanning-latency" product="waf" />
 
 :::
 

@@ -63,6 +63,18 @@ The following example allows browser-based uploads from `https://example.com` wi
 ]
 ```
 
+## Use CORS with a custom domain
+
+[Custom domains](/r2/buckets/public-buckets/#custom-domains) connected to an R2 bucket with a CORS policy automatically return CORS response headers for [cross-origin requests](https://fetch.spec.whatwg.org/#http-cors-protocol).
+
+Cross-origin requests must include a valid `Origin` request header, for example, `Origin: https://example.com`. If you are testing directly or using a command-line tool such as `curl`, you will not see CORS `Access-Control-*` response headers unless the `Origin` request header is included in the request.
+
+:::caution[Caching and CORS headers]
+
+If you set a CORS policy on a bucket that is already serving traffic using a custom domain, any existing cached assets will not reflect the CORS response headers until they are refreshed in cache. Use [Cache Purge](/cache/how-to/purge-cache/) to purge the cache for that hostname after making any CORS policy related changes.
+
+:::
+
 ## Add CORS policies from the dashboard
 
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.

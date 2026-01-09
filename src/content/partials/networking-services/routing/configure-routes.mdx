@@ -18,7 +18,7 @@ params:
 
 import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (only available over Direct CNI).
+Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (only available over CNI with Dataplane v2 (beta)).
 
 Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more information about all the technical aspects related to:
 - Routes' priorities and weights
@@ -93,7 +93,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 5. In **Tunnel/Next hop**, select a tunnel for your route from the tunnels you created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
 6. Choose the **Priority** for your route. Lower numbers have higher priorities.
 	:::note
-	<Render file="longest-prefix-match" product="networking-services/reference" /> Have this in mind when configuring priorities for your routes. Refer to <a href={props.routePrioritization}>Route prioritization</a> for more information.
+	<Render file="longest-prefix-match" product="networking-services/reference" /> Keep this in mind when configuring priorities for your routes. Refer to <a href={props.routePrioritization}>Route prioritization</a> for more information.
 	:::
 7. (Optional) Choose a **Weight** for your route. Refer to <a href={props.chooseWeights}>Set priority and weights for static routes</a> for examples.
 8. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
@@ -407,13 +407,13 @@ Example:
 
 ## Configure BGP routes
 
-BGP peering is available when using a [Direct CNI](/network-interconnect/) as an on-ramp.
+BGP peering is available when using [CNI with Dataplane v2 (beta)](/network-interconnect/) as an on-ramp.
 
 ### Choose an ASN for BGP peering
 
 The Magic routing table is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
 
-By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (for example, any value between `64512` and `65534`).
+By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
 
 To set this ASN:
 
@@ -475,7 +475,7 @@ To set this ASN:
 	<Markdown
     text={`
 		${props.productName} customers should also be aware of the following:
-		- The customer chooses their device ASN, which must be different to the Cloudflare-side ASN.
+		- The customer chooses their device ASN, which must be different from the Cloudflare-side ASN.
 		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled interconnect.
 		- The customer-announced \`AS_PATH\` is transitive between interconnects — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two ${props.productName}-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
 			To enable routing between private networks over ${props.productName}, you should either:
@@ -491,7 +491,7 @@ To set this ASN:
 ### Set up BGP peering
 
 :::caution
-BGP peering is only available to {props.productName} customers with Direct CNI as an on-ramp. If your network is set up with GRE or IPsec tunnels, you cannot use BGP peering.
+BGP peering is only available to {props.productName} customers with CNI with Dataplane v2 (beta) as an on-ramp. If your network is set up with GRE or IPsec tunnels, you cannot use BGP peering.
 :::
 
 You need to configure two ASNs:
@@ -538,7 +538,7 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 )
 }
 
-5. Locate the Direct CNI interconnect to configure with BGP > select the **three dots** next to it > **Configure BGP**.
+5. Locate the CNI interconnect with Dataplane v2 (beta) to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
 
 	{ props.magicWord !== "Magic Transit" && (
