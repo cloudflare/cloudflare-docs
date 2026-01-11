@@ -980,6 +980,10 @@ wrangler types [<PATH>] [OPTIONS]
   - Control the types that Wrangler generates for `vars` bindings.
   - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myVar: 'my dev variable' | 'my prod variable'`).
   - If `false`, Wrangler generates generic types (e.g. `myVar: string`). This is useful when variables change frequently, especially when working across multiple environments.
+- `--check` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Check if the generated types at the specified path are up-to-date without regenerating them.
+  - Exits with code 0 if types are up-to-date, or code 1 if types are out-of-date.
+  - Useful for CI/CD pipelines and pre-commit hooks to ensure types have been regenerated after configuration changes.
 - `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
   - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If the Worker you are generating types for has service bindings or bindings to Durable Objects, you can also provide the paths to those configuration files so that the generated `Env` type will include RPC types. For example, given a Worker with a service binding, `wrangler types -c wrangler.toml -c ../bound-worker/wrangler.toml` will generate an `Env` type like this:
   ```ts
