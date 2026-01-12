@@ -2388,6 +2388,7 @@
 /cloudflare-one/team-and-resources/devices/agentless/dns/* /cloudflare-one/networks/resolvers-and-proxies/dns/:splat 301
 /cloudflare-one/api-terraform/access-api-examples/* /api/resources/zero_trust/subresources/access/subresources/policies/ 301
 /cloudflare-one/traffic-policies/packet-filtering/add-rules/* /cloudflare-one/traffic-policies/packet-filtering/add-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/* /cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ 301
 
 # Email Security nav revamp (dynamics)
 /cloudflare-one/email-security/detection-settings/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
