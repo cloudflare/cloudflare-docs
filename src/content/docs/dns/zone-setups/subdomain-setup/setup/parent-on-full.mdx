@@ -9,7 +9,7 @@ head:
 
 ---
 
-When the parent zone is using a [full setup](/dns/zone-setups/full-setup/)[^1], the steps to set up your child zone depend on whether the subdomain already exists in the parent domain.
+When the parent zone is using a [primary setup (full)](/dns/zone-setups/full-setup/)[^1], the steps to set up your child zone depend on whether the subdomain already exists in the parent domain.
 
 :::note
 
@@ -55,7 +55,7 @@ If you have already created DNS records covering your subdomain in the parent zo
 3. In your child zone, make sure you have all DNS records that relate to the subdomain. This includes all DNS records deeper than the delegated subdomain. For example, if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
 
    :::note
-   If your child zone is on a full setup, consider [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent zone, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
+   If your child zone is on a primary setup (full), consider [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent zone, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
    :::
 
 4. If the parent zone is on Cloudflare, make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child zone.
