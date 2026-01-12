@@ -5,6 +5,7 @@
 
 # homepage
 /docs/ /directory/ 301
+/support/ai/ / 301
 /api /api/ 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
