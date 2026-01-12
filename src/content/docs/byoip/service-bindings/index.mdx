@@ -41,7 +41,11 @@ When a service binding of type `CDN` is applied, once the change has propagated 
 
 ### Spectrum
 
-When a service binding of type `Spectrum` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any TCP/UDP/HTTP requests are directed into the Spectrum pipeline for Layer 4 or Layer 7 processing.
+When a service binding of type `Spectrum` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any TCP/HTTP requests are directed into the Spectrum pipeline for Layer 4 or Layer 7 processing.
+
+:::note[UDP applications]
+Spectrum UDP applications are [not supported](/spectrum/reference/limitations/#udp) on BYOIP.
+:::
 
 ### Magic Transit
 
