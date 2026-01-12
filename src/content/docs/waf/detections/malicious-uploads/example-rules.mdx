@@ -29,10 +29,10 @@ This custom rule example blocks requests addressed at `/upload.php` that contain
 
 - **When incoming requests match:**
 
-  | Field                        | Operator | Value         |
-  | ---------------------------- | -------- | ------------- |
-  | Has malicious content object | equals   | True          |
-  | URI Path                     | equals   | `/upload.php` |
+  | Field                        | Operator | Value         |     |
+  | ---------------------------- | -------- | ------------- | --- |
+  | Has malicious content object | equals   | True          | And |
+  | URI Path                     | equals   | `/upload.php` |     |
 
   If you are using the Expression Editor:<br/>
   `(cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload.php")`
