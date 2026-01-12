@@ -172,7 +172,7 @@ The following are methods available on the **Native Durable Object WebSocket API
 
 - <code>serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
 
-  - Keeps a copy of `value` associated with the WebSocket connection. Serialized attachments are available as long as their attached WebSocket connection is healthy, even after hibernation. If any side of the connection is closed, the attachments will be lost.
+  - Keeps a copy of `value` associated with the WebSocket connection. Serialized attachments are available as long as their attached WebSocket connection is healthy, even after hibernation. If any side of the connection is closed, the attachments will be lost. If the value needs to be durable even if the [Durable Object is evicted](/durable-objects/concepts/durable-object-lifecycle/), please use [Durable Object Storage](/durable-objects/api/sqlite-storage-api/).
 
   - If you modify `value` after calling this method, those changes will not be retained unless you call this method again.
 
