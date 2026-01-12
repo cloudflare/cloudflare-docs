@@ -53,3 +53,52 @@ To review mTLS rules, consider the steps below. For further guidance refer to [C
      ```
 
 4. To edit the rule, either use the user interface or select **Edit expression**.
+
+---
+
+## Advanced Debugging
+
+To increase visibility into what a client is sending for testing and debugging, consider the following approach:
+
+1) Create worker to debug print [cf.properties](/workers/runtime-apis/request/#incomingrequestcfproperties): 
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    // You can view your logs in the Observability dashboard
+    console.info({ message: JSON.stringify(request.cf, null, 2) });
+    return new Response(JSON.stringify(request.cf, null, 2))
+  }
+};
+```
+
+2) Associate Worker with SNI that mTLS was enabled on via a [Worker Route](workers/configuration/routing/routes/) or [Custom Domain](/workers/configuration/routing/custom-domains/)
+
+3) Next, make request to the hostname and/or path configured - with and without sending the mTLS client cert.
+
+- Expected response with valid client cert: 
+
+```json
+"tlsClientAuth": {
+  "certPresented": "1",
+  "certVerified": "SUCCESS",
+},
+```
+
+- Expected response with invalid client cert (for example, self-signed cert):
+
+```json
+"tlsClientAuth": {
+  "certPresented": "1",
+  "certVerified": "FAILED:self signed certificate",
+},
+```
+
+- Expected response without client cert: 
+
+```json
+"tlsClientAuth": {
+  "certPresented": "0",
+  "certVerified": "NONE",
+},
+```
