@@ -1,246 +1,204 @@
 ---
-title: Integrate with Microsoft Information Protection
+title: Integrate with Microsoft Purview Information Protection
 pcx_content_type: learning-unit
 sidebar:
-  order: 5
+  order: 4
 ---
 
-Microsoft Information Protection (MIP) integration allows you to enforce DLP policies based on sensitivity labels applied to files in Microsoft 365.
+import { Render, TabItem, Tabs } from "~/components";
 
-## What is Microsoft Information Protection?
+:::note
 
-Microsoft Information Protection (MIP) is a framework for classifying and protecting sensitive data using labels. Organizations use MIP to:
+Integration profiles require [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/).
+:::
 
-- Apply sensitivity labels to documents and emails
-- Classify data based on content and context
-- Enforce protection policies based on labels
-- Track and control labeled content
-
-## Benefits of MIP integration
-
-**Consistent labeling:**
-
-- Users label content once in Microsoft 365
-- Labels are respected across Cloudflare Gateway and CASB
-- Unified data classification across platforms
-
-**Simplified policy management:**
-
-- Create DLP policies based on labels instead of content patterns
-- Leverage existing Microsoft 365 label taxonomy
-- Reduce complexity of DLP profile management
-
-**Enhanced protection:**
-
-- Protect labeled content even when accessed outside Microsoft 365
-- Enforce policies on labeled files uploaded to any application
-- Prevent label removal or downgrade
+Microsoft Purview Information Protection (MIP) provides [sensitivity labels](https://learn.microsoft.com/purview/sensitivity-labels) to classify and protect sensitive data. By integrating your Microsoft account with Cloudflare One, you can enforce DLP policies based on these sensitivity labels across all applications, not just within Microsoft 365.
 
 ## Prerequisites
 
-Before integrating MIP:
-
-- Microsoft 365 E3 or E5 license (or equivalent)
-- Microsoft Information Protection labels configured in Microsoft 365
+- Microsoft 365 E3 or E5 license with Purview Information Protection labels configured
 - Cloudflare Enterprise plan with DLP
 - Administrator access to both Microsoft 365 and Cloudflare Zero Trust
 
-## Configure MIP integration
+## Set up MIP integration
 
-### Connect Microsoft 365 to Cloudflare
-
-The MIP integration is configured through CASB:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
-2. Select **Add integration** > **Microsoft 365**.
-3. Follow the authentication flow to connect your Microsoft 365 tenant.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Cloud & SaaS**.
+2. Select **Add integration**, then choose **Microsoft**
+3. Follow the Microsoft authentication flow.
 4. Grant the required permissions for MIP label access.
 
-For detailed instructions, refer to [Microsoft 365 CASB integration](/cloudflare-one/integrations/cloud-and-saas/casb-integrations/microsoft-365/).
+For more information, refer to [Microsoft 365 CASB integration](/cloudflare-one/integrations/cloud-and-saas/casb-integrations/microsoft-365/).
 
-### Enable MIP label detection
+## Use MIP labels in DLP policies
 
-After connecting Microsoft 365:
+After configuring the Microsoft integration, a new integration profile named **MIP Sensitivity Labels** will automatically appear under **Data loss prevention** > **Profiles**. This profile contains all your Microsoft sensitivity labels.
 
-1. Go to **DLP** > **DLP Profiles**.
-2. Create a new profile or edit an existing one.
-3. Select **Add detection entry**.
-4. Choose **Microsoft Information Protection Label**.
-5. Select the labels you want to detect.
-6. Select **Add entry**.
+You can use the Microsoft integration profile directly in Gateway policies, or add specific labels to a custom DLP profile:
 
-## Create label-based DLP policies
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
+2. Create a new custom profile, or choose an existing one and select **Edit**.
+3. Select **Add existing entries**.
+4. Choose **Microsoft Information Protection Label** and select the labels you want to detect.
+5. Select **Save profile**.
 
-### Block uploads of highly confidential files
+## Example policies
 
-Prevent files labeled as "Highly Confidential" from being uploaded to non-Microsoft applications:
+### Block highly confidential uploads
 
-1. Create a DLP profile:
-   - **Name**: Highly Confidential Files
-   - **Detection entry**: MIP Label is `Highly Confidential`
-2. Create a Gateway HTTP policy:
-   - **Name**: Block highly confidential uploads to non-Microsoft apps
-   - **Traffic**:
-     - Application is not `Microsoft 365`
-     - AND DLP Profile is `Highly Confidential Files`
-     - AND Upload Mime Type is in `All File Types`
-   - **Action**: Block
+Prevent files labeled as "Highly Confidential" from being uploaded to non-Microsoft applications.
 
-### Isolate confidential files in external applications
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-Allow access to confidential files but restrict actions:
+| Selector         | Operator | Value                    | Logic | Action |
+| ---------------- | -------- | ------------------------ | ----- | ------ |
+| Application      | not in   | _Microsoft 365_          | And   | Block  |
+| DLP Profile      | in       | _MIP Sensitivity Labels_ | And   |        |
+| Upload Mime Type | in       | _All File Types_         |       |        |
 
-1. Create a DLP profile for confidential labels
-2. Create a Gateway HTTP policy:
-   - **Traffic**:
-     - DLP Profile is `Confidential Files`
-     - AND Application is not `Microsoft 365`
-   - **Action**: Isolate
-   - **Isolation settings**:
-     - Disable file downloads
-     - Disable copy/paste
+In the DLP Profile selector, choose the **MIP Sensitivity Labels** integration profile and select the `Highly Confidential` label.
 
-### Audit access to sensitive labeled content
+</TabItem> <TabItem label="API">
 
-Monitor access to all labeled content:
-
-1. Create a DLP profile that includes all MIP labels
-2. Create a Gateway HTTP policy:
-   - **Traffic**: DLP Profile is `All MIP Labels`
-   - **Action**: Allow
-   - **Enable logging**: Yes
-
-## MIP label hierarchy
-
-Microsoft 365 labels can be organized hierarchically:
-
-```
-Confidential
-├── Confidential - Internal
-├── Confidential - Partners
-└── Confidential - Highly Restricted
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Block highly confidential uploads to non-Microsoft apps",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "not any(app.ids[*] in {1489}) and any(dlp.profiles[*] in {\"<mip_profile_id>\"}) and any(http.request.mime_types[*] in {\"*/*\"})"
+    }
+  ],
+  "action": "block",
+  "enabled": true
+}'
 ```
 
-### Detect parent and child labels
+Replace `<mip_profile_id>` with your MIP Sensitivity Labels integration profile ID. The app ID `1489` represents Microsoft 365.
 
-When creating DLP policies, you can:
+</TabItem> <TabItem label="Terraform">
 
-- **Detect specific label**: Only match exact label
-- **Detect label and children**: Match label and all sub-labels
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_highly_confidential_uploads" {
+  account_id  = var.account_id
+  name        = "Block highly confidential uploads to non-Microsoft apps"
+  description = "Prevent Highly Confidential labeled files from being uploaded outside Microsoft 365"
+  action      = "block"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "not any(app.ids[*] in {1489}) and any(dlp.profiles[*] in {\"<mip_profile_id>\"}) and any(http.request.mime_types[*] in {\"*/*\"})"
+}
+```
 
-**Example**: Detecting "Confidential" with children will match:
+Replace `<mip_profile_id>` with your MIP Sensitivity Labels integration profile ID.
 
-- Confidential
-- Confidential - Internal
-- Confidential - Partners
-- Confidential - Highly Restricted
+</TabItem> </Tabs>
 
-## Limitations and considerations
+### Isolate confidential files
 
-### Nested labels
+Allow access to confidential files in external applications but restrict actions like downloads and copy/paste using Browser Isolation.
 
-<Render file="dlp/mip-nested-labels-limitation" product="cloudflare-one" />
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-### Label synchronization
+| Selector    | Operator | Value                    | Logic | Action  |
+| ----------- | -------- | ------------------------ | ----- | ------- |
+| Application | not in   | _Microsoft 365_          | And   | Isolate |
+| DLP Profile | in       | _MIP Sensitivity Labels_ |       |         |
 
-- Labels are synced when files are scanned by CASB or pass through Gateway
-- Label changes in Microsoft 365 may take time to propagate
-- Removed labels may still be cached temporarily
+In the DLP Profile selector, choose the **MIP Sensitivity Labels** integration profile and select the `Confidential` label (with or without children).
+
+In the policy settings, configure isolation options:
+
+- Disable file downloads
+- Disable copy/paste
+- Disable printing
+
+</TabItem> <TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Isolate confidential files in external apps",
+  "conditions": [
+    {
+      "type": "traffic",
+      "expression": "not any(app.ids[*] in {1489}) and any(dlp.profiles[*] in {\"<mip_profile_id>\"})"
+    }
+  ],
+  "action": "isolate",
+  "enabled": true,
+  "rule_settings": {
+    "isolate": {
+      "disable_copy_paste": true,
+      "disable_download": true,
+      "disable_printing": true
+    }
+  }
+}'
+```
+
+Replace `<mip_profile_id>` with your MIP Sensitivity Labels integration profile ID.
+
+</TabItem> <TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "isolate_confidential_files" {
+  account_id  = var.account_id
+  name        = "Isolate confidential files in external apps"
+  description = "Allow access to confidential files but restrict actions using Browser Isolation"
+  action      = "isolate"
+  enabled     = true
+  filters     = ["http"]
+  traffic     = "not any(app.ids[*] in {1489}) and any(dlp.profiles[*] in {\"<mip_profile_id>\"})"
+
+  rule_settings {
+    isolate {
+      disable_copy_paste = true
+      disable_download   = true
+      disable_printing   = true
+    }
+  }
+}
+```
+
+Replace `<mip_profile_id>` with your MIP Sensitivity Labels integration profile ID.
+
+</TabItem> </Tabs>
+
+## Considerations
+
+<Render
+	file="data-loss-prevention/mip-nested-labels-limitation"
+	product="cloudflare-one"
+/>
+
+### Syncing
+
+Allow 24 hours for label additions and edits in your Microsoft account to propagate to Cloudflare DLP. Deletions in your Microsoft account will not delete entries in your Cloudflare DLP profile.
 
 ### Supported file types
 
-MIP labels are supported for:
+MIP labels are supported for Microsoft Office files, PDFs, and some other file formats with embedded labels.
 
-- Microsoft Office files (Word, Excel, PowerPoint)
-- PDF files
-- Some other file formats with embedded labels
+### Managed entries
 
-### Performance
+Detection entries in the MIP integration profile are managed by Microsoft and cannot be manually added, edited, or deleted within Cloudflare DLP.
 
-- Label detection adds minimal latency
-- Large files may take longer to scan for labels
-- Consider file size limits for optimal performance
+## Combine with content-based DLP
 
-## Combine MIP with content-based DLP
-
-Layer label-based and content-based detection for comprehensive protection:
-
-**Example: Comprehensive financial data profile**
-
-```
-Profile: Financial Data Protection
-Detection entries:
-  - MIP Label: "Confidential - Financial"
-  - Regex: Credit card pattern
-  - Regex: Bank account pattern
-  - Keyword: "financial", "banking"
-Match count: 1
-```
-
-This profile triggers if:
-
-- File has the "Confidential - Financial" label, OR
-- File contains credit card numbers, OR
-- File contains bank account numbers, OR
-- File contains financial keywords
+You can layer label-based and content-based detection for comprehensive protection. For example, create a profile that detects files with a "Confidential - Financial" label OR files containing credit card patterns, providing both label-based and pattern-based coverage.
 
 ## Best practices
 
-### Label governance
-
-- Establish clear labeling guidelines for users
-- Train users on when and how to apply labels
-- Regularly audit label usage and compliance
-- Enforce labeling through Microsoft 365 policies
-
-### Policy design
-
-- Start with high-sensitivity labels (Highly Confidential, Restricted)
-- Gradually expand to medium and low-sensitivity labels
-- Use label-based policies for broad categories
-- Use content-based DLP for specific data patterns
-
-### Testing
-
-- Test label detection with sample labeled files
-- Verify labels are correctly identified in Gateway logs
-- Confirm policy actions work as expected
-- Validate user experience with labeled content
-
-### Monitoring
-
-- Track label distribution across your organization
-- Monitor policy violations by label type
-- Identify users who frequently trigger label-based policies
-- Review label effectiveness in preventing data loss
-
-## Troubleshooting
-
-**Labels not detected:**
-
-- Verify Microsoft 365 integration is active
-- Confirm labels are applied in Microsoft 365
-- Check that file types support embedded labels
+- Start with high-sensitivity labels (Highly Confidential, Restricted) before expanding to lower sensitivity levels
+- Use label-based policies for broad categories and content-based DLP for specific data patterns
+- Test label detection with sample labeled files before deploying policies
 - Ensure TLS inspection is enabled for label scanning
-
-**Wrong labels detected:**
-
-- Verify label synchronization is complete
-- Check for label changes in Microsoft 365
-- Review label hierarchy configuration
-- Confirm detection entry is selecting correct labels
-
-**Performance issues:**
-
-- Limit label-based scanning to specific applications
-- Consider file size limits
-- Review number of labels being detected
-- Optimize policy ordering
 
 ## Next steps
 
-With MIP integration configured, you can:
-
-- Apply comprehensive label-based data protection
-- Combine with CASB for data at rest protection
-- Monitor labeled content across all applications
+With MIP integration configured, you have completed the prevent data exfiltration learning path. You can now apply comprehensive DLP policies that combine profiles, detection entries, custom datasets, and Microsoft Information Protection labels to protect sensitive data across all traffic types and applications.
