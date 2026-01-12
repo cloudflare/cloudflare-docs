@@ -2387,6 +2387,7 @@
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
 /cloudflare-one/team-and-resources/devices/agentless/dns/* /cloudflare-one/networks/resolvers-and-proxies/dns/:splat 301
 /cloudflare-one/api-terraform/access-api-examples/* /api/resources/zero_trust/subresources/access/subresources/policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/add-rules/* /cloudflare-one/traffic-policies/packet-filtering/add-policies/ 301
 
 # Email Security nav revamp (dynamics)
 /cloudflare-one/email-security/detection-settings/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
@@ -2429,6 +2430,9 @@
 /magic-wan/third-party/* /magic-wan/configuration/manually/third-party/:splat 301
 /magic-wan/connector/* /magic-wan/configuration/connector/:splat 301
 /magic-wan/configuration/connector/dhcp/* /magic-wan/configuration/connector/network-options/dhcp/:splat 301
+
+# Magic firewall
+/magic-firewall/how-to/create-rate-limiting-rules/* /magic-firewall/how-to/create-rate-limiting-policies/ 301
 
 # Rules
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
