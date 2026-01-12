@@ -20,10 +20,10 @@ async fetch(request, env) {
 from workers import WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        # D1 database is 'self.env.DB', where "DB" is the binding name from the Wrangler configuration file.
-        pass
-```
+async def fetch(self, request): # D1 database is 'self.env.DB', where "DB" is the binding name from the Wrangler configuration file.
+pass
+
+````
 </TabItem> </Tabs>
 
 A D1 binding has the type `D1Database`, and supports a number of methods, as listed below.
@@ -38,7 +38,8 @@ Prepares a query statement to be later executed.
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
-```
+````
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
 some_variable = "Bs Beverages"
@@ -48,44 +49,46 @@ stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind
 
 #### Parameters
 
-- <code>query</code>: <Type text="String"/> <MetaInfo text="Required"/>
-  - The SQL query you wish to execute on the database.
+- <code>query</code>: <Type text="String" /> <MetaInfo text="Required" />- The
+  SQL query you wish to execute on the database.
 
 #### Return values
 
-- <code>D1PreparedStatement</code>: <Type text="Object"/>
-  - An object which only contains methods. Refer to [Prepared statement methods](/d1/worker-api/prepared-statements/).
+- <code>D1PreparedStatement</code>: <Type text="Object" />- An object which only
+  contains methods. Refer to [Prepared statement
+  methods](/d1/worker-api/prepared-statements/).
 
 #### Guidance
 
-You  can use the `bind` method to dynamically bind a value into the query statement, as shown below.
+You can use the `bind` method to dynamically bind a value into the query statement, as shown below.
 
 - Example of a static statement without using `bind`:
 
-	<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-	```js
-	const stmt = db
-		.prepare("SELECT * FROM Customers WHERE CompanyName = Alfreds Futterkiste AND CustomerId = 1")
-	```
-	</TabItem> <TabItem label="Python" icon="seti:python">
-	```py
-	stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = Alfreds Futterkiste AND CustomerId = 1")
-	```
-	</TabItem> </Tabs>
+  <Tabs syncKey="workersExamples">
+  	{" "}
+  	<TabItem label="JavaScript" icon="seti:javascript">
+  		```js const stmt = db .prepare("SELECT * FROM Customers WHERE CompanyName
+  		= Alfreds Futterkiste AND CustomerId = 1") ```
+  	</TabItem>{" "}
+  	<TabItem label="Python" icon="seti:python">
+  		```py stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName =
+  		Alfreds Futterkiste AND CustomerId = 1") ```
+  	</TabItem>{" "}
+  </Tabs>
 
 - Example of an ordered statement using `bind`:
 
-	<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-	```js
-	const stmt = db
-		.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?")
-		.bind("Alfreds Futterkiste", 1);
-	```
-	</TabItem> <TabItem label="Python" icon="seti:python">
-	```py
-	stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?").bind("Alfreds Futterkiste", 1)
-	```
-	</TabItem> </Tabs>
+  <Tabs syncKey="workersExamples">
+  	{" "}
+  	<TabItem label="JavaScript" icon="seti:javascript">
+  		```js const stmt = db .prepare("SELECT * FROM Customers WHERE CompanyName
+  		= ? AND CustomerId = ?") .bind("Alfreds Futterkiste", 1); ```
+  	</TabItem>{" "}
+  	<TabItem label="Python" icon="seti:python">
+  		```py stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND
+  		CustomerId = ?").bind("Alfreds Futterkiste", 1) ```
+  	</TabItem>{" "}
+  </Tabs>
 
 Refer to the [`bind` method documentation](/d1/worker-api/prepared-statements/#bind) for more information.
 
@@ -113,12 +116,13 @@ from pyodide.ffi import to_js
 
 company_name1 = "Bs Beverages"
 company_name2 = "Around the Horn"
-stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?")
+stmt = self.env.DB.prepare("SELECT \* FROM Customers WHERE CompanyName = ?")
 batch_result = await self.env.DB.batch(to_js([
-    stmt.bind(company_name1),
-    stmt.bind(company_name2)
+stmt.bind(company_name1),
+stmt.bind(company_name2)
 ]))
-```
+
+````
 </TabItem> </Tabs>
 
 #### Parameters
@@ -143,7 +147,8 @@ const stmt = await env.DB.batch([
 	env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`).bind(companyName2)
 ]);
 return Response.json(stmt)
-```
+````
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
 from pyodide.ffi import to_js
@@ -152,11 +157,12 @@ from workers import Response
 company_name1 = "Bs Beverages"
 company_name2 = "Around the Horn"
 stmt = await self.env.DB.batch(to_js([
-    self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(company_name1),
-    self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(company_name2)
+self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(company_name1),
+self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(company_name2)
 ]))
 return Response.json(stmt)
-```
+
+````
 </TabItem> </Tabs>
 
 ```json output
@@ -207,99 +213,153 @@ return Response.json(stmt)
     ]
   }
 ]
-```
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-```js
-console.log(stmt[1].results);
-```
-</TabItem> <TabItem label="Python" icon="seti:python">
-```py
-print(stmt[1].results.to_py())
-```
-</TabItem> </Tabs>
+````
+
+<Tabs syncKey="workersExamples">
+	{" "}
+	<TabItem label="JavaScript" icon="seti:javascript">
+		```js console.log(stmt[1].results); ```
+	</TabItem>{" "}
+	<TabItem label="Python" icon="seti:python">
+		```py print(stmt[1].results.to_py()) ```
+	</TabItem>{" "}
+</Tabs>
 
 ```json output
 [
-  {
-    "CustomerId": 4,
-    "CompanyName": "Around the Horn",
-    "ContactName": "Thomas Hardy"
-  }
+	{
+		"CustomerId": 4,
+		"CompanyName": "Around the Horn",
+		"ContactName": "Thomas Hardy"
+	}
 ]
 ```
+
 </Details>
 
 #### Guidance
 
 - You can construct batches reusing the same prepared statement:
 
-	<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-	```js
-	const companyName1 = `Bs Beverages`;
-	const companyName2 = `Around the Horn`;
-	const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
-	const batchResult = await env.DB.batch([
-		stmt.bind(companyName1),
-		stmt.bind(companyName2)
-	]);
-	return Response.json(batchResult);
-	```
-	</TabItem> <TabItem label="Python" icon="seti:python">
-	```py
-	from pyodide.ffi import to_js
-	from workers import Response
+  <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+```js
+const companyName1 = `Bs Beverages`;
+const companyName2 = `Around the Horn`;
+const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
+const batchResult = await env.DB.batch([
+	stmt.bind(companyName1),
+	stmt.bind(companyName2)
+]);
+return Response.json(batchResult);
+```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from pyodide.ffi import to_js
+from workers import Response
 
-	company_name1 = "Bs Beverages"
-	company_name2 = "Around the Horn"
-	stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?")
-	batch_result = await self.env.DB.batch(to_js([
-	    stmt.bind(company_name1),
-	    stmt.bind(company_name2)
-	]))
-	return Response.json(batch_result)
-	```
-	</TabItem> </Tabs>
+  company_name1 = "Bs Beverages"
+  company_name2 = "Around the Horn"
+  stmt = self.env.DB.prepare("SELECT \* FROM Customers WHERE CompanyName = ?")
+  batch_result = await self.env.DB.batch(to_js([
+  stmt.bind(company_name1),
+  stmt.bind(company_name2)
+  ]))
+  return Response.json(batch_result)
+
+  ```
+  </TabItem> </Tabs>
+  ```
 
 ### `exec()`
 
 Executes one or more queries directly without prepared statements or parameter bindings.
 
+:::caution[Security Warning]
+The `exec()` method does NOT support parameter binding and should only be used for:
+
+- Schema migrations
+- One-time administrative tasks
+- Queries without user input
+
+**Never use `exec()` with user-provided data.** This creates SQL injection vulnerabilities. Always use `prepare()` + `bind()` for queries involving user input.
+:::
+
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
-const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"`);
-```
+// ✅ Acceptable use case: Schema migration
+const returnValue = await env.DB.exec(`
+  CREATE INDEX IF NOT EXISTS idx_customers_name 
+  ON Customers(CompanyName)
+`);
+
+// ❌ NEVER DO THIS with user input
+// const userInput = request.query.get('company');
+// await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "${userInput}"`); // SQL INJECTION RISK!
+
+// ✅ For user input, use prepare() + bind() instead
+// const stmt = env.DB.prepare("SELECT \* FROM Customers WHERE CompanyName = ?");
+// const result = await stmt.bind(userInput).run();
+
+````
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-return_value = await self.env.DB.exec('SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"')
-```
+# ✅ Acceptable use case: Schema migration
+return_value = await self.env.DB.exec('''
+  CREATE INDEX IF NOT EXISTS idx_customers_name
+  ON Customers(CompanyName)
+''')
+
+# ❌ NEVER DO THIS with user input
+# user_input = request.query.get('company')
+# await self.env.DB.exec(f'SELECT * FROM Customers WHERE CompanyName = "{user_input}"')  # SQL INJECTION RISK!
+
+# ✅ For user input, use prepare() + bind() instead
+# stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?")
+# result = await stmt.bind(user_input).run()
+````
+
 </TabItem> </Tabs>
 
 #### Parameters
 
-- <code>query</code>: <Type text="String"/> <MetaInfo text="Required"/>
-  - The SQL query statement without parameter binding.
+- <code>query</code>: <Type text="String" /> <MetaInfo text="Required" />- The
+  SQL query statement without parameter binding.
 
 #### Return values
 
-- <code>D1ExecResult</code>: <Type text="Object"/>
-  - The `count` property contains the number of executed queries.
-  - The `duration` property contains the duration of operation in milliseconds.
-	- Refer to [`D1ExecResult`](/d1/worker-api/return-object/#d1execresult) for more information.
+- <code>D1ExecResult</code>: <Type text="Object" />- The `count` property
+  contains the number of executed queries. - The `duration` property contains
+  the duration of operation in milliseconds. - Refer to
+  [`D1ExecResult`](/d1/worker-api/return-object/#d1execresult) for more
+  information.
 
 <Details header="Example of return values" open={false}>
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
-const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"`);
+const returnValue = await env.DB.exec(`
+  CREATE TABLE IF NOT EXISTS logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    message TEXT,
+    created_at INTEGER
+  )
+`);
 return Response.json(returnValue);
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
 from workers import Response
 
-return_value = await self.env.DB.exec('SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"')
+return_value = await self.env.DB.exec('''
+CREATE TABLE IF NOT EXISTS logs (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+message TEXT,
+created_at INTEGER
+)
+''')
 return Response.json(return_value)
-```
+
+````
 </TabItem> </Tabs>
 
 ```json output
@@ -307,7 +367,8 @@ return Response.json(return_value)
   "count": 1,
   "duration": 1
 }
-```
+````
+
 </Details>
 
 #### Guidance
@@ -316,6 +377,7 @@ return Response.json(return_value)
 - This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe.
 - Only use this method for maintenance and one-shot tasks (for example, migration jobs).
 - The input can be one or multiple queries separated by `\n`.
+- **Important**: `exec()` does not support parameter binding. Use `prepare()` with `bind()` for any queries that include dynamic values or user input.
 
 ### `dump`
 
@@ -341,7 +403,8 @@ from workers import Response
 
 dump = await db.dump()
 return Response(dump, status=200, headers={"Content-Type": "application/octet-stream"})
-```
+
+````
 </TabItem> </Tabs>
 
 #### Parameters
@@ -359,7 +422,8 @@ Starts a D1 session which maintains sequential consistency among queries execute
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const session = env.DB.withSession("<parameter>");
-```
+````
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
 session = self.env.DB.withSession("<parameter>")
@@ -368,24 +432,34 @@ session = self.env.DB.withSession("<parameter>")
 
 #### Parameters
 
-- <code>first-primary</code>: <Type text="String"/><MetaInfo text="Optional"/>
-  - Directs the first query in the Session (whether read or write) to the primary database instance. Use this option if you need to start the Session with the most up-to-date data from the primary database instance.
-  - Subsequent queries in the Session may use read replicas.
-  - Subsequent queries in the Session have sequential consistency.
+- <code>first-primary</code>: <Type text="String" />
+  <MetaInfo text="Optional" />- Directs the first query in the Session (whether
+  read or write) to the primary database instance. Use this option if you need
+  to start the Session with the most up-to-date data from the primary database
+  instance. - Subsequent queries in the Session may use read replicas. -
+  Subsequent queries in the Session have sequential consistency.
 
-- <code>first-unconstrained</code>: <Type text="String"/><MetaInfo text="Optional"/>
-  - Directs the first query in the Session (whether read or write) to any database instance. Use this option if you do not need to start the Session with the most up-to-date data, and wish to prioritize minimizing query latency from the very start of the Session.
-  - Subsequent queries in the Session have sequential consistency.
-  - This is the default behavior when no parameter is provided.
+- <code>first-unconstrained</code>: <Type text="String" />
+  <MetaInfo text="Optional" />- Directs the first query in the Session (whether
+  read or write) to any database instance. Use this option if you do not need to
+  start the Session with the most up-to-date data, and wish to prioritize
+  minimizing query latency from the very start of the Session. - Subsequent
+  queries in the Session have sequential consistency. - This is the default
+  behavior when no parameter is provided.
 
-- <code>bookmark</code>: <Type text="String"/><MetaInfo text="Optional"/>
-  - A [`bookmark`](/d1/reference/time-travel/#bookmarks) from a previous D1 Session. This allows you to start a new Session from at least the provided `bookmark`.
+- <code>bookmark</code>: <Type text="String" />
+  <MetaInfo text="Optional" />- A
+  [`bookmark`](/d1/reference/time-travel/#bookmarks) from a previous D1 Session.
+  This allows you to start a new Session from at least the provided `bookmark`.
   - Subsequent queries in the Session have sequential consistency.
 
 #### Return values
 
-- <code>D1DatabaseSession</code>: <Type text="Object"/>
-  - An object which contains the methods [`prepare()`](/d1/worker-api/d1-database#prepare) and [`batch()`](/d1/worker-api/d1-database#batch) similar to `D1Database`, along with the additional [`getBookmark`](/d1/worker-api/d1-database#getbookmark) method.
+- <code>D1DatabaseSession</code>: <Type text="Object" />- An object which
+  contains the methods [`prepare()`](/d1/worker-api/d1-database#prepare) and
+  [`batch()`](/d1/worker-api/d1-database#batch) similar to `D1Database`, along
+  with the additional [`getBookmark`](/d1/worker-api/d1-database#getbookmark)
+  method.
 
 #### Guidance
 
@@ -414,6 +488,7 @@ result = await session.prepare(
 ).run()
 
 bookmark = session.getBookmark()
+
 ```
 </TabItem> </Tabs>
 
@@ -434,3 +509,4 @@ This method is equivalent to [`D1Database::prepare`](/d1/worker-api/d1-database/
 ### `batch()`
 
 This method is equivalent to [`D1Database::batch`](/d1/worker-api/d1-database/#batch).
+```

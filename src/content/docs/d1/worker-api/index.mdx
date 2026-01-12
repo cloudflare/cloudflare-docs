@@ -27,14 +27,14 @@ For example, providing an `OrderRow` type as a type parameter to [`D1PreparedSta
 ```ts
 // Row definition
 type OrderRow = {
-  Id: string;
-  CustomerName: string;
-  OrderDate: number;
+	Id: string;
+	CustomerName: string;
+	OrderDate: number;
 };
 
 // Elsewhere in your application
 const result = await env.MY_DB.prepare(
-"SELECT Id, CustomerName, OrderDate FROM [Order] ORDER BY ShippedDate DESC LIMIT 100",
+	"SELECT Id, CustomerName, OrderDate FROM [Order] ORDER BY ShippedDate DESC LIMIT 100",
 ).run<OrderRow>();
 ```
 
@@ -96,57 +96,117 @@ Replace the contents of your `index.js` file with the code below to view the eff
 
 <Details header="index.js" open={false}>
 ```js
+/**
+ * D1 API Playground Worker
+ * 
+ * This Worker demonstrates various D1 API methods.
+ * Navigate to different endpoints to test each method:
+ * - /run - Execute a query with run() (returns full D1Result)
+ * - /raw - Get raw array results
+ * - /first - Get first row only
+ * - /batch - Execute multiple queries atomically
+ * - /exec - Execute raw SQL (no parameters - use for migrations only)
+ * - /withsession - Use D1 Sessions for read replication
+ */
+
 export default {
-	async fetch(request, env) {
-	  const { pathname } = new URL(request.url);
-	//   if (pathname === "/api/beverages") {
-	// 	// If you did not use `DB` as your binding name, change it here
-	// 	const { results } = await env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?",).bind("Bs Beverages").run();
-	// 	return Response.json(results);
-	//   }
-		const companyName1 = `Bs Beverages`;
-		const companyName2 = `Around the Horn`;
-		const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
-		const stmtMulti = env.DB.prepare(`SELECT * FROM Customers; SELECT * FROM Customers WHERE CompanyName = ?`);
-		const session = env.DB.withSession("first-primary")
-		const sessionStmt = session.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
+  async fetch(request, env) {
+    const { pathname } = new URL(request.url);
+    
+    // Sample data for queries
+    const companyName1 = "Bs Beverages";
+    const companyName2 = "Around the Horn";
+    
+    try {
+      // Prepared statement (reusable across routes)
+      const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?");
 
-	  if (pathname === `/RUN`){
-		const returnValue = await stmt.bind(companyName1).run();
-		return Response.json(returnValue);
+      // Route: /run - Returns full D1Result with metadata
+      if (pathname === "/run") {
+        const result = await stmt.bind(companyName1).run();
+        return Response.json(result);
+      }
 
-	} else if (pathname === `/RAW`){
-		const returnValue = await stmt.bind(companyName1).raw();
-		return Response.json(returnValue);
+      // Route: /raw - Returns array of arrays (no metadata)
+      else if (pathname === "/raw") {
+        const result = await stmt.bind(companyName1).raw();
+        return Response.json(result);
+      }
 
-	} else if (pathname === `/FIRST`){
-		const returnValue = await stmt.bind(companyName1).first();
-		return Response.json(returnValue);
+      // Route: /first - Returns only the first row
+      else if (pathname === "/first") {
+        const result = await stmt.bind(companyName1).first();
+        return Response.json(result);
+      }
 
-	} else if (pathname === `/BATCH`) {
-		const batchResult = await env.DB.batch([
-			stmt.bind(companyName1),
-			stmt.bind(companyName2)
-		]);
-		return Response.json(batchResult);
+      // Route: /batch - Execute multiple queries atomically
+      else if (pathname === "/batch") {
+        const results = await env.DB.batch([
+          stmt.bind(companyName1),
+          stmt.bind(companyName2)
+        ]);
+        return Response.json(results);
+      }
 
-	} else if (pathname === `/EXEC`){
-		const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"`);
-		return Response.json(returnValue);
+      // Route: /exec - Execute raw SQL (use only for schema changes)
+      else if (pathname === "/exec") {
+        // Note: exec() does not support parameter binding
+        // Only use for maintenance tasks, never with user input
+        const result = await env.DB.exec(
+          'SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"'
+        );
+        return Response.json(result);
+      }
 
-	} else if (pathname === `/WITHSESSION`){
-		const returnValue = await sessionStmt.bind(companyName1).run();
-		console.log("You're now using D1 Sessions!")
-		return Response.json(returnValue);
-	}
+      // Route: /withsession - Use D1 Sessions for read replication
+      else if (pathname === "/withsession") {
+        const session = env.DB.withSession("first-primary");
+        const result = await session
+          .prepare("SELECT * FROM Customers WHERE CompanyName = ?")
+          .bind(companyName1)
+          .run();
 
-	  return new Response(
-		`Welcome to the D1 API Playground!
-		\nChange the URL to test the various methods inside your index.js file.`,
-	  );
-	},
-  };
-```
+        const bookmark = session.getBookmark();
+        console.log("Using D1 Sessions! Bookmark:", bookmark);
+
+        return Response.json({
+          ...result,
+          session_bookmark: bookmark
+        });
+      }
+
+      // Default response with API documentation
+      return new Response(
+        `D1 API Playground\n\n` +
+        `Available endpoints:\n` +
+        `- GET /run - Execute query and return full D1Result\n` +
+        `- GET /raw - Execute query and return raw arrays\n` +
+        `- GET /first - Execute query and return first row only\n` +
+        `- GET /batch - Execute multiple queries atomically\n` +
+        `- GET /exec - Execute raw SQL (schema changes only)\n` +
+        `- GET /withsession - Use D1 Sessions with read replication\n`,
+        {
+          headers: { "Content-Type": "text/plain" },
+          status: 200
+        }
+      );
+
+    } catch (error) {
+      // Handle errors gracefully
+      console.error("Database operation failed:", error);
+      return Response.json(
+        {
+          error: "Database operation failed",
+          message: error.message
+        },
+        { status: 500 }
+      );
+    }
+
+},
+};
+
+````
 </Details>
 
 ### 3. Deploy the Worker
@@ -177,3 +237,4 @@ export default {
 
 Change the URL to test the various D1 Worker Binding APIs.
 
+````

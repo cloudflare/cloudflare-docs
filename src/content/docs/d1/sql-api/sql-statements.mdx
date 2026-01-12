@@ -13,7 +13,11 @@ You can execute any of these statements via the D1 console in the Cloudflare das
 
 ## Supported SQLite extensions
 
-<Render file="d1-do-supported-sqlite-extensions" product="d1" params={{ product: "D1 supports" }}/>
+<Render
+	file="d1-do-supported-sqlite-extensions"
+	product="d1"
+	params={{ product: "D1 supports" }}
+/>
 
 ## Compatible PRAGMA statements
 
@@ -54,20 +58,80 @@ SELECT name, sql FROM sqlite_master
 
 ## Search with LIKE
 
-You can perform a search using SQL's `LIKE` operator:
+You can perform a search using SQL's `LIKE` operator. The `LIKE` operator supports wildcard characters:
+
+- `%` matches any sequence of zero or more characters
+- `_` matches any single character
+
+When using `LIKE` with user input, always use parameter binding to prevent SQL injection.
 
 ```js
+// User input
+const userSearch = "eve";
+
+// ✅ CORRECT: Use parameter binding with wildcards
 const { results } = await env.DB.prepare(
 	"SELECT * FROM Customers WHERE CompanyName LIKE ?",
 )
-	.bind("%eve%")
+	.bind(`%${userSearch}%`)
 	.run();
 console.log("results: ", results);
+
+// Different search patterns:
+// Starts with: bind(`${userSearch}%`)
+// Ends with: bind(`%${userSearch}`)
+// Contains: bind(`%${userSearch}%`)
 ```
 
 ```js output
-results:  [...]
+results:  [
+  { CustomerId: 11, CompanyName: "Bs Beverages", ContactName: "Victoria Ashworth" },
+  ...
+]
 ```
+
+### Escaping special characters in LIKE
+
+If user input might contain `%` or `_` characters that should be treated literally (not as wildcards), escape them:
+
+```js
+// Helper function to escape LIKE special characters
+function escapeLikePattern(str) {
+	return str
+		.replace(/\\/g, "\\\\") // Escape backslash first
+		.replace(/%/g, "\\%") // Escape %
+		.replace(/_/g, "\\_"); // Escape _
+}
+
+// User input containing special characters
+const userInput = "50%_off";
+const escaped = escapeLikePattern(userInput);
+
+// Use ESCAPE clause to specify escape character
+const { results } = await env.DB.prepare(
+	"SELECT * FROM Products WHERE name LIKE ? ESCAPE '\\'",
+)
+	.bind(`%${escaped}%`)
+	.run();
+```
+
+:::caution[Security: Always use parameter binding]
+**Never** concatenate user input directly into LIKE queries:
+
+```js
+// ❌ DANGEROUS - SQL Injection vulnerability
+const unsafeQuery = `SELECT * FROM Customers WHERE CompanyName LIKE '%${userInput}%'`;
+// await env.DB.exec(unsafeQuery); // NEVER DO THIS!
+
+// ✅ SAFE - Use parameter binding
+const safeQuery = await env.DB.prepare(
+	"SELECT * FROM Customers WHERE CompanyName LIKE ?",
+)
+	.bind(`%${userInput}%`)
+	.run();
+```
+
+:::
 
 ## Related resources
 

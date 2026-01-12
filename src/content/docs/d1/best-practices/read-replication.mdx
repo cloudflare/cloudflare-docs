@@ -6,7 +6,16 @@ sidebar:
   badge: Beta
 ---
 
-import { GlossaryTooltip, Details, GitHubCode, APIRequest, Tabs, TabItem, TypeScriptExample, DashButton } from "~/components"
+import {
+	GlossaryTooltip,
+	Details,
+	GitHubCode,
+	APIRequest,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+	DashButton,
+} from "~/components";
 
 D1 read replication can lower latency for read queries and scale read throughput by adding read-only database copies, called read replicas, across regions globally closer to clients.
 
@@ -16,19 +25,19 @@ A session encapsulates all the queries from one logical session for your applica
 
 To checkout D1 read replication, deploy the following Worker code using Sessions API, which will prompt you to create a D1 database and enable read replication on said database.
 
-   [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api-template)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api-template)
 
 :::note[Tip: Place your database further away for the read replication demo]
 To simulate how read replication can improve a worst case latency scenario, set your D1 database location hint to be in a farther away region. For example, if you are in Europe create your database in Western North America (WNAM).
 :::
 
 <GitHubCode
-repo="cloudflare/templates"
-file="d1-starter-sessions-api/src/index.ts"
-commit="3912e863acedd2be2438f8758f21374ed426fc54"
-lang="ts"
-useTypeScriptExample={true}
-lines="7-44"
+	repo="cloudflare/templates"
+	file="d1-starter-sessions-api/src/index.ts"
+	commit="3912e863acedd2be2438f8758f21374ed426fc54"
+	lang="ts"
+	useTypeScriptExample={true}
+	lines="7-44"
 />
 
 ## Primary database instance vs read replicas
@@ -49,10 +58,10 @@ For more information, refer to [replica lag and consistency model](/d1/best-prac
 All write queries are still forwarded to the primary database instance. Read replication only improves the response time for read query requests.
 :::
 
-| Type of database instance | Description                                                                                                                                       | How it handles write queries                                | How it handles read queries                               |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------- |
-| Primary database instance | The database instance containing the “original” copy of the database                                                                              | Can serve write queries                                     | Can serve read queries                                    |
-| Read replica database instance             | A database instance containing a copy of the original database which asynchronously receives updates from the primary database instance | Forwards any write queries to the primary database instance | Can serve read queries using its own copy of the database |
+| Type of database instance      | Description                                                                                                                             | How it handles write queries                                | How it handles read queries                               |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------- |
+| Primary database instance      | The database instance containing the “original” copy of the database                                                                    | Can serve write queries                                     | Can serve read queries                                    |
+| Read replica database instance | A database instance containing a copy of the original database which asynchronously receives updates from the primary database instance | Forwards any write queries to the primary database instance | Can serve read queries using its own copy of the database |
 
 ## Benefits of read replication
 
@@ -74,6 +83,7 @@ Read replication can be enabled at the database level in the Cloudflare dashboar
 1. In the Cloudflare dashboard, go to the **D1** page.
 
    <DashButton url="/?to=/:account/workers/d1" />
+
 2. Select an existing database > **Settings** > **Enable Read Replication**.
 
 ### Start a session without constraints
@@ -81,18 +91,21 @@ Read replication can be enabled at the database level in the Cloudflare dashboar
 To create a session from any available database version, use `withSession()` without any parameters, which will route the first query to any database instance, either the primary database instance or a read replica.
 
 ```ts
-const session = env.DB.withSession() // synchronous
+const session = env.DB.withSession(); // synchronous
 // query executes on either primary database or a read replica
 const result = await session
 	.prepare(`SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'`)
-	.run()
+	.run();
+
+// Get bookmark for sequential consistency in future requests
+const bookmark = session.getBookmark();
 ```
 
 - `withSession()` is the same as `withSession("first-unconstrained")`
 - This approach is best when your application does not require the latest database version. All queries in a session ensure sequential consistency.
 - Refer to the [D1 Workers Binding API documentation](/d1/worker-api/d1-database#withsession).
 
-{/* #### Example of a D1 session without constraints
+{/\* #### Example of a D1 session without constraints
 
 Suppose you want to develop a feature for displaying “likes” on a social network application.
 
@@ -100,7 +113,7 @@ The number of likes is a good example of a situation which does not require the 
 
 Subsequent interactions on the application should continue using the same session by passing the `bookmark` from the first query to subsequent requests. This guarantees that all interactions will observe information at least as up-to-date as the initial request, and therefore never show information older than what a user has already observed. The number of likes will be updated with newer counts over time with subsequent requests as D1 asynchronously updates the read replicas with the changes from the primary database.
 
-```js
+`````js
 async function getLikes(postId: string, db: D1Database, bookmark: string | null): GetLikesResult {
   // NOTE: Achieve sequential consistency with given bookmark,
   //       or start a new session that can be served by any replica.
@@ -118,17 +131,20 @@ async function getLikes(postId: string, db: D1Database, bookmark: string | null)
 To create a session from the latest database version, use `withSession("first-primary")`, which will route the first query to the primary database instance.
 
 ```ts
-const session = env.DB.withSession(`first-primary`) // synchronous
+const session = env.DB.withSession("first-primary"); // synchronous
 // query executes on primary database
 const result = await session
 	.prepare(`SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'`)
-	.run()
+	.run();
+
+// Get bookmark to ensure future reads see at least this version
+const bookmark = session.getBookmark();
 ```
 
 - This approach is best when your application requires the latest database version. All queries in a session ensure sequential consistency.
 - Refer to the [D1 Workers Binding API documentation](/d1/worker-api/d1-database#withsession).
 
-{/* #### Example of using `first-primary`
+{/\* #### Example of using `first-primary`
 
 Suppose you want to develop a webpage for an electricity provider which lists the electricity bill statements. An assumption here is that each statement is immutable. Once issued, it never changes.
 
@@ -136,7 +152,7 @@ In this scenario, you want the first request of the page to show a list of all t
 
 Then, when opening an individual electricity bill statement, we can continue using the same session by passing the `bookmark` from the first query to subsequent requests. Since each bill statement is immutable, any bill statement listed from the first query is guaranteed to be available in subsequent requests using the same session.
 
-```ts
+````ts
 async function listBillStatements(accountId: string, db: D1Database): Promise<ListBillStatementsResult> {
 	const session = db.withSession('first-primary');
 	const { results } = (await session.prepare('SELECT * FROM bills WHERE accountId = ?').bind(accountId).run()) as unknown as {
@@ -162,25 +178,89 @@ async function getBillStatement(accountId: string, billId: string, bookmark: str
 To create a new session from the context of a previous session, pass a `bookmark` parameter to guarantee that the session starts with a database version that is at least as up-to-date as the provided `bookmark`.
 
 ```ts
-// retrieve bookmark from previous session stored in HTTP header
-const bookmark = request.headers.get('x-d1-bookmark') ?? 'first-unconstrained';
+// Retrieve bookmark from previous session stored in HTTP header
+const previousBookmark = request.headers.get("x-d1-bookmark") ?? "first-unconstrained";
 
-const session = env.DB.withSession(bookmark)
+const session = env.DB.withSession(previousBookmark);
 const result = await session
 	.prepare(`SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'`)
-	.run()
-// store bookmark for a future session
-response.headers.set('x-d1-bookmark', session.getBookmark() ?? "")
+	.run();
+
+// Store updated bookmark for the next request
+const newBookmark = session.getBookmark();
 ```
 
 - Starting a session with a `bookmark` ensures the new session will be at least as up-to-date as the previous session that generated the given `bookmark`.
 - Refer to the [D1 Workers Binding API documentation](/d1/worker-api/d1-database#withsession).
 
-{/* #### Example of using `bookmark`
+#### Complete example with bookmark persistence
+
+Here's a practical example showing how to use bookmarks across multiple requests:
+
+```ts
+interface Env {
+	DB: D1Database;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		try {
+			// Example: List products (use primary for latest data)
+			if (url.pathname === "/api/products") {
+				const session = env.DB.withSession("first-primary");
+
+				const { results } = await session
+					.prepare("SELECT * FROM products WHERE active = 1 ORDER BY created_at DESC LIMIT 20")
+					.run();
+
+				return Response.json(results, {
+					headers: {
+						"X-D1-Bookmark": session.getBookmark() || "",
+					},
+				});
+			}
+
+			// Example: Get product details (use bookmark from previous request)
+			if (url.pathname.startsWith("/api/product/")) {
+				const productId = url.pathname.split("/").pop();
+				const bookmark = request.headers.get("X-D1-Bookmark") || "first-unconstrained";
+
+				const session = env.DB.withSession(bookmark);
+				const product = await session
+					.prepare("SELECT * FROM products WHERE id = ?")
+					.bind(productId)
+					.first();
+
+				if (!product) {
+					return Response.json({ error: "Product not found" }, { status: 404 });
+				}
+
+				return Response.json(product, {
+					headers: {
+						"X-D1-Bookmark": session.getBookmark() || "",
+					},
+				});
+			}
+
+			return Response.json({ error: "Not found" }, { status: 404 });
+		} catch (error) {
+			console.error("Request failed:", error);
+			return Response.json(
+				{ error: "Internal server error" },
+				{ status: 500 }
+			);
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+{/\* #### Example of using `bookmark`
 
 This example follows from [Example of using `first-primary`](/d1/best-practices/read-replication/#example-of-using-first-primary), but retrieves the `bookmark` from HTTP cookie.
 
-```ts collapse={1-10, 22-42, 61-86}
+````ts collapse={1-10, 22-42, 61-86}
 import { ListBillStatementsResult, GetBillStatementResult, Bill } from './types';
 
 async function listBillStatements(accountId: string, db: D1Database): Promise<ListBillStatementsResult> {
@@ -281,7 +361,7 @@ console.log({
   servedByRegion: result.meta.served_by_region ?? "",
   servedByPrimary: result.meta.served_by_primary ?? "",
 });
-```
+````
 
 - `served_by_region` and `served_by_primary` fields are present for all D1 remote requests, regardless of whether read replication is enabled or if the Sessions API is used. On local development, `npx wrangler dev`, these fields are `undefined`.
 
@@ -303,18 +383,16 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/datab
 
 ```ts
 const headers = new Headers({
-  "Authorization": `Bearer ${TOKEN}`
+	Authorization: `Bearer ${TOKEN}`,
 });
 
-await fetch ("/v4/accounts/{account_id}/d1/database/{database_id}", {
+await fetch("/v4/accounts/{account_id}/d1/database/{database_id}", {
 	method: "PUT",
 	headers: headers,
-	body: JSON.stringify(
-		{ "read_replication": { "mode": "auto" } }
-	)
- }
-)
+	body: JSON.stringify({ read_replication: { mode: "auto" } }),
+});
 ```
+
 </TabItem>
 </Tabs>
 
@@ -343,14 +421,15 @@ const headers = new Headers({
 });
 
 await fetch ("/v4/accounts/{account_id}/d1/database/{database_id}", {
-	method: "PUT",
-	headers: headers,
-	body: JSON.stringify(
-		{ "read_replication": { "mode": "disabled" } }
-	)
- }
+method: "PUT",
+headers: headers,
+body: JSON.stringify(
+{ "read_replication": { "mode": "disabled" } }
 )
-```
+}
+)
+
+````
 </TabItem>
 </Tabs>
 
@@ -367,7 +446,8 @@ For this REST endpoint, you need to have an API token with `D1:Read` permission.
 ```sh
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
   -H "Authorization: Bearer $TOKEN"
-```
+````
+
 </TabItem>
 <TabItem label="TypeScript">
 ```ts
@@ -376,12 +456,13 @@ const headers = new Headers({
 });
 
 const response = await fetch("/v4/accounts/{account_id}/d1/database/{database_id}", {
-  method: "GET",
-  headers: headers
+method: "GET",
+headers: headers
 });
 
 const data = await response.json();
 console.log(data.read_replication.mode);
+
 ```
 </TabItem>
 </Tabs>
@@ -474,3 +555,5 @@ You may wish to refer to the following resources:
 - [D1 Sessions API documentation](/d1/worker-api/d1-database#withsession)
 - [Starter code for D1 Sessions API demo](https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api-template)
 - [E-commerce store read replication tutorial](/d1/tutorials/using-read-replication-for-e-com)
+```
+`````
