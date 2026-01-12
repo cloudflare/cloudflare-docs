@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { DashButton, Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
 A device registration represents an individual session of the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) on a physical device, linking a user (or service token) and the device to your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization). A device registration is created when the WARP client first authenticates. Each device registration has associated configuration, which includes a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
 
@@ -32,9 +32,6 @@ To review how many device registrations are associated with a device:
 To review a device registration's status:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Devices**.
-
-   <DashButton url="/?to=/:account/team-resources/devices" />
-
 2. Select the device and select **View details**.
 3. Scroll down to **Users** and find the user associated with the device.
 4. Review the status (such as `Active` or `Revoked`) of the device registration under **Status**.
