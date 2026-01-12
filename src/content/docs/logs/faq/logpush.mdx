@@ -18,6 +18,42 @@ description: Review frequently asked questions about Logpush.
 **Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, Logpush will retry around five times over five minutes. However, note that this number and time are just approximations. If Cloudflare persistently receives errors from your destination, and cannot keep up with incoming batches, Logpush will eventually drop logs. If the errors continue for a prolonged period of time, Logpush will assume that the destination is permanently unavailable and disable your push job. You can always re-enable the job later.
 
 
+### How can I be notified if my Logpush job fails?
+
+Configure [Logpush health notifications](/logs/logpush/logpush-health/) to receive alerts when your Logpush job is disabled or experiencing errors. This is especially important since Logpush cannot backfill logs, so early detection of issues helps prevent data loss.
+
+
+### How do sample_rate and SampleInterval relate to each other?
+
+`sample_rate` and `SampleInterval` are independent mechanisms that operate at different stages:
+
+- **`sample_rate`**: A configuration parameter you set on your Logpush job to control what percentage of logs are delivered to your destination (0.0-1.0). For example, setting `sample_rate: 0.1` delivers approximately 10% of logs.
+
+- **`SampleInterval`**: A data field that appears in certain datasets (particularly [Network Analytics Logs](/logs/reference/log-fields/account/network_analytics_logs/)) indicating upstream sampling applied during data collection. A `SampleInterval` of 1000 means the log entry represents 1 in 1000 packets.
+
+The `sample_rate` you configure applies on top of any pre-existing sampling. If your data already has `SampleInterval: 1000` and you set `sample_rate: 0.1`, you receive approximately 1 in 10,000 of the original events (1000 × 10).
+
+Note that when customer-configured sampling is applied, the `SampleInterval` field value in the logs is not modified. When there is no internal sampling, `SampleInterval` will always be 1 regardless of your configured `sample_rate`.
+
+
+### How can I log mTLS Certificate Headers in Logpush Custom Fields?
+
+To log mTLS certificate details (such as `cf-cert-subject-dn` or `cf-cert-issuer-dn`) in Logpush, you need to:
+
+1. Enable the [Add TLS client auth headers](/rules/transform/managed-transforms/reference/#add-tls-client-auth-headers) Managed Transform to inject the certificate headers.
+2. Configure [Logpush custom fields](/logs/logpush/logpush-job/custom-fields/) using `transformed_request_fields` (not `request_fields`) to capture these Cloudflare-injected headers.
+3. Ensure your Logpush job includes the `RequestHeaders` field.
+
+The mTLS headers are injected by Cloudflare after the client request is received, so they must be captured using `transformed_request_fields` rather than `request_fields`. Refer to [mTLS authentication](/ssl/client-certificates/enable-mtls/) for more information on configuring client certificates.
+
+
+### Is it possible to log the Request Body?
+
+No, request body content cannot be logged through Cloudflare's logging systems. While request and response headers can be logged using [Logpush custom fields](/logs/logpush/logpush-job/custom-fields/) (Enterprise), request bodies are not available in any Logpush or Logpull dataset.
+
+Request bodies often contain sensitive data and would generate massive data volumes. If you need visibility into request body content, consider logging at your origin server or using [Cloudflare Workers](/workers/) to selectively capture specific body content to a third-party service or [R2](/r2/).
+
+
 ### Can I adjust how often logs are pushed?
 
 No. Cloudflare pushes logs in batches as soon as possible.
