@@ -1,16 +1,12 @@
 ---
-title: DMA/Metro code field now available
+title: Metro code field now available in Rules
 description: The ip.src.metro_code field is now populated with DMA (Designated Market Area) data for IP geolocation.
 date: 2026-01-12
 ---
 
-## Metro code field now available in Rules
-
-The `ip.src.metro_code` field in the Ruleset engine is now populated with DMA (Designated Market Area) data.
+The `ip.src.metro_code` field in the Ruleset Engine is now populated with DMA (Designated Market Area) data.
 
 You can use this field to build rules that target traffic based on geographic market areas, enabling more granular location-based policies for your applications.
-
----
 
 ### Field details
 
@@ -24,4 +20,4 @@ Example filter expression:
 ip.src.metro_code eq "501"
 ```
 
-More information can be found in the Rules language [fields reference](/ruleset-engine/rules-language/fields/reference/ip.src.metro_code/).
+For more information, refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/ip.src.metro_code/).
