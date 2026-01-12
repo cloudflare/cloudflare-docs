@@ -46,7 +46,7 @@ You can use the following commands to validate if the posture check is working a
 
 	```powershell
 	Get-WmiObject -Namespace "root\SecurityCenter2" -ClassName "AntiVirusProduct"
-	```
+	```;
 
 	```powershell output
 	<redacted>
@@ -59,19 +59,9 @@ You can use the following commands to validate if the posture check is working a
 	PSComputerName           : ENDPOINT-01
 	```
 
-3. Microsoft does not support decoding the `productState` from the `SecurityCenter2` namespace. You will need to manually check the antivirus products in this list to determine if they are active. For example, to view the status of Windows Defender, you can run the following command:
+3. Microsoft does not support decoding the `productState` from the `SecurityCenter2` namespace. To verify that an antivirus product is active, open the [Windows Security app](https://support.microsoft.com/en-us/windows/stay-protected-with-the-windows-security-app-2ae0363d-0ada-c064-8b56-6a39afb6a963). The **Virus & threat protection** panel should say `No action needed` with a green checkmark.
 
-	```powershell
-	Get-MpComputerStatus | Select-Object AntivirusEnabled, RealTimeProtectionEnabled
-	```
-
-	```powershell output
-	AntivirusEnabled RealTimeProtectionEnabled
-	---------------- -------------------------
-							True                      True
-	```
-
-	Both parameters must be `True` for the antivirus posture check to pass.
+	To determine which antivirus product is running, select **Virus & threat protection** > **Manage providers**. You will see the name of the antivirus product (for example, `Windows Defender Antivirus`) and its current state.
 
 4. If you configured a maximum antivirus signature age in your posture check, compare the `timestamp` in the PowerShell output against the current system time. If the difference exceeds the configured number of days, the posture check will fail.
 
