@@ -16,17 +16,29 @@ Cloudflare DLP scans traffic inline as it flows through Gateway, detecting sensi
 - File uploads and downloads
 - Form submissions
 - API requests and responses
+- AI prompts and messages
 - Copy/paste operations (when using Browser Isolation)
 
 When DLP detects sensitive data that matches a profile, the associated Gateway HTTP policy action is taken (Block, Allow, Isolate).
 
-## Build DLP policies
+## Build baseline DLP policies
 
-Create Gateway HTTP policies that reference your DLP profiles to enforce data protection.
+Create baseline Gateway HTTP policies that reference your DLP profiles to enforce common data protection requirements.
 
 ### Block sensitive data uploads to AI applications
 
 Prevent users from sharing sensitive information with AI tools.
+
+Cloudflare DLP uses [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#application-granular-controls) to detect and categorize prompts submitted to generative AI tools like ChatGPT, Google Gemini, Perplexity, and Claude. This analysis looks at:
+
+- **Content**: The specific text or data provided (for example, PII, source code, or financial data).
+- **Intent**: The user's goal (for example, requesting PII or attempting to jailbreak the model).
+
+You can use predefined AI Prompt profiles (such as _AI Prompt: Financial Information_ or _AI Prompt: AI Security_) to specifically target these interactions.
+
+:::note
+To capture the full text of user prompts and AI responses for forensic analysis, enable **Capture generative AI prompt content in logs** in your Gateway HTTP policy settings. This requires configuring a [payload encryption key](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#set-a-dlp-payload-encryption-public-key).
+:::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -71,17 +83,16 @@ resource "cloudflare_zero_trust_gateway_policy" "block_ai_sensitive_data" {
 
 </TabItem> </Tabs>
 
-### Block source code uploads to personal repositories
+### Block source code uploads to GitHub
 
 Prevent intellectual property leakage.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector            | Operator | Value                | Logic | Action |
-| ------------------- | -------- | -------------------- | ----- | ------ |
-| Application         | in       | _GitHub_             | And   | Block  |
-| GitHub Organization | not in   | `your-corporate-org` | And   |        |
-| DLP Profile         | in       | _Source Code_        |       |        |
+| Selector    | Operator | Value         | Logic | Action |
+| ----------- | -------- | ------------- | ----- | ------ |
+| Application | in       | _GitHub_      | And   | Block  |
+| DLP Profile | in       | _Source Code_ |       |        |
 
 </TabItem> <TabItem label="API">
 
@@ -90,11 +101,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
-  "name": "Block source code uploads to personal GitHub",
+  "name": "Block source code uploads to GitHub",
   "conditions": [
     {
       "type": "traffic",
-      "expression": "app.id == \"github\" and not(github.org == \"your-corporate-org\") and any(dlp.profiles[*] in {\"source_code\"})"
+      "expression": "app.id == \"github\" and any(dlp.profiles[*] in {\"source_code\"})"
     }
   ],
   "action": "block",
@@ -105,14 +116,14 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
 </TabItem> <TabItem label="Terraform">
 
 ```tf
-resource "cloudflare_zero_trust_gateway_policy" "block_personal_github_source_code" {
+resource "cloudflare_zero_trust_gateway_policy" "block_github_source_code" {
   account_id  = var.account_id
-  name        = "Block source code uploads to personal GitHub"
-  description = "Prevent intellectual property leakage to personal repositories"
+  name        = "Block source code uploads to GitHub"
+  description = "Prevent intellectual property leakage"
   action      = "block"
   enabled     = true
   filters     = ["http"]
-  traffic     = "app.id == \"github\" and not(github.org == \"your-corporate-org\") and any(dlp.profiles[*] in {\"source_code\"})"
+  traffic     = "app.id == \"github\" and any(dlp.profiles[*] in {\"source_code\"})"
 }
 ```
 
@@ -131,7 +142,7 @@ Monitor and optionally block sensitive data uploads to cloud storage.
 | Upload Mime Type | in       | _All File Types_ |       |        |
 
 :::note
-Before you enforce blocks, you can set the action to _Allow_ with logging enabled to monitor uploads and understand false positives.
+Before you enforce blocks, you can set the action to _Allow_ with logging turned on to monitor uploads and understand false positives.
 :::
 
 </TabItem> <TabItem label="API">
@@ -171,7 +182,7 @@ resource "cloudflare_zero_trust_gateway_policy" "block_pii_cloud_storage" {
 
 ## DLP policy patterns
 
-The following DLP policy patterns help you implement more sophisticated data protection strategies.
+The following DLP policy patterns help you implement more sophisticated data protection strategies. You can use these patterns to create policies that enforce data protection requirements based on your organization's specific needs.
 
 ### Monitor before blocking
 
@@ -220,14 +231,14 @@ resource "cloudflare_zero_trust_gateway_policy" "monitor_financial_info" {
 
 ### Scope DLP to specific applications
 
-Apply DLP only to high-risk applications.
+Apply DLP only to high-risk applications. Supported applications include ChatGPT, Google Gemini, Perplexity, Claude, Box, Dropbox, Google Drive, and more. For a list of supported applications, refer to [Applications and app types](/cloudflare-one/traffic-policies/application-app-types/).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector    | Operator | Value                                     | Logic | Action |
-| ----------- | -------- | ----------------------------------------- | ----- | ------ |
-| Application | in       | _Artificial Intelligence_, _File Sharing_ | And   | Block  |
-| DLP Profile | in       | _Source Code_                             |       |        |
+| Selector    | Operator | Value                     | Logic | Action |
+| ----------- | -------- | ------------------------- | ----- | ------ |
+| Application | in       | _ChatGPT_, _Google Drive_ | And   | Block  |
+| DLP Profile | in       | _Source Code_             |       |        |
 
 </TabItem> <TabItem label="API">
 
@@ -240,7 +251,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
   "conditions": [
     {
       "type": "traffic",
-      "expression": "any(app.ids[*] in {\"cloud_storage\", \"ai\", \"file_sharing\"}) and any(dlp.profiles[*] in {\"source_code\"})"
+      "expression": "any(app.ids[*] in {1199}) and any(dlp.profiles[*] in {\"source_code\"})"
     }
   ],
   "action": "block",
@@ -258,7 +269,8 @@ resource "cloudflare_zero_trust_gateway_policy" "scope_dlp_high_risk_apps" {
   action      = "block"
   enabled     = true
   filters     = ["http"]
-  traffic     = "any(app.ids[*] in {\"cloud_storage\", \"ai\", \"file_sharing\"}) and any(dlp.profiles[*] in {\"source_code\"})"
+  // 1199 is the App ID for ChatGPT. Retrieve other IDs via the API.
+  traffic     = "any(app.ids[*] in {1199}) and any(dlp.profiles[*] in {\"source_code\"})"
 }
 ```
 
@@ -270,11 +282,11 @@ Block sensitive data uploads to personal tenants.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector                | Operator | Value              | Logic | Action |
-| ----------------------- | -------- | ------------------ | ----- | ------ |
-| Application             | in       | _Google Workspace_ | And   | Block  |
-| Google Workspace Domain | not in   | `example.com`      | And   |        |
-| DLP Profile             | in       | _PII_              |       |        |
+| Selector    | Operator | Value                  | Logic | Action |
+| ----------- | -------- | ---------------------- | ----- | ------ |
+| Application | in       | _Google Workspace_     | And   | Block  |
+| Domain      | not in   | `internal.example.com` | And   |        |
+| DLP Profile | in       | _PII_                  |       |        |
 
 </TabItem> <TabItem label="API">
 
@@ -287,7 +299,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
   "conditions": [
     {
       "type": "traffic",
-      "expression": "app.id == \"google_workspace\" and not(google_workspace.domain == \"example.com\") and any(dlp.profiles[*] in {\"pii\"})"
+      "expression": "app.id == \"google_workspace\" and not(http.request.host == \"internal.example.com\") and any(dlp.profiles[*] in {\"pii\"})"
     }
   ],
   "action": "block",
@@ -305,7 +317,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dlp_tenant_control" {
   action      = "block"
   enabled     = true
   filters     = ["http"]
-  traffic     = "app.id == \"google_workspace\" and not(google_workspace.domain == \"example.com\") and any(dlp.profiles[*] in {\"pii\"})"
+  traffic     = "app.id == \"google_workspace\" and not(http.request.host == \"internal.example.com\") and any(dlp.profiles[*] in {\"pii\"})"
 }
 ```
 
@@ -319,9 +331,9 @@ Enforce stricter DLP for contractors or high-risk users.
 
 | Selector         | Operator | Value               | Logic | Action |
 | ---------------- | -------- | ------------------- | ----- | ------ |
-| User Group       | in       | `Contractors`       | And   | Block  |
-| DLP Profile      | in       | _Confidential Data_ | And   |        |
-| Upload Mime Type | in       | _All File Types_    |       |        |
+| DLP Profile      | in       | _Confidential Data_ | And   | Block  |
+| Upload Mime Type | in       | _All File Types_    | And   |        |
+| User Group       | in       | `Contractors`       |       |        |
 
 </TabItem> <TabItem label="API">
 
@@ -360,7 +372,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dlp_user_groups" {
 
 ## Monitor DLP effectiveness
 
-Once you have implemented DLP policies, monitor their effectiveness in Gateway logs:
+Once you have implemented DLP policies, you can monitor their effectiveness in Gateway logs:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
 2. Choose **HTTP request logs**.
@@ -376,6 +388,5 @@ To integrate DLP with Cloudflare Email Security, refer to [Secure Microsoft 365 
 
 With DLP policies configured, you can now:
 
-- Configure advanced DLP settings to optimize detection accuracy
 - Create Exact Data Match datasets for specific sensitive data
 - Integrate with Microsoft Information Protection
