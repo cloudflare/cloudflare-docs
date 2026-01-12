@@ -1,0 +1,107 @@
+---
+title: MCP SDK upgraded to v1.25.2 with enhanced error handling and new transport features
+description: MCP SDK upgrade brings improved error handling for transport detection, new WorkerTransport options, and a simpler way to build MCP servers
+products:
+  - agents
+  - workers
+date: 2026-01-12
+---
+
+The Agents SDK has been updated with [@modelcontextprotocol/sdk v1.25.2](https://github.com/modelcontextprotocol/typescript-sdk), bringing several improvements to MCP server development and transport handling.
+
+### Enhanced error handling
+
+The MCP SDK now uses `StreamableHTTPError` with structured error codes instead of message-only errors. The Agents SDK has been updated to handle these new error structures correctly:
+
+- **404/405 errors**: Properly detected for transport fallback
+- **401 errors**: Correctly identified for authentication failures
+- **Improved detection**: Error handling now checks both error codes and messages for better reliability
+
+This change improves the auto-transport selection feature, allowing the SDK to more reliably detect when a transport is not supported and fall back to alternatives.
+
+### New WorkerTransport options
+
+The `WorkerTransport` class now supports additional options for advanced use cases:
+
+#### Session lifecycle callback
+
+Track when sessions are closed:
+
+```ts
+const transport = new WorkerTransport({
+	onsessionclosed: (sessionId) => {
+		console.log(`Session ${sessionId} was closed`);
+		// Clean up session-specific resources
+	},
+});
+```
+
+#### Event store for resumability
+
+Enable clients to reconnect and resume from their last received message:
+
+```ts
+const transport = new WorkerTransport({
+	eventStore: {
+		storeEvent: async (streamId, message) => {
+			const eventId = crypto.randomUUID();
+			await env.KV.put(`event:${eventId}`, JSON.stringify({ streamId, message }));
+			return eventId;
+		},
+		replayEventsAfter: async (lastEventId, { send }) => {
+			// Retrieve and replay events after lastEventId
+			const events = await getEventsAfter(lastEventId);
+			for (const event of events) {
+				await send(event.id, event.message);
+			}
+			return events[0]?.streamId ?? "_GET_stream";
+		},
+	},
+});
+```
+
+#### Polling behavior support
+
+Control client reconnection timing and implement polling patterns:
+
+```ts
+const transport = new WorkerTransport({
+	retryInterval: 5000, // Client reconnects after 5 seconds
+});
+
+// Close stream to trigger reconnection
+transport.closeSSEStream(requestId);
+```
+
+The new `closeSSEStream` method allows servers to close individual SSE streams, triggering client reconnection after the specified retry interval. This is useful for implementing polling patterns during long-running operations.
+
+### Simplified MCP server creation
+
+A new example demonstrates using `WebStandardStreamableHTTPServerTransport` from the MCP SDK directly, without the `agents` package. This provides the simplest way to create a stateless MCP server on Cloudflare Workers:
+
+```ts
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+
+const server = new McpServer({
+	name: "Hello MCP Server",
+	version: "1.0.0",
+});
+
+const transport = new WebStandardStreamableHTTPServerTransport();
+server.connect(transport);
+
+export default {
+	fetch: async (request: Request) => {
+		return transport.handleRequest(request);
+	},
+};
+```
+
+This approach requires no additional dependencies beyond the MCP SDK and is ideal when you do not need state management or authentication. View the [complete example](https://github.com/cloudflare/agents/tree/main/examples/mcp-server) on GitHub.
+
+For more advanced use cases with state management and authentication, continue using [`createMcpHandler`](/agents/model-context-protocol/mcp-handler-api/) from the Agents SDK.
+
+### API documentation updates
+
+The [MCP Handler API reference](/agents/model-context-protocol/mcp-handler-api/) has been updated with documentation for all new WorkerTransport options and methods. The [Transport guide](/agents/model-context-protocol/transport/) now includes both approaches for building MCP servers.

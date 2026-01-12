@@ -61,8 +61,11 @@ interface CreateMcpHandlerOptions extends WorkerTransportOptions {
 	sessionIdGenerator?: () => string;
 	enableJsonResponse?: boolean;
 	onsessioninitialized?: (sessionId: string) => void;
+	onsessionclosed?: (sessionId: string) => void;
 	corsOptions?: CORSOptions;
 	storage?: MCPStorageApi;
+	eventStore?: EventStore;
+	retryInterval?: number;
 }
 ```
 
@@ -259,6 +262,7 @@ class WorkerTransport implements Transport {
 	): Promise<void>;
 	async start(): Promise<void>;
 	async close(): Promise<void>;
+	closeSSEStream(requestId: RequestId): void;
 }
 ```
 
@@ -286,6 +290,12 @@ interface WorkerTransportOptions {
 	onsessioninitialized?: (sessionId: string) => void;
 
 	/**
+	 * Callback invoked when a session is closed via DELETE request.
+	 * Receives the session ID that was closed.
+	 */
+	onsessionclosed?: (sessionId: string) => void;
+
+	/**
 	 * CORS configuration for cross-origin requests.
 	 * Configures Access-Control-* headers.
 	 */
@@ -297,6 +307,18 @@ interface WorkerTransportOptions {
 	 * so it survives hibernation/restart.
 	 */
 	storage?: MCPStorageApi;
+
+	/**
+	 * Event store for resumability support.
+	 * If provided, enables clients to reconnect and resume messages using Last-Event-ID.
+	 */
+	eventStore?: EventStore;
+
+	/**
+	 * Retry interval in milliseconds to suggest to clients in SSE retry field.
+	 * Controls client reconnection timing for polling behavior.
+	 */
+	retryInterval?: number;
 }
 ```
 
@@ -338,6 +360,23 @@ A callback that fires when a session is initialized, either by creating a new se
 const transport = new WorkerTransport({
 	onsessioninitialized: (sessionId) => {
 		console.log(`MCP session initialized: ${sessionId}`);
+	},
+});
+```
+
+</TypeScriptExample>
+
+#### onsessionclosed
+
+A callback that fires when a session is closed via a DELETE request. Use this to clean up resources or perform logging when a client explicitly terminates a session.
+
+<TypeScriptExample>
+
+```ts
+const transport = new WorkerTransport({
+	onsessionclosed: (sessionId) => {
+		console.log(`MCP session closed: ${sessionId}`);
+		// Clean up any session-specific resources
 	},
 });
 ```
@@ -408,6 +447,113 @@ const transport = new WorkerTransport({
 ```
 
 </TypeScriptExample>
+
+#### eventStore
+
+An optional event store for resumability support. When provided, the transport stores each message with a unique event ID, allowing clients to reconnect and resume from their last received message using the `Last-Event-ID` header.
+
+```ts
+interface EventStore {
+	/**
+	 * Stores an event for later retrieval.
+	 * Returns the generated event ID.
+	 */
+	storeEvent(streamId: string, message: JSONRPCMessage): Promise<string>;
+
+	/**
+	 * Replays events after the given event ID.
+	 * Returns the stream ID that was replayed.
+	 */
+	replayEventsAfter(
+		lastEventId: string,
+		options: {
+			send: (eventId: string, message: JSONRPCMessage) => Promise<void>;
+		},
+	): Promise<string>;
+
+	/**
+	 * Optional: Get stream ID for a given event ID.
+	 */
+	getStreamIdForEventId?(eventId: string): Promise<string | undefined>;
+}
+```
+
+<TypeScriptExample>
+
+```ts
+const transport = new WorkerTransport({
+	eventStore: {
+		storeEvent: async (streamId, message) => {
+			const eventId = crypto.randomUUID();
+			await env.KV.put(`event:${eventId}`, JSON.stringify({ streamId, message }));
+			return eventId;
+		},
+		replayEventsAfter: async (lastEventId, { send }) => {
+			// Retrieve and replay events after lastEventId
+			const events = await getEventsAfter(lastEventId);
+			for (const event of events) {
+				await send(event.id, event.message);
+			}
+			return events[0]?.streamId ?? "_GET_stream";
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+#### retryInterval
+
+The retry interval in milliseconds to suggest to clients in the SSE `retry` field. This controls how quickly clients reconnect when the connection is closed, enabling polling behavior during long-running operations.
+
+<TypeScriptExample>
+
+```ts
+const transport = new WorkerTransport({
+	retryInterval: 5000, // Suggest clients reconnect after 5 seconds
+});
+```
+
+</TypeScriptExample>
+
+When combined with the `closeSSEStream` method, this enables implementing polling patterns where the server closes the connection and the client automatically reconnects after the specified interval.
+
+### Methods
+
+#### closeSSEStream
+
+Close an SSE stream for a specific request, triggering client reconnection. Use this to implement polling behavior during long-running operations where the client will automatically reconnect after the retry interval specified in the priming event.
+
+```ts
+closeSSEStream(requestId: RequestId): void;
+```
+
+<TypeScriptExample>
+
+```ts
+// In an MCP tool handler
+server.tool("longRunningTask", "Start a long-running task", {}, async () => {
+	// Start the task asynchronously
+	startBackgroundTask();
+
+	// Close the SSE stream to trigger client reconnection
+	// The client will reconnect based on the retryInterval
+	transport.closeSSEStream(currentRequestId);
+
+	return {
+		content: [
+			{
+				type: "text",
+				text: "Task started. Client will reconnect to check status.",
+			},
+		],
+	};
+});
+```
+
+</TypeScriptExample>
+
+This method is useful when implementing polling patterns where the server needs to perform work between client connections rather than keeping a long-lived connection open.
 
 ## Authentication Context
 
