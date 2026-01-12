@@ -13,19 +13,19 @@ Review Workers errors and exceptions.
 
 When a Worker running in production has an error that prevents it from returning a response, the client will receive an error page with an error code, defined as follows:
 
-| Error code | Meaning                                                                                                                                         |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `1101`     | Worker threw a JavaScript exception.                                                                                                            |
-| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                                           |
-| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                                         |
-| `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                                                        |
-| `1019`     | Worker hit [loop limit](#loop-limit).                                                                                                           |
-| `1021`     | Worker has requested a host it cannot access.                                                                                                   |
-| `1022`     | Cloudflare has failed to route the request to the Worker.                                                                                       |
-| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                                               |
-| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                                                       |
+| Error code | Meaning                                                                                                                                                                                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1101`     | Worker threw a JavaScript exception.                                                                                                                                                                                                                                |
+| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                                                                                                                                                               |
+| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                                                                                                                                                             |
+| `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                                                                                                                                                                            |
+| `1019`     | Worker hit [loop limit](#loop-limit).                                                                                                                                                                                                                               |
+| `1021`     | Worker has requested a host it cannot access.                                                                                                                                                                                                                       |
+| `1022`     | Cloudflare has failed to route the request to the Worker.                                                                                                                                                                                                           |
+| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                                                                                                                                                                   |
+| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                                                                                                                                                                           |
 | `1042`     | Worker tried to fetch from another Worker on the same zone, which is only [supported](/workers/runtime-apis/fetch/) when the [`global_fetch_strictly_public` compatibility flag](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) is used. |
-| `10162`    | Module has an unsupported Content-Type.                                                                                                         |
+| `10162`    | Module has an unsupported Content-Type.                                                                                                                                                                                                                             |
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
@@ -183,23 +183,24 @@ If you need to share state across requests, consider using [Durable Objects](/du
 
 These errors occur when a Worker is uploaded or modified.
 
-| Error code | Meaning                                                                                                                         |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `10006`    | Could not parse your Worker's code.                                                                                             |
-| `10007`    | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                       |
-| `10015`    | Account is not entitled to use Workers.                                                                                         |
-| `10016`    | Invalid Worker name.                                                                                                            |
-| `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.             |
-| `10026`    | Could not parse request body.                                                                                                   |
-| `10027`    | The uploaded Worker exceeded the [Worker size limits](/workers/platform/limits/#worker-size). |
-| `10035`    | Multiple attempts to modify a resource at the same time                                                                         |
-| `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                           |
-| `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                        |
-| `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                     |
-| `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).     |
-| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                           |
-| `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                        |
-| `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.              |
+| Error code | Meaning                                                                                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `10006`    | Could not parse your Worker's code.                                                                                                                                 |
+| `10007`    | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                                                           |
+| `10015`    | Account is not entitled to use Workers.                                                                                                                             |
+| `10016`    | Invalid Worker name.                                                                                                                                                |
+| `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.                                                 |
+| `10026`    | Could not parse request body.                                                                                                                                       |
+| `10027`    | The uploaded Worker exceeded the [Worker size limits](/workers/platform/limits/#worker-size).                                                                       |
+| `10035`    | Multiple attempts to modify a resource at the same time                                                                                                             |
+| `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                                                               |
+| `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                                                            |
+| `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                                                         |
+| `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).                                         |
+| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                                                               |
+| `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                                                            |
+| `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.                                                  |
+| `10215`    | Secret edit failed. Refer to [Secret modification with Worker versions](/workers/observability/errors/#secret-modification-with-worker-versions-10215) for details. |
 
 ### Validation Errors (10021)
 
@@ -215,6 +216,32 @@ This means that you are doing work in the top-level scope of your Worker that ta
 
 This means that you are doing work in the top-level scope of your Worker that allocates more than the [memory limit (128 MB)](/workers/platform/limits/#memory) of memory.
 
+### Secret modification with Worker versions (10215)
+
+This error occurs when you attempt to modify a [secret](/workers/configuration/secrets/) using the secrets API (`wrangler secret put` or the dashboard's "Variables and Secrets" interface) while using [Worker versions](/workers/configuration/versions-and-deployments/), and the latest version of your Worker is not currently deployed.
+
+This limitation exists to prevent accidental deployment when using Worker versions and secrets together. The secrets API automatically deploys changes, which could unintentionally deploy an earlier version when combined with the versions system.
+
+To resolve this error, you have three options:
+
+1. **Use the versions secret API (recommended)**: This API allows you to update secrets without immediately deploying. Create a new version with modified secrets, then deploy when ready:
+
+   ```sh
+   npx wrangler versions secret put <SECRET_NAME>
+   npx wrangler versions deploy
+   ```
+
+   Refer to [Secrets with versions](/workers/configuration/secrets/#adding-secrets-to-your-project) for more details.
+
+2. **Deploy the latest version first**: Ensure your latest version is deployed before modifying secrets:
+
+   ```sh
+   npx wrangler versions deploy
+   npx wrangler secret put <SECRET_NAME>
+   ```
+
+3. **Use the Cloudflare dashboard**: The dashboard can modify secrets and deploy the version in a single operation. Navigate to your Worker > **Settings** > **Variables and Secrets**.
+
 ## Runtime errors
 
 Runtime errors will occur within the runtime, do not throw up an error page, and are not visible to the end user. Runtime errors are detected by the user with logs.
@@ -228,6 +255,7 @@ Runtime errors will occur within the runtime, do not throw up an error page, and
 ## Identify errors: Workers Metrics
 
 To review whether your application is experiencing any downtime or returning any errors:
+
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
