@@ -2,7 +2,7 @@
 {}
 ---
 
-This document is intended to provide Arista VeloCloud customers with the steps to provision non SD-WAN destinations via Edge for connectivity with Cloudflare Magic WAN.
+This document is intended to provide Arista VeloCloud customers with the steps to provision non SD-WAN destinations through Edge for connectivity with Cloudflare Magic WAN.
 
 ## VeloCloud Edge Nodes profile configuration
 
@@ -10,7 +10,7 @@ This document is intended to provide Arista VeloCloud customers with the steps t
 2. Select **New profile** to create a new profile (for example, `vc-edge-03-profile`).
 3. Select the **Device** tab and expand the **Interfaces** section.
 4. Select the **Edge Model** corresponding to the device (Virtual Edge). The default interface scheme for the Virtual Edge will be displayed. For example: eight interfaces, from GE1 to GE8.
-5. We are only using interfaces **GE3** and **GE4.** Disable all unused interfaces to ensure anyone with physical access to the edge node cannot connect any unused interfaces. Do this by selecting each interface one at a time and unchecking **Interface Enabled** followed by Save.
+5. We are only using interfaces **GE3** and **GE4.** Disable all unused interfaces to ensure anyone with physical access to the edge node cannot connect any unused interfaces. Do this by selecting each interface one at a time and unchecking **Interface Enabled** followed by **Save**.
 
 ### Configure interfaces
 
@@ -77,7 +77,7 @@ Select **Save** to apply changes for Interface **GE3**.
 
 #### IPv4 Settings
 
-- **Addressing Type**: DHCP or Static (Example assumes Static IP)
+- **Addressing Type**: DHCP or Static (example assumes Static IP)
 - **WAN Link**: User Defined
 - **OSPF**: Not applicable
 - **Multicast**: Not applicable
@@ -112,7 +112,7 @@ Select **Save** to apply changes for the Profile.
 ## Network Services
 
 1. Go to **Configure** > **Network Services**.
-2. Expand **Non SD-WAN Destinations via Edge** and select **New**.
+2. Expand **Non SD-WAN Destinations through Edge** and select **New**.
 
 ### General
 
@@ -148,7 +148,7 @@ Select **Save** to apply changes for the Profile.
 1. Go to **Configure** > **Edges**, and select **Add Edge**.
 2. Select the following settings:
    1. **Mode**: SD-WAN Edge
-   2. **Name**:The name for your edge. For example, ` vc-edge-03`
+   2. **Name**: The name for your edge. For example, ` vc-edge-03`
    3. **Model**: *Virtual Edge* (select the model of your Arista VeloCloud Edge appliance)
    4. **Profile**: Select the Profile created in the Provision configuration section. For example, `vc-edge-03-profile`
    5. **Edge License**: Select the appropriate license
@@ -179,7 +179,7 @@ Once the Edge device is added, you should land on the **Device** tab.
 5. Scroll down to **IPv4 Settings**, and configure the following options:
    1. **Addressing Type**: *Static* (this is inherited from the Profile)
    2. **IP Address**: Specify the WAN interface IP address
-   3. **CIDR Prefix**: Add your subnet mask in CIDR notation
+   3. **CIDR Prefix**: Add your subnet mask in Classless Inter-Domain Routing (CIDR) notation
    4. **Gateway**: Default Gateway (`0.0.0.0/0`)
    5. All other settings are inherited from the Profile.
 6. Scroll down and select **Save**.
@@ -187,10 +187,10 @@ Once the Edge device is added, you should land on the **Device** tab.
 8. Scroll down to **IPv4 Settings**, and configure the following options:
    1. Addressing Type: Static (inherited from the Profile)
    2. IP Address: Specify the WAN interface IP address
-   3. CIDR Prefix: (Subnetmask in CIDR notation)
+   3. CIDR Prefix: (subnet mask in CIDR notation)
    4. Gateway: Default Gateway (0.0.0.0/0)
    5. All other settings are inherited from the Profile.
-9. Scroll down and click *Save*.
+9. Scroll down and select **Save**.
 
 #### User Defined WAN Link
 
@@ -200,22 +200,22 @@ Note the indicator next to **GE3**. The steps in the Profile section disabled **
 
 1. Scroll down to **WAN Link Configuration** > **Add User Defined WAN Link**, and configure the following options:
    1. **Link Type**: *Public* (the WAN interface is connected directly to the Internet in this example — you may need to select *Private* depending on your environment)
-   2. **Interfaces**: check the box for **GE3** (WAN Interface)
+   2. **Interfaces**: Check the box for **GE3** (WAN Interface)
 2. This example assumes default settings under **View optional** **configuration** and **View advanced settings**.
 3. Select **Add Link** to save the changes.
-4. Confirm the **User Defined WAN Link** is displayed and you no longer see an indicator next to interface **GE3**.
+4. Confirm the **User Defined WAN Link** is displayed and an indicator no longer appears next to interface **GE3**.
 
 #### VPN Services
 
 1. Scroll down to **VPN Services**.
-2. Expand **Non SD-WAN Destination via Edge** and select the **Override** checkbox.
+2. Expand **Non SD-WAN Destination through Edge** and select the **Override** checkbox.
 3. Select **Add**.
 4. Select the drop-down under the **Name** column.
 5. Select the **Network Service** defined earlier. For example, `Magic_WAN_vc-edge-03`.
 6. In the **Action** column, select the **+** button, and configure the following options:
-   1. **Public WAN Link**: Choose the Public WAN Link (refer to User-Defined WAN Link above)
+   1. **Public WAN Link**: Choose the Public WAN Link (refer to User-Defined WAN Link)
    2. **Local Identification Type**: *FQDN*
-   3. **Local Identification**: enter the FQDN specified when configuring Magic WAN IPsec Tunnels via the Custom FQDN IKE ID API endpoint.
+   3. **Local Identification**: Enter the FQDN specified when configuring Magic WAN IPsec Tunnels through the Custom FQDN IKE ID API endpoint.
    4. **PSK**: Enter the Pre-Shared Key. Ensure you use the same PSK for both Magic WAN IPsec Tunnels.
    5. **Destination Primary Public IP**: Pre-populated from the Network Service defined earlier.
    6. **Destination Secondary Public IP**: Pre-populated from the Network Service defined earlier.
@@ -230,8 +230,8 @@ Configure the **Site Subnets** to facilitate:
 * Ensure Magic WAN IPsec tunnel health checks perform optimally.
 
 1. Go to **Configure** > **Network Services**.
-2. Expand the **Non SD-WAN Destinations via Edge** section.
-3. Select the desired non SD-WAN destination - for example, `Magic_WAN_vc-edge-03`.
+2. Expand the **Non SD-WAN Destinations through Edge** section.
+3. Select the desired non SD-WAN destination, like `Magic_WAN_vc-edge-03`.
 
 ### Site Subnets
 
@@ -240,15 +240,15 @@ Configure a minimum of three IPsec tunnels. This example demonstrates two routes
 - Magic WAN IPsec Tunnel Health Checks
 - Primary VPN Gateway:
   - To the respective Magic WAN IPv4 interface address associated with the primary Cloudflare anycast tunnel endpoint IP address
-  - Routed via the Primary VPN Gateway.
+  - Routed through the Primary VPN Gateway.
 - Secondary VPN Gateway:
   - To the respective Magic WAN IPv4 interface address associated with the secondary Cloudflare anycast tunnel endpoint IP address
-  - Routed via the Secondary VPN Gateway.
-- Remote Magic WAN Site(s): CIDR blocks to route via Cloudflare Magic WAN
+  - Routed through the Secondary VPN Gateway.
+- Remote Magic WAN Site(s): CIDR blocks to route through Cloudflare Magic WAN
   - The LAN interface for vc-edge-03 is:
     - 172.16.34.254/24 (subnet address: 172.16.34.0/24).
     - This does not need to be specified under Site Subnets as it is local.
-  - Assume two remote sites - each of which need to be defined as Site Subnets and routed via both the Primary VPN Gateway and Secondary VPN Gateway.
+  - Assume two remote sites, each of which need to be defined as Site Subnets and routed through both the Primary VPN Gateway and Secondary VPN Gateway.
     - 172.16.32.0/24
     - 72.16.33.0/24
 
@@ -261,7 +261,7 @@ Configure a minimum of three IPsec tunnels. This example demonstrates two routes
       1. 172.16.32.0/24 - Primary and Secondary VPN Gateways
    4. Site vc-edge-02:
       1. 172.16.33.0/24 - Primary and Secondary VPN Gateways
-2. This is what the **Site Subnets** tab should look like when configured as indicated above:
+2. The **Site Subnets** tab should look like the following when configured as indicated:
 
 ![An example of how the Site Subnets tab should look like when configured as indicated.](~/assets/images/magic-wan/third-party/velocloud/image3.png)
 
@@ -269,7 +269,7 @@ Configure a minimum of three IPsec tunnels. This example demonstrates two routes
 
 ## Magic WAN and Cloudflare Gateway
 
-Cloudflare Magic WAN and Secure Web Gateway (Cloudflare Gateway) are tightly integrated. Arista VeloCloud customers can easily route traffic via Magic WAN to Cloudflare Gateway. All Internet egress traffic is subject to Cloudflare Gateway policies.
+Cloudflare Magic WAN and Secure Web Gateway (Cloudflare Gateway) are tightly integrated. Arista VeloCloud customers can easily route traffic through Magic WAN to Cloudflare Gateway. All Internet egress traffic is subject to Cloudflare Gateway policies.
 
 Arista VeloCloud's Business Policies allow for intelligent routing of traffic destined for the Internet with only a few selections.
 
@@ -287,6 +287,6 @@ Arista VeloCloud's Business Policies allow for intelligent routing of traffic de
    4. **Action**
       1. **Priority**: Normal
       2. **Enable Rate Limit**: Unchecked
-      3. **Network Service**: *Internet Backhaul* > *Non SD-WAN Destination via Edge / Cloud Security Service*.
-      4. **Non SD-WAN Destination via Edge / Cloud Security Service**: Select the Network Service associated with the respective Edge device. For example, `MAgic_WAN_vc-edge-03`.
+      3. **Network Service**: *Internet Backhaul* > *Non SD-WAN Destination through Edge / Cloud Security Service*.
+      4. **Non SD-WAN Destination through Edge / Cloud Security Service**: Select the Network Service associated with the respective Edge device. For example, `Magic_WAN_vc-edge-03`.
 4. Select **Create** to save the rule.
