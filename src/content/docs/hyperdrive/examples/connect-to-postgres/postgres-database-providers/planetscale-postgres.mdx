@@ -12,6 +12,12 @@ import { Render } from "~/components";
 
 This example shows you how to connect Hyperdrive to a [PlanetScale](https://planetscale.com/) PostgreSQL database.
 
+:::note[Prefer a simpler setup?]
+
+You can connect PlanetScale to Cloudflare using the [native integration](/workers/databases/third-party-integrations/planetscale/) which automatically creates a Hyperdrive configuration without manually copying credentials. The native integration is available for both PostgreSQL and MySQL databases.
+
+:::
+
 ## 1. Allow Hyperdrive access
 
 You can connect Hyperdrive to any existing PlanetScale PostgreSQL database by creating a new role (optional) and retrieving a connection string to your database.

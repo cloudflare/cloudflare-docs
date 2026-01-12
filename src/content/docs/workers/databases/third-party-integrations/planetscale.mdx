@@ -16,15 +16,62 @@ Hyperdrive can provide lower latencies because it performs the database connecti
 :::
 
 <Tabs>
-	<TabItem label="Hyperdrive (recommended)">
+	<TabItem label="Connect with Hyperdrive (recommended)">
 
-To connect to PlanetScale using [Hyperdrive](/hyperdrive), follow these steps:
+<Tabs>
+	<TabItem label="Automatic setup">
 
-         <Render file="planetscale-partial" product="hyperdrive"/>
+## Set up an integration with PlanetScale
+
+You can connect your PlanetScale account directly to Cloudflare to create Hyperdrive configurations automatically, without manually copying credentials. This is the easiest and most secure way to connect PlanetScale to Workers.
+
+### Prerequisites
+
+- A [PlanetScale account](https://auth.planetscale.com/sign-up) with an existing database (MySQL or PostgreSQL)
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up) with Workers enabled
+
+### Connect from the Cloudflare dashboard
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers & Pages** > **Hyperdrive**.
+3. Select **Create a Hyperdrive**.
+4. Choose **PlanetScale** from the list of database providers.
+5. Select **Connect your PlanetScale account** and follow the prompts to authorize Cloudflare to access your PlanetScale databases.
+6. Select your PlanetScale organization, database, and branch.
+7. Cloudflare will automatically create a Hyperdrive configuration with optimal settings.
+8. [Bind the Hyperdrive configuration to your Worker](/hyperdrive/get-started/#4-bind-your-worker-to-hyperdrive) to start querying your database.
+
+### Connect from the PlanetScale dashboard
+
+Alternatively, you can initiate the connection from PlanetScale:
+
+1. Log in to the [PlanetScale dashboard](https://app.planetscale.com).
+2. Select the database you want to connect.
+3. Go to **Connect** > **Cloudflare**.
+4. Follow the prompts to authorize and connect your Cloudflare account.
+5. The integration will create a Hyperdrive configuration that you can view in the Cloudflare dashboard.
+
+### Benefits of the native integration
+
+- **Automatic configuration**: Hyperdrive is automatically configured with optimal settings for your PlanetScale database
+- **Secure by default**: Credentials are securely stored and never exposed in your code
+- **Easy credential rotation**: Rotate passwords with one click from either dashboard
+- **Optimal performance**: Automatically uses Hyperdrive's connection pooling and query caching
+
+Once connected, use a PostgreSQL or MySQL driver (like [node-postgres](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/node-postgres/) or [mysql2](/hyperdrive/examples/connect-to-mysql/mysql-drivers-and-libraries/mysql2/)) to query your database through Hyperdrive. See the [Hyperdrive getting started guide](/hyperdrive/get-started/) for code examples.
+
+</TabItem>
+<TabItem label="Manual setup">
+
+<Render file="planetscale-partial" product="hyperdrive" />
+
+</TabItem>
+</Tabs>
+
     </TabItem>
     <TabItem label="PlanetScale serverless driver">
 
-## Set up an integration with PlanetScale
+## Use the PlanetScale serverless driver
 
 To set up an integration with PlanetScale:
 
