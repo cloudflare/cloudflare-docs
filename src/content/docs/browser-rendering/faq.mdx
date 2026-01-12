@@ -78,7 +78,7 @@ This applies to both the [REST API](/browser-rendering/rest-api/) and [Workers B
 
 ### Is there any temporary caching of submitted content?
 
-For the [REST API](/browser-rendering/rest-api/), generated content is cached by default for 5 seconds (configurable up to 1 day via the `cacheTTL` parameter, or set to `0` to disable caching). This cache protects against repeated requests for the same URL by the same account. Customer-submitted HTML content itself is not cached.
+For the [REST API](/browser-rendering/rest-api/), generated content is cached by default for five seconds (configurable up to one day via the `cacheTTL` parameter, or set to `0` to disable caching). This cache protects against repeated requests for the same URL by the same account. Customer-submitted HTML content itself is not cached.
 
 For [Workers Bindings](/browser-rendering/workers-bindings/), no caching is used. Content exists only in memory for the duration of the rendering operation and is discarded immediately after the response is returned.
 
