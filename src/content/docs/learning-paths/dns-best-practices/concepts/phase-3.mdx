@@ -23,17 +23,17 @@ Complete one last check of all DNS records in your Cloudflare dashboard for accu
 ## 3. Monitor propagation
 
 - DNS nameserver changes can take time to propagate globally, typically anywhere from a few minutes to 48 hours (though often much faster due to lowered TTLs).  
-- Use tools like:  
+- Use the commands exemplified below, replacing `yourdomain.com` by your actual domain.  
    - `dig yourdomain.com NS @8.8.8.8` (query Google's DNS)  
    - `dig yourdomain.com NS @1.1.1.1` (query Cloudflare's DNS)
-   - `whois yourdomain.com` (`yourdomain.com` is your domain)
+   - `whois yourdomain.com`
    - `dig yourdomain.com @tld.nameserver.com` (`tld.nameserver.com` is the nameserver of your domain's TLD. You can find this information by querying it as `dig com ns +short` where `.com` is the example.)
    
    You are looking for the Cloudflare nameservers to be reported consistently. 
 
 ## 4. Initial testing
 
-Once propagation appears to be widespread, perform basic resolution tests for critical records (for example, your website's `A` record, `MX` records).
+Once propagation appears to be widespread, perform basic resolution tests for critical records (for example, your website's `A` record and any `MX` records, if you had them set up).
 
 - `dig yourdomain.com A +short`  
 - `dig yourdomain.com MX +short`

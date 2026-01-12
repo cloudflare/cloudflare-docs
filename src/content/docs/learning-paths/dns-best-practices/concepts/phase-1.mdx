@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-Thorough planning is the cornerstone of a successful DNS migration.
+Detailed planning is the cornerstone of a successful DNS migration.
 
 ## 1. Understand your current BIND setup
 
@@ -47,7 +47,7 @@ Cloudflare supports two main migration approaches when DNSSEC is enabled:
 
 **Disable-and-re-enable approach (safer for most teams):**  
 
-1.  Log in to your registrar and remove the DS records associated with your on-prem BIND DNSSEC keys for each domain.  
+1. Log in to your registrar and remove the DS records associated with your on-prem BIND DNSSEC keys for each domain.  
 2. Plan to switch nameservers only after resolvers are no longer expecting the old DNSSEC chain.  
 
 **DS record TTL:** If DNSSEC is active, note the Time To Live (TTL) of your DS records at the parent zone (managed by your registrar). This will determine how long you need to wait after removing DS records. As a rule of thumb, wait at least one full DS TTL and preferably up to 1.5 times the TTL before changing nameservers.  
