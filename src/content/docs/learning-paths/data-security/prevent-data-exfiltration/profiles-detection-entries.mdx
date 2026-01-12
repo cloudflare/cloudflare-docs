@@ -2,7 +2,7 @@
 title: Understanding profiles and detection entries
 pcx_content_type: learning-unit
 sidebar:
-  order: 2
+  order: 1
 ---
 
 import { Render } from "~/components";
@@ -28,11 +28,15 @@ DLP profiles can include:
 | Regular expressions (regex) | Pattern-based matching for structured data (for example, `\d{3}-\d{2}-\d{4}` for Social Security numbers). |
 | Keywords                    | Simple text matching (for example, "CONFIDENTIAL" or "INTERNAL ONLY").                                     |
 | Predefined detectors        | Built-in detectors for common data types like credit card numbers and API keys.                            |
-| Detection entries           | Custom uploaded data including:                                                                            |
-| Exact Data Match (EDM)      | Hashes sensitive data (like names or credit cards) before upload to protect privacy.                       |
-| Custom Wordlist (CWL)       | Uses plaintext lists for non-sensitive data (like project names or SKUs).                                  |
-| Documents                   | Document fingerprints for similarity matching.                                                             |
-| AI prompt topics            | Predefined AI prompt protection detections.                                                                |
+
+Detection entries can include:
+
+| Detection entry type   | Description                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------ |
+| Exact Data Match (EDM) | Hashes sensitive data (like names or credit cards) before upload to protect privacy. |
+| Custom Wordlist (CWL)  | Uses plaintext lists for non-sensitive data (like project names or SKUs).            |
+| Documents              | Document fingerprints for similarity matching.                                       |
+| AI prompt topics       | Predefined AI prompt protection detections.                                          |
 
 For more information on creating and uploading detection entries, refer to [Detection entries](/cloudflare-one/data-loss-prevention/detection-entries/).
 

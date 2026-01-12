@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in custom detection entries. Detection entries allow you to define custom data patterns for DLP to detect using [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/). Detection entries include custom [datasets](#datasets) with defined data, [document entries](#documents) with example fingerprints, and [AI prompt topics](#ai-prompt-topics).
 
@@ -33,15 +33,17 @@ Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in
 
 #### Formatting
 
-To prepare a dataset for DLP, add your desired data to a multi-column spreadsheet. Each line must be at least six characters long. Entries do not require trailing or final commas.
-
-For compatibility, save your file in either `.csv` or `.txt` format with LF (`\n`) newline characters. DLP does not support CRLF (`\r\n`) newline characters. For information on dataset limits, refer to [Account limits](/cloudflare-one/account-limits/#data-loss-prevention-dlp).
+<Render
+	file="data-loss-prevention/dataset-formatting"
+	product="cloudflare-one"
+/>
 
 #### Column title cells
 
-Column title cells may result in false positives in Custom Wordlist datasets and should be removed.
-
-DLP will detect and use title cells as column names for Exact Data Match datasets. If multiple columns have the same name, DLP will append a number sign (`#`) and number to their names.
+<Render
+	file="data-loss-prevention/dataset-column-titles"
+	product="cloudflare-one"
+/>
 
 :::caution[Update EDM datasets]
 To select which Exact Data Match columns to use, you will need to [reupload any EDM datasets](#manage-existing-datasets) added prior to column support.
@@ -49,51 +51,24 @@ To select which Exact Data Match columns to use, you will need to [reupload any 
 
 ### Upload a new dataset
 
-<Details header="Upload an Exact Data Match dataset">
+<Render
+	file="data-loss-prevention/upload-edm-dataset"
+	product="cloudflare-one"
+/>
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
-2. From the **Datasets** tab, select **Add a dataset**.
-3. Select **Exact Data Match (EDM)**.
-4. Upload your dataset file. Select **Next**.
-5. Review and choose the detected columns you want to include. Select **Next**.
-6. Name your dataset. Optionally, add a description. Select **Next**.
-7. Review the details for your uploaded dataset. Select **Save dataset**.
+<Render
+	file="data-loss-prevention/upload-cwl-dataset"
+	product="cloudflare-one"
+/>
 
-DLP will encrypt your dataset and save its hash.
-
-</Details>
-
-<Details header="Upload a Custom Wordlist dataset">
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
-2. From the **Datasets** tab, select **Add a dataset**.
-3. Select **Custom Wordlist (CWL)**.
-4. Name your dataset. Optionally, add a description.
-5. (Optional) In **Settings**, turn on **Enforce case sensitivity** to require matched values to contain exact capitalization.
-6. In **Upload file**, choose your dataset file.
-7. Select **Save**.
-
-DLP will save your dataset in cleartext.
-
-</Details>
-
-The dataset will appear in the list with an **Uploading** status. Once the upload is complete, the status will change to **Complete**. To use your uploaded dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
+<Render
+	file="data-loss-prevention/dataset-upload-status"
+	product="cloudflare-one"
+/>
 
 ### Manage existing datasets
 
-Uploaded DLP datasets are read-only. To update a dataset, you must upload a new file to replace the original.
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
-2. From the **Datasets** tab, select the dataset you want to update.
-3. Select **Upload dataset** and choose your updated dataset. Select **Next**.
-4. If your select dataset is an Exact Data Match dataset, review and choose the new columns. Select **Next**.
-5. Select **Save dataset**.
-
-Your new dataset will replace the original dataset.
-
-:::caution[Remove existing column entries]
-If you want to update an Exact Data Match dataset to remove a column in use as an [existing detection entry](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile), you must remove the existing entry from any custom DLP profiles using it before updating the dataset.
-:::
+<Render file="data-loss-prevention/manage-datasets" product="cloudflare-one" />
 
 ## Documents
 

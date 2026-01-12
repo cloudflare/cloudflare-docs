@@ -1,0 +1,13 @@
+Uploaded DLP datasets are read-only. To update a dataset, you must upload a new file to replace the original.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+2. From the **Datasets** tab, select the dataset you want to update.
+3. Select **Upload dataset** and choose your updated dataset. Select **Next**.
+4. If your select dataset is an Exact Data Match dataset, review and choose the new columns. Select **Next**.
+5. Select **Save dataset**.
+
+Your new dataset will replace the original dataset.
+
+:::caution[Remove existing column entries]
+If you want to update an Exact Data Match dataset to remove a column in use as an [existing detection entry](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile), you must remove the existing entry from any custom DLP profiles using it before updating the dataset.
+:::

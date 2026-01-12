@@ -1,0 +1,197 @@
+---
+title: Use custom datasets
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+---
+
+import { Details, Render } from "~/components";
+
+Cloudflare DLP allows you to create and upload custom datasets to scan for specific matching data.
+
+## Dataset types
+
+DLP includes two types of custom datasets: Exact Data Match (EDM) for sensitive information and Custom Wordlist (CWL) for non-sensitive data.
+
+### Exact Data Match
+
+Exact Data Match (EDM) protects sensitive information, such as names, addresses, phone numbers, and credit card numbers.
+
+All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset. Matched data will be redacted in payload logs.
+
+Use EDM when you need to protect the following types of data:
+
+| Data type                               | Examples                                                |
+| --------------------------------------- | ------------------------------------------------------- |
+| Employee data                           | Email addresses, employee IDs, Social Security numbers  |
+| Customer data                           | Customer IDs, account numbers, specific email addresses |
+| Financial information                   | Credit card numbers, bank account numbers               |
+| Personal identifiable information (PII) | Names, addresses, phone numbers                         |
+
+### Custom Wordlist
+
+Custom Wordlist (CWL) protects non-sensitive data, such as intellectual property and SKU numbers. Optionally, CWL can detect case-sensitive data.
+
+Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in payload logs.
+
+Use CWL when you need to protect the following types of data:
+
+| Data type              | Examples                                            |
+| ---------------------- | --------------------------------------------------- |
+| Intellectual property  | Product names, project codenames, proprietary terms |
+| Business identifiers   | SKU numbers, part numbers, internal codes           |
+| Non-sensitive keywords | Company-specific terminology, brand names           |
+
+### Comparison
+
+| Feature              | Exact Data Match (EDM)           | Custom Wordlist (CWL)         |
+| -------------------- | -------------------------------- | ----------------------------- |
+| **Data type**        | Sensitive information            | Non-sensitive data            |
+| **Storage**          | Encrypted and hashed             | Plaintext                     |
+| **Payload logs**     | Redacted                         | Plaintext matches visible     |
+| **Case sensitivity** | Always case sensitive            | Optional                      |
+| **Best for**         | PII, financial data, credentials | Keywords, product names, SKUs |
+| **Column support**   | Yes                              | No                            |
+
+## Prepare DLP datasets
+
+<Render
+	file="data-loss-prevention/dataset-formatting"
+	product="cloudflare-one"
+/>
+
+<Render
+	file="data-loss-prevention/dataset-column-titles"
+	product="cloudflare-one"
+/>
+
+## Upload a new dataset
+
+<Render
+	file="data-loss-prevention/upload-edm-dataset"
+	product="cloudflare-one"
+/>
+
+<Render
+	file="data-loss-prevention/upload-cwl-dataset"
+	product="cloudflare-one"
+/>
+
+<Render
+	file="data-loss-prevention/dataset-upload-status"
+	product="cloudflare-one"
+/>
+
+## Manage existing datasets
+
+<Render file="data-loss-prevention/manage-datasets" product="cloudflare-one" />
+
+## Best practices
+
+Use the following best practices when using DLP datasets.
+
+### Data preparation
+
+When preparing data for DLP datasets, include variations in your datasets to ensure comprehensive coverage, such as:
+
+- Email addresses with and without domain
+- IDs with and without prefixes
+- Phone numbers in different formats
+
+For example, in an employee PII EDM dataset:
+
+```csv
+employee_id,email,phone
+E12345,john.doe@example.com,555-123-4567
+E12345,john.doe@example.com,5551234567
+```
+
+### Keep data current
+
+Regularly update your datasets to ensure they remain current and relevant. This includes:
+
+- Update datasets regularly (weekly or monthly)
+- Remove outdated entries
+- Add new data as needed
+- Verify data accuracy before uploading
+
+### Dataset organization
+
+Organize your datasets by sensitivity:
+
+1. High-sensitivity: Use EDM for executive data, financial information
+2. Medium-sensitivity: Use EDM for general employee data
+3. Low-sensitivity: Use CWL for public-facing information
+
+Organize your datasets by use case:
+
+1. Employee PII dataset (EDM)
+2. Customer PII dataset (EDM)
+3. Product names dataset (CWL)
+4. Internal terminology dataset (CWL)
+
+## Use datasets in DLP profiles
+
+After uploading a dataset to DLP, you can add it to a custom DLP profile:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
+2. Choose an existing custom profile and select **Edit**, or create a new one.
+3. Select **Add existing entries**.
+4. Choose your dataset:
+   - For EDM datasets, select the specific columns you want to match
+   - For CWL datasets, the entire wordlist will be used
+5. Select **Confirm**.
+6. Configure match count and other profile settings as needed.
+7. Select **Save profile**.
+
+## Combine datasets with other detection methods
+
+You can layer datasets with pattern matching for more comprehensive protection. For example, you can create an **Employee Data Protection** profile with the following configuration:
+
+- **Detection entries**:
+  - EDM: Employee dataset (email column)
+  - EDM: Employee dataset (ssn column)
+  - Regex: SSN pattern `\d{3}-\d{2}-\d{4}`
+  - Keyword: `employee`, `personnel`
+- **Match count**: 2
+- **Context analysis**: Enabled
+
+This profile triggers when at least two detection entries match, providing both precision (EDM) and coverage (pattern matching).
+
+## Troubleshooting
+
+### Dataset not detecting known values
+
+If your dataset is not detecting known values, try the following:
+
+- Verify the value exists in the dataset
+- For EDM: Check column selection in detection entry
+- For CWL: Verify case sensitivity settings
+- Confirm the dataset was uploaded successfully
+- Check that the dataset is added to a DLP profile
+
+### Too many false positives
+
+If you are receiving too many false positives, try the following:
+
+- Review dataset for outdated or incorrect entries
+- For CWL: Consider enabling case sensitivity
+- Verify data format consistency
+- Update or replace the dataset
+
+### Upload failures
+
+If you are receiving upload failures, try the following:
+
+- Verify file format (`.csv` or `.txt`)
+- Check for CRLF line endings (use LF instead)
+- Ensure entries are at least six characters long
+- Verify file size is within account limits
+
+## Next steps
+
+With custom datasets configured, you can now:
+
+- Integrate with Microsoft Information Protection for label-based DLP
+- Apply comprehensive DLP policies across all data protection scenarios
+- Monitor and refine datasets based on detection patterns
