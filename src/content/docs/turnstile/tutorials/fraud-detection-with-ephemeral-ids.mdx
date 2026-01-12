@@ -14,37 +14,21 @@ description: >-
   Learn how to implement fraud detection using Turnstile's Ephemeral IDs to identify and block bad actors who rotate IP addresses.
 ---
 
-import { Aside } from "~/components";
+Ephemeral IDs let you detect fraud patterns that evade traditional IP-based detection. This tutorial will show you how to log Ephemeral IDs, detect suspicious patterns, and block bad actors.
 
-Ephemeral IDs let you detect fraud patterns that evade traditional IP-based detection. This tutorial shows how to log Ephemeral IDs, detect suspicious patterns, and block bad actors.
-
-## The problem
-
-Attackers often:
-
-- Create hundreds of fake accounts to abuse promotions
-- Rotate through proxy pools to avoid IP-based rate limiting
-- Use real browsers (not bots) to evade basic bot detection
+Attackers often create hundreds of fake accounts to abuse promotions, rotate through proxy pools to avoid IP-based rate limiting, and use real browsers to evade basic bot detection.
 
 Traditional IP-based detection fails because each request appears to come from a different address. Ephemeral IDs solve this by identifying the underlying client device, even when IP addresses change.
 
 ## Before you begin
 
-- Ephemeral IDs require Enterprise Bot Management with Enterprise Turnstile add-on, or standalone Enterprise Turnstile. [Contact your account team](/turnstile/additional-configuration/ephemeral-id/#availability) to enable this feature.
-- Basic familiarity with Turnstile integration. Refer to [Protect your forms](/turnstile/tutorials/login-pages/) if needed.
+- Ephemeral IDs require [Enterprise Bot Management](/bots/plans/bm-subscription/) with the [Enterprise Turnstile add-on](/turnstile/plans/), or [standalone Enterprise Turnstile](/turnstile/additional-configuration/ephemeral-id/). Contact your account team to enable this feature.
+- You must have basic familiarity with Turnstile integration. Refer to [Protect your forms](/turnstile/tutorials/login-pages/) for more information.
 
-<Aside type="caution" title="Ephemeral IDs are not guaranteed unique">
-	Not every unique device will produce a unique Ephemeral ID. Privacy-focused
-	devices and browsers (such as iPhones and Safari) limit the signals available
-	for fingerprinting, which means multiple legitimate users may share the same
-	Ephemeral ID. Use Ephemeral IDs to detect high-volume abuse patterns, not to
-	uniquely identify individual devices. Always set detection thresholds high
-	enough to avoid false positives.
-</Aside>
-
----
-
-## Step 1: Set up logging
+:::caution[Ephemeral IDs are not guaranteed to be unique]
+Not every unique device will produce a unique Ephemeral ID. Privacy-focused devices and browsers (such as iPhones and Safari) limit the signals available for fingerprinting, which means multiple legitimate users may share the same Ephemeral ID. Use Ephemeral IDs to detect high-volume abuse patterns, not to uniquely identify individual devices. Always set detection thresholds high enough to avoid false positives.
+:::
+## 1. Set up logging
 
 Create a table to store events with Ephemeral IDs.
 
@@ -64,10 +48,7 @@ CREATE TABLE blocked_ephemeral_ids (
     created_at      TIMESTAMPTZ DEFAULT NOW()
 );
 ```
-
----
-
-## Step 2: Extract and log Ephemeral IDs
+## 2. Extract and log Ephemeral IDs
 
 When you call Siteverify, the Ephemeral ID is returned in the `metadata` field. Log it with every protected action.
 
@@ -123,10 +104,7 @@ async function verifyAndLogTurnstile(
 	return { success: true, ephemeralId, isBlocked: false };
 }
 ```
-
----
-
-## Step 3: Use it in your signup flow
+## 3. Use it in your sign up flow
 
 ```typescript
 export async function handleSignup(request: Request, env: Env) {
@@ -173,12 +151,9 @@ export async function handleSignup(request: Request, env: Env) {
 	return new Response("Account created", { status: 201 });
 }
 ```
+## 4. Detect fraud patterns
 
----
-
-## Step 4: Detect fraud patterns
-
-Run this query periodically (for example, every 5 minutes) to find suspicious Ephemeral IDs:
+Run the following query periodically (for example, every five minutes) to find suspicious Ephemeral IDs:
 
 ```sql
 -- Find devices creating multiple accounts in the last hour
@@ -209,10 +184,7 @@ GROUP BY ephemeral_id
 HAVING COUNT(*) > 3
 ON CONFLICT (ephemeral_id) DO NOTHING;
 ```
-
----
-
-## Step 5: Investigate and take action
+## 5. Investigate and take action
 
 When you ban accounts for abuse, find other accounts from the same device:
 
@@ -242,16 +214,15 @@ WHERE id IN (
 
 ---
 
-## Tips
+## Recommendations
 
-<Aside type="note" title="Privacy">
-	Ephemeral IDs are privacy-preserving: scoped to your account, short-lived, and
-	cannot identify individuals across sites.
-</Aside>
+:::note[Privacy]
+Ephemeral IDs are privacy-preserving: scoped to your account, short-lived, and cannot identify individuals across sites.
+:::
 
 - **Log immediately**: Capture the Ephemeral ID right when you call Siteverify.
 - **Silent rejection**: When blocking fraud, return generic errors. Never reveal that you detected the device.
-- **Tune thresholds**: Start conservative (for example, 3+ signups/hour) and adjust based on your traffic.
+- **Tune thresholds**: Start conservative (for example, three sign ups per hour) with the query and adjust based on your traffic.
 - **Combine signals**: Use Ephemeral IDs alongside IP reputation and behavior analytics.
 
 ## Related resources
