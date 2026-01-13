@@ -10,7 +10,16 @@ async function main() {
 	let seenDynamicRedirects = false;
 	let numStaticRedirectsAfterDynamicRedirect = 0;
 
-	const validEndings = ["/", "*", ".xml", ".md", ".json", ".html", ".pdf"];
+	const validEndings = [
+		"/",
+		"*",
+		".xml",
+		".md",
+		".json",
+		".html",
+		".pdf",
+		".zip",
+	];
 
 	const redirectSourceUrls: string[] = [];
 
