@@ -14,6 +14,7 @@
 /sitemap.xml /sitemap-index.xml 301
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
 /learning-paths/ /resources/ 301
+/markdown.zip /llms-full.txt 301
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
