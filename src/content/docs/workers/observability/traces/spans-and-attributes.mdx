@@ -144,6 +144,8 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 #### [`RPC Handler`](/workers/runtime-apis/rpc/)
 
+All RPC requests within a [RPC session](/workers/runtime-apis/rpc/lifecycle/) using `RpcTarget` are nested under the initial session span.
+
 - `cloudflare.jsrpc.method`
 
 #### [`Email Handler`](/email-routing/email-workers/runtime-api/)
