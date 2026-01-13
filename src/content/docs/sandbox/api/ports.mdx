@@ -29,28 +29,73 @@ const response = await sandbox.exposePort(port: number, options: ExposePortOptio
 - `options`:
   - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-sandbox-abc123.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
   - `name` - Friendly name for the port (optional)
+  - `token` - Custom token for stable preview URLs (optional). Must be 1-16 characters containing only lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_). If not provided, a random 16-character token will be generated automatically.
 
 **Returns**: `Promise<ExposePortResponse>` with `port`, `url` (preview URL), `name`
 
 <TypeScriptExample>
-```
+```ts
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
+// Basic usage - auto-generated token (random URL each time)
 await sandbox.startProcess('python -m http.server 8000');
 const exposed = await sandbox.exposePort(8000, { hostname });
 
-console.log('Available at:', exposed.exposedAt);
-// https://8000-abc123.yourdomain.com
+console.log('Available at:', exposed.url);
+// https://8000-sandbox-id-abc123random4567.yourdomain.com
 
-// Multiple services with names
+// Custom token for stable URLs across deployments
 await sandbox.startProcess('node api.js');
-const api = await sandbox.exposePort(3000, { hostname, name: 'api' });
+const api = await sandbox.exposePort(3000, { 
+  hostname, 
+  name: 'api',
+  token: 'my-api-v1' 
+});
 
+console.log('Stable URL:', api.url);
+// https://3000-sandbox-id-my-api-v1.yourdomain.com
+// URL stays the same across container restarts and deployments
+
+// Multiple services with custom tokens
 await sandbox.startProcess('npm run dev');
-const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
+const frontend = await sandbox.exposePort(5173, { 
+  hostname, 
+  name: 'frontend',
+  token: 'dev-ui' 
+});
 ```
 </TypeScriptExample>
+
+#### Custom Tokens for Stable URLs
+
+Use custom tokens to create predictable preview URLs that remain consistent across container restarts and deployments. This is especially useful for:
+
+- Sharing URLs with users or team members
+- Maintaining stable references in production environments
+- Testing with consistent endpoints
+
+<TypeScriptExample>
+```ts
+// With custom token - URL stays the same across restarts
+const { url } = await sandbox.exposePort(8080, {
+  hostname: 'example.com',
+  token: 'my-token-v1'
+});
+// url: https://8080-sandbox-id-my-token-v1.example.com
+
+// Without token - generates random 16-character token (existing behavior)
+const { url } = await sandbox.exposePort(8080, {
+  hostname: 'example.com'
+});
+// url: https://8080-sandbox-id-abc123random4567.example.com
+```
+</TypeScriptExample>
+
+**Token Requirements**:
+- Length: 1-16 characters
+- Characters: Lowercase letters (a-z), numbers (0-9), hyphens (-), underscores (_) only
+- Must be unique per port within the same sandbox
 
 :::note[Local development]
 When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile for each port. See [Expose Services guide](/sandbox/guides/expose-services/#local-development) for details.
