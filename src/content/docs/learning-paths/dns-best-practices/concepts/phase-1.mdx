@@ -34,7 +34,7 @@ Clearly list all domain names to be migrated and define success criteria for the
 
 1. [Create your Cloudflare account](/fundamentals/account/create-account/) if you have not already.  
 2. Familiarize yourself with the Cloudflare DNS dashboard and its features.  
-3. Understand [Cloudflare's record types](/dns/manage-dns-records/reference/dns-record-types/) and how they map from BIND.
+3. Consider the different [DNS record types](/dns/manage-dns-records/reference/dns-record-types/) you can manage on Cloudflare and how they map from BIND.
 
 ## 4. DNSSEC strategy (critical)
 
@@ -50,7 +50,7 @@ Cloudflare supports two main migration approaches when DNSSEC is enabled:
 1. Log in to your registrar and remove the DS records associated with your on-prem BIND DNSSEC keys for each domain.  
 2. Plan to switch nameservers only after resolvers are no longer expecting the old DNSSEC chain.  
 
-*S record TTL: If DNSSEC is active, note the Time To Live (TTL) of your DS records at the parent zone (managed by your registrar). This will determine how long you need to wait after removing DS records. As a rule of thumb, wait at least one full DS TTL and preferably up to 1.5 times the TTL before changing nameservers.  
+*DS record TTL: If DNSSEC is active, note the Time To Live (TTL) of your DS records at the parent zone (managed by your registrar). This will determine how long you need to wait after removing DS records. As a rule of thumb, wait at least one full DS TTL and preferably up to 1.5 times the TTL before changing nameservers.  
 
 For more information about DNSSEC on Cloudflare, refer to [DNSSEC](/dns/dnssec/).
 
