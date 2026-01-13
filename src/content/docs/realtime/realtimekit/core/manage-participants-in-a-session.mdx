@@ -1,7 +1,6 @@
 ---
-title: Manage other participants in a session
+title: Manage Participants in a Session
 pcx_content_type: how-to
-slug: realtime/realtimekit/core/manage-other-participants-in-a-session
 sidebar:
   order: 7
 ---
@@ -10,18 +9,17 @@ import { Render } from "~/components";
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
+:::note[Prerequisites]
+
+The local participant (for example, a host or moderator) must have the required **Host Controls** permissions enabled in their preset. For details, refer to [Preset](/realtime/realtimekit/concepts/preset/).
+:::
+
 Use RealtimeKit host controls to manage other participants in a live session. You can mute audio or video, pin a participant, or remove participants from the session.
 These actions require specific host control permissions enabled in the local participant's [Preset](/realtime/realtimekit/concepts/preset/).
 Before you show UI controls or call these methods, verify that the local participant has the necessary permissions.
 In this guide, the **local participant** refers to the user performing the actions.
 
 <RTKSDKSelector />
-
-## Before you start
-
-### Prerequisites
-
-- The local participant (for example, a host or moderator) must have the required **Host Controls** permissions enabled in their preset. For details, refer to [Preset](/realtime/realtimekit/concepts/preset/).
 
 ### Select a remote participant
 

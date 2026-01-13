@@ -27,7 +27,7 @@ The local user is accessible via `meeting.self` and contains all information and
 
 Access participant identifiers and display information:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Participant identifiers
@@ -112,7 +112,7 @@ meeting.localUser.picture // Display picture URL
 
 Access the local user's media tracks and states:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Media state flags
@@ -221,7 +221,7 @@ meeting.localUser.isMicrophonePermissionGranted // Microphone permission status
 
 Access room state and participant status:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Room state
@@ -374,7 +374,7 @@ meeting.localUser.flags // ParticipantFlags (recorder, hidden)
 
 Mute and unmute the microphone:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Enable audio (unmute)
@@ -443,7 +443,10 @@ let isAudioEnabled = meeting.localUser.audioEnabled
 <RTKCodeSnippet id="mobile-react-native">
 
 ```jsx
-import { useRealtimeKitClient, useRealtimeKitSelector } from "@cloudflare/realtimekit-react-native";
+import {
+	useRealtimeKitClient,
+	useRealtimeKitSelector,
+} from "@cloudflare/realtimekit-react-native";
 import { TouchableHighlight, Text } from "react-native";
 
 function AudioControls() {
@@ -490,7 +493,7 @@ final isAudioEnabled = meeting.localUser.audioEnabled;
 
 Enable and disable the camera:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Enable video
@@ -603,7 +606,7 @@ final isVideoEnabled = meeting.localUser.videoEnabled;
 
 Start and stop screen sharing:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Enable screen share
@@ -732,7 +735,7 @@ meeting.localUser.disableScreenShare();
 
 Update the display name before joining the meeting:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 await meeting.self.setName("New Name");
@@ -805,7 +808,7 @@ Name changes only reflect across all participants if done before joining the mee
 
 ### Get available devices
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Get all media devices
@@ -953,12 +956,12 @@ function DeviceSelector() {
 		<View>
 			<FlatList
 				data={audioDevices}
-				renderItem={({item}) => 
+				renderItem={({ item }) => (
 					<TouchableHighlight onPress={() => handleDeviceChange(item)}>
 						<Text>{item.label}</Text>
 					</TouchableHighlight>
-				}
-				keyExtractor={item => item.deviceId}
+				)}
+				keyExtractor={(item) => item.deviceId}
 			/>
 		</View>
 	);
@@ -995,7 +998,7 @@ final selectedVideoDevice = meeting.localUser.getSelectedVideoDevice();
 
 Switch to a different media device:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Get all devices
@@ -1079,7 +1082,7 @@ meeting.localUser.switchCamera();
 
 ## Display local video
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ### Register video element
 
@@ -1460,6 +1463,7 @@ To stop the screen share:
 ```swift
 meeting.localUser.disableScreenShare()
 ```
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-flutter">
@@ -1518,6 +1522,7 @@ To stop the screen share:
 ```dart
 meeting.localUser.disableScreenShare()
 ```
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-react-native">
@@ -1570,13 +1575,13 @@ Add this key inside the Info.plist of the main App:
 Launch the broadcast extension and enable screen share:
 
 ```js
-meeting.self.enableScreenShare()
+meeting.self.enableScreenShare();
 ```
 
 To stop the screen share:
 
 ```js
-meeting.self.disableScreenShare()
+meeting.self.disableScreenShare();
 ```
 
 </RTKCodeSnippet>
@@ -1587,7 +1592,7 @@ meeting.self.disableScreenShare()
 
 Fires when the local user joins the meeting:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("roomJoined", () => {
@@ -1678,7 +1683,7 @@ Flutter SDK uses a different event model. Monitor `roomJoined` property changes 
 
 Fires when the local user leaves the meeting:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("roomLeft", ({ state }) => {
@@ -1789,7 +1794,7 @@ meeting.addSelfEventListener(MeetingSelfListener());
 
 Fires when video is enabled or disabled:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("videoUpdate", ({ videoEnabled, videoTrack }) => {
@@ -1877,7 +1882,7 @@ Flutter SDK uses a different event model. Monitor `videoEnabled` property change
 
 Fires when audio is enabled or disabled:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("audioUpdate", ({ audioEnabled, audioTrack }) => {
@@ -1961,7 +1966,7 @@ Flutter SDK uses a different event model. Monitor `audioEnabled` property change
 
 Fires when screen sharing starts or stops:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on(
@@ -2077,7 +2082,7 @@ Flutter SDK uses a different event model. Monitor `screenShareEnabled` property 
 
 Fires when the active device changes:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("deviceUpdate", ({ device }) => {
@@ -2201,7 +2206,7 @@ meeting.addSelfEventListener(DeviceChangeListener());
 
 Triggered when the list of available devices changes (device plugged in or out):
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("deviceListUpdate", ({ added, removed, devices }) => {
@@ -2314,7 +2319,7 @@ meeting.addSelfEventListener(DeviceListListener(meeting));
 
 Monitor your own network quality:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on(
@@ -2464,7 +2469,7 @@ Flutter SDK does not currently expose network quality scores.
 
 Triggered when permissions are updated dynamically:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Listen to specific permission updates
@@ -2534,7 +2539,7 @@ Flutter SDK uses a different permissions model. Refer to the Flutter-specific do
 
 Triggered when media permissions are denied or media capture fails:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("mediaPermissionError", ({ message, kind }) => {
@@ -2674,7 +2679,7 @@ final hasMicPermission = meeting.localUser.isMicrophonePermissionGranted;
 
 For meetings with waiting room enabled:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 Monitor the `roomState` property for waitlist status. The value `'waitlisted'` indicates the user is in the waiting room.
 
@@ -2794,7 +2799,7 @@ extension MeetingViewModel: RtkSelfEventListener {
 
 Pin or unpin yourself in the meeting (requires appropriate permissions):
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 Web SDK does not currently support pinning the local participant.
 
@@ -2847,7 +2852,7 @@ Flutter SDK does not currently support pinning the local participant.
 
 Update video or screenshare resolution at runtime:
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 Web SDK does not currently expose runtime constraint updates for local participant.
 
