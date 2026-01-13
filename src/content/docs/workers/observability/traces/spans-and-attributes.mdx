@@ -440,14 +440,12 @@ All RPC requests within a [RPC session](/workers/runtime-apis/rpc/lifecycle/) us
 
 ### [Durable Object API](/durable-objects/)
 
-When a Durable Object is invoked, the Worker invocation span will include:
-
-- `cloudflare.durable_object.queue_time_us`
-
 #### `durable_object_subrequest`
 
-- `cloudflare.durable_object.startup_duration_ms`
+- `cloudflare.durable_object.queue_time_us`
+- `cloudflare.durable_object.startup_time_ms`
 - `cloudflare.durable_object.constructor_invoked`
+- `cloudflare.durable_object.constructor_time_ms`
 - `cloudflare.durable_object.cpu_time_ms`
 - `cloudflare.durable_object.wall_time_ms`
 
