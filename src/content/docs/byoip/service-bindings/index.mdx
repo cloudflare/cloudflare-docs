@@ -11,7 +11,7 @@ sidebar:
 description: In IP address management, service binding refers to the association of IPs to specific Cloudflare services. Review the available options and the API endpoints to set up service bindings.
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, Render } from "~/components";
 
 In IP address management, service bindings are mappings that control whether traffic destined for a given IP address is routed to [Magic Transit](/magic-transit/), the CDN pipeline [^1], or the Spectrum pipeline [^2].
 
@@ -41,7 +41,9 @@ When a service binding of type `CDN` is applied, once the change has propagated 
 
 ### Spectrum
 
-When a service binding of type `Spectrum` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any TCP/UDP/HTTP requests are directed into the Spectrum pipeline for Layer 4 or Layer 7 processing.
+When a service binding of type `Spectrum` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any TCP/HTTP requests are directed into the Spectrum pipeline for Layer 4 or Layer 7 processing.
+
+<Render file="spectrum-udp-byoip-limitation" product="byoip" />
 
 ### Magic Transit
 

@@ -68,6 +68,22 @@ Yes. If your webpage or PDF requires a font that is not pre-installed, you can l
 
 ---
 
+## Security & Data Handling
+
+### Does Cloudflare store or retain the HTML content I submit for rendering?
+
+No. Cloudflare processes content ephemerally and does not retain customer-submitted HTML or generated output (such as PDFs or screenshots) beyond what is required to perform the rendering operation. Once the response is returned, the content is immediately discarded from the rendering environment.
+
+This applies to both the [REST API](/browser-rendering/rest-api/) and [Workers Bindings](/browser-rendering/workers-bindings/) (using `@cloudflare/puppeteer` or `@cloudflare/playwright`).
+
+### Is there any temporary caching of submitted content?
+
+For the [REST API](/browser-rendering/rest-api/), generated content is cached by default for five seconds (configurable up to one day via the `cacheTTL` parameter, or set to `0` to disable caching). This cache protects against repeated requests for the same URL by the same account. Customer-submitted HTML content itself is not cached.
+
+For [Workers Bindings](/browser-rendering/workers-bindings/), no caching is used. Content exists only in memory for the duration of the rendering operation and is discarded immediately after the response is returned.
+
+---
+
 ## Errors & Troubleshooting
 
 ### `Cannot read properties of undefined (reading 'fetch')`

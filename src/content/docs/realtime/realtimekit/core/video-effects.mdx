@@ -1,12 +1,13 @@
 ---
 pcx_content_type: content
-title: Video Background
-slug: realtime/realtimekit/core/video-background
+title: Video Effects
 sidebar:
   order: 14
 ---
 
-import { Tabs, TabItem, PackageManagers } from "~/components";
+import { PackageManagers } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 Add video background effects and blur to participant video feeds in your RealtimeKit meetings using the Core SDK.
 
@@ -14,8 +15,9 @@ Add video background effects and blur to participant video feeds in your Realtim
 If you are using the `rtk-meeting` component with UI Kit and prefer a higher-level abstraction, refer to [UI Kit Addons](/realtime/realtimekit/ui-kit/addons/) instead.
 :::
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKSDKSelector />
+
+<RTKCodeSnippet id="web-web-components">
 
 ## Installation
 
@@ -116,8 +118,8 @@ const videoBackgroundTransformer =
 	});
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-react">
 
 ## Installation
 
@@ -226,8 +228,8 @@ const transformer = await RealtimeKitVideoBackgroundTransformer.init({
 });
 ```
 
-</TabItem>
-<TabItem label="Angular">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="web-angular">
 
 ## Installation
 
@@ -338,8 +340,8 @@ this.videoBackgroundTransformer =
 	});
 ```
 
-</TabItem>
-<TabItem label="Android">
+</RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-android">
 
 ## Installation
 
@@ -422,5 +424,4 @@ val meeting = RealtimeKitMeetingBuilder
   .build(activity)
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>

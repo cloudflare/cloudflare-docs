@@ -4,17 +4,17 @@
 
 # More dev-specific files
 
-/.github/ @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
-/.github/CODEOWNERS @cloudflare/pcx-technical-writing @cloudflare/content-engineering @kodster28
+/.github/ @cloudflare/content-engineering @kodster28
+/.github/CODEOWNERS @cloudflare/pcx-technical-writing @kodster28
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @kodster28
-/src/components/ @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
-*.js @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
-*.ts @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
-*.astro @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
-/src/schemas/tags.ts @cloudflare/pcx-content-engineering @cloudflare/content-engineering @kodster28
-/src/util/api.ts @cloudflare/pcx-content-engineering @cloudflare/content-engineering @pedrosousa @kodster28
-/src/content/workers-ai-models/ @craigsdennis @cloudflare/pcx-content-engineering @cloudflare/content-engineering @cloudflare/pcx-technical-writing @kodster28
-/public/__redirects @cloudflare/pcx-content-engineering @cloudflare/content-engineering @cloudflare/pcx-technical-writing
+/src/components/ @cloudflare/content-engineering @kodster28
+*.js @cloudflare/content-engineering @kodster28
+*.ts @cloudflare/content-engineering @kodster28
+*.astro @cloudflare/content-engineering @kodster28
+/src/schemas/tags.ts @cloudflare/content-engineering @kodster28
+/src/util/api.ts @cloudflare/content-engineering @pedrosousa @kodster28
+/src/content/workers-ai-models/ @craigsdennis @cloudflare/content-engineering @cloudflare/pcx-technical-writing @kodster28
+/public/__redirects @cloudflare/content-engineering @cloudflare/pcx-technical-writing
 
 
 # AI
@@ -22,7 +22,7 @@
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/ai-agents
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
 /src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @cloudflare/pcx-technical-writing
-/src/content/docs/workers-ai/ @rita3ko @craigsdennis @markdembo @mchenco @cloudflare/pcx-technical-writing
+/src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @cloudflare/pcx-technical-writing
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
 /src/content/partials/vectorize/ @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
 /src/content/partials/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @cloudflare/pcx-technical-writing
@@ -38,7 +38,7 @@
 
 # Analytics & Logs
 
-/src/content/docs/analytics/ @jimhawkridge @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/docs/analytics/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
 /src/content/docs/data-localization/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
 /src/content/docs/logs/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
 
@@ -51,7 +51,7 @@
 
 # Browser Rendering API
 
-/src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @celso @danielgek @kathayl @ToriLindsay
+/src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @celso @kathayl @ToriLindsay
 
 # Changelogs
 
@@ -104,7 +104,7 @@
 /src/content/release-notes/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/docs/ai-crawl-control/ @oxyjun @cloudflare/pcx-technical-writing
-/src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @lambrospetrou @mikenomitch @cloudflare/pcx-technical-writing @cloudflare/workers-runtime-1
+/src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @lambrospetrou @mikenomitch @cloudflare/pcx-technical-writing
 /src/content/partials/durable-objects/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
 /src/content/release-notes/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/email-routing/ @cloudflare/pcx-technical-writing
@@ -112,14 +112,14 @@
 /src/content/release-notes/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/release-notes/durable-objects.yaml @elithrar @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
-/src/content/docs/images/ @ToriLindsay @cloudflare/pcx-technical-writing @renandincer @third774 @deanna-cf
+/src/content/docs/images/ @ToriLindsay @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/pcx-technical-writing
 /src/content/partials/pages/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
 /src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/pcx-technical-writing
 /src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/pcx-technical-writing
-/src/content/docs/kv/ @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
-/src/content/release-notes/kv.yaml @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
-/src/content/partials/kv/ @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
+/src/content/docs/kv/ @elithrar @thomasgauvin @oxyjun @cloudflare/pcx-technical-writing
+/src/content/release-notes/kv.yaml @elithrar @thomasgauvin @oxyjun @cloudflare/pcx-technical-writing
+/src/content/partials/kv/ @elithrar @thomasgauvin @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/queues/ @elithrar @jonesphillip @harshil1712 @mia303 @cloudflare/pcx-technical-writing
 /src/content/partials/queues/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
 /src/content/release-notes/queues.yaml @elithrar @jonesphillip @cloudflare/pcx-technical-writing
@@ -132,16 +132,16 @@
 /public/realtime/ @cloudflare/pcx-technical-writing @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
 /src/content/docs/stream/ @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/release-notes/stream.yaml @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing
-/src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @cloudflare/workers-runtime-1 @mattietk
-/src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @cloudflare/workers-runtime-1 @mattietk
-/src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @cloudflare/workers-runtime-1 @mattietk
+/src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @mattietk
+/src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @mattietk
+/src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @mattietk
 /src/content/release-notes/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/deploy-config @cloudflare/pcx-technical-writing @irvinebroque @mikenomitch @mattietk
-/src/content/docs/zaraz/ @ToriLindsay @kathayl @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
-/src/content/release-notes/zaraz.yaml @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
+/src/content/docs/zaraz/ @ToriLindsay @kathayl @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
+/src/content/release-notes/zaraz.yaml @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @cloudflare/pcx-technical-writing @yomna-shousha
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
-/src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @cloudflare/pcx-technical-writing @cloudflare/workers-runtime-1
-/src/content/docs/pages/framework-guides/ @igorminar @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/pcx-technical-writing
+/src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @cloudflare/pcx-technical-writing
+/src/content/docs/pages/framework-guides/ @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @nevikashah @WalshyDev @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
@@ -179,8 +179,8 @@
 
 # MoQ
 
-/src/content/docs/moq/ @englishm @renandincer @nils-ohlmeier @cloudflare/pcx-technical-writing
-/src/content/products/moq.yml @englishm @renandincer @nils-ohlmeier @cloudflare/pcx-technical-writing
+/src/content/docs/moq/ @renandincer @nils-ohlmeier @cloudflare/pcx-technical-writing
+/src/content/products/moq.yml @renandincer @nils-ohlmeier @cloudflare/pcx-technical-writing
 
 # Performance products
 
@@ -201,8 +201,8 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 
 # Radar
 
-/src/content/docs/radar/ @tiagoad @andre-j3sus @cloudflare/pcx-technical-writing
-/src/content/release-notes/radar.yaml @tiagoad @andre-j3sus @cloudflare/pcx-technical-writing
+/src/content/docs/radar/ @andre-j3sus @cloudflare/pcx-technical-writing
+/src/content/release-notes/radar.yaml @andre-j3sus @cloudflare/pcx-technical-writing
 
 # Reference architecture
 
@@ -225,13 +225,13 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 
 # Support
 
-/src/content/docs/support/ @zeinjaber @ngayerie @cloudflare/pcx-technical-writing @cloudflare/customer-support
-/src/assets/images/support/ @zeinjaber @ngayerie @cloudflare/pcx-technical-writing @cloudflare/customer-support
-/src/content/docs/billing/ @zeinjaber @ngayerie @simon-says @cloudflare/customer-support @cloudflare/pcx-technical-writing
+/src/content/docs/support/ @cloudflare/pcx-technical-writing @cloudflare/customer-support
+/src/assets/images/support/ @cloudflare/pcx-technical-writing @cloudflare/customer-support
+/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/pcx-technical-writing
 
 # Turnstile
 
-/src/content/docs/turnstile/ @migueldemoura @punkeel @worenga @patriciasantaana @cloudflare/pcx-technical-writing
+/src/content/docs/turnstile/ @migueldemoura @punkeel @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Waiting Room
 
@@ -242,4 +242,4 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 /src/content/docs/web-analytics/ @angelampcosta @cloudflare/pcx-technical-writing
 
 # AI Prompts for Cloudflare Workers development
-/public/workers/prompts/ @jahands @Maximo-Guk @jbwcloudflare @cloudflare/pcx-technical-writing
+/public/workers/prompts/ @jahands @Maximo-Guk @cloudflare/pcx-technical-writing
