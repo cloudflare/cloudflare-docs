@@ -9,7 +9,7 @@ import { Details, Render, TabItem, Tabs, APIRequest } from "~/components";
 
 <Render file="warp/external-disconnect-availability" product="cloudflare-one" />
 
-The External Emergency Disconnect feature allows organizations to remotely disconnect their fleet of WARP clients using their own infrastructure, independent of the standard Cloudflare control plane. This capability mitigates single point of failure risk and ensures continuity of control in case Cloudflare services are unavailable.
+The External Emergency Disconnect feature allows organizations to remotely disconnect and reconnect their fleet of WARP clients using their own infrastructure, independent of Cloudflare's infrastructure. For example, in the event of a [Cloudflare network outage](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/#use-cases) you ensure that you can still manage your devices even if Cloudflare’s systems are down or unreachable.
 
 When External Emergency Disconnect is enabled, WARP clients will periodically poll a customer-hosted HTTPS endpoint. A client will only change its connection state if it receives a valid JSON payload with the new state. Any failure to successfully retrieve the state (such as endpoint unreachability, invalid certificate fingerprint, or an improperly structured payload) will not cause a state change on the client.
 
