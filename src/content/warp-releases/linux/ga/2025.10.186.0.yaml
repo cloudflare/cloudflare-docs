@@ -8,7 +8,7 @@ releaseNotes: |-
   - Linux [disk encryption posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/disk-encryption/) now supports non-filesystem encryption types like `dm-crypt`.
   - [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode) now supports transparent HTTP proxying in addition to CONNECT-based proxying.
   - Fixed an issue where the GUI becomes unresponsive when the **Re-Authenticate in browser** button is clicked.
-  -  Added a new feature to manage WARP client connectivity for all devices using an [external signal](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/). This feature allows administrators to send a global signal from an on prem HTTPS endpoint that force disconnects or reconnects all WARP clients in an account based on configuration set on the endpoint.
+  -  Added a new feature to manage WARP client connectivity for all devices using an [external signal](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/). This feature allows administrators to send a global signal from an on-premises HTTPS endpoint that force disconnects or reconnects all WARP clients in an account based on configuration set on the endpoint.
 version: 2025.10.186.0
 releaseDate: 2026-01-13T01:53:14.425Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/noble-arm/version/2025.10.186.0
