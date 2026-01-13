@@ -112,20 +112,18 @@ Wrangler supports two different versions of the Images API:
 - A high-fidelity version that supports all features that are available through the Images API. This is the same version that Cloudflare runs globally in production.
 - A low-fidelity offline version that supports only a subset of features, such as resizing and rotation.
 
-To test the high-fidelity version of Images, you can run `wrangler dev`:
+To test the low-fidelity version of Images, you can run `wrangler dev`:
 
 ```txt
 npx wrangler dev
 ```
 
-This creates a local-only environment that mirrors the production environment where Cloudflare runs the Images API. You can test your Worker with all available transformation features before deploying to production.
+Currently, this version supports only `width`, `height`, `rotate`, and `format`.
 
-To test the low-fidelity offline version of Images, add the `--experimental-images-local-mode` flag:
+To test the high-fidelity remote version of Images, you can use the `--remote` flag:
 
 ```txt
-npx wrangler dev --experimental-images-local-mode
+npx wrangler dev --remote
 ```
-
-Currently, this version supports only `width`, `height`, `rotate`, and `format`.
 
 When testing with the [Workers Vitest integration](/workers/testing/vitest-integration/), the low-fidelity offline version is used by default, to avoid hitting the Cloudflare API in tests.
