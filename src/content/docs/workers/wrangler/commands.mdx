@@ -966,9 +966,23 @@ wrangler types [<PATH>] [OPTIONS]
 
 :::
 
+### Multi-environment support
+
+By default, `wrangler types` generates types for bindings from **all environments** defined in your configuration file. This ensures your generated `Env` type includes all bindings that might be used across different deployment environments (such as staging and production), preventing TypeScript errors when accessing environment-specific bindings.
+
+For example, if you have a KV namespace binding only in production and an R2 bucket binding only in staging, both will be included in the generated types.
+
+If the same binding name exists with different types across environments (for example, `CACHE` is a KV namespace in one environment but an R2 bucket in another), Wrangler will throw an error to prevent type conflicts.
+
+To generate types for only a specific environment, use the `--env` flag.
+
+### Options
+
 - `PATH` <Type text="string" /> <MetaInfo text="(default: `./worker-configuration.d.ts`)" />
   - The path to where types for your Worker will be written.
   - The path must have a `d.ts` extension.
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
+  - Generate types for bindings in a specific environment only, rather than aggregating bindings from all environments.
 - `--env-interface` <Type text="string" /> <MetaInfo text="(default: `Env`)" />
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
