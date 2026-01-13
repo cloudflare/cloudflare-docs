@@ -378,19 +378,7 @@ Also refer to [KV binding docs](/kv/concepts/kv-bindings/#use-kv-bindings-when-d
     const flag = await env.FEATURE_FLAGS.get("new_checkout");
     ```
 
-4.  Use the `put()` method on `USERS_NOTIFICATION_CONFIG` to create a new key-value pair. You will add a new key `user_2` with value `disabled` to your KV namespace.
-
-    ```ts
-    let value = await env.USERS_NOTIFICATION_CONFIG.put("user_2", "disabled");
-    ```
-
-5.  Use the KV `get()` method to fetch the data you stored in your KV namespace. You will fetch the value of the key `user_2` from your KV namespace.
-
-        ```ts
-        let value = await env.USERS_NOTIFICATION_CONFIG.get("user_2");
-        ```
-
-    </Steps>
+</Steps>
 
 Your Worker code should look like this:
 
