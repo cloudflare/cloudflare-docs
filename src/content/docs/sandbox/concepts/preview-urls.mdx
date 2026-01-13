@@ -18,21 +18,56 @@ const { hostname } = new URL(request.url);
 await sandbox.startProcess("python -m http.server 8000");
 const exposed = await sandbox.exposePort(8000, { hostname });
 
-console.log(exposed.exposedAt);
-// Production: https://8000-abc123.yourdomain.com
+console.log(exposed.url);
+// Production: https://8000-sandbox-id-abc123random4567.yourdomain.com
 // Local dev: http://localhost:8787/...
 ```
 
 ## URL Format
 
-**Production**: `https://{port}-{sandbox-id}.yourdomain.com`
+**Production**: `https://{port}-{sandbox-id}-{token}.yourdomain.com`
 
-- Port 8080: `https://8080-abc123.yourdomain.com`
-- Port 3000: `https://3000-abc123.yourdomain.com`
+- With auto-generated token: `https://8080-abc123-random16chars12.yourdomain.com`
+- With custom token: `https://8080-abc123-my-api-v1.yourdomain.com`
 
 **Local development**: `http://localhost:8787/...`
 
-Preview URLs remain stable while a port is exposed and can be shared during that time. However, if you unexpose and re-expose a port, a new random token is generated and the URL changes. For persistent URLs, keep ports exposed for the duration you need them accessible.
+## Token Types
+
+### Auto-generated tokens (default)
+
+When no custom token is specified, a random 16-character token is generated:
+
+```typescript
+const exposed = await sandbox.exposePort(8000, { hostname });
+// https://8000-sandbox-id-abc123random4567.yourdomain.com
+```
+
+URLs with auto-generated tokens change when you unexpose and re-expose a port.
+
+### Custom tokens for stable URLs
+
+For production deployments or shared URLs, specify a custom token to maintain consistency across container restarts:
+
+```typescript
+const stable = await sandbox.exposePort(8000, { 
+  hostname, 
+  token: 'api-v1' 
+});
+// https://8000-sandbox-id-api-v1.yourdomain.com
+// Same URL every time ✓
+```
+
+**Token requirements:**
+- 1-16 characters long
+- Lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_) only
+- Must be unique within each sandbox
+
+**Use cases for custom tokens:**
+- Production APIs with stable endpoints
+- Sharing demo URLs with external users
+- Documentation with consistent examples
+- Integration testing with predictable URLs
 
 ## ID Case Sensitivity
 
@@ -45,7 +80,7 @@ Preview URLs extract the sandbox ID from the hostname to route requests. Since h
 const sandbox = getSandbox(env.Sandbox, 'MyProject-123');
 // Durable Object ID: "MyProject-123"
 await sandbox.exposePort(8080, { hostname });
-// Preview URL: 8000-myproject-123.yourdomain.com
+// Preview URL: 8080-myproject-123-token123.yourdomain.com
 // Routes to: "myproject-123" (different DO - doesn't exist!)
 ```
 
@@ -56,7 +91,7 @@ const sandbox = getSandbox(env.Sandbox, 'MyProject-123', {
   normalizeId: true
 });
 // Durable Object ID: "myproject-123" (lowercased)
-// Preview URL: 8000-myproject-123.yourdomain.com
+// Preview URL: 8080-myproject-123-token123.yourdomain.com
 // Routes to: "myproject-123" (same DO - works!)
 ```
 
@@ -101,9 +136,9 @@ await sandbox.startProcess("node admin.js"); // Port 3001
 const api = await sandbox.exposePort(3000, { hostname, name: "api" });
 const admin = await sandbox.exposePort(3001, { hostname, name: "admin" });
 
-// Each gets its own URL:
-// https://3000-abc123.yourdomain.com
-// https://3001-abc123.yourdomain.com
+// Each gets its own URL with unique tokens:
+// https://3000-abc123-random16chars01.yourdomain.com
+// https://3001-abc123-random16chars02.yourdomain.com
 ```
 
 ## What Works
@@ -131,10 +166,10 @@ const { hostname } = new URL(request.url);
 
 // Start a WebSocket server
 await sandbox.startProcess("bun run ws-server.ts 8080");
-const { exposedAt } = await sandbox.exposePort(8080, { hostname });
+const { url } = await sandbox.exposePort(8080, { hostname });
 
 // Clients connect using WebSocket protocol
-// Browser: new WebSocket('wss://8080-abc123.yourdomain.com')
+// Browser: new WebSocket('wss://8080-abc123-token123.yourdomain.com')
 
 // Your Worker routes automatically
 export default {
@@ -155,9 +190,10 @@ Preview URLs are publicly accessible by default, but require a valid access toke
 
 **Built-in security**:
 
-- **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token.yourdomain.com`)
+- **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token456.yourdomain.com`)
 - **HTTPS in production** - All traffic is encrypted with automatic TLS
-- **Unpredictable URLs** - Tokens are randomly generated and difficult to guess
+- **Unpredictable URLs** - Auto-generated tokens are randomly generated and difficult to guess
+- **Token collision prevention** - Custom tokens are validated to ensure uniqueness within each sandbox
 
 **Add application-level authentication**:
 
