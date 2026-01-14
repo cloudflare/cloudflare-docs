@@ -47,6 +47,8 @@ In networking, the default route dictates where traffic flows when no other spec
 
 The following table outlines the supported routing combinations.
 
+**TODO: Clean up and merge tables**
+
 | Cisco AnyConnect | Cloudflare WARP | Compatibility |
 |------------------|-----------------|---------------|
 | Tunnel Network List Below <br /> `tunnelspecified` | Include IPs and domains | ✅ Supported |
@@ -170,6 +172,8 @@ This section only applies if you are using [Gateway with WARP](#gateway-with-war
 The [Gateway with WARP](#gateway-with-warp) and [Secure Web Gateway without DNS Filtering (Tunnel only)](#secure-web-gateway-without-dns-filtering-tunnel-only) modes both provide IP filtering capabilities.
 
 If you are using Gateway with WARP or Secure Web Gateway without DNS Filtering (Tunnel only) mode for your WARP deployment, you must appropriately configure both the WARP client and the Cisco AnyConnect client to avoid conflicts.
+
+**TODO: Clean up and merge tables**
 
 <Render file="warp/cisco/default-route-routing-table" product="cloudflare-one" />
 
@@ -465,6 +469,8 @@ The following steps must be taken in your Cloudflare One configuration to ensure
 
 Set your WARP Split Tunnels mode to `Include IPs and domains` or `Exclude IPs and domains` based on your [routing preference](/cloudflare-one/team-and-resources/devices/warp/deployment/cisco/#2-warp-mode-decision-matrix). Avoid [tunnel-in-a-tunnel](/cloudflare-one/team-and-resources/devices/warp/deployment/cisco/#supported-routing-combinations) conflicts.
 
+**TODO: Clean up and merge tables**
+
 <Render file="warp/cisco/default-route-routing-table" product="cloudflare-one" />
 
 <Render file="warp/change-split-tunnels-mode" product="cloudflare-one" />
@@ -503,6 +509,8 @@ No changes are needed to your existing DNS provider as Cloudflare will not be ha
 TODO: Need instructions for this section.
 
 Set your AnyConnect client to Split tunnel or Full tunnel based on your [routing preference](/cloudflare-one/team-and-resources/devices/warp/deployment/cisco/#2-warp-mode-decision-matrix). Avoid [tunnel-in-a-tunnel](/cloudflare-one/team-and-resources/devices/warp/deployment/cisco/#supported-routing-combinations) conflicts.
+
+**TODO: Clean up and merge tables**
 
 <Render file="warp/cisco/default-route-routing-table" product="cloudflare-one" />
 
