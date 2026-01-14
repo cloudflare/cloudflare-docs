@@ -63,7 +63,7 @@ The asset manifest is a ledger which keeps track of files we want to use in our 
 
 The [manifest upload request](/api/resources/workers/subresources/scripts/subresources/assets/subresources/upload/methods/create/) describes each file which we intend to upload. Each file is its own key representing the file path and name, and is an object which contains metadata about the file.
 
-`hash` represents a 32 hexadecimal character hash of the file, while `size` is the size (in bytes) of the file.
+`hash` represents a 32 hexadecimal character hash of the file contents with the file extension. `size` is the size (in bytes) of the file.
 
 <Tabs syncKey="workers-vs-platforms" IconComponent={Icon}>
 <TabItem icon="workers" label="Workers">
