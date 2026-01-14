@@ -55,7 +55,7 @@ export default {
 
     // 4. Preview URL is now available (public by default)
     console.log('Server accessible at:', exposed.exposedAt);
-    // Production: https://8000-abc123.yourdomain.com
+    // Production: https://8000-abc123-randomtoken123.yourdomain.com
     // Local dev: http://localhost:8787/...
 
     return Response.json({ url: exposed.exposedAt });
@@ -73,7 +73,7 @@ When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile f
 :::
 
 :::caution[Uppercase sandbox IDs don't work with preview URLs]
-Preview URLs extract the sandbox ID from the hostname, which is always lowercase (e.g., `8000-myproject-123.yourdomain.com`). If you created your sandbox with an uppercase ID like `"MyProject-123"`, the URL routes to `"myproject-123"` (a different Durable Object), making your sandbox unreachable.
+Preview URLs extract the sandbox ID from the hostname, which is always lowercase (e.g., `8000-myproject-123-token.yourdomain.com`). If you created your sandbox with an uppercase ID like `"MyProject-123"`, the URL routes to `"myproject-123"` (a different Durable Object), making your sandbox unreachable.
 
 To fix this, use `normalizeId: true` when creating sandboxes for port exposure:
 
@@ -87,6 +87,42 @@ This lowercases the ID during creation so it matches preview URL routing. Withou
 
 See [Sandbox options](/sandbox/configuration/sandbox-options/#normalizeid) for details.
 :::
+
+## Stable URLs with custom tokens
+
+By default, each port gets a random token that changes when you re-expose the port. For stable URLs that persist across deployments, use custom tokens:
+
+<TypeScriptExample>
+```
+// Extract hostname from request
+const { hostname } = new URL(request.url);
+
+// Custom token - URL stays the same across restarts/deployments
+const api = await sandbox.exposePort(8080, { 
+  hostname, 
+  token: 'production_api',
+  name: 'api'
+});
+console.log('Stable API URL:', api.exposedAt);
+// Always: https://8080-abc123-production_api.yourdomain.com
+
+// Without token - generates random token each time
+const dev = await sandbox.exposePort(3001, { hostname, name: 'dev' });
+console.log('Random URL:', dev.exposedAt);  
+// Changes: https://3001-abc123-abc123random4567.yourdomain.com
+```
+</TypeScriptExample>
+
+**Custom token requirements:**
+- 1-16 characters 
+- Only lowercase letters (a-z), numbers (0-9), and underscores (_)
+- Must be unique per sandbox (cannot reuse tokens for different ports)
+
+**Use cases for custom tokens:**
+- Production services that need stable URLs
+- Sharing URLs with team members
+- Webhook endpoints that cannot change
+- Documentation links
 
 ## Name your exposed ports
 
@@ -330,12 +366,37 @@ See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#norm
 
 ## Preview URL Format
 
-**Production**: `https://{port}-{sandbox-id}.yourdomain.com`
+**Production**: `https://{port}-{sandbox-id}-{token}.yourdomain.com`
 
-- Port 8080: `https://8080-abc123.yourdomain.com`
-- Port 5173: `https://5173-abc123.yourdomain.com`
+- Port 8080: `https://8080-abc123-randomtoken123.yourdomain.com`
+- Port 5173: `https://5173-abc123-anothertokenabc.yourdomain.com`
 
 **Local development**: `http://localhost:8787/...`
+
+### Token Types
+
+Each exposed port includes a unique token in the URL for security:
+
+- **Random tokens** (default): Automatically generated 16-character tokens
+- **Custom tokens**: Use your own tokens for stable URLs across deployments
+
+<TypeScriptExample>
+```
+// Custom token for stable URLs
+const api = await sandbox.exposePort(8080, { 
+  hostname, 
+  token: 'my_api_v1',
+  name: 'api' 
+});
+// URL: https://8080-abc123-my_api_v1.yourdomain.com
+
+// Random token (default)
+const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
+// URL: https://5173-abc123-abc123random4567.yourdomain.com
+```
+</TypeScriptExample>
+
+Custom tokens must be 1-16 characters containing only lowercase letters (a-z), numbers (0-9), and underscores (_).
 
 **Note**: Port 3000 is reserved for the internal Bun server and cannot be exposed.
 

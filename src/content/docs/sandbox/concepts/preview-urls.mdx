@@ -19,24 +19,43 @@ await sandbox.startProcess("python -m http.server 8000");
 const exposed = await sandbox.exposePort(8000, { hostname });
 
 console.log(exposed.exposedAt);
-// Production: https://8000-abc123.yourdomain.com
+// Production: https://8000-abc123-randomtoken123.yourdomain.com
 // Local dev: http://localhost:8787/...
 ```
 
 ## URL Format
 
-**Production**: `https://{port}-{sandbox-id}.yourdomain.com`
+**Production**: `https://{port}-{sandbox-id}-{token}.yourdomain.com`
 
-- Port 8080: `https://8080-abc123.yourdomain.com`
-- Port 3000: `https://3000-abc123.yourdomain.com`
+- Port 8080: `https://8080-abc123-randomtoken123.yourdomain.com`
+- Port 3000: `https://3000-abc123-anothertokenabc.yourdomain.com`
 
 **Local development**: `http://localhost:8787/...`
 
-Preview URLs remain stable while a port is exposed and can be shared during that time. However, if you unexpose and re-expose a port, a new random token is generated and the URL changes. For persistent URLs, keep ports exposed for the duration you need them accessible.
+### Token Types
+
+**Random tokens** (default): If you do not provide a custom token, each exposed port gets a unique, randomly generated 16-character token. These URLs remain stable while a port is exposed, but change if you unexpose and re-expose.
+
+**Custom tokens**: You can provide a custom token for stable URLs that persist across deployments and restarts:
+
+```typescript
+// Custom token - URL stays consistent 
+const stable = await sandbox.exposePort(8080, { 
+  hostname, 
+  token: 'my_app_v1' 
+});
+// URL: https://8080-abc123-my_app_v1.yourdomain.com
+
+// Without token - generates random token
+const random = await sandbox.exposePort(8080, { hostname });
+// URL: https://8080-abc123-abc123random4567.yourdomain.com
+```
+
+Custom tokens must be 1-16 characters containing only lowercase letters (a-z), numbers (0-9), and underscores (_).
 
 ## ID Case Sensitivity
 
-Preview URLs extract the sandbox ID from the hostname to route requests. Since hostnames are case-insensitive (per RFC 3986), they're always lowercased: `8080-MyProject-123.yourdomain.com` becomes `8080-myproject-123.yourdomain.com`.
+Preview URLs extract the sandbox ID from the hostname to route requests. Since hostnames are case-insensitive (per RFC 3986), they're always lowercased: `8080-MyProject-123-token.yourdomain.com` becomes `8080-myproject-123-token.yourdomain.com`.
 
 **The problem**: If you create a sandbox with `"MyProject-123"`, it exists as a Durable Object with that exact ID. But the preview URL routes to `"myproject-123"` (lowercased from the hostname). These are different Durable Objects, so your sandbox is unreachable via preview URL.
 
@@ -45,7 +64,7 @@ Preview URLs extract the sandbox ID from the hostname to route requests. Since h
 const sandbox = getSandbox(env.Sandbox, 'MyProject-123');
 // Durable Object ID: "MyProject-123"
 await sandbox.exposePort(8080, { hostname });
-// Preview URL: 8000-myproject-123.yourdomain.com
+// Preview URL: 8000-myproject-123-token123.yourdomain.com
 // Routes to: "myproject-123" (different DO - doesn't exist!)
 ```
 
@@ -56,7 +75,7 @@ const sandbox = getSandbox(env.Sandbox, 'MyProject-123', {
   normalizeId: true
 });
 // Durable Object ID: "myproject-123" (lowercased)
-// Preview URL: 8000-myproject-123.yourdomain.com
+// Preview URL: 8000-myproject-123-token123.yourdomain.com
 // Routes to: "myproject-123" (same DO - works!)
 ```
 
@@ -102,8 +121,8 @@ const api = await sandbox.exposePort(3000, { hostname, name: "api" });
 const admin = await sandbox.exposePort(3001, { hostname, name: "admin" });
 
 // Each gets its own URL:
-// https://3000-abc123.yourdomain.com
-// https://3001-abc123.yourdomain.com
+// https://3000-abc123-token123.yourdomain.com
+// https://3001-abc123-token456.yourdomain.com
 ```
 
 ## What Works
@@ -134,7 +153,7 @@ await sandbox.startProcess("bun run ws-server.ts 8080");
 const { exposedAt } = await sandbox.exposePort(8080, { hostname });
 
 // Clients connect using WebSocket protocol
-// Browser: new WebSocket('wss://8080-abc123.yourdomain.com')
+// Browser: new WebSocket('wss://8080-abc123-token123.yourdomain.com')
 
 // Your Worker routes automatically
 export default {
