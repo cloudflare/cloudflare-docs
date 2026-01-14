@@ -1,0 +1,57 @@
+---
+title: New guide for using Dynamic Workers with Durable Objects storage
+description: Avoid subrequest limits when using dynamic workers with Durable Objects.
+products:
+  - durable-objects
+  - workers
+date: 2026-01-14
+---
+
+A new [best practices guide](/durable-objects/best-practices/dynamic-workers-with-storage/) is now available for developers building platforms that execute untrusted user code with Durable Objects storage access. This guide helps you avoid hitting subrequest limits while maintaining high performance.
+
+**The problem:** When dynamic workers make frequent RPC calls to Durable Objects for storage operations, each call counts as a subrequest. With limits of 50-1,000 subrequests per request, applications processing streaming data or making multiple storage operations per chunk can quickly exceed these limits.
+
+**The solution:** Run the dynamic worker inside the Durable Object and pass a storage reference directly using `RpcTarget`. This eliminates RPC overhead and subrequest counting for storage operations.
+
+```ts
+import { DurableObject, RpcTarget } from "cloudflare:workers";
+
+// Storage context provides safe access to DO storage
+class StorageContext extends RpcTarget {
+	constructor(private storage: DurableObjectStorage) {
+		super();
+	}
+
+	async saveChunk(data: any) {
+		await this.storage.sql.exec(
+			"INSERT INTO chunks (data) VALUES (?)",
+			JSON.stringify(data),
+		);
+	}
+}
+
+export class MyDurableObject extends DurableObject {
+	async executeUserCode(request: Request): Promise<Response> {
+		// Load dynamic worker INSIDE the Durable Object
+		const worker = this.env.LOADER.get("user-code-123", () => ({
+			compatibilityDate: "2025-06-01",
+			mainModule: "user-code.js",
+			modules: { "user-code.js": getUserSubmittedCode() },
+			env: { API_KEY: "user-api-key" },
+		}));
+
+		// Pass storage context as RPC parameter (not env binding)
+		const storageContext = new StorageContext(this.ctx.storage);
+		return worker.getEntrypoint().execute(request, storageContext);
+	}
+}
+```
+
+The guide includes detailed explanations of:
+
+- Why `RpcTarget` instead of `WorkerEntrypoint` for storage contexts
+- The difference between environment bindings and RPC parameters
+- Isolate lifetime considerations
+- Complete working examples with anti-pattern comparisons
+
+Learn more in the [Dynamic Workers with Durable Objects storage](/durable-objects/best-practices/dynamic-workers-with-storage/) guide.
