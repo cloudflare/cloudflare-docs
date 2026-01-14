@@ -426,33 +426,6 @@ const storageContext = new StorageContext(this.ctx.storage, (data) =>
 );
 ```
 
-## Performance benefits
-
-This architecture provides significant performance improvements:
-
-| Metric                 | Anti-pattern (RPC) | Recommended (Direct) | Improvement          |
-| ---------------------- | ------------------ | -------------------- | -------------------- |
-| Subrequests            | 4 per chunk        | 0 per chunk          | ✅ No limit hit      |
-| Latency per operation  | ~5-10ms (network)  | ~0.1ms (local)       | ✅ 50-100x faster    |
-| Serialization overhead | Per RPC call       | None                 | ✅ Reduced CPU usage |
-| Request timeout risk   | High (accumulates) | Low (minimal)        | ✅ More reliable     |
-
-## When to use this pattern
-
-Use this pattern when:
-
-- ✅ You need to execute untrusted user code with storage access
-- ✅ Your code makes frequent storage operations (10+ per request)
-- ✅ You're processing streaming data in chunks
-- ✅ You need to broadcast updates to multiple clients
-- ✅ You want to minimize latency and improve performance
-
-Consider alternatives when:
-
-- ❌ Storage operations are infrequent (< 5 per request) - simple RPC may suffice
-- ❌ You don't need code isolation - use regular Durable Object methods
-- ❌ Your user code needs to run across multiple Durable Objects - use RPC
-
 ## Related resources
 
 - [Dynamic Worker Loaders](/workers/runtime-apis/bindings/worker-loader/) - Complete API reference
