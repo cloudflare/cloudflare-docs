@@ -49,7 +49,7 @@ Proxy mode is best suited for organizations that want to filter traffic directed
 
 ### Set up proxy mode
 
-When you create a Cloudflare One account, a default device profile is created in `Gateway with WARP` mode. To set up proxy mode, you will need to edit the default device profile or create a new device profile and set the WARP mode to `Proxy mode`.
+When you create a Cloudflare One account, a default [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is created in `Gateway with WARP` service mode. To set up proxy mode, you will need to edit the default device profile or create a new device profile and set the WARP service mode to `Proxy mode`.
 
 The default profile is used for all devices that are not assigned to a specific profile. If you want to apply proxy mode to a specific group of devices, you will need to create a new device profile and assign it to those devices.
 
@@ -62,9 +62,15 @@ To set up proxy mode:
 5. Under **Service mode**, select **Proxy mode**.
 6. Select **Save profile**.
 
-For devices using proxy mode, the WARP client listens on the configured port at the address `127.0.0.1` (`localhost`). Cloudflare uses `40000` as the default port for WARP in proxy mode, but this can be changed. You must explicitly configure individual applications or your system proxy settings to use this proxy.
+:::note[MDM deployment]
 
-Once configured, traffic from these applications will securely tunnel through WARP.
+If you are deploying WARP through MDM, the configuration file will override any device profile settings, including the WARP service mode. Refer to the [`service_mode` parameter](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#service_mode) for more information.
+
+:::
+
+For devices using proxy mode, the WARP client listens on the configured port at the address `127.0.0.1` (`localhost`). Cloudflare uses `40000` as the default port for WARP in proxy mode, but you can modify this to any available port. You must explicitly configure individual applications or your system proxy settings to use this proxy.
+
+Once configured, traffic to and from these applications will securely tunnel through WARP.
 
 To make more complex routing decisions (such as, routing traffic directly to the Internet or other proxies), you can use a [PAC file](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/).
 
