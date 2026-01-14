@@ -105,7 +105,7 @@ const bookmark = session.getBookmark();
 - This approach is best when your application does not require the latest database version. All queries in a session ensure sequential consistency.
 - Refer to the [D1 Workers Binding API documentation](/d1/worker-api/d1-database#withsession).
 
-{/\* #### Example of a D1 session without constraints
+{/* #### Example of a D1 session without constraints
 
 Suppose you want to develop a feature for displaying “likes” on a social network application.
 
@@ -144,7 +144,7 @@ const bookmark = session.getBookmark();
 - This approach is best when your application requires the latest database version. All queries in a session ensure sequential consistency.
 - Refer to the [D1 Workers Binding API documentation](/d1/worker-api/d1-database#withsession).
 
-{/\* #### Example of using `first-primary`
+{/* #### Example of using `first-primary`
 
 Suppose you want to develop a webpage for an electricity provider which lists the electricity bill statements. An assumption here is that each statement is immutable. Once issued, it never changes.
 
@@ -256,7 +256,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-{/\* #### Example of using `bookmark`
+{/* #### Example of using `bookmark`
 
 This example follows from [Example of using `first-primary`](/d1/best-practices/read-replication/#example-of-using-first-primary), but retrieves the `bookmark` from HTTP cookie.
 

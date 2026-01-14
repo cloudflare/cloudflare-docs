@@ -65,30 +65,44 @@ You can use the `bind` method to dynamically bind a value into the query stateme
 - Example of a static statement without using `bind`:
 
   <Tabs syncKey="workersExamples">
-  	{" "}
-  	<TabItem label="JavaScript" icon="seti:javascript">
-  		```js const stmt = db .prepare("SELECT * FROM Customers WHERE CompanyName
-  		= Alfreds Futterkiste AND CustomerId = 1") ```
-  	</TabItem>{" "}
-  	<TabItem label="Python" icon="seti:python">
-  		```py stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName =
-  		Alfreds Futterkiste AND CustomerId = 1") ```
-  	</TabItem>{" "}
-  </Tabs>
+<TabItem label="JavaScript" icon="seti:javascript">
+
+  ```js
+  const stmt = db.prepare(
+  	"SELECT * FROM Customers WHERE CompanyName = 'Alfreds Futterkiste' AND CustomerId = 1",
+  );
+  ```
+
+  </TabItem>
+<TabItem label="Python" icon="seti:python">
+
+  ```py
+  stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = 'Alfreds Futterkiste' AND CustomerId = 1")
+  ```
+
+  </TabItem>
+</Tabs>
 
 - Example of an ordered statement using `bind`:
 
-  <Tabs syncKey="workersExamples">
-  	{" "}
-  	<TabItem label="JavaScript" icon="seti:javascript">
-  		```js const stmt = db .prepare("SELECT * FROM Customers WHERE CompanyName
-  		= ? AND CustomerId = ?") .bind("Alfreds Futterkiste", 1); ```
-  	</TabItem>{" "}
-  	<TabItem label="Python" icon="seti:python">
-  		```py stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND
-  		CustomerId = ?").bind("Alfreds Futterkiste", 1) ```
-  	</TabItem>{" "}
-  </Tabs>
+    <Tabs syncKey="workersExamples">
+<TabItem label="JavaScript" icon="seti:javascript">
+
+  ```js
+  const stmt = db
+  	.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?")
+  	.bind("Alfreds Futterkiste", 1);
+  ```
+
+    </TabItem>
+<TabItem label="Python" icon="seti:python">
+
+  ```py
+  stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?").bind("Alfreds Futterkiste", 1)
+  ```
+
+    </TabItem>
+</Tabs>
 
 Refer to the [`bind` method documentation](/d1/worker-api/prepared-statements/#bind) for more information.
 
@@ -242,33 +256,35 @@ return Response.json(stmt)
 - You can construct batches reusing the same prepared statement:
 
   <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 const companyName1 = `Bs Beverages`;
 const companyName2 = `Around the Horn`;
 const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
 const batchResult = await env.DB.batch([
 	stmt.bind(companyName1),
-	stmt.bind(companyName2)
+	stmt.bind(companyName2),
 ]);
 return Response.json(batchResult);
 ```
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
 from pyodide.ffi import to_js
 from workers import Response
 
-  company_name1 = "Bs Beverages"
-  company_name2 = "Around the Horn"
-  stmt = self.env.DB.prepare("SELECT \* FROM Customers WHERE CompanyName = ?")
-  batch_result = await self.env.DB.batch(to_js([
-  stmt.bind(company_name1),
-  stmt.bind(company_name2)
-  ]))
-  return Response.json(batch_result)
+company_name1 = "Bs Beverages"
+company_name2 = "Around the Horn"
+stmt = self.env.DB.prepare("SELECT \* FROM Customers WHERE CompanyName = ?")
+batch_result = await self.env.DB.batch(to_js([
+stmt.bind(company_name1),
+stmt.bind(company_name2)
+]))
+return Response.json(batch_result)
 
-  ```
-  </TabItem> </Tabs>
-  ```
+```
+</TabItem> </Tabs>
+```
 
 ### `exec()`
 
