@@ -12,9 +12,10 @@ This error indicates that a CNAME record between domains in different Cloudflare
 
 By default, Cloudflare prohibits a DNS CNAME record between domains in different Cloudflare accounts. CNAME records are permitted within a domain (`www.example.com` CNAME to `api.example.com`) and across zones within the same user account (`www.example.com` CNAME to `www.example.net`) or using our [Cloudflare for SaaS](https://www.cloudflare.com/saas/) solution.
 
-Another common cause is connecting a custom domain to an R2 bucket, where the domain is an active zone with the [zone hold](/fundamentals/account/account-security/zone-holds/) feature enabled.
+Another common cause is connecting a custom domain to an R2 bucket, where the domain is an active zone with the [zone hold](/fundamentals/account/account-security/zone-holds/) feature enabled or if the zone is banned.
 
 ### Resolution
 
 - To allow CNAME record resolution to a domain in a different Cloudflare account, the domain owner of the CNAME target must use [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/).
 - To allow connecting to a R2 bucket with a custom domain, disable the [zone hold](/fundamentals/account/account-security/zone-holds/) feature on the custom domain target zone to resolve the 1014 error.
+- To allow connections to an R2 bucket whose zone is banned, first check whether there is any [phishing report](/fundamentals/reference/report-abuse/complaint-types/) for the hostname (and request a review if there is one). If this does not resolve the issue, contact your account team.

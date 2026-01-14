@@ -21,9 +21,9 @@ In this guide, we will learn how to add a custom header for your RealtimeKit mee
 
 <RTKCodeSnippet id="web-react">
 
-RealtimeKit UI Kit provides the [`RtkHeader`](https://github.com/cloudflare/realtimekit-ui/blob/staging/packages/core/src/components/rtk-header/rtk-header.tsx) component for a default header.
+RealtimeKit UI Kit provides the [`RtkHeader`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) component for a default header.
 
-If you need additional controls, replace `RtkHeader` with individual UI Kit components and custom elements. 
+If you need additional controls, replace `RtkHeader` with individual UI Kit components and custom elements.
 
 Import the required components:
 
@@ -37,7 +37,7 @@ import {
 	RtkParticipantCount,
 	RtkViewerCount,
 	RtkClock,
-} from '@cloudflare/realtimekit-ui';
+} from "@cloudflare/realtimekit-ui";
 ```
 
 In your `RtkUIProvider` from [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/), replace:
@@ -49,16 +49,32 @@ In your `RtkUIProvider` from [Build Your Own UI](/realtime/realtimekit/ui-kit/bu
 with:
 
 ```jsx
-<div style={{ display: "flex", justifyContent: "space-between", backgroundColor: "black", color: "white" }}>
-	<div id="header-left" style={{ display: "flex", alignItems: "center", height: "48px" }}>
+<div
+	style={{
+		display: "flex",
+		justifyContent: "space-between",
+		backgroundColor: "black",
+		color: "white",
+	}}
+>
+	<div
+		id="header-left"
+		style={{ display: "flex", alignItems: "center", height: "48px" }}
+	>
 		<RtkLogo />
 		<RtkRecordingIndicator />
 		<RtkLivestreamIndicator />
 	</div>
-	<div id="header-center" style={{ display: "flex", alignItems: "center", height: "48px" }}>
+	<div
+		id="header-center"
+		style={{ display: "flex", alignItems: "center", height: "48px" }}
+	>
 		<RtkMeetingTitle />
 	</div>
-	<div id="header-right" style={{ display: "flex", alignItems: "center", height: "48px" }}>
+	<div
+		id="header-right"
+		style={{ display: "flex", alignItems: "center", height: "48px" }}
+	>
 		<RtkGridPagination />
 		<RtkParticipantCount />
 		<RtkViewerCount />
@@ -93,7 +109,9 @@ If you need additional controls, replace `rtk-header` with individual UI Kit com
 with:
 
 ```html
-<div style="display: flex; justify-content: space-between; align-items: center; height: 48px; padding: 0 12px; background-color: black; color: white;">
+<div
+	style="display: flex; justify-content: space-between; align-items: center; height: 48px; padding: 0 12px; background-color: black; color: white;"
+>
 	<div style="display: flex; align-items: center; gap: 8px;">
 		<rtk-logo></rtk-logo>
 		<rtk-recording-indicator></rtk-recording-indicator>
@@ -117,13 +135,194 @@ with:
 Register the click handler after rendering:
 
 ```javascript
-document
-	.querySelector("#report-bug-button")
-	.addEventListener("click", () => {
-		console.log("Report Bug Clicked");
-	});
+document.querySelector("#report-bug-button").addEventListener("click", () => {
+	console.log("Report Bug Clicked");
+});
 ```
 
 A complete example to build your own UI with custom header can be found [here](https://github.com/cloudflare/realtimekit-web-examples/tree/main/html-examples/examples/create-your-own-ui) with the custom header component [here](https://github.com/cloudflare/realtimekit-web-examples/blob/main/html-examples/examples/create-your-own-ui/components/meeting-header.js).
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+RealtimeKit UI Kit provides the [`rtk-header`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) component for a default header.
+
+If you need additional controls, replace `rtk-header` with individual UI Kit components and custom elements. Create a custom header component that uses the RealtimeKit angular components directly.
+
+#### Create Custom Header Component
+
+```typescript title="custom-header.component.ts"
+import { Component, AfterViewInit } from "@angular/core";
+
+@Component({
+	selector: "app-custom-header",
+	template: `
+		<div class="custom-header">
+			<div class="header-left">
+				<rtk-logo></rtk-logo>
+				<rtk-recording-indicator></rtk-recording-indicator>
+				<rtk-livestream-indicator></rtk-livestream-indicator>
+			</div>
+
+			<div class="header-center">
+				<rtk-meeting-title></rtk-meeting-title>
+			</div>
+
+			<div class="header-right">
+				<rtk-grid-pagination></rtk-grid-pagination>
+				<rtk-participant-count></rtk-participant-count>
+				<rtk-viewer-count></rtk-viewer-count>
+				<rtk-clock></rtk-clock>
+				<button
+					type="button"
+					class="report-bug-button"
+					(click)="onReportBugClick()"
+				>
+					Report Bug
+				</button>
+			</div>
+		</div>
+	`,
+	styles: [
+		`
+			.custom-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				height: 48px;
+				padding: 0 12px;
+				background-color: black;
+				color: white;
+			}
+
+			.header-left,
+			.header-right {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.header-center {
+				display: flex;
+				align-items: center;
+			}
+
+			.report-bug-button {
+				background: none;
+				border: 1px solid white;
+				color: white;
+				padding: 4px 8px;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 12px;
+			}
+
+			.report-bug-button:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+		`,
+	],
+})
+export class CustomHeaderComponent implements AfterViewInit {
+	ngAfterViewInit() {
+		console.log("Custom header initialized");
+	}
+
+	onReportBugClick() {
+		console.log("Report Bug Clicked");
+		// Add your custom logic here
+		// For example: open a modal, navigate to a form, etc.
+	}
+}
+```
+
+#### Use in Your Meeting Component
+
+In your main meeting component template, replace:
+
+```html
+<rtk-header style="display: flex; justify-content: space-between;"></rtk-header>
+```
+
+with:
+
+```html
+<app-custom-header></app-custom-header>
+```
+
+#### Complete Meeting Component Example
+
+```typescript title="meeting.component.ts"
+import {
+	Component,
+	ElementRef,
+	OnInit,
+	OnDestroy,
+	ViewChild,
+} from "@angular/core";
+
+@Component({
+	selector: "app-meeting",
+	template: `
+		<rtk-meeting #meetingComponent id="meeting-component">
+			<!-- Custom header replaces rtk-header -->
+			<app-custom-header></app-custom-header>
+
+			<!-- Other meeting UI components -->
+			<rtk-grid></rtk-grid>
+			<rtk-sidebar></rtk-sidebar>
+		</rtk-meeting>
+	`,
+})
+export class MeetingComponent implements OnInit, OnDestroy {
+	@ViewChild("meetingComponent", { static: true }) meetingElement!: ElementRef;
+
+	meeting: any;
+	private authToken = "<participant_auth_token>";
+
+	async ngOnInit() {
+		const RealtimeKitClient = await import(
+			"https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js"
+		);
+
+		this.meeting = await RealtimeKitClient.default.init({
+			authToken: this.authToken,
+		});
+
+		const meetingComponent = this.meetingElement.nativeElement;
+		meetingComponent.showSetupScreen = true;
+		meetingComponent.meeting = this.meeting;
+	}
+
+	ngOnDestroy() {
+		// Cleanup logic
+	}
+}
+```
+
+#### Module Configuration
+
+Don't forget to declare your custom header component in your Angular module:
+
+```typescript title="app.module.ts"
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+
+import { AppComponent } from "./app.component";
+import { MeetingComponent } from "./meeting.component";
+import { CustomHeaderComponent } from "./custom-header.component";
+
+@NgModule({
+	declarations: [AppComponent, MeetingComponent, CustomHeaderComponent],
+	imports: [BrowserModule],
+	providers: [],
+	bootstrap: [AppComponent],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA], // Required for RTK web components
+})
+export class AppModule {}
+```
+
+This approach gives you full control over the header layout while maintaining Angular's component architecture and event handling patterns.
 
 </RTKCodeSnippet>

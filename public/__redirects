@@ -5,6 +5,7 @@
 
 # homepage
 /docs/ /directory/ 301
+/support/ai/ / 301
 /api /api/ 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
@@ -13,6 +14,7 @@
 /sitemap.xml /sitemap-index.xml 301
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
 /learning-paths/ /resources/ 301
+/markdown.zip /llms-full.txt 301
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
@@ -338,7 +340,12 @@
 /realtime/pricing/ /realtime/sfu/pricing/ 302
 /realtime/changelog/ /realtime/sfu/changelog/ 302
 /realtime/realtimekit/get-started/ /realtime/realtimekit/quickstart/ 302
-/realtime/realtimekit/core/breakout-rooms/ /realtime/realtimekit/ui-kit/breakout-rooms/ 302
+/realtime/realtimekit/core/ai/ /realtime/realtimekit/ai/ 302
+/realtime/realtimekit/core/remote-participant/ /realtime/realtimekit/core/remote-participants/ 302
+/realtime/realtimekit/ui-kit/meeting-lifecycle/ realtime/realtimekit/ui-kit/state-management/ 302
+/realtime/realtimekit/core/video-background/ /realtime/realtimekit/core/video-effects/ 302
+/realtime/realtimekit/voice-meetings/ /realtime/realtimekit/audio-calls/ 302
+/realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
@@ -472,6 +479,7 @@
 /ddos-protection/managed-rulesets/network/override-expressions/ /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301
 /ddos-protection/managed-rulesets/adjust-rules/false-positive/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/#legitimate-traffic-is-incorrectly-identified-as-an-attack-and-causes-a-false-positive 301
 /ddos-protection/managed-rulesets/adjust-rules/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/ 301
+/ddos-protection/best-practices/respond-to-ddos-attacks/ /ddos-protection/best-practices/proactive-defense/ 301
 
 # developer spotlight
 /developer-spotlight/tutorials/ /resources/ 301
@@ -1245,6 +1253,7 @@
 /rules/custom-errors/create-api/ /rules/custom-errors/create-rules/ 301
 /rules/custom-errors/error-tokens/ /rules/custom-errors/reference/error-tokens/ 301
 /rules/custom-errors/parameters/ /rules/custom-errors/reference/parameters/ 301
+/rules/reference/esc-deprecation/ /rules/ 301
 
 # ruleset engine
 /ruleset-engine/rules-language/fields/standard-fields/ /ruleset-engine/rules-language/fields/reference/ 301
@@ -1336,6 +1345,19 @@
 /cloudflare-for-platforms/workers-for-platforms/reference/observability/ /cloudflare-for-platforms/workers-for-platforms/configuration/observability/ 301
 /cloudflare-for-platforms/workers-for-platforms/reference/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/ 301
 /cloudflare-for-platforms/workers-for-platforms/reference/tags/ /cloudflare-for-platforms/workers-for-platforms/configuration/tags/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/ /cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/hostname-routing/ /cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/developing-with-wrangler/ /cloudflare-for-platforms/workers-for-platforms/reference/local-development/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/ /cloudflare-for-platforms/workers-for-platforms/get-started/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform-examples/ /cloudflare-for-platforms/workers-for-platforms/reference/platform-examples/ 301
+/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/ /cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/ 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/user-workers/ /cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers 301
+/cloudflare-for-platforms/workers-for-platforms/get-started/bindings/ /cloudflare-for-platforms/workers-for-platforms/configuration/bindings/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/pricing/ /cloudflare-for-platforms/workers-for-platforms/reference/pricing/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/limits/ /cloudflare-for-platforms/workers-for-platforms/reference/limits/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/worker-isolation/ /cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/ 301
+/cloudflare-for-platforms/workers-for-platforms/demos/ /cloudflare-for-platforms/workers-for-platforms/platform-templates/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform/ /cloudflare-for-platforms/workers-for-platforms/reference/ 301
 
 # stream
 /stream/getting-started/ /stream/ 301
@@ -1370,10 +1392,13 @@
 /docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
 /docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
 /style-guide/components/asides/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/checkbox/ /style-guide/formatting/structure/lists/ 301
+/style-guide/components/code/ /style-guide/formatting/code-block-guidelines/ 301
+/style-guide/components/compatibility-flag/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/footnotes/ /style-guide/formatting/footnotes/ 301
 /style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
 /style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
-/style-guide/components/code/ /style-guide/formatting/code-block-guidelines/ 301
-/style-guide/components/footnotes/ /style-guide/formatting/footnotes/ 301
+/style-guide/components/workers-templates/ /style-guide/components/index/ 301
 
 # support
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/reference/troubleshooting/ 301
@@ -2134,6 +2159,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/lb/ /cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/ 301
+/cloudflare-one/tutorials/vnc-client-in-browser/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/vnc-browser-rendering/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/installation/ /cloudflare-one/connections/connect-networks/downloads/ 301

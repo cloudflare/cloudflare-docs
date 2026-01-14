@@ -1,6 +1,5 @@
 ---
 pcx_content_type: how-to
-
 title: View rulesets
 sidebar:
   order: 2
@@ -8,16 +7,24 @@ sidebar:
 
 import { Details, APIRequest } from "~/components";
 
+This page includes examples of the following API operations:
+
+- [View available rulesets](#view-available-rulesets)
+- [Get an entry point ruleset](#get-an-entry-point-ruleset)
+- [View the rules included in a ruleset](#view-the-rules-included-in-a-ruleset)
+
 ## View available rulesets
 
 You can list the available rulesets for a zone or account.
 
+For a list of API endpoints refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/).
+
 ### Example: View available rulesets at the zone level
 
-The response to the `GET` request will include the following rulesets:
+The response to the [GET request](/api/resources/rulesets/methods/list/) obtaining the list of rulesets at the zone level will include the following rulesets:
 
 - Managed rulesets you can deploy, indicated by `"kind": "managed"`.
-- Zone-level phase entry points, if configured, indicated by `"kind": "zone"`.
+- Zone-level phase entry point rulesets, if configured, indicated by `"kind": "zone"`.
 - Custom rulesets, if configured, indicated by `"kind": "custom"`.
 
 <APIRequest path="/zones/{zone_id}/rulesets" method="GET" />
@@ -61,10 +68,10 @@ The response to the `GET` request will include the following rulesets:
 
 ### Example: View available rulesets at the account level
 
-The response will include the following rulesets:
+The response to the [GET request](/api/resources/rulesets/methods/list/) obtaining the list of rulesets at the account level will include the following rulesets:
 
 - Managed rulesets you can deploy, indicated by `"kind": "managed"`.
-- Account-level phase entry points, if configured, indicated by `"kind": "root"`.
+- Account-level phase entry point rulesets, if configured, indicated by `"kind": "root"`.
 - Custom rulesets, if configured, indicated by `"kind": "custom"`.
 
 <APIRequest path="/accounts/{account_id}/rulesets" method="GET" />
@@ -115,13 +122,74 @@ The response will include the following rulesets:
 }
 ```
 
+## Get an entry point ruleset
+
+You can get the definition of the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of a given [phase](/ruleset-engine/about/phases/) at the zone or account level.
+
+If the entry point ruleset exists, the API will return a `200 OK` HTTP status code, along with the ruleset definition.
+
+If the entry point ruleset does not exist, the API will return a `404 Not Found` HTTP status code.
+
+### Example: Get an entry point ruleset at the zone level
+
+The following [GET request](/api/resources/rulesets/subresources/phases/methods/get/) obtains the definition of the entry point ruleset for the `http_request_firewall_managed` phase at the zone level. In this case, the entry point ruleset exists and contains one rule.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="GET"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+/>
+
+```json output collapse={11-17}
+{
+	"result": {
+		"id": "<RULESET_ID>",
+		"name": "Zone-level phase entry point ruleset",
+		"description": "This ruleset executes a managed ruleset.",
+		"kind": "zone",
+		"version": "2",
+		"rules": [
+			{
+				"id": "<RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"expression": "true",
+				"action_parameters": {
+					"id": "<MANAGED_RULESET_ID>"
+				},
+				"last_updated": "2021-03-17T15:42:37.917815Z"
+			}
+		],
+		"last_updated": "2021-03-17T15:42:37.917815Z",
+		"phase": "http_request_firewall_managed"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+### Example: Get an entry point ruleset at the account level
+
+The following [GET request](/api/resources/rulesets/subresources/phases/methods/get/) obtains the definition of the entry point ruleset for the `http_request_firewall_managed` phase at the account level.
+
+<APIRequest
+	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="GET"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+/>
+
 ## View the rules included in a ruleset
 
-You can view all versions of phase entry points (at the account and zone levels) and custom rulesets, but you can only view the most recent version of managed rulesets.
+You can view all versions of phase entry point rulesets (at the account and zone levels) and custom rulesets, but you can only view the most recent version of managed rulesets.
 
 ### Example: View rules in a phase entry point ruleset at the zone level
 
-The following example lists the rules in version `2` of the `http_request_firewall_managed` phase entry point ruleset at the zone level.
+The following [GET request](/api/resources/rulesets/subresources/phases/subresources/versions/methods/get/) lists the rules in version `2` of the `http_request_firewall_managed` phase entry point ruleset at the zone level.
 
 <APIRequest
 	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint/versions/{ruleset_version}"
@@ -163,7 +231,7 @@ The following example lists the rules in version `2` of the `http_request_firewa
 
 ### Example: View rules in a managed ruleset
 
-The following example lists the rules in version `2` of a managed ruleset (the most recent version of that ruleset).
+The following [GET request](/api/resources/rulesets/subresources/versions/methods/get/) lists the rules in version `2` of a managed ruleset (the most recent version of that ruleset).
 
 Each rule in a managed ruleset can have associated tags or categories, listed in the `categories` field.
 

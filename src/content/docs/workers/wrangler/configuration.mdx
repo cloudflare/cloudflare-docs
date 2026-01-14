@@ -500,17 +500,17 @@ database_id = "<DATABASE_ID>"
 
 ### Dispatch namespace bindings (Workers for Platforms)
 
-Dispatch namespace bindings allow for communication between a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
+Dispatch namespace bindings allow for communication between a [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) and a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace). Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_NAMESPACE"` or `binding = "productionNamespace"` would both be valid names for the binding.
 
 - `namespace` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
+  - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace).
 
 - `outbound` <Type text="object" /> <MetaInfo text="optional" />
   - `service` <Type text="string" /> <MetaInfo text="required" /> The name of the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to bind to.
-  - `parameters` array optional A list of parameters to pass data from your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
+  - `parameters` array optional A list of parameters to pass data from your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
 
 <WranglerConfig>
 
@@ -1071,12 +1071,8 @@ new_sqlite_classes = ["MyContainer"]
 
 ### Custom Instance Types
 
-:::note
-For Enterprise customers only.
-:::
-
-In place of the [named instance types](/containers/platform-details#instance-types), you can set a custom instance type by
-individually configuring vCPU, memory, and disk.
+In place of the [named instance types](/containers/platform-details/limits/#instance-types), you can set a custom instance type by individually configuring vCPU, memory, and disk.
+See the [limits documentation](/containers/platform-details/limits/#custom-instance-types) for constraints on custom instance types.
 
 The following options are available:
 
@@ -1210,6 +1206,9 @@ You can configure various aspects of local development, such as the local protoc
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
   - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
     Example:
+
+- `generate_types` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Generate types from your Worker configuration. Defaults to `false`.
 
 <WranglerConfig>
 

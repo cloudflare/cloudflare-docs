@@ -26,18 +26,15 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     continue-on-error: true
-
   label_size:
     name: Label size
     permissions:
-      issues: write
       pull-requests: write
+      contents: read
+      issues: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/label-size
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: codelytv/pr-size-labeler@v1
     continue-on-error: true
 
   assign:

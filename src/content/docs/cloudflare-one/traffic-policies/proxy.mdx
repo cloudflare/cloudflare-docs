@@ -41,7 +41,7 @@ For HTTP/3 traffic to be logged and filtered, you need to turn on both TLS decry
 
 ### ICMP <Badge text="Beta" variant="caution" size="small" />
 
-The ICMP proxy forwards traffic for diagnostic tools such as `ping` and `traceroute`.
+The ICMP proxy allows IMCP traffic to reach your private network through Gateway. For example, this would allow a WARP user to run diagnostic commands such as `ping` and `traceroute` to an internal server IP.
 
 :::caution[Limitation]
 Gateway cannot log or filter ICMP traffic.

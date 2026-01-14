@@ -15,9 +15,9 @@ import {
 } from "~/components";
 
 :::note
-PAC files are only available on Enterprise plans.
+[Authorization endpoints](#authorization-endpoint) and [PAC file hosting](#create-a-hosted-pac-file) are in open beta for all customers.
 
-[Authorization endpoints](#authorization-endpoint) and [PAC file hosting](#create-a-hosted-pac-file) are in beta for Enterprise plans. To opt in, contact your account team.
+[Source IP proxy endpoints](#source-ip-endpoint) are only available on Enterprise plans.
 :::
 
 Proxy endpoints allow you to apply Gateway policies without installing a client on your devices. By configuring a Proxy Auto-Configuration (PAC) file at the browser level, you can route traffic through Gateway for filtering and policy enforcement. Cloudflare supports configuring two types of proxy endpoints: identity-based [authorization endpoints](#authorization-endpoint) and [source IP proxy endpoints](#source-ip-endpoint).
@@ -458,24 +458,44 @@ You can modify proxy endpoint settings after creation.
 
 ## Limitations
 
+### Authorization endpoint limitations
+
+When using [authorization endpoints](#authorization-endpoint), be aware of the following limitations.
+
+#### Domain bypassing and certificate pinning
+
+You must bypass domains you do not intend to inspect with your PAC file. Gateway will still apply [Do Not Inspect (DNI) policies](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) when using authorization endpoints, but this will not bypass certificate pinning errors.
+
+#### Plaintext HTTP traffic
+
+Authorization endpoints do not support plaintext HTTP traffic unless the traffic is configured through an [Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) or bypassed with the PAC file.
+
+#### Referer header traffic
+
+Traffic with a referer HTTP header matching the domain of a recently logged in user from the same source IP will be allowed through and logged with a non-identity email address.
+
+This issue occurs because browsers will not tag HTTP sub-requests with the identity cookie used to verify user authentication. If you would like to filter this traffic, you can set up an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block all traffic matching the non-identity email address.
+
 ### Traffic limitations
 
 Each type of proxy endpoint supports the following features:
 
 | Feature                                                                             | Source IP endpoint | Authorization endpoint |
 | ----------------------------------------------------------------------------------- | ------------------ | ---------------------- |
-| **HTTP/HTTPS traffic**                                                              | ✅[^1]             | ✅[^1]                 |
+| **HTTP/HTTPS traffic**                                                              | ✅[^1]             | ✅[^2]                 |
 | **Non-HTTP TCP traffic**                                                            | ✅                 | —                      |
 | **UDP traffic**                                                                     | —                  | —                      |
 | **[HTTP3](/cloudflare-one/traffic-policies/http-policies/http3/)**                  | —                  | —                      |
 | **[Identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/)** | —                  | ✅                     |
 | **mTLS authentication**                                                             | —                  | —                      |
 | **[Happy Eyeballs](https://datatracker.ietf.org/doc/html/rfc6555)**                 | —                  | —                      |
-| **Browser HTTPS auto-upgrade**                                                      | —[^2]              | —[^2]                  |
+| **Browser HTTPS auto-upgrade**                                                      | —[^3]              | —[^3]                  |
 
-[^1]: To access plaintext HTTP (non-HTTPS) origins through proxy endpoints, configure them as [self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). This allows users to access HTTP resources while maintaining security through Access policies.
+[^1]: For [source IP endpoints](#source-ip-endpoint), to access plaintext HTTP (non-HTTPS) origins, configure them as [self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). This allows users to access HTTP resources while maintaining security through Access policies.
 
-[^2]: Proxy endpoints do not support HTTPS when browsers automatically upgrade HTTP requests to HTTPS (such as Chrome's automatic HTTPS upgrades). If you encounter connection issues with sites that are being auto-upgraded, you may need to disable automatic HTTPS upgrades in your browser settings or configure the site as an exception.
+[^2]: To access plaintext HTTP (non-HTTPS) origins with [authorization endpoints](#authorization-endpoint), refer to [Plaintext HTTP traffic](#plaintext-http-traffic).
+
+[^3]: Proxy endpoints do not support HTTPS when browsers automatically upgrade HTTP requests to HTTPS (such as Chrome's automatic HTTPS upgrades). If you encounter connection issues with sites that are being auto-upgraded, you may need to disable automatic HTTPS upgrades in your browser settings or configure the site as an exception.
 
 ### Session duration
 

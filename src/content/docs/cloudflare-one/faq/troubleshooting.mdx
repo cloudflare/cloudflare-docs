@@ -197,8 +197,6 @@ For WARP client versions prior to 2024.12.554.0, certificates had to be marked a
 
 ### What do I need to do?
 
-Before deploying a new certificate, [update WARP](/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/#how-to-update-warp) to version 2024.12.554.0 or newer.
-
 For WARP client versions before and after 2024.12.554.0, certificate propagation will only occur when the WARP client is responsible for automatically installing the certificate on the client device. To enable the WARP client to propogate certificates:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices**.
@@ -214,7 +212,7 @@ After enabling certificate propagation, you must update your certificate:
 3. Select the expiration date for this new certificate (five years is the default, but this can be adjusted) and select **Generate certificate**.
 4. The new certificate will be marked **Inactive** at first. Select the **three dots** to the right of the certificate, then select **Activate** to activate the certificate.
 
-For WARP versions on or above 2024.12.554.0, selecting **Activate** will download the new certificate to end-user devices.
+When you activate a certificate, WARP will download the new certificate to end-user devices.
 
 Certificate propagation to end-user devices can take up to 10 minutes, but can be expedited by resetting the encryption keys.
 
