@@ -3,14 +3,9 @@ pcx_content_type: configuration
 title: Dynamic Worker Loaders
 head: []
 description: The Dynamic Worker Loader API, which allows dynamically spawning isolates that run arbitrary code.
-
 ---
 
-import {
-	Type,
-  MetaInfo,
-  WranglerConfig
-} from "~/components";
+import { Type, MetaInfo, WranglerConfig } from "~/components";
 
 :::note[Dynamic Worker Loading is in closed beta]
 
@@ -25,8 +20,9 @@ An isolate is like a lightweight container. [The Workers platform uses isolates 
 Isolates are much cheaper than containers. You can start an isolate in milliseconds, and it's fine to start one just to run a snippet of code and immediately throw away. There's no need to worry about pooling isolates or trying to reuse already-warm isolates, as you would need to do with containers.
 
 Worker Loaders also enable **sandboxing** of code, meaning that you can strictly limit what the code is allowed to do. In particular:
-* You can arrange to intercept or simply block all network requests made by the Worker within.
-* You can supply the sandboxed Worker with custom bindings to represent specific resources which it should be allowed to access.
+
+- You can arrange to intercept or simply block all network requests made by the Worker within.
+- You can supply the sandboxed Worker with custom bindings to represent specific resources which it should be allowed to access.
 
 With proper sandboxing configured, you can safely run code you do not trust in a dynamic isolate.
 
@@ -37,35 +33,35 @@ let id = "foo";
 
 // Get the isolate with the given ID, creating it if no such isolate exists yet.
 let worker = env.LOADER.get(id, async () => {
-  // If the isolate does not already exist, this callback is invoked to fetch
-  // the isolate's Worker code.
+	// If the isolate does not already exist, this callback is invoked to fetch
+	// the isolate's Worker code.
 
-  return {
-    compatibilityDate: "2025-06-01",
+	return {
+		compatibilityDate: "2025-06-01",
 
-    // Specify the worker's code (module files).
-    mainModule: "foo.js",
-    modules: {
-      "foo.js":
-        "export default {\n" +
-        "  fetch(req, env, ctx) { return new Response('Hello'); }\n" +
-        "}\n",
-    },
+		// Specify the worker's code (module files).
+		mainModule: "foo.js",
+		modules: {
+			"foo.js":
+				"export default {\n" +
+				"  fetch(req, env, ctx) { return new Response('Hello'); }\n" +
+				"}\n",
+		},
 
-    // Specify the dynamic Worker's environment (`env`). This is specified
-    // as a JavaScript object, exactly as you want it to appear to the
-    // child Worker. It can contain basic serializable types as well as
-    // Service Bindings (see below).
-    env: {
-      SOME_ENV_VAR: 123
-    },
+		// Specify the dynamic Worker's environment (`env`). This is specified
+		// as a JavaScript object, exactly as you want it to appear to the
+		// child Worker. It can contain basic serializable types as well as
+		// Service Bindings (see below).
+		env: {
+			SOME_ENV_VAR: 123,
+		},
 
-    // To block the worker from talking to the internet using `fetch()` or
-    // `connect()`, set `globalOutbound` to `null`. You can also set this
-    // to any service binding, to have calls be intercepted and redirected
-    // to that binding.
-    globalOutbound: null,
-  };
+		// To block the worker from talking to the internet using `fetch()` or
+		// `connect()`, set `globalOutbound` to `null`. You can also set this
+		// to any service binding, to have calls be intercepted and redirected
+		// to that binding.
+		globalOutbound: null,
+	};
 });
 
 // Now you can get the Worker's entrypoint and send requests to it.
@@ -75,7 +71,7 @@ await defaultEntrypoint.fetch("http://example.com");
 // You can get non-default entrypoints as well, and specify the
 // `ctx.props` value to be delivered to the entrypoint.
 let someEntrypoint = worker.getEntrypoint("SomeEntrypointClass", {
-  props: {someProp: 123}
+	props: { someProp: 123 },
 });
 ```
 
@@ -138,12 +134,12 @@ A dictionary object mapping module names to their string contents. If the module
 
 A module's content can also be specified as an object, in order to specify its type independent from the name. The allowed objects are:
 
-* `{js: string}`: A JavaScript module, using ES modules syntax for imports and exports.
-* `{cjs: string}`: A CommonJS module, using `require()` syntax for imports.
-* `{py: string}`: A [Python module](/workers/languages/python/), but see the warning below.
-* `{text: string}`: An importable string value.
-* `{data: ArrayBuffer}`: An importable `ArrayBuffer` value.
-* `{json: object}`: An importable object. The value must be JSON-serializable. However, note that value is provided as a parsed object, and is delivered as a parsed object; neither side actually sees the JSON serialization.
+- `{js: string}`: A JavaScript module, using ES modules syntax for imports and exports.
+- `{cjs: string}`: A CommonJS module, using `require()` syntax for imports.
+- `{py: string}`: A [Python module](/workers/languages/python/), but see the warning below.
+- `{text: string}`: An importable string value.
+- `{data: ArrayBuffer}`: An importable `ArrayBuffer` value.
+- `{json: object}`: An importable object. The value must be JSON-serializable. However, note that value is provided as a parsed object, and is delivered as a parsed object; neither side actually sees the JSON serialization.
 
 :::caution[Warning]
 
@@ -169,25 +165,25 @@ For example:
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class Greeter extends WorkerEntrypoint {
-  fetch(request) {
-    return new Response(`Hello, ${this.ctx.props.name}!`);
-  }
+	fetch(request) {
+		return new Response(`Hello, ${this.ctx.props.name}!`);
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    let worker = env.LOADER.get("alice", () => {
-      return {
-        // Redirect the worker's global outbound to send all requests
-        // to the `Greeter` class, filling in `ctx.props.name` with
-        // the name "Alice", so that it always responds "Hello, Alice!".
-        globalOutbound: ctx.exports.Greeter({props: {name: "Alice"}})
+	async fetch(request, env, ctx) {
+		let worker = env.LOADER.get("alice", () => {
+			return {
+				// Redirect the worker's global outbound to send all requests
+				// to the `Greeter` class, filling in `ctx.props.name` with
+				// the name "Alice", so that it always responds "Hello, Alice!".
+				globalOutbound: ctx.exports.Greeter({ props: { name: "Alice" } }),
 
-        // ... code ...
-      }
-    });
-  }
-}
+				// ... code ...
+			};
+		});
+	},
+};
 ```
 
 #### <code>env <Type text="object" /></code>
@@ -198,8 +194,8 @@ Using this, you can provide custom bindings to the Worker.
 
 `env` is serialized and transferred into the dynamic Worker, where it is used directly as the value of `env` there. It may contain:
 
-* [Structured clonable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
-* [Service Bindings](/workers/runtime-apis/bindings/service-bindings), including [loopback bindings from `ctx.exports`](/workers/runtime-apis/context/#exports).
+- [Structured clonable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+- [Service Bindings](/workers/runtime-apis/bindings/service-bindings), including [loopback bindings from `ctx.exports`](/workers/runtime-apis/context/#exports).
 
 The second point is the key to creating custom bindings: you can define a binding with any arbitrary API, by defining a [`WorkerEntrypoint` class](/workers/runtime-apis/bindings/service-bindings/rpc) implementing an RPC API, and then giving it to the dynamic Worker as a Service Binding.
 
@@ -210,24 +206,115 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 
 // Implement a binding which can be called by the dynamic Worker.
 export class Greeter extends WorkerEntrypoint {
-  greet() {
-    return `Hello, ${this.ctx.props.name}!`;
-  }
+	greet() {
+		return `Hello, ${this.ctx.props.name}!`;
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    let worker = env.LOADER.get("alice", () => {
-      return {
-        env: {
-          // Provide a binding which has a method greet() which can be called
-          // to receive a greeting. The binding knows the Worker's name.
-          GREETER: ctx.exports.Greeter({props: {name: "Alice"}})
-        }
+	async fetch(request, env, ctx) {
+		let worker = env.LOADER.get("alice", () => {
+			return {
+				env: {
+					// Provide a binding which has a method greet() which can be called
+					// to receive a greeting. The binding knows the Worker's name.
+					GREETER: ctx.exports.Greeter({ props: { name: "Alice" } }),
+				},
 
-        // ... code ...
-      }
-    });
-  }
+				// ... code ...
+			};
+		});
+	},
+};
+```
+
+### Passing resources to Dynamic Workers
+
+Dynamic Workers have their own lifetime, independent of any individual request. As a result, when passing resources to a Dynamic Worker, you must ensure the resource's lifetime is compatible with the worker's lifetime to ensure that the resource stays accessible.
+
+**Use `env` for global resources**
+
+Resources like [KV namespaces](/kv/), [R2 buckets](/r2/), or [D1 databases](/d1/) are globally available so you can safely pass them via the env binding at creation time.
+
+**Use function parameters for Durable Object storage**
+
+Durable Objects have their own lifecycle and can be shut down independently of a Dynamic Worker. This means you should not give a Dynamic Worker direct access to objects owned by the Durable Object, such as `this.storage`, at creation time since the Durable Object could be destroyed while the Dynamic Worker is still alive, causing references to its storage to become invalid.
+
+Instead, pass storage access as an RPC method argument. This way, the Durable Object and Dynamic Worker keep their independent lifetimes, but the storage stays accessible for the duration of the call.
+
+To give a Dynamic Worker access to Durable Object storage, wrap it in an [`RpcTarget`](/workers/runtime-apis/rpc/) and pass it as a function parameter. This allows the Dynamic Worker to call methods like `storage.put()` and `storage.get()` without direct access to your Durable Object. You can implement the storage interface using the [KV API](/durable-objects/api/sqlite-storage-api/#synchronous-kv-api), or use [SQLite](/durable-objects/api/sqlite-storage-api/#sql-api) for more complex queries, as the example below shows.
+
+```ts
+import { DurableObject, RpcTarget, WorkerEntrypoint } from "cloudflare:workers";
+
+// Wrap Durable Object storage in an RpcTarget so it can be passed to Dynamic Workers.
+class StorageContext extends RpcTarget {
+	constructor(private storage: DurableObjectStorage) {
+		super();
+		this.storage = storage;
+	}
+
+	async put(key: string, data: any) {
+		this.storage.sql.exec(
+			"INSERT OR REPLACE INTO kv (key, value) VALUES (?, ?)",
+			key,
+			JSON.stringify(data),
+		);
+	}
+
+	async get(key: string) {
+		const cursor = this.storage.sql.exec(
+			"SELECT value FROM kv WHERE key = ?",
+			key,
+		);
+		const row = cursor.one();
+		return row ? JSON.parse(row.value as string) : null;
+	}
+}
+
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		// Create the key-value table if it doesn't exist
+		this.ctx.storage.sql.exec(
+			"CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT)",
+		);
+	}
+
+	async call(request: Request) {
+		// Load Dynamic Worker that needs storage access
+		let worker = this.env.LOADER.get("my-dynamic-worker", () => {
+			return {
+				compatibilityDate: "2025-06-01",
+				mainModule: "worker.js",
+				modules: {
+					"worker.js": `
+            import { WorkerEntrypoint } from 'cloudflare:workers';
+
+            export default class extends WorkerEntrypoint {
+              async call(request, storage) {
+                await storage.put('key', 123);
+                const value = await storage.get('key');
+                return new Response(value);
+              }
+            }
+          `,
+				},
+			};
+		});
+
+		// Pass the StorageContext to the Dynamic Worker
+		return await worker
+			.getEntrypoint()
+			.call(request, new StorageContext(this.ctx.storage));
+	}
+}
+
+export default class extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const id = this.env.MY_DURABLE_OBJECT.idFromName("example");
+		const stub = this.env.MY_DURABLE_OBJECT.get(id);
+		return stub.call(request);
+	}
 }
 ```
