@@ -1014,6 +1014,8 @@
 /magic-network-monitoring/rules/recommended-rule-configuration/ /magic-network-monitoring/rules/static-threshold/ 301
 /magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
 /magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
+/magic-firewall/how-to/create-rate-limiting-rules/ /magic-firewall/how-to/create-rate-limiting-policies/ 301
+
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
@@ -2228,6 +2230,8 @@
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
+/cloudflare-one/traffic-policies/packet-filtering/add-rules/ /cloudflare-one/traffic-policies/packet-filtering/add-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/ /cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ 301
 /cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/team-and-resources/devices/agentless/dns/locations/ 301
 /cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
@@ -2431,9 +2435,6 @@
 /magic-wan/third-party/* /magic-wan/configuration/manually/third-party/:splat 301
 /magic-wan/connector/* /magic-wan/configuration/connector/:splat 301
 /magic-wan/configuration/connector/dhcp/* /magic-wan/configuration/connector/network-options/dhcp/:splat 301
-
-# Magic firewall
-/magic-firewall/how-to/create-rate-limiting-rules/* /magic-firewall/how-to/create-rate-limiting-policies/ 301
 
 # Rules
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
