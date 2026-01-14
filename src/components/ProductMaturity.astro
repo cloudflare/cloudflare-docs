@@ -1,0 +1,22 @@
+---
+import { z } from "astro:schema";
+import { getProductMaturityAndCompliance } from "~/util/product-maturity-and-compliance";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	product: z.string(),
+});
+
+const input = props.parse(Astro.props);
+
+let maturity;
+try {
+	maturity = await getProductMaturityAndCompliance(input.product);
+} catch (error) {
+	console.warn(`[ProductMaturity] ${error}`);
+	maturity = null;
+}
+---
+
+{maturity && maturity}

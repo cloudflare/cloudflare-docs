@@ -116,4 +116,7 @@ export const collections = {
 		loader: dataLoader("stream"),
 		schema: streamSchema,
 	}),
+	"product-maturity-and-compliance": defineCollection({
+		loader: dataLoader("product-maturity-and-compliance"),
+	}),
 };

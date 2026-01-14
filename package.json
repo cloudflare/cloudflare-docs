@@ -4,7 +4,8 @@
 	"type": "module",
 	"scripts": {
 		"astro": "npx astro",
-		"build": "export NODE_OPTIONS='--max-old-space-size=6192' || set NODE_OPTIONS='--max-old-space-size=6192'&& npx astro build",
+		"build": "npm run fetch-external-source-of-truth-data && export NODE_OPTIONS='--max-old-space-size=6192' || set NODE_OPTIONS='--max-old-space-size=6192'&& npx astro build",
+		"fetch-external-source-of-truth-data": "npx tsx scripts/fetch-external-source-of-truth-data.ts",
 		"typegen:worker": "npx wrangler types ./worker/worker-configuration.d.ts",
 		"check": "npm run check:astro && npm run check:worker",
 		"check:astro": "npx astro check",
