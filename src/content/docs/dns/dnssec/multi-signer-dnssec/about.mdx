@@ -45,7 +45,7 @@ In model 2, on the other hand, each provider uses its own KSK to sign its own DN
 
 ## What happens when multi-signer is enabled
 
-When you enable multi-signer DNSSEC on Cloudflare (by setting `dnssec_multi_signer` to `true` via API), the following changes occur:
+When you enable multi-signer DNSSEC on Cloudflare (by setting `dnssec_multi_signer` to `true` [via API](/api/resources/dns/subresources/dnssec/methods/edit/)), the following changes occur:
 
 1. **Internal flag**: Cloudflare sets an internal flag that allows you to add DNSKEY records to your zone.
 2. **External ZSKs included**: When you add DNSKEY records from your secondary provider, Cloudflare includes them in the DNSKEY RRset.
