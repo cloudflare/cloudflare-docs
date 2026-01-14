@@ -23,23 +23,6 @@ Running Cisco AnyConnect and WARP simultaneously requires careful configuration.
 
 The following table maps common industry tunneling terms to Cloudflare WARP terminology and explains how each routing model affects traffic flow.
 
-First draft:
-
-| Concept | Industry term | Cloudflare WARP term | WARP behavior |
-|--------|---------------|----------------------|-------------|
-| Routing all traffic | Full tunnel | Exclude IPs and domains | WARP asserts precedence over the default route. All traffic goes through WARP tunnel except specified exclusions. |
-| Routing specific traffic | Split tunnel | Include IPs and domains | WARP does not assert precedence over the default route. Only traffic explicitly defined in the Include list enters the WARP tunnel. |
-
-Second draft:
-
-| Concept | Cisco AnyConnect term | Cloudflare WARP term | WARP behavior |
-|--------|----------------------|----------------------|---------------|
-| Route all traffic | Tunnel All Networks | Not applicable | WARP does not provide a full tunnel configuration option like Cisco. Instead, users configure WARP to Exclude IPs and domains to route all traffic through the WARP tunnel. |
-| Route all traffic except specific networks | Exclude Network List Below | Exclude IPs and domains | WARP asserts precedence over the system default route. All traffic is sent through the WARP tunnel except destinations explicitly excluded via split tunnel exclusions. |
-| Route only specific networks | Tunnel Network List Below | Include IPs and domains | WARP does not assert precedence over the default route. Only traffic matching the Include list is sent through the WARP tunnel; all other traffic follows the system default route. |
-
-Third draft:
-
 | Routing behavior | Cisco AnyConnect configuration | Cloudflare WARP configuration | WARP behavior |
 |-----------------|--------------------------------|-------------------------------|------------------------|
 | Route all traffic except specific networks | Exclude Network List Below | Exclude IPs and domains | WARP asserts precedence over the system default route. All traffic is routed through the tunnel except explicitly excluded destinations. |
@@ -663,11 +646,16 @@ Proxy mode is best suited for organizations that want to filter traffic originat
 
 The following steps must be taken in your Cisco AnyConnect configuration to ensure proper interoperability with Cloudflare WARP.
 
-##### 1.1 DNS
+##### 1.1 DNS configuration for Cisco AnyConnect
 
 No changes are needed to your existing DNS provider as Cloudflare will not be handling DNS filtering in this mode.
 
-##### 1.2 Tunnel
+##### 1.2 Tunnel configuration for Cisco AnyConnect
+
+If you are using:
+- `tunnelall`: Not supported for interoperability with Cloudflare WARP.
+- `tunnelspecified`: Ensure that the following Cloudflare IPs and domains are not included in the Cisco AnyConnect tunnel.
+- `excludespecified`: Ensure that the following Cloudflare IPs and domains are excluded from the Cisco AnyConnect tunnel.
 
 Configure Cisco AnyConnect to exclude the following Cloudflare components from the VPN tunnel:
 
