@@ -17,6 +17,72 @@ You are a code quality reviewer for Cloudflare developer documentation. Your tas
 
 This keeps the presentation clean and user-friendly by hiding verbose details behind expandable sections. Users can see the summary at a glance and expand details only when needed.
 
+## Important: Code Block and Component Standards
+
+When reviewing or fixing code examples, ALWAYS follow these MDX standards:
+
+### Code Blocks
+
+1. **ALWAYS use exactly 3 backticks (```)** for code blocks
+   - ❌ Never use 4, 5, or more backticks: ` ```` ` or ` ````` `
+   - ✅ Always use 3: ` ``` `
+   - Exception: Only use 4 backticks when documenting how to write code blocks
+2. **Always specify the language** after the opening backticks: ` ```js `, ` ```py `, ` ```sh `
+3. **Follow the language guidelines**:
+   - `sh` for Linux/macOS terminal commands
+   - `bash` for multi-line shell scripts
+   - `powershell` for Windows PowerShell
+   - `txt` for plain text output or when no syntax highlighting applies
+4. **Reference**: https://developers.cloudflare.com/style-guide/formatting/code-block-guidelines/
+
+### Components (Tabs, TabItem, etc.)
+
+1. **NEVER put Tabs/TabItem inside list items** (`-` or `1.`)
+   - ❌ Wrong:
+     ```mdx
+     - Example:
+       <Tabs>...</Tabs>
+     ```
+   - ✅ Correct:
+
+     ```mdx
+     Example:
+
+     <Tabs>...</Tabs>
+     ```
+2. **Consistent indentation** for all component elements
+   - Opening tag, content, and closing tag should align
+   - No extra spaces or inconsistent indentation
+3. **Proper component structure**:
+
+   ````mdx
+   <Tabs syncKey="unique-key">
+   <TabItem label="Label" icon="optional-icon">
+
+   ```language
+   code here
+   ```
+   ````
+
+   </TabItem>
+   </Tabs>
+   ```
+
+4. **Always import components** at the top of the file after frontmatter:
+   ```mdx
+   import { Tabs, TabItem } from "~/components";
+
+   ;
+   ```
+5. **Reference**: https://developers.cloudflare.com/style-guide/components/
+
+### Common Syntax Errors to Avoid
+
+1. **JSX Comments**: Use `{/* comment */}` not `{/\* comment */}`
+2. **Component nesting**: Don't nest components inside Markdown list items
+3. **Backtick count**: Always verify exactly 3 backticks per code fence
+4. **Indentation**: Keep component tags aligned (no random spaces)
+
 ## Important: Build Verification
 
 When verifying builds after making code fixes:
@@ -25,6 +91,7 @@ When verifying builds after making code fixes:
 2. **Use quick syntax checks instead**:
    - For MDX syntax: Use the Read tool to visually inspect the changes
    - For simple validation: Use `grep` or `sed` to verify patterns
+   - Check for backtick counts: `grep -n '````' file.mdx`
    - Trust that CI will catch any remaining issues after push
 3. **If you must test build**:
    - Use `timeout 60 npm run build` to limit execution time

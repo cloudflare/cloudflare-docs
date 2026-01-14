@@ -62,46 +62,46 @@ stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind
 
 You can use the `bind` method to dynamically bind a value into the query statement, as shown below.
 
-- Example of a static statement without using `bind`:
+Example of a static statement without using `bind`:
 
-  <Tabs syncKey="workersExamples">
+<Tabs syncKey="workersExamples">
 <TabItem label="JavaScript" icon="seti:javascript">
 
-  ```js
-  const stmt = db.prepare(
-  	"SELECT * FROM Customers WHERE CompanyName = 'Alfreds Futterkiste' AND CustomerId = 1",
-  );
-  ```
+```js
+const stmt = db.prepare(
+	"SELECT * FROM Customers WHERE CompanyName = 'Alfreds Futterkiste' AND CustomerId = 1",
+);
+```
 
-  </TabItem>
+</TabItem>
 <TabItem label="Python" icon="seti:python">
 
-  ```py
-  stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = 'Alfreds Futterkiste' AND CustomerId = 1")
-  ```
+```py
+stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = 'Alfreds Futterkiste' AND CustomerId = 1")
+```
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
-- Example of an ordered statement using `bind`:
+Example of an ordered statement using `bind`:
 
-    <Tabs syncKey="workersExamples">
+<Tabs syncKey="workersExamples">
 <TabItem label="JavaScript" icon="seti:javascript">
 
-  ```js
-  const stmt = db
-  	.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?")
-  	.bind("Alfreds Futterkiste", 1);
-  ```
+```js
+const stmt = db
+	.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?")
+	.bind("Alfreds Futterkiste", 1);
+```
 
-    </TabItem>
+</TabItem>
 <TabItem label="Python" icon="seti:python">
 
-  ```py
-  stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?").bind("Alfreds Futterkiste", 1)
-  ```
+```py
+stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ? AND CustomerId = ?").bind("Alfreds Futterkiste", 1")
+```
 
-    </TabItem>
+</TabItem>
 </Tabs>
 
 Refer to the [`bind` method documentation](/d1/worker-api/prepared-statements/#bind) for more information.
