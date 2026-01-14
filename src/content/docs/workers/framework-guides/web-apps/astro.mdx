@@ -188,41 +188,16 @@ The [Astro docs](https://docs.astro.build/en/guides/integrations-guide/cloudflar
 
 Astro's [Sessions API](https://docs.astro.build/en/guides/sessions/) allows you to store user data between requests, such as user preferences, shopping carts, or authentication credentials. When using the Cloudflare adapter, Astro automatically configures [Workers KV](/kv/) for session storage.
 
-To use sessions, you need to create a KV namespace and add a binding to your Wrangler configuration:
+Wrangler automatically provisions a KV namespace named `SESSION` when you deploy, so no manual setup is required.
 
-<Steps>
-1. **Create a KV namespace**
+```astro
+---
+export const prerender = false;
+const cart = await Astro.session?.get("cart");
+---
 
-    ```sh
-    npx wrangler kv namespace create "SESSION"
-    ```
-
-2. **Add the binding to your Wrangler configuration**
-
-    <WranglerConfig>
-    ```json
-    {
-    	"kv_namespaces": [
-    		{
-    			"binding": "SESSION",
-    			"id": "<YOUR_KV_NAMESPACE_ID>"
-    		}
-    	]
-    }
-    ```
-    </WranglerConfig>
-
-3. **Use sessions in your Astro pages**
-
-    ```astro
-    ---
-    export const prerender = false;
-    const cart = await Astro.session?.get("cart");
-    ---
-    <a href="/checkout">{cart?.length ?? 0} items</a>
-    ```
-
-</Steps>
+<a href="/checkout">{cart?.length ?? 0} items</a>
+```
 
 You can customize the KV binding name with the [`sessionKVBindingName`](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#sessionkvbindingname) adapter option if you want to use a different binding name.
 
