@@ -117,7 +117,7 @@
 /aegis/about/ips-allocation/ /smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/#ips-allocation 301
 /aegis/about/connection-forwarding/ /smart-shield/configuration/dedicated-egress-ips/how-it-works/connection-forwarding/ 301
 /aegis/about/reuse-and-coalescing/ /smart-shield/concepts/connection-reuse/ 301
-/aegis/setup/ /smart-shield/configuration/dedicated-egress-ips/ 301
+/aegis/setup/ /smart-shield/configuration/dedicated-egress-ips/setup/ 301
 /aegis/configuration-options/ /smart-shield/configuration/dedicated-egress-ips/other-products/ 301
 /aegis/configuration-options/network-firewall/ /smart-shield/configuration/dedicated-egress-ips/ 301
 /aegis/configuration-options/access-cni/ /smart-shield/configuration/dedicated-egress-ips/other-products/#access-and-cni 301
