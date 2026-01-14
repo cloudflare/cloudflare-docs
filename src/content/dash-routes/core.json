@@ -269,7 +269,7 @@
 	},
 	{
 		"name": "Zero Trust",
-		"deeplink": "/?to=/:account/one"
+		"deeplink": "https://one.dash.cloudflare.com"
 	},
 	{
 		"name": "Network analytics",
