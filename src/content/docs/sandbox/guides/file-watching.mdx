@@ -1,0 +1,447 @@
+---
+title: Watch files for changes
+pcx_content_type: how-to
+sidebar:
+  order: 11
+description: Monitor files and directories for real-time changes using native filesystem events.
+---
+
+import { TypeScriptExample } from "~/components";
+
+File watching enables real-time monitoring of filesystem changes in your sandbox. This guide shows you how to set up file watchers for common development workflows like hot reloading, configuration monitoring, and build automation.
+
+## Basic file watching
+
+Start with a simple watcher that monitors a directory for any changes:
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// Watch for any changes in the src directory
+const watcher = await sandbox.watch('/workspace/src', {
+  onEvent: (event) => {
+    console.log(`${event.type.toUpperCase()}: ${event.path}`);
+    if (event.isDirectory) {
+      console.log('  (directory)');
+    }
+  },
+  onError: (error) => {
+    console.error('Watch error:', error);
+  }
+});
+
+// Stop watching when done
+await watcher.stop();
+```
+</TypeScriptExample>
+
+This will detect all file operations including creates, modifications, deletions, and renames.
+
+## Filter by file type
+
+Use glob patterns to watch only specific file types:
+
+<TypeScriptExample>
+```
+// Watch only JavaScript and TypeScript files
+const codeWatcher = await sandbox.watch('/workspace', {
+  recursive: true,
+  include: ['*.js', '*.ts', '*.jsx', '*.tsx'],
+  exclude: ['node_modules', 'dist', '.git', '*.test.js'],
+  onEvent: (event) => {
+    console.log(`Code file ${event.type}: ${event.path}`);
+    
+    if (event.type === 'modify') {
+      // Trigger rebuild or hot reload
+      console.log('Code changed, recompiling...');
+    }
+  }
+});
+
+// Watch configuration files
+const configWatcher = await sandbox.watch('/workspace', {
+  include: ['*.json', '*.yaml', '*.yml', '*.toml'],
+  onEvent: (event) => {
+    if (event.path.includes('package.json')) {
+      console.log('Dependencies may have changed');
+    } else if (event.path.includes('tsconfig.json')) {
+      console.log('TypeScript config changed');
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Development server hot reloading
+
+Implement hot reloading for a development server:
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'dev-sandbox');
+
+// Start development server
+await sandbox.writeFile('/workspace/server.js', `
+const http = require('http');
+const fs = require('fs');
+
+const server = http.createServer((req, res) => {
+  if (req.url === '/') {
+    const html = fs.readFileSync('./index.html', 'utf8');
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(html);
+  } else if (req.url === '/app.js') {
+    const js = fs.readFileSync('./app.js', 'utf8');
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    res.end(js);
+  }
+});
+
+server.listen(3000, () => console.log('Server running on port 3000'));
+`);
+
+// Start the server process
+const serverProcess = await sandbox.startProcess('node server.js', {
+  cwd: '/workspace'
+});
+
+// Watch for changes and restart server
+let restartTimeout: NodeJS.Timeout | null = null;
+
+const watcher = await sandbox.watch('/workspace', {
+  include: ['*.html', '*.js', '*.css'],
+  exclude: ['node_modules'],
+  onEvent: (event) => {
+    if (event.type === 'modify') {
+      console.log(`File changed: ${event.path}`);
+      
+      // Debounce restarts
+      if (restartTimeout) {
+        clearTimeout(restartTimeout);
+      }
+      
+      restartTimeout = setTimeout(async () => {
+        console.log('Restarting development server...');
+        await serverProcess.kill();
+        
+        // Start new server process
+        const newProcess = await sandbox.startProcess('node server.js', {
+          cwd: '/workspace'
+        });
+        
+        console.log('Server restarted');
+      }, 500);
+    }
+  }
+});
+
+// Cleanup on shutdown
+process.on('SIGINT', async () => {
+  await watcher.stop();
+  await serverProcess.kill();
+  process.exit();
+});
+```
+</TypeScriptExample>
+
+## Build system integration
+
+Integrate file watching with build processes:
+
+<TypeScriptExample>
+```
+// Watch source files and trigger builds
+const buildWatcher = await sandbox.watch('/workspace/src', {
+  include: ['*.ts', '*.tsx'],
+  onEvent: async (event) => {
+    if (event.type === 'modify' || event.type === 'create') {
+      console.log(`Source file ${event.type}: ${event.path}`);
+      
+      try {
+        // Run TypeScript compiler
+        const result = await sandbox.exec('npx tsc --noEmit', {
+          cwd: '/workspace'
+        });
+        
+        if (result.success) {
+          console.log('✅ Type check passed');
+          
+          // Run build
+          const buildResult = await sandbox.exec('npm run build', {
+            cwd: '/workspace'
+          });
+          
+          if (buildResult.success) {
+            console.log('✅ Build completed');
+          } else {
+            console.error('❌ Build failed:', buildResult.stderr);
+          }
+        } else {
+          console.error('❌ Type errors:', result.stderr);
+        }
+      } catch (error) {
+        console.error('Build error:', error);
+      }
+    }
+  }
+});
+
+// Also watch package.json for dependency changes
+const depWatcher = await sandbox.watch('/workspace/package.json', {
+  recursive: false,
+  onEvent: async (event) => {
+    if (event.type === 'modify') {
+      console.log('Dependencies changed, reinstalling...');
+      const result = await sandbox.exec('npm install', {
+        cwd: '/workspace'
+      });
+      
+      if (result.success) {
+        console.log('✅ Dependencies updated');
+      } else {
+        console.error('❌ npm install failed:', result.stderr);
+      }
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Configuration monitoring
+
+Monitor configuration files and reload application settings:
+
+<TypeScriptExample>
+```
+interface AppConfig {
+  port: number;
+  debug: boolean;
+  apiUrl: string;
+}
+
+let currentConfig: AppConfig = {
+  port: 3000,
+  debug: false,
+  apiUrl: 'https://api.example.com'
+};
+
+// Load initial config
+const loadConfig = async () => {
+  try {
+    const configFile = await sandbox.readFile('/workspace/config.json');
+    currentConfig = JSON.parse(configFile.content);
+    console.log('Config loaded:', currentConfig);
+  } catch (error) {
+    console.log('Using default config');
+  }
+};
+
+await loadConfig();
+
+// Watch for config changes
+const configWatcher = await sandbox.watch('/workspace/config.json', {
+  recursive: false,
+  onEvent: async (event) => {
+    if (event.type === 'modify') {
+      console.log('Configuration file changed, reloading...');
+      
+      try {
+        const configFile = await sandbox.readFile('/workspace/config.json');
+        const newConfig = JSON.parse(configFile.content);
+        
+        // Validate config structure
+        if (typeof newConfig.port === 'number' && 
+            typeof newConfig.debug === 'boolean' &&
+            typeof newConfig.apiUrl === 'string') {
+          
+          currentConfig = newConfig;
+          console.log('✅ Config reloaded:', currentConfig);
+          
+          // Notify application of config change
+          // (restart server, update API client, etc.)
+          
+        } else {
+          console.error('❌ Invalid config format');
+        }
+      } catch (error) {
+        console.error('❌ Config parsing error:', error);
+      }
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Advanced patterns
+
+### Multiple watchers with coordination
+
+<TypeScriptExample>
+```
+// Coordinate multiple watchers for a complex workflow
+class DevEnvironment {
+  private watchers: Map<string, any> = new Map();
+  
+  async start() {
+    // Watch source files
+    const sourceWatcher = await sandbox.watch('/workspace/src', {
+      include: ['*.ts', '*.tsx'],
+      onEvent: (event) => this.handleSourceChange(event)
+    });
+    this.watchers.set('source', sourceWatcher);
+    
+    // Watch tests
+    const testWatcher = await sandbox.watch('/workspace/tests', {
+      include: ['*.test.ts', '*.spec.ts'],
+      onEvent: (event) => this.handleTestChange(event)
+    });
+    this.watchers.set('test', testWatcher);
+    
+    // Watch config
+    const configWatcher = await sandbox.watch('/workspace', {
+      include: ['*.json', '*.yaml'],
+      onEvent: (event) => this.handleConfigChange(event)
+    });
+    this.watchers.set('config', configWatcher);
+  }
+  
+  async stop() {
+    for (const [name, watcher] of this.watchers) {
+      console.log(`Stopping ${name} watcher`);
+      await watcher.stop();
+    }
+    this.watchers.clear();
+  }
+  
+  private async handleSourceChange(event: WatchEvent) {
+    console.log(`Source ${event.type}: ${event.path}`);
+    // Run linter, type check, and tests
+    await this.runChecks();
+  }
+  
+  private async handleTestChange(event: WatchEvent) {
+    console.log(`Test ${event.type}: ${event.path}`);
+    // Run specific test file
+    await this.runTests(event.path);
+  }
+  
+  private async handleConfigChange(event: WatchEvent) {
+    console.log(`Config ${event.type}: ${event.path}`);
+    // Reload configuration
+    await this.reloadConfig();
+  }
+  
+  private async runChecks() {
+    // Implementation details...
+  }
+  
+  private async runTests(testFile: string) {
+    // Implementation details...
+  }
+  
+  private async reloadConfig() {
+    // Implementation details...
+  }
+}
+
+const devEnv = new DevEnvironment();
+await devEnv.start();
+
+// Cleanup on process exit
+process.on('SIGINT', async () => {
+  await devEnv.stop();
+  process.exit();
+});
+```
+</TypeScriptExample>
+
+### Using AbortSignal for cancellation
+
+<TypeScriptExample>
+```
+// Use AbortSignal for clean cancellation
+const controller = new AbortController();
+
+// Start multiple watchers with the same signal
+const watchers = await Promise.all([
+  sandbox.watch('/workspace/src', {
+    signal: controller.signal,
+    onEvent: (event) => console.log('Source:', event.path)
+  }),
+  sandbox.watch('/workspace/public', {
+    signal: controller.signal,
+    onEvent: (event) => console.log('Static:', event.path)
+  }),
+  sandbox.watch('/workspace/config', {
+    signal: controller.signal,
+    onEvent: (event) => console.log('Config:', event.path)
+  })
+]);
+
+// Stop all watchers at once
+controller.abort();
+
+// Or use timeout-based cancellation
+const timeoutController = new AbortController();
+setTimeout(() => {
+  console.log('Stopping watchers after timeout');
+  timeoutController.abort();
+}, 60000); // Stop after 1 minute
+
+const watcher = await sandbox.watch('/workspace', {
+  signal: timeoutController.signal,
+  onEvent: (event) => console.log('Event:', event.path)
+});
+```
+</TypeScriptExample>
+
+## Best practices
+
+### Performance optimization
+
+- **Use specific patterns**: Filter with `include`/`exclude` to reduce event volume
+- **Debounce rapid changes**: Batch multiple events to avoid excessive processing
+- **Non-recursive for large directories**: Disable recursion for directories with many files
+
+### Resource management
+
+- **Always cleanup**: Use `watcher.stop()` or AbortSignal to prevent memory leaks
+- **Limit concurrent watchers**: Too many watchers can impact performance
+- **Handle errors gracefully**: Use `onError` callback to handle watch failures
+
+### Error handling
+
+<TypeScriptExample>
+```
+const watcher = await sandbox.watch('/workspace/src', {
+  onEvent: (event) => {
+    try {
+      // Process event
+      handleFileChange(event);
+    } catch (error) {
+      console.error('Event processing error:', error);
+    }
+  },
+  onError: (error) => {
+    console.error('Watch error:', error);
+    
+    // Attempt to restart watcher
+    setTimeout(async () => {
+      try {
+        await watcher.stop();
+        // Create new watcher...
+      } catch (restartError) {
+        console.error('Failed to restart watcher:', restartError);
+      }
+    }, 1000);
+  }
+});
+```
+</TypeScriptExample>
+
+File watching provides powerful capabilities for building responsive development tools and automated workflows. Use these patterns to create efficient, robust file monitoring systems in your sandbox applications.

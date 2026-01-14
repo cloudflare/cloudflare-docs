@@ -120,6 +120,40 @@ With Sandbox, you can execute Python scripts, run Node.js applications, analyze 
 		```
 	</TabItem>
 
+	<TabItem label="File Watching">
+		```typescript
+		import { getSandbox } from '@cloudflare/sandbox';
+
+		export { Sandbox } from '@cloudflare/sandbox';
+
+		export default {
+			async fetch(request: Request, env: Env): Promise<Response> {
+				const sandbox = getSandbox(env.Sandbox, 'user-123');
+
+				// Watch for file changes in real-time
+				const watcher = await sandbox.watch('/workspace/src', {
+					include: ['*.js', '*.ts'],
+					onEvent: (event) => {
+						console.log(`${event.type}: ${event.path}`);
+						if (event.type === 'modify') {
+							// Trigger rebuild or hot reload
+							console.log('Code changed, recompiling...');
+						}
+					},
+					onError: (error) => {
+						console.error('Watch error:', error);
+					}
+				});
+
+				// Stop watching when done
+				setTimeout(() => watcher.stop(), 60000);
+
+				return Response.json({ message: 'File watcher started' });
+			}
+		};
+		```
+	</TabItem>
+
 	<TabItem label="WebSocket Connections">
 		```typescript
 		import { getSandbox } from '@cloudflare/sandbox';
@@ -182,6 +216,12 @@ Execute Python and JavaScript code with rich outputs including charts, tables, a
 <Feature header="Persistent storage with object storage" href="/sandbox/guides/mount-buckets/" cta="Learn about bucket mounting">
 
 Mount S3-compatible object storage (R2, S3, GCS, and more) as local filesystems. Access buckets using standard file operations with data that persists across sandbox lifecycles. Production deployment required.
+
+</Feature>
+
+<Feature header="Watch files for real-time changes" href="/sandbox/guides/file-watching/" cta="Learn about file watching">
+
+Monitor files and directories for changes using native filesystem events. Perfect for building hot reloading development servers, build automation systems, and configuration monitoring tools.
 
 </Feature>
 
