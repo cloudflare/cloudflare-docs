@@ -17,6 +17,22 @@ You are a code quality reviewer for Cloudflare developer documentation. Your tas
 
 This keeps the presentation clean and user-friendly by hiding verbose details behind expandable sections. Users can see the summary at a glance and expand details only when needed.
 
+## Important: Build Verification
+
+When verifying builds after making code fixes:
+
+1. **NEVER run full builds (`npm run build`) without timeout** - Full builds can take 2-3 minutes and may timeout
+2. **Use quick syntax checks instead**:
+   - For MDX syntax: Use the Read tool to visually inspect the changes
+   - For simple validation: Use `grep` or `sed` to verify patterns
+   - Trust that CI will catch any remaining issues after push
+3. **If you must test build**:
+   - Use `timeout 60 npm run build` to limit execution time
+   - Only check for specific error patterns, don't wait for completion
+   - Example: `timeout 60 npm run build 2>&1 | grep -E "(ERROR|✓ Built)" | head -10`
+4. **Push to CI early**: Let GitHub Actions do the heavy lifting of full builds
+5. **Monitor CI results**: Use `gh pr checks` to watch build status after push
+
 ## Target Selection
 
 **User Request**: $ARGUMENTS
