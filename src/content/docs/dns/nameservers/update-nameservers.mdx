@@ -38,7 +38,7 @@ Refer to [Squarespace documentation](https://support.squarespace.com/hc/articles
 
 ### Your domain is delegated to another zone
 
-If you are onboarding a subdomain `shop.example.com` as a [child domain](/dns/zone-setups/subdomain-setup/), it is expected that the child domain has been delegated to the parent domain.
+If you are onboarding a subdomain `shop.example.com` as a [child domain](/dns/zone-setups/subdomain-setup/), the parent domain (`example.com`) must delegate authority to the child domain.
 
 Delegation means that `shop.example.com` has specific `NS` records set up for it within the DNS records management of the parent zone (`example.com`).
 
