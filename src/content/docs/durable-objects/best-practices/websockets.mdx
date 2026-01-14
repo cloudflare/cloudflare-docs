@@ -2,10 +2,16 @@
 title: Use WebSockets
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 6
 ---
 
-import { Tabs, TabItem, GlossaryTooltip, Type, WranglerConfig } from "~/components";
+import {
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	Type,
+	WranglerConfig,
+} from "~/components";
 
 This guide covers how to use Durable Objects as WebSocket servers that can connect thousands of clients (per instance), as well as a WebSocket client to connect to other servers or even Durable Objects.
 
@@ -145,10 +151,11 @@ from workers import Response, DurableObject
 from js import WebSocketPair
 
 # Durable Object
+
 class WebSocketHibernationServer(DurableObject):
-    def __init__(self, state, env):
-        super().__init__(state, env)
-        self.ctx = state
+def **init**(self, state, env):
+super().**init**(state, env)
+self.ctx = state
 
     async def fetch(self, request):
         # Creates two ends of a WebSocket connection.
@@ -175,7 +182,8 @@ class WebSocketHibernationServer(DurableObject):
     async def webSocketClose(self, ws, code, reason, was_clean):
         # If the client closes the connection, the runtime will invoke the webSocketClose() handler.
         ws.close(code, "Durable Object is closing WebSocket")
-```
+
+````
 </TabItem>
 </Tabs>
 
@@ -192,7 +200,8 @@ class_name = "WebSocketHibernationServer"
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["WebSocketHibernationServer"]
-```
+````
+
 </WranglerConfig>
 
 A full example can be found in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
@@ -211,20 +220,21 @@ The following are methods available on the **Native Durable Object WebSocket API
 
 #### `WebSocket.serializeAttachment()`
 
-- <code>serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
-
+- <code>
+  	serializeAttachment(value <Type text="any" />)
+  </code>
+  : <Type text="void" />
   - Keeps a copy of `value` associated with the WebSocket connection. Serialized attachments are available as long as their attached WebSocket connection is healthy, even after hibernation. If any side of the connection is closed, the attachments will be lost. If the value needs to be durable even if the [Durable Object is evicted](/durable-objects/concepts/durable-object-lifecycle/), please use [Durable Object Storage](/durable-objects/api/sqlite-storage-api/).
 
   - If you modify `value` after calling this method, those changes will not be retained unless you call this method again.
 
-	- The `value` can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types and the serialized size is limited to 2,048 bytes, otherwise this method will throw an error.
+  - The `value` can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types and the serialized size is limited to 2,048 bytes, otherwise this method will throw an error.
 
-	- If you need to store larger values, or want to persist values even if the Durable Object instance is evicted and the WebSocket connections are closed, use the [Storage API](/durable-objects/api/sqlite-storage-api/) and store the corresponding key as an attachment so it can be retrieved later.
+  - If you need to store larger values, or want to persist values even if the Durable Object instance is evicted and the WebSocket connections are closed, use the [Storage API](/durable-objects/api/sqlite-storage-api/) and store the corresponding key as an attachment so it can be retrieved later.
 
 #### `WebSocket.deserializeAttachment()`
 
 - `deserializeAttachment()`: <Type text='any' />
-
   - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
 
 ## WebSocket Standard API
@@ -325,21 +335,20 @@ export default {
 from workers import Response, WorkerEntrypoint
 
 # Worker
+
 class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        if request.method == "GET" and request.url.endswith("/websocket"):
-            # Expect to receive a WebSocket Upgrade request.
-            # If there is one, accept the request and return a WebSocket Response.
-            upgrade_header = request.headers.get("Upgrade")
-            if not upgrade_header or upgrade_header != "websocket":
-                return Response(
-                    None,
-                    status=426,
-                    status_text="Durable Object expected Upgrade: websocket",
-                    headers={
-                        "Content-Type": "text/plain",
-                    },
-                )
+async def fetch(self, request):
+if request.method == "GET" and request.url.endswith("/websocket"): # Expect to receive a WebSocket Upgrade request. # If there is one, accept the request and return a WebSocket Response.
+upgrade_header = request.headers.get("Upgrade")
+if not upgrade_header or upgrade_header != "websocket":
+return Response(
+None,
+status=426,
+status_text="Durable Object expected Upgrade: websocket",
+headers={
+"Content-Type": "text/plain",
+},
+)
 
             # This example will refer to a single Durable Object instance, since the name "foo" is
             # hardcoded
@@ -357,7 +366,8 @@ class Default(WorkerEntrypoint):
                 "Content-Type": "text/plain",
             },
         )
-```
+
+````
 </TabItem>
 </Tabs>
 
@@ -407,7 +417,7 @@ export class WebSocketServer extends DurableObject {
 		});
 	}
 }
-```
+````
 
 </TabItem>
 <TabItem label="TypeScript" icon="seti:typescript">
@@ -461,10 +471,11 @@ from js import WebSocketPair
 from pyodide.ffi import create_proxy
 
 # Durable Object
+
 class WebSocketServer(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-        self.currently_connected_websockets = 0
+def **init**(self, ctx, env):
+super().**init**(ctx, env)
+self.currently_connected_websockets = 0
 
     async def fetch(self, request):
         # Creates two ends of a WebSocket connection.
@@ -495,7 +506,8 @@ class WebSocketServer(DurableObject):
             status=101,
             web_socket=client,
         )
-```
+
+````
 </TabItem>
 </Tabs>
 
@@ -512,7 +524,8 @@ class_name = "WebSocketServer"
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["WebSocketServer"]
-```
+````
+
 </WranglerConfig>
 
 A full example can be found in [Build a WebSocket server](/durable-objects/examples/websocket-server/).

@@ -1,0 +1,462 @@
+---
+title: Use Dynamic Workers with Durable Objects storage
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { Tabs, TabItem, GlossaryTooltip } from "~/components";
+
+When building platforms that execute untrusted user code, you may need to combine [Dynamic Worker Loaders](/workers/runtime-apis/bindings/worker-loader/) with [Durable Objects](/durable-objects/) to provide both code isolation and persistent storage. This guide explains how to architect your application to avoid hitting subrequest limits while maintaining high performance.
+
+## Use case
+
+Consider a platform where users can:
+
+- Submit custom code that needs to execute in isolation
+- Access persistent storage (for example, state management, data persistence)
+- Make external API calls and process streaming responses
+- Broadcast updates to connected clients via WebSockets
+
+A common example is a collaborative canvas application where user-submitted code processes AI responses in chunks, storing each chunk and broadcasting changes to multiple clients in real-time.
+
+## Understanding subrequest limits
+
+Every Worker request has a limit on the number of [subrequests](/workers/platform/limits/#subrequests) it can make. Subrequests include:
+
+- HTTP requests made via `fetch()` to external or internal services
+- [RPC calls](/workers/runtime-apis/rpc/) to Durable Objects
+- RPC calls to other Workers via Service Bindings
+- Requests to other Cloudflare services (KV, R2, D1, etc.)
+
+**Standard limits:**
+
+- **Enterprise Workers**: 1,000 subrequests per request
+- **Dynamic Workers (Pay-as-you-go)**: 50 subrequests per request
+- **Dynamic Workers (Enterprise)**: 1,000 subrequests per request
+
+:::note
+
+Each RPC method call to a Durable Object counts as a subrequest, even if the Durable Object is in the same account. This is important when your dynamic worker needs to interact with storage frequently.
+
+:::
+
+### Why this matters with dynamic workers
+
+If your dynamic worker makes multiple RPC calls per operation (for example, one to save data, one to broadcast changes), and processes many operations (for example, 50+ chunks from a streaming API), you can quickly exceed subrequest limits:
+
+```
+4 RPC calls per chunk × 50 chunks = 200 subrequests
+```
+
+Even with enterprise limits, complex operations can hit the 1,000 subrequest ceiling, causing your application to fail.
+
+## Anti-pattern: Multiple RPC calls from dynamic worker
+
+The following architecture creates excessive subrequests and should be avoided:
+
+```
+1. Client Request
+   ↓
+2. Main Worker
+   ↓
+3. Dynamic Worker (untrusted user code runs here)
+   │
+   ├─→ External API call (1 subrequest)
+   │
+   └─→ For each chunk/operation:
+       ├─→ RPC: env.MY_DO.saveData()      [SUBREQUEST]
+       ├─→ RPC: env.MY_DO.broadcast()      [SUBREQUEST]
+       └─→ RPC: env.MY_DO.updateState()    [SUBREQUEST]
+
+4. Durable Object (receives RPC calls)
+   └─→ Storage operations
+   └─→ WebSocket broadcasts
+```
+
+### Code example (anti-pattern)
+
+<Tabs>
+<TabItem label="Main Worker" icon="seti:javascript">
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		// Load dynamic worker with DO binding
+		let worker = env.LOADER.get("user-code-123", () => {
+			return {
+				compatibilityDate: "2025-06-01",
+				mainModule: "user-code.js",
+				modules: {
+					"user-code.js": userSubmittedCode,
+				},
+				env: {
+					// Passing DO namespace binding to dynamic worker
+					STORAGE: env.MY_DURABLE_OBJECT,
+				},
+			};
+		});
+
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+</TabItem>
+<TabItem label="Dynamic Worker" icon="seti:javascript">
+
+```js
+// This code runs in the dynamic worker
+export default {
+	async fetch(request, env) {
+		const stub = env.STORAGE.getByName("storage-instance");
+
+		// External API call
+		const stream = await fetch("https://api.example.com/stream");
+
+		// Process streaming response
+		for await (const chunk of stream) {
+			// PROBLEM: Each iteration makes multiple RPC calls
+			await stub.saveChunk(chunk); // Subrequest #1
+			await stub.broadcastUpdate(chunk); // Subrequest #2
+			await stub.commitChanges(); // Subrequest #3
+		}
+
+		return new Response("Done");
+	},
+};
+```
+
+</TabItem>
+<TabItem label="Durable Object" icon="seti:typescript">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
+	async saveChunk(chunk: any) {
+		await this.ctx.storage.sql.exec(
+			"INSERT INTO chunks (data) VALUES (?)",
+			JSON.stringify(chunk),
+		);
+	}
+
+	async broadcastUpdate(chunk: any) {
+		// Broadcast to connected WebSocket clients
+		this.broadcast(chunk);
+	}
+
+	async commitChanges() {
+		await this.ctx.storage.sql.exec("COMMIT");
+	}
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Problems with this approach
+
+1. **Subrequest limit exceeded**: With 50+ chunks, you quickly exceed limits
+2. **Poor performance**: Every storage operation requires a network round-trip
+3. **Latency accumulation**: RPC call latency multiplies with each operation
+4. **Unnecessary serialization**: Data is serialized/deserialized for each RPC call
+
+## Recommended pattern: Pass storage reference to dynamic worker
+
+The solution is to run the dynamic worker **inside the Durable Object** and pass a storage reference directly to it. This eliminates RPC calls for storage operations.
+
+```
+1. Client Request
+   ↓
+2. Main Worker
+   ↓ (forwards to DO)
+3. Durable Object (receives request)
+   │
+   └─→ Loads Dynamic Worker HERE (inside the DO)
+       │
+       ├─→ External API call (1 subrequest)
+       │
+       └─→ For each chunk/operation:
+           ├─→ DIRECT: storageContext.saveData()    [NO RPC - LOCAL CALL]
+           ├─→ DIRECT: storageContext.broadcast()   [NO RPC - LOCAL CALL]
+           └─→ DIRECT: storageContext.updateState() [NO RPC - LOCAL CALL]
+```
+
+### Complete working example
+
+<Tabs>
+<TabItem label="Main Worker" icon="seti:typescript">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+export default class extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		// Get Durable Object instance
+		const id = this.env.MY_DURABLE_OBJECT.idFromName("storage-instance");
+		const stub = this.env.MY_DURABLE_OBJECT.get(id);
+
+		// Forward request to Durable Object
+		// The DO will handle loading and executing the dynamic worker
+		return stub.executeUserCode(request);
+	}
+}
+```
+
+</TabItem>
+<TabItem label="Durable Object" icon="seti:typescript">
+
+```ts
+import { DurableObject, RpcTarget } from "cloudflare:workers";
+
+// Storage context provides safe access to DO storage
+class StorageContext extends RpcTarget {
+	constructor(private storage: DurableObjectStorage) {
+		super();
+		this.storage = storage;
+	}
+
+	async saveChunk(data: any) {
+		await this.storage.sql.exec(
+			"INSERT INTO chunks (data) VALUES (?)",
+			JSON.stringify(data),
+		);
+	}
+
+	async broadcastUpdate(data: any) {
+		// Access to parent DO methods through closure
+		// In practice, you'd implement this via the parent DO
+		return { success: true };
+	}
+
+	async commitChanges() {
+		await this.storage.sql.exec("COMMIT");
+	}
+}
+
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		// Initialize storage schema
+		this.ctx.storage.sql.exec(
+			"CREATE TABLE IF NOT EXISTS chunks (id INTEGER PRIMARY KEY, data TEXT)",
+		);
+	}
+
+	async executeUserCode(request: Request): Promise<Response> {
+		// Load dynamic worker INSIDE the Durable Object
+		const worker = this.env.LOADER.get("user-code-123", () => {
+			return {
+				compatibilityDate: "2025-06-01",
+				mainModule: "user-code.js",
+				modules: {
+					"user-code.js": getUserSubmittedCode(),
+				},
+				// env persists for the dynamic worker's lifetime
+				// DO NOT put transient objects here
+				env: {
+					API_KEY: "user-api-key",
+				},
+			};
+		});
+
+		// Pass storage context as RPC parameter (transient, valid for call duration)
+		const storageContext = new StorageContext(this.ctx.storage);
+		return worker.getEntrypoint().execute(request, storageContext);
+	}
+}
+
+function getUserSubmittedCode(): string {
+	// In practice, fetch this from your storage
+	return `
+    export default {
+      async execute(request, storageContext) {
+        // External API call (1 subrequest)
+        const response = await fetch("https://api.example.com/stream");
+        const stream = response.body;
+        
+        // Process chunks
+        for await (const chunk of stream) {
+          // These are LOCAL calls, not RPC subrequests
+          await storageContext.saveChunk(chunk);
+          await storageContext.broadcastUpdate(chunk);
+          await storageContext.commitChanges();
+        }
+        
+        return new Response("Processing complete");
+      }
+    }
+  `;
+}
+```
+
+</TabItem>
+<TabItem label="wrangler.toml" icon="seti:toml">
+
+```toml
+name = "my-platform-worker"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+
+[[durable_objects.bindings]]
+name = "MY_DURABLE_OBJECT"
+class_name = "MyDurableObject"
+
+[[worker_loaders]]
+binding = "LOADER"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyDurableObject"]
+```
+
+</TabItem>
+</Tabs>
+
+### Why this works
+
+1. **No RPC overhead**: Storage operations are local method calls within the same isolate
+2. **No subrequest counting**: Direct storage access doesn't count toward limits
+3. **Better performance**: Eliminates network latency for every storage operation
+4. **Simpler error handling**: No need to handle RPC serialization errors
+
+## Key implementation details
+
+### Why `RpcTarget` instead of `WorkerEntrypoint`
+
+The `StorageContext` class must extend `RpcTarget` (not `WorkerEntrypoint`) because:
+
+- `WorkerEntrypoint` is designed for persistent service bindings
+- `RpcTarget` is designed for transient RPC objects passed as parameters
+- Storage context is only valid during the RPC call, not for the dynamic worker's entire lifetime
+
+```ts
+// Correct: RpcTarget for transient storage access
+class StorageContext extends RpcTarget {
+	constructor(private storage: DurableObjectStorage) {
+		super();
+	}
+}
+
+// Incorrect: WorkerEntrypoint would imply persistent lifetime
+class StorageContext extends WorkerEntrypoint {
+	// This won't work - WorkerEntrypoint can't be passed as RPC parameter
+}
+```
+
+### Environment vs RPC parameters
+
+Understanding the difference between `env` and RPC parameters is crucial:
+
+**`env` (Environment bindings):**
+
+- Persists for the entire lifetime of the dynamic worker isolate
+- The isolate can outlive the parent Durable Object isolate
+- Can only contain serializable types and persistent service bindings
+- **Cannot** contain transient objects like `DurableObjectStorage`
+
+**RPC method parameters:**
+
+- Valid only for the duration of the RPC call
+- The calling isolate (Durable Object) is guaranteed to be alive during the call
+- Can include transient `RpcTarget` objects
+- Perfect for passing storage references
+
+```ts
+// Correct: Pass storage as RPC parameter
+const storageContext = new StorageContext(this.ctx.storage);
+return worker.getEntrypoint().execute(request, storageContext);
+
+// Incorrect: Cannot put DurableObjectStorage in env
+const worker = env.LOADER.get("id", () => ({
+	env: {
+		STORAGE: this.ctx.storage, // ❌ Error: not serializable
+	},
+}));
+```
+
+### Isolate lifetime considerations
+
+Dynamic isolates have independent lifetimes:
+
+- A dynamic worker isolate can continue running after the parent isolate terminates
+- This is why `env` cannot reference transient parent objects
+- RPC parameters are safe because the call is synchronous - the parent must be alive
+
+:::note
+
+When the parent Durable Object's isolate is evicted or restarted, any dynamic worker isolates it created may also be evicted. However, this is an implementation detail - your code should not rely on this behavior.
+
+:::
+
+### Passing additional capabilities
+
+You can extend `StorageContext` to provide additional capabilities:
+
+```ts
+class StorageContext extends RpcTarget {
+	constructor(
+		private storage: DurableObjectStorage,
+		private broadcastFn: (data: any) => void,
+	) {
+		super();
+	}
+
+	async saveChunk(data: any) {
+		await this.storage.sql.exec(
+			"INSERT INTO chunks (data) VALUES (?)",
+			JSON.stringify(data),
+		);
+	}
+
+	async broadcast(data: any) {
+		// Invoke the parent DO's broadcast function
+		this.broadcastFn(data);
+	}
+}
+
+// In the Durable Object:
+const storageContext = new StorageContext(this.ctx.storage, (data) =>
+	this.broadcastToClients(data),
+);
+```
+
+## Performance benefits
+
+This architecture provides significant performance improvements:
+
+| Metric                 | Anti-pattern (RPC) | Recommended (Direct) | Improvement          |
+| ---------------------- | ------------------ | -------------------- | -------------------- |
+| Subrequests            | 4 per chunk        | 0 per chunk          | ✅ No limit hit      |
+| Latency per operation  | ~5-10ms (network)  | ~0.1ms (local)       | ✅ 50-100x faster    |
+| Serialization overhead | Per RPC call       | None                 | ✅ Reduced CPU usage |
+| Request timeout risk   | High (accumulates) | Low (minimal)        | ✅ More reliable     |
+
+## When to use this pattern
+
+Use this pattern when:
+
+- ✅ You need to execute untrusted user code with storage access
+- ✅ Your code makes frequent storage operations (10+ per request)
+- ✅ You're processing streaming data in chunks
+- ✅ You need to broadcast updates to multiple clients
+- ✅ You want to minimize latency and improve performance
+
+Consider alternatives when:
+
+- ❌ Storage operations are infrequent (< 5 per request) - simple RPC may suffice
+- ❌ You don't need code isolation - use regular Durable Object methods
+- ❌ Your user code needs to run across multiple Durable Objects - use RPC
+
+## Related resources
+
+- [Dynamic Worker Loaders](/workers/runtime-apis/bindings/worker-loader/) - Complete API reference
+- [Workers RPC](/workers/runtime-apis/rpc/) - Understanding RPC types and lifecycle
+- [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) - Storage methods reference
+- [Subrequest limits](/workers/platform/limits/#subrequests) - Platform limits documentation
+- [RpcTarget class](/workers/runtime-apis/rpc/#rpctarget) - RPC type reference
