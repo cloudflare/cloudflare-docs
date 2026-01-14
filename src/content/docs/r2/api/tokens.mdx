@@ -225,9 +225,9 @@ Refer to [Authenticate against R2 API using auth tokens](/r2/examples/authentica
 If you need to create temporary credentials for a bucket or a prefix/object within a bucket, you can use the [temp-access-credentials endpoint](/api/resources/r2/subresources/temporary_credentials/methods/create/) in the API. You will need an existing R2 token to pass in as the parent access key id. You can use the credentials from the API result for an S3-compatible request by setting the credential variables like so:
 
 ```
-AWS_ACCESS_KEY_ID = <accessKeyId>
-AWS_SECRET_ACCESS_KEY = <secretAccessKey>
-AWS_SESSION_TOKEN = <sessionToken>
+ACCESS_KEY_ID = <accessKeyId>
+SECRET_ACCESS_KEY = <secretAccessKey>
+SESSION_TOKEN = <sessionToken>
 ```
 
 :::note
