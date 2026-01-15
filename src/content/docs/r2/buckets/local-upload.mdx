@@ -8,13 +8,13 @@ sidebar:
 
 import { Tabs, TabItem, R2LocalUploadsDiagram } from "~/components";
 
-You can enable Local Uploads on your bucket to reduce the latency of cross-region upload requests. It writes object data to a nearby location, then asynchronously copies it to your bucket. Data is available immediately and remains strongly consistent.
+You can enable Local Uploads on your bucket to improve the performance of cross-region upload requests. It writes object data to a nearby location, then asynchronously copies it to your bucket. Data is available immediately and remains strongly consistent.
 
 ## How it works
 
 ### Without Local Uploads
 
-When a client uploads an object to your R2 bucket, the object data must travel from the client to the storage infrastructure of your bucket. This behavior can result in higher latency when your client is in a different region than the bucket. Refer to [How R2 works](/r2/reference/how-r2-works/) for details.
+When a client uploads an object to your R2 bucket, the object data must travel from the client to the storage infrastructure of your bucket. This behavior can result in higher latency and lower reliability when your client is in a different region than the bucket. Refer to [How R2 works](/r2/how-r2-works/) for details.
 
 ### With Local Uploads
 
@@ -29,7 +29,7 @@ When you make an upload request (i.e. `PutObject` and `UploadPart`) to a bucket 
 
 Local uploads are built for workloads that receive a lot of uploads originating from different geographic regions than where your bucket is located. This feature is ideal when:
 
-- Your users are globally distributed and upload latency is critical to your application's experience
+- Your users are globally distributed and upload performance is critical to your application's experience
 - You want to optimize write performance without changing your bucket's location
 
 To understand the geographic distribution of where your read and write requests are initiated:
