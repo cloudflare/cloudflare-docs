@@ -910,7 +910,7 @@ entries:
     data_type: Integer
     categories: [Request]
     keywords: [request, timing, edge, performance]
-    summary: The time spent processing a request within the Cloudflare global network in millliseconds.
+    summary: The time spent processing a request within the Cloudflare global network in milliseconds.
     description: |-
       The value corresponds to the time interval between when the Cloudflare edge server accepted the HTTP request headers for processing and just before the HTTP response headers were available to be sent to the client.
 
