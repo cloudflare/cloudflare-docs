@@ -1,0 +1,55 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Managed rules** tab.
+
+3. Next to the _Execute_ rule deploying the managed ruleset you want to configure, select the managed ruleset name.<br/> If you have not deployed the managed ruleset yet, select the managed ruleset name under **Managed Rulesets**.
+
+4. (Optional) To execute the managed ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+
+5. In the ruleset configuration section, define settings for all the rules in the ruleset by setting one or more fields using the drop-down lists.
+
+   For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
+
+   ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](~/assets/images/waf/waf-configure-ruleset.png)
+
+6. If you are editing a deployed managed ruleset, select **Save**. If you have not deployed the managed ruleset yet, select **Deploy** to deploy the ruleset immediately, or **Save as Draft** to save your deployment settings for later.
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. (Optional) Filter by **Managed rules**.
+
+3. Search for the managed ruleset you want to configure. Look for a rule with an _Execute_ action.
+
+4. Select the rule name (containing the name of the managed ruleset).
+
+5. (Optional) To execute the managed ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+
+6. In the ruleset configuration section, define settings for all the rules in the ruleset by setting one or more fields using the drop-down lists.
+
+   For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
+
+   ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](~/assets/images/waf/waf-configure-ruleset.png)
+
+7. Select **Save**.
+
+</Steps>
+
+</TabItem> </Tabs>
