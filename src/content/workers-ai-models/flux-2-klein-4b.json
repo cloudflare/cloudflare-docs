@@ -24,12 +24,12 @@
             "value": [
                 {
                     "unit": "per input 512x512 tile",
-                    "price": 0.00014,
+                    "price": 0.000059,
                     "currency": "USD"
                 },
                 {
                     "unit": "per output 512x512 tile",
-                    "price": 0.00007,
+                    "price": 0.000287,
                     "currency": "USD"
                 }
             ]
