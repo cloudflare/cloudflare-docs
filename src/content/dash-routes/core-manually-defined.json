@@ -1,10 +1,5 @@
 [
 	{
-		"name": "Overview",
-		"deeplink": "/?to=/:account/magic-networks/overview",
-		"parent": ["Networking"]
-	},
-	{
 		"name": "Routes",
 		"deeplink": "/?to=/:account/magic-networks/routes",
 		"parent": ["Networking"]
