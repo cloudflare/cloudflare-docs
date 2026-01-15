@@ -55,7 +55,6 @@ import Anthropic from "@anthropic-ai/sdk";
 export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
-	Sandbox: DurableObjectNamespace<Sandbox>;
 	GITHUB_TOKEN: string;
 	ANTHROPIC_API_KEY: string;
 	WEBHOOK_SECRET: string;
@@ -67,7 +66,7 @@ export default {
 		env: Env,
 		ctx: ExecutionContext,
 	): Promise<Response> {
-		const proxyResponse = await proxyToSandbox(request, env);
+		const proxyResponse = await proxyToSandbox(request, ctx);
 		if (proxyResponse) return proxyResponse;
 
 		const url = new URL(request.url);
@@ -105,17 +104,8 @@ export default {
 				console.log(`Starting review for PR #${payload.pull_request.number}`);
 				// Use waitUntil to ensure the review completes even after response is sent
 				ctx.waitUntil(
-					reviewPullRequest(payload, env).catch(console.error),
+					reviewPullRequest(payload, env, ctx).catch(console.error),
 				);
-				return Response.json({ message: "Review started" });
-			}
-
-			return Response.json({ message: "Event ignored" });
-		}
-
-		return new Response(
-			"Code Review Bot\n\nConfigure GitHub webhook to POST /webhook",
-		);
 	},
 };
 
@@ -147,11 +137,15 @@ async function verifySignature(
 	return signature === expected;
 }
 
-async function reviewPullRequest(payload: any, env: Env): Promise<void> {
+async function reviewPullRequest(
+	payload: any,
+	env: Env,
+	ctx: ExecutionContext,
+): Promise<void> {
 	const pr = payload.pull_request;
 	const repo = payload.repository;
 	const octokit = new Octokit({ auth: env.GITHUB_TOKEN });
-	const sandbox = getSandbox(env.Sandbox, `review-${pr.number}`);
+	const sandbox = getSandbox(ctx.exports.Sandbox, `review-${pr.number}`);
 
 	try {
 		// Post initial comment

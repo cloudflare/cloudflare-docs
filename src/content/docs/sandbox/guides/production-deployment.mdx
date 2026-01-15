@@ -29,7 +29,7 @@ The `.workers.dev` domain does not support wildcard subdomains, so production de
 In the Cloudflare dashboard, go to your domain and create an A record:
 
 - **Type**: A
-- **Name**: * (wildcard)
+- **Name**: \* (wildcard)
 - **IPv4 address**: 192.0.2.0
 - **Proxy status**: Proxied (orange cloud)
 
@@ -46,9 +46,10 @@ main = "src/index.ts"
 compatibility_date = "$today"
 
 [[routes]]
-pattern = "*.yourdomain.com/*"
+pattern = "_.yourdomain.com/_"
 zone_name = "yourdomain.com"
-```
+
+````
 </WranglerConfig>
 
 Replace `yourdomain.com` with your actual domain. This routes all subdomain requests to your Worker and enables Cloudflare to provision SSL certificates automatically.
@@ -59,7 +60,7 @@ Deploy your Worker:
 
 ```sh
 npx wrangler deploy
-```
+````
 
 ## Verify
 
@@ -69,8 +70,8 @@ Test that preview URLs work:
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
-const sandbox = getSandbox(env.Sandbox, 'test-sandbox');
-await sandbox.startProcess('python -m http.server 8080');
+const sandbox = getSandbox(ctx.exports.Sandbox, "test-sandbox");
+await sandbox.startProcess("python -m http.server 8080");
 const exposed = await sandbox.exposePort(8080, { hostname });
 
 console.log(exposed.exposedAt);

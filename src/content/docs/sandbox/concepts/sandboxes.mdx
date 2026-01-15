@@ -20,7 +20,7 @@ A sandbox is an isolated execution environment where your code runs. Each sandbo
 A sandbox is created the first time you reference its ID:
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, "user-123");
+const sandbox = getSandbox(ctx.exports.Sandbox, "user-123");
 await sandbox.exec('echo "Hello"'); // First request creates sandbox
 ```
 
@@ -66,7 +66,7 @@ The next request creates a fresh container with a clean environment.
 ### Per-user sandboxes
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
+const sandbox = getSandbox(ctx.exports.Sandbox, `user-${userId}`);
 ```
 
 User's work persists while actively using the sandbox. Good for interactive environments, playgrounds, and notebooks where users work continuously.
@@ -75,7 +75,7 @@ User's work persists while actively using the sandbox. Good for interactive envi
 
 ```typescript
 const sessionId = `session-${Date.now()}-${Math.random()}`;
-const sandbox = getSandbox(env.Sandbox, sessionId);
+const sandbox = getSandbox(ctx.exports.Sandbox, sessionId);
 // Later:
 await sandbox.destroy();
 ```
@@ -85,7 +85,7 @@ Fresh environment each time. Good for one-time execution, CI/CD, and isolated te
 ### Per-task sandboxes
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, `build-${repoName}-${commit}`);
+const sandbox = getSandbox(ctx.exports.Sandbox, `build-${repoName}-${commit}`);
 ```
 
 Idempotent operations with clear task-to-sandbox mapping. Good for builds, pipelines, and background jobs.
@@ -105,7 +105,7 @@ The first request to a sandbox determines its geographic location. Subsequent re
 
 ```typescript
 try {
-	const sandbox = getSandbox(env.Sandbox, sessionId);
+	const sandbox = getSandbox(ctx.exports.Sandbox, sessionId);
 	await sandbox.exec("npm run build");
 } finally {
 	await sandbox.destroy(); // Clean up temporary sandboxes
@@ -136,11 +136,13 @@ await sandbox.exec("python process.py");
 The SDK automatically checks that your npm package version matches the Docker container image version. **Version mismatches can cause features to break or behave unexpectedly.**
 
 **What happens**:
+
 - On sandbox startup, the SDK queries the container's version
 - If versions don't match, a warning is logged
 - Some features may not work correctly if versions are incompatible
 
 **When you might see warnings**:
+
 - You updated the npm package (`npm install @cloudflare/sandbox@latest`) but forgot to update the `FROM` line in your Dockerfile
 
 **How to fix**:

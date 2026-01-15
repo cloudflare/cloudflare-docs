@@ -30,7 +30,7 @@ For **one-time commands, builds, or scripts that complete and exit**, use `exec(
 ```
 import { getSandbox } from '@cloudflare/sandbox';
 
-const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+const sandbox = getSandbox(ctx.exports.Sandbox, 'my-sandbox');
 
 // Start a web server
 const server = await sandbox.startProcess('python -m http.server 8000');
@@ -41,6 +41,7 @@ console.log('PID:', server.pid);
 console.log('Status:', server.status); // 'running'
 
 // Process runs in background - your code continues
+
 ```
 </TypeScriptExample>
 
@@ -50,17 +51,19 @@ Set working directory and environment variables:
 
 <TypeScriptExample>
 ```
+
 const process = await sandbox.startProcess('node server.js', {
-  cwd: '/workspace/api',
-  env: {
-    NODE_ENV: 'production',
-    PORT: '8080',
-    API_KEY: env.API_KEY,
-    DATABASE_URL: env.DATABASE_URL
-  }
+cwd: '/workspace/api',
+env: {
+NODE_ENV: 'production',
+PORT: '8080',
+API_KEY: env.API_KEY,
+DATABASE_URL: env.DATABASE_URL
+}
 });
 
 console.log('API server started');
+
 ```
 </TypeScriptExample>
 
@@ -70,16 +73,18 @@ List and check running processes:
 
 <TypeScriptExample>
 ```
+
 const processes = await sandbox.listProcesses();
 
 console.log(`Running ${processes.length} processes:`);
 
 for (const proc of processes) {
-  console.log(`${proc.id}: ${proc.command} (${proc.status})`);
+console.log(`${proc.id}: ${proc.command} (${proc.status})`);
 }
 
 // Check if specific process is running
 const isRunning = processes.some(p => p.id === processId && p.status === 'running');
+
 ```
 </TypeScriptExample>
 
@@ -89,12 +94,14 @@ Wait for a process to be ready before proceeding:
 
 <TypeScriptExample>
 ```
+
 const server = await sandbox.startProcess('node server.js');
 
 // Wait for server to respond on port 3000
 await server.waitForPort(3000);
 
 console.log('Server is ready');
+
 ```
 </TypeScriptExample>
 
@@ -102,11 +109,13 @@ Or wait for specific log patterns:
 
 <TypeScriptExample>
 ```
+
 const server = await sandbox.startProcess('node server.js');
 
 // Wait for log message
 const result = await server.waitForLog('Server listening');
 console.log('Server is ready:', result.line);
+
 ```
 </TypeScriptExample>
 
@@ -116,6 +125,7 @@ Stream logs in real-time:
 
 <TypeScriptExample>
 ```
+
 import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
 const server = await sandbox.startProcess('node server.js');
@@ -124,8 +134,9 @@ const server = await sandbox.startProcess('node server.js');
 const logStream = await sandbox.streamProcessLogs(server.id);
 
 for await (const log of parseSSEStream<LogEvent>(logStream)) {
-  console.log(log.data);
+console.log(log.data);
 }
+
 ```
 </TypeScriptExample>
 
@@ -133,8 +144,10 @@ Or get accumulated logs:
 
 <TypeScriptExample>
 ```
+
 const logs = await sandbox.getProcessLogs(server.id);
 console.log('Logs:', logs);
+
 ```
 </TypeScriptExample>
 
@@ -142,6 +155,7 @@ console.log('Logs:', logs);
 
 <TypeScriptExample>
 ```
+
 // Stop specific process
 await sandbox.killProcess(server.id);
 
@@ -150,6 +164,7 @@ await sandbox.killProcess(server.id, 'SIGKILL');
 
 // Stop all processes
 await sandbox.killAllProcesses();
+
 ```
 </TypeScriptExample>
 
@@ -159,6 +174,7 @@ Start services in sequence, waiting for dependencies:
 
 <TypeScriptExample>
 ```
+
 // Start database first
 const db = await sandbox.startProcess('redis-server');
 
@@ -167,14 +183,15 @@ await db.waitForPort(6379, { mode: 'tcp' });
 
 // Now start API server (depends on database)
 const api = await sandbox.startProcess('node api-server.js', {
-  env: { DATABASE_URL: 'redis://localhost:6379' }
+env: { DATABASE_URL: 'redis://localhost:6379' }
 });
 
 // Wait for API to be ready
 await api.waitForPort(8080, { path: '/health' });
 
 console.log('All services running');
-```
+
+````
 </TypeScriptExample>
 
 ## Keep containers alive for long-running processes
@@ -188,9 +205,9 @@ import { getSandbox, parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 export { Sandbox } from '@cloudflare/sandbox';
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     // Enable keepAlive for long-running processes
-    const sandbox = getSandbox(env.Sandbox, 'build-job-123', {
+    const sandbox = getSandbox(ctx.exports.Sandbox, 'build-job-123', {
       keepAlive: true
     });
 
@@ -216,7 +233,8 @@ export default {
     }
   }
 };
-```
+````
+
 </TypeScriptExample>
 
 :::caution[Always destroy with keepAlive]
@@ -244,9 +262,10 @@ await new Promise(resolve => setTimeout(resolve, 1000));
 
 const processes = await sandbox.listProcesses();
 if (!processes.find(p => p.id === process.id)) {
-  const logs = await sandbox.getProcessLogs(process.id);
-  console.error('Process exited:', logs);
+const logs = await sandbox.getProcessLogs(process.id);
+console.error('Process exited:', logs);
 }
+
 ```
 </TypeScriptExample>
 
@@ -256,8 +275,10 @@ Kill existing processes before starting:
 
 <TypeScriptExample>
 ```
+
 await sandbox.killAllProcesses();
 const server = await sandbox.startProcess('node server.js');
+
 ```
 </TypeScriptExample>
 
@@ -270,3 +291,4 @@ const server = await sandbox.startProcess('node server.js');
 - [Execute commands guide](/sandbox/guides/execute-commands/) - One-time command execution
 - [Expose services guide](/sandbox/guides/expose-services/) - Make processes accessible
 - [Streaming output guide](/sandbox/guides/streaming-output/) - Monitor process output
+```

@@ -78,9 +78,9 @@ import { getSandbox } from '@cloudflare/sandbox';
 export { Sandbox } from "@cloudflare/sandbox";
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
-      const sandbox = getSandbox(env.Sandbox, 'echo-service');
+      const sandbox = getSandbox(ctx.exports.Sandbox, 'echo-service');
       return await sandbox.wsConnect(request, 8080);
     }
 
@@ -108,17 +108,17 @@ Get a public URL for your WebSocket server:
 ```ts
 import { getSandbox, proxyToSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from '@cloudflare/sandbox';
+export { Sandbox } from "@cloudflare/sandbox";
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     // Auto-route all requests via proxyToSandbox first
-    const proxyResponse = await proxyToSandbox(request, env);
+    const proxyResponse = await proxyToSandbox(request, ctx);
     if (proxyResponse) return proxyResponse;
 
     // Extract hostname from request
     const { hostname } = new URL(request.url);
-    const sandbox = getSandbox(env.Sandbox, 'echo-service');
+    const sandbox = getSandbox(ctx.exports.Sandbox, 'echo-service');
 
     // Expose the port to get preview URL
     const { exposedAt } = await sandbox.exposePort(8080, { hostname });
@@ -157,15 +157,15 @@ Your Worker can connect to a WebSocket service to get real-time data, even when 
 ```ts
 import { getSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from '@cloudflare/sandbox';
+export { Sandbox } from "@cloudflare/sandbox";
 
 let initialized = false;
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 
      // Get or create a sandbox instance
-    const sandbox = getSandbox(env.Sandbox, 'data-processor');
+    const sandbox = getSandbox(ctx.exports.Sandbox, 'data-processor');
 
 
     // Check for WebSocket upgrade

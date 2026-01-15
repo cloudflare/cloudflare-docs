@@ -32,17 +32,17 @@ The typical workflow is: start service → wait for ready → expose port → ha
 ```
 import { getSandbox, proxyToSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from '@cloudflare/sandbox';
+export { Sandbox } from "@cloudflare/sandbox";
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     // Proxy requests to exposed ports first
-    const proxyResponse = await proxyToSandbox(request, env);
+    const proxyResponse = await proxyToSandbox(request, ctx);
     if (proxyResponse) return proxyResponse;
 
     // Extract hostname from request
     const { hostname } = new URL(request.url);
-    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+    const sandbox = getSandbox(ctx.exports.Sandbox, 'my-sandbox');
 
     // 1. Start a web server
     await sandbox.startProcess('python -m http.server 8000');
@@ -59,9 +59,11 @@ export default {
     // Local dev: http://localhost:8787/...
 
     return Response.json({ url: exposed.exposedAt });
-  }
+
+}
 };
-```
+
+````
 </TypeScriptExample>
 
 :::caution
@@ -78,8 +80,8 @@ Preview URLs extract the sandbox ID from the hostname, which is always lowercase
 To fix this, use `normalizeId: true` when creating sandboxes for port exposure:
 
 ```ts
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123', { normalizeId: true });
-```
+const sandbox = getSandbox(ctx.exports.Sandbox, 'MyProject-123', { normalizeId: true });
+````
 
 This lowercases the ID during creation so it matches preview URL routing. Without this, `exposePort()` throws an error.
 
@@ -110,6 +112,7 @@ const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
 console.log('Services:');
 console.log('- API:', api.exposedAt);
 console.log('- Frontend:', frontend.exposedAt);
+
 ```
 </TypeScriptExample>
 
@@ -119,6 +122,7 @@ Always verify a service is ready before exposing. Use a simple delay for most ca
 
 <TypeScriptExample>
 ```
+
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
@@ -130,6 +134,7 @@ await new Promise(resolve => setTimeout(resolve, 2000));
 
 // Now expose
 await sandbox.exposePort(8080, { hostname });
+
 ```
 </TypeScriptExample>
 
@@ -137,6 +142,7 @@ For critical services, poll the health endpoint:
 
 <TypeScriptExample>
 ```
+
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
@@ -144,15 +150,16 @@ await sandbox.startProcess('node api-server.js', { env: { PORT: '8080' } });
 
 // Wait for health check
 for (let i = 0; i < 10; i++) {
-  await new Promise(resolve => setTimeout(resolve, 1000));
+await new Promise(resolve => setTimeout(resolve, 1000));
 
-  const check = await sandbox.exec('curl -f http://localhost:8080/health || echo "not ready"');
-  if (check.stdout.includes('ok')) {
-    break;
-  }
+const check = await sandbox.exec('curl -f http://localhost:8080/health || echo "not ready"');
+if (check.stdout.includes('ok')) {
+break;
+}
 }
 
 await sandbox.exposePort(8080, { hostname });
+
 ```
 </TypeScriptExample>
 
@@ -162,19 +169,20 @@ Expose multiple ports for full-stack applications:
 
 <TypeScriptExample>
 ```
+
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
 // Start backend
 await sandbox.startProcess('node api/server.js', {
-  env: { PORT: '8080' }
+env: { PORT: '8080' }
 });
 await new Promise(resolve => setTimeout(resolve, 2000));
 
 // Start frontend
 await sandbox.startProcess('npm run dev', {
-  cwd: '/workspace/frontend',
-  env: { PORT: '5173', API_URL: 'http://localhost:8080' }
+cwd: '/workspace/frontend',
+env: { PORT: '5173', API_URL: 'http://localhost:8080' }
 });
 await new Promise(resolve => setTimeout(resolve, 3000));
 
@@ -183,9 +191,10 @@ const api = await sandbox.exposePort(8080, { hostname, name: 'api' });
 const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
 
 return Response.json({
-  api: api.exposedAt,
-  frontend: frontend.exposedAt
+api: api.exposedAt,
+frontend: frontend.exposedAt
 });
+
 ```
 </TypeScriptExample>
 
@@ -195,16 +204,18 @@ return Response.json({
 
 <TypeScriptExample>
 ```
+
 const { ports, count } = await sandbox.getExposedPorts();
 
 console.log(`${count} ports currently exposed:`);
 
 for (const port of ports) {
-  console.log(`  Port ${port.port}: ${port.exposedAt}`);
-  if (port.name) {
-    console.log(`    Name: ${port.name}`);
-  }
+console.log(`  Port ${port.port}: ${port.exposedAt}`);
+if (port.name) {
+console.log(`    Name: ${port.name}`);
 }
+}
+
 ```
 </TypeScriptExample>
 
@@ -212,14 +223,16 @@ for (const port of ports) {
 
 <TypeScriptExample>
 ```
+
 // Unexpose a single port
 await sandbox.unexposePort(8000);
 
 // Unexpose multiple ports
 for (const port of [3000, 5173, 8080]) {
-  await sandbox.unexposePort(port);
+await sandbox.unexposePort(port);
 }
-```
+
+````
 </TypeScriptExample>
 
 ## Best practices
@@ -240,18 +253,18 @@ FROM docker.io/cloudflare/sandbox:0.3.3
 EXPOSE 8000
 EXPOSE 8080
 EXPOSE 5173
-```
+````
 
 Update `wrangler.jsonc` to use your Dockerfile:
 
 ```jsonc title="wrangler.jsonc"
 {
-  "containers": [
-    {
-      "class_name": "Sandbox",
-      "image": "./Dockerfile"
-    }
-  ]
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+		},
+	],
 }
 ```
 
@@ -269,11 +282,12 @@ Port 3000 is used by the internal Bun server and cannot be exposed:
 const { hostname } = new URL(request.url);
 
 // ❌ This will fail
-await sandbox.exposePort(3000, { hostname });  // Error: Port 3000 is reserved
+await sandbox.exposePort(3000, { hostname }); // Error: Port 3000 is reserved
 
 // ✅ Use a different port
 await sandbox.startProcess('node server.js', { env: { PORT: '8080' } });
 await sandbox.exposePort(8080, { hostname });
+
 ```
 </TypeScriptExample>
 
@@ -283,12 +297,14 @@ Wait for the service to start before exposing:
 
 <TypeScriptExample>
 ```
+
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
 await sandbox.startProcess('npm run dev');
 await new Promise(resolve => setTimeout(resolve, 3000));
 await sandbox.exposePort(8080, { hostname });
+
 ```
 </TypeScriptExample>
 
@@ -298,13 +314,15 @@ Check before exposing to avoid errors:
 
 <TypeScriptExample>
 ```
+
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
 const { ports } = await sandbox.getExposedPorts();
 if (!ports.some(p => p.port === 8080)) {
-  await sandbox.exposePort(8080, { hostname });
+await sandbox.exposePort(8080, { hostname });
 }
+
 ```
 </TypeScriptExample>
 
@@ -318,9 +336,11 @@ if (!ports.some(p => p.port === 8080)) {
 
 <TypeScriptExample>
 ```
+
 // Create sandbox with normalization
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123', { normalizeId: true });
+const sandbox = getSandbox(ctx.exports.Sandbox, 'MyProject-123', { normalizeId: true });
 await sandbox.exposePort(8080, { hostname });
+
 ```
 </TypeScriptExample>
 
@@ -344,3 +364,4 @@ See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#norm
 - [Ports API reference](/sandbox/api/ports/) - Complete port exposure API
 - [Background processes guide](/sandbox/guides/background-processes/) - Managing services
 - [Execute commands guide](/sandbox/guides/execute-commands/) - Starting services
+```

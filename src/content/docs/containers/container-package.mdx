@@ -20,15 +20,15 @@ Then, you can define a class that extends `Container`, and use it in your Worker
 ```javascript
 import { Container } from "@cloudflare/containers";
 
-class MyContainer extends Container {
+export class MyContainer extends Container {
 	defaultPort = 8080;
 	sleepAfter = "5m";
 }
 
 export default {
-	async fetch(request, env) {
+	async fetch(request, env, ctx) {
 		// gets default instance and forwards request from outside Worker
-		return env.MY_CONTAINER.getByName("hello").fetch(request);
+		return ctx.exports.MyContainer.getByName("hello").fetch(request);
 	},
 };
 ```

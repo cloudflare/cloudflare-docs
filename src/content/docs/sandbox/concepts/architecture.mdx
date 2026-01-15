@@ -45,7 +45,7 @@ The developer-facing API you use in your Workers:
 ```typescript
 import { getSandbox } from "@cloudflare/sandbox";
 
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+const sandbox = getSandbox(ctx.exports.Sandbox, "my-sandbox");
 const result = await sandbox.exec("python script.py");
 ```
 

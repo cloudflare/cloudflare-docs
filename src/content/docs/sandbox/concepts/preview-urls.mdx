@@ -42,7 +42,7 @@ Preview URLs extract the sandbox ID from the hostname to route requests. Since h
 
 ```typescript
 // Problem scenario
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123');
+const sandbox = getSandbox(ctx.exports.Sandbox, "MyProject-123");
 // Durable Object ID: "MyProject-123"
 await sandbox.exposePort(8080, { hostname });
 // Preview URL: 8000-myproject-123.yourdomain.com
@@ -52,8 +52,8 @@ await sandbox.exposePort(8080, { hostname });
 **The solution**: Use `normalizeId: true` to lowercase IDs when creating sandboxes:
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123', {
-  normalizeId: true
+const sandbox = getSandbox(ctx.exports.Sandbox, "MyProject-123", {
+	normalizeId: true,
 });
 // Durable Object ID: "myproject-123" (lowercased)
 // Preview URL: 8000-myproject-123.yourdomain.com

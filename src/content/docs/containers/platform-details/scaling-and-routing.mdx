@@ -17,12 +17,12 @@ starting the container. Note that that getting a container does not automaticall
 ```typescript
 // get and start two container instances
 const containerOne = getContainer(
-	env.MY_CONTAINER,
+	ctx.exports.MyContainer,
 	idOne,
 ).startAndWaitForPorts();
 
 const containerTwo = getContainer(
-	env.MY_CONTAINER,
+	ctx.exports.MyContainer,
 	idTwo,
 ).startAndWaitForPorts();
 ```
@@ -44,15 +44,15 @@ import { Container, getRandom } from "@cloudflare/containers";
 
 const INSTANCE_COUNT = 3;
 
-class Backend extends Container {
+export class Backend extends Container {
 	defaultPort = 8080;
 	sleepAfter = "2h";
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		// note: "getRandom" to be replaced with latency-aware routing in the near future
-		const containerInstance = getRandom(env.BACKEND, INSTANCE_COUNT)
+		const containerInstance = getRandom(ctx.exports.Backend, INSTANCE_COUNT)
 		return containerInstance.fetch(request);
 	},
 };

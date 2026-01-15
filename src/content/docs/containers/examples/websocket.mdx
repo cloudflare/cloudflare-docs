@@ -19,9 +19,9 @@ export class MyContainer extends Container {
 }
 
 export default {
-	async fetch(request, env) {
+	async fetch(request, env, ctx) {
 		// gets default instance and forwards websocket from outside Worker
-		return getContainer(env.MY_CONTAINER).fetch(request);
+		return getContainer(ctx.exports.MyContainer).fetch(request);
 	},
 };
 ```

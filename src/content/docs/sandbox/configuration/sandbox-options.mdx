@@ -27,7 +27,7 @@ Keep the container alive indefinitely by preventing automatic shutdown. When `tr
 <TypeScriptExample>
 ```ts
 // For long-running processes that need the container to stay alive
-const sandbox = getSandbox(env.Sandbox, 'user-123', {
+const sandbox = getSandbox(ctx.exports.Sandbox, 'user-123', {
   keepAlive: true
 });
 
@@ -36,11 +36,12 @@ await sandbox.startProcess('python long_running_script.py');
 
 // Important: Must explicitly destroy when done
 try {
-  // Your work here
+// Your work here
 } finally {
-  await sandbox.destroy(); // Required to prevent containers running indefinitely
+await sandbox.destroy(); // Required to prevent containers running indefinitely
 }
-```
+
+````
 </TypeScriptExample>
 
 :::caution[Resource management with keepAlive]
@@ -57,15 +58,16 @@ Duration of inactivity before the sandbox automatically sleeps. Accepts duration
 <TypeScriptExample>
 ```ts
 // Sleep after 30 seconds of inactivity
-const sandbox = getSandbox(env.Sandbox, 'user-123', {
+const sandbox = getSandbox(ctx.exports.Sandbox, 'user-123', {
   sleepAfter: '30s'
 });
 
 // Sleep after 5 minutes (using number)
-const sandbox2 = getSandbox(env.Sandbox, 'user-456', {
+const sandbox2 = getSandbox(ctx.exports.Sandbox, 'user-456', {
   sleepAfter: 300  // 300 seconds = 5 minutes
 });
-```
+````
+
 </TypeScriptExample>
 
 :::note[Ignored when keepAlive is true]
@@ -82,19 +84,27 @@ Configure timeouts for container startup operations.
 ```ts
 // Extended startup with custom Dockerfile work
 // (installing packages, starting services before SDK)
-const sandbox = getSandbox(env.Sandbox, 'data-processor', {
+const sandbox = getSandbox(ctx.exports.Sandbox, 'data-processor', {
   containerTimeouts: {
     portReadyTimeoutMS: 180_000  // 3 minutes for startup work
   }
 });
 
 // Wait longer during traffic spikes
-const sandbox2 = getSandbox(env.Sandbox, 'user-env', {
-  containerTimeouts: {
-    instanceGetTimeoutMS: 60_000   // 1 minute for provisioning
-  }
+const sandbox2 = getSandbox(ctx.exports.Sandbox, 'user-env', {
+containerTimeouts: {
+instanceGetTimeoutMS: 60_000 // 1 minute for provisioning
+}
 });
-```
+
+// Wait longer during traffic spikes
+const sandbox3 = getSandbox(ctx.exports.Sandbox, 'user-env', {
+containerTimeouts: {
+instanceGetTimeoutMS: 60_000 // 1 minute for provisioning
+}
+});
+
+````
 </TypeScriptExample>
 
 **Available timeout options**:
@@ -123,7 +133,8 @@ Control SDK logging for debugging and monitoring. Set these in your Worker's `wr
 [vars]
 SANDBOX_LOG_LEVEL = "debug"
 SANDBOX_LOG_FORMAT = "pretty"
-```
+````
+
 </WranglerConfig>
 
 :::note[Read at startup]
@@ -144,18 +155,19 @@ Lowercase sandbox IDs when creating sandboxes. When `true`, the ID you provide i
 <TypeScriptExample>
 ```ts
 // Without normalization (default)
-const sandbox1 = getSandbox(env.Sandbox, 'MyProject-123');
+const sandbox1 = getSandbox(ctx.exports.Sandbox, 'MyProject-123');
 // Creates Durable Object with ID: "MyProject-123"
 // Preview URL: 8000-myproject-123.example.com
 // Problem: URL routes to "myproject-123" (different DO)
 
 // With normalization
-const sandbox2 = getSandbox(env.Sandbox, 'MyProject-123', {
-  normalizeId: true
+const sandbox2 = getSandbox(ctx.exports.Sandbox, 'MyProject-123', {
+normalizeId: true
 });
 // Creates Durable Object with ID: "myproject-123"
 // Preview URL: 8000-myproject-123.example.com
 // Works: URL routes to "myproject-123" (same DO)
+
 ```
 </TypeScriptExample>
 
@@ -205,3 +217,4 @@ With `keepAlive`, containers never sleep automatically - use for scenarios where
 - [Background processes guide](/sandbox/guides/background-processes/) - Using `keepAlive` with long-running processes
 - [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes
 - [Sandboxes concept](/sandbox/concepts/sandboxes/) - Understanding sandbox lifecycle
+```

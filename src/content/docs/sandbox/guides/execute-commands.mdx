@@ -30,14 +30,15 @@ Use `exec()` for simple commands that complete quickly:
 ```
 import { getSandbox } from '@cloudflare/sandbox';
 
-const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+const sandbox = getSandbox(ctx.exports.Sandbox, 'my-sandbox');
 
 // Execute a single command
 const result = await sandbox.exec('python --version');
 
-console.log(result.stdout);   // "Python 3.11.0"
+console.log(result.stdout); // "Python 3.11.0"
 console.log(result.exitCode); // 0
-console.log(result.success);  // true
+console.log(result.success); // true
+
 ```
 </TypeScriptExample>
 
@@ -47,6 +48,7 @@ When passing user input or dynamic values, avoid string interpolation to prevent
 
 <TypeScriptExample>
 ```
+
 // Unsafe - vulnerable to injection
 const filename = userInput;
 await sandbox.exec(`cat ${filename}`);
@@ -58,6 +60,7 @@ await sandbox.exec(`cat ${safeFilename}`);
 // Better - write to file and execute
 await sandbox.writeFile('/tmp/input.txt', userInput);
 await sandbox.exec('python process.py /tmp/input.txt');
+
 ```
 </TypeScriptExample>
 
@@ -70,13 +73,14 @@ Commands can fail in two ways:
 
 <TypeScriptExample>
 ```
-try {
-  const result = await sandbox.exec('python analyze.py');
 
-  if (!result.success) {
-    // Command failed (non-zero exit code)
-    console.error('Analysis failed:', result.stderr);
-    console.log('Exit code:', result.exitCode);
+try {
+const result = await sandbox.exec('python analyze.py');
+
+if (!result.success) {
+// Command failed (non-zero exit code)
+console.error('Analysis failed:', result.stderr);
+console.log('Exit code:', result.exitCode);
 
     // Handle specific exit codes
     if (result.exitCode === 1) {
@@ -84,16 +88,18 @@ try {
     } else if (result.exitCode === 2) {
       throw new Error('Missing dependencies');
     }
-  }
 
-  // Success - process output
-  return JSON.parse(result.stdout);
+}
+
+// Success - process output
+return JSON.parse(result.stdout);
 
 } catch (error) {
-  // Execution error (couldn't start command)
-  console.error('Execution failed:', error.message);
-  throw error;
+// Execution error (couldn't start command)
+console.error('Execution failed:', error.message);
+throw error;
 }
+
 ```
 </TypeScriptExample>
 
@@ -103,6 +109,7 @@ The sandbox supports shell features like pipes, redirects, and chaining:
 
 <TypeScriptExample>
 ```
+
 // Pipes and filters
 const result = await sandbox.exec('ls -la | grep ".py" | wc -l');
 console.log('Python files:', result.stdout.trim());
@@ -112,6 +119,7 @@ await sandbox.exec('python generate.py > output.txt 2> errors.txt');
 
 // Multiple commands
 await sandbox.exec('cd /workspace && npm install && npm test');
+
 ```
 </TypeScriptExample>
 
@@ -119,17 +127,17 @@ await sandbox.exec('cd /workspace && npm install && npm test');
 
 <TypeScriptExample>
 ```
+
 // Run inline Python
 const result = await sandbox.exec('python -c "print(sum([1, 2, 3, 4, 5]))"');
 console.log('Sum:', result.stdout.trim()); // "15"
 
 // Run a script file
-await sandbox.writeFile('/workspace/analyze.py', `
-import sys
-print(f"Argument: {sys.argv[1]}")
-`);
+await sandbox.writeFile('/workspace/analyze.py', `import sys
+print(f"Argument: {sys.argv[1]}")`);
 
 await sandbox.exec('python /workspace/analyze.py data.csv');
+
 ```
 </TypeScriptExample>
 
@@ -149,10 +157,12 @@ Verify the command exists in the container:
 
 <TypeScriptExample>
 ```
+
 const check = await sandbox.exec('which python3');
 if (!check.success) {
-  console.error('python3 not found');
+console.error('python3 not found');
 }
+
 ```
 </TypeScriptExample>
 
@@ -162,11 +172,13 @@ Use absolute paths or change directory:
 
 <TypeScriptExample>
 ```
+
 // Use absolute path
 await sandbox.exec('python /workspace/my-app/script.py');
 
 // Or change directory
 await sandbox.exec('cd /workspace/my-app && python script.py');
+
 ```
 </TypeScriptExample>
 
@@ -176,3 +188,4 @@ await sandbox.exec('cd /workspace/my-app && python script.py');
 - [Background processes guide](/sandbox/guides/background-processes/) - Managing long-running processes
 - [Streaming output guide](/sandbox/guides/streaming-output/) - Advanced streaming patterns
 - [Code Interpreter guide](/sandbox/guides/code-execution/) - Higher-level code execution
+```

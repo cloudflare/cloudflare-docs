@@ -16,7 +16,7 @@ The Sandbox SDK provides three methods for setting environment variables, each s
 Set environment variables globally for all commands in the sandbox:
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+const sandbox = getSandbox(ctx.exports.Sandbox, "my-sandbox");
 
 // Set once, available for all subsequent commands
 await sandbox.setEnvVars({
@@ -86,14 +86,17 @@ Then pass them to your sandbox:
 
 ```typescript
 interface Env {
-	Sandbox: DurableObjectNamespace;
 	OPENAI_API_KEY: string;
 	DATABASE_URL: string;
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const sandbox = getSandbox(env.Sandbox, "user-sandbox");
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const sandbox = getSandbox(ctx.exports.Sandbox, "user-sandbox");
 
 		// Option 1: Set globally for all commands
 		await sandbox.setEnvVars({
@@ -151,6 +154,7 @@ await Promise.all([
 When mounting S3-compatible object storage, the SDK uses **s3fs-fuse** under the hood, which requires AWS-style credentials. For R2, generate API tokens from the Cloudflare dashboard and provide them using AWS environment variable names:
 
 **Get R2 API tokens:**
+
 1. Go to [**R2** > **Overview**](https://dash.cloudflare.com/?to=/:account/r2) in the Cloudflare dashboard
 2. Select **Manage R2 API Tokens**
 3. Create a token with **Object Read & Write** permissions
@@ -174,25 +178,28 @@ Bucket mounting requires production deployment. It does not work with `wrangler 
 
 ```typescript
 interface Env {
-	Sandbox: DurableObjectNamespace;
 	AWS_ACCESS_KEY_ID: string;
 	AWS_SECRET_ACCESS_KEY: string;
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const sandbox = getSandbox(env.Sandbox, 'data-processor');
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const sandbox = getSandbox(ctx.exports.Sandbox, "data-processor");
 
 		// Credentials automatically detected from environment
-		await sandbox.mountBucket('my-r2-bucket', '/data', {
-			endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
+		await sandbox.mountBucket("my-r2-bucket", "/data", {
+			endpoint: "https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com",
 		});
 
 		// Access mounted bucket using standard file operations
-		await sandbox.exec('python', { args: ['process.py', '/data/input.csv'] });
+		await sandbox.exec("python", { args: ["process.py", "/data/input.csv"] });
 
 		return Response.json({ success: true });
-	}
+	},
 };
 ```
 
@@ -201,12 +208,12 @@ The SDK automatically detects `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` fr
 **Pass credentials explicitly** (if using custom secret names):
 
 ```typescript
-await sandbox.mountBucket('my-r2-bucket', '/data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+await sandbox.mountBucket("my-r2-bucket", "/data", {
+	endpoint: "https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: env.R2_ACCESS_KEY_ID,
-		secretAccessKey: env.R2_SECRET_ACCESS_KEY
-	}
+		secretAccessKey: env.R2_SECRET_ACCESS_KEY,
+	},
 });
 ```
 

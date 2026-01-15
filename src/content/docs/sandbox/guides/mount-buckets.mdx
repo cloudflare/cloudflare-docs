@@ -33,11 +33,11 @@ Mount S3-compatible buckets when you need:
 ```typescript
 import { getSandbox } from '@cloudflare/sandbox';
 
-const sandbox = getSandbox(env.Sandbox, 'data-processor');
+const sandbox = getSandbox(ctx.exports.Sandbox, 'data-processor');
 
 // Mount R2 bucket
 await sandbox.mountBucket('my-r2-bucket', '/data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
+endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
 });
 
 // Access bucket with standard filesystem operations
@@ -50,7 +50,8 @@ import pandas as pd
 df = pd.read_csv('/data/input.csv')
 df.describe().to_csv('/data/summary.csv')
 `] });
-```
+
+````
 </TypeScriptExample>
 
 :::note[Mounting affects entire sandbox]
@@ -66,7 +67,7 @@ Set credentials as Worker secrets and the SDK automatically detects them:
 ```sh
 npx wrangler secret put AWS_ACCESS_KEY_ID
 npx wrangler secret put AWS_SECRET_ACCESS_KEY
-```
+````
 
 <TypeScriptExample>
 ```typescript
@@ -108,8 +109,9 @@ await sandbox.mountBucket('dataset-bucket', '/data', {
 await sandbox.exec('cat', { args: ['/data/dataset.csv'] });
 
 // Writes fail
-await sandbox.writeFile('/data/new-file.txt', 'data');  // Error: Read-only filesystem
-```
+await sandbox.writeFile('/data/new-file.txt', 'data'); // Error: Read-only filesystem
+
+````
 </TypeScriptExample>
 
 ## Unmount buckets
@@ -124,7 +126,8 @@ await sandbox.exec('python process_data.py');
 
 // Clean up
 await sandbox.unmountBucket('/data');
-```
+````
+
 </TypeScriptExample>
 
 :::note[Automatic cleanup]
@@ -203,6 +206,7 @@ npx wrangler secret put AWS_SECRET_ACCESS_KEY
 **Error**: `S3FSMountError: mount failed`
 
 **Common causes**:
+
 - Incorrect endpoint URL
 - Invalid credentials
 - Bucket doesn't exist
@@ -236,7 +240,8 @@ await sandbox.unmountBucket('/data');
 
 // Or use different path
 await sandbox.mountBucket('bucket2', '/storage', { endpoint: '...' });
-```
+
+````
 </TypeScriptExample>
 
 ### Slow file access
@@ -255,7 +260,8 @@ await sandbox.exec('python', { args: ['process.py', '/workspace/dataset.csv'] })
 
 // Save results back to bucket
 await sandbox.exec('cp', { args: ['/workspace/results.json', '/data/results/output.json'] });
-```
+````
+
 </TypeScriptExample>
 
 ## Best practices

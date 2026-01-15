@@ -50,13 +50,16 @@ import Anthropic from "@anthropic-ai/sdk";
 export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
-	Sandbox: DurableObjectNamespace<Sandbox>;
 	ANTHROPIC_API_KEY: string;
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const proxyResponse = await proxyToSandbox(request, env);
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const proxyResponse = await proxyToSandbox(request, ctx);
 		if (proxyResponse) return proxyResponse;
 
 		if (request.method !== "POST") {
@@ -79,7 +82,7 @@ export default {
 			}
 
 			// Upload CSV to sandbox
-			const sandbox = getSandbox(env.Sandbox, `analysis-${Date.now()}`);
+			const sandbox = getSandbox(ctx.exports.Sandbox, `analysis-${Date.now()}`);
 			const csvPath = "/workspace/data.csv";
 			await sandbox.writeFile(csvPath, await csvFile.text());
 

@@ -58,10 +58,10 @@ Container instances are spun up on-demand and controlled by code you write in yo
     	}
 
     	export default {
-    		async fetch(request, env) {
+    		async fetch(request, env, ctx) {
     			const { "session-id": sessionId } = await request.json();
     			// Get the container instance for the given session ID
-    			const containerInstance = getContainer(env.MY_CONTAINER, sessionId);
+    			const containerInstance = getContainer(ctx.exports.MyContainer, sessionId);
     			// Pass the request to the container instance on its default port
     			return containerInstance.fetch(request);
     		},
@@ -75,6 +75,7 @@ Container instances are spun up on-demand and controlled by code you write in yo
     			"name": "container-starter",
     			"main": "src/index.js",
     			"compatibility_date": "$today",
+    			"compatibility_flags": ["enable_ctx_exports"],
     			"containers": [
     				{
     					"class_name": "MyContainer",
@@ -82,14 +83,6 @@ Container instances are spun up on-demand and controlled by code you write in yo
     					"max_instances": 5
     				}
     			],
-    			"durable_objects": {
-    				"bindings": [
-    					{
-    						"class_name": "MyContainer",
-    						"name": "MY_CONTAINER"
-    					}
-    				]
-    			},
     			"migrations": [
     				{
     					"new_sqlite_classes": ["MyContainer"],

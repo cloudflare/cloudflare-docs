@@ -59,7 +59,7 @@ only charged for actively running instances and not for any unused pre-warmed im
 #### Cold starts
 
 A cold start is when a container instance is started from a completely stopped state.
-If you call `env.MY_CONTAINER.get(id)` with a completely novel ID and launch
+If you call `ctx.exports.MyContainer.get(id)` with a completely novel ID and launch
 this instance for the first time, it will result in a cold start.
 This will start the container image from its entrypoint for the first time. Depending
 on what this entrypoint does, it will take a variable amount of time to start.
@@ -110,13 +110,13 @@ is not slated for the near term.
 - A developer deploys a Container. Cloudflare automatically readies instances across its Network.
 - A request is made from a client in Bariloche, Argentina. It reaches the Worker in a nearby
   Cloudflare location in Neuquen, Argentina.
-- This Worker request calls `getContainer(env.MY_CONTAINER, "session-1337")`. Under the hood, this brings up a Durable
+- This Worker request calls `getContainer(ctx.exports.MyContainer, "session-1337")`. Under the hood, this brings up a Durable
   Object, which then calls `this.ctx.container.start`.
 - This requests the nearest free Container instance. Cloudflare recognizes that an instance is free in Buenos Aires, Argentina, and
   starts it there.
 - A different user needs to route to the same container. This user's request reaches
   the Worker running in Cloudflare's location in San Diego, US.
-- The Worker again calls `getContainer(env.MY_CONTAINER, "session-1337")`.
+- The Worker again calls `getContainer(ctx.exports.MyContainer, "session-1337")`.
 - If the initial container instance is still running, the request is routed to the original location
   in Buenos Aires. If the initial container has gone to sleep, Cloudflare will once
   again try to find the nearest "free" instance of the Container, likely

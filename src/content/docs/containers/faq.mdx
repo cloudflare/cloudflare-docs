@@ -74,7 +74,7 @@ See [scaling & routing documentation](/containers/platform-details/scaling-and-r
 
 A cold start is when a container instance is started from a completely stopped state.
 
-If you call `env.MY_CONTAINER.get(id)` with a completely novel ID and launch
+If you call `ctx.exports.MyContainer.get(id)` with a completely novel ID and launch
 this instance for the first time, it will result in a cold start.
 
 This will start the container image from its entrypoint for the first time. Depending
