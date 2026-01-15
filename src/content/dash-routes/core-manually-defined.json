@@ -1,10 +1,5 @@
 [
 	{
-		"name": "Firewall policies",
-		"deeplink": "/?to=/:account/network-security/magic_firewall/custom",
-		"parent": ["Networking"]
-	},
-	{
 		"name": "Address space",
 		"deeplink": "/?to=/:account/ip-addresses/address-space",
 		"parent": ["Networking", "IP addresses"]
