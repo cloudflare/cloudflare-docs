@@ -1,0 +1,72 @@
+---
+title: Simpler Container and Sandbox configuration
+description: Access your Container and Sandbox classes directly via ctx.exports without explicit Durable Object bindings
+products:
+  - containers
+date: 2026-01-15
+---
+
+You no longer need to configure explicit Durable Object bindings to use [Containers](/containers/) or [Sandboxes](/sandbox/). Instead, access your classes directly via `ctx.exports` in your Worker code.
+
+### Before
+
+Previously, you had to define a Durable Object binding in your Wrangler configuration:
+
+```toml
+[[containers]]
+class_name = "MyContainer"
+image = "./Dockerfile"
+
+[[durable_objects.bindings]]
+name = "MY_CONTAINER"
+class_name = "MyContainer"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyContainer"]
+```
+
+And access it via `env`:
+
+```js
+const container = env.MY_CONTAINER.getByName("my-instance");
+```
+
+### After
+
+Now you only need the container and migration configuration:
+
+```toml
+[[containers]]
+class_name = "MyContainer"
+image = "./Dockerfile"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyContainer"]
+```
+
+And access your class directly via `ctx.exports`:
+
+```js
+const container = ctx.exports.MyContainer.getByName("my-instance");
+```
+
+This works for both Containers and Sandboxes. For Sandboxes, access the class via `ctx.exports.Sandbox`:
+
+```js
+import { getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+export default {
+	async fetch(request, env, ctx) {
+		const sandbox = getSandbox(ctx.exports.Sandbox, "my-sandbox");
+		return sandbox.exec("echo hello");
+	},
+};
+```
+
+This simplifies configuration and reduces boilerplate when working with Containers and Sandboxes.
+
+See the [ctx.exports API documentation](/workers/runtime-apis/context/#exports) and [automatic loopback bindings changelog](/changelog/2025-09-26-ctx-exports/) for more details.

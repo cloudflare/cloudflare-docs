@@ -14,7 +14,7 @@ The minimum required configuration for using Sandbox SDK:
 	"name": "my-sandbox-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-10-13",
-	"compatibility_flags": ["nodejs_compat", "enable_ctx_exports"],
+	"compatibility_flags": ["nodejs_compat"],
 	"containers": [
 		{
 			"class_name": "Sandbox",
@@ -37,7 +37,7 @@ The Sandbox SDK is built on Cloudflare Containers. Your configuration requires t
 1. **containers** - Define the container image (your runtime environment)
 2. **migrations** - Initialize the Durable Object class
 
-The `enable_ctx_exports` compatibility flag enables [automatic loopback bindings](/changelog/2025-09-26-ctx-exports/), so you do not need to configure a Durable Object binding explicitly. Access the Sandbox class via `ctx.exports.Sandbox` in your Worker code.
+You do not need to configure a Durable Object binding explicitly. Access the Sandbox class via `ctx.exports.Sandbox` using [automatic loopback bindings](/changelog/2025-09-26-ctx-exports/).
 
 For detailed configuration options, refer to the [Containers configuration documentation](/workers/wrangler/configuration/#containers).
 
@@ -47,12 +47,10 @@ For detailed configuration options, refer to the [Containers configuration docum
 
 **Error**: `TypeError: ctx.exports.Sandbox is undefined`
 
-**Solution**: Ensure your `wrangler.jsonc` includes the `enable_ctx_exports` compatibility flag:
+**Solution**: Ensure your Worker exports the Sandbox class from `@cloudflare/sandbox`:
 
-```jsonc
-{
-	"compatibility_flags": ["nodejs_compat", "enable_ctx_exports"],
-}
+```typescript
+export { Sandbox } from "@cloudflare/sandbox";
 ```
 
 ### Missing migrations

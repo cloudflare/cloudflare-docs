@@ -108,8 +108,6 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 <WranglerConfig>
 
 ```toml
-compatibility_flags = ["enable_ctx_exports"]
-
 [[containers]]
 max_instances = 10
 class_name = "MyContainer"
@@ -129,7 +127,7 @@ Important points about this config:
 - `max_instances` declares the maximum number of simultaneously running container instances
   that will run.
 - The Durable Object must use [`new_sqlite_classes`](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) not `new_classes`.
-- The `enable_ctx_exports` compatibility flag enables [automatic loopback bindings](/changelog/2025-09-26-ctx-exports/), so you do not need to configure a Durable Object binding explicitly.
+- You do not need to configure a Durable Object binding explicitly. Access the class via `ctx.exports.MyContainer` using [automatic loopback bindings](/changelog/2025-09-26-ctx-exports/).
 
 ### The Container Image
 

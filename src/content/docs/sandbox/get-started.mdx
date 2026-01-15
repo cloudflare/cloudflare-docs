@@ -167,7 +167,6 @@ Your `wrangler.jsonc` connects three pieces together:
 
 ```jsonc
 {
-	"compatibility_flags": ["enable_ctx_exports"],
 	"containers": [
 		{
 			"class_name": "Sandbox",
@@ -187,9 +186,10 @@ Your `wrangler.jsonc` connects three pieces together:
 
 </WranglerConfig>
 
-- **compatibility_flags** - The `enable_ctx_exports` flag enables [automatic loopback bindings](/changelog/2025-09-26-ctx-exports/), so you do not need to configure a Durable Object binding explicitly. Access the Sandbox class via `ctx.exports.Sandbox`.
 - **containers** - Defines the [container image, instance type, and resource limits](/workers/wrangler/configuration/#containers) for your sandbox environment. If you expect to have multiple sandbox instances, you can increase `max_instances`.
 - **migrations** - Registers the `Sandbox` class, implemented by the Sandbox SDK, with [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage) (required once)
+
+You do not need to configure a Durable Object binding explicitly. Access the Sandbox class via `ctx.exports.Sandbox` using [automatic loopback bindings](/changelog/2025-09-26-ctx-exports/).
 
 For detailed configuration options including environment variables, secrets, and custom images, see the [Wrangler configuration reference](/sandbox/configuration/wrangler/).
 

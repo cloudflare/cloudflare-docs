@@ -24,28 +24,29 @@ For a full example, see the [Static Frontend + Container Backend Template](https
 {
   "name": "cron-container",
   "main": "src/index.ts",
-  "compatibility_flags": ["enable_ctx_exports"],
-  "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS"
-  },
-  "containers": [
-    {
-      "class_name": "Backend",
-      "image": "./Dockerfile",
-			"max_instances": 3
-    }
-  ],
-  "migrations": [
-    {
-      "new_sqlite_classes": [
-        "Backend"
-      ],
-      "tag": "v1"
-    }
-  ]
+
+"assets": {
+"directory": "./dist",
+"binding": "ASSETS"
+},
+"containers": [
+{
+"class_name": "Backend",
+"image": "./Dockerfile",
+"max_instances": 3
 }
-```
+],
+"migrations": [
+{
+"new_sqlite_classes": [
+"Backend"
+],
+"tag": "v1"
+}
+]
+}
+
+````
 </WranglerConfig>
 
 ## Add a simple index.html file to serve
@@ -113,7 +114,8 @@ Create a simple `index.html` file in the `./dist` directory.
 </body>
 
 </html>
-```
+````
+
 </Details>
 
 In this example, we are using [Alpine.js](https://alpinejs.dev/) to fetch a list of widgets from `/api/widgets`.
