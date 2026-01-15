@@ -34,14 +34,6 @@ form.append("prompt", "a sunset with a dog");
 form.append("width", "1024");
 form.append("height", "1024");
 
-const formRequest = new Request("http://dummy", {
-	method: "POST",
-	body: form,
-});
-const formStream = formRequest.body;
-const formContentType =
-	formRequest.headers.get("content-type") || "multipart/form-data";
-
 const resp = await env.AI.run("@cf/black-forest-labs/flux-2-klein-4b", {
 	multipart: {
 		body: formStream,
