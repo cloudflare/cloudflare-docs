@@ -5,11 +5,6 @@
 		"parent": ["Networking"]
 	},
 	{
-		"name": "Connectors",
-		"deeplink": "/?to=/:account/magic-networks/connections/tunnels",
-		"parent": ["Networking"]
-	},
-	{
 		"name": "Routes",
 		"deeplink": "/?to=/:account/magic-networks/routes",
 		"parent": ["Networking"]
