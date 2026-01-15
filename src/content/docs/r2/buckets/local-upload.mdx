@@ -34,13 +34,13 @@ Local uploads are built for workloads that receive a lot of uploads originating 
 
 To understand the geographic distribution of where your read and write requests are initiated:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview) and select your account.
 2. Go to **R2** > **Overview** and select your bucket.
 3. Select **Metrics** and view the **Request Distribution** chart.
 
 ### Read latency considerations
 
-When local uploads is enabled, uploaded data may temporarily reside near the client for up to one to two hours before replication completes.
+When local uploads is enabled, uploaded data may temporarily reside near the client before replication completes.
 
 If your workload requires immediate read after write, consider where your read requests originate. Reads from the uploader's region will be fast, while reads from near the bucket's region may experience cross-region latency until replication completes.
 
@@ -73,7 +73,7 @@ You can disable local uploads at any time. R2 completes any in-progress replicat
 
 <Tabs> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview) and select your account.
 2. Go to **R2** > **Overview** and select your bucket.
 3. Select **Settings**.
 4. Under **Local Uploads**, select **Disable**.

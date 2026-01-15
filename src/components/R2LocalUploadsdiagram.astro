@@ -61,7 +61,7 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			<div class="split-area without-local-uploads" data-connector="2-bucket">
 				<svg class="split-svg" viewBox="0 0 320 100" preserveAspectRatio="none">
 					<!-- Stem from node above -->
-					<line class="split-line stem metadata-path" x1="160" y1="0" x2="160" y2="20" stroke="currentColor" stroke-width="2"/>
+					<line class="split-line stem data-path" x1="160" y1="0" x2="160" y2="20" stroke="currentColor" stroke-width="2"/>
 					<!-- Horizontal bar - left half (metadata) -->
 					<line class="split-line horizontal-left metadata-path" x1="85" y1="20" x2="160" y2="20" stroke="currentColor" stroke-width="2"/>
 					<!-- Horizontal bar - right half (object data) -->
@@ -415,12 +415,12 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 		color: rgb(64 64 64);
 	}
 
-	/* Active state for split lines - metadata lights up instantly */
-	.split-area.active .split-line.metadata-path {
+	/* Active state for split lines - metadata lights up when metadata-active class is added */
+	.split-area.metadata-active .split-line.metadata-path {
 		stroke: rgb(249 115 22) !important;
 	}
 
-	/* Object data path animates slowly over 3 seconds */
+	/* Object data path animates slowly over 3 seconds when data-animating class is added */
 	@keyframes line-fill {
 		0% {
 			stroke: rgb(212 212 212);
@@ -445,11 +445,11 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 		}
 	}
 
-	.split-area.active .split-line.data-path {
+	.split-area.data-animating .split-line.data-path {
 		animation: line-fill 3s linear forwards !important;
 	}
 
-	:root[data-theme="dark"] .split-area.active .split-line.data-path {
+	:root[data-theme="dark"] .split-area.data-animating .split-line.data-path {
 		animation: line-fill-dark 3s linear forwards !important;
 	}
 
@@ -932,6 +932,8 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			// Remove all active and animating states
 			this.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
 			this.querySelectorAll('.animating').forEach(el => el.classList.remove('animating'));
+			this.querySelectorAll('.data-animating').forEach(el => el.classList.remove('data-animating'));
+			this.querySelectorAll('.metadata-active').forEach(el => el.classList.remove('metadata-active'));
 		}
 
 		private play() {
@@ -945,7 +947,7 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 
 			this.currentStep++;
 
-			const maxSteps = this.localUploadsEnabled ? 7 : 5;
+			const maxSteps = this.localUploadsEnabled ? 9 : 7;
 
 			if (this.currentStep > maxSteps) {
 				if (this.loop) {
@@ -964,12 +966,12 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 			let duration = 1200;
 			if (!this.localUploadsEnabled && this.currentStep === 4) {
 				duration = 3000; // Wait longer on split lines step (object data animates)
-			} else if (!this.localUploadsEnabled && this.currentStep === 5) {
-				duration = 1700; // Linger on final step
-			} else if (this.localUploadsEnabled && this.currentStep === 6) {
-				duration = 2500; // Wait for progress ring to complete before bucket lights up
-			} else if (this.localUploadsEnabled && this.currentStep === 7) {
-				duration = 2500; // Linger on final step
+			} else if (!this.localUploadsEnabled && this.currentStep === 7) {
+				duration = 2500; // Linger on final step with status indicator
+			} else if (this.localUploadsEnabled && this.currentStep === 8) {
+				duration = 2500; // Wait for progress ring to complete
+			} else if (this.localUploadsEnabled && this.currentStep === 9) {
+				duration = 2500; // Linger on final step with status indicator
 			}
 			this.stepTimeout = setTimeout(() => this.advanceStep(), duration) as unknown as number;
 		}
@@ -1006,24 +1008,31 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 				gatewayNode?.classList.add('active');
 			}
 
-			// Step 4: Split lines to bucket (object metadata lights up immediately, object data animates)
-			// Metadata Service also lights up with object metadata
+			// Step 4: Object data line starts animating
 			if (this.currentStep >= 4) {
 				const splitArea = this.querySelector('.split-area');
-				const metadataComponent = this.querySelector('[data-component="metadata"]');
-				splitArea?.classList.add('active');
-				metadataComponent?.classList.add('active');
+				splitArea?.classList.add('data-animating');
 			}
 
-			// Step 5: YOUR BUCKET border + Metadata Service and Object Data Infra light up + status indicator
+			// Step 5: Object Data Infra lights up
 			if (this.currentStep >= 5) {
+				const objectDataComponent = this.querySelector('[data-component="object-data"]');
+				objectDataComponent?.classList.add('active');
+			}
+
+			// Step 6: Object metadata line lights up
+			if (this.currentStep >= 6) {
+				const splitArea = this.querySelector('.split-area');
+				splitArea?.classList.add('metadata-active');
+			}
+
+			// Step 7: Metadata Service + YOUR BUCKET border + status indicator
+			if (this.currentStep >= 7) {
 				const bucketGroup = this.querySelector('.bucket-group');
 				const metadataComponent = this.querySelector('[data-component="metadata"]');
-				const objectDataComponent = this.querySelector('[data-component="object-data"]');
 				const statusIndicator = this.querySelector('.status-indicator');
 				bucketGroup?.classList.add('active');
 				metadataComponent?.classList.add('active');
-				objectDataComponent?.classList.add('active');
 				statusIndicator?.classList.add('active');
 			}
 		}
@@ -1049,26 +1058,36 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 				gatewayNode?.classList.add('active');
 			}
 
-			// Step 4: Lines from Gateway to Object Data Infra (edge) and to Metadata Service
+			// Step 4: Line from Gateway to Object Data Infra (edge)
 			if (this.currentStep >= 4) {
 				const regionLine = this.querySelector('.region-line');
-				const metadataLines = this.querySelectorAll('.left-col .v-connector.meta-line');
 				regionLine?.classList.add('active');
+			}
+
+			// Step 5: Object Data Infra (edge) lights up
+			if (this.currentStep >= 5) {
+				const localStorageNode = this.querySelector('.local-storage-node');
+				localStorageNode?.classList.add('active');
+			}
+
+			// Step 6: Line from Gateway to Metadata Service
+			if (this.currentStep >= 6) {
+				const metadataLines = this.querySelectorAll('.left-col .v-connector.meta-line');
 				metadataLines.forEach(el => el.classList.add('active'));
 			}
 
-			// Step 5: Object Data Infra (edge) + Metadata Service + status indicator
-			if (this.currentStep >= 5) {
-				const localStorageNode = this.querySelector('.local-storage-node');
+			// Step 7: Metadata Service + YOUR BUCKET border + status indicator lights up
+			if (this.currentStep >= 7) {
+				const bucketGroup = this.querySelector('.bucket-group');
 				const metadataComponent = this.querySelector('[data-component="metadata"]');
 				const statusIndicator = this.querySelector('.status-indicator');
-				localStorageNode?.classList.add('active');
+				bucketGroup?.classList.add('active');
 				metadataComponent?.classList.add('active');
 				statusIndicator?.classList.add('active');
 			}
 
-			// Step 6: Purple replication line animates downward + progress ring fills
-			if (this.currentStep >= 6) {
+			// Step 8: Purple replication line animates downward + progress ring fills
+			if (this.currentStep >= 8) {
 				const replicationLines = this.querySelectorAll('.right-col .v-connector.replication-line');
 				const progressRing = this.querySelector('.progress-ring');
 				// Force animation restart by removing class, triggering reflow, then adding class
@@ -1084,14 +1103,10 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 				}
 			}
 
-			// Step 7: YOUR BUCKET block + Object Data Infra (bucket) lights up + status indicator
-			if (this.currentStep >= 7) {
-				const bucketGroup = this.querySelector('.bucket-group');
+			// Step 9: Object Data Infra (bucket) lights up
+			if (this.currentStep >= 9) {
 				const objectDataComponent = this.querySelector('[data-component="object-data"]');
-				const statusIndicator = this.querySelector('.status-indicator');
-				bucketGroup?.classList.add('active');
 				objectDataComponent?.classList.add('active');
-				statusIndicator?.classList.add('active');
 			}
 		}
 	}
