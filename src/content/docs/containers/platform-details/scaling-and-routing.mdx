@@ -75,7 +75,7 @@ This is an unreleased feature. It is subject to change.
 You will be able to turn autoscaling on for a Container, by setting the `autoscale` property to on the Container class:
 
 ```javascript
-class MyBackend extends Container {
+export class MyBackend extends Container {
 	autoscale = true;
 	defaultPort = 8080;
 }
@@ -90,8 +90,8 @@ pass requests to it:
 
 ```javascript
 export default {
-	async fetch(request, env) {
-		return getContainer(env.MY_BACKEND).fetch(request);
+	async fetch(request, env, ctx) {
+		return getContainer(ctx.exports.MyBackend).fetch(request);
 	},
 };
 ```

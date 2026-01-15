@@ -24,7 +24,7 @@ You can set environment variables when defining a Container in your Worker, or w
 For example:
 
 ```javascript
-class MyContainer extends Container {
+export class MyContainer extends Container {
 	defaultPort = 4000;
 	envVars = {
 		MY_CUSTOM_VAR: "value",

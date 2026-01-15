@@ -123,7 +123,7 @@ to define secrets for your Workers.
 Then you can pass these secrets to your Container using the `envVars` property:
 
 ```javascript
-class MyContainer extends Container {
+export class MyContainer extends Container {
 	defaultPort = 5000;
 	envVars = {
 		MY_SECRET: this.env.MY_SECRET,
@@ -151,7 +151,7 @@ internet access on or off.
 To disable it, configure it on your Container class:
 
 ```javascript
-class MyContainer extends Container {
+export class MyContainer extends Container {
 	defaultPort = 7000;
 	enableInternet = false;
 }
