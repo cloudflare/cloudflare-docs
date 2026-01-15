@@ -5,11 +5,6 @@
 		"parent": ["Networking"]
 	},
 	{
-		"name": "Network analytics",
-		"deeplink": "/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics/all-traffic",
-		"parent": ["Networking", "Insights"]
-	},
-	{
 		"name": "Network health",
 		"deeplink": "/?to=/:account/networking-insights/health/network-health",
 		"parent": ["Networking", "Insights"]
