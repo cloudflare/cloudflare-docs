@@ -12,9 +12,9 @@ const { mode = 'comparison', autoPlay = true, loop = true } = Astro.props;
 	<div class="diagram-wrapper">
 		{mode === 'comparison' && (
 			<div class="toggle-container">
-				<span class="toggle-label">Local uploads</span>
-				<label class="toggle-switch">
-					<input type="checkbox" class="toggle-input" />
+				<span class="toggle-label" id="local-uploads-label">Local uploads</span>
+				<label class="toggle-switch" aria-labelledby="local-uploads-label">
+					<input type="checkbox" class="toggle-input" aria-labelledby="local-uploads-label" />
 					<span class="toggle-slider"></span>
 				</label>
 			</div>
