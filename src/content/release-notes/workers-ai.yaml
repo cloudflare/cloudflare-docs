@@ -3,7 +3,7 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
-  - publish_date: "2025-01-15"
+  - publish_date: "2026-01-15"
     title: Black Forest Labs FLUX.2 [klein] 4b now available
     description: |-
       - [`@cf/black-forest-labs/flux-2-klein-4b`](/workers-ai/models/flux-2-klein-4b/) now available on Workers AI! Read [changelog](/changelog/2025-01-15-flux-2-klein-4b-workers-ai/) to get started
