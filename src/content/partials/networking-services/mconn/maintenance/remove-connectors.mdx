@@ -5,7 +5,9 @@ params:
 
 import { DashButton, Markdown } from "~/components";
 
-When adding or removing Magic WAN Connectors, you need to be aware of the difference between the physical device and its profile. The physical device is the hardware at your site. The profile contains the configuration that allows the device to connect to Cloudflare, including your WANs, LANs, traffic steering, and LAN policies.
+When adding or removing Magic WAN Connectors, you need to be aware of the difference between the physical device and its profile.
+- The physical device is the hardware at your site. 
+- The profile contains the configuration that allows the device to connect to Cloudflare, including your WANs, LANs, traffic steering, and LAN policies.
 
 You can have more than one Magic WAN Connector in one profile if you initially enabled high availability during the configuration of the profile. If you did not enable high availability, you need to delete the profile associated with a site before adding a new Magic WAN Connector.
 
