@@ -1,10 +1,5 @@
 [
 	{
-		"name": "Routes",
-		"deeplink": "/?to=/:account/magic-networks/routes",
-		"parent": ["Networking"]
-	},
-	{
 		"name": "Firewall policies",
 		"deeplink": "/?to=/:account/network-security/magic_firewall/custom",
 		"parent": ["Networking"]
