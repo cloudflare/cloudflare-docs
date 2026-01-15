@@ -79,9 +79,9 @@ In this page you will find instructions on how to configure {props.productName}.
     - One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)
     - One or more vSwitch port group or VLAN that will be the internal LAN
 
-    If you are installing ${props.productNameVirtual} on ESXi, refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html) for more information on how to install ESXi and configure a virtual machine.
+    For details on installing ESXi and configuring a virtual machine, refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html).
 
-		If you are installing ${props.productNameVirtual} on Virtual Environment, refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started) for more information on how to install Virtual environment and configure a virtual machine.
+		For details on installing Virtual environment and configuring a virtual machine, refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started).
 		`}
 		inline={false}
 		/>
@@ -94,7 +94,7 @@ In this page you will find instructions on how to configure {props.productName}.
 
 ## Before you begin
 
-There are a couple of decisions you need to make when installing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Refer to the topics below for more information.
+There are a couple of decisions you need to make when installing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Review the following topics for more information.
 
 ### Determine the need for a high availability configuration
 
@@ -107,7 +107,7 @@ You must decide the type of configuration you want for your site from the beginn
 <Card title="Do you need a high availability configuration?" icon="information">
 
 - If you need a high availability configuration for your premises, refer to
-  [About high availability configurations](#about-high-availability-configurations) for more information
+  [About high availability configurations](#about-high-availability-configurations) for details
   and learn how to configure your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } device in this mode.
 
 - If you do not need a high availability configuration for you premises, check if you need a [DHCP or a static IP setup](#decide-on-dhcp-vs-static-ip-connections) before proceeding to [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard).
@@ -183,7 +183,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 { props.magicWord === "virtual" && (
   <>
 		<AnchorHeading title="Configure a virtual machine" depth={2} />
-		<p>Select the appropriate tab below to learn how to configure {props.productNameVirtual} on VMWare ESXi or Proxmox Virtual Environment.</p>
+		<p>Select the appropriate tab to configure {props.productNameVirtual} on VMWare ESXi or Proxmox Virtual Environment.</p>
 
 		<Tabs> <TabItem label="VMWare ESXi">
 
@@ -191,7 +191,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		text={`
 		**1. Obtain the VMWare image**
 
-		Contact your account team at Cloudflare to obtain the ${props.productNameVirtual} OVA package and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for ${props.productNameVirtual} with the appropriate settings. Refer to [VMWare VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) for more information on this topic.
+		Contact your account team at Cloudflare to obtain the ${props.productNameVirtual} OVA package and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for ${props.productNameVirtual} with the appropriate settings. For details, refer to [VMWare VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html).
 
 		This image can be deployed multiple times to create several instances of a ${props.productNameVirtual}, in different locations or on the same ESXi host.
 
