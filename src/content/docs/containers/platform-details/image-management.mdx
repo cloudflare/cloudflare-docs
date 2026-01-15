@@ -129,6 +129,10 @@ Wrangler will prompt you to create a Secrets Store store if one does not already
 
 Once this is setup, you will be able to use ECR images in your wrangler config.
 
+:::note
+We do not cache ECR images. We will pull images to prewarm and start containers. This may incur egress charges for AWS ECR.
+:::
+
 <WranglerConfig>
 
 ```json
