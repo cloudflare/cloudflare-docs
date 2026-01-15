@@ -12,18 +12,29 @@ You no longer need to configure explicit Durable Object bindings to use [Contain
 
 Previously, you had to define a Durable Object binding in your Wrangler configuration:
 
-```toml
-[[containers]]
-class_name = "MyContainer"
-image = "./Dockerfile"
-
-[[durable_objects.bindings]]
-name = "MY_CONTAINER"
-class_name = "MyContainer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyContainer"]
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "MyContainer",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
+}
 ```
 
 And access it via `env`:
@@ -36,14 +47,21 @@ const container = env.MY_CONTAINER.getByName("my-instance");
 
 Now you only need the container and migration configuration:
 
-```toml
-[[containers]]
-class_name = "MyContainer"
-image = "./Dockerfile"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyContainer"]
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+		},
+	],
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
+}
 ```
 
 And access your class directly via `ctx.exports`:
