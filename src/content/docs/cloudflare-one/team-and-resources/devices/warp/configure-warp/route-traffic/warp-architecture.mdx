@@ -180,7 +180,7 @@ S -- No --> U["Virtual interface<br> (172.16.0.2)"] --> G[Cloudflare Gateway]
 
 #### Virtual interface
 
-Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. WARP's virtual interface is what maintains the WireGuard/MASQUE connection between the device and Cloudflare. By default, its IP address is hardcoded as `172.16.0.2`. You can use [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) to override the default IP address with a unique <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>.
+Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. WARP's virtual interface is what maintains the WireGuard/MASQUE connection between the device and Cloudflare. By default, its IPv4 address is hardcoded as `172.16.0.2` for devices using WireGuard, whereas devices using MASQUE are [assigned a unique IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) from the CGNAT IP space (`100.96.0.0/12`). You can override the default virtual interface IP with a [custom device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
 
 To view a list of all network interfaces on the operating system:
 

@@ -114,10 +114,9 @@ This setting is primarily used as a prerequisite for [WARP Connector](/cloudflar
 
 - `Disabled`: (default) Sets the local interface IP to `172.16.0.2` on all devices. This configuration is only respected by devices using [WireGuard](#device-tunnel-protocol) and does not affect devices using [MASQUE](#device-tunnel-protocol).
 
-- `Enabled`: Sets the local interface IP on each device to its <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>.
+- `Enabled`: Sets the local interface IP on each device to its <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> or to a [custom device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
 
-The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization or switches to a different registration. Disconnects and reconnects do not change the IP address assignment.
-
+The IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization or switches to a different registration. Disconnects and reconnects do not change the IP address assignment.
 
 ### Allow all Cloudflare One traffic to reach enrolled devices
 
