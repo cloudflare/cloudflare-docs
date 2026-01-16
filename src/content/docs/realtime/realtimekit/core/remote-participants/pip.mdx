@@ -1,0 +1,72 @@
+---
+pcx_content_type: navigation
+title: Picture in Picture
+sidebar:
+  label: Picture in Picture
+  order: 2
+---
+
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+Picture-in-Picture API allows you to render `meeting.participants.active` participant's video as a floating tile outside of the current webpage's context.
+
+:::note
+Supported in Chrome/Edge/Chromium-based browsers only.
+:::
+
+### Check Support
+
+Picture-in-Picture API might not be supported for your browser. It is important to always check for support.
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+const isSupported = meeting.participants.pip.isSupported();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const isSupported = meeting.participants.pip.isSupported();
+```
+
+</RTKCodeSnippet>
+
+### Enable Picture-in-Picture
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+await meeting.participants.pip.enable();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.participants.pip.enable();
+```
+
+</RTKCodeSnippet>
+
+### Disable Picture-in-Picture
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+await meeting.participants.pip.disable();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.participants.pip.disable();
+```
+
+</RTKCodeSnippet>

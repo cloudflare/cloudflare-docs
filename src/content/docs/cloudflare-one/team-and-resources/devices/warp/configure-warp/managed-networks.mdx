@@ -37,7 +37,7 @@ On this page, you will learn how to:
 - The WARP client scans for managed networks when the operating system's default route changes, the SSID of the active Wi-Fi connection changes, or the DNS servers of the default interface change. To minimize performance impact, reuse the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
 - Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
 
-## WARP client managed network detection
+## Managed network detection logic
 
 When you configure a managed network, the WARP client uses the TLS endpoint to determine whether the device is on that network.
 
@@ -58,7 +58,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 1. Generate a TLS certificate:
 
 	```sh
-	openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
+	openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout key.pem -out cert.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
 	```
 
 	The command will output a certificate in PEM format and its private key. Store these files in a secure place.
@@ -72,7 +72,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 
 		a. Create an nginx configuration file called `nginx.conf`:
 
-			```txt
+			```txt title="nginx.conf"
 			events {
 			worker_connections  1024;
 			}
@@ -80,8 +80,8 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 			http {
 					server {
 						listen              443 ssl;
-						ssl_certificate     /certs/example.pem;
-						ssl_certificate_key /certs/example.key;
+						ssl_certificate     /certs/cert.pem;
+						ssl_certificate_key /certs/key.pem;
 						location / {
 									return 200;
 						}
@@ -89,12 +89,11 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 			}
 			```
 
-		If needed, replace `/certs/example.pem` and `/certs/example.key` with the locations of your certificate and key.
+		If needed, replace `/certs/cert.pem` and `/certs/key.pem` with the locations of your certificate and key.
 
 		b. Add the nginx image to your Docker compose file:
 
-			```yml
-			version: "3.3"
+			```yml title="docker-compose.yml"
 			services:
 				nginx:
 					image: nginx:latest
@@ -110,7 +109,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 		c. Start the server:
 
 			```sh
-			docker-compose up -d
+			docker compose up -d
 			```
 
 3. To test that the TLS server is working, run a curl command from the end user's device:
@@ -186,25 +185,7 @@ The WARP client establishes a TLS connection using [Rustls](https://github.com/r
 
 The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed certificate.
 
-<Tabs> <TabItem label="Local certificate">
-
-To obtain the SHA-256 fingerprint of a local certificate:
-
-```sh
-openssl x509 -noout -fingerprint -sha256 -inform pem -in example.pem | tr -d :
-```
-
-The output will look something like:
-
-```txt
-SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
-```
-
-</TabItem> <TabItem label="Remote server">
-
-<Render file="warp/managed-networks-sha-256" product="cloudflare-one"/>
-
-</TabItem> </Tabs>
+<Render file="warp/sha-256-fingerprint" product="cloudflare-one"/>
 
 ## 3. Add managed network to Cloudflare One
 
@@ -248,7 +229,9 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 
 WARP will automatically exclude the TLS endpoint from all device profiles if it is specified as a private IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of a private IP, WARP will not automatically exclude it.
 
-If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
+:::note[Split Tunnels in Include mode]
+If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that your Split Tunnel entries do not contain the TLS endpoint IP address; otherwise WARP will exclude the entire Split Tunnel entry from the tunnel. For example, if you are currently including `10.0.0.0/8` but your TLS endpoint is on `10.0.0.1`, use our [IP subtraction calculator](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to remove `10.0.0.1` from `10.0.0.0/8`.
+:::
 
 ## 4. Configure device profile
 

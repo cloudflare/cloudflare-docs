@@ -1,0 +1,35 @@
+releaseNotes: |-
+  This release contains minor fixes, improvements, and new features, including the ability to manage WARP client connectivity for all devices in your fleet using an [external signal](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/).
+
+  WARP client version 2025.8.779.0 introduced an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025. Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com).
+
+  **Changes and improvements**
+  - The [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) feature has been fixed for devices running WARP client version 2025.4.929.0 and newer. Previously, these devices could experience failures with Local Domain Fallback unless a fallback server was explicitly configured. This configuration is no longer a requirement for the feature to function correctly.
+  - Linux [disk encryption posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/disk-encryption/) now supports non-filesystem encryption types like `dm-crypt`.
+  - [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode) now supports transparent HTTP proxying in addition to CONNECT-based proxying.
+  - Fixed an issue where the GUI becomes unresponsive when the **Re-Authenticate in browser** button is clicked.
+  -  Added a new feature to manage WARP client connectivity for all devices using an [external signal](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/). This feature allows administrators to send a global signal from an on-premises HTTPS endpoint that force disconnects or reconnects all WARP clients in an account based on configuration set on the endpoint.
+version: 2025.10.186.0
+releaseDate: 2026-01-13T01:53:14.425Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-arm/version/2025.10.186.0
+packageSize: 51987674
+platformName: Linux
+linuxPlatforms:
+  noble-arm: 51987674
+  focal-arm: 51912080
+  bookworm-intel: 52296504
+  fedora34-arm: 54599628
+  jammy-intel: 52306444
+  fedora34-intel: 55209148
+  noble-intel: 52090374
+  bookworm-arm: 51571280
+  fedora35-intel: 54862462
+  jammy-arm: 51586370
+  bullseye-arm: 51839930
+  centos8-arm: 54385310
+  trixie-intel: 52091546
+  fedora35-arm: 54165334
+  trixie-arm: 51805154
+  focal-intel: 52614234
+  bullseye-intel: 52526626
+  centos8-intel: 54773719

@@ -3,7 +3,7 @@ import { z } from "astro:schema";
 import CodeSnippet from "./RTKCodeSnippet";
 
 const props = z.object({
-	id: z.string(),
+	id: z.union([z.string(), z.array(z.string())]),
 });
 
 const { id } = props.parse(Astro.props);

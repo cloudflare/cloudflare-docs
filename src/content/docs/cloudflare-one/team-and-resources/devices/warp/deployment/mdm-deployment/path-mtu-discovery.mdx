@@ -56,6 +56,20 @@ This configuration enables the PMTUD feature and explicitly configures the MASQU
 
 WARP will now send active probes to detect the network path MTU and will update its tunnel interface MTU accordingly. You can expect PMTUD probes to generate an extra 25 Mb/day of traffic coming from the device.
 
+## Verify PMTUD is enabled
+
+To check if PMTUD is active on a device, open a terminal and run the following command:
+
+```sh
+warp-cli settings | grep -i pmtu
+```
+
+```sh output
+(local policy)	PMTUD enabled: true
+```
+
+If PMTUD is enabled, the output will show `PMTUD enabled: true`.
+
 ## Minimum MTUs
 
 ### Recommended MTU

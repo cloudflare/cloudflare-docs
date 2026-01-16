@@ -4,7 +4,7 @@ title: Build using Core SDK
 slug: realtime/realtimekit/core
 sidebar:
   order: 6
-  label: Initialize SDK
+  label: Getting Started
 ---
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
@@ -35,13 +35,15 @@ export default function App() {
     	initMeeting({ authToken: "<auth-token>" });
     }, []);
 
-	useEffect(() => {
-		// next - if (meeting) meeting.join();
-	}, [meeting])
+    useEffect(() => {
+    	// next - if (meeting) meeting.join();
+    }, [meeting])
 
     return <div></div>;
+
 }
-```
+
+````
 Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
 </RTKCodeSnippet>
 
@@ -49,12 +51,16 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
 Install the client SDK.
 ```bash
 npm i @cloudflare/realtimekit
-```
+````
+
 Alternatively, you can also use the CDN.
+
 ```html
- <script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/browser.js"></script>
 ```
+
 You can initialise the SDK using `RealtimeKitClient.init`.
+
 ```js
 	const authToken = <auth-token>;
 	RealtimeKitClient.init({
@@ -63,7 +69,9 @@ You can initialise the SDK using `RealtimeKitClient.init`.
 		// next - meeting.join();
 	});
 ```
+
 Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
@@ -78,14 +86,16 @@ class AppComponent {
 	@ViewChild("myid") meetingComponent: RtkMeeting;
 	rtkMeeting: RealtimeKitClient;
 
-	async ngAfterViewInit() {
-		const meeting = await RealtimeKitClient.init({
-			authToken: "<auth-token>",
-		});
-		// next - meeting.join();
-	}
+    async ngAfterViewInit() {
+    	const meeting = await RealtimeKitClient.init({
+    		authToken: "<auth-token>",
+    	});
+    	// next - meeting.join();
+    }
+
 }
-```
+
+````
 Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
 
 </RTKCodeSnippet>
@@ -290,4 +300,4 @@ interface DefaultOptions {
 	autoSwitchAudioDevice?: boolean;
 	recording?: RecordingConfig;
 }
-```
+````

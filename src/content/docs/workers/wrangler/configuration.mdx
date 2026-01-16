@@ -1207,6 +1207,9 @@ You can configure various aspects of local development, such as the local protoc
   - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
     Example:
 
+- `generate_types` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Generate types from your Worker configuration. Defaults to `false`.
+
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
