@@ -59,7 +59,7 @@ RUN printf '#!/bin/sh\n\
     \n\
     R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
     echo "Mounting bucket ${R2_BUCKET_NAME}..."\n\
-    /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
+    /usr/local/bin/tigrisfs --fsync-on-close --endpoint "${R2_ENDPOINT}" -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
     sleep 3\n\
     \n\
     echo "Contents of mounted bucket:"\n\
