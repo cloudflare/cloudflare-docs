@@ -390,6 +390,12 @@ interface TransportState {
 	initialized: boolean;
 	initializeParams?: InitializeRequestParams;
 }
+
+interface InitializeRequestParams {
+	capabilities: ClientCapabilities;
+	clientInfo: { name: string; version: string };
+	protocolVersion: string;
+}
 ```
 
 The `TransportState` interface defines what gets persisted to storage:
