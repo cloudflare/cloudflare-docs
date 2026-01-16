@@ -1,12 +1,1 @@
-[
-	{
-		"name": "Packet captures",
-		"deeplink": "/?to=/:account/magic-wan/packet-captures/captures",
-		"parent": ["Networking", "Magic WAN"]
-	},
-	{
-		"name": "Packet captures",
-		"deeplink": "/?to=/:account/magic-transit/packet-captures/captures",
-		"parent": ["Networking", "Magic Transit"]
-	}
-]
+[]
