@@ -4,16 +4,20 @@ title: Rate Limiting
 description: Define rate limits and interact with them directly from your Cloudflare Worker
 ---
 
-import { TabItem, Tabs, WranglerConfig } from "~/components"
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 The Rate Limiting API lets you define rate limits and write code around them in your Worker.
 
 You can use it to enforce:
 
-* Rate limits that are applied after your Worker starts, only once a specific part of your code is reached
-* Different rate limits for different types of customers or users (ex: free vs. paid)
-* Resource-specific or path-specific limits (ex: limit per API route)
-* Any combination of the above
+- Rate limits that are applied after your Worker starts, only once a specific part of your code is reached
+- Different rate limits for different types of customers or users (ex: free vs. paid)
+- Resource-specific or path-specific limits (ex: limit per API route)
+- Any combination of the above
+
+:::note
+The Rate Limiting API is included with all Workers plans.
+:::
 
 The Rate Limiting API is backed by the same infrastructure that serves [rate limiting rules](/waf/rate-limiting-rules/).
 
@@ -50,37 +54,41 @@ This binding makes the `MY_RATE_LIMITER` binding available, which provides a `li
 
 ```javascript
 export default {
-  async fetch(request, env) {
-    const { pathname } = new URL(request.url)
+	async fetch(request, env) {
+		const { pathname } = new URL(request.url);
 
-    const { success } = await env.MY_RATE_LIMITER.limit({ key: pathname }) // key can be any string of your choosing
-    if (!success) {
-      return new Response(`429 Failure – rate limit exceeded for ${pathname}`, { status: 429 })
-    }
+		const { success } = await env.MY_RATE_LIMITER.limit({ key: pathname }); // key can be any string of your choosing
+		if (!success) {
+			return new Response(`429 Failure – rate limit exceeded for ${pathname}`, {
+				status: 429,
+			});
+		}
 
-    return new Response(`Success!`)
-  }
-}
+		return new Response(`Success!`);
+	},
+};
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 interface Env {
-  MY_RATE_LIMITER: RateLimit;
+	MY_RATE_LIMITER: RateLimit;
 }
 
 export default {
-  async fetch(request, env): Promise<Response> {
-    const { pathname } = new URL(request.url)
+	async fetch(request, env): Promise<Response> {
+		const { pathname } = new URL(request.url);
 
-    const { success } = await env.MY_RATE_LIMITER.limit({ key: pathname }) // key can be any string of your choosing
-    if (!success) {
-      return new Response(`429 Failure – rate limit exceeded for ${pathname}`, { status: 429 })
-    }
+		const { success } = await env.MY_RATE_LIMITER.limit({ key: pathname }); // key can be any string of your choosing
+		if (!success) {
+			return new Response(`429 Failure – rate limit exceeded for ${pathname}`, {
+				status: 429,
+			});
+		}
 
-    return new Response(`Success!`)
-  }
+		return new Response(`Success!`);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -88,14 +96,12 @@ export default {
 
 The `limit()` API accepts a single argument — a configuration object with the `key` field.
 
-* The key you provide can be any `string` value.
-* A common pattern is to define your key by combining a string that uniquely identifies the actor initiating the request (ex: a user ID or customer ID) and a string that identifies a specific resource (ex: a particular API route).
+- The key you provide can be any `string` value.
+- A common pattern is to define your key by combining a string that uniquely identifies the actor initiating the request (ex: a user ID or customer ID) and a string that identifies a specific resource (ex: a particular API route).
 
 You can define and configure multiple rate limiting configurations per Worker, which allows you to define different limits against incoming request and/or user parameters as needed to protect your application or upstream APIs.
 
 For example, here is how you can define two rate limiting configurations for free and paid tier users:
-
-
 
 <WranglerConfig>
 
@@ -144,19 +150,19 @@ simple = { limit = 1500, period = 60 }
 
 The `key` passed to the `limit` function, that determines what to rate limit on, should represent a unique characteristic of a user or class of user that you wish to rate limit.
 
-* Good choices include API keys in `Authorization` HTTP headers, URL paths or routes, specific query parameters used by your application, and/or user IDs and tenant IDs. These are all stable identifiers and are unlikely to change from request-to-request.
-* It is not recommended to use IP addresses or locations (regions or countries), since these can be shared by many users in many valid cases. You may find yourself unintentionally rate limiting a wider group of users than you intended by rate limiting on these keys.
+- Good choices include API keys in `Authorization` HTTP headers, URL paths or routes, specific query parameters used by your application, and/or user IDs and tenant IDs. These are all stable identifiers and are unlikely to change from request-to-request.
+- It is not recommended to use IP addresses or locations (regions or countries), since these can be shared by many users in many valid cases. You may find yourself unintentionally rate limiting a wider group of users than you intended by rate limiting on these keys.
 
 ```ts
 // Recommended: use a key that represents a specific user or class of user
-const url = new URL(req.url)
-const userId = url.searchParams.get("userId") || ""
-const { success } = await env.MY_RATE_LIMITER.limit({ key: userId })
+const url = new URL(req.url);
+const userId = url.searchParams.get("userId") || "";
+const { success } = await env.MY_RATE_LIMITER.limit({ key: userId });
 
 // Not recommended:  many users may share a single IP, especially on mobile networks
 // or when using privacy-enabling proxies
-const ipAddress = req.headers.get("cf-connecting-ip") || ""
-const { success } = await env.MY_RATE_LIMITER.limit({ key: ipAddress })
+const ipAddress = req.headers.get("cf-connecting-ip") || "";
+const { success } = await env.MY_RATE_LIMITER.limit({ key: ipAddress });
 ```
 
 ## Locality
@@ -174,7 +180,7 @@ The underlying counters are cached on the same machine that your Worker runs in,
 This means that while in your code you `await` a call to the `limit()` method:
 
 ```javascript
-const { success } = await env.MY_RATE_LIMITER.limit({ key: customerId })
+const { success } = await env.MY_RATE_LIMITER.limit({ key: customerId });
 ```
 
 You are not waiting on a network request. You can use the Rate Limiting API without introducing any meaningful latency to your Worker.
@@ -187,6 +193,6 @@ For example, if many requests come in to your Worker in a single Cloudflare loca
 
 ## Examples
 
-* [`@elithrar/workers-hono-rate-limit`](https://github.com/elithrar/workers-hono-rate-limit) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application.
-* [`@hono-rate-limiter/cloudflare`](https://github.com/rhinobase/hono-rate-limiter) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application, with multiple data stores to choose from.
-* [`hono-cf-rate-limit`](https://github.com/bytaesu/hono-cf-rate-limit) — Middleware for Hono applications that applies rate limiting in Cloudflare Workers, powered by Wrangler’s built-in features.
+- [`@elithrar/workers-hono-rate-limit`](https://github.com/elithrar/workers-hono-rate-limit) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application.
+- [`@hono-rate-limiter/cloudflare`](https://github.com/rhinobase/hono-rate-limiter) — Middleware that lets you easily add rate limits to routes in your [Hono](https://hono.dev/) application, with multiple data stores to choose from.
+- [`hono-cf-rate-limit`](https://github.com/bytaesu/hono-cf-rate-limit) — Middleware for Hono applications that applies rate limiting in Cloudflare Workers, powered by Wrangler’s built-in features.
