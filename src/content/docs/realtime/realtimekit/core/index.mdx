@@ -23,7 +23,8 @@ Install the client SDK
 ```bash
 npm i @cloudflare/realtimekit-react
 ```
-Use the `useRealtimeKitClient` hook to initialise the SDK. 
+Use the `useRealtimeKitClient` hook to initialise the SDK.
+
 ```ts title=App.tsx
 import { useEffect } from 'react';
 import { useRealtimeKitClient } from '@cloudflare/realtimekit-react';
@@ -32,7 +33,15 @@ export default function App() {
 	const [meeting, initMeeting] = useRealtimeKitClient();
 
     useEffect(() => {
-    	initMeeting({ authToken: "<auth-token>" });
+      const meetingDefaultOptions = {
+        audio: true,
+        video: true,
+      };
+
+    	initMeeting({
+        authToken: "<auth-token>",
+        defaults: meetingDefaultOptions, // optional
+      });
     }, []);
 
     useEffect(() => {
@@ -43,15 +52,18 @@ export default function App() {
 
 }
 
-````
+```
+
 Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-web-components">
 Install the client SDK.
+
 ```bash
 npm i @cloudflare/realtimekit
-````
+```
 
 Alternatively, you can also use the CDN.
 
@@ -63,8 +75,15 @@ You can initialise the SDK using `RealtimeKitClient.init`.
 
 ```js
 	const authToken = <auth-token>;
+
+  const meetingDefaultOptions = {
+    audio: true,
+    video: true,
+  };
+
 	RealtimeKitClient.init({
-	authToken,
+	  authToken,
+	  defaults: meetingDefaultOptions, // optional
 	}).then((meeting) => {
 		// next - meeting.join();
 	});
@@ -80,22 +99,27 @@ Install the client SDK.
 npm i @cloudflare/realtimekit-angular
 ```
 You can initialise the SDK using `RealtimeKitClient.init`.
+
 ```ts
 class AppComponent {
 	title = "MyProject";
 	@ViewChild("myid") meetingComponent: RtkMeeting;
 	rtkMeeting: RealtimeKitClient;
 
-    async ngAfterViewInit() {
-    	const meeting = await RealtimeKitClient.init({
-    		authToken: "<auth-token>",
-    	});
-    	// next - meeting.join();
-    }
-
+	async ngAfterViewInit() {
+		const meetingDefaultOptions = {
+			audio: true,
+			video: true,
+		};
+		const meeting = await RealtimeKitClient.init({
+			authToken: "<auth-token>",
+			defaults: meetingDefaultOptions, // optional
+		});
+		// next - meeting.join();
+	}
 }
+```
 
-````
 Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
 
 </RTKCodeSnippet>
@@ -239,48 +263,115 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
 
 ### Advanced Options
 
-The Core SDK provides additional configuration options for advanced use cases. These options can be passed during initialization to customize the behavior of the RealtimeKit client.
+<RTKCodeSnippet id={["web-react", "web-angular", "web-web-components", "mobile-react-native"]}>
 
-| Option | Description | Type | Reqired |
-| ------ | ----------- | ------- | ------ |
-| **video**  | Should video be enabled by default | `boolean` | false |
-| **audio**  | Should audio be enabled by default | `boolean` | false |
-| **mediaConfiguration** | Allows you to pass custom media quality constraints | `MediaConfiguration` | false |
-| **autoSwitchAudioDevice** | Automatically switch to a ngAfterViewInit audio device | `boolean` | false |
-| **isNonPreferredDevice** | Allows you to set specific devices as "not preferred" | `(device: MediaDeviceInfo) => boolean` | false |
-| **recording** | Allows you to configure recording settings | RecordingConfig | false |
+You can **optionally** configure meeting defaults, media quality, screen share preferences, simulcast settings, ice connection behavior, logging, and error handling while initializing the SDK.
+
+```ts
+init({
+	authToken: "<auth_token>",
+	defaults: {
+		video: true,
+		audio: true,
+		screenShare: {
+			displaySurface: "monitor", // Given surface is suggested to the end user
+		},
+		mediaConfiguration: {
+			// Configure custom video quality (e.g., 1080p). Disable simulcast using `simulcastConfig` override for single-layer streaming.
+			video: {
+				width: { ideal: 1920 },
+				height: { ideal: 1080 },
+				frameRate: { ideal: 15 },
+			},
+		},
+	},
+	overrides: {
+		simulcastConfig: {
+			// If you want to disable simulcast
+			disable: false,
+			// If you want to pass custom simulcast encodings
+			encodings: [
+				{
+					rid: "f", // full / highest quality
+					scaleResolutionDownBy: 1.0,
+					maxBitrate: 2500000, // ~2.5 Mbps
+				},
+				{
+					rid: "h", // half
+					scaleResolutionDownBy: 2.0,
+					maxBitrate: 900000, // ~0.9 Mbps
+				},
+				{
+					rid: "q", // quarter
+					scaleResolutionDownBy: 4.0,
+					maxBitrate: 250000, // ~0.25 Mbps
+				},
+			],
+		},
+		forceRelay: false, // forceRelay, if true, TURN will be preferred over STUN
+	},
+	modules: {
+		devTools: {
+			logs: true, // Prints SDK logs to console, Useful in initial integration phase
+		},
+	},
+	onError: (error) => {
+		console.error(error); // SDK errors, Useful in detecting common issues
+	},
+});
+```
+
+:::tip
+`onError` callback is used to handle SDK errors. These errors could be due to invalid auth token, network issues, media permissions, etc. Each error is thrown with a unique error code. Learn more about SDK [error codes](/realtime/realtimekit/core/error-codes/).
+:::
+
+You can pass the following options as `defaults` to alter default behavior.
+
+| Option                    | Description                                                   | Type                                   | Required |
+| ------------------------- | ------------------------------------------------------------- | -------------------------------------- | -------- |
+| **video**                 | Should video be enabled by default                            | `boolean`                              | false    |
+| **audio**                 | Should audio be enabled by default                            | `boolean`                              | false    |
+| **mediaConfiguration**    | Allows you to pass custom media quality constraints           | `MediaConfiguration`                   | false    |
+| **autoSwitchAudioDevice** | Automatically switch to a newly plugged microphone or speaker | `boolean`                              | false    |
+| **isNonPreferredDevice**  | Allows you to set specific devices as "not preferred"         | `(device: MediaDeviceInfo) => boolean` | false    |
+| **recording**             | Allows you to configure recording settings                    | RecordingConfig                        | false    |
+
+:::info
+By default, audio and video are auto enabled, as per preset permissions. SDK uses 640x480 quality as default for group calls, which can be overridden with `mediaConfiguration`. By default, the SDK automatically switches to the best available device and marks virtual devices as not preferred.
+:::
 
 Reference for the types:
+
 ```ts
 interface AudioQualityConstraints {
-	echoCancellation?: boolean,
-	noiseSupression?: boolean,
-	autoGainControl?: boolean,
-	enableStereo?: boolean,
-	enableHighBitrate?: boolean
+	echoCancellation?: boolean;
+	noiseSupression?: boolean;
+	autoGainControl?: boolean;
+	enableStereo?: boolean;
+	enableHighBitrate?: boolean;
 }
 
 interface VideoQualityConstraints {
-	width: { ideal: number },
-	height: { ideal: number },
-	frameRate?: { ideal: number },
+	width: { ideal: number };
+	height: { ideal: number };
+	frameRate?: { ideal: number };
 }
 
 interface ScreenshareQualityConstraints {
-	width?: { max: number },
-	height?: { max: number },
+	width?: { max: number };
+	height?: { max: number };
 	frameRate?: {
-		ideal: number,
-		max: number
-	},
-	displaySurface?: 'window' | 'monitor' | 'browser';
-	selfBrowserSurface?: 'include' | 'exclude'
+		ideal: number;
+		max: number;
+	};
+	displaySurface?: "window" | "monitor" | "browser";
+	selfBrowserSurface?: "include" | "exclude";
 }
 
 interface MediaConfiguration {
-	video?: VideoQualityConstraints,
-	audio?: AudioQualityConstraints,
-	screenshare?: ScreenshareQualityConstraints,
+	video?: VideoQualityConstraints;
+	audio?: AudioQualityConstraints;
+	screenshare?: ScreenshareQualityConstraints;
 }
 
 interface RecordingConfig {
@@ -300,4 +391,20 @@ interface DefaultOptions {
 	autoSwitchAudioDevice?: boolean;
 	recording?: RecordingConfig;
 }
-````
+
+interface Overrides {
+	simulcastConfig?: {
+		disable?: boolean;
+		encodings?: RTCRtpEncodingParameters[];
+	};
+	forceRelay?: boolean;
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+
+You can configure meeting defaults using `enableAudio` and `enableVideo` parameters.
+
+</RTKCodeSnippet>
