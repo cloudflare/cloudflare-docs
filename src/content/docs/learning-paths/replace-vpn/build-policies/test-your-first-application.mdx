@@ -13,19 +13,37 @@ After you have set up your [Zero Trust organization](/learning-paths/replace-vpn
 
 Test if the Access or Gateway policy that you configured is working by using a device with the WARP client installed to reach an internal application or external website through that policy.
 
-If you cannot reach an application protected by Access or an external application through Gateway as expected, review the following troubleshooting resources:
+If you cannot reach an application protected by Access or an external application through Gateway as expected, Cloudflare recommends starting with reviewing your WARP configuration.
 
-- [WARP troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/)
-- [WARP client errors](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/)
-- [WARP connectivity status](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/connectivity-status/)
-- [WARP with Firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/)
-- [Troubleshoot Gateway](/cloudflare-one/traffic-policies/troubleshoot-gateway/)
+### Troubleshoot WARP
+
+- [WARP troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/): Step-by-step instructions to debug WARP client issues.
+- [WARP client errors](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/): If you are receiving an error, review the associated solutions.
+- [WARP connectivity status](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/connectivity-status/): Review the connectivity stage of the WARP daemon as it establishes a connection from the device to Cloudflare.
+- [WARP with Firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/): Ensure you have exempted the correct IP addresses and domains to allow the WARP client to connect.
+
+### Review logs
 
 If you want to check that your device's traffic was routed through Cloudflare, review the Access authentication logs. To access something for Gateway, HTTP request logs, DNS logs, and DNS query logs.
 
-You can check Access or Gateway logs for traffic activity by opening the Cloudflare One dashboard and navigating to…
+To review traffic activity for applications protected by Access: 
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Logs**.
+2. Select **Acess authentication logs**.
+3. Review the [per-request logs](/cloudflare-one/insights/logs/audit-logs/#per-request-logs) for your application.
 
-You can check your Access or Gateway analytics by navigating to… Analytics dashboard. 
+To review traffic activity for Gateway: 
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Logs**.
+2. Select **HTTP request logs**, **DNS logs**, or **DNS query logs** depending on your investigation scope.
+3. Review the [Gateway logs](/cloudflare-one/insights/logs/gateway-logs/) documentation for more information.
+
+Refer to [Troubleshoot Gateway](/cloudflare-one/traffic-policies/troubleshoot-gateway/) if you have already debugged the WARP client and are still unable to reach your application.
+
+### Review analytics
+
+For visualizations of log data, review Access or Gateway analytics:
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Dashboards**.
+2. Select **[Access event analytics](/cloudflare-one/insights/analytics/access/)** for a summary of login events or **[Application Access Report](/cloudflare-one/insights/analytics/application-access/)** for a summary of overall Access Activity. 
+3. Select the **HTTP request analytics**, **DNS query analytics** or **Network session analytics** depending on [your Gateway investigation scope](/cloudflare-one/insights/analytics/gateway/).
 
 ## Digital Experience Monitoring (DEX)
 
