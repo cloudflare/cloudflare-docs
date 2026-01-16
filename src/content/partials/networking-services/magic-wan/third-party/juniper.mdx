@@ -14,15 +14,15 @@ The configuration settings in this document are based on JUNOS 23.4R2.13.
 
 ## Prerequisites
 
-Confirm that you have two Cloudflare anycast IPs allocated to your account. You will establish IPsec tunnels to the two anycast IPs irrespective of the location of your Juniper SRX devices (from now on referred to as endpoint) — traffic will be naturally attracted to the closest Cloudflare colocation facility via BGP anycast.
+Confirm that you have two Cloudflare anycast IPs allocated to your account. Establish IPsec tunnels to the two anycast IPs irrespective of the location of your Juniper SRX devices (from now on referred to as endpoint) — traffic will be naturally attracted to the closest Cloudflare colocation facility via BGP anycast.
 
 Cloudflare recommends that customers configure two IPsec tunnels (one to each of the two anycast IPs allocated to you Cloudflare account) per Internet service provider per endpoint. This provides tunnel redundancy.
 
 Equal-cost multi-path routing (ECMP) ensures traffic is load-balanced across the tunnels, and you can control traffic steering across the tunnels through route prioritization.
 
-Cloudflare supports route-based site-to-site IPsec tunnels, which require the creation of virtual tunnel interfaces (VTIs). We recommend you select one subnet per Magic IPsec tunnel with either a `/30` or `/31` netmask.
+Cloudflare supports route-based site-to-site IPsec tunnels, which require the creation of virtual tunnel interfaces (VTIs). Select one subnet per Magic IPsec tunnel with either a `/30` or `/31` netmask.
 
-Using a `/31` netmask is a more efficient use of IP addresses as it doubles the number of available subnets compared to a `/30`netmask. This is possible because with a `/31`netmask there is no need to reserve IP addresses for the subnet and broadcast addresses, as there would be if you opt to use a `/30` netmask. Additional details can be found in [RFC 3021 - Using 31-Bit Prefixes on IPv4 Point-to-Point Links](https://datatracker.ietf.org/doc/html/rfc3021).
+Using a `/31` netmask is a more efficient use of IP addresses as it doubles the number of available subnets compared to a `/30` netmask. This is possible because with a `/31` netmask there is no need to reserve IP addresses for the subnet and broadcast addresses, as there would be if you opt to use a `/30` netmask. Additional details can be found in [RFC 3021 - Using 31-Bit Prefixes on IPv4 Point-to-Point Links](https://datatracker.ietf.org/doc/html/rfc3021).
 
 ## Cloudflare Magic WAN configuration
 
@@ -53,8 +53,8 @@ This documentation assumes there are two locations connected via Magic WAN:
 	- Ensure you use a unique RFC 1918 IP address for the Interface Address (`/31` or `/30`).
 	- Once again, specify the Internet IP address on the untrust side of the SRX firewall for the **Customer Endpoint**.
 	- The **Cloudflare Endpoint** for the second tunnel will be the second Cloudflare anycast IP provisioned for your account.
-3. Select **Add Tunnels**. We also recommend selecting **Test Tunnels** to ensure that the settings do not conflict with any other tunnels defined in your account and that you specified the correct anycast IP addresses.
-4. You will see a warning indicator next to the tunnel names after creating them because we chose to add a pre-shared key later. This is expected behavior and indicates that a pre-shared key has not been generated yet for the associated tunnel.
+3. Select **Add Tunnels**. Cloudflare recommends selecting **Test Tunnels** to ensure that the settings do not conflict with any other tunnels defined in your account and that you specified the correct anycast IP addresses.
+4. A warning indicator appears next to the tunnel names after creating them because the pre-shared key was not added yet. This is expected behavior and indicates that a pre-shared key has not been generated yet for the associated tunnel.
 5. Select **Edit** next to one of the tunnels to generate a pre-shared key.
 6. Select **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Make a note of the pre-shared key and store it somewhere safe.
 	:::note
@@ -69,7 +69,7 @@ This documentation assumes there are two locations connected via Magic WAN:
 
 ### Magic static routes
 
-Refer to the Magic WAN Topology section above for more details on the IP subnet scheme.
+Refer to the [Magic WAN topology](#magic-wan-topology) section for more details on the IP subnet scheme.
 
 <a href={props.magicStaticRoutesUrl}>Magic static routes</a> effectively tell Magic WAN which tunnels to route traffic destined for a given Magic WAN site.
 
@@ -79,7 +79,7 @@ Cloudflare leverages <a href={props.equalcostMultipathUrl}>equal-cost multi-path
 
 1. Create a static route with the following values. Make sure you select the first tunnel in **Tunnel/Next hop**:
 	- **Description:** The description for the static route assigned to your first tunnel.
-	- **Prefix**: Enter the destination subnet for which this route is intended. For this example, it is `10.1.20.0/24` as stated above.
+	- **Prefix**: Enter the destination subnet for which this route is intended. For this example, it is `10.1.20.0/24`.
 	- **Tunnel/Next hop**: Choose your first tunnel from the drop-down menu.
 	- **Priority**: The default value is `100`.
 	- **Region code**: Leave set to **All Regions** unless otherwise specified.
@@ -223,7 +223,7 @@ lifetime-seconds 86400;
 
 Define two IKE policies - one for each of the two Magic IPsec tunnels:
 
-***Tunnel 1 (SRX300_IPSEC_01)**
+**Tunnel 1 (SRX300_IPSEC_01)**
 
 ```txt
 set security ike policy cf_magic_wan_tun_01_pol mode main
@@ -259,7 +259,7 @@ pre-shared-key ascii-text "$9$f536tp<REDACTED>SrH.fT/9Lx7-bY"; ## SECRET-DATA
 
 #### IKE gateways
 
-Define two IKE gateways — one for each of the two Magic IPsec tunnels. In the examples below, note the use of the **FQDN ID** value obtained from the Cloudflare dashboard in the `local-identity` hostname setting.
+Define two IKE gateways — one for each of the two Magic IPsec tunnels. Note the use of the **FQDN ID** value obtained from the Cloudflare dashboard in the `local-identity` hostname setting.
 
 **Tunnel 1 (SRX300_IPSEC_01)**
 
@@ -328,7 +328,7 @@ lifetime-seconds 28800;
 
 #### IPsec Policy
 
-Define one IPsec policy — reference the IPsec proposal created above.
+Define one IPsec policy — reference the IPsec proposal created in the previous step.
 
 ```txt
 set security ipsec policy cf_magic_wan_ipsec_pol proposals cf_magic_wan_ipsec_prop
@@ -415,7 +415,7 @@ Firewall filters must incorporate at least two terms:
 - **Term 2**: Permit all other traffic — otherwise, the firewall filters will discard any traffic not intended for Magic WAN destinations.
 :::
 
-This configuration only factors in one local site (`10.1.20.0/24`). In this example, we assume devices in the trust zone must route traffic to a remote subnet at another Magic WAN-protected site (`10.1.100.0/24`).
+This configuration only factors in one local site (`10.1.20.0/24`). In this example, devices in the trust zone must route traffic to a remote subnet at another Magic WAN-protected site (`10.1.100.0/24`).
 
 Define a static route on the SRX to route traffic to `10.1.100.0/24` with redundant routes referencing each of the two tunnels.
 
@@ -427,7 +427,7 @@ As mentioned earlier, any traffic destined for other Magic WAN protected sites m
 
 The example includes two static routes - one to each of the two VTIs on the Cloudflare side of the  Magic IPsec Tunnels (`10.252.2.20` and `10.252.2.22`).
 
-While it is possible to be more prescriptive in terms of the destination subnets, we simply use `0.0.0.0/0` as the firewall filter ensures only traffic destined for `10.1.100.0/24` will be forwarded to the routing instance. Any other traffic not destined for `10.1.100.0/24` will continue to the primary routing table (`inet.0`) as it falls outside the scope of the firewall filter configured in the next section below.
+While it is possible to be more prescriptive in terms of the destination subnets, simply use `0.0.0.0/0` as the firewall filter ensures only traffic destined for `10.1.100.0/24` will be forwarded to the routing instance. Any other traffic not destined for `10.1.100.0/24` will continue to the primary routing table (`inet.0`) as it falls outside the scope of the configured firewall filter in the next section.
 
 Leaving the destination subnet as `0.0.0.0/0` eases some administrative burden as you only need to modify the firewall filter to specify which traffic is destined for Magic WAN.
 
@@ -453,7 +453,7 @@ MAGIC_WAN_RI {
 
 **Firewall Filter:**
 
-In this step, we create a stateless firewall filter to ensure only packets from `10.1.20.0/24` destined for `10.1.100.0/24` are sent to the `MAGIC_WAN_RI` routing instance.
+Create a stateless firewall filter to ensure only packets from `10.1.20.0/24` destined for `10.1.100.0/24` are sent to the `MAGIC_WAN_RI` routing instance.
 
 - **Term 1** - `MAGIC_WAN_NETS` ensures only packets from `10.1.20.0/24` destined for `10.1.100.0/24` are sent to the `MAGIC_WAN_RI` routing instance. Take note of the `count` statement defined in this term. [Count](https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/example/firewall-filter-stateless-example-act-on-sampling.html) allows you to view how many packets are processed by this term in the firewall filter. An example of how to view the Counter is included below.
 - **Term 2** - `ALLOW_EVERYTHING_ELSE` ensures all other traffic continues to the primary routing table (`inet.0`).
@@ -532,9 +532,9 @@ family inet {
 
 RIB Groups allow you to concatenate the contents of multiple routing tables into a routing table group.
 
-The primary routing table in the RIB group should be `inet.0` followed by the secondary routing table `MAGIC_WAN_RI.inet.0`  which is the `MAGIC_WAN_RI` routing-instance created above.
+The primary routing table in the RIB group should be `inet.0` followed by the secondary routing table `MAGIC_WAN_RI.inet.0`  which is the `MAGIC_WAN_RI` routing-instance created in the previous step.
 
-[Interface Routes](https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/statement/interface-routes-edit-routing-options.html) referenced below by the `interface-routes` statement determines which interfaces and Routing Instances are bound to the RIB Group.
+[Interface Routes](https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/statement/interface-routes-edit-routing-options.html) and the `interface-routes` statement determine which interfaces and Routing Instances are bound to the RIB Group.
 
 ```txt
 set routing-options static route 0.0.0.0/0 next-hop <DEFAULT GATEWAY VIA ISP>
@@ -723,7 +723,7 @@ set security ike traceoptions file world-readable
 set security ike traceoptions flag all
 ```
 
-The log file can be viewed by doing the following:
+To view the log file:
 
 1. From an operational mode, run **start shell**.
 2. Use the `tail` command to view the contents of the log file in real-time:
@@ -773,7 +773,7 @@ set security ipsec traceoptions flag all
 To view the log file:
 
 1. From an operational mode, run `start shell`.
-2. Use the tail command to view the contents of the log file in real time:
+2. Use the tail command to view the contents of the log file in real-time:
    `tail -f /var/log/ipsec-debug.log`
 3. Press `CTRL + C` when finished.
 4. Type `exit` to return to the operational mode prompt.
