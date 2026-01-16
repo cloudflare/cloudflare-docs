@@ -230,10 +230,12 @@ export default {
 With persistent storage, the transport preserves:
 
 - Session ID across reconnections
-- Protocol version negotiation state
 - Initialization status
+- Client capabilities (like elicitation and sampling support)
+- Client information (name and version)
+- Protocol version negotiation state
 
-This allows MCP clients to reconnect and resume their session in the event of a connection loss.
+This allows MCP clients to reconnect and resume their session in the event of a connection loss, including after serverless cold starts. The preservation of client capabilities is particularly important for features like [elicitation](https://modelcontextprotocol.io/specification/draft/client/elicitation) and [sampling](https://modelcontextprotocol.io/specification/draft/client/sampling), which require the MCP server to know what the client supports.
 
 ### WorkerTransport
 
@@ -386,9 +388,15 @@ interface MCPStorageApi {
 interface TransportState {
 	sessionId?: string;
 	initialized: boolean;
-	protocolVersion?: ProtocolVersion;
+	initializeParams?: InitializeRequestParams;
 }
 ```
+
+The `TransportState` interface defines what gets persisted to storage:
+
+- **sessionId** — The unique identifier for this MCP session
+- **initialized** — Whether the session has completed initialization
+- **initializeParams** — The client's capabilities, client info, and protocol version from the initialize request. This is automatically captured during initialization and restored on reconnection, enabling the server to remember what features the client supports (like elicitation or sampling) across serverless restarts.
 
 <TypeScriptExample>
 
