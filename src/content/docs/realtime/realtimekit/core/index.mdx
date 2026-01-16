@@ -273,15 +273,16 @@ init({
 	defaults: {
 		video: true,
 		audio: true,
-		screenShare: {
-			displaySurface: "monitor", // Given surface is suggested to the end user
-		},
 		mediaConfiguration: {
 			// Configure custom video quality (e.g., 1080p). Disable simulcast using `simulcastConfig` override for single-layer streaming.
 			video: {
 				width: { ideal: 1920 },
 				height: { ideal: 1080 },
 				frameRate: { ideal: 15 },
+			},
+			screenshare: {
+				frameRate: { ideal: 15, max: 30 }, // Default 5
+				displaySurface: "monitor", // Given surface is suggested to the end user
 			},
 		},
 	},
