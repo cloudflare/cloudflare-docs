@@ -56,7 +56,7 @@ Below we have three examples of filters:
 
 ```bash
 # Filter when the status code returned from Cloudflare is either 200 or 201:
-"filter": "{\"where\":{\"and\":[{\"key\":\"EdgeResponseStatus\",\"operator\":\"in\",\"value\":\"200,201\"}]}}"
+"filter": "{\"where\":{\"and\":[{\"key\":\"EdgeResponseStatus\",\"operator\":\"in\",\"value\":[200,201]}]}}"
 ```
 
 ```bash

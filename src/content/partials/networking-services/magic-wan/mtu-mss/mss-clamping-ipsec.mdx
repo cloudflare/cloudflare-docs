@@ -2,6 +2,6 @@
 {}
 ---
 
-For IPsec tunnels, the value you need to specify depends on how your network is set up. The MSS clamping value will be lower than for GRE tunnels, however, since the physical interface will see IPsec-encrypted packets, not TCP packets, and MSS clamping will not apply to those.
+For IPsec tunnels, the value you need to specify depends on how your network is set up. The MSS clamping value is lower than for GRE tunnels because the physical interface sees IPsec-encrypted packets, not TCP packets, and MSS clamping does not apply to those.
 
-- **On your Edge router**: Apply this on your IPsec tunnel internal interface (meaning where the egress traffic will traverse). This may be done automatically once the tunnel is configured but it depends on your devices. TCP MSS clamp should be 1,360 bytes maximum.
+- **On your edge router**: Apply this on your IPsec tunnel internal interface (meaning where the egress traffic will traverse). Your devices may do this automatically once the tunnel is configured, but it depends on your devices. Set the TCP MSS clamp to 1,360 bytes maximum.

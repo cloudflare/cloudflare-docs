@@ -1,0 +1,8 @@
+import { GlossaryTooltip } from "~/components";
+
+Starting with [Chrome 142](https://developer.chrome.com/release-notes/142), the browser restricts requests from websites to local IP addresses, including the Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP </GlossaryTooltip> CGNAT range (`100.80.0.0/16`). When a website attempts to access a domain resolved through an initial resolved IP, the browser will display a prompt from the website asking to look for and connect to devices on the local network. Chrome will block requests to these domains until the user accepts this prompt.
+
+To avoid this issue, choose one of the following options:
+
+- Disable the Chrome feature flag: Go to `chrome://flags` and set the **Local Network Access Checks** flag to _Disabled_.
+- Configure Chrome Enterprise policy: Use the **LocalNetworkAccessAllowedForUrls** policy to allow specific websites to make requests to these domains. For more information, refer to the [Chrome Enterprise documentation](https://chromeenterprise.google/policies/#LocalNetworkAccessAllowedForUrls).

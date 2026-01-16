@@ -139,7 +139,7 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 export default defineConfig({
 	plugins: [
 		cloudflare({
-			persistState: "./my-custom-directory",
+			persistState: { path: "./my-custom-directory" },
 		}),
 	],
 });

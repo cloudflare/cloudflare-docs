@@ -1,0 +1,92 @@
+---
+pcx_content_type: reference
+title: Error codes
+sidebar:
+  order: 5
+---
+
+This page documents error codes returned by R2 when using the [Workers API](/r2/api/workers/) or the [S3-compatible API](/r2/api/s3/), along with recommended fixes to help with troubleshooting.
+
+## How errors are returned
+
+For the **Workers API**, R2 operations throw exceptions that you can catch. The error code is included at the end of the `message` property:
+
+```js
+try {
+  await env.MY_BUCKET.put("my-key", data, { customMetadata: largeMetadata });
+} catch (error) {
+  console.error(error.message);
+  // "put: Your metadata headers exceed the maximum allowed metadata size. (10012)"
+}
+```
+
+For the **S3-compatible API**, errors are returned as XML in the response body:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+  <Code>NoSuchKey</Code>
+  <Message>The specified key does not exist.</Message>
+</Error>
+```
+
+## Error code reference
+
+### Authentication and authorization errors
+
+| Error Code | S3 Code | HTTP Status | Details | Recommended Fix |
+|------------|------|-------------|---------|-----------------|
+| 10002 | Unauthorized | 401 | Missing or invalid authentication credentials. | Verify your [API token](/r2/api/tokens/) or access key credentials are correct and have not expired. |
+| 10003 | AccessDenied | 403 | Insufficient permissions for the requested operation. | Check that your [API token](/r2/api/tokens/) has the required permissions for the bucket and operation. |
+| 10018 | ExpiredRequest | 400 | Presigned URL or request signature has expired. | Regenerate the [presigned URL](/r2/api/s3/presigned-urls/) or signature. |
+| 10035 | SignatureDoesNotMatch | 403 | Request signature does not match calculated signature. | Verify your secret key and signing algorithm. Check for URL encoding issues. |
+| 10042 | NotEntitled | 403 | Account not entitled to this feature. | Ensure your account has an [R2 subscription](/r2/pricing/). |
+
+### Bucket errors
+
+| Error Code | S3 Code | HTTP Status | Details | Recommended Fix |
+|------------|------|-------------|---------|-----------------|
+| 10005 | InvalidBucketName | 400 | Bucket name does not meet naming requirements. | Bucket names must be 3-63 chars, lowercase alphanumeric and hyphens, start/end with alphanumeric. |
+| 10006 | NoSuchBucket | 404 | The specified bucket does not exist. | Verify the bucket name is correct and the bucket exists in your account. |
+| 10008 | BucketNotEmpty | 409 | Cannot delete bucket that contains objects. | Delete all objects in the bucket before deleting the bucket. |
+| 10009 | TooManyBuckets | 400 | Account bucket limit exceeded (default: 1,000,000 buckets). | Request a limit increase via the [Limits Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7). |
+| 10073 | BucketConflict | 409 | Bucket name already exists. | Choose a different bucket name. Bucket names must be unique within your account. |
+
+### Object errors
+
+| Error Code | S3 Code | HTTP Status | Details | Recommended Fix |
+|------------|------|-------------|---------|-----------------|
+| 10007 | NoSuchKey | 404 | The specified object key does not exist. For the [Workers API](/r2/api/workers/workers-api-reference/), `get()` and `head()` return `null` instead of throwing. | Verify the object key is correct and the object has not been deleted. |
+| 10020 | InvalidObjectName | 400 | Object key contains invalid characters or is too long. | Use valid UTF-8 characters. Maximum key length is 1024 bytes. |
+| 100100 | EntityTooLarge | 400 | Object exceeds maximum size (5 GiB for single upload, 5 TiB for multipart). | Use [multipart upload](/r2/objects/multipart-objects/) for objects larger than 5 GiB. Maximum object size is 5 TiB. |
+| 10012 | MetadataTooLarge | 400 | Custom metadata exceeds the 8,192 byte limit. | Reduce custom metadata size. Maximum is 8,192 bytes total for all custom metadata. |
+| 10069 | ObjectLockedByBucketPolicy | 403 | Object is protected by a bucket lock rule and cannot be modified or deleted. | Wait for the retention period to expire. Refer to [bucket locks](/r2/buckets/bucket-locks/). |
+
+### Upload and request errors
+
+| Error Code | S3 Code | HTTP Status | Details | Recommended Fix |
+|------------|------|-------------|---------|-----------------|
+| 10033 | MissingContentLength | 411 | `Content-Length` header required but missing. | Include the `Content-Length` header in PUT/POST requests. |
+| 10013 | IncompleteBody | 400 | Request body terminated before expected `Content-Length`. | Ensure the full request body is sent. Check for network interruptions or client timeouts. |
+| 10014 | InvalidDigest | 400 | Checksum header format is malformed. | Ensure checksums are properly encoded (base64 for SHA/CRC checksums). |
+| 10037 | BadDigest | 400 | Provided checksum does not match the uploaded content. | Verify data integrity and retry the upload. |
+| 10039 | InvalidRange | 416 | Requested byte range is not satisfiable. | Ensure the range start is less than object size. Check `Range` header format. |
+| 10031 | PreconditionFailed | 412 | Conditional headers (`If-Match`, `If-Unmodified-Since`, etc.) were not satisfied. | Object's ETag or modification time does not match your condition. Refetch and retry. Refer to [conditional operations](/r2/api/s3/extensions/#conditional-operations-in-putobject). |
+
+### Multipart upload errors
+
+| Error Code | S3 Code | HTTP Status | Details | Recommended Fix |
+|------------|------|-------------|---------|-----------------|
+| 10011 | EntityTooSmall | 400 | Multipart part is below minimum size (5 MiB), except for the last part. | Ensure each part (except the last) is at least 5 MiB. |
+| 10024 | NoSuchUpload | 404 | Multipart upload does not exist or was aborted. | Verify the `uploadId` is correct. By default, incomplete multipart uploads expire after 7 days. Refer to [object lifecycles](/r2/buckets/object-lifecycles/). |
+| 10025 | InvalidPart | 400 | One or more parts could not be found when completing the upload. | Verify each part was uploaded successfully and use the exact ETag returned from `UploadPart`. |
+| 10048 | InvalidPart | 400 | All non-trailing parts must have the same size. | Ensure all parts except the last have identical sizes. R2 requires uniform part sizes for multipart uploads. |
+
+### Service errors
+
+| Error Code | S3 Code | HTTP Status | Details | Recommended Fix |
+|------------|------|-------------|---------|-----------------|
+| 10001 | InternalError | 500 | An internal error occurred. | Retry the request. If persistent, check [Cloudflare Status](https://www.cloudflarestatus.com) or contact support. |
+| 10043 | ServiceUnavailable | 503 | Service is temporarily unavailable. | Retry with exponential backoff. Check [Cloudflare Status](https://www.cloudflarestatus.com). |
+| 10054 | ClientDisconnect | 400 | Client disconnected before request completed. | Check network connectivity and retry. |
+| 10058 | TooManyRequests | 429 | Rate limit exceeded. Often caused by multiple concurrent requests to the same object key (limit: 1 write/second per key). | Check if multiple clients are accessing the same object key. See [R2 limits](/r2/platform/limits/). |

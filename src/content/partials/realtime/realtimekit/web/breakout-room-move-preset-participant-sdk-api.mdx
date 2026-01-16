@@ -1,0 +1,11 @@
+---
+{}
+
+---
+```js
+const response = await meeting.connectedMeetings.moveParticipantsWithCustomPreset(
+  "SOURCE_MEETING_ID", // sourceMeetingId, meeting id where participants are currently in
+  "TARGET_MEETING_ID", // targetMeetingId, meeting id where participants are to be moved
+  [{ presetId: "PRESET_ID_1" }, { presetId: "PRESET_ID_2" }], // array of objects with presetId field
+);
+```

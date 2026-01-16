@@ -31,13 +31,13 @@ This guide covers how to:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Management**.
 2. Select **Peer to peer connectivity**.
-3. Enable **Allow all Cloudflare One traffic to reach enrolled devices**. This allows Cloudflare to route traffic to the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> space.
+3. Turn on [**Allow all Cloudflare One traffic to reach enrolled devices**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
 4. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that traffic to `100.96.0.0/12` is going through WARP:
 
     <Tabs> <TabItem label="Exclude IPs and domains">
 		If using Split Tunnels in **Exclude** mode:
 			1. Delete `100.64.0.0/10` from the list.
-			2. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not being used for Zero Trust services. For example, if you are using [WARP-to-WARP] alongside [Gateway host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) or [private hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/), add routes to exclude the following IP addresses:
+			2. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not being used for Zero Trust services. For example, if you are using WARP-to-WARP alongside [Gateway host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) or [private hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/), add routes to exclude the following IP addresses:
 
 				- `100.64.0.0/12`
 				- `100.81.0.0/16`

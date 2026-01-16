@@ -9,14 +9,14 @@ import { APIRequest, Render } from "~/components";
 
 To add rules to an existing custom ruleset, use the [Update an account or zone ruleset](/api/resources/rulesets/methods/update/) operation and pass the rules in an array. Each rule has an expression and an action.
 
-:::note[Choosing the appropriate API method]
+:::tip[Choose the appropriate API method]
 
-When you add rules to a custom ruleset using the [Update an account or zone ruleset](/api/resources/rulesets/methods/update/) operation, you replace all the rules in the ruleset with the rules in the request. Use this API method when adding or updating several rules at once. This method will update the ruleset version number only once.
+The [Update an account or zone ruleset](/api/resources/rulesets/methods/update/) operation replaces all the rules in the ruleset with the rules in the request. Use this API operation when you need to add or update several rules at once. This operation updates the ruleset version number only once.
 
-You can use other API operations depending on the type of operation:
+Depending on the update you want to perform, consider using one of the following API operations instead:
 
-- Add a single rule to an existing custom ruleset: Use the [Create an account or zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation.
-- Update a single rule in a custom ruleset: Use the [Update an account or zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/edit/) operation.
+- Add a single rule to an existing custom ruleset: Use the [Create an account or zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation. Refer to [Add a rule to a ruleset](/ruleset-engine/rulesets-api/add-rule/) for an example.
+- Update a single rule in a custom ruleset: Use the [Update an account or zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/edit/) operation. Refer to [Update a rule in a ruleset](/ruleset-engine/rulesets-api/update-rule/) for an example.
 
 :::
 

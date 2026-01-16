@@ -52,7 +52,7 @@ Instances of an Agent are addressed by a unique identifier: that identifier (ID)
 
 Writing an Agent requires you to define a class that extends the `Agent` class from the Agents SDK package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
 
-You can also define your own methods on an Agent: it's technically valid to publish an Agent only has your own methods exposed, and create/get Agents directly from a Worker.
+You can also define your own methods on an Agent: it's technically valid to publish an Agent that only has your own methods exposed, and create/get Agents directly from a Worker.
 
 Your own methods can access the Agent's environment variables and bindings on `this.env`, state on `this.setState`, and call other methods on the Agent via `this.yourMethodName`.
 

@@ -28,10 +28,6 @@ export const webFrameworks: Framework[] = [
 ];
 export const mobileFrameworks: Framework[] = [
 	{
-		id: "react-native",
-		label: "React Native",
-	},
-	{
 		id: "android",
 		label: "Android",
 	},
@@ -42,6 +38,10 @@ export const mobileFrameworks: Framework[] = [
 	{
 		id: "flutter",
 		label: "Flutter",
+	},
+	{
+		id: "react-native",
+		label: "React Native",
 	},
 ];
 

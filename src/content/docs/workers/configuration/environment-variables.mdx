@@ -5,7 +5,7 @@ head: []
 description: You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker.
 ---
 
-import { Render, TabItem, Tabs, WranglerConfig, DashButton } from "~/components";
+import { Render, TabItem, Tabs, TypeScriptExample, WranglerConfig, DashButton } from "~/components";
 
 ## Background
 
@@ -46,6 +46,34 @@ export default {
 ```
 
 </TabItem> </Tabs>
+
+### Import `env` for global access
+
+You can also import `env` from [`cloudflare:workers`](/workers/runtime-apis/bindings/#importing-env-as-a-global) to access environment variables from anywhere in your code, including outside of request handlers:
+
+<TypeScriptExample>
+
+```ts
+import { env } from "cloudflare:workers";
+
+// Access environment variables at the top level
+const apiHost = env.API_HOST;
+
+export default {
+	async fetch(request: Request): Promise<Response> {
+		return new Response(`API host: ${apiHost}`);
+	},
+};
+```
+
+</TypeScriptExample>
+
+This approach is useful when you need to:
+
+- Initialize configuration or API clients at the top level of your Worker.
+- Access environment variables from deeply nested functions without passing `env` through every function call.
+
+For more details, refer to [Importing `env` as a global](/workers/runtime-apis/bindings/#importing-env-as-a-global).
 
 ### Configuring different environments in Wrangler
 
@@ -102,13 +130,7 @@ Select the **Secret** type if your environment variable is a [secret](/workers/c
 
 ## Environment variables and Node.js compatibility
 
-When you enable both the [`nodejs_compat`](/workers/runtime-apis/nodejs/) and
-[`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#nodejs_compat_populate_process_env)
-compatibility flags, and the `disallow_importable_env` compatibility flag is
-not set, environment variables will also be available via the global
-`process.env`. Note that the `nodejs_compat_populate_process_env` flag is
-enabled automatically when `nodejs_compat` is used with a compatibility date
-on or after April 1st, 2025.
+When you enable [`nodejs_compat`](/workers/runtime-apis/nodejs/) and the [`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#nodejs_compat_populate_process_env) compatibility flag (enabled by default for compatibility dates on or after 2025-04-01), environment variables are available via the global `process.env`.
 
 The `process.env` will be populated lazily the first time that `process` is accessed
 in the worker.

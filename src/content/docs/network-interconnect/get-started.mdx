@@ -20,11 +20,15 @@ Eligibility for CNI and port availability is determined in coordination with you
   - The diversity offered in the location will vary.
 - Customers must have a BGP session established for CNI v1 to be operational.
 
-### Product use cases
+### Prefix requirements
+
+To peer with Cloudflare, advertise prefixes with a prefix length of `/24` or shorter for IPv4 and `/48` or shorter for IPv6.
+
+## Product use cases
 
 <Render file="cni-product-use-cases" product="networking-services" />
 
-### Technical specifications
+## Technical specifications
 
 - **Supported port types (Direct CNI)**:
 	- **Dataplane v1**: 10GBASE-LR (single-mode fiber) and 100GBASE-LR (single-mode fiber).
@@ -44,7 +48,7 @@ Eligibility for CNI and port availability is determined in coordination with you
 	- **Dataplane v1**: To increase bandwidth and provide link resiliency, Cloudflare supports combining multiple physical CNI ports into a single logical channel using Link Aggregation Control Protocol (LACP). You can bundle multiple connections to increase total throughput and add redundancy to your private connection with Cloudflare.
 	- **Dataplane v2 (beta)**: Not yet supported. Use ECMP instead.
 
-### Performance characteristics
+## Performance characteristics
 
 The following are the maximum throughput rates supported by the CNI connection. Actual performance will depend on your specific use case and configuration.
 
@@ -54,7 +58,7 @@ The following are the maximum throughput rates supported by the CNI connection. 
 | From Customer to Cloudflare (peering use case) | Up to 10 Gbps | Up to 100 Gbps |
 | From Customer to Cloudflare (Magic Transit/WAN) | &#x2022; **v1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2 (beta)**: Up to 1 Gbps per CNI connection | &#x2022; **v1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2 (beta)**: Up to 1 Gbps per CNI connection  |
 
-### Service expectations
+## Service expectations
 
 Consider the following service levels when planning your deployment:
 - **No Formal SLA**:

@@ -22,7 +22,7 @@ import {
 
 You can deploy full-stack applications, including front-end static assets and back-end APIs, as well as server-side rendered pages (SSR), with [Cloudflare Workers](/workers/static-assets/).
 
-Like Pages, requests for static assets on Workers are free, and Pages Functions invocations are charged at the same rate as Workers, so you can expect [a similar cost structure](/workers/platform/pricing/#workers).
+Like Pages, requests for static assets on Workers are free, and [Pages Functions](#pages-functions) invocations are charged at the same rate as Workers, so you can expect [a similar cost structure](/workers/platform/pricing/#workers).
 
 Unlike Pages, Workers has a distinctly broader set of features available to it, (including Durable Objects, Cron Triggers, and more comprehensive Observability). A complete list can be found at [the bottom of this page](#compatibility-matrix).
 
@@ -139,7 +139,7 @@ Pages would automatically exclude some files and folders from being uploaded as 
 
 ##### Full-stack framework
 
-If you use a full-stack framework powered by Pages Functions, ensure you have [updated your framework](#frameworks) to target Workers instead of Pages.
+If you use a full-stack framework powered by [Pages Functions](/pages/functions/), ensure you have [updated your framework](#frameworks) to target Workers instead of Pages.
 
 ##### Pages Functions with an "advanced mode" `_worker.js` file
 

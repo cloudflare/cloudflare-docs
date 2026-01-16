@@ -32,7 +32,7 @@ It accepts an optional `PluginConfig` parameter.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
-- `config` <Type text='Partial<WorkerConfig> | ((config: WorkerConfig) => Partial<WorkerConfig> | void)' /> <MetaInfo text='optional' />
+- `config` <Type text='WorkerConfigCustomizer<true>' /> <MetaInfo text='optional' />
 
   Customize or override Worker configuration programmatically.
   Accepts a partial configuration object or a function that receives the current config.
@@ -93,7 +93,7 @@ Auxiliary Workers require a `configPath`, a `config` option, or both.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
-- `config` <Type text='Partial<WorkerConfig> | ((config: WorkerConfig) => Partial<WorkerConfig> | void)' /> <MetaInfo text='optional' />
+- `config` <Type text='WorkerConfigCustomizer<false>' /> <MetaInfo text='optional' />
 
   Customize or override Worker configuration programmatically.
   When used without `configPath`, this allows defining auxiliary Workers entirely in code.

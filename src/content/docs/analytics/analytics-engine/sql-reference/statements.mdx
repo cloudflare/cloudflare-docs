@@ -6,8 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Workers Analytics Engine SQL Reference
-
 ---
+
+import { Badge } from "~/components";
 
 ## SHOW TABLES statement
 
@@ -49,6 +50,7 @@ SELECT <expression_list>
 [FROM <table>|(<subquery>)]
 [WHERE <expression>]
 [GROUP BY <expression>, ...]
+[HAVING <expression>]
 [ORDER BY <expression_list>]
 [LIMIT <n>|ALL]
 [FORMAT <format>]
@@ -131,7 +133,7 @@ Note that queries can only operate on a single table. `UNION`, `JOIN` etc. are n
 
 ### WHERE clause
 
-`WHERE` is used to filter the rows returned by a query.
+`WHERE` is used to filter the rows returned by a query before grouping and aggregation.
 
 Usage:
 
@@ -144,6 +146,8 @@ WHERE <condition>
 [Comparison operators](/analytics/analytics-engine/sql-reference/operators/#comparison-operators) can be used to compare values and [boolean operators](/analytics/analytics-engine/sql-reference/operators/#boolean-operators) can be used to combine conditions.
 
 Expressions containing functions and [operators](/analytics/analytics-engine/sql-reference/operators/#supported-operators) are supported.
+
+To filter results after grouping and aggregation, use the [`HAVING` clause](#having-clause) instead.
 
 Examples:
 
@@ -185,6 +189,51 @@ GROUP BY probe_name
 ```
 
 In the usual case the `<expression>` can just be a column name but it is also possible to supply a complex expression here. Multiple expressions or column names can be supplied separated by commas.
+
+### HAVING clause <Badge text="New" variant="tip" size="small" />
+
+`HAVING` is used to filter the results after grouping and aggregation.
+
+Usage:
+
+```sql
+HAVING <condition>
+```
+
+`<condition>` can be any expression that evaluates to a boolean, and can reference aggregate functions or grouped columns.
+
+Unlike `WHERE`, which filters rows before grouping, `HAVING` filters groups after aggregation. This allows you to filter based on aggregate values.
+
+[Comparison operators](/analytics/analytics-engine/sql-reference/operators/#comparison-operators) can be used to compare values and [boolean operators](/analytics/analytics-engine/sql-reference/operators/#boolean-operators) can be used to combine conditions.
+
+Examples:
+
+```sql
+-- filter groups where the average is greater than 10
+SELECT
+    blob1 AS probe_name,
+    avg(double1) AS average_temp
+FROM temperature_readings
+GROUP BY probe_name
+HAVING average_temp > 10
+
+-- filter groups with more than 100 readings
+SELECT
+    blob1 AS probe_name,
+    count() AS num_readings
+FROM temperature_readings
+GROUP BY probe_name
+HAVING num_readings > 100
+
+-- combine multiple conditions
+SELECT
+    blob1 AS city,
+    avg(double1) AS avg_temp,
+    count() AS readings
+FROM weather_data
+GROUP BY city
+HAVING avg_temp > 20 AND readings >= 50
+```
 
 ### ORDER BY clause
 

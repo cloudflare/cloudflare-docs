@@ -27,6 +27,53 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Durable Object alive. For a complete example, refer to [Use the Alarms API](/durable-objects/examples/alarms-api/).
 
+## Scheduling multiple events with a single alarm
+
+Although each Durable Object can only have one alarm set at a time, you can manage many scheduled and recurring events by storing your event schedule in storage and having the `alarm()` handler process due events, then reschedule itself for the next one.
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+export class AgentServer extends DurableObject {
+  // Schedule a one-time or recurring event
+  async scheduleEvent(id, runAt, repeatMs = null) {
+    await this.ctx.storage.put(`event:${id}`, { id, runAt, repeatMs });
+    const currentAlarm = await this.ctx.storage.getAlarm();
+    if (!currentAlarm || runAt < currentAlarm) {
+      await this.ctx.storage.setAlarm(runAt);
+    }
+  }
+
+  async alarm() {
+    const now = Date.now();
+    const events = await this.ctx.storage.list({ prefix: "event:" });
+    let nextAlarm = null;
+
+    for (const [key, event] of events) {
+      if (event.runAt <= now) {
+        await this.processEvent(event);
+        if (event.repeatMs) {
+          event.runAt = now + event.repeatMs;
+          await this.ctx.storage.put(key, event);
+        } else {
+          await this.ctx.storage.delete(key);
+        }
+      }
+      // Track the next event time
+      if (event.runAt > now && (!nextAlarm || event.runAt < nextAlarm)) {
+        nextAlarm = event.runAt;
+      }
+    }
+
+    if (nextAlarm) await this.ctx.storage.setAlarm(nextAlarm);
+  }
+
+  async processEvent(event) {
+    // Your event handling logic here
+  }
+}
+```
+
 ## Storage methods
 
 ### `getAlarm`
