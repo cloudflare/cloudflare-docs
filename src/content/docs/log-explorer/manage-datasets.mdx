@@ -9,6 +9,18 @@ import { TabItem, Tabs, Render, DashButton } from "~/components";
 
 Log Explorer allows you to enable or disable which datasets are available to query in Log Search.
 
+:::note
+Canceling a Log Explorer subscription stops renewal, but it does not automatically stop log ingestion during the current billing cycle. If you want to stop incurring additional charges immediately, disable ingestion for any enabled datasets at both the account level and zone level.
+
+Account-level Manage datasets:
+<DashButton url="/?to=/:account/log-explorer/manage-sources" />
+
+Zone-level Manage datasets:
+<DashButton url="/?to=/:account/:zone/log-explorer/manage-sources" />
+
+To disable a dataset, toggle it off and click **Stop ingesting logs**. Repeat for all datasets you no longer need.
+:::
+
 ## Supported datasets
 
 Log Explorer currently supports the following datasets:

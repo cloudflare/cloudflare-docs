@@ -71,10 +71,32 @@ Your monthly usage is displayed at the top of the Log Search and Manage Datasets
 
 ## How do I turn off Log Explorer?
 
-Use the Manage Datasets feature to enable or disable ingestion for individual datasets and zones.
+Turning off Log Explorer has two parts:
 
+- To stop incurring additional charges immediately, you must stop log ingestion by disabling any enabled datasets (at both the account level and zone level).
+- To stop renewal, you must cancel the Log Explorer subscription (your subscription may remain active until the end of the current billing cycle).
+
+### Stop ingestion (to stop charges immediately)
+
+#### 1) Review and disable account-level datasets
+1. In the Cloudflare dashboard, go to **Log Explorer** > **Manage datasets** (account level):
+
+    <DashButton url="/?to=/:account/log-explorer/manage-sources" />
+
+2. For each dataset you no longer need, toggle it off and click **Stop ingesting logs**.
+3. Repeat for all account-level datasets.
+
+#### 2) Review and disable zone-level datasets
+1. In the Cloudflare dashboard, go to **Log Explorer** > **Manage datasets** for each zone:
+
+    <DashButton url="/?to=/:account/:zone/log-explorer/manage-sources" />
+
+2. For each dataset you no longer need, toggle it off and click **Stop ingesting logs**.
+3. Repeat for all relevant zones and datasets.
+
+### Cancel the subscription (to stop renewal)
 1. In the Cloudflare dashboard, go to the **Manage Account** > **Billing** page.
 
-   <DashButton url="/?to=/:account/billing" />
+    <DashButton url="/?to=/:account/billing" />
 
 2. Under **Subscriptions**, find the Log Explorer subscription, and select **Cancel**.
