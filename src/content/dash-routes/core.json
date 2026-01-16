@@ -317,8 +317,8 @@
 		"parent": ["Networking", "L3/4 DDoS protection"]
 	},
 	{
-		"name": "Leased IPs",
-		"deeplink": "/?to=/:account/ip-addresses/leased-ips",
+		"name": "Address space",
+		"deeplink": "/?to=/:account/ip-addresses/address-space",
 		"parent": ["Networking", "IP addresses"]
 	},
 	{
