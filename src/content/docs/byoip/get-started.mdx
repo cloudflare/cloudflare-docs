@@ -166,6 +166,8 @@ Although you can delegate IPs to other accounts, the IP address service bindings
 
 In IP address management, service bindings map the traffic destined for a given IP address to the Cloudflare service that it should be routed through.
 
+<Render file="service-bindings-cdn-egress" product="byoip" />
+
 ### Default service binding
 
 When you onboard your IP prefixes to Cloudflare, there must be one service binding that spans across your entire prefix. Traffic destined for a given IP address will be routed to this service by default. You can also configure [additional service bindings](#optional-additional-bindings) as described in the next step.
