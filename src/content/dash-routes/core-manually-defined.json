@@ -1,10 +1,5 @@
 [
 	{
-		"name": "Address space",
-		"deeplink": "/?to=/:account/ip-addresses/address-space",
-		"parent": ["Networking", "IP addresses"]
-	},
-	{
 		"name": "Packet captures",
 		"deeplink": "/?to=/:account/magic-wan/packet-captures/captures",
 		"parent": ["Networking", "Magic WAN"]
