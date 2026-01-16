@@ -1,0 +1,67 @@
+---
+title: Path filtering, website crawler improvements, and simplified API instance creation
+description: Path filtering for indexing, sitemap priority and changefreq support, .gz sitemaps, partial URLs, and minimal API for creating instances.
+products:
+  - ai-search
+date: 2026-01-16
+---
+
+[AI Search](/ai-search/) now includes path filtering for both website and R2 data sources, improvements to website crawling, and a simpler API for creating instances.
+
+## Path filtering
+
+You can now control which content gets indexed by defining include and exclude rules for paths. This works for both [website](/ai-search/configuration/data-source/website/#path-filtering) and [R2](/ai-search/configuration/data-source/r2/#path-filtering) data sources.
+
+- Add up to 10 include rules and 10 exclude rules
+- Use `,` as a delimiter to specify multiple patterns
+- Use `*` as a wildcard for pattern matching
+
+Filtering follows this logic:
+
+1. Paths matching any exclude rule are ignored first
+2. Remaining paths are checked against include rules
+3. If include rules are defined, only matching paths are indexed
+
+For example, to index only blog posts while excluding draft content:
+
+- **Include:** `*/blog/*`
+- **Exclude:** `*/blog/drafts/*`
+
+![Path filtering configuration in AI Search](~/assets/images/ai-search/path-filtering.png)
+
+You can configure path filters when creating a new instance or update them at any time from the **Settings** page.
+
+## Website crawler improvements
+
+The website crawler now handles sitemaps more intelligently:
+
+- **Sitemap priority**: Pages are indexed in order of their `<priority>` attribute in the sitemap, allowing you to control which content gets indexed first.
+- **Sitemap changefreq**: When `<lastmod>` is not defined, the crawler now respects the `<changefreq>` attribute to determine how often to re-crawl URLs. If neither attribute is defined, the crawler defaults to once per day.
+- **Compressed sitemaps**: Support for `.gz` compressed sitemaps.
+- **Partial URLs**: Both `robots.txt` and sitemaps now support partial URLs.
+
+## Bug fix
+
+- **Query rewrite in AI Gateway logs**: Query rewrites now correctly appear in [AI Gateway](/ai-gateway/) logs. All AI Search requests are routed through AI Gateway, where you can monitor embeddings, text generation, and other model calls.
+
+## Simplified API instance creation
+
+Creating an AI Search instance via API is now simpler:
+
+- `token_id` is optional if your account already has a service token registered
+- All model fields are now optional and will use defaults
+
+You can now create an instance with minimal configuration:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-search/instances" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {api_token}" \
+  --data '{
+    "id": "my-rag",
+    "type": "web-crawler",
+    "source": "example.com"
+  }'
+```
+
+Learn more about [website crawling configuration](/ai-search/configuration/data-source/website/).
