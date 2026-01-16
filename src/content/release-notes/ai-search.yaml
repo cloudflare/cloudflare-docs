@@ -6,7 +6,7 @@ entries:
   - publish_date: "2026-01-16"
     title: Path filtering, website crawler improvements, and simplified API instance creation
     description: |-
-      You can now filter which paths to include or exclude from indexing for both website and R2 data sources. Website instances now respect sitemap priority for indexing order and changefreq for re-indexing. Added support for .gz compressed sitemaps and partial URLs in robots.txt and sitemaps. Fixed query rewrite visibility in AI Gateway logs. API instance creation is now simpler with optional token_id and model fields.
+      You can now filter which paths to include or exclude from indexing for both website and R2 data sources. Website instances now respect sitemap priority for indexing order and changefreq for re-indexing. Added support for .gz compressed sitemaps and partial URLs in robots.txt and sitemaps. Fixed query rewrite visibility in AI Gateway logs. API instance creation is now simpler with optional token_id and model fields. We are finishing migration to a new indexing engine with improved performance, enabling support for more and larger files soon. Hybrid search using BM25 is rolling out — request early access via [Discord](https://discord.cloudflare.com/).
   - publish_date: "2025-09-25"
     title: AI Search (formerly AutoRAG) now supports more models
     description: |-
