@@ -46,16 +46,22 @@ To set up an integration with Supabase:
 
 4. Configure the Supabase database credentials in your Worker:
 
-   You need to add your Supabase URL and anon key as secrets to your Worker. Get these from your [Supabase Dashboard](https://supabase.com/dashboard) under **Settings** > **API**, then add them as secrets using Wrangler:
+You need to add your Supabase project URL and a key as secrets in your Cloudflare Worker. You can find both values in the **Supabase Dashboard**.
 
-   ```sh
-   # Add the Supabase URL as a secret
-   npx wrangler secret put SUPABASE_URL
-   # When prompted, paste your Supabase project URL
+Go to **Settings → Data API → API Settings** and copy the **Project URL**.  
+Go to **Settings → API Keys → Publishable key** and copy the **Publishable key**.  
 
-   # Add the Supabase anon key as a secret
-   npx wrangler secret put SUPABASE_KEY
-   # When prompted, paste your Supabase anon/public key
+Next, add them as secrets using Wrangler:
+
+```sh
+# Add the Supabase project URL
+npx wrangler secret put SUPABASE_URL
+# Paste your Supabase Project URL when prompted
+
+# Add the Supabase publishable key
+npx wrangler secret put PUBLISHABLE key
+# Paste your Supabase key when prompted
+
    ```
 
 5. In your Worker, install the `@supabase/supabase-js` driver to connect to your database and start manipulating data:
