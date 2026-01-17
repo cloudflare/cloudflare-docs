@@ -10,15 +10,14 @@ head:
 
 import { Stream, Render } from "~/components";
 
-Granting access to others on your account is done with several sets of data principles:
+Cloudflare uses a policy-based access model to manage permissions for account members. The following rules are in place:
 
-1. Accounts have Account Members.
-2. Account Members have policies.
-3. Policies are constructed out of actors, roles, and scopes.
+1. Accounts contain Account Members; these are Users who have membership to your Cloudflare account. 
+2. Account Members are assigned Policies that define what actions they can take as members of your account.
+3. Policies consist of actors, roles, and scopes.
+4. Account Members cannot have empty policies 
 
-When assigning a new user, you can assign a policy to them directly. If multiple policies are needed, they can be added or revoked at a later time.
-
-Learn how to add new account members, edit or revoke their access, and resend verification emails.
+When inviting a new user, you can assign policies to them directly. You can add or remove policies later as needed.
 
 :::note
 
