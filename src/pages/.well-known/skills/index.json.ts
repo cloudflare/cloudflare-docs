@@ -1,4 +1,3 @@
-import type { APIRoute } from "astro";
 import { readdir, readFile } from "fs/promises";
 import { join } from "path";
 import matter from "gray-matter";
@@ -9,11 +8,7 @@ interface Skill {
 	path: string;
 }
 
-interface SkillsIndex {
-	skills: Skill[];
-}
-
-export const GET: APIRoute = async () => {
+export async function GET() {
 	const skillsDir = join(process.cwd(), "public/.well-known/skills");
 
 	const entries = await readdir(skillsDir, { withFileTypes: true });
@@ -35,19 +30,16 @@ export const GET: APIRoute = async () => {
 					path: `/${dir.name}/`,
 				});
 			}
-		} catch {
-			// Skip directories without SKILL.md
+		} catch (error) {
+			// Skip if file doesn't exist; warn on other errors
+			if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+				console.warn(`Failed to parse skill ${dir.name}:`, error);
+			}
 		}
 	}
 
 	// Sort alphabetically by name
 	skills.sort((a, b) => a.name.localeCompare(b.name));
 
-	const index: SkillsIndex = { skills };
-
-	return new Response(JSON.stringify(index, null, 2), {
-		headers: {
-			"content-type": "application/json",
-		},
-	});
-};
+	return Response.json({ skills });
+}
