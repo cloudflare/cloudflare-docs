@@ -5,7 +5,6 @@ import matter from "gray-matter";
 interface Skill {
 	name: string;
 	description: string;
-	path: string;
 }
 
 export async function GET() {
@@ -27,7 +26,6 @@ export async function GET() {
 				skills.push({
 					name: data.name,
 					description: data.description,
-					path: `/${dir.name}/`,
 				});
 			}
 		} catch (error) {
