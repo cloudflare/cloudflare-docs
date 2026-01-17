@@ -1,0 +1,27 @@
+---
+title: Simplified API instance creation
+description: Create AI Search instances with minimal configuration using optional token_id and model fields.
+products:
+  - ai-search
+date: 2026-01-16
+---
+
+Creating an [AI Search](/ai-search/) instance via API is now simpler:
+
+- `token_id` is optional if your account already has a service token registered
+- All model fields are now optional and will use defaults
+
+You can now create an instance with minimal configuration:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-search/instances" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {api_token}" \
+  --data '{
+    "id": "my-rag",
+    "type": "web-crawler",
+    "source": "example.com"
+  }'
+```
+
+Learn more about [creating AI Search instances](/ai-search/get-started/).

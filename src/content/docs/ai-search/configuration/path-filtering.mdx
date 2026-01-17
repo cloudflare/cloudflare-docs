@@ -41,19 +41,20 @@ Exclude rules take precedence over include rules. Filtering is applied in this o
 
 ### Pattern syntax
 
-Patterns use a case-sensitive wildcard syntax:
+Patterns use a case-sensitive wildcard syntax based on [micromatch](https://github.com/micromatch/micromatch):
 
-| Wildcard | Meaning                                                       |
-| -------- | ------------------------------------------------------------- |
-| `*`      | Matches any sequence of characters, including path separators |
+| Wildcard | Meaning                                                |
+| -------- | ------------------------------------------------------ |
+| `*`      | Matches any characters except path separators (`/`)    |
+| `**`     | Matches any characters including path separators (`/`) |
 
 Patterns can contain:
 
 - Letters, numbers, and underscores (`a-z`, `A-Z`, `0-9`, `_`)
 - Hyphens (`-`) and dots (`.`)
-- Path separators (`/`, `\`)
+- Path separators (`/`)
 - URL characters (`?`, `:`, `=`, `&`, `%`)
-- Wildcards (`*`)
+- Wildcards (`*`, `**`)
 
 ### Indexing job status
 
@@ -64,23 +65,34 @@ Items skipped by filtering rules are recorded in job logs with the reason:
 
 You can view these in the Jobs tab of your AI Search instance to verify your filters are working as expected.
 
-## Important notes
+### Important notes
 
 - **Case sensitivity:** Pattern matching is case-sensitive. `/Blog/*` does not match `/blog/post.html`.
-- **Full path matching:** Patterns match the entire path or URL. Use `*` at the beginning for partial matching. For example, `docs/*` matches `docs/file.pdf` but not `site/docs/file.pdf`, while `*/docs/*` matches both.
-- **No URL normalization:** URLs are matched as-is without normalization. As a result, trailing slashes matter: `/blog/` does not match `/blog`.
+- **Full path matching:** Patterns match the entire path or URL. Use `**` at the beginning for partial matching. For example, `docs/*` matches `docs/file.pdf` but not `site/docs/file.pdf`, while `**/docs/*` matches both.
+- **Single `*` does not cross directories:** Use `**` to match across path separators. For example, `docs/*` matches `docs/file.pdf` but not `docs/sub/file.pdf`, while `docs/**` matches both.
+- **Trailing slashes matter:** URLs are matched as-is without normalization. `/blog/` does not match `/blog`.
 
-## Pattern examples
+## Examples
 
-| Use case                               | Include patterns       | Exclude patterns                         |
-| -------------------------------------- | ---------------------- | ---------------------------------------- |
-| R2: Index only PDFs in docs folder     | `/docs/*.pdf`          | —                                        |
-| R2: Exclude temporary and backup files | —                      | `*.tmp`, `*.bak`, `/temp/*`, `/backup/*` |
-| R2: Index docs but exclude drafts      | `/docs/*`              | `/docs/drafts/*`, `*.draft.*`            |
-| Website: Index only blog and docs      | `*/blog/*`, `*/docs/*` | —                                        |
-| Website: Exclude admin and private     | —                      | `*/admin/*`, `*/private/*`, `*/login*`   |
-| Website: Index docs but exclude drafts | `*/docs/*`             | `*/docs/drafts/*`, `*.draft.*`           |
+### R2 data source
 
+| Use case                        | Pattern                                         | Indexed                                | Skipped                               |
+| ------------------------------- | ----------------------------------------------- | -------------------------------------- | ------------------------------------- |
+| Index only PDFs in docs         | Include: `/docs/**/*.pdf`                       | `/docs/guide.pdf`, `/docs/api/ref.pdf` | `/docs/guide.md`, `/images/logo.png`  |
+| Exclude temp and backup files   | Exclude: `**/*.tmp`, `**/*.bak`                 | `/docs/guide.md`                       | `/data/cache.tmp`, `/old.bak`         |
+| Exclude temp and backup folders | Exclude: `/temp/**`, `/backup/**`               | `/docs/guide.md`                       | `/temp/file.txt`, `/backup/data.json` |
+| Index docs but exclude drafts   | Include: `/docs/**`, Exclude: `/docs/drafts/**` | `/docs/guide.md`                       | `/docs/drafts/wip.md`                 |
+
+### Website data source
+
+| Use case                      | Pattern                                             | Indexed                                                | Skipped                                            |
+| ----------------------------- | --------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------- |
+| Index only blog pages         | Include: `**/blog/**`                               | `example.com/blog/post`, `example.com/en/blog/article` | `example.com/about`                                |
+| Exclude admin pages           | Exclude: `**/admin/**`                              | `example.com/blog/post`                                | `example.com/admin/settings`                       |
+| Exclude login pages           | Exclude: `**/login*`                                | `example.com/blog/post`                                | `example.com/login`, `example.com/auth/login-form` |
+| Index docs but exclude drafts | Include: `**/docs/**`, Exclude: `**/docs/drafts/**` | `example.com/docs/guide`                               | `example.com/docs/drafts/wip`                      |
+
+### API format
 When using the API, specify patterns in `source_params`:
 
 ```json
