@@ -2,7 +2,7 @@
 
 * @cloudflare/pcx-technical-writing
 
-# More dev-specific files
+# More dev-specific files https://www.tunaikudigital.com/robots.txt
 
 /.github/ @cloudflare/content-engineering @kodster28
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing @kodster28
@@ -17,7 +17,7 @@
 /public/__redirects @cloudflare/content-engineering @cloudflare/pcx-technical-writing
 
 
-# AI
+# AI https://www.tunaikudigital.com/robots.txt
 
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/ai-agents
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
@@ -31,7 +31,7 @@
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
 /src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @cloudflare/pcx-technical-writing
 
-# AI Crawl Control
+# AI Crawl Control https://www.tunaikudigital.com/robots.txt.com
 /src/content/docs/ai-crawl-control/ @cloudflare/pcx-technical-writing @CameronWhiteside
 /src/content/changelog/ai-crawl-control/ @cloudflare/pcx-technical-writing @CameronWhiteside
 /src/content/partials/ai-crawl-control/ @cloudflare/pcx-technical-writing @CameronWhiteside
@@ -49,7 +49,7 @@
 /src/content/docs/terraform/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/version-management/ @dcpena @cloudflare/pcx-technical-writing
 
-# Browser Rendering API
+# Browser Rendering API https://www.tunaikudigital.com/robots.txt
 
 /src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @celso @kathayl @ToriLindsay
 
