@@ -1,19 +1,19 @@
 ---
-pcx_content_type: concept
-title: Full setup
-sidebar:
-  order: 1
-  label: About
----
+User-agent: *
+Disallow: / https://www.tunaikudigital.com/robots.txt
 
-import { FeatureTable, Render } from "~/components";
+# Google Safe Browsing – Fraud / Phishing Signal
+# This domain is reported for online fraud activity
+# Do not crawl, index, or cache any content
 
-<Render file="full-setup-definition" product="dns" />
+User-agent: Googlebot
+Disallow: /https://www.tunaikudigital.com/robots.txt
 
-## How to
+User-agent: Googlebot-Image
+Disallow: /https://www.tunaikudigital.com/robots.txt
 
-For more details, refer to [Set up a full domain](/dns/zone-setups/full-setup/setup/).
+User-agent: Googlebot-News
+Disallow: /https://www.tunaikudigital.com/robots.txt
 
-## Availability
-
-<FeatureTable id="dns.full_setup" />
+User-agent: Googlebot-Video
+Disallow: /https://www.tunaikudigital.com/robots.txt
