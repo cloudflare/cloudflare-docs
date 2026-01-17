@@ -20,12 +20,12 @@ By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" 
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-		<p>For Magic WAN Connector, health checks are sent to IPsec tunnel endpoints.</p>
+		<p>For Magic WAN Connector, Cloudflare sends health checks to IPsec tunnel endpoints.</p>
   </>
   )
 }
 
-You can configure the health check frequency through the dashboard or [the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, set this to `high`.
+You can configure the health check frequency through the dashboard or [the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/) to suit your use case. For example, if you are connecting a lower-traffic site that does not need immediate failover and you prefer a lower volume of health check traffic, set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues and you want proactive failover at the earliest sign of a potential problem, set this to `high`.
 
 Available options are `low`, `mid`, and `high`.
 
@@ -77,16 +77,18 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 			<>
 				<Markdown
 				text={`
-1. Go to the **Network overview** page.
+1. Go to the **Connector** page.
 				`}
 				inline={false}
 				/>
 
-				<DashButton url="/?to=/:account/magic-wan/network" />
+				<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
 
 				<Markdown
 				text={`
-2. Select your site > **Edit**.
+2. Go the **Appliances** tab > **Profiles**.
+3. Find the Connector profile you want to edit > select the three dots > **Edit**.
+4. In **Network Configuration** > **WAN configuration** > select your WAN > **Edit**.
 				`}
 				inline={false}
 				/>
@@ -94,8 +96,10 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 		) : (
 			<Markdown
 			text={`
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
-2. In **Network overview**, select your site > **Edit**
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Networks**.
+2. Go to **Connectors** > **Appliances**.
+3. In **Profiles**, find the Connector profile you want to edit > select the three dots > **Edit**.
+4. In **Network Configuration** > **WAN configuration** > select your WAN > **Edit**.
 			`}
 			inline={false}
 			/>
@@ -103,9 +107,9 @@ The following example adjusts tunnel health check frequency to `low`. Note that 
 
 		<Markdown
 		text={`
-3. In **Network** > **WAN configuration** > select your WAN > **Edit**.
-4. Change the **Health check rate** to your desired rate.
-5. Select **Save**.
+
+5. Change the **Health check rate** to your desired rate.
+6. Select **Save**.
 		`}
 		inline={false}
 		/>

@@ -12,16 +12,6 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		if (request.url.endsWith("/markdown.zip")) {
-			const res = await this.env.VENDORED_MARKDOWN.get("markdown.zip");
-
-			return new Response(res?.body, {
-				headers: {
-					"Content-Type": "application/zip",
-				},
-			});
-		}
-
 		if (request.url.endsWith("/llms-full.txt")) {
 			const { pathname } = new URL(request.url);
 			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));

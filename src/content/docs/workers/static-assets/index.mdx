@@ -77,6 +77,8 @@ If you are using the [Cloudflare Vite plugin](/workers/vite-plugin/), you do not
 
 By adding an [**assets binding**](/workers/static-assets/binding/#binding), you can directly fetch and serve assets within your Worker code.
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js {13}
 // index.js
 
@@ -94,6 +96,24 @@ export default {
 	},
 };
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+from urllib.parse import urlparse
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		# Example of serving static assets
+		url = urlparse(request.url)
+		if url.path.startswith("/api/):
+			return Response.json({"name": "Cloudflare"})
+
+		return await self.env.ASSETS.fetch(request)
+```
+
+</TabItem></Tabs>
 
 ### Routing behavior
 

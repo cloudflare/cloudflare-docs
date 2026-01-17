@@ -5,7 +5,7 @@ params:
   - staticRouteUrl
 ---
 
-import { DashButton } from "~/components";
+import { DashButton } from '~/components';
 
 This tutorial includes the steps required to configure IPsec tunnels to connect a pfSense firewall to Cloudflare Magic WAN.
 
@@ -85,11 +85,11 @@ Take note of your pre-shared keys, and keep them in a safe place to use later in
 
 After creating your IPsec tunnels, the Cloudflare dashboard will list them under **Tunnels**. To retrieve your IPsec tunnel's user ID:
 
-1. Go to **Tunnels** in the Cloudflare dashboard.
+1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-wan/configuration" />
+<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
 
-2. Select the IPsec tunnel.
+2. In the **IPsec/GRE tunnels** tab, select the IPsec tunnel.
 3. Scroll to **User ID** and copy the string. For example, `ipsec@long_string_of_letters_and_numbers`.
 
 The User ID will be required when configuring IKE Phase 1 on the pfSense firewall.

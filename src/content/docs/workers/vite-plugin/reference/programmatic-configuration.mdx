@@ -158,6 +158,33 @@ export default defineConfig({
 });
 ```
 
+### Configuration inheritance
+
+Auxiliary Workers receive the resolved entry Worker config in the second parameter to the `config` function. This makes it straightforward to inherit configuration from the entry Worker in auxiliary Workers.
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			auxiliaryWorkers: [
+				{
+					config: (_, { entryWorkerConfig }) => ({
+						name: "auxiliary-worker",
+						main: "./src/auxiliary-worker.ts",
+						// Inherit compatibility settings from entry Worker
+						compatibility_date: entryWorkerConfig.compatibility_date,
+						compatibility_flags: entryWorkerConfig.compatibility_flags,
+					}),
+				},
+			],
+		}),
+	],
+});
+```
+
 ## Configuration merging behavior
 
 The `config` option uses [defu](https://github.com/unjs/defu) for merging configuration objects.

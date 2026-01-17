@@ -16,6 +16,8 @@ Only available on Enterprise plans.
 
 Enterprise customers who do not wish to install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/) have the option to upload their own root certificate to Cloudflare. This feature is sometimes referred to as Bring Your Own Public Key Infrastructure (BYOPKI). Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required a Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time. You also need to upload a private key to intercept domains with JIT certificates and to enable the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/).
 
+You can upload either a root certificate or a full certificate chain (root certificate plus intermediate certificates). Uploading a certificate chain allows end-user devices to only install the root certificate, which can simplify certificate management for larger enterprises.
+
 You can upload up to five custom root certificates. If your organization requires more than five certificates, contact your account team.
 
 :::caution
@@ -63,12 +65,14 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 ## Deploy a custom root certificate
 
+You can upload a single root certificate or a full certificate chain. When uploading a certificate chain via the dashboard, API, or Terraform, concatenate the root certificate and any intermediate certificates in PEM format, with the root certificate first.
+
 <Tabs syncKey="dashPlusAPI">
 
 <TabItem label="Dashboard">
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings** > **Certificates**.
 2. Select **Upload certificate**.
-3. Enter the private key and SSL certificate you generated or select **Paste certificate from file** to upload them from a file.
+3. Enter the private key and SSL certificate you generated or select **Paste certificate from file** to upload them from a file. If uploading a certificate chain, paste all certificates (root and intermediates) in PEM format with the root certificate first.
 4. Select **Upload custom certificate**.
 
     You can now [use the generated custom root certificate](#use-a-custom-root-certificate) for inspection.
@@ -79,9 +83,11 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 1. <Render
    	file="upload-mtls-cert"
-   	params={{ key: " ", cert: "root CA" }}
+   	params={{ key: " ", cert: "root CA or certificate chain" }}
    	product="cloudflare-one"
    />
+
+   When uploading a certificate chain, the `certificates` field should contain all certificates in PEM format. To format this field, order the root certificate first, then concatenate any intermediate certificates.
 
 2. Set the certificate as available for use in inspection with the [Activate a Zero Trust certificate endpoint](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/activate/). This will deploy the certificate across the Cloudflare global network.
 

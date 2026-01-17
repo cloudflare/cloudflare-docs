@@ -1,0 +1,18 @@
+---
+{}
+---
+
+import { APIRequest } from "~/components";
+
+## Disable a meeting
+
+Ending a session does not disable the meeting. Participants can join the meeting again and start a new session.
+To prevent participants from joining again and starting a new session, set the meeting status to `INACTIVE` using the [Update a meeting](/api/resources/realtime_kit/subresources/meetings/methods/update_meeting_by_id/) API.
+
+<APIRequest
+	path="/accounts/{account_id}/realtime/kit/{app_id}/meetings/{meeting_id}"
+	method="PATCH"
+	json={{
+		status: "INACTIVE",
+	}}
+/>

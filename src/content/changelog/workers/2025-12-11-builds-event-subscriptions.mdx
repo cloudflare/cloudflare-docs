@@ -1,0 +1,26 @@
+---
+title: Get notified when your Workers builds succeed or fail
+description: Use Queue Event Subscriptions to receive Workers Builds events and send notifications to Slack or any destination.
+products:
+  - workers
+  - queues
+date: 2026-01-09
+---
+
+You can now receive notifications when your Workers' builds start, succeed, fail, or get cancelled using [Event Subscriptions](/queues/event-subscriptions/).
+
+[Workers Builds](/workers/ci-cd/builds/) publishes events to a [Queue](/queues/) that your Worker can read messages from, and then send notifications wherever you need — Slack, Discord, email, or any webhook endpoint.
+
+You can deploy [this Worker](https://github.com/cloudflare/templates/tree/main/workers-builds-notifications-template) to your own Cloudflare account to send build notifications to Slack:
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/workers-builds-notifications-template)
+
+The template includes:
+
+- Build status with Preview/Live URLs for successful deployments
+- Inline error messages for failed builds
+- Branch, commit hash, and author name
+
+![Slack notifications showing build events](src/assets/images/changelog/workers/builds-notifications-slack.png)
+
+For setup instructions, refer to the [template README](https://github.com/cloudflare/templates/tree/main/workers-builds-notifications-template#readme) or the [Event Subscriptions documentation](/queues/event-subscriptions/manage-event-subscriptions/).

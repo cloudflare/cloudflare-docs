@@ -1,13 +1,13 @@
 ---
-title: WAF Release - Scheduled changes for 2025-12-08 (Postponed)
-description: WAF managed ruleset changes scheduled - Postponed (TBD)
-date: 2025-12-08
+title: WAF Release - Scheduled changes for 2026-01-19
+description: WAF managed ruleset changes scheduled for 2026-01-19
+date: 2026-01-15
 scheduled: true
 ---
 
 import { RuleID } from "~/components";
 
-The planned release has been postponed to ensure a smooth deployment. We will share the updated release date once it is confirmed.
+The planned release has been postponed to ensure a smooth deployment.
 
 <table style="width: 100%">
   <thead>
@@ -22,64 +22,9 @@ The planned release has been postponed to ensure a smooth deployment. We will sh
     </tr>
   </thead>
   <tbody>
-	<tr>
+  <tr>
       <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Unchanged (rule remains disabled)</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="7b822fd1f5814e17888ded658480ea8f" />
-      </td>
-      <td>Anomaly:Body - Large 2</td>
-      <td>Default action changes from Log to <b>Block</b> while the rule stays disabled. If you override and enable the rule, review recent log events to ensure blocking will not affect legitimate traffic.</td>
-  </tr>
-	<tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="6429f7386b1546cf9dfce631be5ec20c" />
-      </td>
-      <td>Atlassian Confluence - Code Injection - CVE:CVE-2021-26084 - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "Atlassian Confluence - Code Injection - CVE:CVE-2021-26084" (ID: <RuleID id="e8c550810618437c953cf3a969e0b97a" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="9108ddb347b3497e9f9351640d9206e3" />
-      </td>
-      <td>PostgreSQL - SQLi - Copy - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "PostgreSQL - SQLi - COPY" (ID: <RuleID id="705a6b5569d5472596910e3ce7265a4e" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="72963b917ef74697b5bde02f48a1841a" />
-      </td>
-      <td>SQLi - AND/OR MAKE_SET/ELT - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - AND/OR MAKE_SET/ELT" (ID: <RuleID id="0f41a593c8fe42c38a26f709252d3934" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="adf076af09b2484ca9e7881f9e553ad3" />
-      </td>
-      <td>SQLi - Benchmark Function - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Benchmark Function" (ID: <RuleID id="ac4e9ebfb43a4f3998f6072d2ebc44ad" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
+      <td>2026-01-19</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
@@ -90,139 +35,29 @@ The planned release has been postponed to ensure a smooth deployment. We will sh
    </tr>
    <tr>
       <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
+      <td>2026-01-19</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
         <RuleID id="da289f9e692e4f5397d915fbfaa045cf" />
       </td>
       <td>SQLi - Comparison - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "8166da327a614849bfa29317e7907480" (ID: <RuleID id="8166da327a614849bfa29317e7907480" />)</td>
+      <td>This is a beta detection and will replace the action on original detection "SQLi - Comparison" (ID: <RuleID id="8166da327a614849bfa29317e7907480" />)</td>
    </tr>
     <tr>
       <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
+      <td>2026-01-26</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="cb687d73cc954092b58b90b00cd00ba7" />
+        <RuleID id="7a47683eacce4abd870ab2c630698ff3" />
       </td>
-      <td>Generic Rules - Command Execution - Body</td>
-      <td>This is a new detection.</td>
-    </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="bf30657ffa2a424cbf6570dbcd679ad4" />
-      </td>
-      <td>Generic Rules - Command Execution - Header</td>
-      <td>This is a new detection.</td>
-    </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="6df040f716194070a242967cfd181fb3" />
-      </td>
-      <td>Generic Rules - Command Execution - URI</td>
-      <td>This is a new detection.</td>
-    </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="eb3f44c07266448b9fa54ee7ad7dad3e" />
-      </td>
-      <td>SQLi - String Function - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - String Function" (ID: <RuleID id="63e03eecddfc4b3fb0cad587d32b798c" />)</td>
+      <td>XWiki - Remote Code Execution - CVE:CVE-2025-24893 2</td>
+      <td>This is a new detection. The rule has been renamed to "Wiki - Remote Code Execution - CVE-2025-24893 2", previously known as "XWiki - Remote Code Execution - CVE-2025-24893 – Beta".</td>
    </tr>
     <tr>
       <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="aa776a8f1be84c05afd9f801307a9e8f" />
-      </td>
-      <td>SQLi - Sub Query - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Sub Query" (ID: <RuleID id="6ec5ecf52c094330aff99a38743e66b1" />)</td>
-   </tr>
-   <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="39a4fdc37be948709fa7492e7a95bc3a" />
-      </td>
-      <td>SQLi - Tautology - URI - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Tautology - URI" (ID: <RuleID id="4c580ea1b5174183b7f5e940b3de2e0a" />)</td>
-   </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="810e0ffe1dd84e67b159129b432ac90d" />
-      </td>
-      <td>SQLi - WaitFor Function - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - WaitFor Function" (ID: <RuleID id="b16fe708799441dea3049a99d5faba59" />)</td>
-   </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="80690005fef342e0ad6bc9af596c741e" />
-      </td>
-      <td>SQLi - AND/OR Digit Operator Digit 2 - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - AND/OR Digit Operator Digit" (ID: <RuleID id="98e7e08ae64247e2801ca4b388d80772" />)</td>
-   </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="eaf11ab80b0d491cbb7186f303b2f3fe" />
-      </td>
-      <td>SQLi - Equation 2 - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "SQLi - Equation" (ID: <RuleID id="133c6f83cdf14509a4ca6b82a72a6b3a" />)</td>
-    </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="f3edd4b5a871475c801e627d5cdd95d7" />
-      </td>
-      <td>WordPress, Drupal - Code Injection, Deserialization - Stream Wrapper - CVE:CVE-2019-11831, CVE:CVE-2019-6339, CVE:CVE-2018-1000773 - Beta</td>
-      <td>This is a beta detection and will replace the action on original detection "Wordpress, Drupal - Code Injection, Deserialization - Stream Wrapper - CVE:CVE-2019-11831, CVE:CVE-2019-6339, CVE:CVE-2018-1000773" (ID: <RuleID id="65ff155bc71c4f6cb147e323945fae29" />)</td>
-   </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="5e155f049dbfa5a7835111af59e37ddd" />
-      </td>
-      <td>XWiki - Remote Code Execution - CVE:CVE-2025-24893 - Beta</td>
-      <td>This is a new detection.</td>
-   </tr>
-    <tr>
-      <td>2025-12-01</td>
-      <td>Postponed (TBD)</td>
+      <td>2026-01-26</td>
       <td>Log</td>
       <td>N/A</td>
       <td>

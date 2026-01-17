@@ -1,0 +1,22 @@
+---
+title: Custom container instance types now available for all users
+description: Configure custom vCPU, memory, and disk allocations for your container instances
+products:
+  - containers
+date: 2026-01-05
+---
+
+Custom instance types are now enabled for all [Cloudflare Containers](/containers) users. You can now specify specific vCPU, memory, and disk amounts, rather than being limited to pre-defined [instance types](/containers/platform-details/limits/#instance-types). Previously, only select Enterprise customers were able to customize their instance type.
+
+To use a custom instance type, specify the `instance_type` property as an object with `vcpu`, `memory_mib`, and `disk_mb` fields in your Wrangler configuration:
+
+```toml
+[[containers]]
+image = "./Dockerfile"
+instance_type = { vcpu = 2, memory_mib = 6144, disk_mb = 12000 }
+```
+
+Individual limits for custom instance types are based on the `standard-4` instance type (4 vCPU, 12 GiB memory, 20 GB disk). You must allocate at least 1 vCPU for custom instance types. For workloads requiring less than 1 vCPU, use the predefined instance types like `lite` or `basic`.
+
+See the [limits documentation](/containers/platform-details/limits/#custom-instance-types) for the full list of constraints on custom instance types.
+See the [getting started guide](/containers/get-started/) to deploy your first Container,

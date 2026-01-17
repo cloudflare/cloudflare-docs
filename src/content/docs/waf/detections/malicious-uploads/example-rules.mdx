@@ -12,35 +12,55 @@ head:
 
 This [custom rule](/waf/custom-rules/) example logs all requests with at least one uploaded content object:
 
-- Expression: `cf.waf.content_scan.has_obj`
-- Action: _Log_
+- **When incoming requests match:**
+
+  | Field              | Operator | Value |
+  | ------------------ | -------- | ----- |
+  | Has content object | equals   | True  |
+
+  If you are using the Expression Editor:<br/>
+  `(cf.waf.content_scan.has_obj)`
+
+- **Action:** _Log_
 
 ## Block requests to URI path with a malicious content object
 
 This custom rule example blocks requests addressed at `/upload.php` that contain at least one uploaded content object considered malicious:
 
-- Expression: `cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload.php"`
-- Action: _Block_
+- **When incoming requests match:**
+
+  | Field                        | Operator | Value         |     |
+  | ---------------------------- | -------- | ------------- | --- |
+  | Has malicious content object | equals   | True          | And |
+  | URI Path                     | equals   | `/upload.php` |     |
+
+  If you are using the Expression Editor:<br/>
+  `(cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload.php")`
+
+- **Action:** _Block_
 
 ## Block requests with non-PDF file uploads
 
 This custom rule example blocks requests addressed at `/upload` with uploaded content objects that are not PDF files:
 
-- Expression: `any(cf.waf.content_scan.obj_types[*] != "application/pdf") and http.request.uri.path eq "/upload"`
-- Action: _Block_
+- **When incoming requests match:**<br/>
+  `any(cf.waf.content_scan.obj_types[*] != "application/pdf") and http.request.uri.path eq "/upload"`
+- **Action:** _Block_
 
 ## Block requests with uploaded files over 500 KB
 
 This custom rule example blocks requests addressed at `/upload` with uploaded content objects over 500 KB (512,000 bytes) in size:
 
-- Expression: `any(cf.waf.content_scan.obj_sizes[*] > 512000) and http.request.uri.path eq "/upload"`
-- Action: _Block_
+- **When incoming requests match:**<br/>
+  `any(cf.waf.content_scan.obj_sizes[*] > 512000) and http.request.uri.path eq "/upload"`
+- **Action:** _Block_
 
 ## Block requests with uploaded files over the content scanning limit (50 MB)
 
 This custom rule example blocks requests with uploaded content objects over 50 MB in size (the current content scanning limit):
 
-- Expression: `any(cf.waf.content_scan.obj_sizes[*] >= 52428800)`
-- Action: _Block_
+- **When incoming requests match:**<br/>
+  `any(cf.waf.content_scan.obj_sizes[*] >= 52428800)`
+- **Action:** _Block_
 
 In this example, you must also test for equality because currently any file over 50 MB will be handled internally as if it had a size of 50 MB (52,428,800 bytes). This means that using the `>` (greater than) [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) would not work for this particular rule — you should use `>=` (greater than or equal) instead.

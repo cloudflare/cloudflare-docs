@@ -138,6 +138,32 @@ WARP uses [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure
 - `false` — Disables post-quantum key agreement.
 - `true` — Enables post-quantum key agreement for all traffic through the WARP tunnel.
 
+### `external_emergency_signal_fingerprint`
+
+The SHA-256 fingerprint that WARP will use to validate the [`external_emergency_signal_url`](#external_emergency_signal_url) HTTPS endpoint. Refer to [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect) for details on how to extract this fingerprint.
+
+**Value Type:** `string`
+
+**Value:** SHA-256 fingerprint of the HTTPS server certificate (for example, `DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662`)
+
+### `external_emergency_signal_interval`
+
+How often WARP will poll [`external_emergency_signal_url`](#external_emergency_signal_url) for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/) signal.
+
+**Value Type:** `integer`
+
+**Value:** Polling frequency in seconds (minimum `30`, default `300`)
+
+### `external_emergency_signal_url`
+
+The HTTPS endpoint that WARP will poll for an [External Emergency Disconnect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/) signal.
+
+**Value Type:** `string`
+
+**Value:** `https://192.0.2.1:3333/status/disconnect`
+
+The URL must use `https://` and use an IPv4 or IPv6 address as host (not a domain).
+
 ### `onboarding`
 
 Controls the visibility of the onboarding screens that ask the user to review the privacy policy during an application's first launch.

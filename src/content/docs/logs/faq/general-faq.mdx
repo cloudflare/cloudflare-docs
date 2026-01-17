@@ -11,7 +11,7 @@ description: Review frequently asked questions about Cloudflare Logs.
 
 [❮ Back to FAQ](/logs/faq/)
 
-## Once a request has passed through the Cloudflare network, how soon are the logs available?
+### Once a request has passed through the Cloudflare network, how soon are the logs available?
 
 When using **Logpush**, logs are pushed in batches as soon as possible. For example, if you receive a file at 10:10, the file consists of logs that were processed before 10:10.
 
@@ -19,31 +19,24 @@ When using **Logpull**, logs become available in approximately one to five minut
 
 These timings are only a guideline, not a guarantee, and may depend on network conditions, the request volume for your domain, and other factors. Although we try to get the logs to you as fast as possible, we prioritize not losing log data over speed. On rare occasions, you may experience a longer delay. In this case, you do not need to take any action. The logs will be available as soon as they are processed.
 
-## Are logs available for customers who are not on an Enterprise plan?
-
+### Are logs available for customers who are not on an Enterprise plan?
 
 Not yet, but we are planning to make them available to other customer plans in the future.
 
-
-## When pulling or pushing logs, I occasionally come across a time period with no data, even though I am sure my domain received requests at that time. Is this an expected behavior?
-
+### When pulling or pushing logs, I occasionally come across a time period with no data, even though I am sure my domain received requests at that time. Is this an expected behavior?
 
 Yes. The time period for which you pull or receive logs is based on our processing time, not the time the requests passed through our network. Empty responses do not mean there were no requests during that time period, just that we did not process any logs for your domain during that time.
 
-
-
-## Can I receive logs in a format other than JSON?
+### Can I receive logs in a format other than JSON?
 
 Not at this time. Talk to your Cloudflare account team or [Cloudflare Support](/support/contacting-cloudflare-support/) if you are interested in other formats and we will consider them for the future.
 
 
-## Is it possible to track cache purge requests in the logs?
+### Is it possible to track cache purge requests in the logs?
 
 Yes, since Nov 25, 2025 [Audit Log v2](/fundamentals/account/account-security/audit-logs/).
 
-
-
-## At which stage are HTTP requests logged?
+### At which stage are HTTP requests logged?
 
 Requests are logged only after they successfully reach our proxy.
 It means that requests failing during the TCP or TLS handshake between the client and the Cloudflare proxy will not be available in the logs.
