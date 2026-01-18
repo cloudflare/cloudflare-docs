@@ -43,6 +43,10 @@ entries:
     title: Support document file types in AutoRAG
     description: |-
       Our [conversion utility](/workers-ai/features/markdown-conversion/) can now convert `.docx` and `.odt` files to Markdown, making these files available to index inside your AutoRAG instance.
+  - publish_date: "2025-08-28"
+    title: Website data source and NLWeb integration
+    description: |-
+      AI Search now supports websites as a data source. Connect your domain to automatically crawl and index your site content with continuous re-crawling. Also includes NLWeb integration for conversational search with `/ask` and `/mcp` endpoints.
   - publish_date: "2025-08-20"
     title: Increased maximum query results to 50
     description: |-
