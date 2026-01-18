@@ -156,10 +156,6 @@ Use the [Create token API for AI Search](/api/resources/ai_search/subresources/t
    }
    ```
 
-:::note
-You only need to register a service token once per account. As long as the token exists, the `token_id` field in step 5 becomes optional for future instances.
-:::
-
 ## 5. Create an AI Search instance
 
 Use the [Create instance API](/api/resources/ai_search/subresources/instances/methods/create/) to create an AI Search instance. Replace `<ACCOUNT_ID>` with your [account ID](/fundamentals/account/find-account-and-zone-ids/) and `<AI_SEARCH_API_TOKEN>` with the token from [step 3](#3-create-an-ai-search-api-token).
@@ -195,6 +191,10 @@ Use the [Create instance API](/api/resources/ai_search/subresources/instances/me
    ```
 
 2. Wait for indexing to complete. You can monitor progress in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/ai-search).
+
+:::note
+The `token_id` field is optional if you have previously created an AI Search instance, either via the [dashboard](/ai-search/get-started/dashboard/) or via API with `token_id` included.
+:::
 
 ## Try it out
 
