@@ -1,27 +1,39 @@
 ---
-title: Simplified API instance creation
-description: Create AI Search instances with minimal configuration using optional token_id and model fields.
+title: AI Search API instance creation
+description: Create AI Search instances programmatically using the REST API.
 products:
   - ai-search
 date: 2026-01-16
 ---
 
-Creating an [AI Search](/ai-search/) instance via API is now simpler:
+You can now create [AI Search](/ai-search/) instances programmatically using the [API](/ai-search/get-started/api/). This enables you to automate instance creation and manage instances at scale.
 
-- `token_id` is optional if your account already has a service token registered
-- All model fields are now optional and will use defaults
+If you have already created an AI Search instance via the [dashboard](/ai-search/get-started/dashboard/), your account has a [service API token](/ai-search/configuration/service-api-token/) registered and the `token_id` field becomes optional. Refer to the [REST API reference](/api/resources/ai_search/subresources/instances/methods/create/) for the full request schema. Here are some example requests:
 
-You can now create an instance with minimal configuration:
+**[R2 bucket](/ai-search/configuration/data-source/r2/):**
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-search/instances" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer {api_token}" \
   --data '{
-    "id": "my-rag",
-    "type": "web-crawler",
-    "source": "example.com"
+    "id": "my-r2-rag",
+    "type": "r2",
+    "source": "<R2_BUCKET_NAME>"
   }'
 ```
 
-Learn more about [creating AI Search instances](/ai-search/get-started/).
+**[Website](/ai-search/configuration/data-source/website/):**
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "id": "my-web-rag",
+    "type": "web-crawler",
+    "source": "<DOMAIN_IN_YOUR_ACCOUNT>"
+  }'
+```
+
+Learn more about [getting started with AI Search](/ai-search/get-started/).

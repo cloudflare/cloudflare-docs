@@ -1,14 +1,14 @@
 ---
-title: Path filtering for website and R2 data sources
+title: AI Search path filtering for website and R2 data sources
 description: Control which paths to include or exclude from indexing.
 products:
   - ai-search
 date: 2026-01-16
 ---
 
-[AI Search](/ai-search/) now includes path filtering for both [website](/ai-search/configuration/data-source/website/#path-filtering) and [R2](/ai-search/configuration/data-source/r2/#path-filtering) data sources. You can now control which content gets indexed by defining include and exclude rules for paths.
+[AI Search](/ai-search/) now includes [path filtering](/ai-search/configuration/path-filtering/) for both [website](/ai-search/configuration/data-source/website/#path-filtering) and [R2](/ai-search/configuration/data-source/r2/#path-filtering) data sources. You can now control which content gets indexed by defining include and exclude rules for paths.
 
-By controlling what gets indexed, you can improve the relevance and quality of your search results.
+By controlling what gets indexed, you can improve the relevance and quality of your search results. You can also use path filtering to split a single data source across multiple AI Search instances for specialized search experiences.
 
 ![Path filtering configuration in AI Search](~/assets/images/ai-search/path-filtering.png)
 
@@ -18,6 +18,6 @@ Path filtering uses [micromatch](https://github.com/micromatch/micromatch) patte
 | ------------------------------- | ------------ | ------------------- |
 | Index docs but skip drafts      | `**/docs/**` | `**/docs/drafts/**` |
 | Keep admin pages out of results | —            | `**/admin/**`       |
-| Index only blog content         | `**/blog/**` | —                   |
+| Index only English content      | `**/en/**`   | —                   |
 
 Configure path filters when creating a new instance or update them anytime from **Settings**. Check out [path filtering](/ai-search/configuration/path-filtering/) to learn more.
