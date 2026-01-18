@@ -5,6 +5,8 @@ import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
 import { glob, file } from "astro/loaders";
 
+import { collectionConfig as productMaturityCollectionConfig } from "./content/collection.product-maturity";
+
 import {
 	appsSchema,
 	changelogSchema,
@@ -116,7 +118,5 @@ export const collections = {
 		loader: dataLoader("stream"),
 		schema: streamSchema,
 	}),
-	"product-maturity-and-compliance": defineCollection({
-		loader: dataLoader("product-maturity-and-compliance"),
-	}),
+	"product-maturity": defineCollection(productMaturityCollectionConfig),
 };
