@@ -34,7 +34,7 @@ entries:
   - publish_date: "2025-09-25"
     title: AI Search (formerly AutoRAG) now supports more models
     description: |-
-      Connect your provider keys through AI Gateway to use models from OpenAI and Anthropic for both embeddings and inference.
+      Connect your provider keys through AI Gateway to use models from OpenAI, Anthropic, and other providers for both embeddings and inference.
   - publish_date: "2025-09-19"
     title: Metrics view for AI Search
     description: |-
