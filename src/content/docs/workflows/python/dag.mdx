@@ -9,26 +9,38 @@ sidebar:
 The Python Workflows SDK supports DAG workflows in a declarative way, using the `step.do` decorator with the `depends` parameter to define dependencies (other steps that must complete before this step can run).
 
 ```python
-from workers import WorkflowEntrypoint
+from workers import Response, WorkflowEntrypoint
 
-class MyWorkflow(WorkflowEntrypoint):
+class PythonWorkflowStarter(WorkflowEntrypoint):
     async def run(self, event, step):
-        @step.do("dependency a")
-        async def step_a():
-            # do some work
-            return 10
+        async def await_step(fn):
+            try:
+                return await fn()
+            except TypeError as e:
+                print(f"Successfully caught {type(e).__name__}: {e}")
 
-        @step.do("dependency b")
-        async def step_b():
-            # do some work
-            return 20
+        step.sleep('demo sleep', '10 seconds')
 
-        @step.do("my final step", depends=[step_a, step_b], concurrent=True)
-        async def my_final_step(result_a=0, result_b=0):
-            # should return 30
-            return result_a + result_b
+        @step.do('dependency1')
+        async def dep_1():
+            # does stuff
+            print('executing dep1')
 
-        await my_final_step()
+        @step.do('dependency2')
+        async def dep_2():
+            # does stuff
+            print('executing dep2')
+
+        @step.do('demo do', depends=[dep_1, dep_2], concurrent=True)
+        async def final_step(res1, res2):
+            # does stuff
+            print('something')
+
+        await await_step(final_step)
+
+async def on_fetch(request, env):
+    await env.MY_WORKFLOW.create()
+    return Response("Hello world!")
 ```
 
 On this example, `step_a` and `step_b` are run concurrently before execution of `my_final_step`, which depends on both of them.

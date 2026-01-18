@@ -19,9 +19,12 @@ use aws_smithy_types::date_time::Format::DateTime;
 #[tokio::main]
 async fn main() -> Result<(), s3::Error> {
     let bucket_name = "sdk-example";
-    let account_id = "<accountid>";
-    let access_key_id = "<access_key_id>";
-    let access_key_secret = "<access_key_secret>";
+    // Provide your Cloudflare account ID
+    let account_id = "<ACCOUNT_ID>";
+    // Retrieve your S3 API credentials for your R2 bucket via API tokens
+    // (see: https://developers.cloudflare.com/r2/api/tokens)
+    let access_key_id = "<ACCESS_KEY_ID>";
+    let access_key_secret = "<SECRET_ACCESS_KEY>";
 
     // Configure the client
     let config = aws_config::from_env()
@@ -33,7 +36,7 @@ async fn main() -> Result<(), s3::Error> {
             None,
             "R2",
         ))
-        .region("auto")
+        .region("auto") // Required by SDK but not used by R2
         .load()
         .await;
 

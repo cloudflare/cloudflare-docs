@@ -20,7 +20,9 @@ WebSocket connections pin your Durable Object to memory, and so duration charges
 
 :::
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 import { DurableObject } from 'cloudflare:workers';
 
@@ -132,6 +134,113 @@ export class WebSocketServer extends DurableObject {
 }
 ```
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject, Response, WorkerEntrypoint
+from js import WebSocketPair
+from pyodide.ffi import create_proxy
+import uuid
+
+class Session:
+  def __init__(self, *, ws):
+    self.ws = ws
+
+# Worker
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		if request.url.endswith('/websocket'):
+			# Expect to receive a WebSocket Upgrade request.
+			# If there is one, accept the request and return a WebSocket Response.
+			upgrade_header = request.headers.get('Upgrade')
+			if not upgrade_header or upgrade_header != 'websocket':
+				return Response('Worker expected Upgrade: websocket', status=426)
+
+			if request.method != 'GET':
+				return Response('Worker expected GET method', status=400)
+
+			# Since we are hard coding the Durable Object ID by providing the constant name 'foo',
+			# all requests to this Worker will be sent to the same Durable Object instance.
+			id = self.env.WEBSOCKET_SERVER.idFromName('foo')
+			stub = self.env.WEBSOCKET_SERVER.get(id)
+
+			return await stub.fetch(request)
+
+		return Response(
+			"""Supported endpoints:
+/websocket: Expects a WebSocket upgrade request""",
+			status=200,
+			headers={'Content-Type': 'text/plain'}
+		)
+
+# Durable Object
+class WebSocketServer(DurableObject):
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+		# Keeps track of all WebSocket connections, keyed by session ID
+		self.sessions = {}
+
+	async def fetch(self, request):
+		# Creates two ends of a WebSocket connection.
+		client, server = WebSocketPair.new().object_values()
+
+		# Calling `accept()` tells the runtime that this WebSocket is to begin terminating
+		# request within the Durable Object. It has the effect of "accepting" the connection,
+		# and allowing the WebSocket to send and receive messages.
+		server.accept()
+
+		# Generate a random UUID for the session.
+		id = str(uuid.uuid4())
+
+		# Create proxies for event handlers (must be destroyed when socket closes)
+		async def on_message(event):
+			await self.handleWebSocketMessage(id, event.data)
+
+		message_proxy = create_proxy(on_message)
+		server.addEventListener('message', message_proxy)
+
+		# If the client closes the connection, the runtime will close the connection too.
+		async def on_close(event):
+			await self.handleConnectionClose(id)
+			# Clean up proxies
+			message_proxy.destroy()
+			close_proxy.destroy()
+
+		close_proxy = create_proxy(on_close)
+		server.addEventListener('close', close_proxy)
+
+		# Add the WebSocket connection to the map of active sessions, keyed by session ID.
+		self.sessions[id] = Session(ws=server)
+
+		return Response(None, status=101, web_socket=client)
+
+	async def handleWebSocketMessage(self, session_id, message):
+		session = self.sessions[session_id]
+
+		# Reply back with the same message to the connection
+		session.ws.send(f"[Durable Object] message: {message}, from: {session_id}, to: the initiating client. Total connections: {len(self.sessions)}")
+
+		# Broadcast the message to all the connections,
+		# except the one that sent the message.
+		for id, conn in self.sessions.items():
+			if id != session_id:
+				conn.ws.send(f"[Durable Object] message: {message}, from: {session_id}, to: all clients except the initiating client. Total connections: {len(self.sessions)}")
+
+		# Broadcast the message to all the connections,
+		# including the one that sent the message.
+		for id, conn in self.sessions.items():
+			conn.ws.send(f"[Durable Object] message: {message}, from: {session_id}, to: all clients. Total connections: {len(self.sessions)}")
+
+	async def handleConnectionClose(self, session_id):
+		session = self.sessions.pop(session_id, None)
+		if session:
+			session.ws.close(1000, 'Durable Object is closing WebSocket')
+```
+
+</TabItem>
+
+</Tabs>
 
 Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 

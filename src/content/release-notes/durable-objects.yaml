@@ -3,6 +3,10 @@ link: "/durable-objects/release-notes/"
 productName: Durable Objects
 productLink: "/durable-objects/"
 entries:
+  - publish_date: "2026-01-07"
+    title: Billing for SQLite Storage
+    description: |-
+      Storage billing for SQLite-backed Durable Objects will be enabled in January 2026, with a target date of January 7, 2026 (no earlier). For more details, refer to the [Billing for SQLite Storage](/changelog/durable-objects/2026-01-07-durable-objects-sqlite-storage-billing/).
   - publish_date: "2025-10-25"
     description: |-
       - The maximum WebSocket message size limit has been increased from 1 MiB to 32 MiB.

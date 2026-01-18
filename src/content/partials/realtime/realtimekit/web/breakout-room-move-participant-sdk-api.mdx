@@ -1,0 +1,20 @@
+---
+{}
+
+---
+```js
+// Retrieve list of breakout rooms & participants
+const breakoutRoomsInfo = await meeting.connectedMeetings.getConnectedMeetings();
+
+/*
+* You can retrieve meetingIds and participantIds from the breakoutRoomsInfo object.
+* Based on where the participant currently is, you can decide the sourceMeetingId and targetMeetingId.
+*/
+
+// Move participants to breakout rooms
+const response = await meeting.connectedMeetings.moveParticipants(
+  "SOURCE_MEETING_ID", // sourceMeetingId, meeting id where participants are currently in
+  "TARGET_MEETING_ID", // targetMeetingId, meeting id where participants are to be moved
+  ["PARTICIPANT_ID_1", "PARTICIPANT_ID_2"], // participantIds, array of participant ids to be moved
+);
+```

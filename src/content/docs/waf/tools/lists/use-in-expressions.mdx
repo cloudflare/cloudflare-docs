@@ -10,13 +10,13 @@ import { Render, Steps } from "~/components";
 
 <Render file="expression-builder-editor" product="ruleset-engine" />
 
-## Expression Builder
+## Use a list in the Expression Builder
 
-To use a list in the [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder):
+To use a list in the Expression Builder:
 
 <Steps>
 
-1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
+1. From the **Operator** drop-down list, select _is in list_ or _is not in list_. Note that not all fields support these operators.
 
    ![Selecting an IP list from the Value drop-down list when configuring the expression of a WAF custom rule](~/assets/images/fundamentals/lists/cf-open-proxies-list.png)
 
@@ -26,9 +26,9 @@ To use a list in the [Expression Builder](/ruleset-engine/rules-language/express
 
 </Steps>
 
-## Expression Editor
+## Use a list in the Expression Editor
 
-To use a list in the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor), specify the `in` operator and use `$<list_name>` to specify the name of the list.
+To use a list in the Expression Editor, specify the `in` operator and use `$<list_name>` to specify the name of the list.
 
 Examples:
 

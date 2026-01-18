@@ -17,9 +17,9 @@ To enable or disable a rule, you can specify which properties should be overridd
 
 You have multiple options for enabling rules:
 
-* Select an individual rule and enable it.
-* Enable multiple rules by enabling by category in the `magic-transit-phase`.
-* Enable an entire ruleset.
+- Select an individual rule and enable it.
+- Enable multiple rules by enabling by category in the `magic-transit-phase`.
+- Enable an entire ruleset.
 
 ## API
 
@@ -27,13 +27,13 @@ You have multiple options for enabling rules:
 
 To create a managed ruleset, you must first build a request with the following:
 
-* `managed_ruleset_id`: The ID of the Managed phase Managed kind ruleset that contains the rule you want to enable.
-* `managed_rule_id`: The ID of the rule you want to enable.
+- `managed_ruleset_id`: The ID of the Managed phase Managed kind ruleset that contains the rule you want to enable.
+- `managed_rule_id`: The ID of the rule you want to enable.
 
 Additionally, you need the properties you want to override. The properties you can override include:
 
-* `enabled`: This value can be set to `true` or `false`. When set to `true`, the rule matches packets and applies the rule's default action if the action is not overridden. When set to `false`, the rule is disabled and does not match any packets.
-* `action`: The value can be set to `log` so the rule only produces logs instead of applying the rule's default action.
+- `enabled`: This value can be set to `true` or `false`. When set to `true`, the rule matches packets and applies the rule's default action if the action is not overridden. When set to `false`, the rule is disabled and does not match any packets.
+- `action`: The value can be set to `log` so the rule only produces logs instead of applying the rule's default action.
 
 The `enabled` and `action` properties for a rule are set in the Managed phase Managed kind ruleset. All rules in the Managed phase are currently disabled by default.
 
@@ -133,29 +133,29 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}{account_id}/rulesets/
 
 To delete a ruleset, refer to [Delete a rule in a ruleset](/ruleset-engine/rulesets-api/delete-rule/).
 
-## Cloudflare dashboard
+## Cloudflare One dashboard
 
 ### Enable rules
 
 You can also use the dashboard to enable managed rulesets:
 
-1. In the [Cloudflare One](https://one.dash.cloudflare.com) dashboard, go to **Traffic policies** > **Firewall policies**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies**.
 2. Select **Packet filtering** and go to **Managed**. This is where the dashboard lists all your managed rules.
 3. To enable a rule, turn **Status** on.
 
-## Edit rules 
+### Edit rules
 
 To edit a rule:
 
-1. In the [Cloudflare One](https://one.dash.cloudflare.com) dashboard, go to **Traffic policies** > **Firewall policies**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies**.
 2. Select **Packet filtering** and go to **Managed**. This is where the dashboard lists all your managed rules.
 3. Select the three dots > **Edit**.
 4. Make the necessary changes, then select **Save**.
 
-## View rules
+### View rules
 
 To view basic information about your rules:
 
-1. In the [Cloudflare One](https://one.dash.cloudflare.com) dashboard, go to **Traffic policies** > **Firewall policies**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies**.
 2. Select **Packet filtering** and go to **Managed**. This is where the dashboard lists all your managed rules.
 3. Locate your managed rule, select the three dots > **View**.

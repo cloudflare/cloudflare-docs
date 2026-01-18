@@ -41,7 +41,11 @@ Adaptive DDoS Protection creates a traffic profile by looking at the maximum rat
 
 To eliminate outliers, rate calculations only consider the 95th percentile rates (discarding the top 5% of the highest rates). Cloudflare requires a minimum amount of requests per second (rps) to build traffic profiles. HTTP Adaptive DDoS Protection rules also take into account Cloudflare's [Machine Learning (ML) models](/bots/concepts/bot-score/#machine-learning) to identify traffic that is likely automated.
 
-Cloudflare may change the logic of these protection rules from time to time to improve them. Any rule changes will appear in the [Managed rulesets changelog](/ddos-protection/change-log/) page.
+Cloudflare may change the logic of these protection rules from time to time to improve them.
+
+:::note
+HTTP Adaptive DDoS Protection rules calculate the traffic profile at the zone-level. Therefore, the HTTP Adaptive rules may be ineffective for an [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) zone shared by many of your customers' [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/). The traffic profile would be created based on the varied and aggregated traffic of all of the various custom hostnames. It will not be accurate for an individual customer's hostname.
+:::
 
 ---
 

@@ -1,0 +1,61 @@
+---
+{}
+---
+
+import { Steps } from "~/components";
+
+<Steps>
+
+1. Check that the local participant has permission to disable other participants' video.
+
+   ```ts
+   const canDisableVideo =
+   	meeting.self.permissions.canDisableParticipantVideo === true;
+   if (!canDisableVideo) {
+   	// Disable the control in your UI.
+   }
+   ```
+
+2. Call `disableAllVideo()`.
+
+   If the local participant does not have the required permission, `disableAllVideo()` throws a `ClientError` with code `1201`.
+
+   ```ts
+   try {
+   	await meeting.participants.disableAllVideo();
+   } catch (err: any) {
+   	if (err?.code === 1201) {
+   		// The local participant does not have permission to disable other participants’ video.
+   		return;
+   	}
+   	throw err;
+   }
+   ```
+
+3. Handle the result by listening for updates.
+
+   After the call succeeds, each participant’s `videoEnabled` becomes `false`, and the SDK emits a `videoUpdate` event.
+   The local participant also receives `videoUpdate` on `meeting.self`.
+
+   Listen to remote participant updates on the `joined` map:
+
+   ```ts
+   meeting.participants.joined.on(
+   	"videoUpdate",
+   	(participant, { videoEnabled, videoTrack }) => {
+   		// videoEnabled is false
+   		// Update UI for the participant
+   	},
+   );
+   ```
+
+   Listen to local participant update on `meeting.self`:
+
+   ```ts
+   meeting.self.on("videoUpdate", ({ videoEnabled, videoTrack }) => {
+   	// videoEnabled is false
+   	// Update UI for the local participant
+   });
+   ```
+
+</Steps>

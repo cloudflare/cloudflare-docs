@@ -138,11 +138,11 @@ Besides selecting an internal DNS view when setting up your resolver policies, y
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Resolver policies**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies** > **Resolver policies**.
 2. Select **Add a policy** and enter a name and description.
-3. Create an expression for the traffic you wish to route. For guidance about selectors, operators, and values, refer to [Gateway](/cloudflare-one/traffic-policies/resolver-policies/#selectors).
+3. Create an expression for the traffic you wish to route. For guidance about selectors, operators, and values, refer to [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/#selectors).
 4. Select **Use Internal DNS**. Choose the view that queries matching the expression should be sent to.
-5. (Optional) Adjust the option to **fallback through public DNS** according to your use case.
+5. (Optional) Adjust the option to **Fallback through public DNS** according to your use case.
 
 - Off: Gateway DNS resolver returns the response as-is to the client.
 - On: In case the response from the internal zone is REFUSED, NXDOMAIN, or a response with a CNAME type, Gateway DNS resolver sends the query to Cloudflare 1.1.1.1 public resolver and tries to resolve the query via public DNS.

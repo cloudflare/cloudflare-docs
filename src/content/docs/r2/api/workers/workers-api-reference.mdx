@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Workers API reference
 ---
 
-import { Type, MetaInfo, WranglerConfig } from "~/components";
+import { Type, MetaInfo, WranglerConfig, TabItem, Tabs } from "~/components";
 
 The in-Worker R2 API is accessed by binding an R2 bucket to a [Worker](/workers). The Worker you write can expose external access to buckets via a route or manipulate R2 objects internally.
 
@@ -43,6 +43,8 @@ The following methods are available on the bucket binding object injected into y
 
 For example, to issue a `PUT` object request using the binding above:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 export default {
 	async fetch(request, env) {
@@ -65,6 +67,32 @@ export default {
 	},
 };
 ```
+
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+
+```py
+from workers import WorkerEntrypoint, Response
+from urllib.parse import urlparse
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		url = urlparse(request.url)
+		key = url.path[1:]
+
+		if request.method == "PUT":
+			await self.env.MY_BUCKET.put(key, request.body)
+			return Response(f"Put {key} successfully!")
+		else:
+			return Response(
+				f"{request.method} is not allowed.",
+				status=405,
+				headers={"Allow": "PUT"}
+			)
+```
+
+</TabItem>
+</Tabs>
 
 - `head` <Type text="(key: string): Promise<R2Object | null>" />
 

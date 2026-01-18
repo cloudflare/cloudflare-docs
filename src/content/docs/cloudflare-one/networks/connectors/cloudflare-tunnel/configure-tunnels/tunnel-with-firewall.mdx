@@ -184,9 +184,14 @@ Alternatively, you may use operating system (OS)-level firewall rules to block a
    sudo iptables -L
    ```
 
-Run your tunnel and check that all configured services are still accessible to the outside world via the tunnel, but not via the external IP address of the server.
+7. Run your tunnel and check that all configured services are still accessible to the outside world via the tunnel, but not via the external IP address of the server.
 
-You can also [secure your application with Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
+8. By default, rules you add via the `iptables` command are stored only in memory and do not persist on reboot. There are many different ways to save and reload your firewall rules, depending on your Linux distribution. For example, on Debian you can use the [`iptables-persistent`](https://packages.debian.org/sid/iptables-persistent) package:
+
+	```sh
+	sudo apt install iptables-persistent
+	sudo netfilter-persistent save
+	```
 
 ## Test connectivity
 

@@ -5,26 +5,37 @@ sidebar:
   order: 3
 ---
 
-import { Details } from "~/components"
+import { Details, Render } from "~/components"
 
 When using Cloudflare DNS, you have a few options for your DNS zone setup:
 
 * [Full setup](/dns/zone-setups/full-setup/) (most common): Use Cloudflare as your primary DNS provider and manage your DNS records on Cloudflare.
 * [Partial (CNAME) setup](/dns/zone-setups/partial-setup/): Keep your primary DNS provider and only use Cloudflare's reverse proxy for individual subdomains.
-* [Subdomain setup](/dns/zone-setups/subdomain-setup/): With your apex domain (`example.com`) on a partial or full setup, independently manage the settings for a specific subdomain (`blog.example.com`) within a separate zone and, potentially, a separate account.
 * [Zone transfers](/dns/zone-setups/zone-transfers/): Use Cloudflare and another DNS provider together across your entire zone to increase availability and fault tolerance. DNS records will be transferred between providers using [AXFR](https://datatracker.ietf.org/doc/html/rfc5936) or [IXFR](https://datatracker.ietf.org/doc/html/rfc1995).
+* [Subdomain setup](/dns/zone-setups/subdomain-setup/): With your apex domain (`example.com`) on a partial or full setup, independently manage the settings for a delegated subdomain (`blog.example.com`) within a separate zone and, potentially, a separate account.
 
-:::note
-If you run your own authoritative nameservers but still want to benefit from Cloudflare's global anycast network, check out [DNS Firewall](/dns/dns-firewall/).
-:::
+   <Render file="subdomain-setup-matrix" product="dns" params={{ linkForMore: true }} />
+
+---
 
 ## Zone status
 
-For details on zone status, consider the [Reference page](/dns/zone-setups/reference/domain-status/).
+The possible statuses for a zone are the following:
+
+- Initializing
+- Pending
+- Active
+- Moved
+- Deleted
+- Purged
+
+For details on each status and how a zone can transition from one status to the other, consider the [Reference page](/dns/zone-setups/reference/domain-status/).
 
 :::caution[Do not use pending zones in production]
 If you have a paid plan, make sure not to use pending zones for production traffic. Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs but there are associated risks, especially if you do not use [zone holds](/fundamentals/account/account-security/zone-holds/).
 :::
+
+---
 
 ## Common use cases and availability
 
@@ -53,3 +64,7 @@ If you are on an Enterprise plan, you can use [subdomain setup](/dns/zone-setups
 
 
 </Details>
+
+:::note
+If you run your own authoritative nameservers but still want to benefit from Cloudflare's global anycast network, check out [DNS Firewall](/dns/dns-firewall/).
+:::

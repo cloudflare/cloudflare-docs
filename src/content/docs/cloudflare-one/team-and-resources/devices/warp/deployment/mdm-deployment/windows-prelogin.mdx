@@ -9,7 +9,7 @@ import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)                                               | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)                                                | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | <ul><li> Gateway with WARP</li><li> Gateway with DoH </li><li> Secure Web Gateway without DNS filtering </li><li> Proxy mode </li></ul> | All plans                                                     |
 
@@ -96,9 +96,9 @@ To enable the Windows pre-login feature, an MDM file in the following format mus
 </dict>
 ```
 
-WARP will apply the pre-login configuration when no other WARP registration exists and the user has not yet logged into Windows. When the pre-login configuration is in effect, the device will appear on **My Team** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`.
+WARP will apply the pre-login configuration when no other WARP registration exists and the user has not yet logged into Windows. When the pre-login configuration is in effect, the device will appear on **Team & Resources** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`.
 
-After the user logs into Windows, WARP will automatically switch to the default MDM configuration and prompt the user to authenticate with the IdP. Once authenticated, WARP registers and connects with the user identity. The **My Team** > **Devices** page will now show a new device associated with the user's email.
+After the user logs into Windows, WARP will automatically switch to the default MDM configuration and prompt the user to authenticate with the IdP. Once authenticated, WARP registers and connects with the user identity. The **Team & Resources** > **Devices** page will now show a new device associated with the user's email.
 
 If [multi-user mode](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-multiuser/) is turned off, this user registration will be used for any subsequent connections, including before the next Windows user login. Deleting the user registration would cause WARP to switch back to the pre-login configuration as soon as the user logs out of Windows.
 

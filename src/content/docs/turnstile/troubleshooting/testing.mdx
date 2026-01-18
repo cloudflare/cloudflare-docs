@@ -1,41 +1,156 @@
 ---
-title: Testing
+title: Test your Turnstile implementation
 pcx_content_type: reference
 sidebar:
   order: 1
+  label: Testing
 
 ---
 
 import { GlossaryTooltip } from "~/components"
 
-## Dummy sitekeys and secret keys
+Use dummy sitekeys and secret keys to test your Turnstile implementation without triggering real challenges that would interfere with automated testing suites.
 
-The following <GlossaryTooltip term="sitekey">sitekeys</GlossaryTooltip> and <GlossaryTooltip term="secret key">secret keys</GlossaryTooltip> are available for testing. It is recommended that you use these keys in your development environment to ensure the challenges running in Turnstile do not conflict with your developer tools.
+Automated testing suites (like Selenium, Cypress, or Playwright) are detected as bots by Turnstile, which can cause:
 
-To test locally with real keys, you need to add your testing hostnames (like `localhost`) to your [domain allowlist](/turnstile/additional-configuration/hostname-management/).
+- Tests to fail when Turnstile blocks automated browsers
+- Unpredictable test results due to challenge variations
+- Interference with form submission testing
+- Difficulty testing complete user flows
 
-Dummy sitekeys can be used from any domain, including on `localhost`.
+Dummy keys solve this by providing predictable, controlled responses that work with automated testing tools.
 
-Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
+## Test sitekeys
 
-| Sitekey                    | Description                     | Visibility |
-| -------------------------- | ------------------------------- | ---------- |
-| `1x00000000000000000000AA` | Always passes                   | visible    |
-| `2x00000000000000000000AB` | Always blocks                   | visible    |
-| `1x00000000000000000000BB` | Always passes                   | invisible  |
-| `2x00000000000000000000BB` | Always blocks                   | invisible  |
-| `3x00000000000000000000FF` | Forces an interactive challenge | visible    |
+| Sitekey | Behavior | Widget Type | Use case |
+| ------- | -------- | ----------- | -------- |
+| `1x00000000000000000000AA` | Always passes | Visible | Test successful form submissions |
+| `2x00000000000000000000AB` | Always fails | Visible | Test error handling and retry logic |
+| `1x00000000000000000000BB` | Always passes | Invisible | Test invisible widget success flows |
+| `2x00000000000000000000BB` | Always fails | Invisible | Test invisible widget error handling |
+| `3x00000000000000000000FF` | Forces interactive challenge | Visible | Test user interaction scenarios |
 
-These dummy sitekeys will produce the `XXXX.DUMMY.TOKEN.XXXX` dummy response token.
+## Test secret keys
 
-Production secret keys will reject this token. You must also use a dummy secret key for testing purposes.
+Use these secret keys for server-side validation testing:
 
-| Secret key                            | Description                          |
-| ------------------------------------- | ------------------------------------ |
-| `1x0000000000000000000000000000000AA` | Always passes                        |
-| `2x0000000000000000000000000000000AA` | Always fails                         |
-| `3x0000000000000000000000000000000AA` | Yields a "token already spent" error |
+| Secret key | Behavior | Use case |
+| ---------- | -------- | -------- |
+| `1x0000000000000000000000000000000AA` | Always passes validation | Test successful token validation |
+| `2x0000000000000000000000000000000AA` | Always fails validation | Test validation error handling |
+| `3x0000000000000000000000000000000AA` | Returns "token already spent" error | Test duplicate token handling |
 
-Dummy secret keys will only accept the `XXXX.DUMMY.TOKEN.XXXX` dummy response token.
+---
 
-If you pass a real response, it will fail to prevent common misconfigurations.
+## Implementation
+
+### Local development
+
+Test keys work on any domain, including:
+
+- `localhost`
+- `127.0.0.1`
+- `0.0.0.0`
+- Any development domain
+
+Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost` or `127.0.0.1`), but users can choose to add local domains to the list of allowed domains under [Hostname Management](/turnstile/additional-configuration/hostname-management/). Dummy sitekeys can be used from any domain, including on `localhost`.
+
+### Client-side testing
+
+Replace your production sitekey with a test sitekey.
+
+```html
+<!-- Development/Testing -->
+<div class="cf-turnstile" data-sitekey="1x00000000000000000000AA"></div>
+
+<!-- Production -->
+<div class="cf-turnstile" data-sitekey="your-real-sitekey"></div>
+```
+
+### Server-side testing
+
+Replace your production secret key with a test secret key.
+
+```js
+// Environment-based configuration
+const SECRET_KEY = process.env.NODE_ENV === 'production' 
+  ? process.env.TURNSTILE_SECRET_KEY 
+  : '1x0000000000000000000000000000000AA';
+
+// Use in validation
+const validation = await validateTurnstile(token, SECRET_KEY);
+```
+
+### Environment configuration
+
+Set up different keys for different environments.
+
+```shell
+
+# .env.development
+TURNSTILE_SITEKEY=1x00000000000000000000AA
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+
+# .env.test  
+TURNSTILE_SITEKEY=2x00000000000000000000AB
+TURNSTILE_SECRET_KEY=2x0000000000000000000000000000000AA
+
+# .env.production
+TURNSTILE_SITEKEY=your-real-sitekey
+TURNSTILE_SECRET_KEY=your-real-secret-key
+```
+
+---
+
+## Dummy token behavior
+
+### Token generation
+
+Test sitekeys generate a dummy token: `XXXX.DUMMY.TOKEN.XXXX`
+
+### Token validation
+
+- Test secret keys: Only accept the dummy token, reject real tokens.
+- Production secret keys: Only accept real tokens, reject dummy tokens.
+
+:::note
+Production secret keys will reject the dummy token. You must also use a dummy secret key for testing purposes.
+:::
+
+### Validation response
+
+```json title="Success response"
+{
+  "success": true,
+  "challenge_ts": "2022-02-28T15:14:30.096Z",
+  "hostname": "localhost",
+  "error-codes": [],
+  "action": "test",
+  "cdata": "test-data"
+}
+```
+
+```json title="Failure response"
+{
+  "success": false,
+  "error-codes": ["invalid-input-response"]
+}
+
+```
+
+```json title="Token already redeemed"
+{
+  "success": false,
+  "error-codes": ["timeout-or-duplicate"]
+}
+```
+
+---
+
+## Testing scenarios
+
+| Test sitekey | Test secret key | <div style="width:200px">Test case</div> |
+| ------------ | --------------- | --------- |
+| `1x00000000000000000000AA` | `1x0000000000000000000000000000000AA` | This combination will always result in successful validation. |
+| `2x00000000000000000000AB` | `2x0000000000000000000000000000000AA` | This combination will always fail. |
+| `1x00000000000000000000AA` | `3x0000000000000000000000000000000AA` | This combination will always fail with "timeout-or-duplicate" error. |

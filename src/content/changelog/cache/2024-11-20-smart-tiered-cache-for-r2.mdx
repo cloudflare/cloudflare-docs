@@ -1,0 +1,28 @@
+---
+title: Smart Tiered Cache automatically optimizes R2 caching
+description: R2 storage buckets now automatically benefit from Smart Tiered Cache with intelligent Upper Tier selection.
+products:
+  - cache
+date: 2024-11-20
+---
+
+You can now reduce latency and lower R2 egress costs automatically when using [Smart Tiered Cache](/cache/how-to/tiered-cache/) with [R2](/r2/). Cloudflare intelligently selects a tiered data center close to your R2 bucket location, creating an efficient caching topology without additional configuration.
+
+## How it works
+
+When you enable [Smart Tiered Cache](/cache/how-to/tiered-cache/) for zones using [R2](/r2/) as an origin, Cloudflare automatically:
+
+1. **Identifies your R2 bucket location**: Determines the geographical region where your R2 bucket is stored.
+2. **Selects an optimal Upper Tier**: Chooses a data center close to your bucket as the common Upper Tier cache.
+3. **Routes requests efficiently**: All cache misses in edge locations route through this Upper Tier before reaching R2.
+
+## Benefits
+
+- **Automatic optimization**: No manual configuration required.
+- **Lower egress costs**: Fewer requests to R2 reduce egress charges.
+- **Improved hit ratio**: Common Upper Tier increases cache efficiency.
+- **Reduced latency**: Upper Tier proximity to R2 minimizes fetch times.
+
+## Get started
+
+To get started, enable [Smart Tiered Cache](/cache/how-to/tiered-cache/) on your zone using R2 as an origin.

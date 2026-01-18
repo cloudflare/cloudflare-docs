@@ -8,9 +8,9 @@ sidebar:
 
 import { GlossaryTooltip, Render } from "~/components"
 
-Sequence mitigation allows you to enforce request patterns for authenticated clients communicating with your API. This feature utilizes the same underlying system that powers Sequence Analytics.
+Sequence mitigation allows you to enforce request patterns for authenticated clients communicating with your API.
 
-You can use sequence rules to establish a set of known behavior for API clients.
+You can use sequence rules to establish a set of known behavior for API clients or detect and mitigate malicious behavior.
 
 For example, you may expect that API requests made during a bank funds transfer could conform to the following order in time:
 
@@ -36,6 +36,11 @@ You can [create a sequence rule](/api-shield/security/sequence-mitigation/manage
 
 Sequence rules built via the Cloudflare dashboard using API Shield rules utilize a lookback window to match endpoints in the sequence. The rule will match as long as both endpoints are found within [10 requests](/api-shield/security/sequence-mitigation/#request-limitations) (to endpoints within Endpoint Management) of each other and made within [10 minutes](/api-shield/security/sequence-mitigation/#time-limitations) of each other.
 
+:::note
+
+Contact your account team if the default lookback window is not sufficient for you.
+:::
+
 If you want to add multiple endpoints, ignore the lookback window, and configure time-based constraints, refer to [Sequence mitigation custom rules](/api-shield/security/sequence-mitigation/custom-rules/).
 
 In the bank funds transfer example, enforcing that a user requests `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds` is considered a positive security model, since a user may only perform a funds transfer after listing an account balance.
@@ -57,7 +62,9 @@ API Shield uses your configured <GlossaryTooltip term="session identifier">sessi
 
 ### Request limitations
 
-API Shield currently stores the last 10 requested endpoints by each API user identified by the session identifier. Sequence mitigation de-duplicates requests to the same endpoint while building the sequence.
+By default, API Shield stores the current and previous nine requested endpoints by each individual API user identified through the session identifier. Contact your account team if the default lookback window is not sufficient for you.
+
+Sequence mitigation further de-duplicates requests to the same endpoint while building the sequence.
 
 To illustrate, in the original [sequence example](/api-shield/security/sequence-mitigation/) listed above, sequence mitigation would store the following sequence:
 
@@ -69,7 +76,7 @@ Sequence mitigation de-duplicated the two requests to `GET /api/v1/accounts/{acc
 
 ### Time limitations
 
-Sequence mitigation rules have a lookback period of 10 minutes. If you create a rule that one path must be requested before another path and more than 10 minutes elapses between a user requesting each path, the rule will not match.
+Sequence mitigation rules have a lookback period of 10 minutes, which means that any two requests using the same session identifier will extend the sequence if they happen no further than 10 minutes apart. A request for a session identifier that happens 10 minutes after the last one will start recording a new sequence. For example, if you create a rule that one endpoint must be requested before another endpoint, and more than 10 minutes elapses between a user requesting each endpoint, the rule will not match.
 
 ## Availability
 

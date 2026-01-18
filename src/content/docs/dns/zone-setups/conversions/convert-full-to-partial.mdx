@@ -1,8 +1,70 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: tutorial
 title: Convert full setup to partial setup
-external_link: /dns/zone-setups/partial-setup/setup/
 sidebar:
   order: 1
   label: Full to partial
 ---
+
+import { Tabs, TabItem, Render, GlossaryTooltip, DashButton, Details, APIRequest } from "~/components";
+
+If you initially configured a [full setup](/dns/zone-setups/full-setup/), you can later convert your zone to use a partial setup (also known as CNAME setup).
+
+A partial setup allows you to use [Cloudflare's reverse proxy](/fundamentals/concepts/how-cloudflare-works/) on individual subdomains while using a different authoritative DNS provider.
+
+## Before you begin
+
+Make sure you consider the following:
+
+- It will not be possible to use Cloudflare's reverse proxy on the zone apex (`example.com`), only on subdomains.
+- On the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
+- You should plan for SSL/TLS certificates. If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are proxied. If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
+
+## 1. Prepare DNS records
+
+1. Export a zone file
+
+   <Render file="export-dns-records" product="dns" />
+
+2. Import the zone file into your new primary DNS provider.
+3. Create or update your records so that you have CNAME records pointing to `{your-hostname}.cdn.cloudflare.net` for every hostname you wish to proxy through Cloudflare.
+
+   <Details header="Example CNAME record at authoritative DNS provider">
+
+   The CNAME record for `www.example.com` would be:
+
+   ```txt
+   www.example.com CNAME www.example.com.cdn.cloudflare.net
+   ```
+
+   </Details>
+
+4. Remove any previously existing A, AAAA, or CNAME records referencing the hostnames you want to proxy through Cloudflare. For these hostnames, leave only the records pointing to `{your-hostname}.cdn.cloudflare.net`.
+
+5. Confirm you have the correct record for every subdomain that should be proxied through Cloudflare.
+
+## 2. Convert the zone
+
+<Tabs syncKey="dashPlusAPI">
+  <TabItem label="Dashboard">
+
+	  1. On the Cloudflare dashboard, go to the zone's **Overview** page.
+		2. Select **Convert to CNAME DNS Setup** and then **Convert** to confirm.
+		3. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, under **Verification TXT Record**.
+
+	</TabItem>
+  <TabItem label="API">
+
+	  1. Use the [Edit Zone endpoint](/api/resources/zones/methods/edit/) with `type` set to `partial` to convert the zone type.
+		2. Take note of the value returned under `verification_key` in the API response. This will be used in the next step.
+
+	</TabItem>
+</Tabs>
+
+## 3. Verify ownership
+
+<Render file="partial-setup-verification-record" product="dns" />
+
+## 4. Update your nameservers
+
+Once verification is complete, update the nameservers at your domain registrar to point to your new authoritative DNS provider. Make sure to remove the Cloudflare nameservers.

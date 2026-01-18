@@ -181,6 +181,8 @@ Assuming `203.0.113.100` was also the origin IP, the DNS record would look like 
 
 ### Spectrum
 
+<Render file="spectrum-udp-byoip-limitation" product="byoip" />
+
 Configuring Spectrum to use your own IP address is only possible via the [Cloudflare API](/api/resources/spectrum/).
 
 The `origin_direct` field takes the origin IP address, while `edge_ips` allows you to define which IP address from your BYOIP prefix Cloudflare should use to process requests for your Spectrum application.

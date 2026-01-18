@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Amazon Cognito
 ---
 
+import { Render } from "~/components";
+
 Amazon Cognito provides SSO identity management for end users of web and mobile apps. You can integrate Amazon Cognito as an OIDC identity provider for Cloudflare One.
 
 ## Prerequisites
@@ -32,7 +34,6 @@ To retrieve those values:
 4. Under **Domain**, copy your user pool domain or [configure a new domain](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html).
 
 5. Make note of the following [Amazon Cognito OIDC endpoints](https://docs.aws.amazon.com/cognito/latest/developerguide/federation-endpoints.html):
-
    - **Auth URL**: `https://<your user pool domain>/oauth2/authorize`
    - **Token URL**: `https://<your user pool domain>/oauth2/token`
    - **Certificate (key) URL**: `https://cognito-idp.<region>.amazonaws.com/<your user pool ID>/.well-known/jwks.json` (This is the **Token signing key URL** shown in **User pool overview**.)
@@ -46,14 +47,13 @@ To retrieve those values:
 9. Ensure that **Generate a client secret** is selected.
 
 10. Configure the following **Hosted UI settings**:
-
     1. In **Allowed callback URLs**, add the following URL:
 
        ```txt
        https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
        ```
 
-       You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
+       <Render file="find-team-name" product="cloudflare-one" />
 
     2. Select **Identity providers** to use with this app client. At minimum, enable **Cognito user pool** as a provider.
 

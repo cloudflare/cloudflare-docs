@@ -12,6 +12,22 @@ import { Render } from "~/components";
 
 <Render file="event-subscriptions/intro" product="queues" />
 
+## Send build notifications
+
+You can deploy a Worker that consumes build events and sends notifications to Slack, Discord, or any webhook endpoint:
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/workers-builds-notifications-template)
+
+The template sends notifications for:
+
+- Successful builds with preview or live deployment URLs
+- Failed builds with error messages
+- Cancelled builds
+
+![Example Slack notifications for Workers Builds events](~/assets/images/changelog/workers/builds-notifications-slack.png)
+
+You can customize the Worker to format messages for your webhook provider. For setup instructions, refer to the [template README](https://github.com/cloudflare/templates/tree/main/workers-builds-notifications-template#readme).
+
 ## Available Workers Builds events
 
 <Render file="event-subscriptions/workers-builds-events" product="queues" />
