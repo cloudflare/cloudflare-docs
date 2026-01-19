@@ -81,7 +81,7 @@ This step is only required if Cloudflare is used for east-west traffic routing.
 
 ## 2. Configure overlay policies
 
-Aruba Orchestrator's Business Intent Overlays create intuitive policies which automatically identify and steer application traffic to Cloudflare. Two Business Intent Overlay (BIO) policies are created in this example.
+Aruba Orchestrator's Business Intent Overlays create intuitive policies which automatically identify and steer application traffic to Cloudflare. This example creates two Business Intent Overlay (BIO) policies.
 
 <Details header="GRE tunnel configuration">
 
@@ -272,7 +272,7 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 2. Define static routes on the Orchestrator so Cloudflare can route traffic between sites.
 
-   In this example, a route is created for the subnet `10.30.0.0/24` on the **west_branch** to be routed via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
+   This example creates a route for the subnet `10.30.0.0/24` on the **west_branch** to route via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
 
 ![Static route information for each branch](~/assets/images/magic-wan/third-party/aruba-edge-connect/static-routes-edgeconnect.png)
 
@@ -332,7 +332,7 @@ To validate traffic flow from the local subnet through Cloudflare's Secure Web G
 
 ![cURL example for validating traffic](~/assets/images/magic-wan/third-party/aruba-edge-connect/static-routes-west-ipsec.png)
 
-You can validate the request was sent through Secure Web Gateway with the presence of the `Cf-Team` response header or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
+You can validate the request went through Secure Web Gateway with the presence of the `Cf-Team` response header or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
 
 ![Dashboard example for validating Secure Web Gateway](~/assets/images/magic-wan/third-party/aruba-edge-connect/dash-validation-ipsec.png)
 
