@@ -906,6 +906,7 @@
 /learning-paths/secure-o365-email/monitor-your-inbox/monitor-detections/ /learning-paths/secure-your-email/monitor-your-inbox/monitor-detections/ 301
 /learning-paths/secure-o365-email/monitor-your-inbox/phish-submissions/ /learning-paths/secure-your-email/monitor-your-inbox/phish-submissions/ 301
 /learning-paths/secure-o365-email/monitor-your-inbox/phishguard/ /learning-paths/secure-your-email/monitor-your-inbox/phishguard/ 301
+/reference-architecture/implementation-guides/zero-trust/secure-m365-email/ /reference-architecture/implementation-guides/zero-trust/secure-your-email/ 301
 /learning-paths/workers/ /learning-paths/workers/concepts/ 301
 /learning-paths/clientless-access/ /learning-paths/clientless-access/concepts/ 301
 /learning-paths/application-security/default-traffic-security/security-level/ /learning-paths/application-security/default-traffic-security/browser-integrity/ 301
