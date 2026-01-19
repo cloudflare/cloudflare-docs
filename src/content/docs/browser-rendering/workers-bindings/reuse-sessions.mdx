@@ -41,12 +41,16 @@ In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/br
 
 ## 3. Configure the [Wrangler configuration file](/workers/wrangler/configuration/)
 
+:::note
+Your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later.
+:::
+
 <WranglerConfig>
 
 ```toml
 name = "browser-worker"
 main = "src/index.ts"
-compatibility_date = "2023-03-14"
+compatibility_date = "2025-09-17"
 compatibility_flags = [ "nodejs_compat" ]
 
 browser = { binding = "MYBROWSER" }

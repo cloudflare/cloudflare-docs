@@ -102,6 +102,16 @@ Most Next.js features are supported by the Cloudflare OpenNext adapter:
 
    <PackageManagers type="run" args="deploy" />
 
+    :::note
+    [**Workers Builds**](/workers/ci-cd/builds/) requires you to configure environment variables in the ["Build Variables and secrets"](/workers/ci-cd/builds/configuration/#:~:text=Build%20variables%20and%20secrets) section. 
+
+
+    This ensures the Next build has the necessary access to both public `NEXT_PUBLC...` variables and [non-`NEXT_PUBLIC_...`](https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser), which are essential for tasks like inlining and building SSG pages.
+
+
+    Learn more in the [OpenNext environment variable guide](https://opennext.js.org/cloudflare/howtos/env-vars#workers-builds)
+    :::
+
 </Steps>
 
 ## Deploy an existing Next.js project on Workers
@@ -191,5 +201,16 @@ You can convert an existing Next.js application to run on Cloudflare
     You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
     <PackageManagers type="run" args="deploy" />
+
+    :::note
+    [**Workers Builds**](/workers/ci-cd/builds/) requires you to configure environment variables in the ["Build Variables and secrets"](/workers/ci-cd/builds/configuration/#:~:text=Build%20variables%20and%20secrets) section. 
+
+
+    This ensures the Next build has the necessary access to both public `NEXT_PUBLC...` variables and [non-`NEXT_PUBLIC_...`](https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser), which are essential for tasks like inlining and building SSG pages.
+
+
+    Learn more in the [OpenNext environment variable guide](https://opennext.js.org/cloudflare/howtos/env-vars#workers-builds)
+    :::
+
 
 </Steps>

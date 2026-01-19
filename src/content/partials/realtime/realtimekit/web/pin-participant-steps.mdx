@@ -1,0 +1,69 @@
+---
+{}
+---
+
+import { Steps } from "~/components";
+
+<Steps>
+
+1. Check that the local participant has permission to pin participants.
+
+   ```ts
+   const canPinParticipant = meeting.self.permissions.pinParticipant === true;
+   if (!canPinParticipant) {
+   	// Disable the control in your UI.
+   }
+   ```
+
+2. Call `pin()` on the target participant.
+
+   If the local participant does not have the required permission, `pin()` throws a `ClientError` with code `1201`.
+
+   ```ts
+   try {
+   	await participant.pin();
+   } catch (err: any) {
+   	if (err?.code === 1201) {
+   		// The local participant does not have permission to pin participants.
+   		return;
+   	}
+   	throw err;
+   }
+   ```
+
+3. Handle the result by listening for updates.
+
+   After the call succeeds:
+   - The target participant's `isPinned` becomes true.
+   - The participant is added to `meeting.participants.pinned`.
+   - The SDK emits a `pinned` event.
+
+   **Option A**: Listen on the participant object
+
+   ```ts
+   participant.on("pinned", (updatedParticipant) => {
+   	// updatedParticipant.isPinned is true
+   	// Update your UI.
+   });
+   ```
+
+   **Option B**: Listen on the `joined` map
+
+   ```ts
+   meeting.participants.joined.on("pinned", (updatedParticipant) => {
+   	// updatedParticipant.isPinned is true
+   	// Update your UI.
+   });
+   ```
+
+   If there was an existing pinned participant before, then the SDK emits an `unpinned` event for that participant.
+
+4. On the target pinned participant's side, `meeting.self.isPinned` becomes `true` and `meeting.self` emits `pinned`:
+
+   ```ts
+   meeting.self.on("pinned", (selfParticipant) => {
+   	// Update the local UI to indicate the participant is pinned.
+   });
+   ```
+
+</Steps>

@@ -1,0 +1,473 @@
+---
+pcx_content_type: navigation
+title: Remote Participants Events
+sidebar:
+  label: Events
+  order: 2
+---
+
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+This page provides an overview of the events emitted by `meeting.participants` and related participant maps, which you can use to keep your UI in sync with changes such as participants joining or leaving, pinning updates, active speaker changes, and grid view mode or page changes.
+
+:::note[Prerequisites]
+This page assumes you've already initialized the SDK and understand the meeting object structure. Refer to [Initialize SDK](/realtime/realtimekit/core/) and [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) if needed.
+:::
+
+<RTKSDKSelector />
+
+## Grid
+
+These events allow users to monitor changes to the grid.
+
+### View Mode Change
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+Triggered when the type of grid changes:
+
+```js
+meeting.participants.on(
+	"viewModeChanged",
+	({ viewMode, currentPage, pageCount }) => {
+		console.log("view mode changed", viewMode);
+	},
+);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const viewMode = useRealtimeKitSelector((m) => m.participants.viewMode);
+```
+
+Or use event listener:
+
+```jsx
+meeting.participants.on(
+	"viewModeChanged",
+	({ viewMode, currentPage, pageCount }) => {
+		console.log("view mode changed", viewMode);
+	},
+);
+```
+
+</RTKCodeSnippet>
+
+### Page Change
+
+Triggered when the page changes in paginated mode:
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+meeting.participants.on(
+	"pageChanged",
+	({ viewMode, currentPage, pageCount }) => {
+		console.log("page changed", currentPage);
+	},
+);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const currentPage = useRealtimeKitSelector((m) => m.participants.currentPage);
+const pageCount = useRealtimeKitSelector((m) => m.participants.pageCount);
+```
+
+Or use event listener:
+
+```js
+meeting.participants.on("activeSpeaker", (participant) => {
+	console.log(`${participant.id} is currently speaking`);
+});
+```
+
+</RTKCodeSnippet>
+
+### Active Speaker
+
+Triggered when a participant starts speaking:
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+meeting.participants.on("activeSpeaker", (participant) => {
+	console.log(`${participant.id} is currently speaking`);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const activeSpeaker = useRealtimeKitSelector(
+	(m) => m.participants.lastActiveSpeaker,
+);
+```
+
+Or use event listener:
+
+```jsx
+meeting.participants.on("activeSpeaker", (participant) => {
+	console.log(`${participant.id} is currently speaking`);
+});
+```
+
+</RTKCodeSnippet>
+
+## Participant Maps
+
+These events allow users to monitor changes to remote participant maps. Ideal if you want to get notified when a participant joins or leaves the meeting, is pinned or moves out of the grid.
+
+### Participant Joined
+
+Triggered when any participant joins the meeting:
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+meeting.participants.joined.on("participantJoined", (participant) => {
+	console.log(`A participant with id "${participant.id}" has joined`);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const joinedParticipants = useRealtimeKitSelector((m) => m.participants.joined);
+```
+
+Or use event listener:
+
+```jsx
+meeting.participants.joined.on("participantJoined", (participant) => {
+	console.log(`A participant with id "${participant.id}" has joined`);
+});
+```
+
+</RTKCodeSnippet>
+
+### Participant Left
+
+Triggered when any participant leaves the meeting:
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+meeting.participants.joined.on("participantLeft", (participant) => {
+	console.log(`A participant with id "${participant.id}" has left the meeting`);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const joinedParticipants = useRealtimeKitSelector((m) => m.participants.joined);
+```
+
+Or use event listener:
+
+```jsx
+meeting.participants.joined.on("participantLeft", (participant) => {
+	console.log(`A participant with id "${participant.id}" has left the meeting`);
+});
+```
+
+</RTKCodeSnippet>
+
+### Participant Pinned
+
+Triggered when a participant is pinned:
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+meeting.participants.joined.on("pinned", (participant) => {
+	console.log(`Participant with id "${participant.id}" was pinned`);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const pinnedParticipants = useRealtimeKitSelector((m) => m.participants.pinned);
+```
+
+Or use event listener:
+
+```jsx
+meeting.participants.joined.on("pinned", (participant) => {
+	console.log(`Participant with id "${participant.id}" was pinned`);
+});
+```
+
+</RTKCodeSnippet>
+
+### Participant Unpinned
+
+Triggered when a participant is unpinned:
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+meeting.participants.joined.on("unpinned", (participant) => {
+	console.log(`Participant with id "${participant.id}" was unpinned`);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+const pinnedParticipants = useRealtimeKitSelector((m) => m.participants.pinned);
+```
+
+Or use event listener:
+
+```jsx
+meeting.participants.joined.on("unpinned", (participant) => {
+	console.log(`Participant with id "${participant.id}" was pinned`);
+});
+```
+
+</RTKCodeSnippet>
+
+## Participant
+
+You can monitor changes to a specific participant using the following events:
+
+### Video Update
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+Triggered when any participant starts/stops video:
+
+```js
+meeting.participants.joined.on("videoUpdate", (participant) => {
+	console.log(
+		`A participant with id "${participant.id}" updated their video track`,
+	);
+
+	if (participant.videoEnabled) {
+		// Use participant.videoTrack
+	} else {
+		// Handle stop video
+	}
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+// Check for one participant
+const videoEnabled = useRealtimeKitSelector(
+	(m) => m.participants.joined.get(participantId)?.videoEnabled,
+);
+
+// All video enabled participants
+const videoEnabledParticipants = useRealtimeKitSelector((m) =>
+	m.participants.joined.toArray().filter((p) => p.videoEnabled),
+);
+
+meeting.participants.joined.on("videoUpdate", (participant) => {
+	console.log(
+		`A participant with id "${participant.id}" updated their video track`,
+	);
+
+	if (participant.videoEnabled) {
+		// Use participant.videoTrack
+	} else {
+		// Handle stop video
+	}
+});
+```
+
+</RTKCodeSnippet>
+
+### Audio Update
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+Triggered when any participant starts/stops audio:
+
+```js
+meeting.participants.joined.on("audioUpdate", (participant) => {
+	console.log(
+		`A participant with id "${participant.id}" updated their audio track`,
+	);
+
+	if (participant.audioEnabled) {
+		// Use participant.audioTrack
+	} else {
+		// Handle stop audio
+	}
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+// Check for one participant
+const audioEnabled = useRealtimeKitSelector(
+	(m) => m.participants.joined.get(participantId)?.audioEnabled,
+);
+
+// All audio enabled participants
+const audioEnabledParticipants = useRealtimeKitSelector((m) =>
+	m.participants.joined.toArray().filter((p) => p.audioEnabled),
+);
+
+meeting.participants.joined.on("audioUpdate", (participant) => {
+	console.log(
+		`A participant with id "${participant.id}" updated their audio track`,
+	);
+
+	if (participant.audioEnabled) {
+		// Use participant.audioTrack
+	} else {
+		// Handle stop audio
+	}
+});
+```
+
+</RTKCodeSnippet>
+
+### Screen Share Update
+
+Triggered when any participant starts/stops screen share:
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+```js
+meeting.participants.joined.on("screenShareUpdate", (participant) => {
+	console.log(
+		`A participant with id "${participant.id}" updated their screen share`,
+	);
+
+	if (participant.screenShareEnabled) {
+		// Use participant.screenShareTracks
+	} else {
+		// Handle stop screen share
+	}
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+// Check for one participant
+const screensharingParticipant = useRealtimeKitSelector((m) =>
+	m.participants.joined.toArray().find((p) => p.screenShareEnabled),
+);
+
+// All screen sharing participants
+const screenSharingParticipants = useRealtimeKitSelector((m) =>
+	m.participants.joined.toArray().filter((p) => p.screenShareEnabled),
+);
+```
+
+```js
+meeting.participants.joined.on("screenShareUpdate", (participant) => {
+	console.log(
+		`A participant with id "${participant.id}" updated their screen share`,
+	);
+
+	if (participant.screenShareEnabled) {
+		// Use participant.screenShareTracks
+	} else {
+		// Handle stop screen share
+	}
+});
+```
+
+</RTKCodeSnippet>
+
+### Network Quality Score
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+Monitor participant network quality:
+
+```js
+meeting.participants.joined.on(
+	"mediaScoreUpdate",
+	({ participantId, kind, isScreenshare, score, scoreStats }) => {
+		if (kind === "video") {
+			console.log(
+				`Participant ${participantId}'s ${isScreenshare ? "screenshare" : "video"} quality score is`,
+				score,
+			);
+		}
+
+		if (kind === "audio") {
+			console.log(
+				`Participant ${participantId}'s audio quality score is`,
+				score,
+			);
+		}
+
+		if (score < 5) {
+			console.log(`Participant ${participantId}'s media quality is poor`);
+		}
+	},
+);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+// Use event listener for media score updates
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleMediaScoreUpdate = ({
+		participantId,
+		kind,
+		isScreenshare,
+		score,
+		scoreStats,
+	}) => {
+		if (kind === "video") {
+			console.log(
+				`Participant ${participantId}'s ${isScreenshare ? "screenshare" : "video"} quality score is`,
+				score,
+			);
+		}
+
+		if (score < 5) {
+			console.log(`Participant ${participantId}'s media quality is poor`);
+		}
+	};
+
+	meeting.participants.joined.on("mediaScoreUpdate", handleMediaScoreUpdate);
+
+	return () => {
+		meeting.participants.joined.off("mediaScoreUpdate", handleMediaScoreUpdate);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>

@@ -1,0 +1,21 @@
+---
+{}
+
+---
+```js
+await meeting.connectedMeetings.deleteMeetings([
+  "MEETING_ID_TO_CLOSE_1",
+  "MEETING_ID_TO_CLOSE_2",
+]);
+```
+This would also trigger `stateUpdate` event updating the list of breakout rooms & participants.
+
+```js
+meeting.connectedMeetings.on("stateUpdate", ({meetings, parentMeeting}) => {
+  console.log("stateUpdate", {meetings, parentMeeting});
+});
+
+// Alternatively, you can access the meetings and parentMeeting from the connectedMeetings object
+console.log("Meetings List", meeting.connectedMeetings.meetings);
+console.log("Parent Meeting", meeting.connectedMeetings.parentMeeting);
+```

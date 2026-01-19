@@ -279,7 +279,7 @@ When accessing origin servers with certificates not signed by a public certifica
 		enabled: true,
 		action: "off",
 		filters: ["http"],
-		traffic: 'any(http.conn.domains[*] in {"internal.example.com"})',
+		traffic: 'any(http.request.domains[*] in {"internal.example.com"})',
 		identity: "",
 		device_posture: "",
 	}}

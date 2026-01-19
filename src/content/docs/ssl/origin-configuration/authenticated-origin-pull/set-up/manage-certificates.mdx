@@ -5,7 +5,7 @@ sidebar:
   order: 3
 head:
   - tag: title
-    content: Set up Authenticated Origin Pulls
+    content: Manage AOP certificates
 
 ---
 
@@ -13,27 +13,29 @@ import { APIRequest } from "~/components";
 
 Refer to the following sections to learn how to manage certificates used with the different Authenticated Origin Pulls setups.
 
+---
+
+## Expired certificates
+
+Client certificates are not deleted from Cloudflare upon expiration unless a [delete](/api/resources/origin_tls_client_auth/methods/delete/) request is sent to the Cloudflare API. However, requests are dropped at your origin if your origin only accepts a valid client certificate.
+
+Make sure you have [notifications](/notifications/notification-available/#ssltls) set up to get alerts 30 days and 14 days before an AOP certificate expires.
+
+---
+
 ## Use specialized certificates
 
 To apply different client certificates simultaneously at both the zone and hostname level, you can combine zone-level and per-hostname custom certificates.
 
-First set up [zone-level pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) using a certificate. Then, upload multiple, specialized certificates for [individual hostnames](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
+First, set up [zone-level pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) using a certificate. Then, upload multiple, specialized certificates for [individual hostnames](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/). Since per-hostname certificates are more specific, they take precedence over zone certificates.
 
-:::note[Note]
+---
 
+## Replace a certificate without downtime
 
-Since per-hostname certificates are more specific, they take precedence over zone certificates.
-
-
+:::caution[No automatic removal]
+Client certificates are not deleted from Cloudflare upon expiration unless a [delete](/api/resources/origin_tls_client_auth/methods/delete/) request is sent to the Cloudflare API.
 :::
-
-## Delete a certificate
-
-Client certificates are not deleted from Cloudflare upon expiration unless a [delete](/api/resources/origin_tls_client_auth/methods/delete/) or [replace](/api/resources/origin_tls_client_auth/methods/create/) request is sent to the Cloudflare API.
-
-However, requests are dropped at your origin if your origin only accepts a valid client certificate.
-
-## Replace a client cert (without downtime)
 
 ### Per-hostname
 
@@ -54,6 +56,10 @@ However, requests are dropped at your origin if your origin only accepts a valid
 		]
 	}}
 />
+
+:::note
+If you keep both certificates, the API will state `active` for both but the most recently deployed certificate will be the one enabled and used.
+:::
 
 ### Zone-level
 

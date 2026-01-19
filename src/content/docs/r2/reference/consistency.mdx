@@ -38,6 +38,8 @@ Additional notes:
 * In the event two clients are writing (`PUT` or `DELETE`) to the same key, the last writer to complete "wins".
 * When performing a multipart upload, read-after-write consistency continues to apply once all parts have been successfully uploaded. In the case the same part is uploaded (in error) from multiple writers, the last write will win.
 * Copying an object within the same bucket also follows the same read-after-write consistency that writing a new object would. The "copied" object is immediately readable by all clients once the copy operation completes.
+* To delete an R2 bucket, it must be completely empty before deletion is allowed. If you attempt to delete a bucket that still contains objects, you will receive an error such as: `The bucket you tried to delete (X) is not empty (account Y)` or `Bucket X cannot be deleted because it isn’t empty.`"
+
 
 ## Caching
 

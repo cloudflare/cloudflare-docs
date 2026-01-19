@@ -20,21 +20,14 @@ let { command, headingLevel, description } = props.parse(Astro.props);
 const definition = getCommand(command);
 
 description ??= definition.metadata.description;
+// will be appended after the main description, if present
+const epilogue = definition.metadata.epilogue;
 
 // CED-192 - some commands are experimental and need to be marked as such
-let experimental = false;
-if (definition.metadata.status === "experimental") {
-	experimental = true;
-}
+const experimental = definition.metadata.status === "experimental";
 
 // CED-191 some commands are present but marked as "hidden" and shouldn't be shown
-let hidden = false;
-
 if (definition.metadata.hidden) {
-	hidden = true;
-}
-
-if (hidden) {
 	throw new Error(
 		`[WranglerCommand] "${command}" is marked as hidden. If you want to publish, fix upstream in workers-sdk repo.`
 	);
@@ -89,6 +82,8 @@ if (slotContent) {
 	)
 }
 <Fragment set:html={marked.parse(description)} />
+
+{epilogue && <Fragment set:html={marked.parse(epilogue)} />}
 
 <PackageManagers
 	pkg="wrangler"

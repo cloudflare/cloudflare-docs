@@ -1,0 +1,18 @@
+---
+{}
+
+---
+
+```js
+// Listen to changingMeeting event to show a custom UI to indicate that a meeting switch is happening
+meeting.connectedMeetings.on("changingMeeting", (meetingId) => {
+	console.log("Switching to breakout room or main meeting with id: " + meetingId);
+	console.log("Show a Custom UI to indicate that a meeting switch is happening");
+});
+
+// Listen to meetingChanged event to update the meeting object reference
+meeting.connectedMeetings.on("meetingChanged", (newMeeting) => {
+	console.log("Switched to breakout room or main meeting");
+	console.log("Every action now should be performed on this meeting");
+});
+```

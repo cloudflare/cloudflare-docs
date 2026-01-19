@@ -97,7 +97,6 @@ Also, to streamline common configurations, the Cloudflare dashboard now includes
 | Forwarding URL              | Redirect Rules (Single Redirects)    | [Migrate Forwarding URL](#migrate-forwarding-url)                           |
 | Host Header Override        | Origin Rules                         | [Migrate Host Header Override](#migrate-host-header-override)               |
 | IP Geolocation Header       | Transform Rules (Managed Transforms) | [Migrate IP Geolocation Header](#migrate-ip-geolocation-header)             |
-| Mirage (deprecated)         | Configuration Rules                  | [Migrate Mirage](#migrate-mirage)                                           |
 | Opportunistic Encryption    | Configuration Rules                  | [Migrate Opportunistic Encryption](#migrate-opportunistic-encryption)       |
 | Origin Cache Control        | Cache Rules                          | [Migrate Origin Cache Control](#migrate-origin-cache-control)               |
 | Origin Error Page Pass-thru | Cache Rules                          | [Migrate Origin Error Page Pass-thru](#migrate-origin-error-page-pass-thru) |
@@ -629,7 +628,7 @@ You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subd
 The **Disable Performance** setting is deprecated. Any Page Rules with this setting will not be migrated.
 :::
 
-This Page Rules setting turned off Mirage (deprecated), Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
+This Page Rules setting turned off Polish and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
 
 <Tabs> <TabItem label="Dashboard">
 
@@ -644,7 +643,7 @@ You configured a Page Rule with **Disable Performance** (deprecated) for all sub
 
 <Steps>
 
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Mirage, Polish, and Rocket Loader for any hostname containing `example.com`:
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Polish and Rocket Loader for any hostname containing `example.com`:
 
    - **When incoming requests match**: Custom filter expression
      - Using the Expression Builder:<br/>
@@ -652,7 +651,6 @@ You configured a Page Rule with **Disable Performance** (deprecated) for all sub
      - Using the Expression Editor:<br/>
        `(http.host contains "example.com")`
    - **Then the settings are**:
-     - **Mirage**: Off
      - **Polish**: _Off_
      - **Rocket Loader**: Off
 
@@ -1004,47 +1002,6 @@ You configured a Page Rule adding a `CF-IPCountry` HTTP header, for all requests
 | Page Rules configuration                                                                                                                     | Migrate to a Managed Transform                                                                                                                                                                                       |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Example Page Rule with 'IP Geolocation Header' setting](~/assets/images/rules/reference/page-rules-migration/pr-ip-geolocation-header.png) | ![The 'Add visitor location headers' Managed Transform matching the 'IP Geolocation Header' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-ip-geolocation-header-new.png) |
-
-</TabItem> </Tabs>
-
-### Migrate Mirage (deprecated) {/* migrate-mirage */}
-
-<Tabs> <TabItem label="Dashboard">
-
-**Context:**
-
-You configured a Page Rule turning off Mirage (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
-
-- **URL**: `*example.com/*`
-- **Setting**: _Mirage_
-- **Value**: Off
-
-**How to migrate**:
-
-<Steps>
-
-1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Mirage for any hostname containing `example.com`:
-
-   - **When incoming requests match**: Custom filter expression
-     - Using the Expression Builder:<br/>
-       `Hostname contains "example.com"`
-     - Using the Expression Editor:<br/>
-       `(http.host contains "example.com")`
-   - **Then the settings are**:
-     - **Setting**: Mirage
-       - **Value**: Off
-
-2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
-
-3. If your tests succeed, delete the existing Page Rule.
-
-</Steps>
-
-</TabItem> <TabItem label="Visual guide">
-
-| Page Rules configuration                                                                                       | Migrate to a configuration rule                                                                                                                            |
-| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Example Page Rule with 'Mirage' setting](~/assets/images/rules/reference/page-rules-migration/pr-mirage.png) | ![Configuration rule matching the 'Mirage > Off' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-mirage-new.png) |
 
 </TabItem> </Tabs>
 

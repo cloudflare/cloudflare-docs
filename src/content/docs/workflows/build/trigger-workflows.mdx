@@ -7,7 +7,7 @@ sidebar:
   order: 3
 ---
 
-import { WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 You can trigger Workflows both programmatically and via the Workflows APIs, including:
 
@@ -161,6 +161,42 @@ await instance.restart(); // Returns Promise<void>
 ```
 
 Restarting an instance will immediately cancel any in-progress steps, erase any intermediate state, and treat the Workflow as if it was run for the first time.
+
+### Trigger a Workflow from another Workflow
+
+You can create a new Workflow instance from within a step of another Workflow. The parent Workflow will not block waiting for the child Workflow to complete — it continues execution immediately after the child instance is successfully created.
+
+<TypeScriptExample>
+
+```ts
+export class ParentWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// Perform initial work
+		const result = await step.do("initial processing", async () => {
+			// ... processing logic
+			return { fileKey: "output.pdf" };
+		});
+
+		// Trigger a child workflow for additional processing
+		const childInstance = await step.do("trigger child workflow", async () => {
+			return await this.env.CHILD_WORKFLOW.create({
+				id: `child-${event.instanceId}`,
+				params: { fileKey: result.fileKey },
+			});
+		});
+
+		// Parent continues immediately - not blocked by child workflow
+		await step.do("continue with other work", async () => {
+			console.log(`Started child workflow: ${childInstance.id}`);
+			// This runs right away, regardless of child workflow status
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+If the child Workflow fails to start, the step will fail and be retried according to your retry configuration. Once the child instance is successfully created, it runs independently from the parent.
 
 ## REST API (HTTP)
 
