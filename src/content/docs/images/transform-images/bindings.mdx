@@ -97,6 +97,33 @@ const response = (
 return response;
 ```
 
+You can also auto format the image output based on the accept header:
+
+```ts
+// Check the browser's accept header to see what it supports
+const accept = request.headers.get("accept") || "";
+
+// Set the format priority
+let autoFormat = "image/jpeg";
+if (accept.includes("image/avif")) {
+  autoFormat = "image/avif";
+} else if (accept.includes("image/webp")) {
+  autoFormat = "image/webp";
+}
+
+const info = await env.IMAGES.info(stream);
+
+const response = (
+  await env.IMAGES.input(stream)
+    .transform({ rotate: 90 })
+    .transform({ width: 128 })
+    .transform({ blur: 20 })
+    .output({ format: autoFormat }) // Add the auto format
+).response();
+
+return response;
+```
+
 ### `.info()`
 
 - Outputs information about the image, such as `format`, `fileSize`, `width`, and `height`.
