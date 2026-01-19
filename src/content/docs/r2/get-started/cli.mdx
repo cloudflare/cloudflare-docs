@@ -40,27 +40,30 @@ CLI tools that use the S3 API ([AWS CLI](/r2/examples/aws/aws-cli/), [rclone](/r
 
 [Wrangler](/r2/reference/wrangler-commands/) is the Cloudflare Workers CLI. It authenticates with your Cloudflare account directly, so no API credentials needed.
 
+<Steps>
 1. Install Wrangler:
 
-<PackageManagers pkg="wrangler" dev />
+   <PackageManagers pkg="wrangler" dev />
 
 2. Log in to your Cloudflare account:
 
-```sh
-wrangler login
-```
+   ```sh
+   wrangler login
+   ```
 
+</Steps>
 </TabItem>
 <TabItem label="rclone">
 
 [rclone](/r2/examples/rclone/) is ideal for bulk uploads, migrations, and syncing directories.
 
+<Steps>
 1. [Install rclone](https://rclone.org/install/) (version 1.59 or later).
 2. Configure a new remote:
 
-```sh
-rclone config
-```
+   ```sh
+   rclone config
+   ```
 
 3. Create new remote by selecting `n`.
 4. Name your remote `r2`
@@ -70,25 +73,29 @@ rclone config
 8. Enter your Access Key ID and Secret Access Key when prompted.
 9. Select the region to connect to (optional).
 10. Provide your S3 API endpoint.
+</Steps>
 
 </TabItem>
 <TabItem label="AWS CLI">
 
 The [AWS CLI](/r2/examples/aws/aws-cli/) works with R2 by specifying a custom endpoint.
 
+<Steps>
 1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) for your operating system.
 2. Configure your credentials:
 
-```sh
-aws configure
-```
+   ```sh
+   aws configure
+   ```
 
 3. When prompted, enter:
 
-- **AWS Access Key ID**: Your R2 Access Key ID
-- **AWS Secret Access Key**: Your R2 Secret Access Key
-- **Default region name**: `auto`
-- **Default output format**: `json` (or press Enter to skip)
+   - **AWS Access Key ID**: Your R2 Access Key ID
+   - **AWS Secret Access Key**: Your R2 Secret Access Key
+   - **Default region name**: `auto`
+   - **Default output format**: `json` (or press Enter to skip)
+
+</Steps>
 
 </TabItem>
 </Tabs>

@@ -24,35 +24,39 @@ import {
 
 ## 2. Create a Worker with an R2 binding
 
+<Steps>
+
 1. Create a new Worker project:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={"r2-worker"} />
+   <PackageManagers type="create" pkg="cloudflare@latest" args={"r2-worker"} />
 
-When prompted, select **Hello World example** and **JavaScript** (or TypeScript) as your template.
+   When prompted, select **Hello World example** and **JavaScript** (or TypeScript) as your template.
 
 2. Move into the project directory:
 
-```sh
-cd r2-worker
-```
+   ```sh
+   cd r2-worker
+   ```
 
 3. Add an R2 binding to your Wrangler configuration file. Replace `my-bucket` with your bucket name:
 
-<WranglerConfig>
+   <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "my-bucket"
-```
+   ```toml
+   [[r2_buckets]]
+   binding = "MY_BUCKET"
+   bucket_name = "my-bucket"
+   ```
 
-</WranglerConfig>
+   </WranglerConfig>
 
 4. (Optional) If you are using TypeScript, regenerate types:
 
-```sh
-npx wrangler types
-```
+   ```sh
+   npx wrangler types
+   ```
+
+</Steps>
 
 ## 3. Read and write objects
 
@@ -117,43 +121,47 @@ export default {
 
 ## 4. Test and deploy
 
+<Steps>
+
 1. Test your Worker locally:
 
-```sh
-npx wrangler dev
-```
+   ```sh
+   npx wrangler dev
+   ```
 
-:::note[Local development]
-By default, `wrangler dev` uses a local R2 simulation. Objects you store during development exist only on your machine in the `.wrangler/state` folder and do not affect your production bucket.
+   :::note[Local development]
+   By default, `wrangler dev` uses a local R2 simulation. Objects you store during development exist only on your machine in the `.wrangler/state` folder and do not affect your production bucket.
 
-To connect to your real R2 bucket during development, add `"remote": true` to your R2 binding in your Wrangler configuration file. Refer to [remote bindings](/workers/development-testing/#remote-bindings) for more information.
-:::
+   To connect to your real R2 bucket during development, add `"remote": true` to your R2 binding in your Wrangler configuration file. Refer to [remote bindings](/workers/development-testing/#remote-bindings) for more information.
+   :::
 
 2. Once the dev server is running, test storing and retrieving objects:
 
-```sh
-# Store an object
-curl -X PUT http://localhost:8787/my-file.txt -d 'Hello, R2!'
+   ```sh
+   # Store an object
+   curl -X PUT http://localhost:8787/my-file.txt -d 'Hello, R2!'
 
-# Retrieve the object
-curl http://localhost:8787/my-file.txt
-```
+   # Retrieve the object
+   curl http://localhost:8787/my-file.txt
+   ```
 
 3. Deploy to production:
 
-```sh
-npx wrangler deploy
-```
+   ```sh
+   npx wrangler deploy
+   ```
 
 4. After deploying, Wrangler outputs your Worker's URL (for example, `https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev`). Test storing and retrieving objects:
 
-```sh
-# Store an object
-curl -X PUT https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev/my-file.txt -d 'Hello, R2!'
+   ```sh
+   # Store an object
+   curl -X PUT https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev/my-file.txt -d 'Hello, R2!'
 
-# Retrieve the object
-curl https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev/my-file.txt
-```
+   # Retrieve the object
+   curl https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev/my-file.txt
+	 ```
+
+</Steps>
 
 Refer to the [Workers R2 API documentation](/r2/api/workers/workers-api-usage/) for the complete API reference.
 
