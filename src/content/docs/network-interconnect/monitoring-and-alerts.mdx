@@ -11,11 +11,13 @@ import { Render, DashButton } from "~/components"
 
 The Cloudflare dashboard shows a list of all previously created interconnects, as well as useful information such as IP addresses, speed, type of interconnect, and status.
 
-The [Status column](https://dash.cloudflare.com/?to=/:account/interconnects/all) in the dashboard shows three different status:
+The Status column in the dashboard shows three different status:
+<DashButton url="/?to=/:account/interconnects" />
 
 - **Active**: The link operational state at the interconnect port on the Customer Connectivity Router (CCR) is up. This means that the CCR port sees sufficient light levels and has negotiated an Ethernet link.
 - **Unhealthy**: The link operational state at interconnect port is down. This might mean the CCR does not see light, cannot negotiate an Ethernet signal, or the light levels are below -20 dBm. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.
 - **Pending**: The link is not yet active. This is expected and can occur for several reasons: the customer has not received a cross-connect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The `Pending` status will disappear after the customer completes the cross-connect and status moves to `Active`.
+
 
 ## Alerts (v1 dataplane only)
 
@@ -49,11 +51,9 @@ You can configure notifications for upcoming CNI maintenance events using the No
 ### Enable Cloudflare Status Maintenance Notification
 
 First, identify the PoP code for your CNI circuit:
-1. In the Cloudflare dashboard, go to the **Configuration** page in Magic Transit or Magic WAN.
+1. In the Cloudflare dashboard, go to the **Connectors** page.
 
-	- **For Magic Transit**: <DashButton url="/?to=/:account/magic-transit/configuration" />
-
-	- **For Magic WAN**: <DashButton url="/?to=/:account/magic-wan/configuration" />
+	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
 
 2. Select the **Interconnects** tab.
 3. Select the CNI you want to enable notifications for.

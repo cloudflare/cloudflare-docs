@@ -14,17 +14,18 @@ import {
 	TabItem,
 } from "~/components";
 
-WARP settings define the WARP client modes and permissions available to end users.
+WARP settings allow you to customize the WARP client modes and permissions available to end users.
 
-- [Global settings](#global-settings) apply to all devices enrolled in your Zero Trust organization.
-- [Device settings](#device-settings) may vary across devices depending on which [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is applied.
+- [Global WARP settings](#global-warp-settings) are configurations which apply to all devices enrolled in your Zero Trust organization.
+- [Global disconnection settings](#global-disconnection-settings) allow administrators to force-disconnect all WARP clients during an incident or outage.
+- [Device profile settings](#device-profile-settings) can vary across devices depending on which [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is applied.
 
 :::note
 
 <Render file="warp/client-notification-lag" product="cloudflare-one" />
 :::
 
-## Global settings
+## Global WARP settings
 
 ### Allow admin override codes
 
@@ -39,7 +40,7 @@ When [**Lock WARP switch**](#lock-warp-switch) is enabled, users cannot toggle t
 Example use cases for **Allow admin override codes** include:
 
 - Allowing users to momentarily turn off WARP to work around a temporary network issue such as an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection.
-- Allowing test users to turn on WARP when [Disconnect WARP on all devices](#disconnect-warp-on-all-devices) is in effect.
+- Allowing test users to turn on WARP while a global disconnect is in effect.
 
 As admin, you can set a **Timeout** to define how long a user can toggle the WARP switch on or off after entering the override code. Cloudflare generates a new override code every hour that an admin can send to end users. The override code's validity adheres to fixed-hour time blocks and aims to be generous to the end user.
 
@@ -117,6 +118,27 @@ This setting is primarily used as a prerequisite for [WARP Connector](/cloudflar
 
 The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization or switches to a different registration. Disconnects and reconnects do not change the IP address assignment.
 
+
+### Allow all Cloudflare One traffic to reach enrolled devices
+
+<Details header="Feature availability">
+
+| Operating Systems | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | Gateway with WARP                                        | All plans                                                     |
+
+</Details>
+
+Allows traffic on-ramped using [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/cloudflare-one/networks/connectors/wan-tunnels/) to route to WARP devices enrolled in your Zero Trust organization.
+
+Each WARP device is assigned a virtual IP address in the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> space (`100.96.0.0/12`). With this setting `Enabled`, users on your private network will be able to connect to these virtual IPs and access [TCP, UDP, and/or ICMP-based services](/cloudflare-one/traffic-policies/proxy/) on your WARP devices. You can create [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to control which users and devices can access the `100.96.0.0/12`.
+
+:::note
+Ensure that traffic destined to `100.96.0.0/12` routes from your private network to Cloudflare Gateway. For example, if you are making a [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) connection, you must configure your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) so that traffic to `100.96.0.0/12` routes through the WARP tunnel.
+:::
+
+## Global disconnection settings
+
 ### Disconnect WARP on all devices
 
 <Details header="Feature availability">
@@ -142,29 +164,19 @@ Requires the [Super Administrator](/cloudflare-one/roles-permissions/) role.
 
 **Disconnect WARP on all devices** allows administrators to fail open WARP in case of an incident occurring in your environment, independent from incidents or outages affecting Cloudflare's services. When you turn on **Disconnect WARP on all devices**, Cloudflare will disconnect all Windows, macOS, and Linux WARP clients that are connected to your Zero Trust organization. This includes end user devices, [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) hosts, and [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) devices. End users will receive a notification on their device and the WARP client will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect).
 
-[Auto connect](#auto-connect) and [Lock WARP switch](#lock-warp-switch) will not apply while the global disconnect is on. Additionally, the global disconnect will clear any existing [admin override codes](#allow-admin-override-codes). The only way for users to reconnect during a global disconnect is by using a new [admin override code](#allow-admin-override-codes). For example, you may want to provide IT staff with a code so that they can test resolution of the incident that led to the global disconnect.
-
 To resume normal operations, turn off **Disconnect WARP on all devices**. The WARP client will automatically reconnect.
 
-### Allow all Cloudflare One traffic to reach enrolled devices
+For more information on how **Disconnect WARP on all devices** works with other WARP settings, refer to [WARP settings precedence](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/#warp-settings-precedence).
 
-<Details header="Feature availability">
+### Manage device connection using an external signal
 
-| Operating Systems | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | Gateway with WARP                                        | All plans                                                     |
+<Render file="warp/external-disconnect-availability" product="cloudflare-one" />
 
-</Details>
+Allows administrators to disconnect and reconnect WARP independently from any Cloudflare infrastructure. When `Enabled`, WARP clients will periodically poll the configured HTTPS endpoint and disconnect when it receives a valid disconnect signal.
 
-Allows traffic on-ramped using [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/cloudflare-one/networks/connectors/wan-tunnels/) to route to WARP devices enrolled in your Zero Trust organization.
+To set up the external HTTPS endpoint, refer to [External emergency disconnect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/).
 
-Each WARP device is assigned a virtual IP address in the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> space (`100.96.0.0/12`). With this setting `Enabled`, users on your private network will be able to connect to these virtual IPs and access [TCP, UDP, and/or ICMP-based services](/cloudflare-one/traffic-policies/proxy/) on your WARP devices. You can create [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to control which users and devices can access the `100.96.0.0/12`.
-
-:::note
-Ensure that traffic destined to `100.96.0.0/12` routes from your private network to Cloudflare Gateway. For example, if you are making a [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) connection, you must configure your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) so that traffic to `100.96.0.0/12` routes through the WARP tunnel.
-:::
-
-## Device settings
+## Device profile settings
 
 ### Captive portal detection
 

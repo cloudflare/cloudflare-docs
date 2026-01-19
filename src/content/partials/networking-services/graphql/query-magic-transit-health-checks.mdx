@@ -5,7 +5,7 @@ params:
 
 import { Markdown } from "~/components";
 
-This example uses the GraphQL Analytics API to query {props.productName} tunnel health check results. These results are aggregated from individual health checks that Cloudflare servers perform against Generic Routing Encapsulation (GRE) tunnels you configured to work with {props.productName} during onboarding. You can query up to one week of data for dates up to three months in the past.
+This example uses the GraphQL Analytics API to query {props.productName} tunnel health check results. These results are aggregated from individual health checks that Cloudflare servers perform against the tunnels you configured in your account. You can query up to one week of data for dates up to three months in the past.
 
 The following API call requests tunnel health checks for a specific account over a one-day period for a specific Cloudflare data center and outputs the requested fields. Replace `<CLOUDFLARE_ACCOUNT_TAG>` and `<API_TOKEN>`[^1] with your API credentials, and adjust the `datetimeStart` and `datetimeEnd` variables as needed.
 

@@ -8,6 +8,10 @@ import { FeatureTable, Render } from "~/components";
 
 Cloudflare offers support for gRPC to protect your APIs on any [proxied gRPC endpoints](/dns/proxy-status/). The gRPC protocol helps build efficient APIs with smaller payloads for reduced bandwidth usage, decreased latency, and faster implementations.
 
+:::note
+When gRPC is not enabled on a zone, Cloudflare will respond to gRPC requests with a `403 Forbidden` response.
+:::
+
 ## Availability
 
 <FeatureTable id="network.grpc" />

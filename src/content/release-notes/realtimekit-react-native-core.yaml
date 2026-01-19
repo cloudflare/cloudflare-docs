@@ -1,0 +1,72 @@
+---
+link: "/realtime/realtimekit/release-notes/react-native-core/"
+productName: RealtimeKit React Native Core
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2025-11-20"
+    title: RealtimeKit React Native Core 0.3.1
+    description: |-
+      **Fixes**
+      
+      - Fixed bluetooth not showing in list/dropdown after rejoining meeting
+      - Fixed mobile active speaker not working after rejoining meeting
+  - publish_date: "2025-11-02"
+    title: RealtimeKit React Native Core 0.3.0
+    description: |-
+      **Breaking changes**
+      
+      - Starting from version v0.3.0, SDK now supports only React Native 0.77 and above.
+      
+      **Fixes**
+      
+      - Fixed 16KB page support in Android >=15
+      - Fixed foreground service failed to stop errors in Android
+      - Fixed bluetooth issues in iOS Devices
+      - Fixed android build issues due to deprecated jCenter in React Native 0.80 or higher
+  - publish_date: "2025-10-06"
+    title: RealtimeKit React Native Core 0.2.1
+    description: |-
+      **Fixes**
+      
+      - Fixed can't install multiple apps with expo sdk
+      - Fixed screenshare for Android in Expo with New Architecture enabled
+      - Fixed remote audio/video not working in group calls
+  - publish_date: "2025-09-14"
+    title: RealtimeKit React Native Core 0.2.0
+    description: |-
+      **Breaking changes**
+      
+      - Adding a `blob_provider_authority` string resource is now mandatory.
+      Refer to the installation instructions for more details.
+      
+      **Fixes**
+      
+      - Fixed audio switch to earpiece when leaving stage in Webinar
+      - Fixed types for useRealtimeKitClient options
+      - Fixed screenshare for Android in Expo
+  - publish_date: "2025-08-05"
+    title: RealtimeKit React Native Core 0.1.3
+    description: |-
+      **Fixes**
+      
+      - Fixed active speaker not working
+  - publish_date: "2025-07-08"
+    title: RealtimeKit React Native Core 0.1.2
+    description: |-
+      **Fixes**
+      
+      - Fixed screenshare not working for Android 13 and later
+      - Fixed audio device switching not working
+      - Minor performance improvements
+  - publish_date: "2025-06-05"
+    title: RealtimeKit React Native Core 0.1.1
+    description: |-
+      **Fixes**
+      
+      - Documentation improvements
+  - publish_date: "2025-05-29"
+    title: RealtimeKit React Native Core 0.1.0
+    description: |-
+      **Features**
+      
+      - Initial release

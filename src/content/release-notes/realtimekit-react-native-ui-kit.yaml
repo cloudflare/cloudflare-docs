@@ -1,0 +1,49 @@
+---
+link: "/realtime/realtimekit/release-notes/react-native-ui-kit/"
+productName: RealtimeKit React Native UI Kit
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2025-11-20"
+    title: RealtimeKit React Native UI Kit 0.2.0
+    description: |-
+      **Features**
+      
+      - Added edit, pin & delete controls to Chat messages in RtkChat
+      - Added optional background support for audio/video in Android.
+      Refer to the [documentation](https://docs.realtime.cloudflare.com/react-native/quickstart#additional-steps-for-background-audiovideo-support) for implementation details.
+      
+      **Fixes**
+      
+      - Fixed image button in RtkChat opening File Manager instead of Gallery
+      - Fixed app crash on RtkChat auto-scroll when new messages arrive
+      - Fixed chat message display issues
+  - publish_date: "2025-09-14"
+    title: RealtimeKit React Native UI Kit 0.1.3
+    description: |-
+      **Fixes**
+      
+      - Fixed duplicate stage toggle pop-ups
+      - Fixed audio switch to earpiece when leaving stage in Webinar
+  - publish_date: "2025-07-08"
+    title: RealtimeKit React Native UI Kit 0.1.2
+    description: |-
+      **Fixes**
+      
+      - Fixed android build failing for New Architecture
+      - Added delete option feature in Polls
+      - Fixed screen being blank when kicked from meeting
+      - Fixed the fullscreen button not clickable in screenshare
+      - Fixed audio selector not visible for webinar viewer
+      - Fixed video incorrectly labeled as being off
+  - publish_date: "2025-06-05"
+    title: RealtimeKit React Native UI Kit 0.1.1
+    description: |-
+      **Fixes**
+      
+      - Documentation improvements
+  - publish_date: "2025-06-04"
+    title: RealtimeKit React Native UI Kit 0.1.0
+    description: |-
+      **Features**
+      
+      - Initial release

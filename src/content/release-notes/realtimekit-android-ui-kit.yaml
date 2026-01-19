@@ -1,0 +1,131 @@
+---
+link: "/realtime/realtimekit/release-notes/android-ui-kit/"
+productName: RealtimeKit Android UI Kit
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2025-12-16"
+    title: RealtimeKit Android UI Kit 0.3.2
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.7](/realtime/realtimekit/release-notes/android-core/#2025-12-16)
+  - publish_date: "2025-12-12"
+    title: RealtimeKit Android UI Kit 0.3.1
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.6](/realtime/realtimekit/release-notes/android-core/#2025-12-12)
+      
+      **Fixes**
+      
+      - Fix crash when screenshare is disabled for a participant
+      - Fix screenshare disappearing when video is disabled for a screensharing participant
+  - publish_date: "2025-12-04"
+    title: RealtimeKit Android UI Kit 0.3.0
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.5](/realtime/realtimekit/release-notes/android-core/#2025-12-04)
+  - publish_date: "2025-11-06"
+    title: RealtimeKit Android UI Kit 0.2.12
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.4](/realtime/realtimekit/release-notes/android-core/#2025-11-06)
+      
+      **Fixes**
+      
+      - Fixed an issue with camera video not rendering in the settings UI
+  - publish_date: "2025-10-23"
+    title: RealtimeKit Android UI Kit 0.2.11
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.3](/realtime/realtimekit/release-notes/android-core/#2025-10-23)
+      
+      **Fixes**
+      
+      - Fix a regression that caused self video to not render if meeting was joined with camera disabled
+  - publish_date: "2025-10-23"
+    title: RealtimeKit Android UI Kit 0.2.10
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.2](/realtime/realtimekit/release-notes/android-core/#2025-10-23)
+      
+      **Fixes**
+      
+      - Fix an issue where pinning yourself in the participant view didn't update correctly
+  - publish_date: "2025-10-08"
+    title: RealtimeKit Android UI Kit 0.2.9
+    description: |-
+      **Fixes**
+      
+      - Fix an issue where the last video frame remained stuck on participant tile
+  - publish_date: "2025-10-06"
+    title: RealtimeKit Android UI Kit 0.2.8
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.1](/realtime/realtimekit/release-notes/android-core/#2025-10-06)
+  - publish_date: "2025-09-23"
+    title: RealtimeKit Android UI Kit 0.2.7
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.0](/realtime/realtimekit/release-notes/android-core/#2025-09-23)
+  - publish_date: "2025-09-18"
+    title: RealtimeKit Android UI Kit 0.2.6
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.4.1](/realtime/realtimekit/release-notes/android-core/#2025-09-18)
+      
+      **Fixes**
+      
+      - Audio device selector now dynamically updates the options list when devices are removed or added
+      - Fix crash when a host turns off video for an active screenshare user
+  - publish_date: "2025-09-12"
+    title: RealtimeKit Android UI Kit 0.2.5
+    description: |-
+      **Fixes**
+      
+      - Pinned peers did not get removed from the stage when kicked
+      - Media consumers are now created in parallel, which significantly improves the speed of when users will start seeing other people's audio/video after joining a meeting.
+      - "Ghost"/Invalid peers that would sometimes show up in long-running meetings are now fully gone
+      - Fixed an issue In webinar meetings where the SDK would fail to produce media after being removed from the stage once
+      - Fix a rare crash during meeting joins in poor network scenarios
+  - publish_date: "2025-08-13"
+    title: RealtimeKit Android UI Kit 0.2.4
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.3.2](/realtime/realtimekit/release-notes/android-core/#2025-08-13)
+  - publish_date: "2025-08-13"
+    title: RealtimeKit Android UI Kit 0.2.3
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.3.1](/realtime/realtimekit/release-notes/android-core/#2025-08-13)
+  - publish_date: "2025-08-12"
+    title: RealtimeKit Android UI Kit 0.2.2
+    description: |-
+      **Breaking changes**
+      
+      - `RtkParticipantTileView#activateForSelfPreview` was removed, you can now call `RtkParticipantTileView#activate` for all participants and we take care of the self preview case internally
+      
+      **Features**
+      
+      - Upgraded to [RealtimeKit Core v1.3.0](/realtime/realtimekit/release-notes/android-core/#2025-08-12)
+  - publish_date: "2025-08-05"
+    title: RealtimeKit Android UI Kit 0.2.1
+    description: |-
+      **Features**
+      
+      - Upgraded to [RealtimeKit Core v1.2.0](/realtime/realtimekit/release-notes/android-core/#2025-08-05)
+  - publish_date: "2025-07-02"
+    title: RealtimeKit Android UI Kit 0.2.0
+    description: |-
+      **Features**
+      
+      - Upgraded to [RealtimeKit Core v1.1.0](/realtime/realtimekit/release-notes/android-core/#2025-07-02)

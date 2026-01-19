@@ -5,7 +5,6 @@ params:
   - productNameVirtual?
   - maintenanceURL
   - dashName
-  - deviceTypeName
   - sfpURL?
   - wan
   - lan
@@ -337,16 +336,18 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
   )
 }
 
+### Create a new profile
+
+You need to create a profile for your appliance before connecting it to the Internet.
+
+To create a profile:
+
 {/* WAN Tunnels section */}
 { props.dashName === "WAN Tunnels" && (
 	<>
-		<AnchorHeading title="Create a new profile" depth={3} />
-		<p>You need to create a profile for your appliance before connecting it to the Internet.</p>
-		<p>To create a profile:</p>
 		<ol>
 			<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
-			<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong>.</li>
-			<li>Select <strong>Create a profile</strong>.</li>
+			<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong> &gt; <strong>Create a profile</strong>.</li>
 		</ol>
 	</>
 )
@@ -355,24 +356,23 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 {/* Magic WAN section */}
 { props.dashName !== "WAN Tunnels" && (
 	<>
-		<AnchorHeading title="Add a Connector on-ramp" depth={3} />
-		<p>You need to add your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to your Cloudflare dashboard and configure its settings before connecting it to the Internet.</p>
-		<p>To add a { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:</p>
 		<ol>
-			<li>Log in to the <a href="https://dash.cloudflare.com/">Cloudflare dashboard</a> and select your account.</li>
-			<li>Go to <strong>Networking</strong> &gt; <strong>Magic WAN</strong> &gt; <strong>Connector on-ramps (beta)</strong>.</li>
-			<li>Select <strong>Add</strong>.</li>
+			<li>Go to the <strong>Connectors</strong> page.
+			<br />
+			<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+			</li>
+			<li>Go to the <strong>Appliances</strong> tab &gt; <strong>Profiles</strong> &gt; <strong>Create a new profile</strong>.</li>
 		</ol>
 	</>
 )
 }
-4. In **Name**, enter a descriptive name for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Optionally, you can also add a description for it.
-5. You need to decide if you want to turn on high availability for the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
-6. Select **Create and continue**.
-7. Select **Add {props.deviceTypeName}**. This will show you a list of devices associated with your account. <Markdown text={props.noConnectorShows} />
-8. If you have more than one { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, choose the one that corresponds to the on-ramp you are creating. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices are identified by a serial number, also known as a service tag. Use this information to choose the right { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. <br /> Select **Add Connector** when you are ready to proceed.
-9. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. You can change this later. Refer to <a href={props.interruptWindowURL}>Interrupt window</a> for more details on how to define when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
-10. Select **Continue** to proceed to creating your WAN and LAN networks.
+3. In **Name**, enter a descriptive name for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Optionally, you can also add a description for it.
+4. You need to decide if you want to turn on high availability for the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+5. Select **Create and continue**.
+6. Select **Add Appliance**. This will show you a list of devices associated with your account. <Markdown text={props.noConnectorShows} />
+7. If you have more than one { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, choose the one that corresponds to the on-ramp you are creating. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices are identified by a serial number, also known as a service tag. Use this information to choose the right { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. <br /> Select **Add Appliance** when you are ready to proceed.
+8. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. You can change this later. Refer to <a href={props.interruptWindowURL}>Interrupt window</a> for more details on how to define when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
+9. Select **Continue** to proceed to creating your WAN and LAN networks.
 
 ### Create a WAN
 
@@ -589,15 +589,15 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		{/* Instructions for Magic WAN */}
 		<Markdown
 	text={`
-		1. Go to Magic WAN's **Configuration** page.`}
+		1. Go to the **Connectors** page.`}
 	inline={false}
 	/>
 
-   <DashButton url="/?to=/:account/magic-wan/configuration" />
+   <DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
 
 		<Markdown
 	text={`
-		2. Go to **Connectors**.
+		2. Go to the **Appliances** tab > **Appliances**.
 		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
 		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
@@ -613,7 +613,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
   <>
 		<AnchorHeading title="Boot your Virtual Connector" depth={2} />
 
-		<AnchorHeading title="Default password to access Virtual Connector" depth={2} />
+		<AnchorHeading title="Default password to access Virtual Connector" depth={3} />
 
 		<Markdown
 		text={`
@@ -640,11 +640,11 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		<Markdown
 		text={`
 		1. Connect ${props.productName} to a DHCP port with access to the Internet.
-		2. ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
+		2. [Create a new profile](#create-a-new-profile) in the dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
 		4. [Activate](#activate-appliance) and power on your ${props.productName}.
 		5. Wait 60 seconds.
-		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
+		6. Make changes to the [WAN settings](#create-a-wan) in the dashboard to a static IP set up.
 		7. Wait 60 seconds again.
 		8. ${props.productName} will go offline. This is normal and expected behavior.
 		9. Adjust your physical connections as required to match the static configuration.
@@ -665,11 +665,11 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		<Markdown
 		text={`
 		1. Connect the machine where you installed the VM with ${props.productNameVirtual} to a DHCP port with access to the Internet.
-		2. ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
+		2. [Create a new profile](#create-a-new-profile) in the dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
 		4. [Activate](#activate-appliance) and boot your ${props.productNameVirtual}.
 		5. Wait 60 seconds.
-		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
+		6. Make changes to the [WAN settings](#create-a-wan) in the dashboard to a static IP set up.
 		7. Wait 60 seconds again.
 		8. Modify your [Port Groups](#configure-a-virtual-machine) as needed to change the source from which the WAN port obtains its IP address.
 		9. Reboot your virtual machine.
@@ -825,16 +825,16 @@ To set up a high availability configuration:
 
 <Markdown
 text={`
-1. Follow the steps in ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} up until step 4.
+1. Follow the steps in [Create a new profile](#create-a-new-profile) up until step 4.
 `}
 inline={false}
 />
 2. After naming your site, select **Turn on high availability**.
 3. Select **Create and continue**.
-4. Select **Add {props.deviceTypeName}**.
-5. From the list, choose your first { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add {props.deviceTypeName}**.
-6. Back on the previous screen, select **Add secondary {props.deviceTypeName}**.
-7. From the list, choose your second { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add {props.deviceTypeName}**.
+4. Select **Add Appliance**.
+5. From the list, choose your first { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add Appliance**.
+6. Back on the previous screen, select **Add secondary appliance**.
+7. From the list, choose your second { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add Appliance**.
 8. Select **Continue** to create a WAN. If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
 9. To create a LAN, follow the steps mentioned above in [Create a LAN](#create-a-lan) up until step 4.
 10. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
@@ -856,7 +856,10 @@ To check the IPsec tunnels and static routes created by your { props.magicWord =
 	<>
 		<Markdown
 	text={`
-		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Insights** > **Network visibility**.
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Connectors**.
+		2. In **WAN Tunnels** you can inspect the IPsec tunnels created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
+		3. In **Routes** you can inspect the static routes created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
+
 	`}
 	inline={false}
 	/>
@@ -865,22 +868,32 @@ To check the IPsec tunnels and static routes created by your { props.magicWord =
 	<>
 		<Markdown
 	text={`
-		1. Go to the **Network overview** page.`}
+		1. Go to the **Connectors** page.`}
 	inline={false}
 	/>
 
-   <DashButton url="/?to=/:account/magic-wan/network" />
+   <DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
 
+		<Markdown
+	text={`
+	2. The **IPsec/GRE tunnels** tab shows a list of all the IPsec tunnels created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
+	3. Go to the **Routes** page.
+	`}
+	inline={false}
+	/>
+
+	<DashButton url="/?to=/:account/magic-networks/routes" />
+
+		<Markdown
+	text={`
+	4. Here you can inspect the static routes created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
+	`}
+	inline={false}
+	/>
 	</>
 )
 }
-<Markdown
-text={`
-2. Select the name of the site for which you want to check the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName }'s IPsec tunnels and static routes, and select **Edit**.
-3. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
-`}
-inline={false}
-/>
+
 
 ---
 

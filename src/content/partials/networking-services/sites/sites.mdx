@@ -45,23 +45,24 @@ When you are finished setting these up, refer to the steps below to learn how to
 	<>
 	<Markdown
 		text={`
-		1. Go to the **Network overview** page.
+		1. Go to the **Network health** page.
 		`}
 		inline={false}
 	/>
-	<DashButton url="/?to=/:account/magic-wan/network" />
+	<DashButton url="/?to=/:account/networking-insights/health/network-health" />
 
 		<Markdown
 		text={`
-		2. Add a name and description for your new site. Optionally, you can also add the geographical coordinates for your site in **Latitude** and **Longitude**. If you add geographical coordinates, once created your site's location will show in the map.
-		3. Select **Create and continue**.
-		4. Choose one or more on-ramps for your site from the list. Remember to only choose the on-ramps available to that particular site, as the list might show on-ramps available on other locations.
-		5. Select **Continue**.
-		6. In **Define alert settings** you set up alerts to notify you when there are issues with your site's on-ramps. If you want to set up alerts later, select **Skip this for now** to complete your setup. Otherwise, continue reading.
-		7. In **Magic WAN Health Check Alert** > **Notification name**, enter a name for the site's alert.
-		8. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
-		9. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information.
-		10. Select **Complete setup** to finish setting up your site.
+		2. In **Network overview**, select **Add a site**.
+		3. Add a name and description for your new site. Optionally, you can also add the geographical coordinates for your site in **Latitude** and **Longitude**. If you add geographical coordinates, your site's location will show in the map once created.
+		4. Select **Create and continue**.
+		5. Choose one or more on-ramps for your site from the list. Remember to only choose the on-ramps available to that particular site, as the list might show on-ramps available on other locations.
+		6. Select **Continue**.
+		7. In **Define alert settings** you set up alerts to notify you when there are issues with your site's on-ramps. If you want to set up alerts later, select **Skip this for now** to complete your setup. Otherwise, continue reading.
+		8. In **Magic WAN Health Check Alert** > **Notification name**, enter a name for the site's alert.
+		9. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
+		10. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information.
+		11. Select **Complete setup** to finish setting up your site.
 		`}
 		inline={false}
 	/>
@@ -111,16 +112,17 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 	<>
 	<Markdown
 		text={`
-		1. Go to the **Network overview** page.
+		1. Go to the **Network health** page.
 		`}
 		inline={false}
 	/>
 
-	<DashButton url="/?to=/:account/magic-wan/network" />
+	<DashButton url="/?to=/:account/networking-insights/health/network-health" />
 
 	<Markdown
 		text={`
-		2. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
+		2. Go to **Network overview** > **Traffic overview**.
+		3. Find your site > select the three dots in front of it > **Edit**.
 		3. Select **On-ramps**.
 		4. Select **Add** to add a new on-ramp.
 		5. If you want to remove an on-ramp, select the three dots in front of your on-ramp > **Remove**.
@@ -149,14 +151,15 @@ If you add geographic coordinates to your site, it will show up in the Network m
 	<>
 	<Markdown
 		text={`
-		1. Go to the **Network overview** page.
+		1. Go to the **Network health** page.
 		`}
 		inline={false}
 	/>
-	<DashButton url="/?to=/:account/magic-wan/network" />
+	<DashButton url="/?to=/:account/networking-insights/health/network-health" />
 		<Markdown
 		text={`
-		2. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
+		2. Go to **Network overview** > **Traffic overview**.
+		3. Find your site > select the three dots in front of it > **Edit**.
 		`}
 		inline={false}
 	/>

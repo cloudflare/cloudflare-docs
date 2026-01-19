@@ -2438,20 +2438,6 @@
 				}
 			}
 		},
-		"mirage": {
-			"title": "Mirage (deprecated)",
-			"link": "/speed/optimization/images/mirage/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Pro and above",
-					"free": "No",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
 		"polish": {
 			"title": "Polish",
 			"link": "/images/polish/",

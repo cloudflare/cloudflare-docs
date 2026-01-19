@@ -15,6 +15,8 @@ This guide assumes that you are already familiar with [initializing the Realtime
 
 RealtimeKit provides flexible approaches for acquiring and managing participant media (audio and video tracks). By default, the SDK handles media acquisition automatically when you initialize it. However, certain use cases require accessing media tracks before or independently of SDK initialization.
 
+<RTKSDKSelector />
+
 ## When to use custom media acquisition
 
 Custom media acquisition is useful when you need to:
@@ -33,8 +35,6 @@ Most applications do not need custom media acquisition. If you are unsure whethe
 Initialize the SDK first, then access media tracks from the meeting object. This is the simplest approach and suitable for most use cases.
 
 **When to use**: You need to access media tracks after SDK initialization for logging, analysis, or integration with other services.
-
-<RTKSDKSelector />
 
 <RTKCodeSnippet id="web-react">
 
@@ -101,8 +101,6 @@ class AppComponent {
 </RTKCodeSnippet>
 
 ## Approach 2: Media-first
-
-<RTKSDKSelector />
 
 <RTKCodeSnippet id="web-react">
 
@@ -259,8 +257,6 @@ Acquire and manage media tracks independently using browser APIs, then pass them
 - Requires deeper knowledge of WebRTC and browser media APIs.
 
 Initialize the SDK with audio and video disabled, then enable them with your custom tracks:
-
-<RTKSDKSelector />
 
 <RTKCodeSnippet id="web-react">
 
