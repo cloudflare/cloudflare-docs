@@ -1,0 +1,677 @@
+---
+summary: Automatically inject Turnstile Pre-Clearance to protect API endpoints from automated abuse with transparent challenge handling.
+tags:
+  - Security
+  - Bot Management
+  - Response modification
+  - HTMLRewriter
+products: [snippets, turnstile, bots]
+pcx_content_type: example
+title: Turnstile API Protection with Pre-Clearance
+description: Inject Turnstile Pre-Clearance handler to transparently protect backend APIs from automated attacks without modifying frontend code.
+---
+
+This snippet injects Turnstile Pre-Clearance JavaScript into HTML responses, automatically protecting API endpoints from bots and scrapers. The injected code proactively solves Turnstile challenges and intercepts API requests to handle challenge/retry logic transparently.
+
+## Use case
+
+Protects backend APIs from:
+- Direct API attacks bypassing the frontend
+- Residential proxy abuse (high bot scores 30-99)
+- Automated scraping and inventory checking
+- Credential stuffing and account takeover
+
+Common applications:
+- E-commerce (flight search, checkout APIs)
+- Ticketing and limited releases
+- API-driven web applications
+
+## Prerequisites
+
+- [Turnstile widget](/turnstile/get-started/) created with Pre-Clearance enabled
+- Frontend and API in the same Cloudflare zone (or zones merged)
+- [WAF Managed Challenge](/waf/managed-challenge/) rule protecting API endpoints
+
+## Code
+
+```js
+const CONFIG = {
+  TURNSTILE_SITEKEY: "1x00000000000000000000AA",
+  PROTECTED_API_HOST: "api.example.com",
+  RETRY_DELAY_MS: 100,
+  SOLVE_TIMEOUT_MS: 30000,
+  MAX_RETRIES: 1,
+  CLEARANCE_LIFETIME_MS: 30 * 60 * 1000,
+  DEBUG: false,
+};
+
+const INJECTED_SCRIPT = `
+(function(window) {
+  'use strict';
+
+  var CONFIG = __CONFIG_PLACEHOLDER__;
+  var requestId = 0;
+
+  var STORAGE_KEY = 'tc_clearance_' + CONFIG.PROTECTED_API_HOST.replace(/[^a-z0-9]/gi, '_');
+
+  var TurnstileClearance = {
+    _widgetId: null,
+    _solvePromise: null,
+    _solveResolve: null,
+    _solveReject: null,
+    _solveTimeout: null,
+    _originalFetch: null,
+    _originalXHROpen: null,
+    _originalXHRSend: null,
+    _originalXHRSetRequestHeader: null,
+    _tabId: null,
+    _channel: null,
+    _lastSolveTime: null,
+    _proactiveSolvePromise: null,
+    _renderPending: false,
+    _renderRetryTimeout: null,
+    _renderRetryCount: 0,
+    _maxRenderRetries: 50,
+
+    _log: function(msg, data, type) {
+      if (!CONFIG.DEBUG) return;
+      var prefix = '[TC]';
+      var args = [prefix, msg];
+      if (data !== undefined) args.push(data);
+      switch(type) {
+        case 'error': console.error.apply(console, args); break;
+        case 'warn': console.warn.apply(console, args); break;
+        default: console.log.apply(console, args);
+      }
+    },
+
+    _getStoredClearance: function() {
+      try {
+        var stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          var data = JSON.parse(stored);
+          if (data.solveTime && Date.now() < data.solveTime + CONFIG.CLEARANCE_LIFETIME_MS) {
+            return data;
+          }
+        }
+      } catch (e) {
+        this._log('Error reading stored clearance', { error: e.message }, 'warn');
+      }
+      return null;
+    },
+
+    _storeClearance: function() {
+      try {
+        var data = { solveTime: this._lastSolveTime, host: CONFIG.PROTECTED_API_HOST };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        this._log('Stored clearance in localStorage', { expiresIn: Math.round(CONFIG.CLEARANCE_LIFETIME_MS / 1000) + 's' });
+      } catch (e) {
+        this._log('Error storing clearance', { error: e.message }, 'warn');
+      }
+    },
+
+    _hasValidClearance: function() {
+      if (this._lastSolveTime && Date.now() < this._lastSolveTime + CONFIG.CLEARANCE_LIFETIME_MS) {
+        return true;
+      }
+      var stored = this._getStoredClearance();
+      if (stored) {
+        this._lastSolveTime = stored.solveTime;
+        return true;
+      }
+      return false;
+    },
+
+    _invalidateClearance: function() {
+      this._lastSolveTime = null;
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (e) {}
+      this._log('Clearance invalidated');
+    },
+
+    _isProtectedUrl: function(url) {
+      try {
+        var parsed = new URL(url, window.location.origin);
+        var isProtected = parsed.hostname === CONFIG.PROTECTED_API_HOST;
+        return isProtected;
+      } catch (e) {
+        return false;
+      }
+    },
+
+    _isChallengedResponse: function(status, getHeader) {
+      var cfMitigated = null;
+      try {
+        cfMitigated = getHeader('cf-mitigated');
+      } catch (e) {}
+      var challenged = cfMitigated === 'challenge' || status === 403;
+      return challenged;
+    },
+
+    _waitForClearance: function() {
+      var self = this;
+      
+      if (this._hasValidClearance()) {
+        this._log('Valid clearance exists, proceeding immediately');
+        return Promise.resolve();
+      }
+      
+      if (this._proactiveSolvePromise) {
+        this._log('Waiting for proactive solve to complete...');
+        return this._proactiveSolvePromise;
+      }
+      
+      if (this._solvePromise) {
+        this._log('Waiting for in-progress solve to complete...');
+        return this._solvePromise;
+      }
+      
+      return Promise.resolve();
+    },
+
+    _triggerSolve: function(isProactive) {
+      var self = this;
+
+      if (this._solvePromise) {
+        this._log('Solve already in progress, coalescing');
+        return this._solvePromise;
+      }
+
+      this._log('>>> Triggering Turnstile solve', { proactive: !!isProactive });
+
+      this._solvePromise = new Promise(function(resolve, reject) {
+        self._solveResolve = resolve;
+        self._solveReject = reject;
+
+        self._solveTimeout = setTimeout(function() {
+          self._log('Solve timeout after ' + CONFIG.SOLVE_TIMEOUT_MS + 'ms', null, 'error');
+          self._cleanupSolve();
+          reject(new Error('Turnstile solve timeout'));
+        }, CONFIG.SOLVE_TIMEOUT_MS);
+
+        if (self._widgetId !== null && typeof turnstile !== 'undefined') {
+          self._log('Resetting existing widget');
+          turnstile.reset(self._widgetId);
+        } else {
+          self._renderWidget();
+        }
+      });
+
+      if (isProactive) {
+        this._proactiveSolvePromise = this._solvePromise;
+      }
+
+      return this._solvePromise;
+    },
+
+    _cleanupSolve: function() {
+      if (this._solveTimeout) {
+        clearTimeout(this._solveTimeout);
+        this._solveTimeout = null;
+      }
+      if (this._renderRetryTimeout) {
+        clearTimeout(this._renderRetryTimeout);
+        this._renderRetryTimeout = null;
+      }
+      this._renderPending = false;
+      this._renderRetryCount = 0;
+      this._solvePromise = null;
+      this._solveResolve = null;
+      this._solveReject = null;
+      this._proactiveSolvePromise = null;
+    },
+
+    _removeWidget: function() {
+      if (this._widgetId !== null && typeof turnstile !== 'undefined') {
+        this._log('Removing Turnstile widget', { widgetId: this._widgetId });
+        try {
+          turnstile.remove(this._widgetId);
+        } catch (e) {
+          this._log('Error removing widget', { error: e.message }, 'warn');
+        }
+        this._widgetId = null;
+      }
+      var container = document.getElementById('cf-turnstile-preclearance');
+      if (container && container.parentNode) {
+        container.parentNode.removeChild(container);
+        this._log('Removed Turnstile container');
+      }
+    },
+
+    _onSuccess: function(token) {
+      this._log('<<< Turnstile solved successfully', { tokenPrefix: token.substring(0, 20) + '...' });
+      
+      this._lastSolveTime = Date.now();
+      this._storeClearance();
+
+      if (this._channel) {
+        this._channel.postMessage({ type: 'SOLVE', tabId: this._tabId, time: this._lastSolveTime });
+      }
+
+      if (this._solveResolve) this._solveResolve();
+      this._cleanupSolve();
+    },
+
+    _onError: function(errorCode) {
+      this._log('Turnstile error', { errorCode: errorCode }, 'error');
+      if (this._solveReject) this._solveReject(new Error('Turnstile error: ' + errorCode));
+      this._removeWidget();
+      this._cleanupSolve();
+    },
+
+    _renderWidget: function() {
+      var self = this;
+
+      if (this._renderPending) {
+        this._log('Render already pending, skipping duplicate call');
+        return;
+      }
+
+      if (typeof turnstile === 'undefined') {
+        this._renderRetryCount++;
+        if (this._renderRetryCount > this._maxRenderRetries) {
+          this._log('Turnstile API failed to load after ' + this._maxRenderRetries + ' retries', null, 'error');
+          this._renderPending = false;
+          if (this._solveReject) {
+            this._solveReject(new Error('Turnstile API failed to load'));
+          }
+          this._cleanupSolve();
+          return;
+        }
+        this._log('Turnstile API not loaded yet, waiting... (attempt ' + this._renderRetryCount + '/' + this._maxRenderRetries + ')', null, 'warn');
+        this._renderPending = true;
+        this._renderRetryTimeout = setTimeout(function() {
+          self._renderPending = false;
+          self._renderWidget();
+        }, 100);
+        return;
+      }
+
+      this._renderPending = false;
+      this._renderRetryCount = 0;
+
+      var container = document.getElementById('cf-turnstile-preclearance');
+      if (!container) {
+        if (!document.body) {
+          this._log('document.body not ready, waiting...', null, 'warn');
+          this._renderPending = true;
+          setTimeout(function() {
+            self._renderPending = false;
+            self._renderWidget();
+          }, 10);
+          return;
+        }
+        container = document.createElement('div');
+        container.id = 'cf-turnstile-preclearance';
+        container.style.cssText = 'position:fixed;bottom:10px;right:10px;z-index:999999;';
+        document.body.appendChild(container);
+        this._log('Created Turnstile container');
+      }
+
+      this._log('Rendering Turnstile widget');
+      this._widgetId = turnstile.render(container, {
+        sitekey: CONFIG.TURNSTILE_SITEKEY,
+        callback: function(token) { self._onSuccess(token); },
+        'error-callback': function(code) { self._onError(code); },
+        'expired-callback': function() { self._log('Turnstile token expired', null, 'warn'); }
+      });
+    },
+
+    _startProactiveSolve: function() {
+      var self = this;
+      
+      if (this._hasValidClearance()) {
+        var remaining = (this._lastSolveTime + CONFIG.CLEARANCE_LIFETIME_MS - Date.now()) / 1000;
+        this._log('Valid clearance found in storage, skipping proactive solve', { 
+          remainingSeconds: Math.round(remaining) 
+        });
+        return;
+      }
+      
+      this._log('No valid clearance, starting proactive solve...');
+      
+      self._triggerSolve(true).catch(function(err) {
+        self._log('Proactive solve failed', { error: err.message }, 'warn');
+      });
+    },
+
+    _interceptFetch: function() {
+      var self = this;
+      this._originalFetch = window.fetch;
+
+      window.fetch = function(input, init) {
+        var id = ++requestId;
+        var url = typeof input === 'string' ? input : (input instanceof Request ? input.url : String(input));
+
+        if (!self._isProtectedUrl(url)) {
+          return self._originalFetch.call(window, input, init);
+        }
+
+        var method = (init && init.method) || 'GET';
+        
+        self._log('[F#' + id + '] Protected fetch', { url: url, method: method });
+
+        function makeRequest(retryCount) {
+          var reqInit = init ? Object.assign({}, init) : {};
+          reqInit.credentials = 'include';
+          
+          var reqInput = (input instanceof Request) ? input.clone() : input;
+          self._log('[F#' + id + '] Sending request', { retry: retryCount, credentials: 'include' });
+          
+          return self._originalFetch.call(window, reqInput, reqInit)
+            .then(function(response) {
+              self._log('[F#' + id + '] Response received', {
+                status: response.status,
+                cfMitigated: response.headers.get('cf-mitigated')
+              });
+
+              var challenged = self._isChallengedResponse(response.status, function(h) { return response.headers.get(h); });
+
+              if (challenged && retryCount < CONFIG.MAX_RETRIES) {
+                self._log('[F#' + id + '] Challenge detected, invalidating and solving...', null, 'warn');
+                self._invalidateClearance();
+                return self._triggerSolve()
+                  .then(function() {
+                    self._log('[F#' + id + '] Solve complete, retrying after ' + CONFIG.RETRY_DELAY_MS + 'ms');
+                    return new Promise(function(r) { setTimeout(r, CONFIG.RETRY_DELAY_MS); });
+                  })
+                  .then(function() {
+                    return makeRequest(retryCount + 1);
+                  });
+              }
+
+              if (challenged) {
+                self._log('[F#' + id + '] Max retries reached, returning challenge response', null, 'error');
+              }
+
+              return response;
+            })
+            .catch(function(error) {
+              self._log('[F#' + id + '] Fetch error (likely CORS-blocked challenge)', { 
+                error: error.message, 
+                retry: retryCount 
+              }, 'warn');
+              
+              if (retryCount < CONFIG.MAX_RETRIES) {
+                self._log('[F#' + id + '] Network error, assuming challenge - solving...', null, 'warn');
+                self._invalidateClearance();
+                return self._triggerSolve()
+                  .then(function() {
+                    return new Promise(function(r) { setTimeout(r, CONFIG.RETRY_DELAY_MS); });
+                  })
+                  .then(function() {
+                    return makeRequest(retryCount + 1);
+                  });
+              }
+              
+              throw error;
+            });
+        }
+
+        return self._waitForClearance().then(function() {
+          return makeRequest(0);
+        });
+      };
+      
+      this._log('Fetch interceptor installed');
+    },
+
+    _interceptXHR: function() {
+      var self = this;
+      this._originalXHROpen = XMLHttpRequest.prototype.open;
+      this._originalXHRSend = XMLHttpRequest.prototype.send;
+
+      XMLHttpRequest.prototype.open = function(method, url) {
+        this._tcUrl = url;
+        this._tcMethod = method;
+        return self._originalXHROpen.apply(this, arguments);
+      };
+
+      XMLHttpRequest.prototype.send = function(body) {
+        var xhr = this;
+        var url = xhr._tcUrl;
+
+        if (!self._isProtectedUrl(url)) {
+          return self._originalXHRSend.call(xhr, body);
+        }
+
+        xhr.withCredentials = true;
+        
+        var originalOnReadyStateChange = xhr.onreadystatechange;
+
+        xhr.onreadystatechange = function(event) {
+          if (xhr.readyState === 4) {
+            var challenged = self._isChallengedResponse(xhr.status, function(h) { 
+              return xhr.getResponseHeader(h); 
+            });
+            
+            if (challenged) {
+              self._log('XHR challenge detected, triggering solve', null, 'warn');
+              self._invalidateClearance();
+              self._triggerSolve();
+            }
+          }
+
+          if (originalOnReadyStateChange) {
+            originalOnReadyStateChange.call(xhr, event);
+          }
+        };
+
+        function doSend() {
+          self._originalXHRSend.call(xhr, body);
+        }
+
+        self._waitForClearance().then(doSend);
+      };
+
+      this._log('XHR interceptor installed');
+    },
+
+    _setupCrossTabSync: function() {
+      var self = this;
+      if (typeof BroadcastChannel === 'undefined') return;
+
+      this._tabId = Math.random().toString(36).substr(2, 9);
+      this._channel = new BroadcastChannel('turnstile-clearance');
+
+      this._channel.onmessage = function(event) {
+        if (event.data.type === 'SOLVE' && event.data.tabId !== self._tabId) {
+          self._log('Solve broadcasted from another tab');
+          self._lastSolveTime = event.data.time;
+          self._storeClearance();
+        }
+      };
+      
+      this._log('Cross-tab sync enabled');
+    },
+
+    init: function() {
+      this._interceptFetch();
+      this._interceptXHR();
+      
+      var storedClearance = this._getStoredClearance();
+      if (storedClearance) {
+        this._lastSolveTime = storedClearance.solveTime;
+      }
+      
+      this._log('=== TurnstileClearance initializing ===', {
+        protectedHost: CONFIG.PROTECTED_API_HOST,
+        hasStoredClearance: !!storedClearance
+      });
+
+      this._setupCrossTabSync();
+      this._startProactiveSolve();
+      
+      this._log('=== Initialization complete ===');
+    }
+  };
+
+  window.__tcOnTurnstileReady = function() {
+    TurnstileClearance._log('Turnstile API loaded');
+  };
+
+  TurnstileClearance.init();
+  window.TurnstileClearance = TurnstileClearance;
+
+})(typeof window !== 'undefined' ? window : this);
+`;
+
+export default {
+  async fetch(request) {
+    const response = await fetch(request);
+
+    const contentType = response.headers.get("Content-Type") || "";
+    if (!contentType.includes("text/html")) {
+      return response;
+    }
+
+    if (response.headers.get("cf-mitigated") === "challenge") {
+      return response;
+    }
+
+    const configJson = JSON.stringify({
+      TURNSTILE_SITEKEY: CONFIG.TURNSTILE_SITEKEY,
+      PROTECTED_API_HOST: CONFIG.PROTECTED_API_HOST,
+      RETRY_DELAY_MS: CONFIG.RETRY_DELAY_MS,
+      SOLVE_TIMEOUT_MS: CONFIG.SOLVE_TIMEOUT_MS,
+      MAX_RETRIES: CONFIG.MAX_RETRIES,
+      CLEARANCE_LIFETIME_MS: CONFIG.CLEARANCE_LIFETIME_MS,
+      DEBUG: CONFIG.DEBUG,
+    });
+
+    const scriptWithConfig = INJECTED_SCRIPT.replace("__CONFIG_PLACEHOLDER__", configJson);
+    const turnstileApiUrl = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__tcOnTurnstileReady&render=explicit";
+
+    return new HTMLRewriter()
+      .on("head", {
+        element(element) {
+          element.prepend(`<script>${scriptWithConfig}</script>`, { html: true });
+          element.prepend(`<script src="${turnstileApiUrl}"></script>`, { html: true });
+        },
+      })
+      .transform(response);
+  },
+};
+```
+
+## How it works
+
+### 1. HTML injection
+
+The snippet intercepts HTML responses and uses `HTMLRewriter` to inject two scripts:
+
+- **Turnstile API**: Loads the challenge rendering library
+- **TurnstileClearance module**: Handles proactive solving and request interception
+
+### 2. Proactive challenge solving
+
+On page load, the module:
+
+- Checks `localStorage` for recent solve timestamp
+- If no recent solve, triggers an invisible Turnstile challenge
+- Upon successful solve, **Turnstile issues a `cf_clearance` cookie** via `/cdn-cgi/` endpoint
+- Module stores the solve timestamp in `localStorage` to avoid redundant challenges
+
+:::note[Important]
+The module **tracks solve timestamps**, it does not create or manage the `cf_clearance` cookie itself. Turnstile with Pre-Clearance enabled issues the actual cookie.
+:::
+
+### 3. Request interception
+
+The module overrides `window.fetch` and `XMLHttpRequest.prototype` to:
+
+- Wait for valid clearance before sending requests
+- Add `credentials: 'include'` to send cookies
+- Detect challenge responses (`cf-mitigated: challenge` or `403` status)
+- Automatically trigger solve and retry on challenge
+
+### 4. Challenge recovery
+
+When an API request is challenged:
+
+```
+1. Detect cf-mitigated header or 403 status
+2. Invalidate stored solve timestamp
+3. Trigger Turnstile solve (widget renders if needed)
+4. Upon solve, Turnstile issues new cf_clearance cookie
+5. Retry original request (now with valid clearance cookie)
+```
+
+This happens transparently - existing application code continues to work unchanged.
+
+### 5. Cross-tab sync
+
+Uses `BroadcastChannel` to share solve timestamps across browser tabs:
+- When a user solves in one tab (and Turnstile issues the `cf_clearance` cookie)
+- The solve timestamp is broadcast to all other tabs
+- All tabs update their local tracking to avoid redundant Turnstile challenges
+- The `cf_clearance` cookie itself is automatically shared by the browser across tabs
+
+## Configuration
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `TURNSTILE_SITEKEY` | Required | Your Turnstile widget site key |
+| `PROTECTED_API_HOST` | Required | Hostname of API to protect (e.g., `api.example.com`) |
+| `CLEARANCE_LIFETIME_MS` | 1800000 (30 min) | How long to track solve timestamps locally (should match your zone's Challenge Passage setting) |
+| `MAX_RETRIES` | 1 | Number of retry attempts after challenge |
+| `RETRY_DELAY_MS` | 100 | Delay between retry attempts (ms) |
+| `SOLVE_TIMEOUT_MS` | 30000 | Maximum time to wait for solve (ms) |
+| `DEBUG` | false | Enable console logging for development |
+
+## Requirements
+
+### CORS configuration
+
+Your API must allow credentials in CORS requests:
+
+```js
+// API response headers
+Access-Control-Allow-Origin: https://shop.example.com
+Access-Control-Allow-Credentials: true
+```
+
+### Zone configuration
+
+- Frontend and API must be in the same Cloudflare zone (or zones merged)
+- This allows `cf_clearance` cookie to be shared across both domains
+
+### WAF rule
+
+Protect API endpoints with a Managed Challenge:
+
+```
+Expression: (http.host eq "api.example.com")
+Action: Managed Challenge
+```
+
+## Testing
+
+Enable debug mode to see detailed logging:
+
+```js
+const CONFIG = {
+  // ... other config
+  DEBUG: true
+};
+```
+
+Console output:
+
+```
+[TC] === TurnstileClearance initializing ===
+[TC] No valid clearance, starting proactive solve...
+[TC] Rendering Turnstile widget
+[TC] <<< Turnstile solved successfully
+[TC] Stored clearance in localStorage { expiresIn: "1800s" }
+[TC] [F#1] Protected fetch { url: "https://api.example.com/search", method: "GET" }
+[TC] [F#1] Response received { status: 200, cfMitigated: null }
+```
+
+## Related resources
+
+- [Complete tutorial with WAF configuration](/turnstile/tutorials/protecting-api-endpoints/)
+- [Turnstile Pre-Clearance](/turnstile/concepts/pre-clearance/)
+- [HTMLRewriter documentation](/workers/runtime-apis/html-rewriter/)
+- [Managed Challenge](/waf/managed-challenge/)
