@@ -108,11 +108,18 @@ You need to configure {props.featureName} applications for each of your existing
 	<>
 		<Markdown
 	text={`
-		1. Go to the **Connector on-ramps** page.
+		1. Go to the **Connectors** page.
 		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
+		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Profiles**.
+		`}
+	inline={false}
+	/>
 	</>
 )
 }
@@ -230,11 +237,18 @@ The traffic for the application you chose ${props.whatHappensApp}.
 	<>
 		<Markdown
 	text={`
-		1. Go to the **Connector on-ramps** page.
+		1. Go to the **Connectors** page.
 		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
+		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Profiles**.
+		`}
+	inline={false}
+	/>
 	</>
 )
 }
@@ -327,16 +341,23 @@ To pin applications to a WAN port:
 			</>
 		) : (
 			<>
-				<Markdown
-			text={`
-				1. Go to the **Connector on-ramps** page.
-				`}
+			<Markdown
+				text={`
+					1. Go to the **Connectors** page.
+					`}
 				inline={false}
-			/>
-				<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
+				/>
+					<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
+					<Markdown
+				text={`
+					2. Go to the **Appliances** tab > **Profiles**.
+					`}
+				inline={false}
+				/>
 				<Markdown
 			text={`
-				2. Select your Connector > **Edit**.
+				3. Select your Connector > **Edit**.
 			`}
 			inline={false}
 			/>

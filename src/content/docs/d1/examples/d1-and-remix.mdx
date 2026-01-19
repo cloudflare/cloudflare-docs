@@ -1,5 +1,4 @@
 ---
-
 summary: Query your D1 database from a Remix application.
 tags:
   - Remix
@@ -39,8 +38,12 @@ interface Env {
 export const loader: LoaderFunction = async ({ context, params }) => {
   let env = context.cloudflare.env as Env;
 
-  let { results } = await env.DB.prepare("SELECT * FROM users LIMIT 5").run();
-  return json(results);
+  try {
+    let { results } = await env.DB.prepare("SELECT * FROM users LIMIT 5").run();
+    return json(results);
+  } catch (error) {
+    return json({ error: "Failed to fetch users" }, { status: 500 });
+  }
 };
 
 export default function Index() {

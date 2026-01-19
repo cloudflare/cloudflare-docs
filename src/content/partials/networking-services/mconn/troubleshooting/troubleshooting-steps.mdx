@@ -18,16 +18,16 @@ import { DashButton, Markdown } from "~/components";
 	</>
 ) : (
 	<>
-		<Markdown
+<Markdown
 	text={`
-		1. Go to the **Configuration** page.
-	`}
+		1. Go to the **Connectors** page.
+		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
+		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
 		<Markdown
 	text={`
-		2. In the **Magic WAN Connector** tab, select the Magic WAN Connector want to check analytics for.
+		2. Go to the **Appliances** tab > **Appliances**, and select the Magic WAN Connector you want to check analytics for.
 		3. Select **View analytics**.
 	`}
 	inline={false}
