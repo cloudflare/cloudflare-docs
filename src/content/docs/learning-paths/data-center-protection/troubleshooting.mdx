@@ -5,6 +5,8 @@ sidebar:
   order: 9
 ---
 
+import { DashButton } from "~/components"
+
 ## For Magic Transit ingress-only with Direct Server Return
 
 ### Magic Transit devices cannot reach Internet IPs after cutover to Cloudflare.
@@ -45,20 +47,22 @@ For example, devices cannot browse to a server which is hosted on the Magic Tran
 
 If you suspect that Cloudflare mitigations might be dropping legitimate traffic to your Magic Transit prefix:
 
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Analytics & Logs** > **Network Analytics**.
-3. In the **All traffic** tab select **Add filter** to configure the filters for the traffic-flow in question — like source IP, destination IP and protocol/ports.
-4. Check the analytics results to determine which Cloudflare mitigation system has dropped the traffic — for example, DDoS Managed Rules, Advanced TCP/DNS Protection or Magic Firewall.
-5. If the traffic was dropped by DDoS Managed Rules:
+1. Go to the Network analytics page.
+
+<DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics/all-traffic" />
+
+2. In the **All traffic** tab select **Add filter** to configure the filters for the traffic-flow in question — like source IP, destination IP and protocol/ports.
+3. Check the analytics results to determine which Cloudflare mitigation system has dropped the traffic — for example, DDoS Managed Rules, Advanced TCP/DNS Protection or Magic Firewall.
+4. If the traffic was dropped by DDoS Managed Rules:
 	- Check whether the rule that dropped the traffic is customizable. If it is, go to [DDoS Overrides](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/#create-a-ddos-override). There, you can create/amend an existing override to ensure that this endpoint IP is added to the override with a lower sensitivity applied.
 	- If this rule is not customizable and is part of Cloudflare's always-on standard DDoS mitigations, reach out to Cloudflare support team to request for assistance on this.
-6. If the traffic was dropped by Advanced TCP Protection (ATP):
+5. If the traffic was dropped by Advanced TCP Protection (ATP):
 	- If the mode for the global rule is **Mitigation** you can set up a filter for `monitoring` so that ATP will not drop traffic for this particular traffic flow.
 	- If you need further assistance, reach out to your Cloudflare support team who can adjust other backend configuration options for this mitigation system.
-7. If the traffic was dropped by Advanced DNS Protection:
+6. If the traffic was dropped by Advanced DNS Protection:
 	- You can create a rule to apply on traffic received in a region or datacenter with a lower sensitivity setting. Once created, you can change the mode of the rule to `monitoring`.
 	- Alternatively, you can change the mode for the global rule from `mitigation` to `monitoring`.
-8. If the traffic was dropped by Magic Firewall:
+7. If the traffic was dropped by Magic Firewall:
 	- Check which configured Magic Firewall rule caused the drop.
 	- You can choose to edit the rule or disable it. You can also add a new rule to permit your traffic and ensure it is placed above the rule that is configured to drop the traffic.
 

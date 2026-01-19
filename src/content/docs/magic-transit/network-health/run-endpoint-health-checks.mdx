@@ -20,7 +20,7 @@ When choosing which endpoint IP addresses to monitor with health checks, use the
 
 Cloudflare pings health check IPs from within the [published Cloudflare IP range](https://www.cloudflare.com/ips/), which is also available through the [Cloudflare API](/api/resources/ips/methods/list/).
 
-When configuring an endpoint health check for an IP prefix, select an IP address within the range of that IP prefix. Refer to the table below for an example of an endpoint health check configuration.
+When configuring an endpoint health check for an IP prefix, select an IP address within the range of that IP prefix. Refer to the table for an example of an endpoint health check configuration.
 
 | Prefix            | Endpoint IP address |
 | ----------------- | ------------------- |
@@ -76,7 +76,7 @@ You can query the following categories:
 - `datetimeMinute`: The health check event timestamp truncated to the minute.
 - `endpoint`: The endpoint of the check associated with the health check.
 
-Refer to the example below to learn how to create a query to check your endpoint's health:
+Refer to the example to learn how to create a query to check your endpoint's health:
 
 ```graphql
 query Viewer {
@@ -144,12 +144,12 @@ You can set up alerts to be notified when the state of your endpoint's health is
 5. From the drop-down menu, select *Magic Transit*.
 6. Select **Magic Endpoint Health Check Alert**.
 7. Provide a name for your new notification and optionally provide a description.
-8. In the *Service Level Objective (SLO)* drop-down menu, select the SLO threshold for your notification. The SLO defines the percentage of endpoint health checks that should be passing. If the number of endpoint health checks passing is less than the SLO, the system generates an alert:
+8. In the *Service Level Objective (SLO)* drop-down menu, select the SLO threshold for your notification. The SLO defines the percentage of endpoint health checks that must pass. If the number of passing endpoint health checks falls below the SLO, Cloudflare generates an alert:
 	- **High** - 99%
 	- **Medium** - 98%
 	- **Low** - 97%
 9. In the drop-down menu below SLOs, select the `id` value that matches the `id` you got through the API in step 1. This `id` should match the endpoint health check you want to get notifications for.
-10. Select your preferred notification method (like email or webhooks).
+10. Select your preferred notification method (such as email or webhooks).
 11. Select **Save**.
 
 You will now receive notifications through your preferred method whenever the SLO for your endpoint health checks falls below your chosen threshold.

@@ -99,9 +99,9 @@ In this context, if some traffic is unknown to your organization, Cloudflare wil
 
 - Block security risks:
 
-  | Selector       | Operator | Value                | Action |
-  | -------------- | -------- | -------------------- | ------ |
-  | Security Risks | in       | _All Security Risks_ | Block  |
+  | Selector            | Operator | Value                | Action |
+  | ------------------- | -------- | -------------------- | ------ |
+  | Security Categories | in       | _All Security Risks_ | Block  |
 
 - Isolate all other traffic:
 
@@ -143,7 +143,7 @@ In this context, if some traffic is unknown to your organization, Cloudflare wil
 		name: "Block security risks",
 		precedence: 0,
 		traffic:
-			"http.request.uri.security_category in {68 178 80 83 176 175 117 131 134 151 153}",
+			"any(http.request.uri.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
 		rule_settings: {
 			block_page_enabled: false,
 			block_reason: "",

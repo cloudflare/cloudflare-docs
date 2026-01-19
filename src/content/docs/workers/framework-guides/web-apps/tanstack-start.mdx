@@ -20,15 +20,9 @@ import {
 
 [TanStack Start](https://tanstack.com/start) is a full-stack framework for building web applications. It comes with features like server-side rendering, streaming, server functions, bundling, and more. In this guide, you learn to deploy a TanStack Start application to Cloudflare Workers.
 
-## 1. Set up a TanStack Start project
+## Creating a new TanStack Start application
 
-If you have an existing TanStack Start application, skip to the [Configuring an existing TanStack Start application](#configuring-an-existing-tanstack-start-application) section.
-
-### Creating a new TanStack Start application
-
-Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate TanStack Start's official setup tool, and provide the option to deploy instantly.
-
-To use `create-cloudflare` to create a new TanStack Start project with Workers Assets, run the following command:
+To create a TanStack Start application, run the following command:
 
 <PackageManagers
 	type="create"
@@ -36,13 +30,11 @@ To use `create-cloudflare` to create a new TanStack Start project with Workers A
 	args="my-tanstack-start-app --framework=tanstack-start"
 />
 
-After setting up your project, change your directory by running the following command:
+After you have created your project, run the following command in the project directory to start a local development server. This will allow you to preview your project locally during development.
 
-```sh
-cd my-tanstack-start-app
-```
+<PackageManagers type="run" args="dev" />
 
-### Configuring an existing TanStack Start application
+## Configuring an existing TanStack Start application
 
 If you have an existing TanStack Start application, you can configure it to run on Cloudflare Workers by following these steps:
 
@@ -93,13 +85,7 @@ If you have an existing TanStack Start application, you can configure it to run 
 
 </Steps>
 
-## 2. Develop locally
-
-After you have created your project, run the following command in the project directory to start a local development server. This will allow you to preview your project locally during development.
-
-<PackageManagers type="run" args="dev" />
-
-## 3. Deploy your Project
+## Deploy your Project
 
 You can deploy your project to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/) from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
 
@@ -115,8 +101,6 @@ This can help you making sure that your application will work as intended once i
 <PackageManagers type="run" args="preview" />
 
 :::
-
----
 
 ## Bindings
 
@@ -157,3 +141,62 @@ Will populate the `env` object with the various bindings based on your configura
 :::
 
 <Render file="frameworks-bindings" product="workers" />
+
+## Static Prerendering
+
+You can prerender your application to static HTML files at build time with TanStack Start and serve them as [static assets](/workers/static-assets/).
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+
+export default defineConfig({
+  plugins: [
+    cloudflare({ viteEnvironment: { name: "ssr" } }),
+    tanstackStart({
+      prerender: {
+        // Enable static prerendering
+        enabled: true,
+        // other prerender options...
+      },
+    }),
+  ],
+})
+```
+
+No additional configuration is needed in your wrangler config file. For more prerender options, see the [TanStack Start documentation](https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering).
+
+:::note
+
+Requires `@tanstack/react-start` v1.138.0 or later.
+
+:::
+
+:::caution
+
+Prerendering runs during the build step and uses your local environment variables, secrets, and bindings storage data. Ensure your build environment is configured correctly, and use [remote bindings](/workers/development-testing/#remote-bindings) to prerender with production data.
+
+:::
+
+### Prerendering in CI environments
+
+When prerendering in CI, your Worker code may need access to environment variables or secrets that are not available in the build environment. One way to handle this is to include a `.env` file with variable references, which resolve to values provided by your CI environment:
+																								
+```sh title=".env"
+API_KEY=${API_KEY}
+DATABASE_URL=${DATABASE_URL}
+```
+
+In your CI environment, set `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` and provide the required values as environment variables. If using [Workers Builds](/workers/ci-cd/builds/), update your [build settings](/workers/ci-cd/builds/configuration/#build-settings) accordingly.
+
+:::note
+
+For local development, create a `.env.local` file with actual secret values. Do not commit this file to your repository. Values in `.env.local` override the references in `.env`:
+
+```sh title=".env.local"                                                                                                                                         
+API_KEY=my-local-dev-key                                                                                                                                   
+DATABASE_URL=postgres://localhost/mydb                                                                                                                     
+```
+
+:::

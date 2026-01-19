@@ -9,7 +9,7 @@ To install WARP Connector on a host machine:
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
 2. Select **Create a tunnel**.
 3. For the tunnel type, select **WARP Connector**.
-4. You will be prompted to turn on **Warp to Warp** and [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) if they are currently turned off. These settings allow Cloudflare to assign a unique <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> to each WARP device and route traffic between them.
+4. You will be prompted to turn on [**Allow all Cloudflare One traffic to reach enrolled devices**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices) and [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) if they are currently turned off. These settings allow Cloudflare to assign a unique <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> to each WARP device and route traffic between them.
 5. Give the tunnel any name (for example, `Subnet-10.0.0.0/24`) and select **Create tunnel**.
 6. Select the operating system of your host machine.
 7. On your host machine, open a terminal window and run the commands shown in Cloudflare One. Those commands will install the WARP Connector, enable IP forwarding on the host, and connect WARP Connector to your Zero Trust organization.

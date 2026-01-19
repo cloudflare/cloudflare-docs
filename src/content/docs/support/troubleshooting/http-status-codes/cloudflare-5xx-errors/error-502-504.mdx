@@ -15,7 +15,7 @@ There are two possible causes:
 - [`502/504` errors from your origin web server](#502504-from-your-origin-web-server) (most common).
 - [`502/504` errors from Cloudflare](#502504-from-cloudflare).
 
-You may also see `504` status codes in logs or analytics caused by [cache MISS responses from Early Hints](/cache/advanced-configuration/early-hints/#emit-early-hints).
+You may also see `504` status codes in logs or analytics caused by [cache MISS responses from Early Hints](/cache/advanced-configuration/early-hints/#emit-early-hints), or by Cloudflare Workers Cache API [`cache.match` operations resulting in cache MISS](https://developers.cloudflare.com/workers/runtime-apis/cache/#errors-1).
 
 ### Resolution
 

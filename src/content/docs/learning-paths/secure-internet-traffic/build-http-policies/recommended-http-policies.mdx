@@ -136,7 +136,7 @@ Bypass HTTP inspection for a custom list of domains identified as incompatible w
 		action: "off",
 		filters: ["http"],
 		traffic:
-			"any(http.conn.domains[] in $<DOMAIN_INSPECTION_BYPASS_LIST_UUID>) or any(http.conn.domains[] in $<KNOWN_DOMAINS_LIST_UUID>)",
+			"any(http.request.domains[*] in $<DOMAIN_INSPECTION_BYPASS_LIST_UUID>) or any(http.request.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>)",
 	}}
 />
 
@@ -152,7 +152,7 @@ resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspec
   enabled     = true
   action      = "off"
   filters     = ["http"]
-  traffic     = "any(http.conn.domains[*] in ${"$"}{cloudflare_zero_trust_list.domain_inspection_bypass_list.id}) or any(http.conn.domains[*] in ${"$"}{cloudflare_zero_trust_list.known_domains_list.id})"
+  traffic     = "any(http.request.domains[*] in ${"$"}{cloudflare_zero_trust_list.domain_inspection_bypass_list.id}) or any(http.request.domains[*] in ${"$"}{cloudflare_zero_trust_list.known_domains_list.id})"
 }
 ```
 
@@ -412,7 +412,7 @@ Isolate high risk domains or create a custom list of known risky domains to avoi
 		action: "isolate",
 		filters: ["http"],
 		traffic:
-			"any(http.request.uri.content_category[] in {169 177}) or any(http.request.domains[] in $<DOMAIN_ISOLATE_LIST_UUID>)",
+			"any(http.request.uri.content_category[*] in {169 177}) or any(http.request.domains[*] in $<DOMAIN_ISOLATE_LIST_UUID>)",
 	}}
 />
 

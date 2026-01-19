@@ -3,6 +3,12 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-01-13"
+    description: |-
+      - Updated v8 to version 14.4.
+  - publish_date: "2025-12-19"
+    description: |-
+      - Allow null name when creating dynamic workers.
   - publish_date: "2025-11-25"
     description: |-
       - Updated v8 to version 14.3.

@@ -1,0 +1,15 @@
+---
+{}
+
+---
+```js
+const breakoutRooms = await meeting.connectedMeetings.createMeetings([
+  { title: "Breakout Room 1" },
+  { title: "Breakout Room 2" },
+  { title: "Breakout Room 3" },
+]);
+
+console.log("Created Breakout Rooms: ", breakoutRooms.map((room) => "Id:: " + room.id + " --- Title:: " + room.title).join("\n"));
+```
+
+`breakoutRooms` is an array of basic meeting information such as id and title. You can use the `id` of these objects to move participants to the breakout room.

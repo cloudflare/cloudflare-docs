@@ -11,7 +11,7 @@ entries:
       Unified Billing now supports opt-in Zero Data Retention. This ensures supported upstream AI providers (eg [OpenAI ZDR](https://platform.openai.com/docs/guides/your-data#zero-data-retention)) do not retain request and response data.
   - publish_date: "2025-11-14"
     description: |-
-      - Supports adding OpenAI compatible [Custom Providers](/ai-gateway/configuration/custom/) for inferencing with AI providers that are not natively supported by AI Gateway
+      - Supports adding OpenAI compatible [Custom Providers](/ai-gateway/configuration/custom-providers/) for inferencing with AI providers that are not natively supported by AI Gateway
       - Cost and usage tracking for voice models
       - You can now use Workers AI via AI Gateway with no additional configuration. Previously, this required generating / passing additional Workers AI tokens.
   - publish_date: "2025-11-06"

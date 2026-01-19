@@ -2,7 +2,6 @@
 params:
   - magicWord?
   - productName
-  - analyticsAnchorHeading
   - networkAnalyticsURL
   - traceRoutes
   - graphQlTunnelBandwidthURL
@@ -12,31 +11,27 @@ params:
 
 import { AnchorHeading, Markdown } from "~/components";
 
-{props.productName} customers can follow these troubleshooting steps to gather information at the beginning of a troubleshooting process, then move to more detailed network data collection and analysis to identify the root cause of a problem.
+Use these troubleshooting options to gather information at the start of your troubleshooting process. Then, use more detailed network data collection and analysis to identify the root cause.
 
-
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
-  <>
-	<Markdown
-		text="- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)"
-		inline={false}
-	/>
-  </>
-  )
-}
-- Analyze network traffic over time in <a href={props.analyticsAnchorHeading}>{props.productName} Network Analytics</a>
-- Perform more detailed troubleshooting with:
-  - [Traceroutes](#traceroutes)
-  - [Packet captures](#packet-captures)
+<Markdown
+	text={`
+		${props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels" ? "- View your entire network at a glance in [Network overview (beta)](#network-overview-beta)" : ""}
+		- Analyze network traffic over time in [Network Analytics](#network-analytics)
+		- Perform more detailed troubleshooting with:
+		  - [Traceroutes](#traceroutes)
+		  - [Packet captures](#packet-captures)
+	`}
+	inline={false}
+/>
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-    <AnchorHeading title="Network overview (beta)" depth={2} />
+		<AnchorHeading title="Network overview (beta)" depth={2} slug="network-overview-beta" />
 		<Markdown
 		text={`
-		${props.productName} Network overview (beta) shows the connectivity status and traffic analytics for all ${props.productName} sites. Use it when you receive an alert, need to begin the ${props.productName} troubleshooting process, or are performing routine monitoring.
+		Network overview (beta) shows the connectivity status and traffic analytics for all Magic WAN sites. Use it when you receive an alert, start troubleshooting, or perform routine monitoring.
 
-		Refer to [${props.magicWord === "WAN Tunnels" ? "Network visibility" : "Network overview (beta)"}](${props.siteAnalyticsURL}) to learn more.
+		Refer to [${props.magicWord === "WAN Tunnels" ? "Network health" : "Network overview (beta)"}](${props.siteAnalyticsURL}) to learn more.
 		`}
 		inline={false}
 		/>
@@ -44,27 +39,27 @@ import { AnchorHeading, Markdown } from "~/components";
   )
 }
 
-<AnchorHeading depth={2} title={`${props.productName} Network Analytics`} />
+<AnchorHeading depth={2} title="Network Analytics" />
 
-Network Analytics provides detailed analytics on {props.productName} traffic over time. Customers can filter data on specific traffic characteristics and view traffic trends over time.
+Network Analytics provides detailed analytics on your {props.productName} traffic over time. You can filter data by traffic characteristics and review traffic trends over time.
 
 Refer to <a href={props.networkAnalyticsURL}>{props.productName} Network Analytics</a> to learn more.
 
 ## Traceroutes
 
-Traceroutes provide a hop-by-hop breakdown of the Internet path network traffic follows from Cloudflare's network to a customer's network.
+Traceroutes provide a hop-by-hop breakdown of the Internet path that network traffic follows from Cloudflare's network to your network.
 
 Refer to <a href={props.traceRoutes}>Traceroutes</a> to learn more.
 
 ## Packet captures
 
-Packet captures allow customers to analyze the raw packet data they send to and receive from Cloudflare's network.
+Packet captures allow you to analyze the raw packet data your network sends to and receives from Cloudflare's network.
 
 Refer to [packet captures](/magic-firewall/packet-captures/) to learn more.
 
 ## Query analytics with GraphQL
 
-GraphQL Analytics provides a GraphQL API that customers can query to receive raw JSON data for their {props.productName} traffic analytics. Customers can ingest this data into a SIEM or other tool for further analysis.
+GraphQL Analytics provides a GraphQL API you can query to receive raw JSON data for your {props.productName} traffic analytics. You can ingest this data into a security information and event management (SIEM) tool or another platform for further analysis.
 
 - <a href={props.graphQlTunnelBandwidthURL}>Querying {props.productName} tunnel bandwidth analytics with GraphQL</a>
 - <a href={props.graphQlTunnelHealthURL}>Querying {props.productName} tunnel health check results with GraphQL</a>

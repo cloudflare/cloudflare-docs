@@ -13,7 +13,7 @@ import { GlossaryTooltip } from "~/components";
 Only available to Enterprise customers with a paid add-on.
 :::
 
-Policies define the resources allowed on your applications through <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> directives. Policies can log violations and also enforce an allowlist of resources, effectively blocking resources not included in the policies.
+Policies define the resources allowed on your applications through <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> directives. Policies can log violations and also enforce an allowlist of resources, effectively blocking resources not included in the policies. These two types of policies are called log policies and allow policies, respectively.
 
 In the [new security dashboard](/security/), policies are called content security rules, and they are one of the available types of [security rules](/security/rules/). Security rules perform security-related actions on incoming requests that match specified filters.
 
@@ -41,4 +41,6 @@ Refer to the following pages for instructions on creating a policy or content se
 - [Create a policy in the dashboard](/page-shield/policies/create-dashboard/)
 - [Page Shield API: Create a policy](/page-shield/reference/page-shield-api/#create-a-policy)
 
-Once you have configured one or more policies in a zone, you can filter alert notifications according to those policies. These alerts are called [scoped alerts](/page-shield/alerts/#scoped-alerts).
+Shortly after you configure policies, the Cloudflare dashboard will start displaying any [violations](/page-shield/policies/violations/) of those policies.
+
+You can filter Page Shield alert notifications according to the policies you configured in a zone. These alerts are called [scoped alerts](/page-shield/alerts/#scoped-alerts).

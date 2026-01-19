@@ -1,0 +1,80 @@
+---
+params:
+  - dashName
+---
+
+import { DashButton, Markdown } from "~/components";
+
+When adding or removing Magic WAN Connectors, you need to be aware of the difference between the physical device and its profile.
+- The physical device is the hardware at your site. 
+- The profile contains the configuration that allows the device to connect to Cloudflare, including your WANs, LANs, traffic steering, and LAN policies.
+
+You can have more than one Magic WAN Connector in one profile if you initially enabled high availability during the configuration of the profile. If you did not enable high availability, you need to delete the profile associated with a site before adding a new Magic WAN Connector.
+
+## Remove a profile
+
+{ props.dashName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+<Markdown
+	text={`
+		1. Go to the **Connectors** page.
+		`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
+		<Markdown
+	text={`
+		2. Go to **Appliances** > **Profiles**.
+		`}
+	inline={false}
+	/>
+	</>
+)
+}
+3. Find the profile that you want to edit > select the three dots next to it > **Delete**.
+
+## Remove a physical device
+
+To remove a Magic WAN Connector from your account:
+
+{ props.dashName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Appliances**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+<Markdown
+	text={`
+		1. Go to the **Connectors** page.
+		`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Appliances**.
+		`}
+	inline={false}
+	/>
+	</>
+)
+}
+3. Find the Magic WAN Connector that you want to delete > select the three dots next to it > **Delete**.

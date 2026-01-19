@@ -1,0 +1,61 @@
+---
+{}
+---
+
+import { Steps } from "~/components";
+
+<Steps>
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+   ```ts
+   const canMuteAudio =
+   	meeting.self.permissions.canDisableParticipantAudio === true;
+   if (!canMuteAudio) {
+   	// Disable the control in your UI.
+   }
+   ```
+
+2. Call `disableAllAudio()`.
+
+   If the local participant does not have the required permission, `disableAllAudio()` throws a `ClientError` with code `1201`.
+
+   ```ts
+   try {
+   	await meeting.participants.disableAllAudio();
+   } catch (err: any) {
+   	if (err?.code === 1201) {
+   		// The local participant does not have permission to mute other participants’ audio.
+   		return;
+   	}
+   	throw err;
+   }
+   ```
+
+3. Handle the result by listening for updates.
+
+   After the call succeeds, each participant’s `audioEnabled` becomes `false`, and the SDK emits an `audioUpdate` event.
+   The local participant also receives `audioUpdate` on `meeting.self`.
+
+   Listen to remote participant updates on the `joined` map:
+
+   ```ts
+   meeting.participants.joined.on(
+   	"audioUpdate",
+   	(participant, { audioEnabled, audioTrack }) => {
+   		// audioEnabled is false
+   		// Update UI for the participant
+   	},
+   );
+   ```
+
+   Listen to the local participant update on `meeting.self`:
+
+   ```ts
+   meeting.self.on("audioUpdate", ({ audioEnabled, audioTrack }) => {
+   	// audioEnabled is false
+   	// Update UI for the local participant
+   });
+   ```
+
+</Steps>

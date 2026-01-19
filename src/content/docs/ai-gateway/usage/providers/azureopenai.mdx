@@ -30,7 +30,7 @@ Your new base URL will use the data above in this structure: `https://gateway.ai
 ### cURL
 
 ```bash title="Example fetch request"
-curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-openai/{resource_name}/{deployment_name}/chat/completions?api-version=2023-05-15' \
+curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/azure-openai/{resource_name}/{deployment_name}/chat/completions?api-version=2023-05-15' \
   --header 'Content-Type: application/json' \
   --header 'api-key: {azure_api_key}' \
   --data '{
@@ -43,25 +43,20 @@ curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure-opena
 }'
 ```
 
-### Use `openai-node` with JavaScript
-
-If you are using the `openai-node` library, you can set your endpoint like this:
+### Use `openai` JavaScript SDK
 
 ```js title="JavaScript"
-import OpenAI from "openai";
+import { AzureOpenAI } from "openai";
 
-const resource = "xxx";
-const model = "xxx";
-const apiVersion = "xxx";
-const apiKey = env.AZURE_OPENAI_API_KEY;
-const accountId = "{account_id}";
-const gatewayId = "{gateway_id}";
-const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/azure-openai/${resource}/${model}`;
+const azure_openai = new AzureOpenAI({
+  apiKey: "{azure_api_key}",
+  baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/azure-openai/{resource_name}/`,
+  apiVersion: "2023-05-15",
+  defaultHeaders: { "cf-aig-authorization": "{cf-api-token}" }, // if authenticated
+});
 
-const azure_openai = new OpenAI({
-	apiKey,
-	baseURL,
-	defaultQuery: { "api-version": apiVersion },
-	defaultHeaders: { "api-key": apiKey },
+const result = await azure_openai.chat.completions.create({
+  model: '{deployment_name}',
+  messages: [{ role: "user", content: "Hello" }],
 });
 ```

@@ -42,7 +42,7 @@ The process described on this page does not support onboarding IP prefixes for u
 
 ### Add your prefix
 
-Use the [Add Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/create/) to create a prefix in the Cloudflare account that should own the BYOIP prefix.
+1. Use the [Add Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/create/) to create a prefix in the Cloudflare account that should own the BYOIP prefix.
 
 <Render file="cloudflare-asn-callout" product="byoip" />
 
@@ -89,53 +89,53 @@ The process described on this page leverages automated <GlossaryTooltip term="le
 
 ### Validate prefix ownership
 
-Validate prefix ownership using one of the following methods:
+1. Validate prefix ownership using one of the following methods:
 
-<Tabs> <TabItem label="IRR record">
+   <Tabs> <TabItem label="IRR record">
 
-1. Copy the `ownership_validation_token` returned by the API call.
-2. On the IRR record of the prefix you are onboarding, add the following string in either a `description` or `remarks` field. Replace `<OWNERSHIP_VALIDATION_TOKEN>` by the actual token you copied in the previous step.
+   1. Copy the `ownership_validation_token` returned by the API call.
+   2. On the IRR record of the prefix you are onboarding, add the following string in either a `description` or `remarks` field. Replace `<OWNERSHIP_VALIDATION_TOKEN>` by the actual token you copied in the previous step.
 
-```
-cf-validation: <OWNERSHIP_VALIDATION_TOKEN>
-```
+   ```
+   cf-validation: <OWNERSHIP_VALIDATION_TOKEN>
+   ```
 
-:::note
+   :::note
 
-The exact steps to update your IRR record will depend on the registry you are using. Refer to [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/best-practices/) for details.
+   The exact steps to update your IRR record will depend on the registry you are using. Refer to [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/best-practices/) for details.
 
-:::
+   :::
 
-</TabItem> <TabItem label="Reverse DNS zone and TXT record">
+   </TabItem> <TabItem label="Reverse DNS zone and TXT record">
 
+   1. Consider the size of the prefix you are bringing to Cloudflare. Since the standard `in-addr.arpa` tree assumes delegations on octet or nibble boundaries, if you onboard prefixes that are not aligned with those, you will have to split up the prefix into subnets and create the corresponding reverse DNS zones for each.
 
-1. Consider the size of the prefix you are bringing to Cloudflare. Since the standard `in-addr.arpa` tree assumes delegations on octet or nibble boundaries, if you onboard prefixes that are not aligned with those, you will have to split up the prefix into subnets and create the corresponding reverse DNS zones for each.
+   <Details header="Example">
 
-<Details header="Example">
+   To calculate how many smaller subnets you need, use the following formula:
 
-To calculate how many smaller subnets you need, use the following formula:
+   ```
+   2^(next boundary - current netmask)
+   ```
 
-```
-2^(next boundary - current netmask)
-```
+   For `1.1.0.0/23`, you would setup two (`2^(24-23)`) reverse DNS zones, one for `1.1.0.0/24` and another for `1.1.1.0/24`.
 
-For `1.1.0.0/23`, you would setup two (`2^(24-23)`) reverse DNS zones, one for `1.1.0.0/24` and another for `1.1.1.0/24`.
+   For `2001:0db8::/34`, you would setup four (`2^(36-34)`) reverse DNS zones, for `2001:0db8::/36`, `2001:0db8:1:/36`, `2001:0db8:2::/36`, and `2001:0db8:3::/36`.
 
-For `2001:0db8::/34`, you would setup four (`2^(36-34)`) reverse DNS zones, for `2001:0db8::/36`, `2001:0db8:1:/36`, `2001:0db8:2::/36`, and `2001:0db8:3::/36`.
+   </Details>
 
-</Details>
+   2. Set up a reverse DNS zone. If you use Cloudflare for DNS, refer to [Reverse DNS zones](/dns/additional-options/reverse-zones/#set-up-a-reverse-zone). If you use a different DNS provider, follow their instructions.
+   3. Create TXT records using `cf-validation` as their `name`. They should look like the following example:
 
-2. Set up a reverse DNS zone. If you use Cloudflare for DNS, refer to [Reverse DNS zones](/dns/additional-options/reverse-zones/#set-up-a-reverse-zone). If you use a different DNS provider, follow their instructions.
-3. Create TXT records using `cf-validation` as their `name`. They should look like the following example:
+   ```
+   cf-validation.<REVERSE_ZONE_ADDRESS> IN TXT <TOKEN>
+   ```
 
+   4. Update nameservers at your Regional Internet Registry (RIR). The exact steps to update your nameservers will depend on the registry you are using.
 
-```
-cf-validation.<REVERSE_ZONE_ADDRESS> IN TXT <TOKEN>
-```
+   </TabItem> </Tabs>
 
-4. Update nameservers at your Regional Internet Registry (RIR). The exact steps to update your nameservers will depend on the registry you are using.
-
-</TabItem> </Tabs>
+2. <Render file="validate-prefix-endpoint" product="byoip" />
 
 Once the ownership validation is successful, you can remove the token.
 

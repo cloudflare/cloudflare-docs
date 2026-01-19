@@ -1,12 +1,14 @@
 ---
 title: List and view rulesets
 pcx_content_type: reference
-
+description: Describes the API operations to list and view the details of rulesets at the account or zone level.
 sidebar:
   order: 4
 ---
 
 import { APIRequest } from "~/components";
+
+Use the API operations described in the following sections to list and view the details of rulesets at the account or zone level.
 
 - [List existing rulesets](#list-existing-rulesets)
 - [View a specific ruleset](#view-a-specific-ruleset)
@@ -74,7 +76,7 @@ Use one of the following API endpoints:
   `GET /zones/{zone_id}/rulesets/phases/{phase_name}/entrypoint`
 
 :::note
-You can only use the [Get a zone ruleset](/api/resources/rulesets/methods/get/) operation for zone-level phase entry points (entry points where `kind` is set to `zone`).
+You can only use the [Get a zone ruleset](/api/resources/rulesets/methods/get/) operation for zone-level phase entry point rulesets (entry points where `kind` is set to `zone`).
 :::
 
 The API returns a `404 Not Found` HTTP status code under these conditions:

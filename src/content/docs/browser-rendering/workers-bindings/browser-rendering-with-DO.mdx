@@ -63,12 +63,16 @@ Configure your `browser-worker` project's [Wrangler configuration file](/workers
 
 Update your Wrangler configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
 
+:::note
+Your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later.
+:::
+
 <WranglerConfig>
 
 ```toml
 name = "rendering-api-demo"
 main = "src/index.js"
-compatibility_date = "2023-09-04"
+compatibility_date = "2025-09-17"
 compatibility_flags = [ "nodejs_compat"]
 account_id = "<ACCOUNT_ID>"
 

@@ -21,13 +21,12 @@ All IP addresses not specified in the zone lockdown rule will not have access to
 
 :::note
 
-Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead of zone lockdown rules to block requests from IP addresses not present in an allowlist of IPs and CIDR ranges.
+Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of zone lockdown rules to block requests from IP addresses not present in an allowlist of IPs and CIDR ranges.
 
-For example, a custom rule equivalent to the zone lockdown [example rule](#example-rule) provided in this page could have the following configuration:
+For examples of using custom rules for this purpose, refer to the following use cases:
 
-- **Description**: `Block all traffic to staging and wiki unless it comes from HQ or branch offices`
-- **Expression**: `((http.host eq "staging.example.com") or (http.host eq "example.com" and starts_with(http.request.uri.path, "/wiki/")) and not ip.src in {192.0.2.0/24 2001:DB8::/64 203.0.133.1}`
-- **Action**: _Block_
+- [Allow traffic from IP addresses in allowlist only](/waf/custom-rules/use-cases/allow-traffic-from-ips-in-allowlist/)
+- [Require known IP addresses in site admin area](/waf/custom-rules/use-cases/site-admin-only-known-ips/)
 
 :::
 
@@ -66,8 +65,10 @@ The number of available zone lockdown rules depends on your Cloudflare plan.
 </TabItem> <TabItem label="New dashboard" icon="rocket">
 
 :::note
-Zone Lockdown is only available in the new security dashboard if you have configured at least one zone lockdown rule. Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of zone lockdown rules.
+Zone Lockdown is only available in the [new security dashboard](/security/) if you have configured at least one zone lockdown rule.
 :::
+
+**If you have access to Zone Lockdown rules**
 
 <Steps>
 
@@ -75,7 +76,8 @@ Zone Lockdown is only available in the new security dashboard if you have config
 
    <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-2. Select **Create rule** > **Zone lockdown rules**.
+2. Select **Create rule** > **Zone lockdown rules**.<br/>
+   If this option is not available, refer to the instructions below.
 
 3. Enter a descriptive name for the rule in **Name**.
 
@@ -86,6 +88,22 @@ Zone Lockdown is only available in the new security dashboard if you have config
 6. (Optional) If you are creating a zone lockdown rule that overlaps with an existing rule, expand **Advanced Options** and enter a priority for the rule in **Priority**. The lower the number, the higher the priority. Higher priority rules take precedence.
 
 7. Select **Save and Deploy lockdown rule**.
+
+</Steps>
+
+**If you do not have access to Zone Lockdown rules**
+
+Create a [custom rule](/waf/custom-rules/create-dashboard/) to perform zone lockdown:
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Templates**, and then select the template **Allow only specified IP addresses**.
+
+3. Fill in the required fields and select **Deploy**.
 
 </Steps>
 
@@ -145,6 +163,23 @@ The following example rule will only allow visitors connecting from a company’
   ```
 
 This example would not protect an internal wiki located on a different directory path such as `example.com/internal/wiki`.
+
+:::note
+
+A [custom rule](/waf/custom-rules/create-dashboard/) with an equivalent behavior would have the following configuration:
+
+**Description**:<br/>
+`Block all traffic to staging and wiki unless it comes from HQ or branch offices`
+
+**Expression**:
+
+```txt
+((http.host eq "staging.example.com") or (http.host eq "example.com" and http.request.uri.path wildcard "/wiki/*")) and not ip.src in {192.0.2.0/24 2001:DB8::/64 203.0.133.1}
+```
+
+**Action**: _Block_
+
+:::
 
 ## Access denied example
 

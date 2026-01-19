@@ -1,0 +1,49 @@
+---
+pcx_content_type: how-to
+title: Create Rate Limiting policies (beta)
+sidebar:
+  label: Create Rate Limiting policies
+  badge:
+    text: Beta
+  order: 4
+---
+
+import { DashButton } from "~/components";
+
+Rate limiting policies (beta) allow you to manage incoming traffic to your network for specific locations.
+
+This guide will teach you how to create a policy for when incoming packets match, and in cases where your rate exceeds a certain value (in packets or bits).
+
+:::note
+For Advanced Magic Firewall customers, rate limiting (beta) is available by request through the account team.
+:::
+
+## Add a policy
+
+To add a policy:
+
+1. In the Cloudflare dashboard, go to the [Firewall Policies](https://dash.cloudflare.com/?to=/:account/network-security/magic_firewall/rate_limiting) page.
+2. In the **Rate limiting** tab, select **Add a policy**.
+3. Fill out the information for your new policy:
+    - Select the **Field**: At the moment, you can only choose a [data center name](/magic-firewall/reference/magic-firewall-fields/).
+    - Select the **Operator**: Choose among **equals** or **is in**.
+    - Select the **Value**.
+4. When you are done, select **Save policy**.
+
+## Edit an existing policy
+
+To edit a policy:
+
+1. In the Cloudflare dashboard, go to the [Firewall Policies](https://dash.cloudflare.com/?to=/:account/network-security/magic_firewall/rate_limiting) page.
+2. Select the **Rate limiting** tab.
+3. Locate the policy you want to edit in the list and select **Edit**.
+4. Edit the policy with your changes and select **Edit policy**. 
+
+## Delete an existing policy
+
+To delete an existing policy:
+
+1. In the Cloudflare dashboard, go to the [Firewall Policies](https://dash.cloudflare.com/?to=/:account/network-security/magic_firewall/rate_limiting) page.
+2. Select the **Rate limiting** tab.
+3. Locate the policy you want to delete from the list.
+4. Selet the three dots, then select **Remove**.

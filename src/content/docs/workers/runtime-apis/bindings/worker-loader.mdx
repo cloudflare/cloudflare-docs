@@ -181,11 +181,13 @@ export default {
         // Redirect the worker's global outbound to send all requests
         // to the `Greeter` class, filling in `ctx.props.name` with
         // the name "Alice", so that it always responds "Hello, Alice!".
-        globalOutbound: ctx.exports.Greeter({props: {name: "Alice"}})
+        globalOutbound: ctx.exports.Greeter({props: {name: "Alice"}}),
 
         // ... code ...
       }
     });
+
+    return worker.getEntrypoint().fetch(request);
   }
 }
 ```
@@ -223,10 +225,53 @@ export default {
           // Provide a binding which has a method greet() which can be called
           // to receive a greeting. The binding knows the Worker's name.
           GREETER: ctx.exports.Greeter({props: {name: "Alice"}})
-        }
+        },
 
         // ... code ...
       }
+    });
+
+    return worker.getEntrypoint().fetch(request);
+  }
+}
+```
+
+#### <code>tails <Type text="ServiceStub[]" /> Optional</code>
+
+You may specify one or more [Tail Workers](/workers/observability/logs/tail-workers/) which will observe console logs, errors, and other details about the dynamically-loaded worker's execution. A tail event will be delivered to the Tail Worker upon completion of a request to the dynamically-loaded Worker. As always, you can implement the Tail Worker as an alternative entrypoint in your parent Worker, referring to it using `ctx.exports`:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export default {
+  async fetch(request, env, ctx) {
+    let worker = env.LOADER.get("alice", () => {
+      return {
+        // Send logs, errors, etc. to `LogTailer`. We pass `name` in the
+        // `ctx.props` so that `LogTailer` knows what generated the logs.
+        // (You can pass anything you want in `props`.)
+        tails: [ ctx.exports.LogTailer({props: {name: "alice"}}) ],
+
+        // ... code ...
+      }
+    });
+
+    return worker.getEntrypoint().fetch(request);
+  }
+}
+
+export class LogTailer extends WorkerEntrypoint {
+  async tail(events) {
+    let name = this.ctx.props.name;
+
+    // Send the logs off to our log endpoint, specifying the worker name in
+    // the URL.
+    //
+    // Note that `events` will always be an array of size 1 in this scenario,
+    // describing the event delivered to the dynamically-loaded Worker.
+    await fetch(`https://example.com/submit-logs/${name}`, {
+      method: "POST",
+      body: JSON.stringify(events),
     });
   }
 }

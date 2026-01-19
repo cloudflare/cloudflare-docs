@@ -15,6 +15,7 @@ import {
 	LinkTitleCard,
 	Plan,
 	RelatedProduct,
+	AstroIcon,
 } from "~/components";
 
 <Description>
@@ -27,17 +28,17 @@ Run headless Chrome on [Cloudflare's global network](/workers/) for browser auto
 
 Browser Rendering enables developers to programmatically control and interact with headless browser instances running on Cloudflare’s global network.
 
-## Use Cases
+## Use cases
 
-Browser Rendering supports a wide range of use cases, including:
-- Extract rendered HTML or convert webpages to Markdown using the [content endpoint](/browser-rendering/rest-api/content-endpoint/) and [markdown endpoint](/browser-rendering/rest-api/markdown-endpoint/)
-- Create website thumbnails and social previews using the [screenshot endpoint](/browser-rendering/rest-api/screenshot-endpoint/)
-- Generate PDFs from webpages and HTML content using the [pdf endpoint](/browser-rendering/rest-api/pdf-endpoint/)
-- Archive complete webpage states with the [snapshot endpoint](/browser-rendering/rest-api/snapshot/) that captures both HTML and screenshots
-- Build web scrapers that target specific elements or extract all links using the [scrape endpoint](/browser-rendering/rest-api/scrape-endpoint/) and [links endpoint](/browser-rendering/rest-api/links-endpoint/)
-- Parse and structure webpage data into JSON format using the [json endpoint](/browser-rendering/rest-api/json-endpoint/)
+Programmatically load and fully render dynamic webpages or raw HTML and capture specific outputs such as:
 
-Browser Rendering is also ideal for agentic workflows. Use [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), [Playwright MCP](/browser-rendering/playwright/playwright-mcp/), or [Stagehand](/browser-rendering/stagehand/) to power AI agents that interact with web pages and extract data where APIs do not exist.
+- [Markdown](/browser-rendering/rest-api/markdown-endpoint/)
+- [Screenshots](/browser-rendering/rest-api/screenshot-endpoint/)
+- [PDFs](/browser-rendering/rest-api/pdf-endpoint/)
+- [Snapshots](/browser-rendering/rest-api/snapshot/)
+- [Links](/browser-rendering/rest-api/links-endpoint/)
+- [HTML elements](/browser-rendering/rest-api/scrape-endpoint/)
+- [Structured data](/browser-rendering/rest-api/json-endpoint/)
 
 ## Key features
 
@@ -47,14 +48,15 @@ Browser Rendering is also ideal for agentic workflows. Use [Puppeteer](/browser-
 - **Session management**: [Reuse browser sessions](/browser-rendering/workers-bindings/reuse-sessions/) across requests to improve performance and reduce cold-start overhead
 - **Flexible pricing**: Pay only for browser time used with generous free tier ([view pricing](/browser-rendering/pricing/))
 
-## Integration Methods
+## Integration methods
 
-You can integrate Browser Rendering into your applications using one of the following methods:
+You can integrate Browser Rendering into your applications using the method that best suits your needs:
 
 - **[REST API](/browser-rendering/rest-api/)**: Ideal for simple, stateless tasks like capturing screenshots, generating PDFs, extracting HTML content, and more.
-- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Suitable for advanced browser automation within [Cloudflare Workers](/workers/). This method provides greater control, enabling more complex workflows and persistent sessions.
-
-Choose the method that best fits your use case. For example, use the [REST API endpoints](/browser-rendering/rest-api/) for straightforward tasks from external applications and use [Workers Bindings](/browser-rendering/workers-bindings/) for complex automation within the Cloudflare ecosystem.
+- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Suitable for advanced browser automation within [Cloudflare Workers](/workers/). This method provides greater control, enabling more complex workflows and persistent sessions. Use one of the following libraries:
+  - **[Puppeteer](/browser-rendering/puppeteer/)**: Industry-standard Chrome automation API, ideal for porting existing scripts to the Cloudflare global network.
+  - **[Playwright](/browser-rendering/playwright/)**: Modern browser automation with a developer-friendly API. The [MCP integration](/browser-rendering/playwright/playwright-mcp/) enables AI agents to autonomously browse and extract data.
+  - **[Stagehand](/browser-rendering/stagehand/)**: AI-native SDK using natural language selectors instead of brittle code selectors, ensuring workflows stay resilient when websites change.
 
 ## Related products
 
