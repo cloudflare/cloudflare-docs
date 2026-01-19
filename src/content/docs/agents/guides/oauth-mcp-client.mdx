@@ -293,11 +293,11 @@ This example demonstrates a complete OAuth integration with Cloudflare Observabi
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
-import { Agent, type AgentNamespace, routeAgentRequest } from "agents";
+import { Agent, routeAgentRequest } from "agents";
 import type { MCPClientOAuthResult } from "agents/mcp";
 
 type Env = {
-	MyAgent: AgentNamespace<MyAgent>;
+	MyAgent: DurableObjectNamespace<MyAgent>;
 };
 
 export class MyAgent extends Agent<Env, never> {

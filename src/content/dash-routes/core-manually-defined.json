@@ -35,8 +35,8 @@
 		"parent": ["Networking"]
 	},
 	{
-		"name": "BYOIP",
-		"deeplink": "/?to=/:account/ip-addresses/ip-prefixes",
+		"name": "Address space",
+		"deeplink": "/?to=/:account/ip-addresses/address-space",
 		"parent": ["Networking", "IP addresses"]
 	}
 ]
