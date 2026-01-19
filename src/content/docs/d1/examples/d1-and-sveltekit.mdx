@@ -42,9 +42,8 @@ export async function GET({ request, platform }) {
 			headers: { "Content-Type": "application/json" },
 		});
 	} catch (error) {
-		return new Response(JSON.stringify({ error: "Failed to fetch users" }), {
-			status: 500,
-			headers: { "Content-Type": "application/json" },
+		return Response.json({ error: "Failed to fetch users" }, {
+			status: 500
 		});
 	}
 }
