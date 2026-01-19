@@ -5,7 +5,7 @@ import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
 import { glob, file } from "astro/loaders";
 
-import { collectionConfig as productMaturityCollectionConfig } from "./content/collection-product-maturity";
+import { collectionConfig as productMaturityCollectionConfig } from "./content/collection.product-maturity";
 
 import {
 	appsSchema,
