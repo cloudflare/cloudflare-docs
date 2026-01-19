@@ -1,7 +1,6 @@
 ---
 params:
   - productName
-  - dashButtonPath
   - magicWord
 ---
 
@@ -17,7 +16,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
 2. Go to **Network health** > **WAN connector health**.
-3. Select the tunnel for the traceroute.
+3. Find the tunnel for the traceroute.
 4. Select the three dots > **Traceroute details**.
       `}
       inline={false}
@@ -27,51 +26,26 @@ To run a traceroute from a specific Cloudflare data center to your network:
 
 { props.magicWord !== "WAN Tunnels" && (
   <>
-    <Aside type="note">
-      The steps below cover both the old and new dashboard experiences. To switch dashboard experiences, use the banner at the top of the dashboard.
-    </Aside>
+    <Markdown
+      text={`
+To run a traceroute from a specific Cloudflare data center to your network:
 
-    To run a traceroute from a specific Cloudflare data center to your network:
+1. Go to the **Network health** page.
+      `}
+      inline={false}
+    />
 
-    <Tabs syncKey="dashNewNav">
-      <TabItem label="Old dashboard">
-        <Markdown
-          text={`
-1. Go to ${props.productName}'s **Network health** page.
-          `}
-          inline={false}
-        />
+<DashButton url="/?to=/:account/networking-insights/health/network-health" />
 
-        <DashButton url={props.dashButtonPath} />
+	<Markdown
+		text={`
+2. Select **Connector health**.
+3. Select the tunnel for the traceroute.
+4. Select the three dots > **Traceroute details**.
+      `}
+		inline={false}
+	/>
 
-        <Markdown
-          text={`
-2. Expand a Magic Tunnel and find the Cloudflare data center from which to run the traceroute.
-3. Select **Traceroute for details**.
-          `}
-          inline={false}
-        />
-      </TabItem>
-
-      <TabItem label="New dashboard" icon="rocket">
-        <Markdown
-          text={`
-1. Go to ${props.productName}'s **Network health** page.
-          `}
-          inline={false}
-        />
-
-        <DashButton url={props.dashButtonPath} />
-
-        <Markdown
-          text={`
-2. Select the tunnel for the traceroute.
-3. Select the three dots > **Traceroute details**.
-          `}
-          inline={false}
-        />
-      </TabItem>
-    </Tabs>
   </>
 )}
 

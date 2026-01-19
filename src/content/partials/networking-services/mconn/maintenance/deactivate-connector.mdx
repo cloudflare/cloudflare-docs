@@ -18,16 +18,18 @@ import { DashButton, Markdown } from '~/components';
 	</>
 ) : (
 	<>
-		<Markdown
+<Markdown
 	text={`
-		1. In the Cloudflare dash, go to the **Configuration** page.
-	`}
+		1. Go to the **Connectors** page.
+		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
+		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
 		<Markdown
 	text={`
-		3. In the **Magic WAN Connector** tab, find the Magic WAN Connector you want to deactivate, select the three dots next to it > **Edit**.
+		2. Go to the **Appliances** tab > **Appliances**.
+		3. From the list, find the Magic WAN Connector you want to deactivate > select the three dots next to it > **Edit**.
 	`}
 	inline={false}
 	/>

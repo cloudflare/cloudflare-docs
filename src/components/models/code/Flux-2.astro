@@ -23,13 +23,6 @@ export default {
 		form.append('width', '1024');
 		form.append('height', '1024');
 
-		const formRequest = new Request('http://dummy', {
-			method: 'POST',
-			body: form
-		});
-		const formStream = formRequest.body;
-		const formContentType = formRequest.headers.get('content-type') || 'multipart/form-data';
-
 		const resp = await env.AI.run("${name}", {
 			multipart: {
 				body: formStream,

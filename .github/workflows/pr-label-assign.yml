@@ -17,14 +17,11 @@ jobs:
   label_products:
     name: Label products
     permissions:
-      issues: write
+      contents: read
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/label-products
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/labeler@v6
     continue-on-error: true
   label_size:
     name: Label size

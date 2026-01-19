@@ -2,7 +2,7 @@
 {}
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, DashButton, Tabs, TabItem } from "~/components";
 
 You can configure the source IP address range used by Cloudflare whenever a Cloudflare service, such as Cloudflare Load Balancing, sends traffic to a Cloudflare One private network. This address range is referred to as the Proxy Source IP Prefix (or `cloudflare_source` subnet type in the API).
 - IPv4 traffic is sourced from `100.64.0.0/12`. This range is configurable.
@@ -37,9 +37,27 @@ The following Connectors are affected:
 - WARP Connector
 - WARP Client
 
-## Configure source IPs via API
+## Configure source IPs
 
-Currently, you must use the Cloudflare API to configure this setting. To set up your source IPs, send a `PATCH` request to the [Update Cloudflare Source Subnet endpoint](/api/resources/zero_trust/subresources/networks/subresources/subnets/subresources/cloudflare_source/) with your desired network range. The payload must include the network (your new `/12` range), and may include a name and comment.
+:::note
+You need Cloudflare One Unified Routing to configure source IPs. If your account is not yet on Unified Routing, contact your account team to discuss migration and availability.
+:::
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Address space** page.
+
+   <DashButton url="/?to=/:account/ip-addresses/address-space" />
+
+2. Select the **Custom IPs** tab.
+3. Find the prefix you want to update. This is your new `/12` range.
+4. Select the three dots to the right of the prefix > **Edit**.
+5. Enter a new prefix in the **IP address** field.
+6. Select **Save**.
+
+</TabItem> <TabItem label="API">
+
+To set up your source IPs, send a `PATCH` request to the [Update Cloudflare Source Subnet endpoint](/api/resources/zero_trust/subresources/networks/subresources/subnets/subresources/cloudflare_source/) with your desired network range. The payload must include the network (your new `/12` range), and may include a name and comment.
 
 Example:
 
@@ -52,3 +70,5 @@ Example:
 		"network": "100.64.0.0/12"
 	}}
 />
+
+</TabItem> </Tabs>
