@@ -1,0 +1,159 @@
+---
+pcx_content_type: pubic-endpoint
+title: Public Endpoint
+sidebar:
+  order: 3
+---
+
+AI Search supports public endpoints that allow you to expose specific AI Search capabilities without requiring authentication. This enables you to share your AI Search functionality with external users or integrate it into public-facing applications.
+
+## Available public endpoints
+
+Each AI Search instance can optionally expose three public endpoints:
+
+- **`/chat/completion`** - OpenAI-compatible chat completion endpoint
+- **`/search`** - Vector search endpoint that returns relevant documents
+- **`/mcp`** - Model Context Protocol endpoint for AI agents
+
+## Public URL format
+
+When enabled, public endpoints are accessible at:
+
+```
+https://<hash>.search.ai.cloudflare.com/<endpoint>
+```
+
+For example:
+- `https://abc123.search.ai.cloudflare.com/chat/completion`
+- `https://abc123.search.ai.cloudflare.com/search`
+- `https://abc123.search.ai.cloudflare.com/mcp`
+
+### MCP endpoint
+
+The Model Context Protocol (MCP) endpoint allows AI agents to discover and interact with your AI Search content in a structured way. This endpoint follows the [MCP specification](https://modelcontextprotocol.io/) and provides tools for querying your indexed content.
+
+#### Example MCP usage
+
+To use the MCP endpoint with an AI agent:
+
+```bash
+# Query content using MCP
+curl https://abc123.search.ai.cloudflare.com/mcp \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 2,
+    "method": "tools/call",
+    "params": {
+      "name": "search",
+      "arguments": {
+        "query": "How do I configure AI Search?"
+      }
+    }
+  }'
+```
+
+The MCP endpoint is particularly useful for integrating with AI development tools like Claude Desktop, VS Code extensions, or custom AI agents that support the MCP protocol.
+
+
+
+## Configuration
+
+### Per-endpoint controls
+
+You can enable or disable each public endpoint independently:
+
+1. Go to your AI Search instance settings
+2. Navigate to the **Public Endpoints** section
+3. Toggle each endpoint on or off as needed
+
+Each endpoint has its own configuration panel for granular control.
+
+
+### Rate limiting
+
+Configure rate limits to control usage across all public endpoints:
+
+- **Requests per period**: Set the maximum number of requests allowed
+- **Time period**: Define the time window in minutes
+- **Period type**: Choose between fixed or sliding window
+
+Rate limits apply across all enabled public endpoints for the AI Search instance.
+
+### CORS configuration
+
+Cross-Origin Resource Sharing (CORS) is enabled by default to support browser-based applications.
+
+You can also specify allowed origins:
+
+1. In the **Public Endpoints** settings
+2. Add specific hostnames to the CORS rules
+3. Use `*` to allow all origins (default)
+
+## Security considerations
+
+- Public endpoints do not require authentication
+- Consider enabling rate limiting to prevent abuse
+- Use CORS rules to restrict access to specific domains
+- Monitor usage through your dashboard analytics
+
+
+## AI Search snippets integration
+
+You can integrate AI Search directly into your website using the Cloudflare AI Search snippet library. This provides production-ready, customizable search and chat components with zero dependencies.
+
+:::note
+To use the AI Search snippet library, ensure that the `/chat/completion` and `/search` public endpoints are enabled in your AI Search instance settings.
+:::
+
+### Installation
+You can install the AI Search snippet library via npm or use it directly from the CDN:
+
+#### NPM installation
+
+```bash
+npm install @cloudflare/ai-search-snippet
+```
+
+#### CDN installation
+
+```html
+<script type="module" src="https://abc123.search.ai.cloudflare.com/search-snippet.es.js"></script>
+```
+
+### Basic usage
+
+```html
+<!-- Import the library -->
+<script type="module" src="https://abc123.search.ai.cloudflare.com/search-snippet.es.js"></script>
+
+<!-- Search bar with results -->
+<search-bar-snippet
+    api-url="https://abc123.search.ai.cloudflare.com/"
+    placeholder="Search..."
+    max-results="10">
+</search-bar-snippet>
+
+<!-- Modal search (opens with Cmd/Ctrl+K) -->
+<search-modal-snippet
+    api-url="https://abc123.search.ai.cloudflare.com/"
+    placeholder="Search documentation..."
+    max-results="10">
+</search-modal-snippet>
+
+<!-- Floating chat bubble -->
+<chat-bubble-snippet
+    api-url="https://abc123.search.ai.cloudflare.com/"
+    placeholder="Type a message...">
+</chat-bubble-snippet>
+
+<!-- Full-page chat with history -->
+<chat-page-snippet
+    api-url="https://abc123.search.ai.cloudflare.com/"
+    placeholder="Type a message...">
+</chat-page-snippet>
+```
+
+For more information and advanced configuration options, visit [search.ai.cloudflare.com](https://search.ai.cloudflare.com/).
+
+

@@ -3,6 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-02-25"
+    title: Public endpoint and snippets
+    description: |-
+      You can now expose your AI Search instance via a public endpoint and add snippets to show your search results.
   - publish_date: "2026-02-09"
     title: Crawler user agent renamed
     description: |-
