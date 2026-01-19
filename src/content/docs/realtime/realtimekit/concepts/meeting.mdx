@@ -10,7 +10,7 @@ import { Details } from "~/components";
 
 Meeting is a **re-usable virtual room** that you can join and interact in, in real-time.
 
-You can assign a title and feature configuration to it, then add participants who are authorised to join. The Meeting itself doesn't "start" or "end";  it just exists.
+You can assign a title and feature configuration to it, then add participants who are authorised to join. The Meeting itself doesn't "start" or "end"; it just exists.
 
 Because Meetings do not have a specific date or time, you can create them well in advance or create them just-in-time, right when users need to join.
 
@@ -62,10 +62,11 @@ flowchart TB
 ```
 
 ### Session
-A **Session** is a live instance of a Meeting. It starts automatically when the first participant joins the meeting and ends shortly after the last participant leaves. 
+
+A **Session** is a live instance of a Meeting. It starts automatically when the first participant joins the meeting and ends shortly after the last participant leaves.
 A Session inherits all settings (like features and title) from its parent Meeting.
 
-Because the Meeting is persistent, it can have many different Sessions over time. 
+Because the Meeting is persistent, it can have many different Sessions over time.
 
 Example - **Think of a Meeting as a recurring weekly standup event.**
 
@@ -79,25 +80,24 @@ You can get the details of your sessions from the [RealtimeKit Dashboard](https:
 
 ![Sessions in RealtimeKit Dashboard](~/assets/images/realtime/realtimekit/dashboard-sessions.png)
 
-### Meeting Terminologies
+### Session Terminologies
 
-#### Waiting Room 
+#### Waiting Room
 
 A **waiting room** lets participants join a meeting without immediately entering the live session. This gives hosts full control over **who gets in**, **when they enter**, and **how the meeting flow is managed**.
 
 Hosts can also configure specific behaviours for how users move from the waiting room into the meeting.
 
-* **Join when accepted by someone**
+- **Join when accepted by someone**
   Participants stay in the waiting room until a host or another authorized user explicitly admits them. Ideal for highly controlled or private meetings.
 
-* **Join when a privileged user joins**
+- **Join when a privileged user joins**
   Participants remain in the waiting room initially, but are automatically admitted once a host or other privileged user enters the meeting. Useful for scheduled events where attendees should only join after the moderator is present.
 
-* **Accept users into waiting room**
+- **Accept users into waiting room**
   Hosts can see the list of waiting users, admit them individually or in bulk, or remove them. This mode provides maximum visibility and control over incoming participants.
 
 These options allow you to tailor how access is managed—whether you need strict admission control, a smoother flow once a host arrives, or a combination of both.
-
 
 #### Stage
 
@@ -117,7 +117,7 @@ You can control how participants move between these connected spaces using the f
 
 - **Full Access:** Allows participants to create, update, and delete connected meetings.
 - **Switch Connected Meeting:** Lets participants move freely between the available connected (child) meetings.
-- **Switch to Parent Meeting:**  Allows participants to return to the main (parent) meeting at any time.
+- **Switch to Parent Meeting:** Allows participants to return to the main (parent) meeting at any time.
 
 ### Create a meeting
 
@@ -158,4 +158,3 @@ After learning about Meetings and Sessions, you can explore the following next s
 - Configure [Presets](/realtime/realtimekit/concepts/preset/) for your App – Set up default permissions, media settings, and behavior for all Sessions created from a Meeting.
 - Add [Participants](/realtime/realtimekit/concepts/participant/) to a Meeting – Manage who can join, their roles, and the access controls they inherit.
 - Get started with [RealtimeKit SDKs](/realtime/realtimekit/quickstart/) – Integrate RealtimeKit into your web or mobile app with just a few lines of code.
-

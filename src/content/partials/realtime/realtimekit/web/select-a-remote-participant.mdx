@@ -1,0 +1,15 @@
+---
+{}
+---
+
+To perform actions on a specific participant, you first need to retrieve their participant object.
+Remote participants (other participants) are available in `meeting.participants`. The local participant is available in `meeting.self`.
+Refer to [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) for details.
+
+```ts
+const joinedParticipants = meeting.participants.joined.toArray();
+const participant = joinedParticipants[0];
+if (!participant) {
+	// No remote participants are currently joined.
+}
+```

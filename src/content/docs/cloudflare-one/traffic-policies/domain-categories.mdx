@@ -258,12 +258,12 @@ data "cloudflare_zero_trust_gateway_categories_list" "categories" {
 
 locals {
   main_categories_map = {
-    for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories[0].result :
+    for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories.result :
     c.name => c.id
   }
 
   subcategories_map = merge(flatten([
-    for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories[0].result : {
+    for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories.result : {
       for k, v in coalesce(c.subcategories, []) :
       v.name => v.id
     }

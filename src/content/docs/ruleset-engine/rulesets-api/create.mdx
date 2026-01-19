@@ -1,12 +1,11 @@
 ---
-title: Create ruleset
+title: Create a ruleset
 pcx_content_type: reference
-
 sidebar:
   order: 5
 ---
 
-import { Description, Type, Render, APIRequest } from "~/components";
+import { Description, Type, MetaInfo, Render, APIRequest } from "~/components";
 
 Creates a ruleset of a given kind in the specified phase. Allows you to create phase entry point rulesets.
 
@@ -17,12 +16,14 @@ Use one of the following API endpoints:
 - [Create a zone ruleset](/api/resources/rulesets/methods/create/)<br/>
   `POST /zones/{zone_id}/rulesets`
 
-The following parameters are required:
+## Parameters
+
+A `POST` request to create a ruleset supports the following parameters in the request body:
 
 - `name` <Type text="String" />
   - A human-readable name for the ruleset.
   - The name is immutable. You cannot change it over the lifetime of the ruleset.
-- `description` <Type text="String" />
+- `description` <Type text="String" /> <MetaInfo text="Optional" />
   - Optional description for the ruleset.
   - You can change the description over the lifetime of the ruleset.
 - `kind` <Type text="String" />
@@ -34,8 +35,10 @@ The following parameters are required:
 - `phase` <Type text="String" />
   - The name of the [phase](/ruleset-engine/about/phases/) where the ruleset will be created.
   - Check the [phases list](/ruleset-engine/reference/phases-list/) or the specific Cloudflare product documentation for more information on the phases where you can create rulesets for that product.
+- `rules` <Type text="Array<Rule>" /> <MetaInfo text="Optional" />
+  - A list of [rules](/ruleset-engine/rulesets-api/json-object/#rule-object-structure-and-properties) to include in the ruleset.
 
-Use the `rules` parameter to supply a list of rules for the ruleset. For an object definition, refer to [Rulesets API: JSON Object](/ruleset-engine/rulesets-api/json-object/).
+For additional details on these parameters, refer to [JSON objects](/ruleset-engine/rulesets-api/json-object/).
 
 ## Example - Create a custom ruleset
 

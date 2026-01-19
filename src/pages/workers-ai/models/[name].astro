@@ -22,7 +22,7 @@ import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
-import Flux2Dev from "~/components/models/code/Flux-2-Dev.astro";
+import Flux2 from "~/components/models/code/Flux-2.astro";
 import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
 import MelottsCode from "~/components/models/code/MelottsCode.astro";
 import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
@@ -98,7 +98,11 @@ if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 }
 
 if (model.name === "@cf/black-forest-labs/flux-2-dev") {
-	CodeExamples = Flux2Dev;
+	CodeExamples = Flux2;
+}
+
+if (model.name === "@cf/black-forest-labs/flux-2-klein-4b") {
+	CodeExamples = Flux2;
 }
 
 if (model.name === "@cf/openai/whisper-large-v3-turbo") {

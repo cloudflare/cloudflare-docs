@@ -104,9 +104,9 @@ Magic IPsec tunnels leverage a route-based site-to-site VPN model. This model re
 Configure two IPsec tunnels using the `phase1-interface` and `phase2-interface` objects.
 
 :::note
-Refer to the Cloudflare Magic WAN dashboard to obtain the FQDN ID value when specifying the `localid` attribute/value pair in the `phase1-interface` configuration. To find this value go to **Tunnels** in the Cloudflare dashboard. Then, find your IPsec tunnel and expand it to reveal all the information associated to it.
+Refer to the Cloudflare Magic WAN dashboard to obtain the FQDN ID value when specifying the `localid` attribute/value pair in the `phase1-interface` configuration. To find this value go to the **Connectors** page. Then, in the **IPsec/GRE tunnels** tab, select your IPsec tunnel to reveal all the information associated to it.
 
-<DashButton url="/?to=/:account/magic-wan/configuration" />
+<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
 :::
 
 The following examples assume `wan1` is the external/egress interface of the FortiGate firewall.

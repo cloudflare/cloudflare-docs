@@ -1,5 +1,17 @@
 ---
+import { z } from "astro:schema";
 import SDKSelector from "./RTKSDKSelector";
+
+const platform = z.enum(["web", "mobile"]);
+
+const props = z.object({
+	disabledPlatforms: z
+		.union([platform, z.array(platform)])
+		.optional()
+		.transform((value) => (typeof value === "string" ? [value] : value)),
+});
+
+const { disabledPlatforms } = props.parse(Astro.props);
 ---
 
-<SDKSelector client:load />
+<SDKSelector client:load disabledPlatforms={disabledPlatforms} />

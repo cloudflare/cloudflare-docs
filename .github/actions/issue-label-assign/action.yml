@@ -4,8 +4,9 @@ description: "Assign the issue to its product content owner."
 inputs:
   GITHUB_TOKEN:
     description: "token for repository access"
-    required: true
+    required: false
+    default: ${{ github.token }}
 
 runs:
-  using: "node16"
+  using: "node20"
   main: "index.js"

@@ -1,7 +1,8 @@
 ---
 title: Leveraging Cloudflare for your SaaS applications
 pcx_content_type: design-guide
-products: [cloudflare-for-saas, cloudflare-tunnel, load-balancing, data-localization]
+products:
+  [cloudflare-for-saas, cloudflare-tunnel, load-balancing, data-localization]
 sidebar:
   order: 1
   label: Leveraging Cloudflare for your SaaS applications
@@ -92,7 +93,7 @@ If you need even more flexibility than our rules provide, to give individual beh
 
 If you need more customization than even metadata can provide, or are running a service where your customers write or generate their own application code, [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) lets you deploy a complete serverless application for each of your customers.
 
-We provide several key features such as the [Dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/), which gives you infinite flexibility in deciding which customer application to route to. For example, you can run security checks, then decode an HTTP header telling you the user's ID, and then load the appropriate serverless application for this user's request. [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) give you additional visibility and control into what Internet resources your customer's applications can access, providing a familiar security model in a distributed deployment.
+We provide several key features such as the [Dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/), which gives you infinite flexibility in deciding which customer application to route to. For example, you can run security checks, then decode an HTTP header telling you the user's ID, and then load the appropriate serverless application for this user's request. [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) give you additional visibility and control into what Internet resources your customer's applications can access, providing a familiar security model in a distributed deployment.
 
 We also provide features for [observability](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/), [configuration](/terraform/), and many other tools needed for a production-grade platform deployment. These are detailed in other [reference architectures](/reference-architecture/) and function the same way for platform cases as for the more standard models described in those guides.
 

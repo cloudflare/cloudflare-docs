@@ -153,3 +153,18 @@ This chart shows historical data for all Workers on a zone broken down by succes
 ## GraphQL
 
 Worker metrics are powered by GraphQL. Learn more about querying our data sets in the [Querying Workers Metrics with GraphQL tutorial](/analytics/graphql-api/tutorials/querying-workers-metrics/).
+
+## Custom analytics with Analytics Engine
+
+The metrics described above provide insight into Worker performance and runtime behavior. For custom, application-specific analytics, use [Workers Analytics Engine](/analytics/analytics-engine/).
+
+Analytics Engine is useful for:
+
+- **Custom business metrics** - Track events specific to your application, such as signups, purchases, or feature usage.
+- **Per-customer analytics** - Record data with high-cardinality dimensions like customer IDs or API keys.
+- **Usage-based billing** - Count API calls, compute units, or other billable events per customer.
+- **Performance tracking** - Measure response times, cache hit rates, or error rates with custom dimensions.
+
+Writes to Analytics Engine are non-blocking and do not add latency to your Worker. Query your data using SQL through the [Analytics Engine SQL API](/analytics/analytics-engine/sql-api/) or visualize it in [Grafana](/analytics/analytics-engine/grafana/).
+
+Refer to the [Analytics Engine example](/workers/examples/analytics-engine/) to get started.

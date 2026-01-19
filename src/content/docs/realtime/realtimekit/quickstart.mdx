@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem, Steps, Render } from "~/components";
+import { Render } from "~/components";
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
@@ -31,58 +31,7 @@ _Optional:_ Alternatively, [create tokens programmatically via the API](/fundame
 
 ### Installation
 
-Select a framework based on the platform you are building for.
-
-<RTKSDKSelector />
-
-<RTKCodeSnippet id="web-react">
-
-Please install the following dependencies into your project repository:
-
-```bash
-npm i @cloudflare/realtimekit-react @cloudflare/realtimekit-react-ui
-```
-
-_Optional:_ You can also build on top of our ready-made template:
-
-```bash
-git clone https://github.com/cloudflare/realtimekit-web-examples.git
-cd realtimekit-web-examples/react-examples/examples/default-meeting-ui
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-web-components">
-	Please install the following dependencies into your project repository:
-
-    ```bash
-    npm i @cloudflare/realtimekit-web @cloudflare/realtimekit-ui
-    ```
-
-    _Optional:_ You can also build on top of our ready-made template:
-
-    ```bash
-    git clone https://github.com/cloudflare/realtimekit-web-examples.git
-    cd realtimekit-web-examples/html-examples/examples/default-meeting-ui
-    ```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-	Please install the following dependencies into your project repository:
-
-    ```bash
-    npm i @cloudflare/realtimekit-angular @cloudflare/realtimekit-angular-ui
-    ```
-
-    _Optional:_ You can also build on top of our ready-made template:
-
-    ```bash
-    git clone https://github.com/cloudflare/realtimekit-web-examples.git
-    cd realtimekit-web-examples/angular-examples/examples/default-meeting-ui
-    ```
-
-</RTKCodeSnippet>
+<Render file="realtimekit/common/installation" product="realtime" />
 
 ### Create a RealtimeKit App
 

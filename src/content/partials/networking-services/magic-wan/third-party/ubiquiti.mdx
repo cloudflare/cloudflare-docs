@@ -24,12 +24,8 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. Go to Magic WAN's **Configuration** page.`}
-			inline={false}
-		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
-		<Markdown
-			text={`2. Go to **Tunnels**, and select **Create**.`}
+			text={`
+			1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) to learn how to add IPsec tunnels.`}
 			inline={false}
 		/>
 	</>
@@ -40,7 +36,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 		inline={false}
 	/>
 )}
-3. Select **IPsec tunnel** > **Next**, and fill in the following settings:
+2. Select **IPsec tunnel** > **Next**, and fill in the following settings:
 	   - **Name**: `unifi-gw-primary`
 	   - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
 	   - **Customer Endpoint**: This should be your UniFi Gateway's WAN IP (for example, `203.0.113.10`)
@@ -87,12 +83,17 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
-			inline={false}
+			text={`
+			1. Go to the **Connectors** page.
+			`}
+				inline={false}
 		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
+
+			<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
 		<Markdown
-			text={`2. In **Tunnels**, find the IPsec tunnel you have just created.`}
+			text={`
+			2. In the **IPsec/GRE tunnels** tab, find the IPsec tunnel you have just created.`}
 			inline={false}
 		/>
 	</>
@@ -112,12 +113,17 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
+			text={`
+			1. Go to the **Routes** page.
+			`}
 			inline={false}
 		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
+
+			<DashButton url="/?to=/:account/magic-networks/routes" />
+
 		<Markdown
-			text={`2. Go to **Routes** > **Create static route**.`}
+			text={`
+			2. Select **Create static route**.`}
 			inline={false}
 		/>
 	</>
@@ -146,9 +152,9 @@ To check your connections are working correctly, wait a few minutes, and then ac
 			text={`1. Go to Magic WAN's **Network Health** page.`}
 			inline={false}
 		/>
-		<DashButton url="/?to=/:account/magic-wan/tunnel-healthchecks" />
+		<DashButton url="/?to=/:account/networking-insights/health/network-health" />
 		<Markdown
-			text={`2. On the banner at the top of the page, select **Magic Tunnel Health Dashboard** to enable the new health checks experience.
+			text={`2. Go to the **Connector health** tab.
 3. Find the tunnel you have just created and make sure its status shows **Up**. Refer to [Check tunnel health in the dashboard](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information.`}
 			inline={false}
 		/>

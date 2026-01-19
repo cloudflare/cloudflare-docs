@@ -54,7 +54,7 @@ In your project directory, C3 has generated several files.
 <Details header="What files did C3 create?">
 
 1. `wrangler.jsonc`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
-2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
+2. `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
 5. `node_modules`: Refer to [`npm` documentation `node_modules`](https://docs.npmjs.com/cli/v7/configuring-npm/folders#node-modules).
@@ -119,7 +119,7 @@ export default {
 
 By querying the LLM through the `AI` binding, we can interact directly with Cloudflare AI's large language models directly in our code. In this example, we are using the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
 
-You can deploy your Worker using `wrangler`:
+Deploy your Worker using `wrangler`:
 
 ```sh
 npx wrangler deploy
@@ -406,7 +406,7 @@ To begin, install the `@anthropic-ai/sdk` package:
 
 <PackageManagers pkg="@anthropic-ai/sdk" />
 
-In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it's set, we can generate text using the Anthropic SDK. If it isn't set, we'll fall back to the existing Workers AI code:
+In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it is set, we can generate text using the Anthropic SDK. If it is not set, we'll fall back to the existing Workers AI code:
 
 ```js
 import Anthropic from '@anthropic-ai/sdk';
@@ -415,7 +415,7 @@ app.get('/', async (c) => {
   // ... Existing code
 	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
 
-	let modelUsed: string = ""
+	let modelUsed = ""
 	let response = null
 
 	if (c.env.ANTHROPIC_API_KEY) {

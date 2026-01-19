@@ -47,9 +47,36 @@ Proxy mode is best suited for organizations that want to filter traffic directed
 | ------------- | ----------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | No            | No                | Yes            | HTTP policies, Browser Isolation, identity-based policies, AV scanning, and Data Loss Prevention for traffic sent through localhost proxy |
 
+### Set up proxy mode
+
+When you create a Cloudflare One account, a default [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is created in `Gateway with WARP` service mode. To set up proxy mode, you will need to edit the default device profile or create a new device profile and set the WARP service mode to `Proxy mode`.
+
+The default profile is used for all devices that are not assigned to a specific profile. If you want to apply proxy mode to a specific group of devices, you will need to create a new device profile and assign it to those devices.
+
+To set up proxy mode:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources** > **Device profiles**.
+2. Decide whether you would like to edit the default profile or create a new device profile.
+3. Select the device profile you want to configure > **Edit** (If you only see **View**, you lack the permissions required to modify profiles).
+4. Ensure the **Device tunnel protocol** is set to `MASQUE`.
+5. Under **Service mode**, select **Proxy mode**.
+6. Select **Save profile**.
+
+:::note[MDM deployment]
+
+If you are deploying WARP through MDM, the configuration file will override any device profile settings, including the WARP service mode. Refer to the [`service_mode` parameter](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#service_mode) for more information.
+
+:::
+
+For devices using proxy mode, the WARP client listens on the configured port at the address `127.0.0.1` (`localhost`). Cloudflare uses `40000` as the default port for WARP in proxy mode, but you can modify this to any available port. You must explicitly configure individual applications or your system proxy settings to use this proxy.
+
+Once configured, traffic to and from these applications will securely tunnel through WARP.
+
+To make more complex routing decisions (such as, routing traffic directly to the Internet or other proxies), you can use a [PAC file](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/).
+
 ### Limitations
 
-- Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
+- Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTP proxy communication.
 - Requires the MASQUE [device tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). Wireguard is not supported.
 - Only available on Windows, Linux, and macOS.
 - Proxy mode has a timeout limit of 10 seconds for requests. If a request goes above the 10 second limit, Cloudflare will drop the connection.
