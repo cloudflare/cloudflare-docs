@@ -14,10 +14,10 @@ Your Agent can connect to external [Model Context Protocol (MCP)](https://modelc
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
-import { Agent, type AgentNamespace } from "agents";
+import { Agent } from "agents";
 
 type Env = {
-	MyAgent: AgentNamespace<MyAgent>;
+	MyAgent: DurableObjectNamespace<MyAgent>;
 };
 
 export class MyAgent extends Agent<Env, never> {

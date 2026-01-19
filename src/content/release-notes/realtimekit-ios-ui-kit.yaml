@@ -1,0 +1,115 @@
+---
+link: "/realtime/realtimekit/release-notes/ios-ui-kit/"
+productName: RealtimeKit iOS UI Kit
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2025-12-16"
+    title: RealtimeKit iOS UI Kit 0.5.6
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.7](/realtime/realtimekit/release-notes/ios-core/#2025-12-16)
+  - publish_date: "2025-12-12"
+    title: RealtimeKit iOS UI Kit 0.5.5
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.6](/realtime/realtimekit/release-notes/ios-core/#2025-12-12)
+      
+      **Fixes**
+      
+      - Raised minimum deployment target to iOS 15.6
+  - publish_date: "2025-12-04"
+    title: RealtimeKit iOS UI Kit 0.5.4
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.5](/realtime/realtimekit/release-notes/ios-core/#2025-12-04)
+      
+      **Fixes**
+      
+      - Raised iOS deployment target to 15.6
+  - publish_date: "2025-11-06"
+    title: RealtimeKit iOS UI Kit 0.5.3
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.4](/realtime/realtimekit/release-notes/ios-core/#2025-11-06)
+  - publish_date: "2025-10-23"
+    title: RealtimeKit iOS UI Kit 0.5.2
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.3](/realtime/realtimekit/release-notes/ios-core/#2025-10-23)
+      
+      **Fixes**
+      
+      - Fix a regression that caused self video to not render if meeting was joined with camera disabled
+  - publish_date: "2025-10-23"
+    title: RealtimeKit iOS UI Kit 0.5.1
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.2](/realtime/realtimekit/release-notes/ios-core/#2025-10-23)
+  - publish_date: "2025-10-06"
+    title: RealtimeKit iOS UI Kit 0.5.0
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.5.1](/realtime/realtimekit/release-notes/ios-core/#2025-10-06)
+      
+      **Fixes**
+      
+      - Audio device selector now dynamically updates the options list when devices are removed or added
+      - Fix participant list host actions not working for self
+  - publish_date: "2025-09-12"
+    title: RealtimeKit iOS UI Kit 0.4.6
+    description: |-
+      **Fixes**
+      
+      - Fix a rare crash during meeting joins in poor network scenarios
+  - publish_date: "2025-09-12"
+    title: RealtimeKit iOS UI Kit 0.4.5
+    description: |-
+      **Fixes**
+      
+      - Pinned peers did not get removed from the stage when kicked
+      - Media consumers are now created in parallel, which significantly improves the speed of when users will start seeing other people's audio/video after joining a meeting.
+      - "Ghost"/Invalid peers that would sometimes show up in long-running meetings are now fully gone
+      - Fixed an issue In webinar meetings where the SDK would fail to produce media after being removed from the stage once
+  - publish_date: "2025-08-13"
+    title: RealtimeKit iOS UI Kit 0.4.4
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.3.2](/realtime/realtimekit/release-notes/ios-core/#2025-08-13)
+  - publish_date: "2025-08-13"
+    title: RealtimeKit iOS UI Kit 0.4.3
+    description: |-
+      **Features**
+      
+      - Upgraded to [RealtimeKit Core v1.3.1](/realtime/realtimekit/release-notes/ios-core/#2025-08-13)
+  - publish_date: "2025-08-12"
+    title: RealtimeKit iOS UI Kit 0.4.2
+    description: |-
+      **Features**
+      
+      - Upgraded to [RealtimeKit Core v1.3.0](/realtime/realtimekit/release-notes/ios-core/#2025-08-12)
+  - publish_date: "2025-08-08"
+    title: RealtimeKit iOS UI Kit 0.4.1
+    description: |-
+      **Fixes**
+      
+      - Fix multiple errors in the SPM package preventing it from being imported by users
+  - publish_date: "2025-08-05"
+    title: RealtimeKit iOS UI Kit 0.4.0
+    description: |-
+      **Features**
+      
+      - Upgraded to [RealtimeKit Core v1.2.0](/realtime/realtimekit/release-notes/ios-core/#2025-08-05)
+  - publish_date: "2025-07-02"
+    title: RealtimeKit iOS UI Kit 0.3.0
+    description: |-
+      **Features**
+      
+      - Upgraded to [RealtimeKit Core v1.1.0](/realtime/realtimekit/release-notes/ios-core/#2025-07-02)
