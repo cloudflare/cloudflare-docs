@@ -2,7 +2,7 @@
 {}
 ---
 
-import { APIRequest, Tabs, TabItem } from "~/components";
+import { APIRequest, DashButton, Tabs, TabItem } from "~/components";
 
 You can configure the source IP address range used by Cloudflare whenever a Cloudflare service, such as Cloudflare Load Balancing, sends traffic to a Cloudflare One private network. This address range is referred to as the Proxy Source IP Prefix (or `cloudflare_source` subnet type in the API).
 - IPv4 traffic is sourced from `100.64.0.0/12`. This range is configurable.
@@ -45,11 +45,15 @@ You need Cloudflare One Unified Routing to configure source IPs. If your account
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to Magic WAN's **Custom IPs** page.
-2. Find the prefix you want to update. This is your new `/12` range.
-3. Select the three dots to the right of the prefix > **Edit**.
-4. Enter a new prefix in the **IP address** field.
-5. Select **Save**.
+1. Go to the **Address space** page page.
+
+	<DashButton url="/?to=/:account/ip-addresses/address-space" />
+
+2. Select the **Custom IPs** tab.
+3. Find the prefix you want to update. This is your new `/12` range.
+4. Select the three dots to the right of the prefix > **Edit**.
+5. Enter a new prefix in the **IP address** field.
+6. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
