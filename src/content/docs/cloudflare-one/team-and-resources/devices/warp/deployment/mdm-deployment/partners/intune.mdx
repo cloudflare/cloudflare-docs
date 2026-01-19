@@ -189,6 +189,18 @@ Before deploying WARP, you need to allow its system extensions.
 
    ![Intune admin console where you enter team identifier and bundle identifier](~/assets/images/cloudflare-one/connections/intune/intune-bundle-team-identifier.png)
 
+   Running the following command in the terminal will return the verified identifiers. This validation ensures that the values you enter into Intune match the official application signatures guaranteed by Apple.
+
+   ```bash
+   codesign -dv --verbose=4 /Applications/Cloudflare\ WARP.app 2>&1 | grep Identifier
+   ```
+   Expected output:
+
+   ```output
+   Identifier=com.cloudflare.1dot1dot1dot1.macos
+   TeamIdentifier=68WVV388M8
+   ```
+
 10. Select **Save**.
 
 11. In **Scope tags**, select **Next**.

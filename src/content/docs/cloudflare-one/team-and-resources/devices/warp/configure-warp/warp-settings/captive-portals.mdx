@@ -45,6 +45,12 @@ If WARP cannot establish a connection to Cloudflare, it will:
   - Captive portals that intercept all DNS traffic will block WARP's [DoH connection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_NO_NETWORK](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#cf_no_network) error after they login to the captive portal.
   - Captive portals that only allow HTTPS traffic will block WARP's [Wireguard UDP connection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_HAPPY_EYEBALLS_MITM_FAILURE](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#cf_happy_eyeballs_mitm_failure) error after they login to the captive portal.
 
+:::note[Check system notifications]
+
+Captive portal detection relies on system notifications to prompt the user. The login screen may not appear if a notification is dismissed or if the device is in Do Not Disturb mode, is screen recording, or if notifications for the WARP app are disabled in system settings.
+
+:::
+
 ## Get captive portal logs <Badge text="Beta" variant="note" />
 
 <Details header="Feature availability">

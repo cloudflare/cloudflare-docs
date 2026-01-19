@@ -23,17 +23,24 @@ When you use a static IP address, Magic WAN Connector can also act as a DHCP ser
 	<>
 		<Markdown
 	text={`
-		1. Go to the **Connector on-ramps** page.
+		1. Go to the **Connectors** page.
 		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
+		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Profiles**.
+		`}
+	inline={false}
+	/>
 	</>
 )
 }
 {/* Command needed so list starts on number 3 since steps 1, 2 are inside conditional render */}
 <ol start="3">
-<li>Select your Magic WAN Connector you want to configure &gt; <strong>Edit</strong>.</li>
+<li>Select the Magic WAN Connector you want to configure &gt; <strong>Edit</strong>.</li>
 <li>Select <strong>Network Configuration</strong>, and scroll down to <strong>LAN configuration</strong>.</li>
 <li>In <strong>LAN configuration</strong>, select the LAN where you want to enable DHCP server.</li>
 <li>Select <strong>Edit</strong>.</li>

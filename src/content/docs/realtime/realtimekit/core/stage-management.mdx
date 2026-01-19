@@ -6,13 +6,19 @@ sidebar:
   order: 10
 ---
 
-import { Tabs, TabItem } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 This guide explains how to use stage management APIs for Webinar (WebRTC) use cases in Cloudflare RealtimeKit.
 
-## Overview
+<RTKSDKSelector />
 
-Instead of a traditional publish-subscribe model, where a user can publish their media and others can choose to subscribe, RealtimeKit comes with an optional managed configuration. In this managed configuration, a less privileged user can be configured with a default behavior to not publish media. The user can then request permission to be allowed to publish their media, where a privileged user can choose to grant or deny access.
+Instead of a traditional publish-subscribe model, where a user can publish their
+media and others can choose to subscribe, RealtimeKit comes with an optional
+managed configuration. In this managed configuration, a less privileged user can
+be configured with a default behavior to not publish media. The user can then
+request permission to be allowed to publish their media, where a privileged user
+can choose to grant or deny access.
 
 Using RealtimeKit's stage management APIs, a user can perform actions such as:
 
@@ -22,62 +28,62 @@ Using RealtimeKit's stage management APIs, a user can perform actions such as:
 
 ## Access the Stage APIs
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
 The stage module can be accessed under the `meeting.stage` namespace.
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 console.log("Stage object:", meeting.stage);
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
 
-The stage module can be accessed under the `meeting.stage` namespace.
+<RTKCodeSnippet id="web-angular">
+
+```js
+console.log("Stage object:", meeting.stage);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 console.log("Stage object:", meeting.stage);
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Properties
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
 ### Status
 
 The `meeting.stage.status` property returns the current stage status of the local user.
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 console.log("Stage status:", meeting.stage.status);
 ```
 
-**Possible status values:**
+</RTKCodeSnippet>
 
-- **`ON_STAGE`** - The user is currently on the stage and sharing audio and video.
-- **`OFF_STAGE`** - The user is viewing the session but is not on the stage and is not sharing audio or video.
-- **`REQUESTED_TO_JOIN_STAGE`** - The user has a pending request to join the stage and share audio and video. This status remains until the host accepts or rejects the request.
-- **`ACCEPTED_TO_JOIN_STAGE`** - The host has accepted the user's request to join the stage.
+<RTKCodeSnippet id="web-angular">
 
-:::note
-A user with permission to join stage directly can only assume `ON_STAGE` and `ACCEPTED_TO_JOIN_STAGE` status values.
-:::
+```js
+console.log("Stage status:", meeting.stage.status);
+```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
 
-### Status
-
-The `meeting.stage.status` property returns the current stage status of the local user.
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 console.log("Stage status:", meeting.stage.status);
 ```
 
+</RTKCodeSnippet>
+
 **Possible status values:**
 
 - **`ON_STAGE`** - The user is currently on the stage and sharing audio and video.
@@ -88,40 +94,94 @@ console.log("Stage status:", meeting.stage.status);
 :::note
 A user with permission to join stage directly can only assume `ON_STAGE` and `ACCEPTED_TO_JOIN_STAGE` status values.
 :::
-
-</TabItem>
-</Tabs>
 
 ## Host Controls
 
 RealtimeKit's stage management APIs allow hosts to receive and manage stage requests as well as leave and join the stage.
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
 ### Join Stage
 
 This method connects the user to the media room, enabling them to interact with other peers in the meeting.
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 await meeting.stage.join();
 ```
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+await meeting.stage.join();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.stage.join();
+```
+
+</RTKCodeSnippet>
+
 ### Leave Stage
 
 By employing this method, the user will be disconnected from the media room and subsequently unable to communicate with their peers. Additionally, their audio and video will no longer be visible to others in the room.
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 await meeting.stage.leave();
 ```
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+await meeting.stage.leave();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.stage.leave();
+```
+
+</RTKCodeSnippet>
+
 ### Grant Access
 
 A privileged user can grant access to stage for a set of users with the `grantAccess` method.
 
+<RTKCodeSnippet id="web-web-components">
+
 ```js
 await meeting.stage.grantAccess(userIds);
 ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+await meeting.stage.grantAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.stage.grantAccess(userIds);
+```
+
+</RTKCodeSnippet>
 
 **Parameters:**
 
@@ -131,9 +191,29 @@ await meeting.stage.grantAccess(userIds);
 
 A privileged user can deny access to stage for a set of users with the `denyAccess` method.
 
+<RTKCodeSnippet id="web-web-components">
+
 ```js
 await meeting.stage.denyAccess(userIds);
 ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+await meeting.stage.denyAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.stage.denyAccess(userIds);
+```
+
+</RTKCodeSnippet>
 
 **Parameters:**
 
@@ -143,131 +223,105 @@ await meeting.stage.denyAccess(userIds);
 
 A privileged user can remove a set of users from stage using the `kick` method.
 
+<RTKCodeSnippet id="web-web-components">
+
 ```js
 await meeting.stage.kick(userIds);
 ```
 
-**Parameters:**
+</RTKCodeSnippet>
 
-- `userIds` (string[]) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+<RTKCodeSnippet id="web-angular">
 
-</TabItem>
-<TabItem label="React">
-
-### Join Stage
-
-This method connects the user to the media room, enabling them to interact with other peers in the meeting.
-
-```jsx
-await meeting.stage.join();
+```js
+await meeting.stage.kick(userIds);
 ```
 
-### Leave Stage
+</RTKCodeSnippet>
 
-By employing this method, the user will be disconnected from the media room and subsequently unable to communicate with their peers. Additionally, their audio and video will no longer be visible to others in the room.
-
-```jsx
-await meeting.stage.leave();
-```
-
-### Grant Access
-
-A privileged user can grant access to stage for a set of users with the `grantAccess` method.
-
-```jsx
-await meeting.stage.grantAccess(userIds);
-```
-
-**Parameters:**
-
-- `userIds` (string[]) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
-
-### Deny Access
-
-A privileged user can deny access to stage for a set of users with the `denyAccess` method.
-
-```jsx
-await meeting.stage.denyAccess(userIds);
-```
-
-**Parameters:**
-
-- `userIds` (string[]) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
-
-### Kick Users
-
-A privileged user can remove a set of users from stage using the `kick` method.
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 await meeting.stage.kick(userIds);
 ```
 
+</RTKCodeSnippet>
+
 **Parameters:**
 
 - `userIds` (string[]) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
-
-</TabItem>
-</Tabs>
 
 ## Participant Controls
 
 RealtimeKit's stage management APIs allow participants to request and manage stage access.
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
 ### Request Access
 
 This method is used to create a new stage request which can be approved by the host. Each user (viewer or host) must call this method in order to join the stage.
 
 When the host calls this method, their status will be updated to `ACCEPTED_TO_JOIN_STAGE`.
 
+<RTKCodeSnippet id="web-web-components">
+
 ```js
 await meeting.stage.requestAccess();
 ```
 
-### Cancel Access Request
+</RTKCodeSnippet>
 
-You can call this method to cancel your stage request.
+<RTKCodeSnippet id="web-angular">
 
 ```js
-await meeting.stage.cancelRequestAccess();
+await meeting.stage.requestAccess();
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
 
-### Request Access
-
-This method is used to create a new stage request which can be approved by the host. Each user (viewer or host) must call this method in order to join the stage.
-
-When the host calls this method, their status will be updated to `ACCEPTED_TO_JOIN_STAGE`.
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 await meeting.stage.requestAccess();
 ```
 
+</RTKCodeSnippet>
+
 ### Cancel Access Request
 
 You can call this method to cancel your stage request.
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+await meeting.stage.cancelRequestAccess();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+await meeting.stage.cancelRequestAccess();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 await meeting.stage.cancelRequestAccess();
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Events
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
 The `meeting.stage` module emits the following events:
 
 ### `stageAccessRequestUpdate`
 
 Emitted when there is an update to stage access requests.
+
+<RTKCodeSnippet id="web-web-components">
 
 ```js
 meeting.stage.on("stageAccessRequestUpdate", (data) => {
@@ -275,64 +329,19 @@ meeting.stage.on("stageAccessRequestUpdate", (data) => {
 });
 ```
 
-### `acceptPresentRequests`
+</RTKCodeSnippet>
 
-Emitted when present requests are accepted.
+<RTKCodeSnippet id="web-angular">
 
 ```js
-meeting.stage.on("acceptPresentRequests", (data) => {
-	console.log("Present requests accepted:", data);
+meeting.stage.on("stageAccessRequestUpdate", (data) => {
+	console.log("Stage access request updated:", data);
 });
 ```
 
-### `stageStatusUpdate`
+</RTKCodeSnippet>
 
-Emitted when the stage status changes.
-
-```js
-meeting.stage.on("stageStatusUpdate", (status) => {
-	console.log("Stage status updated:", status);
-});
-```
-
-### `newStageRequest`
-
-Emitted when a new stage request is received.
-
-```js
-meeting.stage.on("newStageRequest", (request) => {
-	console.log("New stage request:", request);
-});
-```
-
-### `stageRequestApproved`
-
-Emitted when a stage request is approved.
-
-```js
-meeting.stage.on("stageRequestApproved", (data) => {
-	console.log("Stage request approved:", data);
-});
-```
-
-### `stageRequestRejected`
-
-Emitted when a stage request is rejected.
-
-```js
-meeting.stage.on("stageRequestRejected", (data) => {
-	console.log("Stage request rejected:", data);
-});
-```
-
-</TabItem>
-<TabItem label="React">
-
-The `meeting.stage` module emits the following events:
-
-### `stageAccessRequestUpdate`
-
-Emitted when there is an update to stage access requests.
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 meeting.stage.on("stageAccessRequestUpdate", (data) => {
@@ -340,9 +349,33 @@ meeting.stage.on("stageAccessRequestUpdate", (data) => {
 });
 ```
 
+</RTKCodeSnippet>
+
 ### `acceptPresentRequests`
 
 Emitted when present requests are accepted.
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("acceptPresentRequests", (data) => {
+	console.log("Present requests accepted:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+meeting.stage.on("acceptPresentRequests", (data) => {
+	console.log("Present requests accepted:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 meeting.stage.on("acceptPresentRequests", (data) => {
@@ -350,9 +383,33 @@ meeting.stage.on("acceptPresentRequests", (data) => {
 });
 ```
 
+</RTKCodeSnippet>
+
 ### `stageStatusUpdate`
 
 Emitted when the stage status changes.
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("stageStatusUpdate", (status) => {
+	console.log("Stage status updated:", status);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+meeting.stage.on("stageStatusUpdate", (status) => {
+	console.log("Stage status updated:", status);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 meeting.stage.on("stageStatusUpdate", (status) => {
@@ -360,9 +417,33 @@ meeting.stage.on("stageStatusUpdate", (status) => {
 });
 ```
 
+</RTKCodeSnippet>
+
 ### `newStageRequest`
 
 Emitted when a new stage request is received.
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("newStageRequest", (request) => {
+	console.log("New stage request:", request);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+meeting.stage.on("newStageRequest", (request) => {
+	console.log("New stage request:", request);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 meeting.stage.on("newStageRequest", (request) => {
@@ -370,9 +451,33 @@ meeting.stage.on("newStageRequest", (request) => {
 });
 ```
 
+</RTKCodeSnippet>
+
 ### `stageRequestApproved`
 
 Emitted when a stage request is approved.
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("stageRequestApproved", (data) => {
+	console.log("Stage request approved:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+meeting.stage.on("stageRequestApproved", (data) => {
+	console.log("Stage request approved:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 meeting.stage.on("stageRequestApproved", (data) => {
@@ -380,9 +485,33 @@ meeting.stage.on("stageRequestApproved", (data) => {
 });
 ```
 
+</RTKCodeSnippet>
+
 ### `stageRequestRejected`
 
 Emitted when a stage request is rejected.
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("stageRequestRejected", (data) => {
+	console.log("Stage request rejected:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```js
+meeting.stage.on("stageRequestRejected", (data) => {
+	console.log("Stage request rejected:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 ```jsx
 meeting.stage.on("stageRequestRejected", (data) => {
@@ -390,7 +519,13 @@ meeting.stage.on("stageRequestRejected", (data) => {
 });
 ```
 
-Alternatively, you can use React hooks to listen for stage updates:
+</RTKCodeSnippet>
+
+### React hooks
+
+<RTKCodeSnippet id="web-react">
+
+You can also use React hooks to listen for stage updates:
 
 ```jsx
 import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
@@ -399,5 +534,10 @@ import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
 const stageStatus = useRealtimeKitSelector((m) => m.stage.status);
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+Hooks are not available for this framework.
+
+</RTKCodeSnippet>

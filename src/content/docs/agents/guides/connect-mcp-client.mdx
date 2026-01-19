@@ -45,10 +45,10 @@ An MCP server to connect to (or use the public example in this tutorial).
 	<TypeScriptExample>
 
 	```ts title="src/index.ts"
-	import { Agent, type AgentNamespace, routeAgentRequest } from "agents";
+	import { Agent, routeAgentRequest } from "agents";
 
 	type Env = {
-		HelloAgent: AgentNamespace<HelloAgent>;
+		HelloAgent: DurableObjectNamespace<HelloAgent>;
 	};
 
 	export class HelloAgent extends Agent<Env, never> {

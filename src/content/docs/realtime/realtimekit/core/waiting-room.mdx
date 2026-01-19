@@ -9,11 +9,13 @@ sidebar:
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
-The waiting room feature allows hosts to control who can join a meeting. When enabled, participants must wait for approval before entering the meeting.
-
 :::note[Prerequisites]
 This page assumes you've already initialized the SDK and understand the meeting object structure. Refer to [Initialize SDK](/realtime/realtimekit/core/) and [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) if needed.
 :::
+
+The waiting room feature allows hosts to control who can join a meeting. When enabled, participants must wait for approval before entering the meeting.
+
+<RTKSDKSelector />
 
 ## How the Waiting Room Works
 
@@ -43,8 +45,6 @@ The diagram below represents only waiting room-related states. The `roomState` p
 ```
 
 ## Listening to State Changes
-
-<RTKSDKSelector />
 
 ### Joined Event
 
@@ -94,7 +94,7 @@ useEffect(() => {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("roomJoined", () => {
@@ -231,7 +231,7 @@ useEffect(() => {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("waitlisted", () => {
@@ -393,7 +393,7 @@ useEffect(() => {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 meeting.self.on("roomLeft", ({ state }) => {
@@ -564,7 +564,7 @@ function WaitingRoomManager() {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 const currentState = meeting.self.roomState;
@@ -633,7 +633,7 @@ function WaitingRoomManager() {
 
 ## Host Actions
 
-Hosts can manage waiting room requests using participant management methods. See [Remote Participants](/realtime/realtimekit/core/remote-participant/) for details on:
+Hosts can manage waiting room requests using participant management methods. See [Remote Participants](/realtime/realtimekit/core/remote-participants/) for details on:
 
 - **`acceptWaitingRoomRequest(participantId)`** - Accept a participant from the waiting room
 - **`rejectWaitingRoomRequest(participantId)`** - Reject a participant's entry request
@@ -683,7 +683,7 @@ function WaitingRoomHost() {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-web-components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 ```js
 // Get waitlisted participants

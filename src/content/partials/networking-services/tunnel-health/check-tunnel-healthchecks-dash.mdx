@@ -1,7 +1,6 @@
 ---
 params:
   - dashInfo
-  - productPath
   - graphQL
   - notificationsPath
   - packetCaptures
@@ -9,7 +8,7 @@ params:
   - magicWord?
 ---
 
-import { Aside, AnchorHeading, GlossaryTooltip, Markdown, Tabs, TabItem } from "~/components";
+import { Aside, AnchorHeading, DashButton, GlossaryTooltip, Markdown } from "~/components";
 
 The Cloudflare dashboard monitors the health of all <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels on your account that route traffic from Cloudflare to your origin network.
 
@@ -19,14 +18,14 @@ The Cloudflare dashboard monitors the health of all <GlossaryTooltip term="anyca
 To access more than one hour of tunnel health data, you should use the <a href={props.graphQL}>GraphQL API</a>.
 :::
 
-Not all data centers are relevant to you at all times. You can refer to the **Average ingress traffic (last hour)** column to understand if a given data center is receiving traffic for your network, and if its health status is relevant to you.
+Not all data centers are relevant to you at all times. You can refer to the **Traffic volume (1 hour)** column to understand if a given data center is receiving traffic for your network, and if its health status is relevant to you.
+
+## Check tunnel health
 
 { props.magicWord === "WAN Tunnels" ? (
 	<>
 	<Markdown
 		text={`
-		To check for anycast tunnel health:
-
 		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights**.
 		2. Go to **Network health** > **WAN connector health**.
 		3. In this screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
@@ -41,31 +40,18 @@ Not all data centers are relevant to you at all times. You can refer to the **Av
 ) : (
 	<>
 
-<Aside type="note">
-The steps below cover both the old and new dashboard experiences. To switch dashboard experiences, use the banner at the top of the dashboard.
-</Aside>
-
-<AnchorHeading title="Check tunnel health" depth={2} />
-
-<Tabs syncKey="dasNewNav">
-	<TabItem label="Old dashboard">
 		<Markdown
 			text={`
-			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-			2. Go to **${props.productPath}**.
-			3. In **Cloudflare colos**, you can choose one or more Cloudflare data centers to filter out the traffic that shows up in your anycast tunnels. For example, if you chose the Lisbon data center, your anycast tunnels would only show connections to that data center.
-			4. You have a list of all your anycast tunnels, as well as their current health status. Find the tunnel you want to inspect and select the arrow (**>**) before it to open its details.
-			5. The details pane shows the connection status between different Cloudflare servers and your tunnel. Select **Traceroute for details** in one of the Cloudflare servers shown to check for issues between Cloudflare and your origin network.
-			`}
+			1. Go to the **Network health** page.
+				`}
 			inline={false}
 		/>
-	</TabItem>
 
-	<TabItem label="New dashboard" icon="rocket">
+		<DashButton url="/?to=/:account/networking-insights/health/network-health" />
+
 		<Markdown
 			text={`
-			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-			2. Go to **${props.productPath}**.
+			2. Select the **Connector health** tab.
 			3. In this screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
 			4. Find the tunnel you want to inspect, select the three dots next to it, and select:
 				- **Create alert**: Opens the ${props.notificationsPath} so you can create specific alerts for that tunnel when specific conditions are met.
@@ -74,19 +60,48 @@ The steps below cover both the old and new dashboard experiences. To switch dash
 			`}
 			inline={false}
 		/>
-	</TabItem>
-</Tabs>
-
 	</>
 )
 }
 
 ## Check tunnel health for a specific tunnel
 
-You can drill down into a specific tunnel to check its health status and other information.{props.magicWord !== "WAN Tunnels" && <> To switch dashboard experiences, use the banner at the top of the dashboard.</>}
+You can drill down into a specific tunnel to check its health status and other information.
 
-1. Go to **{props.productPath}**.
-2. Find and select the tunnel you want to inspect.
+{ props.magicWord === "WAN Tunnels" ? (
+	<>
+	<Markdown
+		text={`
+		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights**.
+		2. Go to **Network health** > **WAN connector health**.
+		`}
+		inline={false}
+	/>
+	</>
+) : (
+	<>
+
+	<Markdown
+			text={`
+			1. Go to the **Network health** page.
+				`}
+			inline={false}
+		/>
+
+	<DashButton url="/?to=/:account/networking-insights/health/network-health" />
+
+	<Markdown
+			text={`
+2. Select the **Connector health** tab.
+			`}
+			inline={false}
+		/>
+	</>
+)
+}
+
+
+3. Find and select the tunnel you want to inspect.
 
 The next screen shows you detailed information about the tunnel, including:
 - Status information

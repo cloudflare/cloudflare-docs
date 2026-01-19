@@ -33,7 +33,9 @@ Yes, Browser Rendering requests are always identified as bot traffic by Cloudfla
 
 If you are attempting to scan your own zone and want Browser Rendering to access your website freely without your bot protection configuration interfering, you can create a WAF skip rule to [allowlist Browser Rendering](/browser-rendering/faq/#how-do-i-allowlist-browser-rendering).
 
-### How do I allowlist Browser Rendering?
+### Can I allowlist Browser Rendering on my own website?
+
+You must be on an Enterprise plan to allowlist Browser Rendering on your own website because WAF custom rules require access to [Bot Management](/bots/get-started/bot-management/) fields.
 
 <Steps>
 1. In the Cloudflare dashboard, go to the **Security rules** page of your account and domain.

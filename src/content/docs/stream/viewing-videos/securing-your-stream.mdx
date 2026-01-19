@@ -17,7 +17,7 @@ Here are some common use cases for using signed URLs:
 
 ### Making a video require signed URLs
 
-Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/{video_uid}`, from working.
+Turn on `requireSignedURLs` to protect a video using signed URLs. This option will prevent _any public links_, such as `customer-<CODE>.cloudflarestream.com/<VIDEO_ID>/watch` or the built-in player, from working.
 
 Restricting viewing can be done by updating the video's metadata.
 
@@ -94,80 +94,41 @@ Similarly, if you are using your own player, retrieve the HLS or DASH manifest b
 
 ### Customizing default restrictions
 
-If you call the `/token` endpoint without any body, it will return a token that expires in one hour. Let's say you want to let a user watch a particular video for the next 12 hours. Here's how you'd do it with a Cloudflare Worker:
+If you call the `/token` endpoint without any body, it will return a token that expires in one hour without any other restrictions or access to [downloads](/stream/viewing-videos/download-videos/). This token can be customized by providing additional properties in the request:
 
 ```javascript
-export default {
-	async fetch(request, env, ctx) {
-		const signed_url_restrictions = {
-			//limit viewing for the next 12 hours
-			exp: Math.floor(Date.now() / 1000) + 12 * 60 * 60,
-		};
+	const signed_url_restrictions = {
+		// Extend the lifetime of the token to 12 hours:
+		exp: Math.floor(Date.now() / 1000) + 12 * 60 * 60,
+		// Allow access to MP4 or Audio Download URLs:
+		downloadable: true,
+		// Geo or IP access restrictions:
+		accessRules: {
+			// ... see examples below
+		}
+	};
 
-		const init = {
-			method: "POST",
-			headers: {
-				Authorization: "Bearer <API_TOKEN>",
-				"content-type": "application/json;charset=UTF-8",
-			},
-			body: JSON.stringify(signed_url_restrictions),
-		};
+	const init = {
+		method: "POST",
+		headers: {
+			Authorization: "Bearer <API_TOKEN>",
+			"content-type": "application/json;charset=UTF-8",
+		},
+		body: JSON.stringify(signed_url_restrictions),
+	};
 
-		const signedurl_service_response = await fetch(
-			"https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_uid}/token",
-			init,
-		);
+	const signedurl_service_response = await fetch(
+		"https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_uid}/token",
+		init,
+	);
 
-		return new Response(
-			JSON.stringify(await signedurl_service_response.json()),
-			{ status: 200 },
-		);
-	},
-};
+	return new Response(
+		JSON.stringify(await signedurl_service_response.json()),
+		{ status: 200 },
+	);
 ```
 
-The returned token will expire after 12 hours.
-
-Let's take this a step further and add 2 additional restrictions:
-
-- Allow the signed URL token to be used for MP4 downloads (assuming the video has downloads enabled)
-- Block users from US and Mexico from viewing or downloading the video
-
-To achieve this, we can specify additional restrictions in the `signed_url_restrictions` object in our sample code:
-
-```javascript
-export default {
-	async fetch(request, env, ctx) {
-		const signed_url_restrictions = {
-			//limit viewing for the next 2 hours
-			exp: Math.floor(Date.now() / 1000) + 12 * 60 * 60,
-			downloadable: true,
-			accessRules: [
-				{ type: "ip.geoip.country", country: ["US", "MX"], action: "block" },
-			],
-		};
-
-		const init = {
-			method: "POST",
-			headers: {
-				Authorization: "Bearer <API_TOKEN>",
-				"content-type": "application/json;charset=UTF-8",
-			},
-			body: JSON.stringify(signed_url_restrictions),
-		};
-
-		const signedurl_service_response = await fetch(
-			"https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video_uid}/token",
-			init,
-		);
-
-		return new Response(
-			JSON.stringify(await signedurl_service_response.json()),
-			{ status: 200 },
-		);
-	},
-};
-```
+However, if you are generating tokens programmatically or adding customizations like these, it is faster and more scalable to use a signing key and generate the token within your application entirely.
 
 ## Option 2: Using a signing key to create signed tokens
 
@@ -227,6 +188,8 @@ async function streamSignedUrl() {
 		sub: videoUID,
 		kid: keyID,
 		exp: expiresIn,
+		// Add `downloadable` boolean for access to MP4 or Audio Downloads:
+		// downloadable: true,
 		accessRules: [
 			{
 				type: "ip.geoip.country",
@@ -299,6 +262,10 @@ If you are using the Stream Player, insert the `token` value returned by the Wor
 If you are using your own player, replace the video id in the manifest url with the `token` value:
 
 `https://customer-<CODE>.cloudflarestream.com/eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ/manifest/video.m3u8`
+
+To allow access to [MP4 or audio downloads](/stream/viewing-videos/download-videos/), make sure the video has the download type already enabled. Then add `downloadable: true` to the payload as shown in the comment above when generating the signed URL. Replace the video id in the download URL with the `token` value:
+
+- `https://customer-<CODE>.cloudflarestream.com/eyJhbGciOiJ.../downloads/default.mp4`
 
 ### Revoking keys
 

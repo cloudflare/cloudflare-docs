@@ -39,6 +39,10 @@
 		"parent": ["Analytics & logs"]
 	},
 	{
+		"name": "Domains",
+		"deeplink": "/?to=/:account/domains/overview"
+	},
+	{
 		"name": "Workers & Pages",
 		"deeplink": "/?to=/:account/workers-and-pages",
 		"parent": ["Compute & AI"]
@@ -79,7 +83,7 @@
 		"parent": ["Compute & AI"]
 	},
 	{
-		"name": "AI Search (AutoRAG)",
+		"name": "AI Search",
 		"deeplink": "/?to=/:account/ai/ai-search",
 		"parent": ["Compute & AI"]
 	},
@@ -97,6 +101,16 @@
 		"name": "VPC",
 		"deeplink": "/?to=/:account/workers/vpc",
 		"parent": ["Compute & AI"]
+	},
+	{
+		"name": "Email Routing",
+		"deeplink": "/?to=/:account/email-service/routing",
+		"parent": ["Compute & AI", "Email Service"]
+	},
+	{
+		"name": "Email Sending",
+		"deeplink": "/?to=/:account/email-service/sending",
+		"parent": ["Compute & AI", "Email Service"]
 	},
 	{
 		"name": "Workers plans",
@@ -458,7 +472,7 @@
 		"parent": ["Manage account"]
 	},
 	{
-		"name": "Settings",
+		"name": "Configurations",
 		"deeplink": "/?to=/:account/configurations",
 		"parent": ["Manage account"]
 	},
