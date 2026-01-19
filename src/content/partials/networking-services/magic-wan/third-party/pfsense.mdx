@@ -17,16 +17,16 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 
 ## Prerequisites
 
-The following information is required for this tutorial:
+This tutorial requires the following information:
 
-- Anycast IP addresses (provided by Cloudflare)
+- Anycast IP addresses (Cloudflare provides these)
 - External IP addresses
 - Internal IP address ranges
 - Inside tunnel `/31` ranges
 
 ## Example scenario
 
-The following IP addresses are used throughout this tutorial. Any legally routable IP addresses have been replaced with IPv4 Address Blocks Reserved for Documentation ([RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)) addresses within the `203.0.113.0/24` subnet.
+This tutorial uses the following IP addresses. These examples replace legally routable IP addresses with IPv4 Address Blocks Reserved for Documentation ([RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)) addresses within the `203.0.113.0/24` subnet.
 
 | Tunnel name                        | `PF_TUNNEL_01`                | `PF_TUNNEL_02`                |
 | ---------------------------------- | ----------------------------- | ----------------------------- |
@@ -40,7 +40,7 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 ## 1. Configure Magic WAN IPsec tunnels
 
-Use the Cloudflare dashboard or API to <a href={props.configureTwoIpsecTunnelsUrl}>configure two IPsec tunnels</a>. The settings mentioned below are used for the IPsec tunnels referenced throughout the remainder of this guide.
+Use the Cloudflare dashboard or API to <a href={props.configureTwoIpsecTunnelsUrl}>configure two IPsec tunnels</a>. This guide uses the settings mentioned below for the IPsec tunnels throughout the remainder.
 
 ### Add IPsec tunnels
 
@@ -48,7 +48,7 @@ Use the Cloudflare dashboard or API to <a href={props.configureTwoIpsecTunnelsUr
    - **Tunnel name**: `PF_TUNNEL_01`
    - **Interface address**: `10.252.2.26/31`
    - **Customer endpoint**: `203.0.113.254`
-   - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
+   - **Cloudflare endpoint**: Enter the Anycast IP address Cloudflare provides.
    - **Health check rate**: _Medium_
    - **Health check type**: _Request_
    - **Health check direction**: _Bidirectional_
@@ -58,7 +58,7 @@ Use the Cloudflare dashboard or API to <a href={props.configureTwoIpsecTunnelsUr
    - **Tunnel name**: `PF_TUNNEL_02`
    - **Interface address**: `10.252.2.28/31`
    - **Customer endpoint**: `203.0.113.254`
-   - **Cloudflare endpoint**: Enter the Anycast IP address provided by Cloudflare.
+   - **Cloudflare endpoint**: Enter the Anycast IP address Cloudflare provides.
    - **Health check rate**: _Medium_
    - **Health check type**: _Request_
    - **Health check direction**: _Bidirectional_
@@ -92,7 +92,7 @@ After creating IPsec tunnels, the Cloudflare dashboard will list them under **Tu
 2. In the **IPsec/GRE tunnels** tab, select the IPsec tunnel.
 3. Scroll to **User ID** and copy the string. For example, `ipsec@long_string_of_letters_and_numbers`.
 
-The User ID will be required when configuring IKE Phase 1 on the pfSense firewall.
+Configuring IKE Phase 1 on the pfSense firewall requires the User ID.
 
 ## 2. Create Magic WAN static routes
 
@@ -130,7 +130,7 @@ Add a new IPsec tunnel [Phase 1 entry](https://docs.netgate.com/pfsense/en/lates
   - **Remote gateway**: Enter the Cloudflare Anycast IP address.
 - **Phase 1 Proposal (Authentication)**
   - **Authentication method**: _Mutual PSK_
-  - **My identifier**: _User Fully qualified domain name_ > `ipsec@long_string_of_letters_and_numbers` <br/> (This identifier can be found in the Cloudflare IPsec tunnel configuration > **User ID**)
+  - **My identifier**: _User Fully qualified domain name_ > `ipsec@long_string_of_letters_and_numbers` <br/> (Find this identifier in the Cloudflare IPsec tunnel configuration > **User ID**)
   - **Peer identifier**: _Peer IP Address_ (Cloudflare Anycast IP)
   - **Pre-Shared Key (PSK)**: Enter the pre-shared key from the Cloudflare IPsec tunnel.
 - **Phase 1 proposal (Encryption algorithm)**
@@ -176,7 +176,7 @@ In **Interfaces** > **Assignments** > **Add**, create a new interface to assign 
 - **Interface Assignments**
   - **WAN**: Add the WAN interface. For example, `vnet1`.
   - **LAN**: Add the LAN interface. For example, `vnet0`.
-  - Add the **CF_IPsec_1** interface created above for Phase 1.
+  - Add the **CF_IPsec_1** interface from Phase 1 above.
 
 Select **Save** to apply the changes.
 
