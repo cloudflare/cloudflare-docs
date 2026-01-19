@@ -32,13 +32,13 @@ AI Search supports `.gz` compressed sitemaps. Both `robots.txt` and sitemaps can
 You can control which pages get indexed by defining include and exclude rules for URL paths. Use this to limit indexing to specific sections of your site or to exclude content you do not want searchable.
 
 :::note
-Path filtering matches against the full URL, including the scheme, hostname, and subdomains. For example, a page at `https://www.example.com/blog/post` requires a pattern like `*/blog/*` to match. Using `/blog/*` alone will not match because it does not account for the hostname.
+Path filtering matches against the full URL, including the scheme, hostname, and subdomains. For example, a page at `https://www.example.com/blog/post` requires a pattern like `**/blog/**` to match. Using `/blog/**` alone will not match because it does not account for the hostname.
 :::
 
 For example, to index only blog posts while excluding drafts:
 
-- **Include:** `*/blog/*`
-- **Exclude:** `*/blog/drafts/*`
+- **Include:** `**/blog/**`
+- **Exclude:** `**/blog/drafts/**`
 
 Refer to [Path filtering](/ai-search/configuration/path-filtering/) for pattern syntax, filtering behavior, and more examples.
 
