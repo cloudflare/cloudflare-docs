@@ -30,12 +30,18 @@ The Firewall device posture attribute ensures that a firewall is running on a de
 3. Select **Firewall**.
 4. Enter a descriptive name for the check.
 5. Select your operating system.
-6. Turn on **Enable firewall check**.
+6. Configure **Enable firewall check** based on your desired security policy:
+	- **Enabled**: (Recommended) The posture check passes only if the firewall is running.
+	- **Disabled**: The posture check passes only if the firewall is turned off.
+
+	:::note
+	The **Enable firewall check** toggle does not turn the posture check on or off; rather, the toggle determines whether the WARP client looks for an active or inactive firewall.
+	:::
 7. Select **Save**.
 
 Next, go to **Insights** > **Logs** > **Posture logs** and verify that the firewall check is returning the expected results.
 
-## How WARP checks the firewall status
+## Validate firewall status
 
 Operating systems determine firewall configuration in various ways. Follow the steps below to understand how the WARP client determines if the firewall is enabled.
 
