@@ -28,17 +28,13 @@ function middlecacheLoader(pathOnMiddlecache: string, options = {}): Loader {
 			if (!fs.existsSync(destination)) {
 				fs.mkdirSync(path.dirname(destination), { recursive: true });
 
-				context.logger.debug(
-					`Download of ${pathOnMiddlecache} starting...`,
-				);
+				context.logger.debug(`Download of ${pathOnMiddlecache} starting...`);
 
 				const response = await fetch(MIDDLECACHE_URL + pathOnMiddlecache);
 				const content = await response.text();
 
 				fs.writeFileSync(destination, content);
-				context.logger.debug(
-					`Download of ${pathOnMiddlecache} completed.`,
-				);
+				context.logger.debug(`Download of ${pathOnMiddlecache} completed.`);
 			}
 
 			const fileLoader = file(destination, options);
