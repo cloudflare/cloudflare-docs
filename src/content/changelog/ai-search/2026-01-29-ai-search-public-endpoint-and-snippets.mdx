@@ -1,0 +1,35 @@
+---
+title: AI Search public endpoint and snippets
+description: Expose AI Search instances via a public endpoint and add snippets to show your search results.
+products:
+  - ai-search
+date: 2026-01-29
+---
+
+[AI Search](/ai-search/) now supports [public endpoints](/ai-search/public-endpoint/), allowing you to expose your AI Search instance directly to users without requiring a Workers binding or backend proxy.
+
+With public endpoints, you can:
+
+- **Embed search directly in your frontend**: Call AI Search from client-side JavaScript without exposing API tokens
+- **Simplify your architecture**: Remove the need for a backend proxy just to forward search requests
+- **Control access**: Configure allowed origins and rate limits to protect your endpoint
+
+To enable a public endpoint for your AI Search instance, go to **Settings** and toggle **Public endpoint**. You can configure allowed origins to restrict which domains can access your endpoint.
+
+Once enabled, you can query your AI Search instance directly from the browser:
+
+```javascript
+const response = await fetch(
+  "https://<hash>.search.ai.cloudflare.com/search",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: "How do I get started?" })
+  }
+);
+
+const results = await response.json();
+```
+
+Learn more about configuring [public endpoints](/ai-search/configuration/public-endpoint/) in AI Search.
+
