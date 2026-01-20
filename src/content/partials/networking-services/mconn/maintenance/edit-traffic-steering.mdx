@@ -19,13 +19,20 @@ You can only add or remove applications to Breakout traffic and Prioritized traf
 	</>
 ) : (
 	<>
-		<Markdown
+<Markdown
 	text={`
-		1. Go to the **Connector on-ramps** page.
+		1. Go to the **Connectors** page.
 		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-wan/mconn-onramp" />
+		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Profiles**.
+		`}
+	inline={false}
+	/>
 	</>
 )
 }

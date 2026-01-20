@@ -669,6 +669,36 @@ Leave the login flow active. Open a second terminal session. In that second term
 curl <LOCALHOST_URL>
 ```
 
+### Use `wrangler login` in a container
+
+The Cloudflare OAuth provider will always redirect to a callback server at `localhost:8976`. If you are running Wrangler inside a container, this server might not be accessible from your host machine's browser - even after authorizing the connection, your login command will hang.
+
+You must configure your container to map port `8976` on your host machine to the Wrangler OAuth callback server's port (`8976` by default).
+
+For example, if you are running Wrangler in a Docker container:
+
+```sh
+docker run -p 8976:8976 <your-image>
+```
+
+And when you run `npx wrangler login` inside your container, set the callback host to listen on all network interfaces:
+
+```sh
+npx wrangler login --callback-host=0.0.0.0
+```
+
+Now when the browser redirects to `localhost:8976`, the request will be forwarded to Wrangler running inside the container on `0.0.0.0:8976`.
+
+If you need to use a different port inside the container, use `--callback-port` as well and adjust your port mapping accordingly, for example:
+
+```sh
+# When starting your container
+docker run -p 8976:9000 <your-image>
+
+# Inside the container
+npx wrangler login --callback-host=0.0.0.0 --callback-port=9000
+```
+
 ---
 
 ## `logout`

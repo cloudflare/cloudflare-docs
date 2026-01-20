@@ -108,8 +108,8 @@ entries:
       **Fixes**
 
       - Livestream feature is now available to all beta users.
-      - Fixed livestream stage functionality where hosts were not consuming peer videos upon participants' stage join.
-      - Resolved issues with viewer joins and leaves in livestream stage.
+      - Fixed Livestream stage functionality where hosts were not consuming peer videos upon participants' stage join.
+      - Resolved issues with viewer joins and leaves in Livestream stage.
 
   - publish_date: "2025-07-08"
     title: RealtimeKit Web Core 1.1.3

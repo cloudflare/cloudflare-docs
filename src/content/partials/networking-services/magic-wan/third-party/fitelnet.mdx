@@ -5,7 +5,7 @@ params:
   - configureStaticRoutesUrl
 ---
 
-This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 devices to connect to Cloudflare Magic WAN via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
+This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 devices to connect to Cloudflare Magic WAN via IPsec (Internet Protocol Security) tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
 
 ## Testing environment
 
@@ -18,14 +18,14 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 
 ### Magic WAN configuration
 
-1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels with the following options:
+1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels.
 2. For the first IPsec tunnel, ensure the following settings are defined:
    - **Tunnel name**: `FITEL-tunnel-1`
    - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
    - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of <a href={props.typeId_ipv4_addrUrl}>type `ID_IPV4_ADDR`</a>.
    - **Cloudflare endpoint**: The Cloudflare anycast IP assigned to you by your account team.
    - **Pre-shared key**: Create a pre-shared key for your first tunnel.
-3. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure these additional setting is defined:
+3. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure these additional settings are defined:
    - **Tunnel name**: `FITEL-tunnel-2`
    - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
    - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of <a href={props.typeId_ipv4_addrUrl}>type `ID_IPV4_ADDR`</a>.
@@ -36,7 +36,7 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 
 #### Router 1 settings
 
-Use the CLI to configure these settings:
+Use the CLI (Command Line Interface) to configure these settings:
 
 ```txt
 interface Tunnel 1

@@ -2,7 +2,7 @@
 {}
 ---
 
-import { APIRequest, Badge, GlossaryTooltip, DashButton } from "~/components";
+import { APIRequest, Badge, DashButton, GlossaryTooltip } from "~/components";
 
 Magic Network Monitoring includes an onboarding workflow that guides you step-by-step through the product configuration process. If you are unable to complete the configuration in one session, you can exit the workflow and resume it at any time.
 
@@ -11,11 +11,7 @@ To begin using Magic Network Monitoring for network and/or cloud traffic visibil
 - [NetFlow and sFlow guide](#netflow-and-sflow-guide)
 - [VPC flow log guide (beta)](#vpc-flow-log-guide)
 
-
-<p>
-	If you are an Enterprise customer, Cloudflare can significantly accelerate the onboarding timeline during active-attack scenarios. Enterprise customers that would like to use Magic Network Monitoring and Magic Transit On Demand together can begin by [configuring Magic Transit](/magic-transit/get-started/).
-</p>
-
+If you are an Enterprise customer, Cloudflare can significantly accelerate the onboarding timeline during active-attack scenarios. Enterprise customers that would like to use Magic Network Monitoring and Magic Transit On Demand together can begin by [configuring Magic Transit](/magic-transit/get-started/).
 
 ## NetFlow and sFlow guide
 
@@ -29,11 +25,11 @@ Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers
 
 When you register your router with Cloudflare, your router links your NetFlow or sFlow data to your Cloudflare account.
 
-1. Go to the **Magic Monitoring** page.
+1. Go to the **Network flow** page.
 
-<DashButton url="/?to=/:account/network-monitoring" />
+<DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/flow-analytics" />
 
-2. In **Magic Network Monitoring Analytics**, select **Configure Magic Network Monitoring**.
+2. In **Network flow (Magic Network Monitoring)**, select **Configure Network flow**.
 3. Select the **Configure routers** tab.
 4. (Optional) Under **IP Address**, enter your router's public IP address.
 5. Under **Default router sampling rate**, enter a value for the <GlossaryTooltip term="sampling">sampling</GlossaryTooltip> rate. The value should match the sampling rate of your NetFlow or sFlow configuration.
@@ -97,8 +93,8 @@ AWS VPC flow logs can only be configured via the Cloudflare API for Magic Networ
 
 After setting up AWS Firehose to send VPC flow logs to Magic Network Monitoring, you can confirm that Cloudflare is receiving the logs as expected by searching for your cloud traffic data in the analytics page of the Magic Network Monitoring dashboard.
 
-1. In the Cloudflare dashboard, go to the **Magic Monitoring** page.
+1. Go to the **Network flow** page.
 
-<DashButton url="/?to=/:account/network-monitoring" />
+<DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/flow-analytics" />
 
-The default view will be the analytics dashboard for Magic Network Monitoring.
+2. The default view will be the analytics dashboard for Magic Network Monitoring.

@@ -24,6 +24,43 @@ This error occurs when the number of <GlossaryTooltip term="Snippets subrequest"
 
 Review your Snippet to ensure your code is within the <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subrequest</GlossaryTooltip> [limits](/rules/snippets/#availability) for your plan. Each subrequest counts against your limit, including any redirects within a subrequest chain.
 
+## Error 1203: Snippets exceeded CPU time limit
+
+This error occurs when a Snippet exceeds the defined [CPU time limit](/rules/snippets/#limits) for Snippets.
+
+### Resolution
+
+Review your Snippet to ensure your code is within the CPU time limit. If you need a higher CPU time limit, consider using [Cloudflare Workers](/workers/). Refer to [When to use Snippets vs Workers](/rules/snippets/when-to-use/) for details.
+
+## Error 1204: Snippets exceeded memory limit
+
+This error occurs when a Snippet exceeds the defined [memory limit](/rules/snippets/#limits) for Snippets.
+
+### Resolution
+
+Review your Snippet to ensure your code is within the memory limit. If you need a higher memory limit, consider using [Cloudflare Workers](/workers/). Refer to [When to use Snippets vs Workers](/rules/snippets/when-to-use/) for details.
+
+## Error 1205: Deployment in progress
+
+A new Snippet was just deployed and is currently propagating across Cloudflare's global network. During this short window, requests may not be processed as expected.
+
+### Resolution
+
+This is a temporary issue. Retry your request after a few seconds — the Snippet will be active once propagation completes.
+
+## Error 1206: Snippet threw exception
+
+The Snippet encountered an unhandled JavaScript exception during execution. This may be caused by one of the following:
+
+- Runtime JavaScript errors in Snippet code
+- Unhandled promise rejections
+- Type errors or reference errors
+
+### Resolution
+
+- Review the Snippet code to identify where the exception might have occurred and fix any detected bugs.
+- Add proper error handling (try/catch blocks).
+
 ## Snippets cannot be renamed
 
 The name you define when creating a Snippet will be used as the Snippet ID and cannot be edited afterwards.
@@ -31,3 +68,9 @@ The name you define when creating a Snippet will be used as the Snippet ID and c
 ### Resolution
 
 To change the name of your Snippet, create a new Snippet and delete the old one.
+
+---
+
+## Other runtime errors
+
+Snippets share some error codes with Workers, namely errors in the `11xx` range. For more information on these errors, refer to [Errors and exceptions](/workers/observability/errors/).

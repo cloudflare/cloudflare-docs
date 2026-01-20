@@ -19,7 +19,7 @@ If you are using Cloudflare Registrar with [custom nameservers](/dns/nameservers
 
 ### Your domain uses a different registrar
 
-If you have acquired your domain from a [registrar](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/) other than Cloudflare Registrar - and it has not been [delegated to another zone](#your-domain-is-delegated-to-another-zone) - you need to update your nameservers at your registrar.
+If you have acquired your domain from a [registrar](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/) other than Cloudflare Registrar - and it has not been [delegated](#your-domain-is-delegated) - you need to update your nameservers at your registrar.
 
 <Render file="ns-update-providers" product="dns" />
 
@@ -36,9 +36,9 @@ In that case, you may have to update your nameservers in the reseller platform, 
 Refer to [Squarespace documentation](https://support.squarespace.com/hc/articles/4404183898125-Nameservers-and-DNSSEC-for-Squarespace-managed-domains#toc-open-the-domain-s-advanced-settings) on how to update nameservers in their platform.
 :::
 
-### Your domain is delegated to another zone
+### Your domain is delegated
 
-If you are onboarding a subdomain `shop.example.com` as a [child domain](/dns/zone-setups/subdomain-setup/), it is expected that the child domain has been delegated to the parent domain.
+If you are onboarding a subdomain `shop.example.com` as a [child domain](/dns/zone-setups/subdomain-setup/), the parent domain (`example.com`) must delegate authority to the child domain.
 
 Delegation means that `shop.example.com` has specific `NS` records set up for it within the DNS records management of the parent zone (`example.com`).
 

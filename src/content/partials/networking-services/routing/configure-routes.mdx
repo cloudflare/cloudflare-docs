@@ -8,7 +8,6 @@ params:
   - routePrioritization
   - chooseWeights
   - productGatewayOrEgress
-  - dashButtonPath?
   - cfTunnelURL?
   - sitesURL?
   - addTunnelsURL?
@@ -73,14 +72,16 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 	<>
 		<Markdown
 			text={`
-			1. Go to ${props.productName}'s **Configuration** page.
+			1. Go to **Routes** page.
 			`}
 			inline={false}
 		/>
-		<DashButton url={props.dashButtonPath} />
+
+		<DashButton url="/?to=/:account/magic-networks/routes" />
+
 		<Markdown
 			text={`
-			2. From the **Routes** tab, select **Create** to add a new route.
+			2. From the **Routes** tab, select **Create static route** to add a new route.
 			`}
 			inline={false}
 		/>
@@ -192,7 +193,7 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes**, locate the route to modify.
+			1. From the **Routes** tab, locate the route to modify.
 			2. Select the three dots next to it > **Edit**.
 		`}
 		inline={false}
@@ -296,7 +297,7 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes**, locate the static route to delete.
+			1. From the **Routes** tab, locate the static route to delete.
 			2. Select the three dots next to it > **Delete**.
 		`}
 		inline={false}
@@ -403,8 +404,6 @@ Example:
 	</>
 )}
 
-
-
 ## Configure BGP routes
 
 BGP peering is available when using [CNI with Dataplane v2 (beta)](/network-interconnect/) as an on-ramp.
@@ -438,14 +437,16 @@ To set this ASN:
 	<>
 		<Markdown
 			text={`
-			1. Go to ${props.productName}'s **Configuration** page.
+			1. Go to the Routes page.
 			`}
 			inline={false}
 		/>
-		<DashButton url={props.dashButtonPath} />
+
+		<DashButton url="/?to=/:account/magic-networks/routes" />
+
 		<Markdown
 			text={`
-			2. Go to **BGP configuration**.
+			2. Select **WAN configuration**.
 			3. In **CF Account ASN**, enter Cloudflare's ASN.
 			4. Select **Update**.
 			`}
@@ -521,15 +522,17 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 	<>
 		<Markdown
 			text={`
-			1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+			1. Go to the Routes page.
 			`}
 			inline={false}
 		/>
-		<DashButton url={props.dashButtonPath} />
+
+		<DashButton url="/?to=/:account/magic-networks/routes" />
+
 		<Markdown
 			text={`
-			2. Go to **BGP configuration**.
-			3. In **CF Account ASN**, enter Cloudflare's ASN.
+			2. Select **WAN configuration**.
+			3. In **CF Account ASN**, enter Cloudflare's ASN, and select **Update**.
 			4. Go to **Interconnects**.
 			`}
 			inline={false}

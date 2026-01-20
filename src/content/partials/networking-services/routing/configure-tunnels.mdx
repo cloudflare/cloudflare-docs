@@ -7,7 +7,6 @@ params:
   - ciphersPagePath
   - antiReplayPagePath
   - cniLink
-  - dashButtonPath?
   - updateHCFrequencyPage
   - tunnelHealthChecksPage
   - biVsUniHealthCheck
@@ -103,14 +102,16 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 	<>
 	<Markdown
 	text={`
-	1. Go to ${props.productName}'s **Configuration** page.
-	`}
+	1. Go to **Connectors** page.
+		`}
 	inline={false}
 	/>
-	<DashButton url={props.dashButtonPath} />
+
+	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+
 	<Markdown
 	text={`
-	2. From the **Tunnels** tab, select **Create**.
+	2. From the **IPsec/GRE tunnels** tab, select **Create a tunnel**.
 	3. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
 	`}
 	inline={false}

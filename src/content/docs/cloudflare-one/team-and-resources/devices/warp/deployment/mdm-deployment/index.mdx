@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
 <Render file="warp/mdm-intro" product="cloudflare-one" />
 
@@ -117,15 +117,19 @@ If you do not wish to use a management tool, you can manually place an `mdm.xml`
 
 1. [Download](/cloudflare-one/static/mdm/com.cloudflare.warp.plist) an example `com.cloudflare.warp.plist` file.
 
-2. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
+2. Replace `your-team-name` with your Cloudflare One <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+
+3. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
 
 #### `mobileconfig` file
 
 1. [Download](/cloudflare-one/static/mdm/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
 
-2. Run `uuidgen` from your macOS Terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID`.
+2. Replace `your-team-name` with your Cloudflare One <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
-3. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
+3. Run `uuidgen` from your macOS Terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID`.
+
+4. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
 
 ### Place an unmanaged `mdm.xml` file
 
