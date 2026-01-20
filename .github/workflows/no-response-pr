@@ -1,0 +1,32 @@
+name: No Response for Pull Requests
+
+# Both `pull_request_review` and `scheduled` event types are required for this Action
+# to work properly.
+
+# This action helps us flag pull requests for more information.
+# To trigger, add the `more-information-needed` label to a pull request.
+# The label will be removed if the author comments or makes updates.
+# If the author does not respond for a specific number of days, the pull request will be automatically closed.
+# However, if they do respond, the pull request will be re-opened automatically and the label will be removed.
+
+on:
+  pull_request_review:
+    types: [submitted]
+  schedule:
+    - cron: "0 0 * * *" # Runs at 12:00 AM UTC every day
+
+jobs:
+  noResponse:
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lee-dohm/no-response@v0.5.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          daysUntilClose: 14
+          closeComment: >
+            This pull request was closed automatically because there has been no response
+            from the original author. As it stands currently, we don't have enough information
+            to take action. If you believe this pull request was closed in error, a) apologies and b) open a new pull request
+            and reference this one in the body.
