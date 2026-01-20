@@ -4,11 +4,11 @@ title: Querying Email Routing events with GraphQL
 
 ---
 
-In this example, we are going to use the GraphQL Analytics API to query for Email Routing events over a specified time period.
+This example uses the GraphQL Analytics API to query for Email Routing events over a specified time period.
 
 ## Activiy Logs API Call
 
-The following API call will request Email Routing activity logs over a one day period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ZONE_TAG>` and `<API_TOKEN>`[^1] with your zone tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
+The following API call will request Email Routing activity logs over a one day period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ZONE_TAG>` and `<API_TOKEN>`[^1] with your zone tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values as required.
 
 ```bash
 echo '{ "query":
@@ -129,7 +129,6 @@ The results returned will be in JSON (as requested):
   },
   "errors": null
 }
-
 ```
 
 ## Analytics API Call
