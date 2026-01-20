@@ -6,7 +6,7 @@ products:
  - User Risk Score
 ---
 
-Cloudflare One has expanded its [User Risk Scoring] (https://developers.cloudflare.com/cloudflare-one/insights/risk-score/) capabilities by introducing two new behaviors for organizations using the [CrowdStrike integration] (https://developers.cloudflare.com/cloudflare-one/integrations/service-providers/crowdstrike/).
+Cloudflare One has expanded its [User Risk Scoring] (/cloudflare-one/insights/risk-score/) capabilities by introducing two new behaviors for organizations using the [CrowdStrike integration] (/cloudflare-one/integrations/service-providers/crowdstrike/).
 
 Administrators can now automatically escalate the risk score of a user if their device matches specific CrowdStrike Zero Trust Assessment (ZTA) score ranges. This allows for more granular security policies that respond dynamically to the health of the endpoint.
 
