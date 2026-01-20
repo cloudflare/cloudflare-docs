@@ -35,6 +35,10 @@ If query rewriting is enabled, AI Search performs the following:
 1. Sends the **original user query** and the **query rewrite system prompt** to the configured LLM
 2. Receives the **rewritten query** from the model
 3. Embeds the rewritten query using the selected embedding model
-4. Performs vector search in your AI Search’s Vectorize index
+4. Performs vector search in your AI Search's Vectorize index
 
 For details on how to guide model behavior during this step, see the [system prompt](/ai-search/configuration/system-prompt/) documentation.
+
+:::note
+All AI Search requests are routed through [AI Gateway](/ai-gateway/) and logged there. If you do not select an AI Gateway during setup, AI Search creates a default gateway for your instance. You can view query rewrites, embeddings, text generation, and other model calls in the AI Gateway logs for monitoring and debugging.
+:::
