@@ -3,6 +3,28 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2025-12-09"
+    title: "Authoritative DNS and DNS Firewall Legacy Analytics"
+    description: |-
+      Deprecation date: December 9, 2025
+
+      End of life date: December 1, 2026
+
+      The following REST APIs are deprecated and will reach their end of life on December 1, 2026.
+
+      * [DNS Analytics API](https://developers.cloudflare.com/api/resources/dns/subresources/analytics/)
+      * [DNS Firewall Analytics API](https://developers.cloudflare.com/api/resources/dns_firewall/subresources/analytics/)
+
+      All existing functionality is fully supported by Cloudflare's GraphQL Analytics API, which provides improved performance, flexibility, and long-term support. Integrations using the REST API need to be migrated to the new GraphQL API before December 1, 2026 in order to ensure uninterrupted service.
+
+      Deprecated APIs:
+      * `GET/zones/{zone_id}/dns_analytics/` (DNS Analytics API)
+      * `GET/accounts/{account_id}/dns_firewall/{dns_firewall_id}/dns_analytics/report` (DNS Firewall Analytics API)
+
+      Replacements:
+      * [GraphQL API for DNS Analytics](/dns/additional-options/analytics/#explore-with-the-api)
+      * [GraphQL API for DNS Firewall Analytics](/dns/dns-firewall/analytics/#graphql)
+
   - publish_date: "2025-11-03"
     title: "Cloudflare Mirage"
     description: |-

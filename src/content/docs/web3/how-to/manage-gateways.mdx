@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, DashButton } from "~/components";
 
 A Cloudflare Web3 gateway provides HTTP-accessible interfaces to various Web3 networks. You can interact with a gateway in several ways.
 
@@ -35,12 +35,13 @@ If you need to edit other fields, [delete the gateway](#delete-a-gateway) and cr
 
 To edit a gateway using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and website.
-3. Go to **Web3**.
-4. On a specific gateway, click **Edit**.
-5. Update the **Gateway Description** and — if editing an **IPFS** gateway — the value for the [DNSLink](/web3/ipfs-gateway/concepts/dnslink/).
-6. Click **Reapply**.
+1. In the Cloudflare dashboard, go to the **Web3** page.
+
+   <DashButton url="/?to=/:account/:zone/web3" />
+
+2. On a specific gateway, click **Edit**.
+3. Update the **Gateway Description** and — if editing an **IPFS** gateway — the value for the [DNSLink](/web3/ipfs-gateway/concepts/dnslink/).
+4. Click **Reapply**.
 
 </TabItem> <TabItem label="API">
 
@@ -58,10 +59,11 @@ When your gateway is stuck in an **Error** [status](/web3/reference/gateway-stat
 
 To refresh a gateway using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and website.
-3. Go to **Web3**.
-4. On a gateway, click the dropdown then **Refresh**.
+1. In the Cloudflare dashboard, go to the **Web3** page.
+
+   <DashButton url="/?to=/:account/:zone/web3" />
+
+2. On a gateway, click the dropdown then **Refresh**.
 
 </TabItem> <TabItem label="API">
 
@@ -85,22 +87,18 @@ You have the ability to block access to one or more:
 
 To add an item to the blocklist using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+1. In the Cloudflare dashboard, go to the **Web3** page.
 
-2. Select your account and website.
+   <DashButton url="/?to=/:account/:zone/web3" />
 
-3. Go to **Web3**.
-
-4. On a specific gateway, click the dropdown then **Blocklist**.
-
-5. Click **Add entry**.
-
-6. Enter the following information:
+2. On a specific gateway, click the dropdown then **Blocklist**.
+3. Click **Add entry**.
+4. Enter the following information:
    - **Blocklist entry type**: Choose **CID** or **Content path**.
    - **Blocklist entry content**: Add a CID or content path to block, meaning either a valid CIDv0 or CIDv1 string (CID) or the entry should start with `/ipfs/` or `/ipns/` (content path).
    - **Blocklist entry description**: Add a description to help you identify the blocklist entry.
 
-7. Click **Add**.
+5. Click **Add**.
 
 </TabItem> <TabItem label="API">
 
@@ -118,11 +116,12 @@ When you delete a gateway, Cloudflare will automatically remove all associated h
 
 To delete a gateway using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and website.
-3. Go to **Web3**.
-4. On a specific gateway, click the dropdown then **Remove**.
-5. Click **Delete hostname**.
+1. In the Cloudflare dashboard, go to the **Web3** page.
+
+   <DashButton url="/?to=/:account/:zone/web3" />
+
+2. On a specific gateway, click the dropdown then **Remove**.
+3. Click **Delete hostname**.
 
 </TabItem> <TabItem label="API">
 

@@ -2,37 +2,107 @@
 title: Download objects
 pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 4
 ---
 
-import { Render, DashButton } from "~/components";
+import { Render, Tabs, TabItem, DashButton } from "~/components";
 
-You can download objects from your bucket from the Cloudflare dashboard or using the Wrangler.
+You can download objects from R2 using the dashboard, Workers API, S3 API, or command-line tools.
 
-## Download objects via the Cloudflare dashboard
+## Download via dashboard
 
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
-2. Locate and select your bucket.
+2. Select your bucket.
 3. Locate the object you want to download.
-4. At the end of the object's row, select the menu button and click **Download**.
+4. Select **...** for the object and click **Download**.
 
-## Download objects via Wrangler
+## Download via Workers API
 
-You can download objects from a bucket, including private buckets in your account, directly.
+Use R2 [bindings](/workers/runtime-apis/bindings/) in Workers to download objects:
 
-For example, to download `file.bin` from `test-bucket`:
-
-```sh
-wrangler r2 object get test-bucket/file.bin
+```ts ins={3}
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		const object = await env.MY_BUCKET.get("image.png");
+		return new Response(object.body);
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
-```sh output
-Downloading "file.bin" from "test-bucket".
-Download complete.
+For complete documentation, refer to [Workers API](/r2/api/workers/workers-api-usage/).
+
+## Download via S3 API
+
+Use S3-compatible SDKs to download objects. You'll need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [R2 API token](/r2/api/tokens/).
+
+<Tabs>
+<TabItem label="JavaScript">
+
+```ts
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+
+const S3 = new S3Client({
+	region: "auto", // Required by SDK but not used by R2
+	// Provide your Cloudflare account ID
+	endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`,
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	credentials: {
+		accessKeyId: '<ACCESS_KEY_ID>',
+		secretAccessKey: '<SECRET_ACCESS_KEY>',
+	},
+});
+
+const response = await S3.send(
+	new GetObjectCommand({
+		Bucket: "my-bucket",
+		Key: "image.png",
+	}),
+);
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+import boto3
+
+s3 = boto3.client(
+	service_name="s3",
+	# Provide your Cloudflare account ID
+	endpoint_url=f"https://{ACCOUNT_ID}.r2.cloudflarestorage.com",
+	# Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	aws_access_key_id=ACCESS_KEY_ID,
+	aws_secret_access_key=SECRET_ACCESS_KEY,
+	region_name="auto", # Required by SDK but not used by R2
+)
+
+response = s3.get_object(Bucket="my-bucket", Key="image.png")
+image_data = response["Body"].read()
+```
+
+</TabItem>
+</Tabs>
+
+Refer to R2's [S3 API documentation](/r2/api/s3/api/) for all S3 API methods.
+
+### Presigned URLs
+
+For client-side downloads where users download directly from R2, use presigned URLs. Your server generates a temporary download URL that clients can use without exposing your API credentials.
+
+1. Your application generates a presigned GET URL using an S3 SDK
+2. Send the URL to your client
+3. Client downloads directly from R2 using the presigned URL
+
+For details on generating and using presigned URLs, refer to [Presigned URLs](/r2/api/s3/presigned-urls/).
+
+## Download via Wrangler
+
+Use [Wrangler](/workers/wrangler/install-and-update/) to download objects. Run the [`r2 object get` command](/workers/wrangler/commands/#r2-object-get):
+
+```sh
+wrangler r2 object get test-bucket/image.png
 ```
 
 The file will be downloaded into the current working directory. You can also use the `--file` flag to set a new name for the object as it is downloaded, and the `--pipe` flag to pipe the download to standard output (stdout).
-
-<Render file="link-to-workers-r2-api" product="r2"/>

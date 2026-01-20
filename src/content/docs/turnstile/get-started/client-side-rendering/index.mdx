@@ -240,7 +240,7 @@ When you embed a Turnstile widget inside a `<form>` element, an invisible input 
 
 ## Explicit rendering
 
-Explicit rendering gives you programmatic control over when and where the widget appears and how the widgets are created using JavaScript functions. This method is suitable for dynamic content, single-page applications(SPAs), or conditional rendering based on user interactions.
+Explicit rendering gives you programmatic control over when and where the widget appears and how the widgets are created using JavaScript functions. This method is suitable for dynamic content, single-page applications (SPAs), or conditional rendering based on user interactions.
 
 ### Use cases
 
@@ -491,6 +491,11 @@ const widgetId = turnstile.render("#container", {
 // Later, run the challenge when needed
 turnstile.execute("#container");
 ```
+
+---
+## Performance and user experience optimization
+
+Cloudflare recommends that you execute the Turnstile script as early upon the visitor's page entry as possible, so that the verification is complete and the interaction is available once the visitor attempts an action on the page. 
 
 ---
 

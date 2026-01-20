@@ -11,6 +11,17 @@ You can use Cloudflare R2 to store data for indexing. To get started, [configure
 
 AI Search will automatically scan and process supported files stored in that bucket. Files that are unsupported or exceed the size limit will be skipped during indexing and logged as errors.
 
+## Path filtering
+
+You can control which files get indexed by defining include and exclude rules for object paths. Use this to limit indexing to specific folders or to exclude files you do not want searchable.
+
+For example, to index only documentation while excluding drafts:
+
+- **Include:** `/docs/**`
+- **Exclude:** `/docs/drafts/**`
+
+Refer to [Path filtering](/ai-search/configuration/path-filtering/) for pattern syntax, filtering behavior, and more examples.
+
 ## File limits
 
 AI Search has different file size limits depending on the file type:

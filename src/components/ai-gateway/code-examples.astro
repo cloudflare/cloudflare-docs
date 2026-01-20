@@ -1,0 +1,112 @@
+---
+import { CodeExample, CodeSelector, modelOptions, code, aiSDKUnifiedCode, aiSDKNativeCode, curlCode } from "./code-example-selector";
+import { Code } from "~/components";
+import { z } from "astro:schema";
+
+
+const props = z.object({
+	forceClient: z.string().optional(),
+    forceAPI: z.string().optional(),
+});
+
+const { forceClient, forceAPI } = props.parse(Astro.props);
+---
+<style>
+    .aig-code-example-container {
+        background-color: var(--color-gray-200);
+        border-color: var(--color-neutral-300);
+        border-radius: 0.675rem;
+        border-bottom-left-radius: 0.85rem;
+        border-bottom-right-radius: 0.85rem;
+        --selector-bg-color: var(--color-white);
+        --selector-border-color: var(--color-neutral-300);
+        --selector-text-color: var(--color-gray-900);
+        --ec-brdRad: 0.675rem;
+        --ec-brdCol: var(--color-neutral-300);
+        &:where([data-theme=dark], [data-theme=dark] *) {
+            background-color: var(--color-neutral-900);
+            border-color: var(--color-neutral-700);
+            --selector-bg-color: var(--color-neutral-700);
+            --selector-border-color: var(--color-neutral-800);
+            --selector-text-color: var(--color-gray-100);
+            --ec-brdCol: var(--color-neutral-700);
+        }
+    }
+</style>
+<div class="border aig-code-example-container">
+<CodeSelector client:load forceClient={forceClient} forceApiType={forceAPI} />
+{(!forceClient || forceClient === "openai-js") && modelOptions.map((option) => (
+    <CodeExample client:load provider={option.provider} clientType="openai-js" keyType="stored" apiType="unified" forceClientType={forceClient} forceApiType={forceAPI}>
+        <Code lang="javascript" title="" code={code
+        .replace("{provider}", option.provider)
+        .replace("{model}", option.model)
+        .replace("    {headerauth}\n","")}
+         />
+    </CodeExample>
+))}
+{(!forceClient || forceClient === "openai-js") && modelOptions.map((option) => (
+    <CodeExample client:load provider={option.provider} clientType="openai-js" keyType="in-request" apiType="unified" forceClientType={forceClient} forceApiType={forceAPI}>
+        <Code lang="javascript" title="" code={code
+        .replace("{provider}", option.provider)
+        .replace("{model}", option.model)
+        .replace("{cf_api_token}", "{" + option.provider + "_api_token}")
+        .replace("    {headerauth}\n","  defaultHeaders: {\n      // if gateway is authenticated\n      \"cf-aig-authorization\": `Bearer {cf_api_token}`, \n  },\n")}
+         />
+    </CodeExample>
+))}
+{(!forceClient || forceClient === "aisdk") && modelOptions.map((option) => (
+    <CodeExample client:load provider={option.provider} clientType="aisdk" keyType="stored" apiType="unified" forceClientType={forceClient} forceApiType={forceAPI}>
+        <Code lang="javascript"  title="" code={aiSDKUnifiedCode
+            .replaceAll("{provider}", option.provider)
+            .replaceAll("{apikey}", "")
+            .replace("{model}", option.model)} />
+    </CodeExample>
+))}
+{(!forceClient || forceClient === "aisdk") && modelOptions.map((option) => (
+    <CodeExample client:load provider={option.provider} clientType="aisdk" keyType="in-request" apiType="unified" forceClientType={forceClient} forceApiType={forceAPI}>
+        <Code lang="javascript"  title="" code={aiSDKUnifiedCode
+            .replaceAll("{provider}", option.provider)
+            .replaceAll("{apikey}", "{ apiKey: '{API_KEY}' }")
+            .replace("{model}", option.model)} />
+    </CodeExample>
+))}
+
+{(!forceClient || forceClient === "aisdk") && modelOptions.map((option) => (
+    <CodeExample client:load provider={option.provider} clientType="aisdk" keyType="stored" apiType="native" forceClientType={forceClient} forceApiType={forceAPI}>
+        <Code lang="javascript"  title="" code={aiSDKNativeCode
+            .replaceAll("{provider}", option.aiSDK.provider)
+            .replaceAll("{providerFactory}", option.aiSDK.providerFactory)
+            .replaceAll("{providerUsage}", option.aiSDK.providerUsage)
+            .replaceAll("{apikey}", "")
+            .replace("{model}", option.model)} />
+    </CodeExample>
+))}
+{(!forceClient || forceClient === "aisdk") && modelOptions.map((option) => (
+    <CodeExample client:load provider={option.provider} clientType="aisdk" keyType="in-request" apiType="native" forceClientType={forceClient} forceApiType={forceAPI}>
+        <Code lang="javascript"  title="" code={aiSDKNativeCode
+            .replaceAll("{provider}", option.aiSDK.provider)
+            .replaceAll("{providerFactory}", option.aiSDK.providerFactory)
+            .replaceAll("{providerUsage}", option.aiSDK.providerUsage)
+            .replaceAll("{apikey}", "{ apiKey: '{API_KEY}' }")
+            .replace("{model}", option.model)} />
+    </CodeExample>
+))}
+
+{(!forceClient || forceClient === "curl") && modelOptions.map((option) => (
+    <CodeExample client:load provider={option.provider} clientType="curl" keyType="stored" apiType="unified" forceClientType={forceClient} forceApiType={forceAPI}>
+        <Code title="" lang="curl" code={curlCode
+            .replaceAll("{provider}", option.provider)
+            .replace("{model}", option.model)
+            .replace("{headerauth}\n","")}
+             />
+    </CodeExample>
+))}
+{(!forceClient || forceClient === "curl") && modelOptions.map((option) => (
+    <CodeExample client:load provider={option.provider} clientType="curl" keyType="in-request" apiType="unified" forceClientType={forceClient} forceApiType={forceAPI}>
+        <Code title="" lang="curl" code={curlCode
+            .replaceAll("{provider}", option.provider)
+            .replace("{model}", option.model)
+            .replace("{headerauth}\n","  --header 'Authorization: Bearer {" + option.provider + "_api_token}' \\\n")} />
+    </CodeExample>
+))}
+</div>

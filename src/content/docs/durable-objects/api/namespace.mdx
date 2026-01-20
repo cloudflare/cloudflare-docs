@@ -59,7 +59,28 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject, WorkerEntrypoint
+
+# Durable Object
+class MyDurableObject(DurableObject):
+  pass
+
+# Worker
+class Default(WorkerEntrypoint):
+  async def fetch(self, request):
+    # A stub is a client Object used to invoke methods defined by the Durable Object
+    stub = self.env.MY_DURABLE_OBJECT.getByName("foo")
+    # ...
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Methods
 

@@ -1,0 +1,81 @@
+---
+link: "/realtime/realtimekit/release-notes/"
+productName: RealtimeKit Web UI Kit
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2025-11-18"
+    title: RealtimeKit Web UI Kit 1.0.7
+    description: |-
+      **Fixes**
+
+      - Fixed alignment issues with unread chat message count, unread polls count, and pending participant stage request count.
+      - Resolved issue where action toggles were incorrectly displayed in participant video preview in the settings component.
+
+  - publish_date: "2025-10-30"
+    title: RealtimeKit Web UI Kit 1.0.6
+    description: |-
+      **Fixes**
+
+      - Fixed an issue where `rtk-debugger` displayed audio and video bitrate as `0`.
+      - Resolved menu visibility for the last participant when the participants list is long.
+      - Fixed `rtk-polls` not rendering when props were provided after initial mount.
+      - Improved `rtk-participant-tile` audio visualizer appearance when muted (no longer shows as a single dot).
+      - Prevented large notifications from overflowing their container.
+      - Fixed a memory leak in the `mediaConnectionUpdate` event listener.
+      - Corrected `rtk-ui-provider` prop passing to children during consecutive meetings on the same page.
+
+  - publish_date: "2025-08-14"
+    title: RealtimeKit Web UI Kit 1.0.5
+    description: |-
+      **Fixes**
+
+      - Fixed Safari CSS issues where the `rtk-settings` component was not visible and the Audio Playback modal was not taking the proper height.
+
+      **Enhancements**
+
+      - Livestream viewer now has a seeker and DVR functionality.
+
+  - publish_date: "2025-07-17"
+    title: RealtimeKit Web UI Kit 1.0.4
+    description: |-
+      **Fixes**
+
+      - Fixed Angular integration issues.
+
+      **Enhancements**
+
+      - Added support for multiple meetings on the same page in RealtimeKit.
+      - Enhanced the `rtk-ui-provider` component to serve as a parent component for sharing common props (`meeting`, `config`, `iconPack`) with all child components.
+
+  - publish_date: "2025-07-08"
+    title: RealtimeKit Web UI Kit 1.0.3
+    description: |-
+      **Fixes**
+
+      - Resolved `TypeError` that occurred for meetings without titles.
+      - Implemented minor UI improvements for chat components.
+
+      **Features**
+
+      - Made Livestream feature available to all beta users.
+
+  - publish_date: "2025-07-02"
+    title: RealtimeKit Web UI Kit 1.0.2
+    description: |-
+      **Performance**
+
+      - Fixed dependency issues to enhance performance and Angular integration.
+
+  - publish_date: "2025-06-30"
+    title: RealtimeKit Web UI Kit 1.0.1
+    description: |-
+      **Deprecated API**
+
+      - Discontinued Vue UI support.
+
+  - publish_date: "2025-05-29"
+    title: RealtimeKit Web UI Kit 1.0.0
+    description: |-
+      **Features**
+
+      - Initial release of Cloudflare RealtimeKit with support for group calls, webinars, livestreaming, polls, and chat.

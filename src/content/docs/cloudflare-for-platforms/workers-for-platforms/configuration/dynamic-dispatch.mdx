@@ -1,0 +1,186 @@
+---
+pcx_content_type: how-to
+title: Dynamic dispatch Worker
+sidebar:
+  order: 3
+---
+
+import { Render, PackageManagers, WranglerConfig } from "~/components";
+
+A [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) is a specialized routing Worker that directs incoming requests to the appropriate user Workers in your dispatch namespace. Instead of using [Workers Routes](/workers/configuration/routing/routes/), dispatch Workers let you programmatically control request routing through code.
+
+![Figure 1: Workers for Platforms: Main Flow](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-1.svg)
+
+:::note
+You can also create a dispatch Worker from the Cloudflare dashboard. Go to **Workers for Platforms**, select your namespace, and click **Create** > **Dispatch Worker**. The dashboard provides templates for path-based and subdomain-based routing.
+:::
+
+#### Why use a dynamic dispatch Worker?
+
+- **Scale**: Route requests to millions of hostnames to different Workers, without defining [Workers Routes](/workers/configuration/routing/routes/) configuration for each one
+- **Custom routing logic**: Write code to determine exactly how requests should be routed. For example:
+  - Store hostname-to-Worker mappings in [Workers KV](/kv/) and look them up dynamically
+  - Route requests based on subdomain, path, headers, or other request properties
+  - Use [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) attached to [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) for routing decisions
+- **Add platform functionality**: Build additional features at the routing layer:
+  - Run authentication checks before requests reach user Workers
+  - Remove or add headers or metadata from incoming requests
+  - Attach useful context like user IDs or account information
+  - Transform requests or responses as needed
+
+### Configure the dispatch namespace binding
+
+To allow your dynamic dispatch Worker to dynamically route requests to Workers in a namespace, you need to configure a dispatch namespace [binding](/workers/runtime-apis/bindings/). This binding enables your dynamic dispatch Worker to call any user Worker within that namespace using `env.dispatcher.get()`.
+
+<WranglerConfig>
+
+```toml
+[[dispatch_namespaces]]
+binding = "DISPATCHER"
+namespace = "my-dispatch-namespace"
+```
+
+</WranglerConfig>
+
+Once the binding is configured, your dynamic dispatch Worker can route requests to any Worker in the namespace. Below are common routing patterns you can implement in your dispatcher.
+
+### Routing examples
+
+![Figure 2: Workers for Platforms: Main Flow](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-2.svg)
+
+#### KV-Based Routing
+
+Store the routing mappings in [Workers KV](/kv/). This allows you to modify your routing logic without requiring you to change or redeploy the dynamic dispatch Worker.
+
+```js
+export default {
+	async fetch(request, env) {
+		try {
+			const url = new URL(request.url);
+
+			// Use hostname, path, or any combination as the routing key
+			const routingKey = url.hostname;
+
+			// Lookup user Worker name from KV store
+			const userWorkerName = await env.USER_ROUTING.get(routingKey);
+
+			if (!userWorkerName) {
+				return new Response("Route not configured", { status: 404 });
+			}
+
+			// Optional: Cache the KV lookup result
+			const userWorker = env.DISPATCHER.get(userWorkerName);
+			return await userWorker.fetch(request);
+		} catch (e) {
+			if (e.message.startsWith("Worker not found")) {
+				return new Response("", { status: 404 });
+			}
+			return new Response(e.message, { status: 500 });
+		}
+	},
+};
+```
+
+#### Subdomain-Based Routing
+
+Route subdomains to the corresponding Worker. For example, `my-customer.example.com` will route to the Worker named `my-customer` in the dispatch namespace.
+
+```js
+export default {
+	async fetch(request, env) {
+		try {
+			// Extract user Worker name from subdomain
+			// Example: customer1.example.com -> customer1
+			const url = new URL(request.url);
+			const userWorkerName = url.hostname.split(".")[0];
+
+			// Get user Worker from dispatch namespace
+			const userWorker = env.DISPATCHER.get(userWorkerName);
+			return await userWorker.fetch(request);
+		} catch (e) {
+			if (e.message.startsWith("Worker not found")) {
+				// User Worker doesn't exist in dispatch namespace
+				return new Response("", { status: 404 });
+			}
+			// Could be any other exception from fetch() or from the dispatched Worker
+			return new Response(e.message, { status: 500 });
+		}
+	},
+};
+```
+
+#### Path-Based routing
+
+Route URL paths to the corresponding Worker. For example, `example.com/customer-1` will route to the Worker named `customer-1` in the dispatch namespace.
+
+```js
+export default {
+	async fetch(request, env) {
+		try {
+			const url = new URL(request.url);
+			const pathParts = url.pathname.split("/").filter(Boolean);
+
+			if (pathParts.length === 0) {
+				return new Response("Invalid path", { status: 400 });
+			}
+
+			// example.com/customer-1 -> routes to 'customer-1' worker
+			const userWorkerName = pathParts[0];
+
+			const userWorker = env.DISPATCHER.get(userWorkerName);
+			return await userWorker.fetch(request);
+		} catch (e) {
+			if (e.message.startsWith("Worker not found")) {
+				return new Response("", { status: 404 });
+			}
+			return new Response(e.message, { status: 500 });
+		}
+	},
+};
+```
+
+### Enforce custom limits
+
+Use [custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) to control how much CPU time a given user Worker can use, or how many subrequests it can make. You can set different limits based on customer plan type or other criteria.
+
+```js
+export default {
+	async fetch(request, env) {
+		try {
+			const url = new URL(request.url);
+			const userWorkerName = url.hostname.split(".")[0];
+
+			// Look up customer plan from your database or KV
+			const customerPlan = await env.CUSTOMERS.get(userWorkerName);
+
+			// Set limits based on plan type
+			const plans = {
+				enterprise: { cpuMs: 50, subRequests: 50 },
+				pro: { cpuMs: 20, subRequests: 20 },
+				free: { cpuMs: 10, subRequests: 5 },
+			};
+			const limits = plans[customerPlan] || plans.free;
+
+			const userWorker = env.DISPATCHER.get(userWorkerName, {}, { limits });
+			return await userWorker.fetch(request);
+		} catch (e) {
+			if (e.message.startsWith("Worker not found")) {
+				return new Response("", { status: 404 });
+			}
+			if (e.message.includes("CPU time limit")) {
+				// Track limit violations with Analytics Engine
+				env.ANALYTICS.writeDataPoint({
+					indexes: [userWorkerName],
+					blobs: ["cpu_limit_exceeded"],
+				});
+				return new Response("CPU limit exceeded", { status: 429 });
+			}
+			return new Response(e.message, { status: 500 });
+		}
+	},
+};
+```
+
+For more details on available limits, refer to [Custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/).
+
+To track limit violations and other metrics across user Workers, use [Workers Analytics Engine](/analytics/analytics-engine/). For detailed logging and debugging, configure a [Tail Worker](/workers/observability/logs/tail-workers/) to capture events from your dispatch Worker.

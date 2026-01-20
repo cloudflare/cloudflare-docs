@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Keycloak (SAML)
 ---
 
+import { Render } from "~/components";
+
 Keycloak is an open source identity and access management solution built by JBoss. If you need a Keycloak lab environment for testing, refer to [this example](https://github.com/mw866/tunnel-keycloak).
 
 ## Set up Keycloak (SAML)
@@ -17,7 +19,7 @@ To set up Keycloak (SAML) as your identity provider:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   <Render file="find-team-name" product="cloudflare-one" />
 
    ![SAML Client interface with team domain and callback in Client ID](~/assets/images/cloudflare-one/identity/keycloak/configure-client.png)
 
@@ -28,7 +30,6 @@ To set up Keycloak (SAML) as your identity provider:
 5. Set the Master SAML Processing URL using the same Keycloak domain: `https://<keycloak_domain>/auth/realms/master/protocol/saml`.
 
 6. If you wish to enable client signatures, enable `Client Signature Required` and select **save**.
-
    1. You will need to [follow the steps here to get the certificate and enable it in the Cloudflare dashboard](/cloudflare-one/integrations/identity-providers/signed_authn/).
 
    2. Import the Access certificate you downloaded into the `SAML Keys` tab. Use `Certificate PEM` as the format.

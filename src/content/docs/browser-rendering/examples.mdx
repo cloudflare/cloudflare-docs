@@ -1,0 +1,65 @@
+---
+pcx_content_type: navigation
+title: Examples
+sidebar:
+  order: 3
+---
+
+import { CardGrid, LinkCard } from "~/components"
+
+Use the examples below to immediately perform quick, common tasks with our [REST API](/browser-rendering/rest-api/).
+
+For dynamic, multi-step automation, see our guides on integrating Cloudflare Browser Rendering with [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), or [Stagehand](/browser-rendering/stagehand/).
+
+<CardGrid>
+    <LinkCard
+        title="Fetch rendered HTML from a URL"
+        description="Capture fully rendered HTML from a webpage after JavaScript execution."
+        href="/browser-rendering/rest-api/content-endpoint/#fetch-rendered-html-from-a-url"
+    />
+    <LinkCard
+        title="Take a screenshot of the visible viewport"
+        description="Capture a screenshot of a fully rendered webpage from a URL or custom HTML."
+        href="/browser-rendering/rest-api/screenshot-endpoint/#basic-usage"
+    />
+    <LinkCard
+        title="Take a screenshot of the full page"
+        description="Capture a screenshot of an entire scrollable webpage, not just the visible viewport."
+        href="/browser-rendering/rest-api/screenshot-endpoint/#navigate-and-capture-a-full-page-screenshot"
+    />
+    <LinkCard
+        title="Take a screenshot of an authenticated page"
+        description="Capture a screenshot of a webpage that requires login by providing session cookies."
+        href="/browser-rendering/rest-api/screenshot-endpoint/#capture-a-screenshot-of-an-authenticated-page"
+    />
+    <LinkCard
+        title="Generate a PDF"
+        description="Generate a PDF from a URL or custom HTML and CSS."
+        href="/browser-rendering/rest-api/pdf-endpoint/#basic-usage"
+    />
+    <LinkCard
+        title="Extract Markdown from a URL"
+        description="Convert a webpage's content into Markdown format."
+        href="/browser-rendering/rest-api/markdown-endpoint/#convert-a-url-to-markdown"
+    />
+    <LinkCard
+        title="Capture a snapshot from a URL"
+        description="Capture both the rendered HTML and a screenshot from a webpage in a single request."
+        href="/browser-rendering/rest-api/snapshot/#capture-a-snapshot-from-a-url"
+    />
+    <LinkCard
+        title="Scrape headings and links from a URL"
+        description="Extract structured data from specific elements on a webpage using CSS selectors."
+        href="/browser-rendering/rest-api/scrape-endpoint/#extract-headings-and-links-from-a-url"
+    />
+    <LinkCard
+        title="Capture structured data with an AI prompt and JSON schema"
+        description="Extract structured data from a webpage using AI using a prompt or JSON schema."
+        href="/browser-rendering/rest-api/json-endpoint/#with-a-prompt-and-json-schema"
+    />
+    <LinkCard
+        title="Retrieve links from a URL"
+        description="Retrieve all links from a webpage, including hidden ones."
+        href="/browser-rendering/rest-api/links-endpoint/#get-all-links-on-a-page"
+    />
+</CardGrid>

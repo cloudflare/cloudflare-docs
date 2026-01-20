@@ -5,6 +5,8 @@ sidebar:
   order: 10
 ---
 
+import { DashButton } from "~/components";
+
 Workflows expose metrics that allow you to inspect and measure Workflow execution, error rates, steps, and total duration across each (and all) of your Workflows.
 
 The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
@@ -63,9 +65,11 @@ The possible values for `eventType` are documented below:
 
 Per-Workflow and instance analytics for Workflows are available in the Cloudflare dashboard. To view current and historical metrics for a database:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Workers & Pages** > **Workflows**](https://dash.cloudflare.com/?to=/:account/workers/workflows).
-3. Select a Workflow to view its metrics.
+1. In the Cloudflare dashboard, go to the **Workflows** page.
+
+   <DashButton url="/?to=/:account/workers/workflows" />
+
+2. Select a Workflow to view its metrics.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 
