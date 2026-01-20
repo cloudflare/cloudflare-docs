@@ -13,7 +13,7 @@ import { APIRequest, Render } from "~/components";
 
 You can use the [Edit Zone Settings API endpoint](/api/resources/zones/subresources/settings/methods/edit/) to set up Dedicated CDN Egress IPs (formerly known as Aegis). If you are not familiar with how Cloudflare API works, refer to [Fundamentals](/fundamentals/api/).
 
-:::caution[Enterprise-only]
+:::note[Enterprise-only]
 Dedicated CDN Egress IPs (DCEI) are currently available to Enterprise customers. Contact your account team to request access.
 :::
 
@@ -21,6 +21,10 @@ Dedicated CDN Egress IPs (DCEI) are currently available to Enterprise customers.
 
 - The Dedicated CDN Egress IPs (DCEI) zone setting is only available within Cloudflare accounts that own leased IPs, or accounts to which a [BYOIP prefix](/byoip/) has been delegated. If you wish to use Dedicated CDN Egress IPs for zones that do not meet this criteria, contact your account team.
 - <Render file="dcei-pool-requirements" product="smart-shield" />
+
+:::caution
+You must allowlist the IP addresses from this pool in your infrastructure before linking it to a zone. If you skip this step, traffic will not reach your origin, causing errors.
+:::
 
 ## Turn on DCEI for a zone
 
