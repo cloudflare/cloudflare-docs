@@ -10,8 +10,8 @@ import { dirname } from "path";
 /**
  * middlecache loader expects a middlecache path
  *
- * @param path - data file path in the middlecache R2 bucket
- * @param options - additional options { url: override middlecache base url, parser: custom parser }
+ * @param path - Data file path in the middlecache R2 bucket, example: "v1/products/maturity_compliance.json"
+ * @param options - Additional options { url: override middlecache base url, parser: custom parser }
  */
 
 type MiddlecacheOptions = {
