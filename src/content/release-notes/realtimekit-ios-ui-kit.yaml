@@ -12,7 +12,7 @@ entries:
       
       **Fixes**
       
-      - Fix video not resuming when video view returns to foreground
+      - Fixed video not resuming when video view returns to foreground
   - publish_date: "2025-12-16"
     title: RealtimeKit iOS UI Kit 0.5.6
     description: |-
