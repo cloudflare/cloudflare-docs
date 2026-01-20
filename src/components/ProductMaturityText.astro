@@ -1,20 +1,18 @@
 ---
 import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
-import { z } from "astro/zod";
+interface Props {
+	product: CollectionEntry<"product-maturity">;
+}
 
-type Props = z.infer<typeof props>;
-const props = z.object({
-	product: z.string(),
-});
+const { product } = Astro.props;
 
-const input = props.parse(Astro.props);
-
-const entry = await getEntry("product-maturity", input.product);
+const entry = await getEntry("product-maturity", product);
 
 if (!entry) {
 	throw new Error(
-		`Product maturity entry not found for product="${input.product}"`,
+		`Product maturity entry not found for product="${product}" in ${Astro.url.pathname}`,
 	);
 }
 ---
