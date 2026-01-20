@@ -1,0 +1,15 @@
+---
+{}
+---
+
+## Edge TTL
+
+By default, Cloudflare caches certain HTTP response codes with the following Edge Cache TTL when a `cache-control` directive or `expires` response header are not present.
+
+| HTTP status code | Default TTL |
+| ---------------- | ----------- |
+| 200, 206, 301    | 120m        |
+| 302, 303         | 20m         |
+| 404, 410         | 3m          |
+
+All other status codes are not cached by default.

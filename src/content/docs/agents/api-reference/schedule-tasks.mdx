@@ -11,6 +11,12 @@ An Agent can schedule tasks to be run in the future by calling `this.schedule(wh
 
 Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read+write state: scheduled tasks can invoke any regular method on your Agent.
 
+:::note[Calling destroy() in scheduled tasks]
+
+You can safely call `this.destroy()` within a scheduled task callback. The Agent will properly handle cleanup and eviction, skipping any remaining database updates after the destroy flag is set.
+
+:::
+
 ### Scheduling tasks
 
 You can call `this.schedule` within any method on an Agent, and schedule tens-of-thousands of tasks per individual Agent:
@@ -48,6 +54,9 @@ You can schedule tasks in multiple ways:
 <TypeScriptExample>
 
 ```ts
+// schedule a task to run immediately
+let task = await this.schedule(0, "someTask", { message: "hello" });
+
 // schedule a task to run in 10 seconds
 let task = await this.schedule(10, "someTask", { message: "hello" });
 
@@ -71,6 +80,12 @@ Calling `await this.schedule` returns a `Schedule`, which includes the task's ra
 :::note[Maximum scheduled tasks]
 
 Each task is mapped to a row in the Agent's underlying [SQLite database](/durable-objects/api/sqlite-storage-api/), which means that each task can be up to 2 MB in size. The maximum number of tasks must be `(task_size * tasks) + all_other_state < maximum_database_size` (currently 1GB per Agent).
+
+:::
+
+:::note[Destroying an Agent from a scheduled task]
+
+You can safely call `this.destroy()` from within a scheduled task callback. The Agent SDK handles this scenario by setting an internal flag to prevent database updates after destruction and deferring the context abort to allow the alarm handler to complete cleanly. This prevents errors that would otherwise occur when the alarm handler attempts to update the schedule table after storage has been cleared.
 
 :::
 
@@ -104,3 +119,40 @@ let tasks = this.getSchedules({
 ```
 
 </TypeScriptExample>
+
+### Lifecycle management with scheduled tasks
+
+When working with scheduled tasks, you can safely call `this.destroy()` from within a scheduled callback to terminate the Agent instance after completing a task. The Agent SDK properly handles the cleanup process to ensure scheduled tasks complete successfully before the Agent is evicted.
+
+<TypeScriptExample>
+
+```ts
+export class SchedulingAgent extends Agent {
+	async onRequest(request) {
+		// Schedule a self-destructing task
+		await this.schedule(60, "cleanupAndDestroy");
+		return new Response("Agent will self-destruct in 60 seconds");
+	}
+
+	async cleanupAndDestroy(data) {
+		// Perform final cleanup operations
+		await this.sendEmail({
+			to: "admin@example.com",
+			subject: "Task completed",
+			body: "Agent task finished, shutting down"
+		});
+
+		// Safely destroy the Agent instance
+		// The destroy operation will complete after this callback finishes
+		await this.destroy();
+	}
+}
+```
+
+</TypeScriptExample>
+
+:::note
+
+When `destroy()` is called from within a scheduled task, the Agent SDK defers the destruction to ensure the scheduled callback completes successfully. The Agent instance will be evicted immediately after the callback finishes executing.
+
+:::

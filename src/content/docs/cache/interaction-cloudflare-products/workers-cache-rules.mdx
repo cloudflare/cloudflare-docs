@@ -9,7 +9,7 @@ head:
 
 ---
 
-Your Workers script can override [cache rule](/cache/how-to/cache-rules/) behavior, whether it is applied to a zone using Cloudflare or a zone that is not proxied through Cloudflare.
+Your Workers script can override [Cache Rules](/cache/how-to/cache-rules/) behavior, whether it is applied to a zone using Cloudflare or a zone that is not proxied through Cloudflare.
 
 For example, if there is a cache rule configured to bypass cache for `example.com/foo`, but your Workers script sets `cacheEverything: true`, the script's setting will take precedence, and the request will be cached. The same applies if the request is made to a non-Cloudflare zone — the Worker's `cacheEverything` setting will still override.
 
@@ -17,9 +17,9 @@ For example, if there is a cache rule configured to bypass cache for `example.co
 
 Cache behavior is determined by the following order of precedence:
 
-1. Workers script settings
-2. Cache rules
-3. Page rules
+1. [Workers](/workers/) script settings
+2. [Cache rules](/cache/how-to/cache-rules/)
+3. [Page rules](/rules/page-rules/)
 
 Cache rules override page rule settings, and Workers scripts override cache rules. Among rules at the same level, the one with the highest specificity takes priority.
 
@@ -27,8 +27,8 @@ Cache rules override page rule settings, and Workers scripts override cache rule
 
 This override behavior is controlled by [compatibility flags](/workers/configuration/compatibility-flags/):
 
-- For the Fetch API: `request_cf_overrides_cache_rules`
-- For the Cache API: `cache_api_request_cf_overrides_cache_rules`
+- For the [Fetch API](/workers/runtime-apis/fetch/): `request_cf_overrides_cache_rules`
+- For the [Cache API](/workers/runtime-apis/cache/): `cache_api_request_cf_overrides_cache_rules`
 
 These flags must be enabled to allow Workers scripts to override cache rules.
 

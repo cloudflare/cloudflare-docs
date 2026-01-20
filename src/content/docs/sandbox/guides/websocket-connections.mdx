@@ -108,20 +108,27 @@ Get a public URL for your WebSocket server:
 ```ts
 import { getSandbox, proxyToSandbox } from '@cloudflare/sandbox';
 
+export { Sandbox } from '@cloudflare/sandbox';
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    // Auto-route all requests via proxyToSandbox first
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+
+    // Extract hostname from request
+    const { hostname } = new URL(request.url);
     const sandbox = getSandbox(env.Sandbox, 'echo-service');
 
     // Expose the port to get preview URL
-    const { exposedAt } = await sandbox.exposePort(8080);
+    const { exposedAt } = await sandbox.exposePort(8080, { hostname });
 
     // Return URL to clients
     if (request.url.includes('/ws-url')) {
       return Response.json({ url: exposedAt.replace('https', 'wss') });
     }
 
-    // Auto-route all requests via proxyToSandbox
-    return proxyToSandbox(request, env.Sandbox, 'echo-service');
+    return new Response('Not found', { status: 404 });
 
 }
 };
@@ -148,23 +155,47 @@ Your Worker can connect to a WebSocket service to get real-time data, even when 
 
 <TypeScriptExample>
 ```ts
+import { getSandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+let initialized = false;
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+
+     // Get or create a sandbox instance
     const sandbox = getSandbox(env.Sandbox, 'data-processor');
 
-    // Incoming HTTP request needs real-time data from sandbox
-    const wsRequest = new Request('ws://internal', {
-      headers: {
-        'Upgrade': 'websocket',
-        'Connection': 'Upgrade'
+
+    // Check for WebSocket upgrade
+    const upgrade = request.headers.get('Upgrade')?.toLowerCase();
+
+    if (upgrade === 'websocket') {
+      // Initialize server on first connection
+      if (!initialized) {
+        await sandbox.writeFile(
+          '/workspace/server.js',
+          `Bun.serve({
+            port: 8080,
+            fetch(req, server) {
+              server.upgrade(req);
+            },
+            websocket: {
+              message(ws, msg) {
+                ws.send(\`Echo: \${msg}\`);
+              }
+            }
+          });`
+        );
+        await sandbox.startProcess(
+          'bun /workspace/server.js'
+        );
+        initialized = true;
       }
-    });
-
-    // Connect to WebSocket service in sandbox
-    const wsResponse = await sandbox.wsConnect(wsRequest, 8080);
-
-    // Process WebSocket stream and return HTTP response
-    // (Implementation depends on your needs)
+      // Connect to WebSocket server
+      return await sandbox.wsConnect(request, 8080);
+    }
 
     return new Response('Processed real-time data');
 

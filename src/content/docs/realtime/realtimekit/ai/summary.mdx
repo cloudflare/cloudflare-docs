@@ -1,0 +1,119 @@
+---
+pcx_content_type: how-to
+title: Summary
+sidebar:
+  order: 2
+---
+
+RealtimeKit generates AI-powered meeting summaries from transcript data.
+
+:::note
+[Transcription](/realtime/realtimekit/ai/transcription/) must be enabled to use summarization.
+:::
+
+## Enable summarization
+
+Set `summarize_on_end: true` when [creating a meeting](/realtime/realtimekit/concepts/meeting/):
+
+```json
+{
+  "title": "Product Review",
+  "ai_config": {
+    "transcription": {
+      "language": "en-US"
+    },
+    "summarization": {
+      "word_limit": 500,
+      "text_format": "markdown",
+      "summary_type": "team_meeting"
+    }
+  },
+  "summarize_on_end": true
+}
+```
+
+## Configuration
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `word_limit` | number | 300 | Summary length (150-1000 words) |
+| `text_format` | string | `plain_text` | Output format: `plain_text` or `markdown` |
+| `summary_type` | string | `general` | Meeting context for tailored summaries |
+
+### Summary types
+
+Choose a type that matches your meeting for better results:
+
+| Type | Best for |
+|------|----------|
+| `general` | Any meeting (default) |
+| `team_meeting` | Regular team syncs |
+| `daily_standup` | Agile standups |
+| `one_on_one_meeting` | 1:1 meetings |
+| `sales_call` | Customer sales conversations |
+| `client_check_in` | Client status updates |
+| `interview` | Job interviews |
+| `lecture` | Educational content |
+| `code_review` | Technical code reviews |
+
+## Consume summaries
+
+### Webhook
+
+Configure `meeting.summary` event in [webhooks](/api/resources/realtime_kit/subresources/webhooks/):
+
+```json
+{
+  "event": "meeting.summary",
+  "meetingId": "meeting-123",
+  "sessionId": "session-456",
+  "summaryDownloadUrl": "https://...",
+  "summaryDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
+}
+```
+
+### REST API
+
+#### Fetch summary
+
+Refer to [Fetch summary of transcripts for a session](/api/resources/realtime_kit/subresources/sessions/#fetch-summary-of-transcripts-for-a-session).
+
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/summary" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+#### Trigger manually
+
+Generate a summary after the meeting if `summarize_on_end` was not set. Refer to [Generate summary of transcripts for the session](/api/resources/realtime_kit/subresources/sessions/#generate-summary-of-transcripts-for-the-session).
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/summary" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+## Example output
+
+With `text_format: "markdown"` and `summary_type: "team_meeting"`:
+
+```markdown
+## Meeting Summary
+
+### Key Discussion Points
+- Reviewed Q4 roadmap priorities
+- Discussed deployment timeline for v2.0
+- Identified blockers for the auth migration
+
+### Action Items
+- @alice: Update design specs by Friday
+- @bob: Schedule security review
+- @charlie: Create migration runbook
+
+### Decisions Made
+- Approved moving forward with Kubernetes migration
+- Delayed analytics dashboard to next sprint
+```
+
+## Retention
+
+Summaries are stored for **7 days** from meeting ends.

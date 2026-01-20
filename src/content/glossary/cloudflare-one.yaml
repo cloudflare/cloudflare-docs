@@ -83,6 +83,10 @@ entries:
     general_definition: |-
       a collection of WARP client settings applied to a specific set of devices in your organization.
 
+  - term: device registration
+    general_definition: |-
+      an individual session of the WARP client on a physical device, with associated configuration including a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
+
   - term: DNS filtering
     general_definition: |-
       DNS filtering uses the Domain Name System to block malicious websites and filter out harmful content, enhancing security and access control.
@@ -199,7 +203,7 @@ entries:
 
   - term: seat
     general_definition: |-
-      a unique user authenticating to an Access application or enrolling in WARP,
+      a unique, billable user within your Zero Trust organization who has performed [an authentication event](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). Service tokens do not consume seats.
 
   - term: service provider (SP)
     general_definition: |-

@@ -34,3 +34,26 @@ Understanding the limits and timeouts of Cloudflare Realtime is crucial for opti
 * **Internet Connectivity Considerations**: The potential for internet connectivity loss between the client and Cloudflare is an operational reality that must be addressed. Implementing a detection and reconnection strategy is recommended to maintain session continuity. This could involve periodic 'heartbeat' signals to your backend server to monitor connectivity status. Upon detecting connectivity issues, automatically attempting to reconnect and establish a new session is advised. Sessions and tracks will remain available for reuse for 30 seconds before timing out, providing a brief window for reconnection attempts.
 
 Adhering to these limits and understanding the timeout behaviors will help ensure that your applications remain responsive and stable while providing a seamless user experience.
+
+## Supported Codecs
+
+Cloudflare Realtime supports the following codecs:
+
+### Supported video codecs
+
+* **H264**
+* **H265**
+* **VP8**
+* **VP9**
+* **AV1**
+
+### Supported audio codecs
+
+* **Opus**
+* **G.711 PCM (A-law)**
+* **G.711 PCM (µ-law)**
+
+:::note
+For external 48kHz PCM support refer to the [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/)
+:::
+

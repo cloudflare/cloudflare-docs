@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Facebook
 ---
 
+import { Render } from "~/components";
+
 Use these steps to set up Facebook as your identity provider.
 
 1. Go to [developers.facebook.com](https://developers.facebook.com/).
@@ -53,7 +55,7 @@ Use these steps to set up Facebook as your identity provider.
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
+    <Render file="find-team-name" product="cloudflare-one" />
 
 22. Select **Save Changes**.
 

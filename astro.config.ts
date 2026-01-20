@@ -6,13 +6,11 @@ import liveCode from "astro-live-code";
 import starlightLinksValidator from "starlight-links-validator";
 import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
-import sitemap, { type SitemapItem } from "@astrojs/sitemap";
+import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
-import { execSync } from "child_process";
-import { existsSync } from "fs";
 
 import remarkValidateImages from "./src/plugins/remark/validate-images";
 
@@ -22,6 +20,7 @@ import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
 import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
+import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
 
 async function autogenSections() {
 	const sections = (
@@ -61,70 +60,6 @@ const customCss = await autogenStyles();
 
 const RUN_LINK_CHECK =
 	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
-const ENABLE_LAST_MOD_IN_SITEMAP =
-	process.env.ENABLE_LAST_MOD_IN_SITEMAP?.toLowerCase() === "true";
-
-/**
- * Get the last Git modification date for a file
- * @param filePath - Absolute path to the file
- * @returns ISO date string or null if not available
- */
-function getGitLastModified(filePath: string): string | null {
-	try {
-		const result = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
-			encoding: "utf-8",
-		}).trim();
-		return result || null;
-	} catch (_error) {
-		return null;
-	}
-}
-
-/**
- * Convert a sitemap URL to the corresponding source file path
- * @param url - The full URL from the sitemap
- * @returns Absolute file path or null if not found
- */
-function urlToFilePath(url: string): string | null {
-	try {
-		const urlObj = new URL(url);
-		const pathname = urlObj.pathname.replace(/\/$/, ""); // Remove trailing slash
-
-		// Try different file extensions and paths
-		const possiblePaths = [
-			`./src/content/docs${pathname}.md`,
-			`./src/content/docs${pathname}.mdx`,
-			`./src/content/docs${pathname}/index.md`,
-			`./src/content/docs${pathname}/index.mdx`,
-		];
-
-		for (const path of possiblePaths) {
-			if (existsSync(path)) {
-				return path;
-			}
-		}
-
-		return null;
-	} catch (_error) {
-		return null;
-	}
-}
-
-function addLastModDate(item: SitemapItem) {
-	const filePath = urlToFilePath(item.url);
-	if (filePath) {
-		const gitDate = getGitLastModified(filePath);
-		if (gitDate) {
-			item.lastmod = gitDate;
-		}
-	} else {
-		console.warn(
-			`[sitemap] Could not find last modified for ${item.url} - setting to now`,
-		);
-		item.lastmod = new Date().toISOString();
-	}
-	return item;
-}
 
 // https://astro.build/config
 export default defineConfig({
@@ -260,9 +195,7 @@ export default defineConfig({
 
 				return true;
 			},
-			serialize(item) {
-				return ENABLE_LAST_MOD_IN_SITEMAP ? addLastModDate(item) : item;
-			},
+			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
 	],

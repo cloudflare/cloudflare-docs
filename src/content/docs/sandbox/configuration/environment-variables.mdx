@@ -146,6 +146,76 @@ await Promise.all([
 ]);
 ```
 
+### Bucket mounting credentials
+
+When mounting S3-compatible object storage, the SDK uses **s3fs-fuse** under the hood, which requires AWS-style credentials. For R2, generate API tokens from the Cloudflare dashboard and provide them using AWS environment variable names:
+
+**Get R2 API tokens:**
+1. Go to [**R2** > **Overview**](https://dash.cloudflare.com/?to=/:account/r2) in the Cloudflare dashboard
+2. Select **Manage R2 API Tokens**
+3. Create a token with **Object Read & Write** permissions
+4. Copy the **Access Key ID** and **Secret Access Key**
+
+**Set credentials as Worker secrets:**
+
+```bash
+wrangler secret put AWS_ACCESS_KEY_ID
+# Paste your R2 Access Key ID
+
+wrangler secret put AWS_SECRET_ACCESS_KEY
+# Paste your R2 Secret Access Key
+```
+
+:::caution[Production only]
+Bucket mounting requires production deployment. It does not work with `wrangler dev` due to FUSE support limitations. See [Mount buckets guide](/sandbox/guides/mount-buckets/) for details.
+:::
+
+**Mount buckets with automatic credential detection:**
+
+```typescript
+interface Env {
+	Sandbox: DurableObjectNamespace;
+	AWS_ACCESS_KEY_ID: string;
+	AWS_SECRET_ACCESS_KEY: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const sandbox = getSandbox(env.Sandbox, 'data-processor');
+
+		// Credentials automatically detected from environment
+		await sandbox.mountBucket('my-r2-bucket', '/data', {
+			endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
+		});
+
+		// Access mounted bucket using standard file operations
+		await sandbox.exec('python', { args: ['process.py', '/data/input.csv'] });
+
+		return Response.json({ success: true });
+	}
+};
+```
+
+The SDK automatically detects `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` from your Worker's environment when you call `mountBucket()` without explicit credentials.
+
+**Pass credentials explicitly** (if using custom secret names):
+
+```typescript
+await sandbox.mountBucket('my-r2-bucket', '/data', {
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+	credentials: {
+		accessKeyId: env.R2_ACCESS_KEY_ID,
+		secretAccessKey: env.R2_SECRET_ACCESS_KEY
+	}
+});
+```
+
+:::note[AWS nomenclature for R2]
+The SDK uses AWS-style credential names (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) because bucket mounting is powered by **s3fs-fuse**, which expects S3-compatible credentials. R2's API tokens work with this format since R2 implements the S3 API.
+:::
+
+See [Mount buckets guide](/sandbox/guides/mount-buckets/) for complete bucket mounting documentation.
+
 ## Environment variable precedence
 
 When the same variable is set at multiple levels, the most specific level takes precedence:

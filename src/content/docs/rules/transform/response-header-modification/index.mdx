@@ -65,11 +65,15 @@ You can create a response header transform rule [in the dashboard](/rules/transf
 
 - Currently, there is a limited number of HTTP response headers that you cannot change. Cloudflare may remove restrictions for some of these HTTP response headers when presented with valid use cases. [Create a post in the community](https://community.cloudflare.com) for consideration.
 
-- Response Header Transform Rules will also apply to default Cloudflare error pages and [Custom Errors](/rules/custom-errors/).
+- Response header transform rules will also apply to default Cloudflare error pages and [Custom Errors](/rules/custom-errors/).
 
 - Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` headers will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
 
 - To add a `set-cookie` header to the response, make sure you use one of the _Add static_/_Add dynamic_ operations instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
+
+- Response header transform rules run in order, and later rules can overwrite changes done by previous rules.
+
+- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_response_headers_transform` phase where response header transform rules are defined. This means that later response header transform rules will not match based on changes done by previous response header transform rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
 
 <Render
 	file="troubleshoot-rules-with-trace"

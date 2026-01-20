@@ -3,7 +3,7 @@ releaseNotes: |-
 
   **Changes and improvements**
   - Fixed a bug preventing the `warp-diag captive-portal` command from running successfully due to the client not parsing SSID on macOS.
-  - Improvements to maintain [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-warp-override) settings when [switching between organizations](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/#switch-organizations-in-warp).
+  - Improvements to maintain [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) settings when [switching between organizations](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/#switch-organizations-in-warp).
   - MASQUE is now the default [tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) for all new WARP device profiles.
   - Improvement to limit idle connections in [Gateway with DoH mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) to avoid unnecessary resource usage that can lead to DoH requests not resolving.
   - Improvements to maintain client connectivity during network changes.

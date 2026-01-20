@@ -9,6 +9,7 @@ import {
 	Render,
 	Markdown,
 	Steps,
+	Details,
 	Tabs,
 	TabItem,
 	DashButton,
@@ -137,53 +138,53 @@ Only available to customers on Business and Enterprise plans.
 
 3. Next to a script, connection, or cookie in the list, select **Details**.
 
+   <Details header="Script and connection details">
+
+   - **Last seen**: How long ago the resource was last detected (in the last 30 days).
+   - **First seen at**: The date and time when the resource was first detected.
+   - **Seen on host**: The host where the script is being loaded or the connection is being made.
+   - **Seen on pages**: The most recent pages where the resource was detected (up to 10 pages).
+   - **First seen on**: The page where the resource was first detected.
+
+   The script details also include the last 10 script versions detected by Page Shield.
+
+   <Render file="scripts-hash-note" product="page-shield" />
+
+   </Details>
+
+   <Details header="Cookie details">
+
+   - **Type**: A cookie can have the following types:
+     - **First-party**: Cookies set by the origin server through a `set-cookie` HTTP response header.
+     - **Unknown**: All other detected cookies.
+
+   - **Domain**: The value of the `Domain` cookie attribute. When not set or unknown, this value is derived from the host.
+
+   - **Path**: The value of the `Path` cookie attribute. When not set or unknown, this value is derived from the most recent page where the cookie was detected.
+
+   - **Last seen**: How long ago the resource was last detected (in the last 30 days).
+
+   - **First seen at**: The date and time when the cookie was first detected.
+
+   - **Seen on host**: The host where the cookie was first detected.
+
+   - **Seen on pages**: The most recent pages where the cookie was detected (up to 10 pages).
+
+   - Additional cookie attributes (only available to Enterprise customers with a paid add-on):
+     - **Max age**: The value of the `Max-Age` cookie attribute.
+     - **Expires**: The value of the `Expires` cookie attribute.
+     - **Lifetime**: The approximate cookie lifetime, based on the `Max-Age` and `Expires` cookie attributes.
+     - **HTTP only**: The value of the `HttpOnly` cookie attribute.
+     - **Secure**: The value of the `Secure` cookie attribute.
+     - **Same site**: The value of the `SameSite` cookie attribute.
+
+   Except for **Domain** and **Path**, [standard cookie attributes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) are only available for first-party cookies, where Cloudflare detected the `set-cookie` HTTP response header in HTTP traffic.
+
+   </Details>
+
 {/* prettier-ignore-end */}
 
 </Steps>
-
-### Script and connection details
-
-The details of each connection or script include:
-
-- **Last seen**: How long ago the resource was last detected (in the last 30 days).
-- **First seen at**: The date and time when the resource was first detected.
-- **Seen on host**: The host where the script is being loaded or the connection is being made.
-- **Seen on pages**: The most recent pages where the resource was detected (up to ten pages).
-- **First seen on**: The page where the resource was first detected.
-
-The script details also include the last 10 script versions detected by Page Shield.
-
-<Render file="scripts-hash-note" product="page-shield" />
-
-### Cookie details
-
-The details of each cookie include:
-
-- **Type**: A cookie can have the following types:
-  - **First-party**: Cookies set by the origin server through a `set-cookie` HTTP response header.
-  - **Unknown**: All other detected cookies.
-
-- **Domain**: The value of the `Domain` cookie attribute. When not set or unknown, this value is derived from the host.
-
-- **Path**: The value of the `Path` cookie attribute. When not set or unknown, this value is derived from the most recent page where the cookie was detected.
-
-- **Last seen**: How long ago the resource was last detected (in the last 30 days).
-
-- **First seen at**: The date and time when the cookie was first detected.
-
-- **Seen on host**: The host where the cookie was first detected.
-
-- **Seen on pages**: The most recent pages where the cookie was detected (up to ten pages).
-
-- Additional cookie attributes (only available to Enterprise customers with a paid add-on):
-  - **Max age**: The value of the `Max-Age` cookie attribute.
-  - **Expires**: The value of the `Expires` cookie attribute.
-  - **Lifetime**: The approximate cookie lifetime, based on the `Max-Age` and `Expires` cookie attributes.
-  - **HTTP only**: The value of the `HttpOnly` cookie attribute.
-  - **Secure**: The value of the `Secure` cookie attribute.
-  - **Same site**: The value of the `SameSite` cookie attribute.
-
-Except for **Domain** and **Path**, [standard cookie attributes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) are only available for first-party cookies, where Cloudflare detected the `set-cookie` HTTP response header in HTTP traffic.
 
 ## Export data
 

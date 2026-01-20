@@ -16,46 +16,43 @@ This guide covers how to configure [Docusign](https://support.docusign.com/s/doc
 
 ## 1. Create the Access for SaaS application
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+1.  In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 
-2. Select **Add an Application**.
+2.  Select **Add an Application**.
 
-3. Select **SaaS**.
+3.  Select **SaaS**.
 
-4. Use the following configuration:
+4.  Use the following configuration:
+    - Set the **Application** to _DocuSign_.
+    - Put placeholder values in **EntityID** and **Assertion Consumer Service URL** (for example, `https://example.com`). We'll come back and update these.
+    - Set **Name ID Format** to: _Unique ID_.
 
-   - Set the **Application** to _DocuSign_.
-   - Put placeholder values in **EntityID** and **Assertion Consumer Service URL** (for example, `https://example.com`). We'll come back and update these.
-   - Set **Name ID Format** to: _Unique ID_.
+5.  DocuSign requires SAML attributes to do Just In Time user provisioning. Ensure you are collecting SAML attributes from your IdP:
+    - Group
+    - username
+    - department
+    - firstName
+    - lastName
+    - phone
 
-5. DocuSign requires SAML attributes to do Just In Time user provisioning. Ensure you are collecting SAML attributes from your IdP:
+6.  These IdP SAML values can then be mapped to the following DocuSign SAML attributes:
+    - Email
+    - Surname
+    - Givenname
 
-   - Group
-   - username
-   - department
-   - firstName
-   - lastName
-   - phone
+7.  Set an Access policy (for example, create a policy based on _Emails ending in @example.com_).
 
-6. These IdP SAML values can then be mapped to the following DocuSign SAML attributes:
+8.  Copy and save the **SSO Endpoint**, **Entity ID** and **Public Key**.
 
-   - Email
-   - Surname
-   - Givenname
+9.  Transform the **Public Key** into a fingerprint:
 
-7. Set an Access policy (for example, create a policy based on _Emails ending in @example.com_).
+        1. Copy the **Public Key** Value.
 
-8. Copy and save the **SSO Endpoint**, **Entity ID** and **Public Key**.
+        2. Paste the **Public Key** into VIM or another code editor.
 
-9. Transform the **Public Key** into a fingerprint:
+        3. Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 
-		1. Copy the **Public Key** Value.
-
-		2. Paste the **Public Key** into VIM or another code editor.
-
-		3. Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-
-		4. Set the file extension to `.crt` and save.
+        4. Set the file extension to `.crt` and save.
 
 ## 2. Configure your DocuSign SSO instance
 
@@ -64,7 +61,6 @@ This guide covers how to configure [Docusign](https://support.docusign.com/s/doc
 2. From the DocuSign Admin dashboard, select **Identity Providers**.
 
 3. On the Identity Providers page, select **ADD IDENTITY PROVIDER**. Use the following mappings from the saved Access Application values:
-
    - **Name**: Pick your desired name.
    - **Identity Provider Issuer**: Entity ID.
    - **Identity Provider Login URL**: Assertion Consumer Service URL.
@@ -81,7 +77,7 @@ This guide covers how to configure [Docusign](https://support.docusign.com/s/doc
 
 ## 3. Finalize your Cloudflare configuration
 
-1. Go back to your DocuSign application under **Access** > **Applications**.
+1. Go back to your DocuSign application under **Access controls** > **Applications**.
 2. Select **Edit**.
 3. Use the following mappings:
    - EntityID->Service Provider Issuer URL.

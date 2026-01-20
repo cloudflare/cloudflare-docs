@@ -5,9 +5,10 @@ sidebar:
   order: 2
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, PackageManagers } from "~/components";
 
 ## How rollouts work
+
 When you run `wrangler deploy`, the Worker code is updated immediately and Container
 instances are updated using a rolling deploy strategy. The default rollout configuration is two steps,
 where the first step updates 10% of the instances, and the second step updates the remaining 90%.
@@ -22,6 +23,7 @@ If you have cleanup that must occur before a Container instance is stopped, you 
 Once stopped, the instance is replaced with a new instance running the updated code. Requests may hang while the container is starting up again.
 
 Here is an example configuration that sets a 5 minute grace period and a two step rollout where the first step updates 10% of instances and the second step updates 100% of instances:
+
 <WranglerConfig>
 
 ```toml
@@ -40,4 +42,17 @@ class_name = "MyContainer"
 tag = "v1"
 new_sqlite_classes = ["MyContainer"]
 ```
+
 </WranglerConfig>
+
+## Immediate rollouts
+
+If you need to do a one-off deployment that rolls out to 100% of container instances in one step, you can deploy with:
+
+<PackageManagers
+	pkg="wrangler"
+	type="exec"
+	args="deploy --containers-rollout=immediate"
+/>
+
+Note that `rollout_active_grace_period`, if configured, will still apply.

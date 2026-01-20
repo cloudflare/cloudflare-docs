@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Pseudo IPv4
 ---
 
-import { FeatureTable, Render, TabItem, Tabs } from "~/components";
+import { FeatureTable, Render, TabItem, Tabs, DashButton } from "~/components";
 
 Cloudflare customers can use **Pseudo IPv4** if their origin web server only understands IPv4 formatted IP addresses (meaning it would not support Cloudflare's default [IPv6 compatibility](/network/ipv6-compatibility/)).
 
@@ -46,9 +46,11 @@ To configure **Pseudo IPv4**:
 
 To change the **Pseudo IPv4** setting in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **Network**.
-3. For **Pseudo IPv4**, choose your desired setting.
+1. In the Cloudflare dashboard, go to the **Network** page.
+
+   <DashButton url="/?to=/:account/:zone/network" />
+
+2. For **Pseudo IPv4**, choose your desired setting.
 
 </TabItem> <TabItem label="API">
 
