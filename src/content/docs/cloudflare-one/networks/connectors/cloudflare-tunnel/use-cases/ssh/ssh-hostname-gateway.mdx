@@ -197,8 +197,14 @@ If you cannot connect, verify the following:
 
 4. **Test connectivity to initial resolved IP** - When you connect to the SSH server using its private hostname, the device should make a connection to the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>:
 
-   ```sh
-   ssh -v <username>@ssh.internal.local
-   ```
+		```sh
+		ssh -v <username>@ssh.internal.local
+		```
 
-   Look for a line showing connection to an IP in the `100.64.0.0/10` range. If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the SSH server's private IP.
+		```sh output
+		...
+		Authenticated to ssh.internal.local ([100.80.200.48]:22) using "publickey".
+		...
+		```
+
+		Look for a line showing connection to an IP in the `100.64.0.0/10` range. If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the SSH server's private IP.
