@@ -39,8 +39,6 @@ Magic Transit customers must ensure that their contract includes CDN and/or Spec
 
 When a service binding of type `CDN` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any HTTP requests are directed into the CDN pipeline for Layer 7 processing.
 
-<Render file="service-bindings-cdn-egress" product="byoip" />
-
 ### Spectrum
 
 When a service binding of type `Spectrum` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any TCP/HTTP requests are directed into the Spectrum pipeline for Layer 4 or Layer 7 processing.
@@ -65,6 +63,10 @@ flowchart LR
 ```
 
 When adding a service binding for a given IP address, it must be either a CDN service binding or a Spectrum service binding. It is not possible (or necessary) to bind both services.
+
+### CDN egress
+
+<Render file="service-bindings-cdn-egress" product="byoip" />
 
 ## Tutorials
 
