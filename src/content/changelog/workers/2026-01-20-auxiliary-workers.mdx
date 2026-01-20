@@ -1,0 +1,32 @@
+---
+title: Use auxiliary Workers alongside full-stack frameworks
+description: Auxiliary Workers are now fully supported when using full-stack frameworks with the Cloudflare Vite plugin
+products:
+  - workers
+date: 2026-01-20
+---
+
+Auxiliary Workers are now fully supported when using full-stack frameworks, such as [React Router](/workers/framework-guides/web-apps/react-router/) and [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/), that integrate with the [Cloudflare Vite plugin](/workers/vite-plugin/reference/api/).
+They are included alongside the framework's build output in the build output directory.
+Note that this feature requires Vite 7 or above.
+
+Auxiliary Workers are additional Workers that can be called via [service bindings](/workers/runtime-apis/bindings/service-bindings/) from your main (entry) Worker.
+They are defined in the plugin config, as in the example below:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		tanstackStart(),
+		cloudflare({
+			viteEnvironment: { name: "ssr" },
+			auxiliaryWorkers: [{ configPath: "./wrangler.aux.jsonc" }],
+		}),
+	],
+});
+```
+
+See the Vite plugin [API docs](/workers/vite-plugin/reference/api/) for more info.

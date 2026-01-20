@@ -81,8 +81,7 @@ async addMcpServer(
   - **`client`** — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas.
   - **`transport`** — Transport layer configuration:
     - **`headers`** — Custom HTTP headers for authentication
-    - **`type`** — Transport type: `"sse"`, `"streamable-http"`, or `"auto"` (tries streamable-http first, falls back to sse)
-
+    - **`type`** — Transport type: `"streamable-http"`, `"sse"` (deprecated), or `"auto"` (tries streamable-http first, falls back to sse)
 #### Returns
 
 A Promise that resolves to a discriminated union based on connection state:

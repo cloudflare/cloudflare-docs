@@ -49,7 +49,7 @@ https://api.cloudflare.com/client/v4/graphql \
 --data @-
 ```
 
-The results are returned in JSON (as requested), so piping the output to `jq` makes them easier to read, as in the following example:
+The results are returned in JSON (as requested), so piping the output to `jq` formats them for easier parsing, as in the following example:
 
 ```bash
 ... | curl --silent \
@@ -97,4 +97,4 @@ https://api.cloudflare.com/client/v4/graphql \
 #=> }
 ```
 
-[^1]: Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) for more information on configuration and permissions.
+[^1]: For details, refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/).
