@@ -5,36 +5,48 @@ import { file } from "astro/loaders";
 
 import { fileURLToPath } from "node:url";
 import fs from "fs";
-import * as path from "path";
+import { dirname } from "path";
 
 /**
- * middlecache loader expects a middlecache path, the name of content collection to be built with the
+ * middlecache loader expects a middlecache path
  *
- * @param path - data file path in the middlecache R2 bucket (required)
- *
+ * @param path - data file path in the middlecache R2 bucket
+ * @param options - additional options { url: override middlecache base url, parser: custom parser }
  */
 
-function middlecacheLoader(pathOnMiddlecache: string, options = {}): Loader {
+type MiddlecacheOptions = {
+	url?: string;
+	parser?: (
+		text: string,
+	) => Record<string, Record<string, unknown>> | Array<Record<string, unknown>>;
+};
+
+function middlecacheLoader(
+	path: string,
+	options: MiddlecacheOptions = {},
+): Loader {
 	return {
 		name: "middlecache-loader",
 		load: async (context: LoaderContext): Promise<void> => {
-			const MIDDLECACHE_URL = "https://middlecache.ced.cloudflare.com/";
+			let middlecacheBaseUrl = "https://middlecache.ced.cloudflare.com/";
+			if (options.url) middlecacheBaseUrl = options.url;
+
 			const tmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
 
-			const destination = `${tmpPath}/middlecache/${pathOnMiddlecache}`;
+			const destination = `${tmpPath}/middlecache/${path}`;
 
 			context.logger.debug(`Remote to local load from: ${destination}`);
 
 			if (!fs.existsSync(destination)) {
-				fs.mkdirSync(path.dirname(destination), { recursive: true });
+				fs.mkdirSync(dirname(destination), { recursive: true });
 
-				context.logger.debug(`Download of ${pathOnMiddlecache} starting...`);
+				context.logger.debug(`Download of ${path} starting...`);
 
-				const response = await fetch(MIDDLECACHE_URL + pathOnMiddlecache);
+				const response = await fetch(middlecacheBaseUrl + path);
 				const content = await response.text();
 
 				fs.writeFileSync(destination, content);
-				context.logger.debug(`Download of ${pathOnMiddlecache} completed.`);
+				context.logger.debug(`Download of ${path} completed.`);
 			}
 
 			const fileLoader = file(destination, options);
