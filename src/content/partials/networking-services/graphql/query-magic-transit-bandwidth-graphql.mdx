@@ -64,7 +64,7 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 The returned values represent the total bandwidth in bits per second during the five-minute interval for a particular tunnel. To use aggregations other than five minutes, use the same time window for both your metric and datetime. For example, to analyze hourly groups, use `bitRateHour` and `datetimeHour`.
 
-The result is in JSON (as requested), so piping the output to `jq` makes it easier to read, as in the following example:
+The result is in JSON (as requested), so piping the output to `jq` formats it for easier parsing, as in the following example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/graphql \
@@ -103,5 +103,5 @@ curl https://api.cloudflare.com/client/v4/graphql \
 #=> }
 ```
 
-[^1]: Refer to [Authenticate with a Cloudflare API key](/analytics/graphql-api/getting-started/authentication/api-key-auth/) for more information.
-[^2]: Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) for more information on configuration and permissions.
+[^1]: For details, refer to [Authenticate with a Cloudflare API key](/analytics/graphql-api/getting-started/authentication/api-key-auth/).
+[^2]: For details, refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/).

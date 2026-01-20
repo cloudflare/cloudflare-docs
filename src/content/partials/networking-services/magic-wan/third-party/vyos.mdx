@@ -2,14 +2,14 @@
 {}
 ---
 
-This tutorial contains configuration information and a sample template for using a VyOS device with an IPsec configuration.
+This tutorial provides configuration information and a sample template for using a VyOS device with an IPsec configuration.
 
 ## Notes
 
-- `vti <NAME_OF_VTI_INTERFACE` - Specifies the virtual tunnel interface of the IPsec tunnel.
-- `esp-group <NAME_OF_ESP_GROUP>` - Defines the ESP group for encrypted traffic defined by the tunnel or defines a particular ESP policy or profile.
-- `ike-group <NAME_OF_IKE_GROUP>` - Defines IKE group to use for key exchanges or defines a particular IKE policy or profile.
-- The IP addresses of the IPsec tunnel interfaces on both ends of the tunnel should be a pair of private IP addresses (RFC 1918) on the same `/31` or `/30` subnet, essentially specifying a point-to-point link.
+- `vti <NAME_OF_VTI_INTERFACE>` - Specifies the virtual tunnel interface of the IPsec tunnel.
+- `esp-group <NAME_OF_ESP_GROUP>` - Encrypts traffic through the tunnel using a particular ESP policy or profile.
+- `ike-group <NAME_OF_IKE_GROUP>` - Exchanges keys using a particular IKE policy or profile.
+- The IP addresses of the IPsec tunnel interfaces on both ends of the tunnel should be a pair of private IP addresses (RFC 1918) on the same `/31` or `/30` subnet, specifying a point-to-point link.
 - The IPsec tunnel endpoint on this VyOS router is the `<IP_ADDR_OF_UPLINK_INTF_TO_INTERNET/WAN>`.
 - The IP address of the IPsec tunnel endpoint on the Cloudflare side is the anycast IP address provided by Cloudflare.
 - This router is configured to initiate the IPsec tunnel connection.
