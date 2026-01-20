@@ -16,8 +16,8 @@ Users connect through the WARP client, and you control access using Gateway's ne
 
 When you create a hostname route in Cloudflare Tunnel:
 
-1. Users SSH to your private hostname (for example, `ssh user@ssh.internal.local`)
-2. Gateway resolves the hostname to an initial resolved IP from a CGNAT range
+1. Users SSH to your private hostname (for example, `ssh user@ssh.internal.local`).
+2. Gateway resolves the hostname to an initial resolved IP from a CGNAT range.
 3. Traffic routes through the WARP tunnel to Cloudflare
 4. Gateway network policies evaluate the connection
 5. Cloudflared proxies the connection to your SSH server's private IP
@@ -26,10 +26,11 @@ This approach is especially useful when your SSH server has an unknown or epheme
 
 ## Prerequisites
 
-- A Cloudflare Zero Trust account
-- `cloudflared` installed on the server hosting your SSH service
+- A Cloudflare Zero Trust organization
 - WARP client installed on user devices
-- Users enrolled in your Zero Trust organization
+- Devices enrolled in your Zero Trust organization
+
+For setup instructions, refer to the [Get started](/cloudflare-one/setup/) guide.
 
 ## 1. Connect the SSH server to Cloudflare
 
@@ -91,11 +92,7 @@ If you need `cloudflared` to use a specific internal DNS server that is differen
 
 ## 3. Configure WARP clients
 
-End users must have the WARP client installed and configured to route traffic to Cloudflare.
-
-### Prerequisites for WARP clients
-
-To connect to private hostnames, WARP clients must forward the following traffic to Cloudflare:
+To connect to private hostnames, WARP clients must be configured to forward the following traffic to Cloudflare:
 
 - Initial resolved IPs (CGNAT range: `100.64.0.0/10`)
 - DNS queries for your private hostname
