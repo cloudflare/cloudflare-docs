@@ -50,7 +50,6 @@ env.NAMESPACE.put(key, value, options?);
 - `key`: `string`
   - The key to associate with the value. A key cannot be empty or be exactly equal to `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
 - `value`: `string` | `ReadableStream` | `ArrayBuffer`
-
   - The value to store. The type is inferred. The maximum size of a value is 25 MiB.
 
 - `options`: `{
@@ -154,7 +153,7 @@ export default {
 		// Helper function to attempt a write to KV and handle errors
 		const attemptWrite = async (i: number) => {
 			try {
-				await env. YOUR_KV_NAMESPACE.put(key, `Write attempt #${i}`);
+				await env.YOUR_KV_NAMESPACE.put(key, `Write attempt #${i}`);
 				return { attempt: i, success: true };
 			} catch (error) {
 				// An error may be thrown if a write to the same key is made within 1 second with a message. For example:
