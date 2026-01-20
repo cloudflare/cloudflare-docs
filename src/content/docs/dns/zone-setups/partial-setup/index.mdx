@@ -6,7 +6,7 @@ sidebar:
   label: About
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { FeatureTable, Render, GlossaryTooltip } from "~/components";
 
 <Render file="partial-setup-definition" product="dns" />
 
@@ -27,7 +27,7 @@ Once you are on a CNAME setup (partial), the actual resolution of your records t
 
 ### DNS resolution
 
-With a CNAME zone (partial), Cloudflare resolves [DNS records differently](/dns/zone-setups/partial-setup/dns-resolution/) than for primary zones (full).
+When you have a partial zone (<GlossaryTooltip term="partial setup" link="/dns/zone-setups/partial-setup/">CNAME setup</GlossaryTooltip>), Cloudflare resolves [DNS records differently](/dns/zone-setups/partial-setup/dns-resolution/) than for primary zones (full setup).
 
 ### CNAME flattening
 
