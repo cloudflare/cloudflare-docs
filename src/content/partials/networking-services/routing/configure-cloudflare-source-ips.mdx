@@ -28,7 +28,7 @@ Before you begin, ensure that:
 
 ## Affected Connectors
 
-Except for Cloudflare Tunnel, all Cloudflare One Connectors (network offramps) see the `cloudflare_source` subnet (default `100.64.0.0/12`) as the source of traffic from a Cloudflare service, such as Cloudflare Load Balancing, to a private network.
+Except for Cloudflare Tunnel, all Cloudflare One Connectors (network offramps) receive traffic from the `cloudflare_source` subnet (default `100.64.0.0/12`) as the source when a Cloudflare service, such as Cloudflare Load Balancing, sends traffic to a private network.
 
 The following Connectors are affected:
 - GRE

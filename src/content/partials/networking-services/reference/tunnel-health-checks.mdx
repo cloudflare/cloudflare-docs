@@ -23,6 +23,22 @@ A tunnel health check probe comes from Cloudflare to the tunnel origin, then ret
 	}}
 />
 
+## Types of health checks
+
+{props.productName} uses two types of health checks:
+
+### Tunnel health checks
+
+Tunnel health checks monitor the status of the tunnels that route traffic from Cloudflare to your origin network. {props.productName} relies on these checks to steer traffic to the best available routes. During onboarding, you <a href={props.tunnelEndpoints}>specify the tunnel endpoints</a> or tunnel health check targets the tunnel probes originating from Cloudflare's global network will target.
+
+You can access tunnel health check results [through the API](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/). Cloudflare aggregates these results from individual health check results from Cloudflare servers.
+
+### Endpoint health checks
+
+Endpoint health checks evaluate connectivity from Cloudflare distributed data centers to your origin network. Designed to provide a broad picture of Internet health, endpoint probes flow over available tunnels and do not inform tunnel selection or steering logic.
+
+Cloudflare global network servers issue endpoint health checks outside of customer network namespaces and typically target endpoints beyond the tunnel-terminating border router. During onboarding, you specify IP addresses to configure endpoint health checks.
+
 ## Tunnel health check attributes
 
 A tunnel health check probe has the following attributes.
@@ -43,11 +59,15 @@ The target defaults to the publicly routable origin specified as the `customer_e
 
 #### Bidirectional
 
-A bidirectional probe stays encapsulated in both directions. The probe comes in through the tunnel and the response also leaves encapsulated through the tunnel. The ICMP reply from your router destined for the anycast IP address on Cloudflare's network arrives at the closest Cloudflare data center and lands on one of the servers using equal-cost multi-path (ECMP), ensuring the response takes the most efficient path.
+A bidirectional probe stays encapsulated in both directions. The probe comes in through the tunnel and the response also leaves encapsulated through the tunnel. The ICMP reply from your router destined for the anycast IP address on Cloudflare's network arrives at the closest Cloudflare data center and lands on one of the servers using Equal-Cost Multi-Path (ECMP), ensuring the response takes the most efficient path.
+
+**Default packet addressing**
 
 By default, Cloudflare destinations these packets for the Cloudflare side of the interface address field set on the tunnel, and sources them from the client side of the tunnel. For example, if the interface address is `10.100.0.8/31`, Cloudflare destinations the packet for `10.100.0.9` and sources it from `10.100.0.8`.
 
-The interface address field uses either a `/30` or `/31` Classless Inter-Domain Routing (CIDR) range:
+**Interface address ranges**
+
+The interface address field uses either a `/30` or `/31` CIDR range:
 
 - **`/31` range**: The IP you provide is the Cloudflare side, and the other IP is the client side. For example, if the interface address is `10.100.0.8/31`, then `10.100.0.8` is the Cloudflare side and `10.100.0.9` is the client side.
 - **`/30` range**: The IP you provide is the Cloudflare side, and the other IP (excluding the broadcast and network identifier) is the client side. For example, if the interface address is `10.100.0.9/30`, then `10.100.0.9` is the Cloudflare side and `10.100.0.10` is the client side.
@@ -108,8 +128,8 @@ flowchart TB
    cloudflare(Cloudflare) --- bare_echo_request([ICMP Echo Request])
    bare_echo_request --> tunnel[Tunnel]
    tunnel --- encapsulated_echo_request([Tunnel Protocol < ICMP Echo Request >])
-   encapsulated_echo_request --> internet([Internet])
-   internet --- encapsulated_echo_request_2([Tunnel Protocol < ICMP Echo Request >])
+   encapsulated_echo_request --> Internet([Internet])
+   Internet --- encapsulated_echo_request_2([Tunnel Protocol < ICMP Echo Request >])
    encapsulated_echo_request_2 --> origin_tunnel(Tunnel)
    origin_tunnel --- received_bare_echo_request([ICMP Echo Request])
    received_bare_echo_request --> origin(Origin)
@@ -118,8 +138,8 @@ flowchart TB
    origin --> bare_echo_reply([ICMP Echo Reply])
    bare_echo_reply --- origin_tunnel_2(Tunnel)
    origin_tunnel_2 --- encapsulated_echo_reply([Tunnel Protocol < ICMP Echo Reply >])
-   encapsulated_echo_reply --- internet_2([Internet])
-   internet_2 --> encapsulated_echo_reply_2([Tunnel Protocol < ICMP Echo Reply >])
+   encapsulated_echo_reply --- Internet_2([Internet])
+   Internet_2 --> encapsulated_echo_reply_2([Tunnel Protocol < ICMP Echo Reply >])
    encapsulated_echo_reply_2 --> tunnel_2[Tunnel]
    tunnel_2 --> bare_echo_reply_2([ICMP Echo Reply])
    bare_echo_reply_2 --> cloudflare
@@ -134,8 +154,8 @@ flowchart TB
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Reply])
    bare_echo_probe --> tunnel[Tunnel]
    tunnel --- encapsulated_echo_probe([Tunnel Protocol < ICMP Echo Reply >])
-   encapsulated_echo_probe --> internet([Internet])
-   internet --- encapsulated_echo_probe_2([Tunnel Protocol < ICMP Echo Reply >])
+   encapsulated_echo_probe --> Internet([Internet])
+   Internet --- encapsulated_echo_probe_2([Tunnel Protocol < ICMP Echo Reply >])
    encapsulated_echo_probe_2 --> origin_tunnel(Tunnel)
    origin_tunnel --- received_bare_echo_reply([ICMP Echo Reply])
    received_bare_echo_reply --> origin(Origin)
@@ -144,8 +164,8 @@ flowchart TB
    origin --> bare_echo_reply([ICMP Echo Reply])
    bare_echo_reply --- origin_tunnel_2(Tunnel)
    origin_tunnel_2 --- encapsulated_echo_reply([Tunnel Protocol < ICMP Echo Reply >])
-   encapsulated_echo_reply --- internet_2([Internet])
-   internet_2 --> encapsulated_echo_reply_2([Tunnel Protocol < ICMP Echo Reply >])
+   encapsulated_echo_reply --- Internet_2([Internet])
+   Internet_2 --> encapsulated_echo_reply_2([Tunnel Protocol < ICMP Echo Reply >])
    encapsulated_echo_reply_2 --> tunnel_2[Tunnel]
    tunnel_2 --> bare_echo_reply_2([ICMP Echo Reply])
    bare_echo_reply_2 --> cloudflare
@@ -159,14 +179,14 @@ flowchart TB
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Request])
    bare_echo_probe --> tunnel[Tunnel]
    tunnel --- encapsulated_echo_probe([Tunnel Protocol < ICMP Echo Request >])
-   encapsulated_echo_probe --> internet([Internet])
-   internet --- encapsulated_echo_probe_2([Tunnel Protocol < ICMP Echo Request >])
+   encapsulated_echo_probe --> Internet([Internet])
+   Internet --- encapsulated_echo_probe_2([Tunnel Protocol < ICMP Echo Request >])
    encapsulated_echo_probe_2 --> origin_tunnel(Tunnel)
    origin_tunnel --- received_bare_echo_reply([ICMP Echo Request])
    received_bare_echo_reply --> origin(Origin)
    origin --- received_bare_echo_reply_2([ICMP Echo Reply])
-   received_bare_echo_reply_2 --> internet_2([Internet])
-   internet_2 --> cloudflare
+   received_bare_echo_reply_2 --> Internet_2([Internet])
+   Internet_2 --> cloudflare
 ```
 
 #### Unidirectional echo reply
@@ -176,14 +196,14 @@ flowchart TB
    cloudflare(Cloudflare) --- bare_echo_probe([ICMP Echo Reply])
    bare_echo_probe --> tunnel[Tunnel]
    tunnel --- encapsulated_echo_probe([Tunnel Protocol < ICMP Echo Reply >])
-   encapsulated_echo_probe --> internet([Internet])
-   internet --- encapsulated_echo_probe_2([Tunnel Protocol < ICMP Echo Reply >])
+   encapsulated_echo_probe --> Internet([Internet])
+   Internet --- encapsulated_echo_probe_2([Tunnel Protocol < ICMP Echo Reply >])
    encapsulated_echo_probe_2 --> origin_tunnel(Tunnel)
    origin_tunnel --- received_bare_echo_reply([ICMP Echo Reply])
    received_bare_echo_reply --> origin(Origin)
    origin --- received_bare_echo_reply_2([ICMP Echo Reply])
-   received_bare_echo_reply_2 --> internet_2([Internet])
-   internet_2 --> cloudflare
+   received_bare_echo_reply_2 --> Internet_2([Internet])
+   Internet_2 --> cloudflare
 ```
 
 ### Rate
@@ -197,11 +217,11 @@ flowchart TB
 	}}
 	/>
 
-Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which Cloudflare sends these probes varies based on tunnel and location. You can tune this rate on a per tunnel basis by modifying the `health_check` rate with the <a href={props.changeHealthCheckRate}>API or the dashboard</a>. You can set the rate as _low_, _mid_, or _high_, with _mid_ being the default.
+Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which Cloudflare sends these probes varies based on tunnel and location. You can tune this rate on a per-tunnel basis by modifying the `health_check` rate with the <a href={props.changeHealthCheckRate}>API or the dashboard</a>. You can set the rate as _low_, _mid_, or _high_, with _mid_ being the default.
 
 The actual rate formula considers the number of servers in a Cloudflare data center or the number of servers with the customer namespace provisioned on them for dynamically provisioned namespaces. The rate is dynamic and depends on the size of Cloudflare's network.
 
-When a probe attempt fails for a <a href={props.probeHealth}>healthy tunnel</a>, each server detecting the failure quickly probes up to two more times to obtain an accurate result. Cloudflare does the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second — each Cloudflare data center sends only one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
+When a probe attempt fails for a <a href={props.probeHealth}>healthy tunnel</a>, each server detecting the failure quickly probes up to two more times to obtain an accurate result. Cloudflare does the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, your network will receive several hundred health check packets per second. Each Cloudflare data center sends only one health check packet as part of a probe, representing a relatively trivial amount of traffic.
 
 
 ## Health state and prioritization
@@ -213,9 +233,7 @@ Healthy tunnels are preferred to degraded tunnels, and degraded tunnels are pref
 {props.productName} steers traffic to tunnels based on priorities you set when you <a href={props.staticRoutes}>assign tunnel route priorities during onboarding</a>. Tunnel routes with lower values have priority over those with higher values.
 
 :::note
-Cloudflare global network servers may be able to reach the origin infrastructure from some locations at a given time but not others. This occurs because Cloudflare does not synchronize health checks among global network servers and because the Internet is not homogeneous.
-
-As a result, tunnel health may be in different states in different parts of the world at the same time.
+Cloudflare global network servers may reach the origin infrastructure from some locations but not others. This occurs because Cloudflare does not synchronize health checks among global network servers and because the Internet is not homogeneous. Therefore, tunnel health may be in different states in different parts of the world at the same time.
 :::
 
 ## Tunnel state determination
@@ -250,7 +268,7 @@ Once a tunnel is in the down state, global network servers continue to emit prob
 
 Tunnels in a degraded state transition to healthy when the failure rate for the previous 30 probes is less than 0.1%. This transition may take up to 30 minutes.
 
-{props.productName}'s tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but tunnel transition occurs slowly from degraded or down to healthy. This scenario is referred to as hysteresis — which is when a system's output depends on its history of past inputs — and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
+{props.productName}'s tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but transitions slowly from degraded or down to healthy. This behavior is called hysteresis and prevents routing changes caused by flapping and other intermittent network failures.
 
 :::note
 Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state.
@@ -278,21 +296,3 @@ Suppose the connectivity issue that set Tunnel 1 health to down becomes resolved
 When all three probes return successfully, {props.productName} transitions the tunnel from down to degraded. As part of this transition, Cloudflare reduces the priority penalty for that route so that its priority becomes `500,100`. Because Tunnel 2 has a priority of `200`, traffic continues to flow over Tunnel 2.
 
 Global network servers continue probing Tunnel 1. When the health check failure rate drops below 0.1% for a five-minute period, {props.productName} sets tunnel status to healthy. Cloudflare fully restores Tunnel 1's routing priority to `100`, and traffic steering returns the data flow to Tunnel 1.
-
-## Types of health checks
-
-### Endpoint health checks
-
-Endpoint health checks evaluate connectivity from Cloudflare distributed data centers to your origin network. Designed to provide a broad picture of Internet health, endpoint probes flow over available tunnels and do not inform tunnel selection or steering logic.
-
-Cloudflare global network servers issue endpoint health checks outside of customer network namespaces and typically target endpoints beyond the tunnel-terminating border router.
-
-During onboarding, you specify IP addresses to configure endpoint health checks.
-
-### Tunnel health checks
-
-Tunnel health checks monitor the status of the tunnels that route traffic from Cloudflare to your origin network. {props.productName} relies on health checks to steer traffic to the best available routes.
-
-During onboarding, you <a href={props.tunnelEndpoints}>specify the tunnel endpoints</a> or tunnel health check targets the tunnel probes originating from Cloudflare's global network will target.
-
-You can access tunnel health check results [through the API](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/). Cloudflare aggregates these results from individual health check results from Cloudflare servers.
