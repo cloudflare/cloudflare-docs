@@ -38,9 +38,9 @@
 
 # Analytics & Logs
 
-/src/content/docs/analytics/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/docs/analytics/ @soheiokamoto @angelampcosta @rianvdm @cloudflare/pcx-technical-writing
 /src/content/docs/data-localization/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
-/src/content/docs/logs/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
+/src/content/docs/logs/ @soheiokamoto @angelampcosta @rianvdm @cloudflare/pcx-technical-writing
 
 # API & Zones
 

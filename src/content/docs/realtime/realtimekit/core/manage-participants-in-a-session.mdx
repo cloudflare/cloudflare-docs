@@ -44,6 +44,74 @@ In this guide, the **local participant** refers to the user performing the actio
 	/>
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-android">
+
+To perform actions on a specific participant, retrieve their participant object from the `participants` property.
+Remote participants are available in `meeting.participants.joined`. The local participant is available in `meeting.localUser`.
+
+```kotlin
+val joinedParticipants = meeting.participants.joined
+val participant = joinedParticipants.firstOrNull()
+if (participant == null) {
+	// No remote participants are currently joined.
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+To perform actions on a specific participant, retrieve their participant object from the `participants` property.
+Remote participants are available in `meeting.participants.joined`. The local participant is available in `meeting.localUser`.
+
+```swift
+let joinedParticipants = meeting.participants.joined
+guard let participant = joinedParticipants.first else {
+	// No remote participants are currently joined.
+	return
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+To perform actions on a specific participant, retrieve their participant object from the `participants` property.
+Remote participants are available in `meeting.participants.joined`. The local participant is available in `meeting.localUser`.
+
+```dart
+final joinedParticipants = meeting.participants.joined;
+final participant = joinedParticipants.firstOrNull;
+if (participant == null) {
+	// No remote participants are currently joined.
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+To perform actions on a specific participant, retrieve their participant object from the `participants` property.
+Remote participants are available in `meeting.participants.joined`. The local participant is available in `meeting.self`.
+
+```jsx
+const joinedParticipants = meeting.participants.joined;
+const participant = joinedParticipants.toArray()[0];
+if (!participant) {
+	// No remote participants are currently joined.
+}
+```
+
+Or use the `useRealtimeKitSelector` hook:
+
+```jsx
+import { useRealtimeKitSelector } from '@cloudflare/realtimekit-react-native';
+
+const joinedParticipants = useRealtimeKitSelector((m) => m.participants.joined);
+```
+
+</RTKCodeSnippet>
+
 ## Mute audio
 
 Mute audio of participants when you need to manage background noise, moderate a classroom or webinar, or prevent interruptions during a session.
@@ -63,6 +131,149 @@ To mute a specific participant's audio:
 
 <RTKCodeSnippet id="web-angular">
 	<Render file="realtimekit/web/mute-participant-steps" product="realtime" />
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+```kotlin
+val canMuteAudio = meeting.localUser.permissions.host.canMuteAudio
+if (!canMuteAudio) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAudio()` on the target participant. If the local participant does not have the required permission, `disableAudio()` returns a `HostError`.
+
+```kotlin
+val error = participant.disableAudio()
+if (error != null) {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `audioEnabled` becomes `false`.
+
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onAudioUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		// audioEnabled is false
+		// Update UI for the participant
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+```swift
+let canMuteAudio = meeting.localUser.permissions.host.canMuteAudio
+if !canMuteAudio {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAudio()` on the target participant. If the local participant does not have the required permission, `disableAudio()` returns a `HostError`.
+
+```swift
+if let error = participant.disableAudio() {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `audioEnabled` becomes `false`.
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onAudioUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		// audioEnabled is false
+		// Update UI for the participant
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(participantsEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+```dart
+final canMuteAudio = meeting.localUser.permissions.host.canMuteAudio;
+if (!canMuteAudio) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAudio()` on the target participant.
+
+```dart
+participant.disableAudio(
+	onResult: (error) {
+		if (error != null) {
+			// Handle error - permission denied or other issue.
+			return;
+		}
+		// Audio disabled successfully.
+	},
+);
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `audioEnabled` becomes `false`.
+
+```dart
+class ParticipantsEventsListener extends RtkParticipantsEventListener {
+	@override
+	void onAudioUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		// audioEnabled is false
+		// Update UI for the participant
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(ParticipantsEventsListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+```jsx
+const canDisableParticipantAudio = meeting.self.permissions.canDisableParticipantAudio;
+if (!canDisableParticipantAudio) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAudio()` on the target participant.
+
+```jsx
+participant
+	.disableAudio()
+	.catch((err) => {
+		// Handle error - permission denied or other issue.
+		console.log(err);
+	});
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `audioEnabled` becomes `false`.
+
+```jsx
+meeting.participants.joined.on('audioUpdate', (participant) => {
+	// participant.audioEnabled is false
+	// Update UI for the participant
+});
+```
+
 </RTKCodeSnippet>
 
 ### Mute all participants
@@ -88,6 +299,149 @@ This affects all participants, including the local participant. To mute audio fo
 		file="realtimekit/web/mute-all-participants-steps"
 		product="realtime"
 	/>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+```kotlin
+val canMuteAudio = meeting.localUser.permissions.host.canMuteAudio
+if (!canMuteAudio) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAllAudio()` on the participants object. If the local participant does not have the required permission, `disableAllAudio()` returns a `HostError`.
+
+```kotlin
+val error = meeting.participants.disableAllAudio()
+if (error != null) {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, each participant's `audioEnabled` becomes `false`.
+
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onAudioUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		// audioEnabled is false
+		// Update UI for the participant
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+```swift
+let canMuteAudio = meeting.localUser.permissions.host.canMuteAudio
+if !canMuteAudio {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAllAudio()` on the participants object. If the local participant does not have the required permission, `disableAllAudio()` returns a `HostError`.
+
+```swift
+if let error = meeting.participants.disableAllAudio() {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, each participant's `audioEnabled` becomes `false`.
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onAudioUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		// audioEnabled is false
+		// Update UI for the participant
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(participantsEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+```dart
+final canMuteAudio = meeting.localUser.permissions.host.canMuteAudio;
+if (!canMuteAudio) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAllAudio()` on the participants object.
+
+```dart
+meeting.participants.disableAllAudio(
+	onResult: (error) {
+		if (error != null) {
+			// Handle error - permission denied or other issue.
+			return;
+		}
+		// All audio disabled successfully.
+	},
+);
+```
+
+3. Handle the result by listening for updates. After the call succeeds, each participant's `audioEnabled` becomes `false`.
+
+```dart
+class ParticipantsEventsListener extends RtkParticipantsEventListener {
+	@override
+	void onAudioUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		// audioEnabled is false
+		// Update UI for the participant
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(ParticipantsEventsListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. Check that the local participant has permission to mute other participants' audio.
+
+```jsx
+const canDisableParticipantAudio = meeting.self.permissions.canDisableParticipantAudio;
+if (!canDisableParticipantAudio) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAllAudio()` on the participants object.
+
+```jsx
+meeting.participants
+	.disableAllAudio(true)
+	.catch((err) => {
+		// Handle error - permission denied or other issue.
+		console.log(err);
+	});
+```
+
+3. Handle the result by listening for updates. After the call succeeds, each participant's `audioEnabled` becomes `false`.
+
+```jsx
+meeting.participants.joined.on('audioUpdate', (participant) => {
+	// participant.audioEnabled is false
+	// Update UI for the participant
+});
+```
+
 </RTKCodeSnippet>
 
 ## Disable video
@@ -120,6 +474,149 @@ To disable a specific participant's video:
 	/>
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-android">
+
+1. Check that the local participant has permission to disable other participants' video.
+
+```kotlin
+val canMuteVideo = meeting.localUser.permissions.host.canMuteVideo
+if (!canMuteVideo) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableVideo()` on the target participant. If the local participant does not have the required permission, `disableVideo()` returns a `HostError`.
+
+```kotlin
+val error = participant.disableVideo()
+if (error != null) {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `videoEnabled` becomes `false`.
+
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onVideoUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		// videoEnabled is false
+		// Update UI for the participant
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+1. Check that the local participant has permission to disable other participants' video.
+
+```swift
+let canMuteVideo = meeting.localUser.permissions.host.canMuteVideo
+if !canMuteVideo {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableVideo()` on the target participant. If the local participant does not have the required permission, `disableVideo()` returns a `HostError`.
+
+```swift
+if let error = participant.disableVideo() {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `videoEnabled` becomes `false`.
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onVideoUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		// videoEnabled is false
+		// Update UI for the participant
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(participantsEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+1. Check that the local participant has permission to disable other participants' video.
+
+```dart
+final canMuteVideo = meeting.localUser.permissions.host.canMuteVideo;
+if (!canMuteVideo) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableVideo()` on the target participant.
+
+```dart
+participant.disableVideo(
+	onResult: (error) {
+		if (error != null) {
+			// Handle error - permission denied or other issue.
+			return;
+		}
+		// Video disabled successfully.
+	},
+);
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `videoEnabled` becomes `false`.
+
+```dart
+class ParticipantsEventsListener extends RtkParticipantsEventListener {
+	@override
+	void onVideoUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		// videoEnabled is false
+		// Update UI for the participant
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(ParticipantsEventsListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. Check that the local participant has permission to disable other participants' video.
+
+```jsx
+const canDisableParticipantVideo = meeting.self.permissions.canDisableParticipantVideo;
+if (!canDisableParticipantVideo) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableVideo()` on the target participant.
+
+```jsx
+participant
+	.disableVideo()
+	.catch((err) => {
+		// Handle error - permission denied or other issue.
+		console.log(err);
+	});
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `videoEnabled` becomes `false`.
+
+```jsx
+meeting.participants.joined.on('videoUpdate', (participant) => {
+	// participant.videoEnabled is false
+	// Update UI for the participant
+});
+```
+
+</RTKCodeSnippet>
+
 ### Disable video for all participants
 
 This affects all participants, including the local participant. To disable video for all participants in the session:
@@ -143,6 +640,149 @@ This affects all participants, including the local participant. To disable video
 		file="realtimekit/web/disable-all-participants-video-steps"
 		product="realtime"
 	/>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+1. Check that the local participant has permission to disable other participants' video.
+
+```kotlin
+val canMuteVideo = meeting.localUser.permissions.host.canMuteVideo
+if (!canMuteVideo) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAllVideo()` on the participants object. If the local participant does not have the required permission, `disableAllVideo()` returns a `HostError`.
+
+```kotlin
+val error = meeting.participants.disableAllVideo()
+if (error != null) {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, each participant's `videoEnabled` becomes `false`.
+
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onVideoUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		// videoEnabled is false
+		// Update UI for the participant
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+1. Check that the local participant has permission to disable other participants' video.
+
+```swift
+let canMuteVideo = meeting.localUser.permissions.host.canMuteVideo
+if !canMuteVideo {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAllVideo()` on the participants object. If the local participant does not have the required permission, `disableAllVideo()` returns a `HostError`.
+
+```swift
+if let error = meeting.participants.disableAllVideo() {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, each participant's `videoEnabled` becomes `false`.
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onVideoUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		// videoEnabled is false
+		// Update UI for the participant
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(participantsEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+1. Check that the local participant has permission to disable other participants' video.
+
+```dart
+final canMuteVideo = meeting.localUser.permissions.host.canMuteVideo;
+if (!canMuteVideo) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAllVideo()` on the participants object.
+
+```dart
+meeting.participants.disableAllVideo(
+	onResult: (error) {
+		if (error != null) {
+			// Handle error - permission denied or other issue.
+			return;
+		}
+		// All video disabled successfully.
+	},
+);
+```
+
+3. Handle the result by listening for updates. After the call succeeds, each participant's `videoEnabled` becomes `false`.
+
+```dart
+class ParticipantsEventsListener extends RtkParticipantsEventListener {
+	@override
+	void onVideoUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		// videoEnabled is false
+		// Update UI for the participant
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(ParticipantsEventsListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. Check that the local participant has permission to disable other participants' video.
+
+```jsx
+const canDisableParticipantVideo = meeting.self.permissions.canDisableParticipantVideo;
+if (!canDisableParticipantVideo) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `disableAllVideo()` on the participants object.
+
+```jsx
+meeting.participants
+	.disableAllVideo(true)
+	.catch((err) => {
+		// Handle error - permission denied or other issue.
+		console.log(err);
+	});
+```
+
+3. Handle the result by listening for updates. After the call succeeds, each participant's `videoEnabled` becomes `false`.
+
+```jsx
+meeting.participants.joined.on('videoUpdate', (participant) => {
+	// participant.videoEnabled is false
+	// Update UI for the participant
+});
+```
+
 </RTKCodeSnippet>
 
 ## Pin participants
@@ -170,6 +810,136 @@ To pin a participant in a session:
 	<Render file="realtimekit/web/pin-participant-steps" product="realtime" />
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-android">
+
+1. Check that the local participant has permission to pin participants.
+
+```kotlin
+val canPinParticipant = meeting.localUser.permissions.host.canPinParticipant
+if (!canPinParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `pin()` on the target participant. If the local participant does not have the required permission, `pin()` returns a `HostError`.
+
+```kotlin
+val error = participant.pin()
+if (error != null) {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `isPinned` becomes `true` and the participant is available in `meeting.participants.pinned`.
+
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onParticipantPinned(participant: RtkRemoteParticipant) {
+		// participant.isPinned is true
+		// Update your UI.
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+1. Check that the local participant has permission to pin participants.
+
+```swift
+let canPinParticipant = meeting.localUser.permissions.host.canPinParticipant
+if !canPinParticipant {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `pin()` on the target participant. If the local participant does not have the required permission, `pin()` returns a `HostError`.
+
+```swift
+if let error = participant.pin() {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `isPinned` becomes `true` and the participant is available in `meeting.participants.pinned`.
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onParticipantPinned(participant: RtkRemoteParticipant) {
+		// participant.isPinned is true
+		// Update your UI.
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(participantsEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+1. Check that the local participant has permission to pin participants.
+
+```dart
+final canPinParticipant = meeting.localUser.permissions.host.canPinParticipant;
+if (!canPinParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `pin()` on the target participant.
+
+```dart
+participant.pin();
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `isPinned` becomes `true` and the participant is available in `meeting.participants.pinned`.
+
+```dart
+class ParticipantsEventsListener extends RtkParticipantsEventListener {
+	@override
+	void onParticipantPinned(RtkRemoteParticipant participant) {
+		// participant.isPinned is true
+		// Update your UI.
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(ParticipantsEventsListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. Check that the local participant has permission to pin participants.
+
+```jsx
+const canPinParticipant = meeting.self.permissions.pinParticipant;
+if (!canPinParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `pin()` on the target participant.
+
+```jsx
+participant.pin();
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `isPinned` becomes `true` and the participant is available in `meeting.participants.pinned`.
+
+```jsx
+meeting.participants.pinned.on('participantPinned', (participant) => {
+	// participant.isPinned is true
+	// Update your UI.
+});
+```
+
+</RTKCodeSnippet>
+
 ### Unpin a participant
 
 Unpin a participant when you need to undo the highlight and return the session to a standard grid or active speaker view.
@@ -185,6 +955,136 @@ To unpin a pinned participant in a session:
 
 <RTKCodeSnippet id="web-angular">
 	<Render file="realtimekit/web/unpin-participant-steps" product="realtime" />
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+1. Check that the local participant has permission to unpin participants.
+
+```kotlin
+val canPinParticipant = meeting.localUser.permissions.host.canPinParticipant
+if (!canPinParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `unpin()` on the target participant. If the local participant does not have the required permission, `unpin()` returns a `HostError`.
+
+```kotlin
+val error = participant.unpin()
+if (error != null) {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `isPinned` becomes `false`.
+
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onParticipantUnpinned(participant: RtkRemoteParticipant) {
+		// participant.isPinned is false
+		// Update your UI.
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+1. Check that the local participant has permission to unpin participants.
+
+```swift
+let canPinParticipant = meeting.localUser.permissions.host.canPinParticipant
+if !canPinParticipant {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `unpin()` on the target participant. If the local participant does not have the required permission, `unpin()` returns a `HostError`.
+
+```swift
+if let error = participant.unpin() {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `isPinned` becomes `false`.
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onParticipantUnpinned(participant: RtkRemoteParticipant) {
+		// participant.isPinned is false
+		// Update your UI.
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(participantsEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+1. Check that the local participant has permission to unpin participants.
+
+```dart
+final canPinParticipant = meeting.localUser.permissions.host.canPinParticipant;
+if (!canPinParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `unpin()` on the target participant.
+
+```dart
+participant.unpin();
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `isPinned` becomes `false`.
+
+```dart
+class ParticipantsEventsListener extends RtkParticipantsEventListener {
+	@override
+	void onParticipantUnpinned(RtkRemoteParticipant participant) {
+		// participant.isPinned is false
+		// Update your UI.
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(ParticipantsEventsListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. Check that the local participant has permission to unpin participants.
+
+```jsx
+const canPinParticipant = meeting.self.permissions.pinParticipant;
+if (!canPinParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `unpin()` on the target participant.
+
+```jsx
+participant.unpin();
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the target participant's `isPinned` becomes `false`.
+
+```jsx
+meeting.participants.pinned.on('unpinned', (participant) => {
+	// participant.isPinned is false
+	// Update your UI.
+});
+```
+
 </RTKCodeSnippet>
 
 ## Remove participants
@@ -206,6 +1106,145 @@ To remove a specific participant from the session:
 
 <RTKCodeSnippet id="web-angular">
 	<Render file="realtimekit/web/remove-participant-steps" product="realtime" />
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+1. Check that the local participant has permission to remove participants.
+
+```kotlin
+val canKickParticipant = meeting.localUser.permissions.host.canKickParticipant
+if (!canKickParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `kick()` on the target participant. If the local participant does not have the required permission, `kick()` returns a `HostError`.
+
+```kotlin
+val error = participant.kick()
+if (error != null) {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the kicked participant is removed from `meeting.participants.joined`.
+
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onParticipantLeave(participant: RtkRemoteParticipant) {
+		// Remove the participant tile from the UI.
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+1. Check that the local participant has permission to remove participants.
+
+```swift
+let canKickParticipant = meeting.localUser.permissions.host.canKickParticipant
+if !canKickParticipant {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `kick()` on the target participant. If the local participant does not have the required permission, `kick()` returns a `HostError`.
+
+```swift
+if let error = participant.kick() {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the kicked participant is removed from `meeting.participants.joined`.
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onParticipantLeave(participant: RtkRemoteParticipant) {
+		// Remove the participant tile from the UI.
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(participantsEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+1. Check that the local participant has permission to remove participants.
+
+```dart
+final canKickParticipant = meeting.localUser.permissions.host.canKickParticipant;
+if (!canKickParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `kick()` on the target participant.
+
+```dart
+participant.kick(
+	onResult: (error) {
+		if (error != null) {
+			// Handle error - permission denied or other issue.
+			return;
+		}
+		// Participant removed successfully.
+	},
+);
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the kicked participant is removed from `meeting.participants.joined`.
+
+```dart
+class ParticipantsEventsListener extends RtkParticipantsEventListener {
+	@override
+	void onParticipantLeave(RtkRemoteParticipant participant) {
+		// Remove the participant tile from the UI.
+	}
+}
+
+// Register the listener
+meeting.addParticipantsEventListener(ParticipantsEventsListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. Check that the local participant has permission to remove participants.
+
+```jsx
+const canKickParticipant = meeting.self.permissions.kickParticipant;
+if (!canKickParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `kick()` on the target participant.
+
+```jsx
+participant
+	.kick()
+	.catch((err) => {
+		// Handle error - permission denied or other issue.
+		console.log(err);
+	});
+```
+
+3. Handle the result by listening for updates. After the call succeeds, the kicked participant is removed from `meeting.participants.joined`.
+
+```jsx
+meeting.participants.joined.on('participantLeft', (participant) => {
+	// Remove the participant tile from the UI.
+});
+```
+
 </RTKCodeSnippet>
 
 ### Remove all participants
@@ -235,6 +1274,147 @@ To remove all participants from the session:
 		file="realtimekit/web/remove-all-participants-steps"
 		product="realtime"
 	/>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+1. Check that the local participant has permission to remove participants.
+
+```kotlin
+val canKickParticipant = meeting.localUser.permissions.host.canKickParticipant
+if (!canKickParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `kickAll()` on the participants object. If the local participant does not have the required permission, `kickAll()` returns a `HostError`.
+
+```kotlin
+val error = meeting.participants.kickAll()
+if (error != null) {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, all participants exit the session.
+
+```kotlin
+meeting.addMeetingRoomEventListener(object : RtkMeetingRoomEventListener {
+	override fun onMeetingEnded() {
+		// Show a message and navigate the user out of the meeting UI.
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+1. Check that the local participant has permission to remove participants.
+
+```swift
+let canKickParticipant = meeting.localUser.permissions.host.canKickParticipant
+if !canKickParticipant {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `kickAll()` on the participants object. If the local participant does not have the required permission, `kickAll()` returns a `HostError`.
+
+```swift
+if let error = meeting.participants.kickAll() {
+	// Handle error - permission denied.
+}
+```
+
+3. Handle the result by listening for updates. After the call succeeds, all participants exit the session.
+
+```swift
+extension MeetingViewModel: RtkMeetingRoomEventListener {
+	func onMeetingEnded() {
+		// Show a message and navigate the user out of the meeting UI.
+	}
+}
+
+// Register the listener
+meeting.addMeetingRoomEventListener(meetingRoomEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+1. Check that the local participant has permission to remove participants.
+
+```dart
+final canKickParticipant = meeting.localUser.permissions.host.canKickParticipant;
+if (!canKickParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `kickAll()` on the participants object.
+
+```dart
+meeting.participants.kickAll(
+	onResult: (error) {
+		if (error != null) {
+			// Handle error - permission denied or other issue.
+			return;
+		}
+		// All participants removed successfully.
+	},
+);
+```
+
+3. Handle the result by listening for updates. After the call succeeds, all participants exit the session.
+
+```dart
+class MeetingRoomEventsListener extends RtkMeetingRoomEventListener {
+	@override
+	void onMeetingEnded() {
+		// Show a message and navigate the user out of the meeting UI.
+	}
+}
+
+// Register the listener
+meeting.addMeetingRoomEventListener(MeetingRoomEventsListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. Check that the local participant has permission to remove participants.
+
+```jsx
+const canKickParticipant = meeting.self.permissions.kickParticipant;
+if (!canKickParticipant) {
+	// Disable the control in your UI.
+}
+```
+
+2. Call `kickAll()` on the participants object.
+
+```jsx
+meeting.participants
+	.kickAll()
+	.catch((err) => {
+		// Handle error - permission denied or other issue.
+		console.log(err);
+	});
+```
+
+3. Handle the result by listening for updates. After the call succeeds, all participants exit the session.
+
+```jsx
+meeting.self.on('roomLeft', ({ state }) => {
+	if (state === 'kicked') {
+		// Show a message and navigate the user out of the meeting UI.
+	}
+});
+```
+
 </RTKCodeSnippet>
 
 ## Next steps

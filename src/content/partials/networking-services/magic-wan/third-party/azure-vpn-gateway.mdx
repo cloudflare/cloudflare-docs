@@ -58,7 +58,7 @@ The time it takes for Azure to fully provision the Virtual Network Gateway depen
 
 1. Create an <a href={props.ipsecTunnelUrl}>IPsec tunnel</a> in the Cloudflare dashboard.
 2. Make sure you have the following settings:
-   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 2 of the Configure Azure section](#2-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to <a href={props.tunnelEndpointsUrl}>Tunnel endpoints</a> for more details.
+   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet. You will configure the corresponding `/32` address in Azure in a later step (refer to [Configure Local Network Gateway for Magic IPsec tunnel health checks](#2-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks)). Refer to <a href={props.tunnelEndpointsUrl}>Tunnel endpoints</a> for more details.
    2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
    3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
    4. **Health check rate**: Leave the default option (Medium) selected.
@@ -100,7 +100,7 @@ Magic WAN uses <a href={props.tunnelHealthChecksUrl}>Tunnel Health Checks</a> to
 
 Tunnel health checks make use of ICMP probes sent from the Cloudflare side of the Magic IPsec tunnel to the remote endpoint (Azure). Probes are sent from the tunnel's interface address, which you specify in two places:
 
-1. **Cloudflare Dashboard:** In your Magic IPsec tunnel configuration as the address of the virtual tunnel interface (VTI) (so that Cloudflare knows what address to send probes from). Cloudflare requires this address in CIDR notation with a `/31` netmask.
+1. **Cloudflare Dashboard:** In your Magic IPsec tunnel configuration as the address of the virtual tunnel interface (VTI) (so that Cloudflare knows what address to send probes from). Cloudflare requires this address in Classless Inter-Domain Routing (CIDR) notation with a `/31` netmask.
 2. **Azure Portal:** In your VPN site's address space (so that Azure routes probe responses back over the tunnel). Azure requires this address in CIDR notation with a `/32` netmask.
 
 Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 - Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
@@ -124,7 +124,7 @@ To configure the Address Space for the Local Network Gateway to support Tunnel H
 2. Select **Connections**.
 3. Under **Address Space(s)** add the Interface Address of the Magic IPsec Tunnel from the Cloudflare dashboard in CIDR notation (for example, `10.252.3.55/32`).
 4. If using an Active/Active configuration, also add the Interface Address of the second Magic IPsec Tunnel from the Cloudflare Dashboard in CIDR notation (for example, `10.252.3.56/32`) under **Address Space(s)**. Both tunnel interface addresses must be configured in the Local Network Gateway Address Space to ensure both tunnels remain healthy.
-4. Select **Save**.
+5. Select **Save**.
 
 :::note
 The Magic IPsec Tunnel Interface Address should be entered as a `/31` in the Cloudflare Dashboard, but as a `/32` when configuring the Local Network Gateway Address Space(s) in the Azure portal.
@@ -134,8 +134,8 @@ The Magic IPsec Tunnel Interface Address should be entered as a `/31` in the Clo
 
 Choose the following settings when creating your VPN Connection:
 
-1. **Virtual network gateway**: Select the Virtual Network Gateway you have created in step 2.
-2. **Local network gateway**: Select the Local Network Gateway created in step 3.
+1. **Virtual network gateway**: Select the Virtual Network Gateway you created in [Create a Virtual Network Gateway](#2-create-a-virtual-network-gateway).
+2. **Local network gateway**: Select the Local Network Gateway created in [Create a Local Network Gateway](#1-create-a-local-network-gateway).
 3. **Use Azure Private IP Address**: **Disabled**
 4. **BGP**: **Disabled**
 5. **IPsec / IKE policy**: **Custom**
@@ -170,7 +170,7 @@ Microsoft does not permit specifying a default route (`0.0.0.0/0`) under Address
 
 ## Install Cloudflare Zero Trust CA Certificate
 
-If you opt to route all Internet bound traffic through Magic WAN and want to take advantage of [HTTPS TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/), it will be necessary to install and trust the Cloudflare Zero Trust root CA certificate on your user's devices. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
+If you opt to route all Internet bound traffic through Magic WAN and want to take advantage of [HTTPS TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/), it will be necessary to install and trust the Cloudflare Zero Trust root certificate authority (CA) certificate on your user's devices. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
 
 More details on how to install the root CA certificate can be found in [User-side certificates](/cloudflare-one/team-and-resources/devices/user-side-certificates/) in the Cloudflare Zero Trust documentation.
 
@@ -195,7 +195,7 @@ curl https://ipinfo.io
 ```
 
 :::note
-ICMP (ping/traceroute) will work to remote Magic WAN sites, but is not forwarded to the Internet. Please ensure you validate connectivity via HTTP.
+Internet Control Message Protocol (ICMP) (ping/traceroute) will work to remote Magic WAN sites, but is not forwarded to the Internet. Ensure you validate connectivity via HTTP.
 :::
 
 ## Validate connectivity and disable Azure Virtual Network Gateway anti-replay protection

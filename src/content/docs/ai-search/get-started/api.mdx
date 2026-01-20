@@ -1,0 +1,222 @@
+---
+title: API
+pcx_content_type: get-started
+sidebar:
+  order: 2
+description: Create AI Search instances programmatically using the REST API.
+---
+
+import { LinkCard } from "@astrojs/starlight/components";
+import { DashButton } from "~/components";
+
+This guide walks you through creating an AI Search instance programmatically using the REST API. This requires setting up a [service API token](/ai-search/configuration/service-api-token/) for system-to-system authentication.
+
+:::note[Already have a service token?]
+If you have created an AI Search instance via the dashboard at least once, your account already has a [service API token](/ai-search/configuration/service-api-token/) registered. The `token_id` parameter is optional and you can skip to [Step 5: Create an AI Search instance](#5-create-an-ai-search-instance).
+:::
+
+## Prerequisites
+
+AI Search integrates with R2 for storing your data. You must have an active R2 subscription before creating your first AI Search instance.
+
+<DashButton url="/?to=/:account/r2/overview" buttonName="R2 Overview" />
+
+## 1. Create an API token with token creation permissions
+
+AI Search requires a service API token to access R2 and other resources on your behalf. To create this service token programmatically, you first need an [API token](/fundamentals/api/get-started/create-token/) with permission to create other tokens.
+
+1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
+2. Select **Create Token**.
+3. Select **Create Custom Token**.
+4. Enter a **Token name**, for example `Token Creator`.
+5. Under **Permissions**, select **User** > **API Tokens** > **Edit**.
+6. Select **Continue to summary**, then select **Create Token**.
+7. Copy and save the token value. This is your `API_TOKEN` for the next step.
+
+:::note
+The steps above create a user-owned token. You can also create an account-owned token. Refer to [Create tokens via API](/fundamentals/api/how-to/create-via-api/) for more information.
+:::
+
+## 2. Create a service API token
+
+Use the [Create token API](/api/resources/user/subresources/tokens/methods/create/) to create a [service API token](/ai-search/configuration/service-api-token/). This token allows AI Search to access resources in your account on your behalf, such as R2, Vectorize, and Workers AI.
+
+1. Run the following request to create a service API token. Replace `<API_TOKEN>` with the token from step 1 and `<ACCOUNT_ID>` with your [account ID](/fundamentals/account/find-account-and-zone-ids/).
+
+   ```bash
+   curl -X POST "https://api.cloudflare.com/client/v4/user/tokens" \
+     -H "Authorization: Bearer <API_TOKEN>" \
+     -H "Content-Type: application/json" \
+     --data '{
+       "name": "AI Search Service API Token",
+       "policies": [
+         {
+           "effect": "allow",
+           "resources": {
+             "com.cloudflare.api.account.<ACCOUNT_ID>": "*"
+           },
+           "permission_groups": [
+             { "id": "9e9b428a0bcd46fd80e580b46a69963c" },
+             { "id": "bf7481a1826f439697cb59a20b22293e" }
+           ]
+         }
+       ]
+     }'
+   ```
+
+   This creates a token with the following permissions:
+
+   | Permission ID                      | Name                     | Description                                  |
+   | ---------------------------------- | ------------------------ | -------------------------------------------- |
+   | `9e9b428a0bcd46fd80e580b46a69963c` | AI Search Index Engine   | Grants access to run AI Search Index Engine  |
+   | `bf7481a1826f439697cb59a20b22293e` | Workers R2 Storage Write | Grants write access to Cloudflare R2 Storage |
+
+2. Save the `id` (`<CF_API_ID>`) and `value` (`<CF_API_KEY>`) from the response. You will need these values in the next step.
+
+   Example response:
+
+   ```json
+   {
+   	"result": {
+   		"id": "<CF_API_ID>",
+   		"name": "AI Search Service API Token",
+   		"status": "active",
+   		"issued_on": "2025-12-24T22:14:16Z",
+   		"modified_on": "2025-12-24T22:14:16Z",
+   		"last_used_on": null,
+   		"value": "<CF_API_KEY>",
+   		"policies": [
+   			{
+   				"id": "f56e6d5054e147e09ebe5c514f8a0f93",
+   				"effect": "allow",
+   				"resources": { "com.cloudflare.api.account.<ACCOUNT_ID>": "*" },
+   				"permission_groups": [
+   					{
+   						"id": "9e9b428a0bcd46fd80e580b46a69963c",
+   						"name": "AI Search Index Engine"
+   					},
+   					{
+   						"id": "bf7481a1826f439697cb59a20b22293e",
+   						"name": "Workers R2 Storage Write"
+   					}
+   				]
+   			}
+   		]
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
+
+## 3. Create an AI Search API token
+
+To register the service token and create AI Search instances, you need an API token with AI Search edit permissions.
+
+1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
+2. Select **Create Token**.
+3. Select **Create Custom Token**.
+4. Enter a **Token name**, for example `AI Search Manager`.
+5. Under **Permissions**, select **Account** > **AI Search** > **Edit**.
+6. Select **Continue to summary**, then select **Create Token**.
+7. Copy and save the token value. This is your `AI_SEARCH_API_TOKEN`.
+
+## 4. Register the service token with AI Search
+
+Use the [Create token API for AI Search](/api/resources/ai_search/subresources/tokens/methods/create/) to register the service token you created in step 2.
+
+1. Run the following request to register the service token. Replace `<CF_API_ID>` and `<CF_API_KEY>` with the values from step 2.
+
+   ```bash
+   curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/tokens" \
+     -H "Authorization: Bearer <AI_SEARCH_API_TOKEN>" \
+     -H "Content-Type: application/json" \
+     --data '{
+       "cf_api_id": "<CF_API_ID>",
+       "cf_api_key": "<CF_API_KEY>",
+       "name": "AI Search Service Token"
+     }'
+   ```
+
+2. Save the `id` (`<TOKEN_ID>`) from the response. You will need this value to create instances.
+
+   Example response:
+
+   ```json
+   {
+   	"success": true,
+   	"result": {
+   		"id": "<TOKEN_ID>",
+   		"name": "AI Search Service Token",
+   		"cf_api_id": "<CF_API_ID>",
+   		"created_at": "2025-12-25 01:52:28",
+   		"modified_at": "2025-12-25 01:52:28",
+   		"enabled": true
+   	}
+   }
+   ```
+
+## 5. Create an AI Search instance
+
+Use the [Create instance API](/api/resources/ai_search/subresources/instances/methods/create/) to create an AI Search instance. Replace `<ACCOUNT_ID>` with your [account ID](/fundamentals/account/find-account-and-zone-ids/) and `<AI_SEARCH_API_TOKEN>` with the token from [step 3](#3-create-an-ai-search-api-token).
+
+1. Choose your data source type and run the corresponding request.
+
+   **[R2 bucket](/ai-search/configuration/data-source/r2/):**
+
+   ```bash
+   curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+     -H "Authorization: Bearer <AI_SEARCH_API_TOKEN>" \
+     -H "Content-Type: application/json" \
+     --data '{
+       "id": "my-r2-rag",
+       "token_id": "<TOKEN_ID>",
+       "type": "r2",
+       "source": "<R2_BUCKET_NAME>"
+     }'
+   ```
+
+   **[Website](/ai-search/configuration/data-source/website/):**
+
+   ```bash
+   curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+     -H "Authorization: Bearer <AI_SEARCH_API_TOKEN>" \
+     -H "Content-Type: application/json" \
+     --data '{
+       "id": "my-web-rag",
+       "token_id": "<TOKEN_ID>",
+       "type": "web-crawler",
+       "source": "<DOMAIN_IN_YOUR_ACCOUNT>"
+     }'
+   ```
+
+2. Wait for indexing to complete. You can monitor progress in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/ai-search).
+
+:::note
+The `token_id` field is optional if you have previously created an AI Search instance, either via the [dashboard](/ai-search/get-started/dashboard/) or via API with `token_id` included.
+:::
+
+## Try it out
+
+Once indexing is complete, you can run your first query. You can check indexing status on the **Overview** tab of your instance.
+
+1. Go to **Compute & AI** > **AI Search**.
+2. Select your instance.
+3. Select the **Playground** tab.
+4. Select **Search with AI** or **Search**.
+5. Enter a query to test the response.
+
+## Add to your application
+
+There are multiple ways you can connect AI Search to your application:
+
+<LinkCard
+	title="Workers Binding"
+	description="Query AI Search directly from your Workers code."
+	href="/ai-search/usage/workers-binding/"
+/>
+<LinkCard
+	title="REST API"
+	description="Query AI Search using HTTP requests."
+	href="/ai-search/usage/rest-api/"
+/>

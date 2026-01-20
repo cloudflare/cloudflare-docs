@@ -5,7 +5,7 @@ params:
 
 import { DashButton, Details, Markdown } from "~/components";
 
-Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These steps use the Cloud Gateway Max (UCG-Max) but work with other UniFi gateways supporting route-based IPsec VPNs, like the Dream Machine series.
+Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These steps use the Cloud Gateway Max (UCG-Max) but work with other UniFi gateways supporting route-based IPsec (Internet Protocol Security) VPNs (Virtual Private Networks), like the Dream Machine series.
 
 
 ## Prerequisites
@@ -143,7 +143,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 
 ## Verify connections
 
-To check your connections are working correctly, wait a few minutes, and then access both Cloudflare and UniFi to verify the tunnel's status:
+Wait a few minutes, then access both Cloudflare and UniFi to verify the tunnel's status:
 
 <Details header="Cloudflare">
 {props.magicWord === "Magic WAN" ? (
@@ -191,7 +191,7 @@ Go to **Settings** > **VPN**, and make sure the status is **Connected**.
 
 To route only specific devices through Cloudflare (UniFi Network Application):
 
-1. Remove necessary routes from Remote Subnets in your VPN configuration.
+1. Remove unnecessary routes from Remote Subnets in your VPN configuration.
 2. Go to **Settings** > **Policy Table**.
 3. Under **Policy Engine** select **Create New Policy** with the following settings:
    - Select `Route`.

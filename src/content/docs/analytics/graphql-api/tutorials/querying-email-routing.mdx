@@ -1,0 +1,284 @@
+---
+pcx_content_type: example
+title: Querying Email Routing events with GraphQL
+
+---
+
+This example uses the GraphQL Analytics API to query for Email Routing events over a specified time period.
+
+## Activiy Logs API Call
+
+The following API call will request Email Routing activity logs over a one day period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ZONE_TAG>` and `<API_TOKEN>`[^1] with your zone tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values as required.
+
+```bash
+echo '{ "query":
+  "query EmailRoutingActivity($zoneTag: string, $filter: EmailRoutingAdaptiveFilter_InputObject) {
+    viewer {
+      zones(filter: { zoneTag: $zoneTag }) {
+        emailRoutingAdaptive(
+          filter: $filter
+          limit: 3
+          orderBy: [datetime_DESC]
+        ) {
+          datetime
+          id: sessionId
+          messageId
+          from
+          to
+          subject
+          status
+          action
+          spf
+          dkim
+          dmarc
+          arc
+          errorDetail
+          isNDR
+          isSpam
+          spamThreshold
+          spamScore
+        }
+      }
+    }
+  }",
+  "variables": {
+    "zoneTag": "<CLOUDFLARE_ZONE_TAG>",
+    "filter": {
+      "datetime_geq": "2026-01-18T11:00:00Z",
+      "datetime_leq": "2026-01-19T11:00:00Z"
+    }
+  }
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @- | jq .
+```
+
+The results returned will be in JSON (as requested):
+
+```json
+{
+  "data": {
+    "viewer": {
+      "zones": [
+        {
+          "emailRoutingAdaptive": [
+            {
+              "action": "forward",
+              "arc": "none",
+              "datetime": "2026-01-19T10:51:25Z",
+              "dkim": "pass",
+              "dmarc": "pass",
+              "errorDetail": "",
+              "from": "John <john@email.example.com>",
+              "id": "AfWyaZ7V1TAH",
+              "isNDR": 0,
+              "isSpam": 0,
+              "messageId": "<9e6574f1-97f8-4060-ad62-c54b6408ac3f@local>",
+              "spamScore": 0,
+              "spamThreshold": 5,
+              "spf": "pass",
+              "status": "delivered",
+              "subject": "How are you doing?",
+              "to": "me@example.com"
+            },
+            {
+              "action": "forward",
+              "arc": "none",
+              "datetime": "2026-01-19T10:30:00Z",
+              "dkim": "pass",
+              "dmarc": "pass",
+              "errorDetail": "",
+              "from": "eBay <ebay@ebay.co.uk>",
+              "id": "aYPegrIfLWia",
+              "isNDR": 0,
+              "isSpam": 0,
+              "messageId": "<1A513C40-F2CD808A928-029BBE999993-0000000000FA8855@starship>",
+              "spamScore": 0,
+              "spamThreshold": 5,
+              "spf": "pass",
+              "status": "delivered",
+              "subject": "New offers",
+              "to": "me@example.com"
+            },
+            {
+              "action": "forward",
+              "arc": "none",
+              "datetime": "2026-01-19T10:29:59Z",
+              "dkim": "pass",
+              "dmarc": "pass",
+              "errorDetail": "",
+              "from": "Notification <notifications@example.com>",
+              "id": "nWIl9gs95mY3",
+              "isNDR": 0,
+              "isSpam": 0,
+              "messageId": "<0AB8F1C3-3015EDF2980-019BBE9B58F2-0000000000FA7C4D@local>",
+              "spamScore": 0,
+              "spamThreshold": 5,
+              "spf": "pass",
+              "status": "delivered",
+              "subject": "You're over quota",
+              "to": "me@example.com"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "errors": null
+}
+```
+
+## Analytics API Call
+
+The following API call will count the number of events grouped by hour.
+
+```bash
+echo '{ "query":
+  "query EmailRoutingActivity($zoneTag: string, $filter: EmailRoutingAdaptiveFilter_InputObject) {
+     viewer {
+       zones(filter: { zoneTag: $zoneTag }) {
+         emailRoutingAdaptiveGroups(
+           limit: 10000
+           filter: $filter
+           orderBy: [datetimeHour_ASC]
+         ) { count
+               dimensions {
+                 datetimeHour
+               }
+             }
+           }
+     }
+  }",
+  "variables": {
+    "zoneTag": "<CLOUDFLARE_ZONE_TAG>",
+    "filter": {
+      "datetimeHour_geq": "2026-01-18T11:00:00Z",
+      "datetimeHour_leq": "2026-01-19T11:00:00Z"
+    }
+  }
+}' | tr -d '\n' | curl --silent \
+https://api.cloudflare.com/client/v4/graphql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data @- | jq .
+```
+
+The results returned will be in JSON (as requested):
+
+```json
+{
+  "data": {
+    "viewer": {
+      "zones": [
+        {
+          "emailRoutingAdaptiveGroups": [
+            {
+              "count": 2,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T11:00:00Z"
+              }
+            },
+            {
+              "count": 1,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T12:00:00Z"
+              }
+            },
+            {
+              "count": 1,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T13:00:00Z"
+              }
+            },
+            {
+              "count": 2,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T14:00:00Z"
+              }
+            },
+            {
+              "count": 1,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T15:00:00Z"
+              }
+            },
+            {
+              "count": 1,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T16:00:00Z"
+              }
+            },
+            {
+              "count": 2,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T17:00:00Z"
+              }
+            },
+            {
+              "count": 3,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T18:00:00Z"
+              }
+            },
+            {
+              "count": 1,
+              "dimensions": {
+                "datetimeHour": "2026-01-18T22:00:00Z"
+              }
+            },
+            {
+              "count": 2,
+              "dimensions": {
+                "datetimeHour": "2026-01-19T01:00:00Z"
+              }
+            },
+            {
+              "count": 1,
+              "dimensions": {
+                "datetimeHour": "2026-01-19T02:00:00Z"
+              }
+            },
+            {
+              "count": 4,
+              "dimensions": {
+                "datetimeHour": "2026-01-19T05:00:00Z"
+              }
+            },
+            {
+              "count": 1,
+              "dimensions": {
+                "datetimeHour": "2026-01-19T08:00:00Z"
+              }
+            },
+            {
+              "count": 5,
+              "dimensions": {
+                "datetimeHour": "2026-01-19T09:00:00Z"
+              }
+            },
+            {
+              "count": 6,
+              "dimensions": {
+                "datetimeHour": "2026-01-19T10:00:00Z"
+              }
+            },
+            {
+              "count": 2,
+              "dimensions": {
+                "datetimeHour": "2026-01-19T11:00:00Z"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "errors": null
+}
+```
+
+[^1]: Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) for more information on configuration and permissions.
