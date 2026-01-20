@@ -10,7 +10,7 @@ import dsr from "~/assets/images/magic-transit/mtu-mss/dsr.png"
 import tunnel from "~/assets/images/magic-transit/mtu-mss/tcp-mss.png"
 import mss_ipsec from "~/assets/images/magic-transit/mtu-mss/ipsec-mss.png"
 
-{props.productName} has operation requirements that customers need to understand to ensure their network functions as intended. Pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. Incorrect configuration of these values can cause performance loss or prevent data [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) delivery.
+{props.productName} has operation requirements that you need to understand to ensure your network functions as intended. Pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. Incorrect configuration of these values can cause performance loss or prevent data [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) delivery.
 
 ## MTU and MSS
 
@@ -44,7 +44,7 @@ Consider a UDP datagram of size 3,000 bytes (8 bytes for the UDP header + 2,992 
 
 Suppose that the UDP datagram has source port `389` and is destined for a {props.productName} customer IP address. Suppose also that the {props.productName} customer has a firewall rule in place that drops UDP traffic with source port `389`, a common [Connectionless Lightweight Directory Access Protocol (CLDAP)](https://blog.cloudflare.com/reflections-on-reflections) reflection attack vector.
 
-The three packet fragments above will arrive at Cloudflare, but only the first fragment contains a UDP header with source port information. The second and third fragments contain UDP data but do not have UDP header information.
+The three preceding packet fragments will arrive at Cloudflare, but only the first fragment contains a UDP header with source port information. The second and third fragments contain UDP data but do not have UDP header information.
 
 So the question is: which of these fragments does Cloudflare drop and which does it deliver to the customer? If Cloudflare only drops the first parts of fragmented packets, the remaining parts could still generate a large amount of traffic during a Denial of Service (DoS) attack.
 
