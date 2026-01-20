@@ -8,7 +8,7 @@ import { GlossaryTooltip, Markdown, DashButton } from "~/components"
 { props.magicWord === "Magic Transit" && (
   <>
     <Markdown
-      text="[Network Analytics](/analytics/network-analytics/) provides real-time visibility into Magic Transit traffic that enters and leaves Cloudflare's network through GRE or IPsec tunnels."
+      text="[Network Analytics](/analytics/network-analytics/) provides real-time insights into Magic Transit traffic that enters and leaves Cloudflare's network through GRE or IPsec tunnels."
       inline={false}
     />
   </>
@@ -25,7 +25,7 @@ import { GlossaryTooltip, Markdown, DashButton } from "~/components"
 
 Data is aggregated into time intervals that vary based on the selected zoom level. For example, a daily view shows 24-hour averages, which can flatten short-term traffic spikes. As a result, longer time intervals display lower peak bandwidth values compared to more granular views like five-minute intervals.
 
-Refer to the [Network Analytics](/analytics/network-analytics/) documentation to learn more.
+For details, refer to the [Network Analytics](/analytics/network-analytics/) documentation.
 
 ## Network traffic data filters
 
@@ -33,7 +33,7 @@ Refer to the [Network Analytics](/analytics/network-analytics/) documentation to
   <>
 	<Markdown
 	text={`
-	With Magic Transit, you can account for traffic flows that enter Cloudflare's network, are blocked by DDoS rules or Magic Firewall, and leave Cloudflare's network. This visibility allows you to track the total packets and bytes that traverse Cloudflare's network and are ultimately destined for your network. It also provides increased visibility into traffic flows that are unaccounted for.
+	With Magic Transit, you can account for traffic flows that enter Cloudflare's network, are blocked by DDoS rules or Magic Firewall, and leave Cloudflare's network. This insight lets you track the total packets and bytes that traverse Cloudflare's network and are ultimately destined for your network. It also provides increased insight into traffic flows that are unaccounted for.
 	`}
 	inline={false}
 	/>
@@ -45,7 +45,7 @@ Refer to the [Network Analytics](/analytics/network-analytics/) documentation to
   <>
 	<Markdown
 	text={`
-	With Magic WAN, you have increased visibility into traffic flows across Cloudflare One products, including:
+	With Magic WAN, you have increased insight into traffic flows across Cloudflare One products, including:
 
 	- Traffic entering Cloudflare's network via WARP
 	- Traffic leaving Cloudflare's network via WARP
@@ -67,7 +67,7 @@ The complete list of filters includes:
 - Samples of all GRE or IPsec tunnel traffic entering or leaving Cloudflare's network.
 - Mitigations applied (such as DDoS and Magic Firewall) to traffic entering Cloudflare's network.
 
-Refer to [Access Magic Tunnel traffic analytics](#access-magic-tunnel-traffic-analytics) to learn how to access these filters.
+For instructions, refer to [Access Magic Tunnel traffic analytics](#access-magic-tunnel-traffic-analytics).
 
 ## Access Magic Tunnel traffic analytics
 
@@ -75,9 +75,9 @@ Refer to [Access Magic Tunnel traffic analytics](#access-magic-tunnel-traffic-an
 
 <DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics/all-traffic" />
 
-2. In the **All Traffic** tab, scroll to **Top Insights** to access network traffic filters. By default, the dashboard shows five items, but you can display up to 25 items at once. To change the number of items, select the drop-down menu.
+2. In the **All Traffic** tab, scroll to **Top Insights** to access network traffic filters. By default, the dashboard displays five items, but you can display up to 25 items at once. To change the number of items, select the drop-down menu.
 3. (Optional) Hover over a traffic type. You can then filter for that traffic or exclude it from the results.
-4. To adjust the scope of information displayed, scroll to **All traffic** > **Add filter**.
+4. To adjust the scope of information, scroll to **All traffic** > **Add filter**.
 5. In the **New filter** popover, select the data type from the left drop-down menu, an operator from the middle drop-down menu, and an action from the right drop-down menu. For example:
 
    ```txt

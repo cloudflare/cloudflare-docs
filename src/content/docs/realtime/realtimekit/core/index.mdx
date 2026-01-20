@@ -128,7 +128,7 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
 	Initialize the RealtimeKit SDK by obtaining an instance of `RealtimeKitClient` using the `RealtimeKitMeetingBuilder` helper.
 
     ```kotlin
-    val rtkClient = RealtimeKitMeetingBuilder.build(activity)
+    val meeting = RealtimeKitMeetingBuilder.build(activity)
     ```
 
     Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Create Participant API](/api/resources/realtime_kit/#create-a-participant).
@@ -145,7 +145,7 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
     Initialize the meeting by calling the `init()` method. This establishes a connection with the RealtimeKit meeting server.
 
     ```kotlin
-    rtkClient.init(
+    meeting.init(
       meetingInfo,
       onInitCompleted = { ... },
       onInitFailed = { ... },

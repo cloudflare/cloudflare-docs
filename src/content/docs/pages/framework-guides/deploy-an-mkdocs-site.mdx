@@ -37,15 +37,11 @@ You have successfully created a GitHub repository and pushed your MkDocs project
 
 ## Deploy with Cloudflare Pages
 
-<Render
-	file="framework-guides/learn-more"
-	product="pages"
-	params={{ name: "MkDocs" }}
-/>
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <PagesBuildPreset framework="mkdocs" />
 
-4. Go to **Environment variables (advanced)** > **Add variable** > and add the variable `PYTHON_VERSION` with a value of `3.7`.
+7. Go to **Environment variables (advanced)** > **Add variable** > and add the variable `PYTHON_VERSION` with a value of `3.7`.
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 

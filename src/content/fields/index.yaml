@@ -979,7 +979,7 @@ entries:
         visitor,
       ]
     plan_info_label: Enterprise add-on
-    summary: Indicates whether the file scanner was unable to scan all the content objects detected in the request.
+    summary: Indicates whether the file scanner was unable to scan any of the content objects detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
 

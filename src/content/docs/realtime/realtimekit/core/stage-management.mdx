@@ -30,6 +30,22 @@ Using RealtimeKit's stage management APIs, a user can perform actions such as:
 
 The stage module can be accessed under the `meeting.stage` namespace.
 
+<RTKCodeSnippet id="web-react">
+
+```jsx
+console.log("Stage object:", meeting.stage);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+console.log("Stage object:", meeting.stage);
+```
+
+</RTKCodeSnippet>
+
 <RTKCodeSnippet id="web-web-components">
 
 ```js
@@ -38,17 +54,33 @@ console.log("Stage object:", meeting.stage);
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-angular">
+<RTKCodeSnippet id="mobile-android">
 
-```js
-console.log("Stage object:", meeting.stage);
+```kotlin
+Log.d("Stage", "Stage object: ${meeting.stage}")
 ```
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id="mobile-ios">
 
-```jsx
+```swift
+print("Stage object: \(meeting.stage)")
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+print("Stage object: ${meeting.stage}");
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
 console.log("Stage object:", meeting.stage);
 ```
 
@@ -60,6 +92,22 @@ console.log("Stage object:", meeting.stage);
 
 The `meeting.stage.status` property returns the current stage status of the local user.
 
+<RTKCodeSnippet id="web-react">
+
+```jsx
+console.log("Stage status:", meeting.stage.status);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+console.log("Stage status:", meeting.stage.status);
+```
+
+</RTKCodeSnippet>
+
 <RTKCodeSnippet id="web-web-components">
 
 ```js
@@ -68,17 +116,33 @@ console.log("Stage status:", meeting.stage.status);
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-angular">
+<RTKCodeSnippet id="mobile-android">
 
-```js
-console.log("Stage status:", meeting.stage.status);
+```kotlin
+Log.d("Stage", "Stage status: ${meeting.stage.stageStatus}")
 ```
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id="mobile-ios">
 
-```jsx
+```swift
+print("Stage status: \(meeting.stage.stageStatus)")
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+print("Stage status: ${meeting.stage.status}");
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
 console.log("Stage status:", meeting.stage.status);
 ```
 
@@ -103,6 +167,22 @@ RealtimeKit's stage management APIs allow hosts to receive and manage stage requ
 
 This method connects the user to the media room, enabling them to interact with other peers in the meeting.
 
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.stage.join();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+await meeting.stage.join();
+```
+
+</RTKCodeSnippet>
+
 <RTKCodeSnippet id="web-web-components">
 
 ```js
@@ -111,17 +191,33 @@ await meeting.stage.join();
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-angular">
+<RTKCodeSnippet id="mobile-android">
 
-```js
-await meeting.stage.join();
+```kotlin
+meeting.stage.join()
 ```
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id="mobile-ios">
 
-```jsx
+```swift
+meeting.stage.join()
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+meeting.stage.join();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
 await meeting.stage.join();
 ```
 
@@ -131,6 +227,22 @@ await meeting.stage.join();
 
 By employing this method, the user will be disconnected from the media room and subsequently unable to communicate with their peers. Additionally, their audio and video will no longer be visible to others in the room.
 
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.stage.leave();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+await meeting.stage.leave();
+```
+
+</RTKCodeSnippet>
+
 <RTKCodeSnippet id="web-web-components">
 
 ```js
@@ -139,17 +251,33 @@ await meeting.stage.leave();
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-angular">
+<RTKCodeSnippet id="mobile-android">
 
-```js
-await meeting.stage.leave();
+```kotlin
+meeting.stage.leave()
 ```
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id="mobile-ios">
 
-```jsx
+```swift
+meeting.stage.leave()
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+meeting.stage.leave();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
 await meeting.stage.leave();
 ```
 
@@ -159,22 +287,6 @@ await meeting.stage.leave();
 
 A privileged user can grant access to stage for a set of users with the `grantAccess` method.
 
-<RTKCodeSnippet id="web-web-components">
-
-```js
-await meeting.stage.grantAccess(userIds);
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-await meeting.stage.grantAccess(userIds);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="web-react">
 
 ```jsx
@@ -183,30 +295,102 @@ await meeting.stage.grantAccess(userIds);
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+await meeting.stage.grantAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+await meeting.stage.grantAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.stage.grantAccess(userIds)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+meeting.stage.grantAccess(userIds: userIds)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+meeting.stage.grantAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+await meeting.stage.grantAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
 **Parameters:**
 
-- `userIds` (string[]) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+<RTKCodeSnippet id="web-react">
+
+- `userIds` (`string[]`) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+- `userIds` (`string[]`) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+- `userIds` (`string[]`) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+- `userIds` (`List<String>`) - List of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.map { it.userId }`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+- `userIds` (`[String]`) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.map { $0.userId }`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+- `userIds` (`List<String>`) - List of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.map((p) => p.userId).toList()`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+- `userIds` (`string[]`) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
 
 ### Deny Access
 
 A privileged user can deny access to stage for a set of users with the `denyAccess` method.
 
-<RTKCodeSnippet id="web-web-components">
-
-```js
-await meeting.stage.denyAccess(userIds);
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-await meeting.stage.denyAccess(userIds);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="web-react">
 
 ```jsx
@@ -215,30 +399,102 @@ await meeting.stage.denyAccess(userIds);
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+await meeting.stage.denyAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+await meeting.stage.denyAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.stage.denyAccess(userIds)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+meeting.stage.denyAccess(userIds: userIds)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+meeting.stage.denyAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+await meeting.stage.denyAccess(userIds);
+```
+
+</RTKCodeSnippet>
+
 **Parameters:**
 
-- `userIds` (string[]) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+<RTKCodeSnippet id="web-react">
+
+- `userIds` (`string[]`) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+- `userIds` (`string[]`) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+- `userIds` (`string[]`) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+- `userIds` (`List<String>`) - List of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.map { it.userId }`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+- `userIds` (`[String]`) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.map { $0.userId }`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+- `userIds` (`List<String>`) - List of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.map((p) => p.userId).toList()`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+- `userIds` (`string[]`) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
 
 ### Kick Users
 
 A privileged user can remove a set of users from stage using the `kick` method.
 
-<RTKCodeSnippet id="web-web-components">
-
-```js
-await meeting.stage.kick(userIds);
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-await meeting.stage.kick(userIds);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="web-react">
 
 ```jsx
@@ -247,9 +503,97 @@ await meeting.stage.kick(userIds);
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+await meeting.stage.kick(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+await meeting.stage.kick(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.stage.kick(userIds)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+meeting.stage.kick(userIds: userIds)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+meeting.stage.kick(userIds);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+await meeting.stage.kick(userIds);
+```
+
+</RTKCodeSnippet>
+
 **Parameters:**
 
-- `userIds` (string[]) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+<RTKCodeSnippet id="web-react">
+
+- `userIds` (`string[]`) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+- `userIds` (`string[]`) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+- `userIds` (`string[]`) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+- `userIds` (`List<String>`) - List of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.map { it.userId }`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+- `userIds` (`[String]`) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.map { $0.userId }`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+- `userIds` (`List<String>`) - List of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.map((p) => p.userId).toList()`
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+- `userIds` (`string[]`) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
+
+</RTKCodeSnippet>
 
 ## Participant Controls
 
@@ -261,6 +605,22 @@ This method is used to create a new stage request which can be approved by the h
 
 When the host calls this method, their status will be updated to `ACCEPTED_TO_JOIN_STAGE`.
 
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.stage.requestAccess();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+await meeting.stage.requestAccess();
+```
+
+</RTKCodeSnippet>
+
 <RTKCodeSnippet id="web-web-components">
 
 ```js
@@ -269,17 +629,33 @@ await meeting.stage.requestAccess();
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-angular">
+<RTKCodeSnippet id="mobile-android">
 
-```js
-await meeting.stage.requestAccess();
+```kotlin
+meeting.stage.requestAccess()
 ```
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id="mobile-ios">
 
-```jsx
+```swift
+meeting.stage.requestAccess()
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+meeting.stage.requestAccess();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
 await meeting.stage.requestAccess();
 ```
 
@@ -289,6 +665,22 @@ await meeting.stage.requestAccess();
 
 You can call this method to cancel your stage request.
 
+<RTKCodeSnippet id="web-react">
+
+```jsx
+await meeting.stage.cancelRequestAccess();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+await meeting.stage.cancelRequestAccess();
+```
+
+</RTKCodeSnippet>
+
 <RTKCodeSnippet id="web-web-components">
 
 ```js
@@ -297,17 +689,33 @@ await meeting.stage.cancelRequestAccess();
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-angular">
+<RTKCodeSnippet id="mobile-android">
 
-```js
-await meeting.stage.cancelRequestAccess();
+```kotlin
+meeting.stage.cancelRequestAccess()
 ```
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id="mobile-ios">
 
-```jsx
+```swift
+meeting.stage.cancelRequestAccess()
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+meeting.stage.cancelRequestAccess();
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
 await meeting.stage.cancelRequestAccess();
 ```
 
@@ -317,30 +725,10 @@ await meeting.stage.cancelRequestAccess();
 
 The `meeting.stage` module emits the following events:
 
-### `stageAccessRequestUpdate`
+### Stage Access Requests Updated
 
 Emitted when there is an update to stage access requests.
 
-<RTKCodeSnippet id="web-web-components">
-
-```js
-meeting.stage.on("stageAccessRequestUpdate", (data) => {
-	console.log("Stage access request updated:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-meeting.stage.on("stageAccessRequestUpdate", (data) => {
-	console.log("Stage access request updated:", data);
-});
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="web-react">
 
 ```jsx
@@ -349,183 +737,7 @@ meeting.stage.on("stageAccessRequestUpdate", (data) => {
 });
 ```
 
-</RTKCodeSnippet>
-
-### `acceptPresentRequests`
-
-Emitted when present requests are accepted.
-
-<RTKCodeSnippet id="web-web-components">
-
-```js
-meeting.stage.on("acceptPresentRequests", (data) => {
-	console.log("Present requests accepted:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-meeting.stage.on("acceptPresentRequests", (data) => {
-	console.log("Present requests accepted:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-```jsx
-meeting.stage.on("acceptPresentRequests", (data) => {
-	console.log("Present requests accepted:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-### `stageStatusUpdate`
-
-Emitted when the stage status changes.
-
-<RTKCodeSnippet id="web-web-components">
-
-```js
-meeting.stage.on("stageStatusUpdate", (status) => {
-	console.log("Stage status updated:", status);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-meeting.stage.on("stageStatusUpdate", (status) => {
-	console.log("Stage status updated:", status);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-```jsx
-meeting.stage.on("stageStatusUpdate", (status) => {
-	console.log("Stage status updated:", status);
-});
-```
-
-</RTKCodeSnippet>
-
-### `newStageRequest`
-
-Emitted when a new stage request is received.
-
-<RTKCodeSnippet id="web-web-components">
-
-```js
-meeting.stage.on("newStageRequest", (request) => {
-	console.log("New stage request:", request);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-meeting.stage.on("newStageRequest", (request) => {
-	console.log("New stage request:", request);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-```jsx
-meeting.stage.on("newStageRequest", (request) => {
-	console.log("New stage request:", request);
-});
-```
-
-</RTKCodeSnippet>
-
-### `stageRequestApproved`
-
-Emitted when a stage request is approved.
-
-<RTKCodeSnippet id="web-web-components">
-
-```js
-meeting.stage.on("stageRequestApproved", (data) => {
-	console.log("Stage request approved:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-meeting.stage.on("stageRequestApproved", (data) => {
-	console.log("Stage request approved:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-```jsx
-meeting.stage.on("stageRequestApproved", (data) => {
-	console.log("Stage request approved:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-### `stageRequestRejected`
-
-Emitted when a stage request is rejected.
-
-<RTKCodeSnippet id="web-web-components">
-
-```js
-meeting.stage.on("stageRequestRejected", (data) => {
-	console.log("Stage request rejected:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-angular">
-
-```js
-meeting.stage.on("stageRequestRejected", (data) => {
-	console.log("Stage request rejected:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-```jsx
-meeting.stage.on("stageRequestRejected", (data) => {
-	console.log("Stage request rejected:", data);
-});
-```
-
-</RTKCodeSnippet>
-
-### React hooks
-
-<RTKCodeSnippet id="web-react">
-
-You can also use React hooks to listen for stage updates:
+Alternatively, you can use React hooks to listen for stage updates:
 
 ```jsx
 import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
@@ -536,8 +748,513 @@ const stageStatus = useRealtimeKitSelector((m) => m.stage.status);
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+<RTKCodeSnippet id="web-angular">
 
-Hooks are not available for this framework.
+```typescript
+meeting.stage.on("stageAccessRequestUpdate", (data) => {
+	console.log("Stage access request updated:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("stageAccessRequestUpdate", (data) => {
+	console.log("Stage access request updated:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addStageEventListener(object : RtkStageEventListener {
+	override fun onStageAccessRequestsUpdated(accessRequests: List<RtkRemoteParticipant>) {
+		// Stage access requests list updated
+		Log.d("Stage", "Access requests updated: ${accessRequests.size}")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension WebinarViewModel: RtkStageEventListener {
+	func onStageAccessRequestsUpdated(accessRequests: [RtkRemoteParticipant]) {
+		// Stage access requests list updated
+		print("Access requests updated: \(accessRequests.count)")
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class StageEventListener extends RtkStageEventListener {
+	@override
+	void onStageAccessRequestsUpdated(List<RtkRemoteParticipant> accessRequests) {
+		// Stage access requests list updated
+		print("Access requests updated: ${accessRequests.length}");
+	}
+}
+
+meeting.addStageEventListener(StageEventListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+meeting.stage.on("stageAccessRequestUpdate", (data) => {
+	console.log("Stage access request updated:", data);
+});
+```
+
+Alternatively, you can use React hooks to listen for stage updates:
+
+```tsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react-native";
+
+// useRealtimeKitSelector hook only works when `RealtimeKitProvider` is used.
+const stageStatus = useRealtimeKitSelector((m) => m.stage.status);
+```
+
+</RTKCodeSnippet>
+
+### Stage Access Request Accepted
+
+Emitted when the host accepts the join stage request or invites a user directly to stage.
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+meeting.stage.on("acceptPresentRequests", (data) => {
+	console.log("Present requests accepted:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+meeting.stage.on("acceptPresentRequests", (data) => {
+	console.log("Present requests accepted:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("acceptPresentRequests", (data) => {
+	console.log("Present requests accepted:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addStageEventListener(object : RtkStageEventListener {
+	override fun onStageAccessRequestAccepted() {
+		// Host accepted the join stage request or invited user directly to stage
+		Log.d("Stage", "Access request accepted")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension WebinarViewModel: RtkStageEventListener {
+	func onStageAccessRequestAccepted() {
+		// Host accepted the join stage request or invited user directly to stage
+		print("Access request accepted")
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class StageEventListener extends RtkStageEventListener {
+	@override
+	void onStageAccessRequestAccepted() {
+		// Host accepted the join stage request or invited user directly to stage
+		print("Access request accepted");
+	}
+}
+
+meeting.addStageEventListener(StageEventListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+meeting.stage.on("acceptPresentRequests", (data) => {
+	console.log("Present requests accepted:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+### Stage Status Updated
+
+Emitted when the local user's stage status changes.
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+meeting.stage.on("stageStatusUpdate", (status) => {
+	console.log("Stage status updated:", status);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+meeting.stage.on("stageStatusUpdate", (status) => {
+	console.log("Stage status updated:", status);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("stageStatusUpdate", (status) => {
+	console.log("Stage status updated:", status);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addStageEventListener(object : RtkStageEventListener {
+	override fun onStageStatusUpdated(oldStatus: StageStatus, newStatus: StageStatus) {
+		// Local user's stage status changed
+		Log.d("Stage", "Status updated from $oldStatus to $newStatus")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension WebinarViewModel: RtkStageEventListener {
+	func onStageStatusUpdated(oldStatus: StageStatus, newStatus: StageStatus) {
+		// Local user's stage status changed
+		print("Status updated from \(oldStatus) to \(newStatus)")
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class StageEventListener extends RtkStageEventListener {
+	@override
+	void onStageStatusUpdated(StageStatus oldStatus, StageStatus newStatus) {
+		// Local user's stage status changed
+		print("Status updated from $oldStatus to $newStatus");
+	}
+}
+
+meeting.addStageEventListener(StageEventListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+meeting.stage.on("stageStatusUpdate", (status) => {
+	console.log("Stage status updated:", status);
+});
+```
+
+</RTKCodeSnippet>
+
+### New Stage Request
+
+Emitted when a new participant requests to join the stage.
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+meeting.stage.on("newStageRequest", (request) => {
+	console.log("New stage request:", request);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+meeting.stage.on("newStageRequest", (request) => {
+	console.log("New stage request:", request);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("newStageRequest", (request) => {
+	console.log("New stage request:", request);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addStageEventListener(object : RtkStageEventListener {
+	override fun onNewStageAccessRequest(participant: RtkRemoteParticipant) {
+		// New participant requested to join the stage
+		Log.d("Stage", "New stage request from: ${participant.name}")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension WebinarViewModel: RtkStageEventListener {
+	func onNewStageAccessRequest(participant: RtkRemoteParticipant) {
+		// New participant requested to join the stage
+		print("New stage request from: \(participant.name)")
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class StageEventListener extends RtkStageEventListener {
+	@override
+	void onNewStageAccessRequest(RtkRemoteParticipant participant) {
+		// New participant requested to join the stage
+		print("New stage request from: ${participant.name}");
+	}
+}
+
+meeting.addStageEventListener(StageEventListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+meeting.stage.on("newStageRequest", (request) => {
+	console.log("New stage request:", request);
+});
+```
+
+</RTKCodeSnippet>
+
+### Stage Request Approved
+
+Emitted when a stage request is approved by the host.
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+meeting.stage.on("stageRequestApproved", (data) => {
+	console.log("Stage request approved:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+meeting.stage.on("stageRequestApproved", (data) => {
+	console.log("Stage request approved:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("stageRequestApproved", (data) => {
+	console.log("Stage request approved:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addStageEventListener(object : RtkStageEventListener {
+	override fun onStageAccessRequestAccepted() {
+		// Host accepted the join stage request or invited user directly to stage
+		Log.d("Stage", "Stage request approved")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension WebinarViewModel: RtkStageEventListener {
+	func onStageAccessRequestAccepted() {
+		// Host accepted the join stage request or invited user directly to stage
+		print("Stage request approved")
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class StageEventListener extends RtkStageEventListener {
+	@override
+	void onStageAccessRequestAccepted() {
+		// Host accepted the join stage request or invited user directly to stage
+		print("Stage request approved");
+	}
+}
+
+meeting.addStageEventListener(StageEventListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+meeting.stage.on("stageRequestApproved", (data) => {
+	console.log("Stage request approved:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+### Stage Request Rejected
+
+Emitted when the host rejects a stage request.
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+meeting.stage.on("stageRequestRejected", (data) => {
+	console.log("Stage request rejected:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+
+```typescript
+meeting.stage.on("stageRequestRejected", (data) => {
+	console.log("Stage request rejected:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+
+```js
+meeting.stage.on("stageRequestRejected", (data) => {
+	console.log("Stage request rejected:", data);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addStageEventListener(object : RtkStageEventListener {
+	override fun onStageAccessRequestRejected() {
+		// Host rejected the join stage request
+		Log.d("Stage", "Stage request rejected")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension WebinarViewModel: RtkStageEventListener {
+	func onStageAccessRequestRejected() {
+		// Host rejected the join stage request
+		print("Stage request rejected")
+	}
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class StageEventListener extends RtkStageEventListener {
+	@override
+	void onStageAccessRequestRejected() {
+		// Host rejected the join stage request
+		print("Stage request rejected");
+	}
+}
+
+meeting.addStageEventListener(StageEventListener());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+meeting.stage.on("stageRequestRejected", (data) => {
+	console.log("Stage request rejected:", data);
+});
+```
 
 </RTKCodeSnippet>

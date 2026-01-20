@@ -9,7 +9,7 @@ params:
 
 import { Render, DashButton } from "~/components";
 
-This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.
+This guide provides information and examples of how to configure Cloudflare Magic WAN with Internet Protocol Security (IPsec) tunnels in conjunction with Fortinet FortiGate firewalls.
 
 The FortiGate configuration settings presented here support <a href={props.bidirectionalHealthChecksUrl}>bidirectional health checks</a> as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
 
@@ -22,7 +22,7 @@ The FortiGate configuration was tested on two different FortiGate firewalls:
 
 ## Magic WAN configuration
 
-The first step to setting up Magic WAN is to add IPsec tunnels and Magic static routes to your Cloudflare account via the dashboard or API.
+To set up Magic WAN, add IPsec tunnels and Magic static routes to your Cloudflare account using the dashboard or API.
 
 Before proceeding, ensure that you have the anycast IPs associated with your account. Check with your Cloudflare account team if you do not yet have them.
 
@@ -55,9 +55,9 @@ By default, the Magic static routes are defined with the priority set to `100`. 
 
 ### Enable asymmetric routing
 
-To ensure health checks work as expected, enable asymmetric routing for ICMP. This option is required. Otherwise, the tunnel health checks which are critical for proper Magic WAN functionality will not work as designed.
+Enable asymmetric routing for ICMP to ensure health checks work as expected. This option is required. Otherwise, the tunnel health checks, which are critical for proper Magic WAN functionality, will not work as designed.
 
-Note that enabling asymmetric routing will affect FortiGate behavior. To learn more, refer to [How FortiGate behaves when asymmetric routing is enabled](https://community.fortinet.com/t5/FortiGate/Technical-Note-How-the-FortiGate-behaves-when-asymmetric-routing/ta-p/198575).
+Enabling asymmetric routing will affect FortiGate behavior. To learn more, refer to [How FortiGate behaves when asymmetric routing is enabled](https://community.fortinet.com/t5/FortiGate/Technical-Note-How-the-FortiGate-behaves-when-asymmetric-routing/ta-p/198575).
 
 ```txt
 config system settings
@@ -67,7 +67,7 @@ end
 
 ### Configure NAT-T (optional)
 
-If you have NAT traversal (NAT-T) on your network, you need to enable this feature and initiate IKE communications on port `4500`.
+If you have Network Address Translation Traversal (NAT-T) on your network, you need to enable this feature and initiate Internet Key Exchange (IKE) communications on port `4500`.
 
 To set the IKE port, add the following to your system settings:
 
@@ -89,7 +89,7 @@ Refer to [Fortinet's documentation](https://community.fortinet.com/t5/FortiGate/
 
 ### Disable anti-replay protection
 
-For route-based IPsec configurations, you will need to disable anti-replay protection. The command below disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet's documentation on [anti-replay support per policy](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435) to learn more.
+For route-based IPsec configurations, you will need to disable anti-replay protection. The following command disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet's documentation on [anti-replay support per policy](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435) to learn more.
 
 ```txt
 config system global
@@ -99,7 +99,7 @@ end
 
 ### IPsec tunnels
 
-Magic IPsec tunnels leverage a route-based site-to-site VPN model. This model relies on the use of virtual tunnel interfaces and routing to define the traffic that flows across the IPsec tunnels.
+Magic IPsec tunnels leverage a route-based site-to-site Virtual Private Network (VPN) model. This model relies on the use of virtual tunnel interfaces and routing to define the traffic that flows across the IPsec tunnels.
 
 Configure two IPsec tunnels using the `phase1-interface` and `phase2-interface` objects.
 
@@ -218,7 +218,7 @@ end
 
 Once the virtual tunnel interfaces have been configured, you should be able to ping the IP address associated with the `remote-ip` attribute.
 
-Below you have examples of a successful result from pinging across both of the virtual tunnel interfaces configured in the previous section:
+The following examples show successful results from pinging across both virtual tunnel interfaces:
 
 #### MWAN_IPsec_Tun1
 
@@ -358,7 +358,7 @@ end
 
 ### Configure Address Group Object
 
-Create an Address Object that contains all of the Cloudflare IPv4 subnets as specified in the previous section. You can copy/paste the CLI commands below into an SSH terminal and the objects will get created automatically:
+Create an Address Object that contains all Cloudflare IPv4 subnets. Copy and paste the following CLI commands into an SSH terminal to create the objects automatically:
 
 ```txt
 config firewall addrgrp
@@ -374,7 +374,7 @@ end
 Add a firewall rule to permit the ICMP traffic associated with the reply style bidirectional health checks.
 
 :::note
-This example assumes this rule is the second rule in the firewall policy (`edit 2`). If you opt to copy/paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.
+This example assumes this is the second firewall policy rule (`edit 2`). If you copy and paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.
 :::
 
 ```txt
@@ -396,12 +396,12 @@ end
 
 ### Policy-based routing
 
-Policy-based routing rules are required to ensure the traffic associated with the bidirectional health checks received over a Magic IPsec tunnel is sent back across the same Magic IPsec tunnel.
+Add policy-based routing rules to ensure traffic associated with bidirectional health checks received over a Magic IPsec tunnel returns across the same tunnel.
 
 Add two policy-based routing rules, one for each of the two Magic IPsec tunnels.
 
 :::note
-This example assumes the rules below are the first and second rules respectively (`edit 1` and `edit 2`). If you opt to copy/paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.
+This example assumes these are the first and second rules respectively (`edit 1` and `edit 2`). If you copy and paste the example into an SSH session, edit the numeric value associated with the rule position accordingly.
 :::
 
 ```txt
@@ -431,13 +431,13 @@ The Cloudflare dashboard monitors the health of all anycast tunnels on your acco
 
 ### Packet Capture
 
-Packet captures allow you to determine whether or not the policy-based routing rules are working as expected.
+Packet captures determine whether the policy-based routing rules are working as expected.
 
 :::note
-Due to the nature of the reply-style tunnel health checks, you will see ICMP Reply packets in both the ingress and egress direction. This is expected behavior.
+Reply-style tunnel health checks produce ICMP Reply packets in both the ingress and egress direction. This is expected behavior.
 :::
 
-The expected behavior should look like the examples below - traffic ingressing Tunnel 01 of 02 should egress the same tunnel.
+Traffic ingressing Tunnel 01 of 02 should egress the same tunnel, as shown in the following example:
 
 ```txt
 fortigate # diagnose sniffer packet any 'host 172.64.240.253' 4
@@ -473,7 +473,7 @@ filters=[host 172.64.240.254]
 
 ### Flow Debugging
 
-Flow debugging can be helpful when it comes to determining whether or not traffic is ingressing/egressing the firewall via the expected path. It takes steps much further than the sniffer packet captures in the previous section, but it creates a tremendous amount of logging and should only be enabled when absolutely necessary.
+Flow debugging helps determine whether traffic is ingressing/egressing the firewall via the expected path. It provides more detail than the sniffer packet captures in the previous section, but creates substantial logging and should only be enabled when absolutely necessary.
 
 Additionally, customers will likely need to contact Fortinet technical support for assistance with interpreting the flow debug logs, as well as to obtain recommendations in terms of how to configure FortiGate to ensure flows are routed correctly based on the application's requirements.
 
@@ -504,7 +504,7 @@ fortigate # 2023-08-01 09:27:26 id=20085 trace_id=2871 func=print_pkt_detail lin
 
 ### Disable Flow Debugging
 
-The typical use of `CTR + C` will not stop Flow Debugging.
+The typical use of `CTRL + C` will not stop Flow Debugging.
 
 You can disable Flow Debugging simply by typing the following at any point while the debug logs are scrolling by:
 
