@@ -18,7 +18,10 @@ type MiddlecacheOptions = {
 	url?: string;
 	parser?: (
 		text: string,
-	) => Record<string, Record<string, unknown>> | Array<Record<string, unknown>>;
+	) =>
+		| Record<string, Record<string, unknown>>
+		| Array<Record<string, unknown>>
+		| Record<string, string | null>;
 };
 
 function middlecacheLoader(
@@ -49,7 +52,7 @@ function middlecacheLoader(
 				context.logger.debug(`Download of ${path} completed.`);
 			}
 
-			const fileLoader = file(destination, options);
+			const fileLoader = file(destination, options as any);
 			// re-use all the functionality of the built-in file loader
 			return await fileLoader.load(context);
 		},
