@@ -13,7 +13,7 @@ import { Render } from "~/components";
 
 Session affinity specifies the type of session affinity the load balancer should use unless specified as `"none"` or `""` (default).
 
-### cookie
+### By Cloudflare cookie only
 
 On the first request to a proxied load balancer, a cookie is generated, encoding information of which endpoint the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the endpoint the cookie encodes for the duration of the cookie and as long as the endpoint remains healthy. If the cookie has expired or the endpoint is unhealthy, a new endpoint is calculated and used.
 
@@ -21,11 +21,11 @@ On the first request to a proxied load balancer, a cookie is generated, encoding
 
 <Render file="session-affinity-by-cookie-process" product="load-balancing" />
 
-### ip_cookie
+### By Cloudflare cookie and Client IP fallback
 
 This behaves similar to `cookie` except the initial endpoint selection is stable and based on the client's IP address.
 
-### header
+### By HTTP header
 
 On the first request to a proxied load balancer, a session key based on the configured HTTP headers is generated. The session key encodes the request headers used for storing which endpoint the request will be forwarded to during the load balancer session state. Subsequent requests to the load balancer with the same headers will be sent to the same endpoint, for the duration of the session and as long as the endpoint remains healthy. If the session has been idle for the duration of session affinity TTL seconds or the endpoint is unhealthy, then a new endpoint is calculated and used.
 
