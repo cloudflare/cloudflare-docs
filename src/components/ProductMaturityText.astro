@@ -3,7 +3,7 @@ import { getEntry } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-	product: CollectionEntry<"product-maturity">;
+	product: CollectionEntry<"product-maturity">["id"];
 }
 
 const { product } = Astro.props;
