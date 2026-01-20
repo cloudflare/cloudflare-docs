@@ -3,14 +3,50 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-01-19"
+    title: Path filtering for website and R2 data sources
+    description: |-
+      You can now filter which paths to include or exclude from indexing for both website and R2 data sources.
+  - publish_date: "2026-01-19"
+    title: Simplified API instance creation
+    description: |-
+      API instance creation is now simpler with optional token_id and model fields.
+  - publish_date: "2026-01-16"
+    title: Website crawler improvements
+    description: |-
+      Website instances now respect sitemap `<priority>` for indexing order and `<changefreq>` for re-crawl frequency. Added support for `.gz` compressed sitemaps and partial URLs in robots.txt and sitemaps.
+  - publish_date: "2026-01-16"
+    title: Improved indexing performance
+    description: |-
+      We have improved indexing performance for all AI Search instances. Support for more and larger files is coming.
+  - publish_date: "2025-12-10"
+    title: Query rewrite visibility in AI Gateway logs
+    description: |-
+      Fixed a bug where query rewrites were not visible in the AI Gateway logs.
+  - publish_date: "2025-11-19"
+    title: Custom HTTP headers for website crawling
+    description: |-
+      AI Search now supports custom HTTP headers for website crawling, allowing you to index content behind authentication or access controls.
+  - publish_date: "2025-10-28"
+    title: Reranking and API-based system prompts
+    description: |-
+      You can now enable reranking to reorder retrieved documents by semantic relevance and set system prompts directly in API requests for per-query control.
   - publish_date: "2025-09-25"
     title: AI Search (formerly AutoRAG) now supports more models
     description: |-
-      Connect your provider keys through AI Gateway to use models like from OpenAI and Anthropic for both embeddings and inference. API updates to align with the new name are coming soon, with existing APIs still supported.
+      Connect your provider keys through AI Gateway to use models from OpenAI, Anthropic, and other providers for both embeddings and inference.
+  - publish_date: "2025-09-19"
+    title: Metrics view for AI Search
+    description: |-
+      AI Search now includes a Metrics tab to track file indexing, search activity, and top retrievals.
   - publish_date: "2025-09-23"
     title: Support document file types in AutoRAG
     description: |-
       Our [conversion utility](/workers-ai/features/markdown-conversion/) can now convert `.docx` and `.odt` files to Markdown, making these files available to index inside your AutoRAG instance.
+  - publish_date: "2025-08-28"
+    title: Website data source and NLWeb integration
+    description: |-
+      AI Search now supports websites as a data source. Connect your domain to automatically crawl and index your site content with continuous re-crawling. Also includes NLWeb integration for conversational search with `/ask` and `/mcp` endpoints.
   - publish_date: "2025-08-20"
     title: Increased maximum query results to 50
     description: |-
@@ -20,9 +56,13 @@ entries:
     description: |-
       When a file is deleted from your R2 bucket, its corresponding chunks are now automatically removed from the Vectorize index linked to your AI Search instance during the next sync.
   - publish_date: "2025-07-08"
+    title: Faster indexing and new Jobs view
+    description: |-
+      Indexing is now 3-5x faster. A new Jobs view lets you monitor indexing progress, view job status, and inspect real-time logs.
+  - publish_date: "2025-07-08"
     title: Reduced cooldown between syncs
     description: |-
-      The cooldown period between sync jobs has been reduced to **3 minutes**, allowing you to trigger syncs more frequently when updating your data. If a sync is requested during the cooldown window, the dashboard and API now return clear response indicating that the sync cannot proceed due to the cooldown.
+      The cooldown period between sync jobs has been reduced to 3 minutes, allowing you to trigger syncs more frequently.
   - publish_date: "2025-06-16"
     title: Rich format file size limit increased to 4 MB
     description: |-
@@ -52,10 +92,22 @@ entries:
     title: EU jurisdiction R2 buckets now supported
     description: |-
       AI Search now supports R2 buckets configured with European Union (EU) jurisdiction restrictions. Previously, files in EU-restricted R2 buckets would not index when linked. This issue has been resolved, and all EU-restricted R2 buckets should now function as expected.
+  - publish_date: "2025-06-19"
+    title: Filter search by file name
+    description: |-
+      You can now filter AI Search queries by file name using the `filename` attribute for more control over which files are searched.
+  - publish_date: "2025-06-19"
+    title: Custom metadata in search responses
+    description: |-
+      AI Search now returns custom metadata in search responses. You can also add a `context` field to guide AI-generated answers.
+  - publish_date: "2025-04-23"
+    title: Metadata filtering and multitenancy support
+    description: |-
+      Filter search results by `folder` and `timestamp` to enable multitenancy and control the scope of retrieved results.
   - publish_date: "2025-04-23"
     title: Response streaming in AI Search binding added
     description: |-
-      AI Search now supports response streaming in the `AI Search` method of the [Workers binding](/ai-search/usage/workers-binding/), allowing you to stream results as they’re retrieved by setting `stream: true`.
+      AI Search now supports response streaming in the `AI Search` method of the [Workers binding](/ai-search/usage/workers-binding/), allowing you to stream results as they're retrieved by setting `stream: true`.
   - publish_date: "2025-04-07"
     title: AI Search is now in open beta!
     description: |-
