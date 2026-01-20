@@ -902,9 +902,43 @@ entries:
     data_type: Number
     categories: [Request]
     keywords: [request, timing, tcp, rtt, performance, latency]
-    summary: The smoothed TCP round-trip time from client to Cloudflare in milliseconds.
+    summary: The smoothed TCP round-trip time (RTT) from client to Cloudflare in milliseconds.
     example_value: |-
       20
+
+  - name: cf.timings.edge_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, edge, performance]
+    summary: The time spent processing a request within the Cloudflare global network in milliseconds.
+    description: |-
+      The value corresponds to the time interval between when the Cloudflare edge server accepted the HTTP request headers for processing and just before the HTTP response headers were available to be sent to the client.
+
+      The value does not include:
+        - The time spent forwarding the request to the origin server (refer to [`cf.timings.origin_ttfb_msec`](/ruleset-engine/rules-language/fields/reference/cf.timings.origin_ttfb_msec/)).
+        - The network transfer time to the client.
+    example_value: |-
+      28
+    example_block: |-
+      # Matches requests where Cloudflare's edge processing time was greater than 500 milliseconds
+      cf.timings.edge_msec > 500
+
+  - name: cf.timings.origin_ttfb_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, ttfb, performance, origin, latency]
+    summary: The round-trip time (RTT) between the Cloudflare global network and the origin server in milliseconds.
+    description: |-
+      This field provides insight into origin server latency. It represents the Time to First Byte (TTFB) from the perspective of the Cloudflare edge server.
+
+      This metric includes both the network RTT and the time the origin server spent handling the request.
+
+      If the request was served from the Cloudflare CDN cache and the origin server was not reached, the value of this field will be `0`.
+    example_value: |-
+      150
+    example_block: |-
+      # Matches requests where the origin response time (TTFB) was greater than 2 seconds:
+      cf.timings.origin_ttfb_msec > 2000
 
   - name: cf.waf.content_scan.has_obj
     data_type: Boolean
