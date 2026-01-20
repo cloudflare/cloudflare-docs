@@ -62,7 +62,7 @@ entries:
   - publish_date: "2025-08-25"
     title: Dynamic routing
     description: |-
-      Introduced [Dynamic routing](/ai-gateway/routing/dynamic-routing/) that lets you visually or via JSON define flexible request flows that segment users, enforce quotas, and choose models with fallbacks—without changing application code.
+      Introduced [Dynamic routing](/ai-gateway/features/dynamic-routing/) that lets you visually or via JSON define flexible request flows that segment users, enforce quotas, and choose models with fallbacks—without changing application code.
   - publish_date: "2025-08-21"
     title: Bring your own keys (BYOK)
     description: |-
