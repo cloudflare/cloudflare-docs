@@ -2,7 +2,7 @@
 {}
 ---
 
-This tutorial contains a configuration example for setting up an IPsec tunnel between Cisco IOS XE and Cloudflare. For this tutorial, the tested Cisco IOS XE software was version 17.03.07.
+This tutorial contains a configuration example for setting up an Internet Protocol Security (IPsec) tunnel between Cisco IOS XE and Cloudflare. For this tutorial, the tested Cisco IOS XE software was version 17.03.07.
 
 You should replace peer addresses with the anycast IP addresses assigned to your account. For example:
 
@@ -22,11 +22,11 @@ crypto ikev2 policy CF_MAGIC_WAN_IKEV2_POLICY
  proposal CF_MAGIC_WAN_IKEV2_PROPOSAL
 !
 crypto ikev2 keyring CF_MAGIC_WAN_KEYRING
- peer GCP_CSR_IPSEC01
+ peer CF_MAGIC_WAN_IPSEC01
   address 162.159.###.###
   pre-shared-key hbGnJzFMqwltb###############BapXCOwsGZz2NMg
  !
- peer GCP_CSR_IPSEC02
+ peer CF_MAGIC_WAN_IPSEC02
   address 172.64.###.###
   pre-shared-key 1VscPp0LPFAcZ###############HOdN-1cUgKVduL4
  !
@@ -102,9 +102,9 @@ interface GigabitEthernet2
 
 ### Establish IPsec behind a NAT or CGNAT with port `4500`
 
-If your Cisco router is behind a NAT or CGNAT and you need to establish a connection on port `4500`, you can use the `nat force-encap`command.
+If your Cisco router is behind a Network Address Translation (NAT) or Carrier-Grade NAT (CGNAT) and you need to establish a connection on port `4500`, you can use the `nat force-encap` command.
 
-Add the `nat force-encap`command when setting up the `crypto ikev2 profile` for your tunnels:
+Add the `nat force-encap` command when setting up the `crypto ikev2 profile` for your tunnels:
 
 ```txt {7}
 crypto ikev2 profile CF_MAGIC_WAN_01

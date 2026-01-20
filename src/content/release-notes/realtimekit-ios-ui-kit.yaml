@@ -3,6 +3,16 @@ link: "/realtime/realtimekit/release-notes/ios-ui-kit/"
 productName: RealtimeKit iOS UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-01-14"
+    title: RealtimeKit iOS UI Kit 0.5.7
+    description: |-
+      **Enhancements**
+      
+      - Upgraded to [RealtimeKit Core v1.6.0](/realtime/realtimekit/release-notes/ios-core/#2026-01-14)
+      
+      **Fixes**
+      
+      - Fixed video not resuming when video view returns to foreground
   - publish_date: "2025-12-16"
     title: RealtimeKit iOS UI Kit 0.5.6
     description: |-

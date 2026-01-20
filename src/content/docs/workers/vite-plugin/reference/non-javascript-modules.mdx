@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: Non-JavaScript modules
+sidebar:
+  order: 10
+description: Additional module types that can be imported in your Worker
+---
+
+{/* Changes to this section should also be applied to /workers/wrangler/bundling */}
+
+In addition to TypeScript and JavaScript, the following module types are automatically configured to be importable in your Worker code.
+
+| Module extension        | Imported type        |
+| ----------------------- | -------------------- |
+| `.txt`                  | `string`             |
+| `.html`                 | `string`             |
+| `.sql`                  | `string`             |
+| `.bin`                  | `ArrayBuffer`        |
+| `.wasm`, `.wasm?module` | `WebAssembly.Module` |
+
+For example, with the following import, `text` will be a string containing the contents of `example.txt`:
+
+```js
+import text from "./example.txt";
+```
+
+This is also the basis for importing Wasm, as in the following example:
+
+```ts
+import wasm from "./example.wasm";
+
+// Instantiate Wasm modules in the module scope
+const instance = await WebAssembly.instantiate(wasm);
+
+export default {
+	fetch() {
+		const result = instance.exports.exported_func();
+
+		return new Response(result);
+	},
+};
+```
+
+:::note
+
+Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`.
+:::

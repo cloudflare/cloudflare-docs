@@ -3,6 +3,15 @@ link: "/realtime/realtimekit/release-notes/android-core/"
 productName: RealtimeKit Android Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-01-14"
+    title: RealtimeKit Android Core 1.6.0
+    description: |-
+      **Fixes**
+      
+      - Improve grid transitions by activating consumers in batches for better performance
+      - Move consumer toggle requests off main thread to prevent UI blocking
+      - Improve video rendering stability with better lifecycle management
+      - Prevent race conditions by canceling reconnection attempts during initialization
   - publish_date: "2025-12-16"
     title: RealtimeKit Android Core 1.5.7
     description: |-
