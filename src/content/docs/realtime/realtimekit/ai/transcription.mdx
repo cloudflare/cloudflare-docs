@@ -1,0 +1,175 @@
+---
+pcx_content_type: how-to
+title: Transcription
+sidebar:
+  order: 1
+---
+
+RealtimeKit provides two transcription modes powered by Cloudflare Workers AI:
+
+| Mode | Model | Use Case |
+|------|-------|----------|
+| **Real-time** | [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) | Live captions during meeting |
+| **Post-meeting** | [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/) | Accurate offline transcription |
+
+## Real-time transcription
+
+Streams transcripts to participants as they speak using [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/) via Cloudflare AI Gateway.
+
+### Enable via preset
+
+Set `transcription_enabled: true` in the participant's [preset](/realtime/realtimekit/concepts/preset/):
+
+```json
+{
+  "name": "webinar_host",
+  "transcription_enabled": true
+}
+```
+
+Only participants with this flag will have their audio transcribed.
+
+### Configure
+
+Pass `ai_config.transcription` when [creating a meeting](/realtime/realtimekit/concepts/meeting/):
+
+```json
+{
+  "title": "Team Standup",
+  "ai_config": {
+    "transcription": {
+      "language": "en-US",
+      "keywords": ["RealtimeKit", "Cloudflare"],
+      "profanity_filter": false
+    }
+  }
+}
+```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `language` | string | `en-US` | Language code for transcription |
+| `keywords` | string[] | `[]` | Terms to boost recognition (names, jargon) |
+| `profanity_filter` | boolean | `false` | Filter offensive language |
+
+### Supported languages
+
+Supports all languages available in [Deepgram Nova-3](/workers-ai/models/deepgram-nova-3/)
+
+### Consume transcripts
+
+#### Client SDK
+
+```javascript
+// Get all transcripts
+const transcripts = meeting.ai.transcripts;
+
+// Listen for new transcripts
+meeting.ai.on("transcript", (data) => {
+  if (data.isPartialTranscript) {
+    // Interim result - speaker still talking
+    updateLiveCaption(data.peerId, data.transcript);
+  } else {
+    // Final result
+    appendToHistory(data);
+  }
+});
+```
+
+#### Transcript payload
+
+```json
+{
+  "id": "1a2b3c4d-5678-90ab-cdef-1234567890ab",
+  "name": "Alice",
+  "peerId": "4f5g6h7i-8j9k-0lmn-opqr-1234567890st",
+  "userId": "uvwxyz-1234-5678-90ab-cdefghijklmn",
+  "customParticipantId": "abc123xyz",
+  "transcript": "Hello everyone",
+  "isPartialTranscript": false,
+  "date": "2024-08-07T10:15:30.000Z"
+}
+```
+
+| Field | Description |
+|-------|-------------|
+| `isPartialTranscript` | `true` = interim (still speaking), `false` = final |
+| `peerId` | Changes if participant rejoins |
+| `userId` | Persistent participant ID |
+| `customParticipantId` | Your custom ID from Add Participant API |
+
+---
+
+## Post-meeting transcription
+
+Generates transcripts after the meeting ends using [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). Transcripts from all participants are consolidated into a unified timeline and delivered via webhook or REST API.
+
+:::note
+Post-meeting transcription is currently in closed beta. If you are interested in this feature, contact your account team.
+:::
+
+### Supported languages
+
+Supports all languages in [Whisper Large v3 Turbo](/workers-ai/models/whisper-large-v3-turbo/). Uses ISO 639-1 language codes.
+
+### Output formats
+
+| Format | Use Case |
+|--------|----------|
+| **CSV** | Spreadsheets, data analysis |
+| **SRT** | Video subtitle files |
+| **VTT** | Web video captions (`<track>` element) |
+| **JSON** | Programmatic access |
+
+#### CSV example
+
+```csv
+Timestamp,Participant ID,User ID,Custom Participant ID,Participant Name,Transcript
+2024-08-07T10:15:30.000Z,peer-123,user-456,cust-789,Alice,Hello everyone
+2024-08-07T10:15:35.000Z,peer-234,user-567,cust-890,Bob,Hi Alice
+```
+
+#### JSON example
+
+```json
+[
+  {
+    "startTime": 0,
+    "endTime": 2.5,
+    "sentence": "Hello everyone",
+    "peerData": {
+      "id": "peer-123",
+      "userId": "user-456",
+      "displayName": "Alice",
+      "cpi": "cust-789"
+    }
+  }
+]
+```
+
+### Fetch transcripts
+
+#### Webhook
+
+Configure `meeting.transcript` event in [webhooks](/api/resources/realtime_kit/subresources/webhooks/):
+
+```json
+{
+  "event": "meeting.transcript",
+  "meetingId": "meeting-123",
+  "sessionId": "session-456",
+  "transcriptDownloadUrl": "https://...",
+  "transcriptDownloadUrlExpiry": "2024-08-14T10:15:30.000Z"
+}
+```
+
+#### REST API
+
+Refer to [Fetch the complete transcript for a session](/api/resources/realtime_kit/subresources/sessions/#fetch-the-complete-transcript-for-a-session).
+
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/transcript" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+Transcripts are available for **7 days** after meeting ends.
