@@ -11,6 +11,12 @@ const props = z.object({
 const input = props.parse(Astro.props);
 
 const entry = await getEntry("product-maturity", input.product);
+
+if (!entry) {
+	throw new Error(
+		`Product maturity entry not found for product="${input.product}"`,
+	);
+}
 ---
 
-{entry && entry.data}
+{entry.data}
