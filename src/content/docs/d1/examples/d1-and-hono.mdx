@@ -1,5 +1,4 @@
 ---
-
 summary: Query D1 from the Hono web framework
 tags:
   - Hono
@@ -51,7 +50,7 @@ app.get("/query/users/:id", async (c) => {
 			.run();
 		return c.json(results);
 	} catch (e) {
-		return c.json({ err: e.message }, 500);
+		return c.json({ err: "Failed to query user" }, 500);
 	}
 });
 
@@ -66,7 +65,12 @@ export default app;
 import { Hono } from "hono";
 import { handle } from "hono/cloudflare-pages";
 
-const app = new Hono().basePath("/api");
+// This ensures c.env.DB is correctly typed
+type Bindings = {
+	DB: D1Database;
+};
+
+const app = new Hono<{ Bindings: Bindings }>().basePath("/api");
 
 // Accessing D1 is via the c.env.YOUR_BINDING property
 app.get("/query/users/:id", async (c) => {
@@ -79,7 +83,7 @@ app.get("/query/users/:id", async (c) => {
 			.run();
 		return c.json(results);
 	} catch (e) {
-		return c.json({ err: e.message }, 500);
+		return c.json({ err: "Failed to query user" }, 500);
 	}
 });
 

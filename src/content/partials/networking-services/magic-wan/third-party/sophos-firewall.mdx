@@ -19,7 +19,7 @@ This tutorial shows you how to use Magic WAN with the following versions of the 
   - SFOS Version 19.0 MR2-Build 472
   - SFOS Version 19.5.1 MR1-Build 278
 
-You can connect through<a href={props.genericRoutingEncapsulationGreOrIpsecTunnelsUrl}> Generic Routing Encapsulation (GRE) or IPsec tunnels</a> to Magic WAN.
+You can connect through <a href={props.genericRoutingEncapsulationGreOrIpsecTunnelsUrl}>Generic Routing Encapsulation (GRE) or IPsec tunnels</a> to Magic WAN.
 
 ## IPsec connection
 
@@ -87,9 +87,9 @@ You must use an interface address from the `/31` subnet required to <a href={pro
 
 ### 5. Disable IPsec anti-replay
 
-You will have to disable IPsec Anti-Replay on your Sophos Firewall. Changing the anti-replay settings restarts the IPsec service, which causes tunnel-flap for all IPsec tunnels. This will also disable IPsec anti-replay protection for all VPN connections globally. Plan these changes accordingly.
+Disable IPsec Anti-Replay on your Sophos Firewall. Changing the anti-replay settings restarts the IPsec service, which causes tunnel-flap for all IPsec tunnels. This will also disable IPsec anti-replay protection for all VPN connections globally. Plan these changes accordingly.
 
-Below are instruction on how to achieve this on SFOS version 19 and SFOS version 19.5:
+Below are instructions on how to achieve this on SFOS version 19 and SFOS version 19.5:
 
 #### SFOS 19.0 MR2-Build 472 or 19.5 MR1-Build278 or later versions:
 
@@ -125,7 +125,7 @@ Start by configuring a GRE tunnel between SFOS and the Cloudflare anycast IP add
 
 ### 2. Add a GRE or SD-WAN route to redirect traffic through the GRE tunnel
 
-The detailed information on how to add a GRE or SD-WAN route to redirect traffic through the GRE tunnel, is in the next section ([Traffic redirection mechanism on Sophos Firewall](#traffic-redirection-mechanism-on-sophos-firewall)).
+Refer to [Traffic redirection mechanism on Sophos Firewall](#traffic-redirection-mechanism-on-sophos-firewall) for information on how to add a GRE or SD-WAN route to redirect traffic through the GRE tunnel.
 
 ### 3. Add a firewall rule for LAN/DMZ to VPN
 
@@ -160,7 +160,7 @@ Go to **Configure** > **Routing** > **Static routes** to add an XFRM interface-b
 
 ### GRE
 
-Add a GRE or SD-WAN route or both.
+Add a GRE route, an SD-WAN route, or both depending on your routing requirements.
 
 #### GRE route
 
@@ -189,7 +189,7 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 The Cloudflare dashboard monitors the health of all anycast tunnels on your account that route traffic from Cloudflare to your origin network. Refer to <a href={props.checkTunnelHealthInTheDashboardUrl}>Check tunnel health in the dashboard</a> for more information.
 
-### Make Cloudflare health checks work
+### Configure Cloudflare health checks
 
 1. The ICMP probe packet from Cloudflare must be the type ICMP request, with anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
 
@@ -248,7 +248,7 @@ The corresponding XFRM interface will also show a **Connected** status.
 
 ### GRE
 
-Access the CLI and type `system gre tunnel show` to check the status of a GRE tunnel. When the tunnel is working, its Status will show up as **Enabled**.
+Access the CLI and type `system gre tunnel show` to check the status of a GRE tunnel. When the tunnel is working, its status will show up as **Enabled**.
 
 ![The GRE tunnel will show a status of Enabled when working.](~/assets/images/magic-wan/third-party/sophos-firewall/gre-status-enabled.png)
 

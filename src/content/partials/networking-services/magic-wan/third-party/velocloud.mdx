@@ -119,25 +119,25 @@ Select **Save** to apply changes for the Profile.
 
 - **Service** **Name**: Name of destination here. For example, `Magic_WAN_vc-edge-03`.
 - **Tunneling Protocol**: **IPsec**
-- **Service Type**: *Generic IKEv2 Router (Route Based VPN)*
-- **Tunnel Mode**: *Active/Hot-Standby* or *Active/Standby*
+- **Service Type**: _Generic IKEv2 Router (Route Based VPN)_
+- **Tunnel Mode**: _Active/Hot-Standby_ or _Active/Standby_
 
 ### IKE/IPsec settings
 
 1. In the **IKE/IPsec Settings** tab, select:
-   1. **IP Version**: *IPv4*
+   1. **IP Version**: _IPv4_
    2. **Primary VPN Gateway**
       1. **Public IP**: Specify one of the two <a href={props.configureTunnelEndpointsUrl}>anycast IPs provided by Cloudflare</a>.
 2. In **IKE Proposal**, expand **View advanced settings for IKE Proposal**:
-   1. **Encryption**: *AES 256 CBC*
-   2. **DH Group**: *14*
-   3. **Hash**: *SHA-256*
-   4. **IKE SA Lifetime (min)**: *1440*
+   1. **Encryption**: _AES 256 CBC_
+   2. **DH Group**: _14_
+   3. **Hash**: _SHA-256_
+   4. **IKE SA Lifetime (min)**: _1440_
    5. **DPD Timeout(sec)**: **20**
 3. Expand **View advanced settings for IPsec Proposal**:
-   1. **Encryption**: *AES 256 CBC*
-   2. **PFS**: *14*
-   3. **Hash**: *SHA 256*
+   1. **Encryption**: _AES 256 CBC_
+   2. **PFS**: _14_
+   3. **Hash**: _SHA 256_
    4. **IPsec SA Lifetime (min)**: **480**
 4. Scroll up **Secondary VPN Gateway**, and select **Add**.
    1. **Public IP**: Specify the second of the two anycast IPs provided by Cloudflare
@@ -150,10 +150,10 @@ Select **Save** to apply changes for the Profile.
 2. Select the following settings:
    1. **Mode**: SD-WAN Edge
    2. **Name**: The name for your edge. For example, ` vc-edge-03`
-   3. **Model**: *Virtual Edge* (select the model of your Arista VeloCloud Edge appliance)
+   3. **Model**: _Virtual Edge_ (select the model of your Arista VeloCloud Edge appliance)
    4. **Profile**: Select the Profile created in the Provision configuration section. For example, `vc-edge-03-profile`
    5. **Edge License**: Select the appropriate license
-   6. **Authentication**: *Certificate Acquire*
+   6. **Authentication**: _Certificate Acquire_
    7. **Encrypt Device Secrets**: Unchecked (do not select)
    8. **High Availability**: Unchecked (configure accordingly based on your environment)
    9. **Contact Info**: Provide a local contact name and local contact email
@@ -178,18 +178,18 @@ Once the Edge device is added, you should land on the **Device** tab.
 3. Select **GE3** to open the properties for the WAN interface.
 4. Many of the properties in this section were inherited from the Profile — as such, they are greyed out. You can select **Override** to modify the configuration specifically for this interface.
 5. Scroll down to **IPv4 Settings**, and configure the following options:
-   1. **Addressing Type**: *Static* (this is inherited from the Profile)
+   1. **Addressing Type**: _Static_ (this is inherited from the Profile)
    2. **IP Address**: Specify the WAN interface IP address
    3. **CIDR Prefix**: Add your subnet mask in Classless Inter-Domain Routing (CIDR) notation
    4. **Gateway**: Default Gateway (`0.0.0.0/0`)
    5. All other settings are inherited from the Profile.
 6. Scroll down and select **Save**.
-7. Select **G4** to open the properties for the LAN interface.
+7. Select **GE4** to open the properties for the LAN interface.
 8. Scroll down to **IPv4 Settings**, and configure the following options:
-   1. Addressing Type: Static (inherited from the Profile)
-   2. IP Address: Specify the WAN interface IP address
-   3. CIDR Prefix: (subnet mask in CIDR notation)
-   4. Gateway: Default Gateway (0.0.0.0/0)
+   1. **Addressing Type**: Static (inherited from the Profile)
+   2. **IP Address**: Specify the WAN interface IP address
+   3. **CIDR Prefix**: (subnet mask in CIDR notation)
+   4. **Gateway**: Default Gateway (0.0.0.0/0)
    5. All other settings are inherited from the Profile.
 9. Scroll down and select **Save**.
 
@@ -200,7 +200,7 @@ Note the indicator next to **GE3**. The steps in the Profile section disabled **
 ![Note the indicator next to GE3.](~/assets/images/magic-wan/third-party/velocloud/image2.png)
 
 1. Scroll down to **WAN Link Configuration** > **Add User Defined WAN Link**, and configure the following options:
-   1. **Link Type**: *Public* (the WAN interface is connected directly to the Internet in this example — you may need to select *Private* depending on your environment)
+   1. **Link Type**: _Public_ (the WAN interface is connected directly to the Internet in this example — you may need to select _Private_ depending on your environment)
    2. **Interfaces**: Check the box for **GE3** (WAN Interface)
 2. This example assumes default settings under **View optional** **configuration** and **View advanced settings**.
 3. Select **Add Link** to save the changes.
@@ -251,7 +251,7 @@ Configure a minimum of three IPsec tunnels. This example demonstrates two routes
     - This does not need to be specified under Site Subnets as it is local.
   - Assume two remote sites, each of which need to be defined as Site Subnets and routed through both the Primary VPN Gateway and Secondary VPN Gateway.
     - 172.16.32.0/24
-    - 72.16.33.0/24
+    - 172.16.33.0/24
 
 1. Select the **Site Subnets** > **Add**. Then, select the following configurations for routes:
    1. Tunnel Health Check - Primary:
@@ -280,14 +280,14 @@ Arista VeloCloud's Business Policies allow for intelligent routing of traffic de
 2. Select the **Business Policy** tab.
 3. Select **Add** to create a Business Policy Rule:
    1. **Rule Name**: Provide a meaningful name to describe Internet traffic routed through the Cloudflare global anycast network.
-   2. **IP Version**: *IPv4*
+   2. **IP Version**: _IPv4_
    3. **Match**
-      1. **Source**: Select *Any*, *Object Groups*, or *Define* to classify the relevant traffic flows.
-      2. **Destination**: Select *Define* > *Internet*
-      3. **Application**: *Any*
+      1. **Source**: Select _Any_, _Object Groups_, or _Define_ to classify the relevant traffic flows.
+      2. **Destination**: Select _Define_ > _Internet_
+      3. **Application**: _Any_
    4. **Action**
       1. **Priority**: Normal
       2. **Enable Rate Limit**: Unchecked
-      3. **Network Service**: *Internet Backhaul* > *Non SD-WAN Destination through Edge / Cloud Security Service*.
+      3. **Network Service**: _Internet Backhaul_ > _Non SD-WAN Destination through Edge / Cloud Security Service_.
       4. **Non SD-WAN Destination through Edge / Cloud Security Service**: Select the Network Service associated with the respective Edge device. For example, `Magic_WAN_vc-edge-03`.
 4. Select **Create** to save the rule.
