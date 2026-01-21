@@ -3,6 +3,95 @@ title: Configure a tunnel
 pcx_content_type: navigation
 sidebar:
   order: 3
-  group:
-    hideIndex: true
 ---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+After [creating your Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/), you can configure various aspects of how `cloudflared` runs and connects your infrastructure to Cloudflare's network. This section covers advanced configuration options to optimize tunnel performance, security, and availability.
+
+All tunnel connections between `cloudflared` and Cloudflare's edge are secured with TLS 1.3 and post-quantum encryption by default, ensuring your traffic is protected against current and future cryptographic threats.
+
+## Configuration options
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Configure cloudflared parameters"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/"
+>
+
+Modify tunnel service parameters to control how `cloudflared` runs on your system, including logging, connection settings, and protocol options.
+
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Tunnel permissions"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/"
+>
+
+Manage tunnel tokens and control who can run your remotely-managed tunnels.
+
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Tunnel with firewall"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/"
+>
+
+Configure firewall rules to allow `cloudflared` egress traffic while blocking all ingress, implementing a positive security model.
+
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Tunnel availability and failover"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/"
+>
+
+Deploy multiple `cloudflared` replicas for high availability and automatic failover across your infrastructure.
+
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Cipher suites"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cipher-suites/"
+>
+
+Review the TLS cipher suites supported by `cloudflared` for secure connections between your origin and Cloudflare's network.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## Common configuration scenarios
+
+### Optimize for production
+
+For production deployments, consider:
+
+- **Deploy replicas** - Run multiple `cloudflared` instances for redundancy
+- **Configure logging** - Set appropriate log levels for monitoring and troubleshooting
+- **Review system requirements** - Ensure your infrastructure meets performance needs
+- **Configure firewall rules** - Implement egress-only traffic patterns for security
+
+### Secure your tunnel
+
+Enhance tunnel security by:
+
+- **Managing tunnel tokens** - Control access to your tunnel credentials
+- **Configuring firewall rules** - Allow only necessary outbound connections
+- **Implementing least privilege** - Grant minimal permissions needed for tunnel operation
+
+### Improve reliability
+
+Maximize tunnel uptime with:
+
+- **Multiple replicas** - Deploy `cloudflared` across different hosts
+- **Health monitoring** - Configure logging to track connection status
+- **Load balancing** - Distribute traffic across tunnel connections
+- **Automatic failover** - Leverage built-in connection redundancy
+
+## Next steps
+
+- [Monitor your tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/) to track performance and troubleshoot issues
+- [Configure routes](/cloudflare-one/networks/routes/) to control how traffic reaches your applications
+- [Set up private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) for internal resource access
