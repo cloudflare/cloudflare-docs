@@ -1,0 +1,147 @@
+---
+pcx_content_type: concept
+title: Deploy Hooks
+description: Generate unique URLs that trigger new builds when they receive an HTTP POST request.
+sidebar:
+  order: 8
+---
+
+import { DashButton } from "~/components";
+
+Deploy Hooks enable you to trigger builds from sources other than commits to your Git repository. Each Deploy Hook generates a unique URL that accepts HTTP POST requests to start a new build. Use Deploy Hooks to connect Workers Builds with external systems and workflows. For example:
+
+- Rebuild automatically when content changes in a headless CMS
+- Build on a schedule using external CRON services
+- Create custom CI/CD pipelines that deploy based on specific conditions
+
+## Creating a Deploy Hook
+
+Before creating a Deploy Hook, ensure your Worker is [connected to a Git repository](/workers/ci-cd/builds/git-integration/).
+
+1. Go to **Workers & Pages** and select your Worker.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Go to **Settings** > **Builds** > **Deploy Hooks**.
+3. Enter a **name** and select the **branch** to build.
+4. Select **Create** and copy the URL.
+
+:::note
+Pick a descriptive name so you can easily identify what triggers each Deploy Hook. If you have multiple content sources, you may want separate hooks for each — otherwise, one hook per branch is sufficient.
+:::
+
+## Triggering a Deploy Hook
+
+Make a POST request to your Deploy Hook URL to start a build.
+
+```bash title="Example request"
+curl -X POST https://api.cloudflare.com/client/v4/workers/builds/deploy_hooks/{deploy_hook_id}
+```
+
+```json title="Example response"
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "build_uuid": "build_xyz123",
+    "branch": "main",
+    "worker": "my-blog"
+  }
+}
+```
+
+No authorization header is required — the URL contains a unique identifier that serves as authentication.
+
+Once the request is sent, the build appears in your Worker's deployment history.
+
+## Security
+
+Each Deploy Hook URL contains a unique identifier that serves as its authentication. Anyone with access to the URL can trigger builds, so store it as securely as you would an API token.
+
+If a URL is compromised, delete the Deploy Hook and create a new one.
+
+## Limits
+
+Builds triggered by Deploy Hooks are rate limited:
+
+| Scope | Rate limit |
+| ----- | ---------- |
+| Per Worker | 10 builds/min |
+| Per account | 100 builds/min |
+
+---
+
+## CMS integration
+
+Most headless CMS platforms support webhooks that can call your Deploy Hook URL when content changes. The setup is similar across platforms:
+
+1. Find the webhooks settings in your CMS (usually under Settings or Integrations)
+2. Create a new webhook and paste your Deploy Hook URL
+3. Select which events should trigger the webhook (for example, publish, unpublish, or update)
+
+Refer to your CMS documentation for specific instructions. Popular platforms with webhook support include Contentful, Sanity, Strapi, Storyblok, DatoCMS, and Prismic.
+
+---
+
+## Using the Builds API
+
+For some use cases, you may prefer to call the [Workers Builds API](/api/resources/workers/subresources/builds/methods/create/) directly instead of using Deploy Hooks.
+
+**When to use the Builds API:**
+
+- **More control over authentication** — Deploy Hooks use a secret URL model where anyone with the URL can trigger builds. The Builds API uses standard API token authentication, which some organizations prefer for security policies and audit logging.
+- **Dynamic branch selection** — Deploy Hooks are tied to a specific branch. With the API, you can specify the branch in the request body, avoiding the need to create separate hooks for each branch.
+
+```bash title="Example request"
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/builds" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{"branch": "main"}'
+```
+
+This requires an API token with **Workers Builds:Edit** permission. Create one at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens).
+
+### Deploy Hook Proxy
+
+Some CMS platforms like Ghost and ButterCMS can only send simple webhook requests — they cannot include custom Authorization headers. If you want to use the Builds API with these platforms (rather than a secret URL), you can deploy a proxy Worker that accepts the webhook and adds the required authentication before forwarding to the Builds API.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/yomna-shousha/deploy-hook-proxy-template)
+
+The proxy accepts requests in this format:
+
+```
+POST https://{proxy}.workers.dev/{worker-name}?secret={secret}&branch={branch}
+```
+
+#### Manual setup
+
+1. Create the project:
+
+```bash
+npm create cloudflare@latest deploy-hooks -- --template=https://github.com/yomna-shousha/deploy-hook-proxy-template
+cd deploy-hooks
+```
+
+2. Add your account ID to `wrangler.jsonc`:
+
+```jsonc
+{
+  "vars": {
+    "ACCOUNT_ID": "your-account-id"
+  }
+}
+```
+
+3. Set the required secrets:
+
+```bash
+wrangler secret put BUILDS_API_TOKEN
+wrangler secret put WEBHOOK_SECRET
+```
+
+4. Deploy:
+
+```bash
+wrangler deploy
+```
