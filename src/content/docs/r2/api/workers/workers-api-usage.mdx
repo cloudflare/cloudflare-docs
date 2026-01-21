@@ -96,6 +96,10 @@ import { TabItem, Tabs } from "~/components";
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
 
+interface Env {
+MY_BUCKET: R2Bucket;
+}
+
 export default class extends WorkerEntrypoint<Env> {
   async fetch(request: Request) {
     const url = new URL(request.url);
@@ -103,14 +107,14 @@ export default class extends WorkerEntrypoint<Env> {
 
     switch (request.method) {
       case "PUT": {
-        await this.env.R2.put(key, request.body, {
+        await this.env.MY_BUCKET.put(key, request.body, {
           onlyIf: request.headers,
           httpMetadata: request.headers,
         });
         return new Response(`Put ${key} successfully!`);
       }
       case "GET": {
-        const object = await this.env.R2.get(key, {
+        const object = await this.env.MY_BUCKET.get(key, {
           onlyIf: request.headers,
           range: request.headers,
         });
@@ -130,7 +134,7 @@ export default class extends WorkerEntrypoint<Env> {
         });
       }
       case "DELETE": {
-        await this.env.R2.delete(key);
+        await this.env.MY_BUCKET.delete(key);
         return new Response("Deleted!");
       }
       default:
@@ -141,8 +145,10 @@ export default class extends WorkerEntrypoint<Env> {
           },
         });
     }
-  }
+
+}
 };
+
 ```
 </TabItem> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
@@ -153,14 +159,14 @@ export default {
 
     switch (request.method) {
       case "PUT": {
-        await this.env.R2.put(key, request.body, {
+        await env.MY_BUCKET.put(key, request.body, {
           onlyIf: request.headers,
           httpMetadata: request.headers,
         });
         return new Response(`Put ${key} successfully!`);
       }
       case "GET": {
-        const object = await this.env.R2.get(key, {
+        const object = await env.MY_BUCKET.get(key, {
           onlyIf: request.headers,
           range: request.headers,
         });
@@ -180,7 +186,7 @@ export default {
         });
       }
       case "DELETE": {
-        await this.env.R2.delete(key);
+        await env.MY_BUCKET.delete(key);
         return new Response("Deleted!");
       }
       default:
@@ -194,52 +200,54 @@ export default {
   }
 }
 ```
+
 </TabItem>
 <TabItem label="Python" icon="seti:python">
 ```py
 from workers import WorkerEntrypoint, Response
 from urllib.parse import urlparse
 
-
 class Default(WorkerEntrypoint):
-	async def fetch(self, request):
-		url = urlparse(request.url)
-		key = url.path[1:]
+async def fetch(self, request):
+url = urlparse(request.url)
+key = url.path[1:]
 
-		if request.method == "PUT":
-			await self.env.R2.put(
-				key,
-				request.body,
-				onlyIf=request.headers,
-				httpMetadata=request.headers,
-			)
-			return Response(f"Put {key} successfully!")
-		elif request.method == "GET":
-			obj = await self.env.R2.get(
-				key,
-				onlyIf=request.headers,
-				range=request.headers,
-			)
+        if request.method == "PUT":
+            await self.env.MY_BUCKET.put(
+                key,
+                request.body,
+                onlyIf=request.headers,
+                httpMetadata=request.headers,
+            )
+            return Response(f"Put {key} successfully!")
+        elif request.method == "GET":
+            obj = await self.env.MY_BUCKET.get(
+                key,
+                onlyIf=request.headers,
+                range=request.headers,
+            )
 
-			if obj is None:
-				return Response("Object Not Found", status=404)
+            if obj is None:
+                return Response("Object Not Found", status=404)
 
-			# When no body is present, preconditions have failed
-			body = obj.body if hasattr(obj, "body") else None
-			status = 200 if hasattr(obj, "body") else 412
+            # When no body is present, preconditions have failed
+            body = obj.body if hasattr(obj, "body") else None
+            status = 200 if hasattr(obj, "body") else 412
 
-			headers = {"etag": obj.httpEtag}
-			return Response(body, status=status, headers=headers)
-		elif request.method == "DELETE":
-			await self.env.R2.delete(key)
-			return Response("Deleted!")
-		else:
-			return Response(
-				"Method Not Allowed",
-				status=405,
-				headers={"Allow": "PUT, GET, DELETE"},
-			)
+            headers = {"etag": obj.httpEtag}
+            return Response(body, status=status, headers=headers)
+        elif request.method == "DELETE":
+            await self.env.MY_BUCKET.delete(key)
+            return Response("Deleted!")
+        else:
+            return Response(
+                "Method Not Allowed",
+                status=405,
+                headers={"Allow": "PUT, GET, DELETE"},
+            )
+
 ```
+
 </TabItem>
 </Tabs>
 <Render file="request-dot-clone-warning" product="workers" />
@@ -402,3 +410,7 @@ By completing this guide, you have successfully installed Wrangler and deployed 
 
 1. [Workers Tutorials](/workers/tutorials/)
 2. [Workers Examples](/workers/examples/)
+
+```
+
+```
