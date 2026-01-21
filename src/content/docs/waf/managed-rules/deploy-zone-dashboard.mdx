@@ -21,15 +21,6 @@ To deploy a managed ruleset with the default configuration:
 
 <Render file="dash-deploy-managed-ruleset-zone" product="waf" />
 
-<Render
-	file="dash-deploy-managed-ruleset-zone"
-	product="waf"
-	params={{
-		rulesetNameOldDash: "Cloudflare Managed Ruleset",
-		rulesetNameNewDash: "Cloudflare managed ruleset",
-	}}
-/>
-
 To temporarily turn off a managed ruleset without deleting its deployment
 configuration, use the toggle next to the rule that deploys the managed ruleset.
 
@@ -46,29 +37,29 @@ To skip one or more rules — or even entire managed rulesets — for specific i
 Some managed rulesets may not allow custom configuration, depending on your Cloudflare plan.
 :::
 
-### Configure field values for all the rules
+### Configure all the rules in a managed ruleset
 
 To configure rule field values for all the rules in a managed ruleset:
 
-<Render file="dash-configure-managed-ruleset-all-rules" product="waf" />
+<Render file="dash-configure-all-rules" product="waf" />
 
-### Configure rules in bulk in a managed ruleset
+### Configure rules of a managed ruleset with a specific tag
 
-<Render file="dash-configure-rules-in-bulk" product="waf" />
+<Render file="dash-configure-rules-by-tag" product="waf" />
 
-### Configure a single rule in a managed ruleset
+### Configure individual rules of a managed ruleset
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 <Render file="managed-rules-browse-zone" product="waf" />
 
-<Render file="managed-ruleset-configure-single-rule" product="waf" />
+<Render file="managed-ruleset-configure-individual-rules" product="waf" />
 
 </TabItem> <TabItem label="New dashboard" icon="rocket">
 
 <Render file="managed-rules-browse-zone-new-nav" product="waf" />
 
-<Render file="managed-ruleset-configure-single-rule" product="waf" />
+<Render file="managed-ruleset-configure-individual-rules" product="waf" />
 
 </TabItem> </Tabs>
 

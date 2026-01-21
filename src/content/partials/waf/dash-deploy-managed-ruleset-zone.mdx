@@ -20,21 +20,19 @@ import managedRulesTabImg from "~/assets/images/waf/waf-managed-rules-tab.png";
 
 3. { props.rulesetNameOldDash ? (
      <>
-	     <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to <strong>{props.rulesetNameOldDash}</strong>.</p>
-	   </>
-	) : (
-	   <>
-	     <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to a managed ruleset.</p>
+       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to <strong>{props.rulesetNameOldDash}</strong>.</p>
+     </>
+   ) : (
+     <>
+       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to a managed ruleset.</p>
 
-			 <Image src={managedRulesTabImg} alt="Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment." />
-	   </>
-	)}
+       <Image src={managedRulesTabImg} alt="Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment." />
+     </>
+   )}
 
 {/* prettier-ignore-end */}
 
 </Steps>
-
-This operation deploys the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
 
 </TabItem> <TabItem label="New dashboard" icon="rocket">
 
@@ -68,3 +66,5 @@ This operation deploys the managed ruleset for the current zone, creating a new 
 </Steps>
 
 </TabItem> </Tabs>
+
+This operation deploys the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
