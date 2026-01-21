@@ -12,10 +12,6 @@ Previously, `wrangler types` only generated types for bindings in the top-level 
 
 Now, running `wrangler types` collects bindings from all environments and includes them in the generated `Env` type. This ensures your types are complete regardless of which environment you deploy to.
 
-## Type conflict detection
-
-If the same binding name exists with different types across environments (for example, `CACHE` is a KV namespace in one environment but an R2 bucket in another), Wrangler will throw an error to prevent type conflicts.
-
 ## Generating types for a specific environment
 
 If you want the previous behavior of generating types for only a specific environment, you can use the `--env` flag:
