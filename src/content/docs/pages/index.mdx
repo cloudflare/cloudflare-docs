@@ -1,120 +1,846 @@
----
-title: Cloudflare Pages
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0B1220" />
+  <title>DK Removals & Logistics | Reliable Home & Office Moves</title>
+  <meta name="description" content="DK Removals & Logistics: home moves, office relocations, student moves, van & Luton services, packing, dismantling and delivery. Fast quotes and professional crews." />
 
-pcx_content_type: overview
-sidebar:
-  order: 1
-head:
-  - tag: title
-    content: Overview
----
+  <!-- Open Graph -->
+  <meta property="og:title" content="DK Removals & Logistics" />
+  <meta property="og:description" content="Reliable, careful, on-time removals. Get an instant quote and book your move." />
+  <meta property="og:type" content="website" />
 
-import {
-	CardGrid,
-	Description,
-	Feature,
-	LinkTitleCard,
-	Plan,
-	RelatedProduct,
-	Render,
-	Aside,
-} from "~/components";
+  <!-- Basic SEO -->
+  <link rel="icon" href="assets/favicon.png" />
+  <style>
+    :root{
+      --bg:#0B1220;
+      --panel:#0F1A2E;
+      --card:#111B30;
+      --text:#EAF0FF;
+      --muted:#B7C3E6;
+      --gold:#D4AF37;
+      --gold2:#F1D67A;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1180px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(212,175,55,.18), transparent 60%),
+                  radial-gradient(900px 500px at 95% 0%, rgba(241,214,122,.10), transparent 55%),
+                  linear-gradient(180deg, #070B13 0%, var(--bg) 28%, #070B13 100%);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px;}
+    .topbar{
+      position:sticky; top:0; z-index:60;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width: 240px;
+    }
+    .logo{
+      width:42px;height:42px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(212,175,55,.25), rgba(255,255,255,.05));
+      border:1px solid rgba(212,175,55,.35);
+      box-shadow: 0 8px 24px rgba(212,175,55,.10);
+      display:grid; place-items:center;
+      font-weight:800; letter-spacing:.5px;
+      color:var(--gold2);
+    }
+    .brand h1{
+      font-size:14px; margin:0; line-height:1.1;
+    }
+    .brand p{
+      margin:2px 0 0; color:var(--muted); font-size:12px;
+    }
+    .menu{
+      display:flex; gap:16px; align-items:center; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .menu a{
+      color:var(--muted);
+      font-size:13px;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid transparent;
+    }
+    .menu a:hover{
+      color:var(--text);
+      border-color:rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+    }
+    .ctaRow{display:flex; gap:10px; align-items:center;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:700;
+      font-size:13px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color:rgba(255,255,255,.20);}
+    .btn.gold{
+      background: linear-gradient(135deg, rgba(212,175,55,.95), rgba(241,214,122,.85));
+      color:#1b1402;
+      border-color: rgba(241,214,122,.55);
+      box-shadow: 0 10px 28px rgba(212,175,55,.18);
+    }
+    .btn.gold:hover{background: linear-gradient(135deg, rgba(241,214,122,.95), rgba(212,175,55,.90));}
+    .btn.ghost{background:transparent;}
+    .mobileToggle{display:none;}
+    .hero{
+      padding:54px 0 26px;
+    }
+    .grid2{
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .heroCard{
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+    }
+    .heroCard:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 220px at 25% 0%, rgba(212,175,55,.20), transparent 60%),
+                  radial-gradient(520px 240px at 95% 30%, rgba(241,214,122,.10), transparent 55%);
+      pointer-events:none;
+    }
+    .heroInner{position:relative; z-index:1;}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,.30);
+      background: rgba(212,175,55,.10);
+      color: var(--gold2);
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.3px;
+    }
+    .hero h2{margin:14px 0 10px; font-size:40px; line-height:1.05;}
+    .hero p{margin:0; color:var(--muted); font-size:15px; line-height:1.6; max-width: 58ch;}
+    .heroBadges{
+      margin-top:16px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .pill{
+      padding:8px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      color:var(--muted);
+      background: rgba(255,255,255,.03);
+      font-size:12px;
+      font-weight:700;
+    }
+    .heroActions{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;}
+    .panel{
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(17,27,48,.85), rgba(15,26,46,.78));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      padding:20px;
+    }
+    .panel h3{margin:0 0 10px; font-size:16px;}
+    .panel p{margin:0 0 14px; color:var(--muted); font-size:13px; line-height:1.55;}
+    form{display:grid; gap:10px;}
+    .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    label{font-size:12px; color:var(--muted); font-weight:700;}
+    input, select, textarea{
+      width:100%;
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline:none;
+    }
+    input::placeholder, textarea::placeholder{color: rgba(183,195,230,.65);}
+    input:focus, select:focus, textarea:focus{border-color: rgba(212,175,55,.55); box-shadow: 0 0 0 4px rgba(212,175,55,.10);}
+    textarea{min-height: 92px; resize: vertical;}
+    .note{
+      font-size:12px; color: var(--muted); line-height:1.45;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding-top:12px;
+      margin-top:6px;
+    }
 
-<Description>
+    section{padding:34px 0;}
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .sectionTitle h3{margin:0; font-size:22px;}
+    .sectionTitle p{margin:0; color:var(--muted); font-size:13px; max-width: 60ch;}
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    .card{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.10);
+      padding:16px;
+      min-height: 130px;
+    }
+    .card h4{margin:0 0 8px; font-size:15px;}
+    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.55;}
+    .icon{
+      width:34px;height:34px;border-radius:12px;margin-bottom:10px;
+      border:1px solid rgba(212,175,55,.30);
+      background: rgba(212,175,55,.10);
+      display:grid; place-items:center;
+      color: var(--gold2);
+      font-weight:900;
+    }
 
-Create full-stack applications that are instantly deployed to the Cloudflare global network.
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
+    }
+    .step{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding:14px;
+    }
+    .step b{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(212,175,55,.12);
+      border:1px solid rgba(212,175,55,.25);
+      color:var(--gold2);
+      font-size:12px;
+      margin-bottom:10px;
+    }
+    .step h4{margin:0 0 6px; font-size:14px;}
+    .step p{margin:0; color:var(--muted); font-size:13px; line-height:1.55;}
 
-</Description>
+    .split{
+      display:grid; grid-template-columns: 1fr 1fr; gap:12px;
+    }
+    .faq details{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding:12px 14px;
+    }
+    .faq summary{
+      cursor:pointer;
+      font-weight:800;
+      color:var(--text);
+      list-style:none;
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .faq summary::-webkit-details-marker{display:none;}
+    .faq p{margin:10px 0 0; color:var(--muted); font-size:13px; line-height:1.6;}
 
-<Plan type="all" />
+    .footer{
+      padding:28px 0 34px;
+      border-top:1px solid var(--line);
+      color: var(--muted);
+      font-size:13px;
+    }
+    .footerGrid{
+      display:grid; grid-template-columns: 1.2fr .8fr .8fr; gap:12px;
+    }
+    .footer a{color: var(--muted);}
+    .footer a:hover{color: var(--text);}
+    .tiny{font-size:12px; color:rgba(183,195,230,.75);}
 
-Deploy your Pages project by connecting to [your Git provider](/pages/get-started/git-integration/), uploading prebuilt assets directly to Pages with [Direct Upload](/pages/get-started/direct-upload/) or using [C3](/pages/get-started/c3/) from the command line.
+    /* Floating quick actions */
+    .float{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      display:grid;
+      gap:10px;
+      z-index:80;
+    }
+    .fab{
+      width:52px;height:52px;
+      border-radius: 18px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      cursor:pointer;
+      font-weight:900;
+    }
+    .fab.gold{background: linear-gradient(135deg, rgba(212,175,55,.95), rgba(241,214,122,.85)); color:#1b1402; border-color: rgba(241,214,122,.55);}
+    .fab:hover{transform: translateY(-1px);}
+    .sr{position:absolute; left:-9999px;}
 
----
+    /* Responsive */
+    @media (max-width: 980px){
+      .grid2{grid-template-columns:1fr;}
+      .cards{grid-template-columns:1fr 1fr;}
+      .steps{grid-template-columns:1fr 1fr;}
+      .footerGrid{grid-template-columns:1fr;}
+      .brand{min-width:auto;}
+      .menu{display:none;}
+      .mobileToggle{display:inline-flex;}
+      .menu.open{
+        display:flex;
+        position:absolute;
+        top:64px; right:18px; left:18px;
+        background: rgba(11,18,32,.96);
+        border:1px solid rgba(255,255,255,.10);
+        border-radius:18px;
+        padding:10px;
+        box-shadow: var(--shadow);
+      }
+      .menu.open .ctaRow{width:100%; justify-content:stretch; flex-wrap:wrap;}
+      .menu.open a{flex:1 1 auto; text-align:center;}
+    }
+    @media (max-width: 560px){
+      .cards{grid-template-columns:1fr;}
+      .steps{grid-template-columns:1fr;}
+      .row2{grid-template-columns:1fr;}
+      .hero h2{font-size:34px;}
+    }
+  </style>
 
-## Features
+  <!-- LocalBusiness schema (edit phone/address/area) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"MovingCompany",
+    "name":"DK Removals & Logistics",
+    "description":"Professional removals & logistics: home moves, office moves, packing, dismantling, van and Luton services.",
+    "areaServed":"United Kingdom",
+    "telephone":"+44-0000-000000",
+    "url":"https://www.example.com"
+  }
+  </script>
+</head>
 
-<Feature header="Pages Functions" href="/pages/functions/">
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="DK Removals & Logistics Home">
+          <div class="logo">dk</div>
+          <div>
+            <h1>DK Removals & Logistics</h1>
+            <p>Professional • Reliable • Honest • On-Time</p>
+          </div>
+        </a>
 
-Use Pages Functions to deploy server-side code to enable dynamic functionality without running a dedicated server.
+        <button class="btn ghost mobileToggle" id="menuBtn" aria-label="Open menu">☰ Menu</button>
 
-</Feature>
+        <div class="menu" id="menu">
+          <a href="#services">Services</a>
+          <a href="#how">How it works</a>
+          <a href="#areas">Areas</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+          <div class="ctaRow">
+            <a class="btn" href="tel:+440000000000">Call</a>
+            <a class="btn gold" href="#quote">Get a Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<Feature header="Rollbacks" href="/pages/configuration/rollbacks/">
+  <main id="top">
+    <!-- HERO -->
+    <div class="wrap hero">
+      <div class="grid2">
+        <div class="heroCard">
+          <div class="heroInner">
+            <span class="kicker">★ Trusted Moves • Careful Handling • Clear Pricing</span>
+            <h2>Move with confidence.<br/>We handle everything.</h2>
+            <p>
+              DK Removals & Logistics provides reliable home and office removals, van & Luton services, packing support,
+              dismantle/reassemble, and same-day logistics — delivered with care, speed, and professionalism.
+            </p>
 
-Rollbacks allow you to instantly revert your project to a previous production deployment.
+            <div class="heroBadges">
+              <span class="pill">Fully planned crew & vehicle</span>
+              <span class="pill">Transparent quotes</span>
+              <span class="pill">Careful lifting & protection</span>
+              <span class="pill">Flexible bookings</span>
+            </div>
 
-</Feature>
+            <div class="heroActions">
+              <a class="btn gold" href="#quote">Get Instant Quote</a>
+              <a class="btn" href="#services">Explore Services</a>
+              <a class="btn ghost" href="https://wa.me/447000000000?text=Hello%20DK%20Removals%20%26%20Logistics%2C%20I%20need%20a%20quote%20for%20a%20move." target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </div>
 
-<Feature header="Redirects" href="/pages/configuration/redirects/">
+        <!-- QUOTE PANEL -->
+        <div class="panel" id="quote">
+          <h3>Get a fast quote (60 seconds)</h3>
+          <p>Fill this form and we’ll respond quickly with a clear breakdown and next steps.</p>
 
-Set up redirects for your Cloudflare Pages project.
+          <!-- IMPORTANT:
+              This demo uses mailto which opens the user's email app (simple and reliable).
+              If you want AUTOMATIC submission, replace action="" with Formspree / your CRM endpoint / Google Apps Script URL.
+          -->
+          <form id="quoteForm">
+            <div class="row2">
+              <div>
+                <label for="name">Client name</label>
+                <input id="name" name="name" placeholder="Your full name" required />
+              </div>
+              <div>
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" placeholder="+44..." required />
+              </div>
+            </div>
 
-</Feature>
+            <div class="row2">
+              <div>
+                <label for="moveDate">Move date</label>
+                <input id="moveDate" name="moveDate" type="date" required />
+              </div>
+              <div>
+                <label for="tier">Service tier</label>
+                <select id="tier" name="tier" required>
+                  <option value="">Select</option>
+                  <option>Economy</option>
+                  <option>Standard</option>
+                  <option>Premium</option>
+                </select>
+              </div>
+            </div>
 
----
+            <div class="row2">
+              <div>
+                <label for="pickup">Pickup postcode</label>
+                <input id="pickup" name="pickup" placeholder="e.g., DD1 4HN" required />
+              </div>
+              <div>
+                <label for="drop">Drop postcode</label>
+                <input id="drop" name="drop" placeholder="e.g., EH1 2NG" required />
+              </div>
+            </div>
 
-## Related products
+            <div class="row2">
+              <div>
+                <label for="hours">Estimated job hours (incl. load/unload)</label>
+                <input id="hours" name="hours" type="number" min="1" step="0.5" placeholder="e.g., 4" required />
+              </div>
+              <div>
+                <label for="crew">Crew size</label>
+                <select id="crew" name="crew" required>
+                  <option value="">Select</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+            </div>
 
-<RelatedProduct header="Workers" href="/workers/" product="workers">
+            <div class="row2">
+              <div>
+                <label for="vehicle">Vehicle type</label>
+                <select id="vehicle" name="vehicle" required>
+                  <option value="">Select</option>
+                  <option>Medium Van</option>
+                  <option>Luton Van</option>
+                </select>
+              </div>
+              <div>
+                <label for="floors">Floors / stairs (ground = 1)</label>
+                <select id="floors" name="floors" required>
+                  <option value="">Select</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                </select>
+              </div>
+            </div>
 
-Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
+            <div class="row2">
+              <div>
+                <label for="longCarry">Long carry (metres)</label>
+                <select id="longCarry" name="longCarry" required>
+                  <option value="">Select</option>
+                  <option>No</option>
+                  <option>Yes</option>
+                </select>
+              </div>
+              <div>
+                <label for="waiting">Waiting time (hours)</label>
+                <input id="waiting" name="waiting" type="number" min="0" step="0.5" placeholder="0" value="0" />
+              </div>
+            </div>
 
-</RelatedProduct>
+            <div class="row2">
+              <div>
+                <label for="packing">Packing required?</label>
+                <select id="packing" name="packing" required>
+                  <option value="">Select</option>
+                  <option>No</option>
+                  <option>Yes</option>
+                </select>
+              </div>
+              <div>
+                <label for="dismantle">Dismantle / reassemble?</label>
+                <select id="dismantle" name="dismantle" required>
+                  <option value="">Select</option>
+                  <option>No</option>
+                  <option>Yes</option>
+                </select>
+              </div>
+            </div>
 
-<RelatedProduct header="R2" href="/r2/" product="r2">
+            <div>
+              <label for="notes">Inventory notes (optional)</label>
+              <textarea id="notes" name="notes" placeholder="e.g., 1 sofa, 20 boxes, bed frame, washing machine..."></textarea>
+            </div>
 
-Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+            <button class="btn gold" type="submit">Send quote request</button>
 
-</RelatedProduct>
+            <div class="note">
+              <b>Prefer WhatsApp?</b> Tap the WhatsApp button and send your pickup/drop postcodes + move date.
+              <br/>
+              <span class="tiny">Tip: Replace phone numbers and email below to your real business contacts.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-<RelatedProduct header="D1" href="/d1/" product="d1">
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <div>
+            <h3>Services</h3>
+            <p>End-to-end removals and logistics — carefully handled, properly planned, and delivered on time.</p>
+          </div>
+          <a class="btn" href="#quote">Get a Quote</a>
+        </div>
 
-D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+        <div class="cards">
+          <div class="card">
+            <div class="icon">H</div>
+            <h4>Home Removals</h4>
+            <p>Flats, houses, student moves — protection, lifting, loading, transport, and unloading done right.</p>
+          </div>
+          <div class="card">
+            <div class="icon">O</div>
+            <h4>Office Relocations</h4>
+            <p>Weekend/evening options available. We move equipment, desks, boxes and keep disruption low.</p>
+          </div>
+          <div class="card">
+            <div class="icon">V</div>
+            <h4>Van & Luton Moves</h4>
+            <p>Medium van and Luton van options to match your inventory size and reduce total trips.</p>
+          </div>
+          <div class="card">
+            <div class="icon">P</div>
+            <h4>Packing Support</h4>
+            <p>Boxes, wrapping and careful packing options — ideal for fragile items and time-saving moves.</p>
+          </div>
+          <div class="card">
+            <div class="icon">D</div>
+            <h4>Dismantle & Reassemble</h4>
+            <p>Beds, wardrobes, tables — we can dismantle, move, and reassemble where required.</p>
+          </div>
+          <div class="card">
+            <div class="icon">S</div>
+            <h4>Same-day Logistics</h4>
+            <p>Collection and delivery of items, store pickups, marketplace deliveries and urgent transport.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</RelatedProduct>
+    <!-- HOW IT WORKS -->
+    <section id="how">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <div>
+            <h3>How it works</h3>
+            <p>Simple steps. Clear communication. Professional delivery.</p>
+          </div>
+        </div>
 
-<RelatedProduct header="Zaraz" href="/zaraz/" product="zaraz">
+        <div class="steps">
+          <div class="step">
+            <b>Step 1</b>
+            <h4>Send details</h4>
+            <p>Use the quote form, call, or WhatsApp. Share date, postcodes, crew size, and vehicle type.</p>
+          </div>
+          <div class="step">
+            <b>Step 2</b>
+            <h4>Receive a clear quote</h4>
+            <p>We respond with a pricing breakdown and the best option for your inventory and schedule.</p>
+          </div>
+          <div class="step">
+            <b>Step 3</b>
+            <h4>Confirm booking</h4>
+            <p>Lock in your move time. Optional deposit confirmation and pre-move checklist shared.</p>
+          </div>
+          <div class="step">
+            <b>Step 4</b>
+            <h4>Move day delivery</h4>
+            <p>Arrive on time, protect items, load safely, transport securely, and unload carefully.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-Offload third-party tools and services to the cloud and improve the speed and security of your website.
+    <!-- AREAS + TRUST -->
+    <section id="areas">
+      <div class="wrap">
+        <div class="split">
+          <div class="card">
+            <h4>Areas covered</h4>
+            <p>
+              We cover local and long-distance moves across the UK.
+              <br/><br/>
+              <b>Common routes:</b> Dundee • Edinburgh • Glasgow • Aberdeen • Perth • Stirling (and beyond).
+              <br/><br/>
+              Tell us your pickup and drop postcodes — we’ll confirm availability fast.
+            </p>
+          </div>
 
-</RelatedProduct>
+          <div class="card">
+            <h4>Why clients choose DK</h4>
+            <p>
+              <b>Professional crews</b> — trained handling and safe lifting.
+              <br/>
+              <b>Transparent quotes</b> — no confusing surprises.
+              <br/>
+              <b>Care-first approach</b> — protection and proper loading.
+              <br/>
+              <b>Communication</b> — you always know what’s happening.
+            </p>
+            <div class="heroActions" style="margin-top:12px;">
+              <a class="btn gold" href="#quote">Get a Quote</a>
+              <a class="btn" href="#contact">Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
----
+    <!-- REVIEWS -->
+    <section id="reviews">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <div>
+            <h3>Client reviews</h3>
+            <p>Add your real reviews here (Google / Facebook / WhatsApp messages). Below are placeholders.</p>
+          </div>
+        </div>
 
-## More resources
+        <div class="cards">
+          <div class="card">
+            <h4>“On time and very careful.”</h4>
+            <p>They wrapped everything properly and moved faster than expected. Excellent communication.</p>
+            <p class="tiny" style="margin-top:10px;">— Customer (Dundee)</p>
+          </div>
+          <div class="card">
+            <h4>“Best moving experience.”</h4>
+            <p>Clear quote, respectful team, and no damage. I’ll recommend DK to anyone moving.</p>
+            <p class="tiny" style="margin-top:10px;">— Customer (Edinburgh)</p>
+          </div>
+          <div class="card">
+            <h4>“Professional office move.”</h4>
+            <p>They handled equipment carefully and finished within the planned time window.</p>
+            <p class="tiny" style="margin-top:10px;">— Customer (Glasgow)</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<CardGrid>
+    <!-- FAQ + CONTACT -->
+    <section id="faq">
+      <div class="wrap">
+        <div class="split">
+          <div class="faq">
+            <div class="sectionTitle">
+              <div>
+                <h3>FAQ</h3>
+                <p>Quick answers to common questions.</p>
+              </div>
+            </div>
 
-<LinkTitleCard title="Limits" href="/pages/platform/limits/" icon="document">
-	Learn about limits that apply to your Pages project (500 deploys per month on
-	the Free plan).
-</LinkTitleCard>
+            <div style="display:grid; gap:10px;">
+              <details>
+                <summary>How do you calculate pricing? <span>+</span></summary>
+                <p>Pricing is based on time, crew size, vehicle type, distance, stairs/floors, and add-ons like packing or dismantling.</p>
+              </details>
+              <details>
+                <summary>Do you do same-day or urgent moves? <span>+</span></summary>
+                <p>Yes, subject to availability. WhatsApp us with postcodes, inventory size and preferred time window.</p>
+              </details>
+              <details>
+                <summary>Do you provide packing materials? <span>+</span></summary>
+                <p>We can provide boxes, wrap, tape and packing support. Tell us what you need in the quote form.</p>
+              </details>
+              <details>
+                <summary>What areas do you cover? <span>+</span></summary>
+                <p>We cover local and long-distance moves across the UK. Share pickup and drop postcodes to confirm quickly.</p>
+              </details>
+            </div>
+          </div>
 
-<LinkTitleCard
-	title="Framework guides"
-	href="/pages/framework-guides/"
-	icon="open-book"
->
-	Deploy popular frameworks such as React, Hugo, and Next.js on Pages.
-</LinkTitleCard>
+          <div class="card" id="contact">
+            <h4>Contact</h4>
+            <p>
+              <b>Phone:</b> <a href="tel:+440000000000">+44 0000 000000</a><br/>
+              <b>WhatsApp:</b> <a target="_blank" rel="noopener"
+                href="https://wa.me/447000000000?text=Hello%20DK%20Removals%20%26%20Logistics%2C%20I%20need%20a%20quote%20for%20a%20move.">
+                Message us on WhatsApp
+              </a><br/>
+              <b>Email:</b> <a href="mailto:quotes@dkremovals.co.uk">quotes@dkremovals.co.uk</a>
+              <br/><br/>
+              <b>Business hours:</b> Mon–Sat (Flexible bookings)
+            </p>
 
-<LinkTitleCard
-	title="Developer Discord"
-	href="https://discord.cloudflare.com"
-	icon="discord"
->
-	Connect with the Workers community on Discord to ask questions, show what you
-	are building, and discuss the platform with other developers.
-</LinkTitleCard>
+            <div class="heroActions" style="margin-top:14px;">
+              <a class="btn gold" href="#quote">Get a Quote</a>
+              <a class="btn" href="tel:+440000000000">Call Now</a>
+              <a class="btn ghost" target="_blank" rel="noopener"
+                 href="https://wa.me/447000000000?text=Hello%20DK%20Removals%20%26%20Logistics%2C%20Please%20help%20me%20book%20a%20move.">
+                WhatsApp
+              </a>
+            </div>
 
-<LinkTitleCard
-	title="@CloudflareDev"
-	href="https://x.com/cloudflaredev"
-	icon="x.com"
->
-	Follow @CloudflareDev on Twitter to learn about product announcements, and
-	what is new in Cloudflare Workers.
-</LinkTitleCard>
+            <p class="tiny" style="margin-top:14px;">
+              Replace placeholders (phone, email, website) with your real DK contacts.
+              If you already have your gold “dk” logo image, I can update the code to use it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</CardGrid>
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="wrap">
+        <div class="footerGrid">
+          <div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+              <div class="logo" style="width:36px;height:36px;border-radius:12px;">dk</div>
+              <div>
+                <b style="color:var(--text);">DK Removals & Logistics</b><br/>
+                <span class="tiny">Professional • Reliable • Honest • On-Time</span>
+              </div>
+            </div>
+            <div class="tiny">© <span id="year"></span> DK Removals & Logistics. All rights reserved.</div>
+          </div>
+
+          <div>
+            <b style="color:var(--text);">Quick links</b><br/>
+            <div style="display:grid; gap:6px; margin-top:10px;">
+              <a href="#services">Services</a>
+              <a href="#how">How it works</a>
+              <a href="#quote">Get a quote</a>
+              <a href="#contact">Contact</a>
+            </div>
+          </div>
+
+          <div>
+            <b style="color:var(--text);">Policies</b><br/>
+            <div style="display:grid; gap:6px; margin-top:10px;">
+              <a href="#" onclick="alert('Add your Terms page later.'); return false;">Terms</a>
+              <a href="#" onclick="alert('Add your Privacy page later.'); return false;">Privacy</a>
+              <a href="#" onclick="alert('Add your Refund/Cancellation policy later.'); return false;">Cancellations</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="float" aria-label="Quick actions">
+      <a class="fab gold" href="#quote" title="Get a Quote"><span class="sr">Get a Quote</span>£</a>
+      <a class="fab" href="tel:+440000000000" title="Call"><span class="sr">Call</span>☎</a>
+      <a class="fab" target="_blank" rel="noopener"
+         href="https://wa.me/447000000000?text=Hello%20DK%20Removals%20%26%20Logistics%2C%20I%20need%20a%20quote%20for%20a%20move."
+         title="WhatsApp"><span class="sr">WhatsApp</span>💬</a>
+    </div>
+  </main>
+
+  <script>
+    // Mobile menu
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('menu');
+    btn?.addEventListener('click', () => menu.classList.toggle('open'));
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Quote form submission via mailto (simple). Replace with your backend later.
+    document.getElementById('quoteForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const payload = Object.fromEntries(data.entries());
+
+      const subject = encodeURIComponent("Quote Request — DK Removals & Logistics");
+      const body = encodeURIComponent(
+        `New quote request:\n\n` +
+        `Name: ${payload.name}\n` +
+        `Phone: ${payload.phone}\n` +
+        `Move date: ${payload.moveDate}\n` +
+        `Service tier: ${payload.tier}\n` +
+        `Pickup postcode: ${payload.pickup}\n` +
+        `Drop postcode: ${payload.drop}\n` +
+        `Estimated hours: ${payload.hours}\n` +
+        `Crew size: ${payload.crew}\n` +
+        `Vehicle type: ${payload.vehicle}\n` +
+        `Floors/stairs: ${payload.floors}\n` +
+        `Long carry: ${payload.longCarry}\n` +
+        `Waiting time: ${payload.waiting}\n` +
+        `Packing: ${payload.packing}\n` +
+        `Dismantle: ${payload.dismantle}\n` +
+        `Notes: ${payload.notes || "-"}\n\n` +
+        `Sent from DK website form.`
+      );
+
+      // Change this email to your business email
+      window.location.href = `mailto:quotes@dkremovals.co.uk?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
