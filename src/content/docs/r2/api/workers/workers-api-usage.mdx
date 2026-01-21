@@ -103,17 +103,11 @@ export default class extends WorkerEntrypoint<Env> {
 
     switch (request.method) {
       case "PUT": {
-        await this.env.R2.put(key, request.body, {
-          onlyIf: request.headers,
-          httpMetadata: request.headers,
-        });
+        await this.env.MY_BUCKET.put(key, request.body);
         return new Response(`Put ${key} successfully!`);
       }
       case "GET": {
-        const object = await this.env.R2.get(key, {
-          onlyIf: request.headers,
-          range: request.headers,
-        });
+        const object = await this.env.MY_BUCKET.get(key);
 
         if (object === null) {
           return new Response("Object Not Found", { status: 404 });
@@ -123,14 +117,12 @@ export default class extends WorkerEntrypoint<Env> {
         object.writeHttpMetadata(headers);
         headers.set("etag", object.httpEtag);
 
-        // When no body is present, preconditions have failed
-        return new Response("body" in object ? object.body : undefined, {
-          status: "body" in object ? 200 : 412,
+        return new Response(object.body, {
           headers,
         });
       }
       case "DELETE": {
-        await this.env.R2.delete(key);
+        await this.env.MY_BUCKET.delete(key);
         return new Response("Deleted!");
       }
       default:
@@ -153,17 +145,11 @@ export default {
 
     switch (request.method) {
       case "PUT": {
-        await this.env.R2.put(key, request.body, {
-          onlyIf: request.headers,
-          httpMetadata: request.headers,
-        });
+        await env.MY_BUCKET.put(key, request.body);
         return new Response(`Put ${key} successfully!`);
       }
       case "GET": {
-        const object = await this.env.R2.get(key, {
-          onlyIf: request.headers,
-          range: request.headers,
-        });
+        const object = await env.MY_BUCKET.get(key);
 
         if (object === null) {
           return new Response("Object Not Found", { status: 404 });
@@ -173,14 +159,12 @@ export default {
         object.writeHttpMetadata(headers);
         headers.set("etag", object.httpEtag);
 
-        // When no body is present, preconditions have failed
-        return new Response("body" in object ? object.body : undefined, {
-          status: "body" in object ? 200 : 412,
+        return new Response(object.body, {
           headers,
         });
       }
       case "DELETE": {
-        await this.env.R2.delete(key);
+        await env.MY_BUCKET.delete(key);
         return new Response("Deleted!");
       }
       default:
@@ -207,31 +191,18 @@ class Default(WorkerEntrypoint):
 		key = url.path[1:]
 
 		if request.method == "PUT":
-			await self.env.R2.put(
-				key,
-				request.body,
-				onlyIf=request.headers,
-				httpMetadata=request.headers,
-			)
+			await self.env.MY_BUCKET.put(key, request.body)
 			return Response(f"Put {key} successfully!")
 		elif request.method == "GET":
-			obj = await self.env.R2.get(
-				key,
-				onlyIf=request.headers,
-				range=request.headers,
-			)
+			obj = await self.env.MY_BUCKET.get(key)
 
 			if obj is None:
 				return Response("Object Not Found", status=404)
 
-			# When no body is present, preconditions have failed
-			body = obj.body if hasattr(obj, "body") else None
-			status = 200 if hasattr(obj, "body") else 412
-
 			headers = {"etag": obj.httpEtag}
-			return Response(body, status=status, headers=headers)
+			return Response(obj.body, headers=headers)
 		elif request.method == "DELETE":
-			await self.env.R2.delete(key)
+			await self.env.MY_BUCKET.delete(key)
 			return Response("Deleted!")
 		else:
 			return Response(
