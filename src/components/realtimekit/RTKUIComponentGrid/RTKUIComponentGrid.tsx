@@ -2,7 +2,10 @@ import { useState, useMemo } from "react";
 import RTKUIComponent from "../RTKUIComponent/RTKUIComponent";
 
 const componentGalleryImageModules = import.meta.glob(
-	"../../../assets/images/realtime/realtimekit/web/components-gallery/*.svg",
+	[
+		"../../../assets/images/realtime/realtimekit/web/components-gallery/*.svg",
+		"../../../assets/images/realtime/realtimekit/web/components-gallery/*.png",
+	],
 	{ eager: true },
 );
 
@@ -97,6 +100,27 @@ const RTKUIComponentGrid = () => {
 			imagePath: imageSrc("rtk-tooltip.svg"),
 			componentName: "rtk-tooltip",
 			tags: ["tooltip", "controlbar", "button"],
+		},
+		{
+			id: "rtk-speaker-selector",
+			name: "Device Selector - Speaker",
+			imagePath: imageSrc("rtk-speaker-selector.png"),
+			componentName: "rtk-speaker-selector",
+			tags: ["speaker", "setting", "selector", "controlbar", "button"],
+		},
+		{
+			id: "rtk-microphone-selector",
+			name: "Device Selector - Microphone",
+			imagePath: imageSrc("rtk-microphone-selector.png"),
+			componentName: "rtk-microphone-selector",
+			tags: ["microphone", "setting", "selector", "controlbar", "button"],
+		},
+		{
+			id: "rtk-camera-selector",
+			name: "Device Selector - Camera",
+			imagePath: imageSrc("rtk-camera-selector.png"),
+			componentName: "rtk-camera-selector",
+			tags: ["camera", "setting", "selector", "controlbar", "button"],
 		},
 	];
 	const uiComponents = [
@@ -203,7 +227,7 @@ const RTKUIComponentGrid = () => {
 		{
 			id: "rtk-leave-meeting",
 			name: "Leave Meeting",
-			imagePath: imageSrc("rtk-leave-meeting.svg"),
+			imagePath: imageSrc("rtk-leave-meeting.png"),
 			componentName: "rtk-leave-meeting",
 			tags: ["leave", "dialog", "modal", "controlbar", "button", "end"],
 		},
@@ -217,9 +241,38 @@ const RTKUIComponentGrid = () => {
 		{
 			id: "rtk-participants",
 			name: "Participants",
-			imagePath: imageSrc("rtk-participants.svg"),
+			imagePath: imageSrc("rtk-participants.png"),
 			componentName: "rtk-participants",
 			tags: ["participants", "sidebar", "list", "participant", "tile"],
+		},
+		{
+			id: "rtk-participants-stage-list",
+			name: "Participants Stage List",
+			imagePath: imageSrc("rtk-participants-stage-list.png"),
+			componentName: "rtk-participants-stage-list",
+			tags: ["participants", "sidebar", "list", "participant", "tile", "stage"],
+		},
+		{
+			id: "rtk-participants-stage-queue",
+			name: "Participants Stage Queue",
+			imagePath: imageSrc("rtk-participants-stage-queue.png"),
+			componentName: "rtk-participants-stage-queue",
+			tags: [
+				"participants",
+				"sidebar",
+				"list",
+				"participant",
+				"tile",
+				"requests",
+				"stage",
+			],
+		},
+		{
+			id: "rtk-polls",
+			name: "Polls",
+			imagePath: imageSrc("rtk-polls.png"),
+			componentName: "rtk-polls",
+			tags: ["polls", "sidebar", "list", "vote", "tile"],
 		},
 		{
 			id: "rtk-participants-audio",
@@ -236,23 +289,16 @@ const RTKUIComponentGrid = () => {
 			tags: ["plugins", "sidebar", "list", "plugin"],
 		},
 		{
-			id: "rtk-polls",
-			name: "Polls",
-			imagePath: imageSrc("rtk-polls.svg"),
-			componentName: "rtk-polls",
-			tags: ["polls", "sidebar", "voting", "interactive"],
-		},
-		{
 			id: "rtk-screenshare-view",
 			name: "Screenshare View",
-			imagePath: imageSrc("rtk-screenshare-view.svg"),
+			imagePath: imageSrc("rtk-screenshare-view.png"),
 			componentName: "rtk-screenshare-view",
 			tags: ["screenshare-view", "screenshare", "media", "grid"],
 		},
 		{
 			id: "rtk-settings",
 			name: "Settings",
-			imagePath: imageSrc("rtk-settings.svg"),
+			imagePath: imageSrc("rtk-settings.png"),
 			componentName: "rtk-settings",
 			tags: [
 				"settings",
@@ -266,7 +312,7 @@ const RTKUIComponentGrid = () => {
 		{
 			id: "rtk-settings-audio",
 			name: "Settings Audio",
-			imagePath: imageSrc("rtk-settings-audio.svg"),
+			imagePath: imageSrc("rtk-settings-audio.png"),
 			componentName: "rtk-settings-audio",
 			tags: [
 				"settings-audio",
@@ -281,13 +327,88 @@ const RTKUIComponentGrid = () => {
 		{
 			id: "rtk-settings-video",
 			name: "Settings Video",
-			imagePath: imageSrc("rtk-settings-video.svg"),
+			imagePath: imageSrc("rtk-settings-video.png"),
 			componentName: "rtk-settings-video",
 			tags: [
 				"settings-video",
 				"video",
 				"settings",
 				"sidebar",
+				"configuration",
+				"dialog",
+				"modal",
+			],
+		},
+		{
+			id: "rtk-debugger",
+			name: "Debugger",
+			imagePath: imageSrc("rtk-debugger.png"),
+			componentName: "rtk-debugger",
+			tags: [
+				"debugger",
+				"settings",
+				"configuration",
+				"preferences",
+				"dialog",
+				"modal",
+			],
+		},
+		{
+			id: "rtk-debugger-system",
+			name: "System Debugger",
+			imagePath: imageSrc("rtk-debugger-system.png"),
+			componentName: "rtk-debugger-system",
+			tags: [
+				"debugger-system",
+				"system",
+				"debugger",
+				"settings",
+				"configuration",
+				"preferences",
+				"dialog",
+				"modal",
+			],
+		},
+		{
+			id: "rtk-debugger-audio",
+			name: "Audio Debugger",
+			imagePath: imageSrc("rtk-debugger-audio.png"),
+			componentName: "rtk-debugger-audio",
+			tags: [
+				"debugger-audio",
+				"audio",
+				"debugger",
+				"settings",
+				"configuration",
+				"dialog",
+				"modal",
+			],
+		},
+		{
+			id: "rtk-debugger-video",
+			name: "Video Debugger",
+			imagePath: imageSrc("rtk-debugger-video.png"),
+			componentName: "rtk-debugger-video",
+			tags: [
+				"debugger-video",
+				"video",
+				"debugger",
+				"settings",
+				"configuration",
+				"dialog",
+				"modal",
+			],
+		},
+		{
+			id: "rtk-debugger-screenshare",
+			name: "Screenshare Debugger",
+			imagePath: imageSrc("rtk-debugger-screenshare.png"),
+			componentName: "rtk-debugger-screenshare",
+			tags: [
+				"debugger-screenshare",
+				"screenshare",
+				"debugger",
+				"settings",
 				"configuration",
 				"dialog",
 				"modal",
@@ -314,6 +435,27 @@ const RTKUIComponentGrid = () => {
 			componentName: "rtk-spotlight-grid",
 			tags: ["spotlight", "grid", "participant", "tile", "layout", "pinned"],
 		},
+		{
+			id: "rtk-breakout-room-manager",
+			name: "Create Breakout Rooms",
+			imagePath: imageSrc("rtk-breakout-room-manager.png"),
+			componentName: "rtk-breakout-room-manager",
+			tags: [],
+		},
+		{
+			id: "rtk-breakout-rooms-manager",
+			name: "Manage Breakout Rooms",
+			imagePath: imageSrc("rtk-breakout-rooms-manager.png"),
+			componentName: "rtk-breakout-rooms-manager",
+			tags: [],
+		},
+		{
+			id: "rtk-breakout-room-toggle",
+			name: "Breakout Room Toggle",
+			imagePath: imageSrc("rtk-breakout-room-toggle.png"),
+			componentName: "rtk-breakout-room-toggle",
+			tags: [],
+		},
 	];
 	const screenComponents = [
 		{
@@ -322,6 +464,13 @@ const RTKUIComponentGrid = () => {
 			imagePath: imageSrc("rtk-ended-screen.svg"),
 			componentName: "rtk-ended-screen",
 			tags: ["ended", "screen", "meeting", "end", "leave"],
+		},
+		{
+			id: "rtk-waiting-screen",
+			name: "Waiting Screen",
+			imagePath: imageSrc("rtk-waiting-screen.png"),
+			componentName: "rtk-waiting-screen",
+			tags: ["lobby", "standby", "screen", "meeting", "waiting", "room"],
 		},
 		{
 			id: "rtk-idle-screen",
@@ -340,7 +489,7 @@ const RTKUIComponentGrid = () => {
 		{
 			id: "rtk-setup-screen",
 			name: "Setup Screen",
-			imagePath: imageSrc("rtk-setup-screen.svg"),
+			imagePath: imageSrc("rtk-setup-screen.png"),
 			componentName: "rtk-setup-screen",
 			tags: ["setup", "screen", "configuration", "preview"],
 		},
