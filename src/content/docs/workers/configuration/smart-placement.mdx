@@ -12,14 +12,29 @@ import { WranglerConfig, DashButton } from "~/components";
 
 By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) run in a data center closest to where the request was received. If your Worker makes requests to back-end infrastructure such as databases or APIs, it may be more performant to run that Worker closer to your back-end than the end user.
 
-You can choose between two placement options:
+<WranglerConfig>
 
-| Option              | Best for                                                        | Configuration      |
-| ------------------- | --------------------------------------------------------------- | ------------------ |
-| **Smart Placement** | Multiple back-end services, or unknown infrastructure locations | `mode = "smart"`   |
-| **Placement Hints** | Single back-end service in a known location                     | `region` or `host` |
+```jsonc
+{
+	"placement": {
+		// Use one of the following options (mutually exclusive):
+		"mode": "smart", // Cloudflare automatically places your Worker closest to the upstream with the most requests
+		"region": "gcp:us-east4", // Explicit cloud region to run your Worker closest to - e.g. "gcp:us-east4" or "aws:us-east-1"
+		"host": "db.example.com:5432", // A host to probe (TCP/layer 4) - e.g. a database host - and place your Worker closest to
+		"hostname": "api.example.com", // A hostname to probe (HTTP/layer 7) - e.g. an API endpoint - and place your Worker closest to
+	},
+}
+```
 
-Both options reduce latency by minimizing round trips between your Worker and back-end services. With placement, you can achieve single-digit millisecond latency to databases, APIs, and other services running in legacy cloud infrastructure.
+</WranglerConfig>
+
+Placement reduces latency by minimizing round trips between your Worker and back-end services. You can achieve single-digit millisecond latency to databases, APIs, and other services running in legacy cloud infrastructure.
+
+| Option     | Best for                                                        | Configuration        |
+| ---------- | --------------------------------------------------------------- | -------------------- |
+| **Smart**  | Multiple back-end services, or unknown infrastructure locations | `mode = "smart"`     |
+| **Region** | Single back-end service in a known cloud region                 | `region`             |
+| **Host**   | Single back-end service not in a major cloud provider           | `host` or `hostname` |
 
 ## Understand placement
 
