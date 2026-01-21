@@ -33,7 +33,7 @@ This guide uses the Anthropic SDK, but the same patterns apply to any LLM SDK (O
 
 ## Quick start
 
-If you want to skip the steps and pull down the complete agent:
+If you want to skip the steps and pull down the complete agent, utilizing [AI Gateway](/ai-gateway):
 
 ```sh
 npm create cloudflare@latest -- --template cloudflare/docs-examples/workflows/durable-ai-agent
@@ -300,7 +300,7 @@ Each `step.do()` creates a checkpoint. If your Workflow crashes or the Worker re
 
 This is especially important for:
 
-- **LLM calls**: Expensive and slow, you don't want to repeat them
+- **LLM calls**: Expensive and slow, should not repeat unnecessarily
 - **External APIs**: May have rate limits or side effects
 - **Idempotency**: Some tools (like sending emails) shouldn't run twice
 
