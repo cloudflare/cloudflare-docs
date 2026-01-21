@@ -47,21 +47,6 @@ To log mTLS certificate details (such as `cf-cert-subject-dn` or `cf-cert-issuer
 The mTLS headers are injected by Cloudflare after the client request is received, so they must be captured using `transformed_request_fields` rather than `request_fields`. Refer to [mTLS authentication](/ssl/client-certificates/enable-mtls/) for more information on configuring client certificates.
 
 
-### Is it possible to log the Request Body?
-
-No, request body content cannot be logged through Cloudflare's logging systems. While request and response headers can be logged using [Logpush custom fields](/logs/logpush/logpush-job/custom-fields/) (Enterprise), request bodies are not available in any Logpush or Logpull dataset.
-
-Request bodies often contain sensitive data and would generate massive data volumes. If you need visibility into request body content, consider logging at your origin server or using [Cloudflare Workers](/workers/) to selectively capture specific body content to a third-party service or [R2](/r2/).
-
-:::note
-
-You can include the encrypted matched payload in your Logpush jobs by adding the General > [Metadata](https://developers.cloudflare.com/logs/reference/log-fields/account/firewall_events/#metadata) field from the Firewall Events dataset to your job. You can then use a Worker to decrypt the payload: [matched-data-worker](https://github.com/cloudflare/matched-data-worker).
-
-Refer to [Store decrypted matched payloads in logs](/waf/managed-rules/payload-logging/decrypt-in-logs/) for more information.
-
-:::
-
-
 ### Can I adjust how often logs are pushed?
 
 No. Cloudflare pushes logs in batches as soon as possible.
