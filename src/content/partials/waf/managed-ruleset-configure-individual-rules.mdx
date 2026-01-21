@@ -18,7 +18,7 @@ import sddRulesetImg from "~/assets/images/waf/managed-rulesets/tags-config-sdd-
 
 6. In the results list, change the values for each rule as desired, using the displayed drop-down lists and toggles. For example, change the status of a rule using the **Status** toggle next to the rule.
 
-   Alternatively, select the checkboxes for all the rules you want to configure. If not all the rules are displayed in the current page, you can extend your selection to all rules across all pages by selecting **Select all \<NUMBER> rules**. Then, use the buttons displayed in the top right corner of the table — for example, **Set status** — to update one or more fields for the selected rules.
+   To configure multiple rules with the same value, select the checkboxes for all the rules you want to configure. If not all the rules are displayed in the current page, you can extend your selection to all rules across all pages by selecting **Select all \<NUMBER> rules**. Then, use the buttons displayed in the top right corner of the table — for example, **Set status** — to update one or more fields for the selected rules.
 
    { (props.rulesetNameOldDash == "" || props.rulesetNameOldDash == "Cloudflare Managed Ruleset") && (
      <Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying selected rules in the Cloudflare Managed Ruleset." />
@@ -28,7 +28,7 @@ import sddRulesetImg from "~/assets/images/waf/managed-rulesets/tags-config-sdd-
      <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying selected rules in the Cloudflare OWASP Core Ruleset." />
    ) }
 
-   { props.rulesetNameOldDash == "Sensitive Data Detection" && (
+   { props.rulesetNameOldDash == "Cloudflare Sensitive Data Detection" && (
      <Image src={sddRulesetImg} alt="The Configure deployment page displaying selected rules in the Sensitive Data Detection ruleset." />
    ) }
 
