@@ -24,7 +24,7 @@ type MiddlecacheOptions = {
 		| Record<string, string | null>;
 };
 
-function middlecacheLoader(
+export function middlecacheLoader(
 	path: string,
 	options: MiddlecacheOptions = {},
 ): Loader {
@@ -58,5 +58,3 @@ function middlecacheLoader(
 		},
 	};
 }
-
-export { middlecacheLoader as middlecache };

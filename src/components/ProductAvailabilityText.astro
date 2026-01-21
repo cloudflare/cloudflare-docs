@@ -3,16 +3,16 @@ import { getEntry } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-	product: CollectionEntry<"product-maturity">["id"];
+	product: CollectionEntry<"product-availability">["id"];
 }
 
 const { product } = Astro.props;
 
-const entry = await getEntry("product-maturity", product);
+const entry = await getEntry("product-availability", product);
 
 if (!entry) {
 	throw new Error(
-		`Product maturity entry not found for product="${product}" in ${Astro.url.pathname}`,
+		`Product availability entry not found for product="${product}" in ${Astro.url.pathname}`,
 	);
 }
 ---
