@@ -20,4 +20,7 @@ const productAvailabilityCollectionConfig = {
 	productAvailabilityCollectionSchema,
 };
 
-export { productAvailabilityCollectionConfig, productAvailabilityCollectionSchema };
+export {
+	productAvailabilityCollectionConfig,
+	productAvailabilityCollectionSchema,
+};
