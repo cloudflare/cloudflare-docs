@@ -1,0 +1,68 @@
+---
+title: New cryptographic functions — base64_encode and sha256
+description: Rulesets now support base64_encode and sha256 functions for generating signed request headers directly in expressions.
+date: 2026-01-21
+---
+
+## New cryptographic functions for Rulesets
+
+Cloudflare Rulesets now includes `base64_encode()` and `sha256()` functions, enabling you to generate signed request headers directly in rule expressions. These functions support common patterns like constructing a canonical string from request attributes, computing a SHA256 digest, and Base64-encoding the result.
+
+---
+
+### New functions
+
+| Function | Description | Availability |
+| --- | --- | --- |
+| `base64_encode(input, flags)` | Encodes a string to Base64 format. Optional `flags` parameter: `u` for URL-safe encoding, `p` for padding (adds `=` characters to make the output length a multiple of 4, which some systems require). By default, output is standard Base64 without padding. | All plans |
+| `sha256(input)` | Computes a SHA256 hash of the input string. | Requires enablement |
+
+:::note
+The `sha256()` function requires an entitlement. Contact your account team to enable it.
+:::
+
+---
+
+### Examples
+
+**Base64 encode a string:**
+
+```txt
+base64_encode("hello world")
+```
+
+Returns: `aGVsbG8gd29ybGQ`
+
+**Base64 encode with padding:**
+
+```txt
+base64_encode("hello world", "p")
+```
+
+Returns: `aGVsbG8gd29ybGQ=`
+
+**URL-safe Base64 encoding:**
+
+```txt
+base64_encode("hello world", "u")
+```
+
+Returns: `aGVsbG8gd29ybGQ`
+
+**SHA256 hash a secret token:**
+
+```txt
+sha256("my-token")
+```
+
+Returns a hash that your origin can validate to authenticate requests.
+
+**SHA256 hash with Base64 encoding:**
+
+```txt
+base64_encode(sha256("my-token"))
+```
+
+Combines hashing and encoding for systems that expect Base64-encoded signatures.
+
+For more information, refer to the [Functions reference](/ruleset-engine/rules-language/functions/).
