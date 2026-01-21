@@ -8,25 +8,25 @@ entries:
     description: |-
       **Fixes**
       
-      - Improve grid transitions by activating consumers in batches for better performance
-      - Move consumer toggle requests off main thread to prevent UI blocking
-      - Improve video rendering stability with better lifecycle management
-      - Prevent race conditions by canceling reconnection attempts during initialization
+      - Improved grid transitions by activating consumers in batches for better performance
+      - Moved consumer toggle requests off main thread to prevent UI blocking
+      - Improved video rendering stability with better lifecycle management
+      - Prevented race conditions by canceling reconnection attempts during initialization
   - publish_date: "2025-12-16"
     title: RealtimeKit Android Core 1.5.7
     description: |-
       **Fixes**
       
-      - Fix rare crash when toggling audio mute
-      - Ensure off-stage webinar hosts do not show up on the grid
+      - Fixed rare crash when toggling audio mute
+      - Off-stage webinar hosts no longer show up on the grid
   - publish_date: "2025-12-12"
     title: RealtimeKit Android Core 1.5.6
     description: |-
       **Fixes**
       
-      - Fix deadlocks in webinar join and screenshare enable flows
-      - Fix an issue with camera not working when moving to settings screen and back
-      - Fix a rare crash in voice activity detection
+      - Fixed deadlocks in webinar join and screenshare enable flows
+      - Fixed an issue with camera not working when moving to settings screen and back
+      - Fixed a rare crash in voice activity detection
   - publish_date: "2025-12-04"
     title: RealtimeKit Android Core 1.5.5
     description: |-
@@ -44,13 +44,13 @@ entries:
     description: |-
       **Fixes**
       
-      - Fix a regression that caused self video to not render if meeting was joined with camera disabled
+      - Fixed a regression that caused self video to not render if meeting was joined with camera disabled
   - publish_date: "2025-10-23"
     title: RealtimeKit Android Core 1.5.2
     description: |-
       **Fixes**
       
-      - Fix unreliable grid behavior with improved refresh logic
+      - Fixed unreliable grid behavior with improved refresh logic
   - publish_date: "2025-10-06"
     title: RealtimeKit Android Core 1.5.1
     description: |-
@@ -62,83 +62,83 @@ entries:
     description: |-
       **Features**
       
-      - Add `RtkSelfEventListener#onAudioDeviceChanged` method that is invoked when the current audio route is updated
+      - Added `RtkSelfEventListener#onAudioDeviceChanged` method that is invoked when the current audio route is updated
   - publish_date: "2025-09-18"
     title: RealtimeKit Android Core 1.4.1
     description: |-
       **Fixes**
       
-      - Prefer speakerphone over earpiece as the default audio output
+      - Speakerphone is now preferred over earpiece as the default audio output
   - publish_date: "2025-09-18"
     title: RealtimeKit Android Core 1.4.0
     description: |-
       **Breaking changes**
       
-      - Update `RtkSelfEventListener#onAudioDevicesUpdated` method to provide the list of available devices
+      - Updated `RtkSelfEventListener#onAudioDevicesUpdated` method to provide the list of available devices
       
       **Fixes**
       
-      - Fix not being able to route audio to Bluetooth devices
+      - Fixed not being able to route audio to Bluetooth devices
   - publish_date: "2025-09-12"
     title: RealtimeKit Android Core 1.3.4
     description: |-
       **Fixes**
       
-      - Fix a rare crash during meeting joins in poor network scenarios
+      - Fixed a rare crash during meeting joins in poor network scenarios
   - publish_date: "2025-09-12"
     title: RealtimeKit Android Core 1.3.3
     description: |-
       **Fixes**
       
-      - Pinned peers did not get removed from the stage when kicked
-      - Media consumers are now created in parallel, which significantly improves the speed of when users will start seeing other people's audio/video after joining a meeting.
+      - Fixed pinned peers not being removed from the stage when kicked
+      - Media consumers are now created in parallel, which significantly improved the speed of when users start seeing other people's audio/video after joining a meeting
       - Native libraries are now 16KB aligned to comply with [Google Play requirements](https://android-developers.googleblog.com/2025/05/prepare-play-apps-for-devices-with-16kb-page-size.html)
-      - "Ghost"/Invalid peers that would sometimes show up in long-running meetings are now fully gone
-      - Fixed an issue In webinar meetings where the SDK would fail to produce media after being removed from the stage once
+      - Fixed "Ghost"/Invalid peers that would sometimes show up in long-running meetings
+      - Fixed an issue in webinar meetings where the SDK would fail to produce media after being removed from the stage once
   - publish_date: "2025-08-13"
     title: RealtimeKit Android Core 1.3.2
     description: |-
       **Enhancements**
       
-      - Fix microphone not working when joining the stage in a webinar
+      - Fixed microphone not working when joining the stage in a webinar
   - publish_date: "2025-08-13"
     title: RealtimeKit Android Core 1.3.1
     description: |-
       **Enhancements**
       
-      - Fix a potential crash in poor network scenarios
+      - Fixed a potential crash in poor network scenarios
   - publish_date: "2025-08-12"
     title: RealtimeKit Android Core 1.3.0
     description: |-
       **Features**
       
-      - Add `RtkSelfParticipant#canJoinStage` and `RtkSelfParticipant#canRequestToJoinStage` APIs
+      - Added `RtkSelfParticipant#canJoinStage` and `RtkSelfParticipant#canRequestToJoinStage` APIs
       
       **Fixes**
       
-      - Viewer unable to join stage in a Livestream
-      - User unable to see existing pinned participant after joining meeting
+      - Fixed viewer unable to join stage in a Livestream
+      - Fixed user unable to see existing pinned participant after joining meeting
   - publish_date: "2025-08-05"
     title: RealtimeKit Android Core 1.2.0
     description: |-
       **Breaking changes**
       
-      - Rename `RtkLivestreamData.roomName` to `RtkLivestreamData.meetingId` to match existing API convention
-      - Remove obsolete `WaitingRoomPermissions` abstraction — all the relevant functionality here is available through `HostPermissions`
+      - Renamed `RtkLivestreamData.roomName` to `RtkLivestreamData.meetingId` to match existing API convention
+      - Removed obsolete `WaitingRoomPermissions` abstraction — all the relevant functionality here is available through `HostPermissions`
       - VideoDevice gained a `cameraType: CameraType` parameter
       - `VideoDeviceType#displayName` is now deprecated, and it's recommended to call `VideoDevice#toString` instead to get user-facing names for individual `VideoDevice` instances
-      - Existing APIs related to middlewares were removed and replaced with equivalent counterparts from WebRTC: `RtkSelfParticipant#addVideoMiddleware`, `RtkSelfParticipant#getVideoMiddlewares` and `RtkSelfParticipant#removeVideoMiddleware` are replaced with `RealtimeKitMeetingBuilder#setVideoProcessor`
-      - `RtkVideoFrame` is removed in favor of WebRTC's own `VideoFrame` class, available as `realtimekit.org.webrtc.VideoFrame`
+      - Existing APIs related to middlewares were removed and replaced with equivalent counterparts from WebRTC: `RtkSelfParticipant#addVideoMiddleware`, `RtkSelfParticipant#getVideoMiddlewares` and `RtkSelfParticipant#removeVideoMiddleware` were replaced with `RealtimeKitMeetingBuilder#setVideoProcessor`
+      - `RtkVideoFrame` was removed in favor of WebRTC's own `VideoFrame` class, available as `realtimekit.org.webrtc.VideoFrame`
       
       **Features**
       
-      - Reimplement middlewares using WebRTC-native primitives to resolve intermittent crashes and other issues, check out the new [Video Processing](https://docs.realtime.cloudflare.com/android-core/video-processing/introduction) docs section to learn more
+      - Reimplemented middlewares using WebRTC-native primitives to resolve intermittent crashes and other issues, check out the new [Video Processing](https://docs.realtime.cloudflare.com/android-core/video-processing/introduction) docs section to learn more
       - `VideoDevice` now properly labels multiple cameras based on their camera characteristics such as wide-angle and telephoto
       
       **Fixes**
       
-      - Fix screen share failing to stop
-      - Silence log spam from our callstats library
+      - Fixed screen share failing to stop
+      - Silenced log spam from our callstats library
   - publish_date: "2025-07-02"
     title: RealtimeKit Android Core 1.1.0
     description: |-
@@ -156,36 +156,36 @@ entries:
       
       **Fixes**
       
-      - Silence logspam from audio activity reporter
-      - Improve speed of joining calls
-      - Automatically trim invalid spaces and newlines from auth tokens
+      - Silenced logspam from audio activity reporter
+      - Improved speed of joining calls
+      - Auth tokens now automatically trim invalid spaces and newlines
   - publish_date: "2025-05-26"
     title: RealtimeKit Android Core 1.0.0
     description: |-
       **Breaking changes**
       
-      - Remove deprecated `channelId` field from `TextMessage`
-      - Move listener types to their respective feature package
-      - Move public listeners to their respective feature packages
-      - rename plugin add-remove listener methods for RtkPluginsEventListener
-      - Move chat extensions to the `chat` package
-      - Move `RtkParticipant` to the root package
-      - Move `RtkMeetingParticipant` to the root package
-      - Move `RtkPluginFile` to the plugins package
-      - Move middlewares to their own package
-      - Move `VideoScaleType` to top level `media` package
-      - Drop `Rtk` prefix from audio and video device types
-      - Move device types to the top level `media` package
-      - Drop `Rtk` prefix from polls types
-      - Replace all LiveStream references with Livestream
-      - Move `RtkMeetingParticipant` to root package
-      - Strip `Rtk` prefix from `RtkRecordingState`
-      - Strip `Rtk` prefix from chat message types
-      - Remove deprecated RtkLivestream#roomName field
-      - Move `RtkMediaPermission` to media package and rename to `MediaPermission`
-      - Redistribute `feat` package members
-      - Move `StageStatus` class to stage package
-      - Rename all event listeners to be of the singular `*EventListener` form
+      - Removed deprecated `channelId` field from `TextMessage`
+      - Moved listener types to their respective feature package
+      - Moved public listeners to their respective feature packages
+      - Renamed plugin add-remove listener methods for RtkPluginsEventListener
+      - Moved chat extensions to the `chat` package
+      - Moved `RtkParticipant` to the root package
+      - Moved `RtkMeetingParticipant` to the root package
+      - Moved `RtkPluginFile` to the plugins package
+      - Moved middlewares to their own package
+      - Moved `VideoScaleType` to top level `media` package
+      - Dropped `Rtk` prefix from audio and video device types
+      - Moved device types to the top level `media` package
+      - Dropped `Rtk` prefix from polls types
+      - Replaced all LiveStream references with Livestream
+      - Moved `RtkMeetingParticipant` to root package
+      - Stripped `Rtk` prefix from `RtkRecordingState`
+      - Stripped `Rtk` prefix from chat message types
+      - Removed deprecated RtkLivestream#roomName field
+      - Moved `RtkMediaPermission` to media package and renamed to `MediaPermission`
+      - Redistributed `feat` package members
+      - Moved `StageStatus` class to stage package
+      - Renamed all event listeners to be of the singular `*EventListener` form
   - publish_date: "2025-05-16"
     title: RealtimeKit Android Core 0.2.1
     description: |-
@@ -197,7 +197,7 @@ entries:
     description: |-
       **Fixes**
       
-      - Add audio activity detection for active speaker signaling
+      - Added audio activity detection for active speaker signaling
   - publish_date: "2025-05-14"
     title: RealtimeKit Android Core 0.1.0
     description: |-
