@@ -252,6 +252,10 @@ const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
 
+:::note
+This is an inactivity timeout, not a maximum session duration. Sessions can remain open longer than 10 minutes as long as they stay active. To keep a session open beyond the inactivity timeout, send a command at least once within your configured window (for example, every 10 minutes). Refer to [session duration limits](/browser-rendering/limits/#is-there-a-maximum-session-duration) for more information.
+:::
+
 ### Session Reuse
 
 The best way to improve the performance of your browser rendering Worker is to reuse sessions by keeping the browser open after you've finished with it, and connecting to that session each time you have a new request. Playwright handles [`browser.close`](https://playwright.dev/docs/api/class-browser#browser-close) differently from Puppeteer. In Playwright, if the browser was obtained using a `connect` session, the session will disconnect. If the browser was obtained using a `launch` session, the session will close. 

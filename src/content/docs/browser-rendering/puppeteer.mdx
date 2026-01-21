@@ -61,6 +61,10 @@ const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
 
+:::note
+This is an inactivity timeout, not a maximum session duration. Sessions can remain open longer than 10 minutes as long as they stay active. To keep a session open beyond the inactivity timeout, send a command at least once within your configured window (for example, every 10 minutes). Refer to [session duration limits](/browser-rendering/limits/#is-there-a-maximum-session-duration) for more information.
+:::
+
 ### Set a custom user agent
 
 To specify a custom user agent in Puppeteer, use the `page.setUserAgent()` method. This is useful if the target website serves different content based on the user agent.
