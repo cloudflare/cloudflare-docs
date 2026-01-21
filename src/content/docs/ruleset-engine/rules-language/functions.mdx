@@ -429,7 +429,7 @@ To create a signed header value from request attributes:
 base64_encode(sha256(concat(to_string(ip.src), to_string(http.request.timestamp.sec), "my-secret-key")))
 ```
 
-:::note
+:::note[Notes]
 
 The `sha256()` function is available as an Enterprise add-on and requires a specific entitlement. Contact your account team to enable it.
 
