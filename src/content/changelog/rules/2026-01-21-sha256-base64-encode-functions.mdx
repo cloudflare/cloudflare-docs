@@ -23,7 +23,7 @@ The `sha256()` function is available as an Enterprise add-on and requires a spec
 
 ### Examples
 
-**Encodes a string to Base64 format:**
+**Encode a string to Base64 format:**
 
 ```txt
 base64_encode("hello world")
@@ -31,7 +31,7 @@ base64_encode("hello world")
 
 Returns: `aGVsbG8gd29ybGQ`
 
-**Encodes a string to Base64 format with padding:**
+**Encode a string to Base64 format with padding:**
 
 ```txt
 base64_encode("hello world", "p")
@@ -39,7 +39,7 @@ base64_encode("hello world", "p")
 
 Returns: `aGVsbG8gd29ybGQ=`
 
-**Performs a URL-safe Base64 encoding of a string:**
+**Perform a URL-safe Base64 encoding of a string:**
 
 ```txt
 base64_encode("hello world", "u")
@@ -47,7 +47,7 @@ base64_encode("hello world", "u")
 
 Returns: `aGVsbG8gd29ybGQ`
 
-**Computes the SHA256 hash of a secret token:**
+**Compute the SHA256 hash of a secret token:**
 
 ```txt
 sha256("my-token")
@@ -55,7 +55,7 @@ sha256("my-token")
 
 Returns a hash that your origin can validate to authenticate requests.
 
-**Computes the SHA256 hash of a string and encodes the result to Base64 format:**
+**Compute the SHA256 hash of a string and encodes the result to Base64 format:**
 
 ```txt
 base64_encode(sha256("my-token"))
