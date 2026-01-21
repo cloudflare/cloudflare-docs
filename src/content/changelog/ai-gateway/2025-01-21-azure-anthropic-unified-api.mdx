@@ -1,0 +1,46 @@
+---
+title: AI Gateway adds Anthropic models on Azure and Azure OpenAI on Unified API
+description: AI Gateway now supports Anthropic models through Azure and Azure OpenAI on the Unified API with BYOK.
+products:
+  - ai-gateway
+date: 2025-01-21
+---
+
+[AI Gateway](/ai-gateway/) now supports two new capabilities for Azure OpenAI users:
+
+## Anthropic models on Azure
+
+You can now use Anthropic models deployed through Azure OpenAI with AI Gateway. To access Anthropic models, use the `/azure/{resource_name}/anthropic` endpoint:
+
+```bash title="Example request"
+curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure/{azure_resource_name}/anthropic/v1/messages' \
+  --header 'cf-aig-authorization: {cf_token}' \
+  --header 'x-api-key: {azure_api_key}' \
+  --header 'anthropic-version: 2023-06-01' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "claude-sonnet-4-5",
+    "max_tokens": 1024,
+    "messages": [
+      { "role": "user", "content": "What is Cloudflare?" }
+    ]
+  }'
+```
+
+## Azure OpenAI on Unified API with BYOK
+
+Azure OpenAI is now supported on the [Unified API (OpenAI-compatible endpoint)](/ai-gateway/usage/chat-completion/) when you have [BYOK](/ai-gateway/configuration/bring-your-own-keys/) configured. With BYOK, you can link a resource name to each stored key, and AI Gateway automatically infers the resource name from your configuration.
+
+```bash title="Unified API with BYOK"
+curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions' \
+  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "azure-openai/{deployment_name}",
+    "messages": [
+      { "role": "user", "content": "What is Cloudflare?" }
+    ]
+  }'
+```
+
+Learn more in the [Azure OpenAI provider documentation](/ai-gateway/usage/providers/azureopenai/).
