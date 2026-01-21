@@ -7,11 +7,7 @@ sidebar:
   order: 2
 ---
 
-import {
-	Details,
-  Tabs,
-  TabItem
-} from "~/components";
+import { Details, Tabs, TabItem } from "~/components";
 import CodeSnippets from "~/components/ai-gateway/code-examples.astro";
 
 Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.
@@ -44,6 +40,7 @@ The OpenAI-compatible endpoint supports models from the following providers:
 
 - [Anthropic](/ai-gateway/usage/providers/anthropic/)
 - [OpenAI](/ai-gateway/usage/providers/openai/)
+- [Azure OpenAI](/ai-gateway/usage/providers/azureopenai/) (requires [BYOK](/ai-gateway/configuration/bring-your-own-keys/))
 - [Groq](/ai-gateway/usage/providers/groq/)
 - [Mistral](/ai-gateway/usage/providers/mistral/)
 - [Cohere](/ai-gateway/usage/providers/cohere/)

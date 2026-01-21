@@ -3,7 +3,9 @@ title: Azure OpenAI
 pcx_content_type: get-started
 ---
 
-[Azure OpenAI](https://azure.microsoft.com/en-gb/products/ai-services/openai-service/) allows you apply natural language algorithms on your data.
+import { Render } from "~/components";
+
+[Azure OpenAI](https://azure.microsoft.com/en-gb/products/ai-services/openai-service/) allows you to apply natural language algorithms on your data.
 
 ## Endpoint
 
@@ -19,7 +21,7 @@ When making requests to Azure OpenAI, you will need:
 - AI Gateway gateway name
 - Azure OpenAI API key
 - Azure OpenAI resource name
-- Azure OpenAI deployment name (aka model name)
+- Azure OpenAI deployment name (also known as model name)
 
 ## URL structure
 
@@ -49,14 +51,81 @@ curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/azure-openai/{
 import { AzureOpenAI } from "openai";
 
 const azure_openai = new AzureOpenAI({
-  apiKey: "{azure_api_key}",
-  baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/azure-openai/{resource_name}/`,
-  apiVersion: "2023-05-15",
-  defaultHeaders: { "cf-aig-authorization": "{cf-api-token}" }, // if authenticated
+	apiKey: "{azure_api_key}",
+	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway}/azure-openai/{resource_name}/`,
+	apiVersion: "2023-05-15",
+	defaultHeaders: { "cf-aig-authorization": "{cf-api-token}" }, // if authenticated
 });
 
 const result = await azure_openai.chat.completions.create({
-  model: '{deployment_name}',
-  messages: [{ role: "user", content: "Hello" }],
+	model: "{deployment_name}",
+	messages: [{ role: "user", content: "Hello" }],
 });
 ```
+
+## Anthropic models on Azure
+
+AI Gateway supports Anthropic models deployed through Azure OpenAI. To use Anthropic models, append `/anthropic` to your Azure resource path.
+
+### Endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure/{azure_resource_name}/anthropic
+```
+
+### Example
+
+```bash title="Anthropic on Azure"
+curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/azure/{azure_resource_name}/anthropic/v1/messages' \
+  --header 'cf-aig-authorization: {cf_token}' \
+  --header 'x-api-key: {azure_api_key}' \
+  --header 'anthropic-version: 2023-06-01' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "max_tokens": 1000,
+    "temperature": 0.7,
+    "system": "You are a helpful assistant.",
+    "messages": [
+      { "role": "user", "content": "What is Cloudflare?" }
+    ],
+    "model": "claude-sonnet-4-5"
+  }'
+```
+
+## Unified API with BYOK
+
+You can use Azure OpenAI with the [Unified API (OpenAI-compatible endpoint)](/ai-gateway/usage/chat-completion/) when you have [BYOK (Bring Your Own Keys)](/ai-gateway/configuration/bring-your-own-keys/) configured.
+
+With BYOK, you can link a resource name to each stored key. AI Gateway automatically infers the resource name from the stored key configuration, so you only need to pass the model name in your request.
+
+### Configure BYOK for Azure OpenAI
+
+When adding your Azure OpenAI API key in the BYOK configuration, specify the resource name associated with the key. This allows AI Gateway to route requests to the correct Azure resource.
+
+### Example
+
+```bash title="Unified API with BYOK"
+curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions' \
+  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "azure-openai/{deployment_name}",
+    "messages": [
+      { "role": "user", "content": "What is Cloudflare?" }
+    ]
+  }'
+```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Azure OpenAI",
+		jsonexample: `
+{
+		"model": "azure-openai/{deployment_name}"
+}`
+
+    }}
+
+/>
