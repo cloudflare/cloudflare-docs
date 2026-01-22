@@ -1,0 +1,255 @@
+---
+updated: 2026-01-22
+difficulty: Intermediate
+pcx_content_type: tutorial
+title: Run E2E tests with Browser Rendering
+sidebar:
+  order: 4
+tags:
+  - Playwright
+  - Testing
+  - E2E
+---
+
+import { Details, Tabs, TabItem } from "~/components";
+
+End-to-end (E2E) testing typically requires running browsers locally or in Docker containers within your CI/CD pipeline. This adds complexity: you need to install browsers, manage dependencies, and allocate resources for browser instances.
+
+With Cloudflare Browser Rendering, you can run your E2E tests against remote browsers using the [Chrome DevTools Protocol (CDP)](https://chromedevtools.github.io/devtools-protocol/). Your test runner connects to a remote browser over WebSocket, eliminating the need to install or manage browsers in your CI environment.
+
+## Why use Browser Rendering for E2E tests
+
+- **Simplified CI/CD**: No need to install browsers or manage Docker images with browser dependencies.
+- **Consistent environment**: Tests run against the same browser environment every time, reducing flaky tests caused by local browser differences.
+- **Reduced resource usage**: Offload browser execution to Cloudflare, freeing up CI runner resources.
+- **Faster pipeline setup**: Skip browser installation steps in your CI configuration.
+
+<Details header="Local vs remote browsers: when to use each">
+
+|                     | Local browser | Remote browser (CDP) |
+|---------------------|---------------|----------------------|
+| **Best for**        | Development, debugging | CI/CD pipelines, production tests |
+| **Speed**           | Faster (no network latency) | Slightly slower (network hop) |
+| **Setup**           | Requires browsers installed | No browser installation needed |
+| **Debugging**       | Visual browser, DevTools access | Headless only (live view coming soon) |
+| **Resource usage**  | Uses local CPU/RAM | Offloads to Cloudflare |
+
+**In practice:**
+- **Developers** run tests locally during development so they can see the browser, pause tests, and debug visually.
+- **CI pipelines** use remote browsers because installing browsers in CI is slow, flaky, and wastes resources.
+
+The fixture pattern shown in this tutorial supports both workflows automatically — tests run locally by default, and switch to remote browsers when the `CDP_ENDPOINT` environment variable is set.
+
+</Details>
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
+- A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Browser Rendering - Edit` permissions
+- An existing [Playwright](https://playwright.dev/) test suite
+- Your application deployed to a publicly accessible URL (or behind [Cloudflare Access](/cloudflare-one/policies/access/))
+
+:::note
+This tutorial uses the standard `@playwright/test` package, not the Cloudflare fork. The Cloudflare fork (`@cloudflare/playwright`) is designed for running browser automation [inside a Worker](/browser-rendering/workers-bindings/). For E2E testing from external environments like CI runners, use the standard package with CDP connections as shown below.
+:::
+
+## 1. Get your CDP endpoint
+
+Browser Rendering exposes a CDP WebSocket endpoint that test runners can connect to. The endpoint URL follows this format:
+
+```txt
+wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/cdp
+```
+
+Replace `<ACCOUNT_ID>` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/).
+
+Store this as an environment variable in your CI system, along with your API token:
+
+```sh
+CDP_ENDPOINT="wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/cdp"
+CDP_API_TOKEN="<API_TOKEN>"
+```
+
+:::note
+Keep your API token secure. Store it as a secret in your CI/CD system rather than committing it to your repository.
+:::
+
+## 2. Create a CDP connection fixture
+
+Create a Playwright fixture that conditionally connects to the remote browser. This allows your tests to run locally with installed browsers during development, or remotely via CDP in CI.
+
+Create a file called `cdp-fixture.ts` in your tests directory:
+
+```ts title="tests/cdp-fixture.ts"
+import { test as base, chromium } from "@playwright/test";
+
+const CDP_ENDPOINT = process.env.CDP_ENDPOINT;
+const CDP_API_TOKEN = process.env.CDP_API_TOKEN;
+
+export const test = CDP_ENDPOINT
+  ? base.extend({
+      browser: async ({}, use) => {
+        const browser = await chromium.connectOverCDP(CDP_ENDPOINT, {
+          headers: CDP_API_TOKEN
+            ? { Authorization: `Bearer ${CDP_API_TOKEN}` }
+            : {},
+        });
+        await use(browser);
+        await browser.close();
+      },
+    })
+  : base;
+
+export { expect } from "@playwright/test";
+```
+
+This fixture checks for the `CDP_ENDPOINT` environment variable:
+- **If set**: Connects to Browser Rendering via CDP
+- **If not set**: Uses the default local browser (standard Playwright behavior)
+
+## 3. Update your tests to use the fixture
+
+Import the custom `test` function from your fixture instead of directly from `@playwright/test`:
+
+```ts title="tests/example.spec.ts"
+import { test, expect } from "./cdp-fixture";
+
+test("homepage has correct title", async ({ page }) => {
+  await page.goto("https://your-app.example.com");
+  await expect(page).toHaveTitle(/Your App/);
+});
+
+test("user can navigate to about page", async ({ page }) => {
+  await page.goto("https://your-app.example.com");
+  await page.click('a[href="/about"]');
+  await expect(page).toHaveURL(/.*about/);
+});
+```
+
+## 4. Handle authentication (optional)
+
+If your application is behind [Cloudflare Access](/cloudflare-one/policies/access/), configure Playwright to include the Access headers in all requests.
+
+First, create a [service token](/cloudflare-one/identity/service-tokens/) for your CI pipeline. Then update your `playwright.config.ts`:
+
+```ts title="playwright.config.ts"
+import { defineConfig } from "@playwright/test";
+
+const CF_ACCESS_CLIENT_ID = process.env.CF_ACCESS_CLIENT_ID;
+const CF_ACCESS_CLIENT_SECRET = process.env.CF_ACCESS_CLIENT_SECRET;
+
+export default defineConfig({
+  use: {
+    baseURL: process.env.PREVIEW_URL || "https://your-app.example.com",
+    extraHTTPHeaders:
+      CF_ACCESS_CLIENT_ID && CF_ACCESS_CLIENT_SECRET
+        ? {
+            "CF-Access-Client-Id": CF_ACCESS_CLIENT_ID,
+            "CF-Access-Client-Secret": CF_ACCESS_CLIENT_SECRET,
+          }
+        : {},
+  },
+});
+```
+
+## 5. Update your CI configuration
+
+Add the CDP endpoint and any authentication credentials to your CI environment. Below are examples for common CI systems.
+
+<Tabs> <TabItem label="GitHub Actions">
+
+```yaml title=".github/workflows/e2e.yml"
+name: E2E Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run E2E tests
+        env:
+          CDP_ENDPOINT: "wss://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/browser-rendering/cdp"
+          CDP_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: npx playwright test
+```
+
+</TabItem> <TabItem label="GitLab CI">
+
+```yaml title=".gitlab-ci.yml"
+e2e-tests:
+  image: node:20
+  stage: test
+  variables:
+    CDP_ENDPOINT: "wss://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/browser-rendering/cdp"
+    CDP_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+  script:
+    - npm ci
+    - npx playwright test
+```
+
+</TabItem> </Tabs>
+
+:::caution
+Do not install Playwright browsers in CI when using Browser Rendering. Skip the `npx playwright install` step to save time and resources.
+:::
+
+## 6. Run your tests
+
+**Locally (with local browsers):**
+
+```sh
+npx playwright test
+```
+
+**In CI (with Browser Rendering):**
+
+Your CI pipeline will automatically use Browser Rendering when the `CDP_ENDPOINT` environment variable is set.
+
+## Troubleshooting
+
+### Connection timeouts
+
+If you experience connection timeouts, ensure your API token has the correct permissions and has not expired. You can also increase the connection timeout in your fixture:
+
+```ts
+const browser = await chromium.connectOverCDP(CDP_ENDPOINT, {
+  headers: { Authorization: `Bearer ${CDP_API_TOKEN}` },
+  timeout: 60000, // 60 seconds
+});
+```
+
+### Tests pass locally but fail in CI
+
+This usually indicates environment differences. Ensure your application URL is accessible from Cloudflare's network and that any required authentication headers are configured correctly.
+
+## Summary
+
+You have configured your E2E tests to run against Cloudflare Browser Rendering. Your CI pipeline no longer needs to install or manage browsers, and your tests run against a consistent browser environment.
+
+:::note[Using Puppeteer?]
+This tutorial focuses on Playwright, the recommended framework for E2E testing. If you use Puppeteer, the same CDP connection approach works — use [`puppeteer.connect()`](https://pptr.dev/api/puppeteer.puppeteer.connect) with the `browserWSEndpoint` option.
+:::
+
+## Pricing
+
+Browser Rendering usage from CDP connections is billed based on browser hours. Refer to [Browser Rendering pricing](/browser-rendering/pricing/) for details on costs and how to monitor your usage.
+
+## Related resources
+
+- [Playwright documentation](/browser-rendering/playwright/)
+- [Browser Rendering limits](/browser-rendering/limits/)
+- [Browser Rendering pricing](/browser-rendering/pricing/)
+- [Cloudflare Access service tokens](/cloudflare-one/identity/service-tokens/)
