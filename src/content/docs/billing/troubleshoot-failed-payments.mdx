@@ -13,7 +13,12 @@ This article will help if you are receiving errors about your payment failing wh
 Alternatively, you may receive an email from us about a subscription renewal payment failure with the subject: “[Cloudflare]: We couldn't process your renewal payment” which states “We were unable to process your renewal payment”.
 
 ## Automatic retries and product removal
-If the failed payment relates to a recurring charge for a Cloudflare plan, add-on, or subscription then after a five (5) day grace period, your account is automatically downgraded to a Free plan. Downgrading to a Free plan does not suspend your website, but you will lose any subscriptions or add-on services associated with the Pro, Business, or Enterprise plan.
+If the failed payment relates to a recurring charge for a Cloudflare plan, add-on, or subscription then Cloudflare, using AI, chooses the best times to retry failed payment attempts to increase the chance of successfully paying an invoice. The AI model behind "Smart Retries" uses time-dependent, dynamic signals, such as: 
+
+* The number of different devices that have presented a given payment method in the last N hours.
+* The best time to pay (payments made for debit cards in certain countries might be slightly more successful at 12:01 AM in local time zones).
+
+Cloudflare uses this information to assess when to retry payments. We continuously learn from new purchaser behaviors and transactions, which provide for a more targeted approach over traditional rules-based payment retry logic. after all retries have been completed, your account is automatically downgraded to a Free plan. Downgrading to a Free plan does not suspend your website, but you will lose any subscriptions or add-on services associated with the Pro, Business, or Enterprise plan.
 
 To avoid this, follow the Causes & Solution sections below to resolve the failing payment and retry. If you are unable to resolve the issue within the 5 day grace period, you’ll need to manually re-subscribe to these products. You may need to [pay an overdue balance](/billing/pay-invoices-overdue-balances/#pay-an-overdue-balance) relating to the five day grace period, if applicable.
 
