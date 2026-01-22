@@ -87,7 +87,7 @@ encode_base64(sha256(concat(to_string(ip.src), http.host, "my-secret")))
 ```
 
 :::note
-You can only use the `encode_base64()` function in [Transform Rules](/rules/transform/) (request/response header transform rules).
+You can only use the `encode_base64()` function in [request/response header transform rules](/rules/transform/).
 :::
 
 ### `cidr`
