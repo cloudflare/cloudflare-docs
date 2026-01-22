@@ -1,0 +1,218 @@
+---
+title: Cloudflare Email Service
+pcx_content_type: overview
+sidebar:
+  order: 1
+---
+
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+	Tabs,
+	TabItem,
+	LinkButton,
+	Badge,
+} from "~/components";
+
+<Description>
+
+Send transactional emails and route incoming emails to Workers or email addresses
+
+</Description>
+
+<Plan type="workers-paid" />
+
+:::note[Welcome to Email Service Private Beta]
+Cloudflare Email Service is currently in private beta. Access is limited to approved users.
+
+**Known limitations:**
+
+- Your domain must use Cloudflare DNS
+- You must use the Workers binding (REST API is not available)
+- Email templates are not available
+- You must onboard the top-level domain to use Email Sending and/or Email Routing
+
+Many of these will be addressed over the course of the private and public beta.
+:::
+
+Cloudflare Email Service provides powerful email capabilities:
+
+- **Email Sending** for outbound transactional emails
+- **Email Routing** for handling incoming emails with Workers or routing to email addresses
+
+Together, these two features make it possible for you to send and receive emails from your applications. For example, you can use Email Service for:
+
+- Transactional emails (welcome messages, password resets, order confirmations)
+- Authentication flows (magic links, email verification, two-factor authentication)
+- Notifications and alerts
+- Custom email addresses (support@, contact@, orders@)
+- Emails as a mode of interaction for agents, such as send an email to create an issue in ticket tracking
+
+Access Email Service from Cloudflare Workers using Workers Bindings:
+
+<Tabs>
+<TabItem label="index.ts">
+```ts
+export default {
+	// Handle HTTP requests (Email Sending)
+	async fetch(request, env, ctx): Promise<Response> {
+		// Send a welcome email
+		await env.EMAIL.send({
+			to: "user@example.com",
+			from: "welcome@yourdomain.com",
+			subject: "Welcome to our service!",
+			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+			text: "Welcome! Thanks for signing up."
+		});
+
+    	return new Response("Email sent successfully");
+    },
+
+    // Handle incoming emails (Email Routing)
+    async email(message, env, ctx): Promise<void> {
+    	// Forward to support team
+    	if (message.to.includes("support@yourdomain.com")) {
+    		await message.forward("team@yourdomain.com");
+    	}
+
+    	// Send auto-reply
+    	await env.EMAIL.send({
+    		to: message.from,
+    		from: "noreply@yourdomain.com",
+    		subject: "We received your message",
+    		html: "<h1>Thank you!</h1><p>We'll get back to you soon.</p>"
+    	});
+    }
+
+} satisfies ExportedHandler<{ EMAIL: EmailBinding }>;
+
+````
+</TabItem>
+<TabItem label="wrangler.jsonc">
+```jsonc
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-01-01",
+
+	// Email sending
+	"send_email": [
+		{
+			"name": "EMAIL"
+		}
+	],
+
+	// Email routing
+	"email": [
+		{
+			"name": "EMAIL_HANDLER"
+		}
+	]
+}
+````
+
+</TabItem>
+</Tabs>
+
+See the full [Workers Email API reference](/email-service/api/send-emails/workers-api/).
+
+<LinkButton href="/email-service/get-started/">Get started</LinkButton>
+
+---
+
+## Features
+
+<Feature header="Email Sending" href="/email-service/get-started/send-emails/">
+	Send transactional emails with high deliverability and global performance.
+</Feature>
+
+<Feature header="Email Routing" href="/email-service/get-started/route-emails/">
+	Route incoming emails to custom addresses, Workers, or external destinations.
+</Feature>
+
+<Feature
+	header="React Email Support"
+	href="/email-service/examples/email-sending/react-email-templates/"
+>
+	Build modern, responsive email templates using React components.
+</Feature>
+
+<Feature header="Deliverability" href="/email-service/concepts/deliverability/">
+	Automatic IP reputation management and deliverability optimization.
+</Feature>
+
+<Feature
+	header="Analytics & Observability"
+	href="/email-service/observability/"
+>
+	Monitor email performance with comprehensive metrics and alerting.
+</Feature>
+
+<Feature header="Workers API" href="/email-service/api/">
+	Send and route emails using the native Workers API.
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+	Build serverless applications that can send emails directly from the edge.
+</RelatedProduct>
+
+<RelatedProduct header="Queues" href="/queues/" product="queues">
+	Process email events asynchronously with Workers Queues integration.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Analytics Engine"
+	href="/analytics/"
+	product="analytics"
+>
+	Store and analyze custom email metrics with Workers Analytics Engine.
+</RelatedProduct>
+
+---
+
+### More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Platform limits"
+	href="/email-service/platform/limits/"
+	icon="document"
+>
+	Learn about Email Service limits and quotas.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Pricing"
+	href="/email-service/platform/pricing/"
+	icon="seti:shell"
+>
+	Understand Email Service pricing and plans.
+</LinkTitleCard>
+
+<LinkTitleCard title="Examples" href="/email-service/examples/" icon="document">
+	Explore practical examples and implementation patterns.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Discord"
+	href="https://discord.com/channels/595317990191398933/893253103695065128"
+	icon="discord"
+>
+	Ask questions and discuss Email Service with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard title="Twitter" href="https://x.com/cloudflaredev" icon="x.com">
+	Follow product announcements and developer updates.
+</LinkTitleCard>
+
+</CardGrid>

@@ -1,0 +1,437 @@
+---
+title: Domain configuration (work in progress)
+pcx_content_type: concept
+summary: |
+  Configure domains for Cloudflare Email Service, manage DNS records, and verify domain setup for both email sending and routing.
+sidebar:
+  order: 1
+---
+
+import { Steps, Tabs, TabItem } from "~/components";
+
+Configure your domains to work with Cloudflare Email Service. This includes DNS record management, domain verification, and advanced domain settings.
+
+## Automatic DNS configuration
+
+You can quickly get your DNS configured by following the automatic DNS configuration flow as part of the onboarding onto Email Service.
+
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com).
+
+2. Navigate to **Compute & AI** > **Email Service**.
+
+3. Select **Onboard Domain**.
+
+4. Choose a domain from your Cloudflare account.
+
+5. Select **Next** to configure DNS records.
+
+6. Press **Add records and onboard**. This will add the following DNS records to your domain:
+   - TXT records for SPF to authorize sending emails and routing forwarded emails.
+   - TXT records for DKIM to provide authentication for emails sent and forwarded from your domain.
+   - MX records to route incoming emails to Email Service.
+
+## DNS record configuration details
+
+Cloudflare automatically configures required DNS records for both email sending and routing when you onboard a domain onto Email Service.
+Here are the specific details of the DNS records configured:
+
+### Sending records
+
+These records authenticate your outbound emails:
+
+<Tabs>
+<TabItem label="SPF Record">
+
+**Purpose**: Authorizes Cloudflare to send emails on behalf of your domain.
+
+```dns
+TXT yourdomain.com "v=spf1 include:_spf.cloudflare.com ~all"
+```
+
+**Configuration:**
+
+- **Type**: TXT
+- **Name**: `@` (root domain)
+- **Value**: `v=spf1 include:_spf.cloudflare.com ~all`
+- **TTL**: Auto
+
+:::note[Existing SPF Records]
+If you have existing SPF records, merge them: `v=spf1 include:_spf.cloudflare.com include:_spf.google.com ~all`
+:::
+
+</TabItem>
+<TabItem label="DKIM Record">
+
+**Purpose**: Provides cryptographic authentication for your emails.
+
+```dns
+TXT selector._domainkey.yourdomain.com "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC..."
+```
+
+**Configuration:**
+
+- **Type**: TXT
+- **Name**: `selector._domainkey` (selector provided by Cloudflare)
+- **Value**: DKIM public key (provided by Cloudflare)
+- **TTL**: Auto
+
+**Multiple selectors supported** for key rotation and different use cases.
+
+</TabItem>
+<TabItem label="DMARC Record">
+
+**Purpose**: Sets policy for email authentication failures.
+
+```dns
+TXT _dmarc.yourdomain.com "v=DMARC1; p=quarantine; rua=mailto:dmarc@yourdomain.com"
+```
+
+**Configuration:**
+
+- **Type**: TXT
+- **Name**: `_dmarc`
+- **Value**: DMARC policy
+- **TTL**: Auto
+
+**Policy options:**
+
+- `p=none` - Monitor only (recommended for new setups)
+- `p=quarantine` - Quarantine suspicious emails
+- `p=reject` - Reject unauthenticated emails
+
+</TabItem>
+</Tabs>
+
+### Routing records
+
+These records route incoming emails to Cloudflare and authenticate forwarded emails:
+
+<Tabs>
+<TabItem label="MX Records">
+
+**Purpose**: Route incoming emails to Cloudflare's mail servers.
+
+```dns
+MX yourdomain.com route1.mx.cloudflare.net (Priority: 15)
+MX yourdomain.com route2.mx.cloudflare.net (Priority: 70)
+MX yourdomain.com route3.mx.cloudflare.net (Priority: 96)
+```
+
+**Configuration:**
+
+- **Type**: MX
+- **Name**: `@` (root domain)
+- **Mail server**: Cloudflare routing MX servers
+- **Priority**: 15, 70, 96 (lower = higher priority)
+
+</TabItem>
+<TabItem label="Routing SPF Record">
+
+**Purpose**: Authorizes Cloudflare to forward emails on behalf of your domain.
+
+```dns
+TXT yourdomain.com "v=spf1 include:_spf.mx.cloudflare.net ~all"
+```
+
+**Configuration:**
+
+- **Type**: TXT
+- **Name**: `@` (root domain)
+- **Value**: `v=spf1 include:_spf.mx.cloudflare.net ~all`
+- **TTL**: Auto
+
+:::note[Different from Sending SPF]
+Email Routing uses `_spf.mx.cloudflare.net` while Email Sending uses `_spf.cloudflare.com`. Both can coexist in the same SPF record.
+:::
+
+</TabItem>
+<TabItem label="Routing DKIM Record">
+
+**Purpose**: Provides cryptographic authentication for forwarded emails.
+
+```dns
+TXT cf2024-1._domainkey.yourdomain.com "v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA..."
+```
+
+**Configuration:**
+
+- **Type**: TXT
+- **Name**: `cf2024-1._domainkey` (selector provided by Cloudflare)
+- **Value**: DKIM public key (provided by Cloudflare)
+- **TTL**: Auto
+
+**Separate from sending DKIM** - Email Routing uses its own DKIM selector and keys.
+
+</TabItem>
+<TabItem label="Routing TXT Record">
+
+**Purpose**: Enables Email Routing functionality.
+
+```dns
+TXT yourdomain.com "v=CF-EMAIL-ROUTING"
+```
+
+**Configuration:**
+
+- **Type**: TXT
+- **Name**: `@` (root domain)
+- **Value**: `v=CF-EMAIL-ROUTING`
+- **TTL**: Auto
+
+</TabItem>
+</Tabs>
+
+## Domain verification
+
+Verify your domain configuration to ensure proper setup:
+
+1. Go to **Compute & AI** > **Email Service** > **Settings**.
+
+2. Check **Domain Status**:
+   - **DNS Records**: All required records configured
+   - **Sending SPF**: Properly configured and verified (`_spf.cloudflare.com`)
+   - **Routing SPF**: Properly configured and verified (`_spf.mx.cloudflare.net`)
+   - **Sending DKIM**: Keys generated and DNS records added
+   - **Routing DKIM**: Keys generated and DNS records added (separate selector)
+   - **DMARC**: Policy configured (if enabled)
+   - **MX Records**: Pointing to Cloudflare routing servers
+
+3. If any status shows as not configured:
+   - Wait 5-15 minutes for DNS propagation
+   - Select **Verify Records** to re-check
+   - Check DNS configuration in your domain settings
+
+### Verification troubleshooting
+
+<Tabs>
+<TabItem label="DNS Propagation">
+
+**Issue**: Records show as "Not Found" immediately after adding.
+
+**Solution**:
+
+- Wait 5-15 minutes for DNS propagation
+- Check propagation status: `dig TXT yourdomain.com`
+- Cloudflare domains propagate faster than external domains
+
+**Check propagation globally:**
+
+```bash
+# Check SPF record
+dig TXT yourdomain.com | grep spf
+
+# Check DKIM record
+dig TXT selector._domainkey.yourdomain.com
+
+# Check MX records
+dig MX yourdomain.com
+```
+
+</TabItem>
+<TabItem label="Record Conflicts">
+
+**Issue**: Existing DNS records conflict with Email Service.
+
+**SPF Conflicts:**
+
+- Merge existing SPF records
+- Remove duplicate `v=spf1` entries
+- Ensure only one SPF record exists
+
+**MX Conflicts:**
+
+- Email Routing requires Cloudflare MX records
+- Remove or update existing MX records
+- Cannot use Email Routing with external mail servers
+
+**DKIM Conflicts:**
+
+- Use different selectors for different services
+- `cloudflare._domainkey` for Email Service
+- `google._domainkey` for Google Workspace
+
+</TabItem>
+</Tabs>
+
+## Advanced domain settings
+
+### Custom sending domains
+
+Configure specific subdomains for different types of emails:
+
+1. Add subdomain to your Cloudflare account:
+   - `transactional.yourdomain.com`
+   - `marketing.yourdomain.com`
+   - `notifications.yourdomain.com`
+
+2. Configure DNS records for each subdomain.
+
+3. Use specific domains in your email sending:
+
+   ```ts
+   // Transactional emails
+   await env.EMAIL.send({
+   	from: "orders@transactional.yourdomain.com",
+   	// ...
+   });
+
+   // Marketing emails
+   await env.EMAIL.send({
+   	from: "newsletter@marketing.yourdomain.com",
+   	// ...
+   });
+   ```
+
+### Sender address restrictions
+
+Restrict which email addresses can be used for sending:
+
+<Tabs>
+<TabItem label="Dashboard Configuration">
+
+1. Go to **Compute & AI** > **Email Service** > **Settings**.
+2. Select **Sender Restrictions**.
+3. Add allowed sender addresses:
+   - `noreply@yourdomain.com`
+   - `support@yourdomain.com`
+   - `orders@yourdomain.com`
+4. Save configuration.
+
+</TabItem>
+<TabItem label="Worker Configuration">
+
+```toml
+# wrangler.toml
+[[send_email]]
+name = "SECURE_EMAIL"
+allowed_sender_addresses = [
+    "noreply@yourdomain.com",
+    "support@yourdomain.com",
+    "orders@yourdomain.com"
+]
+```
+
+**Benefits:**
+
+- Prevents unauthorized email sending
+- Reduces risk of domain reputation damage
+- Enforces consistent sender addresses
+
+</TabItem>
+</Tabs>
+
+### Multi-domain setup
+
+Configure multiple domains for different purposes:
+
+```ts
+interface Env {
+	EMAIL: EmailBinding;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/send-corporate") {
+			await env.EMAIL.send({
+				from: "contact@company.com",
+				to: "client@example.com",
+				subject: "Corporate Communication",
+			});
+		}
+
+		if (url.pathname === "/send-product") {
+			await env.EMAIL.send({
+				from: "updates@product.company.com",
+				to: "user@example.com",
+				subject: "Product Update",
+			});
+		}
+	},
+};
+```
+
+## Domain management
+
+### Remove a domain
+
+1. Go to **Compute & AI** > **Email Service** > **Settings**.
+2. Select the domain to remove.
+3. Select **Remove Domain**.
+4. Confirm removal.
+
+:::warning[Domain Removal Impact]
+Removing a domain will:
+
+- Stop all email sending from that domain
+- Disable email routing for that domain
+- Require reconfiguration if re-added
+  :::
+
+### Transfer domain ownership
+
+1. Domain must remain in the same Cloudflare account.
+2. DNS records are tied to the account, not specific users.
+3. Use Cloudflare account-level permissions to manage access.
+
+## Monitoring domain health
+
+### Domain status indicators
+
+- **🟢 Active**: All records configured correctly
+- **🟡 Warning**: Some records missing or misconfigured
+- **🔴 Error**: Critical configuration issues
+- **⚪ Pending**: DNS propagation in progress
+
+### Automated monitoring
+
+Set up automated domain health checks:
+
+```ts
+// Check domain configuration
+async function checkDomainHealth(domain: string): Promise<boolean> {
+	try {
+		// Check SPF record
+		const spfCheck = await fetch(
+			`https://dns.google/resolve?name=${domain}&type=TXT`,
+		);
+		const spfData = await spfCheck.json();
+
+		const hasSpf = spfData.Answer?.some(
+			(record) =>
+				record.data.includes("v=spf1") &&
+				record.data.includes("_spf.cloudflare.com"),
+		);
+
+		if (!hasSpf) {
+			console.warn(`SPF record missing for ${domain}`);
+			return false;
+		}
+
+		return true;
+	} catch (error) {
+		console.error(`Domain health check failed for ${domain}:`, error);
+		return false;
+	}
+}
+```
+
+## Summary
+
+Proper domain configuration is essential for Email Service functionality:
+
+- ✅ **DNS records** enable sending and routing
+- ✅ **Verification** ensures proper setup
+- ✅ **Advanced settings** provide flexibility and security
+- ✅ **Monitoring** maintains domain health
+
+## Next steps
+
+- **[Workers configuration](/email-service/configuration/workers/)**: Set up email bindings
+- **[Domain authentication (DKIM and SPF)](/email-service/concepts/email-authentication/)**: Learn about SPF, DKIM, and DMARC
+- **[Deliverability](/email-service/concepts/deliverability/)**: Optimize email delivery
+
+---
+
+_Need help with domain configuration?_ Contact support.

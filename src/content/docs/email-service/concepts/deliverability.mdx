@@ -1,0 +1,84 @@
+---
+title: Email deliverability
+pcx_content_type: concept
+summary: Understand bounce handling, quarantine system, and reputation management for optimal email delivery.
+sidebar:
+  order: 3
+---
+
+import Sandboxing from "~/content/partials/email-service/_sandboxing.mdx";
+
+Email deliverability ensures your emails reach recipients' inboxes. Cloudflare Email Service handles bounces automatically and manages sender reputation to maximize delivery success.
+
+## Bounces
+
+Bounces occur when emails cannot be delivered to recipients. There are two types of bounces: **hard bounces** and **soft bounces**.
+
+### Hard bounces
+
+Hard bounces are permanent delivery failures that occur when:
+
+- Email address doesn't exist (`user@domain.com` → No such user)
+- Domain doesn't exist (`user@nonexistentdomain.com`)
+- Recipient server permanently blocks your domain
+- Content rejected as spam by recipient filters
+
+**Hard bounces are never retried** because the failure is permanent. Emails that hard bounce will be returned to your `replyAt` email address and can be handled with email routing.
+
+Hard bounced addresses are automatically added to your [suppression list](/email-service/concepts/suppressions/) to protect your sender reputation.
+
+### Soft bounces
+
+Soft bounces are temporary failures that may succeed if retried:
+
+- Recipient mailbox is full
+- Email server temporarily down
+- Rate limiting or greylisting
+
+Cloudflare automatically retries soft bounces with exponential backoff (15min → 1hr → 4hr → 12hr → 24hr) for up to 72 hours.
+
+<Sandboxing />
+
+## Quarantine system
+
+Your email sending account may be quarantined when your deliverability is too low (< 98%) and affects the pool of IP addresses shared
+by users of Cloudflare Email Service. To resolve this, ensure that your deliverability is >98% for a period of time and notify the Email Service product team.
+
+Moreover, additional **deliverability factors** may be considered, such as:
+
+- **Sender reputation**: New or low-reputation domains
+- **Content patterns**: Suspicious content analysis
+- **Domain reputation**: Historical sending behavior
+- **Traffic patterns**: Unusual volume spikes
+
+Your reputation status and quarantined emails are visible in the Cloudflare dashboard.
+
+## Reputation management
+
+Cloudflare automatically manages:
+
+- **IP reputation**: Shared pools with tiered promotion based on sending quality
+- **Domain authentication**: DKIM signing, SPF alignment, DMARC compliance
+- **Feedback processing**: ISP complaint handling and suppression list management
+
+Monitor your reputation and delivery metrics in the Cloudflare dashboard.
+
+### Best practices
+
+Avoid content that can trigger spam-detection or can be perceived as unwanted content:
+
+- Avoid spam trigger words (FREE, URGENT, GUARANTEED)
+- Include both HTML and plain text versions
+- Use legitimate URLs and clear sender identification
+
+Ensure that your email lists are clean and contain intended recipients:
+
+- Validate emails before sending
+- Implement double opt-in for subscriptions
+- Remove hard bounced addresses immediately
+
+Ensure that you deliverability stays above key metrics to avoid affecting your email sending reputation:
+
+- Delivery rate >95%
+- Hard bounce rate < 2%
+- Complaint rate < 0.1%

@@ -1,0 +1,141 @@
+---
+title: Email sending
+pcx_content_type: how-to
+summary: Test email sending Workers locally using wrangler dev with simulated email delivery
+sidebar:
+  order: 1
+---
+
+import { WranglerConfig } from "~/components";
+
+Test email sending functionality locally using `wrangler dev` to simulate email delivery and verify your sending logic before deploying.
+
+## Prerequisites
+
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/) installed
+- Node.js and npm installed
+
+## Configuration
+
+Configure your Wrangler file with the email binding:
+
+<WranglerConfig>
+
+```toml
+name = "email-sending-worker"
+compatibility_date = "2024-01-01"
+
+[[send_email]]
+name = "EMAIL"
+```
+
+</WranglerConfig>
+
+:::note
+
+Local development simulates email sending by writing emails to local EML files instead of actually sending them.
+
+:::
+
+## Basic sending worker
+
+```javascript
+export default {
+	async fetch(request, env, ctx) {
+		if (request.method !== "POST") {
+			return new Response("Method not allowed", { status: 405 });
+		}
+
+		try {
+			const emailData = await request.json();
+
+			console.log("📤 Sending email:", {
+				to: emailData.to,
+				from: emailData.from,
+				subject: emailData.subject,
+			});
+
+			const response = await env.EMAIL.send(emailData);
+
+			return new Response(
+				JSON.stringify({
+					success: true,
+					id: response.messageId,
+				}),
+				{
+					headers: { "Content-Type": "application/json" },
+				},
+			);
+		} catch (error) {
+			return new Response(
+				JSON.stringify({
+					success: false,
+					error: error.message,
+				}),
+				{
+					status: 500,
+					headers: { "Content-Type": "application/json" },
+				},
+			);
+		}
+	},
+};
+```
+
+## Testing
+
+Start your development server:
+
+```bash
+npx wrangler dev
+```
+
+Send a test email:
+
+```bash
+curl -X POST http://localhost:8787/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "recipient@example.com",
+    "from": "sender@yourdomain.com",
+    "subject": "Test Email",
+    "html": "<h1>Hello from Wrangler!</h1>",
+    "text": "Hello from Wrangler!"
+  }'
+```
+
+Wrangler will show output like:
+
+```bash
+[wrangler:inf] send_email binding called with the following message:
+  /tmp/miniflare-files/email/test-email-abc123.eml
+```
+
+## Understanding the .eml file
+
+Wrangler simulates `env.EMAIL.send()` by writing the email to a local file in [EML format](https://en.wikipedia.org/wiki/Email#Message_format). The file contains the raw email message with headers and body:
+
+```eml
+Date: Fri, 04 Apr 2025 12:27:08 +0000
+From: sender@yourdomain.com
+To: recipient@example.com
+Message-ID: <2s95plkazox@example.com>
+Subject: Test Email
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<h1>Hello from Wrangler!</h1>
+```
+
+You can:
+
+- Open `.eml` files in email clients to preview rendering
+- Inspect headers to verify email metadata
+- Test different content types (HTML, plain text, multipart)
+- Validate email structure before deployment
+
+## Next steps
+
+- Deploy your sending worker: [Email Service configuration](/email-service/configuration/workers/)
+- See advanced patterns: [Email sending examples](/email-service/examples/email-sending/)

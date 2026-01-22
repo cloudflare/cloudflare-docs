@@ -1,0 +1,26 @@
+## Set up your domain
+
+Before using Email Routing, you need to configure your domain.
+
+### Onboard your domain
+
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com).
+
+2. Navigate to **Compute & AI** > **Email Service** > **Email Routing**.
+
+3. Select **Onboard Domain**.
+
+4. Choose a domain from your Cloudflare account.
+
+5. Select **Continue** to proceed with DNS configuration.
+
+6. Press **Add records and onboard**. This will add the following DNS records to your domain:
+   - MX records to route incoming emails to Cloudflare.
+   - TXT records for SPF to authorize email routing.
+   - CNAME records for DKIM to provide authentication for routed emails.
+
+:::note[DNS Propagation]
+DNS changes can take up to 24 hours to propagate globally, but usually complete within 5-15 minutes for domains using Cloudflare DNS.
+:::
+
+Once your domain is verified, you can start routing emails.

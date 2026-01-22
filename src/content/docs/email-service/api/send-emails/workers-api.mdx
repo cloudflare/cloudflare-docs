@@ -1,0 +1,541 @@
+---
+title: Workers API
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { Tabs, TabItem, WranglerConfig } from "~/components";
+
+The Workers API provides native email sending capabilities directly from your Cloudflare Workers. This is the recommended method for applications built on the Cloudflare platform.
+
+## Email binding
+
+Configure email bindings in your Wrangler configuration file to enable email sending:
+
+<WranglerConfig>
+
+```toml
+[[send_email]]
+name = "EMAIL"
+
+# Optional: restrict sender addresses for security
+[[send_email]]
+name = "RESTRICTED_EMAIL"
+allowed_sender_addresses = ["noreply@yourdomain.com", "support@yourdomain.com"]
+```
+
+</WranglerConfig>
+
+## send() method
+
+Send a single email using the `send()` method on your email binding.
+
+### Interface
+
+```typescript
+interface EmailBinding {
+	send(message: EmailMessage): Promise<EmailResponse>;
+	sendBatch(messages: EmailMessage[]): Promise<BatchEmailResponse>;
+}
+
+interface EmailMessage {
+	to: string | string[]; // Max 50 recipients
+	from: string | { email: string; name: string };
+	subject: string;
+	html?: string;
+	text?: string;
+	react?: React.ReactElement; // React Email support
+	cc?: string | string[];
+	bcc?: string | string[];
+	replyTo?: string | { email: string; name: string };
+	attachments?: Attachment[];
+	headers?: { [key: string]: string };
+}
+
+interface Attachment {
+	content: string; // Base64 encoded content
+	filename: string;
+	type: string; // MIME type
+	disposition: "attachment" | "inline";
+	contentId?: string; // For inline attachments
+}
+
+interface EmailResponse {
+	messageId: string; // Unique email ID
+	success: boolean; // Indicates if email was accepted
+}
+
+interface BatchEmailResponse {
+	results: (EmailResponse | EmailError)[];
+}
+
+interface EmailError {
+	success: false;
+	error: {
+		code: string; // Error code (e.g., "E_VALIDATION_ERROR")
+		message: string; // Human readable error message
+	};
+}
+
+// Error thrown for single sends and binding-level batch errors
+class EmailSendError extends Error {
+	code: string;
+	message: string;
+}
+```
+
+### Basic usage
+
+<Tabs>
+<TabItem label="Simple email">
+
+```typescript
+interface Env {
+	EMAIL: EmailBinding;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const response = await env.EMAIL.send({
+			to: "user@example.com",
+			from: "welcome@yourdomain.com",
+			subject: "Welcome to our service!",
+			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+			text: "Welcome! Thanks for signing up.",
+		});
+
+		return new Response(`Email sent: ${response.messageId}`);
+	},
+};
+```
+
+</TabItem>
+<TabItem label="Multiple recipients">
+
+```typescript
+// Send to multiple recipients (max 50)
+const response = await env.EMAIL.send({
+	to: ["user1@example.com", "user2@example.com", "user3@example.com"],
+	from: { email: "newsletter@yourdomain.com", name: "Newsletter Team" },
+	subject: "Monthly Newsletter",
+	html: "<h1>This month's updates</h1>",
+	text: "This month's updates",
+});
+```
+
+</TabItem>
+<TabItem label="With CC and BCC">
+
+```typescript
+const response = await env.EMAIL.send({
+	to: "customer@example.com",
+	cc: ["manager@company.com"],
+	bcc: ["archive@company.com"],
+	from: "orders@yourdomain.com",
+	replyTo: "support@yourdomain.com",
+	subject: "Order Confirmation #12345",
+	html: "<h1>Your order is confirmed</h1>",
+	text: "Your order is confirmed",
+});
+```
+
+</TabItem>
+</Tabs>
+
+### Attachments
+
+<Tabs>
+<TabItem label="PDF attachment">
+
+```typescript
+const response = await env.EMAIL.send({
+	to: "customer@example.com",
+	from: "invoices@yourdomain.com",
+	subject: "Your Invoice",
+	html: "<h1>Invoice attached</h1><p>Please find your invoice attached.</p>",
+	attachments: [
+		{
+			content: "JVBERi0xLjQKJeLjz9MKMSAwIG9iag...", // Base64 PDF content
+			filename: "invoice-12345.pdf",
+			type: "application/pdf",
+			disposition: "attachment",
+		},
+	],
+});
+```
+
+</TabItem>
+<TabItem label="Inline image">
+
+```typescript
+const response = await env.EMAIL.send({
+	to: "user@example.com",
+	from: "marketing@yourdomain.com",
+	subject: "Check out our new product!",
+	html: `
+    <h1>New Product Launch</h1>
+    <img src="cid:product-image" alt="New Product" />
+    <p>Check out our amazing new product!</p>
+  `,
+	attachments: [
+		{
+			content: "iVBORw0KGgoAAAANSUhEUgAA...", // Base64 image content
+			filename: "product.png",
+			type: "image/png",
+			disposition: "inline",
+			contentId: "product-image",
+		},
+	],
+});
+```
+
+</TabItem>
+</Tabs>
+
+### React Email integration
+
+Use React components to build email templates:
+
+<Tabs>
+<TabItem label="React component">
+
+```tsx
+// email-templates/WelcomeEmail.tsx
+import {
+	Html,
+	Head,
+	Body,
+	Container,
+	Text,
+	Button,
+} from "@react-email/components";
+
+interface WelcomeEmailProps {
+	name: string;
+	verificationUrl: string;
+}
+
+export function WelcomeEmail({ name, verificationUrl }: WelcomeEmailProps) {
+	return (
+		<Html>
+			<Head />
+			<Body
+				style={{ fontFamily: "Arial, sans-serif", backgroundColor: "#f6f9fc" }}
+			>
+				<Container style={{ padding: "20px" }}>
+					<Text style={{ fontSize: "24px", fontWeight: "bold" }}>
+						Welcome, {name}!
+					</Text>
+					<Text>
+						Thank you for joining our service. Click the button below to verify
+						your email address.
+					</Text>
+					<Button
+						href={verificationUrl}
+						style={{
+							backgroundColor: "#007ee6",
+							color: "white",
+							padding: "12px 20px",
+							textDecoration: "none",
+							borderRadius: "4px",
+							display: "inline-block",
+						}}
+					>
+						Verify Email
+					</Button>
+				</Container>
+			</Body>
+		</Html>
+	);
+}
+```
+
+</TabItem>
+<TabItem label="Using in Worker">
+
+```typescript
+import { WelcomeEmail } from './email-templates/WelcomeEmail';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const { email, name } = await request.json();
+
+    const verificationToken = generateVerificationToken();
+    const verificationUrl = `https://yourdomain.com/verify?token=${verificationToken}`;
+
+    const response = await env.EMAIL.send({
+      to: email,
+      from: "welcome@yourdomain.com",
+      subject: "Welcome to our service!",
+      react: <WelcomeEmail name={name} verificationUrl={verificationUrl} />
+    });
+
+    return new Response(JSON.stringify({
+      success: true,
+      emailId: response.messageId
+    }));
+  }
+};
+```
+
+</TabItem>
+</Tabs>
+
+## sendBatch() method
+
+Send multiple emails in a single request using the `sendBatch()` method:
+
+<Tabs>
+<TabItem label="Different recipients">
+
+```typescript
+// Send personalized emails to different recipients
+const emails = [
+	{
+		to: "alice@example.com",
+		from: "newsletter@yourdomain.com",
+		subject: "Personal update for Alice",
+		html: "<h1>Hi Alice!</h1><p>Your personalized content here.</p>",
+	},
+	{
+		to: "bob@example.com",
+		from: "newsletter@yourdomain.com",
+		subject: "Personal update for Bob",
+		html: "<h1>Hi Bob!</h1><p>Your personalized content here.</p>",
+	},
+];
+
+const batchResponse = await env.EMAIL.sendBatch(emails);
+batchResponse.results.forEach((result, index) => {
+	if (result.success) {
+		console.log(`Email ${index} sent successfully: ${result.messageId}`);
+	} else {
+		console.error(
+			`Email ${index} failed: ${result.error.code} - ${result.error.message}`,
+		);
+	}
+});
+```
+
+</TabItem>
+<TabItem label="Template with data">
+
+```typescript
+// Send template emails with different data
+const subscribers = [
+  { email: "user1@example.com", name: "Alice", plan: "Pro" },
+  { email: "user2@example.com", name: "Bob", plan: "Business" },
+  { email: "user3@example.com", name: "Carol", plan: "Enterprise" }
+];
+
+const emails = subscribers.map(subscriber => ({
+  to: subscriber.email,
+  from: "updates@yourdomain.com",
+  subject: `Your ${subscriber.plan} plan update`,
+  react: <PlanUpdateEmail
+    name={subscriber.name}
+    plan={subscriber.plan}
+  />
+}));
+
+const batchResponse = await env.EMAIL.sendBatch(emails);
+console.log(`Batch completed: ${batchResponse.results.length} emails processed`);
+```
+
+</TabItem>
+</Tabs>
+
+## Error handling
+
+Handle email sending errors gracefully:
+
+<Tabs>
+<TabItem label="Single send errors">
+
+```typescript
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		try {
+			const response = await env.EMAIL.send({
+				to: "user@example.com",
+				from: "noreply@yourdomain.com",
+				subject: "Test Email",
+				text: "This is a test email.",
+			});
+
+			return new Response(
+				JSON.stringify({
+					success: true,
+					emailId: response.messageId,
+				}),
+			);
+		} catch (error) {
+			// Error is EmailSendError with code and message
+			console.error("Email sending failed:", error.code, error.message);
+
+			// Handle specific error types
+			switch (error.code) {
+				case "E_SENDER_NOT_VERIFIED":
+					return new Response(
+						JSON.stringify({
+							success: false,
+							error: "Please verify your sender domain first",
+						}),
+						{ status: 400 },
+					);
+
+				case "E_RATE_LIMIT_EXCEEDED":
+					return new Response(
+						JSON.stringify({
+							success: false,
+							error: "Rate limit exceeded. Please try again later",
+						}),
+						{ status: 429 },
+					);
+
+				default:
+					return new Response(
+						JSON.stringify({
+							success: false,
+							error: error.message,
+						}),
+						{ status: 500 },
+					);
+			}
+		}
+	},
+};
+```
+
+</TabItem>
+<TabItem label="Batch send errors">
+
+```typescript
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const emails = [
+			{
+				to: "user1@example.com",
+				from: "noreply@yourdomain.com",
+				subject: "Test Email 1",
+				text: "This is test email 1.",
+			},
+			{
+				to: "user2@example.com",
+				from: "noreply@yourdomain.com",
+				subject: "Test Email 2",
+				text: "This is test email 2.",
+			},
+		];
+
+		try {
+			const batchResponse = await env.EMAIL.sendBatch(emails);
+
+			let successCount = 0;
+			let errorCount = 0;
+			const errors = [];
+
+			batchResponse.results.forEach((result, index) => {
+				if (result.success) {
+					successCount++;
+				} else {
+					errorCount++;
+					errors.push({
+						index,
+						code: result.error.code,
+						message: result.error.message,
+					});
+				}
+			});
+
+			return new Response(
+				JSON.stringify({
+					success: true,
+					summary: {
+						total: emails.length,
+						successful: successCount,
+						failed: errorCount,
+					},
+					errors: errors,
+				}),
+			);
+		} catch (error) {
+			// This indicates a binding-level error (e.g., E_BATCH_TOO_LARGE)
+			console.error("Batch sending failed:", error.code, error.message);
+
+			return new Response(
+				JSON.stringify({
+					success: false,
+					error: error.message,
+				}),
+				{ status: 400 },
+			);
+		}
+	},
+};
+```
+
+</TabItem>
+</Tabs>
+
+## Error codes
+
+The following error codes may be returned when sending emails:
+
+| Error Code                      | Description                             | Common Causes                                                 |
+| ------------------------------- | --------------------------------------- | ------------------------------------------------------------- |
+| `E_VALIDATION_ERROR`            | Validation error in the payload         | Invalid email format, missing required fields, malformed data |
+| `E_FIELD_MISSING`               | Required field is missing               | Missing `to`, `from`, or `subject` fields                     |
+| `E_TOO_MANY_RECIPIENTS`         | Too many recipients in to/cc/bcc arrays | Combined recipients exceed 50 limit                           |
+| `E_SENDER_NOT_VERIFIED`         | Sender domain not verified              | Attempting to send from unverified domain                     |
+| `E_RECIPIENT_SUPPRESSED`        | Recipient is on suppression list        | Email address has bounced or unsubscribed                     |
+| `E_SENDER_DOMAIN_NOT_AVAILABLE` | Domain not available for sending        | Domain not onboarded to Email Service                         |
+| `E_BATCH_TOO_LARGE`             | Batch contains too many emails          | Batch size exceeds maximum allowed                            |
+| `E_CONTENT_TOO_LARGE`           | Email content exceeds size limit        | Total content size > 25MB                                     |
+| `E_SUBJECT_TOO_LONG`            | Subject line too long                   | Subject exceeds maximum character limit                       |
+| `E_DELIVERY_FAILED`             | Could not deliver the email             | SMTP delivery failure, recipient server rejection             |
+| `E_RATE_LIMIT_EXCEEDED`         | Rate limit exceeded                     | Hourly sending limit reached                                  |
+| `E_DAILY_LIMIT_EXCEEDED`        | Daily limit exceeded                    | Daily sending quota reached                                   |
+| `E_MONTHLY_LIMIT_EXCEEDED`      | Monthly limit exceeded                  | Monthly sending quota reached                                 |
+| `E_BINDING_UNAVAILABLE`         | Email binding not available             | Email service binding is not configured or available          |
+| `E_INTERNAL_SERVER_ERROR`       | Internal service error                  | Email Service temporarily unavailable                         |
+
+## Legacy EmailMessage API
+
+The existing EmailMessage API remains supported for backward compatibility:
+
+```typescript
+import { EmailMessage } from "cloudflare:email";
+import { createMimeMessage } from "mimetext";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const msg = createMimeMessage();
+		msg.setSender({ name: "Sender", addr: "sender@yourdomain.com" });
+		msg.setRecipient("recipient@example.com");
+		msg.setSubject("Legacy Email");
+		msg.addMessage({
+			contentType: "text/html",
+			data: "<h1>Hello from legacy API</h1>",
+		});
+
+		const message = new EmailMessage(
+			"sender@yourdomain.com",
+			"recipient@example.com",
+			msg.asRaw(),
+		);
+
+		await env.EMAIL.send(message);
+		return new Response("Legacy email sent");
+	},
+};
+```
+
+---
+
+**Next steps:**
+
+- See [practical examples](/email-service/examples/) of Workers API usage
+- Learn about [email routing](/email-service/api/route-emails/) for handling incoming emails
+- Explore [email authentication](/email-service/concepts/email-authentication/) for better deliverability

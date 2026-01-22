@@ -1,0 +1,151 @@
+---
+pcx_content_type: concept
+title: Metrics and analytics (work in progress)
+sidebar:
+  order: 1
+---
+
+Email Service exposes analytics that allow you to inspect email sending performance and delivery rates across all your domains.
+
+The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) charts are queried from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
+
+## Metrics
+
+Email Service currently exposes the below metrics:
+
+| Dataset | GraphQL Dataset Name         | Description                                                            |
+| ------- | ---------------------------- | ---------------------------------------------------------------------- |
+| Sending | `emailSendingAdaptiveGroups` | This dataset consists of email sending operations and delivery status. |
+
+Metrics can be queried (and are retained) for the past 31 days.
+
+## View metrics in the dashboard
+
+Per-domain analytics for Email Service are available in the Cloudflare dashboard. To view current and historical metrics:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to [**Compute & AI** > **Email Service**](https://dash.cloudflare.com/?to=/:account/email/service).
+3. Select an existing domain or view account-wide metrics.
+4. Select the **Analytics** tab.
+
+You can optionally select a time window to query. This defaults to the last 24 hours.
+
+## Query via the GraphQL API
+
+You can programmatically query analytics for your Email Service domains via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard, and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+
+To get started using the [GraphQL Analytics API](/analytics/graphql-api/), follow the documentation to setup [Authentication for the GraphQL Analytics API](/analytics/graphql-api/getting-started/authentication/).
+
+To use the GraphQL API to retrieve Email Service's datasets, you must provide the `accountTag` filter with your Cloudflare Account ID. The GraphQL datasets for Email Service include:
+
+- `emailSendingAdaptiveGroups`
+
+### Examples
+
+The following are common GraphQL queries that you can use to retrieve information about Email Service analytics. These queries make use of variables `$accountTag`, `$date_geq`, `$date_leq`, and `$domainName`, which should be set as GraphQL variables or replaced in line. These variables should look similar to these:
+
+```json
+{
+	"accountTag": "<YOUR_ACCOUNT_ID>",
+	"domainName": "<YOUR_DOMAIN>",
+	"date_geq": "2024-07-15",
+	"date_leq": "2024-07-30"
+}
+```
+
+#### Email sending operations
+
+To query the count of sent, delivered, bounced, and rejected emails for a given `domainName` and for a given date range (`start` and `end`), grouped by `date` and `status`:
+
+```graphql graphql-api-explorer
+query EmailSendingOperationsSample(
+	$accountTag: string!
+	$domainName: string
+	$start: Date
+	$end: Date
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			emailSendingAdaptiveGroups(
+				filter: { domainName: $domainName, date_geq: $start, date_leq: $end }
+				limit: 10000
+				orderBy: [date_DESC]
+			) {
+				sum {
+					emails
+				}
+				dimensions {
+					date
+					status
+				}
+			}
+		}
+	}
+}
+```
+
+To query the distribution of delivery latency for sent emails for a given `domainName` within a given date range (`start`, `end`):
+
+```graphql graphql-api-explorer
+query EmailDeliveryLatencySample(
+	$accountTag: string!
+	$domainName: string
+	$start: Date
+	$end: Date
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			emailSendingAdaptiveGroups(
+				filter: {
+					domainName: $domainName
+					date_geq: $start
+					date_leq: $end
+					status: "delivered"
+				}
+				limit: 10000
+			) {
+				sum {
+					emails
+				}
+				dimensions {
+					status
+				}
+				quantiles {
+					deliveryLatencyMsP25
+					deliveryLatencyMsP50
+					deliveryLatencyMsP75
+					deliveryLatencyMsP90
+					deliveryLatencyMsP99
+					deliveryLatencyMsP999
+				}
+			}
+		}
+	}
+}
+```
+
+To query your account-wide email sending across all domains:
+
+```graphql graphql-api-explorer
+query EmailSendingAccountWideSample(
+	$accountTag: string!
+	$start: Date
+	$end: Date
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			emailSendingAdaptiveGroups(
+				filter: { date_geq: $start, date_leq: $end }
+				limit: 10000
+			) {
+				sum {
+					emails
+				}
+				dimensions {
+					status
+				}
+			}
+		}
+	}
+}
+```

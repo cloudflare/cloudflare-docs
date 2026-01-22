@@ -1,0 +1,102 @@
+---
+title: Send emails
+pcx_content_type: get-started
+summary: |
+  Send your first email using Cloudflare Email Service with Workers API.
+sidebar:
+  order: 1
+---
+
+import {
+	Render,
+	PackageManagers,
+	Steps,
+	Tabs,
+	TabItem,
+	WranglerConfig,
+} from "~/components";
+import DomainSetup from "~/content/partials/email-service/_domain-setup-sending.mdx";
+
+Send emails from your applications using Cloudflare Email Service with the Workers API.
+
+:::note
+You must be using Cloudflare DNS to use Email Service.
+:::
+
+<DomainSetup />
+
+## Send your first email
+
+Send your first email from Workers using the Workers API.
+
+Start by creating a new Worker project.
+
+1.  Create a new Worker project:
+
+    <PackageManagers
+    	type="create"
+    	pkg="cloudflare@latest"
+    	args="email-service-tutorial"
+    />
+
+2.  Add email binding to your Wrangler configuration file:
+
+    <WranglerConfig>
+
+    ```toml
+    [[send_email]]
+    name = "EMAIL"
+    ```
+
+    </WranglerConfig>
+
+3.  Create your Worker code in `src/index.ts`:
+
+    ```ts
+    interface Env {
+    	EMAIL: EmailBinding;
+    }
+
+    export default {
+    	async fetch(request: Request, env: Env): Promise<Response> {
+    		// Send a welcome email
+    		const response = await env.EMAIL.send({
+    			to: "recipient@example.com",
+    			from: "welcome@yourdomain.com", // Replace with your domain
+    			subject: "Welcome to our service!",
+    			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+    			text: "Welcome! Thanks for signing up.",
+    		});
+
+    		return new Response(`Email sent: ${response.messageId}`);
+    	},
+    } satisfies ExportedHandler<Env>;
+    ```
+
+4.  You can use `npx wrangler dev --remote` to develop your Worker project and send emails. This runs your code on Cloudflare's infrastructure while allowing you to step through the code.
+
+        ```sh
+        npx wrangler dev --remote
+        # ⎔ Starting remote preview...
+        # Total Upload: 24.96 KiB / gzip: 6.17 KiB
+        # [wrangler:info] Ready on http://localhost:8787
+        ```
+
+5.  Deploy and test:
+
+        ```sh
+        npm run deploy
+        # Visit your Worker URL to send the email
+        ```
+
+## What's next?
+
+Now that you can send emails, explore advanced features:
+
+- **[Route incoming emails](/email-service/get-started/route-emails/)** - Process emails sent to your domain
+- **[API reference](/email-service/api/send-emails/)** - Complete API documentation
+- **[Examples](/email-service/examples/)** - Real-world implementation patterns
+
+---
+
+_Having issues?_ Contact support.

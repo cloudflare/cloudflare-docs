@@ -1,0 +1,120 @@
+---
+title: Email Logs
+pcx_content_type: how-to
+summary: View and analyze email sending and routing activity logs with detailed authentication and delivery information
+sidebar:
+  order: 3
+---
+
+Email Service provides comprehensive logging for both email sending and routing activities. Access detailed logs through the Cloudflare dashboard to monitor email flow, troubleshoot delivery issues, and analyze authentication status.
+
+## Activity Log
+
+The Activity Log allows you to sort through all email activities and check actions taken by Email Service.
+
+### Email sending logs
+
+For outbound emails sent through Email Service:
+
+- **Sent**: Email successfully accepted and queued for delivery
+- **Delivered**: Email successfully delivered to recipient's mail server
+- **Bounced**: Email bounced (hard or soft bounce)
+- **Quarantined**: Email held for review due to reputation or content analysis
+- **Failed**: Email failed to send due to configuration or authentication issues
+
+### Email routing logs
+
+For inbound emails processed through Email Routing:
+
+- **Forwarded**: Email successfully forwarded to destination address
+- **Dropped**: Email dropped due to filtering rules or configuration
+- **Rejected**: Email rejected due to SPF, DKIM, or DMARC failures
+- **Processed**: Email processed by Worker handler
+
+## Viewing email details
+
+Select any email in the Activity Log to expand its details and view comprehensive information:
+
+### Authentication status
+
+Check the status of email authentication protocols:
+
+- **SPF status**: Shows pass/fail for Sender Policy Framework validation
+- **DKIM status**: Shows pass/fail for DomainKeys Identified Mail signature verification
+- **DMARC status**: Shows pass/fail for Domain-based Message Authentication compliance
+
+### Email headers
+
+View complete email headers including:
+
+- Message-ID and threading information
+- Authentication-Results headers
+- Custom headers added during processing
+- Routing and delivery timestamps
+
+### Delivery information
+
+For sent emails, see delivery details:
+
+- Recipient mail server response
+- Delivery attempts and timestamps
+- Bounce reason codes and categories
+- Final delivery status
+
+## Taking action on emails
+
+Based on the information shown in email details, you can:
+
+### Mark as spam
+
+- Flag emails that should be treated as spam
+- Helps improve future filtering accuracy
+- Applies to both sending reputation and routing filters
+
+### Block sender
+
+- Block specific sender addresses from future delivery
+- Automatically reject emails from blocked senders
+- Useful for persistent spam or unwanted emails
+
+### Review patterns
+
+- Identify trends in bounce rates or authentication failures
+- Spot potential configuration issues
+- Monitor reputation changes over time
+
+## Filtering and searching logs
+
+Use the Activity Log filters to find specific emails:
+
+**By status**: Filter by delivery status (sent, bounced, delivered, etc.)
+**By timeframe**: View logs for specific date ranges
+**By sender/recipient**: Search for specific email addresses
+**By authentication**: Filter by SPF/DKIM/DMARC results
+
+## Best practices for log monitoring
+
+### Regular review
+
+- Monitor logs daily during initial setup
+- Check weekly for ongoing operations
+- Review immediately after configuration changes
+
+### Key metrics to watch
+
+- Authentication failure rates
+- Bounce patterns and trends
+- Quarantine frequency
+- Delivery success rates
+
+### Troubleshooting workflow
+
+1. **Identify the issue**: Use logs to pinpoint failure types
+2. **Check authentication**: Verify SPF, DKIM, DMARC configuration
+3. **Review content**: Look for patterns in quarantined emails
+4. **Adjust configuration**: Make necessary DNS or routing changes
+5. **Monitor improvement**: Track metrics after changes
+
+---
+
+Email logs provide the visibility needed to maintain high deliverability and properly route incoming emails. Use this data to optimize your email configuration and quickly resolve any delivery issues.
