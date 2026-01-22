@@ -54,7 +54,7 @@ You can configure (or override) the following Cloudflare OWASP Core Ruleset sett
 - **OWASP action**: The action to perform when the calculated [request threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) is greater than the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold). The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Interactive Challenge_, and _Log_.
 - **[Payload logging](/waf/managed-rules/payload-logging/configure/)**: When enabled, logs the request information (payload) that triggered a specific rule of the managed ruleset. You must configure a public key to encrypt the payload.
 
-To configure the Cloudflare OWASP Core Ruleset in the dashboard:
+Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure it in the dashboard:
 
 <Render
 	file="dash-configure-all-rules"
@@ -74,7 +74,7 @@ You can configure (or override) the following setting in the dashboard for OWASP
 Setting the rule status for specific tags affects all current and future rules with the tags you selected.
 :::
 
-Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-the-cloudflare-owasp-core-ruleset), do the following to configure rules with specific tags in the dashboard:
+Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure rules with specific tags in the dashboard:
 
 <Render
 	file="dash-configure-rules-by-tag"
@@ -90,7 +90,7 @@ You can configure (or override) the following setting in the dashboard for the s
 
 - **Rule status**: Sets the status (enabled or disabled) of a single rule or, if you select multiple rules, for the selected rules.
 
-Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-the-cloudflare-owasp-core-ruleset), do the following to configure individual ruleset rules in the dashboard:
+Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
