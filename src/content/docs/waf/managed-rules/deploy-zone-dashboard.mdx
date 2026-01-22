@@ -11,13 +11,21 @@ head:
 
 import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
-The instructions on this page will guide you through deploying and configuring a managed ruleset for a zone.
+The instructions in this page provide general guidance for deploying and configuring a managed ruleset for a zone.
 
+For more specific instructions, refer to the following pages:
+
+- [Deploy the Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/#deploy-in-the-dashboard)
+- [Deploy the Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/#deploy-in-the-dashboard)
+- [Deploy the Cloudflare Sensitive Data Detection ruleset](/waf/managed-rules/reference/sensitive-data-detection/#deploy-in-the-dashboard)
+
+:::tip
 To deploy a managed ruleset for several Enterprise domains in your account, refer to [Deploy a managed ruleset in the dashboard for an account](/waf/account/managed-rulesets/deploy-dashboard/).
+:::
 
 ## Deploy a managed ruleset
 
-To deploy a managed ruleset with the default configuration:
+To deploy a managed ruleset for a zone:
 
 <Render file="dash-deploy-managed-ruleset-zone" product="waf" />
 
@@ -29,7 +37,7 @@ configuration, use the toggle next to the rule that deploys the managed ruleset.
 Configure a managed ruleset to:
 
 - Specify a custom filter expression to apply the rules in the ruleset to a subset of incoming requests.
-- Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare), or turn off those rules.
+- Configure (or override) specific settings for one or more rules (for example, configure a rule with an action different from the default action configured by Cloudflare), or turn off those rules.
 
 To skip one or more rules — or even entire managed rulesets — for specific incoming requests, [add an exception](/waf/managed-rules/waf-exceptions/).
 
@@ -39,15 +47,19 @@ Some managed rulesets may not allow custom configuration, depending on your Clou
 
 ### Configure all the rules in a managed ruleset
 
-To configure rule field values for all the rules in a managed ruleset:
+To configure (or override) settings for all the rules in a managed ruleset:
 
 <Render file="dash-configure-all-rules" product="waf" />
 
-### Configure rules of a managed ruleset with a specific tag
+### Configure rules of a managed ruleset with specific tags
+
+To configure (or override) settings of rules tagged with specific tags:
 
 <Render file="dash-configure-rules-by-tag" product="waf" />
 
 ### Configure individual rules of a managed ruleset
+
+To configure (or override) settings of individual rules of a managed ruleset:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
@@ -73,7 +85,15 @@ You can browse the available rules in a managed ruleset and search for individua
 
 </TabItem> <TabItem label="New dashboard" icon="rocket">
 
-<Render file="managed-rules-browse-zone-new-nav" product="waf" />
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Web application exploits**.
+
+3. Find the managed ruleset you want to browse, and select **View ruleset**.
+
+4. Review the rules and their tags in the side panel.
 
 </TabItem> </Tabs>
 
