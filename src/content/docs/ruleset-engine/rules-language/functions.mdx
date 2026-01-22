@@ -57,10 +57,10 @@ Example:
 all(http.request.headers["content-type"][*] == "application/json")
 ```
 
-### `base64_encode`
+### `encode_base64`
 
 {/* prettier-ignore */}
-<code>base64_encode(input <Type text="String | Bytes" /> [, flags <Type text="String" />])</code>: <Type text="String" />
+<code>encode_base64(input <Type text="String | Bytes" /> [, flags <Type text="String" />])</code>: <Type text="String" />
 
 Encodes an `input` string or byte array to Base64 format.
 
@@ -74,20 +74,20 @@ By default, the output uses standard Base64 encoding without padding.
 Examples:
 
 ```txt
-base64_encode("hello world")          will return "aGVsbG8gd29ybGQ"
-base64_encode("hello world", "p")     will return "aGVsbG8gd29ybGQ="
-base64_encode("hello world", "u")     will return "aGVsbG8gd29ybGQ"
-base64_encode("hello world", "up")    will return "aGVsbG8gd29ybGQ="
+encode_base64("hello world")          will return "aGVsbG8gd29ybGQ"
+encode_base64("hello world", "p")     will return "aGVsbG8gd29ybGQ="
+encode_base64("hello world", "u")     will return "aGVsbG8gd29ybGQ"
+encode_base64("hello world", "up")    will return "aGVsbG8gd29ybGQ="
 ```
 
-You can combine `base64_encode()` with other functions to create signed request headers:
+You can combine `encode_base64()` with other functions to create signed request headers:
 
 ```txt
-base64_encode(sha256(concat(to_string(ip.src), http.host, "my-secret")))
+encode_base64(sha256(concat(to_string(ip.src), http.host, "my-secret")))
 ```
 
 :::note
-You can only use the `base64_encode()` function in rewrite expressions of [Transform Rules](/rules/transform/).
+You can only use the `encode_base64()` function in [Transform Rules](/rules/transform/) (request/response header transform rules).
 :::
 
 ### `cidr`
@@ -417,16 +417,16 @@ sha256("my-token")
 
 The example above returns a 32-byte hash that your origin can validate to authenticate requests.
 
-You can combine `sha256()` with [`base64_encode()`](#base64_encode) to create Base64-encoded signatures:
+You can combine `sha256()` with [`encode_base64()`](#encode_base64) to create Base64-encoded signatures:
 
 ```txt
-base64_encode(sha256("my-token"))
+encode_base64(sha256("my-token"))
 ```
 
 To create a signed header value from request attributes:
 
 ```txt
-base64_encode(sha256(concat(to_string(ip.src), to_string(http.request.timestamp.sec), "my-secret-key")))
+encode_base64(sha256(concat(to_string(ip.src), to_string(http.request.timestamp.sec), "my-secret-key")))
 ```
 
 :::note[Notes]
