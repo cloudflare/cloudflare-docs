@@ -1,7 +1,7 @@
 ---
 params:
   - rulesetName?
-  - rulesetNameNewDash?
+  - dashOptionName?
 ---
 
 import { Tabs, TabItem, Steps, DashButton, Markdown } from "~/components";
@@ -46,8 +46,8 @@ import managedRulesTabImg from "~/assets/images/waf/waf-managed-rules-tab.png";
 
 2. (Optional) Filter by **Web application exploits**.
 
-3. { props.rulesetNameNewDash ? (
-     <Markdown text={`Turn on <strong>${props.rulesetNameNewDash}</strong>.`} inline={false} />
+3. { props.dashOptionName ? (
+     <Markdown text={`Turn on <strong>${props.dashOptionName}</strong>.`} inline={false} />
    ) : (
      <>
        <p>Turn on the managed ruleset(s) you want to deploy:</p>
