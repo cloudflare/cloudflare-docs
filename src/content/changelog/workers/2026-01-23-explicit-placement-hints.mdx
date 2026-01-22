@@ -26,9 +26,7 @@ To [set a placement hint](/workers/configuration/smart-placement/#use-placement-
 
 Placement hints support Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure region identifiers. Workers run in the [Cloudflare data center](https://www.cloudflare.com/network/) with the lowest latency to the specified cloud region.
 
-If your existing infrastructure is not in these cloud providers, expose it to placement probes with `placement.host` for layer 4 checks or `placement.hostname` for layer 7 checks.
-
-These probes are designed to locate single-homed infrastructure and are not suitable for anycasted or multicasted resources.
+If your existing infrastructure is not in these cloud providers, expose it to placement probes with `placement.host` for layer 4 checks or `placement.hostname` for layer 7 checks. These probes are designed to locate single-homed infrastructure and are not suitable for anycasted or multicasted resources.
 
 <WranglerConfig>
 

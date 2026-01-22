@@ -28,7 +28,7 @@ By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) run in
 
 </WranglerConfig>
 
-Placement reduces latency by minimizing round trips between your Worker and back-end services. You can achieve single-digit millisecond latency to databases, APIs, and other services running in legacy cloud infrastructure.
+Placement can reduce the overall latency of a Worker request by minimizing roundtrip latency of requests between your Worker and back-end services. You can achieve single-digit millisecond latency to databases, APIs, and other services running in legacy cloud infrastructure.
 
 | Option     | Best for                                                        | Configuration        |
 | ---------- | --------------------------------------------------------------- | -------------------- |
@@ -172,7 +172,7 @@ Cloudflare maps your specified cloud region to the data center with the lowest l
 
 ### Specify a host endpoint
 
-If your infrastructure is not in a major cloud provider, you can specify an endpoint for Cloudflare to probe.
+If your infrastructure is not in a major cloud provider, you can specify an endpoint for Cloudflare to probe. Cloudflare will triangulate the position of your external host and place Workers in a nearby region.
 
 :::note
 Host-based placement is experimental.
@@ -219,6 +219,29 @@ Placement Hints support Amazon Web Services (AWS), Google Cloud Platform (GCP), 
 | Azure    | `azure:{region}` | `azure:westeurope`, `azure:eastus`, `azure:southeastasia` |
 
 For a full list of region codes, refer to [AWS regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html), [GCP regions](https://cloud.google.com/compute/docs/regions-zones), or [Azure regions](https://learn.microsoft.com/en-us/azure/reliability/regions-list).
+
+## Placement Behavior
+
+Workers Placement behaves in similar fashion when either Smart Placement or Placement hints are used. The following behavior applies to both.
+
+### Review limitations
+
+The following limitations apply to both smart placement and placement hints: 
+- Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). It does not affect [RPC methods](/workers/runtime-apis/rpc/) or [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints).
+	- Workers without a fetch event handler are ignored by Smart Placement.
+	- [Static assets](/workers/static-assets/) are always served from the location nearest to the incoming request. If your code retrieves assets via the [static assets binding](/workers/static-assets/binding/), assets are served from the location where your Worker runs.
+
+### `cf-placement` header
+
+Cloudflare adds a `cf-placement` header to all requests when placement is enabled. Use this header to check whether a request was routed with Smart Placement and where the Worker processed the request.
+
+The header value includes a placement type and an airport code indicating the data center location:
+- `remote-LHR` — The request was routed using Smart Placement to a data center near London.
+- `local-EWR` — The request was not routed using Smart Placement. The Worker ran in the default location near Newark.
+
+:::caution
+The `cf-placement` header may be removed before Smart Placement exits beta.
+:::
 
 ## Best practices
 
