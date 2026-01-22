@@ -18,7 +18,7 @@ If you send NetFlow and/or sFlow data to Cloudflare, you can configure static th
 | **Rule threshold** | The number of bits per second or packets per second for the rule alert. When this value is exceeded for the rule duration, an alert notification is sent. Minimum of `1` and no maximum. |
 | **Rule duration** | The amount of time in minutes the rule threshold must exceed to send an alert notification. Choose from the following values: `1`, `5`, `10`, `15`, `20`, `30`, `45`, or `60` minutes. |
 | **Auto-advertisement** | If you are a Magic Transit On Demand customer, you can enable this feature to automatically enable Magic Transit if the rule alert is triggered. Magic Network Monitoring supports Magic Transit's supernet capability. To learn more refer to [Auto-Advertisement section](#rule-auto-advertisement). |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries. To learn more and see an example, view the [Rule IP prefixes](#rule-ip-prefixes) section. |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR (Classless Inter-Domain Routing) range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries. To learn more, refer to [Rule IP prefixes](#rule-ip-prefixes). |
 
 ## API documentation
 
@@ -26,9 +26,9 @@ To review an example static threshold rule, go to the [Rules](https://api.cloudf
 
 ## Recommended rule configuration
 
-You can create Magic Network Monitoring rules to monitor the traffic volume of your network for a set of IP prefixes and / or IP addresses. The traffic volume threshold for these rules is also set by you. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
+You can create Magic Network Monitoring rules to monitor the traffic volume of your network for a set of IP prefixes and/or IP addresses. The traffic volume threshold for these rules is also set by you. If the traffic volume threshold is crossed, Magic Network Monitoring will send an alert via email, webhook, or PagerDuty.
 
-Follow the guidelines outlined in this page to create appropriate Magic Network Monitoring rules and set accurate rule thresholds.
+Follow the guidelines in [Rule IP prefixes](#rule-ip-prefixes), [Rule threshold](#rule-threshold), and [Rule duration](#rule-duration) to create appropriate Magic Network Monitoring rules and set accurate rule thresholds.
 
 ### Rule IP prefixes
 
@@ -38,7 +38,7 @@ As you become more familiar with the traffic patterns across each IP prefix, we 
 
 ### Rule threshold
 
-Follow the steps below to configure appropriate rule thresholds.
+Follow the steps in [Initial rule configuration](#initial-rule-configuration) and [Setting the appropriate threshold](#setting-the-appropriate-threshold) to configure appropriate rule thresholds.
 
 #### Initial rule configuration
 
@@ -48,7 +48,7 @@ This will allow you to collect initial information about the typical traffic vol
 
 | Threshold type | Recommended rule threshold to collect initial data |
 | :---- 				 | :---- 																						  |
-| Bits 					 | 10 Gpbs (10,000,000,000 bits per second) 					|
+| Bits 					 | 10 Gbps (10,000,000,000 bits per second) 					|
 | Packets 			 | 10 Mpps (10,000,000 packets per second) 						|
 
 #### Setting the appropriate threshold
@@ -57,7 +57,7 @@ After creating the initial set of rules to monitor your network traffic, you sho
 
 Cloudflare recommends that you set a rule threshold that is two times larger than the maximum non-attack traffic observed for a one minute time interval within a Magic Network Monitoring rule.
 
-To find the maximum non-attack traffic for a one minute time interval over the past 14-30 days, you can filter for the specific rule you want to analyze. To do that:
+To find the maximum non-attack traffic for a one minute time interval over the past 14-30 days, filter for the specific rule you want to analyze:
 
 1. Go to the **Network flow** page.
 
@@ -78,7 +78,7 @@ Record the largest traffic volume peak for the rule in a spreadsheet, then repea
 
 ### Rule duration
 
-Your IP prefixes may experience inconsistent spikes in traffic volume across one minute time intervals. We recommend that you set a rule duration of 120 seconds or greater to reduce false positive alerts on short-term non-malicious traffic spikes. A rule duration of 120 seconds means that the traffic volume must be above the rule threshold for 120 seconds before an alert is fired.
+Your IP prefixes may experience inconsistent spikes in traffic volume across one minute time intervals. We recommend that you set a rule duration of at least two minutes to reduce false positive alerts on short-term non-malicious traffic spikes. A rule duration of two minutes means that the traffic volume must be above the rule threshold for two minutes before an alert is fired.
 
 ### Adjusting rules over time
 
