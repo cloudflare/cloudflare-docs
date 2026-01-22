@@ -9,16 +9,6 @@ sidebar:
 import { Render, GlossaryTooltip } from "~/components";
 
 
-## Which record types can Cloudflare proxy?
-
-Only `A`, `AAAA`, and `CNAME` records can be proxied. Cloudflare will not proxy any other [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
-
----
-
-## Does Cloudflare support wildcard DNS entries?
-
-Cloudflare supports wildcard '\*' DNS records, both proxied and unproxied, on all plans.
-
 ---
 
 ## Can I CNAME a domain not on Cloudflare to a domain that is on Cloudflare?
@@ -27,14 +17,6 @@ No. If you would like to do a redirect for a site not on Cloudflare, then set up
 
 Redirecting non-Cloudflare sites via `CNAME` records would cause a DNS resolution error. Since Cloudflare is a reverse proxy for the domain that is on Cloudflare, the `CNAME` redirect for the domain (not on Cloudflare) would not know where to send the traffic to.
 
-
----
-
-## Why do I have to remove my `DS` record when signing up for Cloudflare?
-
-<Render file="dnssec-providers" product="dns" />
-
-For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/dnssec/).
 
 ---
 
@@ -100,16 +82,6 @@ Third-party tools can sometimes fail to return correct DNS results if a recursiv
 - [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
 - [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
 - [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
-
----
-
-## Why am I getting a warning for hostname not covered even if I have a custom certificate?
-
-If the [custom certificate](/ssl/edge-certificates/custom-certificates/) has been in place before our new certificate management pipeline, the following warning is displayed but can be discarded.
-`This hostname is not covered by a certificate.`
-
-The warning will be gone when you upload a new custom certificate, or start using another type of certificate for this hostname.
-
 
 ---
 
