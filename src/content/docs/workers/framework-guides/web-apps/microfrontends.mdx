@@ -169,39 +169,31 @@ The router also handles:
 - **Redirect headers**: Rewrites `Location` headers to include the mount path
 - **Cookie paths**: Updates `Set-Cookie` headers to scope cookies to the mount path
 
-## Preloading
+## Route Preloading
 
-The router can generate a preload script that prefetches other microfrontends in the background, improving navigation performance between different parts of your application.
+When `preload: true` is set on a static mount route, the router automatically preloads those routes to enable faster navigation. The router uses **browser-specific optimization** to provide the best performance for each browser:
 
-When you set `"preload": true` on a route, the router:
+### Chromium Browsers (Chrome, Edge, Opera, Brave)
 
-1. Generates a `/__mf-preload.js` script
-2. Injects it into HTML responses
-3. Prefetches configured microfrontends after page load
+For Chromium-based browsers, the router uses the **Speculation Rules API** - a modern, browser-native prefetching mechanism:
 
-Example preload script (automatically generated):
+- Injects `<script type="speculationrules">` into the `<head>` element
+- Browser handles prefetching automatically with optimal priority management
+- Respects user preferences (battery saver, data saver modes)
+- Uses per-document in-memory cache for faster access
+- Not blocked by Cache-Control headers
+- More efficient than JavaScript-based fetching
 
-```javascript
-// Injected by router worker
-const routes = ["/app-a", "/app-b"];
-const run = () => {
-	for (const p of routes) {
-		fetch(p, {
-			method: "GET",
-			credentials: "same-origin",
-			cache: "default",
-		}).catch(() => {});
-	}
-};
+**Example injected speculation rules:**
 
-if (document.readyState === "loading") {
-	document.addEventListener("DOMContentLoaded", run, { once: true });
-} else {
-	run();
+```json
+{
+	"prefetch": [
+		{
+			"urls": ["/app1", "/app2", "/dashboard"]
+		}
+	]
 }
-```
-
-This allows browsers to fetch and [cache](/cache/) resources from other microfrontends before users navigate to them, resulting in faster transitions.
 
 ## Smooth transitions
 
