@@ -14,8 +14,8 @@ There are two types of on-ramps: single virtual private cloud (VPC) and hubs.
 Before creating on-ramps from your cloud networks to Magic WAN, make sure you:
 
 - {props.mwanAccount}
-- Went through process of [setting up your cloud provider](/magic-cloud-networking/get-started/).
-- Have the correct cloud resources. Refer to [Reference](/magic-cloud-networking/reference/) to check resource by cloud provider.
+- Went through the process of [setting up your cloud provider](/magic-cloud-networking/get-started/).
+- Have the correct cloud resources. Refer to [Reference](/magic-cloud-networking/reference/) to check resources by cloud provider.
 
 ## Available on-ramps
 
@@ -43,7 +43,7 @@ Choose this option if you have a single VPC in your cloud to connect to Magic WA
 3. Select **Add new on-ramp**.
 4. Go to **Connect an existing VPC to Cloudflare** > **Select**.
 5. Give your new on-ramp a name and a description (optional), then select **Continue**.
-6. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP and Azure. Then, select **Continue**.
+6. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP, and Azure. Then, select **Continue**.
 7. Select the network that you want to connect to. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/) you have already set up. When you are done, select **Continue**.
 8. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
    - **Add routes for your Magic WAN address space to your cloud network**: Select this option to install routes for reaching Magic WAN in your cloud network's route tables (refer to [Magic WAN address space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
@@ -212,7 +212,7 @@ After setting up your on-ramps, you need to update your network security groups 
 
 ---
 
-## Magic WAN Address Space
+## Magic WAN address space
 
 By default, Cloudflare installs the following summarized routes in your cloud route tables to direct traffic to Magic WAN:
 
