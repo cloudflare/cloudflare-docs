@@ -1,0 +1,17 @@
+---
+{}
+---
+
+import { Details } from "~/components";
+
+<Details header="Hostname format restrictions">
+- **Character limit:** Must be less than 255 characters.
+- **Supported wildcards:** A single wildcard (`*`) is allowed, and it must represent a full DNS label.
+			Examples: `*.internal.local`, `foo.*.internal.local`
+- **Unsupported wildcards:** The following wildcard formats are not supported:
+		- Partial wildcards such as `*-dev.internal.local` or `dev-*.internal.local`.
+		- Wildcards in the middle of a label, such as `foo*bar.internal.local`.
+		- Multiple wildcards in the hostname, such as `*.*.internal.local`.
+- **Wildcard trimming**: Leading wildcards (`*`) are trimmed off and an implicit dot (`.`) is assumed. For example, `*.internal.local` is saved as `internal.local` but will match all subdomains at the wildcard level (covers `foo.internal.local` but not `foo.bar.internal.local`).
+- **Dot trimming:** Leading and ending dots (`.`) are allowed but trimmed off.
+</Details>

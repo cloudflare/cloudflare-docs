@@ -1,0 +1,36 @@
+---
+{}
+---
+
+If you need `cloudflared` to use a specific internal DNS server that is different from the host's default resolver, you must explicitly connect that DNS server to Cloudflare via an [IP/CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/). You will also need to configure a [Gateway resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) to route queries to this specific private DNS server.
+
+1.  To create an IP/CIDR route for the DNS server:
+    1. Go to **Networks** > **Routes** > **CIDR**.
+    2. Select **Add CIDR route**.
+    3. Enter the private IP address of your internal DNS resolver.
+    4. Select the Cloudflare Tunnel that connects to the network where this DNS server resides.
+    5. Select **Create**.
+
+2.  To create a resolver policy:
+    1. Go to **Traffic policies** > **Resolver policies**.
+    2. Select **Create a policy**.
+    3. Create an expression that matches the private hostname:
+       <table>
+         <thead>
+           <tr>
+             <th>Selector</th>
+             <th>Operator</th>
+             <th>Value</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td>Host</td>
+             <td>in</td>
+             <td><code>{props.hostname}</code></td>
+           </tr>
+         </tbody>
+       </table>
+    4. Under **Configure custom DNS resolvers**, enter the private IP address of your internal DNS server.
+    5. From the dropdown menu, select the `- Private` routing option and the [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) assigned to the tunnel you selected in the previous step.
+    6. Select **Create policy**.
