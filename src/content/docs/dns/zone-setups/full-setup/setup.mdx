@@ -73,6 +73,12 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 <Render file="dns-nxdomain-warning" product="dns" />
 
+### Unexpected DNS records after import
+
+If you see many unexpected DNS records after adding your domain, a wildcard (`*`) record at your previous authoritative DNS provider may have been imported into Cloudflare in a way that creates additional records.
+
+Review your imported records and remove any records that you do not need. For more background on wildcard behavior, refer to [Wildcard DNS records](/dns/manage-dns-records/reference/wildcard-dns-records/).
+
 ## Update your nameservers
 
 <Render file="nameserver-preamble" product="dns" />

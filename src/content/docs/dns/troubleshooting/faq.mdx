@@ -9,34 +9,12 @@ sidebar:
 import { Render, GlossaryTooltip } from "~/components";
 
 
----
-
-## Can I CNAME a domain not on Cloudflare to a domain that is on Cloudflare?
-
-No. If you would like to do a redirect for a site not on Cloudflare, then set up a traditional `301` or `302` redirect on your origin web server.
-
-Redirecting non-Cloudflare sites via `CNAME` records would cause a DNS resolution error. Since Cloudflare is a reverse proxy for the domain that is on Cloudflare, the `CNAME` redirect for the domain (not on Cloudflare) would not know where to send the traffic to.
-
-
----
-
-## What happens when I remove the `DS` record?
-
-When you remove your DS record, an invalidation process begins which results in the unsigning of your domain’s DNS records. This will allow your authoritative nameservers to be changed. If you are an existing customer, this will not affect your ability to use Cloudflare. New customers will need to complete this step before Cloudflare can be used successfully.
-
----
 
 ## Does Cloudflare support EDNS0 (extension mechanisms for DNS)?
 
 Yes, Cloudflare DNS supports EDNS0. EDNS0 is enabled for all Cloudflare customers. It is a building block for modern DNS implementations that adds support for signaling if the DNS Resolver (recursive DNS provider) supports larger message sizes and DNSSEC.
 
 EDNS0 is the first approved set of mechanisms for [DNS extensions](http://en.wikipedia.org/wiki/Extension_mechanisms_for_DNS), originally published as [RFC 2671](https://datatracker.ietf.org/doc/html/rfc2671).
-
----
-
-## What should I do if I change my server IP address or hosting provider?
-
-After switching hosting providers or server IP addresses, update the IP addresses in your Cloudflare **DNS** app. Your new hosting provider will provide the new IP addresses that your DNS should use.  To modify DNS record content in the **DNS** app, click on the IP address, and enter the new IP address.
 
 ---
 
@@ -54,34 +32,6 @@ Error seems to be misleading, as the error was found to be in customer code synt
 **Solution**
 
 Make sure the argument `zone_id = data.cloudflare_zones.example_com.zones[0].id`. A more detailed use case can be found in [this](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) GitHub thread.
-
----
-
-## Why am I getting hundreds of random DNS records after adding my domain?
-
-This can happen when you had a wildcard `*` record configured at your previous authoritative DNS, and for some reason the wildcard record wasn't detected. You can remove these records in bulk [using the API](/api/resources/dns/subresources/records/methods/delete/).
-
-Alternatively, you can also:
-
-1. [Remove your domain](/fundamentals/manage-domains/remove-domain/) from Cloudflare.
-2. Delete the wildcard record from your authoritative DNS.
-3. [Re-add](/fundamentals/manage-domains/add-site/) the domain.
-
----
-
-## What IP should I use for parked domain / redirect-only / originless setup?
-
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/proxy-status/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
-
----
-
-## Why are DNS queries returning incorrect results?
-
-Third-party tools can sometimes fail to return correct DNS results if a recursive DNS cache fails to refresh. In this circumstance, purge your public DNS cache via these methods:
-
-- [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
-- [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
-- [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
 
 ---
 
