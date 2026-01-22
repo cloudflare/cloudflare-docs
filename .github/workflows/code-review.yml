@@ -1,11 +1,11 @@
 name: Code Example Review
 
-# Trigger only on PRs targeting production branch with markdown changes
+# Trigger only on PRs targeting jun-test-code-review branch with markdown changes
 on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - production
+      - jun-test-code-review
     paths:
       - "src/content/docs/**/*.md"
       - "src/content/docs/**/*.mdx"
@@ -62,21 +62,21 @@ jobs:
             After the command outputs the formatted comment text:
 
             A) Check if a review comment already exists on this PR:
-               
+
                COMMENT_ID=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
                  --jq '.[] | select(.body | contains("Code Review Complete")) | .id' | head -n1)
 
             B) If COMMENT_ID exists (not empty):
                Update the existing comment to preserve comment structure:
-               
+
                gh api repos/${{ github.repository }}/issues/comments/$COMMENT_ID \
                  -X PATCH -f body="$(cat comment.md)"
-               
+
                (where comment.md contains the generated comment text)
 
             C) If COMMENT_ID is empty (no existing comment):
                Create a new comment:
-               
+
                gh pr comment ${{ github.event.pull_request.number }} \
                  --body-file comment.md
 
