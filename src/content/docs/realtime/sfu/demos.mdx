@@ -3,10 +3,9 @@ pcx_content_type: navigation
 title: Demos
 sidebar:
   order: 10
-
 ---
 
-import { ExternalResources, GlossaryTooltip } from "~/components"
+import { ExternalResources, GlossaryTooltip } from "~/components";
 
 Learn how you can use Realtime within your existing architecture.
 
@@ -22,4 +21,9 @@ Explore the following <GlossaryTooltip term="demo application">demo applications
 
 An interactive visualization showing how Realtime uses Cloudflare's global network as a distributed SFU. Click anywhere on the map to add participants and watch them connect to their nearest datacenter via anycast routing, with media tracks flowing along Cloudflare's private backbone.
 
-[View Global SFU Visualization](https://realtime-sfu.dev-demos.workers.dev)
+<div style="position: relative; height: 600px; width: 100%;">
+	<iframe
+		src="https://realtime-sfu.cf-dev-platform.com"
+		style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+	></iframe>
+</div>
