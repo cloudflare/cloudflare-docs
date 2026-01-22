@@ -11,6 +11,7 @@ import {
 	Render,
 	PackageManagers,
 	WranglerConfig,
+	Steps
 } from "~/components";
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
@@ -43,197 +44,223 @@ Follow the steps below to learn how to build a Workflow from scratch.
 
 ## 1. Create a new Worker project
 
-Open a terminal and run the `create cloudflare` (C3) CLI tool to create your Worker project:
+<Steps>
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={"my-workflow"} />
+1. Open a terminal and run the `create cloudflare` (C3) CLI tool to create your Worker project:
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "hello-world",
-		type: "Worker only",
-		lang: "TypeScript",
-	}}
-/>
+   <PackageManagers type="create" pkg="cloudflare@latest" args={"my-workflow"} />
 
-Move into your new project directory:
+   <Render
+   	file="c3-post-run-steps"
+   	product="workers"
+   	params={{
+   		category: "hello-world",
+   		type: "Worker only",
+   		lang: "TypeScript",
+   	}}
+   />
 
-```sh
-cd my-workflow
-```
+2. Move into your new project directory:
 
-<Details header="What files did C3 create?">
+   ```sh
+   cd my-workflow
+   ```
 
-In your project directory, C3 will have generated the following:
+   <Details header="What files did C3 create?">
 
-- `wrangler.jsonc`: Your [Wrangler configuration file](/workers/wrangler/configuration/#sample-wrangler-configuration).
-- `src/index.ts`: A minimal Worker written in TypeScript.
-- `package.json`: A minimal Node dependencies configuration file.
-- `tsconfig.json`: TypeScript configuration.
+   In your project directory, C3 will have generated the following:
 
-</Details>
+   - `wrangler.jsonc`: Your [Wrangler configuration file](/workers/wrangler/configuration/#sample-wrangler-configuration).
+   - `src/index.ts`: A minimal Worker written in TypeScript.
+   - `package.json`: A minimal Node dependencies configuration file.
+   - `tsconfig.json`: TypeScript configuration.
+
+   </Details>
+
+</Steps>
 
 ## 2. Write your Workflow
 
-Create a new file `src/workflow.ts`:
+<Steps>
+1. Create a new file `src/workflow.ts`:
 
-```ts title="src/workflow.ts"
-import { WorkflowEntrypoint, WorkflowStep } from "cloudflare:workers";
-import type { WorkflowEvent } from "cloudflare:workers";
+   ```ts title="src/workflow.ts"
+   import { WorkflowEntrypoint, WorkflowStep } from "cloudflare:workers";
+   import type { WorkflowEvent } from "cloudflare:workers";
 
-type Params = { name: string };
-type IPResponse = { result: { ipv4_cidrs: string[] } };
+   type Params = { name: string };
+   type IPResponse = { result: { ipv4_cidrs: string[] } };
 
-export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
-	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		const data = await step.do("fetch data", async () => {
-			const response = await fetch("https://api.cloudflare.com/client/v4/ips");
-			return await response.json<IPResponse>();
-		});
+   export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+   	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+   		const data = await step.do("fetch data", async () => {
+   			const response = await fetch("https://api.cloudflare.com/client/v4/ips");
+   			return await response.json<IPResponse>();
+   		});
 
-		await step.sleep("pause", "20 seconds");
+   		await step.sleep("pause", "20 seconds");
 
-		const result = await step.do(
-			"process data",
-			{ retries: { limit: 3, delay: "5 seconds", backoff: "linear" } },
-			async () => {
-				return {
-					name: event.payload.name,
-					ipCount: data.result.ipv4_cidrs.length,
-				};
-			},
-		);
+   		const result = await step.do(
+   			"process data",
+   			{ retries: { limit: 3, delay: "5 seconds", backoff: "linear" } },
+   			async () => {
+   				return {
+   					name: event.payload.name,
+   					ipCount: data.result.ipv4_cidrs.length,
+   				};
+   			},
+   		);
 
-		return result;
-	}
-}
-```
+   		return result;
+   	}
+   }
+   ```
 
-A Workflow extends `WorkflowEntrypoint` and implements a `run` method. This code also passes in our `Params` type as a [type parameter](/workflows/build/events-and-parameters/) so that events that trigger our Workflow are typed.
+   A Workflow extends `WorkflowEntrypoint` and implements a `run` method. This code also passes in our `Params` type as a [type parameter](/workflows/build/events-and-parameters/) so that events that trigger our Workflow are typed.
 
-The [`step`](/workflows/build/workers-api/#step) object is the core of the Workflows API. It provides methods to define durable steps in your Workflow:
+   The [`step`](/workflows/build/workers-api/#step) object is the core of the Workflows API. It provides methods to define durable steps in your Workflow:
 
-- `step.do(name, callback)` - Executes code and persists the result. If the Workflow is interrupted or retried, it resumes from the last successful step rather than re-running completed work.
-- `step.sleep(name, duration)` - Pauses the Workflow for a duration (e.g., `"10 seconds"`, `"1 hour"`).
+   - `step.do(name, callback)` - Executes code and persists the result. If the Workflow is interrupted or retried, it resumes from the last successful step rather than re-running completed work.
+   - `step.sleep(name, duration)` - Pauses the Workflow for a duration (e.g., `"10 seconds"`, `"1 hour"`).
 
-You can pass a [retry configuration](/workflows/build/sleeping-and-retrying/) to `step.do()` to customize how failures are handled. See the [full step API](/workflows/build/workers-api/#step) for additional methods like `sleepUntil` and `waitForEvent`.
+   You can pass a [retry configuration](/workflows/build/sleeping-and-retrying/) to `step.do()` to customize how failures are handled. See the [full step API](/workflows/build/workers-api/#step) for additional methods like `sleepUntil` and `waitForEvent`.
 
-When deciding whether to break code into separate steps, ask yourself: "Do I want all of this code to run again if just one part fails?" Separate steps are ideal for operations like calling external APIs, querying databases, or reading files from storage — if a later step fails, your Workflow can retry from that point using data already fetched, avoiding redundant API calls or database queries.
+   When deciding whether to break code into separate steps, ask yourself: "Do I want all of this code to run again if just one part fails?" Separate steps are ideal for operations like calling external APIs, querying databases, or reading files from storage — if a later step fails, your Workflow can retry from that point using data already fetched, avoiding redundant API calls or database queries.
 
-For more guidance on how to define your Workflow logic, refer to [Rules of Workflows](/workflows/build/rules-of-workflows/).
+   For more guidance on how to define your Workflow logic, refer to [Rules of Workflows](/workflows/build/rules-of-workflows/).
+
+</Steps>
 
 ## 3. Configure your Workflow
 
-Open `wrangler.jsonc`, which is your [Wrangler configuration file](/workers/wrangler/configuration/) for your Workers project and your Workflow, and add the `workflows` configuration:
+<Steps>
+1. Open `wrangler.jsonc`, which is your [Wrangler configuration file](/workers/wrangler/configuration/) for your Workers project and your Workflow, and add the `workflows` configuration:
 
-<WranglerConfig>
+   <WranglerConfig>
 
-```json title="wrangler.jsonc"
-{
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "my-workflow",
-	"main": "src/index.ts",
-	"compatibility_date": "2025-12-21",
-	"observability": {
-		"enabled": true
-	},
-	"workflows": [
-		{
-			"name": "my-workflow",
-			"binding": "MY_WORKFLOW",
-			"class_name": "MyWorkflow"
-		}
-	]
-}
-```
+   ```json title="wrangler.jsonc"
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "my-workflow",
+   	"main": "src/index.ts",
+   	"compatibility_date": "2025-12-21",
+   	"observability": {
+   		"enabled": true
+   	},
+   	"workflows": [
+   		{
+   			"name": "my-workflow",
+   			"binding": "MY_WORKFLOW",
+   			"class_name": "MyWorkflow"
+   		}
+   	]
+   }
+   ```
 
-</WranglerConfig>
+   </WranglerConfig>
 
-The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.MY_WORKFLOW`).
+   The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.MY_WORKFLOW`).
 
-You can also access [bindings](/workers/runtime-apis/bindings/) (such as [KV](/kv/), [R2](/r2/), or [D1](/d1/)) via `this.env` within your Workflow. For more information on bindings within Workers, refer to [Bindings (env)](/workers/runtime-apis/bindings/).
+   You can also access [bindings](/workers/runtime-apis/bindings/) (such as [KV](/kv/), [R2](/r2/), or [D1](/d1/)) via `this.env` within your Workflow. For more information on bindings within Workers, refer to [Bindings (env)](/workers/runtime-apis/bindings/).
 
-Now, generate types for your bindings:
+2. Now, generate types for your bindings:
 
-```sh
-npx wrangler types
-```
+   ```sh
+   npx wrangler types
+   ```
 
-This creates a `worker-configuration.d.ts` file with the `Env` type that includes your `MY_WORKFLOW` binding.
+   This creates a `worker-configuration.d.ts` file with the `Env` type that includes your `MY_WORKFLOW` binding.
+
+</Steps>
 
 ## 4. Write your API
 
-Now, you'll need a place to call your Workflow. Replace `src/index.ts` with a [fetch handler](/workers/runtime-apis/handlers/fetch/) to start and check Workflow instances:
+Now, you'll need a place to call your Workflow.
 
-```ts title="src/index.ts"
-export { MyWorkflow } from "./workflow";
+<Steps>
 
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const instanceId = url.searchParams.get("instanceId");
+1. Replace `src/index.ts` with a [fetch handler](/workers/runtime-apis/handlers/fetch/) to start and check Workflow instances:
 
-		if (instanceId) {
-			const instance = await env.MY_WORKFLOW.get(instanceId);
-			return Response.json(await instance.status());
-		}
+   ```ts title="src/index.ts"
+   export { MyWorkflow } from "./workflow";
 
-		const instance = await env.MY_WORKFLOW.create();
-		return Response.json({ instanceId: instance.id });
-	},
-} satisfies ExportedHandler<Env>;
-```
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const instanceId = url.searchParams.get("instanceId");
+
+   		if (instanceId) {
+   			const instance = await env.MY_WORKFLOW.get(instanceId);
+   			return Response.json(await instance.status());
+   		}
+
+   		const instance = await env.MY_WORKFLOW.create();
+   		return Response.json({ instanceId: instance.id });
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+</Steps>
 
 ## 5. Develop locally
 
-Start a local development server:
+<Steps>
 
-```sh
-npx wrangler dev
-```
+1. Start a local development server:
 
-To start a Workflow instance, open a new terminal window and run:
+   ```sh
+   npx wrangler dev
+   ```
 
-```sh
-curl http://localhost:8787
-```
+2. To start a Workflow instance, open a new terminal window and run:
 
-An `instanceId` will be automatically generated:
+   ```sh
+   curl http://localhost:8787
+   ```
 
-```json output
-{ "instanceId": "abc-123-def" }
-```
+   An `instanceId` will be automatically generated:
 
-Check the status using the returned `instanceId`:
+   ```json output
+   { "instanceId": "abc-123-def" }
+   ```
 
-```sh
-curl "http://localhost:8787?instanceId=abc-123-def"
-```
+3. Check the status using the returned `instanceId`:
 
-The Workflow will progress through its steps. After about 20 seconds (the sleep duration), it will complete.
+   ```sh
+   curl "http://localhost:8787?instanceId=abc-123-def"
+   ```
+
+   The Workflow will progress through its steps. After about 20 seconds (the sleep duration), it will complete.
+
+</Steps>
 
 ## 6. Deploy your Workflow
 
-```sh
-npx wrangler deploy
-```
+<Steps>
 
-Test in production using the same curl commands against your deployed URL. You can also [trigger a workflow instance](/workflows/build/trigger-workflows/) in production via Workers, Wrangler, or the Cloudflare dashboard.
+1. Deploy your Workflow:
 
-Once deployed, you can also inspect Workflow instances with the CLI:
+   ```sh
+   npx wrangler deploy
+   ```
 
-```sh
-npx wrangler workflows instances describe my-workflow latest
-```
+   Test in production using the same curl commands against your deployed URL. You can also [trigger a workflow instance](/workflows/build/trigger-workflows/) in production via Workers, Wrangler, or the Cloudflare dashboard.
 
-The output of `instances describe` shows:
+   Once deployed, you can also inspect Workflow instances with the CLI:
 
-- The status (success, failure, running) of each step
-- Any state emitted by the step
-- Any `sleep` state, including when the Workflow will wake up
-- Retries associated with each step
-- Errors, including exception messages
+   ```sh
+   npx wrangler workflows instances describe my-workflow latest
+   ```
+
+   The output of `instances describe` shows:
+
+   - The status (success, failure, running) of each step
+   - Any state emitted by the step
+   - Any `sleep` state, including when the Workflow will wake up
+   - Retries associated with each step
+   - Errors, including exception messages
+
+</Steps>
 
 ## Learn more
 
