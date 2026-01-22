@@ -1,6 +1,6 @@
 ---
 params:
-  - rulesetNameOldDash?
+  - rulesetName?
   - rulesetNameNewDash?
 ---
 
@@ -12,7 +12,7 @@ import { Render, Tabs, TabItem } from "~/components";
 	file="managed-rules-browse-zone"
 	product="waf"
 	params={{
-		rulesetNameOldDash: props.rulesetNameOldDash,
+		rulesetName: props.rulesetName,
 	}}
 />
 
@@ -20,7 +20,7 @@ import { Render, Tabs, TabItem } from "~/components";
 	file="managed-ruleset-configure-rules-by-tag"
 	product="waf"
 	params={{
-		rulesetNameOldDash: props.rulesetNameOldDash,
+		rulesetName: props.rulesetName,
 		rulesetNameNewDash: props.rulesetNameNewDash,
 	}}
 />
@@ -31,7 +31,7 @@ import { Render, Tabs, TabItem } from "~/components";
 	file="managed-rules-browse-zone-new-nav"
 	product="waf"
 	params={{
-		rulesetNameOldDash: props.rulesetNameOldDash,
+		rulesetName: props.rulesetName,
 		rulesetNameNewDash: props.rulesetNameNewDash,
 	}}
 />
@@ -40,7 +40,7 @@ import { Render, Tabs, TabItem } from "~/components";
 	file="managed-ruleset-configure-rules-by-tag"
 	product="waf"
 	params={{
-		rulesetNameOldDash: props.rulesetNameOldDash,
+		rulesetName: props.rulesetName,
 		rulesetNameNewDash: props.rulesetNameNewDash,
 	}}
 />

@@ -1,6 +1,6 @@
 ---
 params:
-  - rulesetNameOldDash?
+  - rulesetName?
   - rulesetNameNewDash?
 ---
 
@@ -18,9 +18,9 @@ import managedRulesTabImg from "~/assets/images/waf/waf-managed-rules-tab.png";
 
 2. Go to **Security** > **WAF** > **Managed rules** tab.
 
-3. { props.rulesetNameOldDash ? (
+3. { props.rulesetName ? (
      <>
-       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to <strong>{props.rulesetNameOldDash}</strong>.</p>
+       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to <strong>{props.rulesetName}</strong>.</p>
      </>
    ) : (
      <>

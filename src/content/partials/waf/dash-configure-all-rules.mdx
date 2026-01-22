@@ -1,6 +1,6 @@
 ---
 params:
-  - rulesetNameOldDash?
+  - rulesetName?
   - rulesetNameNewDash?
 ---
 
@@ -19,24 +19,24 @@ import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/ruleset-co
 
 2. Go to **Security** > **WAF** > **Managed rules** tab.
 
-3. Next to the _Execute_ rule deploying the { props.rulesetNameOldDash ?? "managed ruleset you want to configure" }, select the managed ruleset name.<br/>
-   If you have not deployed the managed ruleset yet, select { props.rulesetNameOldDash ? <Markdown text={`**${props.rulesetNameOldDash}**`} /> : "the managed ruleset name" } under **Managed Rulesets**.
+3. Next to the _Execute_ rule deploying the { props.rulesetName ?? "managed ruleset you want to configure" }, select the managed ruleset name.<br/>
+   If you have not deployed the managed ruleset yet, select { props.rulesetName ? <Markdown text={`**${props.rulesetName}**`} /> : "the managed ruleset name" } under **Managed Rulesets**.
 
-4. (Optional) To execute the { props.rulesetNameOldDash ?? "managed ruleset" } for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+4. (Optional) To execute the { props.rulesetName ?? "managed ruleset" } for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
 
-5. Under **Ruleset configuration**, define settings for all the rules in the { props.rulesetNameOldDash ?? "ruleset" } using the drop-down lists.
+5. Under **Ruleset configuration**, define settings for all the rules in the { props.rulesetName ?? "ruleset" } using the drop-down lists.
 
    For example, select the action to perform for all the rules in the ruleset.
 
-   { props.rulesetNameOldDash == "Cloudflare Managed Ruleset" && (
+   { props.rulesetName == "Cloudflare Managed Ruleset" && (
      <Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the Cloudflare Managed Ruleset: ruleset action and ruleset status." />
    )}
 
-   { props.rulesetNameOldDash == "Cloudflare OWASP Core Ruleset" && (
+   { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
      <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the OWASP Core Ruleset: OWASP Anomaly Score Threshold, OWASP Paranoia Level, and OWASP Action." />
    )}
 
-6. If you have not deployed the { props.rulesetNameOldDash ?? "managed ruleset" } yet:
+6. If you have not deployed the { props.rulesetName ?? "managed ruleset" } yet:
      - Select **Deploy** to deploy the ruleset immediately.
      - Select **Save as Draft** to save your deployment settings for later.
 
@@ -58,21 +58,21 @@ import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/ruleset-co
 
 2. (Optional) Filter by **Managed rules**.
 
-3. Search for { props.rulesetNameOldDash ? <Markdown text={`**${props.rulesetNameOldDash}**`} /> : "the managed ruleset you want to configure" }. Look for a rule with an _Execute_ action.
+3. Search for { props.rulesetName ? <Markdown text={`**${props.rulesetName}**`} /> : "the managed ruleset you want to configure" }. Look for a rule with an _Execute_ action.
 
 4. Select the rule name (containing the name of the managed ruleset) to open the deployment configuration page.
 
-5. (Optional) To execute the { props.rulesetNameOldDash ?? "managed ruleset" } for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+5. (Optional) To execute the { props.rulesetName ?? "managed ruleset" } for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
 
-6. In the ruleset configuration section, define settings for all the rules in the { props.rulesetNameOldDash ?? "ruleset" } by setting one or more fields using the drop-down lists.
+6. In the ruleset configuration section, define settings for all the rules in the { props.rulesetName ?? "ruleset" } by setting one or more fields using the drop-down lists.
 
    For example, select the action to perform for all the rules in the ruleset.
 
-   { props.rulesetNameOldDash == "Cloudflare Managed Ruleset" && (
+   { props.rulesetName == "Cloudflare Managed Ruleset" && (
      <Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the Cloudflare Managed Ruleset: ruleset action and ruleset status." />
    )}
 
-   { props.rulesetNameOldDash == "Cloudflare OWASP Core Ruleset" && (
+   { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
      <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the OWASP Core Ruleset: OWASP Anomaly Score Threshold, OWASP Paranoia Level, and OWASP Action." />
    )}
 
