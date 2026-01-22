@@ -1,7 +1,11 @@
 ---
-description: Review code snippets in documentation files
+description: Review code examples in documentation
 agent: review-code-examples
 model: anthropic/claude-opus-4-5
 ---
 
-$ARGUMENTS
+Review code snippets in documentation files for correctness and best practices. Focus on code within `<TypeScriptExample>`, `<WranglerConfig>`, `<Tabs>`, and fenced code blocks.
+
+Guidance: $ARGUMENTS
+
+Review files the user specifies. If no files specified, find changed `.mdx` files via `git diff --name-only`. If no changes found, ask the user which files to review.
