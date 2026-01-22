@@ -11,9 +11,43 @@ You are a code quality reviewer for Cloudflare developer documentation. Your tas
 
 **User Request**: $ARGUMENTS
 
+### Execution Mode Detection
+
+Parse `$ARGUMENTS` to detect execution mode:
+
+**Check for `--automated` flag:**
+
+- If `$ARGUMENTS` contains `--automated`: Set `AUTOMATED_MODE=true`
+- Remove `--automated` from `$ARGUMENTS` before processing target
+- Example: `review-code-example --automated https://github.com/.../pull/123`
+  - Mode: `AUTOMATED_MODE=true`
+  - Target: `https://github.com/.../pull/123`
+
+**Automated Mode Behavior:**
+
+When `AUTOMATED_MODE=true`:
+
+1. Skip ALL interactive prompts (do not ask user questions)
+2. Auto-proceed at all decision points
+3. Review-only: Do NOT make commits, PRs, or file modifications
+4. Format output as GitHub PR comment with collapsed details
+5. Exit immediately after generating output (do not wait for input)
+
+**Interactive Mode Behavior:**
+
+When `AUTOMATED_MODE=false` (default):
+
+1. Ask user for confirmation at decision points
+2. Allow user to choose fix/review/focus options
+3. Normal interactive workflow
+
 ### Step 0: Determine Target Location
 
-1. If `$ARGUMENTS` is empty or not provided, ask the user:
+1. If `$ARGUMENTS` is empty or not provided:
+   - **If AUTOMATED_MODE=true**:
+     - ERROR: "Target argument is required in automated mode"
+     - Exit with error code 1
+   - **Otherwise** (interactive mode), ask the user:
 
 - "Which target would you like me to review code examples in?"
 - Options:
@@ -88,6 +122,13 @@ If no files found → `"No .md or .mdx files were changed in this PR. Nothing to
 #### 4. File Limit Check
 
 If `changed_md_files.length > 50`:
+
+**If AUTOMATED_MODE=true**:
+
+- Log: "Reviewing [N] markdown files. This may take several minutes."
+- Continue automatically to next step
+
+**Otherwise** (interactive mode):
 
 ```
 ⚠️ This PR changes <N> markdown files. This will take some time to review.
@@ -237,13 +278,13 @@ This gives you a JSON structure like:
 
 ```json
 {
-  "src/content/docs/workers/get-started.md": [
-    { "start": 45, "end": 67, "language": "typescript" },
-    { "start": 89, "end": 102, "language": "javascript" }
-  ],
-  "src/content/docs/r2/api.mdx": [
-    { "start": 123, "end": 145, "language": "typescript" }
-  ]
+	"src/content/docs/workers/get-started.md": [
+		{ "start": 45, "end": 67, "language": "typescript" },
+		{ "start": 89, "end": 102, "language": "javascript" }
+	],
+	"src/content/docs/r2/api.mdx": [
+		{ "start": 123, "end": 145, "language": "typescript" }
+	]
 }
 ```
 
@@ -298,10 +339,10 @@ Analyzing changed files for code block modifications...
 
 Total: 5 code blocks to review across 3 files
 
-Would you like to continue?
-```
+**If AUTOMATED_MODE=true**: Proceed automatically to next step
 
-Wait for user confirmation.
+**Otherwise** (interactive mode): Wait for user confirmation - "Would you like to continue?"
+```
 
 #### 9. Update Execution Plan
 
@@ -948,7 +989,16 @@ If any issues needing review (score < 0.5) were found, highlight them:
 
 Use the ⚠️ emoji only for "Review Needed" items to draw attention to the most important issues.
 
-### 3. Ask User for Next Steps
+### 3. Determine Next Steps
+
+**If AUTOMATED_MODE=true**:
+
+- Do NOT ask the user for next steps
+- Skip directly to "3a. Generate Automated Review Comment" (see below)
+- Do NOT make any commits, PRs, or file modifications
+- Exit after generating the formatted comment
+
+**Otherwise** (interactive mode):
 
 After presenting the summary, explicitly ask:
 
@@ -962,6 +1012,209 @@ D) Do nothing - you'll handle fixes manually
 
 What would you prefer?
 ```
+
+### 3a. Generate Automated Review Comment (AUTOMATED_MODE only)
+
+**This section executes ONLY when AUTOMATED_MODE=true.**
+
+#### Output Requirements
+
+Generate a GitHub-flavored markdown comment with:
+
+1. Clear title and brief summary
+2. Timestamp showing when review was last updated
+3. ALL details inside `<details>` tags (collapsed by default)
+4. Only 1-2 lines visible: title + summary + timestamp
+
+#### Comment Template
+
+Use this EXACT structure:
+
+```markdown
+## Code Review Complete
+
+Reviewed [X] code blocks across [N] files. [Brief status summary]
+
+_Last updated: [Current timestamp in format: Day Mon DD, YYYY at HH:MM AM/PM UTC]_
+
+<details>
+<summary>📊 Review Summary</summary>
+
+**Files Reviewed**: [N]  
+**Code Blocks Reviewed**: [X]  
+**Average Score**: [X.X]/[Max] ([XX]%)
+
+### Issues Found:
+
+- ⚠️ Review Needed: [N] (score < 0.5)
+- Review Recommended: [N] (score 0.5-0.7)
+- Review Optional: [N] (score 0.7-0.9)
+
+</details>
+
+<details>
+<summary>⚠️ Issues Needing Review</summary>
+
+[Only include this section if there are issues with score < 0.5]
+
+For each issue:
+
+- **File**: [path] (Lines [start-end])
+- **Category**: [Illustrative/Demonstrative/Executable]
+- **Score**: [X.X]/[Max]
+- **Issue**: [Brief description of what criterion failed and why]
+- **Impact**: [Explanation of why this matters]
+
+</details>
+
+<details>
+<summary>📝 Detailed Review Results</summary>
+
+[Full detailed review output for ALL code blocks]
+
+For each code block, include:
+
+- File path and line numbers
+- Code block category
+- Overall score
+- Evaluation results for each criterion (with individual scores)
+- Suggested improvements (if any)
+- Revised code (if issues warrant it)
+
+Use the existing structured format from the review process.
+
+</details>
+
+<details>
+<summary>ℹ️ About This Review</summary>
+
+This automated review evaluates code examples based on:
+
+**Categorization:**
+
+- **Illustrative** (3 criteria): Simple examples demonstrating a concept
+- **Demonstrative** (5 criteria): Functional but incomplete examples
+- **Executable** (8 criteria): Complete, standalone examples
+
+**Scoring Criteria:**
+
+- Each criterion scored 0.0-1.0 in 0.1 increments
+- Scores below 0.5 indicate issues needing attention
+- Scores 0.5-0.7 indicate recommended improvements
+- Scores above 0.7 are optional enhancements
+
+**Review Type:**
+
+- This is a review-only check
+- No automatic fixes are applied
+- Does not block PR merging
+- Provides feedback for manual improvements
+
+</details>
+```
+
+#### Special Case Templates
+
+**When no code changes found:**
+
+```markdown
+## Code Review Complete
+
+No code examples were changed in this PR. Nothing to review.
+
+_Last updated: [timestamp]_
+```
+
+**When all examples pass (no issues):**
+
+```markdown
+## Code Review Complete
+
+Reviewed [X] code blocks across [N] files. All examples passed review.
+
+_Last updated: [timestamp]_
+
+<details>
+<summary>📊 Review Summary</summary>
+
+**Files Reviewed**: [N]  
+**Code Blocks Reviewed**: [X]  
+**Average Score**: [X.X]/[Max] ([XX]%)
+
+All code blocks scored above 0.7. No issues requiring attention.
+
+</details>
+
+<details>
+<summary>📝 Detailed Review Results</summary>
+
+[Full breakdown of all code blocks with scores and evaluations]
+
+</details>
+
+<details>
+<summary>ℹ️ About This Review</summary>
+
+[Same as above]
+
+</details>
+```
+
+**When issues are found:**
+
+```markdown
+## Code Review Complete
+
+Reviewed [X] code blocks across [N] files. Found [N] issues needing review.
+
+_Last updated: [timestamp]_
+
+<details>
+<summary>⚠️ Issues Needing Review ([N])</summary>
+
+[List each issue with file, lines, score, and description]
+
+</details>
+
+<details>
+<summary>📊 Review Summary</summary>
+
+[Full statistics including breakdown by score ranges]
+
+</details>
+
+<details>
+<summary>📝 Detailed Review Results</summary>
+
+[All code blocks with full evaluation details]
+
+</details>
+
+<details>
+<summary>ℹ️ About This Review</summary>
+
+[Same as above]
+
+</details>
+```
+
+#### Timestamp Format
+
+Generate timestamp using current date/time in this format:
+
+- Pattern: `Day Mon DD, YYYY at HH:MM AM/PM UTC`
+- Example: `Thu Jan 22, 2026 at 3:45 PM UTC`
+- Use UTC timezone for consistency
+
+#### Output Instructions
+
+After generating the complete formatted comment:
+
+1. Output the entire comment text (ready to post to GitHub)
+2. Log: "AUTOMATED_MODE: Review comment generated and ready for posting."
+3. Exit successfully with code 0
+4. Do NOT wait for any user input
+5. Do NOT proceed to sections 4-7 (those are for interactive mode only)
 
 ### 4. If User Chooses Option A (Fix and Create PR)
 
