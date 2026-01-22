@@ -29,7 +29,7 @@ Configure [Logpush health notifications](/logs/logpush/logpush-health/) to recei
 
 - **`sample_rate`**: A configuration parameter you set on your Logpush job to control what percentage of logs are delivered to your destination (0.0-1.0). For example, setting `sample_rate: 0.1` delivers approximately 10% of logs.
 
-- **`SampleInterval`**: A data field that appears in certain datasets (particularly [Network Analytics Logs](/logs/reference/log-fields/account/network_analytics_logs/)) indicating upstream sampling applied during data collection. A `SampleInterval` of 1000 means the log entry represents 1 in 1000 packets.
+- **`SampleInterval`**: A data field that appears in certain datasets (particularly [Network Analytics Logs](/logs/logpush/logpush-job/datasets/account/network_analytics_logs/)) indicating upstream sampling applied during data collection. A `SampleInterval` of 1000 means the log entry represents 1 in 1000 packets.
 
 The `sample_rate` you configure applies on top of any pre-existing sampling. If your data already has `SampleInterval: 1000` and you set `sample_rate: 0.1`, you receive approximately 1 in 10,000 of the original events (1000 × 10).
 
