@@ -8,7 +8,6 @@ import { Image } from "astro:assets";
 
 import cloudflareManagedRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-cloudflare-managed-ruleset.png";
 import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-owasp-core-ruleset.png";
-import sddRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-sdd-ruleset.png";
 
 <Steps>
 
@@ -30,10 +29,6 @@ import sddRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-sdd
 
    { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
      <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying the rules in the Cloudflare OWASP Core Ruleset." />
-   ) }
-
-   { props.rulesetName == "Sensitive Data Detection" && (
-     <Image src={sddRulesetImg} alt="The Configure deployment page displaying the rules in the Sensitive Data Detection ruleset." />
    ) }
 
 {/* prettier-ignore-end */}
