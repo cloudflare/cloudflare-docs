@@ -49,4 +49,20 @@ If you want to remove these records:
  * [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to remove the records related to universal and backup certificates.
  * [Delete advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) to remove the records related to advanced certificates.
 
+---
 
+## Incorrect results for DNS queries
+
+You notice DNS queries returning incorrect results even after you waited for the [TTL](/dns/manage-dns-records/reference/ttl/) to expire.
+
+### Cause
+
+Third-party tools can sometimes fail to return correct DNS results if a recursive DNS cache fails to refresh.
+
+### Solution
+
+In this circumstance, purge your public DNS cache via these methods:
+
+- [Purge your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
+- [Purge your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
+- [Purge your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
