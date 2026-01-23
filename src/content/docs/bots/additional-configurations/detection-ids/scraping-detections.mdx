@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, Tabs, TabItem, Steps, DashButton } from "~/components"
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
 Scraping behavioral detection IDs allow you to better protect your website from volumetric scraping attacks by identifying anomalous behavior. The detection IDs below are specifically designed to catch suspicious scraping activity at the zone level.
 
@@ -20,16 +20,9 @@ Cloudflare's [Managed Challenge](/cloudflare-challenges/challenge-types/challeng
 
 To access scraping detections:
 
-<Tabs syncKey="dashNewNav"> 
-	<TabItem label="Old dashboard">
-		<Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-            2. Go to **Security** > **WAF**.
-            3. Under **Custom rules**, select **Create rule**.
-            4. Fill out the form using **Bot Detection IDs** along with other necessary information.
-            5. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
-        </Steps>
-    </TabItem>
+{/* prettier-ignore-start */}
+
+<Tabs syncKey="dashNewNav">
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
             1. In the Cloudflare dashboard, go to the **Security rules** page.
@@ -39,8 +32,19 @@ To access scraping detections:
             3. Fill out the form using **Bot Detection IDs** along with other necessary information.
             4. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
         </Steps>
-	</TabItem> 
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+            2. Go to **Security** > **WAF**.
+            3. Under **Custom rules**, select **Create rule**.
+            4. Fill out the form using **Bot Detection IDs** along with other necessary information.
+            5. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
+        </Steps>
+    </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ```js title="Rule example"
 
@@ -48,7 +52,7 @@ To access scraping detections:
 ```
 
 :::tip[Best practice]
-If you are choosing to challenge as your rule action, ensure that you exclude any API calls on which you do not want to issue a challenge. To exclude requests to such paths, edit the [WAF custom rule](/waf/custom-rules/) to exclude the relevant paths. 
+If you are choosing to challenge as your rule action, ensure that you exclude any API calls on which you do not want to issue a challenge. To exclude requests to such paths, edit the [WAF custom rule](/waf/custom-rules/) to exclude the relevant paths.
 :::
 
 :::note
