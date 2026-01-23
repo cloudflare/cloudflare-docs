@@ -6,11 +6,23 @@ sidebar:
   badge: Beta
 ---
 
-import { MetaInfo, Render } from "~/components";
+import { Render } from "~/components";
 
 The `/crawl` endpoint automates the process of scraping content from webpages starting with a single URL and crawling to a specified number of links or depth of links. The response can be returned in either HTML, Markdown, or JSON.
 
 The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay`. All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`.
+
+However, if the starting URL belongs to a domain that is onboarded to your Cloudflare account, the crawler will bypass `robots.txt` restrictions. This allows you to crawl your own sites without `robots.txt` blocking the crawler.
+
+:::note
+To bypass `robots.txt` restrictions, the domain must be onboarded to the same Cloudflare account you are using to make the API request.
+
+Refer to [Add a site to Cloudflare](/fundamentals/setup/manage-domains/add-site/) for more information on adding a domain to your Cloudflare account.
+:::
+
+:::caution[Bot protection may block crawling]
+If you use Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the Browser Rendering crawler. Refer to [Will Browser Rendering bypass Cloudflare's Bot Protection?](/browser-rendering/faq/#will-browser-rendering-bypass-cloudflares-bot-protection) for instructions on creating a WAF skip rule.
+:::
 
 ## Endpoint
 
@@ -28,12 +40,22 @@ Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optio
 - Scraping online content to build a knowledge base of up-to-date information
 - Converting online content into LLM-friendly formats to train [Retrieval-Augmented Generation (RAG) applications](/reference-architecture/diagrams/ai/ai-rag/) and other AI systems
 
+## How the crawler discovers URLs
+
+The crawler discovers and processes URLs in the following order:
+
+1. **Starting URL** — The URL specified in your request.
+2. **Sitemap links** — URLs found in the site's sitemap.
+3. **Page links** — Links scraped from pages, if not already found in the sitemap.
+
+The crawler currently uses this fixed discovery order. A `source` parameter to customize this behavior (such as using only sitemaps or RSS feeds) may be added in a future release.
+
 ## Basic usage
 
 There are two separate steps to using the `/crawl` endpoint:
 1. [Initiate the crawl job](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) — A `POST` request where you initiate the crawl and receive a response with a job `id`.
 2. [Request results of the crawl job](/browser-rendering/rest-api/crawl-endpoint/#request-results-of-the-crawl-job) — A `GET` request where you request the status or results of the crawl.
- 
+
 Crawl jobs have a maximum run time of seven days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
 
 :::note[Free plan limitation]
@@ -166,8 +188,19 @@ The following optional parameters can be used in your crawl request, in addition
 | `jsonOptions` | Object | Only required if `formats` includes `json`. Contains `prompt`, `response_format`, and `custom_ai` properties (same types as the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/)). |
 | `options.includeExternalLinks` | Boolean | If true, follows links to external domains (default is false). |
 | `options.includeSubdomains` | Boolean | If true, follows links to subdomains of the starting URL (default is false). |
-| `options.includePatterns` | Array of strings | Only visits URLs that match one of these patterns. |
-| `options.excludePatterns` | Array of strings | Does not visit URLs that match any of these patterns. |
+| `options.includePatterns` | Array of strings | Only visits URLs that match one of these wildcard patterns. Use `*` to match any characters except `/`, or `**` to match any characters including `/`. |
+| `options.excludePatterns` | Array of strings | Does not visit URLs that match any of these wildcard patterns. Use `*` to match any characters except `/`, or `**` to match any characters including `/`. |
+
+:::note[Pattern behavior]
+**Priority:** `excludePatterns` has strictly higher priority. If a URL matches an exclude rule, it is skipped, regardless of whether it matches an include rule.
+
+**Default behavior:**
+- **No rules** — Behavior remains unchanged (everything is indexed).
+- **Exclude only** — Everything is indexed except items matching the exclude patterns.
+- **Include only** — Only items matching the include patterns are indexed; everything else is ignored.
+
+URLs that are discovered but skipped due to these rules are visible in the dashboard logs. This helps you understand which items were intentionally omitted and debug cases where exclude and include rules accidentally overlap.
+:::
 
 Example `crawl` request with all optional parameters:
 
@@ -189,7 +222,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
         "/api/v1/*"
       ],
       "excludePatterns": [
-         "\/learning-paths\/"
+        "*/learning-paths/*"
       ]
     }
 }'
