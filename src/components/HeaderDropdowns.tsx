@@ -51,7 +51,7 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="hover:bg-neutral-100 dark:hover:bg-cl1-gray-0 flex cursor-pointer items-center justify-center gap-1.5 rounded-sm bg-transparent p-2 font-medium"
+				className="dark:hover:bg-cl1-gray-0 flex cursor-pointer items-center justify-center gap-1.5 rounded-sm bg-transparent p-2 font-medium hover:bg-neutral-100"
 			>
 				{label}
 				<PiCaretDown />
@@ -61,13 +61,13 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 					ref={refs.setFloating}
 					style={floatingStyles}
 					{...getFloatingProps()}
-					className="border-cl1-gray-8 bg-cl1-white dark:border-zinc-800 dark:bg-cl1-gray-0 max-w-80 min-w-60 list-none rounded-lg overflow-clip border pl-0 shadow-md"
+					className="border-cl1-gray-8 bg-cl1-white dark:bg-cl1-gray-0 max-w-80 min-w-60 list-none overflow-clip rounded-lg border pl-0 shadow-md dark:border-zinc-800"
 				>
 					{pages.map((page) => (
 						<li key={page.href}>
 							<a
 								href={page.href}
-								className="text-sm hover:bg-neutral-100 dark:hover:bg-zinc-800 block p-3 text-black no-underline"
+								className="block p-3 text-sm text-black no-underline hover:bg-neutral-100 dark:hover:bg-zinc-800"
 								target={page.href.startsWith("https") ? "_blank" : undefined}
 							>
 								{page.label}
@@ -87,7 +87,7 @@ export default function HeaderDropdownsComponent() {
 				<a
 					key={href}
 					href={href}
-					className="hover:bg-neutral-100 dark:hover:bg-cl1-gray-0 flex items-center justify-center rounded-sm p-2 font-medium text-black no-underline"
+					className="dark:hover:bg-cl1-gray-0 flex items-center justify-center rounded-sm p-2 font-medium text-black no-underline hover:bg-neutral-100"
 				>
 					{label}
 				</a>

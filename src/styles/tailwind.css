@@ -7,7 +7,6 @@
 @source "../**/*.{astro,html,js,jsx,ts,tsx,css}";
 @source not "../content/";
 
-
 @theme {
 	--breakpoint-desktop: 800px;
 
@@ -152,7 +151,6 @@
 	}
 
 	:root {
-
 		--blue-accent-200: rgb(15, 0, 107);
 		--blue-accent-600: rgb(46, 105, 255);
 		--blue-accent-900: rgb(62, 116, 255);
@@ -186,7 +184,7 @@
 	--sl-color-hairline: var(--sl-color-hairline-shade);
 }
 
-:root[data-theme='dark'] {
+:root[data-theme="dark"] {
 	--sl-color-bg-nav: rgba(18, 18, 18, 0.92);
 	--sl-color-bg: #121212;
 	--sl-color-bg-sidebar: #181818 !important;
@@ -208,8 +206,8 @@
 
 .card {
 	@apply rounded-lg p-6;
-	@apply bg-neutral-50 border-neutral-200/80;
-	@apply dark:bg-neutral-900 dark:border-neutral-800/80;
+	@apply border-neutral-200/80 bg-neutral-50;
+	@apply dark:border-neutral-800/80 dark:bg-neutral-900;
 }
 
 .card > .body {
@@ -219,34 +217,37 @@
 
 .DocSearch-Button {
 	@apply !border-neutral-200 !bg-neutral-100 !placeholder-gray-600;
-	@apply !bg-transparent desktop:!bg-neutral-200 desktop:dark:!bg-neutral-900;
-	@apply dark:!border-neutral-800  dark:!placeholder-gray-400;
+	@apply desktop:!bg-neutral-200 desktop:dark:!bg-neutral-900 !bg-transparent;
+	@apply dark:!border-neutral-800 dark:!placeholder-gray-400;
 }
 
-.DocSearch-Button-Placeholder, .DocSearch-Search-Icon {
+.DocSearch-Button-Placeholder,
+.DocSearch-Search-Icon {
 	@apply !text-neutral-400;
 	@apply dark:!text-neutral-600;
 }
 
 .DocSearch-Button-Key {
-	@apply !text-neutral-500 !border-neutral-300;
-	@apply dark:!text-neutral-500 dark:!border-neutral-700;
+	@apply !border-neutral-300 !text-neutral-500;
+	@apply dark:!border-neutral-700 dark:!text-neutral-500;
 }
 
 .DocSearch-Footer {
-	@apply !py-2.5 !gap-2 !h-auto;
+	@apply !h-auto !gap-2 !py-2.5;
 }
 
 .sidebar-content {
 	@apply !gap-2.5;
 }
 
-.sidebar-content .top-level li a:hover, .sidebar-content .top-level > li summary:hover, .sidebar-content .top-level > li ul > li > a:hover {
-	@apply transition-colors !bg-neutral-200/60 dark:!bg-zinc-800 rounded-r-md;
+.sidebar-content .top-level li a:hover,
+.sidebar-content .top-level > li summary:hover,
+.sidebar-content .top-level > li ul > li > a:hover {
+	@apply rounded-r-md !bg-neutral-200/60 transition-colors dark:!bg-zinc-800;
 }
 
 .sidebar-content .top-level li a[aria-current="page"]:hover {
-	@apply transition-colors !bg-neutral-200/60 dark:!bg-zinc-800 rounded-r-md;
+	@apply rounded-r-md !bg-neutral-200/60 transition-colors dark:!bg-zinc-800;
 }
 
 .sidebar-content ul {
@@ -279,7 +280,8 @@
 	@apply dark:bg-transparent;
 }
 
-.expressive-code .playground-frame, .expressive-code pre {
+.expressive-code .playground-frame,
+.expressive-code pre {
 	@apply dark:border-zinc-800;
 }
 
@@ -301,7 +303,7 @@
 }
 
 .expressive-code .frame.is-terminal .header {
-	@apply !bg-zinc-100 dark:!bg-zinc-800 dark:!border-zinc-800;
+	@apply !bg-zinc-100 dark:!border-zinc-800 dark:!bg-zinc-800;
 }
 
 .expressive-code .frame.is-terminal .header::after {
