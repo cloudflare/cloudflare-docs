@@ -732,7 +732,7 @@ The query of a webpage's URL.
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ one: "hostnames", two: "Host" }}
+	params={{ selector: "hostnames", selectorName: "Host", operator: "matches regex", value: ".*whispersystems.org|.*signal.org" }}
 />
 
 ## Logical operators

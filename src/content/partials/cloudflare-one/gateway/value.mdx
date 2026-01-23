@@ -1,5 +1,9 @@
 ---
-inputParameters: selector;;selectorName
+params:
+  - selector
+  - selectorName
+  - operator
+  - value
 ---
 
 import { Markdown } from "~/components";
@@ -8,12 +12,12 @@ In the **Value** field, you can input a single value when using an equality comp
 
 ### Regular expressions
 
-Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. For more information, refer to our guide for [Wildcards](/cloudflare-one/access-controls/policies/app-paths/#wildcards). To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
+The policy builder evaluates regular expressions using Rust. The Rust implementation is slightly different than regex libraries used elsewhere. For more information, refer to our guide for [Wildcards](/cloudflare-one/access-controls/policies/app-paths/#wildcards). To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
 
-If you want to match multiple values, you can use the pipe symbol (`|`) as an OR operator. In Gateway, you do not need to use an escape character (`\`) before the pipe symbol. For example, the following policy blocks requests to two {props.one} if either appears in a request header:
+If you want to match multiple values, you can use the pipe symbol (`|`) as an OR operator. You do not need to use an escape character (`\`) before the pipe symbol. For example, the following policy blocks requests to two {props.selector} if either appears in a request header:
 
-| Selector    | Operator      | Value                                  | Action |
-| ----------- | ------------- | -------------------------------------- | ------ |
-| {props.two} | matches regex | `.\*whispersystems.org\|.\*signal.org` | Block  |
+| Selector    | Operator        | Value          | Action |
+| ----------- | --------------- | -------------- | ------ |
+| {props.selectorName} | {props.operator} | <code>{props.value}</code> | Block  |
 
 In addition to regular expressions, you can use [logical operators](#logical-operators) to match multiple values.

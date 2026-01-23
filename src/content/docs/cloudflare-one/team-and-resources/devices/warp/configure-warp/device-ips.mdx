@@ -163,8 +163,18 @@ Comparison operators determine how device profiles match a selector.
 
 | Operator | Meaning                                    |
 | -------- | ------------------------------------------ |
-| is       | equals the defined value                   |
 | in       | matches at least one of the defined values |
+| not in   | does not match any of the defined values   |
+| is       | equals the defined value                   |
+| matches  | [regular expression]() (regex) evaluates to true  |
+
+## Value
+
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ selector: "SNI hosts", selectorName: "SNI", operator: "matches regex", value: ".*whispersystems.org|.*signal.org" }}
+/>
 
 ## Logical operators
 
