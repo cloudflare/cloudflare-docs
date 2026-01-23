@@ -57,12 +57,6 @@ Since only [records used for IP address resolution](/dns/manage-dns-records/refe
 It may take longer than five minutes for you to actually experience record changes, as your local DNS cache may take longer to update.
 :::
 
-### Originless and redirect-only setups
-
-If you need a placeholder address for an originless setup, you can use the reserved IPv6 address `100::` or the reserved IPv4 address `192.0.2.0` in a proxied DNS record.
-
-This allows you to route requests using products such as [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Workers](/workers/).
-
 ### Mix proxied and unproxied
 
 If you have multiple A or AAAA records on the same name and at least one of them is proxied, Cloudflare will treat all A or AAAA records on this name as being proxied.
