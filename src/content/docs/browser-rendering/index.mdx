@@ -50,13 +50,18 @@ Programmatically load and fully render dynamic webpages or raw HTML and capture 
 
 ## Integration methods
 
-You can integrate Browser Rendering into your applications using the method that best suits your needs:
+- **[REST API](/browser-rendering/rest-api/)**: Simple HTTP endpoints for stateless tasks like screenshots, PDFs, and scraping.
+- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Full browser automation within Workers using [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), or [Stagehand](/browser-rendering/stagehand/).
 
-- **[REST API](/browser-rendering/rest-api/)**: Ideal for simple, stateless tasks like capturing screenshots, generating PDFs, extracting HTML content, and more.
-- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Suitable for advanced browser automation within [Cloudflare Workers](/workers/). This method provides greater control, enabling more complex workflows and persistent sessions. Use one of the following libraries:
-  - **[Puppeteer](/browser-rendering/puppeteer/)**: Industry-standard Chrome automation API, ideal for porting existing scripts to the Cloudflare global network.
-  - **[Playwright](/browser-rendering/playwright/)**: Modern browser automation with a developer-friendly API. The [MCP integration](/browser-rendering/playwright/playwright-mcp/) enables AI agents to autonomously browse and extract data.
-  - **[Stagehand](/browser-rendering/stagehand/)**: AI-native SDK using natural language selectors instead of brittle code selectors, ensuring workflows stay resilient when websites change.
+| Use case | Recommended | Why |
+| --- | --- | --- |
+| Simple screenshot, PDF, or scrape | [REST API](/browser-rendering/rest-api/) | No code deployment; single HTTP request |
+| Browser automation | [Playwright](/browser-rendering/playwright/) | Full control with built-in tracing and assertions |
+| Porting existing scripts | [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/) | Minimal code changes from standard libraries |
+| AI-powered data extraction | [JSON endpoint](/browser-rendering/rest-api/json-endpoint/) | Structured data via natural language prompts |
+| AI agent browsing | [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) | LLMs control browsers via MCP |
+| Resilient scraping | [Stagehand](/browser-rendering/stagehand/) | AI finds elements by intent, not selectors |
+
 
 ## Related products
 

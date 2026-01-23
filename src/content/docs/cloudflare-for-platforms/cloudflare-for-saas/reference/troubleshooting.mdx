@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Troubleshooting Cloudflare for SaaS
-
 ---
 
 import { Details, Render } from "~/components";
@@ -17,13 +16,13 @@ By default, you may issue up to 15 certificates per minute. Only successful subm
 
 If you require a higher rate limit, contact your Customer Success Manager.
 
-***
+---
 
 ## Purge cache
 
 To remove specific files from Cloudflare’s cache, [purge the cache](/cache/how-to/purge-cache/purge-by-hostname/) while specifying one or more hostnames.
 
-***
+---
 
 ## Resolution error 1016 (Origin DNS error) when accessing the custom hostname
 
@@ -35,17 +34,13 @@ There are three main causes of error 1016:
 2. Fallback Origin is not [correctly set](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
 3. A Wildcard Custom Hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone. In this case, the [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority) for the standalone zone will take precedence over the wildcard custom hostname. This behavior applies even if there is no DNS record for this standalone zone hostname.
 
-In this scenario each hostname that needs to be served by the Cloudflare for SaaS parent zone needs to be added as an individual Custom Hostname.
+In this scenario each hostname that needs to be served by the [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) parent zone needs to be added as an individual Custom Hostname.
 
 :::note
-
-
 If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Errors](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/).
-
-
 :::
 
-***
+---
 
 ## Custom hostname in Moved status
 
@@ -53,7 +48,7 @@ To move a custom hostname back to an Active status, send a [PATCH request](/api/
 
 In some circumstances, custom hostnames can also enter a **Moved** state if your customer changes their DNS records pointing to your SaaS service. For more details, refer to [Remove custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/remove-custom-hostnames/).
 
-***
+---
 
 ## CAA Errors
 
@@ -65,7 +60,7 @@ You can check which CAA records are configured on a domain using the `dig` comma
 You will need to ensure that the required CAA records for the selected Certificate Authority are configured.
 For example, here are the records required to issue [Let's Encrypt](https://letsencrypt.org/docs/caa/) and [Google Trust Services](https://pki.goog/faq/#caa) certificates:
 
-```
+```txt
 example.com CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
 example.com CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
 
@@ -96,25 +91,24 @@ Consider the following solutions:
 
 - Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
 
-    <Details header="Example API call">
+  <Details header="Example API call">
 
-    ```sh
-    curl --request PATCH \\
-    https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id} \\
-    --header "X-Auth-Email: <EMAIL>" \\
-    --header "X-Auth-Key: <API_KEY>" \\
-    --header "Content-Type: application/json" \\
-    --data '{
-      "ssl": {
-          "method": "txt",
-          "type": "dv",
-          "certificate_authority": ""
-      }
-    }'
+  ```sh
+  curl --request PATCH \
+  "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "ssl": {
+        "method": "txt",
+        "type": "dv",
+        "certificate_authority": ""
+    }
+  }'
+  ```
 
-    ```
-
-    </Details>
+  </Details>
 
 - Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to `google`: this sets Google Trust Services as the CA for your custom hostnames. In your API call, make sure to also include `method` and `type` in the `ssl` object.
 - If you are using a custom certificate for your custom hostname, refer to the [custom certificates troubleshooting](/ssl/edge-certificates/custom-certificates/troubleshooting/#lets-encrypt-chain-update).

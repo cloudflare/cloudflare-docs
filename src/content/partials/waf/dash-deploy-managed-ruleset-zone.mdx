@@ -1,0 +1,72 @@
+---
+params:
+  - rulesetName?
+  - dashOptionName?
+---
+
+import { Tabs, TabItem, Steps, DashButton, Markdown } from "~/components";
+import { Image } from "astro:assets";
+import managedRulesTabImg from "~/assets/images/waf/waf-managed-rules-tab.png";
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+{/* prettier-ignore-start */}
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Managed rules** tab.
+
+3. { props.rulesetName ? (
+     <>
+       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to <strong>{props.rulesetName}</strong>.</p>
+     </>
+   ) : (
+     <>
+       <p>Under <strong>Managed Rulesets</strong>, select <strong>Deploy</strong> next to a managed ruleset.</p>
+
+       <Image src={managedRulesTabImg} alt="Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment." />
+     </>
+   )}
+
+{/* prettier-ignore-end */}
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+{/* prettier-ignore-start */}
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Web application exploits**.
+
+3. { props.dashOptionName ? (
+     <Markdown text={`Turn on <strong>${props.dashOptionName}</strong>.`} inline={false} />
+   ) : (
+     <>
+       <p>Turn on the managed ruleset(s) you want to deploy:</p>
+       <ul>
+			   <li><strong>Cloudflare managed ruleset</strong> - Deploys the <a href="/waf/managed-rules/reference/cloudflare-managed-ruleset/">Cloudflare Managed Ruleset</a>.</li>
+         <li><strong>OWASP Core</strong> - Deploys the <a href="/waf/managed-rules/reference/owasp-core-ruleset/">Cloudflare OWASP Core Ruleset</a>.</li>
+         <li><strong>Sensitive data detection</strong> - Deploys the <a href="/waf/managed-rules/reference/sensitive-data-detection/">Cloudflare Sensitive Data Detection</a> managed ruleset.</li>
+       </ul>
+		 </>
+		)}
+
+4. Review the deployment settings. Edit the scope, if necessary, to apply the ruleset to a subset of the incoming requests, or configure any custom settings (also known as overrides).
+
+5. Select **Save**.
+
+{/* prettier-ignore-end */}
+
+</Steps>
+
+</TabItem> </Tabs>
+
+This operation deploys the managed ruleset for the current zone, creating a new rule with the _Execute_ action.

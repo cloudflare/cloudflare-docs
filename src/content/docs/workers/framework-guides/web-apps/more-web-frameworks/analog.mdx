@@ -1,0 +1,52 @@
+---
+pcx_content_type: how-to
+title: Analog
+tags: ["full-stack", "Angular"]
+description: Create an Analog application and deploy it to Cloudflare Workers.
+---
+
+import { Render, PackageManagers } from "~/components";
+
+In this guide, you will create a new [Analog](https://analogjs.org/) application and deploy to Cloudflare Workers.
+
+[Analog](https://analogjs.org/) is a fullstack meta-framework for Angular, powered by [Vite](https://vitejs.dev/) and [Nitro](https://nitro.unjs.io/).
+
+## 1. Set up a new project
+
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Analog's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Analog project, run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-analog-app --framework=analog"
+/>
+
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-analog-app
+```
+
+## 2. Develop locally
+
+After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+
+<PackageManagers type="run" args={"dev"} />
+
+## 3. Deploy your Project
+
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+<PackageManagers type="run" args={"deploy"} />
+
+---
+
+## Bindings
+
+Your Analog application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [Nitro documentation](https://nitro.unjs.io/deploy/providers/cloudflare#direct-access-to-cloudflare-bindings) provides information about configuring bindings and how you can access them in your Analog API routes.
+
+<Render file="frameworks-bindings" product="workers" />

@@ -1,0 +1,52 @@
+---
+title: "WAF Release - 2026-01-20"
+description: Cloudflare WAF managed rulesets 2026-01-20 release
+date: 2026-01-20
+---
+
+import { RuleID } from "~/components";
+
+This week's release focuses on improvements to existing detections to enhance coverage. 
+
+**Key Findings**
+
+- Existing rule enhancements have been deployed to improve detection resilience against SQL injection.
+
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+    <tbody>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="a291bd530fa346d18cc1ce5a68d90c8f" />
+      </td>
+      <td>N/A</td>
+      <td>SQLi - Comment - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule is merged into the original rule "SQLi - Comment" (ID: <RuleID id="42c424998d2a42c9808ab49c6d8d8fe4" />)</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="da289f9e692e4f5397d915fbfaa045cf" />
+      </td>
+      <td>N/A</td>
+      <td>SQLi - Comparison - Beta</td>
+      <td>Log</td>
+      <td>Block</td>      
+      <td>This rule is merged into the original rule "SQLi - Comparison" (ID: <RuleID id="8166da327a614849bfa29317e7907480" />)</td>
+   </tr>
+  </tbody>    
+</table>

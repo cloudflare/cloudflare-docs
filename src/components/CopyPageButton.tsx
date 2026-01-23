@@ -15,7 +15,6 @@ import {
 	PiArrowSquareOutLight,
 	PiCheckCircleLight,
 	PiXCircleLight,
-	PiChatCircleLight,
 	PiLinkLight,
 	PiPlugsConnectedLight,
 } from "react-icons/pi";
@@ -50,14 +49,6 @@ export default function CopyPageButton() {
 			value: "view markdown",
 		});
 		window.open(markdownUrl, "_blank");
-	};
-
-	const handleDocsAI = () => {
-		const docsAIUrl = "https://developers.cloudflare.com/support/ai/";
-		track("clicked copy page button", {
-			value: "docs ai",
-		});
-		window.open(docsAIUrl, "_blank");
 	};
 
 	const handleViewAIOptions = () => {
@@ -161,12 +152,6 @@ export default function CopyPageButton() {
 			description: "Explore more AI tooling options",
 			icon: PiPlugsConnectedLight,
 			onClick: handleViewAIOptions,
-		},
-		{
-			label: "Ask Docs AI",
-			description: "Open our Docs AI assistant in a new tab",
-			icon: PiChatCircleLight,
-			onClick: handleDocsAI,
 		},
 	];
 

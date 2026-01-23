@@ -1,0 +1,33 @@
+---
+title: Smart Tiered Cache optimizes Load Balancing Pools
+description: Smart Tiered Cache now selects a common tiered data center for Load Balancing Pools to increase cache hit ratio.
+products:
+  - cache
+date: 2025-01-08
+---
+
+You can now achieve higher cache hit rates and reduce origin load when using [Load Balancing](/load-balancing/) with [Smart Tiered Cache](/cache/how-to/tiered-cache/). Cloudflare automatically selects a single, optimal tiered data center for all origins in your Load Balancing Pool.
+
+## How it works
+
+When you use [Load Balancing](/load-balancing/) with [Smart Tiered Cache](/cache/how-to/tiered-cache/), Cloudflare analyzes performance metrics across your pool's origins and automatically selects the optimal Upper Tier data center for the entire pool. This means:
+
+- **Consistent cache location**: All origins in the pool share the same Upper Tier cache.
+- **Higher HIT rates**: Requests for the same content hit the cache more frequently.
+- **Reduced origin requests**: Fewer requests reach your origin servers.
+- **Improved performance**: Faster response times for cache HITs.
+
+## Example workflow
+
+```txt
+Load Balancing Pool: api-pool
+├── Origin 1: api-1.example.com
+├── Origin 2: api-2.example.com
+└── Origin 3: api-3.example.com
+    ↓
+Selected Upper Tier: [Optimal data center based on pool performance]
+```
+
+## Get started
+
+To get started, enable [Smart Tiered Cache](/cache/how-to/tiered-cache/) on your zone and configure your [Load Balancing Pool](/load-balancing/).

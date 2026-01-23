@@ -6,16 +6,126 @@ sidebar:
 head:
   - tag: title
     content: Configure the OWASP ruleset in the dashboard
-
 ---
 
-You can configure the following settings of the Cloudflare OWASP Core Ruleset in the dashboard:
+import { Render, Markdown, Tabs, TabItem } from "~/components";
 
-* **Set the [paranoia level](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level).** The available levels are *PL1* (default), *PL2*, *PL3*, and *PL4*.
-* **Set the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold).** The available thresholds are: *Low - 60 and higher*, *Medium - 40 and higher* (default), or *High - 25 and higher*.
-* **Set the [action](/ruleset-engine/rules-language/actions/) to perform.** The action is executed when the calculated request threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
-* **Disable specific rules or rules with specific tags.**
-* **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
-* **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
+The Cloudflare OWASP Core Ruleset is Cloudflare's implementation of the [OWASP ModSecurity Core Rule Set](https://owasp.org/www-project-modsecurity-core-rule-set/) (CRS). It is designed to work as a single entity to calculate a [threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) and execute an action based on that score.
 
-For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
+:::tip
+Learn more about the [concepts](/waf/managed-rules/reference/owasp-core-ruleset/concepts/) around the OWASP Core Ruleset and check out the [ruleset evaluation example](/waf/managed-rules/reference/owasp-core-ruleset/example/).
+:::
+
+## Deploy the Cloudflare OWASP Core Ruleset {/* deploy-in-the-dashboard */}
+
+<Render
+	file="dash-deploy-managed-ruleset-zone"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare OWASP Core Ruleset",
+		dashOptionName: "OWASP core ruleset",
+	}}
+/>
+
+## Configure in the dashboard
+
+You can configure (or override) the Cloudflare OWASP Core Ruleset, overriding its default configuration, at several levels:
+
+- [Ruleset level](#ruleset-level-configuration)
+- [Tag level](#tag-level-configuration)
+- [Rule level](#rule-level-configuration)
+
+More specific configurations (rule and tag level) have greater priority than less specific configurations (ruleset level).
+
+### Ruleset-level configuration
+
+You can configure (or override) the following Cloudflare OWASP Core Ruleset settings in the Cloudflare dashboard:
+
+- **Scope**: When you specify a custom filter expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests. By default, a managed ruleset deployed in the dashboard applies to all incoming traffic.
+- **[Paranoia level](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level)**: The paranoia level (PL) classifies OWASP rules according to their aggressiveness, varying from _PL1_ to _PL4_, where _PL4_ is the most strict level. The available levels are:
+  - _PL1_ (default)
+  - _PL2_
+  - _PL3_
+  - _PL4_
+- **[Score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold)**: The score threshold (or anomaly threshold) defines the minimum cumulative score — obtained from matching OWASP rules — for the WAF to apply the configured OWASP ruleset action. The available thresholds are:
+  - _Low - 60 and higher_
+  - _Medium - 40 and higher_ (default)
+  - _High - 25 and higher_
+- **OWASP action**: The action to perform when the calculated [request threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) is greater than the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold). The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Interactive Challenge_, and _Log_.
+- **[Payload logging](/waf/managed-rules/payload-logging/configure/)**: When enabled, logs the request information (payload) that triggered a specific rule of the managed ruleset. You must configure a public key to encrypt the payload.
+
+Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure it in the dashboard:
+
+<Render
+	file="dash-configure-all-rules"
+	params={{
+		rulesetName: "Cloudflare OWASP Core Ruleset",
+	}}
+	product="waf"
+/>
+
+### Tag-level configuration
+
+You can configure (or override) the following setting in the dashboard for OWASP Core Ruleset rules tagged with at least one of the selected tags:
+
+- **Rule status**: Sets the rule status (enabled or disabled) for all the rules with the selected tags. To remove the action override at the tag level, set the action to _Default_.
+
+:::note
+Setting the rule status for specific tags affects all current and future rules with the tags you selected.
+:::
+
+Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure rules with specific tags in the dashboard:
+
+<Render
+	file="dash-configure-rules-by-tag"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare OWASP Core Ruleset",
+	}}
+/>
+
+### Rule-level configuration
+
+You can configure (or override) the following setting in the dashboard for the selected OWASP Core Ruleset rules:
+
+- **Rule status**: Sets the status (enabled or disabled) of a single rule or, if you select multiple rules, for the selected rules.
+
+Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Render
+	file="managed-rules-browse-zone"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare OWASP Core Ruleset",
+	}}
+/>
+
+<Render
+	file="managed-ruleset-configure-individual-rules"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare OWASP Core Ruleset",
+	}}
+/>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Render
+	file="managed-rules-browse-zone-new-nav"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare OWASP Core Ruleset",
+	}}
+/>
+
+<Render
+	file="managed-ruleset-configure-individual-rules"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare OWASP Core Ruleset",
+	}}
+/>
+
+</TabItem> </Tabs>

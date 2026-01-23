@@ -5,13 +5,16 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem, Markdown } from "~/components";
+
+export const availableActions =
+	"The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_.";
 
 Created by the Cloudflare security team, this ruleset provides fast and effective protection for all of your applications. The ruleset is updated frequently to cover new vulnerabilities and reduce false positives.
 
 Cloudflare recommends that you enable the rules whose tags correspond to your technology stack. For example, if you use WordPress, enable the rules tagged with `wordpress`.
 
-Cloudflare’s [WAF changelog](/waf/change-log/) allows you to monitor ongoing changes to the WAF's managed rulesets.
+Cloudflare's [WAF changelog](/waf/change-log/) allows you to monitor ongoing changes to the WAF's managed rulesets.
 
 :::note
 
@@ -21,21 +24,126 @@ It is not recommended that you enable all the available rules using overrides, s
 
 :::
 
+## Deploy the Cloudflare Managed Ruleset {/* deploy-in-the-dashboard */}
+
+<Render
+	file="dash-deploy-managed-ruleset-zone"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Managed Ruleset",
+		dashOptionName: "Cloudflare managed ruleset",
+	}}
+/>
+
 ## Configure in the dashboard
 
-You can configure the following settings of the Cloudflare Managed Ruleset in the Cloudflare dashboard:
+You can configure (or override) the Cloudflare Managed Ruleset, overriding its default configuration, at several levels:
 
-- **Set the action to perform.** When you define an action for the ruleset, you override the default action defined for each rule. The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_. To remove the action override, set the ruleset action to _Default_.
-- **Override the action performed by individual rules or rules with specific tags.** The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Interactive Challenge_.
-- **Disable specific rules or rules with specific tags.**
-- **Customize the filter expression.** With a custom expression, the Cloudflare Managed Ruleset applies only to a subset of the incoming requests.
-- **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
+- [Ruleset level](#ruleset-level-configuration)
+- [Tag level](#tag-level-configuration)
+- [Rule level](#rule-level-configuration)
 
-For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
+When you create several overrides at different levels, more specific configurations (tag and rule level) have priority over less specific configurations (ruleset level). Refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Ruleset Engine documentation for more information.
+
+### Ruleset-level configuration
+
+You can configure (or override) the following Cloudflare Managed Ruleset settings in the Cloudflare dashboard:
+
+- **Scope**: When you define a custom filter expression for the scope, the Cloudflare Managed Ruleset applies only to a subset of the incoming requests. By default, a managed ruleset deployed in the dashboard applies to all incoming traffic.
+
+- **Ruleset action**: When you define an action for the ruleset, you override the default action defined for each rule. <Markdown text={availableActions} /> To remove the action override at the ruleset level, set the ruleset action to _Default_.
+
+- **Ruleset status**: Enables or disables all the rules in the ruleset.
+
+  :::note
+  When you enable all the rules in the ruleset, you will affect rules that are disabled by default and all the rules that are added to the managed ruleset in the future.
+  :::
+
+- **[Payload logging](/waf/managed-rules/payload-logging/configure/)**: When enabled, logs the request information (payload) that triggered a specific rule of the managed ruleset. You must configure a public key to encrypt the payload.
+
+Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard), do the following to configure it in the dashboard:
+
+<Render
+	file="dash-configure-all-rules"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Managed Ruleset",
+	}}
+/>
+
+### Tag-level configuration
+
+You can configure (or override) the following Cloudflare Managed Ruleset settings in the dashboard for rules tagged with at least one of the selected tags:
+
+- **Rule action**: Sets the rule action for all the rules with the selected tags. <Markdown text={availableActions} />
+
+- **Rule status**: Sets the rule status for all the rules with the selected tags.
+
+:::note
+Setting any of these configurations for specific tags affects all current and future rules with the tags you selected.
+:::
+
+Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard), do the following to configure rules with specific tags in the dashboard:
+
+<Render
+	file="dash-configure-rules-by-tag"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Managed Ruleset",
+	}}
+/>
+
+### Rule-level configuration
+
+You can configure (or override) the following Cloudflare Managed Ruleset settings in the dashboard for the selected rules:
+
+- **Rule action**: Sets the action of a single rule or, if you select multiple rules, for the selected rules. <Markdown text={availableActions} /> Once you have changed the configuration of a rule, you have the option to reset the configuration back to the default one as defined in the Cloudflare Managed Ruleset.
+
+- **Rule status**: Sets the status (enabled or disabled) of a single rule or, if you select multiple rules, for the selected rules.
+
+Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Render
+	file="managed-rules-browse-zone"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Managed Ruleset",
+	}}
+/>
+
+<Render
+	file="managed-ruleset-configure-individual-rules"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Managed Ruleset",
+	}}
+/>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Render
+	file="managed-rules-browse-zone-new-nav"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Managed Ruleset",
+	}}
+/>
+
+<Render
+	file="managed-ruleset-configure-individual-rules"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Managed Ruleset",
+	}}
+/>
+
+</TabItem> </Tabs>
 
 ## Configure via API
 
-To enable the Cloudflare Managed Ruleset for a given zone via API, create a rule with `execute` action in the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` phase.
+To deploy the Cloudflare Managed Ruleset for a given zone via API, create a rule with `execute` action in the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` phase.
 
 ### Example
 
@@ -51,3 +159,40 @@ To enable the Cloudflare Managed Ruleset for a given zone via API, create a rule
 />
 
 <Render file="managed-rulesets/api-more-resources" product="waf" />
+
+## Configure using Terraform
+
+The following example deploys the Cloudflare Managed Ruleset for a zone and overrides the action and status of a specific rule.
+
+<Render file="v4-code-snippets" product="terraform" />
+
+```tf
+# Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
+resource "cloudflare_ruleset" "zone_level_managed_waf" {
+  zone_id     = "<ZONE_ID>"
+  name        = "Managed WAF entry point ruleset"
+  description = "Zone-level WAF Managed Rules config"
+  kind        = "zone"
+  phase       = "http_request_firewall_managed"
+
+  # Execute Cloudflare Managed Ruleset
+  rules {
+    ref         = "execute_cloudflare_managed_ruleset"
+    description = "Execute Cloudflare Managed Ruleset on my zone-level phase entry point ruleset"
+    expression  = "true"
+    action      = "execute"
+    action_parameters {
+      id = "efb7b8c949ac4650a09736fc376e9aee"
+      overrides {
+        rules {
+          id      = "5de7edfa648c4d6891dc3e7f84534ffa"
+          action  = "log"
+          enabled = true
+        }
+      }
+    }
+  }
+}
+```
+
+For more information, refer to [WAF Managed Rules configuration using Terraform](/terraform/additional-configurations/waf-managed-rulesets/).
