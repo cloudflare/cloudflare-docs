@@ -1119,7 +1119,7 @@ f) **Never do these inefficient patterns**:
 
 Run this validator on each file that was modified:
 
-````bash
+```bash
 python3 << 'FENCE_VALIDATOR_EOF'
 import re
 import sys
