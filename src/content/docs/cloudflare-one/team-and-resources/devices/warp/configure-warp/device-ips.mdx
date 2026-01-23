@@ -32,7 +32,7 @@ To define a custom IPv4 subnet for device IPs:
 4. In **CIDR**, enter a valid IPv4 CIDR block from the supported private ranges:
 	- `10.0.0.0/8`
 	- `172.16.0.0/12`
-	- `192.168.100.0/24`
+	- `192.168.0.0/16`
 	- `100.64.0.0/10`
 
 	The configured CIDR block must be at least size `/24`.
@@ -91,11 +91,13 @@ The device profile UUID is shown in the `Profile ID` field.
 You cannot edit an existing IPv4 subnet definition. To assign a different IPv4 subnet to your devices:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
-2. Under **Device IP assignment**, find the devices associated with the old subnet and select **Edit**.
+2. Under **Device IP assignment**, find the device group associated with the old subnet and select **Edit**.
 3. Select **Create new IP subnet range** to define a new subnet.
 4. Select **Save**.
 
 The new subnet will appear in the **WARP IP subnets** table. You can now delete the old subnet. Devices will only get an IP from the new subnet when they [re-register](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration); existing registrations will retain their original IP.
+
+
 
 ## Selectors
 
@@ -141,45 +143,19 @@ Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/
 	params={{ UIname: "User group names" }}
 />
 
-### Operating system
+### User name
 
-Apply a device profile based on the operating system of the device.
-
-| UI name          | API example                        |
-| ---------------- | ---------------------------------- |
-| Operating system | `os.name in {\"windows\" \"mac\"}` |
-
-### Operating system version
-
-Apply a device profile based on the [OS version](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/#determine-the-os-version) of the device.
-
-| UI name                  | API example               |
-| ------------------------ | ------------------------- |
-| Operating system version | `os.version == \"1.2.0\"` |
-
-<Render file="warp/os-version-semver" product="cloudflare-one" />
-
-### Managed network
-
-Apply a device profile based on the [managed network](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) that the device is connected to.
-
-| UI name         | API example                    |
-| --------------- | ------------------------------ |
-| Managed network | `network == \"Austin office\"` |
+<Render
+	file="gateway/selectors/user-name"
+	product="cloudflare-one"
+		params={{ UIname: "User Name" }}
+/>
 
 ### SAML attributes
 
 Apply a device profile based on an attribute name and value from a [SAML IdP](/cloudflare-one/traffic-policies/identity-selectors/#generic-saml-idp).
 
 <Render file="gateway/selectors/saml-attributes" product="cloudflare-one" />
-
-### Service token
-
-Apply a device profile based on the [service token](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#check-for-service-token) used to enroll the device.
-
-| UI name       | API example                                                               |
-| ------------- | ------------------------------------------------------------------------- |
-| Service Token | `identity.service_token_uuid == \"f174e90a-fafe-4643-bbbc-4a0ed4fc8415\"` |
 
 ## Comparison operators
 

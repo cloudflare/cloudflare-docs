@@ -82,9 +82,11 @@ Use this selector to create identity-based Gateway policies based on an IdP grou
 
 Use this selector to create identity-based Gateway policies based on an IdP username for a particular user in the IdP.
 
-| UI name   | API example                    |
-| --------- | ------------------------------ |
-| User Name | `identity.name == "user-name"` |
+<Render
+	file="gateway/selectors/user-name"
+	product="cloudflare-one"
+		params={{ UIname: "User Name" }}
+/>
 
 :::note[Gateway groups vs. Access rule groups]
 
