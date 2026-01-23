@@ -1191,7 +1191,7 @@ else:
     print(f"✓ {filepath}: All code block fences valid")
 
 FENCE_VALIDATOR_EOF
-````
+```
 
 **Run this validator on each modified file.** If validation fails (unmatched fences), STOP and ask the user for guidance.
 
