@@ -10,18 +10,3 @@ import { Render, GlossaryTooltip } from "~/components";
 
 
 ---
-
-
-## 403 Authentication error when creating DNS records using Terraform
-
-**Problem Description**
-
-`Error: failed to create DNS record: HTTP status 403: Authentication error (10000)` is returned when using Terraform with Cloudflare API.
-
-**Root Cause**
-
-Error seems to be misleading, as the error was found to be in customer code syntax, specifically: zone_id = data.cloudflare_zones.example_com.id
-
-**Solution**
-
-Make sure the argument `zone_id = data.cloudflare_zones.example_com.zones[0].id`. A more detailed use case can be found in [this](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) GitHub thread.
