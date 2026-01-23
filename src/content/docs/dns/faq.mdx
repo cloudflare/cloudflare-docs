@@ -6,7 +6,7 @@ sidebar:
   order: 21
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 The sections bellow cover frequently asked questions about Cloudflare authoritative DNS. For DNS Firewall, refer to [DNS Firewall FAQ](/dns/dns-firewall/faq/).
 
@@ -25,7 +25,7 @@ Yes. Cloudflare offers [free DNS services](https://www.cloudflare.com/dns) to cu
 
 Cloudflare never limits or caps DNS queries, but the pricing depends on your plan level.
 
-For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries.For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
+For customers on Free, Pro, or Business plans, Cloudflare does not charge for DNS queries. For customers on Enterprise plans, Cloudflare uses the number of monthly DNS queries as a pricing input to generate a custom quote.
 
 ### Does Cloudflare offer domain masking?
 
@@ -47,9 +47,11 @@ EDNS0 is the first approved set of mechanisms for [DNS extensions](http://en.wik
 
 ### Where can I find my Cloudflare nameservers?
 
-Under the **DNS** app of your Cloudflare account, review the **Cloudflare Nameservers**.
+On the **DNS Records** page, locate the **Cloudflare Nameservers** card.
 
-The IP address associated with a specific Cloudflare nameserver can be retrieved via a dig command or a third-party DNS lookup tool hosted online such as [whatsmydns.net](https://www.whatsmydns.net/):
+<DashButton url="/?to=/:account/:zone/dns/records" />
+
+Also, the IP address associated with a specific Cloudflare nameserver can be retrieved via a dig command or a third-party DNS lookup tool hosted online such as [whatsmydns.net](https://www.whatsmydns.net/):
 
 ```sh
 dig kate.ns.cloudflare.com
@@ -61,20 +63,24 @@ kate.ns.cloudflare.com.    68675    IN    A    173.245.58.124.
 
 ### Where do I change my nameservers to point to Cloudflare?
 
-Make the change at your registrar, which is where you registered your domain. This may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a WHOIS search. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
+Make the change at your registrar, which is where you registered your domain. This may or may not be your hosting provider - refer to [Update nameservers](/dns/nameservers/update-nameservers/) for further context.
+
+If you do not know who your registrar is for the domain, a WHOIS search can help. You can use [ICANN Lookup](https://lookup.icann.org/), for example.
 
 :::caution
 
 Some country code TLDs may not be supported by ICANN Lookup. If that is the case, use a different WHOIS search tool.
 :::
 
-Once you identify your registrar, follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/#update-your-nameservers).
+Once you identify your registrar, follow their instructions.
 
-### Why have I received an email: Your Name Servers have Changed?
+<Render file="ns-update-providers" product="dns" />
 
-For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare's nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from *Active* to *Moved* in the Cloudflare **Overview** app and an email is sent to the customer.
+### Why have I received an email: (mydomain) stopped using Cloudflare's nameservers?
 
-This is important because, if a domain is in a _Moved_ state for a [long enough period of time](/dns/zone-setups/reference/domain-status/), it will be deleted from Cloudflare.
+For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare's nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from **Active** to **Moved** and an email is sent to the customer.
+
+This is important because, if a domain is in a **Moved** state for a [long enough period of time](/dns/zone-setups/reference/domain-status/), it will be deleted from Cloudflare.
 
 <Render file="recover-deleted-domain" product="dns" />
 
