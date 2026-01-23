@@ -1,0 +1,40 @@
+---
+title: Shell tab completions for Wrangler CLI
+description: Wrangler now supports shell tab completions for Bash, Zsh, Fish, and PowerShell, making it faster to navigate commands and flags.
+products:
+  - workers
+date: 2026-01-09
+---
+
+Wrangler now includes built-in shell tab completion support, making it faster and easier to navigate commands without memorizing every option. Press Tab as you type to autocomplete commands, subcommands, flags, and even option values like log levels.
+
+Tab completions are supported for Bash, Zsh, Fish, and PowerShell.
+
+### Setup
+
+Generate the completion script for your shell and add it to your configuration file:
+
+```sh
+# Bash
+wrangler complete bash >> ~/.bashrc
+
+# Zsh
+wrangler complete zsh >> ~/.zshrc
+
+# Fish
+wrangler complete fish >> ~/.config/fish/config.fish
+
+# PowerShell
+wrangler complete powershell >> $PROFILE
+```
+
+After adding the script, restart your terminal or source your configuration file for the changes to take effect. Then you can simply press Tab to see available completions:
+
+```sh
+wrangler d<TAB>          # completes to 'deploy', 'dev', 'd1', etc.
+wrangler kv <TAB>        # shows subcommands: namespace, key, bulk
+```
+
+Tab completions are dynamically generated from Wrangler's command registry, so they stay up-to-date as new commands and options are added. This feature is powered by [`@bomb.sh/tab`](https://github.com/bombshell-dev/tab/).
+
+See the [`wrangler complete` documentation](/workers/wrangler/commands/#complete) for more details.

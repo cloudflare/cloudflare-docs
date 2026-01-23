@@ -65,11 +65,11 @@ You  can use the `bind` method to dynamically bind a value into the query statem
 	<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 	```js
 	const stmt = db
-		.prepare("SELECT * FROM Customers WHERE CompanyName = Alfreds Futterkiste AND CustomerId = 1")
+		.prepare("SELECT * FROM Customers WHERE CompanyName = 'Alfreds Futterkiste' AND CustomerId = 1")
 	```
 	</TabItem> <TabItem label="Python" icon="seti:python">
 	```py
-	stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = Alfreds Futterkiste AND CustomerId = 1")
+	stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = 'Alfreds Futterkiste' AND CustomerId = 1")
 	```
 	</TabItem> </Tabs>
 
@@ -404,7 +404,8 @@ const session = env.DB.withSession("first-primary");
 const result = await session
 	.prepare(`SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'`)
 	.run()
-return { bookmark } = session.getBookmark();
+const { bookmark } = session.getBookmark();
+	return bookmark;
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py

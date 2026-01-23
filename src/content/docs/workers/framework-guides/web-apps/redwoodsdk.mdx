@@ -3,9 +3,8 @@ pcx_content_type: how-to
 title: RedwoodSDK
 sidebar:
   order: 6
-head: []
 tags: ["full-stack"]
-description: Create an RedwoodSDK application and deploy it to Cloudflare Workers with Workers Assets.
+description: Create a RedwoodSDK application and deploy it to Cloudflare Workers.
 ---
 
 import {
@@ -19,23 +18,23 @@ import {
 
 In this guide, you will create a new [RedwoodSDK](https://rwsdk.com/) application and deploy it to Cloudflare Workers.
 
-RedwoodSDK is a composable framework for building server-side web apps on Cloudflare. It starts as a Vite plugin that unlocks SSR, React Server Components, Server Functions, and realtime capabilities.
+RedwoodSDK is a framework for building server-side web applications on Cloudflare. It is a Vite plugin that provides SSR, React Server Components, Server Functions, and realtime capabilities.
 
 ## Deploy a new RedwoodSDK application on Workers
 
 <Steps>
 1. **Create a new project.**
 
-	Run the following command, replacing `<project-name>` with your desired project name:
+	Run the following command, replacing `my-project-name` with your desired project name:
 		<PackageManagers
 			type="dlx"
-			pkg="degit"
-			args={"redwoodjs/sdk/starters/standard#main <project-name>"}
+			pkg="create-rwsdk"
+			args={"my-project-name"}
 		/>
 
 2. **Change the directory.**
 	```sh
-	cd <project-name>
+	cd my-project-name
 	```
 
 3. **Install dependencies.**
@@ -43,14 +42,56 @@ RedwoodSDK is a composable framework for building server-side web apps on Cloudf
 
 4. **Develop locally.**
 
-	Run the following command in the project directory to start a local development server. RedwoodSDK is just a plugin for Vite, so you can use the same dev workflow as any other Vite project:
+	Run the following command in the project directory to start a local development server. RedwoodSDK is a Vite plugin, so you can use the same development workflow as any other Vite project:
 		<PackageManagers type="run" args={"dev"} />
 
-5. **Deploy your project.**
+	Access the development server in your browser at `http://localhost:5173`, where you should see "Hello, World!" displayed on the page.
+
+5. **Add your first route.**
+
+	The entry point of your application is `src/worker.tsx`. Open that file in your editor.
+
+	You will see the `defineApp` function, which handles requests by returning responses to the client:
+
+	```tsx
+	import { defineApp } from "rwsdk/worker";
+	import { route, render } from "rwsdk/router";
+
+	import { Document } from "@/app/Document";
+	import { Home } from "@/app/pages/Home";
+
+	export default defineApp([
+	  render(Document, [route("/", () => new Response("Hello, World!"))]),
+	]);
+	```
+
+	Add a `/ping` route handler:
+
+	```tsx
+	import { defineApp } from "rwsdk/worker";
+	import { route, render } from "rwsdk/router";
+
+	export default defineApp([
+	  render(Document, [
+	    route("/", () => new Response("Hello, World!")),
+	    route("/ping", function () {
+	      return <h1>Pong!</h1>;
+	    }),
+	  ]),
+	]);
+	```
+
+	Navigate to `http://localhost:5173/ping` to see "Pong!" displayed on the page.
+
+	Routes can return JSX directly. RedwoodSDK has support for React Server Components, which renders JSX on the server and sends HTML to the client.
+
+6. **Deploy your project.**
 
 	You can deploy your project to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), either from your local machine or from any CI/CD system, including [Cloudflare Workers CI/CD](/workers/ci-cd/builds/).
 
 	Use the following command to build and deploy. If you are using CI, make sure to update your [deploy command](/workers/ci-cd/builds/configuration/#build-settings) configuration accordingly.
 		<PackageManagers type="run" args={"release"} />
+
+	The first time you run the command it might fail and ask you to create a workers.dev subdomain. Go to the dashboard and open the Workers menu. Opening the Workers landing page for the first time will create a workers.dev subdomain automatically.
 
 </Steps>

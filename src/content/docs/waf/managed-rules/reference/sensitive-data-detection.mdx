@@ -27,7 +27,9 @@ The Cloudflare Sensitive Data Detection managed ruleset helps identify data leak
 
 Turning on Cloudflare Sensitive Data Detection will not introduce additional latency, since the detection occurs outside the response path. For this reason, rules are always deployed with the _Log_ action (you cannot block a response that was already sent), providing you with visibility on the sensitive data leaving your origin servers.
 
+:::note
 Some rules in the Cloudflare Sensitive Data Detection managed ruleset are disabled by default, to prevent false positives and a large number of logged events. You should review the PII and sensitive data relevant to your application and turn on the appropriate rules in the managed ruleset, according to the instructions in the following sections.
+:::
 
 ## Additional remarks
 
@@ -39,20 +41,23 @@ Currently, Cloudflare Sensitive Data Detection does not support [matched payload
 
 ---
 
-## Configure in the dashboard
+## Deploy the Cloudflare Sensitive Data Detection ruleset {/* deploy-in-the-dashboard */}
+
+:::note
+Requires an Enterprise plan with a paid add-on.
+:::
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
-To configure Cloudflare Sensitive Data Detection in the Cloudflare dashboard, go to **Security** > **Sensitive Data**.
+<Steps>
 
-You can turn the managed ruleset on or off, and configure the following settings:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Sensitive data**.
+3. Turn on **Cloudflare Sensitive Data Detection** to deploy the ruleset.
 
-- Turn on or off specific rules or rules with specific tags.
-- Customize the filter expression. With a custom expression, Cloudflare Sensitive Data Detection applies only to a subset of the incoming requests.
+</Steps>
 
 </TabItem> <TabItem label="New dashboard" icon="rocket">
-
-To enable Cloudflare Sensitive Data Detection:
 
 <Steps>
 
@@ -60,34 +65,146 @@ To enable Cloudflare Sensitive Data Detection:
 
    <DashButton url="/?to=/:account/:zone/security/settings" />
 
-2. (Optional) Filter by **Detections tools**.
-3. Turn on **Sensitive data detection**.
+2. (Optional) Filter by **Web application exploits**.
+3. Turn on **Sensitive data detection** to deploy the ruleset.
 
 </Steps>
 
-To adjust the scope of the managed ruleset or turn off specific rules:
+</TabItem> </Tabs>
+
+## Configure in the dashboard
+
+You can configure (or override) the Cloudflare Sensitive Data Detection ruleset at several levels:
+
+- [Ruleset level](#ruleset-level-configuration)
+- [Tag level](#tag-level-configuration)
+- [Rule level](#rule-level-configuration)
+
+More specific configurations (rule and tag level) have greater priority than less specific configurations (ruleset level). Refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Ruleset Engine documentation for more information.
+
+### Ruleset-level configuration
+
+You can configure (or override) the following Cloudflare Sensitive Data Detection setting in the Cloudflare dashboard:
+
+- **Scope**: When you define a custom filter expression for the scope, the Cloudflare Sensitive Data Detection ruleset applies only to a subset of the incoming requests. By default, a managed ruleset deployed in the dashboard applies to all incoming traffic.
+
+Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy-in-the-dashboard), do the following to configure it in the dashboard:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 <Steps>
 
-1. In the **Settings** page, under **Sensitive data detection**, select **Configured ruleset**.
-2. To apply the managed ruleset for a subset of incoming requests, select **Custom filter expression** and define the filter expression.
-3. Select **Next**.
-4. To turn specific rules on or off, select **Browse rules** and use the toggle next to each rule to turn it on or off.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+
+2. Go to **Security** > **Sensitive Data**.
+
+3. Next to **Cloudflare Sensitive Data Detection**, select the three dots > **Edit**.
+
+4. Select **Edit scope** and decide if you want to apply the managed ruleset to all incoming requests or to a subset. If you select **Custom filter expression**, define the filter expression that will determine which requests the Cloudflare Sensitive Data Detection ruleset will apply to.
+
+5. Select **Next**, and then select **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Web application exploits**.
+3. For **Sensitive data detection**, select **Configured ruleset: \<SCOPE>** to edit the ruleset scope.<br/>
+   Decide if you want to apply the managed ruleset to all incoming requests (global scope) or to a subset.
+
+4. If you selected **Custom filter expression**, define the filter expression that will determine which requests the Cloudflare Sensitive Data Detection ruleset will apply to.
+
 5. Select **Next**, and then select **Save**.
 
 </Steps>
 
 </TabItem> </Tabs>
 
-For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
+### Tag-level configuration
+
+You can configure (or override) the following setting in the dashboard for rules tagged with at least one of the selected tags:
+
+- **Rule status**: Sets the rule status for all the rules with the selected tags.
+
+:::note
+Setting the rule status for specific tags affects all current and future rules with the tags you selected.
+:::
+
+Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy-in-the-dashboard), do the following to configure rules with specific tags in the dashboard:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Render file="managed-rules-browse-zone-sdd" product="waf" />
+
+<Render
+	file="managed-ruleset-configure-rules-by-tag"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Sensitive Data Detection",
+	}}
+/>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Render file="managed-rules-browse-zone-sdd-new-nav" product="waf" />
+
+<Render
+	file="managed-ruleset-configure-rules-by-tag"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Sensitive Data Detection",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### Rule-level configuration
+
+You can configure (or override) the following setting in the dashboard for the selected rules:
+
+- **Rule status**: Sets the status (enabled or disabled) of a single rule or, if you select multiple rules, for the selected rules.
+
+Once you have [deployed the Cloudflare Sensitive Data Detection ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Render file="managed-rules-browse-zone-sdd" product="waf" />
+
+<Render
+	file="managed-ruleset-configure-individual-rules"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Sensitive Data Detection",
+	}}
+/>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Render file="managed-rules-browse-zone-sdd-new-nav" product="waf" />
+
+<Render
+	file="managed-ruleset-configure-individual-rules"
+	product="waf"
+	params={{
+		rulesetName: "Cloudflare Sensitive Data Detection",
+	}}
+/>
+
+</TabItem> </Tabs>
 
 ## Configure via API
 
-To enable Cloudflare Sensitive Data Detection for a given zone using the API, create a rule with `execute` action in the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_response_firewall_managed` phase.
+To deploy the Cloudflare Sensitive Data Detection ruleset for a given zone using the API, create a rule with `execute` action in the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_response_firewall_managed` phase.
 
 ### Example
 
-This example deploys the Cloudflare Sensitive Data Detection managed ruleset to the `http_response_firewall_managed` phase of a given zone (`$ZONE_ID`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed for all incoming requests.
+This example deploys the Cloudflare Sensitive Data Detection ruleset to the `http_response_firewall_managed` phase of a given zone (`$ZONE_ID`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed for all incoming requests.
 
 1.  <Render
     	file="rulesets/api-zone/step1-get-entrypoint"

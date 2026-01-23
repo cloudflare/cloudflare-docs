@@ -1,0 +1,44 @@
+---
+params:
+  - rulesetName?
+---
+
+import { Render, Tabs, TabItem } from "~/components";
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Render
+	file="managed-rules-browse-zone"
+	product="waf"
+	params={{
+		rulesetName: props.rulesetName,
+	}}
+/>
+
+<Render
+	file="managed-ruleset-configure-rules-by-tag"
+	product="waf"
+	params={{
+		rulesetName: props.rulesetName,
+	}}
+/>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Render
+	file="managed-rules-browse-zone-new-nav"
+	product="waf"
+	params={{
+		rulesetName: props.rulesetName,
+	}}
+/>
+
+<Render
+	file="managed-ruleset-configure-rules-by-tag"
+	product="waf"
+	params={{
+		rulesetName: props.rulesetName,
+	}}
+/>
+
+</TabItem> </Tabs>

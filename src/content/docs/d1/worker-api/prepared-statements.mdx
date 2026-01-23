@@ -120,13 +120,13 @@ Example of a static statement:
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
-const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = Bs Beverages");
+const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'");
 // "Bs Beverages" is hard-coded into the query.
 // `stmt` is a static statement.
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = Bs Beverages")
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'")
 # "Bs Beverages" is hard-coded into the query.
 # `stmt` is a static statement.
 ```
@@ -407,7 +407,7 @@ Get a specific column from the first row:
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
-const returnValue = await stmt.first(CustomerId);
+const returnValue = await stmt.first("CustomerId");
 return Response.json(returnValue)
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">

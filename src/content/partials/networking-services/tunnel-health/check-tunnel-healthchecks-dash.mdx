@@ -12,7 +12,7 @@ import { Aside, AnchorHeading, DashButton, GlossaryTooltip, Markdown } from "~/c
 
 The Cloudflare dashboard monitors the health of all <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels on your account that route traffic from Cloudflare to your origin network.
 
-{props.dashInfo} If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogeneous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
+{props.dashInfo} If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to report tunnel status as degraded or unhealthy, since the Internet is not homogeneous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
 
 :::note
 To access more than one hour of tunnel health data, you should use the <a href={props.graphQL}>GraphQL API</a>.
@@ -28,7 +28,7 @@ Not all data centers are relevant to you at all times. You can refer to the **Tr
 		text={`
 		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights**.
 		2. Go to **Network health** > **WAN connector health**.
-		3. In this screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
+		3. In this view you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
 		4. Find the tunnel you want to inspect, select the three dots next to it, and choose:
 			- **Create alert**: Opens the ${props.notificationsPath} so you can create specific alerts for that tunnel when specific conditions are met.
 			- **Network Analytics**: Opens the Analytics section of the dash, prefiltered with the tunnel you want to inspect.
@@ -52,7 +52,7 @@ Not all data centers are relevant to you at all times. You can refer to the **Tr
 		<Markdown
 			text={`
 			2. Select the **Connector health** tab.
-			3. In this screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
+			3. In this view you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
 			4. Find the tunnel you want to inspect, select the three dots next to it, and select:
 				- **Create alert**: Opens the ${props.notificationsPath} so you can create specific alerts for that tunnel when specific conditions are met.
 				- **Network Analytics**: Opens the Analytics section of the dash, prefiltered with the tunnel you want to inspect.
@@ -103,7 +103,7 @@ You can drill down into a specific tunnel to check its health status and other i
 
 3. Find and select the tunnel you want to inspect.
 
-The next screen shows you detailed information about the tunnel, including:
+The next view displays detailed information about the tunnel, including:
 - Status information
 	- Up: More than 80% of health checks pass.
 	- Degraded: More than 40% of health checks pass.
@@ -113,4 +113,4 @@ The next screen shows you detailed information about the tunnel, including:
 
 If you select the three dots in front of the tunnel you want to inspect, you have access to the following tools:
 - Packet captures: Collect <a href={props.packetCaptures}>packet level data for your traffic</a>
-- Network Analytics: Leverage real-time visibility into <a href={props.networkAnalytics}>network analytics</a>.
+- Network Analytics: Leverage real-time insights into <a href={props.networkAnalytics}>network analytics</a>.

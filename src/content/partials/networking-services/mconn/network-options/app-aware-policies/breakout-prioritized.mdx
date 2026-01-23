@@ -31,7 +31,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, DashButton, Markdown, Render, T
 		<pre class="mermaid">
 			{`
 			flowchart LR
-			accTitle: In this example, the applications go directly to the Internet, skipping Cloudflare's security. filtering
+			accTitle: In this example, the applications go directly to the Internet, skipping Cloudflare's security filtering
 			a(Magic WAN Connector) --> b(Cloudflare) -->|Filtered traffic|c(Internet)
 
 			a-- Breakout traffic ---d(Application1) & e(Application2) --> c
@@ -46,7 +46,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, DashButton, Markdown, Render, T
 		text={`
 		We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
 
-    Refer to <a href="${props.trafficSteeringURL}">Traffic steering</a> to learn how Cloudflare routes traffic.
+    For details on how Cloudflare routes traffic, refer to <a href="${props.trafficSteeringURL}">Traffic steering</a>.
 		`}
 		inline={false}
 		/>
@@ -288,7 +288,7 @@ You need to delete {props.featureName} applications for each of your existing si
 		}
 	```
 
-	Take note of the `"id"` value for the application that want to delete.
+	Take note of the `"id"` value for the application that you want to delete.
 
 2. Send a `DELETE` request to delete an application from the {props.featureName} policy.
 
@@ -334,7 +334,7 @@ To pin applications to a WAN port:
 			text={`
 				1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
 				2. Go to **Connectors** > **Appliances** > **Profiles**.
-				3. Select the Magic WAN Connector you want to configure> **Edit**.
+				3. Select the Magic WAN Connector you want to configure > **Edit**.
 			`}
 			inline={false}
 			/>
@@ -368,7 +368,7 @@ To pin applications to a WAN port:
 		text={`
 		4. In **Traffic steering** > **Breakout Traffic** find the application you want to pin to a WAN port.
 		5. Select the three dots next to it > **Edit application traffic**.
-		6. From the **Preferred breakout port** dropdown, select the WAN port you want to assign to the applications.
+		6. From the **Preferred breakout port** drop-down menu, select the WAN port you want to assign to the applications.
 		7. Select **Save**.
 		`}
 		inline={false}

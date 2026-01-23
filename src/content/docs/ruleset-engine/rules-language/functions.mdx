@@ -57,6 +57,39 @@ Example:
 all(http.request.headers["content-type"][*] == "application/json")
 ```
 
+### `encode_base64`
+
+{/* prettier-ignore */}
+<code>encode_base64(input <Type text="String | Bytes" /> [, flags <Type text="String" />])</code>: <Type text="String" />
+
+Encodes an `input` string or byte array to Base64 format.
+
+The `flags` parameter is optional. You can provide one or more flags as a single string. The available flags are the following:
+
+- `u`: Uses URL-safe Base64 encoding (uses `-` and `_` instead of `+` and `/`).
+- `p`: Adds padding (appends `=` characters to make the output length a multiple of 4, as required by some systems).
+
+By default, the output uses standard Base64 encoding without padding.
+
+Examples:
+
+```txt
+encode_base64("hello world")          will return "aGVsbG8gd29ybGQ"
+encode_base64("hello world", "p")     will return "aGVsbG8gd29ybGQ="
+encode_base64("hello world", "u")     will return "aGVsbG8gd29ybGQ"
+encode_base64("hello world", "up")    will return "aGVsbG8gd29ybGQ="
+```
+
+You can combine `encode_base64()` with other functions to create signed request headers:
+
+```txt
+encode_base64(sha256(concat(to_string(ip.src), http.host, "my-secret")))
+```
+
+:::note
+You can only use the `encode_base64()` function in [request/response header transform rules](/rules/transform/).
+:::
+
 ### `cidr`
 
 {/* prettier-ignore */}
@@ -365,6 +398,43 @@ remove_query_args(http.request.uri.query, "category") will return "order=desc"
 
 :::note
 You can only use the `remove_query_args()` function in [rewrite expressions of Transform Rules](/rules/transform/).
+:::
+
+### `sha256`
+
+{/* prettier-ignore */}
+<code>sha256(input <Type text="String | Bytes" />)</code>: <Type text="Bytes" />
+
+Computes the SHA-256 cryptographic hash of the `input` string or byte array. Returns a 32-byte hash value.
+
+Use this function to generate signed request headers, validate request integrity, or create secure tokens directly in rule expressions.
+
+Examples:
+
+```txt
+sha256("my-token")
+```
+
+The example above returns a 32-byte hash that your origin can validate to authenticate requests.
+
+You can combine `sha256()` with [`encode_base64()`](#encode_base64) to create Base64-encoded signatures:
+
+```txt
+encode_base64(sha256("my-token"))
+```
+
+To create a signed header value from request attributes:
+
+```txt
+encode_base64(sha256(concat(to_string(ip.src), to_string(http.request.timestamp.sec), "my-secret-key")))
+```
+
+:::note[Notes]
+
+The `sha256()` function is available as an Enterprise add-on and requires a specific entitlement. Contact your account team to enable it.
+
+You can only use the `sha256()` function in rewrite expressions of [Transform Rules](/rules/transform/).
+
 :::
 
 ### `split`

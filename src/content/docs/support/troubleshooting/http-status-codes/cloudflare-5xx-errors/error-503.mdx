@@ -35,3 +35,12 @@ If the error contains `cloudflare` or `cloudflare-nginx` in the HTML response bo
 #### 503 Error only visible in logs and analytics
 
 These errors result from [unsuccessful prefetches from Speed Brain](/speed/optimization/content/speed-brain/#how-speed-brain-works) and can be discarded. These errors are not visible to visitors of your website. [Speed Brain](/speed/optimization/content/speed-brain/#enable-and-disable-speed-brain) can be disabled for the zone if needed (this feature cannot be disabled for a specific path).
+
+### Workers-specific causes
+
+Error 503 can also occur when using Cloudflare Workers:
+
+- A Worker exceeds CPU time limits (see [Error 1102](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1102/))
+- Worker code encounters memory limit issues (see [Error 1102](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1102/))
+
+If you are using Workers, check the Workers dashboard for error logs and resource limit issues.

@@ -78,7 +78,13 @@ Further, there are a few keys that can _only_ appear at the top-level.
 <Render file="vite-environments" product="workers" />
 
 ## Automatic provisioning
-<a href="https://developers.cloudflare.com/changelog/2025-10-24-automatic-resource-provisioning/" target="_blank"><InlineBadge preset="beta" /></a>
+
+<a
+	href="https://developers.cloudflare.com/changelog/2025-10-24-automatic-resource-provisioning/"
+	target="_blank"
+>
+	<InlineBadge preset="beta" />
+</a>
 
 Wrangler can automatically provision resources for you when you deploy your Worker without you having to create them ahead of time.
 
@@ -213,6 +219,13 @@ The `main` key is optional for assets-only Workers.
 
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
   - Maps a Durable Object from a class name to a runtime state. This communicates changes to the Durable Object (creation / deletion / rename / transfer) to the Workers runtime and provides the runtime with instructions on how to deal with those changes. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/#durable-object-migrations-in-wranglertoml).
+
+* `placement` <Type text="object"/> <MetaInfo text="optional"/>
+  - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/smart-placement/).
+  - `mode` <Type text="string"/> — Set to `"smart"` to automatically place your Worker near back-end services based on observed latency.
+  - `region` <Type text="string"/> — Specify a cloud region (for example, `"aws:us-east-1"`, `"gcp:europe-west1"`, or `"azure:westeurope"`) to place your Worker near infrastructure in that region.
+  - `host` <Type text="string"/> — Specify a hostname and port for a single-homed layer 4 service (for example, `"my_database_host.com:5432"`) to place your Worker near that service.
+  - `hostname` <Type text="string"/> — Specify a hostname for a single-homed layer 7 service (for example, `"my_api_server.com"`) to place your Worker near that service.
 
 ## Non-inheritable keys
 
@@ -1450,14 +1463,9 @@ A common example of using a redirected configuration is where a custom build too
 - `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file, containing only the settings for the given environment.
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
-	<FileTree>
-		- dist
-  		- index.js
-  		- wrangler.jsonc
-		- .wrangler
-  		- deploy
-    		- config.json
-	</FileTree>
+  <FileTree>
+  	- dist - index.js - wrangler.jsonc - .wrangler - deploy - config.json
+  </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:
 

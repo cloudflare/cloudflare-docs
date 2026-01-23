@@ -5,9 +5,11 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, DirectoryListing } from "~/components";
 
 To use Cloudflare DNS as an authoritative DNS provider - be it in a [primary (full)](/dns/zone-setups/full-setup/) or [secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) setup -, your domain nameservers must point to nameservers that you get from your Cloudflare account. Updating your nameservers is required to activate your domain on Cloudflare and use most of our [application services](/fundamentals/concepts/how-cloudflare-works/).
+
+<Render file="nameservers-registrar-callout" product="dns" />
 
 ## Specific processes
 
@@ -43,3 +45,11 @@ If you are onboarding a subdomain `shop.example.com` as a [child domain](/dns/zo
 Delegation means that `shop.example.com` has specific `NS` records set up for it within the DNS records management of the parent zone (`example.com`).
 
 If that is the case, when setting up your zone in Cloudflare or opting for a different set of [nameservers](/dns/nameservers/), you have to update the `NS` records in the parent domain, and not at the registrar.
+
+## Further guidance
+
+This page covers specific workflows that customers who do not use Cloudflare Registrar[^1] might have to follow to update their domain nameservers. For complete tutorials, refer to the pages below. Full setup is the most common option, and the only one available for customers on the Free or Pro plans.
+
+<DirectoryListing folder="/dns/zone-setups/" />
+
+[^1]: If you acquired your domain from Cloudflare Registrar, your domain already uses and must remain on Cloudflare nameservers. For details, refer to [Registrar](/registrar/faq/#can-i-change-my-nameservers).

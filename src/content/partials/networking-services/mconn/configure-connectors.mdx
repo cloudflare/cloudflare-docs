@@ -79,9 +79,9 @@ In this page you will find instructions on how to configure {props.productName}.
     - One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)
     - One or more vSwitch port group or VLAN that will be the internal LAN
 
-    If you are installing ${props.productNameVirtual} on ESXi, refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html) for more information on how to install ESXi and configure a virtual machine.
+    For details on installing ESXi and configuring a virtual machine, refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html).
 
-		If you are installing ${props.productNameVirtual} on Virtual Environment, refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started) for more information on how to install Virtual environment and configure a virtual machine.
+		For details on installing Virtual environment and configuring a virtual machine, refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started).
 		`}
 		inline={false}
 		/>
@@ -94,7 +94,7 @@ In this page you will find instructions on how to configure {props.productName}.
 
 ## Before you begin
 
-There are a couple of decisions you need to make when installing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Refer to the topics below for more information.
+There are a couple of decisions you need to make when installing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Review the following topics for more information.
 
 ### Determine the need for a high availability configuration
 
@@ -107,7 +107,7 @@ You must decide the type of configuration you want for your site from the beginn
 <Card title="Do you need a high availability configuration?" icon="information">
 
 - If you need a high availability configuration for your premises, refer to
-  [About high availability configurations](#about-high-availability-configurations) for more information
+  [About high availability configurations](#about-high-availability-configurations) for details
   and learn how to configure your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } device in this mode.
 
 - If you do not need a high availability configuration for you premises, check if you need a [DHCP or a static IP setup](#decide-on-dhcp-vs-static-ip-connections) before proceeding to [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard).
@@ -132,7 +132,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<Markdown
 		text={`
 		1. Connect ${props.productName} to a DHCP port with access to the Internet.
-		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your ${props.productName} device.
+		2. Follow the [setup flow](#set-up-cloudflare-dashboard) and activate your ${props.productName} device.
 		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
 		`}
 		inline={false}
@@ -153,7 +153,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<Markdown
 		text={`
     1. Connect the machine with your ${props.productNameVirtual} VM to a DHCP port with access to the Internet.
-		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your ${props.productNameVirtual} device.
+		2. Follow the [setup flow](#set-up-cloudflare-dashboard) and activate your ${props.productNameVirtual} device.
 		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
 		`}
 		inline={false}
@@ -183,7 +183,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 { props.magicWord === "virtual" && (
   <>
 		<AnchorHeading title="Configure a virtual machine" depth={2} />
-		<p>Select the appropriate tab below to learn how to configure {props.productNameVirtual} on VMWare ESXi or Proxmox Virtual Environment.</p>
+		<p>Select the appropriate tab to configure {props.productNameVirtual} on VMWare ESXi or Proxmox Virtual Environment.</p>
 
 		<Tabs> <TabItem label="VMWare ESXi">
 
@@ -191,7 +191,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		text={`
 		**1. Obtain the VMWare image**
 
-		Contact your account team at Cloudflare to obtain the ${props.productNameVirtual} OVA package and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for ${props.productNameVirtual} with the appropriate settings. Refer to [VMWare VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) for more information on this topic.
+		Contact your account team at Cloudflare to obtain the ${props.productNameVirtual} OVA package and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for ${props.productNameVirtual} with the appropriate settings. For details, refer to [VMWare VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html).
 
 		This image can be deployed multiple times to create several instances of a ${props.productNameVirtual}, in different locations or on the same ESXi host.
 
@@ -205,7 +205,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 		**2. Deploy the ${props.productNameVirtual} on VMware**
 
-		The following instructions assume you already have VMware ESXi hypervisor installed with sufficient resources. Refer to [Prerequisites](#prerequisites) for more information.
+		The following instructions assume you already have VMware ESXi hypervisor installed with sufficient resources. For details, refer to [Prerequisites](#prerequisites).
 
 		1. When setting up your VMware ESXi, you need to create port groups for ${props.productNameVirtual}. Go to **Networking** > **Port groups**, and prepare your vSwitch port groups and/or VLANs for your desired network topology. For example, a simple deployment typically has:
 			- A WAN port group where the ${props.productNameVirtual} will get an IP address (static or DHCP) that has access to the Internet.
@@ -275,13 +275,13 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		text={`
 		**1. Obtain the ${props.productNameVirtual} script**
 
-		Contact your account team at Cloudflare to obtain your license keys and the ${props.productNameVirtual} script for Proxmox. The script will set up and configure a Proxmox virtual machine with the appropriate settings for ${props.productNameVirtual}. Refer to [Prerequisites](#prerequisites) for more information on system requirements.
+		Contact your account team at Cloudflare to obtain your license keys and the ${props.productNameVirtual} script for Proxmox. The script will set up and configure a Proxmox virtual machine with the appropriate settings for ${props.productNameVirtual}. For details on system requirements, refer to [Prerequisites](#prerequisites).
 
 		The script can be deployed multiple times to create several instances of a ${props.productNameVirtual}, in different locations or on the same Proxmox host. You will consume one license key for each instance created. For example, if you want to deploy 10 ${props.productNameVirtual}s you should request 10 license keys, and your account team will create 10 ${props.productNameVirtual} instances in your Cloudflare dashboard.
 
 		**2. Deploy the ${props.productNameVirtual} on Proxmox**
 
-		The following instructions assume you already have Proxmox Virtual Environment installed with sufficient resources. Refer to [Prerequisites](#prerequisites) for more information.
+		The following instructions assume you already have Proxmox Virtual Environment installed with sufficient resources. For details, refer to [Prerequisites](#prerequisites).
 
 		1. In the terminal prompt of your Proxmox server, load the script provided by your account team. For example: \`bash YOUR_SCRIPT\`. You need elevated privileges to run the script.
 		2. You will be prompted to create a new ${props.productNameVirtual}. Select **yes** to proceed.
@@ -367,9 +367,9 @@ To create a profile:
 )
 }
 3. In **Name**, enter a descriptive name for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Optionally, you can also add a description for it.
-4. You need to decide if you want to turn on high availability for the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+4. You need to decide if you want to turn on high availability for the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. For details, refer to [About high availability configurations](#about-high-availability-configurations).
 5. Select **Create and continue**.
-6. Select **Add Appliance**. This will show you a list of devices associated with your account. <Markdown text={props.noConnectorShows} />
+6. Select **Add Appliance**. This will display a list of devices associated with your account. <Markdown text={props.noConnectorShows} />
 7. If you have more than one { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, choose the one that corresponds to the on-ramp you are creating. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices are identified by a serial number, also known as a service tag. Use this information to choose the right { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. <br /> Select **Add Appliance** when you are ready to proceed.
 8. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. You can change this later. Refer to <a href={props.interruptWindowURL}>Interrupt window</a> for more details on how to define when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
 9. Select **Continue** to proceed to creating your WAN and LAN networks.
@@ -382,15 +382,15 @@ To create a profile:
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link={props.tunnelHealthChecksURL}>health</GlossaryTooltip>. Refer to <a href={props.wanSettingsURL}>WAN settings</a> for more details.
 		:::note
-		This is not the same as a high availability (HA) configuration. HA configurations need two { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices to work. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+		This is not the same as a high availability (HA) configuration. HA configurations need two { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices to work. For details, refer to [About high availability configurations](#about-high-availability-configurations).
 		:::
 2. In **Interface name**, enter a descriptive name for your WAN.
 3. **Interface number** <Markdown text={props.wan} />
 4. In **VLAN ID**, enter a number between `0` and `4094` to specify a <a href={props.vlanIdURL}>VLAN ID</a>.
-5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to <a href={props.trafficSteeringURL}>Traffic steering</a> to learn more about how Cloudflare calculates priorities.
-6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. Refer to <a href={props.healthCheckFrequencyURL}>Update tunnel health checks frequency</a> for more information.
+5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. For details on how Cloudflare calculates priorities, refer to <a href={props.trafficSteeringURL}>Traffic steering</a>.
+6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. For details, refer to <a href={props.healthCheckFrequencyURL}>Update tunnel health checks frequency</a>.
 7. **Addressing**: Select **DHCP**. This is needed the first time you set up your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
-	1. Continue the set up flow below to activate your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
+	1. Continue the set up flow to activate your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
 	2. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address). If you choose a static IP, you also need to specify the static IP and gateway addresses.
 8. Select **Save** when you are finished.
 
@@ -434,7 +434,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 7. (Optional) If your LAN contains additional subnets behind a layer 3 router, select **Add routed subnet** under **Routed subnets** to add them:
    - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
    - **Next hop**: The address of the L3 router to which the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } should forward packets for this subnet.
-   - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> Refer to <a href={props.routedSubnetsURL}>Routed subnets</a> for more information.
+   - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> For details, refer to <a href={props.routedSubnetsURL}>Routed subnets</a>.
 8. Select **Save**.
 9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, once it boots up.
 
@@ -465,7 +465,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 #### Network segmentation
 
-After setting up your LANs, you can configure your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to enable communication between them without traffic leaving your premises. Refer to <a href={props.networkSegmentationURL}>Network segmentation</a> for more information.
+After setting up your LANs, you can configure your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to enable communication between them without traffic leaving your premises. For details, refer to <a href={props.networkSegmentationURL}>Network segmentation</a>.
 
 #### DHCP options
 
@@ -502,7 +502,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
     class a,c orange`}
 		</pre>
 
-		<p>In the example below, the {props.productName} device sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.</p>
+		<p>In the following example, the {props.productName} device sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.</p>
 
 		<pre class="mermaid">
 		{`flowchart LR
@@ -550,7 +550,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 { props.magicWord === "hardware" && (
   <>
 		<p>When {props.productName} is first activated, you need to have Internet connection. If you chose to set up your {props.productName} with DHCP you will need to have one of the {props.productName} ports connected to the Internet through a device that supports DHCP. This is required so that the {props.productName} can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.</p>
-		<p> If you set up your {props.productName} with a static IP through the bootstrap method, you do not need a DHCP port. Refer to <a href="#decide-on-dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a> for more information.</p>
+		<p> If you set up your {props.productName} with a static IP through the bootstrap method, you do not need a DHCP port. For details, refer to <a href="#decide-on-dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a>.</p>
 
 		<Aside type="caution">Remember that if you chose the DHCP method you have to connect {props.productName} through a route that supports DHCP for its first connection to the Internet. Otherwise, {props.productName} will not work.</Aside>
   </>
@@ -578,7 +578,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		2. Go to **Connectors** > **Appliances**.
 		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
+		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. For details on defining when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems, refer to <a href="${ props.interruptWindowURL }">Interrupt window</a>.
 		6. Select **Update**.
 	`}
 	inline={false}
@@ -600,7 +600,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		2. Go to the **Appliances** tab > **Appliances**.
 		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
+		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. For details on defining when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems, refer to <a href="${ props.interruptWindowURL }">Interrupt window</a>.
 		6. Select **Update**.
 	`}
 	inline={false}
@@ -633,7 +633,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 { props.magicWord === "hardware" && (
   <>
-    <p>After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productName} on a network configuration with a static IP, follow the steps below.</p>
+    <p>After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productName} on a network configuration with a static IP, follow these steps:</p>
 
 		<Aside type="caution">Make sure you complete the setup workflow and activate your {props.productName} before changing the WAN settings to a static IP.</Aside>
 
@@ -658,7 +658,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 { props.magicWord === "virtual" && (
   <>
-		<p>After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productNameVirtual} on a network configuration with a static IP, follow the steps below.</p>
+		<p>After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productNameVirtual} on a network configuration with a static IP, follow these steps:</p>
 
 		<Aside type="caution">Make sure you complete the setup workflow and activate your {props.productNameVirtual} before changing the WAN settings to a static IP.</Aside>
 
@@ -684,7 +684,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
   <>
 		<AnchorHeading title="Bootstrap via Serial Console" depth={2} />
 		<p>Advanced users can locally configure their {props.productName} to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However, it does require being comfortable with using tools to access the serial port on {props.productName} as well as using a serial terminal client to access the environment in your {props.productName}.</p>
-		<p>Below is a detailed description of how to use the serial port to configure your {props.productName} locally.</p>
+		<p>The following is a detailed description of how to use the serial port to configure your {props.productName} locally.</p>
 
 		<Aside type="note">The <code>reset device</code> option in your {props.productName} clears most of the configuration that is locally cached, resets the password to the default, and reboots.</Aside>
 
@@ -720,7 +720,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		<p>The default password for your {props.productName} device is the serial number (also known as a Service Tag for Dell devices), all uppercase followed by an <code>!</code> (for example, <code>A1B2C3D!</code>)</p>
 
 		<AnchorHeading title="2. Install a serial terminal client" depth={3} />
-		<p>To access the {props.productName} device environment you need a serial terminal client. Follow the instructions below to install one, based on your operating system.</p>
+		<p>To access the {props.productName} device environment you need a serial terminal client. Follow these instructions to install one, based on your operating system.</p>
 
 		<AnchorHeading title="Windows" depth={4} />
 
@@ -728,9 +728,9 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		text={`
 		Cloudflare recommends using PuTTY for Windows. Download PuTTY from the [official website](https://www.putty.org/) and then install it.
 
-		1. Check the COM port of the USB to UART device in the Windows Device Manager. It should show up as something similar to <code>Silicon Labs CP210x USB to UART Bridge (COMX)</code>.
+		1. Check the COM port of the USB to UART device in the Windows Device Manager. It should appear as something similar to <code>Silicon Labs CP210x USB to UART Bridge (COMX)</code>.
 		2. Take note of the value in the parentheses (COMX).
-			- Refer to the [Dell Documentation Page](https://infohub.delltechnologies.com/l/virtual-edge-platform-vep-1405-series-diag-os-and-tools-release-notes/bios-installation-and-configuration) for more details on creating a serial console connection.
+			- For details on creating a serial console connection, refer to the [Dell Documentation Page](https://infohub.delltechnologies.com/l/virtual-edge-platform-vep-1405-series-diag-os-and-tools-release-notes/bios-installation-and-configuration).
 		3. Launch PuTTY.
 		4. Under **Category**, make sure that **Session** (the first item) is selected.
 		5. Under **Connection type**, select **Serial**.
@@ -836,7 +836,7 @@ inline={false}
 6. Back on the previous screen, select **Add secondary appliance**.
 7. From the list, choose your second { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add Appliance**.
 8. Select **Continue** to create a WAN. If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
-9. To create a LAN, follow the steps mentioned above in [Create a LAN](#create-a-lan) up until step 4.
+9. To create a LAN, follow the steps in [Create a LAN](#create-a-lan) up until step 4.
 10. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
 11. In **Secondary static address**, enter the IP for the secondary node in your site. For example, `192.168.10.2/24`.
 12. In **Virtual static address**, enter the IP that the LAN south of the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } device will forward traffic to. For example, `192.168.10.3/24`.
