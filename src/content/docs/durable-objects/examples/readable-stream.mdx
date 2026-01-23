@@ -29,7 +29,7 @@ MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
 }
 
 // Send incremented counter value every second
-async function\* dataSource(signal: AbortSignal) {
+async function* dataSource(signal: AbortSignal) {
 let counter = 0;
 while (!signal.aborted) {
 yield counter++;
@@ -107,7 +107,7 @@ export default {
 
 } satisfies ExportedHandler<Env>;
 
-````
+```
 </TypeScriptExample>
 
 <WranglerConfig>
@@ -119,7 +119,7 @@ class_name = "MyDurableObject"
 [[migrations]]
 tag = "v1"
 new_classes = ["MyDurableObject"]
-````
+```
 
 </WranglerConfig>
 
@@ -128,7 +128,3 @@ new_classes = ["MyDurableObject"]
 In a setup where a Durable Object returns a readable stream to a Worker, if the Worker cancels the Durable Object's readable stream, the cancellation propagates to the Durable Object.
 
 :::
-
-```
-
-```
