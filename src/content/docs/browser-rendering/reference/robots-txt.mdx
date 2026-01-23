@@ -1,0 +1,105 @@
+---
+title: robots.txt and sitemaps
+pcx_content_type: reference
+sidebar:
+  order: 5
+---
+
+This page provides general guidance on configuring `robots.txt` and sitemaps for websites you plan to access with Browser Rendering.
+
+## User-Agent
+
+Browser Rendering uses a standard browser User-Agent by default:
+
+```txt
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+```
+
+This means `robots.txt` rules targeting `User-agent: *` will apply to Browser Rendering requests. You can customize the User-Agent using the `userAgent` parameter in your API request.
+
+## Identifying Browser Rendering requests
+
+While Browser Rendering uses a standard browser User-Agent, requests can be identified by the [automatic headers](/browser-rendering/reference/automatic-request-headers/) that Cloudflare attaches:
+
+- `cf-brapi-request-id` — Unique identifier for REST API requests
+- `Signature-agent` — Points to Cloudflare's bot verification keys
+
+For Cloudflare security products, Browser Rendering has a bot detection ID of `128292352`. Use this to create WAF rules that allow or block Browser Rendering traffic.
+
+## Best practices for robots.txt
+
+A well-configured `robots.txt` helps crawlers understand which parts of your site they can access.
+
+### Reference your sitemap
+
+Include a reference to your sitemap in `robots.txt` so crawlers can discover your URLs:
+
+```txt title="robots.txt"
+User-agent: *
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml
+```
+
+You can list multiple sitemaps:
+
+```txt title="robots.txt"
+User-agent: *
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/blog-sitemap.xml
+```
+
+### Set a crawl delay
+
+Use `crawl-delay` to control how frequently crawlers request pages from your server:
+
+```txt title="robots.txt"
+User-agent: *
+Crawl-delay: 2
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml
+```
+
+The value is in seconds. A `crawl-delay` of 2 means the crawler waits 2 seconds between requests.
+
+## Best practices for sitemaps
+
+Structure your sitemap to help crawlers process your site efficiently:
+
+```xml title="sitemap.xml"
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://example.com/important-page</loc>
+    <lastmod>2025-01-15</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://example.com/other-page</loc>
+    <lastmod>2025-01-10</lastmod>
+    <priority>0.5</priority>
+  </url>
+</urlset>
+```
+
+| Attribute    | Purpose                       | Recommendation                                                                 |
+| ------------ | ----------------------------- | ------------------------------------------------------------------------------ |
+| `<loc>`      | URL of the page               | Required. Use full URLs.                                                       |
+| `<lastmod>`  | Last modification date        | Include to help the crawler identify updated content.                          |
+| `<priority>` | Relative importance (0.0-1.0) | Set higher values for important pages. The crawler processes pages in order.   |
+
+### Recommendations
+
+- **Include `<lastmod>`** on all URLs to help identify which pages have changed.
+- **Set `<priority>`** to control processing order. Pages with higher priority are processed first.
+- **Use sitemap index files** for large sites with multiple sitemaps.
+- **Compress large sitemaps** using `.gz` format to reduce bandwidth.
+- **Keep sitemaps under 50MB** and 50,000 URLs per file (standard sitemap limits).
+
+## Related resources
+
+- [/crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/) — Automate crawling multiple pages
+- [FAQ: Will Browser Rendering bypass Cloudflare's Bot Protection?](/browser-rendering/faq/#will-browser-rendering-bypass-cloudflares-bot-protection) — Instructions for creating a WAF skip rule
