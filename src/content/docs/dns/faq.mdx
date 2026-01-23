@@ -35,6 +35,12 @@ No. Cloudflare does not offer domain masking or DNS redirect services (your host
 
 Yes. Enterprise customers can add subdomains directly to Cloudflare via [subdomain support](/dns/zone-setups/subdomain-setup/).
 
+### Does Cloudflare support EDNS0 (extension mechanisms for DNS)?
+
+Yes, EDNS0 is a building block for modern DNS implementations and is enabled for all Cloudflare customers. EDNS0 adds support for signaling if the DNS Resolver (recursive DNS provider) supports larger message sizes and DNSSEC.
+
+EDNS0 is the first approved set of mechanisms for [DNS extensions](http://en.wikipedia.org/wiki/Extension_mechanisms_for_DNS), originally published as [RFC 2671](https://www.rfc-editor.org/rfc/rfc2671.html).
+
 ---
 
 ## Nameservers
