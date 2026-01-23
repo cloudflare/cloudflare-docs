@@ -1,0 +1,28 @@
+---
+title: Analyze site areas with path pattern grouping
+description: AI Crawl Control now groups paths by pattern so you can analyze site areas like /blog/* or /api/* instead of individual URLs.
+date: 2026-01-24
+---
+
+AI Crawl Control now supports **path pattern grouping** to help you understand which areas of your site AI crawlers target most.
+
+## What's new
+
+### Patterns tab in Most Popular Paths
+
+The **Most popular paths** table now includes a **Patterns** tab that auto-detects URI patterns (`/blog/*`, `/api/v1/*`, `/docs/*`) and groups requests by site area. Instead of seeing hundreds of individual paths, you can now see which areas of your site receive the most crawler attention.
+
+### Destination patterns in Top Referrers
+
+The **Top referrers** section now shows destination patterns alongside referral sources. See which site areas receive the most AI-driven referral traffic, grouped by pattern rather than individual URLs.
+
+Both views are filterable via the top-level filter bar, so you can narrow down by crawler, operator, hostname, or time range.
+
+## Get started
+
+1. Log in to the Cloudflare dashboard and select your account and domain.
+2. Go to **AI Crawl Control** > **Metrics**.
+3. In **Most popular paths**, select the **Patterns** tab to view grouped site areas.
+4. In **Top referrers**, view destination patterns to see which site areas receive AI referral traffic.
+
+Learn more about [analyzing AI traffic](/ai-crawl-control/features/analyze-ai-traffic/).
