@@ -46,3 +46,12 @@ In this case there are 2 ways forward:
 - (*Recommended*) Ask the new SaaS provider to provision a specific custom hostname for you instead of the wildcard (`mystore.example.com` instead of `*.example.com`).
 - Ask the Super Administrator of your account to contact [Cloudflare Support](/support/contacting-cloudflare-support/) to request an update of the SaaS configuration.
 
+---
+
+## Why are DNS queries returning incorrect results?
+
+Third-party tools can sometimes fail to return correct DNS results if a recursive DNS cache fails to refresh. In this circumstance, purge your public DNS cache via these methods:
+
+- [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
+- [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
+- [Purging your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)
