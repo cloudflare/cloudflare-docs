@@ -13,6 +13,18 @@ These headers are meant to ensure transparency and cannot be removed or overridd
 
 :::
 
+## User-Agent
+
+Browser Rendering uses a standard browser User-Agent by default:
+
+```txt
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+```
+
+Unlike the automatic headers listed below, the User-Agent can be customized using the `userAgent` parameter in your API request. Because the User-Agent is configurable, destination servers should use the automatic headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
+
+## Automatic headers
+
 | Header               | Description                                                                         |
 | -------------------- | ----------------------------------------------------------------------------------- |
 | `cf-brapi-request-id` | A unique identifier for the Browser Rendering request when using the [REST API](/browser-rendering/rest-api/)                           |
