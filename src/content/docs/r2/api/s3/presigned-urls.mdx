@@ -54,7 +54,7 @@ const getUrl = await getSignedUrl(
 // https://my-bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/image.png?X-Amz-Algorithm=...
 
 // Generate presigned URL for writing (PUT)
-// Specify ContentType to restrict uploads to a specific file type
+// Specify ContentType and add it to signableHeaders to restrict uploads to a specific file type
 const putUrl = await getSignedUrl(
 	S3,
 	new PutObjectCommand({
@@ -62,7 +62,10 @@ const putUrl = await getSignedUrl(
 		Key: "image.png",
 		ContentType: "image/png",
 	}),
-	{ expiresIn: 3600 },
+	{ 
+		expiresIn: 3600,
+		signableHeaders: new Set(["content-type"]),
+	},
 );
 ```
 
