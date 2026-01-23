@@ -501,6 +501,7 @@
 /dns/manage-dns-records/reference/proxied-dns-records/ /dns/proxy-status/ 301
 /dns/manage-dns-records/troubleshooting/acme-challenge-txt-record/ /dns/manage-dns-records/troubleshooting/unexpected-dns-records/#acme_challenge-txt-records 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
+/dns/troubleshooting/faq/ /dns/faq/ 301
 /dns/zone-setups/partial-setup/convert-partial-to-full/ /dns/zone-setups/conversions/convert-partial-to-full/ 301
 /dns/zone-setups/partial-setup/convert-partial-to-secondary/ /dns/zone-setups/conversions/convert-partial-to-secondary/ 301
 /dns/zone-setups/reference/nameserver-assignment/ /dns/nameservers/nameserver-options/#assignment-method 301
