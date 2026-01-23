@@ -8,7 +8,43 @@ import { Image } from "astro:assets";
 import cloudflareManagedRulesetImg from "~/assets/images/waf/managed-rulesets/ruleset-config-cloudflare-managed-ruleset.png";
 import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/ruleset-config-owasp-core-ruleset.png";
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+{/* prettier-ignore-start */}
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. (Optional) Filter by **Managed rules**.
+
+3. Search for { props.rulesetName ? <Markdown text={`**${props.rulesetName}**`} /> : "the managed ruleset you want to configure" }. Look for a rule with an _Execute_ action.
+
+4. Select the rule name (containing the name of the managed ruleset) to open the deployment configuration page.
+
+5. (Optional) To execute the { props.rulesetName ?? "managed ruleset" } for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+
+6. In the ruleset configuration section, define settings for all the rules in the { props.rulesetName ?? "ruleset" } by setting one or more fields using the drop-down lists.
+
+   For example, select the action to perform for all the rules in the ruleset.
+
+   { props.rulesetName == "Cloudflare Managed Ruleset" && (
+     <Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the Cloudflare Managed Ruleset: ruleset action and ruleset status." />
+   )}
+
+   { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
+     <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the OWASP Core Ruleset: OWASP Anomaly Score Threshold, OWASP Paranoia Level, and OWASP Action." />
+   )}
+
+7. Select **Save**.
+
+{/* prettier-ignore-end */}
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
 
 <Steps>
 
@@ -40,42 +76,6 @@ import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/ruleset-co
      - Select **Save as Draft** to save your deployment settings for later.
 
    If you are editing a managed ruleset you already deployed, select **Save**.
-
-{/* prettier-ignore-end */}
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
-
-<Steps>
-
-{/* prettier-ignore-start */}
-
-1. In the Cloudflare dashboard, go to the **Security rules** page.
-
-   <DashButton url="/?to=/:account/:zone/security/security-rules" />
-
-2. (Optional) Filter by **Managed rules**.
-
-3. Search for { props.rulesetName ? <Markdown text={`**${props.rulesetName}**`} /> : "the managed ruleset you want to configure" }. Look for a rule with an _Execute_ action.
-
-4. Select the rule name (containing the name of the managed ruleset) to open the deployment configuration page.
-
-5. (Optional) To execute the { props.rulesetName ?? "managed ruleset" } for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
-
-6. In the ruleset configuration section, define settings for all the rules in the { props.rulesetName ?? "ruleset" } by setting one or more fields using the drop-down lists.
-
-   For example, select the action to perform for all the rules in the ruleset.
-
-   { props.rulesetName == "Cloudflare Managed Ruleset" && (
-     <Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the Cloudflare Managed Ruleset: ruleset action and ruleset status." />
-   )}
-
-   { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
-     <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the OWASP Core Ruleset: OWASP Anomaly Score Threshold, OWASP Paranoia Level, and OWASP Action." />
-   )}
-
-7. Select **Save**.
 
 {/* prettier-ignore-end */}
 

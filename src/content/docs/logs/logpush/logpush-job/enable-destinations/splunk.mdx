@@ -179,32 +179,7 @@ Refer to the [Logpush FAQ](/logs/faq/logpush/) for troubleshooting information.
 
 If your logpush destination hostname is proxied through Cloudflare, and you have the Cloudflare Web Application Firewall (WAF) turned on, you may be challenged or blocked when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a [custom rule](/waf/custom-rules/) that allows Cloudflare to bypass the HEC endpoint.
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Security** > **WAF** > **Custom rules**.
-2. Select **Create rule** and enter a descriptive name for it (for example, `Splunk`).
-3. Under **When incoming requests match**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, select **And** to create the next row of rules. Refer to the table below for the values you should input:
-
-   | Field            | Operator   | Value                                                                 |
-   | ---------------- | ---------- | --------------------------------------------------------------------- |
-   | Request Method   | `equals`   | `POST`                                                                |
-   | Hostname         | `equals`   | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com` |
-   | URI Path         | `equals`   | `/services/collector/raw`                                             |
-   | URI Query String | `contains` | `channel`                                                             |
-   | AS Num           | `equals`   | `132892`                                                              |
-   | User Agent       | `equals`   | `Go-http-client/2.0`                                                  |
-
-4. After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
-
-   ```txt
-   (http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.src.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
-   ```
-
-5. Under the **Then** > **Choose an action** dropdown, select _Skip_.
-6. Under **WAF components to skip**, select _All managed rules_.
-7. Select **Deploy**.
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 1. In the Cloudflare dashboard, go to the **Security rules** page.
 
@@ -234,6 +209,31 @@ If your logpush destination hostname is proxied through Cloudflare, and you have
 6. Under the **Then** > **Choose an action** dropdown, select _Skip_.
 7. Under **WAF components to skip**, select _All managed rules_.
 8. Select **Deploy**.
+
+</TabItem> <TabItem label="Old dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Security** > **WAF** > **Custom rules**.
+2. Select **Create rule** and enter a descriptive name for it (for example, `Splunk`).
+3. Under **When incoming requests match**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, select **And** to create the next row of rules. Refer to the table below for the values you should input:
+
+   | Field            | Operator   | Value                                                                 |
+   | ---------------- | ---------- | --------------------------------------------------------------------- |
+   | Request Method   | `equals`   | `POST`                                                                |
+   | Hostname         | `equals`   | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com` |
+   | URI Path         | `equals`   | `/services/collector/raw`                                             |
+   | URI Query String | `contains` | `channel`                                                             |
+   | AS Num           | `equals`   | `132892`                                                              |
+   | User Agent       | `equals`   | `Go-http-client/2.0`                                                  |
+
+4. After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
+
+   ```txt
+   (http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.src.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
+   ```
+
+5. Under the **Then** > **Choose an action** dropdown, select _Skip_.
+6. Under **WAF components to skip**, select _All managed rules_.
+7. Select **Deploy**.
 
 </TabItem> </Tabs>
 

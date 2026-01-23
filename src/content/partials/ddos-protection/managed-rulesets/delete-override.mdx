@@ -1,21 +1,14 @@
 ---
 inputParameters: selectAccountWebsite;;dashboardLocation
-
 ---
 
-import { Markdown, Tabs, TabItem, Steps, DashButton } from "~/components"
+import { Markdown, Tabs, TabItem, Steps, DashButton } from "~/components";
 
 ### Delete a DDoS override
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-    <TabItem label="Old dashboard">
-        <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and {props.one}.
-            2. Go to **Security** > **DDoS**.
-            3. Next to the DDoS override you wish to delete, select **Delete**.
-            4. Select **Delete** to confirm the operation.
-        </Steps>
-    </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
         1. In the Cloudflare dashboard, go to the **Security rules** page.
@@ -26,4 +19,14 @@ import { Markdown, Tabs, TabItem, Steps, DashButton } from "~/components"
         4. Select **Delete deployment**.
         </Steps>
     </TabItem>
+    <TabItem label="Old dashboard">
+        <Steps>
+            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and {props.one}.
+            2. Go to **Security** > **DDoS**.
+            3. Next to the DDoS override you wish to delete, select **Delete**.
+            4. Select **Delete** to confirm the operation.
+        </Steps>
+    </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}

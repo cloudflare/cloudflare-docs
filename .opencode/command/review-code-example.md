@@ -237,13 +237,13 @@ This gives you a JSON structure like:
 
 ```json
 {
-  "src/content/docs/workers/get-started.md": [
-    { "start": 45, "end": 67, "language": "typescript" },
-    { "start": 89, "end": 102, "language": "javascript" }
-  ],
-  "src/content/docs/r2/api.mdx": [
-    { "start": 123, "end": 145, "language": "typescript" }
-  ]
+	"src/content/docs/workers/get-started.md": [
+		{ "start": 45, "end": 67, "language": "typescript" },
+		{ "start": 89, "end": 102, "language": "javascript" }
+	],
+	"src/content/docs/r2/api.mdx": [
+		{ "start": 123, "end": 145, "language": "typescript" }
+	]
 }
 ```
 
@@ -1113,9 +1113,91 @@ f) **Never do these inefficient patterns**:
 - Multiple Edit tool failures indicate you need a different approach (Python)
 - The Read tool is the only reliable way to verify file changes
 
-2. **Create a Commit**
+2. **Validate Code Block Fences (MANDATORY)**
 
-Commit all improvements with a clear message:
+**CRITICAL**: Before committing, validate that all code block fences are properly formatted.
+
+Run this validator on each file that was modified:
+
+```bash
+python3 << 'FENCE_VALIDATOR_EOF'
+import re
+import sys
+
+filepath = sys.argv[1]
+
+# Read file once
+with open(filepath, 'r') as f:
+    content = f.read()
+
+lines = content.split('\n')
+
+# Regex: match fence lines only (whitespace + 3+ backticks + optional language)
+fence_re = re.compile(r'^(\s*)(`{3,})(\w*)$')
+
+# Single pass: find all fences and identify issues
+fences = []
+fixes_needed = []
+
+for i, line in enumerate(lines):
+    match = fence_re.match(line)
+    if match:
+        indent, backticks, lang = match.groups()
+        backtick_count = len(backticks)
+        fences.append(i)
+
+        # Fix: normalize to exactly 3 backticks
+        if backtick_count != 3:
+            lines[i] = f"{indent}```{lang}"
+            fixes_needed.append(f"Line {i+1}: {backtick_count} backticks → 3")
+
+# Check for orphaned empty code block at EOF
+if len(fences) >= 2:
+    last_idx = fences[-1]
+    second_last_idx = fences[-2]
+
+    # If last two fences are within 2 lines and only whitespace between
+    if last_idx - second_last_idx <= 3:
+        between = lines[second_last_idx + 1:last_idx]
+        if all(not line.strip() for line in between):
+            # Remove orphaned pair
+            lines[second_last_idx] = None
+            lines[last_idx] = None
+            for empty_idx in range(second_last_idx + 1, last_idx):
+                lines[empty_idx] = None
+            fixes_needed.append(f"Lines {second_last_idx+1}-{last_idx+1}: Removed orphaned empty code block")
+            fences = fences[:-2]  # Remove from fence list
+
+# Check for unmatched fences
+if len(fences) % 2 != 0:
+    print(f"❌ {filepath}: VALIDATION FAILED")
+    print(f"   Unmatched fences: found {len(fences)} (must be even)")
+    print(f"   Manual inspection required at lines: {[f+1 for f in fences]}")
+    sys.exit(1)
+
+# Apply fixes if needed
+if fixes_needed:
+    # Filter out removed lines and write
+    lines = [line for line in lines if line is not None]
+    new_content = '\n'.join(lines)
+
+    with open(filepath, 'w') as f:
+        f.write(new_content)
+
+    print(f"✓ {filepath}: Fixed {len(fixes_needed)} fence issue(s)")
+    for fix in fixes_needed:
+        print(f"  • {fix}")
+else:
+    print(f"✓ {filepath}: All code block fences valid")
+
+FENCE_VALIDATOR_EOF
+```
+
+**Run this validator on each modified file.** If validation fails (unmatched fences), STOP and ask the user for guidance.
+
+3. **Create a Commit**
+
+Once validation passes for all files, commit all improvements with a clear message:
 
 ```
 Review and improve code examples in [location]
