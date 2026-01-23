@@ -1,0 +1,73 @@
+{
+    "id": "flux-2-klein-9b-uuid",
+    "source": 1,
+    "name": "@cf/black-forest-labs/flux-2-klein-9b",
+    "description": "FLUX.2 [klein] 9B is an ultra-fast, distilled image model with enhanced quality. It unifies image generation and editing in a single model, delivering state-of-the-art quality enabling interactive workflows, real-time previews, and latency-critical applications.",
+    "task": {
+        "id": "3d6e1f35-341b-4915-a6c8-9a7142a9033a",
+        "name": "Text-to-Image",
+        "description": "Generates images from input text. These models can be used to generate and modify images based on text prompts."
+    },
+    "created_at": "2026-01-23 12:00:00.000",
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "partner",
+            "value": "true"
+        },
+        {
+            "property_id": "terms",
+            "value": "https://bfl.ai/legal/terms-of-service"
+        },
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per first MP (1024x1024)",
+                    "price": 0.015,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per subsequent MP",
+                    "price": 0.002,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per input image MP",
+                    "price": 0.002,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "multipart": {
+                    "type": "object",
+                    "properties": {
+                        "body": {
+                            "type": "object"
+                        },
+                        "contentType": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "multipart"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "string",
+                    "description": "Generated image as Base64 string."
+                }
+            }
+        }
+    }
+}
