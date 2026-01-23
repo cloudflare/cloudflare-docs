@@ -40,27 +40,7 @@ The number of available user agent rules depends on your Cloudflare plan.
 
 ## Create a User Agent Blocking rule
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-
-2. Go to **Security** > **WAF**, and select the **Tools** tab.
-
-3. Under **User Agent Blocking**, select **Create blocking rule**.
-
-4. Enter a descriptive name for the rule in **Name/Description**.
-
-5. In **Action**, select the action to perform: _Managed Challenge_, _Block_, _JS Challenge_, or _Interactive Challenge_.
-
-6. Enter a user agent value in **User Agent** (wildcards such as `*` are not supported). For example, to block the Bad Bot web spider, enter `BadBot/1.0.2 (+http://bad.bot)`.
-
-7. Select **Save and Deploy blocking rule**.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 :::note
 User Agent Blocking is only available in the new security dashboard if you have configured at least one user agent rule. Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of user agent rules.
@@ -81,6 +61,26 @@ User Agent Blocking is only available in the new security dashboard if you have 
 5. Enter a user agent value in **User Agent** (wildcards such as `*` are not supported). For example, to block the Bad Bot web spider, enter `BadBot/1.0.2 (+http://bad.bot)`.
 
 6. Select **Save and Deploy blocking rule**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+
+2. Go to **Security** > **WAF**, and select the **Tools** tab.
+
+3. Under **User Agent Blocking**, select **Create blocking rule**.
+
+4. Enter a descriptive name for the rule in **Name/Description**.
+
+5. In **Action**, select the action to perform: _Managed Challenge_, _Block_, _JS Challenge_, or _Interactive Challenge_.
+
+6. Enter a user agent value in **User Agent** (wildcards such as `*` are not supported). For example, to block the Bad Bot web spider, enter `BadBot/1.0.2 (+http://bad.bot)`.
+
+7. Select **Save and Deploy blocking rule**.
 
 </Steps>
 

@@ -5,7 +5,13 @@ sidebar:
   order: 4
 ---
 
-import { GlossaryTooltip, Steps, Tabs, TabItem, DashButton } from "~/components"
+import {
+	GlossaryTooltip,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 The Bot Feedback Loop is a way for customers to send Cloudflare direct feedback in the case of Bot Management potentially <GlossaryTooltip term="bot score" link="/bots/concepts/bot-score/">scoring</GlossaryTooltip> a request incorrectly. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
 
@@ -41,16 +47,9 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 
 ## Submit a report
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **Bots**.
-      3. Apply one or more bot score filters.
-      4. Select **Report incorrect data** and fill out the form.
-      5. Select **Submit**.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. In the Cloudflare dashboard, go to the **Security Analytics** page.
@@ -62,7 +61,18 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
       5. Select **Submit**.
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Bots**.
+      3. Apply one or more bot score filters.
+      4. Select **Report incorrect data** and fill out the form.
+      5. Select **Submit**.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ## Via the API
 
@@ -113,62 +123,62 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/bot_management/feedba
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-```bash output
+```json output
 [
-  {
-    "created_at": "2022-08-19T00:05:24.749712Z",
-    "type": "false_positive",
-    "description": "Legitimate customers having low score",
-    "expression": "(cf.bot_management.score le 46 and ip.src.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
-    "first_request_seen_at": "2022-08-01T00:00:00Z",
-    "last_request_seen_at": "2022-08-10T00:00:00Z",
-    "requests": 100,
-    "requests_by_score": {
-      "1": 50,
-      "10": 50
-    },
-    "requests_by_score_src": {
-      "heuristics": 25,
-      "machine_learning": 75
-    },
-    "requests_by_attribute": {
-      "topIPs": [
-        {
-          "metric": "10.75.34.1",
-          "requests": 100
-        }
-      ],
-      "topUserAgents": [
-        {
-          "metric": "curl/7.68.0",
-          "requests": 100
-        }
-      ]
-    }
-  }
+	{
+		"created_at": "2022-08-19T00:05:24.749712Z",
+		"type": "false_positive",
+		"description": "Legitimate customers having low score",
+		"expression": "(cf.bot_management.score le 46 and ip.src.asnum eq 132892 and http.host eq \"api-discovery.theburritobot.com\" and cf.bot_management.ja3_hash eq \"3fed133de60c35724739b913924b6c24\")",
+		"first_request_seen_at": "2022-08-01T00:00:00Z",
+		"last_request_seen_at": "2022-08-10T00:00:00Z",
+		"requests": 100,
+		"requests_by_score": {
+			"1": 50,
+			"10": 50
+		},
+		"requests_by_score_src": {
+			"heuristics": 25,
+			"machine_learning": 75
+		},
+		"requests_by_attribute": {
+			"topIPs": [
+				{
+					"metric": "10.75.34.1",
+					"requests": 100
+				}
+			],
+			"topUserAgents": [
+				{
+					"metric": "curl/7.68.0",
+					"requests": 100
+				}
+			]
+		}
+	}
 ]
 ```
 
 ## API Fields
 
-| Field                   | Type    | Description                                                                 | Value Example                                                                                                                                                          |
-| ----------------------- | ------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`                  | string  | The feedback report type.                                                   | `false_positive`                                                                                                                                                       |
-| `description`           | string  | The feedback report description with  more details on the issue.            | Legitimate customers having low scores.                                                                                                                                |
+| Field                   | Type    | Description                                                                 | Value Example                                                                                                                                                        |
+| ----------------------- | ------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                  | string  | The feedback report type.                                                   | `false_positive`                                                                                                                                                     |
+| `description`           | string  | The feedback report description with more details on the issue.             | Legitimate customers having low scores.                                                                                                                              |
 | `expression`            | string  | The wirefilter expression matching reported requests.                       | `(cf.bot_management.score le 46 and ip.src.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` |
-| `first_request_seen_at` | string  | The time range start when the first request has been seen, RFC 3339 format. | `2022-08-01T00:00:00Z`                                                                                                                                                 |
-| `last_request_seen_at`  | string  | The time range end when the last request has been seen, RFC 3339 format.    | `2022-08-10T00:00:00Z`                                                                                                                                                 |
-| `requests`              | integer | The total number of reported requests.                                      | `100`                                                                                                                                                                  |
-| `requests_by_score`     | object  | The requests breakdown by score.                                            | See example below.                                                                                                                                                     |
-| `requests_by_score_src` | object  | Requests breakdown by score source.                                         | See example below.                                                                                                                                                     |
-| `requests_by_attribute` | object  | Requests breakdown by attribute (optional).                                 | See example below.                                                                                                                                                     |
+| `first_request_seen_at` | string  | The time range start when the first request has been seen, RFC 3339 format. | `2022-08-01T00:00:00Z`                                                                                                                                               |
+| `last_request_seen_at`  | string  | The time range end when the last request has been seen, RFC 3339 format.    | `2022-08-10T00:00:00Z`                                                                                                                                               |
+| `requests`              | integer | The total number of reported requests.                                      | `100`                                                                                                                                                                |
+| `requests_by_score`     | object  | The requests breakdown by score.                                            | See example below.                                                                                                                                                   |
+| `requests_by_score_src` | object  | Requests breakdown by score source.                                         | See example below.                                                                                                                                                   |
+| `requests_by_attribute` | object  | Requests breakdown by attribute (optional).                                 | See example below.                                                                                                                                                   |
 
 `requests_by_score`
 
 ```json
 {
-  "1": 50,
-  "10": 50
+	"1": 50,
+	"10": 50
 }
 ```
 
@@ -176,28 +186,28 @@ curl 'https://api.cloudflare.com/client/v4/zones/{zone_id}/bot_management/feedba
 
 ```json
 {
-  "machine_learning": 75,
-  "heuristics": 25
+	"machine_learning": 75,
+	"heuristics": 25
 }
 ```
 
 `requests_by_attribute`
 
 ```json
-  {
-    "topIPs": [
-      {
-        "metric": "10.75.34.1"
-        "requests": 100
-      }
-    ],
-    "topUserAgents": [
-      {
-        "metric": "curl/7.68.0",
-        "requests": 100
-      }
-    ]
-  }
+{
+	"topIPs": [
+		{
+			"metric": "10.75.34.1"
+			"requests": 100
+		}
+	],
+	"topUserAgents": [
+		{
+			"metric": "curl/7.68.0",
+			"requests": 100
+		}
+	]
+}
 ```
 
 ### Expression fields
@@ -229,13 +239,13 @@ The instructions below apply to Enterprise subscription with Bot Management only
 
 After submitting a false positive, you can explicitly allow the traffic if you are confident that this traffic source cannot be used for abuse in the future. To allow traffic, you can create a WAF custom rule with a [Skip the remaining custom rules](/waf/custom-rules/skip/options/#skip-the-remaining-custom-rules-current-ruleset) action that matches the characteristics of your false positive report. We recommend any skip rule that you create uses the most narrow possible scope, including restricting the request methods and URIs that the expected traffic has access to, to limit potential abuse.
 
-* Allowing a **[JA3/JA4 fingerprint](/bots/additional-configurations/ja3-ja4-fingerprint/)**:  If you want to allow access to a stable software client that does not come from a dedicated IP, you can do so by looking up the JA3 fingerprint(s) used by that client in the Bot Analytics dashboard, and creating a WAF custom rule to allow traffic based on that JA3 fingerprint. JA3 fingerprints will only match a client’s TLS library, so be cautious in looking for both overlap with other clients and with variation based on the operating system. <br/><br/>Cloudflare does not recommend relying on JA3 rules for mobile applications that may be abused. If you have questions about how to securely allow traffic from your mobile application, please contact your account team.
+- Allowing a **[JA3/JA4 fingerprint](/bots/additional-configurations/ja3-ja4-fingerprint/)**: If you want to allow access to a stable software client that does not come from a dedicated IP, you can do so by looking up the JA3 fingerprint(s) used by that client in the Bot Analytics dashboard, and creating a WAF custom rule to allow traffic based on that JA3 fingerprint. JA3 fingerprints will only match a client’s TLS library, so be cautious in looking for both overlap with other clients and with variation based on the operating system. <br/><br/>Cloudflare does not recommend relying on JA3 rules for mobile applications that may be abused. If you have questions about how to securely allow traffic from your mobile application, please contact your account team.
 
 :::note
 The instructions below apply to Enterprise subscription with Bot Management, Bot Fight Mode and Super Bot Fight Mode.
 :::
 
-* Allowing an **IP address**: Only use an IP address to allow traffic if the IP is a dedicated resource that belongs only to the traffic source you wish to allow. <br/>If the traffic you want to allow shares an IP with other traffic sources, or if the IP changes frequently, consider an alternative to allowing by IP address.
+- Allowing an **IP address**: Only use an IP address to allow traffic if the IP is a dedicated resource that belongs only to the traffic source you wish to allow. <br/>If the traffic you want to allow shares an IP with other traffic sources, or if the IP changes frequently, consider an alternative to allowing by IP address.
 
 ## Recommendations after submitting a false negative
 

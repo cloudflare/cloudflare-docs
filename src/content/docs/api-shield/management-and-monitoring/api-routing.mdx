@@ -4,10 +4,16 @@ pcx_content_type: how-to
 title: API Routing
 sidebar:
   order: 4
-
 ---
 
-import { Markdown, Render, Steps, Tabs, TabItem, DashButton } from "~/components"
+import {
+	Markdown,
+	Render,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 API Shield Routing enables customers to create a unified external-facing API that routes requests to different back-end services that may have different paths and hosts than the existing zone and DNS configuration.
 
@@ -18,21 +24,11 @@ The term **Source Endpoint** refers to the endpoint managed by API Shield in End
 
 ## Process
 
-
 You must add Source Endpoints to Endpoint Management through established methods, including [uploading a schema](/api-shield/security/schema-validation/#add-validation-by-uploading-a-schema), via [API Discovery](/api-shield/security/api-discovery/), or by [adding manually](/api-shield/management-and-monitoring/#add-endpoints-manually), before creating a route.
 
 To create a route, you will need the operation ID of the Source Endpoint. To find the operation ID in the dashboard:
 
 <Tabs syncKey="dashNewNav">
-    <TabItem label="Old dashboard">
-        <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-            2. Select **Security** > **API Shield**.
-            3. Filter the endpoints to find your **Source Endpoint**.
-            4. Expand the row for your Source Endpoint and note the **operation ID** field.
-            5. Select the copy icon to copy the operation ID to your clipboard.
-        </Steps>
-    </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
             1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -43,6 +39,16 @@ To create a route, you will need the operation ID of the Source Endpoint. To fin
             4. Select the copy icon to copy the operation ID to your clipboard.
         </Steps>
     </TabItem>
+    <TabItem label="Old dashboard">
+        <Steps>
+            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+            2. Select **Security** > **API Shield**.
+            3. Filter the endpoints to find your **Source Endpoint**.
+            4. Expand the row for your Source Endpoint and note the **operation ID** field.
+            5. Select the copy icon to copy the operation ID to your clipboard.
+        </Steps>
+    </TabItem>
+
 </Tabs>
 
 Once your Source Endpoints are added to Endpoint Management, use the following steps to create and verify routes on any given operation ID:
@@ -50,16 +56,6 @@ Once your Source Endpoints are added to Endpoint Management, use the following s
 ### Create a route
 
 <Tabs syncKey="dashNewNav">
-    <TabItem label="Old dashboard">
-        <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-            2. Go to **Security** > **API Shield**.
-            3. In **Endpoint Management**, select an existing endpoint and expand its details.
-            4. Under **Routing**, select **Create route**.
-            5. Enter the target URL or IP address to route your endpoint to.
-            6. Select **Deploy route**.
-        </Steps>
-    </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
             1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -71,6 +67,17 @@ Once your Source Endpoints are added to Endpoint Management, use the following s
             5. Select **Deploy route**.
         </Steps>
     </TabItem>
+    <TabItem label="Old dashboard">
+        <Steps>
+            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+            2. Go to **Security** > **API Shield**.
+            3. In **Endpoint Management**, select an existing endpoint and expand its details.
+            4. Under **Routing**, select **Create route**.
+            5. Enter the target URL or IP address to route your endpoint to.
+            6. Select **Deploy route**.
+        </Steps>
+    </TabItem>
+
 </Tabs>
 
 :::note

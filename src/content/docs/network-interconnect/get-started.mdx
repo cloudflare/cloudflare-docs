@@ -1,6 +1,7 @@
 ---
 pcx_content_type: get-started
 title: Get started
+description: Connect your network privately to Cloudflare
 sidebar:
   order: 2
 ---
@@ -11,12 +12,12 @@ import { Render } from "~/components"
 
 ### CNI port availability
 
-Eligibility for CNI and port availability is determined in coordination with your Cloudflare account team. Notably:
+Your Cloudflare account team determines CNI eligibility and port availability. Notably:
 
 - CNI ports are currently offered at no charge to Enterprise customers.
 	- Non-Enterprise customers (and any third party) may peer with Cloudflare via Internet Exchange according to our [open peering policy](https://www.cloudflare.com/peering-policy/).
 - CNI is available at select Cloudflare data centers:
-  - The type of dataplane offered in that location will determine specifications of the supported connection, such as the MTU.
+  - The type of Dataplane offered in that location will determine specifications of the supported connection, such as the MTU.
   - The diversity offered in the location will vary.
 - Customers must have a BGP session established for CNI v1 to be operational.
 
@@ -30,11 +31,11 @@ To peer with Cloudflare, advertise prefixes with a prefix length of `/24` or sho
 
 ## Technical specifications
 
-- **Supported port types (Direct CNI)**:
+- **Supported port types**:
 	- **Dataplane v1**: 10GBASE-LR (single-mode fiber) and 100GBASE-LR (single-mode fiber).
 	- **Dataplane v2 (beta)**: 10GBASE-LR (single-mode fiber) and 100GBASE-LR4 (single-mode fiber) optics are supported.
 - **Distance limitations:** Cloudflare does not support optical links longer than 10 km. For longer distances, you must use intermediate hardware or a third-party provider to extend the connection.
-- **IP addressing:** All Direct and Partner CNI connections use a `/31` subnet for point-to-point IP connectivity between your router and Cloudflare.
+- **IP addressing:** All CNI connections and Partner CNI connections use a `/31` subnet for point-to-point IP connectivity between your router and Cloudflare.
 - **VLAN support:**
 	- **Dataplane v1**: CNI ports may be assigned a single 802.1Q VLAN tag.
 	- **Dataplane v2 (beta)**: VLAN tagging (802.1Q) and QinQ are not yet supported.
@@ -56,14 +57,14 @@ The following are the maximum throughput rates supported by the CNI connection. 
 |----------------------|-------------|--------------|
 | From Cloudflare to Customer (all use cases) | Up to 10 Gbps | Up to 100 Gbps |
 | From Customer to Cloudflare (peering use case) | Up to 10 Gbps | Up to 100 Gbps |
-| From Customer to Cloudflare (Magic Transit/WAN) | &#x2022; **v1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2 (beta)**: Up to 1 Gbps per CNI connection | &#x2022; **v1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2 (beta)**: Up to 1 Gbps per CNI connection  |
+| From Customer to Cloudflare (Magic Transit/WAN) | **v1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> **v2 (beta)**: Up to 1 Gbps per CNI connection | **v1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> **v2 (beta)**: Up to 1 Gbps per CNI connection  |
 
 ## Service expectations
 
 Consider the following service levels when planning your deployment:
 - **No Formal SLA**:
   - CNI is currently offered at no charge and without a formal [Service Level Agreement (SLA)](https://www.cloudflare.com/service-specific-terms-network-services/#cf-network-interconnect-terms).
-  - Cloudflare will work to restore CNI service in the event of a Cloudflare issue. In some Cloudflare data centers the recovery time could be several days. Therefore we always recommend backup connectivity to a different device or via an Internet tunnel.
+  - Cloudflare will work to restore CNI service in the event of a Cloudflare issue. In some Cloudflare data centers the recovery time could be several days. Therefore, we always recommend backup connectivity to a different device or via an Internet tunnel.
 - **Observability**: There is no visibility of the interconnect config/status within the Cloudflare dashboard.
 - **Availability**: While network-resilient locations are designed to maintain connectivity during maintenance, single-homed locations can experience full service disruption.
 - **Backup Connectivity**: You are required to maintain alternative Internet connectivity as a backup for all CNI implementations.
@@ -84,32 +85,32 @@ Cloudflare partners with leading global providers, including: Console Connect, C
 The process of provisioning a CNI typically takes two to four weeks, depending on the complexity of implementation and third-party provider timelines. The most common delays occur during the physical connection phase, which is outside of Cloudflare's direct control.
 
 1. **Submit request**: Work with your account team to create a CNI request ticket, providing your desired CNI type, location, use case, and technical details. An Implementation Manager will be assigned to guide the process.
-2. **Review configuration**: For the v1 dataplane, The Implementation Manager will provide a detailed configuration document covering IP addressing, VLANs, and other technical specifications. You must review and approve this document. For the v2 dataplane, this step is not necessary.
+2. **Review configuration**: For the v1 Dataplane, the Implementation Manager will provide a detailed configuration document covering IP addressing, VLANs, and other technical specifications. You must review and approve this document. For the v2 Dataplane, this step is not necessary.
 3. **Order connection**:
 	- For a **Direct Interconnect**, you will receive a Letter of Authorization (LOA) from Cloudflare to order the physical cross-connect from the data center facility operator.
 	- For a **Partner Interconnect**, you will use the provided details to order a virtual circuit from the partner's portal.
 4. **Configure network**: Both Cloudflare and your network team will configure the respective network devices according to the approved document.
 5. **Test and verify**: Once the connection is physically established, teams will perform basic connectivity tests (for example, ping) and, if applicable, verify that the BGP session can be established.
-6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and / or [Magic WAN](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels).
+6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and/or [Magic WAN](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels).
 7. **Activate services**: Configure your Cloudflare products (for example, Magic Transit) to route traffic over the new CNI. The Implementation Manager will verify end-to-end traffic flow before marking the deployment as complete.
-7. [Add maintenance notifications](/network-interconnect/monitoring-and-alerts/#enable-cloudflare-status-maintenance-notification).
+8. [Add maintenance notifications](/network-interconnect/monitoring-and-alerts/#enable-cloudflare-status-maintenance-notification).
 
 ## How-to guides
 
-### How-to: Provision a Direct Interconnect
+### Provision a Direct Interconnect
 
 1. **Project Kickoff**: In an initial kickoff call, you will confirm the scope and timeline with Cloudflare. Be prepared to provide the following information:
    - desired colocation facility
    - required port speeds (10G or 100G)
    - BGP ASN for Peering/Magic Transit
    - BGP password (optional)
-2. **Order Cross-Connect**: Cloudflare will issue a Letter of Authorization (LOA). This document grants you permission to order a physical cross-connect between your equipment and a specific port on Cloudflare's hardware within the data center. The end-to-end process for ordering a cross-connect can take one to two weeks or more, depending on the facility provider. Cloudflare's demarcation is the port that is specified in the LOA: you are responsible for the deployment, provisioning and ongoing support and operation of this connection, and the commercial relationships with the facility provider and any third-party connectivity providers.
+2. **Order Cross-Connect**: Cloudflare will issue a Letter of Authorization (LOA). This document grants you permission to order a physical cross-connect between your equipment and a specific port on Cloudflare's hardware within the data center. The end-to-end process for ordering a cross-connect can take one to two weeks or more, depending on the facility provider. Cloudflare's demarcation is the port that is specified in the LOA. You are responsible for the deployment, provisioning, and ongoing support and operation of this connection, and the commercial relationships with the facility provider and any third-party connectivity providers.
 
-### How-to: Provision a Partner Interconnect
+### Provision a Partner Interconnect
 
 Cloudflare partners with leading connectivity providers globally. To provision a Partner Interconnect, you will initiate a connection request from your chosen provider's administrative portal. Cloudflare will then review and accept the request to activate the virtual circuit.
 
-### How-to: Provision a Cloud Interconnect
+### Provision a Cloud Interconnect
 
 Enterprise customers using Magic WAN can get started with Cloud Interconnect by contacting their account team.
 

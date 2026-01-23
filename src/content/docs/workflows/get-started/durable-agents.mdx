@@ -1,0 +1,549 @@
+---
+title: Build a Durable AI Agent
+pcx_content_type: get-started
+sidebar:
+  order: 3
+---
+
+import { Details,LinkCard,Render,PackageManagers,WranglerConfig, GlossaryTooltip, Steps, DashButton} from "~/components";
+
+In this guide, you will build an AI agent that researches GitHub repositories. Give it a task like "Compare open-source LLM projects" and it will:
+
+1. Search GitHub for relevant repositories
+2. Fetch details about each one (stars, forks, activity)
+3. Analyze and compare them
+4. Return a recommendation
+
+Each LLM call and tool call becomes a <GlossaryTooltip term="step">step</GlossaryTooltip> — a self-contained, individually retriable unit of work. If any step fails, Workflows retries it automatically. If the entire Workflow crashes mid-task, it resumes from the last successful step.
+
+| Challenge                    | Solution with Workflows                                   |
+| ---------------------------- | --------------------------------------------------------- |
+| Long-running agent loops     | Durable execution that survives any interruption          |
+| Unreliable LLM and API calls | Automatic retry with independent checkpoints              |
+| Waiting for human approval   | `waitForEvent()` pauses for hours or days                 |
+| Polling for job completion   | `step.sleep()` between checks without consuming resources |
+
+This guide uses the Anthropic SDK, but the same patterns apply to any LLM SDK (OpenAI, Google AI, Mistral, etc.).
+
+## Quick start
+
+If you want to skip the steps and pull down the complete agent, utilizing [AI Gateway](/ai-gateway), run the following command:
+
+```sh
+npm create cloudflare@latest -- --template cloudflare/docs-examples/workflows/durable-ai-agent
+```
+
+Use this option if you are familiar with Cloudflare Workflows or want to explore the code first.
+
+Follow the steps below to learn how to build a durable AI agent from scratch.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You will also need an [Anthropic API key](https://platform.claude.com/settings/keys) for LLM calls. New accounts include free credits.
+
+## 1. Create a new Worker project
+
+<Steps>
+
+1. Create a new Worker project by running the following command:
+
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args={"durable-ai-agent"}
+   />
+
+   <Render
+   	file="c3-post-run-steps"
+   	product="workers"
+   	params={{
+   		category: "hello-world",
+   		type: "Worker only",
+   		lang: "TypeScript",
+   	}}
+   />
+
+2. Move into your project:
+
+   ```sh
+   cd durable-ai-agent
+   ```
+
+3. Install dependencies:
+
+   ```sh
+   npm install @anthropic-ai/sdk
+   ```
+
+</Steps>
+
+## 2. Define your tools
+
+Tools are functions the LLM can call to interact with external systems. You define the schema (what inputs the tool accepts) and the implementation (what it does). The LLM decides when to use each tool based on the task.
+
+<Steps>
+
+1. Create `src/tools.ts` with two complementary tools:
+
+   ```ts title="src/tools.ts"
+   export interface SearchReposInput {
+   	query: string;
+   	limit?: number;
+   }
+
+   export interface GetRepoInput {
+   	owner: string;
+   	repo: string;
+   }
+
+   interface GitHubSearchResponse {
+   	items: Array<{ full_name: string; stargazers_count: number }>;
+   }
+
+   interface GitHubRepoResponse {
+   	full_name: string;
+   	description: string;
+   	stargazers_count: number;
+   	forks_count: number;
+   	open_issues_count: number;
+   	language: string;
+   	license: { name: string } | null;
+   	updated_at: string;
+   }
+
+   export const searchReposTool = {
+   	name: "search_repos" as const,
+   	description:
+   		"Search GitHub repositories by keyword. Returns top results. Use get_repo for details.",
+   	input_schema: {
+   		type: "object" as const,
+   		properties: {
+   			query: {
+   				type: "string",
+   				description: "Search query (e.g., 'typescript orm')",
+   			},
+   			limit: { type: "number", description: "Max results (default 5)" },
+   		},
+   		required: ["query"],
+   	},
+   	run: async (input: SearchReposInput): Promise<string> => {
+   		const response = await fetch(
+   			`https://api.github.com/search/repositories?q=${encodeURIComponent(input.query)}&sort=stars&per_page=${input.limit ?? 5}`,
+   			{
+   				headers: {
+   					Accept: "application/vnd.github+json",
+   					"User-Agent": "DurableAgent/1.0",
+   				},
+   			},
+   		);
+   		if (!response.ok) return `Search failed: ${response.status}`;
+   		const data = await response.json<GitHubSearchResponse>();
+   		return JSON.stringify(
+   			data.items.map((r) => ({ name: r.full_name, stars: r.stargazers_count })),
+   		);
+   	},
+   };
+
+   export const getRepoTool = {
+   	name: "get_repo" as const,
+   	description:
+   		"Get detailed info about a GitHub repository including stars, forks, and description.",
+   	input_schema: {
+   		type: "object" as const,
+   		properties: {
+   			owner: {
+   				type: "string",
+   				description: "Repository owner (e.g., 'cloudflare')",
+   			},
+   			repo: {
+   				type: "string",
+   				description: "Repository name (e.g., 'workers-sdk')",
+   			},
+   		},
+   		required: ["owner", "repo"],
+   	},
+   	run: async (input: GetRepoInput): Promise<string> => {
+   		const response = await fetch(
+   			`https://api.github.com/repos/${input.owner}/${input.repo}`,
+   			{
+   				headers: {
+   					Accept: "application/vnd.github+json",
+   					"User-Agent": "DurableAgent/1.0",
+   				},
+   			},
+   		);
+   		if (!response.ok) return `Repo not found: ${input.owner}/${input.repo}`;
+   		const data = await response.json<GitHubRepoResponse>();
+   		return JSON.stringify({
+   			name: data.full_name,
+   			description: data.description,
+   			stars: data.stargazers_count,
+   			forks: data.forks_count,
+   			issues: data.open_issues_count,
+   			language: data.language,
+   			license: data.license?.name ?? "None",
+   			updated: data.updated_at,
+   		});
+   	},
+   };
+
+   export const tools = [searchReposTool, getRepoTool];
+   ```
+
+</Steps>
+
+These tools complement each other: `search_repos` finds repositories, and `get_repo` fetches details about specific ones.
+
+## 3. Write your agent Workflow
+
+A Workflow extends `WorkflowEntrypoint` and implements a `run` method.
+
+- The [`step`](/workflows/build/workers-api/#step) object provides methods to define durable steps.
+- `step.do(name, callback)` executes code and persists the result. If the Workflow is interrupted, it resumes from the last successful step.
+
+For a gentler introduction, refer to [Build your first Workflow](/workflows/get-started/guide/).
+
+The agent loop sends messages to the LLM, executes any tool calls, and repeats until the task is complete. Each LLM call and tool execution is wrapped in `step.do()` for durability.
+
+<Steps>
+1. Create `src/workflow.ts`:
+
+   ```ts title="src/workflow.ts"
+   import { WorkflowEntrypoint, WorkflowStep } from "cloudflare:workers";
+   import type { WorkflowEvent } from "cloudflare:workers";
+   import Anthropic from "@anthropic-ai/sdk";
+   import {
+   	tools,
+   	searchReposTool,
+   	getRepoTool,
+   	type SearchReposInput,
+   	type GetRepoInput,
+   } from "./tools";
+
+   type Params = { task: string };
+
+   export class AgentWorkflow extends WorkflowEntrypoint<Env, Params> {
+   	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+   		const client = new Anthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
+
+   		const messages: Anthropic.MessageParam[] = [
+   			{ role: "user", content: event.payload.task },
+   		];
+
+   		const toolDefinitions = tools.map(({ run, ...rest }) => rest);
+
+   		// Durable agent loop - each turn is checkpointed
+   		for (let turn = 0; turn < 10; turn++) {
+   			const response = (await step.do(
+   				`llm-turn-${turn}`,
+   				{ retries: { limit: 3, delay: "10 seconds", backoff: "exponential" } },
+   				async () => {
+   					const msg = await client.messages.create({
+   						model: "claude-sonnet-4-5-20250929",
+   						max_tokens: 4096,
+   						tools: toolDefinitions,
+   						messages,
+   					});
+   					// Serialize for Workflow state
+   					return JSON.parse(JSON.stringify(msg));
+   				},
+   			)) as Anthropic.Message;
+
+   			if (!response || !response.content) continue;
+
+   			messages.push({ role: "assistant", content: response.content });
+
+   			if (response.stop_reason === "end_turn") {
+   				const textBlock = response.content.find(
+   					(b): b is Anthropic.TextBlock => b.type === "text",
+   				);
+   				return {
+   					status: "complete",
+   					turns: turn + 1,
+   					result: textBlock?.text ?? null,
+   				};
+   			}
+
+   			const toolResults: Anthropic.ToolResultBlockParam[] = [];
+
+   			for (const block of response.content) {
+   				if (block.type !== "tool_use") continue;
+
+   				const result = await step.do(
+   					`tool-${turn}-${block.id}`,
+   					{ retries: { limit: 2, delay: "5 seconds" } },
+   					async () => {
+   						switch (block.name) {
+   							case "search_repos":
+   								return searchReposTool.run(block.input as SearchReposInput);
+   							case "get_repo":
+   								return getRepoTool.run(block.input as GetRepoInput);
+   							default:
+   								return `Unknown tool: ${block.name}`;
+   						}
+   					},
+   				);
+
+   				toolResults.push({
+   					type: "tool_result",
+   					tool_use_id: block.id,
+   					content: result,
+   				});
+   			}
+
+   			messages.push({ role: "user", content: toolResults });
+   		}
+
+   		return { status: "max_turns_reached", turns: 10 };
+   	}
+   }
+   ```
+</Steps>
+
+
+<Details header="Why separate steps for LLM and tools?">
+
+Each `step.do()` creates a checkpoint. If your Workflow crashes or the Worker restarts:
+
+- **After LLM step**: The response is persisted. On resume, it skips the LLM call and moves to tool execution.
+- **After tool step**: The result is persisted. If a later tool fails, earlier tools do not re-run.
+
+This is especially important for:
+
+- **LLM calls**: Expensive and slow, should not repeat unnecessarily
+- **External APIs**: May have rate limits or side effects
+- **Idempotency**: Some tools (like sending emails) should not run twice
+
+</Details>
+
+## 4. Configure your Workflow
+
+<Steps>
+
+1. Open `wrangler.jsonc` and add the `workflow` configuration:
+
+   <WranglerConfig>
+
+   ```json title="wrangler.jsonc"
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "durable-ai-agent",
+   	"main": "src/index.ts",
+   	"compatibility_date": "2025-01-01",
+   	"observability": {
+   		"enabled": true
+   	},
+   	"workflows": [
+   		{
+   			"name": "agent-workflow",
+   			"binding": "AGENT_WORKFLOW",
+   			"class_name": "AgentWorkflow"
+   		}
+   	]
+   }
+   ```
+
+   </WranglerConfig>
+
+   The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.AGENT_WORKFLOW`).
+
+2. Generate types for your bindings:
+
+   ```sh
+   npx wrangler types
+   ```
+
+   This creates a `worker-configuration.d.ts` file with the `Env` type that includes your `AGENT_WORKFLOW` binding.
+
+</Steps>
+
+## 5. Write your API
+
+The Worker exposes an HTTP API to start new agent instances and check their status. Each instance runs independently and can be polled for results.
+
+<Steps>
+1. Replace `src/index.ts`:
+
+   ```ts title="src/index.ts"
+   export { AgentWorkflow } from "./workflow";
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+
+   		const instanceId = url.searchParams.get("instanceId");
+   		if (instanceId) {
+   			const instance = await env.AGENT_WORKFLOW.get(instanceId);
+   			const status = await instance.status();
+
+   			return Response.json({
+   				status: status.status,
+   				output: status.output,
+   			});
+   		}
+
+   		if (request.method === "POST") {
+   			const { task } = await request.json<{ task: string }>();
+   			const instance = await env.AGENT_WORKFLOW.create({
+   				params: { task },
+   			});
+   			return Response.json({ instanceId: instance.id });
+   		}
+
+   		return new Response("POST a task to start an agent", { status: 400 });
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+</Steps>
+
+## 6. Develop locally
+
+<Steps>
+1. Create a [`.env` file](/workers/wrangler/environments/#secrets-in-local-development) for local development:
+
+   ```sh title=".env"
+   ANTHROPIC_API_KEY=your-api-key-here
+   ```
+
+2. Start the dev server:
+
+   ```sh
+   npx wrangler dev
+   ```
+
+3. Start an agent that searches and compares repositories:
+
+   ```sh
+   curl -X POST http://localhost:8787 \
+     -H "Content-Type: application/json" \
+     -d '{"task": "Compare open-source LLM projects"}'
+   ```
+
+   ```json output
+   { "instanceId": "abc-123-def" }
+   ```
+
+4. Check progress (may take a few seconds to complete):
+
+   ```sh
+   curl "http://localhost:8787?instanceId=abc-123-def"
+   ```
+
+</Steps>
+
+The agent will search for repositories, fetch details, and return a comparison.
+
+## 7. Deploy
+
+<Steps>
+1. Deploy the Worker:
+
+   ```sh
+   npx wrangler deploy
+   ```
+
+2. Add your API key as a secret:
+
+   ```sh
+   npx wrangler secret put ANTHROPIC_API_KEY
+   ```
+
+3. Start an agent on your deployed Worker:
+
+   ```sh
+   curl -X POST https://durable-ai-agent.<your-subdomain>.workers.dev \
+     -H "Content-Type: application/json" \
+     -d '{"task": "Compare open-source LLM projects"}'
+   ```
+
+4. Inspect agent runs with the CLI:
+
+   ```sh
+   npx wrangler workflows instances describe agent-workflow latest
+   ```
+
+   This shows every step the agent took, including LLM calls, tool executions, timing, and any retries.
+
+   You can also view this in the Cloudflare dashboard under **agent-workflow**.
+
+   <DashButton url="/?to=/:account/workers/workflows" />
+
+</Steps>
+
+## Adding real-time updates with Agents SDK
+
+The polling approach works well for simple use cases, but for real-time UIs you can combine Workflows with the [Agents SDK](/agents/). The pattern is as follows:
+
+1. Agent handles WebSocket connections and client state
+2. Workflow runs the durable agent loop and pushes updates to the Agent
+3. Agent broadcasts state changes to all connected clients
+
+In your Workflow, push updates to the Agent:
+
+```ts
+// agentId passed via workflow params
+const agent = this.env.RESEARCH_AGENT.get(
+	this.env.RESEARCH_AGENT.idFromName(agentId),
+);
+await agent.updateProgress({
+	status: "searching",
+	message: "Found 5 repositories...",
+});
+```
+
+In your Agent, receive updates and broadcast to clients:
+
+```ts
+import { Agent } from "agents";
+
+export class ResearchAgent extends Agent<Env, State> {
+	async updateProgress(progress: { status: string; message: string }) {
+		this.setState({ ...this.state, ...progress }); // pushes to all connected clients
+	}
+}
+```
+
+Clients use `useAgent()` to subscribe to state changes:
+
+```tsx
+import { useAgent } from "agents/react";
+
+const [state, setState] = useState(initialState);
+
+useAgent({
+	agent: "research-agent",
+	onStateUpdate: (newState) => setState(newState),
+});
+// state updates in real-time as the Workflow progresses
+```
+
+This gives you durable execution (Workflows) with real-time UI updates (Agents SDK). For a complete example with a React UI, refer to the [durable-ai-agent template](https://github.com/cloudflare/templates/tree/main/durable-ai-agent).
+
+## Learn more
+
+<LinkCard
+	title="Events and parameters"
+	href="/workflows/build/events-and-parameters/"
+	description="Pass data to Workflows and pause for external events with waitForEvent."
+/>
+
+<LinkCard
+	title="Sleeping and retrying"
+	href="/workflows/build/sleeping-and-retrying/"
+	description="Configure retry behavior and sleep patterns."
+/>
+
+<LinkCard
+	title="Workers API"
+	href="/workflows/build/workers-api/"
+	description="Explore the full Workflows API for programmatic control."
+/>
+
+<LinkCard
+	title="Agents SDK"
+	href="/agents/"
+	description="For interactive agents with real-time chat and WebSocket connections."
+/>

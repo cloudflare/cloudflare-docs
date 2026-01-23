@@ -5,10 +5,10 @@ params:
 
 import { Render, Tabs, TabItem } from "~/components";
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Render
-	file="managed-rules-browse-zone"
+	file="managed-rules-browse-zone-new-nav"
 	product="waf"
 	params={{
 		rulesetName: props.rulesetName,
@@ -23,10 +23,10 @@ import { Render, Tabs, TabItem } from "~/components";
 	}}
 />
 
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+</TabItem> <TabItem label="Old dashboard">
 
 <Render
-	file="managed-rules-browse-zone-new-nav"
+	file="managed-rules-browse-zone"
 	product="waf"
 	params={{
 		rulesetName: props.rulesetName,

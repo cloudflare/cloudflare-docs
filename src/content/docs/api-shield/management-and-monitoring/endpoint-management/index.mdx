@@ -4,10 +4,17 @@ pcx_content_type: concept
 title: Endpoint Management
 sidebar:
   order: 1
-
 ---
 
-import { GlossaryTooltip, Plan, Steps, Tabs, TabItem, Render, DashButton } from "~/components"
+import {
+	GlossaryTooltip,
+	Plan,
+	Steps,
+	Tabs,
+	TabItem,
+	Render,
+	DashButton,
+} from "~/components";
 
 <Plan type="all" />
 
@@ -20,20 +27,14 @@ This will add the specified endpoints to your list of managed endpoints. You can
 Cloudflare will start collecting [performance data](/api-shield/management-and-monitoring/#endpoint-analysis) on your endpoint when you save an endpoint.
 
 :::note
-
 When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will not be populated.
 :::
 
 ## Access
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Select **Security** > **API Shield**.
-      3. Add your endpoints [manually](#add-endpoints-manually), from [Schema validation](#add-endpoints-from-schema-validation), or from [API Discovery](#add-endpoints-from-api-discovery).
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -44,7 +45,16 @@ When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will
       4. Add your endpoints [manually](#add-endpoints-manually), from [Schema validation](#add-endpoints-from-schema-validation), or from [API Discovery](#add-endpoints-from-api-discovery).
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Select **Security** > **API Shield**.
+      3. Add your endpoints [manually](#add-endpoints-manually), from [Schema validation](#add-endpoints-from-schema-validation), or from [API Discovery](#add-endpoints-from-api-discovery).
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ### Add endpoints from API Discovery
 
@@ -52,14 +62,9 @@ There are two ways to add API endpoints from Discovery.
 
 #### Add from the Endpoints tab
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. From **Endpoint Management**, select **Add endpoints** > **Select from Discovery** tab.
-      2. Select the discovered endpoints you would like to add.
-      3. Select **Add endpoints**.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. From **Endpoints**, go to **Add endpoints** > **Select from Discovery** tab.
@@ -67,18 +72,22 @@ There are two ways to add API endpoints from Discovery.
       3. Select **Add endpoints**.
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. From **Endpoint Management**, select **Add endpoints** > **Select from Discovery** tab.
+      2. Select the discovered endpoints you would like to add.
+      3. Select **Add endpoints**.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 #### Add from the Discovery tab
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. From Endpoint Management, select the **Discovery** tab.
-      2. Select the discovered endpoints you would like to add.
-      3. Select **Save selected endpoints**.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. From **Web assets**, go to the **Discovery** tab.
@@ -86,18 +95,22 @@ There are two ways to add API endpoints from Discovery.
       3. Select **Save selected endpoints**.
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. From Endpoint Management, select the **Discovery** tab.
+      2. Select the discovered endpoints you would like to add.
+      3. Select **Save selected endpoints**.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ### Add endpoints from Schema validation
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Add a schema by [configuring Schema validation](/api-shield/security/schema-validation/).
-      2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
-      3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the schema is saved as a draft or published.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. From **Web assets**, go to the **Endpoints** tab.
@@ -106,7 +119,16 @@ There are two ways to add API endpoints from Discovery.
       4. Select **Add schema and endpoints**.
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Add a schema by [configuring Schema validation](/api-shield/security/schema-validation/).
+      2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
+      3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the schema is saved as a draft or published.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 API Shield will look for duplicate endpoints that have the same host, method, and path. Duplicate endpoints will not be saved to endpoint management.
 
@@ -116,14 +138,9 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
 
 ### Add endpoints manually
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. From Endpoint Management, select **Add endpoints** > **Manually add**.
-      2. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
-      3. Select **Add endpoints**.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. From **Web assets**, go to the **Endpoints** tab.
@@ -132,8 +149,16 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
       4. Select **Add endpoints**.
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. From Endpoint Management, select **Add endpoints** > **Manually add**.
+      2. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
+      3. Select **Add endpoints**.
+    </Steps>
+  </TabItem>
 </Tabs>
 
+{/* prettier-ignore-end */}
 
 :::note
 By selecting multiple checkboxes, you can add several endpoints from Discovery at once instead of individually.
@@ -167,13 +192,9 @@ For more information on how Cloudflare uses variables in API Shield, refer to th
 
 You can delete endpoints one at a time or in bulk.
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. From Endpoint Management, select the checkboxes for the endpoints that you want to delete.
-      2. Select **Delete endpoints**.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. From **Web assets**, go to the **Endpoints** tab.
@@ -181,7 +202,15 @@ You can delete endpoints one at a time or in bulk.
       3. Select **Delete endpoints**.
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. From Endpoint Management, select the checkboxes for the endpoints that you want to delete.
+      2. Select **Delete endpoints**.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 :::caution
 When you delete an endpoint from Endpoint Management, Cloudflare immediately stops tracking all associated performance and analytics data. The endpoint's previous historical metrics are permanently removed and cannot be restored. If you later save this endpoint again, metric tracking will resume, starting from the point the endpoint is re-saved.
