@@ -1891,7 +1891,8 @@
 /workers/configuration/deploy-button/ /workers/platform/deploy-buttons/ 301
 /workers/platform/deployments/ /workers/configuration/versions-and-deployments/ 301
 /workers/platform/environment-variables/ /workers/configuration/environment-variables/ 301
-/workers/platform/smart-placement/ /workers/configuration/smart-placement/ 301
+/workers/platform/smart-placement/ /workers/configuration/placement/ 301
+/workers/configuration/smart-placement/ /workers/configuration/placement/ 301
 /workers/runtime-apis/email-event/ /email-routing/email-workers/runtime-api/ 301
 /workers/runtime-apis/scheduled-event/ /workers/runtime-apis/handlers/scheduled/ 301
 /workers/runtime-apis/fetch-event/ /workers/runtime-apis/handlers/fetch/ 301

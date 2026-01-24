@@ -194,7 +194,7 @@ For the various static asset routing configuration options, refer to [Routing](/
 
 ## Smart Placement
 
-[Smart Placement](/workers/configuration/smart-placement/) can be used to place a Worker's code close to your back-end infrastructure. Smart Placement will only have an effect if you specified a `main`, pointing to your Worker code.
+[Smart Placement](/workers/configuration/placement/) can be used to place a Worker's code close to your back-end infrastructure. Smart Placement will only have an effect if you specified a `main`, pointing to your Worker code.
 
 ### Smart Placement with Worker Code First
 
@@ -202,7 +202,7 @@ If you desire to run your [Worker code ahead of assets](/workers/static-assets/r
 
 Use Smart Placement with `run_worker_first=true` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
 
-If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/smart-placement/#best-practices).
+If you want some assets served as quickly as possible to the user, but others to be served behind a smart-placed Worker, considering splitting your app into multiple Workers and [using service bindings to connect them](/workers/configuration/placement/#multiple-workers).
 
 ### Smart Placement with Assets First
 

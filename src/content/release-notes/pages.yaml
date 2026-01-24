@@ -66,7 +66,7 @@ entries:
   - publish_date: "2023-05-16"
     title: Support for Smart Placement
     description: |-
-      * [Smart placement](/workers/configuration/smart-placement/) can now be enabled for Pages within your Pages Project by going to **Settings** > [**Functions**](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/settings/functions).
+      * [Smart placement](/workers/configuration/placement/) can now be enabled for Pages within your Pages Project by going to **Settings** > [**Functions**](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/settings/functions).
   - publish_date: "2023-03-23"
     title: Git projects can now see files uploaded
     description: |-

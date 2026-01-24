@@ -221,7 +221,7 @@ The `main` key is optional for assets-only Workers.
   - Maps a Durable Object from a class name to a runtime state. This communicates changes to the Durable Object (creation / deletion / rename / transfer) to the Workers runtime and provides the runtime with instructions on how to deal with those changes. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/#durable-object-migrations-in-wranglertoml).
 
 * `placement` <Type text="object"/> <MetaInfo text="optional"/>
-  - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/smart-placement/).
+  - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/placement/).
   - `mode` <Type text="string"/> — Set to `"smart"` to automatically place your Worker near back-end services based on observed latency.
   - `region` <Type text="string"/> — Specify a cloud region (for example, `"aws:us-east-1"`, `"gcp:europe-west1"`, or `"azure:westeurope"`) to place your Worker near infrastructure in that region.
   - `host` <Type text="string"/> — Specify a hostname and port for a single-homed layer 4 service (for example, `"my_database_host.com:5432"`) to place your Worker near that service.

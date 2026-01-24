@@ -19,7 +19,7 @@ This allows you to easily combine together these two features to create powerful
 You can configure the [`assets.run_worker_first` setting](/workers/static-assets/binding/#run_worker_first) to control when your Worker script runs relative to static asset serving. This gives you more control over exactly how and when those assets are served and can be used to implement "middleware" for requests.
 
 :::caution
-If you are using [Smart Placement](/workers/configuration/smart-placement/) in combination with `assets.run_worker_first`, you may find that placement decisions are not optimized correctly as, currently, the entire Worker script is placed as a single unit. This may not accurately reflect the desired "split" in behavior of edge-first vs. smart-placed compute for your application. This is a limitation that we are currently working to resolve.
+If you are using [Smart Placement](/workers/configuration/placement/) in combination with `assets.run_worker_first`, you may find that placement decisions are not optimized correctly as, currently, the entire Worker script is placed as a single unit. This may not accurately reflect the desired "split" in behavior of edge-first vs. smart-placed compute for your application. This is a limitation that we are currently working to resolve.
 :::
 
 ### Run Worker before each request
@@ -71,6 +71,7 @@ export default class extends WorkerEntrypoint<Env> {
 	}
 }
 ```
+
 </TypeScriptExample>
 
 ### Run Worker first for selective paths
@@ -114,11 +115,12 @@ export default class extends WorkerEntrypoint<Env> {
 		// Redirect back to the index, but set a cookie that the front-end will use.
 		return new Response(null, {
 			headers: {
-				"Location": "/",
-				"Set-Cookie": `session_token=${sessionIdentifier}; HttpOnly; Secure; SameSite=Lax; Path=/`
-			}
+				Location: "/",
+				"Set-Cookie": `session_token=${sessionIdentifier}; HttpOnly; Secure; SameSite=Lax; Path=/`,
+			},
 		});
 	}
 }
 ```
+
 </TypeScriptExample>
