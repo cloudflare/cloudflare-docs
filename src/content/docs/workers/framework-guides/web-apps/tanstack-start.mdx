@@ -117,6 +117,74 @@ Preview the build locally before deploying:
 
 :::
 
+## Custom entrypoints
+
+TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypoint. Create a custom server entrypoint to add additional Workers handlers. These include [Queues](/queues/), [Cron Triggers](/workers/configuration/cron-triggers/), and [Durable Objects](/durable-objects/).
+
+`createServerEntry()` returns a plain object that you can spread and extend with additional handlers:
+
+<Steps>
+
+1. Create a custom server entrypoint file:
+
+   <TypeScriptExample filename="app/server.ts">
+
+   ```ts
+   import handler, {
+   	createServerEntry,
+   } from "@tanstack/react-start/server-entry";
+
+   // Export Durable Objects as named exports
+   export { MyDurableObject } from "./my-durable-object";
+
+   const serverEntry = createServerEntry({
+   	async fetch(request) {
+   		return await handler.fetch(request);
+   	},
+   });
+
+   export default {
+   	...serverEntry,
+
+   	// Handle Queue messages
+   	async queue(batch, env, ctx) {
+   		for (const message of batch.messages) {
+   			console.log("Processing message:", message.body);
+   			message.ack();
+   		}
+   	},
+
+   	// Handle Cron Triggers
+   	async scheduled(event, env, ctx) {
+   		console.log("Cron triggered:", event.cron);
+   	},
+   };
+   ```
+
+   </TypeScriptExample>
+
+2. Update your Wrangler configuration to point to your custom entrypoint:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"main": "app/server.ts",
+   }
+   ```
+
+   </WranglerConfig>
+
+</Steps>
+
+### Test scheduled handlers locally
+
+Test your scheduled handler locally using the `/__scheduled` endpoint:
+
+```sh
+curl "http://localhost:5173/__scheduled?cron=*+*+*+*+*"
+```
+
 ## Bindings
 
 Your TanStack Start application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using [bindings](/workers/runtime-apis/bindings/).
