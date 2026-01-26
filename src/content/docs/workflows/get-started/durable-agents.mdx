@@ -5,7 +5,16 @@ sidebar:
   order: 3
 ---
 
-import { Details,LinkCard,Render,PackageManagers,WranglerConfig, GlossaryTooltip, Steps, DashButton} from "~/components";
+import {
+	Details,
+	LinkCard,
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	GlossaryTooltip,
+	Steps,
+	DashButton,
+} from "~/components";
 
 In this guide, you will build an AI agent that researches GitHub repositories. Give it a task like "Compare open-source LLM projects" and it will:
 
@@ -141,7 +150,10 @@ Tools are functions the LLM can call to interact with external systems. You defi
    		if (!response.ok) return `Search failed: ${response.status}`;
    		const data = await response.json<GitHubSearchResponse>();
    		return JSON.stringify(
-   			data.items.map((r) => ({ name: r.full_name, stars: r.stargazers_count })),
+   			data.items.map((r) => ({
+   				name: r.full_name,
+   				stars: r.stargazers_count,
+   			})),
    		);
    	},
    };
@@ -210,98 +222,98 @@ The agent loop sends messages to the LLM, executes any tool calls, and repeats u
 <Steps>
 1. Create `src/workflow.ts`:
 
-   ```ts title="src/workflow.ts"
-   import { WorkflowEntrypoint, WorkflowStep } from "cloudflare:workers";
-   import type { WorkflowEvent } from "cloudflare:workers";
-   import Anthropic from "@anthropic-ai/sdk";
-   import {
-   	tools,
-   	searchReposTool,
-   	getRepoTool,
-   	type SearchReposInput,
-   	type GetRepoInput,
-   } from "./tools";
+```ts title="src/workflow.ts"
+import { WorkflowEntrypoint, WorkflowStep } from "cloudflare:workers";
+import type { WorkflowEvent } from "cloudflare:workers";
+import Anthropic from "@anthropic-ai/sdk";
+import {
+	tools,
+	searchReposTool,
+	getRepoTool,
+	type SearchReposInput,
+	type GetRepoInput,
+} from "./tools";
 
-   type Params = { task: string };
+type Params = { task: string };
 
-   export class AgentWorkflow extends WorkflowEntrypoint<Env, Params> {
-   	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-   		const client = new Anthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
+export class AgentWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		const client = new Anthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 
-   		const messages: Anthropic.MessageParam[] = [
-   			{ role: "user", content: event.payload.task },
-   		];
+		const messages: Anthropic.MessageParam[] = [
+			{ role: "user", content: event.payload.task },
+		];
 
-   		const toolDefinitions = tools.map(({ run, ...rest }) => rest);
+		const toolDefinitions = tools.map(({ run, ...rest }) => rest);
 
-   		// Durable agent loop - each turn is checkpointed
-   		for (let turn = 0; turn < 10; turn++) {
-   			const response = (await step.do(
-   				`llm-turn-${turn}`,
-   				{ retries: { limit: 3, delay: "10 seconds", backoff: "exponential" } },
-   				async () => {
-   					const msg = await client.messages.create({
-   						model: "claude-sonnet-4-5-20250929",
-   						max_tokens: 4096,
-   						tools: toolDefinitions,
-   						messages,
-   					});
-   					// Serialize for Workflow state
-   					return JSON.parse(JSON.stringify(msg));
-   				},
-   			)) as Anthropic.Message;
+		// Durable agent loop - each turn is checkpointed
+		for (let turn = 0; turn < 10; turn++) {
+			const response = (await step.do(
+				`llm-turn-${turn}`,
+				{ retries: { limit: 3, delay: "10 seconds", backoff: "exponential" } },
+				async () => {
+					const msg = await client.messages.create({
+						model: "claude-sonnet-4-5-20250929",
+						max_tokens: 4096,
+						tools: toolDefinitions,
+						messages,
+					});
+					// Serialize for Workflow state
+					return JSON.parse(JSON.stringify(msg));
+				},
+			)) as Anthropic.Message;
 
-   			if (!response || !response.content) continue;
+			if (!response || !response.content) continue;
 
-   			messages.push({ role: "assistant", content: response.content });
+			messages.push({ role: "assistant", content: response.content });
 
-   			if (response.stop_reason === "end_turn") {
-   				const textBlock = response.content.find(
-   					(b): b is Anthropic.TextBlock => b.type === "text",
-   				);
-   				return {
-   					status: "complete",
-   					turns: turn + 1,
-   					result: textBlock?.text ?? null,
-   				};
-   			}
+			if (response.stop_reason === "end_turn") {
+				const textBlock = response.content.find(
+					(b): b is Anthropic.TextBlock => b.type === "text",
+				);
+				return {
+					status: "complete",
+					turns: turn + 1,
+					result: textBlock?.text ?? null,
+				};
+			}
 
-   			const toolResults: Anthropic.ToolResultBlockParam[] = [];
+			const toolResults: Anthropic.ToolResultBlockParam[] = [];
 
-   			for (const block of response.content) {
-   				if (block.type !== "tool_use") continue;
+			for (const block of response.content) {
+				if (block.type !== "tool_use") continue;
 
-   				const result = await step.do(
-   					`tool-${turn}-${block.id}`,
-   					{ retries: { limit: 2, delay: "5 seconds" } },
-   					async () => {
-   						switch (block.name) {
-   							case "search_repos":
-   								return searchReposTool.run(block.input as SearchReposInput);
-   							case "get_repo":
-   								return getRepoTool.run(block.input as GetRepoInput);
-   							default:
-   								return `Unknown tool: ${block.name}`;
-   						}
-   					},
-   				);
+				const result = await step.do(
+					`tool-${turn}-${block.id}`,
+					{ retries: { limit: 2, delay: "5 seconds" } },
+					async () => {
+						switch (block.name) {
+							case "search_repos":
+								return searchReposTool.run(block.input as SearchReposInput);
+							case "get_repo":
+								return getRepoTool.run(block.input as GetRepoInput);
+							default:
+								return `Unknown tool: ${block.name}`;
+						}
+					},
+				);
 
-   				toolResults.push({
-   					type: "tool_result",
-   					tool_use_id: block.id,
-   					content: result,
-   				});
-   			}
+				toolResults.push({
+					type: "tool_result",
+					tool_use_id: block.id,
+					content: result,
+				});
+			}
 
-   			messages.push({ role: "user", content: toolResults });
-   		}
+			messages.push({ role: "user", content: toolResults });
+		}
 
-   		return { status: "max_turns_reached", turns: 10 };
-   	}
-   }
-   ```
+		return { status: "max_turns_reached", turns: 10 };
+	}
+}
+```
+
 </Steps>
-
 
 <Details header="Why separate steps for LLM and tools?">
 
@@ -366,36 +378,36 @@ The Worker exposes an HTTP API to start new agent instances and check their stat
 <Steps>
 1. Replace `src/index.ts`:
 
-   ```ts title="src/index.ts"
-   export { AgentWorkflow } from "./workflow";
+```ts title="src/index.ts"
+export { AgentWorkflow } from "./workflow";
 
-   export default {
-   	async fetch(request: Request, env: Env): Promise<Response> {
-   		const url = new URL(request.url);
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
 
-   		const instanceId = url.searchParams.get("instanceId");
-   		if (instanceId) {
-   			const instance = await env.AGENT_WORKFLOW.get(instanceId);
-   			const status = await instance.status();
+		const instanceId = url.searchParams.get("instanceId");
+		if (instanceId) {
+			const instance = await env.AGENT_WORKFLOW.get(instanceId);
+			const status = await instance.status();
 
-   			return Response.json({
-   				status: status.status,
-   				output: status.output,
-   			});
-   		}
+			return Response.json({
+				status: status.status,
+				output: status.output,
+			});
+		}
 
-   		if (request.method === "POST") {
-   			const { task } = await request.json<{ task: string }>();
-   			const instance = await env.AGENT_WORKFLOW.create({
-   				params: { task },
-   			});
-   			return Response.json({ instanceId: instance.id });
-   		}
+		if (request.method === "POST") {
+			const { task } = await request.json<{ task: string }>();
+			const instance = await env.AGENT_WORKFLOW.create({
+				params: { task },
+			});
+			return Response.json({ instanceId: instance.id });
+		}
 
-   		return new Response("POST a task to start an agent", { status: 400 });
-   	},
-   } satisfies ExportedHandler<Env>;
-   ```
+		return new Response("POST a task to start an agent", { status: 400 });
+	},
+} satisfies ExportedHandler<Env>;
+```
 
 </Steps>
 
@@ -404,9 +416,9 @@ The Worker exposes an HTTP API to start new agent instances and check their stat
 <Steps>
 1. Create a [`.env` file](/workers/wrangler/environments/#secrets-in-local-development) for local development:
 
-   ```sh title=".env"
-   ANTHROPIC_API_KEY=your-api-key-here
-   ```
+```sh title=".env"
+ANTHROPIC_API_KEY=your-api-key-here
+```
 
 2. Start the dev server:
 
@@ -441,9 +453,9 @@ The agent will search for repositories, fetch details, and return a comparison.
 <Steps>
 1. Deploy the Worker:
 
-   ```sh
-   npx wrangler deploy
-   ```
+```sh
+npx wrangler deploy
+```
 
 2. Add your API key as a secret:
 
@@ -520,7 +532,7 @@ useAgent({
 // state updates in real-time as the Workflow progresses
 ```
 
-This gives you durable execution (Workflows) with real-time UI updates (Agents SDK). For a complete example with a React UI, refer to the [durable-ai-agent template](https://github.com/cloudflare/templates/tree/main/durable-ai-agent).
+This gives you durable execution (Workflows) with real-time UI updates (Agents SDK). For a complete example with a React UI, refer to the [durableAgent template](https://github.com/cloudflare/docs-examples/tree/main/workflows/durableAgent).
 
 ## Learn more
 
