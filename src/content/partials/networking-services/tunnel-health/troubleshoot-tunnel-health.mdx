@@ -52,11 +52,12 @@ Tunnels transition between states asymmetrically to prevent flapping:
 - **Down to Degraded**: Requires three consecutive successful health check probes
 - **Degraded to Healthy**: Requires failure rate below 0.1% over 30 consecutive probes
 
-| Minimum state duration Tunnels remain in a degraded or down state for at least five minutes, even if health checks start succeeding immediately. This minimum duration prevents rapid flapping when there is intermittent packet loss. Additionally, a tunnel recovering from Down must always transition through Degraded before returning to Healthy.  |
-| :---- |
+:::note[Minimum state duration]
+Tunnels remain in a degraded or down state for at least five minutes, even if health checks start succeeding immediately. This minimum duration prevents rapid flapping when there is intermittent packet loss. Additionally, a tunnel recovering from `Down` must always transition through `Degraded` before returning to `Healthy`.
+:::
 
-| Recovery from degraded to healthy can take up to 30 minutes. This intentional "slow recovery" behavior (called hysteresis) prevents rapid state changes caused by intermittent network issues or tunnel flapping. |
-| :---- |
+Recovery from degraded to healthy can take up to 30 minutes. This intentional "slow recovery" behavior (called hysteresis) prevents rapid state changes caused by intermittent network issues or tunnel flapping.
+:::
 
 For instructions on monitoring tunnel status, refer to [Check tunnel health in the dashboard](https://developers.cloudflare.com/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/).
 
