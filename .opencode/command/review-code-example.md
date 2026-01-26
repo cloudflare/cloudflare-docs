@@ -1,6 +1,7 @@
 ---
 description: Review code examples in specified folder or page
 subtask: true
+temperature:0.1
 ---
 
 # Code Review Command Prompt
@@ -617,7 +618,7 @@ Each criterion is scored on a scale from 0.0 to 1.0 in 0.1 increments:
 - [ ] Code block uses triple backticks (```)
 - [ ] Opening and closing backticks match
 - [ ] If PackageManagers applies (npm/yarn/pnpm commands), is it used?
-- [ ] If WranglerConfig applies (wrangler.toml), is it used?
+- [ ] If the surrounding documentation context explicitly mentions Wrangler configuration, ensure it is shown using the <WranglerConfig> component. If the context explicitly mentions TOML, keep TOML. Otherwise, use wrangler.jsonc.
 - [ ] Are all components imported in frontmatter?
 
 #### For Demonstrative and Executable (add these to the above):
@@ -675,7 +676,7 @@ Each criterion is scored on a scale from 0.0 to 1.0 in 0.1 increments:
 
 - [ ] All external libraries are documented
 - [ ] Installation commands provided (npm install, etc.)
-- [ ] Wrangler configuration shown if needed
+- [ ] Wrangler configuration is only included when the surrounding documentation context explicitly mentions Wrangler configuration. Use the <WranglerConfig> component. If the context explicitly mentions TOML, keep TOML. Otherwise, use wrangler.jsonc.
 - [ ] Runtime requirements stated (Node version, compatibility flags, etc.)
 
 7. **Full Executability** (1.0 point): The code should run without any modifications
@@ -691,7 +692,7 @@ Each criterion is scored on a scale from 0.0 to 1.0 in 0.1 increments:
 **Must-check items:**
 
 - [ ] All referenced variables are defined or imported
-- [ ] All configuration is provided (wrangler.toml, env vars, etc.)
+- [ ] All configuration explicitly required by the surrounding documentation context is provided (for example, env vars). Wrangler configuration should only be included when explicitly mentioned in context, and must use the <WranglerConfig> component. If the context explicitly mentions TOML, keep TOML. Otherwise, use wrangler.jsonc.
 - [ ] No undefined functions or missing dependencies
 - [ ] Code follows a logical execution path with no gaps
 
@@ -839,7 +840,7 @@ Not needed - suggestions are minor and the code effectively illustrates the retr
 - Security: 1.0/1.0 - No security issues detected
 - Completeness: 0.4/1.0 - ⚠️ Missing error handling and type definitions
 - Dependency Context: 0.0/1.0 - ⚠️ No installation instructions or version information provided
-- Full Executability: 0.6/1.0 - Missing wrangler.toml configuration details
+- Full Executability: 0.6/1.0 - Missing Wrangler configuration details (only required when the surrounding documentation context explicitly mentions Wrangler configuration; use the <WranglerConfig> component and prefer wrangler.jsonc unless TOML is explicitly mentioned)
 - Comments & Documentation: 0.0/1.0 - ⚠️ No explanatory comments for complex logic
 
 **Total Score Calculation**: 4.7/8.0
@@ -849,7 +850,7 @@ Not needed - suggestions are minor and the code effectively illustrates the retr
 <details>
 <summary>Suggested Improvements</summary>
 
-1. Add a wrangler.toml configuration example showing the KV namespace binding
+1. If the surrounding documentation context explicitly mentions Wrangler configuration, add a Wrangler config example using the <WranglerConfig> component showing the KV namespace binding (prefer wrangler.jsonc unless TOML is explicitly mentioned)
 2. Add try-catch blocks around KV operations to handle potential errors
 3. Specify the Workers runtime version and any required compatibility flags
 4. Add explanatory comments for the caching strategy being demonstrated, focusing on "why" not "what"
