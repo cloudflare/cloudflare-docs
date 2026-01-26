@@ -29,12 +29,10 @@ The [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/networking-
 | **Degraded** | Between 40% and 80% of health checks pass | At least 0.1% failures in last five minutes (minimum two failures) |
 | **Down** | Less than 40% of health checks pass | All health checks failed (at least three samples in last second) |
 
+The dashboard shows tunnel health as measured from each Cloudflare data center where your traffic lands. It is normal to see some locations reporting degraded status due to Internet path issues. Focus on locations that show traffic in the Average ingress traffic column.
+
 :::note [Probe retry behavior]
 When a health check probe fails, Cloudflare sends two additional probes to confirm the failure. A tunnel is only marked as unhealthy if all three probes fail. This retry behavior provides resilience against random packet loss.
-:::
-
-:::note
-The dashboard shows tunnel health as measured from each Cloudflare data center where your traffic lands. It is normal to see some locations reporting degraded status due to Internet path issues. Focus on locations that show traffic in the Average ingress traffic column.
 :::
 
 ### Routing priority penalties
