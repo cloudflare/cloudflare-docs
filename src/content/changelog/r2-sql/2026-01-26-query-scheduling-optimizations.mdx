@@ -1,0 +1,13 @@
+---
+title: R2 SQL query scheduling optimizations improve latency
+description: Internal query scheduling improvements deliver lower latency for most SQL queries.
+date: 2026-01-26
+products:
+  - r2-sql
+---
+
+R2 SQL query scheduling has been further optimized to reduce latency on most SQL queries. These internal improvements allow the distributed query engine to execute queries more efficiently without requiring any changes to your existing queries or workflows.
+
+The optimizations apply automatically to all queries against Apache Iceberg tables in [R2 Data Catalog](/r2/data-catalog/). You may notice faster response times, particularly for queries that scan multiple data files or involve complex filtering.
+
+To learn more about R2 SQL and its capabilities, visit the [SQL reference](/r2-sql/sql-reference/) or the [getting started guide](/r2-sql/get-started/).
