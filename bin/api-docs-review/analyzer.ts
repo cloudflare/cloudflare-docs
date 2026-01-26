@@ -2,6 +2,19 @@ import type { OpenAPI, OpenAPIV3 } from "openapi-types";
 import type { CurlCommand, FileReviewResult } from "./types";
 
 /**
+ * Validates that a URL is a Cloudflare API URL by checking the host
+ */
+function isCloudflareApiUrl(url: string): boolean {
+	try {
+		const parsed = new URL(url);
+		// Strict host check - must be exactly api.cloudflare.com
+		return parsed.host === "api.cloudflare.com";
+	} catch {
+		return false;
+	}
+}
+
+/**
  * Parses a curl command to extract method and URL
  */
 function parseCurlCommand(curlLines: string[]): {
@@ -45,7 +58,7 @@ function parseCurlCommand(curlLines: string[]): {
  * Extracts the API path from a full Cloudflare API URL
  */
 function extractApiPath(url: string): string | null {
-	if (!url.includes("api.cloudflare.com")) return null;
+	if (!isCloudflareApiUrl(url)) return null;
 
 	// Remove base URL and extract path
 	const pathMatch = url.match(/api\.cloudflare\.com\/client\/v4(\/[^\s?#"']+)/);
@@ -101,7 +114,7 @@ export function detectCurlCommands(content: string): CurlCommand[] {
 			// Process any pending curl command
 			if (curlLines.length > 0) {
 				const parsed = parseCurlCommand(curlLines);
-				if (parsed && parsed.url.includes("api.cloudflare.com")) {
+				if (parsed && isCloudflareApiUrl(parsed.url)) {
 					const path = extractApiPath(parsed.url);
 					commands.push({
 						line: curlStartLine,
@@ -124,7 +137,7 @@ export function detectCurlCommands(content: string): CurlCommand[] {
 				// Save any previous curl command first
 				if (curlLines.length > 0) {
 					const parsed = parseCurlCommand(curlLines);
-					if (parsed && parsed.url.includes("api.cloudflare.com")) {
+					if (parsed && isCloudflareApiUrl(parsed.url)) {
 						const path = extractApiPath(parsed.url);
 						commands.push({
 							line: curlStartLine,
@@ -146,6 +159,13 @@ export function detectCurlCommands(content: string): CurlCommand[] {
 	}
 
 	return commands;
+}
+
+/**
+ * Escapes a string for use in a regular expression
+ */
+function escapeRegExp(str: string): string {
+	return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 /**
@@ -173,9 +193,8 @@ export function checkEndpointInSchema(
 
 	for (const schemaPath of Object.keys(paths)) {
 		// Create a regex pattern from the schema path
-		const pattern = schemaPath
-			.replace(/\{[^}]+\}/g, "[^/]+")
-			.replace(/\//g, "\\/");
+		// First escape special regex characters, then replace path parameters
+		const pattern = escapeRegExp(schemaPath).replace(/\\\{[^}]+\\\}/g, "[^/]+");
 		const regex = new RegExp(`^${pattern}$`);
 
 		if (regex.test(path) || regex.test(normalizedPath)) {
