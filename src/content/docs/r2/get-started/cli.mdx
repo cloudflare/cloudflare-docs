@@ -128,17 +128,11 @@ Refer to the [Wrangler R2 commands](/r2/reference/wrangler-commands/) for all av
 <TabItem label="rclone">
 
 ```sh
-# Upload myfile.txt to my-bucket (use copyto for single files)
-rclone copyto myfile.txt r2:my-bucket/myfile.txt
+# Upload myfile.txt to my-bucket
+rclone copy myfile.txt r2:my-bucket/
 
-# Download myfile.txt and save it as downloaded.txt
-rclone copyto r2:my-bucket/myfile.txt ./downloaded.txt
-
-# Upload all files in local-folder to my-bucket/backup/
-rclone copy ./local-folder r2:my-bucket/backup/
-
-# Sync local-folder to my-bucket/backup/ (deletes files in R2 not in local)
-rclone sync ./local-folder r2:my-bucket/backup/
+# Download myfile.txt from my-bucket to the current directory
+rclone copy r2:my-bucket/myfile.txt .
 ```
 
 Refer to the [rclone documentation](/r2/examples/rclone/) for more configuration options.

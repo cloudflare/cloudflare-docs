@@ -18,16 +18,9 @@ R2 provides support for a [S3-compatible API](/r2/api/s3/api/), which means you 
 
 To use the S3 API, you need to generate [credentials](/r2/api/tokens/) and get an Access Key ID and Secret Access Key:
 
-<Steps>
-1. In the Cloudflare dashboard, go to **R2**.
-2. Select **Manage R2 API tokens**.
-3. Select **Create API token**.
-4. Choose **Object Read & Write** permission and select the buckets you want to access.
-5. Select **Create API Token**.
-6. Copy the **Access Key ID** and **Secret Access Key**. Store these securely.
-</Steps>
+<Render file="generate-s3-api-token-steps" product="r2" />
 
-You also need your S3 API endpoint URL which you can find on the R2 Overview page:
+You also need your S3 API endpoint URL which you can find at the bottom of the Create API Token confirmation page once you have created your token, or on the R2 Overview page:
 
 ```txt
 https://<ACCOUNT_ID>.r2.cloudflarestorage.com
@@ -114,7 +107,7 @@ Refer to [boto3 examples](/r2/examples/aws/boto3/) for more operations.
 
    ```js
    import {
-  	S3Client,
+   	S3Client,
    	PutObjectCommand,
    	GetObjectCommand,
    	ListObjectsV2Command,
@@ -144,9 +137,9 @@ Refer to [boto3 examples](/r2/examples/aws/boto3/) for more operations.
    // Download a file
    const response = await s3.send(
    	new GetObjectCommand({
-    		Bucket: "my-bucket",
-    		Key: "myfile.txt",
-    	}),
+   		Bucket: "my-bucket",
+   		Key: "myfile.txt",
+   	}),
    );
    const content = await response.Body.transformToString();
    console.log("Downloaded:", content);
@@ -154,11 +147,11 @@ Refer to [boto3 examples](/r2/examples/aws/boto3/) for more operations.
    // List objects
    const list = await s3.send(
    	new ListObjectsV2Command({
-    		Bucket: "my-bucket",
-    	}),
+   		Bucket: "my-bucket",
+   	}),
    );
    console.log(
-    	"Objects:",
+   	"Objects:",
    	list.Contents.map((obj) => obj.Key),
    );
    ```
