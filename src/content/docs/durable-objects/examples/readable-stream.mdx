@@ -24,6 +24,10 @@ This example demonstrates:
 ```ts
 import { DurableObject } from 'cloudflare:workers';
 
+interface Env {
+    MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
 // Send incremented counter value every second
 async function* dataSource(signal: AbortSignal) {
     let counter = 0;
@@ -76,7 +80,7 @@ export default {
 
         const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
 
-        let data = [] as string[];
+        let data: string[] = [];
         let i = 0;
         while (true) {
             // Cancel the stream after 5 messages
@@ -103,6 +107,30 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
+
+<WranglerConfig>
+```jsonc
+{
+	"name": "readable-stream-example",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-02",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": ["MyDurableObject"]
+		}
+	]
+}
+```
+</WranglerConfig>
 
 :::note
 
