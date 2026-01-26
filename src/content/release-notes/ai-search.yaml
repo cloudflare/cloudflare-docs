@@ -3,6 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-01-22"
+    title: New file type support
+    description: |-
+      AI Search now supports EMACS Lisp (`.el`) files and the `.htm` extension for HTML documents. 
   - publish_date: "2026-01-19"
     title: Path filtering for website and R2 data sources
     description: |-

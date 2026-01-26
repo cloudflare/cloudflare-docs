@@ -2,7 +2,17 @@
 import { z } from "astro:schema";
 import SDKSelector from "./RTKSDKSelector";
 
-const platform = z.enum(["web", "mobile"]);
+const platform = z.enum([
+	"web",
+	"mobile",
+	"web-react",
+	"web-web-components",
+	"web-angular",
+	"mobile-android",
+	"mobile-ios",
+	"mobile-flutter",
+	"mobile-react-native",
+]);
 
 const props = z.object({
 	disabledPlatforms: z

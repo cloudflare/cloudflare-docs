@@ -8,6 +8,12 @@ sidebar:
 
 Logpush Health Dashboards give you a clear view into the performance and reliability of your Logpush jobs. You can monitor the status of log delivery, diagnose issues, and understand the volume of data being sent to your configured destinations. This helps you ensure that critical log data for security, compliance, and observability is always flowing as expected.
 
+## Stay informed with health notifications
+
+Configure [Logpush health notifications](/logs/logpush/logpush-health/) to receive alerts when your Logpush job is disabled or experiencing errors. Early detection is critical since Logpush cannot backfill logs—once data is dropped, it is permanently lost.
+
+Health notifications work alongside the Health Dashboard to provide both real-time alerts and historical analysis of your Logpush job performance.
+
 ---
 
 ## Access Health Dashboards
@@ -120,3 +126,15 @@ The Logpush Health Dashboards help you monitor the status, reliability, and perf
 | **Retry Attempts** | Frequent retry activity | Uploads are repeatedly failing and retried multiple times. | - Destination instability or transient errors. <br/> - High latency or slow acknowledgements from the destination. | - Verify destination uptime and ingestion rate. <br/> - Ensure destination is not throttling requests. <br/> - Occasional retries are expected; persistent spikes require review. |
 | **Avg. Upload Duration** | Long upload times | Uploads are taking longer than expected, indicating latency or oversized batches. | - Large batches or uncompressed payloads. <br/> - Network or regional latency. <br/> - Destination processing delays. | - Review **Avg. Upload Duration** trends. <br/> - Reduce batch size for faster uploads. <br/> - Verify destination throughput and rate limit settings. |
 | **Destination Availability** | Low or unstable availability | Cloudflare cannot consistently connect to your destination. | - Destination downtime, DNS errors, or authentication issues. <br/> - Firewall or network restrictions blocking Cloudflare. | - Check **Destination Availability** for dips. <br/> - Confirm destination credentials and endpoint uptime. <br/> - Review allowlists or network access settings. |
+
+## Understanding retry behavior
+
+Logpush is designed to handle temporary destination issues through automatic retries. When your destination is temporarily unavailable, Logpush will retry approximately five times over five minutes. However, if Cloudflare persistently receives errors from your destination and cannot keep up with incoming batches, Logpush will eventually drop logs.
+
+If errors continue for a prolonged period, Logpush assumes the destination is permanently unavailable and disables your push job. You can re-enable the job once the destination issue is resolved.
+
+:::note
+These retry counts and timeframes are approximations. Actual behavior may vary based on the nature of the error and destination response times.
+:::
+
+To monitor retry behavior and destination availability, use the [Health Dashboard](#upload-reliability) metrics, particularly the **Retry Attempts** and **Destination Availability** charts.

@@ -40,29 +40,7 @@ The number of available zone lockdown rules depends on your Cloudflare plan.
 
 ## Create a zone lockdown rule
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-
-2. Go to **Security** > **WAF**, and select the **Tools** tab.
-
-3. Under **Zone Lockdown**, select **Create lockdown rule**.
-
-4. Enter a descriptive name for the rule in **Name**.
-
-5. For **URLs**, enter the domains, subdomains, or URLs you wish to protect from unauthorized IPs. You can use wildcards such as `*`. Enter one item per line.
-
-6. For **IP Range**, enter one or more allowed IPv4/IPv6 addresses or CIDR ranges, one per line. Only these IP addresses and ranges will be able to access the resources you entered in **URLs**.
-
-7. (Optional) If you are creating a zone lockdown rule that overlaps with an existing rule, expand **Advanced Options** and enter a priority for the rule in **Priority**. The lower the number, the higher the priority. Higher priority rules take precedence.
-
-8. Select **Save and Deploy lockdown rule**.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 :::note
 Zone Lockdown is only available in the [new security dashboard](/security/) if you have configured at least one zone lockdown rule.
@@ -104,6 +82,28 @@ Create a [custom rule](/waf/custom-rules/create-dashboard/) to perform zone lock
 2. Select **Templates**, and then select the template **Allow only specified IP addresses**.
 
 3. Fill in the required fields and select **Deploy**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+
+2. Go to **Security** > **WAF**, and select the **Tools** tab.
+
+3. Under **Zone Lockdown**, select **Create lockdown rule**.
+
+4. Enter a descriptive name for the rule in **Name**.
+
+5. For **URLs**, enter the domains, subdomains, or URLs you wish to protect from unauthorized IPs. You can use wildcards such as `*`. Enter one item per line.
+
+6. For **IP Range**, enter one or more allowed IPv4/IPv6 addresses or CIDR ranges, one per line. Only these IP addresses and ranges will be able to access the resources you entered in **URLs**.
+
+7. (Optional) If you are creating a zone lockdown rule that overlaps with an existing rule, expand **Advanced Options** and enter a priority for the rule in **Priority**. The lower the number, the higher the priority. Higher priority rules take precedence.
+
+8. Select **Save and Deploy lockdown rule**.
 
 </Steps>
 

@@ -5,24 +5,23 @@ sidebar:
   order: 7
 head: []
 tags: ["full-stack"]
-description: Create a TanStack Start application and deploy it to Cloudflare Workers.
+description: Deploy a TanStack Start application to Cloudflare Workers.
 ---
 
 import {
-	Badge,
 	Description,
-	InlineBadge,
 	Render,
 	PackageManagers,
 	Steps,
+	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
 
-[TanStack Start](https://tanstack.com/start) is a full-stack framework for building web applications. It comes with features like server-side rendering, streaming, server functions, bundling, and more. In this guide, you learn to deploy a TanStack Start application to Cloudflare Workers.
+[TanStack Start](https://tanstack.com/start) is a full-stack framework for building web applications with server-side rendering, streaming, server functions, and bundling.
 
-## Creating a new TanStack Start application
+## Create a new application
 
-To create a TanStack Start application, run the following command:
+Create a TanStack Start application pre-configured for Cloudflare Workers:
 
 <PackageManagers
 	type="create"
@@ -30,73 +29,89 @@ To create a TanStack Start application, run the following command:
 	args="my-tanstack-start-app --framework=tanstack-start"
 />
 
-After you have created your project, run the following command in the project directory to start a local development server. This will allow you to preview your project locally during development.
+Start a local development server to preview your project during development:
 
 <PackageManagers type="run" args="dev" />
 
-## Configuring an existing TanStack Start application
+## Configure an existing application
 
-If you have an existing TanStack Start application, you can configure it to run on Cloudflare Workers by following these steps:
+If you have an existing TanStack Start application, configure it to run on Cloudflare Workers:
 
 <Steps>
-1. Add the `wrangler.jsonc` configuration file to the root of your project with the following content:
-		<WranglerConfig>
-    ```toml
-    	name = "<YOUR_PROJECT_NAME>"
-    	compatibility_date = "$today"
-    	compatibility_flags = ["nodejs_compat"]
-    	main = "@tanstack/react-start/server-entry"
-    	[observability]
-    	enabled = true
-    ```
-		</WranglerConfig>
 
-2. Install `wrangler` as a development dependency:
+1. Install `@cloudflare/vite-plugin` and `wrangler`:
 
-   <PackageManagers dev pkg="wrangler@latest" />
+   <PackageManagers
+   	type="add"
+   	pkg="@cloudflare/vite-plugin wrangler"
+   	args="-D"
+   />
 
-3. Install the `@cloudflare/vite-plugin` package as a dependency:
+2. Add the Cloudflare plugin to your Vite configuration:
 
-   <PackageManagers type="add" pkg="@cloudflare/vite-plugin@latest" />
+   <TypeScriptExample filename="vite.config.ts">
 
-4. Update your `vite.config.ts` file to include the Cloudflare Vite plugin:
-
-   ```ts title="vite.config.ts"
+   ```ts
    import { defineConfig } from "vite";
+   import { tanstackStart } from "@tanstack/react-start/plugin/vite";
    import { cloudflare } from "@cloudflare/vite-plugin";
-   ...
+   import react from "@vitejs/plugin-react";
 
    export default defineConfig({
-   	plugins: [cloudflare({ viteEnvironment: { name: 'ssr' } }), ...],
-   	// ... other configurations
+   	plugins: [
+   		cloudflare({ viteEnvironment: { name: "ssr" } }),
+   		tanstackStart(),
+   		react(),
+   	],
    });
    ```
 
-5. Update the `scripts` section of your `package.json` file to include the following commands:
+   </TypeScriptExample>
 
-   ```jsonc title="package.json"
-   "scripts": {
-   	...
-   	"deploy": "npm run build && wrangler deploy",
-   	"preview": "npm run build && vite preview",
-   	"cf-typegen": "wrangler types"
+3. Add a `wrangler.jsonc` configuration file:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "<YOUR_PROJECT_NAME>",
+   	"compatibility_date": "2025-01-01",
+   	"compatibility_flags": ["nodejs_compat"],
+   	"main": "@tanstack/react-start/server-entry",
+   	"observability": {
+   		"enabled": true,
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+4. Update the `scripts` section in `package.json`:
+
+   ```json title="package.json"
+   {
+   	"scripts": {
+   		"dev": "vite dev",
+   		"build": "vite build",
+   		"preview": "vite preview",
+   		"deploy": "npm run build && wrangler deploy",
+   		"cf-typegen": "wrangler types"
+   	}
    }
    ```
 
 </Steps>
 
-## Deploy your Project
+## Deploy
 
-You can deploy your project to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/) from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
-
-The following command will build and deploy your project. If you are using CI, ensure you update your [**Deploy command**](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+Deploy to a `*.workers.dev` subdomain or a [custom domain](/workers/configuration/routing/custom-domains/) from your machine or any CI/CD system, including [Workers Builds](/workers/ci-cd/builds/).
 
 <PackageManagers type="run" args={"deploy"} />
 
 :::note
 
-Before deploying your application, you can also run the `preview` script to preview the built output locally before deploying it.
-This can help you making sure that your application will work as intended once it's been deployed to the Cloudflare network:
+Preview the build locally before deploying:
 
 <PackageManagers type="run" args="preview" />
 
@@ -104,12 +119,11 @@ This can help you making sure that your application will work as intended once i
 
 ## Bindings
 
-Your TanStack Start application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using bindings.
+Your TanStack Start application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using [bindings](/workers/runtime-apis/bindings/).
 
-You can use bindings simply by [importing the `env` object](https://developers.cloudflare.com/workers/runtime-apis/bindings/#importing-env-as-a-global) and accessing it in your server
-side code.
+Access bindings by [importing the `env` object](/workers/runtime-apis/bindings/#importing-env-as-a-global) in your server-side code:
 
-For example in the following way:
+<TypeScriptExample filename="app/routes/index.tsx">
 
 ```tsx
 import { createFileRoute } from "@tanstack/react-router";
@@ -122,7 +136,8 @@ export const Route = createFileRoute("/")({
 });
 
 const getData = createServerFn().handler(() => {
-	// Use env here
+	// Access bindings via env
+	// For example: env.MY_KV, env.MY_BUCKET, env.AI, etc.
 });
 
 function RouteComponent() {
@@ -130,42 +145,86 @@ function RouteComponent() {
 }
 ```
 
-:::note
+</TypeScriptExample>
 
-Running the `cf-typegen` script:
+Generate TypeScript types for your bindings based on your Wrangler configuration:
 
 <PackageManagers type="run" args="cf-typegen" />
 
-Will populate the `env` object with the various bindings based on your configuration.
-
-:::
-
 <Render file="frameworks-bindings" product="workers" />
 
-## Static Prerendering
+### Use R2 in a server function
 
-You can prerender your application to static HTML files at build time with TanStack Start and serve them as [static assets](/workers/static-assets/).
+Add an [R2 bucket binding](/r2/api/workers/workers-api-usage/#4-bind-your-bucket-to-a-worker) to your Wrangler configuration:
 
-```ts title="vite.config.ts"
-import { defineConfig } from "vite";
-import { cloudflare } from "@cloudflare/vite-plugin";
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+<WranglerConfig>
 
-export default defineConfig({
-  plugins: [
-    cloudflare({ viteEnvironment: { name: "ssr" } }),
-    tanstackStart({
-      prerender: {
-        // Enable static prerendering
-        enabled: true,
-        // other prerender options...
-      },
-    }),
-  ],
-})
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "<YOUR_BUCKET_NAME>",
+		},
+	],
+}
 ```
 
-No additional configuration is needed in your wrangler config file. For more prerender options, see the [TanStack Start documentation](https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering).
+</WranglerConfig>
+
+Access the bucket in a server function:
+
+<TypeScriptExample filename="app/routes/index.tsx">
+
+```tsx
+import { createServerFn } from "@tanstack/react-start";
+import { env } from "cloudflare:workers";
+
+const uploadFile = createServerFn({ method: "POST" })
+	.validator((data: { key: string; content: string }) => data)
+	.handler(async ({ data }) => {
+		await env.MY_BUCKET.put(data.key, data.content);
+		return { success: true };
+	});
+
+const getFile = createServerFn()
+	.validator((key: string) => key)
+	.handler(async ({ data: key }) => {
+		const object = await env.MY_BUCKET.get(key);
+		return object ? await object.text() : null;
+	});
+```
+
+</TypeScriptExample>
+
+## Static prerendering
+
+Prerender your application to static HTML at build time and serve as [static assets](/workers/static-assets/).
+
+<TypeScriptExample filename="vite.config.ts">
+
+```ts
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({ viteEnvironment: { name: "ssr" } }),
+		tanstackStart({
+			prerender: {
+				enabled: true,
+			},
+		}),
+		react(),
+	],
+});
+```
+
+</TypeScriptExample>
+
+For more options, refer to [TanStack Start static prerendering](https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering).
 
 :::note
 
@@ -175,28 +234,28 @@ Requires `@tanstack/react-start` v1.138.0 or later.
 
 :::caution
 
-Prerendering runs during the build step and uses your local environment variables, secrets, and bindings storage data. Ensure your build environment is configured correctly, and use [remote bindings](/workers/development-testing/#remote-bindings) to prerender with production data.
+Prerendering runs during build and uses local environment variables, secrets, and bindings storage data. Use [remote bindings](/workers/development-testing/#remote-bindings) to prerender with production data.
 
 :::
 
-### Prerendering in CI environments
+### Prerender in CI environments
 
-When prerendering in CI, your Worker code may need access to environment variables or secrets that are not available in the build environment. One way to handle this is to include a `.env` file with variable references, which resolve to values provided by your CI environment:
-																								
+When prerendering in CI, your Worker code may need environment variables or secrets not available in the build environment. Include a `.env` file with variable references that resolve to values from your CI environment:
+
 ```sh title=".env"
 API_KEY=${API_KEY}
 DATABASE_URL=${DATABASE_URL}
 ```
 
-In your CI environment, set `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` and provide the required values as environment variables. If using [Workers Builds](/workers/ci-cd/builds/), update your [build settings](/workers/ci-cd/builds/configuration/#build-settings) accordingly.
+Set `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` in your CI environment and provide the required values as environment variables. If using [Workers Builds](/workers/ci-cd/builds/), update your [build settings](/workers/ci-cd/builds/configuration/#build-settings).
 
 :::note
 
-For local development, create a `.env.local` file with actual secret values. Do not commit this file to your repository. Values in `.env.local` override the references in `.env`:
+For local development, create a `.env.local` file with actual values. Do not commit this file to your repository. Values in `.env.local` override references in `.env`:
 
-```sh title=".env.local"                                                                                                                                         
-API_KEY=my-local-dev-key                                                                                                                                   
-DATABASE_URL=postgres://localhost/mydb                                                                                                                     
+```sh title=".env.local"
+API_KEY=my-local-dev-key
+DATABASE_URL=postgres://localhost/mydb
 ```
 
 :::

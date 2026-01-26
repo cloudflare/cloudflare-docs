@@ -1,0 +1,23 @@
+---
+title: "`wrangler types` now generates types for all environments"
+description: The `wrangler types` command now aggregates bindings from all environments by default, ensuring complete type coverage across your deployment environments.
+products:
+  - workers
+date: 2026-01-13
+---
+
+The `wrangler types` command now generates TypeScript types for bindings from **all environments** defined in your Wrangler configuration file by default.
+
+Previously, `wrangler types` only generated types for bindings in the top-level configuration (or a single environment when using the `--env` flag). This meant that if you had environment-specific bindings — for example, a KV namespace only in production or an R2 bucket only in staging — those bindings would be missing from your generated types, causing TypeScript errors when accessing them.
+
+Now, running `wrangler types` collects bindings from all environments and includes them in the generated `Env` type. This ensures your types are complete regardless of which environment you deploy to.
+
+## Generating types for a specific environment
+
+If you want the previous behavior of generating types for only a specific environment, you can use the `--env` flag:
+
+```sh
+wrangler types --env production
+```
+
+Learn more about [generating types for your Worker](/workers/wrangler/commands/#types) in the Wrangler documentation.

@@ -11,6 +11,12 @@ Limits that apply to authoring, deploying, and running Workflows are detailed be
 
 Many limits are inherited from those applied to Workers scripts and as documented in the [Workers limits](/workers/platform/limits/) documentation.
 
+:::note
+
+Workflows cannot be deployed to Workers for Platforms namespaces, as Workflows do not support Workers for Platforms.
+
+:::
+
 | Feature                                                                                       | Workers Free                                                                                | Workers Paid                                                                                              |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | Workflow class definitions per script                                                         | 3MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits) | 10MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits)              |

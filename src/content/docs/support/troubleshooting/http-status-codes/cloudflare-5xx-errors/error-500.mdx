@@ -27,6 +27,21 @@ However, if the `500` error contains `cloudflare` or `cloudflare-nginx` in the H
 If you observe blank or white pages when visiting your website, confirm whether the issue occurs when [temporarily pausing Cloudflare](/fundamentals/manage-domains/pause-cloudflare/) and contact your hosting provider for assistance.
 :::
 
+### Workers-specific causes
+
+Error 500 can also occur when using Cloudflare Workers:
+
+- A Cloudflare Worker throws a runtime JavaScript exception (see [Error 1101](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1101/))
+
+If you are using Workers, check the Workers dashboard for error logs and exceptions.
+
+### Troubleshooting steps
+
+1. **Check recent configuration changes**: Review any recent changes to Page Rules, Transform Rules, or Workers that might affect request processing.
+2. **Verify origin connectivity**: Ensure your origin server is responding correctly and within acceptable timeframes.
+3. **Review Workers logs**: If using Workers, check for JavaScript exceptions or CPU time limit errors in the Workers dashboard.
+4. **Test with Cloudflare paused**: Temporarily pause Cloudflare to determine if the issue is origin-related.
+
 ### Known Cloudflare issue leading to HTTP Error 500
 
 - A configuration issue on Page Rules can generate HTTP Error `500`. Refer to [Page Rules troubleshooting](/rules/page-rules/troubleshooting/general/#error-500-internal-server-error) for more details and resolution.

@@ -6,11 +6,11 @@ params:
 
 import { GlossaryTooltip, Markdown, Width } from "~/components"
 
-With [Magic Transit On Demand](/magic-transit/on-demand/), you can use {props.productName} to analyze your network traffic and detect Distributed Denial of Service (DDoS) attacks while Magic Transit is disabled. If an attack is detected, you can automatically or manually enable Magic Transit to mitigate DDoS attacks.
+With [Magic Transit On Demand](/magic-transit/on-demand/), you can use {props.productName} to analyze your network traffic and detect Distributed Denial of Service (DDoS) attacks while Magic Transit is disabled. If an attack is detected, you can automatically or manually enable Magic Transit to mitigate attacks.
 
-You can create {props.productName} rules which monitor specific IP <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for DDoS attacks. When a DDoS attack is detected, Cloudflare notifies you by email, [webhook](/notifications/get-started/configure-webhooks/), or [PagerDuty](/notifications/get-started/configure-pagerduty/) with information about the attack. Then, you can [automatically activate IP advertisement](#activate-ip-auto-advertisement) and enable Magic Transit to protect the targeted IP prefixes from DDoS attacks. This feature is referred to as auto-advertisement, and you can enable it for individual {props.productName} rules through the dashboard or API.
+You can create {props.productName} rules which monitor specific Internet Protocol (IP) <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for DDoS attacks. When a DDoS attack is detected, Cloudflare notifies you by email, [webhook](/notifications/get-started/configure-webhooks/), or [PagerDuty](/notifications/get-started/configure-pagerduty/) with information about the attack. Then, you can [automatically activate IP advertisement](#activate-ip-auto-advertisement) and enable Magic Transit to protect the targeted IP prefixes from DDoS attacks. This feature is referred to as auto-advertisement, and you can enable it for individual {props.productName} rules through the dashboard or API.
 
-After Magic Transit is activated and your traffic is flowing through Cloudflare, Cloudflare blocks malicious DDoS traffic, and your origin servers receive only clean network traffic through IPsec or GRE tunnels.
+After Magic Transit is activated and your traffic is flowing through Cloudflare, Cloudflare blocks malicious DDoS traffic, and your origin servers receive only clean network traffic through IPsec or Generic Routing Encapsulation (GRE) tunnels.
 
 The following diagrams illustrate this process:
 

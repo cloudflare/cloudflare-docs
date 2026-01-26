@@ -6,18 +6,26 @@ sidebar:
   order: 5
 ---
 
-import { GlossaryTooltip, Tabs, TabItem, Steps, DashButton } from "~/components";
+import {
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	Steps,
+	DashButton,
+} from "~/components";
 
 Once your <GlossaryTooltip term="API endpoint">endpoints</GlossaryTooltip> are saved, API Shield doubles as an API catalog. API Shield can build an interactive documentation portal with the knowledge it has of your APIs, or you can upload a new OpenAPI schema file to build a documentation portal ad-hoc.
 
 To create a developer portal:
 
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
+  <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **API Shield** > **Settings**.
-      3. Under **Create a developer portal**, select **Create site**.
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **API abuse**.
+      3. On **Create a developer portal**, select **Create site**.
       4. Upload an OpenAPI v3.0 schema file or choose to select an existing schema from API Shield.
           :::note
           If you do not have a schema to upload or to select from a pre-existing schema, export your Endpoint Management schema. For best results, include the learned parameters.
@@ -28,14 +36,13 @@ To create a developer portal:
       6. Select **Create pages project** to begin project creation. A new Pages project will be automatically created and your API schema will be automatically uploaded to the project along with other supporting static content.
       7. Select **Deploy site**.
     </Steps>
-  </TabItem>
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
-          <DashButton url="/?to=/:account/:zone/security/settings" />
-      2. Filter by **API abuse**.
-      3. On **Create a developer portal**, select **Create site**.
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **API Shield** > **Settings**.
+      3. Under **Create a developer portal**, select **Create site**.
       4. Upload an OpenAPI v3.0 schema file or choose to select an existing schema from API Shield.
           :::note
           If you do not have a schema to upload or to select from a pre-existing schema, export your Endpoint Management schema. For best results, include the learned parameters.

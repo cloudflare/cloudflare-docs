@@ -1,0 +1,88 @@
+---
+link: "/realtime/realtimekit/release-notes/flutter-core/"
+productName: RealtimeKit Flutter Core
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2026-01-17"
+    title: RealtimeKit Flutter Core 0.1.5+1
+    description: |-
+      **Features**
+
+      - Updated internal version and dependencies
+  - publish_date: "2025-12-18"
+    title: RealtimeKit Flutter Core 0.1.4+1
+    description: |-
+      **Features**
+
+      - Added `maxParticipantsPerPage` getter in client
+
+      **Fixes**
+
+      - Fixed hot-restart causing infinite loading screen
+      - Fixed video view flickering by using stable keys
+      - Fixed error code handling for iOS
+      - Fixed `rtkClient` not being reset after leaving a meeting
+      - Fixed a crash caused due to color parsing failure
+  - publish_date: "2025-11-24"
+    title: RealtimeKit Flutter Core 0.1.4
+    description: |-
+      **Fixes**
+
+      - Fixed video views failing to be created for some participants
+      - Fixed participant pinning not working correctly
+  - publish_date: "2025-11-03"
+    title: RealtimeKit Flutter Core 0.1.3
+    description: |-
+      **Features**
+
+      - Added `onAudioDeviceChanged(AudioDevice)` callback that is invoked when the current audio route changes
+      - Updated `onAudioDevicesUpdated(List<AudioDevice>)` callback to provide the list of available audio devices
+      - Added camera type to video device and a human-friendly label to show in UI
+
+      **Fixes**
+
+      - Updated iPhone deployment target to 18.0
+  - publish_date: "2025-10-09"
+    title: RealtimeKit Flutter Core 0.1.2+1
+    description: |-
+      **Fixes**
+
+      - Reverted camera type changes that were causing a crash
+  - publish_date: "2025-10-09"
+    title: RealtimeKit Flutter Core 0.1.2
+    description: |-
+      **Fixes**
+
+      - Screen now stays awake while participant is in a meeting
+      - Fixed stage status not being parsed correctly
+      - Fixed screen share view not displaying for local user
+      - Added camera type to video device and a human-friendly label to show in UI
+  - publish_date: "2025-09-12"
+    title: RealtimeKit Flutter Core 0.1.1
+    description: |-
+      **Features**
+
+      - Added `onPollUpdate(List<Poll>)` callback in `RtkPollsEventListener` that is invoked when a poll is updated
+      - Added `acceptAllWaitingRoomRequests()` method to admit all waiting room participants at once
+
+      **Breaking changes**
+
+      - Moved `meeting.broadcastMessage` to `meeting.participants.broadcastMessage(...)`
+      - Renamed `disableAllAudios` and `disableAllVideos` to `disableAllAudio`/`disableAllVideo`
+      - Removed `RTK` prefix from `RtkVideoPermissions`
+
+      **Fixes**
+
+      - Fixed sending images and files in chat causing a crash
+  - publish_date: "2025-08-26"
+    title: RealtimeKit Flutter Core 0.1.0+1
+    description: |-
+      **Fixes**
+
+      - Fixed event listener method names for self, plugin, polls, and recording events
+  - publish_date: "2025-08-25"
+    title: RealtimeKit Flutter Core 0.1.0
+    description: |-
+      **New APIs**
+
+      - Initial release of RealtimeKit Flutter Core

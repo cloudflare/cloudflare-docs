@@ -259,6 +259,18 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 4. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**.
 5. When you are done, select **Save**.
 
+## Use case: Logging mTLS certificate headers
+
+To log mTLS certificate details (such as `cf-cert-subject-dn` or `cf-cert-issuer-dn`) in Logpush, you need to:
+
+1. Enable the [Add TLS client auth headers](/rules/transform/managed-transforms/reference/#add-tls-client-auth-headers) Managed Transform to inject the certificate headers.
+2. Configure Logpush custom fields using `transformed_request_fields` (not `request_fields`) to capture these Cloudflare-injected headers.
+3. Ensure your Logpush job includes the `RequestHeaders` field.
+
+The mTLS headers are injected by Cloudflare after the client request is received, so they must be captured using `transformed_request_fields` rather than `request_fields`.
+
+For more information on configuring client certificates, refer to [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
 ## Limitations
 
 - Custom fields allow 100 headers per field type — this applies separately to `request_fields`, `transformed_request_fields`, `response_fields`, `raw_response_fields`, and `cookie_fields`.
