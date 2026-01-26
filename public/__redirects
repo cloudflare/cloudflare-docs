@@ -2257,6 +2257,7 @@
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /warp-client/teams/ /cloudflare-one/connections/connect-devices/warp/ 301
+/cloudflare-one/integrations/identity-providers/azuread/ /cloudflare-one/integrations/identity-providers/entra-id/ 301
 
 # Cloudflare One nav revamp (statics)
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
