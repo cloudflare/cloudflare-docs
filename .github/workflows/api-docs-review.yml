@@ -1,0 +1,43 @@
+name: API docs review
+
+# **What it does**: Reviews changed documentation files for API documentation quality and coverage.
+# **Why we have it**: To ensure API examples follow style guidelines and identify missing API coverage.
+# **Who does it impact**: PCX team, documentation contributors
+
+on:
+  pull_request:
+    branches:
+      - production
+    paths:
+      - "src/content/docs/**/*.mdx"
+      - "src/content/partials/**/*.mdx"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Review API documentation
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run API docs review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx bin/api-docs-review/index.ts
