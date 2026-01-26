@@ -1,4 +1,4 @@
-import { COMMENT_IDENTIFIER, COMMENT_PREFIX } from "./constants";
+import { COMMENT_IDENTIFIER } from "./constants";
 import type { FileReviewResult, ReviewReport } from "./types";
 
 /**
@@ -7,118 +7,48 @@ import type { FileReviewResult, ReviewReport } from "./types";
 export function generateReport(report: ReviewReport): string {
 	const lines: string[] = [
 		COMMENT_IDENTIFIER,
-		COMMENT_PREFIX,
-		"",
-		`> Automated review of API documentation in changed files.`,
+		"## API Documentation Review",
 		"",
 	];
 
-	// Overall summary
-	lines.push("### Summary");
-	lines.push("");
-	lines.push(
-		`| Metric | Value |`,
-		`| ------ | ----- |`,
-		`| Files reviewed | ${report.summary.totalFiles} |`,
-		`| Total errors | ${report.summary.totalErrors} |`,
-		`| Total warnings | ${report.summary.totalWarnings} |`,
-		`| Total suggestions | ${report.summary.totalSuggestions} |`,
-		`| Average score | ${report.summary.averageScore.toFixed(0)}/100 |`,
-	);
-	lines.push("");
-
-	// API Coverage summary
-	if (report.summary.totalActionsFound > 0) {
-		const coveragePercent =
-			(report.summary.totalActionsWithApi / report.summary.totalActionsFound) *
-			100;
-		lines.push("### API Coverage");
-		lines.push("");
-		lines.push(
-			`| Metric | Value |`,
-			`| ------ | ----- |`,
-			`| Actions identified | ${report.summary.totalActionsFound} |`,
-			`| Actions with API examples | ${report.summary.totalActionsWithApi} (${coveragePercent.toFixed(0)}%) |`,
-			`| Actions missing API examples | ${report.summary.totalActionsMissingApi} |`,
-		);
-		lines.push("");
-	}
-
-	// If no issues at all, show success message
-	if (
-		report.summary.totalErrors === 0 &&
-		report.summary.totalWarnings === 0 &&
-		report.summary.totalSuggestions === 0
-	) {
-		lines.push("### Result");
-		lines.push("");
-		lines.push("No API documentation issues found in the changed files.");
-		lines.push("");
+	if (report.totalWithSchemaEndpoint === 0) {
+		// This shouldn't happen since we only post when there are findings,
+		// but handle it gracefully
+		lines.push("No issues found.");
 		return lines.join("\n");
 	}
 
-	// Per-file details
-	lines.push("### Details");
-	lines.push("");
+	lines.push(
+		`Found **${report.totalWithSchemaEndpoint}** manual curl example${report.totalWithSchemaEndpoint === 1 ? "" : "s"} that can be replaced with the \`<APIRequest>\` component.`,
+		"",
+	);
 
 	for (const file of report.files) {
-		if (file.issues.length === 0) continue;
-
-		lines.push(`<details>`);
-		lines.push(
-			`<summary><strong>${file.relativePath}</strong> (Score: ${file.score}/100)</summary>`,
+		const relevantCommands = file.curlCommands.filter(
+			(cmd) => cmd.hasSchemaEndpoint,
 		);
+		if (relevantCommands.length === 0) continue;
+
+		lines.push(`### ${file.relativePath}`);
 		lines.push("");
 
-		// Group issues by severity
-		const errors = file.issues.filter((i) => i.severity === "error");
-		const warnings = file.issues.filter((i) => i.severity === "warning");
-		const suggestions = file.issues.filter((i) => i.severity === "suggestion");
-
-		if (errors.length > 0) {
-			lines.push("**Errors:**");
-			for (const issue of errors) {
-				const lineInfo = issue.line ? ` (line ${issue.line})` : "";
-				lines.push(`- ${issue.message}${lineInfo}`);
-				if (issue.suggestion) {
-					lines.push(`  - Suggestion: ${issue.suggestion}`);
-				}
-			}
+		for (const cmd of relevantCommands) {
+			lines.push(
+				`- **Line ${cmd.line}**: \`${cmd.method}\` request to \`${cmd.path}\``,
+			);
+			lines.push(
+				`  - This endpoint exists in the [API schema](https://developers.cloudflare.com/api/). Consider replacing with:`,
+			);
+			lines.push("  ```jsx");
+			lines.push(`  <APIRequest path="${cmd.path}" method="${cmd.method}" />`);
+			lines.push("  ```");
 			lines.push("");
 		}
-
-		if (warnings.length > 0) {
-			lines.push("**Warnings:**");
-			for (const issue of warnings) {
-				const lineInfo = issue.line ? ` (line ${issue.line})` : "";
-				lines.push(`- ${issue.message}${lineInfo}`);
-				if (issue.suggestion) {
-					lines.push(`  - Suggestion: ${issue.suggestion}`);
-				}
-			}
-			lines.push("");
-		}
-
-		if (suggestions.length > 0) {
-			lines.push("**Suggestions:**");
-			for (const issue of suggestions) {
-				const lineInfo = issue.line ? ` (line ${issue.line})` : "";
-				lines.push(`- ${issue.message}${lineInfo}`);
-				if (issue.suggestion) {
-					lines.push(`  - ${issue.suggestion}`);
-				}
-			}
-			lines.push("");
-		}
-
-		lines.push("</details>");
-		lines.push("");
 	}
 
-	// Footer with help link
 	lines.push("---");
 	lines.push(
-		"*This review was generated automatically. For more information, see the [API documentation style guide](https://developers.cloudflare.com/style-guide/api-content-strategy/).*",
+		"*Using `<APIRequest>` provides automatic schema validation, consistent formatting, and keeps examples up-to-date. See the [style guide](https://developers.cloudflare.com/style-guide/components/api-request/) for details.*",
 	);
 
 	return lines.join("\n");
@@ -130,55 +60,19 @@ export function generateReport(report: ReviewReport): string {
 export function aggregateResults(
 	fileResults: FileReviewResult[],
 ): ReviewReport {
-	const totalErrors = fileResults.reduce(
-		(sum, f) => sum + f.issues.filter((i) => i.severity === "error").length,
-		0,
-	);
-	const totalWarnings = fileResults.reduce(
-		(sum, f) => sum + f.issues.filter((i) => i.severity === "warning").length,
-		0,
-	);
-	const totalSuggestions = fileResults.reduce(
-		(sum, f) =>
-			sum + f.issues.filter((i) => i.severity === "suggestion").length,
-		0,
-	);
-	const averageScore =
-		fileResults.length > 0
-			? fileResults.reduce((sum, f) => sum + f.score, 0) / fileResults.length
-			: 100;
-
-	const totalActionsFound = fileResults.reduce(
-		(sum, f) => sum + f.summary.actionsFound,
-		0,
-	);
-	const totalActionsWithApi = fileResults.reduce(
-		(sum, f) => sum + f.summary.actionsWithApi,
-		0,
-	);
-	const totalActionsMissingApi = fileResults.reduce(
-		(sum, f) =>
-			sum +
-			f.summary.actionsMissingApiAvailable +
-			f.summary.actionsMissingApiUnavailable,
+	const totalCurlCommands = fileResults.reduce(
+		(sum, f) => sum + f.curlCommands.length,
 		0,
 	);
 
-	// Report has API content if any file has API content
-	const hasApiContent = fileResults.some((f) => f.hasApiContent);
+	const totalWithSchemaEndpoint = fileResults.reduce(
+		(sum, f) => sum + f.curlCommands.filter((c) => c.hasSchemaEndpoint).length,
+		0,
+	);
 
 	return {
 		files: fileResults,
-		hasApiContent,
-		summary: {
-			totalFiles: fileResults.length,
-			totalErrors,
-			totalWarnings,
-			totalSuggestions,
-			averageScore,
-			totalActionsFound,
-			totalActionsWithApi,
-			totalActionsMissingApi,
-		},
+		totalCurlCommands,
+		totalWithSchemaEndpoint,
 	};
 }

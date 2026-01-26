@@ -1,436 +1,227 @@
-import { ACTION_VERBS } from "./constants";
-import type {
-	ActionItem,
-	ComponentUsage,
-	FileReviewResult,
-	ReviewIssue,
-} from "./types";
+import type { OpenAPI, OpenAPIV3 } from "openapi-types";
+import type { CurlCommand, FileReviewResult } from "./types";
 
 /**
- * Extracts the product area from a file path
- * e.g., "src/content/docs/workers/..." -> "workers"
+ * Parses a curl command to extract method and URL
  */
-export function extractProductArea(filePath: string): string | null {
-	const match = filePath.match(/src\/content\/docs\/([^/]+)/);
-	return match ? match[1] : null;
+function parseCurlCommand(curlLines: string[]): {
+	method: string;
+	url: string;
+	rawCommand: string;
+} | null {
+	const fullCommand = curlLines.join(" ").replace(/\\\s*\n\s*/g, " ");
+
+	// Extract URL - curl typically has the URL as a positional argument or after flags
+	const urlMatch = fullCommand.match(
+		/curl\s+(?:[^"'\s]+\s+)*["']?(https?:\/\/[^\s"']+)["']?/,
+	);
+	if (!urlMatch) {
+		// Try another pattern: URL without quotes
+		const urlMatch2 = fullCommand.match(/curl\s+.*?(https?:\/\/[^\s\\]+)/);
+		if (!urlMatch2) return null;
+	}
+
+	const url = urlMatch?.[1] || fullCommand.match(/https?:\/\/[^\s"'\\]+/)?.[0];
+	if (!url) return null;
+
+	// Extract method from -X or --request flag, default to GET (or POST if there's data)
+	let method = "GET";
+	const methodMatch = fullCommand.match(/-X\s+["']?(\w+)["']?/);
+	if (methodMatch) {
+		method = methodMatch[1].toUpperCase();
+	} else if (
+		fullCommand.includes("--data") ||
+		fullCommand.includes("-d ") ||
+		fullCommand.includes("-d'") ||
+		fullCommand.includes('-d"')
+	) {
+		method = "POST";
+	}
+
+	return { method, url, rawCommand: fullCommand.trim() };
 }
 
 /**
- * Detects action items in the document content
- * Actions are identified by headers and procedural content
+ * Extracts the API path from a full Cloudflare API URL
  */
-export function detectActions(content: string): ActionItem[] {
-	const actions: ActionItem[] = [];
+function extractApiPath(url: string): string | null {
+	if (!url.includes("api.cloudflare.com")) return null;
+
+	// Remove base URL and extract path
+	const pathMatch = url.match(/api\.cloudflare\.com\/client\/v4(\/[^\s?#"']+)/);
+	if (!pathMatch) return null;
+
+	let path = pathMatch[1];
+
+	// Normalize path parameters - replace actual IDs and placeholders with OpenAPI format
+	path = path
+		// Shell variable placeholders like $ACCOUNT_ID or ${ACCOUNT_ID}
+		.replace(/\/\$\{?([A-Z_]+)\}?(?=\/|$)/g, (_, name) => {
+			return `/{${name.toLowerCase()}}`;
+		})
+		// Angle bracket placeholders like <ACCOUNT_ID>
+		.replace(/\/<([A-Z_]+)>(?=\/|$)/g, (_, name) => {
+			return `/{${name.toLowerCase()}}`;
+		})
+		// 32-char hex (zone_id, account_id, etc.)
+		.replace(/\/[a-f0-9]{32}(?=\/|$)/gi, "/{id}")
+		// UUIDs
+		.replace(
+			/\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(?=\/|$)/gi,
+			"/{id}",
+		)
+		// Numeric IDs
+		.replace(/\/\d+(?=\/|$)/g, "/{id}");
+
+	return path;
+}
+
+/**
+ * Detects raw curl commands in bash code blocks
+ */
+export function detectCurlCommands(content: string): CurlCommand[] {
+	const commands: CurlCommand[] = [];
 	const lines = content.split("\n");
+
+	let inBashBlock = false;
+	let curlLines: string[] = [];
+	let curlStartLine = 0;
 
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
-		const lineNumber = i + 1;
 
-		// Check for headers that describe actions (## or ###)
-		const headerMatch = line.match(/^#{2,3}\s+(.+)$/);
-		if (headerMatch) {
-			const headerText = headerMatch[1].toLowerCase();
-			const actionType = identifyActionType(headerText);
-
-			if (actionType) {
-				actions.push({
-					name: headerMatch[1],
-					line: lineNumber,
-					actionType,
-					hasApiExample: false, // Will be updated later
-				});
-			}
+		// Detect start of bash/shell code block
+		if (line.match(/^```(?:bash|sh|shell)?\s*$/)) {
+			inBashBlock = true;
+			continue;
 		}
 
-		// Check for numbered list items that describe actions
-		const listMatch = line.match(/^\d+\.\s+(.+)$/);
-		if (listMatch) {
-			const listText = listMatch[1].toLowerCase();
-			// Only capture if it looks like a primary action step
-			if (
-				listText.includes("select **create") ||
-				listText.includes("select **add") ||
-				listText.includes("select **delete") ||
-				listText.includes("select **save")
-			) {
-				// This is likely a dashboard instruction, check if parent section needs API
-				// We'll handle this differently - look for the parent header
-			}
-		}
-	}
-
-	return actions;
-}
-
-/**
- * Identifies the action type from text
- */
-function identifyActionType(text: string): ActionItem["actionType"] | null {
-	const lowerText = text.toLowerCase();
-
-	for (const [actionType, verbs] of Object.entries(ACTION_VERBS)) {
-		for (const verb of verbs) {
-			if (lowerText.includes(verb)) {
-				return actionType as ActionItem["actionType"];
-			}
-		}
-	}
-
-	return null;
-}
-
-/**
- * Detects API-related components in the content
- */
-export function detectComponents(content: string): ComponentUsage[] {
-	const components: ComponentUsage[] = [];
-	const lines = content.split("\n");
-
-	for (let i = 0; i < lines.length; i++) {
-		const line = lines[i];
-		const lineNumber = i + 1;
-
-		// Check for <APIRequest> component
-		if (line.includes("<APIRequest")) {
-			const pathMatch = content
-				.slice(content.indexOf(line))
-				.match(/path=["']([^"']+)["']/);
-			const methodMatch = content
-				.slice(content.indexOf(line))
-				.match(/method=["']([^"']+)["']/);
-
-			components.push({
-				type: "APIRequest",
-				line: lineNumber,
-				path: pathMatch?.[1],
-				method: methodMatch?.[1],
-				hasSchemaValidation: true,
-			});
-		}
-
-		// Check for <CURL> component
-		if (line.includes("<CURL") && !line.includes("<CURL>")) {
-			const urlMatch = content
-				.slice(content.indexOf(line))
-				.match(/url=["']([^"']+)["']/);
-			const methodMatch = content
-				.slice(content.indexOf(line))
-				.match(/method=["']([^"']+)["']/);
-
-			components.push({
-				type: "CURL",
-				line: lineNumber,
-				path: urlMatch?.[1],
-				method: methodMatch?.[1],
-				hasSchemaValidation: false,
-			});
-		}
-
-		// Check for <Tabs> component
-		if (line.includes("<Tabs")) {
-			components.push({
-				type: "Tabs",
-				line: lineNumber,
-			});
-		}
-
-		// Check for raw curl in bash blocks
-		if (line.includes("```bash")) {
-			// Look ahead for curl command
-			let j = i + 1;
-			while (j < lines.length && !lines[j].includes("```")) {
-				if (lines[j].trim().startsWith("curl ")) {
-					components.push({
-						type: "rawCurl",
-						line: j + 1,
+		// Detect end of code block
+		if (line.startsWith("```") && inBashBlock) {
+			// Process any pending curl command
+			if (curlLines.length > 0) {
+				const parsed = parseCurlCommand(curlLines);
+				if (parsed && parsed.url.includes("api.cloudflare.com")) {
+					const path = extractApiPath(parsed.url);
+					commands.push({
+						line: curlStartLine,
+						method: parsed.method,
+						path: path || "",
+						fullUrl: parsed.url,
+						rawCommand: parsed.rawCommand,
+						hasSchemaEndpoint: false, // Will be set later
 					});
-					break;
 				}
-				j++;
+				curlLines = [];
 			}
-		}
-	}
-
-	return components;
-}
-
-/**
- * Checks for common style guide issues
- */
-export function checkStyleGuide(content: string): ReviewIssue[] {
-	const issues: ReviewIssue[] = [];
-	const lines = content.split("\n");
-
-	for (let i = 0; i < lines.length; i++) {
-		const line = lines[i];
-		const lineNumber = i + 1;
-
-		// Check for title case in headers (should be sentence case)
-		const headerMatch = line.match(/^(#{1,6})\s+(.+)$/);
-		if (headerMatch) {
-			const headerText = headerMatch[2];
-			// Simple heuristic: if most words are capitalized, it might be title case
-			const words = headerText.split(/\s+/);
-			const capitalizedWords = words.filter(
-				(w) => w.length > 3 && w[0] === w[0].toUpperCase(),
-			);
-			if (capitalizedWords.length > words.length * 0.7 && words.length > 2) {
-				issues.push({
-					severity: "warning",
-					message: `Header may be using title case instead of sentence case`,
-					line: lineNumber,
-					suggestion:
-						"Use sentence case for headers (capitalize only the first word)",
-				});
-			}
+			inBashBlock = false;
+			continue;
 		}
 
-		// Check for missing imports when using components
-		if (
-			line.includes("<APIRequest") &&
-			!content.includes("import { APIRequest") &&
-			!content.includes("import {APIRequest")
-		) {
-			// Only flag once per file
-			if (
-				!issues.some((issue) => issue.message.includes("APIRequest import"))
-			) {
-				issues.push({
-					severity: "error",
-					message: "Missing import for APIRequest component",
-					line: lineNumber,
-					suggestion: 'Add: import { APIRequest } from "~/components";',
-				});
-			}
-		}
-
-		if (
-			line.includes("<CURL") &&
-			!content.includes("import { CURL") &&
-			!content.includes("import {CURL") &&
-			!content.includes(", CURL") &&
-			!content.includes(",CURL")
-		) {
-			if (!issues.some((issue) => issue.message.includes("CURL import"))) {
-				issues.push({
-					severity: "error",
-					message: "Missing import for CURL component",
-					line: lineNumber,
-					suggestion: 'Add: import { CURL } from "~/components";',
-				});
-			}
-		}
-
-		// Check for Tabs without syncKey
-		if (line.includes("<Tabs") && !line.includes("syncKey")) {
-			issues.push({
-				severity: "warning",
-				message: "Tabs component missing syncKey attribute",
-				line: lineNumber,
-				suggestion: 'Add syncKey="dashPlusAPI" for Dashboard/API tabs',
-			});
-		}
-	}
-
-	return issues;
-}
-
-/**
- * Checks for JSX syntax issues
- */
-export function checkJsxSyntax(content: string): ReviewIssue[] {
-	const issues: ReviewIssue[] = [];
-	const lines = content.split("\n");
-
-	for (let i = 0; i < lines.length; i++) {
-		const line = lines[i];
-		const lineNumber = i + 1;
-
-		// Check for unclosed self-closing tags
-		if (
-			line.includes("<APIRequest") &&
-			!line.includes("/>") &&
-			!line.includes("</APIRequest")
-		) {
-			// Look ahead for closing
-			let foundClose = false;
-			for (let j = i + 1; j < Math.min(i + 20, lines.length); j++) {
-				if (lines[j].includes("/>") || lines[j].includes("</APIRequest")) {
-					foundClose = true;
-					break;
+		if (inBashBlock) {
+			// Check if this line starts a curl command
+			if (line.trim().startsWith("curl ") || line.trim() === "curl") {
+				// Save any previous curl command first
+				if (curlLines.length > 0) {
+					const parsed = parseCurlCommand(curlLines);
+					if (parsed && parsed.url.includes("api.cloudflare.com")) {
+						const path = extractApiPath(parsed.url);
+						commands.push({
+							line: curlStartLine,
+							method: parsed.method,
+							path: path || "",
+							fullUrl: parsed.url,
+							rawCommand: parsed.rawCommand,
+							hasSchemaEndpoint: false,
+						});
+					}
 				}
+				curlLines = [line];
+				curlStartLine = i + 1; // 1-indexed
+			} else if (curlLines.length > 0) {
+				// Continue collecting multi-line curl command
+				curlLines.push(line);
 			}
-			if (!foundClose) {
-				issues.push({
-					severity: "error",
-					message: "APIRequest component may not be properly closed",
-					line: lineNumber,
-					suggestion: "Ensure the component ends with /> or </APIRequest>",
-				});
-			}
-		}
-
-		// Check for object props with single braces instead of double
-		const singleBraceMatch = line.match(/json=\{[^{]/);
-		if (singleBraceMatch && !line.includes("json={{")) {
-			issues.push({
-				severity: "error",
-				message: "Object prop should use double braces",
-				line: lineNumber,
-				suggestion: "Use json={{ ... }} instead of json={ ... }",
-			});
 		}
 	}
 
-	return issues;
+	return commands;
 }
 
 /**
- * Associates detected actions with API components
+ * Checks if an endpoint exists in the OpenAPI schema
  */
-export function associateActionsWithComponents(
-	actions: ActionItem[],
-	components: ComponentUsage[],
-	content: string,
-): ActionItem[] {
-	const lines = content.split("\n");
+export function checkEndpointInSchema(
+	path: string,
+	method: string,
+	schema: OpenAPI.Document,
+): boolean {
+	const paths = (schema as OpenAPIV3.Document).paths;
+	if (!paths) return false;
 
-	return actions.map((action) => {
-		// Find the next header or end of file
-		let endLine = lines.length;
-		for (let i = action.line; i < lines.length; i++) {
-			if (lines[i].match(/^#{2,3}\s+/) && i !== action.line - 1) {
-				endLine = i + 1;
-				break;
-			}
+	// Try exact match first
+	if (paths[path]) {
+		const pathItem = paths[path] as OpenAPIV3.PathItemObject;
+		if (pathItem[method.toLowerCase() as keyof OpenAPIV3.PathItemObject]) {
+			return true;
 		}
-
-		// Check if any API component exists between action and next header
-		const hasApiComponent = components.some(
-			(comp) =>
-				comp.line >= action.line &&
-				comp.line < endLine &&
-				(comp.type === "APIRequest" || comp.type === "CURL"),
-		);
-
-		return {
-			...action,
-			hasApiExample: hasApiComponent,
-		};
-	});
-}
-
-/**
- * Calculate a score for the file review
- */
-export function calculateScore(result: FileReviewResult): number {
-	let score = 100;
-
-	// Deduct for errors
-	const errors = result.issues.filter((i) => i.severity === "error");
-	score -= errors.length * 10;
-
-	// Deduct for warnings
-	const warnings = result.issues.filter((i) => i.severity === "warning");
-	score -= warnings.length * 5;
-
-	// Deduct for missing API examples where API is available
-	score -= result.summary.actionsMissingApiAvailable * 5;
-
-	// Deduct for raw curl commands
-	score -= result.summary.rawCurlCommands * 3;
-
-	// Bonus for using Tabs
-	if (result.summary.hasTabsIntegration) {
-		score += 5;
 	}
 
-	return Math.max(0, Math.min(100, score));
+	// Try to match with path parameters
+	// Convert our normalized path back to OpenAPI format
+	const normalizedPath = path.replace(/\{id\}/g, "{$1}");
+
+	for (const schemaPath of Object.keys(paths)) {
+		// Create a regex pattern from the schema path
+		const pattern = schemaPath
+			.replace(/\{[^}]+\}/g, "[^/]+")
+			.replace(/\//g, "\\/");
+		const regex = new RegExp(`^${pattern}$`);
+
+		if (regex.test(path) || regex.test(normalizedPath)) {
+			const pathItem = paths[schemaPath] as OpenAPIV3.PathItemObject;
+			if (pathItem[method.toLowerCase() as keyof OpenAPIV3.PathItemObject]) {
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 /**
- * Main function to analyze a single file
+ * Analyzes a file for raw curl commands
  */
 export function analyzeFile(
 	filePath: string,
 	content: string,
 ): FileReviewResult {
 	const relativePath = filePath.replace(/.*src\/content\//, "src/content/");
+	const curlCommands = detectCurlCommands(content);
 
-	// Detect actions and components
-	const actions = detectActions(content);
-	const components = detectComponents(content);
-
-	// Associate actions with their API examples
-	const enrichedActions = associateActionsWithComponents(
-		actions,
-		components,
-		content,
-	);
-
-	// Collect all issues
-	const issues: ReviewIssue[] = [
-		...checkStyleGuide(content),
-		...checkJsxSyntax(content),
-	];
-
-	// Add warnings for raw curl commands
-	const rawCurls = components.filter((c) => c.type === "rawCurl");
-	for (const rawCurl of rawCurls) {
-		issues.push({
-			severity: "warning",
-			message: "Raw curl command in bash block should be refactored",
-			line: rawCurl.line,
-			suggestion:
-				"Use <APIRequest> (if schema available) or <CURL> component instead",
-		});
-	}
-
-	// Add suggestions for actions missing API examples
-	const actionsMissingApi = enrichedActions.filter((a) => !a.hasApiExample);
-	for (const action of actionsMissingApi) {
-		issues.push({
-			severity: "suggestion",
-			message: `Action "${action.name}" may benefit from an API example`,
-			line: action.line,
-			suggestion: `Consider adding an <APIRequest> or <CURL> component for the ${action.actionType} operation`,
-		});
-	}
-
-	// Calculate summary
-	const summary = {
-		actionsFound: enrichedActions.length,
-		actionsWithApi: enrichedActions.filter((a) => a.hasApiExample).length,
-		actionsMissingApiAvailable: actionsMissingApi.filter(
-			(a) => a.apiEndpointAvailable,
-		).length,
-		actionsMissingApiUnavailable: actionsMissingApi.filter(
-			(a) => !a.apiEndpointAvailable,
-		).length,
-		rawCurlCommands: rawCurls.length,
-		hasTabsIntegration: components.some((c) => c.type === "Tabs"),
-	};
-
-	// Determine if file has API-related content
-	// A file has API content if it contains APIRequest, CURL components, or raw curl commands
-	const apiComponents = components.filter(
-		(c) => c.type === "APIRequest" || c.type === "CURL" || c.type === "rawCurl",
-	);
-	const hasApiContent = apiComponents.length > 0;
-
-	const result: FileReviewResult = {
+	return {
 		filePath,
 		relativePath,
-		actions: enrichedActions,
-		components,
-		issues,
-		score: 0,
-		hasApiContent,
-		summary,
+		curlCommands,
 	};
+}
 
-	result.score = calculateScore(result);
-
-	return result;
+/**
+ * Enriches curl commands with schema information
+ */
+export async function enrichWithSchemaInfo(
+	results: FileReviewResult[],
+	schema: OpenAPI.Document,
+): Promise<void> {
+	for (const result of results) {
+		for (const cmd of result.curlCommands) {
+			if (cmd.path) {
+				cmd.hasSchemaEndpoint = checkEndpointInSchema(
+					cmd.path,
+					cmd.method,
+					schema,
+				);
+			}
+		}
+	}
 }

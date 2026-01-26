@@ -1,62 +1,20 @@
-export type Severity = "error" | "warning" | "suggestion" | "info";
-
-export interface ReviewIssue {
-	severity: Severity;
-	message: string;
-	line?: number;
-	suggestion?: string;
-	endpoint?: string;
-	apiReference?: string;
-}
-
-export interface ActionItem {
-	name: string;
+export interface CurlCommand {
 	line: number;
-	actionType: "create" | "update" | "delete" | "read" | "other";
-	hasApiExample: boolean;
-	apiEndpointAvailable?: boolean;
-	suggestedEndpoint?: string;
-	suggestedMethod?: string;
-	apiReference?: string;
-}
-
-export interface ComponentUsage {
-	type: "APIRequest" | "CURL" | "Tabs" | "rawCurl";
-	line: number;
-	path?: string;
-	method?: string;
-	hasSchemaValidation?: boolean;
+	method: string;
+	path: string;
+	fullUrl: string;
+	rawCommand: string;
+	hasSchemaEndpoint: boolean;
 }
 
 export interface FileReviewResult {
 	filePath: string;
 	relativePath: string;
-	actions: ActionItem[];
-	components: ComponentUsage[];
-	issues: ReviewIssue[];
-	score: number;
-	hasApiContent: boolean;
-	summary: {
-		actionsFound: number;
-		actionsWithApi: number;
-		actionsMissingApiAvailable: number;
-		actionsMissingApiUnavailable: number;
-		rawCurlCommands: number;
-		hasTabsIntegration: boolean;
-	};
+	curlCommands: CurlCommand[];
 }
 
 export interface ReviewReport {
 	files: FileReviewResult[];
-	hasApiContent: boolean;
-	summary: {
-		totalFiles: number;
-		totalErrors: number;
-		totalWarnings: number;
-		totalSuggestions: number;
-		averageScore: number;
-		totalActionsFound: number;
-		totalActionsWithApi: number;
-		totalActionsMissingApi: number;
-	};
+	totalCurlCommands: number;
+	totalWithSchemaEndpoint: number;
 }

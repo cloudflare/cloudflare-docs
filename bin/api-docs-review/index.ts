@@ -3,8 +3,10 @@ import * as github from "@actions/github";
 import * as fs from "fs";
 import * as path from "path";
 import type { PullRequestEvent } from "@octokit/webhooks-types";
+import SwaggerParser from "@apidevtools/swagger-parser";
+import type { OpenAPI } from "openapi-types";
 
-import { analyzeFile } from "./analyzer";
+import { analyzeFile, enrichWithSchemaInfo } from "./analyzer";
 import { generateReport, aggregateResults } from "./report";
 import {
 	GITHUB_ACTIONS_BOT_ID,
@@ -12,6 +14,17 @@ import {
 	DOCS_CONTENT_PATH,
 	PARTIALS_PATH,
 } from "./constants";
+
+// Schema commit - keep in sync with src/util/api.ts
+const SCHEMA_COMMIT = "6b852f9040e6f578aa91b159af2f933527465f72";
+
+async function getSchema(): Promise<OpenAPI.Document> {
+	const response = await fetch(
+		`https://gh-code.developers.cloudflare.com/cloudflare/api-schemas/${SCHEMA_COMMIT}/openapi.json`,
+	);
+	const obj = await response.json();
+	return SwaggerParser.dereference(obj);
+}
 
 async function run(): Promise<void> {
 	try {
@@ -52,13 +65,12 @@ async function run(): Promise<void> {
 			return;
 		}
 
-		// Analyze each file
+		// Analyze each file for curl commands
 		const fileResults = [];
 
 		for (const file of docsFiles) {
 			const filePath = path.join(process.cwd(), file.filename);
 
-			// Check if file exists (might have been deleted in a later commit)
 			if (!fs.existsSync(filePath)) {
 				core.warning(`File not found: ${file.filename}`);
 				continue;
@@ -69,7 +81,9 @@ async function run(): Promise<void> {
 
 			try {
 				const result = analyzeFile(file.filename, content);
-				fileResults.push(result);
+				if (result.curlCommands.length > 0) {
+					fileResults.push(result);
+				}
 			} catch (error) {
 				core.warning(
 					`Error analyzing ${file.filename}: ${error instanceof Error ? error.message : String(error)}`,
@@ -78,23 +92,28 @@ async function run(): Promise<void> {
 		}
 
 		if (fileResults.length === 0) {
-			core.info("No files were successfully analyzed");
+			core.info("No curl commands found in changed files");
 			await removeExistingComment(octokit, owner, repo, pullRequestNumber);
 			return;
 		}
+
+		// Load schema and check endpoints
+		core.info("Loading API schema...");
+		const schema = await getSchema();
+
+		core.info("Checking endpoints against schema...");
+		await enrichWithSchemaInfo(fileResults, schema);
 
 		// Generate report
 		const report = aggregateResults(fileResults);
 
 		core.info(
-			`Review complete: ${report.summary.totalErrors} errors, ${report.summary.totalWarnings} warnings, ${report.summary.totalSuggestions} suggestions`,
+			`Found ${report.totalCurlCommands} curl commands, ${report.totalWithSchemaEndpoint} have schema endpoints`,
 		);
 
-		// Only post comment if files contain API-related content
-		if (!report.hasApiContent) {
-			core.info(
-				"No API-related content found in changed files, skipping comment",
-			);
+		// Only post comment if there are curl commands with schema endpoints
+		if (report.totalWithSchemaEndpoint === 0) {
+			core.info("No curl commands with matching schema endpoints found");
 			await removeExistingComment(octokit, owner, repo, pullRequestNumber);
 			return;
 		}
@@ -110,21 +129,7 @@ async function run(): Promise<void> {
 			reportMarkdown,
 		);
 
-		// Log summary
-		core.summary
-			.addHeading("API Documentation Review")
-			.addTable([
-				[
-					{ data: "Metric", header: true },
-					{ data: "Value", header: true },
-				],
-				["Files Reviewed", String(report.summary.totalFiles)],
-				["Errors", String(report.summary.totalErrors)],
-				["Warnings", String(report.summary.totalWarnings)],
-				["Suggestions", String(report.summary.totalSuggestions)],
-				["Average Score", `${report.summary.averageScore.toFixed(0)}/100`],
-			])
-			.write();
+		core.info("Comment posted successfully");
 	} catch (error) {
 		if (error instanceof Error) {
 			core.setFailed(error.message);
