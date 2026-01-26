@@ -2,8 +2,6 @@
 params:
   - productName
   - productLink
-  - otherProductName
-  - otherProductLink
   - healthCheckDefault
   - defaultReason
   - tunnelsConfigLink
@@ -18,7 +16,7 @@ params:
 
 import { DashButton } from "~/components";
 
-This guide helps you diagnose and resolve common tunnel health issues with <a href={props.productLink}>{props.productName}</a> and <a href={props.otherProductLink}>{props.otherProductName}</a>. Tunnel health checks monitor your GRE and IPsec tunnels and steer traffic to the best available routes.
+This guide helps you diagnose and resolve common tunnel health issues with <a href={props.productLink}>{props.productName}</a>. Tunnel health checks monitor your GRE and IPsec tunnels and steer traffic to the best available routes.
 
 ## Quick diagnostic checklist
 
@@ -29,7 +27,7 @@ If you are experiencing tunnel health issues, check these items first:
 3. **Anti-replay protection**: Disable anti-replay protection on your router, or set the replay window to `0`.
 4. **MTU settings**: Verify MTU is set correctly (typically `1476` for GRE, `1400-1450` for IPsec).
 5. **IPsec parameters**: Confirm your cryptographic parameters match <a href={props.tunnelsConfigLink}>Cloudflare's supported configuration</a>.
-6. **Health check direction**: {props.productName} defaults to *{props.healthCheckDefault}*{props.defaultReason && `; ${props.otherProductName} ${props.defaultReason} defaults to the opposite direction`}.
+6. **Health check direction**: {props.productName} defaults to *{props.healthCheckDefault}*{props.defaultReason && ` ${props.defaultReason}`}.
 
 ---
 
@@ -87,8 +85,8 @@ For instructions on monitoring tunnel status, refer to <a href={props.checkHealt
 
 | Direction | Behavior | Default for |
 | :---- | :---- | :---- |
-| **Bidirectional** | Probe and response both traverse the tunnel | {props.healthCheckDefault === "Bidirectional" ? props.productName : props.otherProductName} |
-| **Unidirectional** | Probe traverses tunnel; response returns via Internet | {props.healthCheckDefault === "Unidirectional" ? `${props.productName}${props.defaultReason ? ` ${props.defaultReason}` : ""}` : props.otherProductName} |
+| **Bidirectional** | Probe and response both traverse the tunnel | {props.healthCheckDefault === "Bidirectional" ? props.productName : ""} |
+| **Unidirectional** | Probe traverses tunnel; response returns via Internet | {props.healthCheckDefault === "Unidirectional" ? `${props.productName}${props.defaultReason ? ` ${props.defaultReason}` : ""}` : ""} |
 
 :::note
 Unidirectional health checks can be unreliable because intermediate network devices may drop ICMP reply packets. If you have egress traffic enabled, consider switching to bidirectional health checks.
