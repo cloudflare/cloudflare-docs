@@ -1,4 +1,5 @@
 ---
+
 summary: Shows how to restrict access using the HTTP Basic schema.
 tags:
   - Security
@@ -181,7 +182,7 @@ interface Env {
 	PASSWORD: string;
 }
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request, env): Promise<Response> {
 		const BASIC_USER = "admin";
 
 		// You will need an admin password. This should be
@@ -284,7 +285,7 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         "/admin" => {
             // The "Authorization" header is sent when authenticated.
             let authorization = req.headers().get("Authorization")?;
-            if authorization.is_none() {
+            if authorization == None {
                 let mut headers = Headers::new();
                 // Prompts the user for credentials.
                 headers.set(
@@ -295,37 +296,22 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
             }
             let authorization = authorization.unwrap();
             let auth: Vec<&str> = authorization.split(" ").collect();
-
-            // The Authorization header must start with Basic, followed by a space.
-            if auth.len() < 2 {
-                return Response::error("Malformed authorization header.", 400);
-            }
-
             let scheme = auth[0];
             let encoded = auth[1];
 
-            if encoded.is_empty() || scheme != "Basic" {
+            // The Authorization header must start with Basic, followed by a space.
+            if encoded == "" || scheme != "Basic" {
                 return Response::error("Malformed authorization header.", 400);
             }
 
-            let buff = match BASE64_STANDARD.decode(encoded) {
-                Ok(b) => b,
-                Err(_) => return Response::error("Malformed authorization header.", 400),
-            };
+            let buff = BASE64_STANDARD.decode(encoded).unwrap();
             let credentials = String::from_utf8_lossy(&buff);
             // The username & password are split by the first colon.
             //=> example: "username:password"
-            let credentials: Vec<&str> = credentials.splitn(2, ':').collect();
-
-            if credentials.len() < 2 {
-                return Response::error("Malformed authorization header.", 400);
-            }
-
+            let credentials: Vec<&str> = credentials.split(':').collect();
             let user = credentials[0];
             let pass = credentials[1];
 
-            // Note: This comparison is not timing-safe. For production use,
-            // consider using a constant-time comparison to prevent timing attacks.
             if user != basic_user || pass != basic_pass {
                 let mut headers = Headers::new();
                 // Prompts the user for credentials.
