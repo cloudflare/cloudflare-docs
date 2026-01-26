@@ -1,12 +1,26 @@
 ---
-{}
+params:
+  - productName
+  - productLink
+  - otherProductName
+  - otherProductLink
+  - healthCheckDefault
+  - defaultReason
+  - tunnelsConfigLink
+  - checkHealthDashLink
+  - magicFirewallRulesetLink
+  - antiReplayLink
+  - tunnelHealthChecksLink
+  - configureTunnelsLink
+  - networkAnalyticsLink
+  - supportedIpsecConfigLink
 ---
 
 import { DashButton } from "~/components";
 
 # Troubleshoot tunnel health
 
-This guide helps you diagnose and resolve common tunnel health issues with [Magic WAN](https://developers.cloudflare.com/magic-wan/) and [Magic Transit](https://developers.cloudflare.com/magic-transit/). Tunnel health checks monitor your GRE and IPsec tunnels and steer traffic to the best available routes.
+This guide helps you diagnose and resolve common tunnel health issues with <a href={props.productLink}>{props.productName}</a> and <a href={props.otherProductLink}>{props.otherProductName}</a>. Tunnel health checks monitor your GRE and IPsec tunnels and steer traffic to the best available routes.
 
 ## Quick diagnostic checklist
 
@@ -16,8 +30,8 @@ If you are experiencing tunnel health issues, check these items first:
 2. **Magic Firewall rules**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
 3. **Anti-replay protection**: Disable anti-replay protection on your router, or set the replay window to `0`.
 4. **MTU settings**: Verify MTU is set correctly (typically `1476` for GRE, `1400-1450` for IPsec).
-5. **IPsec parameters**: Confirm your cryptographic parameters match [Cloudflare's supported configuration](https://developers.cloudflare.com/magic-wan/reference/tunnels-and-encapsulation/#supported-configuration-parameters).
-6. **Health check direction**: Magic WAN defaults to *Bidirectional*; Magic Transit (direct server return) defaults to *Unidirectional*.
+5. **IPsec parameters**: Confirm your cryptographic parameters match <a href={props.tunnelsConfigLink}>Cloudflare's supported configuration</a>.
+6. **Health check direction**: {props.productName} defaults to *{props.healthCheckDefault}*{props.defaultReason && `; ${props.otherProductName} ${props.defaultReason} defaults to the opposite direction`}.
 
 ---
 
@@ -60,7 +74,7 @@ Tunnels remain in a degraded or down state for at least five minutes, even if he
 Recovery from degraded to healthy can take up to 30 minutes. This intentional "slow recovery" behavior (called hysteresis) prevents rapid state changes caused by intermittent network issues or tunnel flapping.
 :::
 
-For instructions on monitoring tunnel status, refer to [Check tunnel health in the dashboard](https://developers.cloudflare.com/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/).
+For instructions on monitoring tunnel status, refer to <a href={props.checkHealthDashLink}>Check tunnel health in the dashboard</a>.
 
 ### Health check types and directions
 
@@ -75,8 +89,8 @@ For instructions on monitoring tunnel status, refer to [Check tunnel health in t
 
 | Direction | Behavior | Default for |
 | :---- | :---- | :---- |
-| **Bidirectional** | Probe and response both traverse the tunnel | Magic WAN |
-| **Unidirectional** | Probe traverses tunnel; response returns via Internet | Magic Transit (direct server return) |
+| **Bidirectional** | Probe and response both traverse the tunnel | {props.healthCheckDefault === "Bidirectional" ? props.productName : props.otherProductName} |
+| **Unidirectional** | Probe traverses tunnel; response returns via Internet | {props.healthCheckDefault === "Unidirectional" ? `${props.productName}${props.defaultReason ? ` ${props.defaultReason}` : ""}` : props.otherProductName} |
 
 :::note
 Unidirectional health checks can be unreliable because intermediate network devices may drop ICMP reply packets. If you have egress traffic enabled, consider switching to bidirectional health checks.
@@ -150,7 +164,7 @@ Add an allow rule for ICMP traffic from Cloudflare IP addresses *before* any blo
 
 3. Position this rule *before* any rules that block ICMP traffic.
 
-For more information, refer to [Magic Firewall rules and Magic Transit endpoint health checks](https://developers.cloudflare.com/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks).
+For more information, refer to <a href={props.magicFirewallRulesetLink}>Magic Firewall rules and endpoint health checks</a>.
 
 ---
 
@@ -208,7 +222,7 @@ exit
 
 :::caution Enabling replay protection in Cloudflare reduces the performance and resilience benefits of the anycast architecture. Only use this option when your device does not support disabling anti-replay protection. :::
 
-For a detailed explanation of why this setting is necessary, refer to [Anti-replay protection](https://developers.cloudflare.com/magic-wan/reference/anti-replay-protection/).
+For a detailed explanation of why this setting is necessary, refer to <a href={props.antiReplayLink}>Anti-replay protection</a>.
 
 ---
 
@@ -277,7 +291,7 @@ Configure traffic selectors to accept packets for the tunnel interface addresses
 
 Ensure your firewall permits ICMP traffic on the tunnel interface. Many firewalls require explicit rules to allow management traffic (including ping) on tunnel interfaces.
 
-For detailed information on how bidirectional health checks work, refer to [Tunnel health checks](https://developers.cloudflare.com/magic-wan/reference/tunnel-health-checks/).
+For detailed information on how bidirectional health checks work, refer to <a href={props.tunnelHealthChecksLink}>Tunnel health checks</a>.
 
 ---
 
@@ -336,7 +350,7 @@ IPsec tunnel establishment can fail due to several configuration mismatches:
    - UDP port 4500 (IKE NAT-T)
    - IP protocol 50 (ESP)
 
-For the complete list of supported parameters, refer to [Supported configuration parameters](https://developers.cloudflare.com/magic-transit/reference/gre-ipsec-tunnels/#supported-configuration-parameters).
+For the complete list of supported parameters, refer to <a href={props.supportedIpsecConfigLink}>Supported configuration parameters</a>.
 
 ---
 
@@ -413,8 +427,8 @@ show ip route
 
 ## Resources
 
-- [Tunnel health checks](https://developers.cloudflare.com/magic-wan/reference/tunnel-health-checks/): Technical details on health check behavior
-- [Anti-replay protection](https://developers.cloudflare.com/magic-wan/reference/anti-replay-protection/): Why anti-replay must be disabled
-- [Configure tunnel endpoints](https://developers.cloudflare.com/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/): Tunnel setup instructions
-- [Check tunnel health in the dashboard](https://developers.cloudflare.com/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/): Dashboard navigation guide
-- [Network Analytics](https://developers.cloudflare.com/magic-wan/analytics/network-analytics/): Traffic analysis tools
+- <a href={props.tunnelHealthChecksLink}>Tunnel health checks</a>: Technical details on health check behavior
+- <a href={props.antiReplayLink}>Anti-replay protection</a>: Why anti-replay must be disabled
+- <a href={props.configureTunnelsLink}>Configure tunnel endpoints</a>: Tunnel setup instructions
+- <a href={props.checkHealthDashLink}>Check tunnel health in the dashboard</a>: Dashboard navigation guide
+- <a href={props.networkAnalyticsLink}>Network Analytics</a>: Traffic analysis tools
