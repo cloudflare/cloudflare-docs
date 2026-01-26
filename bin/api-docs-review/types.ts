@@ -35,6 +35,7 @@ export interface FileReviewResult {
 	components: ComponentUsage[];
 	issues: ReviewIssue[];
 	score: number;
+	hasApiContent: boolean;
 	summary: {
 		actionsFound: number;
 		actionsWithApi: number;
@@ -47,6 +48,7 @@ export interface FileReviewResult {
 
 export interface ReviewReport {
 	files: FileReviewResult[];
+	hasApiContent: boolean;
 	summary: {
 		totalFiles: number;
 		totalErrors: number;

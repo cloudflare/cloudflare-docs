@@ -412,6 +412,13 @@ export function analyzeFile(
 		hasTabsIntegration: components.some((c) => c.type === "Tabs"),
 	};
 
+	// Determine if file has API-related content
+	// A file has API content if it contains APIRequest, CURL components, or raw curl commands
+	const apiComponents = components.filter(
+		(c) => c.type === "APIRequest" || c.type === "CURL" || c.type === "rawCurl",
+	);
+	const hasApiContent = apiComponents.length > 0;
+
 	const result: FileReviewResult = {
 		filePath,
 		relativePath,
@@ -419,6 +426,7 @@ export function analyzeFile(
 		components,
 		issues,
 		score: 0,
+		hasApiContent,
 		summary,
 	};
 

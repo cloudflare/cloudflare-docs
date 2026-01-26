@@ -164,8 +164,12 @@ export function aggregateResults(
 		0,
 	);
 
+	// Report has API content if any file has API content
+	const hasApiContent = fileResults.some((f) => f.hasApiContent);
+
 	return {
 		files: fileResults,
+		hasApiContent,
 		summary: {
 			totalFiles: fileResults.length,
 			totalErrors,

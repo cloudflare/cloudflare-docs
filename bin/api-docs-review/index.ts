@@ -85,11 +85,21 @@ async function run(): Promise<void> {
 
 		// Generate report
 		const report = aggregateResults(fileResults);
-		const reportMarkdown = generateReport(report);
 
 		core.info(
 			`Review complete: ${report.summary.totalErrors} errors, ${report.summary.totalWarnings} warnings, ${report.summary.totalSuggestions} suggestions`,
 		);
+
+		// Only post comment if files contain API-related content
+		if (!report.hasApiContent) {
+			core.info(
+				"No API-related content found in changed files, skipping comment",
+			);
+			await removeExistingComment(octokit, owner, repo, pullRequestNumber);
+			return;
+		}
+
+		const reportMarkdown = generateReport(report);
 
 		// Post or update comment
 		await postOrUpdateComment(
