@@ -24,44 +24,35 @@ To increase this limit, go to the **Compute (Workers) > Workers plans** page in 
 | -------------------------------------- | --------------- |
 | Concurrent browsers per account (Workers Bindings only)        | 3 per account   |
 | New browser instances per minute (Workers Bindings only)      | 3 per minute    |
-| Browser timeout                        | 60 seconds |
-| Total requests per min (REST API only) | 6 per minute  [^1]  |
+| Browser timeout                        | 60 seconds [^1] |
+| Total requests per min (REST API only) | 6 per minute |
 
-[^1]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of six requests per minute translates to one request every 10 seconds. This means you cannot send all six requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
-
-:::note[Note on browser timeout]
-By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
-:::
+[^1]: By default, a browser will time out after 60 seconds of inactivity. You can extend this to up to 10 minutes using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). Call `browser.close()` to release the browser instance immediately.
 
 ## Workers Paid
 
-:::note[Higher limit requests]
-The limits for Browser Rendering will continue to be raised over time. In the meantime, Cloudflare will grant [requests for higher limits](https://forms.gle/CdueDKvb26mTaepa9) on a case-by-case basis if a need for a higher limit can be clearly demonstrated.
+:::note[Need higher limits?]
+If you are on the Workers Free plan, [upgrade to Workers Paid](/workers/platform/pricing/) for higher limits. If you are already on Workers Paid and need limits beyond those listed below, Cloudflare will grant [requests for higher limits](https://forms.gle/CdueDKvb26mTaepa9) on a case-by-case basis.
 :::
 
 | Feature                                | Limit               |
 | -------------------------------------- | ------------------- |
-| Concurrent browsers per account (Workers Bindings only)        | 30 per account [^2] |
-| New browser instances per minute (Workers Bindings only)       | 30 per minute [^2]  |
-| Browser timeout                        | 60 seconds |
-| Total requests per min (REST API only) | 180 per minute [^2][^3]       |
+| Concurrent browsers per account (Workers Bindings only)        | 30 per account |
+| New browser instances per minute (Workers Bindings only)       | 30 per minute  |
+| Browser timeout                        | 60 seconds [^1] |
+| Total requests per min (REST API only) | 180 per minute |
 
-[^2]: Contact our team to request increases to this limit.
-[^3]: Rate limits are enforced with a fixed per-second fill rate. For example, a limit of 180 requests per minute translates to three requests per second. This means you cannot send all 180 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
+:::note[About concurrent browsers]
+The Workers Paid plan includes 10 concurrent browsers at no additional cost. You can use up to 30 concurrent browsers per account, but usage beyond the included 10 browsers is billed at $2.00 per additional browser (averaged monthly).
 
-:::note[Note on browser timeout]
-By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
+For full pricing details and billing examples, refer to [Pricing](/browser-rendering/pricing/).
 :::
 
-## Note on concurrency
+### Note on concurrency
 
 While the limits above define the maximum number of concurrent browser sessions per account, in practice you may not need to hit these limits. Browser sessions close automatically—by default, after 60 seconds of inactivity or upon task completion—so if each session finishes its work before a new request comes in, the effective concurrency is lower. This means that most workflows do not require very high concurrent browser limits.
 
 ## Limits FAQ & troubleshooting
-
-To upgrade, go to the **Compute (Workers) > Workers plans** page in the Cloudflare dashboard:
-
-<DashButton url="/?to=/:account/workers/plans" />
 
 <Render
   file="manage-concurrency-faq"
@@ -97,12 +88,22 @@ You can monitor your usage and view session close reasons in the Cloudflare dash
 
 Refer to [Browser close reasons](/browser-rendering/reference/browser-close-reasons/) for more information.
 
+## Rate limits and errors
+
+### Understanding rate limits
+
+Rate limits are enforced with a fixed per-second fill rate, not as a burst allowance. This means you cannot send all your requests at once — the API expects them to be spread evenly over the minute.
+
+| Plan | Rate limit | Per-second equivalent |
+| ---- | ---------- | --------------------- |
+| Workers Free | 6 requests/min | 1 request every 10 seconds |
+| Workers Paid | 180 requests/min | 3 requests/second |
+
+If you exceed the rate limit, the API responds with HTTP status code `429 Too many requests` and includes a `Retry-After` header specifying how many seconds to wait before retrying.
+
 ### Error: `429 Too many requests`
 
-When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too many requests`.
-The response includes a `Retry-After` header, which specifies how many seconds to wait before retrying. You can view your account's rate limits in the [Workers Free](#workers-free) and [Workers Paid](#workers-paid) sections above.
-
-Rate limits are enforced with a fixed per-second fill rate. For example, a limit of 180 requests per minute translates to three requests per second. You cannot send all requests at once; the API expects them to be spread evenly over the minute.
+When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too many requests`. You can view your account's rate limits in the [Workers Free](#workers-free) and [Workers Paid](#workers-paid) sections above.
 
 The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
 

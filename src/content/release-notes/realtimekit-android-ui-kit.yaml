@@ -24,8 +24,8 @@ entries:
       
       **Fixes**
       
-      - Fix crash when screenshare is disabled for a participant
-      - Fix screenshare disappearing when video is disabled for a screensharing participant
+      - Fixed crash when screenshare is disabled for a participant
+      - Fixed screenshare disappearing when video is disabled for a screensharing participant
   - publish_date: "2025-12-04"
     title: RealtimeKit Android UI Kit 0.3.0
     description: |-
@@ -51,7 +51,7 @@ entries:
       
       **Fixes**
       
-      - Fix a regression that caused self video to not render if meeting was joined with camera disabled
+      - Fixed a regression that caused self video to not render if meeting was joined with camera disabled
   - publish_date: "2025-10-23"
     title: RealtimeKit Android UI Kit 0.2.10
     description: |-
@@ -61,13 +61,13 @@ entries:
       
       **Fixes**
       
-      - Fix an issue where pinning yourself in the participant view didn't update correctly
+      - Fixed an issue where pinning yourself in the participant view didn't update correctly
   - publish_date: "2025-10-08"
     title: RealtimeKit Android UI Kit 0.2.9
     description: |-
       **Fixes**
       
-      - Fix an issue where the last video frame remained stuck on participant tile
+      - Fixed an issue where the last video frame remained stuck on participant tile
   - publish_date: "2025-10-06"
     title: RealtimeKit Android UI Kit 0.2.8
     description: |-
@@ -90,17 +90,17 @@ entries:
       **Fixes**
       
       - Audio device selector now dynamically updates the options list when devices are removed or added
-      - Fix crash when a host turns off video for an active screenshare user
+      - Fixed crash when a host turns off video for an active screenshare user
   - publish_date: "2025-09-12"
     title: RealtimeKit Android UI Kit 0.2.5
     description: |-
       **Fixes**
       
-      - Pinned peers did not get removed from the stage when kicked
-      - Media consumers are now created in parallel, which significantly improves the speed of when users will start seeing other people's audio/video after joining a meeting.
-      - "Ghost"/Invalid peers that would sometimes show up in long-running meetings are now fully gone
-      - Fixed an issue In webinar meetings where the SDK would fail to produce media after being removed from the stage once
-      - Fix a rare crash during meeting joins in poor network scenarios
+      - Fixed pinned peers not being removed from the stage when kicked
+      - Media consumers are now created in parallel, which significantly improved the speed of when users start seeing other people's audio/video after joining a meeting
+      - Fixed "Ghost"/Invalid peers that would sometimes show up in long-running meetings
+      - Fixed an issue in webinar meetings where the SDK would fail to produce media after being removed from the stage once
+      - Fixed a rare crash during meeting joins in poor network scenarios
   - publish_date: "2025-08-13"
     title: RealtimeKit Android UI Kit 0.2.4
     description: |-

@@ -310,35 +310,27 @@ API_KEY = "6567875fvgt"
 Inheritable keys are configurable at the top-level, and can be inherited (or overridden) by environment-specific configuration.
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
-
   - The name of your Pages project. Alphanumeric and dashes only.
 
 - `pages_build_output_dir` <Type text="string" /> <MetaInfo text="required" />
-
   - The path to your project's build output folder. For example: `./dist`.
 
 - `compatibility_date` <Type text="string" /> <MetaInfo text="required" />
-
   - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
 
 - `compatibility_flags` string\[] optional
-
   - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/configuration/compatibility-dates/).
 
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
-
   - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 
 - `limits` Limits optional
-
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
 - `placement` Placement optional
-
-  - Specify how Pages Functions should be located to minimize round-trip time. Refer to [Smart Placement](/workers/configuration/smart-placement/).
+  - Specify how Pages Functions should be located to minimize round-trip time. Refer to [Smart Placement](/workers/configuration/placement/).
 
 - `upload_source_maps` boolean
-
   - When `upload_source_maps` is set to `true`, Wrangler will upload any server-side source maps part of your Pages project to give corrected stack traces in logs.
 
 ## Non-inheritable keys
@@ -371,47 +363,36 @@ API_KEY = "8901234bfgd"
 This will work for local development, but will fail to validate when you try to deploy.
 
 - `vars` <Type text="object" /> <MetaInfo text="optional" />
-
   - A map of environment variables to set when deploying your Function. Refer to [Environment variables](/pages/functions/bindings/#environment-variables).
 
 - `d1_databases` <Type text="object" /> <MetaInfo text="optional" />
-
   - A list of D1 databases that your Function should be bound to. Refer to [D1 databases](/pages/functions/bindings/#d1-databases).
 
 - `durable_objects` <Type text="object" /> <MetaInfo text="optional" />
-
   - A list of Durable Objects that your Function should be bound to. Refer to [Durable Objects](/pages/functions/bindings/#durable-objects).
 
 - `hyperdrive` <Type text="object" /> <MetaInfo text="optional" />
-
   - Specifies Hyperdrive configs that your Function should be bound to. Refer to [Hyperdrive](/pages/functions/bindings/#r2-buckets).
 
 - `kv_namespaces` <Type text="object" /> <MetaInfo text="optional" />
-
   - A list of KV namespaces that your Function should be bound to. Refer to [KV namespaces](/pages/functions/bindings/#kv-namespaces).
 
 - `queues.producers` <Type text="object" /> <MetaInfo text="optional" />
-
   - Specifies Queues Producers that are bound to this Function. Refer to [Queues Producers](/queues/get-started/#4-set-up-your-producer-worker).
 
 - `r2_buckets` <Type text="object" /> <MetaInfo text="optional" />
-
   - A list of R2 buckets that your Function should be bound to. Refer to [R2 buckets](/pages/functions/bindings/#r2-buckets).
 
 - `vectorize` <Type text="object" /> <MetaInfo text="optional" />
-
   - A list of Vectorize indexes that your Function should be bound to. Refer to [Vectorize indexes](/vectorize/get-started/intro/#3-bind-your-worker-to-your-index).
 
 - `services` <Type text="object" /> <MetaInfo text="optional" />
-
   - A list of service bindings that your Function should be bound to. Refer to [service bindings](/pages/functions/bindings/#service-bindings).
 
 - `analytics_engine_datasets` <Type text="object" /> <MetaInfo text="optional" />
-
   - Specifies analytics engine datasets that are bound to this Function. Refer to [Workers Analytics Engine](/analytics/analytics-engine/get-started/).
 
 - `ai` <Type text="object" /> <MetaInfo text="optional" />
-
   - Specifies an AI binding to this Function. Refer to [Workers AI](/pages/functions/bindings/#workers-ai).
 
 ## Limits

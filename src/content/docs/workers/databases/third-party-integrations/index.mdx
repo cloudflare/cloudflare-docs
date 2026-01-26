@@ -1,22 +1,20 @@
 ---
 pcx_content_type: navigation
-title: 3rd Party Integrations 
+title: 3rd Party Integrations
 head: []
 description: Connect to third-party databases such as Supabase,
-  Turso and PlanetScale) 
-
+  Turso and PlanetScale)
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing } from "~/components";
 
 ## Background
 
-Connect to databases by configuring connection strings and credentials as [secrets](/workers/configuration/secrets/) in your Worker. 
+Connect to databases by configuring connection strings and credentials as [secrets](/workers/configuration/secrets/) in your Worker.
 
 :::note[Connecting to a regional database from a Worker?]
 
-
-If your Worker is connecting to a regional database, you can reduce your query latency by using [Hyperdrive](/hyperdrive) and [Smart Placement](/workers/configuration/smart-placement/) which are both included in any Workers plan. Hyperdrive will pool your databases connections globally across Cloudflare's network. Smart Placement will monitor your application to run your Workers closest to your backend infrastructure when this reduces the latency of your Worker invocations. Learn more about [how Smart Placement works](/workers/configuration/smart-placement/).
+If your Worker is connecting to a regional database, you can reduce your query latency by using [Hyperdrive](/hyperdrive) and [Smart Placement](/workers/configuration/placement/) which are both included in any Workers plan. Hyperdrive will pool your databases connections globally across Cloudflare's network. Smart Placement will monitor your application to run your Workers closest to your backend infrastructure when this reduces the latency of your Worker invocations. Learn more about [how Smart Placement works](/workers/configuration/placement/).
 :::
 
 ## Database credentials

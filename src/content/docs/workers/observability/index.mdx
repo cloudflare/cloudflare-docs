@@ -3,12 +3,88 @@ pcx_content_type: navigation
 title: Observability
 sidebar:
   order: 15
-  group:
-    hideIndex: true
+head: []
+description: Understand how your Worker projects are performing via logs, traces, metrics, and other data sources.
 ---
 
-import { Badge, DirectoryListing } from "~/components";
+import { LinkCard, CardGrid } from "~/components";
 
-Understand how your Worker projects are performing via logs, traces, and other data sources.
+Cloudflare Workers provides comprehensive observability tools to help you understand how your applications are performing, diagnose issues, and gain insights into request flows. Whether you want to use Cloudflare's native observability platform or export telemetry data to your existing monitoring stack, Workers has you covered.
 
-<DirectoryListing />
+## Logs
+
+Logs are essential for troubleshooting and understanding your application's behavior. Cloudflare offers several ways to access and manage your Worker logs.
+
+<CardGrid>
+	<LinkCard
+		title="Workers Logs"
+		href="/workers/observability/logs/workers-logs/"
+		description="Automatically collect, store, filter, and analyze logs in the Cloudflare dashboard."
+	/>
+	<LinkCard
+		title="Real-time logs"
+		href="/workers/observability/logs/real-time-logs/"
+		description="Access log events in near real-time for immediate feedback during development and deployments."
+	/>
+	<LinkCard
+		title="Tail Workers"
+		href="/workers/observability/logs/tail-workers/"
+		description="Apply custom filtering, sampling, and transformation logic to your telemetry data."
+	/>
+	<LinkCard
+		title="Workers Logpush"
+		href="/workers/observability/logs/logpush/"
+		description="Send Workers Trace Event Logs to supported destinations like R2, S3, or logging providers."
+	/>
+</CardGrid>
+
+## Traces
+
+[Tracing](/workers/observability/traces/) gives you end-to-end visibility into the life of a request as it travels through your Workers application and connected services. With automatic instrumentation, Cloudflare captures telemetry data for fetch calls, binding operations (KV, R2, Durable Objects), and handler invocations - no code changes required.
+
+## Metrics and analytics
+
+[Metrics and analytics](/workers/observability/metrics-and-analytics/) let you monitor your Worker's health with built-in metrics including request counts, error rates, CPU time, wall time, and execution duration. View metrics per Worker or aggregated across all Workers on a zone.
+
+## Query Builder
+
+The [Query Builder](/workers/observability/query-builder/) helps you write structured queries to investigate and visualize your telemetry data. Build queries with filters, aggregations, and groupings to analyze logs and identify patterns.
+
+## Exporting data
+
+[Export OpenTelemetry-compliant traces and logs](/workers/observability/exporting-opentelemetry-data/) from Workers to your existing observability stack. Workers supports exporting to any destination with an OTLP endpoint, including Honeycomb, Grafana Cloud, Axiom, and Sentry.
+
+## Debugging
+
+<CardGrid>
+	<LinkCard
+		title="Errors and exceptions"
+		href="/workers/observability/errors/"
+		description="Understand Workers error codes and debug common issues."
+	/>
+	<LinkCard
+		title="Source maps and stack traces"
+		href="/workers/observability/source-maps/"
+		description="Get readable stack traces that map back to your original source code."
+	/>
+	<LinkCard
+		title="DevTools"
+		href="/workers/observability/dev-tools/"
+		description="Use Chrome DevTools for breakpoints, CPU profiling, and memory debugging during local development."
+	/>
+</CardGrid>
+
+## Additional resources
+
+<CardGrid>
+	<LinkCard
+		title="MCP server"
+		href="https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-observability"
+		description="Query Workers observability data using the Model Context Protocol."
+	/>
+	<LinkCard
+		title="Third-party integrations"
+		href="/workers/observability/third-party-integrations/"
+		description="Integrate Workers with third-party observability platforms."
+	/>
+</CardGrid>

@@ -12,7 +12,7 @@ Protect your website or application from AI crawlers by implementing a `robots.t
 
 AI bots are expected to follow the `robots.txt` directives.
 
-`robots.txt` files express your preferences. They do not prevent crawler operators from crawling your content at a technical level. Some crawler operators may disregard your `robots.txt` preferences and crawl your content regardless of what your `robots.txt` file says.  
+`robots.txt` files express your preferences. They do not prevent crawler operators from crawling your content at a technical level. Some crawler operators may disregard your `robots.txt` preferences and crawl your content regardless of what your `robots.txt` file says.
 
 :::note
 Respecting `robots.txt` is voluntary. If you want to prevent crawling, use AI Crawl Control's [manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/) feature.
@@ -112,30 +112,34 @@ If your website does not have a `robots.txt` file, Cloudflare creates a new file
 
 To implement a `robots.txt` file on your domain:
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-	<TabItem label="Old dashboard">
-		<Steps>
-			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-			2. Go to **Security** > **Bots**.
-			3. Select **Configure Bot Fight Mode**.
-			4. Turn **Instruct bot traffic with robots.txt** on.
-		</Steps>
-	</TabItem>
-	<TabItem label="New dashboard" icon="rocket">
-		<Steps>
-			1. In the Cloudflare dashboard, go to the **Security Settings** page.
-				
-				<DashButton url="/?to=/:account/:zone/security/settings" />
-			2. Filter by **Bot traffic**.
-			3. Go to **robots.txt setting**.
-			4. Turn **robots.txt setting** on.
-		</Steps>
-	</TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+         <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **robots.txt setting**.
+      4. Turn **robots.txt setting** on.
+    </Steps>
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Bots**.
+      3. Select **Configure Bot Fight Mode**.
+      4. Turn **Instruct bot traffic with robots.txt** on.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ## Content Signals Policy
 
-Free zones that do not have their own `robots.txt` file and do not use the managed `robots.txt` feature will display the Content Signals Policy when a crawler requests the `robots.txt` file for your zone. 
+Free zones that do not have their own `robots.txt` file and do not use the managed `robots.txt` feature will display the Content Signals Policy when a crawler requests the `robots.txt` file for your zone.
 
 This file only outlines the Content Signals framework. It does not express your preferences or rights associated with your content.
 
@@ -172,7 +176,7 @@ If you would like to opt out of displaying the policy in your `robots.txt` file,
 
 <DashButton url="/?to=/:account/:zone/" />
 
-Alternatively, you can use [Security Settings](#implementation). 
+Alternatively, you can use [Security Settings](#implementation).
 
 :::caution
 Google Search Console may occasionally report `Syntax not understood` for Content Signals and newer directives in the `robots.txt` standard. However, we have observed no impact on crawling rates or SEO as a result of these reports.

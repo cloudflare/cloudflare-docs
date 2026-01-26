@@ -104,32 +104,7 @@ Additionally, you may want to handle leaked credentials detected by Cloudflare a
 
 To check for leaked credentials in a way that is not covered by the default configuration, add a [custom detection location](/waf/detections/leaked-credentials/#custom-detection-locations).
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic detections**, select **Leaked credentials** and then select **Add custom username and password location**.
-4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:
-   - Username location:<br/>
-     `lookup_json_string(http.request.body.raw, "user")`
-   - Password location:<br/>
-     `lookup_json_string(http.request.body.raw, "secret")`
-
-   This configuration will scan incoming HTTP requests containing a JSON body with a structure similar to the following:
-
-   ```js
-   {"user": "<USERNAME>", "secret": "<PASSWORD>"}
-   ```
-
-   Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
-
-5. Select **Save**.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -155,6 +130,31 @@ To check for leaked credentials in a way that is not covered by the default conf
    Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 
 6. Select **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Under **Incoming traffic detections**, select **Leaked credentials** and then select **Add custom username and password location**.
+4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:
+   - Username location:<br/>
+     `lookup_json_string(http.request.body.raw, "user")`
+   - Password location:<br/>
+     `lookup_json_string(http.request.body.raw, "secret")`
+
+   This configuration will scan incoming HTTP requests containing a JSON body with a structure similar to the following:
+
+   ```js
+   {"user": "<USERNAME>", "secret": "<PASSWORD>"}
+   ```
+
+   Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
+
+5. Select **Save**.
 
 </Steps>
 

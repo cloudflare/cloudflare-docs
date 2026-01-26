@@ -43,7 +43,7 @@ async def on_fetch(request, env):
     return Response("Hello world!")
 ```
 
-On this example, `step_a` and `step_b` are run concurrently before execution of `my_final_step`, which depends on both of them.
+On this example, `dep_1` and `dep_2` are run concurrently before execution of `final_step`, which depends on both of them.
 
 Having `concurrent=True` allows the dependencies to be resolved concurrently. If one of the callables passed to `depends` has already completed, it will be skipped and its return value will be reused.
 

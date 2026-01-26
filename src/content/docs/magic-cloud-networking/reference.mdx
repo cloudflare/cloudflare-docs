@@ -19,15 +19,15 @@ When using Magic Cloud Networking (beta) to automatically create on-ramps to you
 - Cloudflare will create a new customer-managed prefix list named **Magic WAN and Cloudflare Edge** populated with your [Magic WAN Address Space](/magic-cloud-networking/cloud-on-ramps/#magic-wan-address-space) prefixes and the IPv4 address ranges for Cloudflare's global network servers (the latter prefixes are necessary if you use any Cloudflare L7 processing features). You must create rules in your Network Security Groups (NSGs) allowing traffic to/from this prefix list in order to have connectivity with Magic WAN. (The prefix list will contain around 15 to 25 entries, which each count against the rules-per-security-group quota for NSGs in your AWS account.)
 - Cloudflare will create a Virtual Private Gateway and attach it to your Virtual Private Cloud (VPC). If an existing Virtual Private Gateway is already attached to the VPC, on-ramp creation will fail.
 - Cloudflare will enable route propagation from the Virtual Private Gateway into all route tables in your VPC. This will result in a route for each prefix in your [Magic WAN Address Space](/magic-cloud-networking/cloud-on-ramps/#magic-wan-address-space) targeting the gateway.
-- Cloudflare will add a route in Magic WAN for each IPv4 CIDR block in your VPC.
+- Cloudflare will add a route in Magic WAN for each IPv4 CIDR (Classless Inter-Domain Routing) block in your VPC.
 
 ### Azure
 
-![Diagram showing how Cloudflare creates on-ramps to AWS](~/assets/images/magic-cloud-networking/reference/azure.png)
+![Diagram showing how Cloudflare creates on-ramps to Azure](~/assets/images/magic-cloud-networking/reference/azure.png)
 
-When using Magic Cloud Networking to automatically create on-ramps to your Azure account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
+When using Magic Cloud Networking (beta) to automatically create on-ramps to your Azure account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
 
-- Cloudflare will create a Virtual Network Gateway in your Virtual Network (VNet). Virtual Network Gateways in Azure require a subnet named `GatewaySubnet`. Cloudflare will create a `GatewaySubnet` if one does not already exist in your VNet. If there is not enough unused address space left in your VNet to create a `/27` subnet  for the`GatewaySubnet`, or if a `GatewaySubnet` exists but does not have enough address space left for a Virtual Network Gateway, on-ramp creation will fail.
+- Cloudflare will create a Virtual Network Gateway in your Virtual Network (VNet). Virtual Network Gateways in Azure require a subnet named `GatewaySubnet`. Cloudflare will create a `GatewaySubnet` if one does not already exist in your VNet. If there is not enough unused address space left in your VNet to create a `/27` subnet for the `GatewaySubnet`, or if a `GatewaySubnet` exists but does not have enough address space left for a Virtual Network Gateway, on-ramp creation will fail.
 - Cloudflare will enable gateway route propagation on all route tables in your VNet. This will result in a route for each prefix in your [Magic WAN Address Space](/magic-cloud-networking/cloud-on-ramps/#magic-wan-address-space) pointing to the gateway. If your VNet has other Virtual Network Gateways, their routes will also propagate to your route tables. If you delete the on-ramp, route propagation will not be disabled.
 - By default, Network Security Groups in Azure contain Allow rules for outbound/inbound traffic to/from the `VirtualNetwork` service tag, which includes Virtual Network Gateway address space (and therefore your Magic WAN Address Space). If you do not want all resources in your VNet to be accessible from Magic WAN, add the appropriate Deny rules to your Network Security Groups (NSGs).
 - Cloudflare will add a route in Magic WAN for each IPv4 address range in your VNet.
@@ -36,7 +36,7 @@ When using Magic Cloud Networking to automatically create on-ramps to your Azure
 
 ![Diagram showing how Cloudflare creates on-ramps to GCP](~/assets/images/magic-cloud-networking/reference/gcp.png)
 
-When using Magic Cloud Networking to automatically create on-ramps to your Google Cloud Platform (GCP) account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
+When using Magic Cloud Networking (beta) to automatically create on-ramps to your Google Cloud Platform (GCP) account, you should be aware of the following configuration changes Cloudflare will make on your behalf:
 
 - Cloudflare will reserve a public Internet routable IP address from GCP.
 - Cloudflare will create a VPN Gateway and two VPN Tunnels in the region you specify.
@@ -46,7 +46,7 @@ When using Magic Cloud Networking to automatically create on-ramps to your Googl
 
 ## Supported resources
 
-Magic Cloud Networking discovers the following resource types.
+Magic Cloud Networking (beta) discovers the following resource types in your cloud environments. These resources are used to build a comprehensive view of your cloud network topology and connectivity.
 
 ### AWS
 

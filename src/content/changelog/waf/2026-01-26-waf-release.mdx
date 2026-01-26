@@ -1,0 +1,63 @@
+---
+title: "WAF Release - 2026-01-26"
+description: Cloudflare WAF managed rulesets 2026-01-26 release
+date: 2026-01-26
+---
+
+import { RuleID } from "~/components";
+
+This week’s release introduces new detections for denial-of-service attempts targeting React (CVE-2026-23864).
+
+**Key Findings**
+
+- CVE-2026-23864 is a denial-of-service vulnerability in React that enables an attacker to trigger service disruption.
+
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+    <tbody>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="aaede80b4d414dc89c443cea61680354" />
+      </td>
+      <td>N/A</td>
+      <td>React Server - DOS - CVE:CVE-2026-23864 - 1</td>
+      <td>N/A</td>
+      <td>Block</td>
+      <td>This is a new detection.</td>
+  </tr>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="3e93c9faaafa447c83a525f2dcdffcf8" />
+      </td>
+      <td>N/A</td>
+      <td>React Server - DOS - CVE:CVE-2026-23864 - 2</td>
+      <td>N/A</td>
+      <td>Block</td>
+      <td>This is a new detection.</td>
+  </tr>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="930020d567684f19b05fb35b349edbc6" />
+      </td>
+      <td>N/A</td>
+      <td>React Server - DOS - CVE:CVE-2026-23864 - 3</td>
+      <td>N/A</td>
+      <td>Block</td>
+      <td>This is a new detection.</td>
+  </tr>
+  </tbody>
+</table>

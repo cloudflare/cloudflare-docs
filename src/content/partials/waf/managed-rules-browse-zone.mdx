@@ -1,21 +1,36 @@
 ---
-{}
+params:
+  - rulesetName?
 ---
 
-import { Steps } from "~/components";
+import { Steps, Markdown } from "~/components";
+import { Image } from "astro:assets";
+
+import cloudflareManagedRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-cloudflare-managed-ruleset.png";
+import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-owasp-core-ruleset.png";
 
 <Steps>
+
+{/* prettier-ignore-start */}
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
 2. Go to **Security** > **WAF** > **Managed rules** tab.
 
-3. If you have already deployed the managed ruleset you want to configure, select the managed ruleset name in the list of deployed managed rulesets. Alternatively, select the three dots > **Edit** next to the _Execute_ rule deploying the managed ruleset.
+3. If you have already deployed the {props.rulesetName ? props.rulesetName : "managed ruleset you want to configure" }, select the ruleset name in the list of deployed managed rulesets. Alternatively, select the three dots > **Edit** next to the _Execute_ rule deploying the {props.rulesetName ? props.rulesetName : "managed ruleset" }.
 
-   If you have not deployed the managed ruleset, select the ruleset name under **Managed Rulesets**.
+   If you have not deployed the managed ruleset, select {props.rulesetName ? <Markdown text={`**${props.rulesetName}**`} /> : "the ruleset name" } under **Managed Rulesets**.
 
 4. Select **Browse rules**.
 
-   ![The Cloudflare dashboard displaying the list of rules in the Cloudflare Managed Ruleset](~/assets/images/waf/waf-browse-rules.png)
+   { (props.rulesetName == "" || props.rulesetName == "Cloudflare Managed Ruleset") && (
+     <Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying the rules in the Cloudflare Managed Ruleset." />
+   ) }
+
+   { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
+     <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying the rules in the Cloudflare OWASP Core Ruleset." />
+   ) }
+
+{/* prettier-ignore-end */}
 
 </Steps>

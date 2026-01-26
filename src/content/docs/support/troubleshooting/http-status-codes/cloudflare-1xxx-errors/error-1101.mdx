@@ -12,6 +12,29 @@ This error indicates a rendering issue.
 
 This error typically occurs when a Cloudflare Worker encounters a runtime JavaScript exception.
 
-### Resolution:
+### Debugging
 
-[Provide appropriate issues details](/support/contacting-cloudflare-support/) to Cloudflare Support.
+To identify the specific JavaScript exception:
+
+1. Check your Workers logs in the Cloudflare dashboard under **Workers & Pages** > **Your Worker** > **Logs**.
+2. Review the Workers code for potential runtime errors such as:
+   - Undefined variables or functions
+   - Type errors
+   - Promise rejections
+   - Network request failures
+3. Test the [Worker locally](/workers/development-testing/#local-development) with sample requests to reproduce the error.
+4. Refer to [Workers error handling](/workers/observability/errors/) for more details on debugging Workers.
+
+### Resolution
+
+Fix the JavaScript exception in your Workers code. If you need assistance, [provide appropriate issue details](/support/contacting-cloudflare-support/) to Cloudflare Support, including:
+
+- The Ray ID from the error page
+- The Worker name
+- Recent changes to the Worker code
+- Steps to reproduce the error
+
+### Related errors
+
+- [Error 1102](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1102/) - Workers CPU time limit exceeded
+- [Error 500](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-500/) - Internal server error (can be caused by Workers exceptions)

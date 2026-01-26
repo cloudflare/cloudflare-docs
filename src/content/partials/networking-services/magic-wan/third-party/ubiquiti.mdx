@@ -16,7 +16,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 - Static public IP from your ISP
 - Admin access to both Cloudflare and UniFi
 - Gather a **Magic Anycast IPv4** address from the **Leased IPs** section in the dashboard
-	- <DashButton url="/?to=/:account/ip-addresses/leased-ips" />
+	- <DashButton url="/?to=/:account/ip-addresses/address-space" />
 	- Contact your account team if you do not see any IPs listed.
 
 ## 1. Configure Magic WAN
@@ -89,7 +89,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 				inline={false}
 		/>
 
-			<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+			<DashButton url="/?to=/:account/magic-networks/connections" />
 
 		<Markdown
 			text={`
@@ -152,7 +152,7 @@ Wait a few minutes, then access both Cloudflare and UniFi to verify the tunnel's
 			text={`1. Go to Magic WAN's **Network Health** page.`}
 			inline={false}
 		/>
-		<DashButton url="/?to=/:account/networking-insights/health/network-health" />
+		<DashButton url="/?to=/:account/networking-insights/health" />
 		<Markdown
 			text={`2. Go to the **Connector health** tab.
 3. Find the tunnel you have just created and make sure its status shows **Up**. Refer to [Check tunnel health in the dashboard](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information.`}

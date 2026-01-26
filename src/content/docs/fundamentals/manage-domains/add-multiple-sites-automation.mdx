@@ -2,8 +2,8 @@
 pcx_content_type: tutorial
 source: https://support.cloudflare.com/hc/articles/360000841472
 title: Add multiple sites via automation
-description: >-
-  To add multiple sites to Cloudflare at once and more efficiently, you can do so via the Cloudflare API.
+description: To add multiple sites to Cloudflare at once and more efficiently, you can do so via the Cloudflare API.
+reviewed: 2026-01-26
 ---
 
 import { Render } from "~/components";
@@ -16,9 +16,9 @@ Adding multiple sites can be useful when you:
 - Are a [partner](https://www.cloudflare.com/partners/), agency, or IT consultancy, and manage multiple domains on behalf of your customers.
 - Are moving an existing set of sites over to Cloudflare.
 
-Using the API will allow you to add multiple sites quickly and efficiently, especially if you are already familiar with [how to change your name-servers](/dns/zone-setups/full-setup/setup/) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
+Using the API will allow you to add multiple sites quickly and efficiently, especially if you are already familiar with [how to change your nameservers](/dns/zone-setups/full-setup/setup/) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 
-This tutorial assumes domains will be added using [full mode](/dns/zone-setups/full-setup/).
+This tutorial assumes domains will be added using a [primary DNS setup (full)](/dns/zone-setups/full-setup/).
 
 ---
 
@@ -33,15 +33,14 @@ To add multiple sites to Cloudflare via automation, you need:
   - Zone-level `Zone: Edit` and `DNS: Edit`
   - Account-level `Domain Administrator`
 - To have disabled [DNSSEC](/dns/concepts/#dnssec) for each domain at your registrar (where you bought your domain name).
-  - Follow this [tutorial](/dns/dnssec/dnssec-active-migration/) to migrate an existing DNS zone without having to disable DNSSEC
 
-<Render file="dnssec-providers" product="dns" />
+   <Render file="dnssec-providers" product="dns" />
 
-<Render file="dnssec-enabled-migration" product="dns" />
+   <Render file="dnssec-enabled-migration" product="dns" />
 
 ---
 
-## Add domains
+## 1. Add domains
 
 1. Create a list of domains you want to add, each on a separate line (newline separated), stored in a file such as `domains.txt`.
 2. Create a bash script `add-multiple-zones.sh` and add the following. Add `domains.txt` to the same directory or update its path accordingly.
@@ -72,20 +71,18 @@ bash add-multiple-zones.sh
 ```
 
 :::caution
-
-<Render file="automation-number-limitations" product="fundamentals" />
-
+There are limitations on the number of domains you can add at a time. Refer to [limitations](#limitations) for details.
 :::
 
 After adding a domain, it will be in a [`Pending Nameserver Update`](/dns/zone-setups/reference/domain-status/) state.
 
-## Additional options
+### Additional options
 
-### jq
+#### jq
 
 [`jq`](https://jqlang.github.io/jq/) is a command-line tool that parses and beautifies JSON outputs.
 
-This tool is a requirement to complete any `Additional options` steps in this tutorial.
+This tool is a requirement to complete any additional option steps in this tutorial.
 
 ```sh
 echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
@@ -93,11 +90,11 @@ echo '{"foo":{"bar":"foo","testing":"hello"}}' | jq .
 
 Refer to `jq` [documentation](https://jqlang.github.io/jq/manual/#basic-filters) for more information.
 
-### Quick scan
+#### Quick scan
 
 Cloudflare offers a [quick scan](/dns/zone-setups/reference/dns-quick-scan/) that helps populate a zone's DNS records. This scan is a best effort attempt based on a predefined list of commonly used record names and types.
 
-This API call requires the domain `ID`. This can be found in the following locations:
+This API call requires the domain ID. This can be found in the following locations:
 
 - [Create Zone](/api/resources/zones/methods/create/#Request)
 - [List Zones](/api/resources/zones/methods/list/)
@@ -135,7 +132,7 @@ Using `jq` with the first option above, modify your script `add-multiple-zones.s
   done
 ```
 
-## Update nameservers
+## 2. Update nameservers
 
 For each domain to become active on Cloudflare, it must be activated in either [Full setup](/dns/zone-setups/full-setup/setup/) or [Partial setup](/dns/zone-setups/partial-setup/setup/). The following script will output a list containing the nameservers associated with each domain.
 
@@ -191,10 +188,10 @@ You can find your zones nameservers in the following locations:
 
 ## Limitations
 
-<Render file="automation-number-limitations" product="fundamentals" /> <br />
+There are limitations on the number of domains you can add at a time - specifically, you can only sign up a maximum of 25 domains every 10 minutes.
 
-After that, you cannot have more pending sites than active sites associated with your Cloudflare account. We recommend waiting until your pending sites have been [activated](/dns/zone-setups/reference/domain-status/) before adding additional domains.
+In addition, if you have over 50 domains and, of those domains, more are pending than active, you will be blocked from adding more. We recommend waiting until your pending sites have been activated before adding more.
 
 ## Common issues
 
-If any errors were returned in this process, the domain may not be registered (or only just registered), be a subdomain, or otherwise been invalid. For more details, refer to [Cannot add domain](/dns/zone-setups/troubleshooting/cannot-add-domain/).
+If any errors were returned in this process, the domain may not be registered (or only just registered), be a subdomain, or be otherwise invalid. For more details, refer to [Cannot add domain](/dns/zone-setups/troubleshooting/cannot-add-domain/).
