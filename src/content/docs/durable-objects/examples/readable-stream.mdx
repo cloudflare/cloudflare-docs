@@ -105,6 +105,25 @@ export default {
 ```
 </TypeScriptExample>
 
+Configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+name = "readable-stream-example"
+main = "src/index.ts"
+
+[[durable_objects.bindings]]
+name = "MY_DURABLE_OBJECT"
+class_name = "MyDurableObject"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyDurableObject"]
+```
+
+</WranglerConfig>
+
 :::note
 
 In a setup where a Durable Object returns a readable stream to a Worker, if the Worker cancels the Durable Object's readable stream, the cancellation propagates to the Durable Object.
