@@ -78,7 +78,8 @@ In your wrangler file, add or update the following settings to enable Node.js AP
 
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
-compatibility_date = "2024-09-23"
+# Use today's date (must be 2024-09-23 or later)
+compatibility_date = "$today"
 ```
 
 </WranglerConfig>

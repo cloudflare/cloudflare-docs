@@ -3,7 +3,7 @@ reviewed: 2023-10-30
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
-products:	[workers]
+products: [workers]
 tags:
   - PostgreSQL
   - TypeScript
@@ -146,7 +146,8 @@ This command outputs your Hyperdrive ID. You can now bind your Hyperdrive config
 ```toml
 name = "timescale-api"
 main = "src/index.ts"
-compatibility_date = "2024-09-23"
+# Use today's date (must be 2024-09-23 or later)
+compatibility_date = "$today"
 compatibility_flags = [ "nodejs_compat"]
 
 [[hyperdrive]]
