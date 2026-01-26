@@ -113,7 +113,7 @@ export default {
 		let obj = env.BROWSER.getByName("browser");
 
 		// Send a request to the Durable Object, then await its response.
-		let resp = await obj.fetch(request.url);
+		let resp = await obj.fetch(request);
 
 		return resp;
 	},
