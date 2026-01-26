@@ -214,7 +214,9 @@ crypto isakmp invalid-spi-recovery
 exit
 ```
 
-:::caution Enabling replay protection in Cloudflare reduces the performance and resilience benefits of the anycast architecture. Only use this option when your device does not support disabling anti-replay protection. :::
+:::caution
+Enabling replay protection in Cloudflare reduces the performance and resilience benefits of the anycast architecture. Only use this option when your device does not support disabling anti-replay protection.
+:::
 
 For a detailed explanation of why this setting is necessary, refer to <a href={props.antiReplayLink}>Anti-replay protection</a>.
 
