@@ -1,0 +1,16 @@
+Workers VPC uses the following account roles:
+
+- `Connectivity Directory Read` to view Workers VPC Services and Tunnels.
+- `Connectivity Directory Bind` to list/read services and bind them in Workers.
+- `Connectivity Directory Admin` to create, update, and delete services.
+
+For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
+
+If your roles were recently updated and commands are still failing, refresh Wrangler authentication:
+
+```sh
+npx wrangler logout
+npx wrangler login
+```
+
+If you authenticate with an API token (`CLOUDFLARE_API_TOKEN`), ensure the token belongs to a user with the required roles.
