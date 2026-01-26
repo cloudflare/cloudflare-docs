@@ -10,6 +10,7 @@ description: Deploy a TanStack Start application to Cloudflare Workers.
 
 import {
 	Description,
+	Details,
 	Render,
 	PackageManagers,
 	Steps,
@@ -119,7 +120,7 @@ Preview the build locally before deploying:
 
 ## Custom entrypoints
 
-TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypoint. Create a custom server entrypoint to add additional Workers handlers. These include [Queues](/queues/), [Cron Triggers](/workers/configuration/cron-triggers/), and [Durable Objects](/durable-objects/).
+TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypoint. Create a custom server entrypoint to add additional Workers handlers. These include [Queues](/queues/), [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Objects](/durable-objects/), [Workflows](/workflows/), and [Service Bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 `createServerEntry()` returns a plain object that you can spread and extend with additional handlers:
 
@@ -184,6 +185,95 @@ Test your scheduled handler locally using the `/__scheduled` endpoint:
 ```sh
 curl "http://localhost:5173/__scheduled?cron=*+*+*+*+*"
 ```
+
+<Details header="Example: Using Workflows">
+
+Export a Workflow class from your custom entrypoint to run durable, multi-step tasks:
+
+<TypeScriptExample filename="app/server.ts">
+
+```ts
+import {
+	WorkflowEntrypoint,
+	WorkflowStep,
+	WorkflowEvent,
+} from "cloudflare:workers";
+
+export class MyWorkflow extends WorkflowEntrypoint<Env> {
+	async run(event: WorkflowEvent<{ input: string }>, step: WorkflowStep) {
+		const result = await step.do("process data", async () => {
+			return `Processed: ${event.payload.input}`;
+		});
+
+		await step.sleep("wait", "10 seconds");
+
+		await step.do("finalize", async () => {
+			console.log("Workflow complete:", result);
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Add the Workflow configuration to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+</Details>
+
+<Details header="Example: Using Service Bindings">
+
+Add a service binding to call another Worker's RPC methods from your TanStack Start application:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"services": [
+		{
+			"binding": "AUTH_SERVICE",
+			"service": "auth-worker",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Call the bound Worker's methods from a server function:
+
+<TypeScriptExample filename="app/routes/index.tsx">
+
+```ts
+import { createServerFn } from "@tanstack/react-start";
+import { env } from "cloudflare:workers";
+
+const verifyUser = createServerFn()
+	.validator((token: string) => token)
+	.handler(async ({ data: token }) => {
+		const result = await env.AUTH_SERVICE.verify(token);
+		return result;
+	});
+```
+
+</TypeScriptExample>
+
+</Details>
 
 ## Bindings
 
