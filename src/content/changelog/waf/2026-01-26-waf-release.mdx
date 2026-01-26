@@ -6,12 +6,12 @@ date: 2026-01-26
 
 import { RuleID } from "~/components";
 
-This week’s release introduces new detections for denial-of-service attempts targeting React (CVE-2026-23864).
+This week’s release introduces new detections for denial-of-service attempts targeting React CVE-2026-23864 (https://www.cve.org/CVERecord?id=CVE-2026-23864).
 
 **Key Findings**
 
-- CVE-2026-23864 is a denial-of-service vulnerability in React that enables an attacker to trigger service disruption.
-
+- CVE-2026-23864 (https://www.cve.org/CVERecord?id=CVE-2026-23864) affects `react-server-dom-parcel`, `react-server-dom-turbopack`, and `react-server-dom-webpack` packages.
+- Attackers can send crafted HTTP requests to Server Function endpoints, causing server crashes, out-of-memory exceptions, or excessive CPU usage.
 
 <table style="width: 100%">
 	<thead>
