@@ -14,14 +14,14 @@ If you are experiencing tunnel health issues, check these items first:
 2. **Magic Firewall rules**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
 3. **Anti-replay protection**: Disable anti-replay protection on your router, or set the replay window to `0`.
 4. **MTU settings**: Verify MTU is set correctly (typically `1476` for GRE, `1400-1450` for IPsec).
-5. **IPsec parameters**: Confirm your crypto parameters match [Cloudflare's supported configuration](https://developers.cloudflare.com/magic-wan/reference/tunnels-and-encapsulation/#supported-configuration-parameters).
+5. **IPsec parameters**: Confirm your cryptographic parameters match [Cloudflare's supported configuration](https://developers.cloudflare.com/magic-wan/reference/tunnels-and-encapsulation/#supported-configuration-parameters).
 6. **Health check direction**: Magic WAN defaults to *Bidirectional*; Magic Transit (direct server return) defaults to *Unidirectional*.
 
 ---
 
 ## Tunnel health states
 
-The Cloudflare dashboard displays three tunnel health states:
+The [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/networking-insights/health) displays three tunnel health states:
 
 | State | Dashboard display | Technical threshold |
 | :---- | :---- | :---- |
@@ -29,11 +29,13 @@ The Cloudflare dashboard displays three tunnel health states:
 | **Degraded** | Between 40% and 80% of health checks pass | At least 0.1% failures in last five minutes (minimum two failures) |
 | **Down** | Less than 40% of health checks pass | All health checks failed (at least three samples in last second) |
 
-| Probe retry behavior When a health check probe fails, Cloudflare sends two additional probes to confirm the failure. A tunnel is only marked as unhealthy if all three probes fail. This retry behavior provides resilience against random packet loss. |
-| :---- |
+:::note [Probe retry behavior]
+When a health check probe fails, Cloudflare sends two additional probes to confirm the failure. A tunnel is only marked as unhealthy if all three probes fail. This retry behavior provides resilience against random packet loss.
+:::
 
-| The dashboard shows tunnel health as measured from each Cloudflare data center where your traffic lands. It is normal to see some locations reporting degraded status due to Internet path issues. Focus on locations that show traffic in the Average ingress traffic column. |
-| :---- |
+:::note
+The dashboard shows tunnel health as measured from each Cloudflare data center where your traffic lands. It is normal to see some locations reporting degraded status due to Internet path issues. Focus on locations that show traffic in the Average ingress traffic column.
+:::
 
 ### Routing priority penalties
 
