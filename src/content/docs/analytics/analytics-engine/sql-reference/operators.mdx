@@ -6,8 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Workers Analytics Engine SQL Reference
-
 ---
+
+import { Badge } from "~/components";
 
 The following operators are supported:
 
@@ -35,6 +36,39 @@ The following operators are supported:
 | `NOT IN`     | true if the preceding expression's value is not in the list<br/>`column NOT IN ('a', 'list', 'of', 'values')` |
 
 We also support the `BETWEEN` operator for checking a value is in an inclusive range: `a [NOT] BETWEEN b AND c`.
+
+### Pattern matching operators <Badge text="New" variant="tip" size="small" />
+
+| Operator    | Description                                                                                        |
+| ----------- | -------------------------------------------------------------------------------------------------- |
+| `LIKE`      | true if the string matches the pattern (case-sensitive)<br/>`column LIKE 'pattern%'`               |
+| `NOT LIKE`  | true if the string does not match the pattern (case-sensitive)<br/>`column NOT LIKE 'pattern%'`    |
+| `ILIKE`     | true if the string matches the pattern (case-insensitive)<br/>`column ILIKE 'pattern%'`            |
+| `NOT ILIKE` | true if the string does not match the pattern (case-insensitive)<br/>`column NOT ILIKE 'pattern%'` |
+
+Pattern matching supports two wildcard characters:
+
+- `%` matches any sequence of zero or more characters
+- `_` matches any single character
+
+Examples:
+
+```sql
+-- Match strings starting with "error"
+WHERE blob1 LIKE 'error%'
+
+-- Match strings ending with ".jpg" (case-insensitive)
+WHERE blob2 ILIKE '%.jpg'
+
+-- Match strings containing "test" anywhere
+WHERE blob3 LIKE '%test%'
+
+-- Match exactly 5 characters starting with "log"
+WHERE blob4 LIKE 'log__'
+
+-- Exclude strings containing "debug" (case-insensitive)
+WHERE blob5 NOT ILIKE '%debug%'
+```
 
 ## Boolean operators
 

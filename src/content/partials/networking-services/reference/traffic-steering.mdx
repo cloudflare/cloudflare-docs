@@ -26,7 +26,7 @@ The Magic networking routing table is a virtual network overlay, private to your
 - Magic Transit delivery for [Denial of Service (DoS)](/ddos-protection/) and <a href={props.mFirewallURL}>{props.mFirewallName}</a> filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
 - {props.productName} packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as <a href={props.warpClientURL}>WARP Client</a>, <a href={props.remoteBrowserURL}>Remote Browser Isolation</a>, <a href={props.accessURL}>Access</a>, and <a href={props.gatewayURL}>Gateway</a>.
 
-The Magic routing table supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [Direct Cloudflare Network Interconnect (CNI)](/network-interconnect/). Entries can be added to the Magic routing table through static route configuration or through routes learned through BGP peering (only available over Direct CNI).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
+The Magic routing table supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2 (beta)](/network-interconnect/). You can add entries to the Magic routing table through static route configuration or through routes learned through BGP peering (only available over CNI with Dataplane v2 (beta)).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
 
 
 ### Allowed IP ranges
@@ -65,9 +65,9 @@ The following IPv4 address ranges are allowed in the Magic Routing table:
 {props.productName} steers traffic along tunnel routes based on route entry priorities.
 
 - Lower values have greater priority.
-- When the priority values for prefix entries match, Cloudflare uses [equal-cost multi-path (ECMP)](#equal-cost-multi-path-routing) packet forwarding to route traffic. An optional weight value can be applied to static routes to [modify ECMP tunnel distribution](#set-priority-and-weights-for-static-routes).
+- When the priority values for prefix entries match, Cloudflare uses [equal-cost multi-path (ECMP)](#equal-cost-multi-path-routing) packet forwarding to route traffic. You can apply an optional weight value to static routes to [modify ECMP tunnel distribution](#set-priority-and-weights-for-static-routes).
 - <Render file="longest-prefix-match" product="networking-services/reference" />
-- When BGP and static routes have the same prefix and priority, Cloudflare enforces priority by preferring static routes over BGP routes. This ensures that manually configured static routes take precedence unless explicitly deprioritized.
+- When BGP and static routes have the same prefix and priority, Cloudflare enforces priority by preferring static routes over BGP routes. This ensures that manually configured static routes take precedence unless you explicitly deprioritize them.
 
 ### Set priority and weights for static routes
 
@@ -81,7 +81,7 @@ The priority value for static routes is directly configured as part of the route
 | `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` |
 | `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` |
 
-In the example above, tunnels with priority of `100` will be preferred to tunnels with priority of `200` since lower numbers have greater priority.
+In this example, tunnels with priority of `100` are preferred to tunnels with priority of `200` because lower numbers have greater priority.
 
 Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. Weight values determine traffic proportion, with higher weights receiving more traffic. The maximum weight value is `256`.
 
@@ -98,7 +98,7 @@ Aside from priority, scoping static routes to specific geographic regions will a
 
 ### Set priority for BGP routes
 
-When BGP advertises a route, Cloudflare automatically adds it to the Magic routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route will always take precedence over the BGP route. Set a different priority for static routes (more or less than `100`) depending on which you want to prioritize. Lower values have greater priority.
+When BGP advertises a route, Cloudflare automatically adds it to the Magic routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route always takes precedence over the BGP route. Set a different priority for static routes (more or less than `100`) depending on which you want to prioritize. Lower values have greater priority.
 
 Additionally, when multiple BGP routes exist with the same prefix length and priority, ECMP distributes traffic across them using [equal-cost multi-path (ECMP) routing](#equal-cost-multi-path-routing).
 
@@ -118,13 +118,13 @@ The community values supported for setting base route priority are:
 - `13335:60150`: Set base Magic route priority to `150`
 - `13335:60200`: Set base Magic route priority to `200`
 - `13335:60901`: Set base Magic route priority to `501000`
-- `13335:60902`: Set baseMagic route priority to `1001000`
+- `13335:60902`: Set base Magic route priority to `1001000`
 
 Setting multiple base priority communities in the same prefix update message is a misconfiguration. In this situation, Cloudflare prefers the highest priority (lowest integer value).
 
 #### AS path prepending for adjusting route priority
 
-For each additional mention of the customer ASN in the received AS path an additional `10` is added to the route's base priority. By increasing the priority number, the route is less preferred.
+For each additional mention of your ASN in the received AS path, Cloudflare adds `10` to the route's base priority. By increasing the priority number, the route becomes less preferred.
 
 For example, if your ASN is `65000` then the `BGP UPDATE` to Cloudflare will be:
 
@@ -219,15 +219,15 @@ In the Magic WAN dashboard, routing mode appears where you manage Magic routes:
 
 ## Scoping routes to specific regions
 
-If you have multiple connectivity paths to a network segment and you would like to apply different route prioritization based on where the traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user.
+If you have multiple connectivity paths to a network segment and want to apply different route prioritization based on where traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user.
 
-When a route is scoped to a Cloudflare data center region, it will only show up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
+When you scope a route to a Cloudflare data center region, it only shows up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
 
 :::note
 Scoping routes to specific regions is not supported with BGP peering, and is only available to statically configured routes at this time.
 :::
 
-When using region-scoped routes, you should ensure that all prefixes have routes covering all regions. Otherwise, traffic may arrive at a Cloudflare region which is not covered by any route, in which case the traffic will be dropped.
+When using region-scoped routes, ensure that all prefixes have routes covering all regions. Otherwise, traffic may arrive at a Cloudflare region that is not covered by any route, in which case Cloudflare drops the traffic.
 
 The following table exemplifies how to use geographic scoping for routes:
 
@@ -268,7 +268,7 @@ Configure scoping for your traffic in the **Region code** section when adding or
   | \`103.21.244.0/29\` | \`TUNNEL_1_IAD\` |
   | \`103.21.244.8/29\` | \`TUNNEL_2_ATL\` |
 
-		The minimum advertising prefix is \`/24\`, but because Cloudflare uses anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that \`/24\` to different tunnel endpoints. For example, you can send \`x.x.x.0/29\` to Data Center 1 and \`x.x.x.8/29\` to Data Center 2. This is helpful when you operate in an environment with constrained IP resources.
+		The minimum advertising prefix is \`/24\`, but because Cloudflare uses anycast tunnels as an outer wrapper for your traffic, Cloudflare can route prefixes within that \`/24\` to different tunnel endpoints. For example, you can send \`x.x.x.0/29\` to Data Center 1 and \`x.x.x.8/29\` to Data Center 2. This is helpful when you operate in an environment with constrained IP resources.
   `}
     inline={false}
   />
@@ -301,7 +301,7 @@ Equal-cost multi-path routing uses hashes calculated from [packet](https://www.c
 Using ECMP has a number of consequences:
 
 - Routing to equal-cost paths is probabilistic.
-- Packets in the same session (or flow) with the same source and destination have the same hash. The packets also use the same next hop.
+- Packets in the same session with the same source and destination have the same hash. The packets also use the same next hop.
 - Routing changes in the number of equal-cost next hops can cause traffic to use different tunnels. For example, dynamic reprioritization triggered by health check events can cause traffic to use different tunnels.
 
 As a result, ECMP provides load balancing across tunnels with the same prefix and priority.
@@ -339,7 +339,7 @@ E[Anycast IP] --> H[/GRE Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{
 
 **Customer router failure**
 
-When {props.productName} health checks determine that Tunnel 2 is unhealthy, {props.productName} dynamically de-prioritizes that route, leaving Tunnel 1 with the sole top-priority route. As a result, {props.productName} steers traffic away from Tunnel 2, and all traffic flows to Tunnel 1.
+When {props.productName} health checks determine that Tunnel 2 is unhealthy, {props.productName} dynamically de-prioritizes that route, leaving Tunnel 1 as the sole top-priority route. As a result, {props.productName} steers traffic away from Tunnel 2, and all traffic flows to Tunnel 1.
 
 ```mermaid
 flowchart LR
@@ -393,7 +393,7 @@ When {props.productName} determines that Tunnels 1 and 2 are healthy again, it r
 
 ### ECMP and bandwidth utilization
 
-Because ECMP is probabilistic, the algorithm routes roughly the same number of flows through each tunnel. However it does not consider the amount of traffic already sent through a tunnel when deciding where to route the next packet.
+Because ECMP is probabilistic, the algorithm routes roughly the same number of flows through each tunnel. However, it does not consider the amount of traffic already sent through a tunnel when deciding where to route the next packet.
 
 For example, consider a scenario with many very low-bandwidth TCP connections and one very high-bandwidth TCP connection. Packets for the high-bandwidth connection have the same hash and thus use the same tunnel. As a result, that tunnel utilizes greater bandwidth than the others.
 
@@ -409,18 +409,18 @@ For more on {props.productName} tunnel weights, contact your Cloudflare customer
 
 ## BGP information
 
-When using a [Direct CNI](/network-interconnect/) connection as an on-ramp, {props.productName} customers can also use BGP peering between their networks and their Magic routing table.
+When using a [CNI with Dataplane v2 (beta)](/network-interconnect/) connection as an on-ramp, you can use BGP peering between your network and your Magic routing table.
 
-Using BGP peering with a CNI allows customers to:
+Using BGP peering with a CNI allows you to:
 
 - Automate the process of adding or removing networks and subnets.
 - Take advantage of failure detection and session recovery features.
 
-With this functionality, customers can:
+With this functionality, you can:
 
-- Establish an eBGP session between their devices and the {props.productName} service when connected through CNI.
+- Establish an eBGP session between your devices and the {props.productName} service when connected through CNI.
 - Secure the session by MD5 authentication to prevent misconfigurations.
-- Exchange routes dynamically between their devices and their Magic routing table.
+- Exchange routes dynamically between your devices and your Magic routing table.
 
 ### BGP peering with the Magic routing table
 
@@ -430,15 +430,15 @@ If instead you are seeking to do public peering with the Cloudflare ASN 13335 at
 
 ### BGP route distribution and convergence
 
-Cloudflare redistributes routes received from the customer device into the Magic routing table, which is used by both {props.productName} and Magic Transit.
+Cloudflare redistributes routes received from your device into the Magic routing table, which both {props.productName} and Magic Transit use.
 
 All routes in the Magic routing table are advertised to BGP peers. Each BGP peer will receive each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
-BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This should not take more than a few minutes to propagate.
+BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This propagation takes no more than a few minutes.
 
 ### BGP timers and settings
 
-Cloudflare uses the timers as follows. These are not configurable:
+Cloudflare uses the following timers, which are not configurable:
 
 | Setting | Description |
 | ----- | ----- |
@@ -456,8 +456,8 @@ BGP multipath is supported. If BGP learns the same prefix on two different inter
 
 BGP support currently has the following limitations:
 
-- The Cloudflare account ASN and the customer device ASN must be different. Only eBGP is supported.
-- Routes are always injected with a priority of `100`.
+- The Cloudflare account ASN and your device ASN must be different. Only eBGP is supported.
+- Cloudflare always injects routes with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
 - Only Internet Protocol version 4 (IPv4) routes are supported.
 
@@ -470,7 +470,7 @@ BGP support currently has the following limitations:
 
 ### Tunnel health checks
 
-{props.productName} customers need to enable <a href={props.legacyHCs}>legacy health checks</a> alongside BGP. This is essential to determine if a specific Cloudflare data center is reachable from a customer device or not. <a href={props.tunnelHCsPage}>Tunnel health checks</a> will modify the route's priorities for dynamically learned BGP routes.
+You need to enable <a href={props.legacyHCs}>legacy health checks</a> alongside BGP. This is essential to determine if a specific Cloudflare data center is reachable from your device. <a href={props.tunnelHCsPage}>Tunnel health checks</a> modify the route priorities for dynamically learned BGP routes.
 
 
 { props.magicWord !== "Magic Transit" && (

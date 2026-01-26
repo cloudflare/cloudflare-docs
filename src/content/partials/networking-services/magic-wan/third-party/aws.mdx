@@ -10,14 +10,14 @@ This tutorial provides information and examples of how to configure IPsec VPN be
 
 You need to have an AWS transit gateway created in your AWS account. This is needed to route traffic between your AWS virtual private cloud (VPC) and Cloudflare Magic WAN. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html) to learn more about creating a transit gateway.
 
-Additionally, you also need to configure the necessary route table entries for the virtual machine (VM) in your AWS virtual private cloud, as well the route table entries for the transit gateway. Otherwise, connectivity between your VM and another VM routed via Magic WAN will not work. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) to learn more about routing tables.
+Additionally, you also need to configure the necessary route table entries for the virtual machine (VM) in your VPC, as well as the route table entries for the transit gateway. Otherwise, connectivity between your VM and another VM routed through Magic WAN will not work. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) to learn more about routing tables.
 
 ## AWS
 
 ### Create AWS transit gateway VPN attachment
 
 1. Go to **Transit gateways** > **Transit gateway attachments**, and select **Create transit gateway attachment**.
-2. Select the **Transit gateway ID** that you created previously from the dropdown.
+2. Select the **Transit gateway ID** that you created previously from the drop-down menu.
 3. For **Attachment type**, select _VPN_.
 4. Under VPN attachment, select the following settings (you can leave settings not mentioned here with their default values):
    1. **Customer Gateway**: Select **New**.
@@ -33,7 +33,7 @@ Additionally, you also need to configure the necessary route table entries for t
 
 3. Select the VPN connection you created > **Actions** > **Modify VPN tunnel options**.
 
-4. From the **VPN tunnel outside IP address** drop-down menu, choose one of tunnels.
+4. From the **VPN tunnel outside IP address** drop-down menu, select one of the tunnels.
 
 5. Take note of the **IP address** you chose, as this corresponds to the customer endpoint IP that you will need to configure on the Cloudflare side of the IPsec tunnel.
 
@@ -72,15 +72,15 @@ After configuring the AWS transit gateway VPN connection and the tunnel as menti
 
 1. Refer to <a href={props.addTunnelsUrl}>Add tunnels</a> to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
    - **Tunnel name**: `tunnel01`
-   - **Interface address**: The `/30`CIDR block enforced by AWS (first usable IP is for the AWS side). For example, `169.254.244.2`.
+   - **Interface address**: The `/30` CIDR block enforced by AWS (first usable IP is for the AWS side). For example, `169.254.244.2`.
    - **Customer endpoint**: The IP address from AWS's VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
    - **Cloudflare endpoint**: Enter the first of your two anycast IPs.
-   - **Pre-shared key**: Choose **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
-   - **Health check type**: Choose **Request**
-   - **Health check direction**: Choose **Bidirectional**
+   - **Pre-shared key**: Select **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
+   - **Health check type**: Select **Request**
+   - **Health check direction**: Select **Bidirectional**
    - **Replay protection**: Select **Enabled**.
 2. Select **Save**.
-3. Repeat the above steps for `tunnel02`. Chose the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
+3. Repeat the above steps for `tunnel02`. Select the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
 
 ### Static routes
 
@@ -90,5 +90,5 @@ To create a static route:
 
 1. Refer to <a href={props.createAStaticRouteUrl}>Create a static route</a> to learn how to create one.
 2. In **Prefix**, enter the subnet for your VM. For example, `192.xx.xx.xx/24`.
-3. For the **Tunnel/Next hop**, choose the IPsec tunnel you created in the previous step.
+3. For the **Tunnel/Next hop**, select the IPsec tunnel you created in the previous step.
 4. Repeat the steps above for the second IPsec tunnel you created.

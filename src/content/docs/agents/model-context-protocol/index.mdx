@@ -25,7 +25,7 @@ You can build and deploy [Model Context Protocol (MCP)](https://modelcontextprot
 
 The MCP standard supports two modes of operation:
 
-- **Remote MCP connections**: MCP clients connect to MCP servers over the Internet, establishing a [long-lived connection using HTTP and Server-Sent Events (SSE)](/agents/model-context-protocol/transport/), and authorizing the MCP client access to resources on the user's account using [OAuth](/agents/model-context-protocol/authorization/).
+- **Remote MCP connections**: MCP clients connect to MCP servers over the Internet, establishing a connection using [Streamable HTTP](/agents/model-context-protocol/transport/), and authorizing the MCP client access to resources on the user's account using [OAuth](/agents/model-context-protocol/authorization/).
 - **Local MCP connections**: MCP clients connect to MCP servers on the same machine, using [stdio](https://spec.modelcontextprotocol.io/specification/draft/basic/transports/#stdio) as a local transport method.
 
 ### Best Practices

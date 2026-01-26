@@ -4,6 +4,7 @@ title: Code block guidelines
 ---
 
 To create a code block:
+
 - Use triple-grave characters (` ``` `) as a fence, and enter a [language](#languages) name after the first ` ``` ` fence
 - Indent lines by four spaces or one tab
 
@@ -16,9 +17,9 @@ Here is an example of a JSON code block:
 ````
 ```json
 {
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
+	"firstName": "John",
+	"lastName": "Smith",
+	"age": 25
 }
 ```
 ````
@@ -65,15 +66,17 @@ index_name = "tutorial-index"
 
 ## Languages
 
-To define the language of your code block, enter the name of the language after the first ``` fence.
+To define the language of your code block, enter the name of the language after the first ` ``` ` fence.
 
 If there is no appropriate syntax language, use `txt` (for example, a fragment of an Apache configuration file).
 
-Make sure you enter the language name in lower case, since other capitalizations of these names are not supported. For example, entering `JavaScript` would use the `txt` language.
+Make sure you enter the language name in lower case, since other capitalizations of these names are not supported. For example, entering `JavaScript` would use the `txt` language as a fallback.
 
 Here is a list of supported languages:
+
 - `bash` (alias: `curl`) [Learn more about terminal commands](#terminal-commands)
 - `c`
+- `dart`
 - `diff`
 - `go`
 - `graphql`
@@ -82,7 +85,7 @@ Here is a list of supported languages:
 - `ini`
 - `java`
 - `js` (alias: `javascript`)
-- `json` [Learn more about JSON commands](#json)
+- `json` [Learn more about JSON code blocks](#json)
 - `kotlin`
 - `php`
 - `powershell` [Learn more about terminal commands](#terminal-commands)
@@ -100,46 +103,24 @@ Here is a list of supported languages:
 
 ### Terminal commands
 
-Use `sh` for one-line commands executed in the Linux/macOS terminal.
-- Each command must be in a single line
-- Use "**`$`** "(dollar sign, space) or "**FOLDER_NAME $** " (folder name, space, dollar sign, space)
-- Examples:
-    - **`$`** command-to-run
-    - **\~/my-folder `$`** command-to-run (where `~` means the home folder of the current user)
+- Use the `sh` or `bash` language for commands executed in the Linux/macOS terminal, including:
+  - One-line commands
+  - Commands that span multiple lines (usually each line ends with a `\`)
+  - Commands for specific shells (for example, a command specifically for the `zsh` shell)
 
-:::note
-The **Copy to clipboard** button (top-right corner of the code block) will copy the entire content, not just what the reader can select.
-:::
+- Use the `powershell` language for Windows PowerShell commands. When rendered, these blocks will have a `PowerShell` title.
 
-Use `bash` for other Linux/macOS/generic commands.
-- For example:
-  - Commands that span multiple lines (usually each line ends with a `\`) and may include one or more lines of JSON content
-  - Commands for specific shells (for example, a command specifically for the zsh shell, where the prompt is usually `%`)
-- If a code block contains only one (multi-line) command, do not include a `$` prefix so that the user can run the command immediately after copying and pasting without having to remove the prefix
-- If a code block includes several commands or it includes output, consider including a prefix before each command to help differentiate between commands and their output
-- For zsh-specific instructions you can use a `%` command prefix instead of `$`
+- Use the `txt` language for Windows console commands.
 
-Use the `powershell` language for Windows PowerShell commands.
-- By default, do not use any prompt prefixes for PowerShell commands
-  - If you need to establish context (for example, you must be in a specific folder before running a command), use the following prompt:
-    - "**PS FOLDER_NAME>** " (the `>` is part of the prompt, and there is a space after it)
-    - Examples:
-      - **PS C:\\>** command-to-run.exe
-      - **PS C:\Users\JohnDoe>** command-to-run.exe
+The **Copy to clipboard** button, available in the top-right corner of each code block, will copy the entire content of the code block, including any command output included in the block.
 
-Use the `txt` language for Windows console commands.
-- Use "**FOLDER_NAME>**" (folder name, greater than symbol, no space after)
-- Alternatively, do not include any prompt and start the line with the command the user must enter (knowing that it will be harder to understand what must be entered and what is example output)
-- Examples:
-  - C:\> command-to-run.exe
-  - C:\Program Files> command-to-run.exe
-  - C:\Users\JohnDoe> command-to-run.exe
+Do not include a prefix (`$`, `%`, `PS>`, `C:\>`, or similar) before a command so that the user can run the command immediately after copying and pasting without having to remove the prefix. Similarly, do not write the folder where the command is being executed unless it is an essential part of the explanation.
 
 ### JSON
 
 Use `json` for JSON code blocks or JSON fragments.
 
-Multi-line curl commands with a JSON body should use `bash` syntax highlighting instead.
+Multi-line curl commands with a JSON body should use the `sh` or `bash` syntax highlighting, as stated in [Terminal commands](#terminal-commands).
 
 :::note
 JSON fragments may appear with a red background in GitHub because they are not valid JSON. Make it clear in the documentation that it is a fragment and not an entire piece of valid JSON content.
@@ -255,6 +236,7 @@ query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
 ### Variables
 
 In the GraphQL API Explorer, the **Variables** section is automatically filled based on the names and types of the variables defined in your query:
+
 - Variables that include `start` and are of type `Time` are set to six hours before the current time
 - Variables that include `end` and are of type `Time` are set to the current time
 - Variables that include `start` and are of type `Date` are set to 24 hours before the current date
@@ -283,6 +265,6 @@ query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
 
 So, the **Variables** would look something like this:
 
-```
-{"zoneTag":"ZONE_ID", "start":"2025-09-11T14:00:00Z", "end":"2025-09-11T20:00:00Z", "uId": "custom-variable"}
+```txt
+{"zoneTag":"ZONE_ID", "start":"2025-09-11T14:00:00Z", "end":"2025-09-11T20:00:00Z", "uId":"custom-variable"}
 ```

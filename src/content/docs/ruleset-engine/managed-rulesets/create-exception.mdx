@@ -1,6 +1,6 @@
 ---
 title: Create an exception
-pcx_content_type: how-to
+pcx_content_type: configuration
 sidebar:
   order: 5
 ---
@@ -100,8 +100,6 @@ For a full example, refer to the [WAF documentation](/waf/managed-rules/waf-exce
 
 ## Additional notes
 
-Exceptions have priority over [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
-
-If you define an exception that skips all remaining rules, the expressions of those rules are not evaluated.
-
-If you define an exception that skips a rule of a managed ruleset, the expression of the rule that executes the managed ruleset is evaluated and the managed ruleset rules are executed except for that specific rule, which is bypassed.
+- Exceptions have priority over [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
+- If you define an exception that skips all remaining rules, the expressions of those rules are not evaluated.
+- If you define an exception that skips a rule of a managed ruleset, the expression of the rule that executes the managed ruleset is evaluated and the managed ruleset rules are executed except for that specific rule, which is bypassed.

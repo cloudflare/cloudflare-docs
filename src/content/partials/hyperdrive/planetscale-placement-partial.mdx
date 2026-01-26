@@ -1,0 +1,18 @@
+---
+{}
+---
+
+:::note
+
+To reduce latency, use a [Placement Hint](/workers/configuration/smart-placement/#use-placement-hints) to run your Worker close to your PlanetScale database. This is especially useful when a single request makes multiple queries.
+
+```jsonc title="wrangler.jsonc"
+{
+	"placement": {
+		// Match to your PlanetScale region, for example "gcp:us-east4" or "aws:us-east-1"
+		"region": "gcp:us-east4",
+	},
+}
+```
+
+:::

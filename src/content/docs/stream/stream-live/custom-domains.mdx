@@ -12,6 +12,13 @@ import { DashButton } from "~/components";
 
 With custom ingest domains, you can configure your RTMPS feeds to use an ingest URL that you specify instead of using `live.cloudflare.com.`
 
+:::note
+
+Custom Ingest Domains cannot be configured for domains with [zone holds](/fundamentals/account/account-security/zone-holds/) enabled.
+
+:::
+
+
 1. In the Cloudflare dashboard, go to the **Live inputs** page.
 
    <DashButton url="/?to=/:account/stream/inputs" />

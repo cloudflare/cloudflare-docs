@@ -19,7 +19,7 @@ Our version is open sourced and can be found in [Cloudflare's fork of Puppeteer]
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 :::note
-The current version of Puppeteer is [**v22.13.1**](https://github.com/cloudflare/puppeteer/releases/tag/v1.0.4).
+The current version is [`@cloudflare/puppeteer` v1.0.4](https://github.com/cloudflare/puppeteer/releases/tag/v1.0.4), based on [Puppeteer v22.13.1](https://pptr.dev/chromium-support).
 :::
 
 ## Use Puppeteer in a Worker
@@ -60,6 +60,10 @@ const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
 ```
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
+
+:::note
+This is an inactivity timeout, not a maximum session duration. Sessions can remain open longer than 10 minutes as long as they stay active. To keep a session open beyond the inactivity timeout, send a command at least once within your configured window (for example, every 10 minutes). Refer to [session duration limits](/browser-rendering/limits/#is-there-a-maximum-session-duration) for more information.
+:::
 
 ### Set a custom user agent
 

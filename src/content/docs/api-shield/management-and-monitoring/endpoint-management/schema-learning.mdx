@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { Steps, Tabs, TabItem, DashButton } from "~/components"
+import { Steps, Tabs, TabItem, DashButton } from "~/components";
 
 Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export the learned schema in OpenAPI `v3.0.0` format by hostname.
 
@@ -14,16 +14,9 @@ To protect your API with a learned schema, refer to [Schema validation](/api-shi
 
 ## Export a schema
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Select **Security** > **API Shield** > **Endpoint Management**.
-      4. Select **Export schema** and choose a hostname to export.
-      5. Select whether to include [learned parameters](/api-shield/management-and-monitoring/#learned-schemas-will-always-include) and [rate limit recommendations](/api-shield/security/volumetric-abuse-detection/)
-      6. Select **Export schema** and choose a location to save the file.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -35,7 +28,18 @@ To protect your API with a learned schema, refer to [Schema validation](/api-shi
       5. Select **Export schema** and choose a location to save the file.
     </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Select **Security** > **API Shield** > **Endpoint Management**.
+      4. Select **Export schema** and choose a hostname to export.
+      5. Select whether to include [learned parameters](/api-shield/management-and-monitoring/#learned-schemas-will-always-include) and [rate limit recommendations](/api-shield/security/volumetric-abuse-detection/)
+      6. Select **Export schema** and choose a location to save the file.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 :::note
 The schema is saved as a JSON file in OpenAPI `v3.0.0` format.

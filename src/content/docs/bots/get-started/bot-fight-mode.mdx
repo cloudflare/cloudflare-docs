@@ -6,10 +6,16 @@ sidebar:
 head:
   - tag: title
     content: Get started with Bot Fight Mode
-
 ---
 
-import { Tabs, TabItem, Steps, Render, DashButton, GlossaryTooltip } from '~/components';
+import {
+	Tabs,
+	TabItem,
+	Steps,
+	Render,
+	DashButton,
+	GlossaryTooltip,
+} from "~/components";
 
 Bot Fight Mode is a simple, free product that helps detect and mitigate bot traffic on your domain. When enabled, the product:
 
@@ -27,7 +33,19 @@ Bot Fight Mode is a simple, free product that helps detect and mitigate bot traf
 
 To start using Bot Fight Mode:
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
+    <TabItem label="New dashboard" icon="rocket">
+        <Steps>
+          1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+              <DashButton url="/?to=/:account/:zone/security/settings" />
+          2. Filter by **Bot traffic**.
+          3. Go to **Bot Fight Mode**.
+          4. Turn **Bot Fight Mode** on.
+        </Steps>
+    </TabItem>
     <TabItem label="Old dashboard">
         <Steps>
          1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
@@ -35,17 +53,9 @@ To start using Bot Fight Mode:
          3. For **Bot Fight Mode**, select **On**.
         </Steps>
     </TabItem>
-    <TabItem label="New dashboard" icon="rocket">
-        <Steps>
-          1. In the Cloudflare dashboard, go to the **Security Settings** page.
-
-              <DashButton url="/?to=/:account/:zone/security/settings" />
-          2. Filter by **Bot traffic**.
-          3. Go to **Bot Fight Mode**. 
-          4. Turn **Bot Fight Mode** on.
-        </Steps>
-    </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 <Render file="sbfm-upgrade" product="bots" />
 
@@ -57,7 +67,19 @@ If you find that **Bot Fight Mode** is causing problems with your application tr
 
 To disable Bot Fight Mode:
 
-<Tabs syncKey="dashNewNav"> 
+{/* prettier-ignore-start */}
+
+<Tabs syncKey="dashNewNav">
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **Bot Fight Mode**.
+      4. Turn **Bot Fight Mode** off.
+    </Steps>
+  </TabItem>
   <TabItem label="Old dashboard">
     <Steps>
       1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
@@ -65,17 +87,9 @@ To disable Bot Fight Mode:
       3. For **Bot Fight Mode**, select **Off**.
     </Steps>
   </TabItem>
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Security Settings** page.
-
-          <DashButton url="/?to=/:account/:zone/security/settings" />
-      2. Filter by **Bot traffic**.
-      3. Go to **Bot Fight Mode**. 
-      4. Turn **Bot Fight Mode** off.
-    </Steps>
-  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ---
 
@@ -106,13 +120,13 @@ Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trig
 
 ### JavaScript Detections
 
-<Render 
-  file="jsd-availability" 
-  product="bots" 
-  params={{ 
-    planType: "Bot Fight Mode",
-    enablement: "automatically enabled and cannot be disabled" 
-    }} 
+<Render
+	file="jsd-availability"
+	product="bots"
+	params={{
+		planType: "Bot Fight Mode",
+		enablement: "automatically enabled and cannot be disabled",
+	}}
 />
 
 <Render file="content-security-policy-limitation" product="bots" />

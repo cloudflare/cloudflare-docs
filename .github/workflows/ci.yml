@@ -36,7 +36,8 @@ jobs:
               -not -name '*.json' \
               -not -name '*.yml' \
               -not -name '*.yaml' \
-              -not -name '*.txt'
+              -not -name '*.txt' \
+              -not -name 'collection.*'
           )
 
           if [ -n "$FILES" ]; then

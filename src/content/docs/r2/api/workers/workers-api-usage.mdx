@@ -194,7 +194,54 @@ export default {
   }
 }
 ```
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+```py
+from workers import WorkerEntrypoint, Response
+from urllib.parse import urlparse
+
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		url = urlparse(request.url)
+		key = url.path[1:]
+
+		if request.method == "PUT":
+			await self.env.R2.put(
+				key,
+				request.body,
+				onlyIf=request.headers,
+				httpMetadata=request.headers,
+			)
+			return Response(f"Put {key} successfully!")
+		elif request.method == "GET":
+			obj = await self.env.R2.get(
+				key,
+				onlyIf=request.headers,
+				range=request.headers,
+			)
+
+			if obj is None:
+				return Response("Object Not Found", status=404)
+
+			# When no body is present, preconditions have failed
+			body = obj.body if hasattr(obj, "body") else None
+			status = 200 if hasattr(obj, "body") else 412
+
+			headers = {"etag": obj.httpEtag}
+			return Response(body, status=status, headers=headers)
+		elif request.method == "DELETE":
+			await self.env.R2.delete(key)
+			return Response("Deleted!")
+		else:
+			return Response(
+				"Method Not Allowed",
+				status=405,
+				headers={"Allow": "PUT, GET, DELETE"},
+			)
+```
+</TabItem>
+</Tabs>
 <Render file="request-dot-clone-warning" product="workers" />
 
 ## 5. Bucket access and privacy
@@ -213,6 +260,9 @@ Continuing with your newly created bucket and Worker, you will need to protect a
 For `PUT` and `DELETE` requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret.
 
 For `GET` requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
+
+<Tabs syncKey="workersExamples">
+<TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 const ALLOW_LIST = ["cat-pic.jpg"];
@@ -247,6 +297,41 @@ export default {
 	},
 };
 ```
+
+</TabItem>
+<TabItem label="Python" icon="seti:python">
+
+```py
+from workers import WorkerEntrypoint, Response
+from urllib.parse import urlparse
+
+ALLOW_LIST = ["cat-pic.jpg"]
+
+# Check requests for a pre-shared secret
+def has_valid_header(request, env):
+	return request.headers.get("X-Custom-Auth-Key") == env.AUTH_KEY_SECRET
+
+def authorize_request(request, env, key):
+	if request.method in ["PUT", "DELETE"]:
+		return has_valid_header(request, env)
+	elif request.method == "GET":
+		return key in ALLOW_LIST
+	else:
+		return False
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		url = urlparse(request.url)
+		key = url.path[1:]
+
+		if not authorize_request(request, self.env, key):
+			return Response("Forbidden", status=403)
+
+		# ...
+```
+
+</TabItem>
+</Tabs>
 
 For this to work, you need to create a secret via Wrangler:
 

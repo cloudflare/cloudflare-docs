@@ -1,9 +1,8 @@
 ---
 pcx_content_type: concept
-title: Smart Placement
+title: Placement
 head: []
-description: Speed up your Worker application by automatically placing your
-  workloads in an optimal location that minimizes latency.
+description: Control where your Worker runs to reduce latency.
 sidebar:
   badge:
     text: Beta
@@ -11,114 +10,243 @@ sidebar:
 
 import { WranglerConfig, DashButton } from "~/components";
 
-By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your back-end infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications.
+By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) run in a data center closest to where the request was received. If your Worker makes requests to back-end infrastructure such as databases or APIs, it may be more performant to run that Worker closer to your back-end than the end user.
 
-## Background
+<WranglerConfig>
 
-The following example demonstrates how moving your Worker close to your back-end services could decrease application latency:
+```jsonc
+{
+	"placement": {
+		// Use one of the following options (mutually exclusive):
+		"mode": "smart", // Cloudflare automatically places your Worker closest to the upstream with the most requests
+		"region": "gcp:us-east4", // Explicit cloud region to run your Worker closest to - e.g. "gcp:us-east4" or "aws:us-east-1"
+		"host": "db.example.com:5432", // A host to probe (TCP/layer 4) - e.g. a database host - and place your Worker closest to
+		"hostname": "api.example.com", // A hostname to probe (HTTP/layer 7) - e.g. an API endpoint - and place your Worker closest to
+	},
+}
+```
 
-You have a user in Sydney, Australia who is accessing an application running on Workers. This application makes multiple round trips to a database located in Frankfurt, Germany in order to serve the user’s request.
+</WranglerConfig>
+
+Placement can reduce the overall latency of a Worker request by minimizing roundtrip latency of requests between your Worker and back-end services. You can achieve single-digit millisecond latency to databases, APIs, and other services running in legacy cloud infrastructure.
+
+| Option     | Best for                                                        | Configuration        |
+| ---------- | --------------------------------------------------------------- | -------------------- |
+| **Smart**  | Multiple back-end services, or unknown infrastructure locations | `mode = "smart"`     |
+| **Region** | Single back-end service in a known cloud region                 | `region`             |
+| **Host**   | Single back-end service not in a major cloud provider           | `host` or `hostname` |
+
+## Understand placement
+
+Consider a user in Sydney, Australia accessing an application running on Workers. This application makes multiple round trips to a database in Frankfurt, Germany.
 
 ![A user located in Sydney, AU connecting to a Worker in the same region which then makes multiple round trips to a database located in Frankfurt, DE. ](~/assets/images/workers/platform/workers-smart-placement-disabled.png)
 
-The issue is the time that it takes the Worker to perform multiple round trips to the database. Instead of the request being processed close to the user, the Cloudflare network, with Smart Placement enabled, would process the request in a data center closest to the database.
+The latency from multiple round trips between Sydney and Frankfurt adds up. By placing the Worker near the database, Cloudflare reduces the total request duration.
 
 ![A user located in Sydney, AU connecting to a Worker in Frankfurt, DE which then makes multiple round trips to a database also located in Frankfurt, DE. ](~/assets/images/workers/platform/workers-smart-placement-enabled.png)
 
-## Understand how Smart Placement works
+## Use smart placement
 
-Smart Placement is enabled on a per-Worker basis. Once enabled, Smart Placement analyzes the [request duration](/workers/observability/metrics-and-analytics/#request-duration) of the Worker in different Cloudflare locations around the world on a regular basis. Smart Placement decides where to run the Worker by comparing the estimated request duration in the location closest to where the request was received (the default location where the Worker would run) to a set of candidate locations around the world. For each candidate location, Smart Placement considers the performance of the Worker in that location as well as the network latency added by forwarding the request to that location. If the estimated request duration in the best candidate location is significantly faster than the location where the request was received, the request will be forwarded to that candidate location. Otherwise, the Worker will run in the default location closest to where the request was received.
+Smart Placement automatically analyzes your Worker's traffic patterns and places it in an optimal location. Use Smart Placement when:
 
-Smart Placement only considers candidate locations where the Worker has previously run, since the estimated request duration in each candidate location is based on historical data from the Worker running in that location. This means that Smart Placement cannot run the Worker in a location that it does not normally receive traffic from.
+- Your Worker connects to multiple back-end services
+- You do not know the exact location of your infrastructure
+- Your back-end services are distributed or replicated
 
-Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). Smart Placement does not affect the execution of [RPC methods](/workers/runtime-apis/rpc/) or [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints). Workers without a fetch event handler will be ignored by Smart Placement. For Workers with both fetch and non-fetch event handlers, Smart Placement will only affect the execution of the fetch event handler.
+Smart Placement is enabled on a per-Worker basis. Once enabled, it analyzes the [request duration](/workers/observability/metrics-and-analytics/#request-duration) of the Worker in different Cloudflare locations on a regular basis.
 
-Similarly, Smart Placement will not affect where [static assets](/workers/static-assets/) are served from. Static assets will continue to be served from the location nearest to the incoming request. If a Worker is invoked and your code retrieves assets via the [static assets binding](https://developers.cloudflare.com/workers/static-assets/binding/), then assets will be served from the location that your Worker runs in.
+For each candidate location, Smart Placement considers the Worker's performance and the network latency added by forwarding the request. If a candidate location is significantly faster, the request is forwarded there. Otherwise, the Worker runs in the default location closest to the request.
 
-## Enable Smart Placement
+Smart Placement only considers locations where the Worker has previously run. It cannot place your Worker in a location that does not normally receive traffic.
 
-Smart Placement is available to users on all Workers plans.
+### Review limitations
 
-### Enable Smart Placement via Wrangler
+- Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). It does not affect [RPC methods](/workers/runtime-apis/rpc/) or [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints).
+- Workers without a fetch event handler are ignored by Smart Placement.
+- [Static assets](/workers/static-assets/) are always served from the location nearest to the incoming request. If your code retrieves assets via the [static assets binding](/workers/static-assets/binding/), assets are served from the location where your Worker runs.
 
-To enable Smart Placement via Wrangler:
+### Enable smart placement
 
-1. Make sure that you have `wrangler@2.20.0` or later [installed](/workers/wrangler/install-and-update/).
+Smart Placement is available on all Workers plans.
 
-2. Add the following to your Worker project's Wrangler file:
+#### Configure with Wrangler
 
-   <WranglerConfig>
+Add the following to your Wrangler configuration file:
 
-   ```toml
-   [placement]
-   mode = "smart"
-   ```
+<WranglerConfig>
 
-   </WranglerConfig>
+```jsonc
+{
+	"placement": {
+		"mode": "smart",
+	},
+}
+```
 
-3. Wait for Smart Placement to analyze your Worker. This process may take up to 15 minutes.
+</WranglerConfig>
 
-4. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/#request-duration).
+Smart Placement may take up to 15 minutes to analyze your Worker after deployment.
 
-### Enable Smart Placement via the dashboard
+#### Configure in the dashboard
 
-To enable Smart Placement via the dashboard:
-
-1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+1. Go to **Workers & Pages**.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
-2. In **Overview**,select your Worker.
-3. Select **Settings** > **General**.
-4. Under **Placement**, choose **Smart**.
-5. Wait for Smart Placement to analyze your Worker. Smart Placement requires consistent traffic to the Worker from multiple locations around the world to make a placement decision. The analysis process may take up to 15 minutes.
-6. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/#request-duration)
+2. Select your Worker.
+3. Go to **Settings** > **General**.
+4. Under **Placement**, select **Smart**.
 
-## Observability
+Smart Placement requires consistent traffic to the Worker from multiple locations to make a placement decision. The analysis process may take up to 15 minutes.
 
-### Placement Status
+### Check placement status
 
-A Worker's metadata contains details about a Worker's placement status. Query your Worker's placement status through the following Workers API endpoint:
+Query your Worker's placement status through the Workers API:
 
 ```bash
-curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/workers/services/{WORKER_NAME} \
--H "Authorization: Bearer <TOKEN>" \
+curl -X GET https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/services/$WORKER_NAME \
+-H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 -H "Content-Type: application/json" | jq .
 ```
 
-Possible placement states include:
+Possible placement states:
 
-- _(not present)_: The Worker has not been analyzed for Smart Placement yet. The Worker will always run in the default Cloudflare location closest to where the request was received.
-- `SUCCESS`: The Worker was successfully analyzed and will be optimized by Smart Placement. The Worker will run in the Cloudflare location that minimizes expected request duration, which may be the default location closest to where the request was received or may be a faster location elsewhere in the world.
-- `INSUFFICIENT_INVOCATIONS`: The Worker has not received enough requests to make a placement decision. Smart Placement requires consistent traffic to the Worker from multiple locations around the world. The Worker will always run in the default Cloudflare location closest to where the request was received.
-- `UNSUPPORTED_APPLICATION`: Smart Placement began optimizing the Worker and measured the results, which showed that Smart Placement made the Worker slower. In response, Smart Placement reverted the placement decision. The Worker will always run in the default Cloudflare location closest to where the request was received, and Smart Placement will not analyze the Worker again until it's redeployed. This state is rare and accounts for less that 1% of Workers with Smart Placement enabled.
+| Status                     | Description                                                                                                       |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| _(not present)_            | The Worker has not been analyzed yet. It runs in the default location closest to the request.                     |
+| `SUCCESS`                  | The Worker was analyzed and will be optimized by Smart Placement.                                                 |
+| `INSUFFICIENT_INVOCATIONS` | The Worker has not received enough requests from multiple locations to make a placement decision.                 |
+| `UNSUPPORTED_APPLICATION`  | Smart Placement made the Worker slower and reverted the placement. This state is rare (fewer than 1% of Workers). |
 
-### Request Duration Analytics
+### Review request duration analytics
 
-Once Smart Placement is enabled, data about request duration gets collected. Request duration is measured at the data center closest to the end user.
+Once Smart Placement is enabled, data about request duration is collected. Request duration is measured at the data center closest to the end user. By default, 1% of requests are not routed with Smart Placement to serve as a baseline for comparison.
 
-By default, one percent (1%) of requests are not routed with Smart Placement. These requests serve as a baseline to compare to.
+View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/#request-duration) to measure the impact of Smart Placement.
+
+### Check the `cf-placement` header
+
+Cloudflare adds a `cf-placement` header to all requests when placement is enabled. Use this header to check whether a request was routed with Smart Placement and where the Worker processed the request.
+
+The header value includes a placement type and an airport code indicating the data center location:
+
+- `remote-LHR` — The request was routed using Smart Placement to a data center near London.
+- `local-EWR` — The request was not routed using Smart Placement. The Worker ran in the default location near Newark.
+
+:::caution
+The `cf-placement` header may be removed before Smart Placement exits beta.
+:::
+
+## Use placement hints
+
+Placement Hints let you explicitly specify where your Worker runs. Use Placement Hints when:
+
+- You know the exact location of your back-end infrastructure
+- Your Worker connects to a single database, API, or service
+- Your infrastructure is single-homed (not replicated or anycasted)
+
+Examples include a primary database, a virtual machine, or a Kubernetes cluster in a specific region. Reducing round-trip latency from 20 to 30 milliseconds per query to 1 to 3 milliseconds improves response times.
+
+:::note
+Workers run on [Cloudflare's global network](https://www.cloudflare.com/network/), not inside cloud provider regions. Placement Hints run your Worker in the data center with the lowest latency to your specified cloud region. At extremely high request volumes (hundreds of thousands of requests per second or more), Cloudflare may run instances across a more distributed area to balance traffic.
+:::
+
+### Specify a cloud region
+
+If your infrastructure runs in AWS, GCP, or Azure, set the `placement.region` property using the format `{provider}:{region}`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"placement": {
+		"region": "aws:us-east-1",
+	},
+}
+```
+
+</WranglerConfig>
+
+Cloudflare maps your specified cloud region to the data center with the lowest latency to that region. Cloudflare automatically adjusts placement to account for network maintenance or changes, so you do not need to specify failover regions.
+
+### Specify a host endpoint
+
+If your infrastructure is not in a major cloud provider, you can specify an endpoint for Cloudflare to probe. Cloudflare will triangulate the position of your external host and place Workers in a nearby region.
+
+:::note
+Host-based placement is experimental.
+:::
+
+Set `placement.host` to identify a layer 4 service. Cloudflare uses TCP CONNECT checks to measure latency and selects the best data center.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"placement": {
+		"host": "my_database_host.com:5432",
+	},
+}
+```
+
+</WranglerConfig>
+
+Set `placement.hostname` to identify a layer 7 service. Cloudflare uses HTTP HEAD checks to measure latency and selects the best data center.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"placement": {
+		"hostname": "my_api_server.com",
+	},
+}
+```
+
+</WranglerConfig>
+
+Probes are sent from public IP ranges, not Cloudflare IP ranges. Cloudflare rechecks service location at regular intervals. These probes locate single-homed resources and do not work correctly for broadcast, anycast, multicast, or replicated resources.
+
+### List supported regions
+
+Placement Hints support Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure region identifiers:
+
+| Provider | Format           | Examples                                                  |
+| -------- | ---------------- | --------------------------------------------------------- |
+| AWS      | `aws:{region}`   | `aws:us-east-1`, `aws:us-west-2`, `aws:eu-central-1`      |
+| GCP      | `gcp:{region}`   | `gcp:us-east4`, `gcp:europe-west1`, `gcp:asia-east1`      |
+| Azure    | `azure:{region}` | `azure:westeurope`, `azure:eastus`, `azure:southeastasia` |
+
+For a full list of region codes, refer to [AWS regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html), [GCP regions](https://cloud.google.com/compute/docs/regions-zones), or [Azure regions](https://learn.microsoft.com/en-us/azure/reliability/regions-list).
+
+## Placement Behavior
+
+Workers Placement behaves in similar fashion when either Smart Placement or Placement hints are used. The following behavior applies to both.
+
+### Review limitations
+
+The following limitations apply to both smart placement and placement hints: 
+- Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). It does not affect [RPC methods](/workers/runtime-apis/rpc/) or [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints).
+	- Workers without a fetch event handler are ignored by Smart Placement.
+	- [Static assets](/workers/static-assets/) are always served from the location nearest to the incoming request. If your code retrieves assets via the [static assets binding](/workers/static-assets/binding/), assets are served from the location where your Worker runs.
 
 ### `cf-placement` header
 
-Once Smart Placement is enabled, Cloudflare adds a `cf-placement` header to all requests. This can be used to check whether a request has been routed with Smart Placement and where the Worker is processing the request (which is shown as the nearest airport code to the data center).
+Cloudflare adds a `cf-placement` header to all requests when placement is enabled. Use this header to check whether a request was routed with Smart Placement and where the Worker processed the request.
 
-For example, the `cf-placement: remote-LHR` header's `remote` value indicates that the request was routed using Smart Placement to a Cloudflare data center near London. The `cf-placement: local-EWR` header's `local` value indicates that the request was not routed using Smart Placement and the Worker was invoked in a data center closest to where the request was received, close to Newark Liberty International Airport (EWR).
+The header value includes a placement type and an airport code indicating the data center location:
+- `remote-LHR` — The request was routed using Smart Placement to a data center near London.
+- `local-EWR` — The request was not routed using Smart Placement. The Worker ran in the default location near Newark.
 
-:::caution[Beta use only]
-
-We may remove the `cf-placement` header before Smart Placement enters general availability.
-
+:::caution
+The `cf-placement` header may be removed before Smart Placement exits beta.
 :::
 
 ## Best practices
 
-If you are building full-stack applications on Workers, we recommend splitting up the front-end and back-end logic into different Workers and using [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) to connect your front-end logic and back-end logic Workers.
+If you are building full-stack applications on Workers, split your front-end and back-end logic into separate Workers. Use [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) to connect them.
 
 ![Smart Placement and Service Bindings](~/assets/images/workers/platform/smart-placement-service-bindings.png)
 
-Enabling Smart Placement on your back-end Worker will invoke it close to your back-end service, while the front-end Worker serves requests close to the user. This architecture maintains fast, reactive front-ends while also improving latency when the back-end Worker is called.
-
-## Give feedback on Smart Placement
-
-Smart Placement is in beta. To share your thoughts and experience with Smart Placement, join the [Cloudflare Developer Discord](https://discord.cloudflare.com).
+Enable placement on your back-end Worker to invoke it close to your back-end service, while the front-end Worker serves requests close to the user. This architecture maintains fast, reactive front-ends while improving latency when the back-end Worker is called.

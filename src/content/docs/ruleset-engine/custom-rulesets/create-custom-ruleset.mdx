@@ -12,6 +12,8 @@ Use the [Create an account or zone ruleset](/api/resources/rulesets/methods/crea
 - Set the `kind` field to `custom`.
 - Specify the name of the [phase](/ruleset-engine/reference/phases-list/) where you want to create the custom ruleset in the `phase` field.
 
+You can also specify the list of rules to include in the custom ruleset in the `rules` array. To add rules after creating the custom ruleset, refer to [Add rules to a custom ruleset](/ruleset-engine/custom-rulesets/add-rules-ruleset/).
+
 <Render file="custom-rulesets-terraform" product="ruleset-engine" />
 
 <Render file="custom-rulesets-dashboard" product="ruleset-engine" />
@@ -52,7 +54,6 @@ The following request creates a new custom ruleset at the account level. The res
 
 You can include a list of rules in the custom ruleset creation request. If you have not added any rules, refer to [Add rules to a custom ruleset](/ruleset-engine/custom-rulesets/add-rules-ruleset/) for more information.
 
-
 ## Example B - Custom ruleset at the zone level
 
 The following request creates a new custom ruleset at the zone level. The response will include the ID of the new custom ruleset in the `id` field.
@@ -88,4 +89,3 @@ The following request creates a new custom ruleset at the zone level. The respon
 You can include a list of rules in the custom ruleset creation request. If you have not added any rules, refer to [Add rules to a custom ruleset](/ruleset-engine/custom-rulesets/add-rules-ruleset/) for more information.
 
 <Render file="custom-ruleset-zone-limitation" product="ruleset-engine" />
-

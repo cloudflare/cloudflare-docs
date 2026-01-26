@@ -1,0 +1,44 @@
+---
+params:
+  - rulesetName?
+---
+
+import { Steps } from "~/components";
+import { Image } from "astro:assets";
+
+import cloudflareManagedRulesetImg from "~/assets/images/waf/managed-rulesets/tags-config-cloudflare-managed-ruleset.png";
+import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/tags-config-owasp-core-ruleset.png";
+import sddRulesetImg from "~/assets/images/waf/managed-rulesets/tags-config-sdd-ruleset.png";
+
+<Steps>
+
+{/* prettier-ignore-start */}
+
+5. Select one or more tags under the search input to filter the rules with those tags, and then select the checkbox in the top left corner of the table to select all the rules shown in the current page.<br/>
+   If not all the rules are displayed in the current page, extend your selection to all rules with the selected tags across all pages by selecting **Select all \<NUMBER> rules**.
+
+   { (props.rulesetName == "" || props.rulesetName == "Cloudflare Managed Ruleset") && (
+     <Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying selected rules with the 'sqli' tag in the Cloudflare Managed Ruleset." />
+   ) }
+
+   { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
+     <Image src={owaspCoreRulesetImg} alt="The Configure deployment page displaying selected rules with the 'attack-xss' tag in the Cloudflare OWASP Core Ruleset." />
+   ) }
+
+   { props.rulesetName == "Cloudflare Sensitive Data Detection" && (
+     <Image src={sddRulesetImg} alt="The Configure deployment page displaying selected rules with the 'encryption' tag in the Sensitive Data Detection ruleset." />
+   ) }
+
+6. Update one or more settings for the selected rules using the buttons displayed in the top right corner of the table (for example, **Set status**).
+
+7. Select **Next**.
+
+8. A dialog appears asking you if any new rules with the selected tags should be configured with the field values you selected.
+   - Select **Include new rules** if you want to apply your configurations to any new rules with the select tags.
+   - Select **Only selected rules** to apply your configurations to the selected rules only.
+
+9. Select **Save**.
+
+{/* prettier-ignore-end */}
+
+</Steps>

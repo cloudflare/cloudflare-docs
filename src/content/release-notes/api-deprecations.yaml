@@ -3,6 +3,34 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-01-23"
+    title: "DNS Record Type Updates via API"
+    description: |-
+      Deprecation date: January 23, 2026
+
+      End of life date: June 30, 2026
+
+      Changing the type of an existing DNS record via the API is deprecated and will no longer be supported after June 30, 2026.
+
+      Changing a DNS record's type is not a natural update operation and typically also requires changing the record's content. Updates to attributes such as name, TTL, or content are common and safe, but changing the record type introduces additional validation complexity and consistency risks.
+
+      To align with correct DNS semantics and reduce operational risk, Cloudflare is deprecating support for in-place DNS record type changes. This behavior already exists in the Terraform v5 provider, where record type changes result in a delete and recreate operation rather than an update.
+
+      Deprecated behavior:
+      * Using the [DNS Records API](/api/resources/dns/subresources/records/) to change the type of an existing record.
+
+      Replacement behavior:
+
+      To change a record's type, clients must:
+      * [Delete the existing DNS record](/api/resources/dns/subresources/records/methods/delete/)
+
+        `DELETE /zones/{zone_id}/dns_records/{dns_record_id}`
+      * [Create a new DNS record with the desired type and content](/api/resources/dns/subresources/records/methods/create/)
+
+        `POST /zones/{zone_id}/dns_records`
+
+      Customers and integrations that rely on in-place record type updates must migrate to a delete-and-recreate workflow before June 30, 2026 to ensure uninterrupted service. After this date, attempts to change a record's type via update operations will no longer be supported.
+
   - publish_date: "2025-12-09"
     title: "Authoritative DNS and DNS Firewall Legacy Analytics"
     description: |-

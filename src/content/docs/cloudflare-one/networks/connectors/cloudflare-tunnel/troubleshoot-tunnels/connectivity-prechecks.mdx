@@ -260,7 +260,7 @@ Choose one of the IPs from your `dig` output (for example, `198.41.192.167`) and
 ### 3.1. Test UDP connectivity
 
 ```sh
-nc -uz -w 3 198.41.192.167 7844
+nc -uvz -w 3 198.41.192.167 7844
 ```
 
 Example output:
@@ -272,7 +272,7 @@ Connection to 198.41.192.167 port 7844 [udp/*] succeeded!
 ### 3.2. Test TCP connectivity
 
 ```sh
-nc -z -w 3 198.41.192.167 7844
+nc -vz -w 3 198.41.192.167 7844
 ```
 
 Example output:

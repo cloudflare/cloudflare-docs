@@ -5,17 +5,17 @@ sidebar:
   order: 14
   badge:
     text: Beta
+    # TODO: set the badge text in the frontmatter from product-availability data
 head:
   - tag: title
     content: Trace a request with Cloudflare Trace
-
 ---
 
-import { DirectoryListing, Plan } from "~/components"
+import { DirectoryListing, Plan, ProductAvailabilityText } from "~/components";
 
 <Plan type="all" />
 
-Cloudflare Trace (beta) follows an HTTP/S request through Cloudflare's reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your hostnames. If the hostname you are testing is not [proxied by Cloudflare](/dns/proxy-status/), Cloudflare Trace will still return all the configurations that Cloudflare would have applied to the request.
+Cloudflare Trace (<ProductAvailabilityText product="cloudflare-trace" />) follows an HTTP/S request through Cloudflare's reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your hostnames. If the hostname you are testing is not [proxied by Cloudflare](/dns/proxy-status/), Cloudflare Trace will still return all the configurations that Cloudflare would have applied to the request.
 
 You can define specific request properties to simulate different conditions for an HTTP/S request. Inactive rules configured in Cloudflare products will not be evaluated.
 

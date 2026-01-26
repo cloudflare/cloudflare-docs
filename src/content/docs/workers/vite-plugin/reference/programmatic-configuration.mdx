@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Programmatic configuration
 sidebar:
-  order: 10
+  order: 11
 description: Configure Workers programmatically using the Vite plugin
 ---
 
@@ -151,6 +151,33 @@ export default defineConfig({
 							ENDPOINT: "https://api.example.com/v2",
 						},
 					},
+				},
+			],
+		}),
+	],
+});
+```
+
+### Configuration inheritance
+
+Auxiliary Workers receive the resolved entry Worker config in the second parameter to the `config` function. This makes it straightforward to inherit configuration from the entry Worker in auxiliary Workers.
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			auxiliaryWorkers: [
+				{
+					config: (_, { entryWorkerConfig }) => ({
+						name: "auxiliary-worker",
+						main: "./src/auxiliary-worker.ts",
+						// Inherit compatibility settings from entry Worker
+						compatibility_date: entryWorkerConfig.compatibility_date,
+						compatibility_flags: entryWorkerConfig.compatibility_flags,
+					}),
 				},
 			],
 		}),

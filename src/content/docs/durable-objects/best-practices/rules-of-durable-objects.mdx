@@ -626,7 +626,7 @@ export class ChatRoom extends DurableObject<Env> {
 
 While Durable Objects are single-threaded, JavaScript's `async`/`await` can allow multiple requests to interleave execution while a request waits for the result of an asynchronous operation. Cloudflare's runtime uses **input gates** and **output gates** to prevent data races and ensure correctness by default.
 
-**Input gates** block new events (incoming requests, fetch responses) while synchronous execution or storage operations are in progress. This prevents concurrent requests from interleaving during critical storage operations:
+**Input gates** block new events (incoming requests, fetch responses) while synchronous JavaScript execution is in progress. Awaiting async operations like `fetch()` or KV storage methods opens the input gate, allowing other requests to interleave. However, storage operations provide special protection:
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1355,7 +1355,7 @@ export class ChatRoom extends DurableObject<Env> {
 
 ### Do not use a single Durable Object as a global singleton
 
-A single Durable Object handling all traffic becomes a bottleneck. Durable Objects execute single-threaded, so all requests to one instance are processed sequentially.
+A single Durable Object handling all traffic becomes a bottleneck. While async operations allow request interleaving, all synchronous JavaScript execution is single-threaded, and storage operations provide serialization guarantees that limit throughput.
 
 A common mistake is using a Durable Object for global rate limiting or global counters. This funnels all traffic through a single instance:
 
@@ -1399,58 +1399,6 @@ export default {
 </TypeScriptExample>
 
 This pattern does not scale. As traffic increases, the single Durable Object becomes a chokepoint. Instead, identify natural coordination boundaries in your application (per user, per room, per document) and create separate Durable Objects for each.
-
-### Avoid blocking the Durable Object with long-running operations
-
-Durable Objects are single-threaded per instance. While one request is being processed, all other requests to that instance wait. Long-running CPU work or slow external API calls block all other requests.
-
-For heavy workloads, consider offloading to [Queues](/queues/) or [Workflows](/workflows/):
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
-	PROCESSING_QUEUE: Queue;
-}
-
-export class ChatRoom extends DurableObject<Env> {
-	// 🔴 Potentially problematic: Slow external call blocks all other requests
-	async processMessageSlow(content: string) {
-		// This 5-second API call blocks all other requests to this room
-		const analysis = await fetch("https://slow-api.example.com/analyze", {
-			method: "POST",
-			body: content,
-		});
-		return analysis.json();
-	}
-
-	// ✅ Better: Queue the work and return immediately
-	async processMessageFast(messageId: string, content: string) {
-		// Store the message
-		this.ctx.storage.sql.exec(
-			"INSERT INTO messages (id, content, status) VALUES (?, ?, ?)",
-			messageId,
-			content,
-			"pending"
-		);
-
-		// Queue the heavy processing
-		await this.env.PROCESSING_QUEUE.send({
-			messageId,
-			content,
-			roomId: await this.ctx.storage.get("roomId"),
-		});
-
-		// Return immediately - other requests aren't blocked
-		return { messageId, status: "queued" };
-	}
-}
-```
-</TypeScriptExample>
-
-This is not a hard rule. Short external calls are fine. Consider offloading when operations consistently take more than a few hundred milliseconds. Streaming external API responses is another strategy to avoid blocking.
 
 ## Testing and migrations
 
