@@ -32,7 +32,7 @@ import { Render, WranglerConfig } from "~/components"
 
 <sup>2</sup> Exceeding the maximum message throughput will cause the `send()` and `sendBatch()` methods to throw an exception with a `Too Many Requests` error until your producer falls below the limit.
 
-<sup>3</sup> Messages in a queue that reach the maximum message retention are deleted from the queue. Queues does not delete messages in the same queue that have not reached this limit.
+<sup>3</sup> Messages in a queue that reach the maximum message retention are deleted from the queue. Queues does not delete messages in the same queue that have not reached this limit. Queues on Workers Free have a retention limit of 24 hours.
 
 <sup>4</sup> Individual queues that reach this limit will receive a `Storage Limit Exceeded` error when calling `send()` or `sendBatch()` on the queue.
 
