@@ -132,7 +132,7 @@ export class Browser implements DurableObject {
   private browser?: puppeteer.Browser;
   private keptAliveInSeconds: number = 0;
   private storage: DurableObjectStorage;
-	private state: DurableObjectState;
+  private state: DurableObjectState;
   private env: Env;
 
   constructor(state: DurableObjectState, env: Env) {
@@ -210,7 +210,7 @@ export class Browser implements DurableObject {
         `Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`,
       );
       await this.storage.setAlarm(Date.now() + 10 * 1000);
-			// You can ensure the ws connection is kept alive by requesting something
+      // You can ensure the ws connection is kept alive by requesting something
       // or just let it close automatically when there is no work to be done
       // for example, `await this.browser.version()`
     } else {
