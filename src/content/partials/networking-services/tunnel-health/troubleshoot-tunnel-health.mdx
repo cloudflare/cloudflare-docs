@@ -79,8 +79,9 @@ For instructions on monitoring tunnel status, refer to [Check tunnel health in t
 | **Bidirectional** | Probe and response both traverse the tunnel | Magic WAN |
 | **Unidirectional** | Probe traverses tunnel; response returns via Internet | Magic Transit (direct server return) |
 
-| Unidirectional health checks can be unreliable because intermediate network devices may drop ICMP reply packets. If you have egress traffic enabled, consider switching to bidirectional health checks.  |
-| :---- |
+:::note
+Unidirectional health checks can be unreliable because intermediate network devices may drop ICMP reply packets. If you have egress traffic enabled, consider switching to bidirectional health checks.
+:::
 
 ---
 
