@@ -114,8 +114,9 @@ Change the health check type from *Reply* to *Request*:
 
 When you use *Request* style health checks, Cloudflare sends an ICMP echo request. Your firewall's stateful inspection engine recognizes this as a legitimate request and automatically permits the ICMP reply response.
 
-| If your firewall drops ICMP request packets as well, verify that your firewall policy permits ICMP traffic on the tunnel interface. |
-| :---- |
+:::note
+If your firewall drops ICMP request packets as well, verify that your firewall policy permits ICMP traffic on the tunnel interface.
+:::
 
 ---
 
@@ -135,8 +136,11 @@ Magic Firewall processes all traffic, including Cloudflare's health check probes
 
 Add an allow rule for ICMP traffic from Cloudflare IP addresses *before* any block rules:
 
-1. Go to **Magic Firewall** \> **Rules**.
-2. Create a new rule with the following parameters:
+1. Go to the **Firewall policies** page.
+
+	<DashButton url="/?to=/:account/network-security/magic_firewall" />
+
+2. Create a new policy with the following parameters:
 
 | Field | Value |
 | :---- | :---- |
@@ -184,8 +188,11 @@ Set the replay window to `0` to effectively disable the check.
 
 Enable replay protection in the Cloudflare dashboard. This routes all tunnel traffic through a single server, maintaining proper sequence numbers at the cost of losing anycast benefits.
 
-1. Go to **Magic WAN** \> **Configuration** \> **Tunnels**.
-2. Select **Edit** on your IPsec tunnel.
+1. Go to the Connectors page.
+
+	<DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. In **IPsec/GRE tunnels**, select **Edit** on your IPsec tunnel.
 3. Enable **Replay protection**.
 4. Select **Update tunnel**.
 
@@ -228,10 +235,12 @@ This behavior is expected and the tunnel will automatically recover. To minimize
 
 2. **Adjust health check sensitivity**: If brief degradation during rekeys triggers alerts, consider lowering the health check rate:
 
-   - Go to **Magic WAN** \> **Configuration** \> **Tunnels**
-   - Select **Edit** on the tunnel
-   - Change **Health check rate** to *Low*
+   1. Go to the **Connectors** page.
 
+	<DashButton url="/?to=/:account/magic-networks/connections" />
+
+   2. In **IPsec/GRE tunnels**, select **Edit** on the tunnel.
+   3. Change **Health check rate** to *Low*
 
 
 3. **Stagger rekey times**: If you have multiple tunnels, configure different SA lifetimes so they do not rekey simultaneously.
@@ -305,11 +314,7 @@ IPsec tunnel establishment can fail due to several configuration mismatches:
 | Authentication | SHA-256, SHA-384, SHA-512 |
 | DH Group | DH group 14, 15, 16, 19, 20 |
 
-
-
    **Phase 2 (IPsec)**
-
-
 
 | Parameter | Supported values |
 | :---- | :---- |
@@ -317,15 +322,11 @@ IPsec tunnel establishment can fail due to several configuration mismatches:
 | Authentication | SHA-256, SHA-512 |
 | PFS Group | DH group 14, 15, 16, 19, 20 |
 
-
-
 2. **Verify the Pre-Shared Key (PSK):**
 
    - Regenerate the PSK in the Cloudflare dashboard
    - Copy the new PSK exactly (no extra spaces or characters)
    - Update your router with the new PSK
-
-
 
 3. **Check the IKE ID format:** Cloudflare uses FQDN format for the IKE ID. Ensure your router is configured to accept an FQDN peer identity. The FQDN is displayed in the tunnel details in the Cloudflare dashboard.
 
@@ -370,15 +371,11 @@ If you have worked through this guide and still experience tunnel health issues,
    - Health check direction (Bidirectional or Unidirectional)
    - Health check rate (Low, Medium, or High)
 
-
-
 4. **Router information:**
 
    - Vendor and model
    - Firmware/software version
    - IPsec configuration (sanitized to remove PSK)
-
-
 
 5. **Symptoms observed:**
 
@@ -398,7 +395,7 @@ If you have worked through this guide and still experience tunnel health issues,
 
 Collect output from these commands (syntax varies by vendor):
 
-```
+```txt
 # Show IPsec SA status
 show crypto ipsec sa
 
@@ -416,8 +413,8 @@ show ip route
 
 ## Resources
 
-- [Tunnel health checks](https://developers.cloudflare.com/magic-wan/reference/tunnel-health-checks/) \- Technical details on health check behavior
-- [Anti-replay protection](https://developers.cloudflare.com/magic-wan/reference/anti-replay-protection/) \- Why anti-replay must be disabled
-- [Configure tunnel endpoints](https://developers.cloudflare.com/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/) \- Tunnel setup instructions
-- [Check tunnel health in the dashboard](https://developers.cloudflare.com/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) \- Dashboard navigation guide
-- [Network Analytics](https://developers.cloudflare.com/magic-wan/analytics/network-analytics/) \- Traffic analysis tools
+- [Tunnel health checks](https://developers.cloudflare.com/magic-wan/reference/tunnel-health-checks/): Technical details on health check behavior
+- [Anti-replay protection](https://developers.cloudflare.com/magic-wan/reference/anti-replay-protection/): Why anti-replay must be disabled
+- [Configure tunnel endpoints](https://developers.cloudflare.com/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/): Tunnel setup instructions
+- [Check tunnel health in the dashboard](https://developers.cloudflare.com/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/): Dashboard navigation guide
+- [Network Analytics](https://developers.cloudflare.com/magic-wan/analytics/network-analytics/): Traffic analysis tools
