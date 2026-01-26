@@ -56,7 +56,9 @@ export function middlecacheLoader(
 				context.logger.debug(`Download of ${path} completed.`);
 			}
 
-			const fileLoader = file(destination, options as any);
+
+			const fileLoader = file(`.tmp/middlecache/${path}`, options as any);
+
 			// re-use all the functionality of the built-in file loader
 			return await fileLoader.load(context);
 		},
