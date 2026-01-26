@@ -227,10 +227,10 @@ Examples:
 
 ```txt
 # Check if there is an HTTP request header with the exact name 'X-My-Header'
-has_value(http.request.headers.name, "X-My-Header")
+has_value(http.request.headers.names, "X-My-Header")
 
 # Check if there is a request header with the exact name provided as the first query argument:
-has_value(http.request.headers.name, http.request.uri.args.names[0])
+has_value(http.request.headers.names, http.request.uri.args.names[0])
 ```
 
 ### `len`
