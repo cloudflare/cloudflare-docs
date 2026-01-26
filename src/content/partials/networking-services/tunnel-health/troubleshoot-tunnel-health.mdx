@@ -2,6 +2,8 @@
 {}
 ---
 
+import { DashButton } from "~/components";
+
 # Troubleshoot tunnel health
 
 This guide helps you diagnose and resolve common tunnel health issues with [Magic WAN](https://developers.cloudflare.com/magic-wan/) and [Magic Transit](https://developers.cloudflare.com/magic-transit/). Tunnel health checks monitor your GRE and IPsec tunnels and steer traffic to the best available routes.
@@ -102,8 +104,11 @@ Stateful firewalls inspect these packets and look for a matching ICMP *Request* 
 
 Change the health check type from *Reply* to *Request*:
 
-1. Go to **Magic WAN** \> **Configuration** \> **Tunnels**.
-2. Select **Edit** on the affected tunnel.
+1. Go to the **Connectors** page.
+
+	<DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. In **IPsec/GRE tunnels**, select **Edit** on the affected tunnel.
 3. Under **Health check type**, change from *Reply* to *Request*.
 4. Select **Update tunnel**.
 
