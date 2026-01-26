@@ -94,11 +94,11 @@ Unidirectional health checks can be unreliable because intermediate network devi
 
 ## Resolve common issues
 
-### Tunnel shows "Down" but traffic is flowing
+### Tunnel shows `Down` but traffic is flowing
 
 **Symptoms:**
 
-- Dashboard shows tunnel as "Down" or "Degraded"
+- Dashboard shows tunnel as `Down` or `Degraded`
 - Actual user traffic passes through the tunnel successfully
 - Health check failure rate is 100% despite working connectivity
 
@@ -226,7 +226,7 @@ For a detailed explanation of why this setting is necessary, refer to <a href={p
 
 **Symptoms:**
 
-- Tunnel health drops to "Degraded" or "Down" periodically
+- Tunnel health drops to `Degraded` or `Down` periodically
 - Issues coincide with IPsec rekey intervals (typically every few hours)
 - Tunnel recovers automatically after 1-3 minutes
 - Router logs show successful rekey completion
@@ -295,7 +295,7 @@ For detailed information on how bidirectional health checks work, refer to <a hr
 
 **Symptoms:**
 
-- Tunnel status shows "Down" and never becomes healthy
+- Tunnel status shows `Down` and never becomes healthy
 - No traffic passes through the tunnel
 - Router logs show IKE negotiation failures
 
