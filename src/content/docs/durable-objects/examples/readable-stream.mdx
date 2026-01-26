@@ -24,12 +24,8 @@ This example demonstrates:
 ```ts
 import { DurableObject } from 'cloudflare:workers';
 
-interface Env {
-MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
-}
-
 // Send incremented counter value every second
-async function\* dataSource(signal: AbortSignal) {
+async function* dataSource(signal: AbortSignal) {
     let counter = 0;
     while (!signal.aborted) {
         yield counter++;
@@ -108,19 +104,6 @@ export default {
 
 ```
 </TypeScriptExample>
-
-<WranglerConfig>
-```toml
-[[durable_objects.bindings]]
-name = "MY_DURABLE_OBJECT"
-class_name = "MyDurableObject"
-
-[[migrations]]
-tag = "v1"
-new_classes = ["MyDurableObject"]
-```
-
-</WranglerConfig>
 
 :::note
 
