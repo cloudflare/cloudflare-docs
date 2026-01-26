@@ -30,7 +30,7 @@ If you are experiencing tunnel health issues, check these items first:
 
 ## Tunnel health states
 
-The [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/networking-insights/health) displays three tunnel health states:
+The [Connector health](https://dash.cloudflare.com/?to=/:account/networking-insights/health) page in the Cloudflare dashboard displays three tunnel health states:
 
 | State | Dashboard display | Technical threshold |
 | :---- | :---- | :---- |
@@ -40,7 +40,7 @@ The [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/networking-
 
 The dashboard shows tunnel health as measured from each Cloudflare data center where your traffic lands. It is normal to see some locations reporting degraded status due to Internet path issues. Focus on locations that show traffic in the Average ingress traffic column.
 
-:::note [Probe retry behavior]
+:::note[Probe retry behavior]
 When a health check probe fails, Cloudflare sends two additional probes to confirm the failure. A tunnel is only marked as unhealthy if all three probes fail. This retry behavior provides resilience against random packet loss.
 :::
 
