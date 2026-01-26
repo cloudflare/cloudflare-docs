@@ -5,7 +5,6 @@ import { file } from "astro/loaders";
 
 import { fileURLToPath } from "node:url";
 import fs from "fs";
-//import path from "path";
 import { dirname, join } from "path";
 
 /**
@@ -35,12 +34,12 @@ export function middlecacheLoader(
 			let middlecacheBaseUrl = "https://middlecache.ced.cloudflare.com/";
 			if (options.url) middlecacheBaseUrl = options.url;
 
-			const pathParts = path.split('/');
-			const universalPath = join(...pathParts)
+			const pathParts = path.split("/");
+			const universalPath = join(...pathParts);
 
 			const tmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
 
-			const destination = join( tmpPath,'middlecache', universalPath );
+			const destination = join(tmpPath, "middlecache", universalPath);
 
 			context.logger.debug(`Remote to local load from: ${destination}`);
 
@@ -55,7 +54,6 @@ export function middlecacheLoader(
 				fs.writeFileSync(destination, content);
 				context.logger.debug(`Download of ${path} completed.`);
 			}
-
 
 			const fileLoader = file(`.tmp/middlecache/${path}`, options as any);
 
