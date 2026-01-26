@@ -66,4 +66,4 @@ End with a summary count by severity, or "All code snippets pass review."
 
 Be direct. No flattery. If the code is fine, say so.
 
-Also, ensure you have fully understood the formatting of the code. Pay close attention to indentations (tabs, spaces, how many spaces), as well as the number of backticks. Use the existing code to identify the convention being used, and follow it strictly.
+Ensure you have fully understood the formatting of the code. Pay close attention to indentations (tabs, spaces, how many spaces), as well as the number of backticks. Use the existing code to identify the convention being used, and follow it strictly.
