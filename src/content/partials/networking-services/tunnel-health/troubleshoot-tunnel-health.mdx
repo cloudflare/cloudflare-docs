@@ -56,7 +56,6 @@ Tunnels transition between states asymmetrically to prevent flapping:
 
 :::note[Minimum state duration]
 Tunnels remain in a degraded or down state for at least five minutes, even if health checks start succeeding immediately. This minimum duration prevents rapid flapping when there is intermittent packet loss. Additionally, a tunnel recovering from `Down` must always transition through `Degraded` before returning to `Healthy`.
-:::
 
 Recovery from degraded to healthy can take up to 30 minutes. This intentional "slow recovery" behavior (called hysteresis) prevents rapid state changes caused by intermittent network issues or tunnel flapping.
 :::
@@ -278,7 +277,7 @@ Configure traffic selectors to accept packets for the tunnel interface addresses
 
 Ensure your firewall permits ICMP traffic on the tunnel interface. Many firewalls require explicit rules to allow management traffic (including ping) on tunnel interfaces.
 
-For detailed information on how bidirectional health checks work, refer to [Tunnel health checks](http:///magic-wan/reference/tunnel-health-checks/).
+For detailed information on how bidirectional health checks work, refer to [Tunnel health checks](https://developers.cloudflare.com/magic-wan/reference/tunnel-health-checks/).
 
 ---
 
