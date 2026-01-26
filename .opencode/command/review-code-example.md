@@ -1,7 +1,7 @@
 ---
 description: Review code examples in specified folder or page
 subtask: true
-temperature:0.1
+temperature: 0.1
 ---
 
 # Code Review Command Prompt
