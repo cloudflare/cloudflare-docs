@@ -1,7 +1,6 @@
 ---
 params:
   - productName
-  - productLink
   - healthCheckDefault
   - defaultReason
   - tunnelsConfigLink
@@ -16,7 +15,7 @@ params:
 
 import { DashButton } from "~/components";
 
-This guide helps you diagnose and resolve common tunnel health issues with <a href={props.productLink}>{props.productName}</a>. Tunnel health checks monitor your GRE and IPsec tunnels and steer traffic to the best available routes.
+This guide helps you diagnose and resolve common tunnel health issues with {props.productName}. Tunnel health checks monitor your GRE and IPsec tunnels and steer traffic to the best available routes.
 
 ## Quick diagnostic checklist
 
