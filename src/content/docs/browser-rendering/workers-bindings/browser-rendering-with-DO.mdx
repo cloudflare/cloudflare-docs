@@ -136,11 +136,11 @@ export class Browser {
 
 		// use the current date and time to create a folder structure for R2
 		const nowDate = new Date();
-		var coeff = 1000 * 60 * 5;
-		var roundedDate = new Date(
+		const coeff = 1000 * 60 * 5;
+		const roundedDate = new Date(
 			Math.round(nowDate.getTime() / coeff) * coeff,
 		).toString();
-		var folder = roundedDate.split(" GMT")[0];
+		const folder = roundedDate.split(" GMT")[0];
 
 		//if there's a browser session open, re-use it
 		if (!this.browser || !this.browser.isConnected()) {
