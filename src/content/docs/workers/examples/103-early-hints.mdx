@@ -1,5 +1,4 @@
 ---
-
 summary: Allow a client to request static assets while waiting for the HTML response.
 tags:
   - Middleware
@@ -12,8 +11,9 @@ title: 103 Early Hints
 sidebar:
   order: 1001
 description: Allow a client to request static assets while waiting for the HTML response.
-last_reviewed: 2022-08-12
+reviewed: 2022-08-12
 ---
+
 import { DashButton, Steps, TabItem, Tabs } from "~/components";
 
 If you want to get started quickly, click on the button below.
@@ -29,11 +29,11 @@ To ensure Early Hints are enabled on your zone:
 <Steps>
 1. In the Cloudflare dashboard, go to the **Speed settings** page.
 
-   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+<DashButton url="/?to=/:account/:zone/speed/optimization" />
 
 2. Go to **Content Optimization**.
 3. Enable the **Early Hints** toggle to on.
-</Steps>
+   </Steps>
 
 You can return `Link` headers from a Worker running on your zone to speed up your page load times.
 

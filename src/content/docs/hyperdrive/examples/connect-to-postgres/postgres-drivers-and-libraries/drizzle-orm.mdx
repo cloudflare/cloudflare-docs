@@ -5,7 +5,7 @@ sidebar:
   order: 3
 meta:
   title: Using Drizzle ORM with Hyperdrive for PostgreSQL
-last_reviewed: 2025-05-12
+reviewed: 2025-05-12
 ---
 
 import { Render, Steps } from "~/components";
@@ -43,17 +43,18 @@ With Drizzle ORM, we define the schema in TypeScript rather than writing raw SQL
 2. Create a `schema.ts` file.
 3. In `schema.ts`, define a `users` table as shown below.
 
-	```ts title="src/db/schema.ts"
-	// src/db/schema.ts
-	import { pgTable, serial, varchar, timestamp } from "drizzle-orm/pg-core";
+    ```ts title="src/db/schema.ts"
+    // src/db/schema.ts
+    import { pgTable, serial, varchar, timestamp } from "drizzle-orm/pg-core";
 
-	export const users = pgTable("users", {
-		id: serial("id").primaryKey(),
-		name: varchar("name", { length: 255 }).notNull(),
-		email: varchar("email", { length: 255 }).notNull().unique(),
-		createdAt: timestamp("created_at").defaultNow(),
-	});
-	```
+    export const users = pgTable("users", {
+    	id: serial("id").primaryKey(),
+    	name: varchar("name", { length: 255 }).notNull(),
+    	email: varchar("email", { length: 255 }).notNull().unique(),
+    	createdAt: timestamp("created_at").defaultNow(),
+    });
+    ```
+
 </Steps>
 
 ### 2.2. Connect Drizzle ORM to the database with Hyperdrive
@@ -111,11 +112,11 @@ You can generate and run SQL migrations on your database based on your schema us
 <Steps>
 1. Create a `.env` file the root folder of your project, and add your database connection string. The Drizzle Kit CLI will use this connection string to create and apply the migrations.
 
-   ```toml title=".env"
-   # .env
-   # Replace with your direct database connection string
-   DATABASE_URL='postgres://user:password@db-host.cloud/database-name'
-   ```
+```toml title=".env"
+# .env
+# Replace with your direct database connection string
+DATABASE_URL='postgres://user:password@db-host.cloud/database-name'
+```
 
 2. Create a `drizzle.config.ts` file in the root folder of your project to configure Drizzle Kit and add the following content:
 
@@ -140,6 +141,7 @@ You can generate and run SQL migrations on your database based on your schema us
    ```bash
    npx drizzle-kit generate
    ```
+
    ```bash output
    No config path provided, using default 'drizzle.config.ts'
    Reading config file 'drizzle.config.ts'
@@ -152,12 +154,14 @@ You can generate and run SQL migrations on your database based on your schema us
    ```bash
    npx drizzle-kit migrate
    ```
+
    ```bash output
    No config path provided, using default 'drizzle.config.ts'
    Reading config file 'drizzle.config.ts'
    Using 'postgres' driver for database querying
    ```
-</Steps>
+
+   </Steps>
 
 ## 3. Deploy your Worker
 

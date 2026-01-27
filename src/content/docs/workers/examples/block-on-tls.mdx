@@ -1,5 +1,4 @@
 ---
-
 summary: Inspects the incoming request's TLS version and blocks if under TLSv1.2.
 tags:
   - Security
@@ -12,7 +11,7 @@ title: Block on TLS
 sidebar:
   order: 1001
 description: Inspects the incoming request's TLS version and blocks if under TLSv1.2.
-last_reviewed: 2022-02-25
+reviewed: 2022-02-25
 ---
 
 import { TabItem, Tabs } from "~/components";
@@ -88,14 +87,13 @@ app.use("*", async (c, next) => {
 	}
 
 	await next();
-
 });
 
 app.onError((err, c) => {
-		console.error(
-			"request.cf does not exist in the previewer, only in production",
-		);
-		return c.text(`Error in workers script: ${err.message}`, 500);
+	console.error(
+		"request.cf does not exist in the previewer, only in production",
+	);
+	return c.text(`Error in workers script: ${err.message}`, 500);
 });
 
 app.get("/", async (c) => {

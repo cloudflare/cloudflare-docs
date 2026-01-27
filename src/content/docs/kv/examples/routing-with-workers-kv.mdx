@@ -1,12 +1,11 @@
 ---
-
 summary: Store routing data in Workers KV to route requests across various web servers with Workers
 pcx_content_type: example
 title: Route requests across various web servers
 sidebar:
   order: 5
 description: Example of how to use Workers KV to build a distributed application configuration store.
-last_reviewed: 2025-03-27
+reviewed: 2025-03-27
 ---
 
 import { Render, PackageManagers, Tabs, TabItem } from "~/components";
@@ -112,7 +111,7 @@ export default {
 }
 } satisfies ExportedHandler<Env>;
 
-```
+````
 </TabItem>
 <TabItem label="wrangler.jsonc">
 ```json
@@ -131,7 +130,7 @@ export default {
 		}
 	]
 }
-```
+````
 
 </TabItem>
 </Tabs>

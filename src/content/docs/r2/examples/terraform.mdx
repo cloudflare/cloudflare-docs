@@ -2,20 +2,19 @@
 title: Terraform
 pcx_content_type: example
 
-last_reviewed: 2022-09-23
+reviewed: 2022-09-23
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="keys" product="r2" /><br/>
+<Render file="keys" product="r2" />
+<br />
 
 This example shows how to configure R2 with Terraform using the [Cloudflare provider](https://github.com/cloudflare/terraform-provider-cloudflare).
 
 :::note[Note for using AWS provider]
 
-
 When using the Cloudflare Terraform provider, you can only manage buckets. To configure items such as CORS and object lifecycles, you will need to use the [AWS Provider](/r2/examples/terraform-aws/).
-
 
 :::
 

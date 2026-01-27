@@ -4,7 +4,7 @@ pcx_content_type: tutorial
 sidebar:
   order: 3
 description: Clone repositories, analyze code with Claude, and post review comments to GitHub PRs.
-last_reviewed: 2025-10-15
+reviewed: 2025-10-15
 ---
 
 import { Render, PackageManagers } from "~/components";
@@ -105,9 +105,7 @@ export default {
 			) {
 				console.log(`Starting review for PR #${payload.pull_request.number}`);
 				// Use waitUntil to ensure the review completes even after response is sent
-				ctx.waitUntil(
-					reviewPullRequest(payload, env).catch(console.error),
-				);
+				ctx.waitUntil(reviewPullRequest(payload, env).catch(console.error));
 				return Response.json({ message: "Review started" });
 			}
 

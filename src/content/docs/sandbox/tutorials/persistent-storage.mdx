@@ -4,7 +4,7 @@ pcx_content_type: tutorial
 sidebar:
   order: 6
 description: Mount R2 buckets as local filesystem paths to persist data across sandbox lifecycles.
-last_reviewed: 2025-11-18
+reviewed: 2025-11-18
 ---
 
 import { Render, PackageManagers, TypeScriptExample } from "~/components";
@@ -18,6 +18,7 @@ Mount object storage buckets as local filesystem paths to persist data across sa
 A Worker that processes data, stores results in an R2 bucket mounted as a local directory, and demonstrates that data persists even after the sandbox is destroyed and recreated.
 
 **Key concepts you'll learn**:
+
 - Mounting R2 buckets as filesystem paths
 - Automatic data persistence across sandbox lifecycles
 - Working with mounted storage using standard file operations
@@ -27,6 +28,7 @@ A Worker that processes data, stores results in an R2 bucket mounted as a local 
 <Render file="prereqs" product="workers" />
 
 You'll also need:
+
 - [Docker](https://www.docker.com/) running locally
 - An R2 bucket (create one in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/r2))
 
@@ -48,19 +50,17 @@ Add an R2 bucket binding to your `wrangler.json`:
 
 ```json title="wrangler.json"
 {
-  "name": "data-pipeline",
-  "compatibility_date": "2025-11-09",
-  "durable_objects": {
-    "bindings": [
-      { "name": "Sandbox", "class_name": "Sandbox" }
-    ]
-  },
-  "r2_buckets": [
-    {
-      "binding": "DATA_BUCKET",
-      "bucket_name": "my-data-bucket"
-    }
-  ]
+	"name": "data-pipeline",
+	"compatibility_date": "2025-11-09",
+	"durable_objects": {
+		"bindings": [{ "name": "Sandbox", "class_name": "Sandbox" }]
+	},
+	"r2_buckets": [
+		{
+			"binding": "DATA_BUCKET",
+			"bucket_name": "my-data-bucket"
+		}
+	]
 }
 ```
 
@@ -74,11 +74,11 @@ Replace `src/index.ts` with code that mounts R2 and processes data:
 ```typescript
 import { getSandbox, type Sandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from '@cloudflare/sandbox';
+export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
-	Sandbox: DurableObjectNamespace<Sandbox>;
-	DATA_BUCKET: R2Bucket;
+Sandbox: DurableObjectNamespace<Sandbox>;
+DATA_BUCKET: R2Bucket;
 }
 
 export default {
@@ -86,90 +86,98 @@ export default {
 		const url = new URL(request.url);
 		const sandbox = getSandbox(env.Sandbox, 'data-processor');
 
-		// Mount R2 bucket to /data directory
-		await sandbox.mountBucket('my-data-bucket', '/data', {
-			endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
-		});
+    	// Mount R2 bucket to /data directory
+    	await sandbox.mountBucket('my-data-bucket', '/data', {
+    		endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
+    	});
 
-		if (url.pathname === '/process') {
-			// Process data and save to mounted R2
-			const result = await sandbox.exec('python', {
-				args: ['-c', `
+    	if (url.pathname === '/process') {
+    		// Process data and save to mounted R2
+    		const result = await sandbox.exec('python', {
+    			args: ['-c', `
+
 import json
 import os
 from datetime import datetime
 
 # Read input (or create sample data)
+
 data = [
-    {'id': 1, 'value': 42},
-    {'id': 2, 'value': 87},
-    {'id': 3, 'value': 15}
+{'id': 1, 'value': 42},
+{'id': 2, 'value': 87},
+{'id': 3, 'value': 15}
 ]
 
 # Process: calculate sum and average
+
 total = sum(item['value'] for item in data)
 avg = total / len(data)
 
 # Save results to mounted R2 (/data is the mounted bucket)
+
 result = {
-    'timestamp': datetime.now().isoformat(),
-    'total': total,
-    'average': avg,
-    'processed_count': len(data)
+'timestamp': datetime.now().isoformat(),
+'total': total,
+'average': avg,
+'processed_count': len(data)
 }
 
 os.makedirs('/data/results', exist_ok=True)
 with open('/data/results/latest.json', 'w') as f:
-    json.dump(result, f, indent=2)
+json.dump(result, f, indent=2)
 
 print(json.dumps(result))
-				`]
-			});
+`]
+});
 
-			return Response.json({
-				message: 'Data processed and saved to R2',
-				result: JSON.parse(result.stdout)
-			});
-		}
+    		return Response.json({
+    			message: 'Data processed and saved to R2',
+    			result: JSON.parse(result.stdout)
+    		});
+    	}
 
-		if (url.pathname === '/results') {
-			// Read results from mounted R2
-			const result = await sandbox.exec('cat', {
-				args: ['/data/results/latest.json']
-			});
+    	if (url.pathname === '/results') {
+    		// Read results from mounted R2
+    		const result = await sandbox.exec('cat', {
+    			args: ['/data/results/latest.json']
+    		});
 
-			if (!result.success) {
-				return Response.json({ error: 'No results found yet' }, { status: 404 });
-			}
+    		if (!result.success) {
+    			return Response.json({ error: 'No results found yet' }, { status: 404 });
+    		}
 
-			return Response.json({
-				message: 'Results retrieved from R2',
-				data: JSON.parse(result.stdout)
-			});
-		}
+    		return Response.json({
+    			message: 'Results retrieved from R2',
+    			data: JSON.parse(result.stdout)
+    		});
+    	}
 
-		if (url.pathname === '/destroy') {
-			// Destroy sandbox to demonstrate persistence
-			await sandbox.destroy();
-			return Response.json({ message: 'Sandbox destroyed. Data persists in R2!' });
-		}
+    	if (url.pathname === '/destroy') {
+    		// Destroy sandbox to demonstrate persistence
+    		await sandbox.destroy();
+    		return Response.json({ message: 'Sandbox destroyed. Data persists in R2!' });
+    	}
 
-		return new Response(`
+    	return new Response(`
+
 Data Pipeline with Persistent Storage
 
 Endpoints:
-- POST /process  - Process data and save to R2
-- GET /results   - Retrieve results from R2
-- POST /destroy  - Destroy sandbox (data survives!)
+
+- POST /process - Process data and save to R2
+- GET /results - Retrieve results from R2
+- POST /destroy - Destroy sandbox (data survives!)
 
 Try this flow:
-1. POST /process  (processes and saves to R2)
-2. POST /destroy  (destroys sandbox)
-3. GET /results   (data still accessible from R2)
-		`, { headers: { 'Content-Type': 'text/plain' } });
-	}
-};
-```
+
+1. POST /process (processes and saves to R2)
+2. POST /destroy (destroys sandbox)
+3. GET /results (data still accessible from R2)
+   `, { headers: { 'Content-Type': 'text/plain' } });
+   }
+   };
+
+````
 </TypeScriptExample>
 
 :::note[Replace YOUR_ACCOUNT_ID]
@@ -198,7 +206,7 @@ npx wrangler secret put AWS_ACCESS_KEY_ID
 
 npx wrangler secret put AWS_SECRET_ACCESS_KEY
 # Paste your R2 Secret Access Key
-```
+````
 
 Worker secrets are encrypted and only accessible to your deployed Worker. The SDK automatically detects these credentials when `mountBucket()` is called.
 

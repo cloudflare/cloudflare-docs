@@ -1,12 +1,11 @@
 ---
-
 summary: Store static assets in Workers KV and serve them from a Worker application with low-latency and high-throughput
 pcx_content_type: example
 title: Store and retrieve static assets
 sidebar:
   order: 4
 description: Example of how to use Workers KV to store static assets
-last_reviewed: 2024-08-30
+reviewed: 2024-08-30
 ---
 
 import { Render, PackageManagers, TabItem, Tabs } from "~/components";
@@ -97,7 +96,7 @@ export default {
 
 } satisfies ExportedHandler<Env>;
 
-```
+````
 </TabItem>
 <TabItem label="wrangler.jsonc">
 ```json
@@ -116,7 +115,7 @@ export default {
 		}
 	]
 }
-```
+````
 
 </TabItem>
 </Tabs>
@@ -273,7 +272,7 @@ export default {
 },
 } satisfies ExportedHandler<Env>;
 
-```
+````
 </TabItem>
 <TabItem label="wrangler.jsonc">
 ```json
@@ -292,7 +291,7 @@ export default {
 		}
 	]
 }
-```
+````
 
 </TabItem>
 </Tabs>

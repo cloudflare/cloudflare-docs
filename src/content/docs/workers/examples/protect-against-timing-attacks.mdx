@@ -1,5 +1,4 @@
 ---
-
 summary: Protect against timing attacks by safely comparing values using
   `timingSafeEqual`.
 tags:
@@ -13,7 +12,7 @@ sidebar:
   order: 1001
 description: Protect against timing attacks by safely comparing values using
   `timingSafeEqual`.
-last_reviewed: 2023-08-04
+reviewed: 2023-08-04
 ---
 
 If you want to get started quickly, click on the button below.
@@ -104,52 +103,52 @@ class Default(WorkerEntrypoint):
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 interface Environment {
-  Bindings: {
-    MY_SECRET_VALUE?: string;
-  }
+	Bindings: {
+		MY_SECRET_VALUE?: string;
+	};
 }
 
 const app = new Hono<Environment>();
 
 // Middleware to handle authentication with timing-safe comparison
-app.use('*', async (c, next) => {
-  const secret = c.env.MY_SECRET_VALUE;
+app.use("*", async (c, next) => {
+	const secret = c.env.MY_SECRET_VALUE;
 
-  if (!secret) {
-    return c.text("Missing secret binding", 500);
-  }
+	if (!secret) {
+		return c.text("Missing secret binding", 500);
+	}
 
-  const authToken = c.req.header("Authorization") || "";
+	const authToken = c.req.header("Authorization") || "";
 
-  // Early length check to avoid unnecessary processing
-  if (authToken.length !== secret.length) {
-    return c.text("Unauthorized", 401);
-  }
+	// Early length check to avoid unnecessary processing
+	if (authToken.length !== secret.length) {
+		return c.text("Unauthorized", 401);
+	}
 
-  const encoder = new TextEncoder();
+	const encoder = new TextEncoder();
 
-  const a = encoder.encode(authToken);
-  const b = encoder.encode(secret);
+	const a = encoder.encode(authToken);
+	const b = encoder.encode(secret);
 
-  if (a.byteLength !== b.byteLength) {
-    return c.text("Unauthorized", 401);
-  }
+	if (a.byteLength !== b.byteLength) {
+		return c.text("Unauthorized", 401);
+	}
 
-  // Perform timing-safe comparison
-  if (!crypto.subtle.timingSafeEqual(a, b)) {
-    return c.text("Unauthorized", 401);
-  }
+	// Perform timing-safe comparison
+	if (!crypto.subtle.timingSafeEqual(a, b)) {
+		return c.text("Unauthorized", 401);
+	}
 
-  // If we got here, the auth token is valid
-  await next();
+	// If we got here, the auth token is valid
+	await next();
 });
 
 // Protected route
-app.get('*', (c) => {
-  return c.text("Welcome!");
+app.get("*", (c) => {
+	return c.text("Welcome!");
 });
 
 export default app;

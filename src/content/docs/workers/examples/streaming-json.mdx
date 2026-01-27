@@ -10,7 +10,7 @@ title: Stream large JSON
 sidebar:
   order: 1001
 description: Parse and transform large JSON request and response bodies using streaming.
-last_reviewed: 2025-12-15
+reviewed: 2025-12-15
 ---
 
 import { TabItem, Tabs } from "~/components";
@@ -41,9 +41,7 @@ export default {
 		const users: string[] = [];
 
 		// Pipe the request body through the JSON parser
-		const reader = request.body
-			.pipeThrough(parser)
-			.getReader();
+		const reader = request.body.pipeThrough(parser).getReader();
 
 		// Process matching JSON values as they stream in
 		while (true) {
@@ -72,9 +70,7 @@ export default {
 		const users = [];
 
 		// Pipe the request body through the JSON parser
-		const reader = request.body
-			.pipeThrough(parser)
-			.getReader();
+		const reader = request.body.pipeThrough(parser).getReader();
 
 		// Process matching JSON values as they stream in
 		while (true) {
@@ -114,9 +110,7 @@ export default {
 
 		// Process the upstream response in the background
 		(async () => {
-			const reader = response.body
-				.pipeThrough(parser)
-				.getReader();
+			const reader = response.body.pipeThrough(parser).getReader();
 
 			await writer.write(encoder.encode('{"processedItems":['));
 			let first = true;
@@ -166,9 +160,7 @@ export default {
 
 		// Process the upstream response in the background
 		(async () => {
-			const reader = response.body
-				.pipeThrough(parser)
-				.getReader();
+			const reader = response.body.pipeThrough(parser).getReader();
 
 			await writer.write(encoder.encode('{"processedItems":['));
 			let first = true;

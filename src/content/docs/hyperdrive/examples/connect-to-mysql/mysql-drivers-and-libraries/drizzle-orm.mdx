@@ -5,7 +5,7 @@ sidebar:
   order: 3
 meta:
   title: Using Drizzle ORM with Hyperdrive for MySQL
-last_reviewed: 2025-05-12
+reviewed: 2025-05-12
 ---
 
 import { Render, Steps } from "~/components";
@@ -30,7 +30,7 @@ npm i -D drizzle-kit tsx @types/node
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.jsonc` file:
 
-<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive"/>
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
 
 ## 2. Configure Drizzle
 
@@ -43,17 +43,18 @@ With Drizzle ORM, we define the schema in TypeScript rather than writing raw SQL
 2. Create a `schema.ts` file.
 3. In `schema.ts`, define a `users` table as shown below.
 
-	```ts title="src/db/schema.ts"
-	// src/schema.ts
-	import { mysqlTable, int, varchar, timestamp } from "drizzle-orm/mysql-core";
+    ```ts title="src/db/schema.ts"
+    // src/schema.ts
+    import { mysqlTable, int, varchar, timestamp } from "drizzle-orm/mysql-core";
 
-	export const users = mysqlTable("users", {
-		id: int("id").primaryKey().autoincrement(),
-		name: varchar("name", { length: 255 }).notNull(),
-		email: varchar("email", { length: 255 }).notNull().unique(),
-		createdAt: timestamp("created_at").defaultNow(),
-	});
-	```
+    export const users = mysqlTable("users", {
+    	id: int("id").primaryKey().autoincrement(),
+    	name: varchar("name", { length: 255 }).notNull(),
+    	email: varchar("email", { length: 255 }).notNull().unique(),
+    	createdAt: timestamp("created_at").defaultNow(),
+    });
+    ```
+
 </Steps>
 
 ### 2.2. Connect Drizzle ORM to the database with Hyperdrive
@@ -71,7 +72,7 @@ import { users } from "./db/schema";
 
 export interface Env {
 	HYPERDRIVE: Hyperdrive;
-  }
+}
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -111,24 +112,24 @@ You can generate and run SQL migrations on your database based on your schema us
 <Steps>
 1. Create a `.env` file in the root folder of your project, and add your database connection string. The Drizzle Kit CLI will use this connection string to create and apply the migrations.
 
-   ```toml title=".env"
-   # .env
-   # Replace with your direct database connection string
-   DATABASE_URL='mysql://user:password@db-host.cloud/database-name'
-   ```
+```toml title=".env"
+# .env
+# Replace with your direct database connection string
+DATABASE_URL='mysql://user:password@db-host.cloud/database-name'
+```
 
 2. Create a `drizzle.config.ts` file in the root folder of your project to configure Drizzle Kit and add the following content:
 
    ```ts title="drizzle.config.ts"
-   import 'dotenv/config';
-   import { defineConfig } from 'drizzle-kit';
+   import "dotenv/config";
+   import { defineConfig } from "drizzle-kit";
    export default defineConfig({
-   out: './drizzle',
-   schema: './src/db/schema.ts',
-   dialect: 'mysql',
-   dbCredentials: {
-   url: process.env.DATABASE_URL!,
-     },
+   	out: "./drizzle",
+   	schema: "./src/db/schema.ts",
+   	dialect: "mysql",
+   	dbCredentials: {
+   		url: process.env.DATABASE_URL!,
+   	},
    });
    ```
 
@@ -137,6 +138,7 @@ You can generate and run SQL migrations on your database based on your schema us
    ```bash
    npx drizzle-kit generate
    ```
+
    ```bash output
    No config path provided, using default 'drizzle.config.ts'
    Reading config file 'drizzle.config.ts'
@@ -148,14 +150,17 @@ You can generate and run SQL migrations on your database based on your schema us
 
    [✓] Your SQL migration file ➜ drizzle/0000_daffy_rhodey.sql 🚀
    ```
+
    ```bash
    npx drizzle-kit migrate
    ```
+
    ```bash output
    No config path provided, using default 'drizzle.config.ts'
    Reading config file 'drizzle.config.ts'
    ```
-</Steps>
+
+   </Steps>
 
 ## 3. Deploy your Worker
 

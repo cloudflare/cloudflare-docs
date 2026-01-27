@@ -5,7 +5,7 @@ title: Mount R2 buckets with FUSE
 sidebar:
   order: 8
 description: Mount R2 buckets as filesystems using FUSE in Containers
-last_reviewed: 2025-11-25
+reviewed: 2025-11-25
 ---
 
 import { Details, TypeScriptExample } from "~/components";
@@ -38,38 +38,42 @@ This example uses [tigrisfs](https://github.com/tigrisdata/tigrisfs), which supp
 FROM alpine:3.20
 
 # Install FUSE and dependencies
-RUN apk add --no-cache \ 
-    --repository http://dl-cdn.alpinelinux.org/alpine/v3.20/main \
-    ca-certificates fuse curl bash
+
+RUN apk add --no-cache \
+ --repository http://dl-cdn.alpinelinux.org/alpine/v3.20/main \
+ ca-certificates fuse curl bash
 
 # Install tigrisfs
+
 RUN ARCH=$(uname -m) && \
-    if [ "$ARCH" = "x86_64" ]; then ARCH="amd64"; fi && \
-    if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
-    VERSION=$(curl -s https://api.github.com/repos/tigrisdata/tigrisfs/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4) && \
-    curl -L "https://github.com/tigrisdata/tigrisfs/releases/download/${VERSION}/tigrisfs_${VERSION#v}_linux_${ARCH}.tar.gz" -o /tmp/tigrisfs.tar.gz && \
-    tar -xzf /tmp/tigrisfs.tar.gz -C /usr/local/bin/ && \
-    rm /tmp/tigrisfs.tar.gz && \
-    chmod +x /usr/local/bin/tigrisfs
+    if [ "$ARCH" = "x86*64" ]; then ARCH="amd64"; fi && \
+ if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
+ VERSION=$(curl -s https://api.github.com/repos/tigrisdata/tigrisfs/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4) && \
+    curl -L "https://github.com/tigrisdata/tigrisfs/releases/download/${VERSION}/tigrisfs*${VERSION#v}_linux_${ARCH}.tar.gz" -o /tmp/tigrisfs.tar.gz && \
+ tar -xzf /tmp/tigrisfs.tar.gz -C /usr/local/bin/ && \
+ rm /tmp/tigrisfs.tar.gz && \
+ chmod +x /usr/local/bin/tigrisfs
 
 # Create startup script that mounts bucket and runs a command
+
 RUN printf '#!/bin/sh\n\
-    set -e\n\
-    \n\
-    mkdir -p /mnt/r2\n\
-    \n\
-    R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
+ set -e\n\
+ \n\
+ mkdir -p /mnt/r2\n\
+ \n\
+ R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
     echo "Mounting bucket ${R2_BUCKET_NAME}..."\n\
     /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
-    sleep 3\n\
-    \n\
-    echo "Contents of mounted bucket:"\n\
-    ls -lah /mnt/r2\n\
-    ' > /startup.sh && chmod +x /startup.sh
+ sleep 3\n\
+ \n\
+ echo "Contents of mounted bucket:"\n\
+ ls -lah /mnt/r2\n\
+ ' > /startup.sh && chmod +x /startup.sh
 
 EXPOSE 8080
 CMD ["/startup.sh"]
-```
+
+````
 </Details>
 
 The startup script creates a mount point, starts tigrisfs in the background to mount the bucket, and then lists the mounted directory contents.
@@ -100,7 +104,8 @@ export class FUSEDemo extends Container<Env> {
     R2_ACCOUNT_ID: this.env.R2_ACCOUNT_ID,
   };
 }
-```
+````
+
 </TypeScriptExample>
 
 The `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be stored as secrets, while `R2_BUCKET_NAME` and `R2_ACCOUNT_ID` can be configured as variables in your `wrangler.jsonc`:
@@ -108,12 +113,13 @@ The `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be stored as secrets,
 :::note[Creating your R2 AWS API keys]
 To get your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`, [head to your R2 dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview) and create a new R2 Access API key. Use the generated the `Access Key ID` as your `AWS_ACCESS_KEY_ID` and `Secret Access Key` is the `AWS_SECRET_ACCESS_KEY`.
 :::
+
 ```json
 {
-  "vars": {
-    "R2_BUCKET_NAME": "my-bucket",
-    "R2_ACCOUNT_ID": "your-account-id"
-  }
+	"vars": {
+		"R2_BUCKET_NAME": "my-bucket",
+		"R2_ACCOUNT_ID": "your-account-id"
+	}
 }
 ```
 

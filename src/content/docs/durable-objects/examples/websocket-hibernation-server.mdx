@@ -1,5 +1,4 @@
 ---
-
 summary: Build a WebSocket server using WebSocket Hibernation on Durable Objects
   and Workers.
 tags:
@@ -10,7 +9,7 @@ sidebar:
   order: 3
 description: Build a WebSocket server using WebSocket Hibernation on Durable
   Objects and Workers.
-last_reviewed: 2024-02-28
+reviewed: 2024-02-28
 ---
 
 import { TabItem, Tabs, WranglerConfig, TypeScriptExample } from "~/components";
@@ -31,16 +30,16 @@ import { DurableObject } from 'cloudflare:workers';
 
 // Worker
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    if (request.url.endsWith('/websocket')) {
-      // Expect to receive a WebSocket Upgrade request.
-      // If there is one, accept the request and return a WebSocket Response.
-      const upgradeHeader = request.headers.get('Upgrade');
-      if (!upgradeHeader || upgradeHeader !== 'websocket') {
-        return new Response('Worker expected Upgrade: websocket', {
-          status: 426,
-        });
-      }
+async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+if (request.url.endsWith('/websocket')) {
+// Expect to receive a WebSocket Upgrade request.
+// If there is one, accept the request and return a WebSocket Response.
+const upgradeHeader = request.headers.get('Upgrade');
+if (!upgradeHeader || upgradeHeader !== 'websocket') {
+return new Response('Worker expected Upgrade: websocket', {
+status: 426,
+});
+}
 
       if (request.method !== 'GET') {
         return new Response('Worker expected GET method', {
@@ -57,26 +56,27 @@ export default {
 
     return new Response(
       `Supported endpoints:
+
 /websocket: Expects a WebSocket upgrade request`,
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-      }
-    );
-  },
+{
+status: 200,
+headers: {
+'Content-Type': 'text/plain',
+},
+}
+);
+},
 };
 
 // Durable Object
 export class WebSocketHibernationServer extends DurableObject {
-  // Keeps track of all WebSocket connections
-  // When the DO hibernates, gets reconstructed in the constructor
-  sessions: Map<WebSocket, { [key: string]: string }>;
+// Keeps track of all WebSocket connections
+// When the DO hibernates, gets reconstructed in the constructor
+sessions: Map<WebSocket, { [key: string]: string }>;
 
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    this.sessions = new Map();
+constructor(ctx: DurableObjectState, env: Env) {
+super(ctx, env);
+this.sessions = new Map();
 
     // As part of constructing the Durable Object,
     // we wake up any hibernating WebSockets and
@@ -94,12 +94,13 @@ export class WebSocketHibernationServer extends DurableObject {
 
     // Sets an application level auto response that does not wake hibernated WebSockets.
     this.ctx.setWebSocketAutoResponse(new WebSocketRequestResponsePair('ping', 'pong'));
-  }
 
-  async fetch(request: Request): Promise<Response> {
-    // Creates two ends of a WebSocket connection.
-    const webSocketPair = new WebSocketPair();
-    const [client, server] = Object.values(webSocketPair);
+}
+
+async fetch(request: Request): Promise<Response> {
+// Creates two ends of a WebSocket connection.
+const webSocketPair = new WebSocketPair();
+const [client, server] = Object.values(webSocketPair);
 
     // Calling `acceptWebSocket()` informs the runtime that this WebSocket is to begin terminating
     // request within the Durable Object. It has the effect of "accepting" the connection,
@@ -126,11 +127,12 @@ export class WebSocketHibernationServer extends DurableObject {
       status: 101,
       webSocket: client,
     });
-  }
 
-  async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
-    // Get the session associated with the WebSocket connection.
-    const session = this.sessions.get(ws)!;
+}
+
+async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
+// Get the session associated with the WebSocket connection.
+const session = this.sessions.get(ws)!;
 
     // Upon receiving a message from the client, the server replies with the same message, the session ID of the connection,
     // and the total number of connections with the "[Durable Object]: " prefix
@@ -148,15 +150,17 @@ export class WebSocketHibernationServer extends DurableObject {
           connectedWs.send(`[Durable Object] message: ${message}, from: ${session.id}, to: all clients except the initiating client. Total connections: ${this.sessions.size}`);
       }
     });
-  }
 
-  async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-    // If the client closes the connection, the runtime will invoke the webSocketClose() handler.
-    this.sessions.delete(ws);
-    ws.close(code, 'Durable Object is closing WebSocket');
-  }
 }
-```
+
+async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+// If the client closes the connection, the runtime will invoke the webSocketClose() handler.
+this.sessions.delete(ws);
+ws.close(code, 'Durable Object is closing WebSocket');
+}
+}
+
+````
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -272,7 +276,7 @@ class WebSocketHibernationServer(DurableObject):
 		if session_id:
 			self.sessions.pop(session_id, None)
 		ws.close(code, 'Durable Object is closing WebSocket')
-```
+````
 
 </TabItem>
 

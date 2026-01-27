@@ -1,10 +1,10 @@
 ---
 title: Authenticate against R2 API using auth tokens
 pcx_content_type: Example
-last_reviewed: 2024-08-29
+reviewed: 2024-08-29
 ---
 
-import { PackageManagers, Tabs, TabItem } from '~/components';
+import { PackageManagers, Tabs, TabItem } from "~/components";
 
 The following example shows how to authenticate against R2 using the S3 API and an API token.
 
@@ -31,7 +31,7 @@ export AWS_SECRET_ACCESS_KEY=your_secret_access_key
 
     Run the following Node.js script with `node index.js`. Ensure you change `Bucket` to the name of your bucket, and `Key` to point to an existing file in your R2 bucket.
 
-		Note, tutorial below should function for TypeScript as well.
+    	Note, tutorial below should function for TypeScript as well.
 
     ```javascript title="index.js"
     import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
@@ -58,6 +58,7 @@ export AWS_SECRET_ACCESS_KEY=your_secret_access_key
     // import { writeFile } from "node:fs/promises";
     // await writeFile('ingested_0001.parquet', data.Body);
     ```
+
   </TabItem>
   <TabItem label="Python" icon="seti:python">
 
@@ -99,35 +100,36 @@ export AWS_SECRET_ACCESS_KEY=your_secret_access_key
 
     except Exception as e:
       print(f'Failed to fetch the object. Error: {str(e)}')
+
+````
+</TabItem>
+<TabItem label="Go" icon="seti:go">
+
+  Use `go get` to add the `aws-sdk-go-v2` packages to your Go project:
+
+  ```sh
+  go get github.com/aws/aws-sdk-go-v2
+  go get github.com/aws/aws-sdk-go-v2/config
+  go get github.com/aws/aws-sdk-go-v2/credentials
+  go get github.com/aws/aws-sdk-go-v2/service/s3
   ```
-  </TabItem>
-  <TabItem label="Go" icon="seti:go">
 
-    Use `go get` to add the `aws-sdk-go-v2` packages to your Go project:
+  Run the following Go application as a script with `go run main.go`. Ensure you change `bucket` to the name of your bucket, and `objectKey` to point to an existing file in your R2 bucket.
 
-    ```sh
-    go get github.com/aws/aws-sdk-go-v2
-    go get github.com/aws/aws-sdk-go-v2/config
-    go get github.com/aws/aws-sdk-go-v2/credentials
-    go get github.com/aws/aws-sdk-go-v2/service/s3
-    ```
+  ```go
+ 	package main
 
-    Run the following Go application as a script with `go run main.go`. Ensure you change `bucket` to the name of your bucket, and `objectKey` to point to an existing file in your R2 bucket.
+  import (
+	  "context"
+	  "fmt"
+	  "io"
+	  "log"
+	  "github.com/aws/aws-sdk-go-v2/aws"
+	  "github.com/aws/aws-sdk-go-v2/config"
+	  "github.com/aws/aws-sdk-go-v2/service/s3"
+  )
 
-    ```go
-   	package main
-
-    import (
-  	  "context"
-  	  "fmt"
-  	  "io"
-  	  "log"
-  	  "github.com/aws/aws-sdk-go-v2/aws"
-  	  "github.com/aws/aws-sdk-go-v2/config"
-  	  "github.com/aws/aws-sdk-go-v2/service/s3"
-    )
-
-    func main() {
+  func main() {
 	    cfg, err := config.LoadDefaultConfig(context.TODO())
 	    if err != nil {
 		    log.Fatalf("Unable to load SDK config, %v", err)
@@ -170,7 +172,8 @@ export AWS_SECRET_ACCESS_KEY=your_secret_access_key
 		    log.Fatalf("Unable to read object content, %v", err)
 	    }
 	    fmt.Printf("Object content length: %d bytes\n", len(content))
-    }
-    ```
-  </TabItem>
+  }
+  ```
+</TabItem>
 </Tabs>
+````

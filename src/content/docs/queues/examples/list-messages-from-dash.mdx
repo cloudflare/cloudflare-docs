@@ -8,7 +8,7 @@ head:
   - tag: title
     content: Cloudflare Queues - Listing and acknowledging messages from the dashboard
 description: Use the dashboard to fetch and acknowledge the messages currently in a queue.
-last_reviewed: 2023-07-18
+reviewed: 2023-07-18
 ---
 
 import { Steps, DashButton } from "~/components";
@@ -22,13 +22,13 @@ To list messages in the dashboard:
 <Steps>
 1. In the Cloudflare dashboard, go to the **Queues** page.
 
-	 <DashButton url="/?to=/:account/workers/queues" />
+     <DashButton url="/?to=/:account/workers/queues" />
 
 2. Select the queue to preview messages from.
 3. Select the **Messages** tab.
 4. Select **List**.
 5. When the list of messages loads, select the blue arrow to the right of each row to expand the message preview.
-</Steps>
+   </Steps>
 
 This will preview a batch of messages currently in the Queue.
 
@@ -37,9 +37,10 @@ This will preview a batch of messages currently in the Queue.
 Acknowledging messages from the [Cloudflare dashboard](https://dash.cloudflare.com) will permanently remove them from the queue, with equivalent behavior as `ack()` in a Worker.
 
 <Steps>
-1. Select the checkbox to the left of each row to select the message for acknowledgement, or select the checkbox in the table header to select all messages.
-2. Select **Acknowledge messages**.
-3. Confirm you want to acknowledge the messages, and select **Acknowledge messages**.
+	1. Select the checkbox to the left of each row to select the message for
+	acknowledgement, or select the checkbox in the table header to select all
+	messages. 2. Select **Acknowledge messages**. 3. Confirm you want to
+	acknowledge the messages, and select **Acknowledge messages**.
 </Steps>
 
 This will remove the selected messages from the queue and prevent consumers from processing them further.

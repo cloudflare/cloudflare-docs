@@ -1,7 +1,7 @@
 ---
 title: Apache Trino
 pcx_content_type: example
-last_reviewed: 2025-09-05
+reviewed: 2025-09-05
 ---
 
 import { Steps } from "~/components";
@@ -16,7 +16,9 @@ Below is an example of using [Apache Trino](https://trino.io/) to connect to R2 
 - Install [Docker](https://docs.docker.com/get-docker/) to run the Trino container.
 
 ## Setup
+
 Create a local directory for the catalog configuration and change directories to it
+
 ```bash
 mkdir -p trino-catalog && cd trino-catalog/
 ```
@@ -63,38 +65,39 @@ iceberg.rest-catalog.oauth2.token=<Your R2 authentication token>
       trinodb/trino:latest
     ```
 
-2. Connect to Trino and query your R2 Data Catalog:
+2.  Connect to Trino and query your R2 Data Catalog:
 
     ```bash
     # Connect to the Trino CLI
     docker exec -it trino-r2 trino
     ```
 
-3. In the Trino CLI, run the following commands:
+3.  In the Trino CLI, run the following commands:
 
-    ```sql
-    -- Show all schemas in the R2 catalog
-    SHOW SCHEMAS IN r2;
+        ```sql
+        -- Show all schemas in the R2 catalog
+        SHOW SCHEMAS IN r2;
 
-    -- Show all schemas in the R2 catalog
-    CREATE SCHEMA r2.example_schema
+        -- Show all schemas in the R2 catalog
+        CREATE SCHEMA r2.example_schema
 
-    -- Create a table with some values in it
-    CREATE TABLE r2.example_schema.yearly_clicks (
-        year,
-        clicks
-    )
-    WITH (
-       partitioning = ARRAY['year']
-    )
-    AS VALUES
-        (2021, 10000),
-        (2022, 20000);
+        -- Create a table with some values in it
+        CREATE TABLE r2.example_schema.yearly_clicks (
+            year,
+            clicks
+        )
+        WITH (
+           partitioning = ARRAY['year']
+        )
+        AS VALUES
+            (2021, 10000),
+            (2022, 20000);
 
-    -- Show tables in a specific schema
-    SHOW TABLES IN r2.example_schema;
+        -- Show tables in a specific schema
+        SHOW TABLES IN r2.example_schema;
 
-    -- Query your Iceberg table
-    SELECT * FROM r2.example_schema.yearly_clicks;
-    ```
-</Steps>
+        -- Query your Iceberg table
+        SELECT * FROM r2.example_schema.yearly_clicks;
+        ```
+
+    </Steps>

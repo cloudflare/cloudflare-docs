@@ -1,5 +1,4 @@
 ---
-
 summary: Redirect a response based on the country code in the header of a visitor.
 tags:
   - Redirects
@@ -14,7 +13,7 @@ title: Country code redirect
 sidebar:
   order: 1001
 description: Redirect a response based on the country code in the header of a visitor.
-last_reviewed: 2020-09-30
+reviewed: 2020-09-30
 ---
 
 If you want to get started quickly, click on the button below.
@@ -111,42 +110,42 @@ class Default(WorkerEntrypoint):
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 // Define the RequestWithCf interface to add Cloudflare-specific properties
 interface RequestWithCf extends Request {
-  cf: {
-    country: string;
-    // Other CF properties can be added as needed
-  };
+	cf: {
+		country: string;
+		// Other CF properties can be added as needed
+	};
 }
 
 const app = new Hono();
 
-app.get('*', async (c) => {
-  /**
-   * A map of the URLs to redirect to
-   */
-  const countryMap: Record<string, string> = {
-    US: "https://example.com/us",
-    EU: "https://example.com/eu",
-  };
+app.get("*", async (c) => {
+	/**
+	 * A map of the URLs to redirect to
+	 */
+	const countryMap: Record<string, string> = {
+		US: "https://example.com/us",
+		EU: "https://example.com/eu",
+	};
 
-  // Cast the raw request to include Cloudflare-specific properties
-  const request = c.req.raw as RequestWithCf;
+	// Cast the raw request to include Cloudflare-specific properties
+	const request = c.req.raw as RequestWithCf;
 
-  // Use the cf object to obtain the country of the request
-  // more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
-  const country = request.cf.country;
+	// Use the cf object to obtain the country of the request
+	// more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
+	const country = request.cf.country;
 
-  if (country != null && country in countryMap) {
-    const url = countryMap[country];
-    // Redirect using Hono's redirect helper
-    return c.redirect(url);
-  } else {
-    // Default fallback
-    return fetch("https://example.com", request);
-  }
+	if (country != null && country in countryMap) {
+		const url = countryMap[country];
+		// Redirect using Hono's redirect helper
+		return c.redirect(url);
+	} else {
+		// Default fallback
+		return fetch("https://example.com", request);
+	}
 });
 
 export default app;

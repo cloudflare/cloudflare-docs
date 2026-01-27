@@ -1,5 +1,4 @@
 ---
-
 summary: Given the cookie name, get the value of a cookie. You can also use
   cookies for A/B testing.
 tags:
@@ -13,7 +12,7 @@ sidebar:
   order: 1001
 description: Given the cookie name, get the value of a cookie. You can also use
   cookies for A/B testing.
-last_reviewed: 2022-02-25
+reviewed: 2022-02-25
 ---
 
 If you want to get started quickly, click on the button below.
@@ -83,24 +82,24 @@ class Default(WorkerEntrypoint):
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
-import { getCookie } from 'hono/cookie';
+import { Hono } from "hono";
+import { getCookie } from "hono/cookie";
 
 const app = new Hono();
 
-app.get('*', (c) => {
-  // The name of the cookie
-  const COOKIE_NAME = "__uid";
+app.get("*", (c) => {
+	// The name of the cookie
+	const COOKIE_NAME = "__uid";
 
-  // Get the specific cookie value using Hono's cookie helper
-  const cookieValue = getCookie(c, COOKIE_NAME);
+	// Get the specific cookie value using Hono's cookie helper
+	const cookieValue = getCookie(c, COOKIE_NAME);
 
-  if (cookieValue) {
-    // Respond with the cookie value
-    return c.text(cookieValue);
-  }
+	if (cookieValue) {
+		// Respond with the cookie value
+		return c.text(cookieValue);
+	}
 
-  return c.text("No cookie with name: " + COOKIE_NAME);
+	return c.text("No cookie with name: " + COOKIE_NAME);
 });
 
 export default app;

@@ -8,7 +8,7 @@ title: Query D1 from SvelteKit
 sidebar:
   order: 3
 description: Query a D1 database from a SvelteKit application.
-last_reviewed: 2023-07-07
+reviewed: 2023-07-07
 ---
 
 import { TabItem, Tabs } from "~/components";
@@ -43,9 +43,12 @@ export async function GET({ request, platform }) {
 			headers: { "Content-Type": "application/json" },
 		});
 	} catch (error) {
-		return Response.json({ error: "Failed to fetch users" }, {
-			status: 500
-		});
+		return Response.json(
+			{ error: "Failed to fetch users" },
+			{
+				status: 500,
+			},
+		);
 	}
 }
 ```

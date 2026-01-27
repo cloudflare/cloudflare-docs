@@ -1,11 +1,10 @@
 ---
 title: Spark (Scala)
 pcx_content_type: example
-last_reviewed: 2025-04-09
+reviewed: 2025-04-09
 ---
 
-import { FileTree } from "~/components"
-
+import { FileTree } from "~/components";
 
 Below is an example of how you can build an [Apache Spark](https://spark.apache.org/) application (with Scala) which connects to R2 Data Catalog. This application is built to run locally, but it can be adapted to run on a cluster.
 
@@ -149,20 +148,9 @@ chmod +x submit.sh
 At this point, your project directory should be structured like this:
 
 <FileTree>
-- Makefile
-- README.md
-- build.sbt
-- project
-  - assembly.sbt
-  - build.properties
-  - project
-- spark-submit.sh
-- src
-  - main
-	  - scala
-		  - com
-			  - example
-				  - R2DataCatalogDemo.scala
+	- Makefile - README.md - build.sbt - project - assembly.sbt - build.properties
+	- project - spark-submit.sh - src - main - scala - com - example -
+	R2DataCatalogDemo.scala
 </FileTree>
 
 Before submitting the job, make sure you have the required environment variable set for your catalog URI, warehouse, and [Cloudflare API token](/r2/api/tokens/).
