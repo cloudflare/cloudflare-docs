@@ -107,16 +107,17 @@ The Durable Object keeps a browser session open for 60 seconds after last use. I
 
 <TypeScriptExample playground={true}>
 ```ts
-import puppeteer from "@cloudflare/puppeteer";
+import { DurableObject } from "cloudflare:workers";
+import * as puppeteer from "@cloudflare/puppeteer";
 
 interface Env {
-  MYBROWSER: BrowserNamespace;
+  MYBROWSER: Fetcher;
   BUCKET: R2Bucket;
   BROWSER: DurableObjectNamespace;
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request, env): Promise<Response> {
     const obj = env.BROWSER.getByName("browser");
 
     // Send a request to the Durable Object, then await its response
@@ -124,20 +125,17 @@ export default {
 
     return resp;
   },
-};
+} satisfies ExportedHandler<Env>;
 
 const KEEP_BROWSER_ALIVE_IN_SECONDS = 60;
 
-export class Browser implements DurableObject {
+export class Browser extends DurableObject<Env> {
   private browser?: puppeteer.Browser;
   private keptAliveInSeconds: number = 0;
   private storage: DurableObjectStorage;
-  private state: DurableObjectState;
-  private env: Env;
 
   constructor(state: DurableObjectState, env: Env) {
-    this.state = state;
-    this.env = env;
+    super(state, env);
     this.storage = state.storage;
   }
 
