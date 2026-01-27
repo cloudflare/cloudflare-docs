@@ -96,19 +96,19 @@ Unidirectional health checks can be unreliable because intermediate network devi
 
 ### Tunnel shows `Down` but traffic is flowing
 
-**Symptoms:**
+#### Symptoms
 
 - Dashboard shows tunnel as `Down` or `Degraded`
 - Actual user traffic passes through the tunnel successfully
 - Health check failure rate is 100% despite working connectivity
 
-**Cause:**
+#### Cause
 
 Stateful firewalls (including Palo Alto, Checkpoint, Cisco ASA, and Fortinet) drop the health check packets. By default, Cloudflare sends ICMP *Reply* packets as health check probes.
 
 Stateful firewalls inspect these packets and look for a matching ICMP *Request* in their session table. When no matching request exists, firewalls drop the reply as "out-of-state".
 
-**Solution:**
+#### Solution
 
 Change the health check type from *Reply* to *Request*:
 
@@ -130,17 +130,17 @@ If your firewall drops ICMP request packets as well, verify that your firewall p
 
 ### Health check failures with Magic Firewall
 
-**Symptoms:**
+#### Symptoms
 
 - Tunnels were healthy before enabling Magic Firewall
 - After adding Magic Firewall rules, health checks fail
 - Blocking ICMP traffic causes immediate health check failures
 
-**Cause:**
+#### Cause
 
 Magic Firewall processes all traffic, including Cloudflare's health check probes. If you create a rule that blocks ICMP traffic, you also block the health check packets that Cloudflare sends to monitor tunnel status.
 
-**Solution:**
+#### Solution
 
 Add an allow rule for ICMP traffic from Cloudflare IP addresses *before* any block rules:
 
@@ -164,7 +164,7 @@ For more information, refer to [Magic Firewall rules and endpoint health checks]
 
 ### IPsec tunnel instability or packet drops
 
-**Symptoms:**
+#### Symptoms
 
 - IPsec tunnel frequently flaps between healthy and down states
 - Intermittent packet loss on the tunnel
@@ -174,13 +174,13 @@ For more information, refer to [Magic Firewall rules and endpoint health checks]
   - "invalid sequence number"
   - "invalid SPI" (Security Parameter Index)
 
-**Cause:**
+#### Cause
 
 Anti-replay protection is enabled on your router. IPsec anti-replay protection expects packets to arrive in sequence from a single sender.
 
 Cloudflare's anycast architecture means your tunnel traffic can originate from thousands of servers across hundreds of data centers. Each server maintains its own sequence counter, causing packets to arrive out-of-order from your router's perspective.
 
-**Solution:**
+#### Solution
 
 Disable anti-replay protection on your router:
 
@@ -224,20 +224,20 @@ For a detailed explanation of why this setting is necessary, refer to <a href={p
 
 ### Tunnel degraded after rekey events
 
-**Symptoms:**
+#### Symptoms
 
 - Tunnel health drops to `Degraded` or `Down` periodically
 - Issues coincide with IPsec rekey intervals (typically every few hours)
 - Tunnel recovers automatically after 1-3 minutes
 - Router logs show successful rekey completion
 
-**Cause:**
+#### Cause
 
 When your router initiates an IPsec rekey, new Security Associations (SAs) are negotiated with a single Cloudflare server. These new SAs must then propagate across Cloudflare's global network.
 
 During this propagation window (typically 90-150 seconds), some Cloudflare servers may not have the new SA. These servers drop traffic encrypted with the new SA until propagation completes.
 
-**Solution:**
+#### Solution
 
 This behavior is expected and the tunnel will automatically recover. To minimize impact:
 
@@ -259,13 +259,13 @@ This behavior is expected and the tunnel will automatically recover. To minimize
 
 ### Bidirectional health check failures
 
-**Symptoms:**
+#### Symptoms
 
 - Health checks configured as bidirectional fail consistently
 - Unidirectional health checks work correctly
 - Traffic flows through the tunnel normally
 
-**Cause:**
+#### Cause
 
 Bidirectional health checks require both the probe and response to traverse the tunnel. Your router must:
 
@@ -274,7 +274,7 @@ Bidirectional health checks require both the probe and response to traverse the 
 
 If traffic selectors or firewall rules do not permit this traffic, bidirectional health checks fail.
 
-**Solution:**
+#### Solution
 
 **For IPsec tunnels:**
 
@@ -293,13 +293,13 @@ For detailed information on how bidirectional health checks work, refer to <a hr
 
 ### IPsec tunnel establishment failures
 
-**Symptoms:**
+#### Symptoms
 
 - Tunnel status shows `Down` and never becomes healthy
 - No traffic passes through the tunnel
 - Router logs show IKE negotiation failures
 
-**Cause:**
+#### Cause
 
 IPsec tunnel establishment can fail due to several configuration mismatches:
 
@@ -310,7 +310,7 @@ IPsec tunnel establishment can fail due to several configuration mismatches:
 | **Wrong IKE ID format** | Authentication failures despite correct PSK |
 | **Firewall blocking IKE** | No IKE traffic reaches Cloudflare |
 
-**Solution:**
+#### Solution
 
 1. **Verify crypto parameters match Cloudflare's supported configuration:**
 
