@@ -58,8 +58,8 @@ These penalties shift traffic to healthier tunnels while maintaining redundancy.
 Tunnels transition between states asymmetrically to prevent flapping:
 
 - **Healthy to Degraded/Down**: Transitions quickly when failures are detected. A tunnel can go directly from Healthy to Down if all probe retries fail.
-- **Down to Degraded**: Requires three consecutive successful health check probes
-- **Degraded to Healthy**: Requires failure rate below 0.1% over 30 consecutive probes
+- **Down to Degraded**: Requires three consecutive successful health check probes.
+- **Degraded to Healthy**: Requires failure rate below 0.1% over 30 consecutive probes.
 
 :::note[Minimum state duration]
 Tunnels remain in a degraded or down state for at least five minutes, even if health checks start succeeding immediately. This minimum duration prevents rapid flapping when there is intermittent packet loss. Additionally, a tunnel recovering from `Down` must always transition through `Degraded` before returning to `Healthy`.
@@ -250,7 +250,7 @@ This behavior is expected and the tunnel will automatically recover. To minimize
 	<DashButton url="/?to=/:account/magic-networks/connections" />
 
    2. In **IPsec/GRE tunnels**, select **Edit** on the tunnel.
-   3. Change **Health check rate** to *Low*
+   3. Change **Health check rate** to *Low*.
 
 
 3. **Stagger rekey times**: If you have multiple tunnels, configure different SA lifetimes so they do not rekey simultaneously.
