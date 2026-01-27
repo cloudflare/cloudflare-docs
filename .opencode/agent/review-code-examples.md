@@ -31,6 +31,7 @@ In the subsequent steps, review **in the context** of that category of code. Cle
 - Correct binding access: `env.X` in fetch handlers, `this.env.X` in classes (WorkerEntrypoint, DurableObject, Workflow, Agent)
 - Bindings in code match `<WranglerConfig>` declarations
 - Required imports present
+- Use latest Cloudflare APIs; flag deprecated methods or patterns when a modern replacement exists
 
 **Streaming** — Flag obvious memory issues.
 
