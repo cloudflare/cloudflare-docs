@@ -62,6 +62,7 @@ In the subsequent steps, review **in the context** of that category of code. Cle
 - **Don't nitpick style.** Focus on code that won't work or teaches bad practices.
 - **Buffering small payloads is fine.** Only flag when size is unknown or large.
 - **TOML is acceptable** in existing docs — only use jsonc for new content.
+- **Do not change indentation of fencing style** when adding or editing. Perform a final sweep of the whole file to make sure fending and code formatting is correct.
 
 ## 4.Severity
 
@@ -71,7 +72,7 @@ In the subsequent steps, review **in the context** of that category of code. Cle
 
 ## 5. Output
 
-Ensure you have fully understood the formatting of the code. Pay close attention to indentations (tabs, spaces, how many spaces), as well as the number of backticks (must only ever be **triple** backticks!). Use the existing code to identify the convention being used, and follow it strictly.
+Ensure you have fully understood the formatting of the code. Pay close attention to indentations (tabs, spaces, how many spaces), as well as the number of backticks (almost always triple backticks!). Preserve the existing fencing style exactly.
 
 For each codeblock you change, output:
 
