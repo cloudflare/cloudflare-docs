@@ -19,7 +19,7 @@ Every code example can be categorized into one of the following types:
 - **Executable**: A code example that is standalone and complete. It can be executed and will run without errors.
   - Example: Final code in Get started sections (https://developers.cloudflare.com/d1/worker-api/#2-modify-the-content-of-indexjs)
 
-First, identify the purpose of the code. In the subsequent steps, review _in the context_ of that category of code.
+First, identify the purpose of the code. In the subsequent steps, review _in the context_ of that category of code. Clearly state the code categorization of each codeblock in the output.
 
 ## What to Look For
 
