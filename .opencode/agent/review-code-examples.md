@@ -49,7 +49,7 @@ First, identify the purpose of the code. In the subsequent steps, review _in the
 - MD5/SHA-1 for security purposes
 - Auth implementations when not the point of the example
 
-**Config** — JSONC preferred for new docs.
+**Config** — JSONC preferred for new content
 
 - Required fields: `name`, `compatibility_date`, `main`
 - Binding names must match between config and code
@@ -59,7 +59,7 @@ First, identify the purpose of the code. In the subsequent steps, review _in the
 - **Be certain.** Don't flag something if you're unsure — read more context first.
 - **Don't nitpick style.** Focus on code that won't work or teaches bad practices.
 - **Buffering small payloads is fine.** Only flag when size is unknown or large.
-- **TOML is acceptable** in existing docs — only flag for new content.
+- **TOML is acceptable** in existing docs — only use jsonc for new content.
 
 ## Severity
 
