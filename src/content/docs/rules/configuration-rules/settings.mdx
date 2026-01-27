@@ -94,7 +94,7 @@ API configuration property name: `"disable_zaraz"` (boolean).
 
 ## Email Obfuscation
 
-[Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
+[Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) prevents spam by hiding email addresses from bots and harvesters while keeping them visible to human visitors to your site.
 
 Use this setting to turn on or off Email Obfuscation for matching requests.
 
@@ -225,7 +225,7 @@ API values: `"off"`, `"lossless"`, `"lossy"`, `"webp"`.
 
 ## Request Body Buffering
 
-Use this setting to configure the request body buffering mode for matching requests:
+Use the Request Body Buffering setting to configure the request body buffering mode for matching requests:
 
 - **Standard** (default): Allows Cloudflare products to inspect a prefix of the request body when necessary for enabled functionality on your zone.
 - **Full**: Buffers the entire request body before sending the request to your origin server.
@@ -255,7 +255,7 @@ API values: `"standard"`, `"full"`, `"none"`.
 
 ## Response Body Buffering
 
-Use this setting to configure the response body buffering mode for matching requests:
+Use the Response Body Buffering setting to configure the response body buffering mode for matching requests:
 
 - **Standard** (default): Allows Cloudflare products to inspect a prefix of the response body when necessary for enabled functionality on your zone.
 - **None**: Strictly no buffering. The response body is streamed directly to the client without inspection.
