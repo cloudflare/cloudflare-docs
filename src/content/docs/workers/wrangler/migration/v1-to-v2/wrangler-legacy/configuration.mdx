@@ -691,9 +691,8 @@ To illustrate how these levels are applied, here is a Wrangler file using multip
 		"local_protocol": "http",
 		"upstream_protocol": "https"
 	},
-	// environment configuration
-	// environment configuration
 	"env": {
+		// environment configuration
 		"staging": {
 			"name": "my-worker-staging",
 			"route": "staging.example.com/*",
@@ -708,6 +707,7 @@ To illustrate how these levels are applied, here is a Wrangler file using multip
 				}
 			]
 		},
+		// environment configuration
 		"production": {
 			"workers_dev": true,
 			"kv_namespaces": [

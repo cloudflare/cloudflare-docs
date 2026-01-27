@@ -16,9 +16,8 @@ To specify different D1 databases for different environments, use the following 
 
 ```jsonc
 {
-	// This is a staging environment
-	// This is a production environment
 	"env": {
+		// This is a staging environment
 		"staging": {
 			"d1_databases": [
 				{
@@ -28,6 +27,7 @@ To specify different D1 databases for different environments, use the following 
 				}
 			]
 		},
+		// This is a production environment
 		"production": {
 			"d1_databases": [
 				{

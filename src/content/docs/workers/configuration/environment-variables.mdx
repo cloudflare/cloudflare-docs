@@ -88,6 +88,7 @@ The example below sets up two environments, `staging` and `production`, with dif
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "my-worker-dev",
+	// top level environment
 	"vars": {
 		"API_HOST": "api.example.com"
 	},
@@ -98,7 +99,6 @@ The example below sets up two environments, `staging` and `production`, with dif
 			}
 		},
 		"production": {
-			// top level environment
 			"vars": {
 				"API_HOST": "production.example.com"
 			}

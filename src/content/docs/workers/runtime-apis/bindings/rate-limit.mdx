@@ -108,9 +108,8 @@ For example, here is how you can define two rate limiting configurations for fre
 ```jsonc
 {
 	"main": "src/index.js",
-	// Free user rate limiting
-	// Paid user rate limiting
 	"ratelimits": [
+		// Free user rate limiting
 		{
 			"name": "FREE_USER_RATE_LIMITER",
 			"namespace_id": "1001",
@@ -119,6 +118,7 @@ For example, here is how you can define two rate limiting configurations for fre
 				"period": 60
 			}
 		},
+		// Paid user rate limiting
 		{
 			"name": "PAID_USER_RATE_LIMITER",
 			"namespace_id": "1002",
