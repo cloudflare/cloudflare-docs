@@ -15,15 +15,14 @@ Treat any fenced code block (triple backticks) and any code inside MDX component
 First, identify the purpose of the code block. Every code example can be categorized into one of the following types:
 
 - **Illustrative**: A code example that purely exists to demonstrate a point. They often use code comments for a large chunk of the code, and only showcase the few lines of code in focus.
-  - Example: Durable Objects Workers Binding API snippets (https://developers.cloudflare.com/durable-objects/api/namespace/#idfromstring)
+
 - **Demonstrative**: A code example that is functional but incomplete. If copy-pasted into the right place with some minor tweaks, it would run. It should be syntactically valid and reflect correct Cloudflare APIs and binding access, even if it omits setup.
-  - Example: D1 Global read replication (https://developers.cloudflare.com/d1/best-practices/read-replication/)
+
 - **Executable**: A code example that is standalone and complete. It can be executed and will run without errors. It should be complete, including imports and any required config/bindings shown on the page.
-  - Example: Final code in Get started sections (https://developers.cloudflare.com/d1/worker-api/#2-modify-the-content-of-indexjs)
 
 In the subsequent steps, review **in the context** of that category of code. Clearly state the code categorization of each codeblock in the output.
 
-## 2. What to Look For in Each Code Block
+## 2. Identify Issues
 
 **Correctness** — Primary focus.
 
@@ -57,7 +56,7 @@ In the subsequent steps, review **in the context** of that category of code. Cle
 - For executable examples that include Wrangler config, required fields are `name`, `compatibility_date`, `main`
 - Binding names must match between config and code
 
-## 3. Before You Flag Something
+## 3. Important rules to follow
 
 - **Be certain.** Don't flag something if you're unsure — read more context first. If you cannot confirm an API, option name, or binding pattern from the page context, do not guess. Ask for more context or refrain from flagging it.
 - **Don't nitpick style.** Focus on code that won't work or teaches bad practices.
@@ -65,17 +64,28 @@ In the subsequent steps, review **in the context** of that category of code. Cle
 - **TOML is acceptable** in existing docs — only use jsonc for new content.
 - **Do not change indentation of fencing style** when adding or editing. Perform a final sweep of the whole file to make sure fencing and code formatting is correct.
 
-## 4. Severity
+## 4. Editing discipline
+
+- **Copy, then modify.** When editing code, copy the original lines verbatim first, then change only the specific tokens that need fixing. Do not regenerate the block from memory.
+- **State the indent.** Before editing, note the indentation style (e.g., "4 spaces") and confirm your replacement matches.
+- **Prefer small edits.** Multiple single-line edits are safer than one large multi-line replacement.
+- **Verify after editing.** Re-read the modified lines from the file to confirm indentation is correct before moving on.
+
+## 5. Severity
 
 - **Important**: Code won't work — syntax errors, wrong binding access, missing imports, hardcoded secrets
 - **Needs Improvement**: Code works but has issues — missing error handling, buffering large data, outdated config
 - **Minor Nits**: Style preferences — TOML vs JSONC, verbose but functional code
 
-## 5. Output
+## 6. Perform Final Pass
 
-Ensure you have fully understood the formatting of the code. Pay close attention to indentations (tabs, spaces, how many spaces), as well as the number of backticks (almost always triple backticks!). Preserve the existing fencing style exactly.
+After any edit, re-read the modified section and verify:
 
-Explicitly perform a final sweep of the whole file to make sure fencing and code formatting is correct.
+1. Indentation matches surrounding code (same tabs/spaces, same width).
+2. Fencing style is unchanged (same number of backticks, same language tag).
+3. No lines were accidentally added or removed.
+
+## 7. Create Output
 
 For each codeblock reviewed, output:
 
