@@ -85,11 +85,16 @@ Reference your created database in your Worker code by creating a [binding](/wor
 
 <WranglerConfig>
 
-```toml
-[[ d1_databases ]]
-binding = "DB" # available in your Worker on `env.DB`
-database_name = "d1-example"
-database_id = "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB", // available in your Worker on `env.DB`
+			"database_name": "d1-example",
+			"database_id": "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -200,15 +205,20 @@ After you have logged in, confirm that your Wrangler file is configured similarl
 
 <WranglerConfig>
 
-```toml
-name = "d1-example"
-main = "src/worker.js"
-compatibility_date = "2022-07-15"
-
-[[ d1_databases ]]
-binding = "DB" # available in your Worker on env.DB
-database_name = "<YOUR_DATABASE_NAME>"
-database_id = "<YOUR_DATABASE_UUID>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "d1-example",
+	"main": "src/worker.js",
+	"compatibility_date": "2022-07-15",
+	"d1_databases": [
+		{
+			"binding": "DB", // available in your Worker on env.DB
+			"database_name": "<YOUR_DATABASE_NAME>",
+			"database_id": "<YOUR_DATABASE_UUID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

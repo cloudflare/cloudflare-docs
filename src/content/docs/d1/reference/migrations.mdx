@@ -34,14 +34,19 @@ This location and table name can be customized in your Wrangler file, inside the
 
 <WranglerConfig>
 
-```toml
-[[ d1_databases ]]
-binding = "<BINDING_NAME>" # i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
-database_name = "<DATABASE_NAME>"
-database_id = "<UUID>"
-preview_database_id = "<UUID>"
-migrations_table = "<d1_migrations>" # Customize this value to change your applied migrations table name
-migrations_dir = "<FOLDER_NAME>" # Specify your custom migration directory
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "<BINDING_NAME>", // i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
+			"database_name": "<DATABASE_NAME>",
+			"database_id": "<UUID>",
+			"preview_database_id": "<UUID>",
+			"migrations_table": "<d1_migrations>", // Customize this value to change your applied migrations table name
+			"migrations_dir": "<FOLDER_NAME>" // Specify your custom migration directory
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -63,9 +63,12 @@ Using Static Assets, you can serve the front-end of your application from your W
 
 <WranglerConfig>
 
-```toml
-[assets]
-directory = "public"
+```jsonc
+{
+	"assets": {
+		"directory": "public"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -237,10 +240,15 @@ To handle the file upload, you will first need to add the R2 binding. In the Wra
 
 <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "<R2_BUCKET_NAME>"
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "<R2_BUCKET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -307,9 +315,16 @@ Add the binding to the Wrangler file:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[queues.consumers]]
-queue = "pdf-summarizer"
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "pdf-summarizer"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -387,9 +402,12 @@ To use Workers AI, you will need to add the Workers AI binding to the Wrangler f
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[ai]
-binding = "AI"
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	}
+}
 ```
 
 </WranglerConfig>

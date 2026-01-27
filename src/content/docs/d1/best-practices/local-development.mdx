@@ -58,11 +58,16 @@ In this example, the Worker has access to local-only D1 database. The correspond
 
 <WranglerConfig>
 
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "test-db"
-database_id = "c020574a-5623-407b-be0c-cd192bab9545"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "test-db",
+			"database_id": "c020574a-5623-407b-be0c-cd192bab9545"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -84,13 +89,18 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) should rese
 
 <WranglerConfig>
 
-```toml
-# If you are only using Pages + D1, you only need the below in your Wrangler config file to interact with D1 locally.
-[[d1_databases]]
-binding = "DB" # Should match preview_database_id
-database_name = "YOUR_DATABASE_NAME"
-database_id = "the-id-of-your-D1-database-goes-here" # wrangler d1 info YOUR_DATABASE_NAME
-preview_database_id = "DB" # Required for Pages local development
+```jsonc
+{
+	// If you are only using Pages + D1, you only need the below in your Wrangler config file to interact with D1 locally.
+	"d1_databases": [
+		{
+			"binding": "DB", // Should match preview_database_id
+			"database_name": "YOUR_DATABASE_NAME",
+			"database_id": "the-id-of-your-D1-database-goes-here", // wrangler d1 info YOUR_DATABASE_NAME
+			"preview_database_id": "DB" // Required for Pages local development
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -128,11 +138,16 @@ You can use Miniflare's [support for D1](https://miniflare.dev/storage/d1) to cr
 
 <WranglerConfig>
 
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "test-db"
-database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "test-db",
+			"database_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -164,12 +179,17 @@ Given the below Wrangler configuration:
 
 <WranglerConfig>
 
-```toml
-[[ d1_databases ]]
-binding = "DB" # i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
-database_name = "your-database" # the name of your D1 database, set when created
-database_id = "<UUID>" # The unique ID of your D1 database, returned when you create your database or run `
-preview_database_id = "local-test-db" # A user-defined ID for your local test database.
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB", // i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
+			"database_name": "your-database", // the name of your D1 database, set when created
+			"database_id": "<UUID>", // The unique ID of your D1 database, returned when you create your database or run `
+			"preview_database_id": "local-test-db" // A user-defined ID for your local test database.
+		}
+	]
+}
 ```
 
 </WranglerConfig>

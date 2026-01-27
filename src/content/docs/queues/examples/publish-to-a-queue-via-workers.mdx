@@ -24,13 +24,19 @@ Configure your Wrangler file as follows:
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "YOUR_QUEUE"
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"queues": {
+		"producers": [
+			{
+				"queue": "my-queue",
+				"binding": "YOUR_QUEUE"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

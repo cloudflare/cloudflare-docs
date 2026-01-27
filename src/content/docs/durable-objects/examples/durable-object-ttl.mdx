@@ -125,17 +125,28 @@ To test and deploy this example, configure your Wrangler file to include a Durab
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "durable-object-ttl"
-main = "src/index.ts"
-
-[[durable_objects.bindings]]
-name = "MY_DURABLE_OBJECT"
-class_name = "MyDurableObject"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyDurableObject"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "durable-object-ttl",
+	"main": "src/index.ts",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"MyDurableObject"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

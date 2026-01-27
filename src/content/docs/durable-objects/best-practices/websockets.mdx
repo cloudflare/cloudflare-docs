@@ -182,16 +182,27 @@ class WebSocketHibernationServer(DurableObject):
 Similar to the [WebSocket Standard API example](/durable-objects/examples/websocket-server/), to execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
 <WranglerConfig>
-```toml
-name = "websocket-hibernation-server"
-
-[[durable_objects.bindings]]
-name = "WEBSOCKET_HIBERNATION_SERVER"
-class_name = "WebSocketHibernationServer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["WebSocketHibernationServer"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "websocket-hibernation-server",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "WEBSOCKET_HIBERNATION_SERVER",
+				"class_name": "WebSocketHibernationServer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"WebSocketHibernationServer"
+			]
+		}
+	]
+}
 ```
 </WranglerConfig>
 
@@ -502,16 +513,27 @@ class WebSocketServer(DurableObject):
 To execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
 <WranglerConfig>
-```toml
-name = "websocket-server"
-
-[[durable_objects.bindings]]
-name = "WEBSOCKET_SERVER"
-class_name = "WebSocketServer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["WebSocketServer"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "websocket-server",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "WEBSOCKET_SERVER",
+				"class_name": "WebSocketServer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"WebSocketServer"
+			]
+		}
+	]
+}
 ```
 </WranglerConfig>
 

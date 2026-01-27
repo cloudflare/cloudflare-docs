@@ -253,10 +253,17 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 
 <WranglerConfig>
 
-```toml
-[[durable_objects.bindings]]
-name = "MY_DURABLE_OBJECT"
-class_name = "MyDurableObject"
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_DURABLE_OBJECT",
+				"class_name": "MyDurableObject"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -277,10 +284,17 @@ The Durable Object migration to create a new Durable Object class with SQLite st
 
 <WranglerConfig>
 
-```toml
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["MyDurableObject"] # Array of new classes
+```jsonc
+{
+	"migrations": [
+		{
+			"tag": "v1", // Should be unique for each entry
+			"new_sqlite_classes": [ // Array of new classes
+				"MyDurableObject"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

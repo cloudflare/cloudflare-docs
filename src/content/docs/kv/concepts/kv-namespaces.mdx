@@ -37,10 +37,15 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-kv_namespaces = [
-  { binding = "<TEST_NAMESPACE>", id = "<TEST_ID>" }
-]
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "<TEST_NAMESPACE>",
+			"id": "<TEST_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -129,17 +129,28 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "durable-object-alarm"
-main = "src/index.ts"
-
-[[durable_objects.bindings]]
-name = "BATCHER"
-class_name = "Batcher"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["Batcher"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "durable-object-alarm",
+	"main": "src/index.ts",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "BATCHER",
+				"class_name": "Batcher"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"Batcher"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

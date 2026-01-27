@@ -486,11 +486,16 @@ Add the D1 bindings returned in the terminal to the `wrangler` file:
 
 <WranglerConfig>
 
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "fast-commerce"
-database_id = "YOUR_DATABASE_ID"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "fast-commerce",
+			"database_id": "YOUR_DATABASE_ID"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

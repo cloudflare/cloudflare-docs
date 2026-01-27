@@ -27,10 +27,15 @@ To bind your R2 bucket to your Worker, add the following to your Wrangler file. 
 
 <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-binding = 'MY_BUCKET' # <~ valid JavaScript variable name
-bucket_name = '<YOUR_BUCKET_NAME>'
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET", // <~ valid JavaScript variable name
+			"bucket_name": "<YOUR_BUCKET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

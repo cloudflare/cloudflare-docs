@@ -190,11 +190,16 @@ But if you wish to add the binding manually, follow the steps below:
 
    <WranglerConfig>
 
-   ```toml
-   [[d1_databases]]
-   binding = "prod_d1_tutorial" # available in your Worker on env.DB
-   database_name = "prod-d1-tutorial"
-   database_id = "<unique-ID-for-your-database>"
+   ```jsonc
+   {
+     "d1_databases": [
+       {
+         "binding": "prod_d1_tutorial", // available in your Worker on env.DB
+         "database_name": "prod-d1-tutorial",
+         "database_id": "<unique-ID-for-your-database>"
+       }
+     ]
+   }
    ```
 
    </WranglerConfig>

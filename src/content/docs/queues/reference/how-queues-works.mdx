@@ -141,11 +141,18 @@ You then connect that consumer to a queue with `wrangler queues consumer <queue-
 
 <WranglerConfig>
 
-```toml
-[[queues.consumers]]
-  queue = "<your-queue-name>"
-  max_batch_size = 100 # optional
-  max_batch_timeout = 30 # optional
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "<your-queue-name>",
+				"max_batch_size": 100, // optional
+				"max_batch_timeout": 30 // optional
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

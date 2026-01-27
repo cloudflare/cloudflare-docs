@@ -15,10 +15,17 @@ For example, the following consumer configuration would send messages to our DLQ
 
 <WranglerConfig>
 
-```toml
-[[queues.consumers]]
-  queue = "my-queue"
-  dead_letter_queue = "my-other-queue"
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "my-queue",
+				"dead_letter_queue": "my-other-queue"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

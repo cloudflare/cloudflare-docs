@@ -88,20 +88,31 @@ In your Worker project's [[Wrangler configuration file](/workers/wrangler/config
 
 <WranglerConfig>
 
-```toml
-name = "event-notification-writer"
-main = "src/index.ts"
-compatibility_date = "2024-03-29"
-compatibility_flags = ["nodejs_compat"]
-
-[[queues.consumers]]
-queue = "example-event-notification-queue"
-max_batch_size = 100
-max_batch_timeout = 5
-
-[[r2_buckets]]
-binding = "LOG_SINK"
-bucket_name = "example-log-sink-bucket"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "event-notification-writer",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-03-29",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"queues": {
+		"consumers": [
+			{
+				"queue": "example-event-notification-queue",
+				"max_batch_size": 100,
+				"max_batch_timeout": 5
+			}
+		]
+	},
+	"r2_buckets": [
+		{
+			"binding": "LOG_SINK",
+			"bucket_name": "example-log-sink-bucket"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

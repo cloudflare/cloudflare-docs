@@ -224,11 +224,16 @@ Make a note of the displayed `database_name` and `database_id`. You will use thi
 
     <WranglerConfig>
 
-    ```toml
-    [[d1_databases]]
-    binding = "DB" # i.e. available in your Worker on env.DB
-    database_name = "d1-http-example"
-    database_id = "1234567890"
+    ```jsonc
+    {
+      "d1_databases": [
+        {
+          "binding": "DB", // i.e. available in your Worker on env.DB
+          "database_name": "d1-http-example",
+          "database_id": "1234567890"
+        }
+      ]
+    }
     ```
 
     </WranglerConfig>

@@ -44,15 +44,22 @@ A HTTP consumer can be configured in the [Wrangler configuration file](/workers/
 
 <WranglerConfig>
 
-```toml
-[[queues.consumers]]
-# Required
-queue = "QUEUE-NAME"
-type = "http_pull"
-# Optional
-visibility_timeout_ms = 5000
-max_retries = 5
-dead_letter_queue = "SOME-OTHER-QUEUE"
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				// Required
+				"queue": "QUEUE-NAME",
+				"type": "http_pull",
+				// Optional
+				"visibility_timeout_ms": 5000,
+				"max_retries": 5,
+				"dead_letter_queue": "SOME-OTHER-QUEUE"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
