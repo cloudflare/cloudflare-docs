@@ -29,6 +29,7 @@ export { default as GitHubCode } from "./GitHubCode.astro";
 export { default as Glossary } from "./Glossary.astro";
 export { default as GlossaryDefinition } from "./GlossaryDefinition.astro";
 export { default as GlossaryTooltip } from "./GlossaryTooltip.astro";
+export { default as GranularControlApplicationsList } from "./GranularControlApplicationsList.astro";
 export { default as HomepageHero } from "./HomepageHero.astro";
 export { default as InlineBadge } from "./InlineBadge.astro";
 export { default as LastReviewed } from "./LastReviewed.astro";
