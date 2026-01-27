@@ -1,6 +1,7 @@
 ---
 title: Access a private API or website
 pcx_content_type: example
+last_reviewed: 2025-11-04
 ---
 
 import { Tabs, TabItem, WranglerConfig } from "~/components";
@@ -67,7 +68,7 @@ binding = "INTERNAL_API"
 service_id = "<YOUR_SERVICE_ID>"
 remote = true
 
-```
+````
 </WranglerConfig>
 
 ## 4. Implement the Worker
@@ -88,7 +89,7 @@ export default {
 		}
 	},
 };
-```
+````
 
 This guide demonstrates how you could create a simple proxy in your Workers. However, you could use VPC Services to fetch APIs directly and manipulate the responses to enable you to build more full-stack and backend functionality on Workers.
 

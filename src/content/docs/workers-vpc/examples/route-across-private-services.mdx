@@ -1,6 +1,7 @@
 ---
 title: Route to private services from Workers
 pcx_content_type: example
+last_reviewed: 2025-11-04
 ---
 
 import { Tabs, TabItem, WranglerConfig } from "~/components";
@@ -50,7 +51,8 @@ service_id = "<YOUR_USER_SERVICE_ID>"
 [[vpc_services]]
 binding = "ORDER_SERVICE"
 service_id = "<YOUR_ORDER_SERVICE_ID>"
-```
+
+````
 </WranglerConfig>
 
 ## 3. Implement the Worker
@@ -74,7 +76,7 @@ export default {
 		return new Response('Not Found', { status: 404 });
 	},
 };
-```
+````
 
 ## 4. Deploy and test
 
@@ -98,4 +100,3 @@ curl https://api-gateway.workers.dev/api/orders
 - Implement [rate limiting](/durable-objects/api/)
 - Set up [monitoring and alerting](/analytics/analytics-engine/)
 - Explore [other examples](/workers-vpc/examples/)
-
