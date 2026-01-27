@@ -22,11 +22,16 @@ When you declare a binding on your Worker, you grant it a specific capability, s
 
 <WranglerConfig>
 
-```toml
-main = "./src/index.js"
-r2_buckets = [
-  { binding = "MY_BUCKET", bucket_name = "<MY_BUCKET_NAME>" }
-]
+```jsonc
+{
+	"main": "./src/index.js",
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "<MY_BUCKET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

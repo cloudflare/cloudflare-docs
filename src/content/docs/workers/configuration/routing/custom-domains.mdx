@@ -60,10 +60,15 @@ To configure a Custom Domain in your [Wrangler configuration file](/workers/wran
 
 <WranglerConfig>
 
-```toml
-[[routes]]
-pattern = "shop.example.com"
-custom_domain = true
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "shop.example.com",
+			"custom_domain": true
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -74,14 +79,19 @@ To configure multiple Custom Domains:
 
 <WranglerConfig>
 
-```toml
-[[routes]]
-pattern = "shop.example.com"
-custom_domain = true
-
-[[routes]]
-pattern = "shop-two.example.com"
-custom_domain = true
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "shop.example.com",
+			"custom_domain": true
+		},
+		{
+			"pattern": "shop-two.example.com",
+			"custom_domain": true
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -182,10 +192,15 @@ To migrate the route `example.com/*` in your [Wrangler configuration file](/work
 
    <WranglerConfig>
 
-   ```toml
-   [[routes]]
-   pattern = "example.com"
-   custom_domain = true
+   ```jsonc
+   {
+     "routes": [
+       {
+         "pattern": "example.com",
+         "custom_domain": true
+       }
+     ]
+   }
    ```
 
    </WranglerConfig>

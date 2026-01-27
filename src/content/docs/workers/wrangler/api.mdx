@@ -339,9 +339,12 @@ The `getPlatformProxy` function uses bindings found in the [Wrangler configurati
 
 <WranglerConfig>
 
-```toml
-[vars]
-MY_VARIABLE = "test"
+```jsonc
+{
+	"vars": {
+		"MY_VARIABLE": "test"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -401,11 +404,18 @@ The bindings supported by `getPlatformProxy` are:
 
     <WranglerConfig>
 
-    ```toml
-    [[durable_objects.bindings]]
-    name = "MyDurableObject"
-    class_name = "MyDurableObject"
-    script_name = "external-do-worker"
+    ```jsonc
+    {
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "MyDurableObject",
+            "class_name": "MyDurableObject",
+            "script_name": "external-do-worker"
+          }
+        ]
+      }
+    }
     ```
 
     </WranglerConfig>

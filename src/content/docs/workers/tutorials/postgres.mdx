@@ -117,13 +117,16 @@ Configure each database parameter as an [environment variable](/workers/configur
 
 <WranglerConfig>
 
-```toml
-[vars]
-DB_USERNAME = "postgres"
-# Set your password by creating a secret so it is not stored as plain text
-DB_HOST = "ep-aged-sound-175961.us-east-2.aws.neon.tech"
-DB_PORT = 5432
-DB_NAME = "productsdb"
+```jsonc
+{
+	"vars": {
+		"DB_USERNAME": "postgres",
+		// Set your password by creating a secret so it is not stored as plain text
+		"DB_HOST": "ep-aged-sound-175961.us-east-2.aws.neon.tech",
+		"DB_PORT": 5432,
+		"DB_NAME": "productsdb"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -338,16 +341,23 @@ This command outputs the Hyperdrive configuration `id` that will be used for you
 
 <WranglerConfig>
 
-```toml {7-9}
-name = "hyperdrive-example"
-main = "src/index.ts"
-compatibility_date = "2024-08-21"
-compatibility_flags = ["nodejs_compat"]
-
-# Pasted from the output of `wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string=[...]` above.
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "hyperdrive-example",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-08-21",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	// Pasted from the output of `wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string=[...]` above.
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

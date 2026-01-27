@@ -27,10 +27,13 @@ You must add the observability setting for your Worker to write logs to Workers 
 
 <WranglerConfig>
 
-    ```toml
-    [observability]
-    enabled = true
-    head_sampling_rate = 1 # optional. default = 1.
+    ```jsonc
+    {
+      "observability": {
+        "enabled": true,
+        "head_sampling_rate": 1 // optional. default = 1.
+      }
+    }
     ```
 
 </WranglerConfig>
@@ -43,10 +46,17 @@ You must add the observability setting for your Worker to write logs to Workers 
 
     <WranglerConfig>
 
-    ```toml
-    [env.staging.observability]
-    enabled = true
-    head_sampling_rate = 1 # optional
+    ```jsonc
+    {
+      "env": {
+        "staging": {
+          "observability": {
+            "enabled": true,
+            "head_sampling_rate": 1 // optional
+          }
+        }
+      }
+    }
     ```
 
     </WranglerConfig>
@@ -91,9 +101,14 @@ Invocation logs can be disabled in wrangler by adding the `invocation_logs = fal
 
 <WranglerConfig>
 
-```toml
-[observability.logs]
-invocation_logs = false
+```jsonc
+{
+	"observability": {
+		"logs": {
+			"invocation_logs": false
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -173,10 +188,13 @@ To enable head-based sampling, set `head_sampling_rate` within the observability
 
 <WranglerConfig>
 
-```toml
-[observability]
-enabled = true
-head_sampling_rate = 0.01 # 1% sampling rate
+```jsonc
+{
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 0.01 // 1% sampling rate
+	}
+}
 ```
 
 </WranglerConfig>

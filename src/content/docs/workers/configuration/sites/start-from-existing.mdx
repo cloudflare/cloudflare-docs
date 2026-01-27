@@ -38,9 +38,12 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
    <WranglerConfig>
 
-   ```toml
-   [site]
-   bucket = "./public" # <-- Add your build directory name here.
+   ```jsonc
+   {
+     "site": {
+       "bucket": "./public" // <-- Add your build directory name here.
+     }
+   }
    ```
 
    </WranglerConfig>
@@ -133,8 +136,10 @@ async function handleEvent(event) {
 
    <WranglerConfig>
 
-   ```toml
-   route = "https://example.com/*"
+   ```jsonc
+   {
+     "route": "https://example.com/*"
+   }
    ```
 
    </WranglerConfig>

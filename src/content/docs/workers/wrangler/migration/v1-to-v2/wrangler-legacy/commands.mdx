@@ -482,16 +482,27 @@ A Wrangler file with two environments:
 
 <WranglerConfig>
 
-```toml
-[env.staging]
-kv_namespaces = [
-  { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
-]
-
-[env.production]
-kv_namespaces = [
-  { binding = "MY_KV", id = "a825455ce00f4f7282403da85269f8ea" }
-]
+```jsonc
+{
+	"env": {
+		"staging": {
+			"kv_namespaces": [
+				{
+					"binding": "MY_KV",
+					"id": "e29b263ab50e42ce9b637fa8370175e8"
+				}
+			]
+		},
+		"production": {
+			"kv_namespaces": [
+				{
+					"binding": "MY_KV",
+					"id": "a825455ce00f4f7282403da85269f8ea"
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -530,22 +541,32 @@ Most `kv` subcommands also allow you to specify an environment with the optional
 
 <WranglerConfig>
 
-```toml
-type = "webpack"
-name = "my-worker"
-account_id = "<account id here>"
-route = "staging.example.com/*"
-workers_dev = false
-
-kv_namespaces = [
-  { binding = "MY_KV", id = "06779da6940b431db6e566b4846d64db" }
-]
-
-[env.production]
-route = "example.com/*"
-kv_namespaces = [
-  { binding = "MY_KV", id = "07bc1f3d1f2a4fd8a45a7e026e2681c6" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"type": "webpack",
+	"name": "my-worker",
+	"account_id": "<account id here>",
+	"route": "staging.example.com/*",
+	"workers_dev": false,
+	"kv_namespaces": [
+		{
+			"binding": "MY_KV",
+			"id": "06779da6940b431db6e566b4846d64db"
+		}
+	],
+	"env": {
+		"production": {
+			"route": "example.com/*",
+			"kv_namespaces": [
+				{
+					"binding": "MY_KV",
+					"id": "07bc1f3d1f2a4fd8a45a7e026e2681c6"
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>

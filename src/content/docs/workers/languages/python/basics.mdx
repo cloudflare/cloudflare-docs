@@ -80,14 +80,19 @@ For example, let us try setting and using an environment variable in a Python Wo
 
 <WranglerConfig>
 
-```toml
-name = "hello-python-worker"
-main = "src/entry.py"
-compatibility_flags = ["python_workers"]
-compatibility_date = "2025-11-02"
-
-[vars]
-API_HOST = "example.com"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "hello-python-worker",
+	"main": "src/entry.py",
+	"compatibility_flags": [
+		"python_workers"
+	],
+	"compatibility_date": "2025-11-02",
+	"vars": {
+		"API_HOST": "example.com"
+	}
+}
 ```
 
 </WranglerConfig>

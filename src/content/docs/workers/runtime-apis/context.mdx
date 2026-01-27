@@ -26,12 +26,23 @@ For example, imagine that you are configuring a Worker called "frontend-worker",
 
 <WranglerConfig>
 
-```toml
-[[services]]
-binding = "DOC_SERVICE"
-service = "doc-worker"
-entrypoint = "DocServiceApi"
-props = { clientId = "frontend-worker", permissions = ["read", "write"] }
+```jsonc
+{
+	"services": [
+		{
+			"binding": "DOC_SERVICE",
+			"service": "doc-worker",
+			"entrypoint": "DocServiceApi",
+			"props": {
+				"clientId": "frontend-worker",
+				"permissions": [
+					"read",
+					"write"
+				]
+			}
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -46,12 +57,23 @@ The Workers platform is designed to ensure that `ctx.props` can only be set by s
 
 <WranglerConfig>
 
-```toml
-[[services]]
-binding = "FOO_DOCUMENT"
-service = "doc-worker"
-entrypoint = "DocumentApi"
-props = { docId = "e366592caec1d88dff724f74136b58b5", permissions = ["read", "write"] }
+```jsonc
+{
+	"services": [
+		{
+			"binding": "FOO_DOCUMENT",
+			"service": "doc-worker",
+			"entrypoint": "DocumentApi",
+			"props": {
+				"docId": "e366592caec1d88dff724f74136b58b5",
+				"permissions": [
+					"read",
+					"write"
+				]
+			}
+		}
+	]
+}
 ```
 
 </WranglerConfig>

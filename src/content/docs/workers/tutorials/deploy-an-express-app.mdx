@@ -67,8 +67,12 @@ Express.js on Cloudflare Workers requires the `nodejs_compat` [compatibility fla
 
 <WranglerConfig>
 
-```toml
-compatibility_flags = ["nodejs_compat"]
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat"
+	]
+}
 ```
 
 </WranglerConfig>
@@ -112,11 +116,16 @@ The binding will be added to your wrangler configuration file.
 
 <WranglerConfig>
 
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "members-db"
-database_id = "<unique-ID-for-your-database>"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "members-db",
+			"database_id": "<unique-ID-for-your-database>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

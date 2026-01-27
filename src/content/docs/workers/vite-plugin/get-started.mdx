@@ -57,10 +57,13 @@ Refer to the [API reference](/workers/vite-plugin/reference/api/) for configurat
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-vite-get-started"
-compatibility_date = "2025-04-03"
-main = "./src/index.ts"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-get-started",
+	"compatibility_date": "2025-04-03",
+	"main": "./src/index.ts"
+}
 ```
 
 </WranglerConfig>

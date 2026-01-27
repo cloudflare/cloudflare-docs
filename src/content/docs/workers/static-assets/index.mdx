@@ -60,14 +60,18 @@ The **assets directory** specified in your [Wrangler configuration file](/worker
 
 <WranglerConfig>
 
-    ```toml {3-4}
-    	name = "my-spa"
-    	main = "src/index.js"
-    	compatibility_date = "2025-01-01"
-    	[assets]
-    	directory = "./dist"
-    	binding = "ASSETS"
-    	```
+    ```jsonc
+    {
+      "$schema": "./node_modules/wrangler/config-schema.json",
+      "name": "my-spa",
+      "main": "src/index.js",
+      "compatibility_date": "2025-01-01",
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS"
+      }
+    }
+    ```
 
 </WranglerConfig>
 
@@ -126,12 +130,14 @@ The default behavior for requests which don't match a static asset can be change
 
 <WranglerConfig>
 
-    ```toml
-    	[assets]
-    	directory = "./dist"
-    	not_found_handling = "single-page-application"
-
-    	```
+    ```jsonc
+    {
+      "assets": {
+        "directory": "./dist",
+        "not_found_handling": "single-page-application"
+      }
+    }
+    ```
 
 </WranglerConfig>
 

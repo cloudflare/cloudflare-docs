@@ -32,10 +32,13 @@ We use the Vite config to set global constant replacements for this environment:
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-compatibility_date = "2025-04-03"
-main = "./src/index.ts"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"compatibility_date": "2025-04-03",
+	"main": "./src/index.ts"
+}
 ```
 
 </WranglerConfig>

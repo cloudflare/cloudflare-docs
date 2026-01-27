@@ -34,11 +34,14 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[build]
-command = "npm run build"
-cwd = "build_cwd"
-watch_dir = "build_watch_dir"
+```jsonc
+{
+	"build": {
+		"command": "npm run build",
+		"cwd": "build_cwd",
+		"watch_dir": "build_watch_dir"
+	}
+}
 ```
 
 </WranglerConfig>

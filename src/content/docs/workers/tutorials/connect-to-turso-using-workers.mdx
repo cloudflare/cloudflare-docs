@@ -159,9 +159,12 @@ Open the [Wrangler configuration file](/workers/wrangler/configuration/) in your
 
 <WranglerConfig>
 
-```toml
-[vars]
-LIBSQL_DB_URL = "paste-your-url-here"
+```jsonc
+{
+	"vars": {
+		"LIBSQL_DB_URL": "paste-your-url-here"
+	}
+}
 ```
 
 </WranglerConfig>

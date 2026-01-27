@@ -37,10 +37,15 @@ For example, if you want Worker A to be able to call Worker B — you'd add the 
 
 <WranglerConfig>
 
-```toml
-services = [
-  { binding = "<BINDING_NAME>", service = "<WORKER_NAME>" }
-]
+```jsonc
+{
+	"services": [
+		{
+			"binding": "<BINDING_NAME>",
+			"service": "<WORKER_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -62,9 +67,12 @@ First, create the Worker that you want to communicate with. Let's call this "Wor
 
 <WranglerConfig>
 
-```toml
-name = "worker_b"
-main = "./src/workerB.js"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker_b",
+	"main": "./src/workerB.js"
+}
 ```
 
 </WranglerConfig>
@@ -88,12 +96,18 @@ Next, create the Worker that will call Worker B. Let's call this "Worker A". Wor
 
 <WranglerConfig>
 
-```toml
-name = "worker_a"
-main = "./src/workerA.js"
-services = [
-  { binding = "WORKER_B", service = "worker_b" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker_a",
+	"main": "./src/workerA.js",
+	"services": [
+		{
+			"binding": "WORKER_B",
+			"service": "worker_b"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
