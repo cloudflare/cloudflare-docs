@@ -1,16 +1,12 @@
 ---
 pcx_content_type: how-to
-title: Connect to SSH with client-side cloudflared (legacy)
+title: Connect to SSH with client-side cloudflared
 sidebar:
-  order: 5
-  label: SSH with client-side cloudflared (legacy)
+  order: 2
+  label: SSH with client-side cloudflared
 ---
 
 import { Render } from "~/components";
-
-:::note
-Not recommended for new deployments. We recommend using [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) to connect to SSH.
-:::
 
 End users can connect to an SSH server without the WARP client by authenticating through `cloudflared` in their native terminal. This method requires having `cloudflared` installed on both the server machine and on the client machine, as well as an active zone on Cloudflare. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
 

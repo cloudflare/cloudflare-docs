@@ -40,10 +40,10 @@ Subdomain setup is only available for Enterprise accounts. If you only want to c
 
 :::caution[Subdomain zones in partial setup are not delegated]
 
-Subdomains using a partial setup represent an exception in the sense that delegation does not apply in this context. As explained in the dedicated [Partial (CNAME) setup section](/dns/zone-setups/partial-setup/), this setup is intended to simply proxy individual subdomains through Cloudflare. For completeness, however, this is listed as an option in this table and the [how-to guide](/dns/zone-setups/subdomain-setup/setup/parent-on-partial/) has detailed explanation on how to achieve a subdomain zone using partial setup.
+Subdomains using a CNAME setup (partial) represent an exception in the sense that delegation does not apply in this context. As explained in the dedicated [CNAME setup (Partial) section](/dns/zone-setups/partial-setup/), this setup is intended to simply proxy individual subdomains through Cloudflare. For completeness, however, this is listed as an option in this table and the [how-to guide](/dns/zone-setups/subdomain-setup/setup/parent-on-partial/) has detailed explanation on how to achieve a subdomain zone using a CNAME setup (partial).
 :::
 
-This table assumes zones that are in an [active status](/dns/zone-setups/reference/domain-status/). For example, if you need to add the parent zone to Cloudflare when its child zone already exists in a partial setup, you can [convert the parent zone to partial](/dns/zone-setups/partial-setup/setup/#1-convert-your-zone-and-review-dns-records) while it is still in pending status.
+This table assumes zones that are in an [active status](/dns/zone-setups/reference/domain-status/). For example, if you need to add the parent zone to Cloudflare when its child zone already exists in a CNAME setup (partial), you can [convert the parent zone to a CNAME setup (partial)](/dns/zone-setups/partial-setup/setup/#1-convert-your-zone-and-review-dns-records) while it is still in pending status.
 
 ---
 

@@ -92,29 +92,9 @@ API configuration property name: `"disable_zaraz"` (boolean).
 
 </Details>
 
-## Hotlink Protection
-
-[Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
-
-Use this setting to turn on or off Hotlink Protection for matching requests.
-
-<Details header="API information">
-
-API configuration property name: `"hotlink_protection"` (boolean).
-
-```json title="API configuration example"
-"action_parameters": {
-    "hotlink_protection": false
-}
-```
-
-<Render file="configuration-rule-link-to-examples" product="rules" />
-
-</Details>
-
 ## Email Obfuscation
 
-[Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
+[Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) prevents spam by hiding email addresses from bots and harvesters while keeping them visible to human visitors to your site.
 
 Use this setting to turn on or off Email Obfuscation for matching requests.
 
@@ -145,6 +125,48 @@ API configuration property name: `"fonts"` (boolean).
 ```json title="API configuration example"
 "action_parameters": {
   "fonts": false
+}
+```
+
+<Render file="configuration-rule-link-to-examples" product="rules" />
+
+</Details>
+
+## Hotlink Protection
+
+[Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
+
+Use this setting to turn on or off Hotlink Protection for matching requests.
+
+<Details header="API information">
+
+API configuration property name: `"hotlink_protection"` (boolean).
+
+```json title="API configuration example"
+"action_parameters": {
+    "hotlink_protection": false
+}
+```
+
+<Render file="configuration-rule-link-to-examples" product="rules" />
+
+</Details>
+
+## I'm Under Attack
+
+When enabled, [Under Attack mode](/fundamentals/reference/under-attack-mode/) performs additional security checks to help mitigate layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked.
+
+Use this setting to turn on or off Under Attack mode for matching requests.
+
+<Details header="API information">
+
+API configuration property name: `"security_level"` (string).
+
+API values: `"off"`, `"essentially_off"`, `"under_attack"`.
+
+```json title="API configuration example"
+"action_parameters": {
+  "security_level": "under_attack"
 }
 ```
 
@@ -201,6 +223,65 @@ API values: `"off"`, `"lossless"`, `"lossy"`, `"webp"`.
 
 </Details>
 
+## Request Body Buffering
+
+Use the Request Body Buffering setting to configure the request body buffering mode for matching requests:
+
+- **Standard** (default): Allows Cloudflare products to inspect a prefix of the request body when necessary for enabled functionality on your zone.
+- **Full**: Buffers the entire request body before sending the request to your origin server.
+- **None**: Strictly no buffering. The request body is streamed directly to the origin server without inspection.
+
+This setting only takes effect on zones running Cloudflare's [latest CDN proxy](https://blog.cloudflare.com/20-percent-internet-upgrade/). Enterprise customers can contact their account team to enable the latest proxy on their zones.
+
+:::caution
+Setting request body buffering to **None** may break functionality that requires body inspection. In particular, this can impact the effectiveness of the Web Application Firewall (WAF) and other security features that rely on analyzing request bodies to detect and block threats.
+:::
+
+<Details header="API information">
+
+API configuration property name: `"request_body_buffering"` (string).
+
+API values: `"standard"`, `"full"`, `"none"`.
+
+```json title="API configuration example"
+"action_parameters": {
+  "request_body_buffering": "full"
+}
+```
+
+<Render file="configuration-rule-link-to-examples" product="rules" />
+
+</Details>
+
+## Response Body Buffering
+
+Use the Response Body Buffering setting to configure the response body buffering mode for matching requests:
+
+- **Standard** (default): Allows Cloudflare products to inspect a prefix of the response body when necessary for enabled functionality on your zone.
+- **None**: Strictly no buffering. The response body is streamed directly to the client without inspection.
+
+This setting only takes effect on zones running Cloudflare's [latest CDN proxy](https://blog.cloudflare.com/20-percent-internet-upgrade/). Enterprise customers can contact their account team to enable the latest proxy on their zones.
+
+:::caution
+Setting response body buffering to **None** may break functionality that requires body inspection. In particular, this can impact the effectiveness of the Web Application Firewall (WAF) and other security features that rely on analyzing response bodies to detect and block threats.
+:::
+
+<Details header="API information">
+
+API configuration property name: `"response_body_buffering"` (string).
+
+API values: `"standard"`, `"none"`.
+
+```json title="API configuration example"
+"action_parameters": {
+  "response_body_buffering": "standard"
+}
+```
+
+<Render file="configuration-rule-link-to-examples" product="rules" />
+
+</Details>
+
 ## Rocket Loader
 
 [Rocket Loader](/speed/optimization/content/rocket-loader/) prioritizes your website's content (such as text, images, and fonts) by deferring the loading of all your JavaScript code until after rendering.
@@ -214,28 +295,6 @@ API configuration property name: `"rocket_loader"` (boolean).
 ```json title="API configuration example"
 "action_parameters": {
   "rocket_loader": true
-}
-```
-
-<Render file="configuration-rule-link-to-examples" product="rules" />
-
-</Details>
-
-## I'm Under Attack
-
-When enabled, [Under Attack mode](/fundamentals/reference/under-attack-mode/) performs additional security checks to help mitigate layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked.
-
-Use this setting to turn on or off Under Attack mode for matching requests.
-
-<Details header="API information">
-
-API configuration property name: `"security_level"` (string).
-
-API values: `"off"`, `"essentially_off"`, `"under_attack"`.
-
-```json title="API configuration example"
-"action_parameters": {
-  "security_level": "under_attack"
 }
 ```
 

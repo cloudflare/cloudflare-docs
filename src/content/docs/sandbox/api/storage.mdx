@@ -2,75 +2,79 @@
 title: Storage
 pcx_content_type: concept
 sidebar:
-  order: 8
+  order: 4
 ---
 
 import { TypeScriptExample } from "~/components";
 
-Mount S3-compatible object storage as local filesystem paths for persistent storage across sandbox lifecycles.
-
-:::caution[Production only]
-Bucket mounting does not work with `wrangler dev` because it requires FUSE support that wrangler does not currently provide. Deploy your Worker to use this feature. See [Mount buckets guide](/sandbox/guides/mount-buckets/) for details.
-:::
+Mount S3-compatible storage buckets (R2, S3, GCS) into the sandbox filesystem for persistent data access.
 
 ## Methods
 
 ### `mountBucket()`
 
-Mount an S3-compatible bucket as a local directory.
+Mount an S3-compatible bucket to a local path in the sandbox.
 
 ```ts
 await sandbox.mountBucket(
-	bucket: string,
-	mountPath: string,
-	options: MountBucketOptions
+  bucket: string,
+  mountPath: string,
+  options: MountBucketOptions
 ): Promise<void>
 ```
 
 **Parameters**:
+
 - `bucket` - Bucket name (e.g., `"my-r2-bucket"`)
 - `mountPath` - Local filesystem path to mount at (e.g., `"/data"`)
 - `options` - Mount configuration (see [`MountBucketOptions`](#mountbucketoptions))
 
 <TypeScriptExample>
-```typescript
-// Mount R2 bucket
-await sandbox.mountBucket('my-r2-bucket', '/data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
+```
+// Mount R2 bucket to /data
+await sandbox.mountBucket('my-bucket', '/data', {
+  endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+  provider: 'r2'
 });
 
-// Access mounted bucket
-await sandbox.exec('ls', { args: ['/data'] });
+// Read/write files directly
+const data = await sandbox.readFile('/data/config.json');
 await sandbox.writeFile('/data/results.json', JSON.stringify(data));
 
 // Mount with explicit credentials
 await sandbox.mountBucket('my-bucket', '/storage', {
-	endpoint: 'https://s3.amazonaws.com',
-	credentials: {
-		accessKeyId: env.AWS_ACCESS_KEY_ID,
-		secretAccessKey: env.AWS_SECRET_ACCESS_KEY
-	}
+  endpoint: 'https://s3.amazonaws.com',
+  credentials: {
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY
+  }
 });
 
 // Read-only mount
 await sandbox.mountBucket('datasets', '/datasets', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	readOnly: true
+  endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+  readOnly: true
+});
+
+// Mount a subdirectory within the bucket
+await sandbox.mountBucket('shared-bucket', '/user-data', {
+  endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+  prefix: '/users/user-123'
 });
 ```
 </TypeScriptExample>
 
 **Throws**:
-- `MissingCredentialsError` - No credentials found in environment or options
-- `InvalidMountConfigError` - Invalid endpoint, bucket name, or mount path
-- `S3FSMountError` - Mount operation failed (network, permissions, bucket not found)
+- `InvalidMountPointError` - Invalid mount path or conflicts with existing mounts
+- `BucketAccessError` - Bucket does not exist or insufficient permissions
 
-:::note[Automatic credential detection]
-The SDK automatically detects `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` from environment variables if credentials are not explicitly provided.
-:::
+:::note[Authentication]
+Credentials can be provided via:
+1. Explicit `credentials` in options
+2. Environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`)
+3. Automatic detection from bound R2 buckets
 
-:::note[Available on sessions]
-Both `sandbox.mountBucket()` and `session.mountBucket()` are supported. Mounts affect the entire sandbox filesystem and are visible across all sessions.
+See the [Mount Buckets guide](/sandbox/guides/mount-buckets/) for detailed authentication options.
 :::
 
 ### `unmountBucket()`
@@ -82,13 +86,13 @@ await sandbox.unmountBucket(mountPath: string): Promise<void>
 ```
 
 **Parameters**:
+
 - `mountPath` - Path where the bucket is mounted (e.g., `"/data"`)
 
 <TypeScriptExample>
-```typescript
-await sandbox.mountBucket('my-bucket', '/data', { endpoint: '...' });
-
-// Do work
+```
+// Mount, process, unmount
+await sandbox.mountBucket('data', '/data', { endpoint: '...' });
 await sandbox.exec('python process.py');
 
 // Unmount
@@ -97,14 +101,12 @@ await sandbox.unmountBucket('/data');
 </TypeScriptExample>
 
 :::note[Automatic cleanup]
-Mounted buckets are automatically unmounted when the sandbox is destroyed. Manual unmounting is optional.
+Mounted buckets are automatically unmounted when the container is destroyed.
 :::
 
 ## Types
 
 ### `MountBucketOptions`
-
-Configuration for mounting a bucket.
 
 ```ts
 interface MountBucketOptions {
@@ -112,73 +114,49 @@ interface MountBucketOptions {
 	provider?: BucketProvider;
 	credentials?: BucketCredentials;
 	readOnly?: boolean;
-	s3fsOptions?: Record<string, string>;
+	prefix?: string;
+	s3fsOptions?: string[];
 }
 ```
 
 **Fields**:
 
 - `endpoint` (required) - S3-compatible endpoint URL
-  - R2: `https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com`
-  - S3: `https://s3.amazonaws.com` or regional endpoint
-  - GCS: `https://storage.googleapis.com`
+  - R2: `'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'`
+  - S3: `'https://s3.amazonaws.com'`
+  - GCS: `'https://storage.googleapis.com'`
 
-- `provider` (optional) - Storage provider hint (`'r2'` | `'s3'` | `'gcs'`)
-  - Default: Auto-detected from endpoint URL
+- `provider` (optional) - Storage provider hint
+  - Enables provider-specific optimizations
+  - Values: `'r2'`, `'s3'`, `'gcs'`
 
-- `credentials` (optional) - S3 access credentials
-  - Default: Uses `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables
+- `credentials` (optional) - API credentials
+  - Contains `accessKeyId` and `secretAccessKey`
+  - If not provided, uses environment variables
 
 - `readOnly` (optional) - Mount in read-only mode
   - Default: `false`
 
-- `s3fsOptions` (optional) - Advanced s3fs mount flags
-  - Example: `{ 'use_cache': '/tmp/cache' }`
+- `prefix` (optional) - Mount a subdirectory within the bucket
+  - Must start with `/` (e.g., `'/sessions/user123'` or `'/data/uploads/'`)
+  - Enables multi-tenant isolation within a single bucket
+
+- `s3fsOptions` (optional) - Advanced s3fs mount flags as string array
+  - Example: `['use_cache=/tmp/cache']`
 
 ### `BucketProvider`
 
 Storage provider hint for automatic s3fs flag optimization.
 
 ```ts
-type BucketProvider = 'r2' | 's3' | 'gcs';
+type BucketProvider = "r2" | "s3" | "gcs";
 ```
 
 - `'r2'` - Cloudflare R2 (recommended, applies `nomixupload` flag)
 - `'s3'` - Amazon S3
 - `'gcs'` - Google Cloud Storage
 
-The SDK auto-detects the provider from the endpoint URL and applies optimized flags. For other S3-compatible providers (Backblaze, MinIO, etc.), omit this field or use the `s3fsOptions` parameter for custom configuration.
-
-### `BucketCredentials`
-
-S3-compatible access credentials.
-
-```ts
-interface BucketCredentials {
-	accessKeyId: string;
-	secretAccessKey: string;
-}
-```
-
-<TypeScriptExample>
-```typescript
-await sandbox.mountBucket('my-bucket', '/data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	credentials: {
-		accessKeyId: env.AWS_ACCESS_KEY_ID,
-		secretAccessKey: env.AWS_SECRET_ACCESS_KEY
-	}
-});
-```
-</TypeScriptExample>
-
-:::caution[Security]
-Never hardcode credentials. Use Worker secrets or environment variables.
-:::
-
 ## Related resources
 
-- [Mount buckets guide](/sandbox/guides/mount-buckets/) - Complete mounting reference
-- [Persistent storage tutorial](/sandbox/tutorials/persistent-storage/) - Example with R2
-- [Environment variables](/sandbox/configuration/environment-variables/) - Credential configuration
-- [R2 documentation](/r2/) - Learn about Cloudflare R2
+- [Mount Buckets guide](/sandbox/guides/mount-buckets/) - Complete bucket mounting walkthrough
+- [Files API](/sandbox/api/files/) - Read and write files

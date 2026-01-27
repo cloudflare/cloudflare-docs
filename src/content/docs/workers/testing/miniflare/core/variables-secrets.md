@@ -5,7 +5,7 @@ title: "🔑 Variables and Secrets"
 
 ## Bindings
 
-Variable and secrets are bound as follows:
+Variables and secrets are bound as follows:
 
 ```js
 const mf = new Miniflare({
@@ -30,4 +30,4 @@ const mf = new Miniflare({
 
 ## Globals
 
-Injecting arbitrary globals is not supported by [workerd](https://github.com/cloudflare/workerd). If you're using a service Worker, bindings will be injected as globals, but these must be JSON-serialisable.
+Injecting arbitrary globals is not supported by [workerd](https://github.com/cloudflare/workerd). If you're using a service Worker, bindings will be injected as globals, but these must be JSON-serializable.

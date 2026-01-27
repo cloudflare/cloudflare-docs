@@ -5,17 +5,17 @@ params:
   - configureStaticRoutesUrl
 ---
 
-This tutorial provides information on how to connect Alibaba Cloud infrastructure to Magic WAN through IPsec tunnels. For more information regarding Alibaba Cloud technology, refer to [Alibaba's documentation](https://www.alibabacloud.com/help/en/vpn-gateway).
+This tutorial shows you how to connect Alibaba Cloud infrastructure to Magic WAN through IPsec tunnels. For more information regarding Alibaba Cloud technology, refer to [Alibaba's documentation](https://www.alibabacloud.com/help/en/vpn-gateway).
 
 ## Alibaba Cloud
 
 ### 1. Create a VPC
 
 1. Log in to your Alibaba Cloud account.
-2. Go to **VPC** > **VPN Gateways**, and select **Create VPC** to create a new virtual private cloud.
+2. Go to **VPC** > **VPN Gateways**, and select **Create VPC** to create a new Virtual Private Cloud (VPC).
 3. Give your VPC a descriptive name. For example, `Cloudflare-Magic-WAN`.
 4. Choose the **Region** that aligns with where your servers are located.
-5. In **IPv4 CIDR block**, choose from one of the recommended IP blocks. For example, `192.168.20.0/24`. Take note of the IP block  you choose, as you will need it to create a static route in Magic WAN.
+5. In **IPv4 CIDR block**, choose from one of the recommended Internet Protocol (IP) blocks in Classless Inter-Domain Routing (CIDR) notation. For example, `192.168.20.0/24`. Take note of the IP block you choose, as you will need it to create a static route in Magic WAN.
 
 ### 2. Create a VPN gateway
 
@@ -26,20 +26,20 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
 5. In **Network Type**, choose **Public**.
 6. For **Tunnels**, select **Single-tunnel**.
 7. In the **VPC** dropdown menu, choose the name of the VPC you created before for Magic WAN. For example, `Cloudflare-Magic-WAN`.
-8. In the **VSwitch** dropdown menu, choose the VSwith you created previously. For example, `VSwitch-CF`.
+8. In the **VSwitch** drop-down menu, choose the VSwitch you created previously. For example, `VSwitch-CF`.
 9. For options such as **Maximum Bandwidth**, **Traffic**, and **Duration**, select the options that best suit your use case.
 10. In **IPsec-VPN**, select **Enable**.
 11. For **SSL-VPN**, select **Disable**.
 12. When you are finished configuring your VPN gateway, return to the main VPN Gateway window.
 13. Select the VPN gateway you have just created, and then select **Destination-based Routing**.
-14. Select **Add Route Entry**, and enter whatever subnets are needed to reach the required destinations. You can, for example, just add a default route to send all traffic through your Magic WAN tunnel.
+14. Select **Add Route Entry**, and enter the subnets needed to reach the required destinations. For example, you can add a default route to send all traffic through your Magic WAN tunnel.
 15. When you are finished, return to the main window.
 16. Select **Publish** > **OK** to publish the route.
 
 ### 3. Create IPsec connections
 
 1. Go to **VPC** > **Customer Gateways** > **Create Customer Gateway**.
-2. Create a customer gateway with the Cloudflare anycast IP address given to you by your account team. Typically starts with `162.xx.xx.xx`.
+2. Create a customer gateway with the Cloudflare anycast IP address given to you by your account team. This typically starts with `162.xx.xx.xx`.
 3. Now, go to **VPC** > **IPsec Connections** > **Create IPsec Connection**.
 4. Create an IPsec connection with the following settings:
    1. **Name**: give it a descriptive name, like `CF-Magic-WAN-IPsec`.
@@ -48,7 +48,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
    4. **Customer Gateway**: Select the customer gateway you created above for Magic WAN.
    5. **Routing Mode**: **Destination Routing Mode**.
    6. **Effective Immediately**: **Yes**.
-   7. **Pre-Shared Key**: This is the pre-shared key (PSK) you will have to use in the Magic WAN IPsec tunnel. If you do not specify one here, the Alibaba system will generate a random PSK for you.
+   7. **Pre-Shared Key**: This is the pre-shared key (PSK) you will have to use in the Magic WAN IPsec tunnel. If you do not specify one here, the Alibaba system will generate a random pre-shared key for you.
 5. Go to **Advanced Settings**, and expand the **Encryption Configuration** settings.
 6. In **IKE Configurations**, select the following settings to configure the IPsec connection. These settings have to match the supported configuration parameters for <a href={props.ipSecTunnelsUrl}>Magic WAN IPsec tunnels</a>:
    1. **Version**: _ikev2_
@@ -65,7 +65,7 @@ This tutorial provides information on how to connect Alibaba Cloud infrastructur
 1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels with the following options:
    1. **Tunnel name**: Give your tunnel a descriptive name, like `Alibaba`.
    2. **Interface address**: Choose from the subnet in your Alibaba Cloud configuration. For example, if your Alibaba default configuration is `169.xx.xx.1/30`, you might want to choose `169.xx.xx.2/30` for your Magic WAN side of the IPsec tunnel.
-   3. **Customer endpoint**: This is the IP address you entered for **Locali** in Alibaba's IPsec connection. For example, `47.xxx.xxx.xxx`.
+   3. **Customer endpoint**: This is the IP address you entered for **Localid** in Alibaba's IPsec connection. For example, `47.xxx.xxx.xxx`.
    4. **Cloudflare endpoint**: Enter the same anycast IP address provided by Cloudflare you have entered for Alibaba's Customer Gateway. Typically starts with `162.xx.xx.xx`.
    5. **Pre-shared key**: Select **Use my own pre-shared key**, and enter the PSK key from your Alibaba Cloud IPsec tunnel.
    6. **Replay protection**: **Enabled**.

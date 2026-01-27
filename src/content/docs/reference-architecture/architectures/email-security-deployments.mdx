@@ -54,7 +54,7 @@ This document will discuss the following methods to deploy and where you would u
 - [Inline or MX](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/)
 - [Microsoft 365 API integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/)
 - [Journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/) or [BCC](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/) with auto-move
-- Hybrid deployment
+- Mixed deployment
 
 ## Choose a deployment model
 
@@ -63,9 +63,9 @@ Before you choose a deployment option, it is important to consider your needs an
 - [Pre-delivery](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/) remediation allows us to tune how messages are delivered by appending to the subject/body, applying URL Rewriting to Cloudflare [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/), and delivering messages into the junk folder or downstream email quarantine. This enables you to design with a specific user experience in mind.
 - We can remove messages before they are consumed by systems that ingest emails such as a ServiceNow or an Archiving Solution.
 - We remove the risk of dwell time issues where there is a time difference between delivery to the inbox and when the message is moved from the inbox.
-- We can support hybrid deployments such as a mix of Microsoft 365 and Microsoft Exchange or Microsoft 365 and Google Workspace.
+- We can support mixed deployments such as a mix of Microsoft 365 and Microsoft Exchange or Microsoft 365 and Google Workspace.
 
-If those needs are not important or you are using layered security that does not include another API-based solution, then our API method is quick and efficient to deploy with no changes to your mail flow. If you want the benefits of API without the risk of API Throttling, then Journal/BCC is the best choice as the ingestion method does not use API calls. However, if you want the protection of an MX deployment along with the benefits of API for internal messaging, then our hybrid deployment is ideal.
+If those needs are not important or you are using layered security that does not include another API-based solution, then our API method is quick and efficient to deploy with no changes to your mail flow. If you want the benefits of API without the risk of API Throttling, then Journal/BCC is the best choice as the ingestion method does not use API calls. However, if you want the protection of an MX deployment along with the benefits of API for internal messaging, then our mixed deployment is ideal.
 
 Should your needs change, know that you have the flexibility to change deployment methods as you see fit without having to repurchase our solution. The only caveat is that Advantage and CyberSafe customers are limited to Inline deployments while Enterprise licensing benefits from all capabilities.
 
@@ -201,23 +201,23 @@ Before deploying Email security via BCC/Journaling deployment, you will need to 
 - May require a Connector in Microsoft 365 to facilitate direct communication.
 - Messages cannot be modified after delivery as per Microsoft 365/Google requirements. This means we cannot perform URL Rewriting to Cloudflare Email Link Isolation or append text to the email Subject or Body. Those features are only available using an Inline deployment.
 
-### Hybrid
+### Mixed
 
-Hybrid utilizes an Inline deployment for external emails and BCC/Journaling for internal emails. This is facilitated by using both deployment methods but configuring Cloudflare for two hops in BCC/Journal mode. This scenario provides all of the added benefits of an MX delivery for external messages, while also providing remediation of bad emails from internal sources. Here are some scenarios where this is helpful.
+Mixed utilizes an Inline deployment for external emails and BCC/Journaling for internal emails. This is facilitated by using both deployment methods but configuring Cloudflare for two hops in BCC/Journal mode. This scenario provides all of the added benefits of an MX delivery for external messages, while also providing remediation of bad emails from internal sources. Here are some scenarios where this is helpful.
 
 <Example>
 If you have mailboxes where emails are consumed by services such as ticketing systems, CRMs (Customer Relationship Management systems), or Legal Archiving. Each of these integrations run the risk of malicious emails being delivered into those systems where no API-based Email security solution can remediate the problem. The only deployment capable of protecting you would be Inline. If you had additional concerns about malware being spread internally or compromised accounts being used to phish users internally, you would have a gap requiring the purchase of both an Inline solution and an API solution. This would create other problems as you may need to manage policies related to email delivery in three different solutions (MX, API, and Microsoft 365/Google).
 
-Cloudflare's hybrid deployment allows us to collapse all of those use cases into a single solution by allowing quarantining of messages at the Cloudflare edge in addition to evaluating internal email and removing them when needed. This improves security while decreasing vendor spend, management overhead, and risk due to the complexity of managing three different policy sets.
+Cloudflare's mixed deployment allows us to collapse all of those use cases into a single solution by allowing quarantining of messages at the Cloudflare edge in addition to evaluating internal email and removing them when needed. This improves security while decreasing vendor spend, management overhead, and risk due to the complexity of managing three different policy sets.
 </Example>
 
 #### Benefits
 
-Hybrid deployment combines the benefits of Inline deployment for external emails and BCC/Journaling for internal emails.
+mixed deployment combines the benefits of Inline deployment for external emails and BCC/Journaling for internal emails.
 
 #### Considerations
 
-When you choose hybrid deployment, you need to consider that:
+When you choose mixed deployment, you need to consider that:
 
 - Internal email detections are limited due to a lack of information such as Email Authentication, Sending Server, and Delivery Path. Only the content within the body of the email can be analyzed.
 - Internal emails may have higher False Positives when using Protecting Users with impersonation registry.
@@ -244,4 +244,4 @@ To summarize, Email security offers three core deployment models: API, BCC/Journ
 
 API and BCC/Journaling models are post-delivery solutions, integrating directly with platforms like Microsoft 365 or Google Workspace to inspect and [auto-move](/cloudflare-one/email-security/settings/auto-moves/) emails after they have landed in the user mailbox. While these post-delivery methods are easier to deploy and require no mail flow changes, they face limitations such as API throttling risks and the inability to modify message content (like subjects or body text).
 
-Finally, the hybrid deployment combines the benefits of Inline for external email protection (critical for systems like CRM or ticketing that ingest email) with BCC/Journaling for internal email evaluation.
+Finally, the mixed deployment combines the benefits of Inline for external email protection (critical for systems like CRM or ticketing that ingest email) with BCC/Journaling for internal email evaluation.

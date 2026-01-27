@@ -184,7 +184,7 @@ await counter.increment();
 
 </TypeScriptExample>
 
-But consider the case where the Worker service that you are calling may be far away across the network, as in the case of [Smart Placement](/workers/runtime-apis/bindings/service-bindings/#smart-placement) or [Durable Objects](/durable-objects). The code above makes two round trips, once when calling `getCounter()`, and again when calling `.increment()`. We'd like to avoid this.
+But consider the case where the Worker service that you are calling may be far away across the network, as in the case of [Smart Placement](/workers/configuration/placement/) or [Durable Objects](/durable-objects). The code above makes two round trips, once when calling `getCounter()`, and again when calling `.increment()`. We'd like to avoid this.
 
 With most RPC systems, the only way to avoid the problem would be to combine the two calls into a single "batch" call, perhaps called `getCounterAndIncrement()`. However, this makes the interface worse. You wouldn't design a local interface this way.
 
@@ -285,7 +285,7 @@ In this video, we explore how Cloudflare Workers support Remote Procedure Calls 
 
 ## Limitations
 
-- [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.
+- [Smart Placement](/workers/configuration/placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.
 
 - The maximum serialized RPC limit is 32 MiB. Consider using [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) when returning more data.
 

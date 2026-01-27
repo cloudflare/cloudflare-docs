@@ -1,0 +1,53 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+description: Create your first R2 bucket and store objects using the dashboard, S3-compatible tools, or Workers.
+---
+
+import { DashButton, LinkCard } from "~/components";
+
+Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+## Before you begin
+
+You need a Cloudflare account with an R2 subscription. If you do not have one:
+1. Go to the [Cloudflare Dashboard](https://dash.cloudflare.com/).
+2. Select **Storage & databases > R2 > Overview**
+3. Complete the checkout flow to add an R2 subscription to your account.
+
+R2 is free to get started with included free monthly usage. You are billed for your usage on a monthly basis. Refer to [Pricing](/r2/pricing/) for details.
+
+<DashButton url="/?to=/:account/r2/overview" />
+
+## Choose how to access R2
+
+R2 supports multiple access methods, so you can choose the one that fits your use case best:
+
+| Method                                                             | Use when                                                                                  |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| [Workers API](/r2/get-started/workers-api/)                        | You are building an application on Cloudflare Workers that needs to read or write from R2 |
+| [S3](/r2/get-started/s3/)                                          | You want to use S3-compatible SDKs to interact with R2 in your existing applications      |
+| [CLI tools](/r2/get-started/cli/)                                  | You want to upload, download, or manage objects from your terminal                        |
+| [Dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview) | You want to quickly view and manage buckets and objects in the browser                    |
+
+## Next steps
+
+<LinkCard
+	title="Workers API"
+	href="/r2/get-started/workers-api/"
+	description="Use R2 from Cloudflare Workers."
+/>
+
+<LinkCard
+	title="S3"
+	href="/r2/get-started/s3/"
+	description="Use R2 with S3-compatible SDKs."
+/>
+
+<LinkCard
+	title="CLI"
+	href="/r2/get-started/cli/"
+	description="Use R2 from the command line."
+/>

@@ -1,0 +1,183 @@
+---
+title: CLI
+pcx_content_type: get-started
+sidebar:
+  order: 3
+description: Use R2 from the command line with Wrangler, rclone, or AWS CLI.
+---
+
+import { PackageManagers, LinkCard, Render, Tabs, TabItem, Steps } from "~/components";
+
+Manage R2 buckets and objects directly from your terminal. Use CLI tools to automate tasks and manage objects.
+
+| Tool                                 | Best for                                                                 |
+| ------------------------------------ | ------------------------------------------------------------------------ |
+| [Wrangler](/workers/wrangler/)       | Single object operations and managing bucket settings with minimal setup |
+| [rclone](/r2/examples/rclone/)       | Bulk object operations, migrations, and syncing directories              |
+| [AWS CLI](/r2/examples/aws/aws-cli/) | Existing AWS workflows or familiarity with AWS CLI                       |
+
+## 1. Create a bucket
+
+<Render file="create-bucket-steps" product="r2" />
+
+## 2. Generate API credentials
+
+CLI tools that use the S3 API ([AWS CLI](/r2/examples/aws/aws-cli/), [rclone](/r2/examples/rclone/)) require an Access Key ID and Secret Access Key. If you are using [Wrangler](/workers/wrangler/), you can skip this step.
+
+<Steps>
+1. In the Cloudflare dashboard, go to **R2**.
+2. Select **Manage R2 API tokens**.
+3. Select **Create API token**.
+4. Choose **Object Read & Write** permission and select the buckets you want to access.
+5. Select **Create API Token**.
+6. Copy the **Access Key ID** and **Secret Access Key**. Store these securely — you cannot view the secret again.
+</Steps>
+
+## 3. Set up a CLI tool
+
+<Tabs>
+<TabItem label="Wrangler">
+
+[Wrangler](/r2/reference/wrangler-commands/) is the Cloudflare Workers CLI. It authenticates with your Cloudflare account directly, so no API credentials needed.
+
+<Steps>
+1. Install Wrangler:
+
+   <PackageManagers pkg="wrangler" dev />
+
+2. Log in to your Cloudflare account:
+
+   ```sh
+   wrangler login
+   ```
+
+</Steps>
+</TabItem>
+<TabItem label="rclone">
+
+[rclone](/r2/examples/rclone/) is ideal for bulk uploads, migrations, and syncing directories.
+
+<Steps>
+1. [Install rclone](https://rclone.org/install/) (version 1.59 or later).
+2. Configure a new remote:
+
+   ```sh
+   rclone config
+   ```
+
+3. Create new remote by selecting `n`.
+4. Name your remote `r2`
+5. Select **Amazon S3 Compliant Storage Providers** as the storage type.
+6. Select **Cloudflare R2** as the provider.
+7. Select whether you would like to enter AWS credentials manually, or get it from the runtime environment.
+8. Enter your Access Key ID and Secret Access Key when prompted.
+9. Select the region to connect to (optional).
+10. Provide your S3 API endpoint.
+</Steps>
+
+</TabItem>
+<TabItem label="AWS CLI">
+
+The [AWS CLI](/r2/examples/aws/aws-cli/) works with R2 by specifying a custom endpoint.
+
+<Steps>
+1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) for your operating system.
+2. Configure your credentials:
+
+   ```sh
+   aws configure
+   ```
+
+3. When prompted, enter:
+
+   - **AWS Access Key ID**: Your R2 Access Key ID
+   - **AWS Secret Access Key**: Your R2 Secret Access Key
+   - **Default region name**: `auto`
+   - **Default output format**: `json` (or press Enter to skip)
+
+</Steps>
+
+</TabItem>
+</Tabs>
+
+## 4. Upload and download objects
+
+(Optional) Create a test file to upload. Run this command in the directory where you plan to run the CLI commands:
+
+```sh
+echo 'Hello, R2!' > myfile.txt
+```
+
+<Tabs>
+<TabItem label="Wrangler">
+
+```sh
+# Upload myfile.txt to my-bucket
+wrangler r2 object put my-bucket/myfile.txt --file ./myfile.txt
+
+# Download myfile.txt and save it as downloaded.txt
+wrangler r2 object get my-bucket/myfile.txt --file ./downloaded.txt
+
+# List all objects in my-bucket
+wrangler r2 object list my-bucket
+```
+
+Refer to the [Wrangler R2 commands](/r2/reference/wrangler-commands/) for all available operations.
+
+</TabItem>
+<TabItem label="rclone">
+
+```sh
+# Upload myfile.txt to my-bucket
+rclone copy myfile.txt r2:my-bucket/
+
+# Download myfile.txt from my-bucket to the current directory
+rclone copy r2:my-bucket/myfile.txt .
+```
+
+Refer to the [rclone documentation](/r2/examples/rclone/) for more configuration options.
+
+</TabItem>
+<TabItem label="AWS CLI">
+
+```sh
+# Upload myfile.txt to my-bucket
+aws s3 cp myfile.txt s3://my-bucket/ --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+
+# Download myfile.txt from my-bucket to current directory
+aws s3 cp s3://my-bucket/myfile.txt ./ --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+
+# List all objects in my-bucket
+aws s3 ls s3://my-bucket/ --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+```
+
+Refer to the [AWS CLI documentation](/r2/examples/aws/aws-cli/) for more examples.
+
+</TabItem>
+</Tabs>
+
+## Next steps
+
+<LinkCard
+	title="Presigned URLs"
+	href="/r2/api/s3/presigned-urls/"
+	description="Generate temporary URLs for private object access."
+/>
+
+<LinkCard
+	title="Public buckets"
+	href="/r2/buckets/public-buckets/"
+	description="Serve files directly over HTTP with a public bucket."
+/>
+
+<LinkCard
+	title="CORS"
+	href="/r2/buckets/cors/"
+	description="Configure CORS for browser-based uploads."
+/>
+
+<LinkCard
+	title="Object lifecycles"
+	href="/r2/buckets/object-lifecycles/"
+	description="Set up lifecycle rules to automatically delete old objects."
+/>

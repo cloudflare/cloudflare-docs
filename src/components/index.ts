@@ -48,6 +48,7 @@ export { default as Plan } from "./Plan.astro";
 export { default as ProductChangelog } from "./ProductChangelog.astro";
 export { default as ProductReleaseNotes } from "./ProductReleaseNotes.astro";
 export { default as ProductFeatures } from "./ProductFeatures.astro";
+export { default as ProductAvailabilityText } from "./ProductAvailabilityText.astro";
 export { default as PublicStats } from "./PublicStats.astro";
 export { default as RelatedProduct } from "./RelatedProduct.astro";
 export { default as Render } from "./Render.astro";

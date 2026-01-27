@@ -62,3 +62,21 @@ To enable Logpush to Azure:
 Logpush will stop pushing logs if your SAS token expires, which is why an expiration period of at least five years is required. The renewal for your SAS token needs to be done via API, updating the `destination_conf` parameter in your Logpush job.
 
 :::
+
+## Troubleshooting Azure destinations
+
+### signedResourceTypes error
+
+When configuring an Azure destination, the SAS (Shared Access Signature) token must be set to a blob container with write-only permissions. The service must be Blob-only (`ss=b`), and the resource type must be Object-only (`srt=o`).
+
+If the SAS token uses different settings, you will receive the following error:
+
+```
+signedResourceTypes must be Object only (srt=o)
+```
+
+To resolve this error, regenerate your SAS token using [Storage Explorer](https://learn.microsoft.com/en-us/azure/storage/storage-explorer/vs-azure-tools-storage-manage-with-storage-explorer) with the correct permissions:
+- Service: Blob-only (`ss=b`)
+- Resource type: Object-only (`srt=o`)
+- Permissions: Write-only
+- Expiration: At least five years from now

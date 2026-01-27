@@ -12,7 +12,7 @@ description: >-
   Use the Browser Rendering API along with Durable Objects to take screenshots from web pages and store them in R2.
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components";
+import { Render, PackageManagers, WranglerConfig, TypeScriptExample } from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/).
 
@@ -105,111 +105,125 @@ The code below uses Durable Object to instantiate a browser using Puppeteer. It 
 
 The Durable Object keeps a browser session open for 60 seconds after last use. If a browser session is open, any requests will re-use the existing session rather than creating a new one. Update your Worker code by copy and pasting the following:
 
-```js
-import puppeteer from "@cloudflare/puppeteer";
+<TypeScriptExample playground={true}>
+```ts
+import { DurableObject } from "cloudflare:workers";
+import * as puppeteer from "@cloudflare/puppeteer";
+
+interface Env {
+  MYBROWSER: Fetcher;
+  BUCKET: R2Bucket;
+  BROWSER: DurableObjectNamespace;
+}
 
 export default {
-	async fetch(request, env) {
-		let obj = env.BROWSER.getByName("browser");
+  async fetch(request, env): Promise<Response> {
+    const obj = env.BROWSER.getByName("browser");
 
-		// Send a request to the Durable Object, then await its response.
-		let resp = await obj.fetch(request.url);
+    // Send a request to the Durable Object, then await its response
+    const resp = await obj.fetch(request);
 
-		return resp;
-	},
-};
+    return resp;
+  },
+} satisfies ExportedHandler<Env>;
 
 const KEEP_BROWSER_ALIVE_IN_SECONDS = 60;
 
-export class Browser {
-	constructor(state, env) {
-		this.state = state;
-		this.env = env;
-		this.keptAliveInSeconds = 0;
-		this.storage = this.state.storage;
-	}
+export class Browser extends DurableObject<Env> {
+  private browser?: puppeteer.Browser;
+  private keptAliveInSeconds: number = 0;
+  private storage: DurableObjectStorage;
 
-	async fetch(request) {
-		// screen resolutions to test out
-		const width = [1920, 1366, 1536, 360, 414];
-		const height = [1080, 768, 864, 640, 896];
+  constructor(state: DurableObjectState, env: Env) {
+    super(state, env);
+    this.storage = state.storage;
+  }
 
-		// use the current date and time to create a folder structure for R2
-		const nowDate = new Date();
-		var coeff = 1000 * 60 * 5;
-		var roundedDate = new Date(
-			Math.round(nowDate.getTime() / coeff) * coeff,
-		).toString();
-		var folder = roundedDate.split(" GMT")[0];
+  async fetch(request: Request): Promise<Response> {
+    // Screen resolutions to test out
+    const width: number[] = [1920, 1366, 1536, 360, 414];
+    const height: number[] = [1080, 768, 864, 640, 896];
 
-		//if there's a browser session open, re-use it
-		if (!this.browser || !this.browser.isConnected()) {
-			console.log(`Browser DO: Starting new instance`);
-			try {
-				this.browser = await puppeteer.launch(this.env.MYBROWSER);
-			} catch (e) {
-				console.log(
-					`Browser DO: Could not start browser instance. Error: ${e}`,
-				);
-			}
-		}
+    // Use the current date and time to create a folder structure for R2
+    const nowDate = new Date();
+    const coeff = 1000 * 60 * 5;
+    const roundedDate = new Date(
+      Math.round(nowDate.getTime() / coeff) * coeff,
+    ).toString();
+    const folder = roundedDate.split(" GMT")[0];
 
-		// Reset keptAlive after each call to the DO
-		this.keptAliveInSeconds = 0;
+    // If there is a browser session open, re-use it
+    if (!this.browser || !this.browser.isConnected()) {
+      console.log(`Browser DO: Starting new instance`);
+      try {
+        this.browser = await puppeteer.launch(this.env.MYBROWSER);
+      } catch (e) {
+        console.log(
+          `Browser DO: Could not start browser instance. Error: ${e}`,
+        );
+      }
+    }
 
-		const page = await this.browser.newPage();
+    // Reset keptAlive after each call to the DO
+    this.keptAliveInSeconds = 0;
 
-		// take screenshots of each screen size
-		for (let i = 0; i < width.length; i++) {
-			await page.setViewport({ width: width[i], height: height[i] });
-			await page.goto("https://workers.cloudflare.com/");
-			const fileName = "screenshot_" + width[i] + "x" + height[i];
-			const sc = await page.screenshot();
+    // Check if browser exists before opening page
+    if (!this.browser) return new Response("Browser launch failed", { status: 500 });
 
-			await this.env.BUCKET.put(folder + "/" + fileName + ".jpg", sc);
-		}
+    const page = await this.browser.newPage();
 
-		// Close tab when there is no more work to be done on the page
-		await page.close();
+    // Take screenshots of each screen size
+    for (let i = 0; i < width.length; i++) {
+      await page.setViewport({ width: width[i], height: height[i] });
+      await page.goto("https://workers.cloudflare.com/");
+      const fileName = `screenshot_${width[i]}x${height[i]}`;
+      const sc = await page.screenshot();
 
-		// Reset keptAlive after performing tasks to the DO.
-		this.keptAliveInSeconds = 0;
+      await this.env.BUCKET.put(`${folder}/${fileName}.jpg`, sc);
+    }
 
-		// set the first alarm to keep DO alive
-		let currentAlarm = await this.storage.getAlarm();
-		if (currentAlarm == null) {
-			console.log(`Browser DO: setting alarm`);
-			const TEN_SECONDS = 10 * 1000;
-			await this.storage.setAlarm(Date.now() + TEN_SECONDS);
-		}
+    // Close tab when there is no more work to be done on the page
+    await page.close();
 
-		return new Response("success");
-	}
+    // Reset keptAlive after performing tasks to the DO
+    this.keptAliveInSeconds = 0;
 
-	async alarm() {
-		this.keptAliveInSeconds += 10;
+    // Set the first alarm to keep DO alive
+    const currentAlarm = await this.storage.getAlarm();
+    if (currentAlarm == null) {
+      console.log(`Browser DO: setting alarm`);
+      const TEN_SECONDS = 10 * 1000;
+      await this.storage.setAlarm(Date.now() + TEN_SECONDS);
+    }
 
-		// Extend browser DO life
-		if (this.keptAliveInSeconds < KEEP_BROWSER_ALIVE_IN_SECONDS) {
-			console.log(
-				`Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`,
-			);
-			await this.storage.setAlarm(Date.now() + 10 * 1000);
-			// You could ensure the ws connection is kept alive by requesting something
-			// or just let it close automatically when there  is no work to be done
-			// for example, `await this.browser.version()`
-		} else {
-			console.log(
-				`Browser DO: exceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}s.`,
-			);
-			if (this.browser) {
-				console.log(`Closing browser.`);
-				await this.browser.close();
-			}
-		}
-	}
+    return new Response("success");
+  }
+
+  async alarm(): Promise<void> {
+    this.keptAliveInSeconds += 10;
+
+    // Extend browser DO life
+    if (this.keptAliveInSeconds < KEEP_BROWSER_ALIVE_IN_SECONDS) {
+      console.log(
+        `Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`,
+      );
+      await this.storage.setAlarm(Date.now() + 10 * 1000);
+      // You can ensure the ws connection is kept alive by requesting something
+      // or just let it close automatically when there is no work to be done
+      // for example, `await this.browser.version()`
+    } else {
+      console.log(
+        `Browser DO: exceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}s.`,
+      );
+      if (this.browser) {
+        console.log(`Closing browser.`);
+        await this.browser.close();
+      }
+    }
+  }
 }
 ```
+</TypeScriptExample>
 
 ## 6. Test
 

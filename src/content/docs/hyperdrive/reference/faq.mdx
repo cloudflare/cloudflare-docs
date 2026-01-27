@@ -27,6 +27,12 @@ and how Hyperdrive solves this.
 
 D1 does not require round trips to create database connections. D1 is designed to be performant for access from Workers by default, without needing Hyperdrive.
 
+### Should I use Placement with Hyperdrive?
+
+Yes, if your Worker makes multiple queries per request. [Placement](/workers/configuration/placement/) runs your Worker near your database, reducing per-query latency from 20-30ms to 1-3ms. Hyperdrive handles connection pooling and setup. Placement reduces the network distance for query execution.
+
+Use `placement.region` if your database runs in AWS, GCP, or Azure. Use `placement.host` for databases hosted elsewhere.
+
 ## Pricing
 
 ### Does Hyperdrive charge for data transfer / egress?

@@ -1,15 +1,26 @@
 ---
 {}
-
 ---
 
-import { Tabs, TabItem, Steps, DashButton } from '~/components';
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
 
 Cloudflare encourages Enterprise customers to enable auto-updates to its Machine Learning models to get the newest bot detection models as they are released.
 
 To enable auto-updates:
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
+    <TabItem label="New dashboard" icon="rocket">
+        <Steps>
+            1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+                <DashButton url="/?to=/:account/:zone/security/settings" />
+            2. Filter by **Bot traffic**.
+            3. Go to **Bot Management**.
+            4. Under **Configurations**, select the edit icon for **Auto-updates to the Machine Learning Model** and turn it on.
+        </Steps>
+    </TabItem>
     <TabItem label="Old dashboard">
         <Steps>
             1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
@@ -18,14 +29,6 @@ To enable auto-updates:
             4. Enable **Auto-updates to the Machine Learning Model**.
         </Steps>
     </TabItem>
-    <TabItem label="New dashboard" icon="rocket">
-        <Steps>
-            1. In the Cloudflare dashboard, go to the **Security Settings** page.
-            
-                <DashButton url="/?to=/:account/:zone/security/settings" />
-            2. Filter by **Bot traffic**.
-            3. Go to **Bot Management**.
-            4. Under **Configurations**, select the edit icon for **Auto-updates to the Machine Learning Model** and turn it on.
-        </Steps>
-    </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}

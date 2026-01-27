@@ -7,13 +7,76 @@ sidebar:
 tableOfContents: false
 ---
 
-The Secure Shell Protocol (SSH) enables users to remotely access devices through the command line. With Cloudflare Zero Trust, you can make your SSH server available over the Internet without the risk of opening inbound ports on the server.
+import { CardGrid, LinkTitleCard } from "~/components";
+
+The Secure Shell Protocol (SSH) enables users to remotely access devices through the command line. With Cloudflare One, you can make your SSH server available over the Internet without the risk of opening inbound ports on the server.
 
 Cloudflare offers four ways to secure SSH:
 
-- [SSH with Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) (recommended)
-- [Self-managed SSH keys](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/)
-- [Browser-rendered SSH terminal](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-browser-rendering/)
-- [SSH with client-side cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-cloudflared-authentication/) (legacy)
+<CardGrid>
 
-For an overview of these connection options, refer to [non-HTTP applications](/cloudflare-one/access-controls/applications/non-http/).
+<LinkTitleCard
+	title="SSH with client-side cloudflared"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-cloudflared-authentication/"
+	icon="seti:shell"
+>
+
+**Setup time:** 15-30 minutes
+
+**Required products:** [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (`cloudflared` on server and client), [Access](/cloudflare-one/access-controls/)
+
+**Best for:** Seamless SSH access with identity-based authentication using native terminal
+
+**Key differentiator:** No WARP client required — works with just `cloudflared` on both ends
+
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="SSH with Access for Infrastructure"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/"
+	icon="seti:lock"
+>
+
+**Setup time:** 45-60 minutes
+
+**Required products:** [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (`cloudflared` on server), [WARP](/cloudflare-one/team-and-resources/devices/warp/) or [Magic WAN](/magic-wan/) (client on-ramp), [Gateway](/cloudflare-one/traffic-policies/), [Access](/cloudflare-one/access-controls/)
+
+**Best for:** Advanced SSH certificate-based authentication with short-lived credentials
+
+**Key differentiator:** SSH certificates with Access policies and command logging
+
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Self-managed SSH keys"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/"
+	icon="key"
+>
+
+**Setup time:** 30-45 minutes
+
+**Required products:** [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (`cloudflared` on server), [WARP](/cloudflare-one/team-and-resources/devices/warp/) or [Magic WAN](/magic-wan/) (client on-ramp), [Gateway](/cloudflare-one/traffic-policies/)
+
+**Best for:** Traditional SSH key management with network-level policy enforcement
+
+**Key differentiator:** Keep your existing SSH key infrastructure with no client-side `cloudflared` or SSH config changes needed
+
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Browser-rendered SSH terminal"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-browser-rendering/"
+	icon="laptop"
+>
+
+**Setup time:** 20-30 minutes
+
+**Required products:** [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (`cloudflared` on server), [Access](/cloudflare-one/access-controls/)
+
+**Best for:** Browser-based SSH access for quick administrative tasks
+
+**Key differentiator:** No SSH client or WARP required — connect directly from a browser
+
+</LinkTitleCard>
+
+</CardGrid>

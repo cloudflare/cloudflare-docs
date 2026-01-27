@@ -11,7 +11,7 @@ import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnipp
 
 The RealtimeKit Stores API allows you to create multiple key-value pair realtime stores. Users can subscribe to changes in a store and receive real-time updates. Data is stored until a [session](/realtime/realtimekit/concepts/meeting/#session) is active.
 
-<RTKSDKSelector />
+<RTKSDKSelector disabledPlatforms={["mobile-flutter"]} />
 
 ### Create a Store
 
@@ -23,31 +23,49 @@ You can create a realtime store (changes are synced with other users):
 
 To create a store:
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id={["web-react", "mobile-react-native"]}>
 
-    ```ts
-
+```ts
 const stores = useRealtimeKitSelector((m) => m.stores);
 const store = stores.create('myStore');
-
 ````
 </RTKCodeSnippet>
 <RTKCodeSnippet id="web-angular">
 
-    ```ts
-
+```ts
 const store = meeting.stores.create('myStore');
-
 ````
 
 </RTKCodeSnippet>
 <RTKCodeSnippet id="web-web-components">
 
-    ```ts
-
+```ts
 const store = meeting.stores.create('myStore');
-
 ````
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+val meeting = RealtimeKitMeetingBuilder.build(activity)
+val store = meeting.stores.create("myStore")
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+let meeting = RealtimeKitiOSClientBuilder().build()
+let store = meeting.stores.create(name: "myStore")
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+This feature is not currently supported in the Flutter SDK
+
 </RTKCodeSnippet>
 
 :::note
@@ -63,7 +81,7 @@ You can add, update or delete entires in a store:
 | `key`   | string     | Unique identifier used to store/update a value in the store | Yes      |
 | `value` | StoreValue | Value that can be stored agains a key                       | Yes      |
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id={"web-react", "mobile-react-native"}>
 
 ```ts
 type StoreValue = string | number | object | array;
@@ -118,6 +136,25 @@ await store.delete("user");
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+val store = meeting.stores.get("myStore")
+
+store.set("user", mapOf("name" to "John Doe"))
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+let store = meeting.stores.get(name: "myStore")
+store.set("user", ["name": "John Doe"])
+```
+
+</RTKCodeSnippet>
+
 :::note
 The `set` method overwrites the existing value, while the `update` method updates the existing value.
 
@@ -128,11 +165,12 @@ For example, if the stored value is `['a', 'b']` and you call `update` with `['c
 
 You can attach event listeners on a store's key, which fire when the value changes.
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id={"web-react", "mobile-react-native"}>
+
 ```ts
 const stores = useRealtimeKitSelector((m) => m.stores.stores);
 const store = stores.get('myStore');
-store.subscribe('key', (data) => { 
+store.subscribe('key', (data) => {
     console.log(data);
 });
 
@@ -142,12 +180,12 @@ console.log(data);
 });
 
 store.unsubscribe('key');
-
 ````
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
+
 ```ts
 const { stores } = meeting.stores;
 const store = stores.get('myStore');
@@ -167,10 +205,11 @@ store.unsubscribe('key');
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-web-components">
+
 ```ts
 const { stores } = meeting.stores;
 const store = stores.get('myStore');
-store.subscribe('key', (data) => { 
+store.subscribe('key', (data) => {
     console.log(data);
 });
 
@@ -180,8 +219,45 @@ console.log(data);
 });
 
 store.unsubscribe('key');
-
 ````
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+val store = meeting.stores.create("myStore")
+val keyChangeCallback = { key: String, value: Any? ->
+  println(value)
+}
+store.subscribe("key", keyChangeCallback)
+
+// Subscribe to all keys
+store.subscribe(RtkStore.WILDCARD_KEY) { key, value ->
+  println(value)
+}
+
+store.unsubscribe("key", keyChangeCallback)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+let store = meeting.stores.create(name: "myStore")
+let keyChangeCallback: ((String, (Any?)) -> Void) = { key, value in
+    print(value ?? "null")
+}
+store.subscribe(key: "key", onChange: keyChangeCallback)
+
+// Subscribe to all keys
+store.subscribe(key: RtkStore.Companion().WILDCARD_KEY) { key, value in
+    print(value ?? "null")
+}
+
+store.unsubscribe(key: "key", onChange: keyChangeCallback)
+```
 
 </RTKCodeSnippet>
 
@@ -189,7 +265,8 @@ store.unsubscribe('key');
 
 You can fetch the data stored in the store:
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id={["web-react", "mobile-react-native"]}>
+
 ```ts
 const stores = useRealtimeKitSelector((m) => m.stores.stores);
 const store = stores.get('myStore');
@@ -204,6 +281,7 @@ const data = store.getAll();
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
+
 ```ts
 const { stores } = meeting.stores;
 const store = stores.get('myStore');
@@ -220,6 +298,7 @@ const data = store.getAll();
 
 
 <RTKCodeSnippet id="web-web-components">
+
 ```ts
 const { stores } = meeting.stores;
 const store = stores.get('myStore');
@@ -230,5 +309,33 @@ const data = store.get('key');
 // fetch all the data in the store
 const data = store.getAll();
 ````
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+val store = meeting.stores.create("myStore")
+
+// fetch value for a specific key
+val data = store.get("key")
+
+// fetch all the data in the store
+val data = store.getAll()
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+let store = meeting.stores.create(name: "myStore")
+
+// fetch value for a specific key
+store.get(key: "key")
+
+// fetch all the data in the store
+store.getAll()
+```
 
 </RTKCodeSnippet>

@@ -24,7 +24,7 @@ Zone custom nameservers are available for zones on Business or Enterprise plans.
 
 ## Use zone custom nameservers
 
-### Primary (full setup) zones
+### Primary zones (full setup)
 
 To create zone custom nameservers:
 
@@ -56,7 +56,7 @@ The next step depends on whether you are using [Cloudflare Registrar](/registrar
 - If you are not using Cloudflare Registrar for your domain, add the zone custom nameservers at your registrar as your authoritative nameservers and as glue (A and AAAA) records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)). If you do not add these records, DNS lookups for your domain will fail.
 ### Secondary zones
 
-If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can still set up zone custom nameservers. After following the [steps above](/dns/nameservers/custom-nameservers/zone-custom-nameservers/#primary-full-setup-zones) to create zone custom nameservers, do the following:
+If you are using [Cloudflare as a secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can still set up zone custom nameservers. After following the [steps above](/dns/nameservers/custom-nameservers/zone-custom-nameservers/#primary-zones-full-setup) to create zone custom nameservers, do the following:
 
 1. Get the ZCNS IPs. You can find them on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page or you can use the [Zone details endpoint](/api/resources/zones/methods/get/) to get the `vanity_name_servers_ips`.
 2. At your primary DNS provider, add [`NS` records](/dns/manage-dns-records/reference/dns-record-types/#ns) and, on the subdomains that you used as ZCNS names, add `A/AAAA` records.

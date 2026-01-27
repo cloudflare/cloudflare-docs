@@ -3,10 +3,17 @@ pcx_content_type: concept
 title: Schema validation
 sidebar:
   order: 8
-
 ---
 
-import { GlossaryDefinition, GlossaryTooltip, Plan, Steps, Tabs, TabItem, DashButton } from "~/components"
+import {
+	GlossaryDefinition,
+	GlossaryTooltip,
+	Plan,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 <Plan type="all" />
 
@@ -22,6 +29,7 @@ You can migrate to Schema validation 2.0 manually by uploading your schemas to t
 
 ## Process
 
+{/* prettier-ignore */}
 <GlossaryTooltip term="API endpoint">Endpoints</GlossaryTooltip> must be added to [Endpoint Management](/api-shield/management-and-monitoring/endpoint-management/) for Schema validation to protect them. Uploading a schema via the Cloudflare dashboard will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/).
 
 If you are uploading a schema via the API or Terraform, you must parse the schema and add your endpoints manually.
@@ -29,7 +37,6 @@ If you are uploading a schema via the API or Terraform, you must parse the schem
 <GlossaryDefinition term="API endpoint" />
 
 :::note
-
 To view the contents in your learned schema, refer to [Export a schema](/api-shield/management-and-monitoring/endpoint-management/schema-learning/#export-a-schema) in Endpoint Management.
 :::
 
@@ -37,18 +44,9 @@ To view the contents in your learned schema, refer to [Export a schema](/api-shi
 
 ### Add validation by uploading a schema
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-   <TabItem label="Old dashboard">
-      <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Select **Security** > **API Shield**.
-         3. Go to **Schema validation** and select **Add validation**.
-         4. Select your schema file for upload.
-         5. Observe the listed endpoints, their host, method, and path. Any new endpoints will automatically be added to Endpoint Management.
-         6. Choose an action for the non-compliant requests to your endpoints.
-         7. Select **Add schema and endpoints**.
-      </Steps>
-   </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
          1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -60,7 +58,20 @@ To view the contents in your learned schema, refer to [Export a schema](/api-shi
          5. Select **Add schema and endpoints**.
       </Steps>
    </TabItem>
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to **Schema validation** and select **Add validation**.
+         4. Select your schema file for upload.
+         5. Observe the listed endpoints, their host, method, and path. Any new endpoints will automatically be added to Endpoint Management.
+         6. Choose an action for the non-compliant requests to your endpoints.
+         7. Select **Add schema and endpoints**.
+      </Steps>
+   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 :::note
 Changes may take a few minutes to process depending on the number of added endpoints.
@@ -68,16 +79,9 @@ Changes may take a few minutes to process depending on the number of added endpo
 
 ### Add validation by applying a learned schema to a single endpoint
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-   <TabItem label="Old dashboard">
-      <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Select **Security** > **API Shield**.
-         3. Go to **Schema validation** and filter by the learned schema available.
-         4. Select **Apply learned schema**.
-         5. Choose an action and select **Apply schema**.
-      </Steps>
-   </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
          1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -88,14 +92,41 @@ Changes may take a few minutes to process depending on the number of added endpo
          4. Select **Apply learned schema**.
          5. Choose an action and select **Apply schema**.
       </Steps>
+
+   </TabItem>
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to **Schema validation** and filter by the learned schema available.
+         4. Select **Apply learned schema**.
+         5. Choose an action and select **Apply schema**.
+      </Steps>
    </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ### Add validation by applying a learned schema to an entire hostname
 
 At this time, learned schemas will not overwrite customer-uploaded schemas. If an endpoint is covered by a customer-uploaded schema and also appears in a learned schema, the **Changes** field is set to `Unaffected`.
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
+         3. Select **Add validation**.
+         4. Select **Apply learned schema**.
+         5. Choose a hostname and review the endpoints that will be protected by the learned schema.
+         6. (Optional) Change the action if a request does not match the schema.
+         7. Select **Apply schema**.
+      </Steps>
+   </TabItem>
    <TabItem label="Old dashboard">
       <Steps>
          1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
@@ -107,20 +138,9 @@ At this time, learned schemas will not overwrite customer-uploaded schemas. If a
          7. Select **Apply schema**.
       </Steps>
    </TabItem>
-   <TabItem label="New dashboard" icon="rocket">
-      <Steps>
-         1. In the Cloudflare dashboard, go to the **Web Assets** page.
-
-               <DashButton url="/?to=/:account/:zone/security/web-assets" />
-         2. Go to the **Schema validation** tab.
-         3. Select **Add validation**.
-         4. Select **Apply learned schema**.
-         5. Choose a hostname and review the endpoints that will be protected by the learned schema.
-         6. (Optional) Change the action if a request does not match the schema.
-         7. Select **Apply schema**.
-      </Steps>
-   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 :::note
 If an endpoint is currently protected by a learned schema, the date of the last applied learned schema will be shown in the current schema field.
@@ -134,7 +154,24 @@ By ensuring that all your endpoints in a schema are added to Endpoint Management
 
 To set up a fallthrough action:
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+               <DashButton url="/?to=/:account/:zone/security/security-rules" />
+         3. Select **Templates**.
+         4. Search for the template named `Mitigate API requests to unidentified endpoints` and select **Preview template**.
+         5. Give your rule a descriptive name.
+         6. Choose one or more hostnames from the dropdown menu and select your action.
+         7. Select **Save as draft** to deploy later, or **Deploy** to deploy now.
+      </Steps>
+
+      Your current fallthrough rules can be viewed in the security rules list.
+
+   </TabItem>
    <TabItem label="Old dashboard">
       <Steps>
          1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
@@ -150,21 +187,9 @@ To set up a fallthrough action:
       Your current fallthrough rules can be viewed in the custom rules list.
 
    </TabItem>
-   <TabItem label="New dashboard" icon="rocket">
-      <Steps>
-         1. In the Cloudflare dashboard, go to the **Security rules** page.
-
-               <DashButton url="/?to=/:account/:zone/security/security-rules" />
-         3. Select **Templates**.
-         4. Search for the template named `Mitigate API requests to unidentified endpoints` and select **Preview template**.
-         5. Give your rule a descriptive name.
-         6. Choose one or more hostnames from the dropdown menu and select your action.
-         7. Select **Save as draft** to deploy later, or **Deploy** to deploy now.
-      </Steps>
-
-      Your current fallthrough rules can be viewed in the security rules list.
-   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 :::note
 You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom rule for a more customized logic check. This detection will evaluate as `true` when a request does not match an endpoint in Endpoint Management, so it is important to check against your API's hostname or root path to ensure that you are not blocking any non-API traffic on your zone.
@@ -172,19 +197,9 @@ You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom
 
 ### Change the action of an entire schema
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-   <TabItem label="Old dashboard">
-      <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Select **Security** > **API Shield**.
-         3. Go to **Schema validation** and select the schema in the Schema list.
-         4. Check the multi-select box to select the endpoints shown on the current page.
-         5. Choose **Select all endpoints**.
-         6. Select **Change action**.
-         7. Choose an action from the dropdown menu.
-         8. Select **Set action**.
-      </Steps>
-   </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
          1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -197,7 +212,21 @@ You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom
          6. Select **Set action**.
       </Steps>
    </TabItem>
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to **Schema validation** and select the schema in the Schema list.
+         4. Check the multi-select box to select the endpoints shown on the current page.
+         5. Choose **Select all endpoints**.
+         6. Select **Change action**.
+         7. Choose an action from the dropdown menu.
+         8. Select **Set action**.
+      </Steps>
+   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ### Change the global default action of Schema validation
 
@@ -209,18 +238,9 @@ Schema validation’s default action is visible on the main Schema validation pa
 
 To change the default action:
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-   <TabItem label="Old dashboard">
-      <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Go to **Security** > **API Shield**.
-         3. Select **Schema validation**.
-         4. Under the default `Log` action, select **Change**.
-         5. Choose a new action from the dropdown menu.
-         6. Observe the current action and accept the change by selecting **Change default action** in the popup window.
-      </Steps>
-      Alternatively, you can modify the global action via **Security** > **API Shield** > **Settings**.
-   </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
           1. In the Cloudflare dashboard, go to the **Security Settings** page.
@@ -232,7 +252,20 @@ To change the default action:
          5. Select **Save**.
       </Steps>
    </TabItem>
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Go to **Security** > **API Shield**.
+         3. Select **Schema validation**.
+         4. Under the default `Log` action, select **Change**.
+         5. Choose a new action from the dropdown menu.
+         6. Observe the current action and accept the change by selecting **Change default action** in the popup window.
+      </Steps>
+      Alternatively, you can modify the global action via **Security** > **API Shield** > **Settings**.
+   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ### Change the action of a single endpoint
 
@@ -242,17 +275,9 @@ This allows you to be stricter on blocking non-compliant requests on certain end
 
 To change the action on an individual endpoint:
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-   <TabItem label="Old dashboard">
-      <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Go to **Security** > **API Shield**.
-         3. Select **Schema validation** and filter the selected endpoint.
-         4. Select the ellipses on the endpoint's row.
-         5. Select **Change action**.
-         6. Choose a new action from the dropdown menu and select **Set action**.
-      </Steps>
-   </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
          1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -264,7 +289,19 @@ To change the action on an individual endpoint:
          5. Choose a new action from the dropdown menu and select **Set action**.
       </Steps>
    </TabItem>
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Go to **Security** > **API Shield**.
+         3. Select **Schema validation** and filter the selected endpoint.
+         4. Select the ellipses on the endpoint's row.
+         5. Select **Change action**.
+         6. Choose a new action from the dropdown menu and select **Set action**.
+      </Steps>
+   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ### Disable Schema validation without changing actions
 
@@ -272,15 +309,9 @@ You can disable Schema validation entirely for temporary troubleshooting. You ca
 
 To disable Schema validation without changing actions:
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-   <TabItem label="Old dashboard">
-      <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Select **Security** > **API Shield**.
-         3. Go to the **Schema validation** settings.
-         4. Select **Disable**.
-      </Steps>
-   </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
          1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -292,22 +323,25 @@ To disable Schema validation without changing actions:
          5. Turn **Schema validation** off.
       </Steps>
    </TabItem>
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to the **Schema validation** settings.
+         4. Select **Disable**.
+      </Steps>
+   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 Your per-endpoint configurations will be saved when modifying the setting, so that you do not lose your configuration. To re-enable your configurations after troubleshooting, navigate back to the settings and select **Enable**.
 
 ### View active schemas
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-   <TabItem label="Old dashboard">
-      <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Select **Security** > **API Shield**.
-         3. Go to your **Schema validation** settings.
-         4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
-         5. Select **Filter** on the endpoints in either schema.
-      </Steps>
-   </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
          1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -319,7 +353,18 @@ Your per-endpoint configurations will be saved when modifying the setting, so th
          5. View your schemas on **Schema validation** > **Active schemas**.
       </Steps>
    </TabItem>
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to your **Schema validation** settings.
+         4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
+         5. Select **Filter** on the endpoints in either schema.
+      </Steps>
+   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ### Delete active schemas
 
@@ -327,16 +372,9 @@ Deleting the schema will remove validation from the currently associated endpoin
 
 To delete currently uploaded or learned schemas:
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-   <TabItem label="Old dashboard">
-      <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Select **Security** > **API Shield**.
-         3. Go to your **Schema validation** settings.
-         4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
-         5. Select the ellipses to access the menu and download or delete the listed schema.
-      </Steps>
-   </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
          1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -349,7 +387,18 @@ To delete currently uploaded or learned schemas:
          6. Select the ellipses to access the menu and download or delete the listed schema.
       </Steps>
    </TabItem>
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to your **Schema validation** settings.
+         4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
+         5. Select the ellipses to access the menu and download or delete the listed schema.
+      </Steps>
+   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ---
 
@@ -384,12 +433,12 @@ Although not strictly required by the OpenAPI specification, Schema validation s
 #### `schema`
 
 - [`type`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - All schemas require a type to be set. If the specific type is not supported by Schema validation, it is usually best to simply set the type to `string` instead.
+  - All schemas require a type to be set. If the specific type is not supported by Schema validation, it is usually best to simply set the type to `string` instead.
 
 #### `parameter`
 
 - [`schema`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - Schema validation does not support the content field in parameters. For more details, refer to the [notes on validated and supported fields](#notes-on-validated-and-supported-fields) below. Instead, a schema is strictly required on all parameters objects.
+  - Schema validation does not support the content field in parameters. For more details, refer to the [notes on validated and supported fields](#notes-on-validated-and-supported-fields) below. Instead, a schema is strictly required on all parameters objects.
 
 ### Notes on validated and supported fields
 
@@ -398,66 +447,66 @@ Refer to the information below for more details on Schema validation's current s
 #### `servers`
 
 - [`url`](https://spec.openapis.org/oas/v3.0.3#server-object)
-   - Schema validation does not support relative URLs.
+  - Schema validation does not support relative URLs.
 - [`variables`](https://spec.openapis.org/oas/v3.0.3#server-variable-object)
-   - Server variables are not validated.
+  - Server variables are not validated.
 
 #### `parameter`
 
 - [`style`](https://spec.openapis.org/oas/v3.0.3#parameter-object)
-   - Only the default values are supported: `"simple"` (path or header parameters) and `"form"` (query or cookie parameters).
+  - Only the default values are supported: `"simple"` (path or header parameters) and `"form"` (query or cookie parameters).
 - [`explode`](https://spec.openapis.org/oas/v3.0.3#parameter-object)
-   - Only the default values are supported: `true` (for form) and `false` (for simple).
+  - Only the default values are supported: `true` (for form) and `false` (for simple).
 - [`content`](https://spec.openapis.org/oas/v3.0.3#parameter-object)
-   - The content field is not supported in parameters. Use the schema field instead.
+  - The content field is not supported in parameters. Use the schema field instead.
 - [`type`](https://spec.openapis.org/oas/v3.0.3#parameter-object)
-   - Cloudflare currently does not validate object type parameters.
+  - Cloudflare currently does not validate object type parameters.
 
 #### `reference`
 
 - [`$ref`](https://spec.openapis.org/oas/v3.0.3#reference-object)
-   - External or relative references are not supported.
+  - External or relative references are not supported.
 
 #### `requestBody`
 
 - `content`
-   - [Request Body Object](https://spec.openapis.org/oas/v3.0.3#request-body-object)
-   - [Media Type Object](https://spec.openapis.org/oas/v3.0.3#media-type-object)
-      - Schema validation is able to validate `application/json` documents. If a given schema allows other content types, Schema validation will accept those requests without validation.
+  - [Request Body Object](https://spec.openapis.org/oas/v3.0.3#request-body-object)
+  - [Media Type Object](https://spec.openapis.org/oas/v3.0.3#media-type-object)
+    - Schema validation is able to validate `application/json` documents. If a given schema allows other content types, Schema validation will accept those requests without validation.
 
 #### `parameter/schema`
 
 - `anyOf`
-   - [Parameter Object](https://spec.openapis.org/oas/v3.0.3#parameter-object)
-   - [Schema Object](https://spec.openapis.org/oas/v3.0.3#schema-object)
-      - `anyOf` schemas are currently not supported in parameter schemas.
+  - [Parameter Object](https://spec.openapis.org/oas/v3.0.3#parameter-object)
+  - [Schema Object](https://spec.openapis.org/oas/v3.0.3#schema-object)
+    - `anyOf` schemas are currently not supported in parameter schemas.
 
 #### `schema`
 
 - [`format`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - Validated formats:
-     - `date-time`
-     - `time`
-     - `date`
-     - `email`
-     - `hostname`
-     - `ipv4`
-     - `ipv6`
-     - `uri`
-     - `uri-reference`
-     - `iri`
-     - `iri-reference`
-     - `int32`
-     - `int64`
-     - `float`
-     - `double`
-     - `password`
-     - `uuid`
-     - `byte`
-     - `uint64`
+  - Validated formats:
+    - `date-time`
+    - `time`
+    - `date`
+    - `email`
+    - `hostname`
+    - `ipv4`
+    - `ipv6`
+    - `uri`
+    - `uri-reference`
+    - `iri`
+    - `iri-reference`
+    - `int32`
+    - `int64`
+    - `float`
+    - `double`
+    - `password`
+    - `uuid`
+    - `byte`
+    - `uint64`
 
 - [`uniqueItems`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - This field is currently not validated by Schema validation.
+  - This field is currently not validated by Schema validation.
 
 ---
 

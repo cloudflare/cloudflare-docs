@@ -5,9 +5,9 @@ sidebar:
   order: 1
 head:
   - tag: title
-    content: Set up a partial (CNAME) zone
+    content: Set up a partial zone (CNAME setup)
 description: >-
-  A partial (CNAME) setup allows you to use Cloudflare's reverse proxy while maintaining your primary and authoritative DNS provider.
+  A CNAME setup (also known as partial) allows you to use Cloudflare's reverse proxy while maintaining your primary and authoritative DNS provider.
 ---
 
 import { Details, Render, GlossaryTooltip, Steps, Tabs, TabItem, APIRequest } from "~/components";
@@ -15,7 +15,7 @@ import { Details, Render, GlossaryTooltip, Steps, Tabs, TabItem, APIRequest } fr
 <Render file="partial-setup-definition" product="dns" />
 
 :::note
-A partial setup is only available to customers on a Business or Enterprise plan.
+A CNAME setup (partial) is only available to customers on a Business or Enterprise plan.
 Partial setups are not supported on Cloudflare Registrar domains.
 :::
 
@@ -101,4 +101,4 @@ If you are adding a zone for the first time via API you can add it directly with
 
 ## Other record types
 
-If you are preparing a conversion from partial to full setup, or if you have a more specific use case, you can use the [Create DNS Record](/api/resources/dns/subresources/records/methods/create/) API endpoint to create DNS records of any supported type.
+If you are preparing a conversion from CNAME setup (partial) to primary setup (full), or if you have a more specific use case, you can use the [Create DNS Record](/api/resources/dns/subresources/records/methods/create/) API endpoint to create DNS records of any supported type.

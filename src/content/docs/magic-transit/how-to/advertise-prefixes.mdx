@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { APIRequest, Details, GlossaryTooltip, Render, Tabs, TabItem, DashButton } from "~/components"
+import { APIRequest, DashButton, Details, GlossaryTooltip, Render, Tabs, TabItem } from "~/components"
 
 ## Onboard prefixes
 
@@ -82,11 +82,11 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 		Currently, only the default BGP prefix (that matches the IP prefix) can be controlled through the Cloudflare dashboard.
 		:::
 
-		1. Go to the **Configuration** page.
+		1. Go to the **Routes** page.
 
-		<DashButton url="/?to=/:account/magic-transit/configuration" />
+	<DashButton url="/?to=/:account/magic-networks/routes" />
 
-		2. From the **IP Prefixes** tab, select the prefix to modify > **Edit**.
+		2. From the **IP prefixes** tab, select the prefix you want to modify > **Edit**.
 		3. From the **Status** drop-down menu, select _Advertised_ or _Withdrawn_.
 		4. (Optional) Edit the description for your prefix.
 		5. Select **Edit IP Prefix** to save your changes.
@@ -116,8 +116,12 @@ Refer to [Safely withdraw a BYOIP prefix](#safely-withdraw-a-byoip-prefix) for m
 
 You can only delete a prefix with an *Unapproved* status. To delete prefixes with a different status, contact your administrator or account manager.
 
-1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Delete**.
-2. Confirm your choice from the modal by selecting **Delete**.
+1. Go to the **Routes** page.
+
+<DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Delete**.
+3. Confirm your choice from the modal by selecting **Delete**.
 
 ### Use the API to set AS prepends on a BGP prefix
 

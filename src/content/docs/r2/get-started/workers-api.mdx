@@ -1,0 +1,192 @@
+---
+title: Workers API
+pcx_content_type: get-started
+sidebar:
+  order: 1
+description: Use R2 from Cloudflare Workers with the Workers API.
+---
+
+import {
+	PackageManagers,
+	WranglerConfig,
+	LinkCard,
+	Render,
+	Tabs,
+	TabItem,
+	Steps
+} from "~/components";
+
+[Workers](/workers/) let you run code at the edge. When you bind an R2 bucket to a Worker, you can read and write objects directly using the [Workers API](/r2/api/workers/workers-api-usage/).
+
+## 1. Create a bucket
+
+<Render file="create-bucket-steps" product="r2" />
+
+## 2. Create a Worker with an R2 binding
+
+<Steps>
+
+1. Create a new Worker project:
+
+   <PackageManagers type="create" pkg="cloudflare@latest" args={"r2-worker"} />
+
+   When prompted, select **Hello World example** and **JavaScript** (or TypeScript) as your template.
+
+2. Move into the project directory:
+
+   ```sh
+   cd r2-worker
+   ```
+
+3. Add an R2 binding to your Wrangler configuration file. Replace `my-bucket` with your bucket name:
+
+   <WranglerConfig>
+
+   ```toml
+   [[r2_buckets]]
+   binding = "MY_BUCKET"
+   bucket_name = "my-bucket"
+   ```
+
+   </WranglerConfig>
+
+4. (Optional) If you are using TypeScript, regenerate types:
+
+   ```sh
+   npx wrangler types
+   ```
+
+</Steps>
+
+## 3. Read and write objects
+
+Use the binding to interact with your bucket. This example stores and retrieves objects based on the URL path:
+
+<Tabs>
+<TabItem label="JavaScript">
+
+```js title="src/index.js"
+export default {
+	async fetch(request, env) {
+		// Get the object key from the URL path
+		// For example: /images/cat.png → images/cat.png
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
+
+		// PUT: Store the request body in R2
+		if (request.method === "PUT") {
+			await env.MY_BUCKET.put(key, request.body);
+			return new Response(`Put ${key} successfully!`);
+		}
+
+		// GET: Retrieve the object from R2
+		const object = await env.MY_BUCKET.get(key);
+		if (object === null) {
+			return new Response("Object not found", { status: 404 });
+		}
+		return new Response(object.body);
+	},
+};
+```
+
+</TabItem>
+<TabItem label="TypeScript">
+
+```ts title="src/index.ts"
+export default {
+	async fetch(request, env): Promise<Response> {
+		// Get the object key from the URL path
+		// For example: /images/cat.png → images/cat.png
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
+
+		// PUT: Store the request body in R2
+		if (request.method === "PUT") {
+			await env.MY_BUCKET.put(key, request.body);
+			return new Response(`Put ${key} successfully!`);
+		}
+
+		// GET: Retrieve the object from R2
+		const object = await env.MY_BUCKET.get(key);
+		if (object === null) {
+			return new Response("Object not found", { status: 404 });
+		}
+		return new Response(object.body);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem>
+</Tabs>
+
+## 4. Test and deploy
+
+<Steps>
+
+1. Test your Worker locally:
+
+   ```sh
+   npx wrangler dev
+   ```
+
+   :::note[Local development]
+   By default, `wrangler dev` uses a local R2 simulation. Objects you store during development exist only on your machine in the `.wrangler/state` folder and do not affect your production bucket.
+
+   To connect to your real R2 bucket during development, add `"remote": true` to your R2 binding in your Wrangler configuration file. Refer to [remote bindings](/workers/development-testing/#remote-bindings) for more information.
+   :::
+
+2. Once the dev server is running, test storing and retrieving objects:
+
+   ```sh
+   # Store an object
+   curl -X PUT http://localhost:8787/my-file.txt -d 'Hello, R2!'
+
+   # Retrieve the object
+   curl http://localhost:8787/my-file.txt
+   ```
+
+3. Deploy to production:
+
+   ```sh
+   npx wrangler deploy
+   ```
+
+4. After deploying, Wrangler outputs your Worker's URL (for example, `https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev`). Test storing and retrieving objects:
+
+   ```sh
+   # Store an object
+   curl -X PUT https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev/my-file.txt -d 'Hello, R2!'
+
+   # Retrieve the object
+   curl https://r2-worker.<YOUR_SUBDOMAIN>.workers.dev/my-file.txt
+	 ```
+
+</Steps>
+
+Refer to the [Workers R2 API documentation](/r2/api/workers/workers-api-usage/) for the complete API reference.
+
+## Next steps
+
+<LinkCard
+	title="Presigned URLs"
+	href="/r2/api/s3/presigned-urls/"
+	description="Generate temporary URLs for private object access."
+/>
+
+<LinkCard
+	title="Public buckets"
+	href="/r2/buckets/public-buckets/"
+	description="Serve files directly over HTTP with a public bucket."
+/>
+
+<LinkCard
+	title="CORS"
+	href="/r2/buckets/cors/"
+	description="Configure CORS for browser-based uploads."
+/>
+
+<LinkCard
+	title="Object lifecycles"
+	href="/r2/buckets/object-lifecycles/"
+	description="Set up lifecycle rules to automatically delete old objects."
+/>

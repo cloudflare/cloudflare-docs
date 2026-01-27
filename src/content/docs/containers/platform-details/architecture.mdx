@@ -22,7 +22,7 @@ This allows you to gracefully shutdown any running instances during a rollout. R
 Recall that Containers are backed by [Durable Objects](/durable-objects/) and [Workers](/workers/).
 Requests are first routed through a Worker, which is generally handled
 by a datacenter in a location with the best latency between itself and the requesting user.
-A different datacenter may be selected to optimize overall latency, if [Smart Placement](/workers/configuration/smart-placement/)
+A different datacenter may be selected to optimize overall latency, if [Smart Placement](/workers/configuration/placement/)
 is on, or if the nearest location is under heavy load.
 
 Because all Container requests are passed through a Worker, end-users cannot make non-HTTP TCP or

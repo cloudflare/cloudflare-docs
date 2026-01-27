@@ -1,0 +1,44 @@
+---
+title: New functions for array and map operations
+description: Rulesets now support split, join, has_key, and has_value functions for advanced expression logic.
+date: 2026-01-20
+---
+
+## New functions for array and map operations
+
+Cloudflare Rulesets now include new functions that enable advanced expression logic for evaluating arrays and maps. These functions allow you to build rules that match against lists of values in request or response headers, enabling use cases like country-based blocking using custom headers.
+
+---
+
+### New functions
+
+| Function | Description |
+| --- | --- |
+| `split(source, delimiter)` | Splits a string into an array of strings using the specified delimiter. |
+| `join(array, delimiter)` | Joins an array of strings into a single string using the specified delimiter. |
+| `has_key(map, key)` | Returns `true` if the specified key exists in the map. |
+| `has_value(map, value)` | Returns `true` if the specified value exists in the map. |
+
+---
+
+### Example use cases
+
+**Check if a country code exists in a header list:**
+
+```txt
+has_value(split(http.response.headers["x-allow-country"][0], ","), ip.src.country)
+```
+
+**Check if a specific header key exists:**
+
+```txt
+has_key(http.request.headers, "x-custom-header")
+```
+
+**Join array values for logging or comparison:**
+
+```txt
+join(http.request.headers.names, ", ")
+```
+
+For more information, refer to the [Functions reference](/ruleset-engine/rules-language/functions/).

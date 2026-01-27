@@ -12,7 +12,7 @@ D1 fits into a familiar architecture for developers, where application servers c
 
 D1 aims for a "batteries included" feature set, including the above HTTP API, [database schema management](/d1/reference/migrations/#_top), [data import/export](/d1/best-practices/import-export-data/), and [database query insights](/d1/observability/metrics-analytics/#query-insights).
 
-With D1, your application code and SQL database queries are not colocated which can impact application performance. If performance is a concern with D1, Workers has [Smart Placement](/workers/configuration/smart-placement/#_top) to dynamically run your Worker in the best location to reduce total Worker request latency, considering everything your Worker talks to, including D1.
+With D1, your application code and SQL database queries are not colocated which can impact application performance. If performance is a concern with D1, Workers has [Smart Placement](/workers/configuration/placement/#_top) to dynamically run your Worker in the best location to reduce total Worker request latency, considering everything your Worker talks to, including D1.
 
 **SQLite in Durable Objects is a lower-level compute with storage building block for distributed systems.**
 

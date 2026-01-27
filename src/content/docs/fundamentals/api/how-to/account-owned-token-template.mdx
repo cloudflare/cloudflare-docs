@@ -1,0 +1,197 @@
+---
+title: API token template URLs
+description: Generate Cloudflare API tokens with pre-configured permissions using template URLs. Learn how to create and customize template URLs for any use case.
+lastUpdated: 2025-01-14
+---
+
+Use template URLs to generate Cloudflare API tokens with pre-configured permissions. Template URLs allow you to share token requirements with users without manually selecting permissions in the dashboard.
+
+Template URLs use query parameters to pre-fill the API token creation page in the Cloudflare dashboard. When a user clicks a template URL, the dashboard automatically configures the specified permissions and settings.
+
+:::note
+
+Template URLs only pre-fill the token creation form. Users must still complete the token creation process in the dashboard.
+
+:::
+
+## URL format
+
+The basic template URL structure is:
+
+```
+https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[ENCODED_PERMISSIONS]&accountId=*&zoneId=all&name=[TOKEN_NAME]
+```
+
+### URL components
+
+| Parameter             | Required | Description                                  |
+| --------------------- | -------- | -------------------------------------------- |
+| `permissionGroupKeys` | Yes      | URL-encoded JSON array of permission objects |
+| `accountId`           | Yes      | Account scope (use `*` for all accounts)     |
+| `zoneId`              | Yes      | Zone scope (use `all` for all zones)         |
+| `name`                | No       | Pre-filled token name                        |
+
+### Permission format
+
+Permissions are encoded as a JSON array with the following structure:
+
+```json
+[{ "key": "permission_name", "type": "read|edit|revoke|run|purge" }]
+```
+
+#### Permission types
+
+| Type     | Description                                |
+| -------- | ------------------------------------------ |
+| `read`   | Read-only access                           |
+| `edit`   | Full access (create, read, update, delete) |
+| `revoke` | Revoke permissions                         |
+| `run`    | Execute permissions                        |
+| `purge`  | Purge permissions                          |
+
+
+## Create custom templates
+
+### 1. Identify required permissions
+
+List the permissions your use case needs. Refer to the [permission reference](#permission-reference) table.
+
+### 2. Create the permission JSON
+
+Format your permissions as a JSON array:
+
+```json
+[
+  { "key": "zone_dns", "type": "edit" },
+  { "key": "analytics", "type": "read" }
+]
+```
+
+### 3. URL-encode the JSON
+
+Use a URL encoder to convert the JSON string:
+
+```text
+%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22analytics%22%2C%22type%22%3A%22read%22%7D%5D
+```
+
+### 4. Build the complete URL
+
+Combine all components into the final template URL:
+
+```text
+https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[ENCODED_JSON]&accountId=*&zoneId=all&name=Custom%20Token
+```
+
+## Permission reference
+
+Use this table to find permission keys for your custom templates.
+
+### Account permissions
+
+| Permission key       | Description           | Common use cases         |
+| -------------------- | --------------------- | ------------------------ |
+| `account_analytics`  | Account analytics     | Reporting, monitoring    |
+| `account_api_tokens` | API token management  | Token automation         |
+| `account_settings`   | Account configuration | Account management       |
+| `billing`            | Billing information   | Cost tracking, invoicing |
+| `workers_scripts`    | Workers scripts       | Serverless functions     |
+| `workers_kv`         | Workers KV storage    | Data storage             |
+| `workers_routes`     | Workers routes        | Traffic routing          |
+
+### Zone permissions
+
+| Permission key      | Description     | Common use cases       |
+| ------------------- | --------------- | ---------------------- |
+| `zone_dns`          | DNS records     | Domain management      |
+| `zone`              | Zone management | Domain configuration   |
+| `analytics`         | Zone analytics  | Performance monitoring |
+| `firewall_services` | Firewall rules  | Security management    |
+| `page_rules`        | Page rules      | Traffic control        |
+| `cache_purge`       | Cache purging   | Content updates        |
+
+### Access permissions
+
+| Permission key       | Description          | Common use cases          |
+| -------------------- | -------------------- | ------------------------- |
+| `access`             | Access applications  | Zero Trust apps           |
+| `access_acct`        | Access organizations | Identity management       |
+| `access_audit_log`   | Access audit logs    | Compliance, security      |
+| `access_custom_page` | Custom pages         | Branding, user experience |
+
+
+## Common permission templates
+
+Use these ready-to-use template URLs for common scenarios.
+
+### DNS management
+
+Create tokens for DNS record management.
+
+| Use case       | Template URL                                                                                                                                                                                             |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DNS read-only  | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=DNS%20Read%20Token<br>`       |
+| DNS read/write | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=DNS%20Management%20Token<br>` |
+
+### Workers development
+
+Create tokens for Workers, KV storage, and related services.
+
+| Use case             | Template URL                                                                                                                                                                                                                                                                                                                                             |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workers scripts only | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Workers%20Scripts%20Token<br>`                                                                                                                                         |
+| Workers full access  | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Workers%20Full%20Access%20Token<br>` |
+
+### Analytics and monitoring
+
+Create tokens for accessing analytics and logs.
+
+| Use case          | Template URL                                                                                                                                                                                                         |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Account analytics | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22account_analytics%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=Account%20Analytics%20Token<br>` |
+| Zone analytics    | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22analytics%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=Zone%20Analytics%20Token<br>`            |
+
+### Zero Trust administration
+
+Create tokens for Cloudflare Zero Trust management.
+
+| Use case                 | Template URL                                                                                                                                                                                                                                                              |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Access applications read | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22access%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=Access%20Read%20Token<br>`                                                                       |
+| Access full management   | `text<br>https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22access%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22access_acct%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Access%20Management%20Token<br>` |
+
+## Best practices
+
+Follow these guidelines when creating and sharing template URLs.
+
+- Principle of least privilege: Only request the minimum permissions necessary for your use case. This reduces security risks if a token is compromised.
+- Use descriptive token names: Include clear, descriptive names in your template URLs to help users understand the token's purpose.
+- Document token usage: Provide clear documentation about what each token is used for and how to revoke it when no longer needed.
+- Regular token rotation: Encourage users to regularly rotate tokens and review permissions.
+- Test before sharing: Always test template URLs in a staging environment before sharing them with users.
+
+## Troubleshooting
+
+Review the list of common issues and solutions.
+
+| Issue                             | Solution                                                  |
+| --------------------------------- | --------------------------------------------------------- |
+| URL does not pre-fill permissions | Verify the JSON is properly URL-encoded                   |
+| Permissions are missing           | Check permission keys in the reference table              |
+| Token name does not appear        | Ensure the name parameter is URL-encoded                  |
+| Access denied error               | Verify the user has required permissions in their account |
+
+Additionally, review the checklist before sharing a template URL.
+
+- All permission keys are correct
+- JSON syntax is valid
+- URL encoding is proper
+- Token name is descriptive
+- Permissions follow least privilege principle
+
+## Related resources
+
+- [API token permissions](/fundamentals/api/reference/permissions/)
+- [Create API tokens](/fundamentals/api/get-started/create-token/)
+- [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/)
+- [API authentication](/fundamentals/api/how-to/make-api-calls/)
