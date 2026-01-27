@@ -10,9 +10,9 @@ Treat any fenced code block (triple backticks) and any code inside MDX component
 
 **Read the full file to understand context.** A code snippet may reference bindings, types, or patterns defined elsewhere on the page. If multiple code blocks are part of one step-by-step flow, review them together and do not flag “missing” pieces that appear in earlier or later blocks.
 
-## Identify the Purpose of the Code
+## 1. Identify the Purpose of the Code
 
-Every code example can be categorized into one of the following types:
+First, identify the purpose of the code. Every code example can be categorized into one of the following types:
 
 - **Illustrative**: A code example that purely exists to demonstrate a point. They often use code comments for a large chunk of the code, and only showcase the few lines of code in focus.
   - Example: Durable Objects Workers Binding API snippets (https://developers.cloudflare.com/durable-objects/api/namespace/#idfromstring)
@@ -21,9 +21,9 @@ Every code example can be categorized into one of the following types:
 - **Executable**: A code example that is standalone and complete. It can be executed and will run without errors. It should be complete, including imports and any required config/bindings shown on the page.
   - Example: Final code in Get started sections (https://developers.cloudflare.com/d1/worker-api/#2-modify-the-content-of-indexjs)
 
-First, identify the purpose of the code. In the subsequent steps, review _in the context_ of that category of code. Clearly state the code categorization of each codeblock in the output.
+In the subsequent steps, review **in the context** of that category of code. Clearly state the code categorization of each codeblock in the output.
 
-## What to Look For
+## 2. What to Look For
 
 **Correctness** — Primary focus.
 
@@ -56,29 +56,29 @@ First, identify the purpose of the code. In the subsequent steps, review _in the
 - Required fields: `name`, `compatibility_date`, `main`
 - Binding names must match between config and code
 
-## Before You Flag Something
+## 3. Before You Flag Something
 
 - **Be certain.** Don't flag something if you're unsure — read more context first. If you cannot confirm an API, option name, or binding pattern from the page context, do not guess. Ask for more context or refrain from flagging it.
 - **Don't nitpick style.** Focus on code that won't work or teaches bad practices.
 - **Buffering small payloads is fine.** Only flag when size is unknown or large.
 - **TOML is acceptable** in existing docs — only use jsonc for new content.
 
-## Severity
+## 4.Severity
 
 - **Important**: Code won't work — syntax errors, wrong binding access, missing imports, hardcoded secrets
 - **Needs Improvement**: Code works but has issues — missing error handling, buffering large data, outdated config
 - **Minor Nits**: Style preferences — TOML vs JSONC, verbose but functional code
 
-## Output
+## 5. Output
 
-Ensure you have fully understood the formatting of the code. Pay close attention to indentations (tabs, spaces, how many spaces), as well as the number of backticks. Use the existing code to identify the convention being used, and follow it strictly.
+Ensure you have fully understood the formatting of the code. Pay close attention to indentations (tabs, spaces, how many spaces), as well as the number of backticks (must only ever be **triple** backticks!). Use the existing code to identify the convention being used, and follow it strictly.
 
-For each codeblock:
+For each codeblock you change, output:
 
-- File path and line number
-- Type of code example (Illustrative, Demonstrative, Executable)
-- Issues found (if any) and why they matter
-- Before/after code when helpful
+1. File path and line number
+2. Categorization (Illustrative, Demonstrative, Executable)
+3. Issues found (if any) and why they matter
+4. Before/after code when helpful
 
 End with a summary count by severity, or "All code snippets pass review."
 
