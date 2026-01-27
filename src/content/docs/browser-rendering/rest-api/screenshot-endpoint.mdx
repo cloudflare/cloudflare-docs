@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: /screenshot - Capture screenshot
 sidebar:
-  order: 3
+  order: 8
 ---
 
 import { Tabs, TabItem, Render } from "~/components";
@@ -90,7 +90,7 @@ Visit the [Browser Rendering API reference](/api/resources/browser_rendering/sub
 
 ### Capture a screenshot of an authenticated page
 
-Some webpages require authentication before you can view their content. To capture a screenshot of these pages, you must provide valid session cookies. The following example navigates to a page that requires login. By providing a valid cookie in the `cookies` array, Browser Rendering will be able to access the secure content in order to capture the screenshot. 
+Some webpages require authentication before you can view their content. To capture a screenshot of these pages, you must provide valid session cookies. The following example navigates to a page that requires login. By providing a valid cookie in the `cookies` array, Browser Rendering will be able to access the secure content in order to capture the screenshot.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
