@@ -31,7 +31,7 @@ In the subsequent steps, review **in the context** of that category of code. Cle
 - Correct binding access: `env.X` in fetch handlers, `this.env.X` in classes (WorkerEntrypoint, DurableObject, Workflow, Agent)
 - Bindings in code match `<WranglerConfig>` declarations
 - Required imports present
-- Use latest Cloudflare APIs; flag deprecated methods or patterns when a modern replacement exists
+- Use latest Cloudflare APIs; flag deprecated methods or patterns when a modern replacement exists. If you flag an API call which seems incorrect, explicitly verify this against Cloudflare documentation.
 
 **Streaming** — Flag obvious memory issues.
 
@@ -74,6 +74,8 @@ In the subsequent steps, review **in the context** of that category of code. Cle
 ## 5. Output
 
 Ensure you have fully understood the formatting of the code. Pay close attention to indentations (tabs, spaces, how many spaces), as well as the number of backticks (almost always triple backticks!). Preserve the existing fencing style exactly.
+
+Explicitly perform a final sweep of the whole file to make sure fencing and code formatting is correct.
 
 For each codeblock reviewed, output:
 
