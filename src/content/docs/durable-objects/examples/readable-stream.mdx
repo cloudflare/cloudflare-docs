@@ -68,9 +68,8 @@ export class MyDurableObject extends DurableObject<Env> {
 
 export default {
     async fetch(request, env, ctx): Promise<Response> {
-        const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-        const stub = env.MY_DURABLE_OBJECT.get(id);
-        const response = await stub.fetch(request);
+        const stub = env.MY_DURABLE_OBJECT.getByName("foo");
+        const response = await stub.fetch(request, { ...request });
         if (!response.ok || !response.body) {
             return new Response('Invalid response', { status: 500 });
         }
