@@ -134,23 +134,34 @@ Here is a [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
-```toml
-name = "backup-d1"
-main = "src/index.ts"
-compatibility_date = "2024-12-27"
-compatibility_flags = [ "nodejs_compat" ]
-
-[[workflows]]
-name = "backup-workflow"
-binding = "BACKUP_WORKFLOW"
-class_name = "backupWorkflow"
-
-[[r2_buckets]]
-binding = "BACKUP_BUCKET"
-bucket_name = "d1-backups"
-
-[triggers]
-crons = [ "0 0 * * *" ]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "backup-d1",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-27",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"workflows": [
+		{
+			"name": "backup-workflow",
+			"binding": "BACKUP_WORKFLOW",
+			"class_name": "backupWorkflow"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "BACKUP_BUCKET",
+			"bucket_name": "d1-backups"
+		}
+	],
+	"triggers": {
+		"crons": [
+			"0 0 * * *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>

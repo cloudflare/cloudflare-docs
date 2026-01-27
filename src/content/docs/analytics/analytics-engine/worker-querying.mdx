@@ -53,9 +53,12 @@ The account ID is set in the [Wrangler configuration file](/workers/wrangler/con
 
 <WranglerConfig>
 
-```toml
-[vars]
-ACCOUNT_ID = "<account_id>"
+```jsonc
+{
+	"vars": {
+		"ACCOUNT_ID": "<account_id>"
+	}
+}
 ```
 
 </WranglerConfig>

@@ -19,10 +19,15 @@ Worker bindings provide a secure way to send data to streams from [Workers](/wor
 Add a pipeline binding to your Wrangler file that points to your stream:
 
 <WranglerConfig>
-```toml
-[[pipelines]]
-pipeline = "<STREAM_ID>"
-binding = "STREAM"
+```jsonc
+{
+	"pipelines": [
+		{
+			"pipeline": "<STREAM_ID>",
+			"binding": "STREAM"
+		}
+	]
+}
 ```
 </WranglerConfig>
 

@@ -244,14 +244,17 @@ import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
-```toml
-name = "my-static-site"
-main = "./src/index.js"
-compatibility_date = "2025-01-29"
-
-[assets]
-directory = "./public"
-binding = "ASSETS"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-static-site",
+	"main": "./src/index.js",
+	"compatibility_date": "2025-01-29",
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS"
+	}
+}
 ```
 
 </WranglerConfig>

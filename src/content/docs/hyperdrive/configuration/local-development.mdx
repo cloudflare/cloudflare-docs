@@ -54,11 +54,16 @@ Alternatively, you can set `localConnectionString` in your [Wrangler configurati
 
 <WranglerConfig>
 
-```toml
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "c020574a-5623-407b-be0c-cd192bab9545"
-localConnectionString = "postgres://user:password@localhost:5432/databasename"
+```jsonc
+{
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "c020574a-5623-407b-be0c-cd192bab9545",
+			"localConnectionString": "postgres://user:password@localhost:5432/databasename"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

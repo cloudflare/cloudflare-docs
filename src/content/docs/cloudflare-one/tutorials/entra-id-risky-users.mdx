@@ -87,20 +87,24 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 
    <WranglerConfig>
 
-   ```toml
-   name = "risky-users"
-   compatibility_date = "2023-01-04"
-   main = "src/index.js"
-   workers_dev = false
-
-   account_id = "<ACCOUNT-ID>"
-
-   [vars]
-   AZURE_AD_TENANT_ID = "<TENANT-ID>"
-   AZURE_AD_CLIENT_ID = "<CLIENT-ID>"
-
-   [triggers]
-   crons = ["* * * * *"]
+   ```jsonc
+   {
+     "$schema": "./node_modules/wrangler/config-schema.json",
+     "name": "risky-users",
+     "compatibility_date": "2023-01-04",
+     "main": "src/index.js",
+     "workers_dev": false,
+     "account_id": "<ACCOUNT-ID>",
+     "vars": {
+       "AZURE_AD_TENANT_ID": "<TENANT-ID>",
+       "AZURE_AD_CLIENT_ID": "<CLIENT-ID>"
+     },
+     "triggers": {
+       "crons": [
+         "* * * * *"
+       ]
+     }
+   }
    ```
 
    </WranglerConfig>

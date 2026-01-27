@@ -113,11 +113,17 @@ To bind an account secret to your Worker, you must have one of the following [ro
 
 <WranglerConfig>
 
-```toml
-main = "./src/index.js"
-secrets_store_secrets = [
-  { binding = "<BINDING_VARIABLE>", store_id= "<STORE_ID>", secret_name = "<MY_SECRET_NAME>" }
-]
+```jsonc
+{
+	"main": "./src/index.js",
+	"secrets_store_secrets": [
+		{
+			"binding": "<BINDING_VARIABLE>",
+			"store_id": "<STORE_ID>",
+			"secret_name": "<MY_SECRET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

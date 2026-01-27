@@ -47,14 +47,19 @@ Your Worker configuration must include the `nodejs_compat` compatibility flag an
 
 <WranglerConfig>
 
-```toml
-name = "browser-worker"
-main = "src/index.ts"
-compatibility_date = "2025-09-17"
-compatibility_flags = [ "nodejs_compat" ]
-
-browser = { binding = "MYBROWSER" }
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "browser-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-09-17",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"browser": {
+		"binding": "MYBROWSER"
+	}
+}
 ```
 
 </WranglerConfig>

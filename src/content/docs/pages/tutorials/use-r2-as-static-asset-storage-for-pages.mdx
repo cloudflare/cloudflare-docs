@@ -72,10 +72,15 @@ Open the [Wrangler configuration file](/pages/functions/wrangler-configuration/)
 
 <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-binding = "MEDIA"
-bucket_name = "cat-media"
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "cat-media"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

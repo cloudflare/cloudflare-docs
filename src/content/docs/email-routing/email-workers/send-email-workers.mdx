@@ -17,10 +17,15 @@ import { Render, WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
-```toml
-send_email = [
-    {name = "<NAME_FOR_BINDING>", destination_address = "<YOUR_EMAIL>@example.com"},
-]
+```jsonc
+{
+	"send_email": [
+		{
+			"name": "<NAME_FOR_BINDING>",
+			"destination_address": "<YOUR_EMAIL>@example.com"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

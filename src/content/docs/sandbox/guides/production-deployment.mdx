@@ -40,14 +40,19 @@ This routes all subdomains through Cloudflare's proxy. The IP address `192.0.2.0
 Add a wildcard route to your Wrangler configuration:
 
 <WranglerConfig>
-```toml
-name = "my-sandbox-app"
-main = "src/index.ts"
-compatibility_date = "$today"
-
-[[routes]]
-pattern = "*.yourdomain.com/*"
-zone_name = "yourdomain.com"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-sandbox-app",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"routes": [
+		{
+			"pattern": "*.yourdomain.com/*",
+			"zone_name": "yourdomain.com"
+		}
+	]
+}
 ```
 </WranglerConfig>
 

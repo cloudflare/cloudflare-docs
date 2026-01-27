@@ -36,20 +36,25 @@ To bind to a Workflow from your Workers code, you need to define a [binding](/wo
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "workflows-tutorial"
-main = "src/index.ts"
-compatibility_date = "2024-10-22"
-
-[[workflows]]
-# The name of the Workflow
-name = "workflows-tutorial"
-# The binding name, which must be a valid JavaScript variable name.  This will
-# be how you call (run) your Workflow from your other Workers handlers or
-# scripts.
-binding = "MY_WORKFLOW"
-# Must match the class defined in your code that extends the Workflow class
-class_name = "MyWorkflow"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workflows-tutorial",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-10-22",
+	"workflows": [
+		{
+			// The name of the Workflow
+			"name": "workflows-tutorial",
+			// The binding name, which must be a valid JavaScript variable name.  This will
+			// be how you call (run) your Workflow from your other Workers handlers or
+			// scripts.
+			"binding": "MY_WORKFLOW",
+			// Must match the class defined in your code that extends the Workflow class
+			"class_name": "MyWorkflow"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

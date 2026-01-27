@@ -26,21 +26,37 @@ Here is an example configuration that sets a 5 minute grace period and a two ste
 
 <WranglerConfig>
 
-```toml
-[[containers]]
-max_instances = 10
-class_name = "MyContainer"
-image = "./Dockerfile"
-rollout_active_grace_period = 300
-rollout_step_percentage = [10, 100]
-
-[[durable_objects.bindings]]
-name = "MY_CONTAINER"
-class_name = "MyContainer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyContainer"]
+```jsonc
+{
+	"containers": [
+		{
+			"max_instances": 10,
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"rollout_active_grace_period": 300,
+			"rollout_step_percentage": [
+				10,
+				100
+			]
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "MyContainer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"MyContainer"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

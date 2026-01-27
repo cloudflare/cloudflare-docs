@@ -107,37 +107,45 @@ The following is an example of a VPC Service for a service using custom HTTP and
 Once you have created a VPC Service, you can bind it to your Worker:
 
 <WranglerConfig>
-```toml
-name = "my-worker"
-main = "src/index.js"
-
-[[vpc_services]]
-binding = "PRIVATE_API"
-service_id = "e6a0817c-79c5-40ca-9776-a1c019defe70"
-remote = true # When true, utilizes [remote bindings](/workers/development-testing/#remote-bindings) to allow access to the VPC Service during local development.
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"main": "src/index.js",
+	"vpc_services": [
+		{
+			"binding": "PRIVATE_API",
+			"service_id": "e6a0817c-79c5-40ca-9776-a1c019defe70",
+			"remote": true // When true, utilizes [remote bindings](/workers/development-testing/#remote-bindings) to allow access to the VPC Service during local development.
+		}
+	]
+}
 ```
 </WranglerConfig>
 
 You can have multiple VPC service bindings:
 
 <WranglerConfig>
-```toml
-[[vpc_services]]
-binding = "PRIVATE_API"
-service_id = "daf43e8c-a81a-4242-9912-4a2ebe4fdd79"
-remote = true
-
-[[vpc_services]]
-binding = "PRIVATE_DATABASE"
-service_id = "453b6067-1327-420d-89b3-2b6ad16e6551"
-remote = true
-
-[[vpc_services]]
-binding = "INTERNAL_CACHE"
-service_id = "6c39b574-237e-49f4-852a-cea5a93ed8f9"
-remote = true
-
+```jsonc
+{
+	"vpc_services": [
+		{
+			"binding": "PRIVATE_API",
+			"service_id": "daf43e8c-a81a-4242-9912-4a2ebe4fdd79",
+			"remote": true
+		},
+		{
+			"binding": "PRIVATE_DATABASE",
+			"service_id": "453b6067-1327-420d-89b3-2b6ad16e6551",
+			"remote": true
+		},
+		{
+			"binding": "INTERNAL_CACHE",
+			"service_id": "6c39b574-237e-49f4-852a-cea5a93ed8f9",
+			"remote": true
+		}
+	]
+}
 ```
 
 </WranglerConfig>

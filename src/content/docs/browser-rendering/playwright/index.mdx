@@ -42,16 +42,21 @@ To use the latest version of `@cloudflare/playwright`, your Worker configuration
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-playwright-example"
-main = "src/index.ts"
-workers_dev = true
-compatibility_flags = ["nodejs_compat"]
-compatibility_date = "2025-09-17"
-upload_source_maps = true
-
-[browser]
-binding = "MYBROWSER"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-playwright-example",
+	"main": "src/index.ts",
+	"workers_dev": true,
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"compatibility_date": "2025-09-17",
+	"upload_source_maps": true,
+	"browser": {
+		"binding": "MYBROWSER"
+	}
+}
 ```
 
 </WranglerConfig>

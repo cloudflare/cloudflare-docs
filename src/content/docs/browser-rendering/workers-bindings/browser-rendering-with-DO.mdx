@@ -69,32 +69,46 @@ Your Worker configuration must include the `nodejs_compat` compatibility flag an
 
 <WranglerConfig>
 
-```toml
-name = "rendering-api-demo"
-main = "src/index.js"
-compatibility_date = "2025-09-17"
-compatibility_flags = [ "nodejs_compat"]
-account_id = "<ACCOUNT_ID>"
-
-
-# Browser Rendering API binding
-browser = { binding = "MYBROWSER" }
-
-# Bind an R2 Bucket
-[[r2_buckets]]
-binding = "BUCKET"
-bucket_name = "screenshots"
-preview_bucket_name = "screenshots-test"
-
-# Binding to a Durable Object
-[[durable_objects.bindings]]
-name = "BROWSER"
-class_name = "Browser"
-
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["Browser"] # Array of new classes
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "rendering-api-demo",
+	"main": "src/index.js",
+	"compatibility_date": "2025-09-17",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"account_id": "<ACCOUNT_ID>",
+	// Browser Rendering API binding
+	"browser": {
+		"binding": "MYBROWSER"
+	},
+	// Bind an R2 Bucket
+	"r2_buckets": [
+		{
+			"binding": "BUCKET",
+			"bucket_name": "screenshots",
+			"preview_bucket_name": "screenshots-test"
+		}
+	],
+	// Binding to a Durable Object
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "BROWSER",
+				"class_name": "Browser"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1", // Should be unique for each entry
+			"new_sqlite_classes": [ // Array of new classes
+				"Browser"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

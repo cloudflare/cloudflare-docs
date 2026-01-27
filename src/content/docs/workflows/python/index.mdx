@@ -56,16 +56,25 @@ async def on_fetch(request, env):
 You must add both `python_workflows` and `python_workers` compatibility flags to your `wrangler.toml` file.
 
 <WranglerConfig>
-```toml
-name = "hello-python"
-main = "src/entry.py"
-compatibility_flags = ["python_workers", "experimental", "python_workflows"]
-compatibility_date = "2024-03-29"
-
-[[workflows]]
-name = "workflows-demo"
-binding = "MY_WORKFLOW"
-class_name = "PythonWorkflowStarter"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "hello-python",
+	"main": "src/entry.py",
+	"compatibility_flags": [
+		"python_workers",
+		"experimental",
+		"python_workflows"
+	],
+	"compatibility_date": "2024-03-29",
+	"workflows": [
+		{
+			"name": "workflows-demo",
+			"binding": "MY_WORKFLOW",
+			"class_name": "PythonWorkflowStarter"
+		}
+	]
+}
 ```
 </WranglerConfig>
 

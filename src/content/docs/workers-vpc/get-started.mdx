@@ -155,15 +155,19 @@ The command will return a service ID. Save this for the next step.
 Add the VPC Service binding to your `wrangler.toml`:
 
 <WranglerConfig>
-```toml
-name = "workers-vpc-app"
-main = "src/index.ts"
-compatibility_date = "2024-01-01"
-
-[[vpc_services]]
-binding = "VPC_SERVICE"
-service_id = "<YOUR_SERVICE_ID>"
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workers-vpc-app",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-01-01",
+	"vpc_services": [
+		{
+			"binding": "VPC_SERVICE",
+			"service_id": "<YOUR_SERVICE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -202,19 +202,28 @@ And finally [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
-```toml
-name = "cart-invoices"
-main = "src/index.ts"
-compatibility_date = "2024-10-22"
-compatibility_flags = ["nodejs_compat" ]
-
-[[workflows]]
-name = "cart-invoices-workflow"
-binding = "CART_WORKFLOW"
-class_name = "cartInvoicesWorkflow"
-
-[[send_email]]
-name = "SEND_EMAIL"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cart-invoices",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-10-22",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"workflows": [
+		{
+			"name": "cart-invoices-workflow",
+			"binding": "CART_WORKFLOW",
+			"class_name": "cartInvoicesWorkflow"
+		}
+	],
+	"send_email": [
+		{
+			"name": "SEND_EMAIL"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
