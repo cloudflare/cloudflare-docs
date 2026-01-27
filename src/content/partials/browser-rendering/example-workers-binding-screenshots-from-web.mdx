@@ -51,16 +51,26 @@ Update your [Wrangler configuration file](/workers/wrangler/configuration/) with
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "browser-worker"
-main = "src/index.js"
-compatibility_date = "2023-03-14"
-compatibility_flags = [ "nodejs_compat" ]
-
-browser = { binding = "MYBROWSER" }
-kv_namespaces = [
-  { binding = "BROWSER_KV_DEMO", id = "22cf855786094a88a6906f8edac425cd", preview_id = "e1f8b68b68d24381b57071445f96e623" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "browser-worker",
+	"main": "src/index.js",
+	"compatibility_date": "2023-03-14",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"browser": {
+		"binding": "MYBROWSER"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "BROWSER_KV_DEMO",
+			"id": "22cf855786094a88a6906f8edac425cd",
+			"preview_id": "e1f8b68b68d24381b57071445f96e623"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -8,9 +8,12 @@ Consider the following two Workers, connected via a [Service Binding](/workers/r
 
 <WranglerConfig>
 
-```toml
-name = "counter-service"
-main = "./src/counterService.js"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "counter-service",
+	"main": "./src/counterService.js"
+}
 ```
 
 </WranglerConfig>
@@ -41,12 +44,18 @@ This function can then be called by the client Worker:
 
 <WranglerConfig>
 
-```toml
-name = "client_worker"
-main = "./src/clientWorker.js"
-services = [
-  { binding = "COUNTER_SERVICE", service = "counter-service" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "client_worker",
+	"main": "./src/clientWorker.js",
+	"services": [
+		{
+			"binding": "COUNTER_SERVICE",
+			"service": "counter-service"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

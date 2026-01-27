@@ -11,10 +11,15 @@ To bind your Hyperdrive configuration to your Worker, add the following to the e
 
 <WranglerConfig>
 
-```toml
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "<YOUR_DATABASE_ID>" # the ID associated with the Hyperdrive you just created
+```jsonc
+{
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "<YOUR_DATABASE_ID>" // the ID associated with the Hyperdrive you just created
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -31,11 +36,16 @@ If you wish to use a local database during development, you can add a `localConn
 
 <WranglerConfig>
 
-```toml
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "<YOUR_DATABASE_ID>" # the ID associated with the Hyperdrive you just created
-localConnectionString = "<LOCAL_DATABASE_CONNECTION_URI>"
+```jsonc
+{
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "<YOUR_DATABASE_ID>", // the ID associated with the Hyperdrive you just created
+			"localConnectionString": "<LOCAL_DATABASE_CONNECTION_URI>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
