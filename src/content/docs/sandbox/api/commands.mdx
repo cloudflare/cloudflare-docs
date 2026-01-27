@@ -106,6 +106,7 @@ const process = await sandbox.startProcess(command: string, options?: ProcessOpt
 - `getLogs()` - Get accumulated logs
 - `waitForPort()` - Wait for process to listen on a port
 - `waitForLog()` - Wait for pattern in process output
+- `waitForExit()` - Wait for process to terminate and return exit code
 
 <TypeScriptExample>
 ```
@@ -315,6 +316,36 @@ await server.waitForLog('Ready', 30000);
 **Throws**:
 - `ProcessReadyTimeoutError` - If pattern is not found within timeout
 - `ProcessExitedBeforeReadyError` - If process exits before pattern appears
+
+### `process.waitForExit()`
+
+Wait for a process to terminate and return the exit code.
+
+```ts
+const result = await process.waitForExit(timeout?: number): Promise<WaitForExitResult>
+```
+
+**Parameters**:
+- `timeout` - Maximum wait time in milliseconds (optional)
+
+**Returns**: `Promise<WaitForExitResult>` with:
+- `exitCode` - The process exit code
+
+<TypeScriptExample>
+```
+const build = await sandbox.startProcess('npm run build');
+
+// Wait for build to complete
+const result = await build.waitForExit();
+console.log('Build finished with exit code:', result.exitCode);
+
+// With timeout
+const result = await build.waitForExit(60000); // 60 second timeout
+```
+</TypeScriptExample>
+
+**Throws**:
+- `ProcessReadyTimeoutError` - If process does not exit within timeout
 
 ## Related resources
 
