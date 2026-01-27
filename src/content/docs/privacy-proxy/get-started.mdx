@@ -19,7 +19,7 @@ Privacy Proxy is a managed service. Before you can connect, Cloudflare will prov
 
 ---
 
-## Step 1: Configure your client
+## 1. Configure your client
 
 Privacy Proxy accepts connections over HTTP/2 and HTTP/3 using the HTTP CONNECT method. Because Privacy Proxy requires authentication headers, you cannot configure browsers to connect directly. Instead, use one of the following approaches:
 
@@ -54,7 +54,7 @@ curl -v \
 
 ---
 
-## Step 2: Verify the connection
+## 2. Verify the connection
 
 To confirm that traffic is routing through Privacy Proxy, check your apparent IP address:
 
@@ -86,7 +86,7 @@ The `ip` value confirms the egress IP address used by the proxy.
 
 ---
 
-## Step 3: Test geolocation (optional)
+## 3. (Optional) Test geolocation
 
 Privacy Proxy preserves user geolocation by selecting egress IP addresses based on the client's location. You can specify a geohash to test this behavior:
 

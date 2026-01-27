@@ -5,14 +5,14 @@ sidebar:
   order: 3
 ---
 
-Privacy Proxy requires clients to authenticate before proxying traffic. This page explains the supported authentication methods and when to use each.
+Privacy Proxy requires clients to authenticate before proxying traffic. This page explains each supported authentication methods and when to use them.
 
 ## Authentication methods
 
 Privacy Proxy supports two authentication methods:
 
 | Method | Use case | Privacy level |
-|--------|----------|---------------|
+| -------- | ---------- | --------------- |
 | Pre-shared key (PSK) | Proof of concept, testing | Lower |
 | Privacy Pass tokens | Production deployments | Higher |
 
@@ -42,7 +42,7 @@ PSK authentication has limitations that make it unsuitable for production:
 - **No rate limiting per user**: You cannot enforce per-user quotas or limits.
 - **Linkability**: The proxy can link all requests using the same PSK, which reduces user privacy.
 
-Use PSK only for testing. For production deployments, use Privacy Pass tokens.
+Use PSK only for testing. For production deployments, use [Privacy Pass tokens](#privacy-pass-tokens).
 
 ---
 

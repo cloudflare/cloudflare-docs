@@ -11,7 +11,7 @@ This page documents the HTTP headers used by Privacy Proxy for authentication, g
 
 Clients include these headers when connecting to Privacy Proxy.
 
-### Proxy-Authorization
+### `Proxy-Authorization`
 
 Authenticates the client to the proxy. Required for all requests.
 
@@ -28,11 +28,11 @@ Proxy-Authorization: PrivateToken token=<base64-encoded-token>
 ```
 
 | Parameter | Description |
-|-----------|-------------|
+| ----------- | ------------- |
 | `<key>` | The pre-shared key provided by Cloudflare |
 | `<base64-encoded-token>` | A base64-encoded Privacy Pass token |
 
-### sec-ch-geohash
+### `sec-ch-geohash`
 
 Specifies the client's geographic location for egress IP selection. Optional but recommended for accurate geolocation.
 
@@ -41,13 +41,12 @@ sec-ch-geohash: <geohash>-<country_code>
 ```
 
 | Parameter | Description |
-|-----------|-------------|
+| ----------- | ------------- |
 | `<geohash>` | A [geohash](https://en.wikipedia.org/wiki/Geohash) string (typically 4-8 characters) |
 | `<country_code>` | ISO 3166-1 alpha-2 country code |
 
-**Example:**
 
-```http
+```http title="Example"
 sec-ch-geohash: u4pruydqqvj-GB
 ```
 
@@ -59,7 +58,7 @@ This example specifies a location in the United Kingdom.
 
 Privacy Proxy includes these headers in responses.
 
-### Server-Timing
+### `Server-Timing`
 
 Provides timing information about proxy processing. Use this to measure latency introduced by the proxy.
 
@@ -68,12 +67,11 @@ Server-Timing: proxy;dur=<milliseconds>
 ```
 
 | Parameter | Description |
-|-----------|-------------|
+| ----------- | ------------- |
 | `<milliseconds>` | Processing time in milliseconds |
 
-**Example:**
 
-```http
+```http title="Example"
 Server-Timing: proxy;dur=8.2
 ```
 
@@ -93,7 +91,7 @@ sec-ch-geohash: 9q8yy-US
 The proxy responds with a status code indicating success or failure:
 
 | Status | Meaning |
-|--------|---------|
+| -------- | --------- |
 | `200 OK` | Tunnel established successfully |
 | `403 Forbidden` | Authentication failed |
 | `502 Bad Gateway` | Could not connect to destination |

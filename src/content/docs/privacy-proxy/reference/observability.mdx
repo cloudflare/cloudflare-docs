@@ -25,7 +25,7 @@ Cloudflare configures your Privacy Proxy instance to export telemetry to this en
 Privacy Proxy exports the following telemetry signals:
 
 | Signal | Description |
-|--------|-------------|
+| -------- | ------------- |
 | Metrics | Connection counts, request rates, latency histograms, error rates |
 | Traces | Per-request traces showing proxy processing time |
 
@@ -36,7 +36,7 @@ Privacy Proxy exports metrics that help you understand usage patterns and perfor
 ### Connection metrics
 
 | Metric | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `privacy_proxy_connections_total` | Total number of proxy connections |
 | `privacy_proxy_connections_active` | Currently active connections |
 | `privacy_proxy_connections_duration_seconds` | Connection duration histogram |
@@ -44,7 +44,7 @@ Privacy Proxy exports metrics that help you understand usage patterns and perfor
 ### Request metrics
 
 | Metric | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `privacy_proxy_requests_total` | Total CONNECT requests processed |
 | `privacy_proxy_requests_by_status` | Requests grouped by response status code |
 | `privacy_proxy_bytes_sent_total` | Total bytes sent to destinations |
@@ -53,11 +53,11 @@ Privacy Proxy exports metrics that help you understand usage patterns and perfor
 ### Latency metrics
 
 | Metric | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `privacy_proxy_connect_latency_seconds` | Time to establish connection to destination |
 | `privacy_proxy_first_byte_latency_seconds` | Time to first byte from destination |
 
-## Server-Timing header
+## `Server-Timing` header
 
 Privacy Proxy includes a `Server-Timing` header in responses to help measure processing latency from the client side:
 
@@ -75,9 +75,7 @@ To visualize Privacy Proxy metrics in Grafana:
 2. Export metrics from the collector to Prometheus.
 3. Create Grafana dashboards using Prometheus as a data source.
 
-Example Prometheus queries:
-
-```promql
+```promql title="Example Prometheus queries"
 # Request rate over time
 rate(privacy_proxy_requests_total[5m])
 

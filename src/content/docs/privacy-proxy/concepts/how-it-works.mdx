@@ -38,7 +38,7 @@ Throughout this process, the proxy learns the destination but not the content. T
 [MASQUE](https://datatracker.ietf.org/wg/masque/about/) (Multiplexed Application Substrate over QUIC Encryption) defines methods for proxying traffic over HTTP. Privacy Proxy supports two MASQUE methods:
 
 | Method | Transport | Use case |
-|--------|-----------|----------|
+| -------- | ----------- | ---------- |
 | HTTP CONNECT | TCP | Traditional HTTPS traffic |
 | CONNECT-UDP | UDP | QUIC-based traffic, real-time applications |
 
@@ -53,7 +53,7 @@ For a technical deep dive into how these protocols work, refer to [A Primer on P
 Privacy Proxy creates a privacy boundary between user identity and user activity:
 
 | Information | Who knows it |
-|-------------|--------------|
+| ------------- | -------------- |
 | User identity (IP address, account) | Authentication service, first-hop proxy (if using double-hop) |
 | Destination server | Privacy Proxy, destination server |
 | Request content | Client, destination server only |

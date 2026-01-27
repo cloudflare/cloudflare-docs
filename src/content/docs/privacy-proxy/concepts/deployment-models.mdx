@@ -33,7 +33,7 @@ Single-hop deployment works well when:
 - Your privacy model requires hiding client IP addresses from destinations, but not from the proxy operator.
 - You need a straightforward integration with minimal client-side changes.
 
-### Example: Microsoft Edge Secure Network
+#### Example: Microsoft Edge Secure Network
 
 [Microsoft Edge Secure Network](https://blog.cloudflare.com/cloudflare-now-powering-microsoft-edge-secure-network/) uses single-hop deployment. The Edge browser connects directly to Cloudflare's Privacy Proxy, which handles authentication via Privacy Pass and proxies traffic to destination servers. Users get protection from network observers and destination servers without needing to configure additional infrastructure.
 
@@ -63,7 +63,7 @@ In a double-hop deployment, you operate the first proxy (Proxy A), and Cloudflar
 The double-hop architecture ensures:
 
 | Information | Proxy A (you) | Proxy B (Cloudflare) |
-|-------------|---------------|----------------------|
+| ------------- | --------------- | ---------------------- |
 | Client IP address | Yes | No |
 | User account | Yes | No |
 | Destination server | Encrypted | Yes |
@@ -79,7 +79,7 @@ Double-hop deployment works well when:
 - You want to maintain control over user authentication and account management.
 - Regulatory or compliance requirements mandate separation of user data.
 
-### Example: iCloud Private Relay
+#### Example: iCloud Private Relay
 
 [iCloud Private Relay](https://blog.cloudflare.com/icloud-private-relay/) uses double-hop deployment. Apple operates the first-hop proxy, which authenticates users with their Apple ID and encrypts the destination. Cloudflare operates the second-hop proxy, which decrypts the destination and connects to the server. Apple knows who the user is but not where they browse. Cloudflare knows the destinations but not who is browsing.
 
@@ -88,7 +88,7 @@ Double-hop deployment works well when:
 ## Comparison
 
 | Aspect | Single-hop | Double-hop |
-|--------|------------|------------|
+| -------- | ------------ | ------------ |
 | Infrastructure | Cloudflare only | You + Cloudflare |
 | Privacy separation | Proxy sees identity + destination | Split across two parties |
 | Operational complexity | Lower | Higher |
@@ -101,10 +101,16 @@ Double-hop deployment works well when:
 
 Consider these questions when selecting a deployment model:
 
-1. **Who should manage user authentication?** If you want Cloudflare to handle authentication, use single-hop. If you need control over user accounts, use double-hop.
+1. **Who should manage user authentication?** 
 
-2. **What are your privacy requirements?** If your threat model requires that no single party sees both user identity and browsing activity, use double-hop.
+If you want Cloudflare to handle authentication, use single-hop. If you need control over user accounts, use double-hop.
 
-3. **What operational capacity do you have?** Double-hop requires you to operate and maintain a proxy. If you prefer a fully managed solution, use single-hop.
+2. **What are your privacy requirements?** 
+
+If your threat model requires that no single party sees both user identity and browsing activity, use double-hop.
+
+3. **What operational capacity do you have?** 
+
+Double-hop requires you to operate and maintain a proxy. If you prefer a fully managed solution, use single-hop.
 
 [Contact us](https://www.cloudflare.com/lp/privacy-edge/) to discuss which deployment model fits your use case.
