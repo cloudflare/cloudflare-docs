@@ -79,7 +79,7 @@ In the subsequent steps, review **in the context** of that category of code. Cle
 
 ## 6. Perform Final Pass
 
-After any edit, re-read the modified section and verify:
+After any edit, you MUST re-read the modified section and verify:
 
 1. Indentation matches surrounding code (same tabs/spaces, same width).
 2. Fencing style is unchanged (same number of backticks, same language tag).
@@ -87,10 +87,10 @@ After any edit, re-read the modified section and verify:
 
 ## 7. Create Output
 
-For each codeblock reviewed, output:
+For each codeblock reviewed, you MUST output:
 
-1. File path and line number
-2. Categorization (Illustrative, Demonstrative, Executable)
+1. File path and line number (required)
+2. Categorization: Illustrative, Demonstrative, Executable (required)
 3. Issues found (if any) and why they matter (can be omitted if N/A)
 4. Before/after code when helpful (can be omitted if N/A)
 
