@@ -21,6 +21,7 @@ const linesToRemove = [
 	"For Zero Trust documentation please see: <https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp>",
 	"For related Consumer documentation please see: https://developers.cloudflare.com/warp-client/",
 	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client/>",
+	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client>",
 ];
 
 for (const { platform, display_name } of platforms) {
