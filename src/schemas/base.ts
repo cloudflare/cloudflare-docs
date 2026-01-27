@@ -135,4 +135,10 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"Whether to show the FeedbackPrompt on the page, defaults to true",
 			),
+		wid: z
+			.string()
+			.optional()
+			.describe(
+				"What Id? Used as a generic identifier for external data sources",
+			),
 	});
