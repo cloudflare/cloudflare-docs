@@ -54,9 +54,12 @@ To bind Workers AI to your Worker, add the following to the end of your Wrangler
 
 <WranglerConfig>
 
-```toml
-[ai]
-binding = "AI"
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	}
+}
 ```
 
 </WranglerConfig>

@@ -113,10 +113,15 @@ To bind your index to your Worker, add the following to the end of your Wrangler
 
 <WranglerConfig>
 
-```toml
-[[vectorize]]
-binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
-index_name = "embeddings-index"
+```jsonc
+{
+	"vectorize": [
+		{
+			"binding": "VECTORIZE", // available in your Worker on env.VECTORIZE
+			"index_name": "embeddings-index"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -135,13 +140,18 @@ From within the `embeddings-tutorial` directory, open your Wrangler file in your
 
 <WranglerConfig>
 
-```toml
-[[vectorize]]
-binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
-index_name = "embeddings-index"
-
-[ai]
-binding = "AI" # available in your Worker on env.AI
+```jsonc
+{
+	"vectorize": [
+		{
+			"binding": "VECTORIZE",
+			"index_name": "embeddings-index"
+		}
+	],
+	"ai": {
+		"binding": "AI" // available in your Worker on env.AI
+	}
+}
 ```
 
 </WranglerConfig>

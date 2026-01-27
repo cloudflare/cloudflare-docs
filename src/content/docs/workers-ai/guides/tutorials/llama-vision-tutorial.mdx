@@ -103,10 +103,13 @@ export default {
 1. Open the [Wrangler configuration file](/workers/wrangler/configuration/) and add the following configuration:
 
 <WranglerConfig>
-```toml
-[env]
-[ai]
-binding="AI"
+```jsonc
+{
+	"env": {},
+	"ai": {
+		"binding": "AI"
+	}
+}
 ```
 </WranglerConfig>
 

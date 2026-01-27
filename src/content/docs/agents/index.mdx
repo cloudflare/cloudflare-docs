@@ -96,15 +96,25 @@ export class MyAgent extends Agent {
 Lastly, add the [Durable Objects](/durable-objects/) binding to your wrangler file:
 
 <WranglerConfig>
-```toml
-[[durable_objects.bindings]]
-name = "MyAgent"
-class_name = "MyAgent"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyAgent"]
-
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MyAgent",
+				"class_name": "MyAgent"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"MyAgent"
+			]
+		}
+	]
+}
 ```
 </WranglerConfig>
 
