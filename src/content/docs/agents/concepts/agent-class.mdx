@@ -365,12 +365,13 @@ class MyAgent extends Agent {
     console.log("Raw email size:", raw.length);
 
     // Reply to the email
-    await this.replyToEmail(email, {
+    const result = await this.replyToEmail(email, {
       fromName: "My Agent",
       subject: "Re: " + email.headers.get("subject"),
       body: "Thanks for your email!",
       contentType: "text/plain"
     });
+    console.log("Email sent with ID:", result.messageId);
   }
 }
 ```
@@ -386,6 +387,28 @@ export default {
   }
 };
 ```
+
+The `AgentEmail` interface provides direct access to the underlying email message methods:
+
+```ts
+class MyAgent extends Agent {
+  async onEmail(email: AgentEmail) {
+    // Forward the email to another address
+    const forwardResult = await email.forward("destination@example.com");
+    console.log("Forwarded with message ID:", forwardResult.messageId);
+
+    // Reply to the email
+    const replyResult = await email.reply({
+      from: email.to,
+      to: email.from,
+      raw: rawEmailContent
+    });
+    console.log("Replied with message ID:", replyResult.messageId);
+  }
+}
+```
+
+Both `email.forward()` and `email.reply()` return a `Promise<EmailSendResult>` which contains a `messageId` field that can be used for tracking sent emails.
 
 ### Context Management
 

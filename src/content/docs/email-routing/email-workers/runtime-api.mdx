@@ -19,7 +19,8 @@ An `EmailEvent` is the event type to programmatically process your emails with a
 ```js
 export default {
   async email(message, env, ctx) {
-    await message.forward("<YOUR_EMAIL>");
+    const result = await message.forward("<YOUR_EMAIL>");
+    console.log("Email forwarded with ID:", result.messageId);
   },
 };
 ```
@@ -84,8 +85,8 @@ addEventListener("email", async (event) => {
   public constructor(from: string, to: string, raw: ReadableStream | string);
 
   setReject(reason: string): void;
-  forward(rcptTo: string, headers?: Headers): Promise<void>;
-  reply(message: EmailMessage): Promise<void>;
+  forward(rcptTo: string, headers?: Headers): Promise<EmailSendResult>;
+  reply(message: EmailMessage): Promise<EmailSendResult>;
 }
 ```
 
@@ -115,15 +116,15 @@ An email message that is sent to a consumer Worker and can be rejected/forwarded
 
   * Reject this email message by returning a permanent SMTP error back to the connecting client, including the given reason.
 
-* <code>forward(rcptTostring, headersHeadersoptional)</code> : Promise
+* <code>forward(rcptTostring, headersHeadersoptional)</code> : Promise&lt;EmailSendResult&gt;
 
   * Forward this email message to a verified destination address of the account. If you want, you can add extra headers to the email message. Only `X-*` headers are allowed.
-  * When the promise resolves, the message is confirmed to be forwarded to a verified destination address.
+  * When the promise resolves, the message is confirmed to be forwarded to a verified destination address and returns an `EmailSendResult` object containing a `messageId`.
 
-* <code>reply(EmailMessage)</code> : Promise
+* <code>reply(EmailMessage)</code> : Promise&lt;EmailSendResult&gt;
 
   * Reply to the sender of this email message with a new EmailMessage object.
-  * When the promise resolves, the message is confirmed to be replied.
+  * When the promise resolves, the message is confirmed to be replied and returns an `EmailSendResult` object containing a `messageId`.
 
 
 ## `EmailMessage` definition
@@ -144,3 +145,17 @@ An email message that can be sent from a Worker.
 * `to` string
 
   * `Envelope To` attribute of the email message.
+
+## `EmailSendResult` definition
+
+```ts
+interface EmailSendResult {
+    readonly messageId: string;
+}
+```
+
+The result of sending an email via `forward()` or `reply()`.
+
+* `messageId` string
+
+  * A unique identifier for the sent email message that can be used for tracking and logging purposes.
