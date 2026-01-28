@@ -39,13 +39,16 @@ Start by creating a new Worker project.
     	args="email-service-tutorial"
     />
 
-2.  Add email binding to your Wrangler configuration file:
+    When prompted, select **"Hello World" Worker** as the template.
+
+2.  Add the email binding to your Wrangler configuration file:
 
     <WranglerConfig>
 
     ```toml
     [[send_email]]
     name = "EMAIL"
+    remote = true
     ```
 
     </WranglerConfig>
@@ -53,16 +56,16 @@ Start by creating a new Worker project.
 3.  Create your Worker code in `src/index.ts`:
 
     ```ts
-    interface Env {
-    	EMAIL: EmailBinding;
-    }
+    // Configuration - Update these values
+    const YOUR_DOMAIN = "yourdomain.com"; // Replace with your verified domain
+    const RECIPIENT_EMAIL = "recipient@example.com"; // Replace with your email to receive test emails
 
     export default {
     	async fetch(request: Request, env: Env): Promise<Response> {
     		// Send a welcome email
     		const response = await env.EMAIL.send({
-    			to: "recipient@example.com",
-    			from: "welcome@yourdomain.com", // Replace with your domain
+    			to: RECIPIENT_EMAIL,
+    			from: `welcome@${YOUR_DOMAIN}`,
     			subject: "Welcome to our service!",
     			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
     			text: "Welcome! Thanks for signing up.",
@@ -73,21 +76,30 @@ Start by creating a new Worker project.
     } satisfies ExportedHandler<Env>;
     ```
 
-4.  You can use `npx wrangler dev --remote` to develop your Worker project and send emails. This runs your code on Cloudflare's infrastructure while allowing you to step through the code.
+4.  You can use `npx wrangler dev` to develop your Worker project and send emails. This runs your code locally while connecting to Cloudflare Email Service (using [remote bindings](https://developers.cloudflare.com/workers/development-testing/#remote-bindings)).
 
         ```sh
-        npx wrangler dev --remote
+        npx wrangler dev
         # ⎔ Starting remote preview...
         # Total Upload: 24.96 KiB / gzip: 6.17 KiB
         # [wrangler:info] Ready on http://localhost:8787
         ```
 
-5.  Deploy and test:
+5.  Deploy your Worker:
 
         ```sh
         npm run deploy
-        # Visit your Worker URL to send the email
         ```
+
+## Test your email Worker
+
+After deploying, test that your Worker can send emails:
+
+1. Visit your Worker URL in a browser (shown in the deploy output, for example: `https://email-service-tutorial.<your-subdomain>.workers.dev`).
+
+2. You should see a response like `Email sent: <message-id>`.
+
+3. Check the inbox for the email address you specified in `RECIPIENT_EMAIL`. If you do not see the email, check your spam folder.
 
 ## What's next?
 
