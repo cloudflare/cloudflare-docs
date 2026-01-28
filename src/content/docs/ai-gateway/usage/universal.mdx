@@ -6,7 +6,7 @@ sidebar:
   hidden: true
 ---
 
-import { Render, Badge } from "~/components";
+import { Render, Badge, WranglerConfig } from "~/components";
 
 :::note
 
@@ -77,15 +77,13 @@ ws.on("message", function incoming(message) {
 
 ## Workers Binding example
 
-import { WranglerConfig } from "~/components";
-
 <WranglerConfig>
 
 ```jsonc
 {
 	"ai": {
-		"binding": "AI"
-	}
+		"binding": "AI",
+	},
 }
 ```
 

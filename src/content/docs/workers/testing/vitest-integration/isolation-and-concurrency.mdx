@@ -6,8 +6,9 @@ sidebar:
 head: []
 description: Review how the Workers Vitest integration runs your tests, how it
   isolates tests from each other, and how it imports modules.
-
 ---
+
+import { WranglerConfig } from "~/components";
 
 Review how the Workers Vitest integration runs your tests, how it isolates tests from each other, and how it imports modules.
 
@@ -60,7 +61,6 @@ The Workers Vitest pool works by running code inside a Cloudflare Worker that Vi
 
 :::caution
 
-
 Using Vitest Pool Workers may cause your Worker to behave differently when deployed than during testing as the `nodejs_compat` flag is enabled by default. This means that Node.js-specific APIs and modules are available when running your tests. However, Cloudflare Workers do not support these Node.js APIs in the production environment unless you specify this flag in your Worker configuration.
 
 If you do not have a `nodejs_compat` or `nodejs_compat_v2` flag in your configuration and you import a Node.js module in your Worker code, your tests may pass, but you will find that you will not be able to deploy this Worker, as the upload call (either via the REST API or via Wrangler) will throw an error.
@@ -84,7 +84,7 @@ In our `src/index.ts` file, we use the `process` object, which is a Node.js glob
 ```typescript
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		process.env.TEST = 'test';
+		process.env.TEST = "test";
 		return new Response(process.env.TEST);
 	},
 } satisfies ExportedHandler<Env>;
@@ -94,7 +94,7 @@ The test is a simple assertion that the Worker managed to use `process`.
 
 ```typescript
 it('responds with "test"', async () => {
-	const response = await SELF.fetch('https://example.com/');
+	const response = await SELF.fetch("https://example.com/");
 	expect(await response.text()).toMatchInlineSnapshot(`"test"`);
 });
 ```
