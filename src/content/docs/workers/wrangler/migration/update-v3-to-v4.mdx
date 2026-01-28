@@ -16,6 +16,7 @@ While many users should expect a no-op upgrade, the following sections outline t
 To upgrade to the latest version of Wrangler v4 within your Worker project, run:
 
 <PackageManagers pkg="wrangler@4" dev />
+
 After upgrading, you can verify the installation:
 
 <PackageManagers type="exec" pkg="wrangler" args="--version" />
@@ -63,47 +64,6 @@ Wrangler v4 upgrades esbuild from **v0.17.19** to **v0.24**, bringing improvemen
 - **Dynamic imports:** Wildcard imports (for example, `import('./data/' + kind + '.json')`) now automatically include all matching files in the bundle.
 
 Users relying on wildcard dynamic imports may see unwanted files bundled. Prior to esbuild v0.19, `import` statements with dynamic paths (like `import('./data/' + kind + '.json')`) did not bundle all files matching the glob pattern (`*.json`). Only files explicitly referenced or included using `find_additional_modules` were bundled. With esbuild v0.19, wildcard imports now automatically bundle all files matching the glob pattern. This could result in unwanted files being bundled, so users might want to avoid wildcard dynamic imports and use explicit imports instead.
-
-<Details header="Am I affected?">
-
-Search your codebase for dynamic imports with variable paths:
-
-```sh
-# Search for patterns like import('./path/' + variable)
-grep -rE "import\s*\(\s*['\`]\..*\s*\+" --include="*.js" --include="*.ts" --include="*.mjs" .
-
-# Search for patterns like require('./path/' + variable)
-grep -rE "require\s*\(\s*['\`]\..*\s*\+" --include="*.js" --include="*.ts" --include="*.cjs" .
-```
-
-**You need to take action if you find patterns like:**
-
-- `import('./locales/' + lang + '.json')`
-- `require('./data/' + kind + '.js')`
-- ``import(`./templates/${name}.html`)``
-
-**What to do:**
-
-1. Replace dynamic wildcard imports with explicit imports where possible.
-2. If you need dynamic imports, ensure the matching directory only contains files you want bundled.
-3. Consider moving dynamic imports to a dedicated subdirectory to limit the files included.
-
-**Example fix:**
-
-```js
-// Before: may bundle all JSON files in ./locales/
-const messages = await import("./locales/" + lang + ".json");
-
-// After: explicit imports
-const locales = {
-	en: () => import("./locales/en.json"),
-	es: () => import("./locales/es.json"),
-	fr: () => import("./locales/fr.json"),
-};
-const messages = await locales[lang]();
-```
-
-</Details>
 
 ### Commands default to local mode
 
