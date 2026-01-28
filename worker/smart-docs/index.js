@@ -1,7 +1,7 @@
 /**
- * Smart Documentation Worker - Environment Detection (Silent Mode)
+ * Smart Documentation Worker - Environment Detection
  * Personalizes technical documentation based on user's environment
- * WITHOUT any visible messaging or detection indicators
+ * Silently shows only relevant content for user's OS
  */
 
 export default {
@@ -213,6 +213,36 @@ function getDocumentationHTML() {
             font-weight: 700;
             margin-right: 12px;
         }
+        
+        /* OS Switcher Tabs */
+        .os-switcher {
+            display: flex;
+            gap: 8px;
+            margin: 20px 0;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .os-tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        
+        .os-tab:hover {
+            color: #f6821f;
+        }
+        
+        .os-tab.active {
+            color: #f6821f;
+            border-bottom-color: #f6821f;
+        }
     </style>
 </head>
 <body>
@@ -223,6 +253,13 @@ function getDocumentationHTML() {
         <h2><span class="step-number">1</span>Install Wrangler CLI</h2>
         
         <p>Wrangler is the official CLI for managing Cloudflare Workers. Install it using your package manager:</p>
+        
+        <!-- OS Switcher Tabs -->
+        <div class="os-switcher">
+            <button class="os-tab" data-os="mac" onclick="switchOS('mac')">macOS</button>
+            <button class="os-tab" data-os="windows" onclick="switchOS('windows')">Windows</button>
+            <button class="os-tab" data-os="linux" onclick="switchOS('linux')">Linux</button>
+        </div>
         
         <!-- macOS Installation - shown only to Mac users -->
         <div class="os-mac">
@@ -279,6 +316,62 @@ cd my-worker</div>
             <strong>Next Steps:</strong> Explore our examples, tutorials, and API documentation to build your next project.
         </p>
     </div>
+    
+    <script>
+        // OS Switcher functionality
+        function switchOS(os) {
+            // Hide all OS sections
+            document.querySelectorAll('.os-mac, .os-windows, .os-linux').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show selected OS section
+            document.querySelectorAll('.os-' + os).forEach(el => {
+                el.style.display = 'block';
+            });
+            
+            // Update active tab
+            document.querySelectorAll('.os-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector('[data-os="' + os + '"]').classList.add('active');
+            
+            // Save preference to localStorage
+            localStorage.setItem('preferred-os', os);
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for saved preference
+            const savedOS = localStorage.getItem('preferred-os');
+            
+            // Determine which OS to show (saved preference or auto-detected)
+            let activeOS = savedOS;
+            
+            // If no saved preference, use auto-detected OS from server
+            if (!activeOS) {
+                // Check which OS section is currently visible (auto-detected by server)
+                if (document.querySelector('.os-mac').style.display !== 'none') {
+                    activeOS = 'mac';
+                } else if (document.querySelector('.os-windows').style.display !== 'none') {
+                    activeOS = 'windows';
+                } else if (document.querySelector('.os-linux').style.display !== 'none') {
+                    activeOS = 'linux';
+                } else {
+                    // Fallback to first visible OS
+                    activeOS = 'mac';
+                }
+            }
+            
+            // Set active tab and show content
+            document.querySelector('[data-os="' + activeOS + '"]').classList.add('active');
+            
+            // If user has preference, apply it
+            if (savedOS) {
+                switchOS(savedOS);
+            }
+        });
+    </script>
 </body>
 </html>`;
 }
