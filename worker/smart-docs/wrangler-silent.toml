@@ -1,0 +1,7 @@
+name = "smart-docs-worker-silent"
+main = "src/index-silent.js"
+compatibility_date = "2024-01-01"
+account_id = "2f3dc21d188ba781322b520bbde5fb5a"
+
+# Silent mode - no user-facing messages about detection
+# Just quietly shows relevant content for their OS
