@@ -12,15 +12,31 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "terms",
+            "value": "https://bfl.ai/legal/terms-of-service"
+        },
+        {
             "property_id": "partner",
             "value": "true"
         },
         {
-            "property_id": "terms",
-            "value": "https://bfl.ai/legal/terms-of-service"
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per input 512x512 tile, per step",
+                    "price": 0.00021,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per output 512x512 tile, per step",
+                    "price": 0.00041,
+                    "currency": "USD"
+                }
+            ]
         }
     ],
-    "schema": {
+    "schema": 
+        {
         "input": {
             "type": "object",
             "properties": {
@@ -33,12 +49,16 @@
                         "contentType": {
                             "type": "string"
                         }
-                    }
-                }
-            },
-            "required": [
-                "multipart"
-            ]
+                    },
+                    "required": [
+                        "body",
+                        "contentType"
+                    ]
+                },
+                "required": [
+                    "multipart"
+                ]
+            }
         },
         "output": {
             "type": "object",
