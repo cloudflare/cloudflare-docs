@@ -9,19 +9,19 @@ This page documents the HTTP headers used by Privacy Proxy for authentication, g
 
 ## Request headers
 
-Clients include these headers when connecting to Privacy Proxy.
+Clients include the following headers when connecting to Privacy Proxy.
 
 ### `Proxy-Authorization`
 
 Authenticates the client to the proxy. Required for all requests.
 
-**Pre-shared key format:**
+Pre-shared key format:
 
 ```http
 Proxy-Authorization: Preshared <key>
 ```
 
-**Privacy Pass token format:**
+Privacy Pass token format:
 
 ```http
 Proxy-Authorization: PrivateToken token=<base64-encoded-token>
@@ -45,7 +45,6 @@ sec-ch-geohash: <geohash>-<country_code>
 | `<geohash>` | A [geohash](https://en.wikipedia.org/wiki/Geohash) string (typically 4-8 characters) |
 | `<country_code>` | ISO 3166-1 alpha-2 country code |
 
-
 ```http title="Example"
 sec-ch-geohash: u4pruydqqvj-GB
 ```
@@ -56,7 +55,7 @@ This example specifies a location in the United Kingdom.
 
 ## Response headers
 
-Privacy Proxy includes these headers in responses.
+Privacy Proxy includes the following headers in responses.
 
 ### `Server-Timing`
 
@@ -69,7 +68,6 @@ Server-Timing: proxy;dur=<milliseconds>
 | Parameter | Description |
 | ----------- | ------------- |
 | `<milliseconds>` | Processing time in milliseconds |
-
 
 ```http title="Example"
 Server-Timing: proxy;dur=8.2
