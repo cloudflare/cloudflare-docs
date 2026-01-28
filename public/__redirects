@@ -345,7 +345,7 @@
 /realtime/realtimekit/get-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/realtimekit/core/ai/ /realtime/realtimekit/ai/ 302
 /realtime/realtimekit/core/remote-participant/ /realtime/realtimekit/core/remote-participants/ 302
-/realtime/realtimekit/ui-kit/meeting-lifecycle/ realtime/realtimekit/ui-kit/state-management/ 302
+/realtime/realtimekit/ui-kit/meeting-lifecycle/ /realtime/realtimekit/ui-kit/state-management/ 302
 /realtime/realtimekit/core/video-background/ /realtime/realtimekit/core/video-effects/ 302
 /realtime/realtimekit/voice-meetings/ /realtime/realtimekit/audio-calls/ 302
 /realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
@@ -2416,7 +2416,7 @@
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
-/cloudflare-one/email-security/reclassifications/* /cloudflare-one/email-security/submissions/ :splat 301
+/cloudflare-one/email-security/reclassifications/* /cloudflare-one/email-security/submissions/:splat 301
 
 
 # Cloudflare One nav revamp (dynamics)
