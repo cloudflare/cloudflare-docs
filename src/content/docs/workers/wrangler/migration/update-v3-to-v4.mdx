@@ -13,19 +13,12 @@ While many users should expect a no-op upgrade, the following sections outline t
 
 ## Upgrade to Wrangler v4
 
-To upgrade to the latest version of Wrangler within your Worker project, run:
-
-<PackageManagers pkg="wrangler@latest" dev />
-
-To install a specific Wrangler v4 version, specify the major version number:
+To upgrade to the latest version of Wrangler v4 within your Worker project, run:
 
 <PackageManagers pkg="wrangler@4" dev />
+After upgrading, you can verify the installation:
 
-After upgrading, verify the installation:
-
-```sh
-npx wrangler --version
-```
+<PackageManagers type="exec" pkg="wrangler" args="--version" />
 
 ### Summary of changes
 
@@ -57,9 +50,9 @@ Run the following command to check your Node.js version:
 node --version
 ```
 
-**You need to take action if** your version starts with `v16` (for example, `v16.20.0`).
+**You need to take action if** your version starts with `v16` or `v18` (for example, `v16.20.0` or `v18.20.0`).
 
-**To upgrade Node.js**, use a version manager like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/), or download directly from [nodejs.org](https://nodejs.org/). Cloudflare recommends using the latest LTS version of Node.js.
+**To upgrade Node.js**, refer to the [Wrangler system requirements](/workers/wrangler/install-and-update/). Cloudflare recommends using the latest LTS version of Node.js.
 
 </Details>
 
