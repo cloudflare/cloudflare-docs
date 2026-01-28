@@ -197,10 +197,115 @@ The Cloudflare One dashboard provides a high-level overview of assigned and avai
 
 If your subnet is approaching capacity, you can [expand your subnet](#edit-an-ip-subnet) to increase the number of available IPs. Alternatively, you can free up IPs by [deleting existing device registrations](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration), particularly revoked registrations that may be consuming IP space despite the device no longer being in use.
 
-To get a list of all device registrations in a subnet (including revoked registrations), use the [Cloudflare API](/api/resources/zero_trust/subresources/devices/subresources/registrations/methods/list/). For example, the following script fetches all device registrations and their device IPs, and outputs all registrations within a specific IPv4 subnet.
+To get a list of all device registrations in a subnet (including revoked registrations), use the [Cloudflare API](/api/resources/zero_trust/subresources/devices/subresources/registrations/methods/list/). For example, the following script fetches all device registrations and their device IPs, and outputs all registrations within the specified CIDR block.
 
 <Details header="Example script to filter registrations by IP">
+1. Create a new file called `filter-device-ips.py` that contains the following code:
+	```python
+	import requests
+	import ipaddress
+	import json
 
+	# --- Configuration ---
+	AUTH_EMAIL = "<CLOUDFLARE_ACCOUNT_EMAIL>"
+	AUTH_KEY = "<CLOUDFLARE_API_KEY>"  # Refer to https://developers.cloudflare.com/fundamentals/api/get-started/keys/. API token authentication is not currently supported for fetching device IPs.
+	ACCOUNT_ID = "<CLOUDLFARE_ACCOUNT_ID"  # Refer to https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/.
+	TARGET_CIDR = "100.64.0.0/10"
+
+	# --- API request headers ---
+	headers = {
+			"X-Auth-Email": AUTH_EMAIL,
+			"X-Auth-Key": AUTH_KEY,
+			"Content-Type": "application/json"
+	}
+
+	def get_all_registrations():
+			"""Fetches all device registrations including revoked registrations. """
+			devices = {}
+			url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/devices/registrations"
+			params = {"per_page": 50, "status": "all"}
+
+			while True:
+					response = requests.get(url, headers=headers, params=params).json()
+					if not response.get('success'):
+							print(f"Error fetching registrations: {response.get('errors')}")
+							break
+
+					for d in response.get('result', []):
+							# We use the ID as the key to link with IP data later
+							devices[d['id']] = d
+
+					cursor = response.get('result_info', {}).get('cursor')
+					if not cursor:
+							break
+					params['cursor'] = cursor
+
+			return devices
+
+	def filter_by_cidr(device_map, network):
+			"""Fetch device IPs and return devices that fall within the target CIDR block."""
+			matches = []
+			device_ids = list(device_map.keys())
+
+			# API limits IP correlation to batches of 20
+			for i in range(0, len(device_ids), 20):
+					batch = device_ids[i:i+20]
+					# Construct parameters for the IP endpoint
+					params = {f"device_ids[{idx}]": d_id for idx, d_id in enumerate(batch)}
+					url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/teamnet/devices/ips"
+
+					res = requests.get(url, headers=headers, params=params).json()
+
+					if not res.get('success'):
+							print(f"Error fetching IPs: {res.get('errors')}")
+							continue
+
+					for item in res.get('result', []):
+							d_id = item.get('device_id')
+							ip_data = item.get('device_ips', {})
+							ipv4_str = ip_data.get('ipv4')
+
+							if ipv4_str:
+									try:
+											if ipaddress.IPv4Address(ipv4_str) in network:
+													if d_id in device_map:
+															full_data = device_map[d_id]
+															full_data['device_ips'] = ip_data
+															matches.append(full_data)
+									except ValueError:
+											continue
+
+			return matches
+
+	if __name__ == "__main__":
+			try:
+					net = ipaddress.IPv4Network(TARGET_CIDR, strict=False)
+
+					print(f"[*] Fetching registrations (status=all)...")
+					all_devices = get_all_registrations()
+					print(f"[*] Found {len(all_devices)} total registrations.")
+
+					print(f"[*] Checking IP ranges for match...")
+					filtered_list = filter_by_cidr(all_devices, net)
+
+					if filtered_list:
+							print(f"\n--- Found {len(filtered_list)} Device(s) in {TARGET_CIDR} ---\n")
+							for dev in filtered_list:
+									print(json.dumps(dev, indent=2))
+									print("-" * 50)
+					else:
+							print(f"\nNo devices found within the {TARGET_CIDR} range.")
+
+			except Exception as e:
+					print(f"Script Error: {e}")
+	```
+
+2. In the script configuration section, input your Cloudflare API credentials and your IP subnet range.
+
+3. Open a terminal and navigate to the script directory. To run the script, type:
+	```sh
+	python3 filter-device-ips.py
+	```
 
 </Details>
 
