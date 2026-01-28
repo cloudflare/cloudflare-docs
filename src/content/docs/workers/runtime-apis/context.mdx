@@ -2,23 +2,19 @@
 pcx_content_type: configuration
 title: Context (ctx)
 head: []
-description: The Context API in Cloudflare Workers, including props, exports, waitUntil and
+description:
+  The Context API in Cloudflare Workers, including props, exports, waitUntil and
   passThroughOnException.
-
 ---
 
-import {
-  Tabs,
-  TabItem,
-  WranglerConfig
-} from "~/components";
+import { Tabs, TabItem, WranglerConfig } from "~/components";
 
 The Context API provides methods to manage the lifecycle of your Worker or Durable Object.
 
 Context is exposed via the following places:
 
-* As the third parameter in all [handlers](/workers/runtime-apis/handlers/), including the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/). (`fetch(request, env, ctx)`)
-* As a class property of the [`WorkerEntrypoint` class](/workers/runtime-apis/bindings/service-bindings/rpc) (`this.ctx`)
+- As the third parameter in all [handlers](/workers/runtime-apis/handlers/), including the [`fetch()` handler](/workers/runtime-apis/handlers/fetch/). (`fetch(request, env, ctx)`)
+- As a class property of the [`WorkerEntrypoint` class](/workers/runtime-apis/bindings/service-bindings/rpc) (`this.ctx`)
 
 Note that the Context API is available strictly in stateless contexts, that is, not [Durable Objects](/durable-objects/). However, Durable Objects have a different object, the [Durable Object State](/durable-objects/api/state/), which is available as `this.ctx` inside a Durable Object class, and provides some of the same functionality as the Context API.
 
@@ -72,8 +68,8 @@ To use `ctx.exports`, you must use [the `enable_ctx_exports` compatibility flag]
 
 `ctx.exports` provides automatically-configured "loopback" bindings for all of your top-level exports.
 
-* For each top-level export that `extends WorkerEntrypoint` (or simply implements a fetch handler), `ctx.exports` automatically contains a [Service Binding](/workers/runtime-apis/bindings/service-bindings).
-* For each top-level export that `extends DurableObject` (and which has been configured with storage via a [migration](/durable-objects/reference/durable-objects-migrations/)), `ctx.exports` automatically contains a [Durable Object namespace binding](/durable-objects/api/namespace/).
+- For each top-level export that `extends WorkerEntrypoint` (or simply implements a fetch handler), `ctx.exports` automatically contains a [Service Binding](/workers/runtime-apis/bindings/service-bindings).
+- For each top-level export that `extends DurableObject` (and which has been configured with storage via a [migration](/durable-objects/reference/durable-objects-migrations/)), `ctx.exports` automatically contains a [Durable Object namespace binding](/durable-objects/api/namespace/).
 
 For example:
 
@@ -81,17 +77,17 @@ For example:
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class Greeter extends WorkerEntrypoint {
-  greet(name) {
-    return `Hello, ${name}!`;
-  }
+	greet(name) {
+		return `Hello, ${name}!`;
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    let greeting = await ctx.exports.Greeter.greet("World")
-    return new Response(greeting);
-  }
-}
+	async fetch(request, env, ctx) {
+		let greeting = await ctx.exports.Greeter.greet("World");
+		return new Response(greeting);
+	},
+};
 ```
 
 In this example, the default fetch handler calls the `Greeter` class over RPC, like how you'd use a Service Binding. However, there is no external configuration required. `ctx.exports` is populated _automatically_ from your top-level imports.
@@ -106,22 +102,22 @@ Loopback Service Bindings in `ctx.exports` have an extra capability that regular
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class Greeter extends WorkerEntrypoint {
-  greet(name) {
-    return `${this.ctx.props.greeting}, ${name}!`;
-  }
+	greet(name) {
+		return `${this.ctx.props.greeting}, ${name}!`;
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    // Make a custom greeter that uses the greeting "Welcome".
-    let greeter = ctx.exports.Greeter({props: {greeting: "Welcome"}})
+	async fetch(request, env, ctx) {
+		// Make a custom greeter that uses the greeting "Welcome".
+		let greeter = ctx.exports.Greeter({ props: { greeting: "Welcome" } });
 
-    // Greet the world. Returns "Welcome, World!"
-    let greeting = await greeter.greet("World")
+		// Greet the world. Returns "Welcome, World!"
+		let greeting = await greeter.greet("World");
 
-    return new Response(greeting);
-  }
-}
+		return new Response(greeting);
+	},
+};
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
@@ -130,25 +126,25 @@ export default {
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 type Props = {
-  greeting: string
-}
+	greeting: string;
+};
 
 export class Greeter extends WorkerEntrypoint<Env, Props> {
-  greet(name) {
-    return `${this.ctx.props.greeting}, ${name}!`;
-  }
+	greet(name) {
+		return `${this.ctx.props.greeting}, ${name}!`;
+	}
 }
 
 export default {
-  async fetch(request, env, ctx) {
-    // Make a custom greeter that uses the greeting "Welcome".
-    let greeter = ctx.exports.Greeter({props: {greeting: "Welcome"}})
+	async fetch(request, env, ctx) {
+		// Make a custom greeter that uses the greeting "Welcome".
+		let greeter = ctx.exports.Greeter({ props: { greeting: "Welcome" } });
 
-    // Greet the world. Returns "Welcome, World!"
-    let greeting = await greeter.greet("World")
+		// Greet the world. Returns "Welcome, World!"
+		let greeting = await greeter.greet("World");
 
-    return new Response(greeting);
-  }
+		return new Response(greeting);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
@@ -170,8 +166,16 @@ When declaring an entrypoint class that accepts `props`, make sure to declare it
 
 `waitUntil` is commonly used to:
 
-* Fire off events to external analytics providers. (note that when you use [Workers Analytics Engine](/analytics/analytics-engine/), you do not need to use `waitUntil`)
-* Put items into cache using the [Cache API](/workers/runtime-apis/cache/)
+- Fire off events to external analytics providers. (note that when you use [Workers Analytics Engine](/analytics/analytics-engine/), you do not need to use `waitUntil`)
+- Put items into cache using the [Cache API](/workers/runtime-apis/cache/)
+
+:::caution[`waitUntil` has a 30-second time limit]
+
+The Worker's lifetime is extended for up to 30 seconds after the response is sent or the client disconnects. This time limit is shared across all `waitUntil()` calls within the same request — if any Promises have not settled after 30 seconds, they are cancelled. When `waitUntil` tasks are cancelled, the following warning will be logged to [Workers Logs](/workers/observability/logs/workers-logs/) and any attached [Tail Workers](/workers/observability/logs/tail-workers/): `waitUntil() tasks did not complete within the allowed time after invocation end and have been cancelled.`
+
+If you need to guarantee that work completes successfully, you should send messages to a [Queue](/queues/) and process them in a separate consumer Worker. Queues provide reliable delivery and automatic retries, ensuring your work is not lost.
+
+:::
 
 :::note[Alternatives to waitUntil]
 
@@ -186,21 +190,21 @@ For example:
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    // Forward / proxy original request
-    let res = await fetch(request);
+	async fetch(request, env, ctx) {
+		// Forward / proxy original request
+		let res = await fetch(request);
 
-    // Add custom header(s)
-    res = new Response(res.body, res);
-    res.headers.set('x-foo', 'bar');
+		// Add custom header(s)
+		res = new Response(res.body, res);
+		res.headers.set("x-foo", "bar");
 
-    // Cache the response
-    // NOTE: Does NOT block / wait
-    ctx.waitUntil(caches.default.put(request, res.clone()));
+		// Cache the response
+		// NOTE: Does NOT block / wait
+		ctx.waitUntil(caches.default.put(request, res.clone()));
 
-    // Done
-    return res;
-  },
+		// Done
+		return res;
+	},
 };
 ```
 
@@ -217,10 +221,10 @@ The `passThroughOnException` method allows a Worker to [fail open](https://commu
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    // Proxy to origin on unhandled/uncaught exceptions
-    ctx.passThroughOnException();
-    throw new Error('Oops');
-  },
+	async fetch(request, env, ctx) {
+		// Proxy to origin on unhandled/uncaught exceptions
+		ctx.passThroughOnException();
+		throw new Error("Oops");
+	},
 };
 ```

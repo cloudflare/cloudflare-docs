@@ -3,10 +3,16 @@ pcx_content_type: reference
 title: Static resource protection
 sidebar:
   order: 12
-
 ---
 
-import { Render, Tabs, TabItem, Steps, GlossaryTooltip, DashButton } from "~/components";
+import {
+	Render,
+	Tabs,
+	TabItem,
+	Steps,
+	GlossaryTooltip,
+	DashButton,
+} from "~/components";
 
 Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their <GlossaryTooltip term="static content">static resources</GlossaryTooltip> from bots.
 
@@ -19,26 +25,30 @@ If you enable static resource protection, you may block good bots — like mail 
 
 To enable this feature as a Pro or Business customer or an Enterprise customer without Bot Management:
 
-<Tabs syncKey="dashNewNav"> 
-	<TabItem label="Old dashboard">
-		<Steps>
+{/* prettier-ignore-start */}
+
+<Tabs syncKey="dashNewNav">
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+         <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **Super Bot Fight Mode**.
+      4. Under **Configurations**, select the edit icon for **Static resource protection** and turn it on.
+    </Steps>
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
       1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
       2. Go to **Security** > **Bots**.
       3. Select **Configure Super Bot Fight Mode**.
       4. For **Static resource protection**, select **On**.
     </Steps>
   </TabItem>
-  <TabItem label="New dashboard" icon="rocket">
-		<Steps>
-      1. In the Cloudflare dashboard, go to the **Security Settings** page.
-
-          <DashButton url="/?to=/:account/:zone/security/settings" />
-      2. Filter by **Bot traffic**.
-      3. Go to **Super Bot Fight Mode**.
-      4. Under **Configurations**, select the edit icon for **Static resource protection** and turn it on.
-    </Steps>
-  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 :::caution
 

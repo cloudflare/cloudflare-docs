@@ -2,12 +2,12 @@
 {}
 ---
 
-CNI provides a private point-to-point IP connection with Cloudflare. There are two dataplanes that come with different technical specifications.
+CNI provides a private point-to-point IP connection with Cloudflare. There are two Dataplanes that come with different technical specifications.
 
 
 |  | Dataplane v1 | Dataplane v2 (beta) |
 | ---- | ---- | ---- |
-| **Magic Transit Direct Server Return (DSR)** <br /> DDoS protection for all ingress traffic from the Internet to your public network. Send egress traffic via your ISP. | Supported with or without a GRE tunnel established over the interconnect circuit. | Supported. |
+| **Magic Transit Direct Server Return (DSR)** <br /> Distributed Denial of Service (DDoS) protection for all ingress traffic from the Internet to your public network. Send egress traffic via your ISP. | Supported with or without a GRE tunnel established over the interconnect circuit. | Supported. |
 | **Magic Transit with Egress** <br /> DDoS protection for all ingress traffic from the Internet to your public network. Send egress traffic via Cloudflare. | Supported with or without a GRE tunnel established over the interconnect circuit. | Supported. |
 | **Magic WAN and Zero Trust**  <br /> Build a secure, private network backbone connecting your Zero Trust users and applications with all your sites, data centers, and clouds. | Supported with a GRE tunnel established over the interconnect circuit. | Supported. |
 | **Peering** <br /> Exchange public routes with a single Cloudflare PoP (Point of Presence). | Supported. <br /><br /> All customers connecting with the edge data center will exchange public routes at that PoP with AS13335. Connectivity is established at each individual PoP. Routes for other edge locations in Cloudflare's network may not be available. Routes for customer-advertised prefixes will be available only in the connected PoP. | Not supported. |

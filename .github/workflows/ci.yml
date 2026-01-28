@@ -37,7 +37,7 @@ jobs:
               -not -name '*.yml' \
               -not -name '*.yaml' \
               -not -name '*.txt' \
-              -not -name 'collection.*'
+              -not -wholename 'src/content/collections/*'
           )
 
           if [ -n "$FILES" ]; then

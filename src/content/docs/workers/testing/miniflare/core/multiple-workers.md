@@ -1,6 +1,6 @@
 ---
 order: 9
-title: "🔌 Multiple Workers"
+title: Multiple Workers
 ---
 
 Miniflare allows you to run multiple workers in the same instance. All Workers can be defined at the same level, using the `workers` option.

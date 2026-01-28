@@ -136,21 +136,27 @@ await sandbox.exec("python process.py");
 The SDK automatically checks that your npm package version matches the Docker container image version. **Version mismatches can cause features to break or behave unexpectedly.**
 
 **What happens**:
+
 - On sandbox startup, the SDK queries the container's version
 - If versions don't match, a warning is logged
 - Some features may not work correctly if versions are incompatible
 
 **When you might see warnings**:
+
 - You updated the npm package (`npm install @cloudflare/sandbox@latest`) but forgot to update the `FROM` line in your Dockerfile
 
 **How to fix**:
-Update your Dockerfile to match your npm package version. For example, if using `@cloudflare/sandbox@0.3.3`:
+Update your Dockerfile to match your npm package version. For example, if using `@cloudflare/sandbox@0.7.0`:
 
 ```dockerfile
-FROM docker.io/cloudflare/sandbox:0.3.3  # Match your npm version
+# Default image (JavaScript/TypeScript)
+FROM docker.io/cloudflare/sandbox:0.7.0
+
+# Or Python image if you need Python support
+FROM docker.io/cloudflare/sandbox:0.7.0-python
 ```
 
-See [Dockerfile reference](/sandbox/configuration/dockerfile/) for details on extending the base image.
+See [Dockerfile reference](/sandbox/configuration/dockerfile/) for details on image variants and extending the base image.
 
 ## Best practices
 

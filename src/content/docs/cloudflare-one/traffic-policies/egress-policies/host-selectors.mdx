@@ -73,10 +73,6 @@ Unsupported traffic will be resolved with your default Gateway settings. If you 
 
 ### Configuration changes
 
-:::caution
-Gateway will overwrite the DNS response for all supported traffic, even if you use identity or device posture selectors to limit which users or devices are affected by the policy. In these cases, while the DNS response is overwritten, Gateway will still apply the correct Egress policy. Therefore, the configuration changes below must be applied to all of your users and device profiles.
-:::
-
 To configure your Zero Trust organization to use Host selectors with Egress policies:
 
 1.  Ensure you have deployed [WARP version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/warp/download-warp/) or later on your users' desktop devices. If you need to apply your policies to mobile devices or devices running a version of WARP prior to 2025.4.929.0, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):

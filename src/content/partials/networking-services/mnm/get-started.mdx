@@ -11,7 +11,9 @@ To begin using Magic Network Monitoring for network and/or cloud traffic visibil
 - [NetFlow and sFlow guide](#netflow-and-sflow-guide)
 - [VPC flow log guide (beta)](#vpc-flow-log-guide)
 
-If you are an Enterprise customer, Cloudflare can significantly accelerate the onboarding timeline during active-attack scenarios. Enterprise customers that would like to use Magic Network Monitoring and Magic Transit On Demand together can begin by [configuring Magic Transit](/magic-transit/get-started/).
+If you are an Enterprise customer, Cloudflare can significantly accelerate the onboarding timeline during active-attack scenarios.
+
+Enterprise customers that would like to use Magic Network Monitoring and Magic Transit On Demand together can begin by [configuring Magic Transit](/magic-transit/get-started/).
 
 ## NetFlow and sFlow guide
 
@@ -37,9 +39,9 @@ When you register your router with Cloudflare, your router links your NetFlow or
 
 ### 3. Configure your router
 
-Next, configure your router to send NetFlow/SFlow data to Cloudflare. For this step, you will also need to have your router's configuration menu open to input the values shown in the Cloudflare dashboard.
+Next, configure your router to send NetFlow or sFlow data to Cloudflare. For this step, you will also need to have your router's configuration menu open to input the values shown in the Cloudflare dashboard.
 
-Refer to the [NetFlow/IPFIX configuration](/magic-network-monitoring/routers/netflow-ipfix-config/) or the [sFlow configuration guide](/magic-network-monitoring/routers/sflow-config/) for more information.
+Refer to the [NetFlow and IPFIX configuration guide](/magic-network-monitoring/routers/netflow-ipfix-config/) or the [sFlow configuration guide](/magic-network-monitoring/routers/sflow-config/) for more information.
 
 1. From **Configure routers** in the dashboard, select either **NetFlow Configuration** or **sFlow configuration**.
 2. Follow the configuration steps for the selected configuration type.
@@ -50,7 +52,7 @@ Refer to the [NetFlow/IPFIX configuration](/magic-network-monitoring/routers/net
 
 After setting up your router, confirm the configuration was successfully set up.
 
-From the **Check routers** page on the dashboard, you can view the status of your routers. Keep in mind that router data takes five to ten minutes to be sent to Cloudflare.
+From the **Check routers** page on the dashboard, you can view the status of your routers. Router data typically takes five to ten minutes to appear in the Cloudflare dashboard.
 
 Refer to **Router status description** to confirm whether data is successfully being sent.
 
@@ -68,22 +70,22 @@ Create rules to analyze data for a specific set of destinations or to implement 
 
 ### 1. Verify cloud flow log capabilities
 
-Verify that your AWS account is capable of exporting AWS VPC flow logs via AWS Firehose. Currently, Magic Network Monitoring only supports VPC flow log ingestion for AWS.
+Verify that your Amazon Web Services (AWS) account is capable of exporting AWS Virtual Private Cloud (VPC) flow logs through AWS Firehose. Currently, Magic Network Monitoring only supports VPC flow log ingestion for AWS.
 
 ### 2. Set up AWS Firehose to export VPC flow logs to Cloudflare
 
 :::note
-AWS VPC flow logs can only be configured via the Cloudflare API for Magic Network Monitoring. There are no inputs in the dashboard for configuring AWS VPC flow logs.
+AWS VPC flow logs can only be configured through the Cloudflare API for Magic Network Monitoring. There are no inputs in the dashboard for configuring AWS VPC flow logs.
 :::
 
-1. Create an authorization token via [Cloudflare's API for Magic Network Monitoring](/api/resources/magic_network_monitoring/subresources/vpc_flows/subresources/tokens/methods/create/). This authorization token allows Cloudflare to identify and verify the account sending VPC flow logs to our endpoint.
+1. Create an authorization token using [Cloudflare's API for Magic Network Monitoring](/api/resources/magic_network_monitoring/subresources/vpc_flows/subresources/tokens/methods/create/). This authorization token allows Cloudflare to identify and verify the account sending VPC flow logs to our endpoint.
 
 	<APIRequest
 		path="/accounts/{account_id}/mnm/vpc-flows/token"
 		method="POST"
 	/>
 
-2. Set the `HTTP Headers - X-Amz-Firehose-Access-Key` in the stream configuration for the authorization token generated in the previous step.
+2. In your AWS Firehose stream configuration, set the `HTTP Headers - X-Amz-Firehose-Access-Key` to the authorization token generated in the previous step.
 
 3. Send your AWS Firehose VPC flow log stream towards `https://aws-flow-logs.cloudflare.com/`.
 

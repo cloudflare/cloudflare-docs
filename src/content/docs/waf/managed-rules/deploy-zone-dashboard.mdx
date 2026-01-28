@@ -60,15 +60,15 @@ To configure (or override) settings of rules tagged with specific tags:
 
 To configure (or override) settings of individual rules of a managed ruleset:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
-<Render file="managed-rules-browse-zone" product="waf" />
+<Render file="managed-rules-browse-zone-new-nav" product="waf" />
 
 <Render file="managed-ruleset-configure-individual-rules" product="waf" />
 
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+</TabItem> <TabItem label="Old dashboard">
 
-<Render file="managed-rules-browse-zone-new-nav" product="waf" />
+<Render file="managed-rules-browse-zone" product="waf" />
 
 <Render file="managed-ruleset-configure-individual-rules" product="waf" />
 
@@ -78,11 +78,7 @@ To configure (or override) settings of individual rules of a managed ruleset:
 
 You can browse the available rules in a managed ruleset and search for individual rules or tags.
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Render file="managed-rules-browse-zone" product="waf" />
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 1. In the Cloudflare dashboard, go to the Security **Settings** page.
 
@@ -94,21 +90,15 @@ You can browse the available rules in a managed ruleset and search for individua
 
 4. Review the rules and their tags in the side panel.
 
+</TabItem> <TabItem label="Old dashboard">
+
+<Render file="managed-rules-browse-zone" product="waf" />
+
 </TabItem> </Tabs>
 
 ### Delete a managed ruleset deployment rule or an exception
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **WAF** > **Managed rules** tab.
-3. Next to the rule or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -119,6 +109,16 @@ You can browse the available rules in a managed ruleset and search for individua
 2. (Optional) Filter by **Managed rules**.
 3. Search for the managed ruleset you want to configure.
 4. Next to the managed ruleset deployment rule (execute rule) or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **WAF** > **Managed rules** tab.
+3. Next to the rule or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.
 
 </Steps>
 

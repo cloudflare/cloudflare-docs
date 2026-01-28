@@ -484,14 +484,14 @@ Assume you want to push software updates from a cloud based [distribution point]
     	Physical Address. . . . . . . . . :
     	DHCP Enabled. . . . . . . . . . . : No
     	Autoconfiguration Enabled . . . . : Yes
-    	IPv6 Address. . . . . . . . . . . : 2606:4700:110:8f79:145:f180:fc4:8106(Preferred)
+    	IPv6 Address. . . . . . . . . . . : 2001:db8:110:8f79:145:f180:fc4:8106(Preferred)
     	Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%49(Preferred)
     	IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
     	Subnet Mask . . . . . . . . . . . : 255.255.255.255
     	Default Gateway . . . . . . . . . :
     	DNS Servers . . . . . . . . . . . : 127.0.2.2
     																			127.0.2.3
-    	NetBIOS over Tcpip. . . . . . . . : Enabled
+    	NetBIOS over Tcpip. . . . . . . . : Disabled
     ```
 
     </Details>
@@ -506,3 +506,71 @@ Assume you want to push software updates from a cloud based [distribution point]
     b. Assign this boundary to one or more boundary groups.
 
 When the device is remote, the WARP interface description changes to `(SCCM) Cloudflare WARP Interface Tunnel` and the SCCM server will determine that the device belongs to the VPN boundary group. The device can now download updates from the distribution point assigned to this boundary group. When a network change occurs and WARP detects a managed network, it will revert the interface description to `Cloudflare WARP Interface Tunnel` and the boundary condition will no longer be satisfied. The device will match your local IP range and be considered as on-prem.
+
+### NetBIOS over TCPIP
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2026.1.89.1         |
+| macOS    | ❌           |                      |
+| Linux    | ❌           |                      |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+NetBIOS over TCP/IP (NetBT) is a legacy protocol used for name resolution and other features on Windows. NetBT has been deprecated for years, but Windows has not removed it. Cloudflare WARP disables NetBT on the tunnel interface by default for security reasons and to align with modern best practices. This setting allows you to override the default behavior and enable NetBT over the WARP tunnel.
+
+#### When to enable NetBT
+
+You should turn on **NetBIOS over TCPIP** only if devices need to access internal resources over NetBT. Example scenarios include:
+
+- **Legacy name resolution**: You rely on NetBIOS to resolve single-label names (such as `\\SERVER01`), instead of modern alternatives like mDNS for single-label names or standard DNS for Fully Qualified Domain Names (such as `\\server01.corp.internal`).
+- **SMBv1**: You are accessing very old file shares or printers that do not support modern SMB (v2/v3) and require NetBT for discovery.
+- **Legacy applications**: You use specialized internal software that hard-codes NetBIOS for node-to-node communication.
+
+Otherwise, the recommendation is to always disable **NetBIOS over TCPIP**. You can choose a different setting for [remote devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) versus [on-prem devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/#4-configure-device-profile).
+
+#### Verify NetBT settings
+
+To check if **NetBIOS over TCPIP** is enabled on the WARP tunnel interface, run the following command:
+
+ ```txt
+warp-cli settings | findstr "NetBT"
+ ```
+
+```txt output
+(network policy) NetBT: true
+```
+
+You can also verify network interface details for the `CloudflareWARP` adapter:
+
+```txt
+ipconfig /all
+```
+
+```txt output {16}
+Windows IP Configuration
+...
+Unknown adapter CloudflareWARP:
+    Connection-specific DNS Suffix  . :
+    Description . . . . . . . . . . . : Cloudflare WARP Interface Tunnel
+    Physical Address. . . . . . . . . :
+    DHCP Enabled. . . . . . . . . . . : No
+    Autoconfiguration Enabled . . . . : Yes
+    IPv6 Address. . . . . . . . . . . : 2001:db8:110:8f79:145:f180:fc4:8106(Preferred)
+    Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%49(Preferred)
+    IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
+    Subnet Mask . . . . . . . . . . . : 255.255.255.255
+    Default Gateway . . . . . . . . . :
+    DNS Servers . . . . . . . . . . . : 127.0.2.2
+    																		127.0.2.3
+    NetBIOS over Tcpip. . . . . . . . : Enabled
+```

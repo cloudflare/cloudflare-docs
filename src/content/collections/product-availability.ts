@@ -1,6 +1,6 @@
 import { z } from "astro/zod";
 
-import { middlecacheLoader } from "../util/custom-loaders";
+import { middlecacheLoader } from "../../util/custom-loaders";
 
 const productAvailabilityCollectionSchema = z.string().nullable();
 

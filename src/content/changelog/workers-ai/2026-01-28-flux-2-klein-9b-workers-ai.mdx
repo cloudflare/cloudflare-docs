@@ -1,0 +1,121 @@
+---
+title: Launching FLUX.2 [klein] 9B on Workers AI
+description: New ultra-fast FLUX.2 [klein] 9B model on Workers AI
+date: 2026-01-28
+---
+
+We have partnered with Black Forest Labs (BFL) again to bring their optimized FLUX.2 [klein] 9B model to Workers AI. This distilled model offers enhanced quality compared to the 4B variant, while maintaining cost-effective pricing. With a fixed 4-step inference process, Klein 9B is ideal for rapid prototyping and real-time applications where both speed and quality matter.
+
+Read the [BFL blog](https://bfl.ai/blog) to learn more about the model itself, or try it out yourself on our [multi modal playground](https://multi-modal.ai.cloudflare.com/).
+
+Pricing documentation is available on the [model page](/workers-ai/models/flux-2-klein-9b/) or [pricing page](/workers-ai/platform/pricing/).
+
+## Workers AI platform specifics
+
+The model hosted on Workers AI is optimized for speed with a **fixed 4-step inference process** and supports up to 4 image inputs. Since this is a distilled model, the `steps` parameter is fixed at 4 and cannot be adjusted. Like FLUX.2 [dev] and FLUX.2 [klein] 4B, this image model uses multipart form data inputs, even if you just have a prompt.
+
+With the REST API, the multipart form data input looks like this:
+
+```bash
+curl --request POST \
+  --url 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT}/ai/run/@cf/black-forest-labs/flux-2-klein-9b' \
+  --header 'Authorization: Bearer {TOKEN}' \
+  --header 'Content-Type: multipart/form-data' \
+  --form 'prompt=a sunset at the alps' \
+  --form width=1024 \
+  --form height=1024
+```
+
+With the Workers AI binding, you can use it as such:
+
+```javascript
+const form = new FormData();
+form.append("prompt", "a sunset with a dog");
+form.append("width", "1024");
+form.append("height", "1024");
+
+const resp = await env.AI.run("@cf/black-forest-labs/flux-2-klein-9b", {
+	multipart: {
+		body: form,
+		contentType: "multipart/form-data",
+	},
+});
+```
+
+The parameters you can send to the model are detailed here:
+
+<details>
+  <summary>JSON Schema for Model</summary>
+**Required Parameters**
+
+- `prompt` (string) - Text description of the image to generate
+
+**Optional Parameters**
+
+- `input_image_0` (string) - Binary image
+- `input_image_1` (string) - Binary image
+- `input_image_2` (string) - Binary image
+- `input_image_3` (string) - Binary image
+- `guidance` (float) - Guidance scale for generation. Higher values follow the prompt more closely
+- `width` (integer) - Width of the image, default `1024` Range: 256-1920
+- `height` (integer) - Height of the image, default `768` Range: 256-1920
+- `seed` (integer) - Seed for reproducibility
+
+**Note:** Since this is a distilled model, the `steps` parameter is fixed at 4 and cannot be adjusted.
+
+</details>
+
+## Multi-reference images
+
+The FLUX.2 klein-9b model supports generating images based on reference images, just like FLUX.2 [dev] and FLUX.2 [klein] 4B. You can use this feature to apply the style of one image to another, add a new character to an image, or iterate on past generated images. You would use it with the same multipart form data structure, with the input images in binary. The model supports up to 4 input images.
+
+For the prompt, you can reference the images based on the index, like `take the subject of image 1 and style it like image 0` or even use natural language like `place the dog beside the woman`.
+
+You must name the input parameter as `input_image_0`, `input_image_1`, `input_image_2`, `input_image_3` for it to work correctly. All input images must be smaller than 512x512.
+
+```bash
+curl --request POST \
+  --url 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT}/ai/run/@cf/black-forest-labs/flux-2-klein-9b' \
+  --header 'Authorization: Bearer {TOKEN}' \
+  --header 'Content-Type: multipart/form-data' \
+  --form 'prompt=take the subject of image 1 and style it like image 0' \
+  --form input_image_0=@/Users/johndoe/Desktop/icedoutkeanu.png \
+  --form input_image_1=@/Users/johndoe/Desktop/me.png \
+  --form width=1024 \
+  --form height=1024
+```
+
+Through Workers AI Binding:
+
+```javascript
+//helper function to convert ReadableStream to Blob
+async function streamToBlob(stream: ReadableStream, contentType: string): Promise<Blob> {
+  const reader = stream.getReader();
+  const chunks = [];
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+  }
+
+  return new Blob(chunks, { type: contentType });
+}
+
+const image0 = await fetch("http://image-url");
+const image1 = await fetch("http://image-url");
+const form = new FormData();
+
+const image_blob0 = await streamToBlob(image0.body, "image/png");
+const image_blob1 = await streamToBlob(image1.body, "image/png");
+form.append('input_image_0', image_blob0)
+form.append('input_image_1', image_blob1)
+form.append('prompt', 'take the subject of image 1 and style it like image 0')
+
+const resp = await env.AI.run("@cf/black-forest-labs/flux-2-klein-9b", {
+    multipart: {
+        body: form,
+        contentType: "multipart/form-data"
+    }
+})
+```

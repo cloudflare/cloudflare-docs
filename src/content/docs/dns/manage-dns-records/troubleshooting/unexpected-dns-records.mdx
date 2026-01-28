@@ -1,20 +1,44 @@
 ---
-title: Unexpected _acme-challenge TXT records
+title: Unexpected DNS records
 pcx_content_type: troubleshooting
 sidebar:
   order: 11
-  label: Unexpected TXT records
+  label: Unexpected DNS records
 ---
 
 import { GlossaryTooltip } from "~/components"
 
+## Additional	records after import
+
+You find several unexpected DNS records after adding your domain to Cloudflare.
+
+### Cause
+
+A wildcard (`*`) record at your previous authoritative DNS provider may have been imported into Cloudflare in a way that creates additional records.
+
+### Solution
+
+To solve this issue, you can do one of the following:
+
+- [Delete records in bulk](/dns/manage-dns-records/how-to/batch-record-changes/#delete-records-in-bulk).
+
+- Remove and re-add your domain:
+
+   1. [Remove your domain](/fundamentals/manage-domains/remove-domain/) from Cloudflare.
+   2. Delete the wildcard record from your authoritative DNS.
+   3. [Re-add](/fundamentals/manage-domains/add-site/) the domain.
+
+---
+
+## acme_challenge TXT records
+
 You might notice TXT records like `_acme-challenge.<hostname>` are returned by your domain but cannot be found on the DNS tab of your Cloudflare dashboard.
 
-## Causes
+### Cause
 
 These records are automatically created to allow Cloudflare edge certificates ([universal](/ssl/edge-certificates/universal-ssl/), [advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [backup](/ssl/edge-certificates/backup-certificates/)) to be provisioned. `_acme-challenge` records are required by <GlossaryTooltip term="Certificate Authority (CA)">certificate authorities (CAs)</GlossaryTooltip> so that they can verify your domain ownership before issuing the SSL/TLS certificate. For details, refer to [Domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/).
 
-## Solution
+### Solution
 
 As these records are tied to the certificates, they cannot be deleted from the DNS tab of your Cloudflare dashboard.
 
@@ -25,4 +49,20 @@ If you want to remove these records:
  * [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to remove the records related to universal and backup certificates.
  * [Delete advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) to remove the records related to advanced certificates.
 
+---
 
+## Incorrect results for DNS queries
+
+You notice DNS queries returning incorrect results even after you waited for the [TTL](/dns/manage-dns-records/reference/ttl/) to expire.
+
+### Cause
+
+Third-party tools can sometimes fail to return correct DNS results if a recursive DNS cache fails to refresh.
+
+### Solution
+
+In this circumstance, purge your public DNS cache via these methods:
+
+- [Purge your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
+- [Purge your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
+- [Purge your DNS cache locally](https://docs.cpanel.net/knowledge-base/dns/how-to-clear-your-dns-cache/)

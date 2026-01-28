@@ -48,9 +48,9 @@ If you have an Enterprise account, you also have the option to [configure your o
 
 ## Multi-provider DNS
 
-Multi-provider DNS is an optional setting for zones using [full setup](/dns/zone-setups/full-setup/) and is an enforced default behavior for zones using [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
+Multi-provider DNS is an optional setting for zones using [primary setup (full)](/dns/zone-setups/full-setup/) and is an enforced default behavior for zones using [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
 
-When you enable multi-provider DNS on a primary (full setup) zone:
+When you enable multi-provider DNS on a primary zone:
 
 * Cloudflare will no longer ignore `NS` records created on the zone apex, as in the example below.
 
@@ -64,7 +64,7 @@ When you enable multi-provider DNS on a primary (full setup) zone:
 
 This means that responses to DNS queries made to the zone apex and requesting `NS` records will contain both Cloudflare's and your other DNS providers' nameservers.
 
-* Cloudflare will activate a primary (full setup) zone even if its [nameservers listed at the registrar](/dns/nameservers/update-nameservers/) include nameservers from other DNS providers.
+* Cloudflare will activate a primary zone (full setup) even if its [nameservers listed at the registrar](/dns/nameservers/update-nameservers/) include nameservers from other DNS providers.
 
 :::caution
 
