@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem } from "~/components";
 
 VPC Service bindings provide a convenient API for accessing VPC Services from your Worker. Each binding represents a connection to a service in your private network through a Cloudflare Tunnel.
 
@@ -20,6 +20,10 @@ Workers VPC is currently in beta. Features and APIs may change before general av
 ## VPC Service binding
 
 A VPC Service binding is accessed via the `env` parameter in your Worker's fetch handler. It provides a `fetch()` method for making HTTP requests to your private service.
+
+:::note[Required roles]
+To bind a VPC Service in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
+:::
 
 ## fetch()
 

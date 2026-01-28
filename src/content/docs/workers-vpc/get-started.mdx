@@ -150,6 +150,8 @@ The command will return a service ID. Save this for the next step.
 </TabItem>
 </Tabs>
 
+If you encounter permission errors, refer to [Required roles](/workers-vpc/configuration/vpc-services/#required-roles).
+
 ## 4. Configure your Worker
 
 Add the VPC Service binding to your `wrangler.toml`:
@@ -217,7 +219,7 @@ Once testing is complete, deploy your Worker:
 npx wrangler deploy
 ```
 
-Your Worker is now deployed and can access your private network resources securely through the Cloudflare Tunnel.
+Your Worker is now deployed and can access your private network resources securely through the Cloudflare Tunnel. If you encounter permission errors, refer to [Required roles](/workers-vpc/configuration/vpc-services/#required-roles).
 
 ## Next steps
 
