@@ -181,7 +181,7 @@
             "contentType": "application/json",
             "oneOf": [
                 {
-                    "title": "Ouput Query",
+                    "title": "Output Query",
                     "properties": {
                         "response": {
                             "type": "array",
@@ -230,7 +230,7 @@
                     }
                 },
                 {
-                    "title": "Ouput Embedding",
+                    "title": "Output Embedding",
                     "properties": {
                         "shape": {
                             "type": "array",
