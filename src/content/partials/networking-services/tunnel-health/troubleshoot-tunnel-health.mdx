@@ -24,7 +24,7 @@ If you are experiencing tunnel health issues, check these items first:
 3. **MTU settings**: Verify MTU is set correctly (typically `1476` for GRE, `1400-1450` for IPsec).
 4. **IPsec parameters**: Confirm your cryptographic parameters match <a href={props.tunnelsConfigLink}>Cloudflare's supported configuration</a>.
 5. **Health check direction**: {props.productName} defaults to <Markdown text={props.healthCheckDefault} />.
-6. **Magic Firewall rules (Uncommon)**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
+6. **Magic Firewall rules (Less common)**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
 
 ---
 
