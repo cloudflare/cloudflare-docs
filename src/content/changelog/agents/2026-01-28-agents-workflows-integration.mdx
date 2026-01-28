@@ -1,0 +1,85 @@
+---
+title: Kick off long-running Workflows from your Agents
+description: The Agents SDK now has first-class support for Cloudflare Workflows, enabling durable multi-step background processing with automatic tracking and bidirectional communication.
+products:
+  - agents
+  - workflows
+date: 2026-01-28
+---
+
+import { TypeScriptExample } from "~/components";
+
+The Agents SDK now has first-class support for [Cloudflare Workflows](/workflows/), allowing you to kick off durable, long-running async tasks from your Agent. Track workflow progress, sync state back to your Agent, and implement human-in-the-loop approval flows—all with automatic tracking in SQLite.
+
+Use the new `AgentWorkflow` class to define workflows with typed access to your Agent:
+
+<TypeScriptExample>
+
+```ts
+import { AgentWorkflow } from "agents";
+import type { AgentWorkflowEvent, AgentWorkflowStep } from "agents";
+
+export class ProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> {
+	async run(event: AgentWorkflowEvent<TaskParams>, step: AgentWorkflowStep) {
+		// Report progress to Agent
+		await this.reportProgress({ step: "process", percent: 0.5 });
+
+		// Call Agent methods via RPC
+		await this.agent.updateStatus(event.payload.taskId, "processing");
+
+		const result = await step.do("process", async () => {
+			return processData(event.payload.data);
+		});
+
+		await step.reportComplete(result);
+		return result;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Start workflows from your Agent with `runWorkflow()` and handle lifecycle events:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent {
+	async startTask(taskId: string, data: string) {
+		// Automatically tracked in Agent database
+		const workflowId = await this.runWorkflow("PROCESSING_WORKFLOW", {
+			taskId,
+			data,
+		});
+		return { workflowId };
+	}
+
+	async onWorkflowProgress(
+		workflowName: string,
+		workflowId: string,
+		progress: unknown,
+	) {
+		this.broadcast(JSON.stringify({ type: "progress", progress }));
+	}
+
+	async onWorkflowComplete(
+		workflowName: string,
+		workflowId: string,
+		result?: unknown,
+	) {
+		console.log(`Workflow ${workflowId} completed`);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Key capabilities:
+
+- **Automatic tracking** in the Agent SQLite database
+- **Progress reporting** with typed progress objects
+- **Bidirectional communication** between Agents and Workflows via RPC
+- **State synchronization** from Workflows back to Agents (broadcasts to clients)
+- **Human-in-the-loop** with `waitForApproval()` and `approveWorkflow()`/`rejectWorkflow()`
+
+For the complete API reference and patterns, see [Integrate with Cloudflare Workflows](/agents/guides/workflows-integration/).
