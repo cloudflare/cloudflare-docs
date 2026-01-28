@@ -1,7 +1,7 @@
 # Close stale issues and pull requests (uses actions/stale@v4 with GITHUB_TOKEN)
 on:
   schedule:
-    - cron: "0 0 * * 1" # weekly run: every Monday at 00:00 UTC
+    - cron: '0 3 * * *'
   workflow_dispatch:
 
 permissions:
