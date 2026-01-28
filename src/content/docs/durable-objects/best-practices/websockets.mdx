@@ -84,8 +84,8 @@ export class WebSocketHibernationServer extends DurableObject {
 	}
 
 	async webSocketClose(ws, code, reason, wasClean) {
-		// If the client closes the connection, the runtime will invoke the webSocketClose() handler.
-		ws.close(code, "Durable Object is closing WebSocket");
+		// Calling close() on the server completes the WebSocket close handshake
+		ws.close(code, reason);
 	}
 }
 ```
@@ -132,8 +132,8 @@ export class WebSocketHibernationServer extends DurableObject {
 		reason: string,
 		wasClean: boolean,
 	) {
-		// If the client closes the connection, the runtime will invoke the webSocketClose() handler.
-		ws.close(code, "Durable Object is closing WebSocket");
+		// Calling close() on the server completes the WebSocket close handshake
+		ws.close(code, reason);
 	}
 }
 ```
@@ -173,8 +173,8 @@ class WebSocketHibernationServer(DurableObject):
         )
 
     async def webSocketClose(self, ws, code, reason, was_clean):
-        # If the client closes the connection, the runtime will invoke the webSocketClose() handler.
-        ws.close(code, "Durable Object is closing WebSocket")
+        # Calling close() on the server completes the WebSocket close handshake
+        ws.close(code, reason)
 ```
 </TabItem>
 </Tabs>

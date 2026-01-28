@@ -1124,6 +1124,8 @@ export class ChatRoom extends DurableObject<Env> {
 		reason: string,
 		wasClean: boolean
 	) {
+		// Calling close() completes the WebSocket handshake
+		ws.close(code, reason);
 		console.log(`WebSocket closed: ${code} ${reason}`);
 	}
 
@@ -1136,6 +1138,11 @@ export class ChatRoom extends DurableObject<Env> {
 </TypeScriptExample>
 
 With the Hibernation API, your Durable Object can go to sleep when there is no active JavaScript execution, but WebSocket connections remain open. When a message arrives, the Durable Object wakes up automatically.
+
+Best practices:
+
+- The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) exposes `webSocketError`, `webSocketMessage`, and `webSocketClose` handlers for their respective WebSocket events.
+- When implementing `webSocketClose`, you **must** reciprocate the close by calling `ws.close()` to avoid swallowing the WebSocket close frame. Failing to do so results in `1006` errors, representing an abnormal close per the WebSocket specification.
 
 Refer to [WebSockets](/durable-objects/best-practices/websockets/) for more details.
 
@@ -1205,7 +1212,9 @@ export class ChatRoom extends DurableObject<Env> {
 		this.broadcast(chatMessage);
 	}
 
-	async webSocketClose(ws: WebSocket) {
+	async webSocketClose(ws: WebSocket, code: number, reason: string) {
+		// Calling close() completes the WebSocket handshake
+		ws.close(code, reason);
 		const state = ws.deserializeAttachment() as ConnectionState;
 		this.broadcast(`${state.username} left the chat`);
 	}
