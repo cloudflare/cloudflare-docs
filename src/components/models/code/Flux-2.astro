@@ -23,6 +23,13 @@ export default {
 		form.append('width', '1024');
 		form.append('height', '1024');
 
+		// FormData doesn't expose its serialized body or boundary. Passing it to a
+		// Request (or Response) constructor serializes it and generates the Content-Type
+		// header with the boundary, which is required for the server to parse the multipart fields.
+		const formResponse = new Response(form);
+		const formStream = formResponse.body;
+		const formContentType = formResponse.headers.get('content-type')!;
+
 		const resp = await env.AI.run("${name}", {
 			multipart: {
 				body: formStream,
