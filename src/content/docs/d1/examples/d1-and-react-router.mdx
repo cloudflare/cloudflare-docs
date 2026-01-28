@@ -1,0 +1,119 @@
+---
+summary: Query your D1 database from a React Router application.
+tags:
+  - React Router
+pcx_content_type: example
+title: Query D1 from React Router
+sidebar:
+  order: 1
+description: Query your D1 database from a React Router application.
+---
+
+import { TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
+
+[React Router v7](https://reactrouter.com/) is a full-stack web framework for building React applications. You can query your D1 database from React Router using the [data loading](https://reactrouter.com/start/framework/data-loading) API with the `loader` function and `useLoaderData` hook.
+
+## Set up a React Router project with D1
+
+1. Create a new React Router project using the Cloudflare template:
+
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args="my-react-router-app --framework=react-router"
+   />
+
+2. Create a D1 database:
+
+   ```sh
+   npx wrangler d1 create my-database
+   ```
+
+3. Add the D1 binding to your Wrangler configuration file:
+
+   <WranglerConfig>
+
+   ```toml
+   [[d1_databases]]
+   binding = "DB"
+   database_name = "my-database"
+   database_id = "<DATABASE_ID>"
+   ```
+
+   </WranglerConfig>
+
+4. Run local development:
+
+   <PackageManagers type="run" args="dev" />
+
+## Query D1 from a route
+
+The following example shows how to define a React Router [`loader`](https://reactrouter.com/start/framework/data-loading) that queries a D1 database.
+
+- Bindings are available on `context.cloudflare.env` in your loader functions.
+- If you configured a [binding](/workers/wrangler/configuration/#d1-databases) named `DB`, access the [D1 Workers Binding API](/d1/worker-api/) methods via `context.cloudflare.env.DB`.
+
+<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts title="app/routes/users.tsx"
+import type { Route } from "./+types/users";
+
+export async function loader({ context }: Route.LoaderArgs) {
+  const env = context.cloudflare.env;
+
+  try {
+    const { results } = await env.DB.prepare(
+      "SELECT * FROM users LIMIT 5"
+    ).run();
+    return { users: results };
+  } catch (error) {
+    return { users: [], error: "Failed to fetch users" };
+  }
+}
+
+export default function Users({ loaderData }: Route.ComponentProps) {
+  const { users, error } = loaderData;
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+      <h1>Users</h1>
+      <pre>{JSON.stringify(users, null, 2)}</pre>
+    </div>
+  );
+}
+```
+
+</TabItem> </Tabs>
+
+## Add type safety
+
+For full type safety, extend the `CloudflareEnvironment` interface in your Worker entry file:
+
+```ts title="workers/app.ts"
+import { createRequestHandler } from "react-router";
+
+declare global {
+	interface CloudflareEnvironment {
+		DB: D1Database;
+	}
+}
+
+const requestHandler = createRequestHandler(
+	() => import("virtual:react-router/server-build"),
+	import.meta.env.MODE,
+);
+
+export default {
+	async fetch(request, env, ctx) {
+		return requestHandler(request, {
+			cloudflare: { env, ctx },
+		});
+	},
+} satisfies ExportedHandler<CloudflareEnvironment>;
+```
+
+For more information on using bindings with React Router, refer to the [React Router framework guide](/workers/framework-guides/web-apps/react-router/#use-bindings-with-react-router).
