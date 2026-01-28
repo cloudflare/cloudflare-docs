@@ -1,11 +1,11 @@
 name: Code Example Review
 
-# Trigger only on PRs targeting jun-test-code-review branch with markdown changes
+# Trigger on PRs with "Review-Code" label or markdown changes
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, labeled]
     branches:
-      - jun-test-code-review
+      - production
     paths:
       - "src/content/docs/**/*.md"
       - "src/content/docs/**/*.mdx"
@@ -19,6 +19,7 @@ jobs:
   review:
     name: Review code examples
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'Review-Code')
     timeout-minutes: 15 # Prevent indefinite hanging
     permissions:
       id-token: write
