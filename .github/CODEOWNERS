@@ -11,6 +11,7 @@
 *.js @cloudflare/content-engineering @kodster28
 *.ts @cloudflare/content-engineering @kodster28
 *.astro @cloudflare/content-engineering @kodster28
+package.json @cloudflare/content-engineering
 /src/schemas/tags.ts @cloudflare/content-engineering @kodster28
 /src/util/api.ts @cloudflare/content-engineering @pedrosousa @kodster28
 /src/content/workers-ai-models/ @craigsdennis @cloudflare/content-engineering @cloudflare/pcx-technical-writing @kodster28
