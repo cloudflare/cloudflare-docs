@@ -1,6 +1,6 @@
 name = "smart-docs-worker"
-main = "src/index.js"
+main = "index.js"
 compatibility_date = "2024-01-01"
-account_id = "2f3dc21d188ba781322b520bbde5fb5a"
 
-# No secrets needed for this demo
+# No user-facing messages about detection
+# Content is quietly personalized for user's OS
