@@ -5,7 +5,24 @@ sidebar:
   order: 7
 ---
 
-import { Render } from "~/components";
+import { Render, Details } from "~/components";
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2026.1.89.1         |
+| macOS    | ❌           |                      |
+| Linux    | ❌           |                      |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
 
 A device IP identifies and routes traffic to a specific WARP device in your Zero Trust organization.
 
