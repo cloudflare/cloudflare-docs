@@ -1,0 +1,32 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  WARP client version 2025.8.779.0 introduced an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025. Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com).
+
+  **Changes and improvements**
+  - Fixed an issue causing failure of the [local network exclusion](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-users-to-enable-local-network-exclusion) feature when configured with a timeout of `0`.
+  - Improvement for more accurate reporting of device colocation information in the Cloudflare One dashboard.
+version: 2026.1.89.1
+releaseDate: 2026-01-27T02:56:28.152Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/jammy-arm/version/2026.1.89.1
+packageSize: 53883984
+platformName: Linux
+linuxPlatforms:
+  jammy-arm: 53883984
+  centos8-arm: 56666365
+  noble-intel: 54430848
+  trixie-arm: 54098968
+  fedora34-arm: 56873650
+  bookworm-arm: 53866120
+  fedora35-intel: 57205356
+  trixie-intel: 54430154
+  fedora34-intel: 57544011
+  bookworm-intel: 54629808
+  noble-arm: 54281330
+  centos8-intel: 57114278
+  fedora35-arm: 56436924
+  bullseye-intel: 54858612
+  bullseye-arm: 54116204
+  focal-arm: 54202248
+  focal-intel: 54952446
+  jammy-intel: 54633166
