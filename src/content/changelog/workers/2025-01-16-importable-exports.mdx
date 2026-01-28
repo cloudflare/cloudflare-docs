@@ -1,0 +1,44 @@
+---
+title: Import `exports` to call exported classes more easily in your Worker
+description: Access your Worker's entrypoints without manually configuring Service Bindings
+products:
+  - workers
+  - durable-objects
+date: 2025-01-16
+---
+
+import { TypeScriptExample } from "~/components";
+
+You can import `exports` and call any exported `WorkerEntrypoint`,
+`DurableObject`, `Agent`, `Container`, or `Sandbox` class directly:
+
+```js
+import { DurableObject, exports } from "cloudflare:workers";
+
+// or WorkerEntrypoint, Agent, Container, or Sandbox
+export class Greeter extends DurableObject {
+	greet() {
+		return `Hello, World!`;
+	}
+}
+
+export default {
+	async fetch(request, env, ctx) {
+		return new Response(getGreeting());
+	},
+
+	getGreeting() {
+		// neither env nor ctx had to be thread through to the function
+		let greeter = exports.Greeter.getByName(new URL(request.url).pathname);
+		return greeter.greet()
+	},
+};
+```
+
+Previously, calling one entrypoint from another within the same Worker required
+manually configuring Service Bindings in your wrangler configuration. This added
+friction when building modular Workers with multiple entrypoints or when Durable Objects.
+
+This eliminates the need to wire up these bindings manually.
+
+For more information, see [documentation on `ctx.exports`](/workers/runtime-apis/context/#exports).

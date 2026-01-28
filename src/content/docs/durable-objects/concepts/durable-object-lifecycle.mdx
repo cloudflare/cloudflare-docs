@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { Render } from "~/components";
 
 This section describes the lifecycle of a [Durable Object](/durable-objects/concepts/what-are-durable-objects/).
 
@@ -91,23 +91,4 @@ When your Durable Object code is updated, your Worker and Durable Objects are re
 
 ### Working without shutdown hooks
 
-Durable Objects do not provide shutdown hooks or lifecycle callbacks that run before shutdown. This is because Cloudflare cannot guarantee these hooks would execute in all cases, and external software may rely too heavily on these (unreliable) hooks.
-
-Instead of relying on shutdown hooks, you can regularly write to storage to recover gracefully from shutdowns.
-
-For example, if you are processing a stream of data and need to save your progress, write your position to storage as you go rather than waiting to persist it at the end:
-
-```js
-// Good: Write progress as you go
-async processData(data) {
-  data.forEach(async (item, index) => {
-    await this.processItem(item);
-    // Save progress frequently
-    await this.ctx.storage.put("lastProcessedIndex", index);
-  });
-}
-```
-
-While this may feel unintuitive, Durable Object storage writes are fast and synchronous, so you can persist state with minimal performance concerns.
-
-This approach ensures your Durable Object can safely resume from any point, even if it shuts down unexpectedly.
+<Render file="working-without-shutdown-hooks" product="durable-objects" />
