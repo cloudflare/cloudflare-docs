@@ -67,14 +67,17 @@ If you do not have a `nodejs_compat` or `nodejs_compat_v2` flag in your configur
 
 However, if you use Node.js globals that are not supported by the runtime, your Worker upload will be successful, but you may see errors in production code. Let's create a contrived example to illustrate the issue.
 
-The `wrangler.toml` does not specify either `nodejs_compat` or `nodejs_compat_v2`:
+The wrangler configuration file does not specify either `nodejs_compat` or `nodejs_compat_v2`:
 
-```toml
-name = "test"
-main = "src/index.ts"
-compatibility_date = "2024-12-16"
-# no nodejs_compat flags here
+<WranglerConfig>
+```jsonc
+{ "name": "test",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-12-16"
+	# no nodejs_compat flags here
+}
 ```
+</WranglerConfig>
 
 In our `src/index.ts` file, we use the `process` object, which is a Node.js global, unavailable in the Workerd runtime:
 
