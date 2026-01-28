@@ -31,13 +31,9 @@ When a user registers the WARP client, Cloudflare assigns a virtual IPv4 and IPv
 - Default IPv4: `100.96.0.0/12`
 - Default IPv6: `2606:4700:0cf1:1000::/64`
 
-If your organization already uses the default IPv4 range for internal networking, or if you require predictable IP assignments for firewall policy management, you can configure custom WARP IPv4 subnets. You can assign different IPv4 subnets to devices based on the user's identity.
+If your organization already uses the default IPv4 range for internal networking, or if you require more granular IP assignments for firewall policy management, you can configure custom WARP IPv4 subnets. You can assign different IPv4 subnets to devices based on the user's identity.
 
 The default IPv6 range is owned by Cloudflare and therefore should not conflict with services on your private network. The WARP IPv6 range is not configurable.
-
-## Prerequisites
-
-- [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) is enabled in your [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
 
 ## Create an IP subnet
 
@@ -63,14 +59,20 @@ You can now [assign this subnet](#assign-device-ips) to a group of devices.
 
 ## Assign device IPs
 
+### Prerequisites
+
+- [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) is enabled in your [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
+
+### Create an IP assignment
 To assign IP subnets to your devices:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
 2. Under **Device IP assignment**, select **Add new IP assignment**.
 3. Enter a name for this group of devices (for example, `IT department`).
-4. Create rules to define the users or devices that will receive these IPs. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/traffic-policies/network-policies/#comparison-operators), and [Values](/cloudflare-one/traffic-policies/network-policies/#value).
+4. Create rules to define the users or devices that will receive these IPs. Learn more about the available [Selectors](#selectors), [Operators](#comparison-operators), and [Values](#value).
 5. Choose an existing IPv4 subnet from the dropdown menu, or [create a new subnet](#create-an-ipv4-subnet).
 6. Select **Assign IP address**.
+7. (Optional) In the **Device IP assignment** table, change the [order of precedence](#order-of-precedence) of IP assignments.
 
 Devices that match your rules are assigned a random IP from this address space upon registration. Only newly registered devices will receive a new IP; existing devices will not see any impact to connectivity. To assign a new IP to an existing device, you must [delete its registration](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration) and then [re-enroll the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 
@@ -164,45 +166,43 @@ To evaluate multiple conditions in an expression, select a logical operator:
 
 WARP checks the IP assignments from top to bottom as they appear in the dashboard (lowest precedence number is checked first). WARP follows the first match principle — once a device matches an IP assignment, WARP stops evaluating and no subsequent IP assignments can override the decision. You can rearrange the IP assignments in the dashboard according to your desired order of precedence.
 
-
 ## Verify device IPs
-
 
 ### Via the dashboard
 
-To verify the last active device profile for a specific device:
+To check the virtual IP addresses assigned to a specific device registration:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices**.
-2. Under devices, find your device.
-3. Review the device profile under **Last active device profile**.
+2. Select your device > **View details**.
+	:::tip[Device filters]
+	The dashboard defaults to showing devices that were last seen within the past year. You can select **Show filters** to change the date range or filter by the last active user.
+	:::
+3. Scroll down to **Users**. You will see the registrations associated with this device along with their assigned IPv4 and IPv6 addresses.
 
 ### Via the CLI
 
-not in profile settings. must check network interface via ifconfig, etc..
+To check the device IP used by WARP's virtual network interface:
+
+<Render file="warp/check-network-interface-ip" product="cloudflare-one" />
 
 ## View subnet usage
 
-You can monitor the consumption of your IPv4 subnets to ensure you have enough addresses for new device registrations.
-
-### Via the dashboard
+Monitor the consumption of your IPv4 subnets to ensure you have enough addresses for new device registrations. Devices will be unable to register if they match a subnet with no available IPs.
 
 The Cloudflare One dashboard provides a high-level overview of assigned and available IPs:
 
-Go to Team & Resources > Devices > Device profiles.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles**.
+2. Locate the **WARP IP subnets** table.
+3. The **IPs assigned** column displays the total number of IPs currently assigned to active device registrations versus the total capacity of the CIDR block.
 
-Locate the WARP IP subnets table.
+If your subnet is approaching capacity, you can [expand your subnet](#edit-an-ip-subnet) to increase the number of available IPs. Alternatively, you can free up IPs by [deleting existing device registrations](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration), particularly revoked registrations that may be consuming IP space despite the device no longer being in use.
 
-The Usage column displays the total number of IPs currently assigned to active device registrations versus the total capacity of the CIDR block.
+To get a list of all device registrations in a subnet (including revoked registrations), use the [Cloudflare API](/api/resources/zero_trust/subresources/devices/subresources/registrations/methods/list/). For example, the following script fetches all device registrations and their device IPs, and outputs all registrations within a specific IPv4 subnet.
 
-### Via the API
-
-use API to see which devices are assigned to the subnet, including revoked devices.
-
-For a granular list of which specific IPs are "taken" (including those held by revoked or inactive devices), use the Cloudflare API.
-
-This is particularly useful for identifying "ghost" registrations that may be consuming IP space despite the device no longer being in use.
+<Details header="Example script to filter registrations by IP">
 
 
+</Details>
 
 ## Edit an IP subnet
 
