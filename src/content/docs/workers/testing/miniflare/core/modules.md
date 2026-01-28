@@ -1,6 +1,6 @@
 ---
 order: 3
-title: "📚 Modules"
+title: Modules
 ---
 
 - [Modules Reference](/workers/reference/migrate-to-module-workers/)

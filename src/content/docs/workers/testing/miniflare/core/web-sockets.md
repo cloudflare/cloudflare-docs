@@ -1,6 +1,6 @@
 ---
 order: 4
-title: "✉️ WebSockets"
+title: WebSockets
 ---
 
 - [WebSockets Reference](/workers/runtime-apis/websockets)

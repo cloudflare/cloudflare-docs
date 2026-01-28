@@ -1,6 +1,6 @@
 ---
 order: 0
-title: 📦 KV
+title: KV
 ---
 
 - [KV Reference](/kv/api/)
