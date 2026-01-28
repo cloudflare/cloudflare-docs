@@ -45,11 +45,11 @@ Response:
 
 ## Two Ways to Generate Signed Tokens
 
-You can program your app to generate token in two ways:
+You can program your app to generate tokens in two ways:
 
-- **Low-volume or testing: Use the `/token` endpoint to generate a short-lived signed token.** This is recommended for testing purposes or if you are generating less than 1,000 tokens per day. It requires making an API call to Cloudflare for each token, _which is subject to [rate limiting](/fundamentals/api/reference/limits/)._ The default result is valid for 1 hour.
+- **Low-volume or testing: Use the `/token` endpoint to generate a short-lived signed token.** This is recommended for testing purposes or if you are generating less than 1,000 tokens per day. It requires making an API call to Cloudflare for each token, _which is subject to [rate limiting](/fundamentals/api/reference/limits/)._ The default result is valid for 1 hour. This method does not support [Live WebRTC](/stream/webrtc-beta/).
 
-- **Recommended: Use a signing key to create tokens.** If you have thousands of daily users or need to generate a high volume of tokens, you can create tokens yourself using a signing key. This way, you do not need to call a Stream API each time you need to generate a token, and is therefore _not_ a rate-limited operation.
+- **Recommended: Use a signing key to create tokens.** If you have thousands of daily users or need to generate a high volume of tokens, as with [Live WebRTC](/stream/webrtc-beta/), you can create tokens yourself using a signing key. This way, you do not need to call a Stream API each time you need to generate a token, and is therefore _not_ a rate-limited operation.
 
 ## Option 1: Using the /token endpoint
 
