@@ -2,7 +2,9 @@
 {}
 ---
 
-Durable Objects do not provide shutdown hooks or lifecycle callbacks that run before shutdown. This is because Cloudflare cannot guarantee these hooks would execute in all cases, and external software may rely too heavily on these (unreliable) hooks.
+Durable Objects may shut down due to deployments, inactivity, or runtime decisions. Rather than relying on shutdown hooks (which are not provided), design your application to write state incrementally.
+
+Shutdown hooks or lifecycle callbacks that run before shutdown are not provided because Cloudflare cannot guarantee these hooks would execute in all cases, and external software may rely too heavily on these (unreliable) hooks.
 
 Instead of relying on shutdown hooks, you can regularly write to storage to recover gracefully from shutdowns.
 
