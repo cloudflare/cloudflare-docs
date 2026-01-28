@@ -26,30 +26,30 @@ import kotlinx.coroutines.runBlocking
 import kotlin.time.Duration.Companion.minutes
 
 val ACCOUNT_ID = "<ACCOUNT_ID>"
-val ACCESS_KEY = "<ACCESS_KEY>"
-val SECRET_KEY = "<SECRET_KEY>"
+val ACCESS_KEY_ID = "<ACCESS_KEY_ID>"
+val SECRET_ACCESS_KEY = "<SECRET_ACCESS_KEY>"
 
 fun main() = runBlocking {
-    val r2Client = S3Client.fromEnvironment {
+    S3Client.fromEnvironment {
         region = "auto" // Required by SDK, but not used by R2
         endpointUrl = Url.parse("https://${ACCOUNT_ID}.r2.cloudflarestorage.com")
         credentialsProvider = StaticCredentialsProvider(
             Credentials(
-                accessKeyId = ACCESS_KEY,
-                secretAccessKey = SECRET_KEY
+                accessKeyId = ACCESS_KEY_ID,
+                secretAccessKey = SECRET_ACCESS_KEY
             ),
         )
-    }
+    }.use { r2Client ->
+        println("Available buckets:")
+        r2Client.listBuckets().buckets?.forEach { bucket ->
+            println("* ${bucket.name}")
+        }
 
-    println("Available buckets:")
-    r2Client.listBuckets().buckets?.forEach { bucket ->
-        println("* ${bucket.name}")
-    }
-
-    val bucketName = "<BUCKET_NAME>"
-    println("\nObjects in bucket '${bucketName}':")
-    r2Client.listObjects { bucket = bucketName }.contents?.forEach {
-        println("* ${it.key} (size: ${it.size} bytes, modified: ${it.lastModified})")
+        val bucketName = "<BUCKET_NAME>"
+        println("\nObjects in bucket '${bucketName}':")
+        r2Client.listObjects { bucket = bucketName }.contents?.forEach {
+            println("* ${it.key} (size: ${it.size} bytes, modified: ${it.lastModified})")
+        }
     }
 }
 ```
