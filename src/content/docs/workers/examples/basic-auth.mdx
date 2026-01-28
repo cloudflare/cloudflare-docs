@@ -1,5 +1,4 @@
 ---
-
 summary: Shows how to restrict access using the HTTP Basic schema.
 tags:
   - Security
@@ -296,21 +295,26 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
             }
             let authorization = authorization.unwrap();
             let auth: Vec<&str> = authorization.split(" ").collect();
-            let scheme = auth[0];
-            let encoded = auth[1];
 
             // The Authorization header must start with Basic, followed by a space.
-            if encoded == "" || scheme != "Basic" {
+            if auth.len() < 2 || auth[0] != "Basic" || auth[1].is_empty() {
                 return Response::error("Malformed authorization header.", 400);
             }
+
+            let scheme = auth[0];
+            let encoded = auth[1];
 
             let buff = BASE64_STANDARD.decode(encoded).unwrap();
             let credentials = String::from_utf8_lossy(&buff);
             // The username & password are split by the first colon.
             //=> example: "username:password"
-            let credentials: Vec<&str> = credentials.split(':').collect();
-            let user = credentials[0];
-            let pass = credentials[1];
+            let index = credentials.find(':');
+            if index.is_none() {
+                return Response::error("Malformed credentials.", 400);
+            }
+            let index = index.unwrap();
+            let user = &credentials[..index];
+            let pass = &credentials[index + 1..];
 
             if user != basic_user || pass != basic_pass {
                 let mut headers = Headers::new();
@@ -347,7 +351,6 @@ import { basicAuth } from "hono/basic-auth";
 // Define environment interface
 interface Env {
 	Bindings: {
-		USERNAME: string;
 		PASSWORD: string;
 	};
 }
@@ -359,12 +362,20 @@ app.get("/", (c) => {
 	return c.text("Anyone can access the homepage.");
 });
 
+// Logout route - invalidate credentials
+app.get("/logout", (c) => {
+	// Invalidate the "Authorization" header by returning a HTTP 401.
+	// We do not send a "WWW-Authenticate" header, as this would trigger
+	// a popup in the browser, immediately asking for credentials again.
+	return c.text("Logged out.", 401);
+});
+
 // Admin route - protected with Basic Auth
 app.get(
 	"/admin",
 	async (c, next) => {
 		const auth = basicAuth({
-			username: c.env.USERNAME,
+			username: "admin",
 			password: c.env.PASSWORD,
 		});
 
