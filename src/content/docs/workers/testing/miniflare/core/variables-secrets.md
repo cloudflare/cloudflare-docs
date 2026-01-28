@@ -1,6 +1,6 @@
 ---
 order: 2
-title: "🔑 Variables and Secrets"
+title: Variables and Secrets
 ---
 
 ## Bindings

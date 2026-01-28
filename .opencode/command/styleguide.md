@@ -38,17 +38,20 @@ Look at all the unstaged changes to markdown (.md, .mdx) files, pull out the lin
 
 ## Structure and Formatting
 
-9. **Code blocks**: Ensure code blocks use appropriate components (`TypeScriptExample`, `WranglerConfig`, `PackageManagers`) or proper language hints. Code should include descriptions of what it does.
+9. **Emojis in frontmatter**: Flag any emojis in frontmatter fields, especially `title` and `sidebar` labels. Emojis should not appear in page titles or sidebar labels.
 
-10. **Paragraphs**: Flag extremely long paragraphs (more than 2-3 sentences). Suggest breaking up with headers, lists, or asides.
+10. **Code blocks**: Ensure code blocks use appropriate components (`TypeScriptExample`, `WranglerConfig`, `PackageManagers`) or proper language hints. Code should include descriptions of what it does.
 
-11. **Link text**: Flag links with unhelpful text like "here", "this page", "read more", or "click here". Link text should describe the destination.
+11. **Paragraphs**: Flag extremely long paragraphs (more than 2-3 sentences). Suggest breaking up with headers, lists, or asides.
 
-12. **Links format**: Flag full URLs to developers.cloudflare.com - should use relative paths (e.g., `/workers/get-started/`).
+12. **Link text**: Flag links with unhelpful text like "here", "this page", "read more", or "click here". Link text should describe the destination.
+
+13. **Links format**: Flag full URLs to developers.cloudflare.com - should use relative paths (e.g., `/workers/get-started/`).
 
 ## Output Format
 
 For each issue found, report:
+
 - The problematic text (quote it)
 - Which rule it violates
 - A suggested fix

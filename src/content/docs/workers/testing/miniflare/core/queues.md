@@ -1,6 +1,6 @@
 ---
 order: 8
-title: "🚥 Queues"
+title: Queues
 ---
 
 - [Queues Reference](/queues/)

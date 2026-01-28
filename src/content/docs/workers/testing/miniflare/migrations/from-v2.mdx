@@ -1,6 +1,6 @@
 ---
 order: 3
-title: ⬆️ Migrating from Version 2
+title: Migrating from Version 2
 ---
 
 Miniflare v3 now uses [`workerd`](https://github.com/cloudflare/workerd), the
@@ -44,7 +44,6 @@ open-source `workerd` runtime. See the [Getting Started guide for the new API do
     mapping binding names to queue names, or a `string[]` of binding names to
     queues of the same name.
 - `queueConsumers`
-
   - Either accepts a `Record<string, QueueConsumerOptions>` mapping queue names
     to consumer options, or a `string[]` of queue names to consume with default
     options. `QueueConsumerOptions` has the following type:
@@ -97,7 +96,6 @@ open-source `workerd` runtime. See the [Getting Started guide for the new API do
     triggering scheduled events yet. This option may be added back in a future
     release.
 - `mounts`
-
   - Miniflare no longer has the concept of parent and child Workers. Instead,
     all Workers can be defined at the same level, using the new `workers`
     option. Here's an example that uses a service binding to increment a value
@@ -133,13 +131,13 @@ open-source `workerd` runtime. See the [Getting Started guide for the new API do
               // Get the message defined outside
               const response = await env.CUSTOM.fetch("http://host/");
               const message = await response.text();
-
+    
               // Increment the count 3 times
               await env.INCREMENTER.fetch("http://host/");
               await env.INCREMENTER.fetch("http://host/");
               await env.INCREMENTER.fetch("http://host/");
               const count = await env.COUNTS.get("count");
-
+    
               return new Response(message + count);
             }
           }`,
