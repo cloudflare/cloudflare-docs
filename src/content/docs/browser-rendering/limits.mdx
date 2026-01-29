@@ -12,7 +12,7 @@ import { Render, Plan, Tabs, TabItem, DashButton } from "~/components";
 
 ## Workers Free
 
-Users on the [Workers Free plan](/workers/platform/pricing/) are limited to **10 minutes of browser rendering usage per day**.
+Users on the [Workers Free plan](/workers/platform/pricing/) are limited to **10 minutes of Browser Rendering usage per day**.
 
 To increase this limit, go to the **Compute (Workers) > Workers plans** page in the Cloudflare dashboard:
 
@@ -20,12 +20,12 @@ To increase this limit, go to the **Compute (Workers) > Workers plans** page in 
 
 [Learn more about Workers Plans](/workers/platform/pricing).
 
-| Feature                                | Limit           |
-| -------------------------------------- | --------------- |
-| Concurrent browsers per account (Workers Bindings only)        | 3 per account   |
-| New browser instances per minute (Workers Bindings only)      | 3 per minute    |
-| Browser timeout                        | 60 seconds [^1] |
-| Total requests per min (REST API only) | 6 per minute |
+| Feature                                                  | Limit           |
+| -------------------------------------------------------- | --------------- |
+| Concurrent browsers per account (Workers Bindings only)  | 3 per account   |
+| New browser instances per minute (Workers Bindings only) | 3 per minute    |
+| Browser timeout                                          | 60 seconds [^1] |
+| Total requests per min (REST API only)                   | 6 per minute    |
 
 [^1]: By default, a browser will time out after 60 seconds of inactivity. You can extend this to up to 10 minutes using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). Call `browser.close()` to release the browser instance immediately.
 
@@ -35,12 +35,12 @@ To increase this limit, go to the **Compute (Workers) > Workers plans** page in 
 If you are on the Workers Free plan, [upgrade to Workers Paid](/workers/platform/pricing/) for higher limits. If you are already on Workers Paid and need limits beyond those listed below, Cloudflare will grant [requests for higher limits](https://forms.gle/CdueDKvb26mTaepa9) on a case-by-case basis.
 :::
 
-| Feature                                | Limit               |
-| -------------------------------------- | ------------------- |
-| Concurrent browsers per account (Workers Bindings only)        | 30 per account |
-| New browser instances per minute (Workers Bindings only)       | 30 per minute  |
-| Browser timeout                        | 60 seconds [^1] |
-| Total requests per min (REST API only) | 180 per minute |
+| Feature                                                  | Limit           |
+| -------------------------------------------------------- | --------------- |
+| Concurrent browsers per account (Workers Bindings only)  | 30 per account  |
+| New browser instances per minute (Workers Bindings only) | 30 per minute   |
+| Browser timeout                                          | 60 seconds [^1] |
+| Total requests per min (REST API only)                   | 180 per minute  |
 
 :::note[About concurrent browsers]
 The Workers Paid plan includes 10 concurrent browsers at no additional cost. You can use up to 30 concurrent browsers per account, but usage beyond the included 10 browsers is billed at $2.00 per additional browser (averaged monthly).
@@ -54,10 +54,7 @@ While the limits above define the maximum number of concurrent browser sessions 
 
 ## Limits FAQ & troubleshooting
 
-<Render
-  file="manage-concurrency-faq"
-  product="browser-rendering"
-/>
+<Render file="manage-concurrency-faq" product="browser-rendering" />
 
 ### Can I increase the browser timeout?
 
@@ -78,6 +75,7 @@ If you recently upgraded to the [Workers Paid plan](/workers/platform/pricing/) 
 If you are hitting the daily limit or seeing higher usage than expected, the most common cause is browser sessions that are not being closed properly. When a browser session is not explicitly closed with `browser.close()`, it remains open and continues to consume browser time until it times out (60 seconds by default, or up to 10 minutes if you use the `keep_alive` option).
 
 To minimize usage:
+
 - Always call `browser.close()` when you are finished with a browser session.
 - Wrap your browser code in a `try/finally` block to ensure `browser.close()` is called even if an error occurs.
 - Use [`puppeteer.history()`](/browser-rendering/puppeteer/#list-recent-sessions) or [`playwright.history()`](/browser-rendering/playwright/#list-recent-sessions) to review recent sessions and identify any that closed due to `BrowserIdle` instead of `NormalClosure`. Sessions that close due to idle timeout indicate the browser was not closed explicitly.
@@ -94,10 +92,10 @@ Refer to [Browser close reasons](/browser-rendering/reference/browser-close-reas
 
 Rate limits are enforced with a fixed per-second fill rate, not as a burst allowance. This means you cannot send all your requests at once — the API expects them to be spread evenly over the minute.
 
-| Plan | Rate limit | Per-second equivalent |
-| ---- | ---------- | --------------------- |
-| Workers Free | 6 requests/min | 1 request every 10 seconds |
-| Workers Paid | 180 requests/min | 3 requests/second |
+| Plan         | Rate limit       | Per-second equivalent      |
+| ------------ | ---------------- | -------------------------- |
+| Workers Free | 6 requests/min   | 1 request every 10 seconds |
+| Workers Paid | 180 requests/min | 3 requests/second          |
 
 If you exceed the rate limit, the API responds with HTTP status code `429 Too many requests` and includes a `Retry-After` header specifying how many seconds to wait before retrying.
 
@@ -119,14 +117,16 @@ const response = await fetch('https://api.cloudflare.com/client/v4/accounts/<acc
 });
 
 if (response.status === 429) {
-    const retryAfter = response.headers.get('Retry-After');
-    console.log(`Rate limited. Waiting ${retryAfter} seconds...`);
-    await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+const retryAfter = response.headers.get('Retry-After');
+console.log(`Rate limited. Waiting ${retryAfter} seconds...`);
+await new Promise(resolve => setTimeout(resolve, retryAfter \* 1000));
 
     // Retry the request
     const retryResponse = await fetch(/* same request as above */);
+
 }
-```
+
+````
 
 </TabItem> <TabItem label="Workers Bindings">
 
@@ -153,13 +153,13 @@ try {
 		const browser = await puppeteer.launch(env.MYBROWSER);
 	}
 }
-```
+````
 
 </TabItem> </Tabs>
 
 ### Error: `429 Browser time limit exceeded for today`
 
-This `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today` error indicates you have hit the daily browser limit on the Workers Free plan. [Workers Free plan accounts are limited](#workers-free) to 10 minutes of browser rendering usage per day. If you exceed that limit, you will receive a `429` error until the next UTC day.
+This `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today` error indicates you have hit the daily browser limit on the Workers Free plan. [Workers Free plan accounts are limited](#workers-free) to 10 minutes of Browser Rendering usage per day. If you exceed that limit, you will receive a `429` error until the next UTC day.
 
 You can [increase your limits](#workers-paid) by upgrading to a Workers Paid plan on the **Workers plans** page of the Cloudflare dashboard:
 
