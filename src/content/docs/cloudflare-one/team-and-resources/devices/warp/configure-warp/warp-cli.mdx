@@ -1256,7 +1256,7 @@ warp-cli status
 warp-cli disconnect
 ```
 
-### Changing operating modes
+### Changing WARP modes
 
 ```sh
 # Use WARP with DNS over HTTPS
@@ -1279,19 +1279,6 @@ warp-cli tunnel ip add-range 192.168.1.0/24
 # List current exclusions
 warp-cli tunnel host list
 warp-cli tunnel ip list
-```
-
-### DNS configuration
-
-```sh
-# Enable Families mode (malware blocking) - Consumer only
-warp-cli dns families malware
-
-# Add a fallback DNS domain
-warp-cli dns fallback add company.internal
-
-# View DNS statistics
-warp-cli dns stats
 ```
 
 ### Debugging and diagnostics
@@ -1319,29 +1306,6 @@ warp-cli registration new myorganization
 # View registration details
 warp-cli registration show
 ```
-
-### Generate shell completions
-
-<Tabs>
-<TabItem label="Bash">
-```sh
-warp-cli generate-completions bash >> ~/.bashrc
-source ~/.bashrc
-```
-</TabItem>
-<TabItem label="Zsh">
-```sh
-warp-cli generate-completions zsh >> ~/.zshrc
-source ~/.zshrc
-```
-</TabItem>
-<TabItem label="Fish">
-```sh
-warp-cli generate-completions fish >> ~/.config/fish/config.fish
-source ~/.config/fish/config.fish
-```
-</TabItem>
-</Tabs>
 
 ---
 
