@@ -13,10 +13,10 @@ Before uninstalling `cloudflared`, you should:
 
 TODO: Include instructions on what user needs to consider before uninstalling CF Tunnel
 
-1. Stop any running `cloudflared` connections. If `cloudflared` is installed [as a service](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/index), run one of the following commands:
-   - **Linux**: `sudo systemctl stop cloudflared`
-   - **macOS**: `sudo launchctl stop com.cloudflare.cloudflared`
-   - **Windows**: `sc stop cloudflared`
+1. Stop any running `cloudflared` connections. If `cloudflared` is installed as a service, run one of the following commands:
+   - **Linux**: [`sudo systemctl stop cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/as-a-service/linux/)
+   - **macOS**: [`sudo launchctl stop com.cloudflare.cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/as-a-service/macos/)
+   - **Windows**: [`sc stop cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/as-a-service/windows/)
 
    If you are running `cloudflared` manually (not as a service), terminate the process with `Ctrl`+`C` or close the terminal window.
 
