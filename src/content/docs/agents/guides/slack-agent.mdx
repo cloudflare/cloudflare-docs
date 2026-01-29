@@ -118,21 +118,33 @@ The `OPENAI_BASE_URL` is optional but recommended. Using [Cloudflare AI Gateway]
 3. Update your `wrangler.jsonc` to configure your Agent:
 
 <WranglerConfig>
-```toml
-name = "my-slack-agent"
-main = "src/index.ts"
-compatibility_date = "2024-01-01"
-compatibility_flags = ["nodejs_compat"]
-
-[[durable_objects.bindings]]
-name = "MyAgent"
-class_name = "MyAgent"
-script_name = "my-slack-agent"
-
-[[migrations]]
-tag = "v1"
-new_classes = ["MyAgent"]
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-slack-agent",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-01-01",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MyAgent",
+				"class_name": "MyAgent",
+				"script_name": "my-slack-agent"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": [
+				"MyAgent"
+			]
+		}
+	]
+}
 ```
 </WranglerConfig>
 

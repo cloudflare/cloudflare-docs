@@ -42,20 +42,25 @@ To start, you will need to set up your project to use the following resources on
 
 ### Add the bindings to your Wrangler configuration
 
-Configure your `wrangler.toml` file to add the Images, R2, and Assets bindings:
+Configure your Wrangler configuration file to add the Images, R2, and Assets bindings:
 
 <WranglerConfig>
-```toml
-[images]
-binding = "IMAGES"
-
-[[r2_buckets]]
-binding = "R2"
-bucket_name = "<BUCKET>"
-
-[assets]
-directory = "./<DIRECTORY>"
-binding = "ASSETS"
+```jsonc
+{
+	"images": {
+		"binding": "IMAGES"
+	},
+	"r2_buckets": [
+		{
+			"binding": "R2",
+			"bucket_name": "<BUCKET>"
+		}
+	],
+	"assets": {
+		"directory": "./<DIRECTORY>",
+		"binding": "ASSETS"
+	}
+}
 ```
 
 </WranglerConfig>

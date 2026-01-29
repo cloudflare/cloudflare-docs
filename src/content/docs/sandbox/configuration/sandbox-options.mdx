@@ -119,10 +119,13 @@ Control SDK logging for debugging and monitoring. Set these in your Worker's `wr
 - `SANDBOX_LOG_FORMAT` - Output format: `json`, `pretty`. **Default**: `json`
 
 <WranglerConfig>
-```toml
-[vars]
-SANDBOX_LOG_LEVEL = "debug"
-SANDBOX_LOG_FORMAT = "pretty"
+```jsonc
+{
+	"vars": {
+		"SANDBOX_LOG_LEVEL": "debug",
+		"SANDBOX_LOG_FORMAT": "pretty"
+	}
+}
 ```
 </WranglerConfig>
 

@@ -49,16 +49,23 @@ To create a Hyperdrive configuration with the [Wrangler CLI](/workers/wrangler/i
 
 	<WranglerConfig>
 
-	```toml
-	name = "hyperdrive-example"
-	main = "src/index.ts"
-	compatibility_date = "2024-08-21"
-	compatibility_flags = ["nodejs_compat"]
-
-	# Pasted from the output of `wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string=[...]` above.
-	[[hyperdrive]]
-	binding = "HYPERDRIVE"
-	id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
+	```jsonc
+	{
+		"$schema": "./node_modules/wrangler/config-schema.json",
+		"name": "hyperdrive-example",
+		"main": "src/index.ts",
+		"compatibility_date": "2024-08-21",
+		"compatibility_flags": [
+			"nodejs_compat"
+		],
+		// Pasted from the output of `wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string=[...]` above.
+		"hyperdrive": [
+			{
+				"binding": "HYPERDRIVE",
+				"id": "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
+			}
+		]
+	}
 	```
 
 	</WranglerConfig>

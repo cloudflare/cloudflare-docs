@@ -25,13 +25,20 @@ Define a cron trigger configuration in your Wrangler configuration file:
 
 <WranglerConfig>
 
-```toml
-[triggers]
-# Schedule cron triggers:
-# - At every 3rd minute
-# - At 15:00 (UTC) on first day of the month
-# - At 23:59 (UTC) on the last weekday of the month
-crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
+```jsonc
+{
+	"triggers": {
+		// Schedule cron triggers:
+		// - At every 3rd minute
+		// - At 15:00 (UTC) on first day of the month
+		// - At 23:59 (UTC) on the last weekday of the month
+		"crons": [
+			"*/3 * * * *",
+			"0 15 1 * *",
+			"59 23 LW * *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>

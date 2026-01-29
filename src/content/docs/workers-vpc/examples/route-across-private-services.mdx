@@ -36,21 +36,26 @@ Note the service IDs returned for the next step.
 
 ## 2. Configure your Worker
 
-Update your `wrangler.toml`:
+Update your Wrangler configuration file:
 
 <WranglerConfig>
-```toml
-name = "api-gateway"
-main = "src/index.js"
-compatibility_date = "2024-01-01"
-
-[[vpc_services]]
-binding = "USER_SERVICE"
-service_id = "<YOUR_USER_SERVICE_ID>"
-
-[[vpc_services]]
-binding = "ORDER_SERVICE"
-service_id = "<YOUR_ORDER_SERVICE_ID>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "api-gateway",
+	"main": "src/index.js",
+	"compatibility_date": "2024-01-01",
+	"vpc_services": [
+		{
+			"binding": "USER_SERVICE",
+			"service_id": "<YOUR_USER_SERVICE_ID>"
+		},
+		{
+			"binding": "ORDER_SERVICE",
+			"service_id": "<YOUR_ORDER_SERVICE_ID>"
+		}
+	]
+}
 ```
 </WranglerConfig>
 

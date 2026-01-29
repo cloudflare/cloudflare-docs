@@ -61,10 +61,15 @@ Refer to the [API reference](/workers/vite-plugin/reference/api/) for configurat
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-vite-tutorial"
-compatibility_date = "2025-04-03"
-assets = { not_found_handling = "single-page-application" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-tutorial",
+	"compatibility_date": "2025-04-03",
+	"assets": {
+		"not_found_handling": "single-page-application"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -134,11 +139,16 @@ This tutorial, however, will show you how to go a step further and add an API Wo
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-vite-tutorial"
-compatibility_date = "2025-04-03"
-assets = { not_found_handling = "single-page-application" }
-main = "./worker/index.ts"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-tutorial",
+	"compatibility_date": "2025-04-03",
+	"assets": {
+		"not_found_handling": "single-page-application"
+	},
+	"main": "./worker/index.ts"
+}
 ```
 
 </WranglerConfig>
@@ -176,11 +186,19 @@ This opts out of interpreting the `Sec-Fetch-Mode` header.
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-vite-tutorial"
-compatibility_date = "2025-04-03"
-assets = { not_found_handling = "single-page-application", run_worker_first = ["/api/*"] }
-main = "./worker/index.ts"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-vite-tutorial",
+	"compatibility_date": "2025-04-03",
+	"assets": {
+		"not_found_handling": "single-page-application",
+		"run_worker_first": [
+			"/api/*"
+		]
+	},
+	"main": "./worker/index.ts"
+}
 ```
 
 </WranglerConfig>

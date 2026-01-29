@@ -30,10 +30,15 @@ The folder of static assets to be served. For many frameworks, this is the `./pu
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-compatibility_date = "2024-09-19"
-assets = { directory = "./public/" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"compatibility_date": "2024-09-19",
+	"assets": {
+		"directory": "./public/"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -67,16 +72,20 @@ Controls whether to invoke the Worker script regardless of a request which would
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-compatibility_date = "2024-09-19"
-main = "src/index.ts"
- # The following configuration unconditionally invokes the Worker script at
- # `src/index.ts`, which can programatically fetch assets via the ASSETS binding
-[assets]
-directory = "./public/"
-binding = "ASSETS"
-run_worker_first = true
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"compatibility_date": "2024-09-19",
+	"main": "src/index.ts",
+	// The following configuration unconditionally invokes the Worker script at
+	// `src/index.ts`, which can programatically fetch assets via the ASSETS binding
+	"assets": {
+		"directory": "./public/",
+		"binding": "ASSETS",
+		"run_worker_first": true
+	}
+}
 ```
 
 </WranglerConfig>
@@ -117,14 +126,17 @@ Configuring the optional [binding](/workers/runtime-apis/bindings) gives you acc
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-main = "./src/index.js"
-compatibility_date = "2024-09-19"
-
-[assets]
-directory = "./public/"
-binding = "ASSETS"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"main": "./src/index.js",
+	"compatibility_date": "2024-09-19",
+	"assets": {
+		"directory": "./public/",
+		"binding": "ASSETS"
+	}
+}
 ```
 
 </WranglerConfig>

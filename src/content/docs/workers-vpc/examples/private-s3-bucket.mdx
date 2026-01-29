@@ -94,18 +94,22 @@ curl -i https://your-bucket-name.s3.us-west-2.amazonaws.com/test-file.txt
 
 ## 4. Configure your Worker
 
-Update your `wrangler.toml`:
+Update your Wrangler configuration file:
 
 <WranglerConfig>
-```toml
-name = "private-s3-gateway"
-main = "src/index.js"
-compatibility_date = "2024-01-01"
-
-[[vpc_services]]
-binding = "S3_STORAGE"
-service_id = "<YOUR_SERVICE_ID>"
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "private-s3-gateway",
+	"main": "src/index.js",
+	"compatibility_date": "2024-01-01",
+	"vpc_services": [
+		{
+			"binding": "S3_STORAGE",
+			"service_id": "<YOUR_SERVICE_ID>"
+		}
+	]
+}
 ```
 </WranglerConfig>
 

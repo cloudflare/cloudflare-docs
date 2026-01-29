@@ -247,17 +247,28 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "websocket-server"
-main = "src/index.ts"
-
-[[durable_objects.bindings]]
-name = "WEBSOCKET_SERVER"
-class_name = "WebSocketServer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["WebSocketServer"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "websocket-server",
+	"main": "src/index.ts",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "WEBSOCKET_SERVER",
+				"class_name": "WebSocketServer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"WebSocketServer"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

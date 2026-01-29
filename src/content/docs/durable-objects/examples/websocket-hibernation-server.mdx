@@ -282,17 +282,28 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "websocket-hibernation-server"
-main = "src/index.ts"
-
-[[durable_objects.bindings]]
-name = "WEBSOCKET_HIBERNATION_SERVER"
-class_name = "WebSocketHibernationServer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["WebSocketHibernationServer"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "websocket-hibernation-server",
+	"main": "src/index.ts",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "WEBSOCKET_HIBERNATION_SERVER",
+				"class_name": "WebSocketHibernationServer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"WebSocketHibernationServer"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

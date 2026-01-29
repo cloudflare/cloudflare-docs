@@ -15,7 +15,7 @@ Ensure language is not overly verbose, LLM-like, or inconsistent with existing d
 - Avoid future tense except for actions that have not happened yet
 - Do not use marketing-centric language in technical documentation - e.g.
 - "Perfect for" → "Use for"
-- "Essential for" → "Use for" 
+- "Essential for" → "Use for"
 - "Critical for" → "Use for"
 - "Best for" → "Use when"
 - "Modern $THING" → just say $THING
@@ -92,7 +92,7 @@ Documentation should represent timeless truth, not time-bound information.
 Use appropriate code components:
 
 - `TypeScriptExample` for TypeScript code with multiple tabs
-- `WranglerConfig` for `wrangler.toml` configuration
+- `WranglerConfig` for `wrangler.jsonc` configuration
 - `PackageManagers` for commands across npm/yarn/pnpm
 - Standard code fences with language hints for other code
 
