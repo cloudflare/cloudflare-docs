@@ -27,7 +27,7 @@ Privacy Proxy exports the following telemetry signals:
 | Signal | Description |
 | -------- | ------------- |
 | Metrics | Connection counts, request rates, latency histograms, error rates |
-| Traces | Per-request traces showing proxy processing time |
+| Traces | Per-request traces showing proxy processing time. Traces are sampled at approximately 1% of requests. |
 
 ## Metrics
 
@@ -59,7 +59,7 @@ Privacy Proxy exports metrics that help you understand usage patterns and perfor
 
 ## `Server-Timing` header
 
-Privacy Proxy includes a `Server-Timing` header in responses to help measure processing latency from the client side:
+Privacy Proxy includes a `Server-Timing` header in responses to help measure processing latency from the client side. For full header format details, refer to [HTTP headers](/privacy-proxy/reference/http-headers/#server-timing).
 
 ```http
 Server-Timing: proxy;dur=12.5
