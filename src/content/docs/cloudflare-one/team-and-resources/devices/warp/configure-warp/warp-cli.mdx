@@ -1,0 +1,1354 @@
+---
+pcx_content_type: reference
+title: WARP CLI
+description: Manage the WARP client from the command line.
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: WARP CLI commands
+---
+
+import { TabItem, Tabs, Type, MetaInfo } from "~/components";
+
+The WARP command-line interface (CLI) allows you to manage the WARP client directly from your terminal. Use `warp-cli` to control connections, configure settings, and troubleshoot issues without the graphical interface.
+
+## Prerequisites
+
+Before using `warp-cli`, you must install the WARP client on your device. Refer to the installation guide for your operating system:
+
+- [Windows](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows)
+- [macOS](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos)
+- [Linux](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux)
+- [iOS](/cloudflare-one/connections/connect-devices/warp/download-warp/#ios)
+- [Android](/cloudflare-one/connections/connect-devices/warp/download-warp/#android)
+
+## How to run WARP CLI commands
+
+This page provides a reference for WARP CLI commands.
+
+```txt
+warp-cli <COMMAND> [SUBCOMMAND] [ARGUMENTS] [OPTIONS]
+```
+
+- `<REQUIRED>` - Angle brackets indicate required arguments.
+- `[OPTIONAL]` - Square brackets indicate optional arguments.
+
+## Commands
+
+### Connection management
+
+- [`connect`](#connect) - Maintain a connection to Cloudflare.
+- [`disconnect`](#disconnect) - Disconnect the client.
+- [`status`](#status) - Return the current connection status.
+- [`mode`](#mode) - Set the client operating mode.
+
+### Configuration
+
+- [`registration`](#registration) - Manage device registration.
+- [`settings`](#settings) - View and manage application settings.
+- [`dns`](#dns) - Configure DNS settings.
+- [`tunnel`](#tunnel) - Configure tunnel settings.
+- [`trusted`](#trusted) - Configure trusted networks (Consumer only).
+- [`override`](#override) - Manage administrative overrides.
+- [`proxy`](#proxy) - Configure proxy mode settings.
+- [`vnet`](#vnet) - Manage virtual networks.
+- [`environment`](#environment) - Set compliance environment.
+- [`mdm`](#mdm) - Manage MDM configurations.
+- [`api`](#api) - Configure API endpoint.
+
+### Networking
+
+- [`target`](#target) - List available targets.
+
+### Diagnostics and utilities
+
+- [`debug`](#debug) - Access debugging commands.
+- [`stats`](#stats) - Display WARP statistics.
+- [`certs`](#certs) - Print account certificates.
+- [`generate-completions`](#generate-completions) - Generate shell completion scripts.
+
+## Global options
+
+The following options can be used with any `warp-cli` command:
+
+| Option                | Short | Description                                                                              |
+| --------------------- | ----- | ---------------------------------------------------------------------------------------- |
+| `--timeout <SECONDS>` | `-t`  | Timeout (in seconds) before IPC channel is considered hung.                              |
+| `--listen`            | `-l`  | Listen for status changes and DNS logs (if enabled).                                     |
+| `--accept-tos`        |       | Accept the Terms of Service agreement.                                                   |
+| `--verbose`           | `-v`  | Enable verbose output. Use multiple times for increased verbosity (for example, `-vvv`). |
+| `--json`              | `-j`  | Pretty print output as JSON.                                                             |
+| `--no-paginate`       |       | Disable automatic pagination.                                                            |
+| `--no-ansi`           |       | Disable ANSI characters in output.                                                       |
+| `--help`              | `-h`  | Print help information.                                                                  |
+| `--version`           | `-V`  | Print version information.                                                               |
+
+---
+
+## `connect`
+
+Establish and maintain a connection to Cloudflare. The client will attempt to stay connected whenever possible.
+
+```sh
+warp-cli connect
+```
+
+---
+
+## `disconnect`
+
+Disconnect the WARP client from Cloudflare.
+
+```sh
+warp-cli disconnect
+```
+
+---
+
+## `status`
+
+Return the current connection status of the WARP client.
+
+```sh
+warp-cli status
+```
+
+Example output:
+
+```txt
+Status update: Connected
+Success
+```
+
+---
+
+## `mode`
+
+Set the client operating mode. The mode determines how WARP handles traffic.
+
+```sh
+warp-cli mode <MODE>
+```
+
+- `MODE` <Type text="string" /> <MetaInfo text="required" />
+  - The operating mode for the WARP client.
+
+| Mode          | Description                           |
+| ------------- | ------------------------------------- |
+| `warp`        | Establish tunnel with normal UDP DNS. |
+| `doh`         | DNS over HTTPS only (no tunnel).      |
+| `warp+doh`    | Tunnel with DoH for DNS resolution.   |
+| `dot`         | DNS over TLS only (no tunnel).        |
+| `warp+dot`    | Tunnel with DoT for DNS resolution.   |
+| `proxy`       | Tunnel for SOCKS5 proxy.              |
+| `tunnel_only` | Tunnel without DNS proxying.          |
+
+:::note
+The available modes may vary between Consumer and Zero Trust deployments. Zero Trust administrators typically configure the [service mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) through [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) or [MDM parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#service_mode).
+:::
+
+---
+
+## `registration`
+
+Manage device registration with Cloudflare.
+
+### `registration show`
+
+Display the current registration information.
+
+```sh
+warp-cli registration show
+```
+
+### `registration new`
+
+Register the client with Cloudflare. Optionally specify a Zero Trust organization.
+
+```sh
+warp-cli registration new [ORGANIZATION]
+```
+
+- `ORGANIZATION` <Type text="string" /> <MetaInfo text="optional" />
+  - The Zero Trust organization name to register with.
+
+### `registration delete`
+
+Delete the current registration.
+
+```sh
+warp-cli registration delete
+```
+
+### `registration organization`
+
+Get the Teams organization name associated with the current registration.
+
+```sh
+warp-cli registration organization
+```
+
+### `registration devices`
+
+List all devices associated with the current registration.
+
+```sh
+warp-cli registration devices
+```
+
+### `registration license`
+
+Attach the client to an account using a license key.
+
+```sh
+warp-cli registration license <KEY>
+```
+
+- `KEY` <Type text="string" /> <MetaInfo text="required" />
+  - The license key to attach.
+
+### `registration delete-all`
+
+Delete all registrations for all users and scopes.
+
+```sh
+warp-cli registration delete-all
+```
+
+### `registration token`
+
+Used internally by callbacks to return tokens as part of registration.
+
+```sh
+warp-cli registration token <URL>
+```
+
+- `URL` <Type text="string" /> <MetaInfo text="required" />
+  - The callback URL containing the token.
+
+### `registration initialize-token-callback`
+
+Initialize the token callback mechanism.
+
+```sh
+warp-cli registration initialize-token-callback
+```
+
+---
+
+## `settings`
+
+View and manage application settings.
+
+### `settings list`
+
+Display the current settings.
+
+```sh
+warp-cli settings list
+```
+
+### `settings reset`
+
+Restore settings to their default values.
+
+```sh
+warp-cli settings reset
+```
+
+### `settings support-url`
+
+Get the Teams support URL configured for your organization.
+
+```sh
+warp-cli settings support-url
+```
+
+### `settings mode-switch-allowed`
+
+Check if mode switching is allowed for the current device.
+
+```sh
+warp-cli settings mode-switch-allowed
+```
+
+---
+
+## `dns`
+
+Configure DNS settings for the WARP client.
+
+### `dns fallback`
+
+Manage fallback DNS domains. These domains bypass the WARP DNS proxy.
+
+#### `dns fallback add`
+
+Add a fallback domain.
+
+```sh
+warp-cli dns fallback add <DOMAIN>
+```
+
+- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
+  - The domain to add to the fallback list.
+
+#### `dns fallback remove`
+
+Remove a fallback domain.
+
+```sh
+warp-cli dns fallback remove <DOMAIN>
+```
+
+- `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
+  - The domain to remove from the fallback list.
+
+#### `dns fallback list`
+
+List all fallback domains.
+
+```sh
+warp-cli dns fallback list
+```
+
+#### `dns fallback reset`
+
+Reset fallback domains to defaults.
+
+```sh
+warp-cli dns fallback reset
+```
+
+### `dns families`
+
+Configure Cloudflare for Families DNS filtering mode.
+
+```sh
+warp-cli dns families <MODE>
+```
+
+- `MODE` <Type text="string" /> <MetaInfo text="required" />
+  - The Families filtering mode: `full`, `malware`, or `off`.
+
+:::note[Consumer only]
+This command is only available for Consumer WARP deployments. Zero Trust users should configure DNS filtering through [Gateway policies](/cloudflare-one/traffic-policies/dns-policies/).
+:::
+
+### `dns gateway-id`
+
+Configure the Gateway DNS location ID.
+
+#### `dns gateway-id set`
+
+Force DNS queries to use a specific Gateway ID.
+
+```sh
+warp-cli dns gateway-id set <ID>
+```
+
+- `ID` <Type text="string" /> <MetaInfo text="required" />
+  - The Gateway DNS location ID.
+
+#### `dns gateway-id reset`
+
+Reset the Gateway ID to the default.
+
+```sh
+warp-cli dns gateway-id reset
+```
+
+### `dns log`
+
+Toggle DNS query logging.
+
+```sh
+warp-cli dns log <ENABLED>
+```
+
+- `ENABLED` <Type text="string" /> <MetaInfo text="required" />
+  - Enable or disable DNS logging: `enable` or `disable`.
+
+### `dns stats`
+
+Display DNS statistics.
+
+```sh
+warp-cli dns stats
+```
+
+### `dns endpoint`
+
+Configure a custom DNS over HTTPS endpoint.
+
+#### `dns endpoint set`
+
+Set a custom DoH endpoint.
+
+```sh
+warp-cli dns endpoint set <ENDPOINT>
+```
+
+- `ENDPOINT` <Type text="string" /> <MetaInfo text="required" />
+  - The custom DoH endpoint URL.
+
+#### `dns endpoint reset`
+
+Reset the DoH endpoint to the default.
+
+```sh
+warp-cli dns endpoint reset
+```
+
+### `dns default-fallbacks`
+
+Show the default fallback DNS servers.
+
+```sh
+warp-cli dns default-fallbacks
+```
+
+---
+
+## `tunnel`
+
+Configure tunnel settings for the WARP client.
+
+### `tunnel dump`
+
+Get the current split tunnel routing configuration.
+
+```sh
+warp-cli tunnel dump
+```
+
+### `tunnel host`
+
+Manage split tunnel hosts. These hosts are either included or excluded from the WARP tunnel depending on your split tunnel configuration.
+
+#### `tunnel host list`
+
+List all split tunnel hosts.
+
+```sh
+warp-cli tunnel host list
+```
+
+#### `tunnel host add`
+
+Add a host to the split tunnel configuration.
+
+```sh
+warp-cli tunnel host add <HOST>
+```
+
+- `HOST` <Type text="string" /> <MetaInfo text="required" />
+  - The hostname to add.
+
+#### `tunnel host remove`
+
+Remove a host from the split tunnel configuration.
+
+```sh
+warp-cli tunnel host remove <HOST>
+```
+
+- `HOST` <Type text="string" /> <MetaInfo text="required" />
+  - The hostname to remove.
+
+#### `tunnel host reset`
+
+Reset split tunnel hosts to defaults.
+
+```sh
+warp-cli tunnel host reset
+```
+
+### `tunnel ip`
+
+Manage split tunnel IP addresses and ranges.
+
+#### `tunnel ip list`
+
+List all split tunnel IP addresses.
+
+```sh
+warp-cli tunnel ip list
+```
+
+#### `tunnel ip add`
+
+Add an IP address to the split tunnel configuration.
+
+```sh
+warp-cli tunnel ip add <IP>
+```
+
+- `IP` <Type text="string" /> <MetaInfo text="required" />
+  - The IP address to add.
+
+#### `tunnel ip remove`
+
+Remove an IP address from the split tunnel configuration.
+
+```sh
+warp-cli tunnel ip remove <IP>
+```
+
+- `IP` <Type text="string" /> <MetaInfo text="required" />
+  - The IP address to remove.
+
+#### `tunnel ip add-range`
+
+Add an IP range to the split tunnel configuration.
+
+```sh
+warp-cli tunnel ip add-range <CIDR>
+```
+
+- `CIDR` <Type text="string" /> <MetaInfo text="required" />
+  - The IP range in CIDR notation (for example, `192.168.1.0/24`).
+
+#### `tunnel ip remove-range`
+
+Remove an IP range from the split tunnel configuration.
+
+```sh
+warp-cli tunnel ip remove-range <CIDR>
+```
+
+- `CIDR` <Type text="string" /> <MetaInfo text="required" />
+  - The IP range in CIDR notation.
+
+#### `tunnel ip reset`
+
+Reset split tunnel IP addresses to defaults.
+
+```sh
+warp-cli tunnel ip reset
+```
+
+### `tunnel stats`
+
+Display tunnel statistics.
+
+```sh
+warp-cli tunnel stats
+```
+
+### `tunnel rotate-keys`
+
+Generate a new key pair for the tunnel.
+
+```sh
+warp-cli tunnel rotate-keys
+```
+
+### `tunnel endpoint`
+
+Configure a custom tunnel endpoint.
+
+#### `tunnel endpoint set`
+
+Force the tunnel to use a specific endpoint.
+
+```sh
+warp-cli tunnel endpoint set <IP:PORT>
+```
+
+- `IP:PORT` <Type text="string" /> <MetaInfo text="required" />
+  - The endpoint address and port (for example, `162.159.193.1:2408`).
+
+:::note[Zero Trust]
+In Zero Trust deployments, this command requires a [privileged user](#override-unlock).
+:::
+
+#### `tunnel endpoint reset`
+
+Reset the tunnel endpoint to the default.
+
+```sh
+warp-cli tunnel endpoint reset
+```
+
+### `tunnel protocol`
+
+Configure the tunnel protocol.
+
+#### `tunnel protocol set`
+
+Set the tunnel protocol.
+
+```sh
+warp-cli tunnel protocol set <PROTOCOL>
+```
+
+- `PROTOCOL` <Type text="string" /> <MetaInfo text="required" />
+  - The protocol to use: `MASQUE` or `WireGuard`.
+
+:::note[Consumer only]
+This command is only available for Consumer WARP deployments. Zero Trust administrators should configure the [device tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) through device profiles or [MDM parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#warp_tunnel_protocol).
+:::
+
+#### `tunnel protocol reset`
+
+Reset the tunnel protocol to the default.
+
+```sh
+warp-cli tunnel protocol reset
+```
+
+### `tunnel masque-options`
+
+Configure MASQUE protocol options.
+
+#### `tunnel masque-options set`
+
+Set MASQUE protocol options.
+
+```sh
+warp-cli tunnel masque-options set <OPTION>
+```
+
+- `OPTION` <Type text="string" /> <MetaInfo text="required" />
+  - The MASQUE option: `h3-only`, `h2-only`, or `h3-with-h2-fallback`.
+
+:::note[Consumer only]
+This command is only available for Consumer WARP deployments.
+:::
+
+#### `tunnel masque-options reset`
+
+Reset MASQUE options to defaults.
+
+```sh
+warp-cli tunnel masque-options reset
+```
+
+### `tunnel mtu`
+
+Configure the tunnel MTU (Maximum Transmission Unit).
+
+#### `tunnel mtu set`
+
+Set a custom MTU value.
+
+```sh
+warp-cli tunnel mtu set <VALUE>
+```
+
+- `VALUE` <Type text="integer" /> <MetaInfo text="required" />
+  - The MTU value in bytes.
+
+#### `tunnel mtu reset`
+
+Reset MTU to the default value.
+
+```sh
+warp-cli tunnel mtu reset
+```
+
+### `tunnel pmtud`
+
+Configure Path MTU Discovery (PMTUD) for MASQUE.
+
+:::note[Elevated privileges required]
+These commands require elevated privileges (administrator or root access).
+:::
+
+#### `tunnel pmtud enable`
+
+Enable Path MTU Discovery.
+
+```sh
+warp-cli tunnel pmtud enable
+```
+
+#### `tunnel pmtud disable`
+
+Disable Path MTU Discovery.
+
+```sh
+warp-cli tunnel pmtud disable
+```
+
+#### `tunnel pmtud reset`
+
+Reset PMTUD to the default setting.
+
+```sh
+warp-cli tunnel pmtud reset
+```
+
+---
+
+## `trusted`
+
+Configure trusted network settings. When connected to a trusted network, WARP automatically disconnects.
+
+:::note[Consumer only]
+Trusted network commands are only available for Consumer WARP deployments. Zero Trust administrators should configure [managed networks](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) through the dashboard.
+:::
+
+### `trusted ssid`
+
+Manage trusted Wi-Fi networks by SSID.
+
+#### `trusted ssid list`
+
+List all trusted SSIDs.
+
+```sh
+warp-cli trusted ssid list
+```
+
+#### `trusted ssid add`
+
+Add a trusted SSID.
+
+```sh
+warp-cli trusted ssid add <SSID>
+```
+
+- `SSID` <Type text="string" /> <MetaInfo text="required" />
+  - The Wi-Fi network name to trust.
+
+#### `trusted ssid remove`
+
+Remove a trusted SSID.
+
+```sh
+warp-cli trusted ssid remove <SSID>
+```
+
+- `SSID` <Type text="string" /> <MetaInfo text="required" />
+  - The Wi-Fi network name to remove.
+
+#### `trusted ssid reset`
+
+Reset trusted SSIDs to defaults.
+
+```sh
+warp-cli trusted ssid reset
+```
+
+### `trusted ethernet`
+
+Configure automatic disconnection when connected to ethernet.
+
+```sh
+warp-cli trusted ethernet <ENABLED>
+```
+
+- `ENABLED` <Type text="string" /> <MetaInfo text="required" />
+  - Enable or disable: `enable` or `disable`.
+
+### `trusted wifi`
+
+Configure automatic disconnection when connected to any Wi-Fi network.
+
+```sh
+warp-cli trusted wifi <ENABLED>
+```
+
+- `ENABLED` <Type text="string" /> <MetaInfo text="required" />
+  - Enable or disable: `enable` or `disable`.
+
+---
+
+## `override`
+
+Manage administrative override settings. Overrides allow temporary bypass of WARP policies.
+
+### `override show`
+
+Display current override information.
+
+```sh
+warp-cli override show
+```
+
+### `override unlock`
+
+Temporarily override WARP policies using an admin-provided code.
+
+```sh
+warp-cli override unlock <CODE>
+```
+
+- `CODE` <Type text="string" /> <MetaInfo text="required" />
+  - The admin override code.
+
+### `override local-network`
+
+Manage local network access override.
+
+#### `override local-network allow`
+
+Allow local network access temporarily.
+
+```sh
+warp-cli override local-network allow
+```
+
+#### `override local-network show`
+
+Show current local network override status.
+
+```sh
+warp-cli override local-network show
+```
+
+#### `override local-network stop`
+
+Stop the local network access override.
+
+```sh
+warp-cli override local-network stop
+```
+
+### `override generate`
+
+Generate an admin override code.
+
+```sh
+warp-cli override generate <HOURS>
+```
+
+- `HOURS` <Type text="integer" /> <MetaInfo text="required" />
+  - The number of hours the override code should be valid.
+
+:::note[Admin privileges required]
+This command requires administrator privileges on the device.
+:::
+
+---
+
+## `proxy`
+
+Configure proxy mode settings.
+
+### `proxy port`
+
+Set the port for the SOCKS5/HTTP proxy when running in proxy mode.
+
+```sh
+warp-cli proxy port <PORT>
+```
+
+- `PORT` <Type text="integer" /> <MetaInfo text="required" />
+  - The port number for the proxy (listens on `127.0.0.1`).
+
+---
+
+## `vnet`
+
+Get or specify the connected virtual network.
+
+```sh
+warp-cli vnet [VNET]
+```
+
+- `VNET` <Type text="string" /> <MetaInfo text="optional" />
+  - The virtual network to connect to. If omitted, displays the current virtual network.
+
+---
+
+## `debug`
+
+Access debugging commands for troubleshooting WARP issues.
+
+### `debug access-reauth`
+
+Force Access authentication refresh.
+
+```sh
+warp-cli debug access-reauth
+```
+
+### `debug alternate-network`
+
+Get the detected alternate network name.
+
+```sh
+warp-cli debug alternate-network
+```
+
+### `debug connectivity-check`
+
+Toggle connectivity checks.
+
+```sh
+warp-cli debug connectivity-check <ENABLED>
+```
+
+- `ENABLED` <Type text="string" /> <MetaInfo text="required" />
+  - Enable or disable connectivity checks: `enable` or `disable`.
+
+### `debug dex`
+
+Get recent Digital Experience Monitoring (DEX) data.
+
+```sh
+warp-cli debug dex
+```
+
+### `debug network`
+
+Display current network information.
+
+```sh
+warp-cli debug network
+```
+
+### `debug posture`
+
+Display device posture information.
+
+```sh
+warp-cli debug posture
+```
+
+### `debug pcap`
+
+Perform packet capture for debugging.
+
+#### `debug pcap start`
+
+Start a packet capture.
+
+```sh
+warp-cli debug pcap start [OPTIONS]
+```
+
+- `--interface` <Type text="string" /> <MetaInfo text="optional" />
+  - The network interface to capture on.
+- `--packet-size` <Type text="integer" /> <MetaInfo text="optional" />
+  - Maximum packet size to capture.
+- `--size-limit-mb` <Type text="integer" /> <MetaInfo text="optional" />
+  - Maximum capture file size in megabytes.
+- `--time-limit-min` <Type text="integer" /> <MetaInfo text="optional" />
+  - Maximum capture duration in minutes.
+
+#### `debug pcap stop`
+
+Stop the current packet capture.
+
+```sh
+warp-cli debug pcap stop
+```
+
+### `debug speed-test`
+
+Run a speed test.
+
+```sh
+warp-cli debug speed-test [OPTIONS]
+```
+
+- `--interface` <Type text="string" /> <MetaInfo text="optional" />
+  - The network interface to use for the speed test.
+
+### `debug qlog`
+
+Configure QLOG tunnel logging.
+
+#### `debug qlog enable`
+
+Enable QLOG logging.
+
+```sh
+warp-cli debug qlog enable [OPTIONS]
+```
+
+- `--current-connection-only` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Only log the current connection.
+
+#### `debug qlog disable`
+
+Disable QLOG logging.
+
+```sh
+warp-cli debug qlog disable
+```
+
+### `debug frequent-connection-stats`
+
+Enable frequent QUIC connection statistics for one hour.
+
+```sh
+warp-cli debug frequent-connection-stats
+```
+
+### `debug log-filter`
+
+Configure dynamic log filtering.
+
+#### `debug log-filter set`
+
+Set a log filter.
+
+```sh
+warp-cli debug log-filter set <FILTER>
+```
+
+- `FILTER` <Type text="string" /> <MetaInfo text="required" />
+  - The log filter expression.
+
+#### `debug log-filter reset`
+
+Reset the log filter to the default.
+
+```sh
+warp-cli debug log-filter reset
+```
+
+### `debug task-dump`
+
+Dump running async tasks for debugging.
+
+```sh
+warp-cli debug task-dump
+```
+
+### `debug in-flight-requests`
+
+List in-flight API requests.
+
+```sh
+warp-cli debug in-flight-requests
+```
+
+### `debug upload-stats`
+
+Manually trigger an uploading of the stats.
+
+```sh
+warp-cli debug upload-stats
+```
+
+### `debug panic`
+
+Force the daemon to panic.
+
+```sh
+warp-cli debug panic
+```
+
+- `--ignored` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Test the classification feature and present as an ignored panic.
+
+:::caution
+This command is only available when the daemon is running in debug mode. Use with extreme caution as it will crash the WARP service.
+:::
+
+---
+
+## `stats`
+
+Display WARP statistics.
+
+```sh
+warp-cli stats
+```
+
+### `stats enhanced`
+
+Display enhanced statistics.
+
+```sh
+warp-cli stats enhanced
+```
+
+---
+
+## `mdm`
+
+Manage MDM (Mobile Device Management) configurations.
+
+### `mdm get-configs`
+
+Show the current MDM configurations.
+
+```sh
+warp-cli mdm get-configs
+```
+
+### `mdm set-config`
+
+Apply an MDM configuration.
+
+```sh
+warp-cli mdm set-config <CONFIG>
+```
+
+- `CONFIG` <Type text="string" /> <MetaInfo text="required" />
+  - The MDM configuration to apply.
+
+---
+
+## `environment`
+
+Configure the compliance environment.
+
+### `environment set`
+
+Set the compliance environment.
+
+```sh
+warp-cli environment set <ENVIRONMENT>
+```
+
+- `ENVIRONMENT` <Type text="string" /> <MetaInfo text="required" />
+  - The environment: `Normal` or `FedRAMP-High`.
+
+### `environment reset`
+
+Reset the environment override.
+
+```sh
+warp-cli environment reset
+```
+
+---
+
+## `target`
+
+List available targets for connection.
+
+### `target list`
+
+List available targets with optional filtering.
+
+```sh
+warp-cli target list [OPTIONS]
+```
+
+- `--attribute` <Type text="string" /> <MetaInfo text="optional" />
+  - Filter by attribute in `KEY=VALUE` format.
+- `--id` <Type text="string" /> <MetaInfo text="optional" />
+  - Filter by target ID.
+- `--ip` <Type text="string" /> <MetaInfo text="optional" />
+  - Filter by IP address.
+- `--ip-begins` <Type text="string" /> <MetaInfo text="optional" />
+  - Filter by IP address prefix.
+- `--protocol` <Type text="string" /> <MetaInfo text="optional" />
+  - Filter by protocol.
+- `--username` <Type text="string" /> <MetaInfo text="optional" />
+  - Filter by username.
+- `--vnet` <Type text="string" /> <MetaInfo text="optional" />
+  - Filter by virtual network.
+- `--desc` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Sort results in descending order.
+- `--max-items` <Type text="integer" /> <MetaInfo text="optional" />
+  - Maximum number of items to return.
+- `--page-id` <Type text="string" /> <MetaInfo text="optional" />
+  - Page ID for pagination.
+- `--per-page` <Type text="integer" /> <MetaInfo text="optional" />
+  - Number of items per page.
+
+---
+
+## `api`
+
+Configure API endpoint settings.
+
+### `api endpoint`
+
+Configure the API endpoint.
+
+#### `api endpoint set`
+
+Override the API endpoint.
+
+```sh
+warp-cli api endpoint set <ADDRESS>
+```
+
+- `ADDRESS` <Type text="string" /> <MetaInfo text="required" />
+  - The API endpoint address.
+
+#### `api endpoint reset`
+
+Reset the API endpoint to the default.
+
+```sh
+warp-cli api endpoint reset
+```
+
+---
+
+## `certs`
+
+Print account certificates installed on the device.
+
+```sh
+warp-cli certs
+```
+
+---
+
+## `generate-completions`
+
+Generate shell completion scripts for warp-cli commands.
+
+```sh
+warp-cli generate-completions <SHELL>
+```
+
+- `SHELL` <Type text="string" /> <MetaInfo text="required" />
+  - The shell to generate completions for: `bash`, `zsh`, `fish`, or `powershell`.
+
+### Setup
+
+Generate and add the completion script to your shell configuration:
+
+<Tabs>
+<TabItem label="Bash">
+```sh
+warp-cli generate-completions bash >> ~/.bashrc
+```
+
+Restart your terminal or run `source ~/.bashrc`.
+
+</TabItem>
+<TabItem label="Zsh">
+```sh
+warp-cli generate-completions zsh >> ~/.zshrc
+```
+
+Restart your terminal or run `source ~/.zshrc`.
+
+</TabItem>
+<TabItem label="Fish">
+```sh
+warp-cli generate-completions fish >> ~/.config/fish/config.fish
+```
+
+Restart your terminal or run `source ~/.config/fish/config.fish`.
+
+</TabItem>
+<TabItem label="PowerShell">
+```powershell
+warp-cli generate-completions powershell >> $PROFILE
+```
+
+Restart PowerShell or run `. $PROFILE`.
+
+</TabItem>
+</Tabs>
+
+---
+
+## Examples
+
+### Basic connection management
+
+```sh
+# Connect to WARP
+warp-cli connect
+
+# Check connection status
+warp-cli status
+
+# Disconnect from WARP
+warp-cli disconnect
+```
+
+### Changing operating modes
+
+```sh
+# Use WARP with DNS over HTTPS
+warp-cli mode warp+doh
+
+# Use WARP as a SOCKS5 proxy
+warp-cli mode proxy
+warp-cli proxy port 1080
+```
+
+### Managing split tunnels
+
+```sh
+# Add a host to exclude from tunnel
+warp-cli tunnel host add example.com
+
+# Add an IP range to exclude
+warp-cli tunnel ip add-range 192.168.1.0/24
+
+# List current exclusions
+warp-cli tunnel host list
+warp-cli tunnel ip list
+```
+
+### DNS configuration
+
+```sh
+# Enable Families mode (malware blocking) - Consumer only
+warp-cli dns families malware
+
+# Add a fallback DNS domain
+warp-cli dns fallback add company.internal
+
+# View DNS statistics
+warp-cli dns stats
+```
+
+### Debugging and diagnostics
+
+```sh
+# Check network information
+warp-cli debug network
+
+# View device posture
+warp-cli debug posture
+
+# Start a packet capture (5 minutes, 100MB limit)
+warp-cli debug pcap start --time-limit-min 5 --size-limit-mb 100
+
+# Stop the capture
+warp-cli debug pcap stop
+```
+
+### Registration
+
+```sh
+# Register with a Zero Trust organization
+warp-cli registration new myorganization
+
+# View registration details
+warp-cli registration show
+```
+
+### Generate shell completions
+
+<Tabs>
+<TabItem label="Bash">
+```sh
+warp-cli generate-completions bash >> ~/.bashrc
+source ~/.bashrc
+```
+</TabItem>
+<TabItem label="Zsh">
+```sh
+warp-cli generate-completions zsh >> ~/.zshrc
+source ~/.zshrc
+```
+</TabItem>
+<TabItem label="Fish">
+```sh
+warp-cli generate-completions fish >> ~/.config/fish/config.fish
+source ~/.config/fish/config.fish
+```
+</TabItem>
+</Tabs>
+
+---
+
+## Related resources
+
+- [WARP troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/) - Start here to troubleshoot common WARP misconfigurations.
+- [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) - Learn about the different operating modes available for WARP.
+- [MDM deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/) - Configure WARP settings through MDM.
+- [Device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) - Manage WARP settings for groups of devices.
+- [Split tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) - Configure which traffic goes through the WARP tunnel.
