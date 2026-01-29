@@ -26,7 +26,7 @@ This guide covers how to connect WARP client user devices to a private network b
 
 - A Linux host [^1] on the subnet.
 - For WARP Connector to connect to Cloudflare services, your firewall should allow inbound/outbound traffic for the [WARP IP addresses, ports, and domains](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/).
-- For WARP clients to connect to your subnet, your firewall should allow inbound traffic from the <GlossaryTooltip term="CGNAT IP">WARP CGNAT IP range</GlossaryTooltip>: `100.96.0.0/12`
+- For WARP clients to connect to your subnet, your firewall should allow inbound traffic from  your [device IPs](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
 
 ## 1. Install a WARP Connector
 
@@ -36,12 +36,12 @@ This guide covers how to connect WARP client user devices to a private network b
 
 <Render file="tunnel/warp-connector-device-profile" product="cloudflare-one" />
 
-## 3. Route CGNAT IPs through Cloudflare
+## 3. Route device IPs through Cloudflare
 
-WARP clients and WARP Connectors are accessed using their <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>. Therefore, CGNAT IP traffic must route through Cloudflare on both the WARP Connector host and WARP client devices.
+WARP clients and WARP Connectors are accessed using their [device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/). Therefore, traffic to your device IPs must route through Cloudflare on both the WARP Connector host and WARP client devices. For example, if your devices use the default <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP range</GlossaryTooltip> (`100.96.0.0/12`)
 
 1. In your WARP Connector device profile, go to [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
-2. Ensure that `100.96.0.0/12` routes through the WARP tunnel. For example, if you are using **Exclude** mode, delete `100.64.0.0/10` from the list and re-add `100.64.0.0/11` and `100.112.0.0/12`.
+2. Ensure that `100.96.0.0/12` routes through the WARP tunnel. For example, for **Exclude** split tunnel mode, delete `100.64.0.0/10` from the list and re-add `100.64.0.0/11` and `100.112.0.0/12`.
 3. Repeat the previous steps for all WARP client device profiles.
 
 ## 4. Route traffic from subnet to WARP Connector
@@ -77,7 +77,7 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 #### Add IP route to devices
 
-To route all <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> traffic through WARP Connector:
+To route all <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP</GlossaryTooltip> traffic through WARP Connector:
 
 <Tabs> <TabItem label="Linux">
 
