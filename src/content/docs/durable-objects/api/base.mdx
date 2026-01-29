@@ -80,7 +80,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `alarm`
 
-- <code>alarm(alarmInfo? <Type text="AlarmInfo"/>)</code>: <Type text="void"/> | <Type text="Promise<void>"/>
+- <code>alarm(alarmInfo? <Type text="AlarmInvocationInfo"/>)</code>: <Type text="void"/> | <Type text="Promise<void>"/>
 
   - Called by the system when a scheduled alarm time is reached.
 
@@ -92,7 +92,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 #### Parameters
 
-- `alarmInfo` <Type text="AlarmInfo"/> (optional) - an object containing retry information:
+- `alarmInfo` <Type text="AlarmInvocationInfo"/> (optional) - an object containing retry information:
   - `retryCount` <Type text="number"/> - the number of times this alarm event has been retried.
   - `isRetry` <Type text="boolean"/> - `true` if this alarm event is a retry, `false` otherwise.
 
@@ -105,7 +105,7 @@ export class MyDurableObject extends DurableObject<Env> {
 <TypeScriptExample>
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
-	async alarm(alarmInfo?: AlarmInfo): Promise<void> {
+	async alarm(alarmInfo?: AlarmInvocationInfo): Promise<void> {
 		if (alarmInfo?.isRetry) {
 			console.log(`Alarm retry attempt ${alarmInfo.retryCount}`);
 		}
