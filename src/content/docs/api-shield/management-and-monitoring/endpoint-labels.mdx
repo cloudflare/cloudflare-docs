@@ -83,6 +83,41 @@ Cloudflare will only add authentication labels to endpoints with successful resp
 
 <Render file="label-methodology" product="api-shield" />
 
+#### Recommended action
+
+How you address risks to your endpoints will depend on its label(s). The following steps provide you with general guidelines on how to take action on them.
+
+<Steps>
+1. Review risks to endpoints. 
+   
+   View the endpoints labeled as risks and identify if they have been labeled for other risks. 
+
+   For example, endpoints labeled `cf-risk-sensitive` and `cf-risk-missing-auth` or `cf-risk-mixed-auth` may contain sensitive data that is available to unauthenticated users.
+
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   Go to the details pages for endpoints labeled as `cf-risk-missing-auth` or `cf-risk-mixed-auth`, and check for recent changes in the authenticated traffic profile in the last 24 hours and 7 days.
+
+2. Review traffic to these labeled endpoints in Security Analytics.
+
+   Check for unexpected traffic sources and note any irregular traffic patterns. 
+
+   :::caution[Filtering]
+   Filtering by risk label includes all traffic to all endpoints labeled with that risk, not only the traffic that prompted Cloudflare to apply the label.
+   :::
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+3. Review your origin's authorization and authentication policies with your development team.
+
+   Speak with your developers or application owners in your organization to understand whether or not all requests to these endpoints should be authenticated. Modify your application to consistently enforce the authentication requirement for all traffic accessing these endpoints. 
+
+	Refer to [Authentication Posture](/api-shield/security/authentication-posture/) for more information.
+   
+</Steps>
+
+---
+
 ## Create a label
 
 <Tabs syncKey="dashNewNav">
