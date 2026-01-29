@@ -57,82 +57,7 @@ To restore state after hibernation, use [`serializeAttachment`](#websocketserial
 
 Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
 
-### Automatic ping/pong handling
-
-The Cloudflare runtime automatically handles WebSocket protocol ping frames:
-
-- Incoming [ping frames](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) receive automatic pong responses
-- Ping/pong handling does not interrupt hibernation
-- The `webSocketMessage` handler is not called for control frames
-
-This behavior keeps connections alive without waking the Durable Object.
-
-### Batch messages to reduce overhead
-
-Each WebSocket message incurs processing overhead from context switches between the JavaScript runtime and the underlying system. Sending many small messages can overwhelm a single Durable Object. This happens even if the total data volume is small.
-
-To maximize throughput:
-
-- **Batch multiple logical messages** into a single WebSocket frame
-- **Use a simple envelope format** to pack and unpack batched messages
-- **Target fewer, larger messages** rather than many small ones
-
-<TypeScriptExample>
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-// Define a batch envelope format
-interface BatchedMessage {
-messages: Array<{ type: string; payload: unknown }>;
-timestamp: number;
-}
-
-// Client-side: batch messages before sending
-function sendBatch(ws: WebSocket, messages: Array<{ type: string; payload: unknown }>) {
-const batch: BatchedMessage = {
-messages,
-timestamp: Date.now(),
-};
-ws.send(JSON.stringify(batch));
-}
-
-// Durable Object: process batched messages
-export class GameRoom extends DurableObject<Env> {
-async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
-if (typeof message !== "string") return;
-
-    	const batch = JSON.parse(message) as BatchedMessage;
-
-    	// Process all messages in the batch in a single handler invocation
-    	for (const msg of batch.messages) {
-    		this.handleMessage(ws, msg);
-    	}
-    }
-
-    private handleMessage(ws: WebSocket, msg: { type: string; payload: unknown }) {
-    	// Handle individual message logic
-    }
-
-}
-
-````
-</TypeScriptExample>
-
-#### Why batching helps
-
-WebSocket reads require context switches between the kernel and JavaScript runtime. Each individual message triggers this overhead. Batching 10-100 logical messages into a single WebSocket frame reduces context switches proportionally.
-
-For high-frequency data like sensor readings or game state updates, use time-based or count-based batching. Batch every 50-100ms or every 50-100 messages, whichever comes first.
-
-:::note
-
-Hibernation is only supported when a Durable Object acts as a WebSocket server. Outgoing WebSockets do not hibernate.
-
-Events such as [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks prevent hibernation. This includes `setTimeout` and `setInterval` usage. Read more about [when a Durable Object incurs duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
-
-:::
-
-### Example
+### Hibernation example
 
 To use WebSockets with Durable Objects:
 
@@ -179,7 +104,7 @@ export class WebSocketHibernationServer extends DurableObject {
 		ws.close(code, reason);
 	}
 }
-````
+```
 
 </TabItem>
 <TabItem label="TypeScript" icon="seti:typescript">
@@ -294,7 +219,8 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 		}
 	]
 }
-```
+````
+
 </WranglerConfig>
 
 A full example is available in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
@@ -302,6 +228,84 @@ A full example is available in [Build a WebSocket server with WebSocket Hibernat
 :::caution[Local development support]
 
 Prior to `wrangler@3.13.2` and Miniflare `v3.20231016.0`, WebSockets did not hibernate in local development. Hibernatable WebSocket events like [`webSocketMessage()`](/durable-objects/api/base/#websocketmessage) are still delivered. However, the Durable Object is never evicted from memory.
+
+:::
+
+### Automatic ping/pong handling
+
+The Cloudflare runtime automatically handles WebSocket protocol ping frames:
+
+- Incoming [ping frames](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) receive automatic pong responses
+- Ping/pong handling does not interrupt hibernation
+- The `webSocketMessage` handler is not called for control frames
+
+This behavior keeps connections alive without waking the Durable Object.
+
+### Batch messages to reduce overhead
+
+Each WebSocket message incurs processing overhead from context switches between the JavaScript runtime and the underlying system. Sending many small messages can overwhelm a single Durable Object. This happens even if the total data volume is small.
+
+To maximize throughput:
+
+- **Batch multiple logical messages** into a single WebSocket frame
+- **Use a simple envelope format** to pack and unpack batched messages
+- **Target fewer, larger messages** rather than many small ones
+
+<TypeScriptExample>
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+// Define a batch envelope format
+interface BatchedMessage {
+messages: Array<{ type: string; payload: unknown }>;
+timestamp: number;
+}
+
+// Client-side: batch messages before sending
+function sendBatch(
+ws: WebSocket,
+messages: Array<{ type: string; payload: unknown }>,
+) {
+const batch: BatchedMessage = {
+messages,
+timestamp: Date.now(),
+};
+ws.send(JSON.stringify(batch));
+}
+
+// Durable Object: process batched messages
+export class GameRoom extends DurableObject<Env> {
+async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+if (typeof message !== "string") return;
+
+    	const batch = JSON.parse(message) as BatchedMessage;
+
+    	// Process all messages in the batch in a single handler invocation
+    	for (const msg of batch.messages) {
+    		this.handleMessage(ws, msg);
+    	}
+    }
+
+    private handleMessage(ws: WebSocket, msg: { type: string; payload: unknown }) {
+    	// Handle individual message logic
+    }
+
+}
+
+````
+</TypeScriptExample>
+
+#### Why batching helps
+
+WebSocket reads require context switches between the kernel and JavaScript runtime. Each individual message triggers this overhead. Batching 10-100 logical messages into a single WebSocket frame reduces context switches proportionally.
+
+For high-frequency data like sensor readings or game state updates, use time-based or count-based batching. Batch every 50-100ms or every 50-100 messages, whichever comes first.
+
+:::note
+
+Hibernation is only supported when a Durable Object acts as a WebSocket server. Outgoing WebSockets do not hibernate.
+
+Events such as [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks prevent hibernation. This includes `setTimeout` and `setInterval` usage. Read more about [when a Durable Object incurs duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 :::
 
@@ -379,7 +383,8 @@ export class WebSocketServer extends DurableObject<Env> {
 		ws.close(code, reason);
 	}
 }
-```
+````
+
 </TypeScriptExample>
 
 ## WebSocket Standard API
@@ -438,7 +443,7 @@ export default {
 		});
 	},
 };
-````
+```
 
 </TabItem>
 <TabItem label="TypeScript" icon="seti:typescript">
