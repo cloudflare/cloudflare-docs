@@ -151,9 +151,9 @@ export class WebSocketHibernationServer extends DurableObject {
   }
 
   async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-    // If the client closes the connection, the runtime will invoke the webSocketClose() handler.
+    // Calling close() on the server completes the WebSocket close handshake
+    ws.close(code, reason);
     this.sessions.delete(ws);
-    ws.close(code, 'Durable Object is closing WebSocket');
   }
 }
 ```
@@ -266,12 +266,12 @@ class WebSocketHibernationServer(DurableObject):
 				session.ws.send(f"[Durable Object] message: {message}, from: {session_id}, to: all clients except the initiating client. Total connections: {len(self.sessions)}")
 
 	async def webSocketClose(self, ws, code, reason, wasClean):
-		# If the client closes the connection, the runtime will invoke the webSocketClose() handler.
+		# Calling close() on the server completes the WebSocket close handshake
+		ws.close(code, reason)
 		# Get the session ID from the WebSocket attachment to remove it from sessions
 		session_id = ws.deserializeAttachment()
 		if session_id:
 			self.sessions.pop(session_id, None)
-		ws.close(code, 'Durable Object is closing WebSocket')
 ```
 
 </TabItem>

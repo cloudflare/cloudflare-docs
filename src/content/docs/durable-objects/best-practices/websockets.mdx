@@ -5,51 +5,85 @@ sidebar:
   order: 5
 ---
 
-import { Tabs, TabItem, GlossaryTooltip, Type, WranglerConfig } from "~/components";
+import {
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	Type,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
-This guide covers how to use Durable Objects as WebSocket servers that can connect thousands of clients (per instance), as well as a WebSocket client to connect to other servers or even Durable Objects.
+Durable Objects can act as WebSocket servers that connect thousands of clients per instance. You can also use WebSockets as a client to connect to other servers or Durable Objects.
 
-There are two sets of WebSockets API:
+Two WebSocket APIs are available:
 
-1. **Native Durable Object WebSocket API**, which allows your Durable Object to hibernate without disconnecting clients when not actively doing work **(recommended)**.
-2. **Web Standard WebSocket APIs**, using the familiar `addEventListener` event pattern.
+1. **Hibernation WebSocket API** - Allows the Durable Object to hibernate without disconnecting clients when idle. **(recommended)**
+2. **Web Standard WebSocket API** - Uses the familiar `addEventListener` event pattern.
 
 ## What are WebSockets?
 
-WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server. Both Cloudflare Durable Objects and Workers can act as WebSocket endpoints - either as a client or as a server. Because WebSocket sessions are long-lived, applications commonly use Durable Objects to accept either the client or server connection. While there are other use cases for using Workers exclusively with WebSockets, for example proxying WebSocket messages, WebSockets are most useful when combined with Durable Objects.
+WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server.
 
-Because Durable Objects provide a single-point-of-coordination between [Cloudflare Workers](/workers/), a single Durable Object instance can be used in parallel with WebSockets to coordinate between multiple clients, such as participants in a chat room or a multiplayer game. Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example of using Durable Objects with WebSockets.
+Key characteristics:
 
-Both Cloudflare Durable Objects and Workers can use the [Web Standard WebSocket API](/workers/runtime-apis/websockets/) to build applications, but a major differentiator of Cloudflare Durable Objects relative to other platforms is the ability to Hibernate WebSocket connections to save costs. Clients can remain connected when the Durable Object is idle (and not sending messages or running compute tasks), which allows you to push events to clients and minimize the active duration (GB-seconds) associated with long-running Durable Object processes.
+- Both Workers and Durable Objects can act as WebSocket endpoints (client or server)
+- WebSocket sessions are long-lived, making Durable Objects ideal for accepting connections
+- A single Durable Object instance can coordinate between multiple clients (for example, chat rooms or multiplayer games)
 
-## Durable Objects' Hibernation WebSocket API
+Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example of using Durable Objects with WebSockets.
 
-In addition to [the Web Standard WebSocket API](/workers/runtime-apis/websockets/), Cloudflare Durable Objects can use the WebSocket Hibernation API which extends the Web Standard WebSocket API to reduce costs. Specifically, [billable Duration (GB-s) charges](/durable-objects/platform/pricing/) are not incurred during periods of inactivity.
+### Why use Hibernation?
 
-### How does Durable Object Hibernation work with WebSockets?
+The Hibernation WebSocket API reduces costs by allowing Durable Objects to sleep when idle:
 
-When a Durable Object receives no events (like alarms) or messages for a short period of time, the Durable Object is evicted from memory to avoid unnecessary charges (refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/)). The WebSocket clients remain connected to the Cloudflare network. When your Durable Object receives an event during hibernation, it is re-initialized, its `constructor` function is called, and it can access the WebSocket clients with the `this.ctx.getWebSockets()` function.
+- Clients remain connected while the Durable Object is not in memory
+- [Billable Duration (GB-s) charges](/durable-objects/platform/pricing/) do not accrue during hibernation
+- When a message arrives, the Durable Object wakes up automatically
 
-When the Durable Object is evicted from memory, its in-memory state is reset. It is common to rely on in-memory state to organize your WebSockets (for example, keeping your WebSockets in rooms with a `Map<WebSocket, Object>` data type). With Hibernation, you must restore the in-memory state of your Durable Object within the `constructor` function.
+## Durable Objects Hibernation WebSocket API
 
-To do this, you can use the [`serializeAttachment`](#websocketserializeattachment) to persist additional data with the Durable Object WebSocket class, which will persist the data to the Durable Object's storage. Upon re-initialization of the Durable Object, you can access this data with [`deserializeAttachment`](#websocketdeserializeattachment).
+The Hibernation WebSocket API extends the [Web Standard WebSocket API](/workers/runtime-apis/websockets/) to reduce costs during periods of inactivity.
 
-The Durable Object WebSocket class consists of Cloudflare-specific extensions to the Web Standard WebSocket API. These extensions are either present on the [DurableObjectState](/durable-objects/api/state) interface, or as handler methods on the Durable Object class.
+### How hibernation works
+
+When a Durable Object receives no events (such as alarms or messages) for a short period, it is evicted from memory. During hibernation:
+
+- WebSocket clients remain connected to the Cloudflare network
+- In-memory state is reset
+- When an event arrives, the Durable Object is re-initialized and its `constructor` runs
+
+To restore state after hibernation, use [`serializeAttachment`](#websocketserializeattachment) and [`deserializeAttachment`](#websocketdeserializeattachment) to persist data with each WebSocket connection.
+
+Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
+
+### Automatic ping/pong handling
+
+The Cloudflare runtime automatically handles WebSocket protocol ping frames:
+
+- Incoming [ping frames](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) receive automatic pong responses
+- Ping/pong handling does not interrupt hibernation
+- The `webSocketMessage` handler is not called for control frames
+
+This behavior keeps connections alive without waking the Durable Object.
 
 :::note
 
-Hibernation is only supported when a Durable Object acts as a WebSocket server. Currently, outgoing WebSockets cannot hibernate.
+Hibernation is only supported when a Durable Object acts as a WebSocket server. Outgoing WebSockets do not hibernate.
 
-Events, for example [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks using `setTimeout/setInterval`, can prevent a Durable Object from being inactive and therefore prevent this cost saving.
-Read more in the section [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
+Events such as [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks prevent hibernation. This includes `setTimeout` and `setInterval` usage. Read more about [when a Durable Object incurs duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 :::
 
 ### Example
 
-To use WebSockets with Durable Objects, you first need to proxy the `request` object from the Worker to the Durable Object, as is done in the [WebSocket Standard API example](/durable-objects/examples/websocket-server/). Using the Hibernation WebSockets API in Durable Objects differs slightly from using WebSocket Standard APIs. In summary, [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket) is called to accept the server side of the WebSocket connection, and handler methods are defined on the Durable Object class for relevant event types rather than adding event listeners.
+To use WebSockets with Durable Objects:
 
-If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
+1. Proxy the request from the Worker to the Durable Object
+2. Call [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket) to accept the server side connection
+3. Define handler methods on the Durable Object class for relevant events
+
+If an event occurs for a hibernated Durable Object, the runtime re-initializes it by calling the constructor. Minimize work in the constructor when using hibernation.
 
 <Tabs syncKey="workersExamples">
 <TabItem label="JavaScript" icon="seti:javascript">
@@ -84,8 +118,8 @@ export class WebSocketHibernationServer extends DurableObject {
 	}
 
 	async webSocketClose(ws, code, reason, wasClean) {
-		// If the client closes the connection, the runtime will invoke the webSocketClose() handler.
-		ws.close(code, "Durable Object is closing WebSocket");
+		// Calling close() on the server completes the WebSocket close handshake
+		ws.close(code, reason);
 	}
 }
 ```
@@ -132,8 +166,8 @@ export class WebSocketHibernationServer extends DurableObject {
 		reason: string,
 		wasClean: boolean,
 	) {
-		// If the client closes the connection, the runtime will invoke the webSocketClose() handler.
-		ws.close(code, "Durable Object is closing WebSocket");
+		// Calling close() on the server completes the WebSocket close handshake
+		ws.close(code, reason);
 	}
 }
 ```
@@ -145,10 +179,11 @@ from workers import Response, DurableObject
 from js import WebSocketPair
 
 # Durable Object
+
 class WebSocketHibernationServer(DurableObject):
-    def __init__(self, state, env):
-        super().__init__(state, env)
-        self.ctx = state
+def **init**(self, state, env):
+super().**init**(state, env)
+self.ctx = state
 
     async def fetch(self, request):
         # Creates two ends of a WebSocket connection.
@@ -173,13 +208,14 @@ class WebSocketHibernationServer(DurableObject):
         )
 
     async def webSocketClose(self, ws, code, reason, was_clean):
-        # If the client closes the connection, the runtime will invoke the webSocketClose() handler.
-        ws.close(code, "Durable Object is closing WebSocket")
-```
+        # Calling close() on the server completes the WebSocket close handshake
+        ws.close(code, reason)
+
+````
 </TabItem>
 </Tabs>
 
-Similar to the [WebSocket Standard API example](/durable-objects/examples/websocket-server/), to execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
+Configure your Wrangler file with a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/):
 
 <WranglerConfig>
 ```jsonc
@@ -197,54 +233,115 @@ Similar to the [WebSocket Standard API example](/durable-objects/examples/websoc
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"WebSocketHibernationServer"
-			]
+			"new_sqlite_classes": ["WebSocketHibernationServer"]
 		}
 	]
 }
-```
+````
+
 </WranglerConfig>
 
-A full example can be found in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
+A full example is available in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
 
-:::caution[Support for local development]
+:::caution[Local development support]
 
-Prior to `wrangler@3.13.2` and Miniflare `v3.20231016.0`, WebSockets did not hibernate when using local development environments such as `wrangler dev` or Miniflare.
-
-If you are using older versions, note that while hibernatable WebSocket events such as [`webSocketMessage()`](/durable-objects/api/base/#websocketmessage) will still be delivered, the Durable Object will never be evicted from memory.
+Prior to `wrangler@3.13.2` and Miniflare `v3.20231016.0`, WebSockets did not hibernate in local development. Hibernatable WebSocket events like [`webSocketMessage()`](/durable-objects/api/base/#websocketmessage) are still delivered. However, the Durable Object is never evicted from memory.
 
 :::
 
 ### Extended methods
 
-The following are methods available on the **Native Durable Object WebSocket API**, the WebSocket class available in Durable Objects. These methods facilitate persisting state to storage to set and restore state before and after a Durable Object's hibernation.
+The following methods are available on the Hibernation WebSocket API. Use them to persist and restore state before and after hibernation.
 
-#### `WebSocket.serializeAttachment()`
+#### `WebSocket.serializeAttachment`
 
-- <code>serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
+- <code>
+  	serializeAttachment(value <Type text="any" />)
+  </code>
+  : <Type text="void" />
 
-  - Keeps a copy of `value` associated with the WebSocket connection. Serialized attachments are available as long as their attached WebSocket connection is healthy, even after hibernation. If any side of the connection is closed, the attachments will be lost. If the value needs to be durable even if the [Durable Object is evicted](/durable-objects/concepts/durable-object-lifecycle/), please use [Durable Object Storage](/durable-objects/api/sqlite-storage-api/).
+Keeps a copy of `value` associated with the WebSocket connection.
 
-  - If you modify `value` after calling this method, those changes will not be retained unless you call this method again.
+Key behaviors:
 
-	- The `value` can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types and the serialized size is limited to 2,048 bytes, otherwise this method will throw an error.
+- Serialized attachments persist through hibernation as long as the WebSocket remains healthy
+- If either side closes the connection, attachments are lost
+- Modifications to `value` after calling this method are not retained unless you call it again
+- The `value` can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
+- Maximum serialized size is 2,048 bytes
 
-	- If you need to store larger values, or want to persist values even if the Durable Object instance is evicted and the WebSocket connections are closed, use the [Storage API](/durable-objects/api/sqlite-storage-api/) and store the corresponding key as an attachment so it can be retrieved later.
+For larger values or data that must persist beyond WebSocket lifetime, use the [Storage API](/durable-objects/api/sqlite-storage-api/) and store the corresponding key as an attachment.
 
-#### `WebSocket.deserializeAttachment()`
+#### `WebSocket.deserializeAttachment`
 
 - `deserializeAttachment()`: <Type text='any' />
 
-  - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
+Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
+
+#### Attachment example
+
+Use `serializeAttachment` and `deserializeAttachment` to persist per-connection state across hibernation:
+
+<TypeScriptExample>
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface ConnectionState {
+orderId: string;
+joinedAt: number;
+}
+
+export class WebSocketServer extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		const orderId = url.searchParams.get("orderId") ?? "anonymous";
+
+    	const webSocketPair = new WebSocketPair();
+    	const [client, server] = Object.values(webSocketPair);
+
+    	this.ctx.acceptWebSocket(server);
+
+    	// Persist per-connection state that survives hibernation
+    	const state: ConnectionState = {
+    		orderId,
+    		joinedAt: Date.now(),
+    	};
+    	server.serializeAttachment(state);
+
+    	return new Response(null, { status: 101, webSocket: client });
+    }
+
+    async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+    	// Restore state after potential hibernation
+    	const state = ws.deserializeAttachment() as ConnectionState;
+    	ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
+    }
+
+    async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+    	const state = ws.deserializeAttachment() as ConnectionState;
+    	console.log(`${state.orderId} disconnected`);
+    	ws.close(code, reason);
+    }
+
+}
+
+````
+</TypeScriptExample>
 
 ## WebSocket Standard API
 
-WebSocket connections are established by making an HTTP GET request with the `Upgrade: websocket` header. A Cloudflare Worker is commonly used to validate the request, proxy the request to the Durable Object to accept the server side connection, and return the client side connection in the response.
+WebSocket connections are established by making an HTTP GET request with the `Upgrade: websocket` header.
+
+The typical flow:
+
+1. A Worker validates the upgrade request
+2. The Worker proxies the request to the Durable Object
+3. The Durable Object accepts the server side connection
+4. The Worker returns the client side connection in the response
 
 :::note[Validate requests in a Worker]
 
-Both Workers and Durable Objects are billed, in part, based on the number of requests they receive. To avoid being billed for requests against a Durable Object for invalid requests, be sure to validate requests in your Worker.
+Both Workers and Durable Objects are billed based on the number of requests. Validate requests in your Worker to avoid billing for invalid requests against a Durable Object.
 
 :::
 
@@ -287,7 +384,7 @@ export default {
 		});
 	},
 };
-```
+````
 
 </TabItem>
 <TabItem label="TypeScript" icon="seti:typescript">
@@ -336,21 +433,20 @@ export default {
 from workers import Response, WorkerEntrypoint
 
 # Worker
+
 class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        if request.method == "GET" and request.url.endswith("/websocket"):
-            # Expect to receive a WebSocket Upgrade request.
-            # If there is one, accept the request and return a WebSocket Response.
-            upgrade_header = request.headers.get("Upgrade")
-            if not upgrade_header or upgrade_header != "websocket":
-                return Response(
-                    None,
-                    status=426,
-                    status_text="Durable Object expected Upgrade: websocket",
-                    headers={
-                        "Content-Type": "text/plain",
-                    },
-                )
+async def fetch(self, request):
+if request.method == "GET" and request.url.endswith("/websocket"): # Expect to receive a WebSocket Upgrade request. # If there is one, accept the request and return a WebSocket Response.
+upgrade_header = request.headers.get("Upgrade")
+if not upgrade_header or upgrade_header != "websocket":
+return Response(
+None,
+status=426,
+status_text="Durable Object expected Upgrade: websocket",
+headers={
+"Content-Type": "text/plain",
+},
+)
 
             # This example will refer to a single Durable Object instance, since the name "foo" is
             # hardcoded
@@ -368,11 +464,12 @@ class Default(WorkerEntrypoint):
                 "Content-Type": "text/plain",
             },
         )
-```
+
+````
 </TabItem>
 </Tabs>
 
-Each WebSocket server in this example is represented by a Durable Object. This WebSocket server creates a single WebSocket connection and responds to all messages over that connection with the total number of accepted WebSocket connections. In the Durable Object's fetch handler we create client and server connections and add event listeners for relevant event types.
+The following Durable Object creates a WebSocket connection and responds to messages with the total number of connections:
 
 <Tabs syncKey="workersExamples">
 <TabItem label="JavaScript" icon="seti:javascript">
@@ -418,7 +515,7 @@ export class WebSocketServer extends DurableObject {
 		});
 	}
 }
-```
+````
 
 </TabItem>
 <TabItem label="TypeScript" icon="seti:typescript">
@@ -472,10 +569,11 @@ from js import WebSocketPair
 from pyodide.ffi import create_proxy
 
 # Durable Object
+
 class WebSocketServer(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-        self.currently_connected_websockets = 0
+def **init**(self, ctx, env):
+super().**init**(ctx, env)
+self.currently_connected_websockets = 0
 
     async def fetch(self, request):
         # Creates two ends of a WebSocket connection.
@@ -506,11 +604,12 @@ class WebSocketServer(DurableObject):
             status=101,
             web_socket=client,
         )
-```
+
+````
 </TabItem>
 </Tabs>
 
-To execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
+Configure your Wrangler file with a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/):
 
 <WranglerConfig>
 ```jsonc
@@ -528,20 +627,19 @@ To execute this code, configure your Wrangler file to include a Durable Object [
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"WebSocketServer"
-			]
+			"new_sqlite_classes": ["WebSocketServer"]
 		}
 	]
 }
-```
+````
+
 </WranglerConfig>
 
-A full example can be found in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
+A full example is available in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
 
-:::caution[WebSockets disconnection]
+:::caution[WebSocket disconnection on deploy]
 
-Code updates will disconnect all WebSockets. If you deploy a new version of a Worker, every Durable Object is restarted. Any connections to old Durable Objects will be disconnected.
+Code updates disconnect all WebSockets. Deploying a new version restarts every Durable Object, which disconnects any existing connections.
 
 :::
 
