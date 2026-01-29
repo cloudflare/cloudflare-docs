@@ -3,7 +3,7 @@ name: Code Example Review
 # Trigger on PRs with "Review-Code" label or markdown changes
 on:
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [labeled]
     branches:
       - production
     paths:
@@ -17,26 +17,25 @@ concurrency:
 
 jobs:
   review:
-    name: Review code examples
+    name: Code Example Review
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'Review-Code')
     timeout-minutes: 15 # Prevent indefinite hanging
     permissions:
-      id-token: write
       contents: read
       pull-requests: write
       issues: read
 
     steps:
       - name: Checkout PR code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
           persist-credentials: false
 
       - name: Run automated code review
-        uses: anomalyco/opencode/github@latest
+        uses: anomalyco/opencode/github@9cfdbbb1afa2f183f3fb0507457297b317261990  # v1.1.41
         continue-on-error: true # Don't block PR if review fails
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
