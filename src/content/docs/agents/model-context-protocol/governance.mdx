@@ -10,7 +10,7 @@ sidebar:
 
 import { } from "~/components";
 
-Model Context Protocol (MCP) allows Large Language Models (LLMs) to interact with proprietary data and internal tools. However, as MCP adoption grows, organizations face security risks from "Shadow MCP", where employees run unmanaged local MCP servers against sensitive internal resources. MCP governance means that administrators have control over which MCP Servers are used in the organization, who can use them, and under what conditions.
+Model Context Protocol (MCP) allows Large Language Models (LLMs) to interact with proprietary data and internal tools. However, as MCP adoption grows, organizations face security risks from "Shadow MCP", where employees run unmanaged local MCP servers against sensitive internal resources. MCP governance means that administrators have control over which MCP servers are used in the organization, who can use them, and under what conditions.
 
 ## MCP server portals
 
@@ -26,4 +26,4 @@ Cloudflare Access logs MCP server requests and tool executions made through the 
 
 ## Remote MCP servers
 
-To maintain a modern security posture, Cloudflare recommends the use of [remote MCP servers](/agents/guides/remote-mcp-server/) over local installations. Running MCP servers locally introduces risks similar to unmanaged shadow IT, making it difficult to audit data flow or verify the integrity of the server code. By [building remote MCP servers](/agents/guides/remote-mcp-server/), administrators gain visibility into what servers are being used, along with the ability to control who access them and what tools are authorized for employee use.
+To maintain a modern security posture, Cloudflare recommends the use of [remote MCP servers](/agents/guides/remote-mcp-server/) over local installations. Running MCP servers locally introduces risks similar to unmanaged [shadow IT](https://www.cloudflare.com/learning/access-management/what-is-shadow-it/), making it difficult to audit data flow or verify the integrity of the server code. By [building remote MCP servers](/agents/guides/remote-mcp-server/), administrators gain visibility into what servers are being used, along with the ability to control who access them and what tools are authorized for employee use.
