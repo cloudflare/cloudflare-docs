@@ -370,8 +370,10 @@ Migrate tracked workflows after renaming a workflow binding.
 <TypeScriptExample>
 
 ```ts
-async onStart() {
-  this.migrateWorkflowBinding('OLD_WORKFLOW', 'NEW_WORKFLOW');
+class MyAgent extends Agent {
+	async onStart() {
+		this.migrateWorkflowBinding("OLD_WORKFLOW", "NEW_WORKFLOW");
+	}
 }
 ```
 
