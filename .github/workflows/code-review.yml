@@ -1,6 +1,6 @@
 name: Code Example Review
 
-# Trigger on PRs with "Review-Code" label or via comment commands
+# Trigger on PRs with "Review-Code" label
 on:
   pull_request:
     types: [labeled]
@@ -9,8 +9,6 @@ on:
     paths:
       - "src/content/docs/**/*.md"
       - "src/content/docs/**/*.mdx"
-  issue_comment:
-    types: [created]
 
 # Prevent duplicate runs on the same PR
 concurrency:
@@ -18,26 +16,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-membership:
-    name: Check Cloudflare Membership
-    runs-on: ubuntu-latest
-    outputs:
-      is_member: ${{ steps.check_membership.outputs.is_member }}
-    steps:
-      - id: check_membership
-        name: Check if user is Cloudflare org member
-        run: 'curl --write-out ''%{http_code}'' --silent --output /dev/null -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/cloudflare/members/${{ github.actor }} | grep -q ''204'' && echo "is_member=true" >> $GITHUB_OUTPUT || echo "is_member=false" >> $GITHUB_OUTPUT'
-
   review:
     name: Code Example Review
     runs-on: ubuntu-latest
-    needs: check-membership
-    if: |
-      needs.check-membership.outputs.is_member == 'true' &&
-      (
-        (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'Review-Code')) ||
-        (github.event_name == 'issue_comment' && github.event.issue.pull_request)
-      )
+    if: contains(github.event.pull_request.labels.*.name, 'Review-Code')
     timeout-minutes: 15 # Prevent indefinite hanging
     permissions:
       contents: read
