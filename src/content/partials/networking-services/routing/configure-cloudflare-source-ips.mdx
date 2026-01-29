@@ -1,5 +1,6 @@
 ---
-{}
+params:
+  - unifiedRoutingLink
 ---
 
 import { APIRequest, DashButton, Tabs, TabItem } from "~/components";
@@ -15,7 +16,7 @@ You must configure routes in your network so that response traffic for these sou
 ## Prerequisites
 
 Before you begin, ensure that:
-- You have Cloudflare One Unified Routing. If your account is not yet on Unified Routing, contact your account team to discuss migration and availability.
+- You have Cloudflare One <a href={props.unifiedRoutingLink}>Unified Routing (beta)</a>. If your account is not yet on Unified Routing, contact your account team to discuss migration and availability.
 - You have [Cloudflare One Networks Write](/fundamentals/api/reference/permissions/) permission.
 - Your desired new network range meets the following requirements:
   - Your network must be defined as a single CIDR with a prefix length of `/12`.
