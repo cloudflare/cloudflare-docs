@@ -12,7 +12,7 @@ describe("Cloudflare Docs", () => {
 			expect(await response.text()).toContain("Cloudflare Docs");
 		});
 
-		// Remove once the whacky double-slash rules get removed
+		// Remove once the wacky double-slash rules get removed
 		it("responds with index.html at `//`", async () => {
 			const request = new Request("http://fakehost//");
 			const response = await SELF.fetch(request);
