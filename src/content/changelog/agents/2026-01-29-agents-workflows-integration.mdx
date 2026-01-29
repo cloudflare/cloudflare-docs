@@ -56,7 +56,7 @@ export class MyAgent extends Agent {
 
 	async onWorkflowProgress(
 		workflowName: string,
-		workflowId: string,
+		instanceId: string,
 		progress: unknown,
 	) {
 		this.broadcast(JSON.stringify({ type: "progress", progress }));
