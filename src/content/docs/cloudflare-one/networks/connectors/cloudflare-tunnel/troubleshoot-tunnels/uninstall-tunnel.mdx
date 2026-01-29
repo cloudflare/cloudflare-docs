@@ -1,0 +1,113 @@
+---
+pcx_content_type: how-to
+title: Uninstall Cloudflare Tunnel
+---
+
+import { TabItem, Tabs } from "~/components";
+
+This guide explains how to uninstall `cloudflared` from your system. The uninstall process varies depending on your operating system and how you originally installed `cloudflared`.
+
+## Before you uninstall
+
+Before uninstalling `cloudflared`, you should:
+
+TODO: Include instructions on what user needs to consider before uninstalling CF Tunnel
+
+1. Stop any running `cloudflared` connections. If `cloudflared` is installed [as a service](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/index), run one of the following commands:
+   - **Linux**: `sudo systemctl stop cloudflared`
+   - **macOS**: `sudo launchctl stop com.cloudflare.cloudflared`
+   - **Windows**: `sc stop cloudflared`
+
+   If you are running `cloudflared` manually (not as a service), terminate the process with `Ctrl`+`C` or close the terminal window.
+
+2. (Optional) Delete the tunnel if you no longer need it:
+   - **Remotely-managed tunnels**: Go to **Networks** > **Tunnels** in [Zero Trust](https://one.dash.cloudflare.com/) and delete the tunnel.
+   - **Locally-managed tunnels**: Run [`cloudflared tunnel delete <NAME or UUID>`](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/tunnel-useful-commands/).
+
+## Linux
+
+<Tabs>
+<TabItem label="Debian/Ubuntu">
+
+If you installed `cloudflared` using `apt` or a `.deb` package:
+
+```sh
+sudo apt remove cloudflared -y
+```
+
+</TabItem>
+<TabItem label="Red Hat/CentOS">
+
+If you installed `cloudflared` using `yum` or a `.rpm` package:
+
+```sh
+sudo yum remove cloudflared -y
+```
+
+</TabItem>
+<TabItem label="Binary">
+
+If you installed `cloudflared` by downloading the binary directly, remove the binary from its installation location:
+
+```sh
+sudo rm /usr/local/bin/cloudflared
+```
+
+</TabItem>
+</Tabs>
+
+## macOS
+
+<Tabs>
+<TabItem label="Homebrew">
+
+If you installed `cloudflared` using Homebrew:
+
+```sh
+brew uninstall cloudflared
+```
+
+</TabItem>
+<TabItem label="Package installer">
+
+If you installed `cloudflared` using the `.pkg` installer from GitHub, remove the binary from `/usr/local/bin`:
+
+```sh
+sudo rm /usr/local/bin/cloudflared
+```
+
+</TabItem>
+</Tabs>
+
+## Windows
+
+<Tabs>
+<TabItem label="winget">
+
+If you installed `cloudflared` using winget:
+
+```bash
+winget uninstall --id Cloudflare.cloudflared
+```
+
+</TabItem>
+<TabItem label="Control Panel">
+
+If you installed `cloudflared` using the executable:
+
+1. Open **Settings** > **Apps** > **Installed apps**.
+2. Search for `cloudflared`.
+3. Select the three dots next to the app and choose **Uninstall**.
+
+For more information, refer to [Microsoft's documentation on uninstalling apps](https://support.microsoft.com/en-us/windows/uninstall-or-remove-apps-and-programs-in-windows-4b55f974-2cc6-2d2b-d092-5905080eaf98).
+
+</TabItem>
+</Tabs>
+
+## Docker
+
+To remove the `cloudflared` Docker image:
+
+```sh
+docker rmi cloudflare/cloudflared
+```
