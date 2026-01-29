@@ -47,7 +47,7 @@ Start workflows from your Agent with `runWorkflow()` and handle lifecycle events
 export class MyAgent extends Agent {
 	async startTask(taskId: string, data: string) {
 		// Automatically tracked in Agent database
-		const workflowId = await this.runWorkflow("PROCESSING_WORKFLOW", {
+		const instanceId = await this.runWorkflow("PROCESSING_WORKFLOW", {
 			taskId,
 			data,
 		});
