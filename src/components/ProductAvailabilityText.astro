@@ -4,30 +4,30 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
 	product: CollectionEntry<"product-availability">["id"];
-	parentheses?: boolean; 
+	parentheses?: string;
 }
 
-const { product, parentheses = false } = Astro.props;
+const { product, parentheses = "false" } = Astro.props;
 
 let entry = await getEntry("product-availability", product);
-let output = ""
+let output = "";
 
-if (!entry) {
+if (!entry || !entry.data.availability) {
 	console.warn(
-		`Product availability entry not found for product="${product}" in ${Astro.url.pathname}. Returning empty.`,
+		`Product availability value not found for product="${product}" in ${Astro.url.pathname}. Returning empty.`,
 	);
 }
 // don't show anything for GA products
-else if (entry.data.toUpperCase() === "GA") {
+else if (entry.data.availability.toUpperCase() === "GA") {
 	console.info(
 		`Product availability entry is GA for product="${product}" in ${Astro.url.pathname}. Returning empty.`,
 	);
 }
+// show an availability value
 else {
-	if (parentheses) output = `(${entry.data})`
-	else output = entry.data	
+	if (parentheses === "true") output = `(${entry.data.availability})`;
+	else output = entry.data.availability;
 }
-
 ---
 
 {output}

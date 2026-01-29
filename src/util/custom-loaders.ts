@@ -18,10 +18,7 @@ type MiddlecacheOptions = {
 	url?: string;
 	parser?: (
 		text: string,
-	) =>
-		| Record<string, Record<string, unknown>>
-		| Array<Record<string, unknown>>
-		| Record<string, string | null>;
+	) => Record<string, Record<string, unknown>> | Array<Record<string, unknown>>;
 };
 
 export function middlecacheLoader(
