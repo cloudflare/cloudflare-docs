@@ -9,13 +9,7 @@ products:
 
 Magic WAN now allows you to configure the source IP address range used by Cloudflare services (such as Load Balancing, Gateway, and Browser Isolation) when sending traffic to your private networks.
 
-Previously, traffic to private networks was sourced from public Cloudflare IPs, which caused:
-
-- **Asymmetric routing**: Return traffic was routed via the public Internet instead of the private Magic WAN tunnel.
-- **Stateful firewall failures**: Firewalls could not properly track connections since they only saw one direction of traffic.
-- **Security and compliance gaps**: Private traffic was returning over the public Internet instead of secure private interconnects.
-
-With this feature, you can now configure a dedicated, non-Internet-routable private IP range to ensure:
+Previously, traffic to private networks was sourced from public Cloudflare IPs, which may have caused IP conflicts. With this feature, you can now configure a dedicated, non-Internet-routable private IP range to ensure:
 
 - Symmetric routing over private network connections
 - Proper firewall state preservation
