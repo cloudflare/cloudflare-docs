@@ -64,7 +64,7 @@ export class MyAgent extends Agent {
 
 	async onWorkflowComplete(
 		workflowName: string,
-		workflowId: string,
+		instanceId: string,
 		result?: unknown,
 	) {
 		console.log(`Workflow ${workflowId} completed`);
