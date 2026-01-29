@@ -1,6 +1,6 @@
 name: Code Example Review
 
-# Trigger on PRs with "Review-Code" label or markdown changes
+# Trigger on PRs with "Review-Code" label
 on:
   pull_request:
     types: [labeled]
