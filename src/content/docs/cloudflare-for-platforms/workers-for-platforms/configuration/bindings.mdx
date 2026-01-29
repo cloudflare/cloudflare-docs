@@ -33,7 +33,7 @@ Create a KV namespace using the [Cloudflare API](/api/resources/kv/subresources/
 Use the [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to attach the KV namespace binding to the Worker. You can do this when you're first uploading the Worker script or when updating an existing Worker.
 
 :::note
-When using the API to upload scripts, bindings must be specified in the `metadata` object of your multipart upload request. You cannot upload the wrangler configuration file as a module to configure the bindings. For more details about multipart uploads, see [Multipart upload metadata](/workers/configuration/multipart-upload-metadata/).
+When using the API to upload scripts, bindings must be specified in the `metadata` object of your multipart upload request. You cannot upload the Wrangler configuration file as a module to configure the bindings. For more details about multipart uploads, see [Multipart upload metadata](/workers/configuration/multipart-upload-metadata/).
 :::
 
 ##### Example API request

@@ -43,7 +43,7 @@ In the example `ecommerce-monorepo`, a Workers project should be created for `pr
 
 A Git connection to `ecommerce-monorepo` should be added in all of the Workers projects. If you are using a monorepo tool, such as [Turborepo](https://turbo.build/), you can configure a different deploy command for each Worker, for example, `turbo deploy -F product-service`.
 
-Set the root directory of each Worker to where its wrangler configuration file is located. For example, for `product-service`, the root directory should be `/workers/product-service/`. Optionally, you can add [build watch paths](/workers/ci-cd/builds/build-watch-paths/) to optimize your builds.
+Set the root directory of each Worker to where its Wrangler configuration file is located. For example, for `product-service`, the root directory should be `/workers/product-service/`. Optionally, you can add [build watch paths](/workers/ci-cd/builds/build-watch-paths/) to optimize your builds.
 
 When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers if the change is within its included watch paths using the configured commands for that Worker.
 

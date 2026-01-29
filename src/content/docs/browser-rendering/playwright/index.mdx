@@ -34,7 +34,7 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/todomvc)
 
-Make sure you have the [browser binding](/browser-rendering/reference/wrangler/#bindings) configured in your wrangler configuration file:
+Make sure you have the [browser binding](/browser-rendering/reference/wrangler/#bindings) configured in your Wrangler configuration file:
 
 :::note
 To use the latest version of `@cloudflare/playwright`, your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later. This change is necessary because the library's functionality requires the native `node.fs` API.
@@ -201,7 +201,7 @@ First, ensure you have a KV namespace. You can create a new one with:
 npx wrangler kv namespace create KV
 ```
 
-Then, add the KV namespace to your wrangler configuration file:
+Then, add the KV namespace to your Wrangler configuration file:
 
 <WranglerConfig>
 
