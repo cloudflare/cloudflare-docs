@@ -40,26 +40,40 @@ It is best practice to treat Wrangler's configuration file as the [source of tru
 
 <WranglerConfig>
 
-```toml
-# Top-level configuration
-name = "my-worker"
-main = "src/index.js"
-compatibility_date = "2022-07-12"
-
-workers_dev = false
-route = { pattern = "example.org/*", zone_name = "example.org" }
-
-kv_namespaces = [
-  { binding = "<MY_NAMESPACE>", id = "<KV_ID>" }
-]
-
-[env.staging]
-name = "my-worker-staging"
-route = { pattern = "staging.example.org/*", zone_name = "example.org" }
-
-kv_namespaces = [
-  { binding = "<MY_NAMESPACE>", id = "<STAGING_KV_ID>" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// Top-level configuration
+	"name": "my-worker",
+	"main": "src/index.js",
+	"compatibility_date": "2022-07-12",
+	"workers_dev": false,
+	"route": {
+		"pattern": "example.org/*",
+		"zone_name": "example.org"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "<MY_NAMESPACE>",
+			"id": "<KV_ID>"
+		}
+	],
+	"env": {
+		"staging": {
+			"name": "my-worker-staging",
+			"route": {
+				"pattern": "staging.example.org/*",
+				"zone_name": "example.org"
+			},
+			"kv_namespaces": [
+				{
+					"binding": "<MY_NAMESPACE>",
+					"id": "<STAGING_KV_ID>"
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -92,12 +106,16 @@ This currently works for KV, R2, and D1 bindings.
 
 To use this feature, add bindings to your configuration file _without_ adding resource IDs, or in the case of R2, a bucket name. Resources will be created with the name of your worker as the prefix.
 
-<WranglerConfig removeSchema>
+<WranglerConfig>
 
-```toml
-kv_namespaces = [
-  { binding = "<MY_KV_NAMESPACE>" }
-]
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "<MY_KV_NAMESPACE>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -274,10 +292,15 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[routes]]
-pattern = "shop.example.com"
-custom_domain = true
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "shop.example.com",
+			"custom_domain": true
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -298,10 +321,15 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[routes]]
-pattern = "subdomain.example.com/*"
-zone_id = "<YOUR_ZONE_ID>"
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "subdomain.example.com/*",
+			"zone_id": "<YOUR_ZONE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -318,10 +346,15 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[routes]]
-pattern = "subdomain.example.com/*"
-zone_name = "example.com"
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "subdomain.example.com/*",
+			"zone_name": "example.com"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -334,8 +367,10 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-route = "example.com/*"
+```jsonc
+{
+	"route": "example.com/*"
+}
 ```
 
 </WranglerConfig>
@@ -349,8 +384,10 @@ Cloudflare Workers accounts come with a `workers.dev` subdomain that is configur
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-workers_dev = false
+```jsonc
+{
+	"workers_dev": false
+}
 ```
 
 </WranglerConfig>
@@ -367,9 +404,14 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[triggers]
-crons = ["* * * * *"]
+```jsonc
+{
+	"triggers": {
+		"crons": [
+			"* * * * *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -388,10 +430,13 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[observability]
-enabled = true
-head_sampling_rate = 0.1 # 10% of requests are logged
+```jsonc
+{
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 0.1 // 10% of requests are logged
+	}
+}
 ```
 
 </WranglerConfig>
@@ -417,11 +462,14 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[build]
-command = "npm run build"
-cwd = "build_cwd"
-watch_dir = "build_watch_dir"
+```jsonc
+{
+	"build": {
+		"command": "npm run build",
+		"cwd": "build_cwd",
+		"watch_dir": "build_watch_dir"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -441,9 +489,12 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[limits]
-cpu_ms = 100
+```jsonc
+{
+	"limits": {
+		"cpu_ms": 100
+	}
+}
 ```
 
 </WranglerConfig>
@@ -463,9 +514,12 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[browser]
-binding = "<BINDING_NAME>"
+```jsonc
+{
+	"browser": {
+		"binding": "<BINDING_NAME>"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -502,11 +556,16 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[d1_databases]]
-binding = "<BINDING_NAME>"
-database_name = "<DATABASE_NAME>"
-database_id = "<DATABASE_ID>"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "<BINDING_NAME>",
+			"database_name": "<DATABASE_NAME>",
+			"database_id": "<DATABASE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -527,12 +586,21 @@ Dispatch namespace bindings allow for communication between a [dynamic dispatch 
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[dispatch_namespaces]]
-binding = "<BINDING_NAME>"
-namespace = "<NAMESPACE_NAME>"
-outbound = {service = "<WORKER_NAME>", parameters = ["params_object"]}
-
+```jsonc
+{
+	"dispatch_namespaces": [
+		{
+			"binding": "<BINDING_NAME>",
+			"namespace": "<NAMESPACE_NAME>",
+			"outbound": {
+				"service": "<WORKER_NAME>",
+				"parameters": [
+					"params_object"
+				]
+			}
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -559,11 +627,17 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[durable_objects.bindings]]
-name = "<BINDING_NAME>"
-class_name = "<CLASS_NAME>"
-
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "<BINDING_NAME>",
+				"class_name": "<CLASS_NAME>"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -588,15 +662,29 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["DurableObjectExample"] # Array of new classes
-
-[[migrations]]
-tag = "v2"
-renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array of rename directives
-deleted_classes = ["DeprecatedClass"] # Array of deleted class names
+```jsonc
+{
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [ // Array of new classes
+				"DurableObjectExample"
+			]
+		},
+		{
+			"tag": "v2", // Should be unique for each entry
+			"renamed_classes": [ // Array of rename directives
+				{
+					"from": "DurableObjectExample",
+					"to": "UpdatedName"
+				}
+			],
+			"deleted_classes": [ // Array of deleted class names
+				"DeprecatedClass"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -644,13 +732,19 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-# required for database drivers to function
-compatibility_flags = ["nodejs_compat_v2"]
-
-[[hyperdrive]]
-binding = "<BINDING_NAME>"
-id = "<ID>"
+```jsonc
+{
+	// required for database drivers to function
+	"compatibility_flags": [
+		"nodejs_compat_v2"
+	],
+	"hyperdrive": [
+		{
+			"binding": "<BINDING_NAME>",
+			"id": "<ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -700,14 +794,19 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[kv_namespaces]]
-binding = "<BINDING_NAME1>"
-id = "<NAMESPACE_ID1>"
-
-[[kv_namespaces]]
-binding = "<BINDING_NAME2>"
-id = "<NAMESPACE_ID2>"
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "<BINDING_NAME1>",
+			"id": "<NAMESPACE_ID1>"
+		},
+		{
+			"binding": "<BINDING_NAME2>",
+			"id": "<NAMESPACE_ID2>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -731,11 +830,18 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[queues.producers]]
-  binding = "<BINDING_NAME>"
-  queue = "<QUEUE_NAME>"
-  delivery_delay = 60 # Delay messages by 60 seconds before they are delivered to a consumer
+```jsonc
+{
+	"queues": {
+		"producers": [
+			{
+				"binding": "<BINDING_NAME>",
+				"queue": "<QUEUE_NAME>",
+				"delivery_delay": 60 // Delay messages by 60 seconds before they are delivered to a consumer
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -770,15 +876,22 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[queues.consumers]]
-  queue = "my-queue"
-  max_batch_size = 10
-  max_batch_timeout = 30
-  max_retries = 10
-  dead_letter_queue = "my-queue-dlq"
-  max_concurrency = 5
-  retry_delay = 120 # Delay retried messages by 2 minutes before re-attempting delivery
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "my-queue",
+				"max_batch_size": 10,
+				"max_batch_timeout": 30,
+				"max_retries": 10,
+				"dead_letter_queue": "my-queue-dlq",
+				"max_concurrency": 5,
+				"retry_delay": 120 // Delay retried messages by 2 minutes before re-attempting delivery
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -811,14 +924,19 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[r2_buckets]]
-binding = "<BINDING_NAME1>"
-bucket_name = "<BUCKET_NAME1>"
-
-[[r2_buckets]]
-binding = "<BINDING_NAME2>"
-bucket_name = "<BUCKET_NAME2>"
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "<BINDING_NAME1>",
+			"bucket_name": "<BUCKET_NAME1>"
+		},
+		{
+			"binding": "<BINDING_NAME2>",
+			"bucket_name": "<BUCKET_NAME2>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -839,10 +957,15 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[vectorize]]
-binding = "<BINDING_NAME>"
-index_name = "<INDEX_NAME>"
+```jsonc
+{
+	"vectorize": [
+		{
+			"binding": "<BINDING_NAME>",
+			"index_name": "<INDEX_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -867,11 +990,16 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[services]]
-binding = "<BINDING_NAME>"
-service = "<WORKER_NAME>"
-entrypoint = "<ENTRYPOINT_NAME>"
+```jsonc
+{
+	"services": [
+		{
+			"binding": "<BINDING_NAME>",
+			"service": "<WORKER_NAME>",
+			"entrypoint": "<ENTRYPOINT_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -896,10 +1024,15 @@ Example:
 
 <WranglerConfig>
 
-```toml
-[[analytics_engine_datasets]]
-binding = "<BINDING_NAME>"
-dataset = "<DATASET_NAME>"
+```jsonc
+{
+	"analytics_engine_datasets": [
+		{
+			"binding": "<BINDING_NAME>",
+			"dataset": "<DATASET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -920,14 +1053,19 @@ Example of a Wrangler configuration file that includes an mTLS certificate bindi
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[mtls_certificates]]
-binding = "<BINDING_NAME1>"
-certificate_id = "<CERTIFICATE_ID1>"
-
-[[mtls_certificates]]
-binding = "<BINDING_NAME2>"
-certificate_id = "<CERTIFICATE_ID2>"
+```jsonc
+{
+	"mtls_certificates": [
+		{
+			"binding": "<BINDING_NAME1>",
+			"certificate_id": "<CERTIFICATE_ID1>"
+		},
+		{
+			"binding": "<BINDING_NAME2>",
+			"certificate_id": "<CERTIFICATE_ID2>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -950,9 +1088,12 @@ Example:
 
 <WranglerConfig>
 
-```toml
-[ai]
-binding = "AI" # available in your Worker code on `env.AI`
+```jsonc
+{
+	"ai": {
+		"binding": "AI" // available in your Worker code on `env.AI`
+	}
+}
 ```
 
 </WranglerConfig>
@@ -985,8 +1126,15 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "404-page" }
+```jsonc
+{
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+		"html_handling": "force-trailing-slash",
+		"not_found_handling": "404-page"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -995,14 +1143,17 @@ You can also configure `run_worker_first` with an array of route patterns:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[assets]
-directory = "./public"
-binding = "ASSETS"
-run_worker_first = [
-  "/api/*",        # API calls go to Worker first
-  "!/api/docs/*"   # EXCEPTION: For /api/docs/*, try static assets first
-]
+```jsonc
+{
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+		"run_worker_first": [
+			"/api/*",			// API calls go to Worker first
+			"!/api/docs/*"	// EXCEPTION: For /api/docs/*, try static assets first
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -1063,21 +1214,36 @@ The following options are available:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[containers]]
-class_name = "MyContainer"
-image = "./Dockerfile"
-max_instances = 10
-instance_type = "basic" # Optional, defaults to "lite"
-image_vars = { FOO = "BAR" }
-
-[[durable_objects.bindings]]
-name = "MY_CONTAINER"
-class_name = "MyContainer"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyContainer"]
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"max_instances": 10,
+			"instance_type": "basic", // Optional, defaults to "lite"
+			"image_vars": {
+				"FOO": "BAR"
+			}
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "MyContainer"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"MyContainer"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -1100,10 +1266,19 @@ The following options are available:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[containers]]
-image = "./Dockerfile"
-instance_type = { vcpu = 1, memory_mib = 1024, disk_mb = 4000 }
+```jsonc
+{
+	"containers": [
+		{
+			"image": "./Dockerfile",
+			"instance_type": {
+				"vcpu": 1,
+				"memory_mib": 1024,
+				"disk_mb": 4000
+			}
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -1135,10 +1310,18 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-rules = [
-  { type = "Text", globs = ["**/*.md"], fallthrough = true }
-]
+```jsonc
+{
+	"rules": [
+		{
+			"type": "Text",
+			"globs": [
+				"**/*.md"
+			],
+			"fallthrough": true
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -1177,9 +1360,15 @@ To fix this, you can exclude certain files from being included. To do this use t
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[python_modules]
-excludes = ["**/*.pyc", "**/__pycache__"]
+```jsonc
+{
+	"python_modules": {
+		"excludes": [
+			"**/*.pyc",
+			"**/__pycache__"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -1225,11 +1414,14 @@ You can configure various aspects of local development, such as the local protoc
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[dev]
-ip = "192.168.1.1"
-port = 8080
-local_protocol = "http"
+```jsonc
+{
+	"dev": {
+		"ip": "192.168.1.1",
+		"port": 8080,
+		"local_protocol": "http"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -1250,9 +1442,12 @@ You can configure Wrangler to replace all calls to import a particular package w
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[alias]
-"foo" = "./replacement-module-filepath"
+```jsonc
+{
+	"alias": {
+		"foo": "./replacement-module-filepath"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -1281,9 +1476,12 @@ You can alias all imports of `node-fetch` to instead point directly to the `fetc
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[alias]
-"node-fetch" = "./fetch-polyfill"
+```jsonc
+{
+	"alias": {
+		"node-fetch": "./fetch-polyfill"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -1300,9 +1498,12 @@ For example, let's say the NPM package you rely on calls [`fs.readFile`](https:/
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[alias]
-"fs" = "./fs-polyfill"
+```jsonc
+{
+	"alias": {
+		"fs": "./fs-polyfill"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -1326,9 +1527,10 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-upload_source_maps = true
-
+```jsonc
+{
+	"upload_source_maps": true
+}
 ```
 
 </WranglerConfig>
@@ -1352,11 +1554,18 @@ Example:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[site]
-bucket = "./public"
-include = ["upload_dir"]
-exclude = ["ignore_dir"]
+```jsonc
+{
+	"site": {
+		"bucket": "./public",
+		"include": [
+			"upload_dir"
+		],
+		"exclude": [
+			"ignore_dir"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -1439,15 +1648,22 @@ A common example of using a redirected configuration is where a custom build too
 
   <WranglerConfig>
 
-  ```toml title="wrangler.toml"
-  name = "my-worker"
-  main = "src/index.ts"
-
-  [vars]
-  MY_VARIABLE = "production variable"
-
-  [env.staging.vars]
-  MY_VARIABLE = "staging variable"
+  ```jsonc
+  {
+    "$schema": "./node_modules/wrangler/config-schema.json",
+    "name": "my-worker",
+    "main": "src/index.ts",
+    "vars": {
+      "MY_VARIABLE": "production variable"
+    },
+    "env": {
+      "staging": {
+        "vars": {
+          "MY_VARIABLE": "staging variable"
+        }
+      }
+    }
+  }
   ```
 
   </WranglerConfig>

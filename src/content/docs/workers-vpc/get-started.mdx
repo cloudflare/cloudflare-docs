@@ -154,18 +154,22 @@ If you encounter permission errors, refer to [Required roles](/workers-vpc/confi
 
 ## 4. Configure your Worker
 
-Add the VPC Service binding to your `wrangler.toml`:
+Add the VPC Service binding to your Wrangler configuration file:
 
 <WranglerConfig>
-```toml
-name = "workers-vpc-app"
-main = "src/index.ts"
-compatibility_date = "2024-01-01"
-
-[[vpc_services]]
-binding = "VPC_SERVICE"
-service_id = "<YOUR_SERVICE_ID>"
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workers-vpc-app",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-01-01",
+	"vpc_services": [
+		{
+			"binding": "VPC_SERVICE",
+			"service_id": "<YOUR_SERVICE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

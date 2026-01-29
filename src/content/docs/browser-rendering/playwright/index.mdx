@@ -34,7 +34,7 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/todomvc)
 
-Make sure you have the [browser binding](/browser-rendering/reference/wrangler/#bindings) configured in your `wrangler.toml` file:
+Make sure you have the [browser binding](/browser-rendering/reference/wrangler/#bindings) configured in your Wrangler configuration file:
 
 :::note
 To use the latest version of `@cloudflare/playwright`, your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later. This change is necessary because the library's functionality requires the native `node.fs` API.
@@ -42,16 +42,21 @@ To use the latest version of `@cloudflare/playwright`, your Worker configuration
 
 <WranglerConfig>
 
-```toml
-name = "cloudflare-playwright-example"
-main = "src/index.ts"
-workers_dev = true
-compatibility_flags = ["nodejs_compat"]
-compatibility_date = "2025-09-17"
-upload_source_maps = true
-
-[browser]
-binding = "MYBROWSER"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-playwright-example",
+	"main": "src/index.ts",
+	"workers_dev": true,
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"compatibility_date": "2025-09-17",
+	"upload_source_maps": true,
+	"browser": {
+		"binding": "MYBROWSER"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -196,7 +201,7 @@ First, ensure you have a KV namespace. You can create a new one with:
 npx wrangler kv namespace create KV
 ```
 
-Then, add the KV namespace to your `wrangler.toml` file:
+Then, add the KV namespace to your Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -258,7 +263,7 @@ This is an inactivity timeout, not a maximum session duration. Sessions can rema
 
 ### Session Reuse
 
-The best way to improve the performance of your browser rendering Worker is to reuse sessions by keeping the browser open after you've finished with it, and connecting to that session each time you have a new request. Playwright handles [`browser.close`](https://playwright.dev/docs/api/class-browser#browser-close) differently from Puppeteer. In Playwright, if the browser was obtained using a `connect` session, the session will disconnect. If the browser was obtained using a `launch` session, the session will close. 
+The best way to improve the performance of your browser rendering Worker is to reuse sessions by keeping the browser open after you've finished with it, and connecting to that session each time you have a new request. Playwright handles [`browser.close`](https://playwright.dev/docs/api/class-browser#browser-close) differently from Puppeteer. In Playwright, if the browser was obtained using a `connect` session, the session will disconnect. If the browser was obtained using a `launch` session, the session will close.
 
 ```js
 import { env } from "cloudflare:workers";
@@ -269,7 +274,7 @@ async function reuseSameSession() {
 	const { sessionId } = await acquire(env.BROWSER);
 
 	for (let i = 0; i < 5; i++) {
-		// connects to the session that was previously acquired  
+		// connects to the session that was previously acquired
 		const browser = await connect(env.BROWSER, sessionId);
 
 		// ...
@@ -292,7 +297,7 @@ const context = await browser.newContext({
 ```
 
 :::note
-The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot. 
+The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot.
 :::
 
 

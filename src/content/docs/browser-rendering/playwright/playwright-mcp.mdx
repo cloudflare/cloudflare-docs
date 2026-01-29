@@ -48,7 +48,7 @@ Follow these steps to deploy `@cloudflare/playwright-mcp`:
 
 <PackageManagers pkg="@cloudflare/playwright-mcp" dev />
 
-2. Make sure you have the [browser rendering](/browser-rendering/) and [durable object](/durable-objects/) bindings and [migrations](/durable-objects/reference/durable-objects-migrations/) in your wrangler configuration file.
+2. Make sure you have the [browser rendering](/browser-rendering/) and [durable object](/durable-objects/) bindings and [migrations](/durable-objects/reference/durable-objects-migrations/) in your Wrangler configuration file.
 
 :::note
 Your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later.
@@ -56,22 +56,35 @@ Your Worker configuration must include the `nodejs_compat` compatibility flag an
 
 <WranglerConfig>
 
-```toml
-name = "playwright-mcp-example"
-main = "src/index.ts"
-compatibility_date = "2025-09-17"
-compatibility_flags = ["nodejs_compat"]
-
-[browser]
-binding = "BROWSER"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["PlaywrightMCP"]
-
-[[durable_objects.bindings]]
-name = "MCP_OBJECT"
-class_name = "PlaywrightMCP"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "playwright-mcp-example",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-09-17",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"browser": {
+		"binding": "BROWSER"
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"PlaywrightMCP"
+			]
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MCP_OBJECT",
+				"class_name": "PlaywrightMCP"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

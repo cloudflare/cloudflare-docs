@@ -77,9 +77,12 @@ Consider the following example:
 
 <WranglerConfig>
 
-```toml
-name = "counter"
-main = "./src/counter.js"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "counter",
+	"main": "./src/counter.js"
+}
 ```
 
 </WranglerConfig>
@@ -121,12 +124,19 @@ The method `increment` can be called directly by the client, as can the public p
 
 <WranglerConfig>
 
-```toml
-name = "client-worker"
-main = "./src/clientWorker.js"
-services = [
-  { binding = "COUNTER_SERVICE", service = "counter", entrypoint = "CounterService" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "client-worker",
+	"main": "./src/clientWorker.js",
+	"services": [
+		{
+			"binding": "COUNTER_SERVICE",
+			"service": "counter",
+			"entrypoint": "CounterService"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -42,10 +42,15 @@ import {
 
    <WranglerConfig>
 
-   ```toml
-   [[r2_buckets]]
-   binding = "MY_BUCKET"
-   bucket_name = "my-bucket"
+   ```jsonc
+   {
+     "r2_buckets": [
+       {
+         "binding": "MY_BUCKET",
+         "bucket_name": "my-bucket"
+       }
+     ]
+   }
    ```
 
    </WranglerConfig>

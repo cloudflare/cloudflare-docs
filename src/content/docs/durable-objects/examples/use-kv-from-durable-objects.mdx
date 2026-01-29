@@ -25,18 +25,26 @@ Configure your Wrangler file as follows:
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-main = "src/index.ts"
-
-kv_namespaces = [
-  { binding = "YOUR_KV_NAMESPACE", id = "<id_of_your_namespace>" }
-]
-
-[durable_objects]
-bindings = [
-  { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"kv_namespaces": [
+		{
+			"binding": "YOUR_KV_NAMESPACE",
+			"id": "<id_of_your_namespace>"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "YOUR_DO_CLASS",
+				"class_name": "YourDurableObject"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

@@ -143,15 +143,22 @@ This command outputs your Hyperdrive ID. You can now bind your Hyperdrive config
 
 <WranglerConfig>
 
-```toml
-name = "timescale-api"
-main = "src/index.ts"
-compatibility_date = "2024-09-23"
-compatibility_flags = [ "nodejs_compat"]
-
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "your-id-here"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "timescale-api",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-09-23",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "your-id-here"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

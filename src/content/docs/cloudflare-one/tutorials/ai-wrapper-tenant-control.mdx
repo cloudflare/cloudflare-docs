@@ -80,7 +80,7 @@ In order to build the Worker, you will need to choose if you want to build it lo
    wrangler init
    ```
 
-3. Create a `wrangler.toml` configuration file:
+3. Create a Wrangler configuration file:
 
    ```toml
    name = "ai-agent-wrapper"
@@ -362,7 +362,7 @@ Once the Worker code is complete, you need to make the Worker addressable using 
 
 <Tabs> <TabItem label="Wrangler">
 
-Edit the `wrangler.toml` configuration file and add the following information to ensure that the Worker is only accessible using the custom hostname:
+Edit the Wrangler configuration file and add the following information to ensure that the Worker is only accessible using the custom hostname:
 
 ```diff lang="toml"
 name = "ai-agent-wrapper"
@@ -379,7 +379,7 @@ workers_dev = false
 # Add any environment variables here
 ```
 
-To publish the worker, run `wrangler publish`.
+To publish the worker, run `wrangler deploy`.
 
 </TabItem> <TabItem label="Dashboard">
 

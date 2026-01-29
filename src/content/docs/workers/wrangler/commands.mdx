@@ -858,10 +858,15 @@ You can then add this certificate as a [binding](/workers/runtime-apis/bindings/
 
 <WranglerConfig>
 
-```toml
-mtls_certificates = [
-  { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
-]
+```jsonc
+{
+	"mtls_certificates": [
+		{
+			"binding": "MY_CERT",
+			"certificate_id": "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -18,21 +18,32 @@ The following Worker will catch JavaScript errors and send them to a queue. The 
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "ERROR_QUEUE"
-
-[[queues.consumers]]
-  queue = "my-queue"
-  max_batch_size = 100
-  max_batch_timeout = 30
-
-[[r2_buckets]]
-  bucket_name = "my-bucket"
-  binding = "ERROR_BUCKET"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"queues": {
+		"producers": [
+			{
+				"queue": "my-queue",
+				"binding": "ERROR_QUEUE"
+			}
+		],
+		"consumers": [
+			{
+				"queue": "my-queue",
+				"max_batch_size": 100,
+				"max_batch_timeout": 30
+			}
+		]
+	},
+	"r2_buckets": [
+		{
+			"bucket_name": "my-bucket",
+			"binding": "ERROR_BUCKET"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

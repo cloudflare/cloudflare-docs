@@ -6,14 +6,20 @@ import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
-```toml
-# required for database drivers to function
-compatibility_flags = ["nodejs_compat"]
-compatibility_date = "2024-09-23"
-
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "<your-hyperdrive-id-here>"
+```jsonc
+{
+	// required for database drivers to function
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"compatibility_date": "2024-09-23",
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "<your-hyperdrive-id-here>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

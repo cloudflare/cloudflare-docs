@@ -4,7 +4,7 @@ title: Static assets
 description: Host static assets on Cloudflare's global network and deliver faster load times worldwide with Workers for Platforms.
 ---
 
-
+import { WranglerConfig } from "~/components";
 
 Workers for Platforms lets you deploy front-end applications at scale. By hosting static assets on Cloudflare's global network, you can deliver faster load times worldwide and eliminate the need for external infrastructure. You can also combine these static assets with dynamic logic in Cloudflare Workers, providing a full-stack experience for your customers.
 
@@ -240,18 +240,19 @@ If you prefer a CLI-based approach and your platform setup allows direct publish
 
 Create or update your [Wrangler configuration file](/workers/wrangler/configuration/) to specify where Wrangler should look for static files:
 
-import { WranglerConfig } from "~/components";
-
 <WranglerConfig>
 
-```toml
-name = "my-static-site"
-main = "./src/index.js"
-compatibility_date = "2025-01-29"
-
-[assets]
-directory = "./public"
-binding = "ASSETS"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-static-site",
+	"main": "./src/index.js",
+	"compatibility_date": "2025-01-29",
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+	},
+}
 ```
 
 </WranglerConfig>

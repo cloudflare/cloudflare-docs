@@ -55,19 +55,23 @@ Note the service ID returned for the next step.
 
 ## 3. Configure your Worker
 
-Update your `wrangler.toml`:
+Update your Wrangler configuration file:
 
 <WranglerConfig>
-```toml
-name = "private-api-gateway"
-main = "src/index.js"
-compatibility_date = "2024-01-01"
-
-[[vpc_services]]
-binding = "INTERNAL_API"
-service_id = "<YOUR_SERVICE_ID>"
-remote = true
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "private-api-gateway",
+	"main": "src/index.js",
+	"compatibility_date": "2024-01-01",
+	"vpc_services": [
+		{
+			"binding": "INTERNAL_API",
+			"service_id": "<YOUR_SERVICE_ID>",
+			"remote": true
+		}
+	]
+}
 ```
 </WranglerConfig>
 

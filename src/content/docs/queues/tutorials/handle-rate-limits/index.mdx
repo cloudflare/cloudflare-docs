@@ -76,16 +76,25 @@ In your Wrangler file, add the following:
 
 <WranglerConfig>
 
-```toml
-[[queues.producers]]
-binding = "EMAIL_QUEUE"
-queue = "rate-limit-queue"
-
-[[queues.consumers]]
-queue = "rate-limit-queue"
-max_batch_size = 2
-max_batch_timeout = 10
-max_retries = 3
+```jsonc
+{
+	"queues": {
+		"producers": [
+			{
+				"binding": "EMAIL_QUEUE",
+				"queue": "rate-limit-queue"
+			}
+		],
+		"consumers": [
+			{
+				"queue": "rate-limit-queue",
+				"max_batch_size": 2,
+				"max_batch_timeout": 10,
+				"max_retries": 3
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -96,22 +105,32 @@ Your final Wrangler file should look similar to the example below.
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-#:schema node_modules/wrangler/config-schema.json
-name = "resend-rate-limit-queue"
-main = "src/index.ts"
-compatibility_date = "2024-09-09"
-compatibility_flags = ["nodejs_compat"]
-
-[[queues.producers]]
-binding = "EMAIL_QUEUE"
-queue = "rate-limit-queue"
-
-[[queues.consumers]]
-queue = "rate-limit-queue"
-max_batch_size = 2
-max_batch_timeout = 10
-max_retries = 3
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "resend-rate-limit-queue",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-09-09",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"queues": {
+		"producers": [
+			{
+				"binding": "EMAIL_QUEUE",
+				"queue": "rate-limit-queue"
+			}
+		],
+		"consumers": [
+			{
+				"queue": "rate-limit-queue",
+				"max_batch_size": 2,
+				"max_batch_timeout": 10,
+				"max_retries": 3
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

@@ -5,7 +5,14 @@ sidebar:
   order: 5
 ---
 
-import { Tabs, TabItem, GlossaryTooltip, Type, WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	Type,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
 Durable Objects can act as WebSocket servers that connect thousands of clients per instance. You can also use WebSockets as a client to connect to other servers or Durable Objects.
 
@@ -172,10 +179,11 @@ from workers import Response, DurableObject
 from js import WebSocketPair
 
 # Durable Object
+
 class WebSocketHibernationServer(DurableObject):
-    def __init__(self, state, env):
-        super().__init__(state, env)
-        self.ctx = state
+def **init**(self, state, env):
+super().**init**(state, env)
+self.ctx = state
 
     async def fetch(self, request):
         # Creates two ends of a WebSocket connection.
@@ -202,7 +210,8 @@ class WebSocketHibernationServer(DurableObject):
     async def webSocketClose(self, ws, code, reason, was_clean):
         # Calling close() on the server completes the WebSocket close handshake
         ws.close(code, reason)
-```
+
+````
 </TabItem>
 </Tabs>
 
@@ -211,6 +220,7 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 <WranglerConfig>
 ```jsonc
 {
+	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "websocket-hibernation-server",
 	"durable_objects": {
 		"bindings": [
@@ -227,7 +237,8 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 		}
 	]
 }
-```
+````
+
 </WranglerConfig>
 
 A full example is available in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
@@ -244,7 +255,10 @@ The following methods are available on the Hibernation WebSocket API. Use them t
 
 #### `WebSocket.serializeAttachment`
 
-- <code>serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
+- <code>
+  	serializeAttachment(value <Type text="any" />)
+  </code>
+  : <Type text="void" />
 
 Keeps a copy of `value` associated with the WebSocket connection.
 
@@ -273,8 +287,8 @@ Use `serializeAttachment` and `deserializeAttachment` to persist per-connection 
 import { DurableObject } from "cloudflare:workers";
 
 interface ConnectionState {
-	orderId: string;
-	joinedAt: number;
+orderId: string;
+joinedAt: number;
 }
 
 export class WebSocketServer extends DurableObject<Env> {
@@ -282,34 +296,36 @@ export class WebSocketServer extends DurableObject<Env> {
 		const url = new URL(request.url);
 		const orderId = url.searchParams.get("orderId") ?? "anonymous";
 
-		const webSocketPair = new WebSocketPair();
-		const [client, server] = Object.values(webSocketPair);
+    	const webSocketPair = new WebSocketPair();
+    	const [client, server] = Object.values(webSocketPair);
 
-		this.ctx.acceptWebSocket(server);
+    	this.ctx.acceptWebSocket(server);
 
-		// Persist per-connection state that survives hibernation
-		const state: ConnectionState = {
-			orderId,
-			joinedAt: Date.now(),
-		};
-		server.serializeAttachment(state);
+    	// Persist per-connection state that survives hibernation
+    	const state: ConnectionState = {
+    		orderId,
+    		joinedAt: Date.now(),
+    	};
+    	server.serializeAttachment(state);
 
-		return new Response(null, { status: 101, webSocket: client });
-	}
+    	return new Response(null, { status: 101, webSocket: client });
+    }
 
-	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
-		// Restore state after potential hibernation
-		const state = ws.deserializeAttachment() as ConnectionState;
-		ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
-	}
+    async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+    	// Restore state after potential hibernation
+    	const state = ws.deserializeAttachment() as ConnectionState;
+    	ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
+    }
 
-	async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-		const state = ws.deserializeAttachment() as ConnectionState;
-		console.log(`${state.orderId} disconnected`);
-		ws.close(code, reason);
-	}
+    async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+    	const state = ws.deserializeAttachment() as ConnectionState;
+    	console.log(`${state.orderId} disconnected`);
+    	ws.close(code, reason);
+    }
+
 }
-```
+
+````
 </TypeScriptExample>
 
 ## WebSocket Standard API
@@ -368,7 +384,7 @@ export default {
 		});
 	},
 };
-```
+````
 
 </TabItem>
 <TabItem label="TypeScript" icon="seti:typescript">
@@ -417,21 +433,20 @@ export default {
 from workers import Response, WorkerEntrypoint
 
 # Worker
+
 class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        if request.method == "GET" and request.url.endswith("/websocket"):
-            # Expect to receive a WebSocket Upgrade request.
-            # If there is one, accept the request and return a WebSocket Response.
-            upgrade_header = request.headers.get("Upgrade")
-            if not upgrade_header or upgrade_header != "websocket":
-                return Response(
-                    None,
-                    status=426,
-                    status_text="Durable Object expected Upgrade: websocket",
-                    headers={
-                        "Content-Type": "text/plain",
-                    },
-                )
+async def fetch(self, request):
+if request.method == "GET" and request.url.endswith("/websocket"): # Expect to receive a WebSocket Upgrade request. # If there is one, accept the request and return a WebSocket Response.
+upgrade_header = request.headers.get("Upgrade")
+if not upgrade_header or upgrade_header != "websocket":
+return Response(
+None,
+status=426,
+status_text="Durable Object expected Upgrade: websocket",
+headers={
+"Content-Type": "text/plain",
+},
+)
 
             # This example will refer to a single Durable Object instance, since the name "foo" is
             # hardcoded
@@ -449,7 +464,8 @@ class Default(WorkerEntrypoint):
                 "Content-Type": "text/plain",
             },
         )
-```
+
+````
 </TabItem>
 </Tabs>
 
@@ -499,7 +515,7 @@ export class WebSocketServer extends DurableObject {
 		});
 	}
 }
-```
+````
 
 </TabItem>
 <TabItem label="TypeScript" icon="seti:typescript">
@@ -553,10 +569,11 @@ from js import WebSocketPair
 from pyodide.ffi import create_proxy
 
 # Durable Object
+
 class WebSocketServer(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-        self.currently_connected_websockets = 0
+def **init**(self, ctx, env):
+super().**init**(ctx, env)
+self.currently_connected_websockets = 0
 
     async def fetch(self, request):
         # Creates two ends of a WebSocket connection.
@@ -587,7 +604,8 @@ class WebSocketServer(DurableObject):
             status=101,
             web_socket=client,
         )
-```
+
+````
 </TabItem>
 </Tabs>
 
@@ -596,6 +614,7 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 <WranglerConfig>
 ```jsonc
 {
+	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "websocket-server",
 	"durable_objects": {
 		"bindings": [
@@ -612,7 +631,8 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 		}
 	]
 }
-```
+````
+
 </WranglerConfig>
 
 A full example is available in [Build a WebSocket server](/durable-objects/examples/websocket-server/).

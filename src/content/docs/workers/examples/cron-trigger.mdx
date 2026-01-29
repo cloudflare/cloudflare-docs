@@ -100,13 +100,17 @@ If you are deploying with Wrangler, set the cron syntax (once per hour as shown 
 
 <WranglerConfig>
 
-```toml
-name = "worker"
-
-# ...
-
-[triggers]
-crons = ["0 * * * *"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker",
+	// ...
+	"triggers": {
+		"crons": [
+			"0 * * * *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -115,9 +119,18 @@ You also can set a different Cron Trigger for each [environment](/workers/wrangl
 
 <WranglerConfig>
 
-```toml
-[env.dev.triggers]
-crons = ["0 * * * *"]
+```jsonc
+{
+	"env": {
+		"dev": {
+			"triggers": {
+				"crons": [
+					"0 * * * *"
+				]
+			}
+		}
+	}
+}
 ```
 
 </WranglerConfig>
