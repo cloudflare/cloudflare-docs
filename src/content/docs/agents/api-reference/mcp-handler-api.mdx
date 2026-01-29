@@ -1,15 +1,15 @@
 ---
-pcx_content_type: concept
-title: createMcpHandler — API Reference
+pcx_content_type: reference
+title: createMcpHandler
 tags:
   - MCP
 sidebar:
-  order: 8
+  order: 13
 ---
 
 import { Render, TypeScriptExample } from "~/components";
 
-The `createMcpHandler` function creates a fetch handler to serve your MCP server. You can use it as an alternative to the [`McpAgent`](/agents/model-context-protocol/mcp-agent-api) class when you don't need the deprecated SSE transport.
+The `createMcpHandler` function creates a fetch handler to serve your [MCP server](/agents/model-context-protocol/). You can use it as an alternative to the [`McpAgent`](/agents/api-reference/mcp-agent-api) class when you don't need the deprecated SSE transport.
 
 It uses an implementation of the MCP Transport interface, `WorkerTransport`, built on top of web standards, which conforms to the [streamable-http](https://modelcontextprotocol.io/specification/draft/basic/transports/#streamable-http) transport specification.
 
