@@ -237,8 +237,7 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 		}
 	]
 }
-````
-
+```
 </WranglerConfig>
 
 A full example is available in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
@@ -287,8 +286,8 @@ Use `serializeAttachment` and `deserializeAttachment` to persist per-connection 
 import { DurableObject } from "cloudflare:workers";
 
 interface ConnectionState {
-orderId: string;
-joinedAt: number;
+	orderId: string;
+	joinedAt: number;
 }
 
 export class WebSocketServer extends DurableObject<Env> {
@@ -296,36 +295,34 @@ export class WebSocketServer extends DurableObject<Env> {
 		const url = new URL(request.url);
 		const orderId = url.searchParams.get("orderId") ?? "anonymous";
 
-    	const webSocketPair = new WebSocketPair();
-    	const [client, server] = Object.values(webSocketPair);
+		const webSocketPair = new WebSocketPair();
+		const [client, server] = Object.values(webSocketPair);
 
-    	this.ctx.acceptWebSocket(server);
+		this.ctx.acceptWebSocket(server);
 
-    	// Persist per-connection state that survives hibernation
-    	const state: ConnectionState = {
-    		orderId,
-    		joinedAt: Date.now(),
-    	};
-    	server.serializeAttachment(state);
+		// Persist per-connection state that survives hibernation
+		const state: ConnectionState = {
+			orderId,
+			joinedAt: Date.now(),
+		};
+		server.serializeAttachment(state);
 
-    	return new Response(null, { status: 101, webSocket: client });
-    }
+		return new Response(null, { status: 101, webSocket: client });
+	}
 
-    async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
-    	// Restore state after potential hibernation
-    	const state = ws.deserializeAttachment() as ConnectionState;
-    	ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
-    }
+	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+		// Restore state after potential hibernation
+		const state = ws.deserializeAttachment() as ConnectionState;
+		ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
+	}
 
-    async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-    	const state = ws.deserializeAttachment() as ConnectionState;
-    	console.log(`${state.orderId} disconnected`);
-    	ws.close(code, reason);
-    }
-
+	async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+		const state = ws.deserializeAttachment() as ConnectionState;
+		console.log(`${state.orderId} disconnected`);
+		ws.close(code, reason);
+	}
 }
-
-````
+```
 </TypeScriptExample>
 
 ## WebSocket Standard API
@@ -631,8 +628,7 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 		}
 	]
 }
-````
-
+```
 </WranglerConfig>
 
 A full example is available in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
@@ -649,3 +645,5 @@ Code updates disconnect all WebSockets. Deploying a new version restarts every D
 - [Cloudflare's WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template)
 - [Durable Object base class](/durable-objects/api/base/)
 - [Durable Object State interface](/durable-objects/api/state/)
+```
+````
