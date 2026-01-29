@@ -323,7 +323,7 @@ Delete workflow tracking records matching criteria.
 <TypeScriptExample>
 
 ```ts
-// Delete completed workflows older than 7 days
+// Delete completed workflow instances older than 7 days
 this.deleteWorkflows({
 	status: "complete",
 	createdBefore: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
