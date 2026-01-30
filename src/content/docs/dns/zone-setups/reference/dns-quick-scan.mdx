@@ -4,7 +4,7 @@ title: Records quick scan
 
 ---
 
-import { Example } from "~/components"
+import { Details, Example } from "~/components"
 
 To help all customers get started when a new zone is created, Cloudflare offers a DNS records quick scan.
 
@@ -14,13 +14,44 @@ On the dashboard, the quick scan is only available as you are onboaring a new do
 
 ## How the quick scan works
 
-The scan is built upon a list of recurring patterns of DNS records `type` and `name`, that Cloudflare identifies as being used in existing active zones.
+The scan is built upon a list of recurring patterns of DNS records **Type** and **Name**, that Cloudflare identifies as being used in existing active zones.
 
-Since DNS record names are automatically appended with the domain that the records are set for, two completely different domains - `domain.com` and `test.xyz`, for example - would probably have a few matches if the lists of DNS records on their zones were compared side by side and the criterion was `type`/`name` combination.
+Since DNS record names are automatically appended with the domain that the records are set for, two completely different domains - `example.com` and `domain.test`, for example - would probably have a few matches if the lists of DNS records on their zones were compared side by side and the criterion was **Type**/**Name** combination.
 
-The DNS records `content` would be different for each zone but, based on record `type` and `name`, Cloudflare can identify recurring patterns and expect to find the same pairs when a new domain is added.
+<Details header="Example">
 
-The following section provides some examples of DNS records `type`/`name` combinations that the scan usually finds.
+<Example>
+DNS management for **example.com**:
+
+| Type | Name     | Content                 |
+| ---- | -------- | ----------------------- |
+| **A**   | **@**     | `192.0.2.0`  |
+| **CNAME**   | **www**     | `example.com`  |
+| **A**        | **mail**   | `192.0.2.100`      |
+| **MX**        | **@**   | `mail.example.com`      |
+| *CNAME*   | *my-store1900*     | `example-shop.saas.test`  |
+
+</Example>
+
+<Example>
+DNS management for **domain.test**:
+
+| Type | Name     | Content                 |
+| ---- | -------- | ----------------------- |
+| **A**   | **@**     | `192.0.2.8`  |
+| **CNAME**   | **www**     | `domain.test`  |
+| *CNAME*   | *specific-internal-name*     | `services.test.dev`  |
+| **A**        | **mail**   | `192.0.2.20`      |
+| **MX**        | **@**   | `mail.domain.test`      |
+
+
+</Example>
+
+</Details>
+
+The DNS records **Content** would be different for each zone but, based on record **Type** and **Name**, Cloudflare can identify recurring patterns and expect to find the same pairs when a new domain is added.
+
+The [use cases section](#use-case-examples) below provides some examples of DNS records **Type**/**Name** combinations that the scan usually finds.
 
 ## Use case examples
 
@@ -34,11 +65,11 @@ The following section provides some examples of DNS records `type`/`name` combin
 
 </Example>
 
-The value `@` indicates the domain apex - in the example above, `domain.com` or `test.xyz`.
+The value `@` indicates the domain apex - in the example above, `domain.test` or `example.com`.
 
 Virtually all zones on a primary setup (full) are expected to have at least one [address record](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) pointing to the IP address where the website or application is hosted.
 
-### `www` records
+### www records
 
 <Example>
 
@@ -56,7 +87,7 @@ Virtually all zones on a primary setup (full) are expected to have at least one 
 
 </Example>
 
-Since it is still common that visitors type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a  [`CNAME`](/dns/manage-dns-records/reference/dns-record-types/#cname) or an [`A`](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) record named `www`. This allows queries for `www.<DOMAIN>` to return the expected result.
+Since it is still common that visitors type `www.<DOMAIN>` in their browsers expecting to reach the domain, zones will usually have a  [CNAME](/dns/manage-dns-records/reference/dns-record-types/#cname) or an [A](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) record named `www`. This allows queries for `www.<DOMAIN>` to return the expected result.
 
 ### Email records
 
