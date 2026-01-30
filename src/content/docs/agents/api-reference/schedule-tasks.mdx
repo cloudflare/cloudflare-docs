@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig, PackageManagers } from "~/components";
 
 An Agent can schedule tasks to be run in the future by calling `this.schedule(when, callback, data)`, where `when` can be a delay, a `Date`, or a cron string; `callback` the function name to call, and `data` is an object of data to pass to the function.
 
@@ -16,6 +16,51 @@ Scheduled tasks can do anything a request or message from a user can: make reque
 You can safely call `this.destroy()` within a scheduled task callback. The Agent will properly handle cleanup and eviction, skipping any remaining database updates after the destroy flag is set.
 
 :::
+
+## Parsing natural language scheduling requests
+
+The `scheduleSchema` provides a structured way to parse natural language scheduling requests into a format that can be used with `this.schedule()`. This is useful when building agents that accept user input like "remind me tomorrow at 3pm" or "schedule a meeting next Monday".
+
+The schema uses the [AI SDK](https://sdk.vercel.ai/docs/introduction) to extract scheduling information from natural language text.
+
+To use `scheduleSchema`, install the required packages:
+
+<PackageManagers pkg="ai @ai-sdk/openai" />
+
+### scheduleSchema
+
+<TypeScriptExample>
+
+```ts
+import { generateObject } from "ai";
+import { scheduleSchema, getSchedulePrompt } from "agents/schedule";
+
+const result = await generateObject({
+  model,
+  prompt: `${getSchedulePrompt({ date: new Date() })} Input: "${userInput}"`,
+  schema: scheduleSchema,
+  // Required for OpenAI to avoid strict JSON schema validation errors
+  providerOptions: {
+    openai: { strictJsonSchema: false }
+  }
+});
+
+// result.object contains the parsed schedule information:
+// - description: string - A description of the task
+// - when: object - The parsed scheduling information
+```
+
+</TypeScriptExample>
+
+:::caution[OpenAI provider options required]
+
+When using `scheduleSchema` with OpenAI models via the AI SDK, you must pass `providerOptions: { openai: { strictJsonSchema: false } }` to `generateObject`. This is required because the schema uses optional fields which are not compatible with OpenAI's strict structured outputs mode.
+
+The `@ai-sdk/openai` package now defaults `strictJsonSchema` to `true`, which requires all schema properties to be in the `required` array.
+
+:::
+
+The `getSchedulePrompt()` helper function provides the system prompt that instructs the AI model how to parse scheduling requests. Pass the current date so the model can correctly interpret relative time expressions like "tomorrow" or "next week".
 
 ### Scheduling tasks
 
