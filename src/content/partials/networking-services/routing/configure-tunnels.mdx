@@ -137,19 +137,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 { props.magicWord !== "Magic Transit" && (<Markdown text={`16. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "17" : "16"}. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.`} inline={false} />
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering**, if you want to use BGP peering with this tunnel.
-
-	- [Cloudflare Account ASN](/magic-wan/configuration/manually/how-to/configure-routes/#choose-an-asn-for-bgp-peering) is set to 13335. You may change this to a private value if you want.
-	- In **Customer device ASN**, enter the ASN for your network.
-		:::note
-		Multiple tunnels or interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's allowas-in feature) to exchange routes between networks.
-		:::
-	- In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
-	- (Optional) In **Additional Advertised prefix list**, input any additional prefixes you want to advertise alongside your existing routes. Leave this blank if you do not want to advertise extra routes. Typical prefixes to configure here include:
-		- A route to <code>0.0.0.0/0</code>, the default route — to attract all Internet-bound traffic if using Magic WAN with Gateway.
-		- A route to <code>100.96.0.0/12</code>, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/#add-ip-route-to-router).
-		- A route to <code>100.64.0.0/12</code>, the portion of CGNAT space [used by default for Cloudflare Source IPs](/magic-wan/configuration/manually/how-to/configure-cloudflare-source-ips/).
-`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering**, if you want to use BGP peering with this tunnel. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
 
 </Details>
 
@@ -189,6 +177,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 { props.magicWord !== "Magic Transit" && (<Markdown text={`17. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. To add multiple tunnels, select **Add IPsec tunnel** for each new tunnel.`} inline={false} />
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "20" : "19"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering**, if you want to use BGP peering with this tunnel. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
 
 </Details>
 
