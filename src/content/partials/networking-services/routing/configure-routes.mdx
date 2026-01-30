@@ -537,6 +537,8 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 			`}
 			inline={false}
 		/>
+
+		<DashButton url="/?to=/:account/interconnects" />
 	</>
 )
 }
@@ -589,6 +591,8 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 			`}
 			inline={false}
 		/>
+
+		<DashButton url="/?to=/:account/magic-networks/connections" />
 	</>
 )
 }
@@ -597,7 +601,7 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 	file="routing/bgp-config-steps"
 	product="networking-services"
 	params={{
-		locateText: "Locate the tunnel you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.",
+		locateText: "In **IPsec/GRE tunnels**, locate the tunnel you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.",
 		productGatewayOrEgress: props.productGatewayOrEgress,
 		magicWord: props.magicWord
 	}}
