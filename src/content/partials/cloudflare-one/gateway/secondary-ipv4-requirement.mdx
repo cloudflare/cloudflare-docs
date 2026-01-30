@@ -1,0 +1,5 @@
+---
+{}
+---
+
+When creating egress policies with dedicated egress IPs, you must set a secondary IPv4 address to ensure traffic resilience. You can set the secondary IPv4 address to `0.0.0.0` or a specific Cloudflare location different from your primary IPv4 address. If you set the secondary IPv4 address to `0.0.0.0`, Gateway will route traffic to the location closest to the user. If the physical location of your primary IPv4 address is not available, Gateway will route traffic to either the default Cloudflare egress range or the secondary location specified.

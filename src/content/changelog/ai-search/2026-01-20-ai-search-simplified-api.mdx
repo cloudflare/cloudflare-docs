@@ -1,0 +1,31 @@
+---
+title: Create AI Search instances programmatically via REST API
+description: Create AI Search instances programmatically using the REST API.
+products:
+  - ai-search
+date: 2026-01-20
+---
+
+You can now create [AI Search](/ai-search/) instances programmatically using the [API](/ai-search/get-started/api/). For example, use the API to create instances for each customer in a multi-tenant application or manage AI Search alongside your other infrastructure.
+
+If you have created an AI Search instance via the [dashboard](/ai-search/get-started/dashboard/) before, you already have a [service API token](/ai-search/configuration/service-api-token/) registered and can start creating instances programmatically right away. If not, follow the [API guide](/ai-search/get-started/api/) to set up your first instance.
+
+For example, you can now create separate search instances for each language on your website:
+
+```bash
+for lang in en fr es de; do
+  curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances" \
+    -H "Authorization: Bearer $API_TOKEN" \
+    -H "Content-Type: application/json" \
+    --data '{
+      "id": "docs-'"$lang"'",
+      "type": "web-crawler",
+      "source": "example.com",
+      "source_params": {
+        "path_include": ["**/'"$lang"'/**"]
+      }
+    }'
+done
+```
+
+Refer to the [REST API reference](/api/resources/ai_search/subresources/instances/methods/create/) for additional configuration options.

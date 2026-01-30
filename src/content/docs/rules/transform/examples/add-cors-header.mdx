@@ -1,0 +1,37 @@
+---
+pcx_content_type: example
+summary: Create a response header transform rule to add an `Access-Control-Allow-Origin` CORS HTTP header to the response with a static wildcard value.
+products: [transform-rules]
+tags:
+  - Response modification
+title: Add a wildcard CORS response header
+description:
+  Create a CORS response header transform rule to add an `Access-Control-Allow-Origin` HTTP header to the response with wildcard as static value.
+  (`cookiename=value`).
+---
+
+import { Example } from "~/components";
+
+The following response header transform rule adds a header named `Access-Control-Allow-Origin` with a static wildcard value (`*`) to the HTTP response:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+(http.host eq "<YOUR_HOSTNAME>")
+```
+
+Selected operation under **Modify response header**: _Set static_
+
+**Header name**: `Access-Control-Allow-Origin`
+
+**Value**: `*`
+
+</Example>
+
+You can also use an expression similar to the following to apply the CORS header to several specific hostnames:
+
+```txt
+(http.host in {"<YOUR_HOSTNAME_1>" "<YOUR_HOSTNAME_2>"})
+```

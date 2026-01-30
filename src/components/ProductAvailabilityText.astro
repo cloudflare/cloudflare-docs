@@ -1,0 +1,20 @@
+---
+import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	product: CollectionEntry<"product-availability">["id"];
+}
+
+const { product } = Astro.props;
+
+const entry = await getEntry("product-availability", product);
+
+if (!entry) {
+	throw new Error(
+		`Product availability entry not found for product="${product}" in ${Astro.url.pathname}`,
+	);
+}
+---
+
+{entry.data}

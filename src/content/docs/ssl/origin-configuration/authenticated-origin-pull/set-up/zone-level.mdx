@@ -58,7 +58,7 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 <Render file="aop-enforce-validation" product="ssl" />
 
-## 5. (Optional) Set up alerts for zone-level Authenticated Origin Pulls certificates
+## 5. (Optional) Set up expiration alerts
 
 You can configure alerts to receive notifications before your AOP certificates expire.
 
@@ -72,7 +72,3 @@ You can configure alerts to receive notifications before your AOP certificates e
 ## Further options
 
 Refer to [Manage certificates](/ssl/origin-configuration/authenticated-origin-pull/set-up/manage-certificates/) for further options.
-
-:::note
-If you have more than one custom certificate, Cloudflare serves the certificate you uploaded first. Follow [these steps](/ssl/origin-configuration/authenticated-origin-pull/set-up/manage-certificates/#zone-level) if you need to replace the certificate.
-:::

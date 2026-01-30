@@ -558,7 +558,7 @@ If you set up the Service binding via the Cloudflare dashboard, you will need to
 
 For example, to develop locally, if your Worker is called `my-worker`, run `npx wrangler dev` in the `my-worker` directory. In a different terminal, also run `npx wrangler pages dev <OUTPUT_DIR> --service MY_SERVICE=my-worker` in your Pages project directory. Interact with this Service binding by using `context.env` (for example, `context.env.MY_SERVICE`).
 
-Wrangler also supports running your Pages project and bound Workers in the same dev session with one command. To try it out, pass multiple -c flags to Wrangler, like this: `wrangler pages dev -c wrangler.toml -c ../other-worker/wrangler.toml`. The first argument must point to your Pages configuration file, and the subsequent configurations will be accessible via a Service binding from your Pages project.
+Wrangler also supports running your Pages project and bound Workers in the same dev session with one command. To try it out, pass multiple -c flags to Wrangler, like this: `wrangler pages dev -c wrangler.jsonc -c ../other-worker/wrangler.jsonc`. The first argument must point to your Pages configuration file, and the subsequent configurations will be accessible via a Service binding from your Pages project.
 
 :::caution
 
@@ -633,9 +633,13 @@ PostgreSQL drivers like [`Postgres.js`](https://github.com/porsager/postgres) de
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-compatibility_flags = [ "nodejs_compat" ]
-compatibility_date = "2024-09-23"
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"compatibility_date": "2024-09-23"
+}
 ```
 
 </WranglerConfig>

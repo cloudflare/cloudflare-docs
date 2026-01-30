@@ -97,3 +97,11 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
 />
 
 </TabItem> </Tabs>
+
+### Troubleshooting
+
+When switching organizations or connecting for the first time, keep the following in mind:
+
+- If this is the first time connecting to an organization, web browsers like Chrome may require a full restart to correctly recognize and trust the organization's root certificate. Cloudflare recommends closing all browser windows after the initial connection. All subsequent switches should not require a restart.
+- On macOS, ensure the specific CA certificate for the new organization is properly trusted by verifying its status in Keychain Access.
+- Switching configurations may sometimes momentarily disconnect the WARP client. If this occurs, simply re-enable WARP to restore the connection.

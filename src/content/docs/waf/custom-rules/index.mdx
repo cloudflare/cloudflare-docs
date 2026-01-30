@@ -11,11 +11,20 @@ import { Render, FeatureTable } from "~/components";
 
 Custom rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to the [actions reference](/ruleset-engine/rules-language/actions/).
 
-To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/account/custom-rulesets/), which require an Enterprise plan with a paid add-on.
+To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/account/custom-rulesets/). At the zone level, all customers can create and deploy custom rulesets. Custom rulesets at the account level require an Enterprise plan with a paid add-on.
+
+:::note
+Currently, the Cloudflare dashboard does not support working with custom rulesets at the zone level. You will need to [use the Cloudflare API](/waf/custom-rules/create-api/) to configure or deploy these rulesets.
+:::
 
 ## Availability
 
 <FeatureTable id="security.waf_c_custom_rules" />
+
+The maximum number of custom rules applies to an entire [phase](/ruleset-engine/about/phases/). Each scope (zone or account) has a separate maximum number of rules, counted in the following way:
+
+- Zone: All custom rules plus all the rules across custom rulesets defined at the zone level.
+- Account: All the rules across custom rulesets defined at the account level.
 
 ---
 

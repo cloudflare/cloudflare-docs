@@ -40,7 +40,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Google_Gemma_3_12B_It_Prompt",
+                    "title": "Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -115,7 +115,7 @@
                     ]
                 },
                 {
-                    "title": "Google_Gemma_3_12B_It_Messages",
+                    "title": "Messages",
                     "properties": {
                         "messages": {
                             "type": "array",

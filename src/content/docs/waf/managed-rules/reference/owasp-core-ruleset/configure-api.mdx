@@ -19,7 +19,7 @@ You can also disable specific rules in the managed ruleset using [rule overrides
 
 ## Set the paranoia level
 
-To enable all the rules up to a specific [paranoia level](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level), create [tag overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/#working-with-overrides) that disable all the rules associated with higher paranoia levels.
+To enable all the rules up to a specific [paranoia level](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level), create [tag overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/#work-with-overrides) that disable all the rules associated with higher paranoia levels.
 
 The tags associated with the different paranoia levels are the following:
 
@@ -148,7 +148,7 @@ For more information on creating overrides, refer to [Override a managed ruleset
 
 ## Configure the score threshold and the action
 
-To define the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold), or to specify the [action](/ruleset-engine/rules-language/actions/) to perform when the threat score is greater than the threshold, create a [rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/#working-with-overrides) for the last rule in the managed ruleset that:
+To define the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold), or to specify the [action](/ruleset-engine/rules-language/actions/) to perform when the threat score is greater than the threshold, create a [rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/#work-with-overrides) for the last rule in the managed ruleset that:
 
 - Specifies the action to take in the `action` property. The available actions are: `block` (default), `managed_challenge`, `js_challenge`, `log`, and `challenge`.
 - Defines the desired anomaly score threshold (an integer value) in the `score_threshold` property.

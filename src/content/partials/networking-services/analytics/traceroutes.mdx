@@ -1,13 +1,12 @@
 ---
 params:
   - productName
-  - dashButtonPath
   - magicWord
 ---
 
 import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 
-{props.productName} customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare's network to their own network.
+You can run traceroutes to analyze the hop-by-hop Internet path and latency between Cloudflare's network and your network.
 
 { props.magicWord === "WAN Tunnels" && (
   <>
@@ -16,8 +15,8 @@ import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 To run a traceroute from a specific Cloudflare data center to your network:
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
-2. Go to **Network visibility** > **WAN connector health**.
-3. Select the tunnel you want to run the traceroute on.
+2. Go to **Network health** > **WAN connector health**.
+3. Find the tunnel for the traceroute.
 4. Select the three dots > **Traceroute details**.
       `}
       inline={false}
@@ -27,58 +26,33 @@ To run a traceroute from a specific Cloudflare data center to your network:
 
 { props.magicWord !== "WAN Tunnels" && (
   <>
-    <Aside type="note">
-      To change between the new dashboard experience and the old one, find the banner at the top of the screen.
-    </Aside>
+    <Markdown
+      text={`
+To run a traceroute from a specific Cloudflare data center to your network:
 
-    To run a traceroute from a specific Cloudflare data center to your network:
+1. Go to the **Network health** page.
+      `}
+      inline={false}
+    />
 
-    <Tabs syncKey="dashNewNav">
-      <TabItem label="Old dashboard">
-        <Markdown
-          text={`
-1. In the Cloudflare dashboard, go to ${props.productName}'s **Network health** page.
-          `}
-          inline={false}
-        />
+<DashButton url="/?to=/:account/networking-insights/health" />
 
-        <DashButton url={props.dashButtonPath} />
+	<Markdown
+		text={`
+2. Select **Connector health**.
+3. Select the tunnel for the traceroute.
+4. Select the three dots > **Traceroute details**.
+      `}
+		inline={false}
+	/>
 
-        <Markdown
-          text={`
-2. Expand a Magic Tunnel, and find the Cloudflare data center where the traceroute will be run from.
-3. Select **Traceroute for details**.
-          `}
-          inline={false}
-        />
-      </TabItem>
-
-      <TabItem label="New dashboard" icon="rocket">
-        <Markdown
-          text={`
-1. In the Cloudflare dashboard, go to ${props.productName}'s **Network health** page.
-          `}
-          inline={false}
-        />
-
-        <DashButton url={props.dashButtonPath} />
-
-        <Markdown
-          text={`
-2. Select the tunnel you want to run the traceroute on.
-3. Select the three dots > **Traceroute details**.
-          `}
-          inline={false}
-        />
-      </TabItem>
-    </Tabs>
   </>
 )}
 
 You can access detailed data from the traceroute, including:
 
-- TTL Host
-- AS Number
+- Time to live (TTL) and host
+- Autonomous system (AS) number
 - [Packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) sent in the traceroute
 - Average, minimum, and maximum latency
 - Standard deviation of latency

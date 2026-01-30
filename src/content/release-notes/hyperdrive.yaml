@@ -3,6 +3,14 @@ link: "/hyperdrive/platform/release-notes/"
 productName: Hyperdrive
 productLink: "/hyperdrive/"
 entries:
+  - publish_date: "2025-12-04"
+    title: Connect to remote databases during local development with wrangler dev
+    description: |-
+      The `localConnectionString` configuration field and `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environment variable now support connecting to remote databases over TLS during local development with `wrangler dev`. 
+
+      When using a remote database connection string, your Worker code runs locally on your machine while connecting directly to the remote database. Hyperdrive caching does not take effect. 
+
+      Refer to [Local development](/hyperdrive/configuration/local-development/) for instructions on how to configure remote database connections for local development.
   - publish_date: "2025-07-03"
     title: Hyperdrive now supports configurable connection counts
     description: |-

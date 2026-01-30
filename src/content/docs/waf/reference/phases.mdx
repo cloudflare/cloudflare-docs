@@ -17,18 +17,7 @@ The Web Application Firewall provides the following [phases](/ruleset-engine/abo
 
 These phases exist both at the account level and at the zone level. Considering the available phases and the two different levels, rules will be evaluated in the following order:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-| Security feature                                               | Scope   | Phase                           | Ruleset kind                          | Location in the dashboard                                                                     |
-| -------------------------------------------------------------- | ------- | ------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [Custom rulesets](/waf/account/custom-rulesets/)<br/>          | Account | `http_request_firewall_custom`  | `custom` (create)<br/>`root` (deploy) | <DashButton url="/?to=/:account/application-security/waf" /> > **Custom rulesets** tab        |
-| [Custom rules](/waf/custom-rules/)                             | Zone    | `http_request_firewall_custom`  | `zone`                                | Your zone > **Security** > **WAF** > **Custom rules** tab                                     |
-| [Rate limiting rulesets](/waf/account/rate-limiting-rulesets/) | Account | `http_ratelimit`                | `root`                                | <DashButton url="/?to=/:account/application-security/waf" /> > **Rate limiting rulesets** tab |
-| [Rate limiting rules](/waf/rate-limiting-rules/)               | Zone    | `http_ratelimit`                | `zone`                                | Your zone > **Security** > **WAF** > **Rate limiting rules** tab                              |
-| [Managed rulesets](/waf/account/managed-rulesets/)             | Account | `http_request_firewall_managed` | `root`                                | <DashButton url="/?to=/:account/application-security/waf" /> > **Managed rulesets** tab       |
-| [Managed rules](/waf/managed-rules/)                           | Zone    | `http_request_firewall_managed` | `zone`                                | Your zone > **Security** > **WAF** > **Managed rules** tab                                    |
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 | Security feature                                               | Scope   | Phase                           | Ruleset kind                          | Location in the dashboard                                                                     |
 | -------------------------------------------------------------- | ------- | ------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -38,6 +27,17 @@ These phases exist both at the account level and at the zone level. Considering 
 | [Rate limiting rules](/waf/rate-limiting-rules/)               | Zone    | `http_ratelimit`                | `zone`                                | <DashButton url="/?to=/:account/:zone/security/security-rules" />                             |
 | [Managed rulesets](/waf/account/managed-rulesets/)             | Account | `http_request_firewall_managed` | `root`                                | <DashButton url="/?to=/:account/application-security/waf" /> > **Managed rulesets** tab       |
 | [Managed rules](/waf/managed-rules/)                           | Zone    | `http_request_firewall_managed` | `zone`                                | <DashButton url="/?to=/:account/:zone/security/security-rules" />                             |
+
+</TabItem> <TabItem label="Old dashboard">
+
+| Security feature                                               | Scope   | Phase                           | Ruleset kind                          | Location in the dashboard                                                                     |
+| -------------------------------------------------------------- | ------- | ------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [Custom rulesets](/waf/account/custom-rulesets/)<br/>          | Account | `http_request_firewall_custom`  | `custom` (create)<br/>`root` (deploy) | <DashButton url="/?to=/:account/application-security/waf" /> > **Custom rulesets** tab        |
+| [Custom rules](/waf/custom-rules/)                             | Zone    | `http_request_firewall_custom`  | `zone`                                | Your zone > **Security** > **WAF** > **Custom rules** tab                                     |
+| [Rate limiting rulesets](/waf/account/rate-limiting-rulesets/) | Account | `http_ratelimit`                | `root`                                | <DashButton url="/?to=/:account/application-security/waf" /> > **Rate limiting rulesets** tab |
+| [Rate limiting rules](/waf/rate-limiting-rules/)               | Zone    | `http_ratelimit`                | `zone`                                | Your zone > **Security** > **WAF** > **Rate limiting rules** tab                              |
+| [Managed rulesets](/waf/account/managed-rulesets/)             | Account | `http_request_firewall_managed` | `root`                                | <DashButton url="/?to=/:account/application-security/waf" /> > **Managed rulesets** tab       |
+| [Managed rules](/waf/managed-rules/)                           | Zone    | `http_request_firewall_managed` | `zone`                                | Your zone > **Security** > **WAF** > **Managed rules** tab                                    |
 
 </TabItem> </Tabs>
 

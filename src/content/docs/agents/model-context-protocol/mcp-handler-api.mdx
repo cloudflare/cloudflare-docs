@@ -9,7 +9,7 @@ sidebar:
 
 import { Render, TypeScriptExample } from "~/components";
 
-The `createMcpHandler` function creates a fetch handler to serve your MCP server. You can use it as a lightweight alternative to the [`McpAgent`](/agents/model-context-protocol/mcp-agent-api) class.
+The `createMcpHandler` function creates a fetch handler to serve your MCP server. You can use it as an alternative to the [`McpAgent`](/agents/model-context-protocol/mcp-agent-api) class when you don't need the deprecated SSE transport.
 
 It uses an implementation of the MCP Transport interface, `WorkerTransport`, built on top of web standards, which conforms to the [streamable-http](https://modelcontextprotocol.io/specification/draft/basic/transports/#streamable-http) transport specification.
 
@@ -20,12 +20,12 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 function createMcpHandler(
 	server: McpServer,
 	options?: CreateMcpHandlerOptions,
-): (request: Request, env: unknown, ctx: ExecutionContext) => Promise<Response>;
+): (request: Request, env: Env, ctx: ExecutionContext) => Promise<Response>;
 ```
 
 #### Parameters
 
-- **server** — An instance of `McpServer` from the `@modelcontextprotocol/sdk` package
+- **server** — An instance of [`McpServer`](https://modelcontextprotocol.io/docs/develop/build-server#node) from the `@modelcontextprotocol/sdk` package
 - **options** — Optional configuration object (see [`CreateMcpHandlerOptions`](#createmcphandleroptions))
 
 #### Returns
@@ -88,7 +88,7 @@ const handler = createMcpHandler(server, {
 
 An authentication context object that will be available to MCP tools via [`getMcpAuthContext()`](/agents/model-context-protocol/mcp-handler-api#authentication-context).
 
-When using the [`OAuthProvider`](/agents/model-context-protocol/authorization/) from `@cloudflare/workers-oauth-provider`, the auth context is automatically populated with information from the OAuth flow. You typically don't need to set this manually.
+When using the [`OAuthProvider`](/agents/model-context-protocol/authorization/) from `@cloudflare/workers-oauth-provider`, the authentication context is automatically populated with information from the OAuth flow. You typically don't need to set this manually.
 
 #### transport
 
@@ -100,7 +100,7 @@ A custom `WorkerTransport` instance. If not provided, a new transport is created
 import { createMcpHandler, WorkerTransport } from "agents/mcp";
 
 const transport = new WorkerTransport({
-	sessionIdGenerator: () => "my-session-id",
+	sessionIdGenerator: () => `session-${crypto.randomUUID()}`,
 	storage: {
 		get: () => myStorage.get("transport-state"),
 		set: (state) => myStorage.put("transport-state", state),
@@ -411,7 +411,7 @@ const transport = new WorkerTransport({
 
 ## Authentication Context
 
-When using [OAuth authentication](/agents/model-context-protocol/authorization/) with the `createMcpHandler`, user information is made available to your MCP tools through `getMcpAuthContext()`. Under the hood this uses `AsyncLocalStorage` to pass the request to the tool handler, keeping the authentication context available.
+When using [OAuth authentication](/agents/model-context-protocol/authorization/) with `createMcpHandler`, user information is made available to your MCP tools through `getMcpAuthContext()`. Under the hood this uses `AsyncLocalStorage` to pass the request to the tool handler, keeping the authentication context available.
 
 ```ts
 interface McpAuthContext {
@@ -421,7 +421,7 @@ interface McpAuthContext {
 
 ### getMcpAuthContext
 
-Retrieve the current authentication context within an MCP tool handler. This returns user information that was populated by the OAuth provider. Note that if using `McpAgent` this information is accessable directly on `this.props` instead.
+Retrieve the current authentication context within an MCP tool handler. This returns user information that was populated by the OAuth provider. Note that if using `McpAgent`, this information is accessable directly on `this.props` instead.
 
 ```ts
 import { getMcpAuthContext } from "agents/mcp";

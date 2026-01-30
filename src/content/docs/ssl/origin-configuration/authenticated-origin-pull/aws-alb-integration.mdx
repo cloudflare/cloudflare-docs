@@ -12,8 +12,6 @@ import { Render, APIRequest } from "~/components";
 
 This guide will walk you through how to set up [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls to securely connect to an AWS Application Load Balancer using [mutual TLS verify](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html).
 
-You can also find instructions on how to [rollback](#rollback-the-cloudflare-configuration) this setup in Cloudflare.
-
 ## Before you begin
 
 - You should already have your AWS account and [EC2](https://docs.aws.amazon.com/ec2/?icmpid=docs_homepage_featuredsvcs) configured.
@@ -104,34 +102,6 @@ Make sure your [encryption mode](/ssl/origin-configuration/ssl-modes/) is set to
 
 ---
 
-## Rollback the Cloudflare configuration
+## Roll back the Cloudflare configuration
 
-1. Use a [`PUT` request](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) to disable Authenticated Origin Pulls on the hostname.
-
-<APIRequest
-	path="/zones/{zone_id}/origin_tls_client_auth/hostnames"
-	method="PUT"
-	json={{
-		config: [
-			{
-				enabled: false,
-				cert_id: "<CERT_ID>",
-				hostname: "<YOUR_HOSTNAME>",
-			},
-		],
-	}}
-/>
-
-2. (Optional) Use a [`GET` request](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
-
-<APIRequest
-	path="/zones/{zone_id}/origin_tls_client_auth/hostnames/certificates"
-	method="GET"
-/>
-
-3. Use the [Delete hostname client certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/delete/) endpoint to remove the certificate you had uploaded.
-
-<APIRequest
-	path="/zones/{zone_id}/origin_tls_client_auth/hostnames/certificates/{certificate_id}"
-	method="DELETE"
-/>
+<Render file="aop-rollback-hostname-setup" product="ssl" />

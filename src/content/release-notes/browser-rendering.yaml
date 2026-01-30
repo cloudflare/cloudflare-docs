@@ -3,6 +3,29 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-01-21"
+    title: "@cloudflare/puppeteer v1.0.5 released"
+    description: |-
+      * Released version 1.0.5 of [`@cloudflare/puppeteer`](https://www.npmjs.com/package/@cloudflare/puppeteer/v/1.0.5), which includes a performance optimization for base64 decoding.
+  - publish_date: "2026-01-08"
+    title: "@cloudflare/playwright v1.1.0 released"
+    description: |-
+      * Released version 1.1.0 of [`@cloudflare/playwright`](https://github.com/cloudflare/playwright), now upgraded to [Playwright v1.57.0](https://playwright.dev/docs/release-notes#version-157).
+  - publish_date: "2026-01-07"
+    title: Bug fixes for JSON endpoint, waitForSelector timeout, and WebSocket rendering
+    description: |-
+      * Updated the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) fallback model and improved error handling for when plan limits of Workers Free plan users are reached.
+      * REST API requests using `waitForSelector` will now correctly fail if the specified selector is not found within the time limit.
+      * Fixed an issue where pages using WebSockets were not rendering correctly.
+  - publish_date: "2025-12-04"
+    title: Added guidance on allowlisting Browser Rendering in Bot Management
+    description: |-
+      * Added [FAQ guidance](/browser-rendering/faq/#how-do-i-allowlist-browser-rendering) on how to create a WAF skip rule to allowlist Browser Rendering requests when using Bot Management on your zone.
+  - publish_date: "2025-12-03"
+    title: Improved AI JSON response parsing and debugging
+    description: |-
+      * Added `rawAiResponse` field to [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) error responses, allowing you to inspect the unparsed AI output when JSON parsing fails for easier debugging.
+      * Improved AI response handling to better distinguish between valid JSON objects, arrays, and invalid payloads, increasing type safety and reliability.
   - publish_date: "2025-10-21"
     title: Added guidance on REST API timeouts and custom fonts
     description: |-

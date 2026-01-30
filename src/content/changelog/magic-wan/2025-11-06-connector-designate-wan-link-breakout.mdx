@@ -1,0 +1,19 @@
+---
+title: Designate WAN link for breakout traffic
+description: Pin breakout traffic to specific WAN ports for deterministic egress control
+date: 2025-11-06
+products:
+  - cloudflare-one
+---
+
+Magic WAN Connector now allows you to designate a specific WAN port for breakout traffic, giving you deterministic control over the egress path for latency-sensitive applications.
+
+With this feature, you can:
+
+- Pin breakout traffic for specific applications to a preferred WAN port.
+- Ensure critical traffic (such as Zoom or Teams) always uses your fastest or most reliable connection.
+- Benefit from automatic failover to standard WAN port priority if the preferred port goes down.
+
+This is useful for organizations with multiple ISP uplinks who need predictable egress behavior for performance-sensitive traffic.
+
+For configuration details, refer to [Designate WAN ports for breakout apps](/magic-wan/configuration/connector/network-options/application-based-policies/breakout-traffic/#designate-wan-ports-for-breakout-apps).

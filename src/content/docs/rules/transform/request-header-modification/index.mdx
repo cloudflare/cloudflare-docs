@@ -66,6 +66,14 @@ You can create a request header transform rule [in the dashboard](/rules/transfo
 
 - To use [claims inside a JSON Web Token (JWT)](/api-shield/security/jwt-validation/transform-rules/), you must first set up a token validation configuration in API Shield.
 
+- Request header transform rules run in order, and later rules can overwrite changes done by previous rules.
+
+- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_late_transform` phase where request header transform rules are defined. This means that later request header transform rules will not match based on changes done by previous request header transform rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
+
+## Execution order
+
+<Render file="product-execution-order" product="rules" />
+
 <Render
 	file="troubleshoot-rules-with-trace"
 	product="rules"

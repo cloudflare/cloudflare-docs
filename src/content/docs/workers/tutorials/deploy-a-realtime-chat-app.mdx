@@ -52,10 +52,15 @@ To configure a route in your Wrangler configuration file, add the following to y
 
 <WranglerConfig>
 
-```toml
-[[routes]]
-pattern = "example.com/about"
-zone_id = "<YOUR_ZONE_ID>"
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "example.com/about",
+			"zone_id": "<YOUR_ZONE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -66,10 +71,15 @@ To configure a subdomain in your Wrangler configuration file, add the following 
 
 <WranglerConfig>
 
-```toml
-[[routes]]
-pattern = "subdomain.example.com"
-custom_domain = true
+```jsonc
+{
+	"routes": [
+		{
+			"pattern": "subdomain.example.com",
+			"custom_domain": true
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -91,19 +101,29 @@ To uninstall your chat application, modify your Wrangler file to remove the `dur
 
 <WranglerConfig>
 
-```toml
-[durable_objects]
-bindings = [
-]
-
-# Indicate that you want the ChatRoom and RateLimiter classes to be callable as Durable Objects.
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["ChatRoom", "RateLimiter"]
-
-[[migrations]]
-tag = "v2"
-deleted_classes = ["ChatRoom", "RateLimiter"]
+```jsonc
+{
+	"durable_objects": {
+		"bindings": []
+	},
+	// Indicate that you want the ChatRoom and RateLimiter classes to be callable as Durable Objects.
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"ChatRoom",
+				"RateLimiter"
+			]
+		},
+		{
+			"tag": "v2", // Should be unique for each entry
+			"deleted_classes": [
+				"ChatRoom",
+				"RateLimiter"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -110,3 +110,9 @@ Gateway does not currently support hostname-based filtering for traffic on non-`
 From a WARP device, open a browser and go to `app.bank.com`.
 
 You can search for `app.bank.com` in your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/); the **DNS response details** section should show the public resolved IPs as well as an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. You can also check your [Cloudflare Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing through the tunnel to the public resolved IPs.
+
+## Limitations
+
+### Google Chrome restricts local network access
+
+<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one"/>

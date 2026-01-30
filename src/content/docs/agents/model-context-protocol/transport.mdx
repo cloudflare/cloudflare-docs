@@ -7,116 +7,103 @@ sidebar:
   order: 5
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, TypeScriptExample } from "~/components";
 
-The Model Context Protocol (MCP) specification defines three standard [transport mechanisms](https://spec.modelcontextprotocol.io/specification/draft/basic/transports/) for communication between clients and servers:
+The Model Context Protocol (MCP) specification defines two standard [transport mechanisms](https://spec.modelcontextprotocol.io/specification/draft/basic/transports/) for communication between clients and servers:
 
-1. **stdio, communication over standard in and standard out** — designed for local MCP connections.
-2. **Server-Sent Events (SSE)** — Currently supported by most remote MCP clients, but is expected to be replaced by Streamable HTTP over time. It requires two endpoints: one for sending requests, another for receiving streamed responses.
-3. **Streamable HTTP** — New transport method [introduced](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) in March 2025. It simplifies the communication by using a single HTTP endpoint for bidirectional messaging. It is currently gaining adoption among remote MCP clients, but it is expected to become the standard transport in the future.
+1. **stdio** — Communication over standard in and standard out, designed for local MCP connections.
+2. **Streamable HTTP** — The standard transport method for remote MCP connections, [introduced](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) in March 2025. It uses a single HTTP endpoint for bidirectional messaging.
 
-MCP servers built with the [Agents SDK](/agents) can support both remote transport methods (SSE and Streamable HTTP), with the [`McpAgent` class](https://github.com/cloudflare/agents/blob/2f82f51784f4e27292249747b5fbeeef94305552/packages/agents/src/mcp.ts) automatically handling the transport configuration.
+:::note
+Server-Sent Events (SSE) was previously used for remote MCP connections but has been deprecated in favor of Streamable HTTP. If you need SSE support for legacy clients, use the [`McpAgent`](/agents/model-context-protocol/mcp-agent-api/) class.
+:::
+
+MCP servers built with the [Agents SDK](/agents) use [`createMcpHandler`](/agents/model-context-protocol/mcp-handler-api/) to handle Streamable HTTP transport.
 
 ## Implementing remote MCP transport
 
-If you're building a new MCP server or upgrading an existing one on Cloudflare, we recommend supporting both remote transport methods (SSE and Streamable HTTP) concurrently to ensure compatibility with all MCP clients.
+Use [`createMcpHandler`](/agents/model-context-protocol/mcp-handler-api/) to create an MCP server that handles Streamable HTTP transport. This is the recommended approach for new MCP servers.
 
 #### Get started quickly
 
-You can use the "Deploy to Cloudflare" button to create a remote MCP server that automatically supports both SSE and Streamable HTTP transport methods.
+You can use the "Deploy to Cloudflare" button to create a remote MCP server.
 
-[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless)
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/mcp-worker)
 
 #### Remote MCP server (without authentication)
 
-If you're manually configuring your MCP server, here's how to use the `McpAgent` class to handle both transport methods:
+Create an MCP server using `createMcpHandler`. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-  fetch(request: Request, env: Env, ctx: ExecutionContext) {
-    const { pathname } = new URL(request.url);
-
-    if (pathname.startsWith('/sse')) {
-      return MyMcpAgent.serveSSE('/sse').fetch(request, env, ctx);
-    }
-
-    if (pathname.startsWith('/mcp')) {
-      return MyMcpAgent.serve('/mcp').fetch(request, env, ctx);
-    }
-  },
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+<TypeScriptExample>
 
 ```ts
+import { createMcpHandler } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+
+const server = new McpServer({
+	name: "My MCP Server",
+	version: "1.0.0",
+});
+
+server.registerTool(
+	"hello",
+	{
+		description: "Returns a greeting message",
+		inputSchema: { name: z.string().optional() },
+	},
+	async ({ name }) => {
+		return {
+			content: [{ text: `Hello, ${name ?? "World"}!`, type: "text" }],
+		};
+	},
+);
+
 export default {
-	fetch(
-		request: Request,
-		env: Env,
-		ctx: ExecutionContext,
-	): Response | Promise<Response> {
-		const { pathname } = new URL(request.url);
-
-		if (pathname.startsWith("/sse")) {
-			return MyMcpAgent.serveSSE("/sse").fetch(request, env, ctx);
-		}
-
-		if (pathname.startsWith("/mcp")) {
-			return MyMcpAgent.serve("/mcp").fetch(request, env, ctx);
-		}
-
-		// Handle case where no path matches
-		return new Response("Not found", { status: 404 });
+	fetch: (request: Request, env: Env, ctx: ExecutionContext) => {
+		return createMcpHandler(server)(request, env, ctx);
 	},
 };
 ```
 
- </TabItem>
-<TabItem label="Hono" icon="seti:typescript">
-```ts
-const app = new Hono()
-
-app.mount('/sse', MyMCP.serveSSE('/sse').fetch, { replaceRequest: false })
-app.mount('/mcp', MyMCP.serve('/mcp').fetch, { replaceRequest: false )
-
-export default app
-```
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 #### MCP server with authentication
 
-If your MCP server implements authentication & authorization using the [Workers OAuth Provider](https://github.com/cloudflare/workers-oauth-provider) Library, then you can configure it to support both transport methods using the `apiHandlers` property.
+If your MCP server implements authentication & authorization using the [Workers OAuth Provider](https://github.com/cloudflare/workers-oauth-provider) library, use `createMcpHandler` with the `apiRoute` and `apiHandler` properties. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker-authenticated).
 
-```js
+<TypeScriptExample>
+
+```ts
 export default new OAuthProvider({
-	apiHandlers: {
-		"/sse": MyMCP.serveSSE("/sse"),
-		"/mcp": MyMCP.serve("/mcp"),
+	apiRoute: "/mcp",
+	apiHandler: {
+		fetch: (request: Request, env: Env, ctx: ExecutionContext) => {
+			return createMcpHandler(server)(request, env, ctx);
+		},
 	},
 	// ... other OAuth configuration
 });
 ```
 
-### Upgrading an existing remote MCP server
+</TypeScriptExample>
 
-If you've already built a remote MCP server using the Cloudflare Agents SDK, make the following changes to support the new Streamable HTTP transport while maintaining compatibility with remote MCP clients using SSE:
+### Stateful MCP servers
 
-- Use `MyMcpAgent.serveSSE('/sse')` for the existing SSE transport. Previously, this would have been `MyMcpAgent.mount('/sse')`, which has been kept as an alias.
-- Add a new path with `MyMcpAgent.serve('/mcp')` to support the new Streamable HTTP transport.
+If your MCP server needs to maintain state across requests, use `createMcpHandler` with a `WorkerTransport` inside an [Agent](/agents/) class. This allows you to persist session state in Durable Object storage and use advanced MCP features like [elicitation](https://modelcontextprotocol.io/specification/draft/client/elicitation) and [sampling](https://modelcontextprotocol.io/specification/draft/client/sampling).
 
-If you have an MCP server with authentication/authorization using the Workers OAuth Provider, [update the configuration](/agents/model-context-protocol/transport/#mcp-server-with-authentication) to use the `apiHandlers` property, which replaces `apiRoute` and `apiHandler`.
+See [Stateful MCP Servers](/agents/model-context-protocol/mcp-handler-api#stateful-mcp-servers) for implementation details.
 
-:::note
-To use apiHandlers, update to @cloudflare/workers-oauth-provider v0.0.4 or later.
-:::
+### Migrating from McpAgent
 
-With these few changes, your MCP server will support both transport methods, making it compatible with both existing and new clients.
+If you have an existing MCP server using the `McpAgent` class:
+
+- **Not using state?** Replace your `McpAgent` class with `McpServer` from `@modelcontextprotocol/sdk` and use `createMcpHandler(server)` in a Worker `fetch` handler.
+- **Using state?** Use `createMcpHandler` with a `WorkerTransport` inside an [Agent](/agents/) class. See [Stateful MCP Servers](/agents/model-context-protocol/mcp-handler-api#stateful-mcp-servers) for details.
+- **Need SSE support?** Continue using `McpAgent` with `serveSSE()` for legacy client compatibility. See the [McpAgent API reference](/agents/model-context-protocol/mcp-agent-api/).
 
 ### Testing with MCP clients
 
-While most MCP clients have not yet adopted the new Streamable HTTP transport, you can start testing it today using [`mcp-remote`](https://www.npmjs.com/package/mcp-remote), an adapter that lets MCP clients that otherwise only support local connections work with remote MCP servers.
+You can test your MCP server using an MCP client that supports remote connections, or use [`mcp-remote`](https://www.npmjs.com/package/mcp-remote), an adapter that lets MCP clients that only support local connections work with remote MCP servers.
 
-Follow [this guide](/agents/guides/test-remote-mcp-server/) for instructions on how to connect to your remote MCP server from Claude Desktop, Cursor, Windsurf, and other local MCP clients, using the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote).
+Follow [this guide](/agents/guides/test-remote-mcp-server/) for instructions on how to connect to your remote MCP server to Claude Desktop, Cursor, Windsurf, and other MCP clients.

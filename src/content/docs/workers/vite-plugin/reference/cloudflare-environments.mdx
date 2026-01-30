@@ -14,18 +14,28 @@ Consider the following example Worker config file:
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-compatibility_date = "2025-04-03"
-main = "./src/index.ts"
-
-vars = { MY_VAR = "Top-level var" }
-
-[env.staging]
-vars = { MY_VAR = "Staging var" }
-
-[env.production]
-vars = { MY_VAR = "Production var" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"compatibility_date": "2025-04-03",
+	"main": "./src/index.ts",
+	"vars": {
+		"MY_VAR": "Top-level var"
+	},
+	"env": {
+		"staging": {
+			"vars": {
+				"MY_VAR": "Staging var"
+			}
+		},
+		"production": {
+			"vars": {
+				"MY_VAR": "Production var"
+			}
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -71,20 +81,28 @@ Consider again the previous example:
 
 <WranglerConfig>
 
-```toml
-# wrangler.toml
-
-name = "my-worker"
-compatibility_date = "2025-04-03"
-main = "./src/index.ts"
-
-vars = { MY_VAR = "Top-level var" }
-
-[env.staging]
-vars = { MY_VAR = "Staging var" }
-
-[env.production]
-vars = { MY_VAR = "Production var" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"compatibility_date": "2025-04-03",
+	"main": "./src/index.ts",
+	"vars": {
+		"MY_VAR": "Top-level var"
+	},
+	"env": {
+		"staging": {
+			"vars": {
+				"MY_VAR": "Staging var"
+			}
+		},
+		"production": {
+			"vars": {
+				"MY_VAR": "Production var"
+			}
+		}
+	}
+}
 ```
 
 </WranglerConfig>

@@ -17,17 +17,17 @@ params:
 import { CardGrid, Description, Feature, GlossaryTooltip, LinkTitleCard, Plan, RelatedProduct, Stream } from "~/components";
 
 <Description>
-	Improve security and performance for your entire corporate networking,
-	reducing cost and operation complexity.
+	Improve security and performance for your entire corporate network,
+	reducing cost and operational complexity.
 </Description>
 
 <Plan type="enterprise" />
 
-{props.productName} provides secure, performant connectivity and [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate networking, reducing cost and operation complexity. [Magic Firewall](/magic-firewall/) integrates smoothly with {props.productName}, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
+{props.productName} provides secure, performant connectivity and [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) for your entire corporate network, reducing cost and operational complexity. [Magic Firewall](/magic-firewall/) integrates smoothly with {props.productName}, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
 
-With {props.productName}, you can securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare's network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
+With {props.productName}, you can securely connect any traffic source - data centers, offices, devices, cloud resources - to Cloudflare's network and configure routing policies to direct traffic where it needs to go, all within one SaaS solution.
 
-{props.productName} supports a variety of <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> including any device that supports <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.{props.magicWord === "Magic WAN" && <> To make it easier to onboard your cloud properties, you can use <a href={props.cloudNetworkingUrl}>Magic Cloud Networking</a>, which automates the process of creating on-ramps from your cloud networks.</>}
+{props.productName} supports a variety of <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> including any device that supports <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.{props.magicWord === "Magic WAN" && <> To make it easier to onboard your cloud resources, you can use <a href={props.cloudNetworkingUrl}>Magic Cloud Networking</a>, which automates creating on-ramps from your cloud networks.</>}
 
 Refer to <a href={props.onRampsUrl}>On-ramps</a> for a full list of supported on-ramps.
 
@@ -84,7 +84,7 @@ Learn how to <a href={props.getStartedUrl}>get started</a>.
 </Feature>
 
 <Feature header="BGP peering" href={props.bgpRoutesUrl}>
-Use BGP peering between your networks and Cloudflare to automate the process of adding or removing networks and subnets, and take advantage of failure detection and session recovery features.
+Use BGP (Border Gateway Protocol) peering between your networks and Cloudflare to automate adding or removing networks and subnets, and take advantage of failure detection and session recovery features.
 </Feature>
 
 ---

@@ -47,12 +47,12 @@ The following example uses the AI SDK to generate text and stream it back to the
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents';
+import { Agent, getAgentByName, routeAgentRequest } from 'agents';
 import { streamText } from 'ai';
 import { createOpenAI, openai } from '@ai-sdk/openai';
 
 interface Env {
-	MyAgent: AgentNamespace<MyAgent>;
+	MyAgent: DurableObjectNamespace<MyAgent>;
 	OPENAI_API_KEY: string;
 }
 

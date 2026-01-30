@@ -74,9 +74,12 @@ This binding enables your application to interact with Cloudflare resources such
 
 <WranglerConfig>
 
-```toml
-name = "staff-directory"
-compatibility_date = "2023-12-01"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "staff-directory",
+	"compatibility_date": "2023-12-01"
+}
 ```
 
 </WranglerConfig>
@@ -87,11 +90,16 @@ Next, add the database binding details to your Wrangler file. This involves spec
 
 <WranglerConfig>
 
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "staff-directory"
-database_id = "f495af5f-dd71-4554-9974-97bdda7137b3"
+```jsonc
+{
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "staff-directory",
+			"database_id": "f495af5f-dd71-4554-9974-97bdda7137b3"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -381,10 +389,15 @@ Once the bucket is created, add the R2 bucket binding to your Wrangler file:
 
 <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "employee-avatars"
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "employee-avatars"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -432,18 +445,25 @@ After successful login, confirm that your Wrangler file is configured similarly 
 
 <WranglerConfig>
 
-```toml
-name = "staff-directory"
-compatibility_date = "2023-12-01"
-
-[[r2_buckets]]
-binding = "MY_BUCKET"
-bucket_name = "employee-avatars"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "staff-directory"
-database_id = "f495af5f-dd71-4554-9974-97bdda7137b3"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "staff-directory",
+	"compatibility_date": "2023-12-01",
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "employee-avatars"
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "staff-directory",
+			"database_id": "f495af5f-dd71-4554-9974-97bdda7137b3"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

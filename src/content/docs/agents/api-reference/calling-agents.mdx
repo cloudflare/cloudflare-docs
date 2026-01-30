@@ -26,13 +26,13 @@ See the usage patterns in the following example:
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents';
+import { Agent, getAgentByName, routeAgentRequest } from 'agents';
 
 interface Env {
 	// Define your Agent on the environment here
 	// Passing your Agent class as a TypeScript type parameter allows you to call
 	// methods defined on your Agent.
-	MyAgent: AgentNamespace<MyAgent>;
+	MyAgent: DurableObjectNamespace<MyAgent>;
 }
 
 export default {
@@ -76,13 +76,13 @@ For example, once you have a handle (or "stub") to an unique instance of your Ag
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName } from 'agents';
+import { Agent, getAgentByName } from 'agents';
 
 interface Env {
 	// Define your Agent on the environment here
 	// Passing your Agent class as a TypeScript type parameter allows you to call
 	// methods defined on your Agent.
-	MyAgent: AgentNamespace<MyAgent>;
+	MyAgent: DurableObjectNamespace<MyAgent>;
 }
 
 interface UserHistory {
@@ -119,13 +119,13 @@ export class MyAgent extends Agent<Env, UserHistory> {
 ```
 </TypeScriptExample>
 
-When using TypeScript, ensure you pass your Agent class as a TypeScript type parameter to the AgentNamespace type so that types are correctly inferred:
+When using TypeScript, ensure you pass your Agent class as a TypeScript type parameter to the DurableObjectNamespace type so that types are correctly inferred:
 
 ```ts
 interface Env {
 	// Passing your Agent class as a TypeScript type parameter allows you to call
 	// methods defined on your Agent.
-	MyAgent: AgentNamespace<CodeReviewAgent>;
+	MyAgent: DurableObjectNamespace<CodeReviewAgent>;
 }
 
 export class CodeReviewAgent extends Agent<Env, AgentState> {
@@ -154,10 +154,10 @@ The example below shows how to create a unique agent Agent for each `userId` in 
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents';
+import { Agent, getAgentByName, routeAgentRequest } from 'agents';
 
 interface Env {
-	MyAgent: AgentNamespace<MyAgent>;
+	MyAgent: DurableObjectNamespace<MyAgent>;
 }
 
 export default {
@@ -195,10 +195,10 @@ The `routeAgentRequest` helper documented earlier in this guide exposes two usef
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, routeAgentRequest } from 'agents';
+import { Agent, routeAgentRequest } from 'agents';
 
 interface Env {
-	MyAgent: AgentNamespace<MyAgent>;
+	MyAgent: DurableObjectNamespace<MyAgent>;
 }
 
 export default {
@@ -237,7 +237,7 @@ For example, if you are using [Hono](https://hono.dev/), you can authenticate in
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName } from 'agents';
+import { Agent, getAgentByName } from 'agents';
 import { Hono } from 'hono';
 
 const app = new Hono<{ Bindings: Env }>();

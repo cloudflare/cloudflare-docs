@@ -8,6 +8,8 @@ head:
     content: Known limitations - Browser Isolation
 ---
 
+import { Render } from "~/components";
+
 Below, you will find information regarding the current limitations for Browser Isolation.
 
 ## Website compatibility
@@ -74,8 +76,6 @@ You no longer need to isolate both the Identity Provider (IdP) and Service Provi
 
 [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) may still be preferred in some deployment models. Clientless Web Isolation implicitly isolates all traffic (both IdP and SP) and supports HTTP-POST SAML bindings.
 
-## Browser Isolation is not compatible with private IPs on non-`443` ports
+## Browser Isolation is not compatible with private apps on non-`443` ports
 
-Browser Isolation is not compatible with [self-hosted private applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) that use private IPs or hostnames on ports other than `443`. Trying to access self-hosted applications on non-`443` ports will result in a Gateway block page.
-
-To use Browser Isolation for an application on a private IP address with a non-`443` port, configure a [private network application](/cloudflare-one/access-controls/applications/non-http/legacy-private-network-app/) instead.
+<Render file="access/self-hosted-app/browser-isolation-non-443" product="cloudflare-one"/>

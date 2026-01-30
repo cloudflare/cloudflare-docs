@@ -17,15 +17,15 @@ For example, when you allow Workers to interact with Images, you can:
 - Optimize an image stored in R2 by passing the blob of bytes representing the image, instead of fetching the public URL for the image.
 - Resize an image, overlay the output over a second image as a watermark, then resize this output into a final result.
 
-Bindings can be configured in the Cloudflare dashboard for your Worker or in the `wrangler.toml` file in your project's directory.
+Bindings can be configured in the Cloudflare dashboard for your Worker or in the Wrangler configuration file in your project's directory.
 
 ## Setup
 
 The Images binding is enabled on a per-Worker basis.
 
-You can define variables in the `wrangler.toml` file of your Worker project's directory. These variables are bound to external resources at runtime, and you can then interact with them through this variable.
+You can define variables in the Wrangler configuration file of your Worker project's directory. These variables are bound to external resources at runtime, and you can then interact with them through this variable.
 
-To bind Images to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind Images to your Worker, add the following to the end of your Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -112,20 +112,18 @@ Wrangler supports two different versions of the Images API:
 - A high-fidelity version that supports all features that are available through the Images API. This is the same version that Cloudflare runs globally in production.
 - A low-fidelity offline version that supports only a subset of features, such as resizing and rotation.
 
-To test the high-fidelity version of Images, you can run `wrangler dev`:
+To test the low-fidelity version of Images, you can run `wrangler dev`:
 
 ```txt
 npx wrangler dev
 ```
 
-This creates a local-only environment that mirrors the production environment where Cloudflare runs the Images API. You can test your Worker with all available transformation features before deploying to production.
+Currently, this version supports only `width`, `height`, `rotate`, and `format`.
 
-To test the low-fidelity offline version of Images, add the `--experimental-images-local-mode` flag:
+To test the high-fidelity remote version of Images, you can use the `--remote` flag:
 
 ```txt
-npx wrangler dev --experimental-images-local-mode
+npx wrangler dev --remote
 ```
-
-Currently, this version supports only `width`, `height`, `rotate`, and `format`.
 
 When testing with the [Workers Vitest integration](/workers/testing/vitest-integration/), the low-fidelity offline version is used by default, to avoid hitting the Cloudflare API in tests.

@@ -52,12 +52,15 @@ module.exports = {
 
 <WranglerConfig>
 
-```toml
-type = "webpack"
-name = "my-worker"
-account_id = "12345678901234567890"
-workers_dev = true
-webpack_config = "webpack.config.js"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"type": "webpack",
+	"name": "my-worker",
+	"account_id": "12345678901234567890",
+	"workers_dev": true,
+	"webpack_config": "webpack.config.js"
+}
 ```
 
 </WranglerConfig>
@@ -68,20 +71,25 @@ It is possible to use different webpack configuration files within different [Wr
 
 <WranglerConfig>
 
-```toml
-type = "webpack"
-name = "my-worker-dev"
-account_id = "12345678901234567890"
-workers_dev = true
-webpack_config = "webpack.development.js"
-
-[env.staging]
-name = "my-worker-staging"
-webpack_config = "webpack.staging.js"
-
-[env.production]
-name = "my-worker-production"
-webpack_config = "webpack.production.js"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"type": "webpack",
+	"name": "my-worker-dev",
+	"account_id": "12345678901234567890",
+	"workers_dev": true,
+	"webpack_config": "webpack.development.js",
+	"env": {
+		"staging": {
+			"name": "my-worker-staging",
+			"webpack_config": "webpack.staging.js"
+		},
+		"production": {
+			"name": "my-worker-production",
+			"webpack_config": "webpack.production.js"
+		}
+	}
+}
 ```
 
 </WranglerConfig>

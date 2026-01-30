@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/203306930-Understanding
 title: Onion Routing and Tor support
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, DashButton } from "~/components";
 
 Improve the Tor user experience by enabling Onion Routing, which enables Cloudflare to serve your website’s content directly through the Tor network and without requiring exit nodes.
 
@@ -29,9 +29,11 @@ You should note that the visible domain in the user interface remains unchanged,
 
 To enable **Onion Routing** in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Network**.
-3. For **Onion Routing**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **Network** page.
+
+   <DashButton url="/?to=/:account/:zone/network" />
+
+2. For **Onion Routing**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 

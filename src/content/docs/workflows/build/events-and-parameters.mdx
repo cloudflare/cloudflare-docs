@@ -78,7 +78,11 @@ A running Workflow can wait for an event (or events) by calling `step.waitForEve
 
 Because `waitForEvent` is part of the `WorkflowStep` API, you can call it multiple times within a Workflow, and use control flow to conditionally wait for an event.
 
-Calling `waitForEvent` requires you to specify an `type`, which is used to match the corresponding `type` when sending an event to a Workflow instance.
+Calling `waitForEvent` requires you to specify an `type` (up to 100 characters [^1]), which is used to match the corresponding `type` when sending an event to a Workflow instance.
+
+:::caution
+The `waitForEvent` type parameter only supports letters, digits, `-`, and `_`. Currently including `.` is not supported and will result in a `workflow.invalid_event_type` error. 
+:::
 
 For example, to wait for billing webhook:
 
@@ -120,6 +124,29 @@ let event = await step.waitForEvent(
 
 You can specify a timeout between 1 second and up to 365 days.
 
+:::caution[Timeout behavior]
+
+When `waitForEvent` times out, the Workflow will throw an error and the instance will fail. If you want your Workflow to continue even if the event is not received, wrap the `waitForEvent` call in a try-catch block:
+
+<TypeScriptExample>
+
+```ts
+try {
+	const event = await step.waitForEvent("wait for approval", {
+		type: "approval",
+		timeout: "1 hour",
+	});
+	// Handle the received event
+} catch (e) {
+	// Timeout occurred - handle the case where no event was received
+	console.log("No approval received, proceeding with default action");
+}
+```
+
+</TypeScriptExample>
+
+:::
+
 ### Send events to running workflows
 
 Workflow instances that are waiting on events using the `waitForEvent` API can be sent events using the `instance.sendEvent` API:
@@ -150,8 +177,14 @@ export default {
 </TypeScriptExample>
 
 - Similar to the [`waitForEvent`](#wait-for-events) example in this guide, the `type` property in our `waitForEvent` and `sendEvent` fields must match.
-- To send multiple events to a Workflow that has multiple `waitForEvent` calls, call `sendEvent` with the corresponding `type` property set.
+- To send multiple events to a Workflow that has multiple `waitForEvent` calls, call `sendEvent` with the corresponding `type` property set (up to 100 characters [^1]).
 - Events can also be sent using the REST API (HTTP API)'s [Events endpoint](/api/resources/workflows/subresources/instances/subresources/events/methods/create/).
+
+:::note[Event timing]
+
+You can send an event to a Workflow instance _before_ it reaches the corresponding `waitForEvent` call, as long as the instance has been created. The event will be buffered and delivered when the Workflow reaches the `waitForEvent` step with the matching `type`.
+
+:::
 
 ## TypeScript and type parameters
 
@@ -202,3 +235,5 @@ export class MyWorkflow extends WorkflowEntrypoint {
 ```
 
 <Render file="workflows-type-parameters" product="workflows" />
+
+[^1]: Match pattern: `^[a-zA-Z0-9_][a-zA-Z0-9-_]*$`

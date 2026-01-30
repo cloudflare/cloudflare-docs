@@ -60,20 +60,24 @@ You can set up External Evaluation rules using any API service, but to get start
 
   <WranglerConfig>
 
-   ```toml
-   name = "my-worker"
-   workers_dev = true
-   compatibility_date = "2024-08-06"
-   main = "index.js"
-
-
-   [[kv_namespaces]]
-   binding = "KV"
-   id = "YOUR_KV_NAMESPACE_ID"
-
-   [vars]
-   TEAM_DOMAIN="<TEAM_NAME>.cloudflareaccess.com"
-   DEBUG=false
+   ```jsonc
+   {
+     "$schema": "./node_modules/wrangler/config-schema.json",
+     "name": "my-worker",
+     "workers_dev": true,
+     "compatibility_date": "2024-08-06",
+     "main": "index.js",
+     "kv_namespaces": [
+       {
+         "binding": "KV",
+         "id": "YOUR_KV_NAMESPACE_ID"
+       }
+     ],
+     "vars": {
+       "TEAM_DOMAIN": "<TEAM_NAME>.cloudflareaccess.com",
+       "DEBUG": false
+     }
+   }
    ```
 	 </WranglerConfig>
 

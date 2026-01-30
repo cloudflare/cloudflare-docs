@@ -1,6 +1,7 @@
 ---
 params:
   - sshMode?
+  - tunnelMode?
 ---
 
 For the fastest possible troubleshooting, ensure your support ticket includes comprehensive details. The more context you provide, the faster your issue can be identified and resolved.
@@ -46,6 +47,19 @@ To ensure efficient resolution when [contacting support](/support/contacting-clo
         </label>
       </li>
     </>
+  ) : props.tunnelMode ? (
+    <>
+      <li>
+        <label>
+          <input type="checkbox" /> Tunnel logs: Include the <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/#view-logs-on-your-local-machine">logs from your local machine</a>.
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" /> Tunnel diagnostic logs: Include <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/diag-logs/">tunnel diagnostic logs</a>.
+        </label>
+      </li>
+    </>
   ) : (
     <li>
       <label>
@@ -66,6 +80,8 @@ Avoid vague descriptions and include scenario, timestamps, and steps taken to tr
 
     <p>The <code>sshd_config</code> file and <code>ssh -vvv alice@10.116.0.3</code> output are attached. The tunnel status is Healthy in the Cloudflare dashboard, and Access authentication logs show a successful <code>Access granted</code> decision.</p>
   </>
+) : props.tunnelMode ? (
+  <p>Acme Corp attempted to establish a tunnel connection on October 30, 2025, at approximately 3:45 PM UTC. DNS resolution and TCP connectivity tests passed, but the <code>cloudflared</code> daemon logs showed <code>failed to sufficiently increase receive buffer size</code> errors. The tunnel diagnostic logs collected at 3:50 PM UTC are attached, along with the output from the DNS and network connectivity pre-checks.</p>
 ) : (
   <p>Karen was on a train on July 17, 2025, at approximately 1:00 PM Central Time. She attempted to connect to a captive portal but received the following error message in Chrome: <code>ERR_CONNECTION_RESET</code>. A warp diag was collected immediately after and is attached.</p>
 )}

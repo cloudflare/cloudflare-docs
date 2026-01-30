@@ -127,14 +127,14 @@ To view status and actions for each email:
   - **View details**: Refer to [Email details](#email-details) to learn more.
   - **View similar emails**: Find similar emails based on the `value_edf_hash` (Electronic Detection Fingerprint hash).
   - **Release**: Email security will no longer quarantine your chosen messages.
-  - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](#reclassify-messages) to learn more.
+  - **Submit for review**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](#reclassify-messages) to learn more.
 
 - If the email is not quarantined:
   - **View details**.
   - **View similar emails**.
   - **View submission detail**.
   - **[Move](/cloudflare-one/email-security/settings/auto-moves/)** (only available if you authorized moves).
-  - **[Request reclassification](#reclassify-messages)**.
+  - **[Submit for review](#reclassify-messages)**.
 
 ## Email details
 
@@ -159,11 +159,23 @@ Email security displays the following details:
    - Country
 4. **Links identified**: A list of malicious links identified by Email security. Refer to [Open links](#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
 5. **Attachments**: If an email has an attachment, the Cloudflare dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/remote-browser-isolation/). Only PDF files are currently supported.
-6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam.
+6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam. The dashboard also displays [Cloudy summaries](/cloudflare-one/email-security/investigation/search-email/#cloudy-summaries).
+
+#### Cloudy summaries
+
+The Cloudflare dashboard uses [Cloudy](/fundamentals/reference/cloudy-ai-agent/) to explain why an email was classified as unwanted. 
+
+Cloudy analyzes the underlying detection code and generates a description of the specific detection logic that led to an email final disposition. Each summary provides a rating option that allows you to provide feedback to the Email security team. Cloudy summaries are only available for emails with a final [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/#available-values). 
+
+**View all signatures** allows you to view all the detections that triggered on the email, including detections that did not determine the final disposition.
 
 #### Open links
 
 You can open links in Security Center or [Browser Isolation](/cloudflare-one/remote-browser-isolation/), or copy and paste the link so you can investigate content in external tools.
+
+When you select a link in a suspicious email, you risk exposing your device and your company's network to malware, ransomware, and credential harvesting.
+
+Browser Isolation eliminates any risk of your device being compromised by opening all web content from unverified or suspicious sources in a safe, disposable remote browser session hosted by Cloudflare.
 
 To open links in Security Center:
 
@@ -185,18 +197,11 @@ To open links in Browser Isolation:
 
 Alternatively, you can directly [open links in Browser Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/#open-links-in-browser-isolation).
 
+When you open a link from an email, Cloudflare will present you with a blue bar. This indicates that the page is isolated and that you are protected from any potential malicious content on that page.
+
 :::note
 If you purchased Gateway and [Browser Isolation](/cloudflare-one/remote-browser-isolation/), you can perform more actions when opening links.
 :::
-
-When opening links, Email security will not allow you to:
-
-- [Copy (from remote to client)](/cloudflare-one/remote-browser-isolation/isolation-policies/)
-- [Paste (from client to remote)](/cloudflare-one/remote-browser-isolation/isolation-policies/)
-- Use [keyboard](/cloudflare-one/remote-browser-isolation/isolation-policies/)
-- [Print](/cloudflare-one/remote-browser-isolation/isolation-policies/)
-- [Download files](/cloudflare-one/remote-browser-isolation/isolation-policies/)
-- [Uploads files](/cloudflare-one/remote-browser-isolation/isolation-policies/)
 
 To open and investigate a link in an external tool:
 

@@ -1,40 +1,66 @@
 ---
 pcx_content_type: reference
 title: Scans and penetration testing policy
-
 ---
+
+import { GlossaryTooltip } from "~/components";
 
 Customers may conduct scans and penetration tests (with certain restrictions) on application and network-layer aspects of their own assets, such as their [zones](/fundamentals/concepts/accounts-and-zones/#zones) within their Cloudflare accounts, provided they adhere to Cloudflare's policy.
 
-- **Permitted targets** - all scans or testing must be limited to the following:
+## Permitted targets
 
-  	- Customer-owned IPs,
-  	- Cloudflare's designated public IPs, or
- 	- The customer's registered DNS entries.
+All scans or testing must be limited to the following:
 
-Targets like `*.cloudflare.com` or other Cloudflare-owned destinations are only allowed as part of Cloudflare's Public Bug Bounty program. Refer to the [Additional Resources](#additional-resources) section for more information.
+- Customer-owned IPs
+- Cloudflare's designated public IPs
+- The customer's registered DNS entries
 
-### Scanning
+Targets like `*.cloudflare.com` or other Cloudflare-owned destinations are only allowed as part of Cloudflare's Public Bug Bounty program. Refer to the [Additional resources](#additional-resources) section for more information.
+
+## Scans
 
 - **Throttling**: Scans should be throttled to a reasonable rate to prevent disruptions and ensure stable system performance.
 - **Scope and intent**: Scans should identify the presence of vulnerabilities without attempting to actively exploit any detected weaknesses.
 - **Exclusions**: It is recommended to exclude [`/cdn-cgi/` endpoints](/fundamentals/reference/cdn-cgi-endpoint/) from scans to avoid false positives or irrelevant results.
 - **Compliance checks**: Customers may conduct [PCI compliance scans](/fundamentals/security/pci-scans/) or verify that [known vulnerabilities](/ssl/reference/compliance-and-vulnerabilities/#known-vulnerabilities-mitigations) have been addressed.
 
-### Penetration testing
+## Penetration tests
 
-- **Network behavior**:
-  - Cloudflare's [anycast network](/fundamentals/concepts/how-cloudflare-works/) will report ports other than `80` and `443` as open due to its shared infrastructure and the nature of Cloudflare's proxy. The reporting is expected behavior and does not indicate a vulnerability.
-  - Tools like Netcat may list [non-standard HTTP ports](/fundamentals/reference/network-ports/) as open; however, these ports are open solely for Cloudflare's routing purposes and do not necessarily indicate that a connection can be established with the customer's origin over those ports.
+Before starting a penetration test on your [zones](/fundamentals/concepts/accounts-and-zones/#zones), set the following application security configurations for each zone you will run the test on:
+
+1. [Deploy the Cloudflare Managed Ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset) and
+   [enable all rules](/waf/managed-rules/deploy-zone-dashboard/#configure-field-values-for-all-the-rules) in the ruleset by setting **Ruleset status** to **Enabled**.
+
+2. [Deploy the Cloudflare OWASP Core Ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset) and set the following [ruleset configuration](/waf/managed-rules/deploy-zone-dashboard/#configure-field-values-for-all-the-rules):
+   - **Paranoia Level**: _PL4_
+   - **Score threshold**: _High - 25 and higher_
+
+3. [Create a custom rule](/waf/custom-rules/create-dashboard/) based on the [WAF attack score](/waf/detections/attack-score/) to block requests considered as an attack (WAF attack score between 1 and 20). Refer to the [WAF attack score](/waf/detections/attack-score/#1-create-a-custom-rule) documentation for an example.
+
+4. [Create a custom rule](/waf/custom-rules/create-dashboard/) based on [malicious uploads detection](/waf/detections/malicious-uploads/) to block requests containing <GlossaryTooltip term="content object">content objects</GlossaryTooltip> considered malicious. Refer to [Example rules](/waf/detections/malicious-uploads/example-rules/#block-requests-to-uri-path-with-a-malicious-content-object) for examples of custom rules used to mitigate this kind of threat.
+
+5. On Pro and Business plans without Bot Management, [enable Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/#enable-super-bot-fight-mode).<br/>
+   Customers with access to Bot Management should make sure that [Bot Management is enabled](/bots/get-started/bot-management/#enable-bot-management-for-enterprise) (it is enabled by default on entitled zones).
+
+6. [Create rate limiting rules](/waf/rate-limiting-rules/create-zone-dashboard/) to protect key endpoints of the zone being tested. Refer to [Rate limiting rule examples](/waf/rate-limiting-rules/use-cases/) and [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) for example configurations.
+
+Be aware that other Cloudflare security and performance features, configurations, and rules active on your account or zone can influence test results.
+
+After completing the test, it is recommended that you review your security posture and make any necessary adjustments based on the findings.
+
+### Important remarks
+
+- Cloudflare's [anycast network](/fundamentals/concepts/how-cloudflare-works/) will report ports other than `80` and `443` as open due to its shared infrastructure and the nature of Cloudflare's proxy. The reporting is expected behavior and does not indicate a vulnerability.
+
+- Tools like Netcat may list [non-standard HTTP ports](/fundamentals/reference/network-ports/) as open; however, these ports are open solely for Cloudflare's routing purposes and do not necessarily indicate that a connection can be established with the customer's origin over those ports.
+
 - **Known false positives**: Any findings related to the [ROBOT vulnerability](/ssl/reference/compliance-and-vulnerabilities/#return-of-bleichenbachers-oracle-threat-robot) are false positives when the customer's assets are behind Cloudflare.
-- **Customer security review**: During penetration testing, customers should be aware of the Cloudflare security and performance features, configurations, and rules active on their account or zone. After completing the test, it is recommended that customers review their security posture and make any necessary adjustments based on the findings.
 
-Customers can download the latest Penetration Test Report of Cloudflare via the [Dashboard](/fundamentals/reference/policies-compliances/compliance-docs/).
+## Denial-of-Service (DoS) tests
 
-### Denial-of-Service (DoS) testing
+For guidelines on required notification and necessary information, refer to [Simulating test DDoS attacks](/ddos-protection/reference/simulate-ddos-attack/). Customers should also familiarize themselves with Cloudflare's [DDoS protection best practices](/ddos-protection/best-practices/).
 
-For guidelines on required notification and necessary information, refer to Cloudflare's documentation [Simulating DDoS Attacks](/ddos-protection/reference/simulate-ddos-attack). Customers should also familiarize themselves with Cloudflare's [DDoS protection best practices](/ddos-protection/best-practices/).
+## Additional resources
 
-### Additional Resources
-
-For information about Cloudflare's Public Bug Bounty program, visit [HackerOne](https://hackerone.com/cloudflare).
+- Customers can download the latest Penetration Test Report of Cloudflare via the [dashboard](/fundamentals/reference/policies-compliances/compliance-docs/).
+- For information about Cloudflare's Public Bug Bounty program, visit [HackerOne](https://hackerone.com/cloudflare).

@@ -48,7 +48,7 @@ To view IP information for a user device:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Your devices**.
 2. Select a device, then select **View details**.
-3. Under **Details**, scroll down to **IP details**.
+3. Go to **IP details**.
 4. Review the IP details for your selected device's most recent session.
 
 ## View a device's IP history
@@ -56,12 +56,8 @@ To view IP information for a user device:
 DEX's IP visibility allows you to review an event log of a device's IP history for the last seven days. To view a device's IP history:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Your devices**.
-2. Select a device > **View details** > under **Details**, scroll down to **IP details**.
-3. Select **View device history**.
-4. View the device's IP history and status from the last seven days.
-5. Select a time to view more information about the device at that time.
-
-Refer to [Available metrics](/cloudflare-one/insights/dex/monitoring/#available-metrics) to review **Status** and **Mode** descriptions.
+2. Select a device > **View details** > go to **IP details**.
+3. Select **View all ISPs**.
 
 ## Troubleshoot with IP visibility
 
@@ -70,5 +66,5 @@ While IP visibility allows you to inspect a device's IP information, use [DEX's 
 To find which Cloudflare data center a device is connected to:
 
 1. Follow the steps listed in [View IP information](#view-a-devices-ip-history) to find a device's IP information.
-2. Select **Device Monitoring** above **Device event log**.
-3. Find **Colo** in the **Device details** table to review which Cloudflare data center your selected device's egress traffic is connected to.
+2. On the device page, select **Colocation & client** or find the **Client** table at the top of the page.
+3. In the **Client** table, find **Colocation** to review which Cloudflare data center your selected device's egress traffic is connected to.

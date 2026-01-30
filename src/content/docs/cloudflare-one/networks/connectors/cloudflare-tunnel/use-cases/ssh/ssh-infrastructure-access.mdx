@@ -1,8 +1,8 @@
 ---
 pcx_content_type: how-to
-title: SSH with Access for Infrastructure (recommended)
+title: SSH with Access for Infrastructure
 sidebar:
-  order: 2
+  order: 3
   label: SSH with Access for Infrastructure
 ---
 
@@ -53,8 +53,15 @@ To connect your devices to Cloudflare:
 
 <Render file="access/add-infrastructure-app" product="cloudflare-one" />
 
-## 6. (Recommended) Modify order of precedence in Gateway
+## 6. (Recommended) Configure network policies
 
+Traffic from the WARP client to your infrastructure targets is filtered by both [Gateway network policies](/cloudflare-one/traffic-policies/initial-setup/network/) and the application-specific Access policies.
+
+### Catch-all block policy
+
+<Render file="tunnel/catch-all-policy" product="cloudflare-one"/>
+
+### Allow Access infrastructure targets
 <Render
 	file="access/modify-gateway-policy-precedence"
 	product="cloudflare-one"

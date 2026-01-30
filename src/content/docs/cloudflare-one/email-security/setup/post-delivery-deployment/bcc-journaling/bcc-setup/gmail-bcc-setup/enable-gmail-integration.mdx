@@ -7,6 +7,8 @@ sidebar:
 
 import { Render } from "~/components";
 
+This guide describes the process for enabling Email security with Google Workspace. It requires setting up a [service account](https://docs.cloud.google.com/iam/docs/service-account-overview) and a JSON key in Google Cloud Platform (GCP), followed by configuring domain-wide delegation in the Google Workspace Admin Console to authorize the integration.
+
 ## Prerequisites
 
 To use Email security, you will need to have:
@@ -37,7 +39,7 @@ To use Email security, you will need to have:
 
 1. Once you have named your integration, select **Next**.
 2. On the [Google Cloud Console](https://console.cloud.google.com/welcome/new), go to the sidebar, select **APIs & Services**, then select **Credentials**.
-3. Select **CREATE CREDENTIALS** > **Service account**.
+3. Select **CREATE CREDENTIALS** > **Service account**. Refer to [Service accounts overview](https://docs.cloud.google.com/iam/docs/service-account-overview) to learn more about service accounts.
 4. Fill in the details to create a service account:
    - **Service account name**: Enter `Cloudflare Google Integration`.
    - **Service account ID**: Enter `cloudflare-google-integration`.

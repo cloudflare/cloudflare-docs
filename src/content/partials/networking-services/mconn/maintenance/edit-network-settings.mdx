@@ -3,7 +3,7 @@ params:
   - dashName
 ---
 
-import { Markdown } from "~/components";
+import { DashButton, Markdown } from "~/components";
 
 { props.dashName === "WAN Tunnels" ? (
 	<>
@@ -19,9 +19,16 @@ import { Markdown } from "~/components";
 	<>
 		<Markdown
 	text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
-	`}
+		1. Go to the **Connectors** page.
+		`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-networks/connections" />
+
+		<Markdown
+	text={`
+		2. Go to the **Appliances** tab > **Profiles**.
+		`}
 	inline={false}
 	/>
 	</>

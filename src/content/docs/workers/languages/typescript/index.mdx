@@ -129,7 +129,7 @@ Most projects will have existing build and development scripts, as well as some 
 }
 ```
 
-We recommend you commit your generated types file for use in CI. Alternatively, you can run `wrangler types` before other CI commands, as it should not take more than a few seconds. For example:
+We recommend you commit your generated types file for use in CI. You can run `wrangler types` before other CI commands, as it should not take more than a few seconds. For example:
 
 <Tabs> <TabItem label="npm">
 
@@ -156,6 +156,36 @@ We recommend you commit your generated types file for use in CI. Alternatively, 
 ```
 
 </TabItem> </Tabs>
+
+Alternatively, if you commit your generated types file and want to verify it stays up-to-date in CI, you can use the `--check` flag:
+
+<Tabs> <TabItem label="npm">
+
+```yaml
+- run: npx wrangler types --check
+- run: npm run build
+- run: npm test
+```
+
+</TabItem> <TabItem label="yarn">
+
+```yaml
+- run: yarn wrangler types --check
+- run: yarn build
+- run: yarn test
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```yaml
+- run: pnpm wrangler types --check
+- run: pnpm run build
+- run: pnpm test
+```
+
+</TabItem> </Tabs>
+
+This fails the CI job if the committed types file is out-of-date, prompting developers to regenerate and commit the updated types.
 
 ### Resources
 

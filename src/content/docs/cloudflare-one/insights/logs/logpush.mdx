@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 :::note
 Only available on Enterprise plans.
@@ -55,6 +55,12 @@ Refer to [Logpush datasets](/logs/logpush/logpush-job/datasets/) for a list of a
 | [WARP Config Changes](/logs/logpush/logpush-job/datasets/account/warp_config_changes/)                     | Event logs that are generated whenever a WARP device changes [profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) |
 | [WARP Toggle Events](/logs/logpush/logpush-job/datasets/account/warp_toggle_changes/)                      | Event logs that are generated whenever a WARP device toggles WARP on or off                                                                              |
 | [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway                                                                                           |
+
+## Verify regional map application
+
+If you are using [Regional Services](/data-localization/regional-services/) with Cloudflare One, you can configure which subset of Cloudflare data centers decrypt and route your traffic. This allows you to accommodate regional restrictions like GDPR or meet compliance requirements that include geographic restrictions on data flows or processing.
+
+<Render file="verify-regional-map" product="data-localization" />
 
 ## Parse DNS logs
 

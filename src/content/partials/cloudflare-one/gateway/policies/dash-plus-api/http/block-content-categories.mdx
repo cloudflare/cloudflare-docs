@@ -43,7 +43,7 @@ resource "cloudflare_zero_trust_gateway_policy" "block_unauthorized_apps" {
   enabled        = true
   action         = "block"
   filters        = ["http"]
-  traffic        = "any(http.request.uri.content_category[*] in {17 85 87 102 157 135 138 180 162 32 169 177 128 15 115 119 124 141 161 2 67 125 133 99})""
+  traffic        = "any(http.request.uri.content_category[*] in {17 85 87 102 157 135 138 180 162 32 169 177 128 15 115 119 124 141 161 2 67 125 133 99})"
   identity       = ""
   device_posture = ""
 }

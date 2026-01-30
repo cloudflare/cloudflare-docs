@@ -5,7 +5,7 @@ params:
 
 import { DashButton, Details, Markdown } from "~/components";
 
-Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These steps use the Cloud Gateway Max (UCG-Max) but work with other UniFi gateways supporting route-based IPsec VPNs, like the Dream Machine series.
+Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These steps use the Cloud Gateway Max (UCG-Max) but work with other UniFi gateways supporting route-based IPsec (Internet Protocol Security) VPNs (Virtual Private Networks), like the Dream Machine series.
 
 
 ## Prerequisites
@@ -16,7 +16,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 - Static public IP from your ISP
 - Admin access to both Cloudflare and UniFi
 - Gather a **Magic Anycast IPv4** address from the **Leased IPs** section in the dashboard
-	- <DashButton url="/?to=/:account/ip-addresses/leased-ips" />
+	- <DashButton url="/?to=/:account/ip-addresses/address-space" />
 	- Contact your account team if you do not see any IPs listed.
 
 ## 1. Configure Magic WAN
@@ -24,12 +24,8 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
-			inline={false}
-		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
-		<Markdown
-			text={`2. Go to **Tunnels**, and select **Create**.`}
+			text={`
+			1. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) to learn how to add IPsec tunnels.`}
 			inline={false}
 		/>
 	</>
@@ -40,7 +36,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 		inline={false}
 	/>
 )}
-3. Select **IPsec tunnel** > **Next**, and fill in the following settings:
+2. Select **IPsec tunnel** > **Next**, and fill in the following settings:
 	   - **Name**: `unifi-gw-primary`
 	   - **IPv4 Interface Address**: `10.252.2.28/31` or refer to the [Tunnel endpoints documentation](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/)
 	   - **Customer Endpoint**: This should be your UniFi Gateway's WAN IP (for example, `203.0.113.10`)
@@ -87,12 +83,17 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
-			inline={false}
+			text={`
+			1. Go to the **Connectors** page.
+			`}
+				inline={false}
 		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
+
+			<DashButton url="/?to=/:account/magic-networks/connections" />
+
 		<Markdown
-			text={`2. In **Tunnels**, find the IPsec tunnel you have just created.`}
+			text={`
+			2. In the **IPsec/GRE tunnels** tab, find the IPsec tunnel you have just created.`}
 			inline={false}
 		/>
 	</>
@@ -112,12 +113,17 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 {props.magicWord === "Magic WAN" ? (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
+			text={`
+			1. Go to the **Routes** page.
+			`}
 			inline={false}
 		/>
-		<DashButton url="/?to=/:account/magic-wan/configuration" />
+
+			<DashButton url="/?to=/:account/magic-networks/routes" />
+
 		<Markdown
-			text={`2. Go to **Routes** > **Create static route**.`}
+			text={`
+			2. Select **Create static route**.`}
 			inline={false}
 		/>
 	</>
@@ -137,7 +143,7 @@ Connect a Ubiquiti UniFi Gateway to Cloudflare's network using Magic WAN. These 
 
 ## Verify connections
 
-To check your connections are working correctly, wait a few minutes, and then access both Cloudflare and UniFi to verify the tunnel's status:
+Wait a few minutes, then access both Cloudflare and UniFi to verify the tunnel's status:
 
 <Details header="Cloudflare">
 {props.magicWord === "Magic WAN" ? (
@@ -146,9 +152,9 @@ To check your connections are working correctly, wait a few minutes, and then ac
 			text={`1. Go to Magic WAN's **Network Health** page.`}
 			inline={false}
 		/>
-		<DashButton url="/?to=/:account/magic-wan/tunnel-healthchecks" />
+		<DashButton url="/?to=/:account/networking-insights/health" />
 		<Markdown
-			text={`2. On the banner at the top of the page, select **Magic Tunnel Health Dashboard** to enable the new health checks experience.
+			text={`2. Go to the **Connector health** tab.
 3. Find the tunnel you have just created and make sure its status shows **Up**. Refer to [Check tunnel health in the dashboard](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information.`}
 			inline={false}
 		/>
@@ -185,7 +191,7 @@ Go to **Settings** > **VPN**, and make sure the status is **Connected**.
 
 To route only specific devices through Cloudflare (UniFi Network Application):
 
-1. Remove necessary routes from Remote Subnets in your VPN configuration.
+1. Remove unnecessary routes from Remote Subnets in your VPN configuration.
 2. Go to **Settings** > **Policy Table**.
 3. Under **Policy Engine** select **Create New Policy** with the following settings:
    - Select `Route`.

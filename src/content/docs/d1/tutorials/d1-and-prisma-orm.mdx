@@ -137,18 +137,26 @@ Copy the last part of the command output and paste it into your Wrangler file. I
 
 <WranglerConfig>
 
-```toml
-name = "prisma-d1-example"
-main = "src/index.ts"
-compatibility_date = "2024-03-20"
-compatibility_flags = ["nodejs_compat"]
-[observability]
-enabled = true
-
-[[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "prisma-demo-db"
-database_id = "<D1_DATABASE_ID>"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "prisma-d1-example",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-03-20",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB", // i.e. available in your Worker on env.DB
+			"database_name": "prisma-demo-db",
+			"database_id": "<D1_DATABASE_ID>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

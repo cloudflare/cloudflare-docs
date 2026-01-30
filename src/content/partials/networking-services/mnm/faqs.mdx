@@ -2,7 +2,7 @@
 {}
 ---
 
-Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
+Find answers to the most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) to explore more resources.
 
 ## I am getting an "Invalid account settings request body: account name format contains illegal characters or is not supported" error when trying to create a rule.
 
@@ -14,18 +14,18 @@ Refer to [Account name](/fundamentals/account/create-account/#account-name) to l
 
 Yes. Both enterprise and free customers can send encrypted network flow data to Cloudflare.
 
-Enterprise customers with Magic Transit or Magic WAN are able to send encrypted network flow data via an IPsec tunnel to Cloudflare's network. You can achieve this by:
+Enterprise customers with Magic Transit or Magic WAN can send encrypted network flow data via an IPsec tunnel to Cloudflare's network. You can achieve this by:
 
 1. Configuring your [NetFlow](/magic-network-monitoring/routers/netflow-ipfix-config/) or [sFlow](/magic-network-monitoring/routers/sflow-config/) data to be sent to Cloudflare's network for parsing.
 2. Directing that network flow data to be sent over [Magic Transit IPsec tunnels](/magic-transit/how-to/configure-tunnel-endpoints/) or [Magic WAN IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/) to Cloudflare's network.
 
 Cloudflare's network will then identify this traffic via the destination IP address/port, and direct the network flow traffic to Magic Network Monitoring for parsing.
 
-Free customers can route their network flow traffic through a device that is running the WARP client. Then, network flow traffic can be forwarded from the WARP enabled device to Cloudflare's network flow endpoints. You can learn more about this in the [Encrypt network flow data tutorial](/magic-network-monitoring/tutorials/encrypt-network-flow-data/).
+Free customers can route their network flow traffic through a device that is running the WARP client. Then, network flow traffic can be forwarded from the WARP enabled device to Cloudflare's network flow endpoints. Learn more in the [Encrypt network flow data tutorial](/magic-network-monitoring/tutorials/encrypt-network-flow-data/).
 
 ## I have Auto-Advertisement enabled and it was triggered by an attack. Do I have to turn Magic Transit off manually?
 
-Once Auto-Advertisement is activated for an IP prefix that is under attack, the IP prefix will continue to be advertised by Cloudflare even if the attack ends. You will then need to manually disable advertisement for that IP prefix. Refer to [Configure dynamic advertisement](/byoip/concepts/dynamic-advertisement/best-practices/#configure-dynamic-advertisement) to learn how to withdraw your prefixes, and stop using Magic Transit.
+Once Auto-Advertisement is activated for an IP prefix that is under attack, the IP prefix will continue to be advertised by Cloudflare even if the attack ends. You must manually disable advertisement for that IP prefix. Refer to [Configure dynamic advertisement](/byoip/concepts/dynamic-advertisement/best-practices/#configure-dynamic-advertisement) to learn how to withdraw your prefixes, and stop using Magic Transit.
 
 ## If Auto-Advertisement is enabled, and the threshold has been triggered, will the IP prefix show as advertised in the dashboard?
 
@@ -50,9 +50,9 @@ With this rule, your network needs to receive a throughput greater than 50,000,0
 
 ## My router's public IP address is different from the IP address of my network flow `agent-ip`. I cannot change my network flow `agent-ip`, and I am not seeing my router's traffic in Magic Network Monitoring analytics
 
-It is recommended that you set your router's public IP address and network flow `agent-ip` to the same value. However, if you are unable to do this, you can register both your router's public IP and your network flow `agent-ip` in the Magic Network Monitoring [router configuration](/magic-network-monitoring/get-started/). This will prevent Magic Network Monitoring from blocking network traffic received from any unknown IP addresses, and will show your router's network flow data underneath the router's `agent-ip`.
+Set your router's public IP address and network flow `agent-ip` to the same value. However, if you are unable to do this, you can register both your router's public IP and your network flow `agent-ip` in the Magic Network Monitoring [router configuration](/magic-network-monitoring/get-started/). This will prevent Magic Network Monitoring from blocking network traffic received from any unknown IP addresses, and will show your router's network flow data underneath the router's `agent-ip`.
 
-## What is Magic Network Monitoring's data retention policy for Netflow/sFlow received from customer's routers?
+## What is Magic Network Monitoring's data retention policy for NetFlow/sFlow received from customer's routers?
 
 Currently, all data received from a customer's router goes to our servers in the US. If you enable data sovereignty in Europe, you cannot currently use Magic Network Monitoring.
 

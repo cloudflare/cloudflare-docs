@@ -76,3 +76,67 @@ The following example shows how to set up logpush and Dedicated CDN Egress IPs t
 - Configuration: Select dataset, job name, filters, and fields. Refer to the [Logpush documentation](/logs/logpush/) for more details.
 
 2. Check destination to confirm if the logs are received.
+
+## 5. Secure your proxy zone endpoint
+
+The proxy zone hostname is publicly resolvable, but traffic passes through Cloudflare's edge where you can apply security controls. Use the following best practices to protect your endpoint.
+
+### Add a secret header with WAF validation
+
+Add a secret token as an HTTP header in your Logpush job, then create a WAF rule to block requests without it. This is the recommended approach for most deployments.
+
+**Configure Logpush with a secret header**
+
+Any URL parameter starting with `header_` becomes an HTTP header in the request. When creating or updating your Logpush job, add the secret header to your destination URL:
+
+```txt
+https://logpush.yourdestinationendpoint.com?header_X-Logpush-Secret=YOUR_RANDOM_SECRET_TOKEN
+```
+
+Generate a strong random token using `openssl rand -hex 32`.
+
+**Create a WAF custom rule**
+
+In the proxy zone, go to **Security** > **WAF** > **Custom rules** and create a rule to block requests without the correct secret header.
+
+- **Expression:**
+  ```txt
+  (http.host eq "logpush.yourdestinationendpoint.com" and all(http.request.headers["x-logpush-secret"][*] ne "YOUR_RANDOM_SECRET_TOKEN"))
+  ```
+- **Action:** Block
+
+### Add ASN-based filtering
+
+For defense in depth, add a rule to only allow traffic from Cloudflare's ASN. Logpush traffic originates from Cloudflare's network (ASN 13335 or 132892).
+
+- **Expression:**
+  ```txt
+  (http.host eq "logpush.yourdestinationendpoint.com" and not ip.geoip.asnum in {13335 132892})
+  ```
+- **Action:** Block
+
+:::note
+ASN filtering alone is insufficient because other Cloudflare customers' traffic also originates from these ASNs. Always combine with secret header validation.
+:::
+
+### Use Access Service Tokens for high-security environments
+
+For stronger authentication, use [Cloudflare Access Service Tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) for machine-to-machine authentication. Create a Service Token in the Zero Trust dashboard, then configure Logpush with the Access headers:
+
+```txt
+https://logpush.yourdestinationendpoint.com?header_CF-Access-Client-Id=YOUR_CLIENT_ID&header_CF-Access-Client-Secret=YOUR_CLIENT_SECRET
+```
+
+### Verify your security configuration
+
+Test that your WAF rules are blocking unauthorized requests:
+
+```bash
+$ curl https://logpush.yourdestinationendpoint.com
+# Expected: error code: 1020
+
+$ curl -H "X-Logpush-Secret: wrong-token" https://logpush.yourdestinationendpoint.com
+# Expected: error code: 1020
+```
+
+Check Cloudflare Analytics for the proxy zone to confirm Logpush traffic is flowing, and monitor WAF events to ensure unauthorized requests are blocked.

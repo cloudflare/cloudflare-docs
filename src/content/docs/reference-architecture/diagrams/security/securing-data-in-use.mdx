@@ -34,7 +34,7 @@ The following diagram visualizes a typical interaction between a user, RBI and a
 
 ![Figure 1: Text copy/paste blocked by Cloudflare RBI.](~/assets/images/reference-architecture/securing-data-in-use/securing-data-in-use-fig1.svg "Figure 1: Text copy/paste blocked by Cloudflare RBI.")
 
-1. User attempts to login to ChatGPT, and the request goes via Cloudflare since the user is running our [device agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/) to maximize visibility and control of all traffic between the end user’s device and the resources being requested. [Clientless](/cloudflare-one/team-and-resources/devices/agentless/) options are supported as well.
+1. User attempts to login to ChatGPT, and the request goes via Cloudflare since the user is running our [device agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/) to maximize visibility and control of all traffic between the end user’s device and the resources being requested. [Clientless](/cloudflare-one/networks/resolvers-and-proxies/) options are supported as well.
 2. Cloudflare’s [Secure Web Gateway](/cloudflare-one/traffic-policies/) (SWG) will first verify that the user is permitted to access ChatGPT.
 3. Cloudflare’s patented Network Vector Rendering (NVR) process begins as a headless browser on our edge network starts and rasterizes the web app, which involves writing SKIA draw commands.
 4. NVR intercepts those draw commands > tokenizes them > compresses them > encrypts them > and sends them to the local web browser.

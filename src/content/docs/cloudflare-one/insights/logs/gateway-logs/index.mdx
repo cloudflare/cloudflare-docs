@@ -35,7 +35,7 @@ These settings will only apply to logs displayed in Cloudflare One. Logpush data
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Query name**        | Name of the domain that was queried.                                                                                                                                                                                                                                                                                                                                                                                             |
 | **Query ID**          | UUID of the query assigned by Cloudflare.                                                                                                                                                                                                                                                                                                                                                                                        |
-| **Email**             | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/team-and-resources/devices/agentless/pac-files/)) or machine-level authentication (such as a [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
+| **Email**             | Email address of the user who registered the WARP client where traffic originated from. If a non-identity on-ramp (such as a [proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)) or machine-level authentication (such as a [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/)) was used, this value will be `non_identity@<team-domain>.cloudflareaccess.com`. |
 | **Action**            | The [Action](/cloudflare-one/traffic-policies/dns-policies/#actions) Gateway applied to the query (such as Allow or Block).                                                                                                                                                                                                                                                                                                      |
 | **Time**              | Date and time of the DNS query.                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **Resolver decision** | The reason why Gateway applied a particular **Action** to the request. Refer to the [list of resolver decisions](#resolver-decisions).                                                                                                                                                                                                                                                                                           |
@@ -44,14 +44,14 @@ These settings will only apply to logs displayed in Cloudflare One. Logpush data
 
 #### Configuration information
 
-| Field                  | Description                                                                                                                        |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **DNS location**       | [User-configured location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) from where the DNS query was made. |
-| **Policy name**        | Name of the matched policy.                                                                                                        |
-| **Policy ID**          | ID of the matched policy.                                                                                                          |
-| **Policy description** | Description of the matched policy.                                                                                                 |
-| **DoH subdomain**      | <GlossaryTooltip term="DoH subdomain">DoH subdomain</GlossaryTooltip> of the DNS location.                                         |
-| **Protocol**           | Protocol that was used to make the DNS query (such as `https`).                                                                    |
+| Field                  | Description                                                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **DNS location**       | [User-configured location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) from where the DNS query was made. |
+| **Policy name**        | Name of the matched policy.                                                                                                  |
+| **Policy ID**          | ID of the matched policy.                                                                                                    |
+| **Policy description** | Description of the matched policy.                                                                                           |
+| **DoH subdomain**      | <GlossaryTooltip term="DoH subdomain">DoH subdomain</GlossaryTooltip> of the DNS location.                                   |
+| **Protocol**           | Protocol that was used to make the DNS query (such as `https`).                                                              |
 
 #### Identities
 
@@ -143,12 +143,12 @@ Gateway can log failed connections in [network session logs](/logs/logpush/logpu
 
 #### Matched policies
 
-| Field                  | Description                                                                                                                        |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **DNS location**       | [User-configured location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) from where the DNS query was made. |
-| **Policy name**        | Name of the matched policy.                                                                                                        |
-| **Policy ID**          | ID of the policy enforcing the decision Gateway made.                                                                              |
-| **Policy description** | Description of the matched policy.                                                                                                 |
+| Field                  | Description                                                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **DNS location**       | [User-configured location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) from where the DNS query was made. |
+| **Policy name**        | Name of the matched policy.                                                                                                  |
+| **Policy ID**          | ID of the policy enforcing the decision Gateway made.                                                                        |
+| **Policy description** | Description of the matched policy.                                                                                           |
 
 #### Identities
 
@@ -179,7 +179,7 @@ Gateway can log failed connections in [network session logs](/logs/logpush/logpu
 | **SNI**                      | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                                        |
 | **Virtual Network**          | [Virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to. |
 | **Category details**         | Category or categories associated with the packet.                                                                                                         |
-| **Proxy endpoint**           | [PAC file proxy endpoint](/cloudflare-one/team-and-resources/devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.                    |
+| **Proxy endpoint**           | [PAC file proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) Gateway forwarded traffic to, if applicable.                    |
 | **Application ID**           | ID of the application that matched the domain.                                                                                                             |
 | **Application name**         | Name of the application that matched the domain.                                                                                                           |
 
@@ -211,14 +211,14 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 
 #### Matched policies
 
-| Field                     | Description                                                                                                                        |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **DNS location**          | [User-configured location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) from where the DNS query was made. |
-| **Policy name**           | Name of the matched policy.                                                                                                        |
-| **Policy ID**             | ID of the matched policy.                                                                                                          |
-| **Policy description**    | Description of the matched policy.                                                                                                 |
-| **Matched category ID**   | ID of the category matched in the policy.                                                                                          |
-| **Matched category name** | Name of the category matched in the policy.                                                                                        |
+| Field                     | Description                                                                                                                  |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **DNS location**          | [User-configured location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) from where the DNS query was made. |
+| **Policy name**           | Name of the matched policy.                                                                                                  |
+| **Policy ID**             | ID of the matched policy.                                                                                                    |
+| **Policy description**    | Description of the matched policy.                                                                                           |
+| **Matched category ID**   | ID of the category matched in the policy.                                                                                    |
+| **Matched category name** | Name of the category matched in the policy.                                                                                  |
 
 #### Identities
 
@@ -253,7 +253,7 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | **Application ID**           | ID of the application that matched the domain.                                                                                                             |
 | **Application name**         | Name of the application that matched the domain.                                                                                                           |
 | **Categories**               | [Content categories](/cloudflare-one/traffic-policies/domain-categories/) that the domain belongs to.                                                      |
-| **Proxy endpoint**           | [PAC file proxy endpoint](/cloudflare-one/team-and-resources/devices/agentless/pac-files/) Gateway forwarded traffic to, if applicable.                    |
+| **Proxy endpoint**           | [PAC file proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) Gateway forwarded traffic to, if applicable.                    |
 | **Virtual Network**          | [Virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) that the client is connected to. |
 | **Sandbox scanned**          | Status of the [file quarantine](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/).                                                          |
 

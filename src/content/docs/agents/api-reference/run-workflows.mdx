@@ -31,7 +31,7 @@ Triggering a Workflow from an Agent is no different from [triggering a Workflow 
 ```ts
 interface Env {
 	MY_WORKFLOW: Workflow;
-	MyAgent: AgentNamespace<MyAgent>;
+	MyAgent: DurableObjectNamespace<MyAgent>;
 }
 
 export class MyAgent extends Agent<Env> {

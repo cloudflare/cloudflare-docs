@@ -12,6 +12,16 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per audio minute (websocket)",
+                    "price": 0.0077,
+                    "currency": "USD"
+                }
+            ]
+        },
+        {
             "property_id": "partner",
             "value": "true"
         },

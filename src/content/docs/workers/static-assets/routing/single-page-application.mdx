@@ -8,7 +8,7 @@ sidebar:
 
 import { WranglerConfig, TypeScriptExample, Render } from "~/components";
 
-Single Page Applications (SPAs) are web applications which are client-side rendered (CSR). They are often built with a framework such as [React](/workers/framework-guides/web-apps/react/), [Vue](/workers/framework-guides/web-apps/vue/) or [Svelte](/workers/framework-guides/web-apps/svelte/). The build process of these frameworks will produce a single `/index.html` file and accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.). Typically, data is fetched by the client from an API with client-side requests.
+Single Page Applications (SPAs) are web applications which are client-side rendered (CSR). They are often built with a framework such as [React](/workers/framework-guides/web-apps/react/), [Vue](/workers/framework-guides/web-apps/vue/) or [Svelte](/workers/framework-guides/web-apps/sveltekit/). The build process of these frameworks will produce a single `/index.html` file and accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.). Typically, data is fetched by the client from an API with client-side requests.
 
 When you configure `single-page-application` mode, Cloudflare provides default routing behavior that automatically serves your `/index.html` file for navigation requests (those with `Sec-Fetch-Mode: navigate` headers) which don't match any other asset. For more control over which paths invoke your Worker script, you can use [advanced routing control](#advanced-routing-control).
 

@@ -346,9 +346,11 @@ To deploy your Worker, open your Wrangler file and update the `name` key with yo
 
 <WranglerConfig>
 
-```toml
-name = "worker-to-text"
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker-to-text"
+}
 ```
 
 </WranglerConfig>
@@ -507,9 +509,11 @@ To deploy your Worker, open your Wrangler file and update the `name` key with yo
 
 <WranglerConfig>
 
-```toml
-name = "thumbnail-image"
-
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "thumbnail-image"
+}
 ```
 
 </WranglerConfig>

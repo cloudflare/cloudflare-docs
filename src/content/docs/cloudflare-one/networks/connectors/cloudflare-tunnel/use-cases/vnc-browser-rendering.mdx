@@ -1,0 +1,233 @@
+---
+pcx_content_type: how-to
+title: Render a VNC client in the browser
+sidebar:
+  order: 10
+  label: VNC
+---
+
+import { Render } from "~/components";
+
+A Virtual Network Computer (VNC) server provides users with remote access to a computer's desktop environment. Cloudflare can render a VNC terminal in the browser without any client-side software or configuration.
+
+Browser-rendered VNC requires connecting the VNC server to Cloudflare and routing traffic through a public hostname. To access the VNC server, users go to the public hostname URL and log in through Cloudflare Access using your configured identity provider. Cloudflare will apply your [Access policies](/cloudflare-one/access-controls/policies/) and, when a user is allowed, render a VNC client in their browser.
+
+:::note
+There are a number of different VNC server versions, deployments, and instances. This guide uses TightVNC running an XFCE desktop, but browser-rendered VNC will work with most configurations.
+:::
+
+## Prerequisites
+
+- An [active domain on Cloudflare](/fundamentals/manage-domains/add-site/).
+- The domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
+
+## 1. Set up a VNC server
+
+For demonstration purposes, we will create a TightVNC server on an Ubuntu virtual machine (VM) hosted in Google Cloud Project (GCP). We will configure the VNC server to run XFCE, a lightweight desktop environment suitable for remote access. If you already have a VNC server installed, you can skip this step and [go to Step 2](#2-connect-the-server-to-cloudflare).
+
+1. Open a terminal window for your Ubuntu VM.
+
+2. Install XFCE and TightVNC by running the following command:
+
+		```sh
+		sudo apt update
+		sudo apt install xfce4 xfce4-goodies dbus-x11 tightvncserver -y
+
+		```
+
+		This command installs the desktop, some helpful utilities, and the VNC server software.
+
+3. To initialize the VNC server:
+
+	1. Create a VNC server instance:
+
+		```sh
+		vncserver
+		```
+
+	2. You will be prompted to set a password. This password will be used to connect to your VNC server. It is limited to 8 characters.
+
+		TightVNC will now create configuration files and start a VNC session on display `:1` (which uses port `5901`).
+
+	3. You will be asked if you want to create a view-only password. You can press `n` for no.
+
+	4. Kill this initial session so that you can edit its configuration:
+
+		```sh
+		vncserver -kill :1
+		```
+4. Configure VNC to launch the XFCE desktop:
+
+	1. Create a VNC configuration directory if it is missing:
+
+	```sh
+	mkdir -p ~/.vnc
+	```
+
+	2. Open the `xstartup` file using a text editor. For example,
+
+	```sh
+	vim ~/.vnc/xstartup
+	```
+
+	3. Update the file to the following configuration:
+
+	```bash
+	#!/bin/sh
+	unset SESSION_MANAGER
+	unset DBUS_SESSION_BUS_ADDRESS
+	startxfce4
+	```
+
+	4. Make the file executable:
+
+	```sh
+	chmod +x ~/.vnc/xstartup
+	```
+
+5. Start the VNC server again:
+	```sh
+	vncserver -localhost :1
+	```
+
+	The `-localhost` flag ensures the VNC server only listens for connections from the VM itself, not from the public Internet. Your VNC server is now running on port `5901`, but it is only accessible from `localhost` (`127.0.0.1`) inside the VM.
+
+6. (Recommended) Test the VNC server with an existing VNC client to verify any missing packages or configuration changes. For example, to test a VNC server hosted on GCP:
+
+	1. Open a terminal on the client machine.
+
+	2. Connect to the VNC server over SSH, forwarding your local port `5901` to the VNC server's listening port:
+
+		```sh
+		gcloud compute ssh [YOUR_VM_NAME] --zone=[YOUR_ZONE] -- -L 5901:localhost:5901
+		```
+
+	3. Open your preferred VNC viewer application.
+
+	4. In the VNC viewer, connect to the address `localhost:5901` and enter your VNC server password.
+
+	You should see the Ubuntu VM desktop.
+
+7. (Optional) Configure the VNC server to start on boot:
+
+	1. Find the full path to the `vncserver` command:
+
+		```sh
+		which vncserver
+		```
+		```sh output
+		/usr/bin/vncserver
+		```
+	2. Create a new service configuration file:
+
+	```sh
+	sudo vim /etc/systemd/system/vncserver@.service
+	```
+
+	3. Copy and paste the following content. Replace `[YOUR_USERNAME]` with the VNC server user. If needed, update `/usr/bin/vncserver` to your `vncserver` path.
+
+		```toml
+		[Unit]
+		Description=Start TightVNC server at startup
+		After=syslog.target network.target
+
+		[Service]
+		Type=forking
+		User=[YOUR_USERNAME]
+		WorkingDirectory=/home/[YOUR_USERNAME]
+
+		PIDFile=/home/[YOUR_USERNAME]/.vnc/%H:%i.pid
+
+		ExecStartPre=-/usr/bin/vncserver -kill :%i > /dev/null 2>&1
+		ExecStart=/usr/bin/vncserver -localhost :%i
+		ExecStop=/usr/bin/vncserver -kill :%i
+
+		[Install]
+		WantedBy=multi-user.target
+		```
+
+		4. Reload `systemd` to read in the new service file:
+
+		```sh
+		sudo systemctl daemon-reload
+		```
+
+		5. Enable the service to start at boot:
+
+		```sh
+		sudo systemctl enable vncserver@1.service
+		```
+
+		The `1` variable configures the VNC service to use display `:1` (which runs on port `5901`).
+
+		6. By default, `systemd` user services only run when that user is logged in. To allow your VNC service to start on boot (before you log in), enable user linger for your user:
+
+		```sh
+		sudo loginctl enable-linger [YOUR_USERNAME]
+		```
+
+		7. Start the service:
+
+		```sh
+		sudo systemctl start vncserver@1.service
+		```
+
+		8. Check its status:
+
+		```sh
+		sudo systemctl status vncserver@1.service
+		```
+
+		The VNC server will now start automatically every time the VM boots.
+
+## 2. Connect the server to Cloudflare
+
+1. Create a Cloudflare Tunnel by following the [dashboard setup guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
+
+2. Go to **Networks** > **Connectors**. Select your tunnel and select **Edit**.
+
+3. Select the **Published application routes** tab, then select **Add a published application route**.
+
+4. Choose a domain from the drop-down menu and specify any subdomain (for example, `vnc.example.com`).
+
+5. For **Service**, select _TCP_ and enter `localhost:<5901>`. If the VNC server is on a different machine from where you installed the tunnel, enter `<SERVER_IP>:5901`.
+
+	Replace `5901` with your VNC server's listening port. To determine your VNC listening port, run `sudo ss -lnpt` and look for `vnc` in the list of processes.
+
+6. Save the route.
+
+Your VNC server is now ready to accept inbound requests from Cloudflare.
+
+## 3. Create an Access application for VNC
+
+Create a Cloudflare Access application that users can access through their browser:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+
+2. Select **Add an application**.
+
+3. Select **Self-hosted**.
+
+4. Enter any name for the application.
+
+5. Select **Add public hostname** and enter your published application hostname (`vnc.example.com`).
+
+6. In **Browser rendering settings**, set **Browser rendering** to _VNC_.
+
+7. <Render file="access/add-access-policies" product="cloudflare-one" />
+
+	<Render file="access/self-hosted-app/browser-rendering-policies" product="cloudflare-one" />
+
+8. Save the application.
+
+## 4. Connect as a user
+
+Users can now access the remote desktop environment directly in their web browser without installing any VNC client software.
+
+To connect to the VNC server:
+
+1. Open a browser and go to the public hostname URL (for example, `https://vnc.example.com`).
+2. Log in to Cloudflare Access with your configured identity provider.
+3. Enter the VNC server password.
+
+You should see the remote VNC server desktop rendered in your browser. All connections are secured through Cloudflare's network, and access is controlled by your Access policies.

@@ -59,9 +59,3 @@ export default {
 	},
 };
 ```
-
-:::note
-
-If you expect to be making multiple parallel database queries within a single Worker invocation, consider using a [connection pool (`pg.Pool`)](https://node-postgres.com/apis/pool) to allow for parallel queries. If doing so, set the max connections of the connection pool to 5 connections. This ensures that the connection pool fits within [Workers' concurrent open connections limit of 6](/workers/platform/limits), which affect TCP connections that database drivers use.
-
-:::

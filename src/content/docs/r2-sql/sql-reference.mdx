@@ -16,14 +16,54 @@ This page documents the R2 SQL syntax based on the currently supported grammar i
 
 ---
 
-## Complete Query Syntax
+## Query Syntax
 
 ```sql
-SELECT column_list
+SELECT column_list | aggregation_function
 FROM table_name
 WHERE conditions --optional
+[GROUP BY column_list]
+[HAVING conditions]
 [ORDER BY column_name [DESC | ASC]]
 [LIMIT number]
+```
+
+---
+
+## Schema Discovery Commands
+
+R2 SQL supports metadata queries to explore available namespaces and tables.
+
+### SHOW DATABASES
+
+Lists all available namespaces.
+
+```sql
+SHOW DATABASES;
+```
+
+### SHOW NAMESPACES
+
+Alias for `SHOW DATABASES`. Lists all available namespaces.
+
+```sql
+SHOW NAMESPACES;
+```
+
+### SHOW TABLES
+
+Lists all tables within a specific namespace.
+
+```sql
+SHOW TABLES IN namespace_name;
+```
+
+### DESCRIBE
+
+Describes the structure of a table, showing column names and data types.
+
+```sql
+DESCRIBE namespace_name.table_name;
 ```
 
 ---
@@ -44,10 +84,60 @@ SELECT column_specification [, column_specification, ...]
 ### Examples
 
 ```sql
-SELECT * FROM table_name
-SELECT user_id FROM table_name
-SELECT user_id, timestamp, status FROM table_name
-SELECT timestamp, user_id, response_code FROM table_name
+SELECT * FROM namespace_name.table_name
+SELECT user_id FROM namespace_name.table_name
+SELECT user_id, timestamp, status FROM namespace_name.table_name
+SELECT timestamp, user_id, response_code FROM namespace_name.table_name
+```
+
+---
+
+## Aggregation Functions
+
+### Syntax
+
+```sql
+SELECT aggregation_function(column_name)
+FROM table_name
+GROUP BY column_list
+```
+
+### Supported Functions
+
+- **COUNT(*)**: Counts total rows **note**: only `*` is supported
+- **SUM(column)**: Sums numeric values
+- **AVG(column)**: Calculates average of numeric values
+- **MIN(column)**: Finds minimum value
+- **MAX(column)**: Finds maximum value
+
+### Examples
+
+```sql
+-- Count rows by department
+SELECT department, COUNT(*)
+FROM my_namespace.sales_data
+GROUP BY department
+
+-- Sum decimal values
+SELECT region, SUM(total_amount)
+FROM my_namespace.sales_data
+GROUP BY region
+
+-- Average by category
+SELECT category, AVG(price)
+FROM my_namespace.products
+GROUP BY category
+
+-- Min and Max
+SELECT department, MIN(salary), MAX(salary)
+FROM my_namespace.employees
+GROUP BY department
+
+-- Invalid: No aliases
+SELECT department, COUNT(*) AS total FROM my_namespace.sales_data GROUP BY department
+
+-- Invalid: COUNT column name
+SELECT COUNT(department) FROM my_namespace.sales_data
 ```
 
 ---
@@ -105,12 +195,93 @@ SELECT * WHERE condition [AND|OR condition ...]
 ### Examples
 
 ```sql
-SELECT * FROM table_name WHERE timestamp BETWEEN '2025-09-24T01:00:00Z' AND '2025-09-25T01:00:00Z'
-SELECT * FROM table_name WHERE status = 200
-SELECT * FROM table_name WHERE response_time > 1000
-SELECT * FROM table_name WHERE user_id IS NOT NULL
-SELECT * FROM table_name WHERE method = 'GET' AND status >= 200 AND status < 300
-SELECT * FROM table_name WHERE (status = 404 OR status = 500) AND timestamp > '2024-01-01'
+SELECT * FROM namespace_name.table_name WHERE timestamp BETWEEN '2025-09-24T01:00:00Z' AND '2025-09-25T01:00:00Z'
+SELECT * FROM namespace_name.table_name WHERE status = 200
+SELECT * FROM namespace_name.table_name WHERE response_time > 1000
+SELECT * FROM namespace_name.table_name WHERE user_id IS NOT NULL
+SELECT * FROM namespace_name.table_name WHERE method = 'GET' AND status >= 200 AND status < 300
+SELECT * FROM namespace_name.table_name WHERE (status = 404 OR status = 500) AND timestamp > '2024-01-01'
+```
+
+---
+
+## GROUP BY Clause
+
+### Syntax
+
+```sql
+SELECT column_list, aggregation_function
+FROM table_name
+[WHERE conditions]
+GROUP BY column_list
+```
+
+### Examples
+
+```sql
+-- Single column grouping
+SELECT department, COUNT(*)
+FROM my_namespace.sales_data
+GROUP BY department
+
+-- Multiple column grouping
+SELECT department, category, COUNT(*)
+FROM my_namespace.sales_data
+GROUP BY department, category
+
+-- With WHERE filter
+SELECT region, COUNT(*)
+FROM my_namespace.sales_data
+WHERE status = 'completed'
+GROUP BY region
+
+-- With ORDER BY (COUNT only)
+SELECT region, COUNT(*)
+FROM my_namespace.sales_data
+GROUP BY region
+ORDER BY COUNT(*) DESC
+LIMIT 10
+
+-- ORDER BY SUM
+SELECT department, SUM(amount)
+FROM my_namespace.sales_data
+GROUP BY department
+ORDER BY SUM(amount) DESC
+```
+
+---
+
+## HAVING Clause
+
+### Syntax
+
+```sql
+SELECT column_list, COUNT(*)
+FROM table_name
+GROUP BY column_list
+HAVING SUM/COUNT/MIN/MAX/AVG(column_name) comparison_operator value
+```
+
+### Examples
+
+```sql
+-- Filter by count threshold
+SELECT department, COUNT(*)
+FROM my_namespace.sales_data
+GROUP BY department
+HAVING COUNT(*) > 1000
+
+-- Multiple conditions
+SELECT region, COUNT(*)
+FROM my_namespace.sales_data
+GROUP BY region
+HAVING COUNT(*) >= 100
+
+-- HAVING with SUM
+SELECT department, SUM(amount)
+FROM my_namespace.sales_data
+GROUP BY department
+HAVING SUM(amount) > 1000000
 ```
 
 ---
@@ -132,9 +303,9 @@ ORDER BY partition_key [DESC]
 ### Examples
 
 ```sql
-SELECT * FROM table_name WHERE ... ORDER BY paetition_key_A
-SELECT * FROM table_name WHERE ... ORDER BY partition_key_B DESC
-SELECT * FROM table_name WHERE ... ORDER BY partitionKey_A ASC
+SELECT * FROM namespace_name.table_name WHERE ... ORDER BY partition_key_A
+SELECT * FROM namespace_name.table_name WHERE ... ORDER BY partition_key_B DESC
+SELECT * FROM namespace_name.table_name WHERE ... ORDER BY partition_key_A ASC
 
 ```
 
@@ -155,7 +326,7 @@ LIMIT number
 ### Examples
 
 ```sql
-SELECT * FROM table_name WHERE ... LIMIT 100
+SELECT * FROM namespace_name.table_name WHERE ... LIMIT 100
 ```
 
 ---
@@ -166,7 +337,7 @@ SELECT * FROM table_name WHERE ... LIMIT 100
 
 ```sql
 SELECT *
-FROM http_requests
+FROM my_namespace.http_requests
 WHERE timestamp BETWEEN '2025-09-24T01:00:00Z' AND '2025-09-25T01:00:00Z'
 LIMIT 100
 ```
@@ -175,7 +346,7 @@ LIMIT 100
 
 ```sql
 SELECT user_id, timestamp, status, response_time
-FROM access_logs
+FROM my_namespace.access_logs
 WHERE status >= 400 AND response_time > 5000
 ORDER BY response_time DESC
 LIMIT 50
@@ -185,7 +356,7 @@ LIMIT 50
 
 ```sql
 SELECT timestamp, method, status, user_agent
-FROM http_requests
+FROM my_namespace.http_requests
 WHERE (method = 'POST' OR method = 'PUT')
   AND status BETWEEN 200 AND 299
   AND user_agent IS NOT NULL
@@ -197,11 +368,42 @@ LIMIT 1000
 
 ```sql
 SELECT user_id, session_id, date_column
-FROM user_events
+FROM my_namespace.user_events
 WHERE session_id IS NOT NULL
   AND date_column >= '2024-01-01'
 ORDER BY timestamp
 LIMIT 500
+```
+
+### Aggregation Query
+
+```sql
+SELECT department, COUNT(*)
+FROM my_namespace.sales_data
+WHERE sale_date >= '2024-01-01'
+GROUP BY department
+ORDER BY COUNT(*) DESC
+LIMIT 10
+```
+
+### Aggregation with HAVING
+
+```sql
+SELECT region, COUNT(*)
+FROM my_namespace.sales_data
+WHERE status = 'completed'
+GROUP BY region
+HAVING COUNT(*) > 1000
+LIMIT 20
+```
+
+### Multiple Column Grouping
+
+```sql
+SELECT department, category, MIN(price), MAX(price)
+FROM my_namespace.products
+GROUP BY department, category
+LIMIT 100
 ```
 
 ---
@@ -223,17 +425,17 @@ LIMIT 500
 
 ```sql
 -- Integer comparisons
-SELECT * FROM table_name WHERE status = 200
-SELECT * FROM table_name WHERE response_time > 1000
+SELECT * FROM namespace_name.table_name WHERE status = 200
+SELECT * FROM namespace_name.table_name WHERE response_time > 1000
 
 -- Float comparisons
-SELECT * FROM table_name WHERE cpu_usage >= 85.5
-SELECT * FROM table_name WHERE memory_ratio < 0.8
+SELECT * FROM namespace_name.table_name WHERE cpu_usage >= 85.5
+SELECT * FROM namespace_name.table_name WHERE memory_ratio < 0.8
 
 -- String comparisons
-SELECT * FROM table_name WHERE method = 'POST'
-SELECT * FROM table_name WHERE user_agent != 'bot'
-SELECT * FROM table_name WHERE country_code = 'US'
+SELECT * FROM namespace_name.table_name WHERE method = 'POST'
+SELECT * FROM namespace_name.table_name WHERE user_agent != 'bot'
+SELECT * FROM namespace_name.table_name WHERE country_code = 'US'
 ```
 
 ---
@@ -247,7 +449,7 @@ SELECT * FROM table_name WHERE country_code = 'US'
 Use parentheses to override default precedence:
 
 ```sql
-SELECT * FROM table_name WHERE (status = 404 OR status = 500) AND method = 'GET'
+SELECT * FROM namespace_name.table_name WHERE (status = 404 OR status = 500) AND method = 'GET'
 ```
 
 ---
