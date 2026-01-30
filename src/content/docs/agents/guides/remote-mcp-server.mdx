@@ -109,15 +109,14 @@ Learn more about other ways of using remote MCP servers with MCP clients here in
 The public MCP server example you deployed earlier allows any client to connect and invoke tools without logging in. In this section, we will walk through how to enable user authentication to your MCP server. To add authentication, you can either:
 
 - **Build OAuth logic directly into your MCP server**: You can integrate Cloudflare Access or a third-party service as the OAuth provider. The MCP server handles secure login flows and issues access tokens that MCP clients can use to make authenticated tool calls. Users sign in with the OAuth provider and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
-- **Use Cloudflare Access as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)**: Your MCP server validates the Cloudflare Access JWT to ensure that requests come from Cloudflare Access. User sign in to any identity provider enabled in your Access application, and are only allowed to connect to the MCP server if they pass your Access policies.
+- **Use Cloudflare Access as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)**: Your MCP server validates the Cloudflare Access JWT to ensure that requests come from Cloudflare Access. User sign in to your configured identity provider and are only allowed to connect to the MCP server if they pass your Access policies.
 
 ### Option 1: Use Cloudflare Access for OAuth
 
 
 ### Option 2: Use Cloudflare Access as a reverse proxy
 
-You can use Cloudflare Access to secure authentication to your MCP server. This allows you to restrict access to your tools based on identity providers (like Google, Okta, or Microsoft Entra ID) or email domains without managing OAuth logic within your code.
-
+You can use Cloudflare Access to secure authentication to your MCP server, without managing OAuth logic within your code. This method allows you to restrict access to your tools based on user attributes from identity providers (like Google, Okta, or Microsoft Entra ID), email domains, IP addresses, and [other criteria](/cloudflare-one/access-controls/policies/).
 
 ### Option 3: Third-party OAuth provider
 
