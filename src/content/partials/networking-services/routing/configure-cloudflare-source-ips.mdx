@@ -5,7 +5,7 @@ params:
 
 import { APIRequest, DashButton, Tabs, TabItem } from "~/components";
 
-You can configure the source IP address range used by Cloudflare whenever a Cloudflare service, such as Cloudflare Load Balancing, sends traffic to a Cloudflare One private network. This address range is referred to as the Proxy Source IP Prefix (or `cloudflare_source` subnet type in the API).
+You can configure the source IP address range used by Cloudflare whenever a Cloudflare service, such as Cloudflare Load Balancing, sends traffic to a Cloudflare One private network. This address range is referred to as the Cloudflare Source IP Prefix (or `cloudflare_source` subnet type in the API).
 - IPv4 traffic is sourced from `100.64.0.0/12`. This range is configurable.
 - IPv6 traffic is sourced from `2606:4700:cf1:5000::/64`. This range is not configurable.
 
@@ -21,7 +21,7 @@ Before you begin, ensure that:
 - Your desired new network range meets the following requirements:
   - Your network must be defined as a single CIDR with a prefix length of `/12`.
   - Cloudflare One subnets in the same account cannot overlap. Default allocations include:
-    - Proxy Source IPs (`100.64.0.0/12`)
+    - Cloudflare Source IPs (`100.64.0.0/12`)
     - Hostname Route Token IPs (`100.80.0.0/16`)
     - WARP Clients (`100.96.0.0/12`)
     - Private Load Balancers (`100.112.0.0/16`)
