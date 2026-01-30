@@ -23,6 +23,6 @@ const valueWithMetadata = await env.NAMESPACE.getWithMetadata("my-key", {
 	cacheTtl: 30, // Cache for minimum 30 seconds
 });
 ```
-The default cache TTL remains unchanged at 60 seconds.
+The default cache TTL remains unchanged at 60 seconds. Update to the latest version of Wrangler to be able to use 30 seconds `cacheTtl`.
 
 This change affects all KV read operations using the binding API. For more information, consult the [Workers KV cache TTL documentation](/kv/api/read-key-value-pairs/#cachettl-parameter).
