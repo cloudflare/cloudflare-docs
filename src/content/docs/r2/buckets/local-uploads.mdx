@@ -8,9 +8,11 @@ sidebar:
 
 import { Tabs, TabItem, DashButton, R2LocalUploadsDiagram } from "~/components";
 
-You can enable Local Uploads on your bucket to improve the performance of cross-region upload requests. It writes object data to a nearby location, then asynchronously copies it to your bucket. Data is available immediately and remains strongly consistent.
+You can enable Local Uploads on your bucket to improve the performance of upload requests when clients upload data from a different region than your bucket. Local Uploads writes object data to a nearby location, then asynchronously copies it to your bucket. Data is available immediately and remains strongly consistent.
 
 ## How it works
+
+The following sections describe how R2 handles upload requests with and without Local Uploads enabled.
 
 ### Without Local Uploads
 
@@ -29,8 +31,9 @@ When you make an upload request (i.e. `PutObject` and `UploadPart`) to a bucket 
 
 Local uploads are built for workloads that receive a lot of uploads originating from different geographic regions than where your bucket is located. This feature is ideal when:
 
-- Your users are globally distributed, and upload performance is critical to your application's experience
-- You want to optimize write performance without changing your bucket's location
+- Your users are globally distributed
+- Upload performance and reliability is critical to your application
+- You want to optimize write performance without changing your bucket's primary location
 
 To understand the geographic distribution of where your read and write requests are initiated:
 
@@ -60,7 +63,7 @@ When you enable Local Uploads, existing uploads will complete as expected with n
 1. Log in to the Cloudflare dashboard, and go to R2 Overview.
 
    <DashButton url="/?to=/:account/r2/overview" />
-   
+
 2. Select your bucket.
 3. Select **Settings**.
 4. Under **Local Uploads**, select **Enable**.
@@ -84,7 +87,7 @@ You can disable local uploads at any time. R2 completes any in-progress replicat
 1. Log in to the Cloudflare dashboard, and go to R2 Overview.
 
    <DashButton url="/?to=/:account/r2/overview" />
-   
+
 2. Select your bucket.
 3. Select **Settings**.
 4. Under **Local Uploads**, select **Disable**.

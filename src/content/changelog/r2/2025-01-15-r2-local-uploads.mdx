@@ -1,14 +1,12 @@
 ---
-title: Improve Global Upload Performance with R2 Local Uploads
+title: Improve Global Upload Performance with R2 Local Uploads - Now in Open Beta
 description: R2 Local Uploads reduces total request duration for uploads by more than 50%. It writes object data to a nearby location, then asynchronously copies it to your bucket. Data is available immediately.
 products:
   - r2
 date: 2026-02-03
 ---
 
-[R2](/r2/) is introducing [Local Uploads](/r2/buckets/local-uploads/) in open beta. Local Uploads improves upload performance for clients who are uploading from a region outside of the bucket's region.
-
-With Local Uploads enabled, object data is written to storage infrastructure near the client, then asynchronously replicated to your bucket. The object is immediately accessible and remains strongly consistent throughout. Refer to [How R2 works](/r2/how-r2-works/) for details on how data is written to your bucket.
+[Local Uploads](/r2/buckets/local-uploads/) is now available in open beta. Enable it on your [R2](/r2/) bucket to improve upload performance when clients upload data from a different region than your bucket. With Local Uploads enabled, object data is written to storage infrastructure near the client, then asynchronously replicated to your bucket. The object is immediately accessible and remains strongly consistent throughout. Refer to [How R2 works](/r2/how-r2-works/) for details on how data is written to your bucket.
 
 In our tests, we observed a **>50% reduction in Time to Last Byte (TTLB)** for upload requests when Local Uploads is enabled.
 

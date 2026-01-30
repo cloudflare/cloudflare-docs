@@ -64,7 +64,7 @@ When a read request (e.g. fetching an object) is made to R2, the following seque
 
 The performance of your operations can be influenced by factors such as the bucket's geographical location, request origin, and access patterns.
 
-To optimize upload performance for cross-region requests, enable [Local Uploads](/r2/buckets/local-upload/) on your bucket.
+To optimize upload performance for cross-region requests, enable [Local Uploads](/r2/buckets/local-uploads/) on your bucket.
 
 To optimize read performance, enable [Cloudflare Cache](/cache/) when using a [custom domain](/r2/buckets/public-buckets/#custom-domains). When caching is enabled, read requests can bypass the R2 Gateway and be served directly from Cloudflare's edge cache, reducing latency. Note that cached data may not reflect the latest version immediately.
 
