@@ -58,6 +58,42 @@ When using `keepAlive: true`, you **must** call `destroy()` when finished to pre
 
 ---
 
+### `setKeepAlive()`
+
+Enable or disable keepAlive mode dynamically after sandbox creation.
+
+```ts
+await sandbox.setKeepAlive(keepAlive: boolean): Promise<void>
+```
+
+**Parameters**:
+- `keepAlive` - `true` to prevent automatic sleep, `false` to allow normal sleep behavior
+
+When enabled, the sandbox automatically sends heartbeat pings every 30 seconds to prevent container eviction. When disabled, the sandbox returns to normal sleep behavior based on the `sleepAfter` configuration.
+
+<TypeScriptExample>
+```
+const sandbox = getSandbox(env.Sandbox, 'user-123');
+
+// Enable keepAlive for a long-running process
+await sandbox.setKeepAlive(true);
+await sandbox.startProcess('python long_running_analysis.py');
+
+// Later, disable keepAlive when done
+await sandbox.setKeepAlive(false);
+```
+</TypeScriptExample>
+
+:::note[Heartbeat mechanism]
+When keepAlive is enabled, the sandbox automatically sends lightweight ping requests to the container every 30 seconds to prevent eviction. This happens transparently without affecting your application code.
+:::
+
+:::caution[Resource management]
+Containers with `keepAlive: true` will not automatically timeout. Always disable keepAlive or call `destroy()` when done to prevent containers running indefinitely.
+:::
+
+---
+
 ### `destroy()`
 
 Destroy the sandbox container and free up resources.
