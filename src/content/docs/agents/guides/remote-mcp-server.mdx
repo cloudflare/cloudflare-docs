@@ -106,17 +106,28 @@ Learn more about other ways of using remote MCP servers with MCP clients here in
 
 ## Add Authentication
 
-Now that you’ve deployed a public MCP server, let’s walk through how to enable user authentication using OAuth.
+The public MCP server example you deployed earlier allows any client to connect and invoke tools without logging in. In this section, we will walk through how to enable user authentication to your MCP server. To add authentication, you can either:
 
-The public server example you deployed earlier allows any client to connect and invoke tools without logging in. To add authentication, you’ll update your MCP server to act as an OAuth provider, handling secure login flows and issuing access tokens that MCP clients can use to make authenticated tool calls.
+- **Build OAuth logic directly into your MCP server**: You can integrate Cloudflare Access or a third-party service as the OAuth provider. The MCP server handles secure login flows and issues access tokens that MCP clients can use to make authenticated tool calls. Users sign in with the OAuth provider and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
+- **Use Cloudflare Access as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)**: Your MCP server validates the Cloudflare Access JWT to ensure that requests come from Cloudflare Access. User sign in to any identity provider enabled in your Access application, and are only allowed to connect to the MCP server if they pass your Access policies.
 
-This is especially useful if users already need to log in to use your service. Once authentication is enabled, users can sign in with their existing account and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
+### Option 1: Use Cloudflare Access for OAuth
 
-In this example, we use GitHub as an OAuth provider, but you can connect your MCP server with any [OAuth provider](/agents/model-context-protocol/authorization/#2-third-party-oauth-provider) that supports the OAuth 2.0 specification, including Google, Slack, [Stytch](/agents/model-context-protocol/authorization/#stytch), [Auth0](/agents/model-context-protocol/authorization/#stytch), [WorkOS](/agents/model-context-protocol/authorization/#stytch), and more.
 
-### Step 1 — Create a new MCP server
+### Option 2: Use Cloudflare Access as a reverse proxy
 
-Run the following command to create a new MCP server:
+You can use Cloudflare Access to secure authentication to your MCP server. This allows you to restrict access to your tools based on identity providers (like Google, Okta, or Microsoft Entra ID) or email domains without managing OAuth logic within your code.
+
+
+### Option 3: Third-party OAuth provider
+
+You can connect your MCP server with any [OAuth provider](/agents/model-context-protocol/authorization/#2-third-party-oauth-provider) that supports the OAuth 2.0 specification, including GitHub, Google, Slack, [Stytch](/agents/model-context-protocol/authorization/#stytch), [Auth0](/agents/model-context-protocol/authorization/#stytch), [WorkOS](/agents/model-context-protocol/authorization/#stytch), and more.
+
+The following example demonstrates how to use GitHub as an OAuth provider.
+
+#### Step 1 — Create a new MCP server
+
+Run the following command to create a new MCP server with GitHub OAuth:
 
 <PackageManagers
 	type="create"
@@ -149,117 +160,111 @@ export default new OAuthProvider({
 
 This will ensure that your users are redirected to GitHub to authenticate. To get this working though, you need to create OAuth client apps in the steps below.
 
-### Step 2 — Create an OAuth App
+#### Step 2 — Create an OAuth App
 
 You'll need to create two [GitHub OAuth Apps](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) to use GitHub as an authentication provider for your MCP server — one for local development, and one for production.
 
-#### First create a new OAuth App for local development
+#### Step 2.1 — Create a new OAuth App for local development
 
-Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
+1. Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
 
-- **Application name**: `My MCP Server (local)`
-- **Homepage URL**: `http://localhost:8788`
-- **Authorization callback URL**: `http://localhost:8788/callback`
+	- **Application name**: `My MCP Server (local)`
+	- **Homepage URL**: `http://localhost:8788`
+	- **Authorization callback URL**: `http://localhost:8788/callback`
 
-For the OAuth app you just created, add the client ID of the OAuth app as `GITHUB_CLIENT_ID` and generate a client secret, adding it as `GITHUB_CLIENT_SECRET` to a `.dev.vars` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
+2. For the OAuth app you just created, add the client ID of the OAuth app as `GITHUB_CLIENT_ID` and generate a client secret, adding it as `GITHUB_CLIENT_SECRET` to a `.dev.vars` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
 
-```sh
-touch .dev.vars
-echo 'GITHUB_CLIENT_ID="your-client-id"' >> .dev.vars
-echo 'GITHUB_CLIENT_SECRET="your-client-secret"' >> .dev.vars
-cat .dev.vars
-```
+	```sh
+	touch .dev.vars
+	echo 'GITHUB_CLIENT_ID="your-client-id"' >> .dev.vars
+	echo 'GITHUB_CLIENT_SECRET="your-client-secret"' >> .dev.vars
+	cat .dev.vars
+	```
 
-#### Next, run your MCP server locally
+3. Run the following command to start the development server:
 
-Run the following command to start the development server:
+	```sh
+	npm start
+	```
 
-```sh
-npm start
-```
+	Your MCP server is now running on `http://localhost:8788/mcp`.
 
-Your MCP server is now running on `http://localhost:8788/mcp`.
+4. In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
 
-In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
+	```sh
+	npx @modelcontextprotocol/inspector@latest
+	```
 
-```sh
-npx @modelcontextprotocol/inspector@latest
-```
+5. Open the MCP inspector in your web browser:
 
-Open the MCP inspector in your web browser:
+	```sh
+	open http://localhost:5173
+	```
 
-```sh
-open http://localhost:5173
-```
+6. In the inspector, enter the URL of your MCP server, `http://localhost:8788/mcp`
 
-In the inspector, enter the URL of your MCP server, `http://localhost:8788/mcp`
+7. In the main panel on the right, click the **OAuth Settings** button and then click **Quick OAuth Flow**.
 
-In the main panel on the right, click the **OAuth Settings** button and then click **Quick OAuth Flow**.
+	You should be redirected to a GitHub login or authorization page. After authorizing the MCP Client (the inspector) access to your GitHub account, you will be redirected back to the inspector.
 
-You should be redirected to a GitHub login or authorization page. After authorizing the MCP Client (the inspector) access to your GitHub account, you will be redirected back to the inspector.
+8. Click **Connect** in the sidebar and you should see the "List Tools" button, which will list the tools that your MCP server exposes.
 
-Click **Connect** in the sidebar and you should see the "List Tools" button, which will list the tools that your MCP server exposes.
+#### Step 2.2 — Create a new OAuth App for production
 
-#### Second — create a new OAuth App for production
+You'll need to repeat [Step 2.1](#step-21--create-a-new-oauth-app-for-local-development) to create a new OAuth App for production.
 
-You'll need to repeat these steps to create a new OAuth App for production.
-
-Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
+1. Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
 
 - **Application name**: `My MCP Server (production)`
 - **Homepage URL**: Enter the workers.dev URL of your deployed MCP server (ex: `worker-name.account-name.workers.dev`)
 - **Authorization callback URL**: Enter the `/callback` path of the workers.dev URL of your deployed MCP server (ex: `worker-name.account-name.workers.dev/callback`)
 
-For the OAuth app you just created, add the client ID and client secret, using Wrangler CLI:
+2. For the OAuth app you just created, add the client ID and client secret, using Wrangler CLI:
 
-```sh
-wrangler secret put GITHUB_CLIENT_ID
-```
+	```sh
+	wrangler secret put GITHUB_CLIENT_ID
+	```
 
-```sh
-wrangler secret put GITHUB_CLIENT_SECRET
-```
+	```sh
+	wrangler secret put GITHUB_CLIENT_SECRET
+	```
 
-```
-npx wrangler secret put COOKIE_ENCRYPTION_KEY # add any random string here e.g. openssl rand -hex 32
-```
+	```
+	npx wrangler secret put COOKIE_ENCRYPTION_KEY # add any random string here e.g. openssl rand -hex 32
+	```
 
-:::caution
-When you create the first secret, Wrangler will ask if you want to create a new Worker. Submit "Y" to create a new Worker and save the secret.
-:::
+	:::caution
+	When you create the first secret, Wrangler will ask if you want to create a new Worker. Submit "Y" to create a new Worker and save the secret.
+	:::
 
-#### Set up a KV namespace
+3. Set up a KV namespace
 
-- Create the KV namespace:
+		a. Create the KV namespace:
 
-```bash
-npx wrangler kv namespace create "OAUTH_KV"
-```
+		```bash
+		npx wrangler kv namespace create "OAUTH_KV"
+		```
 
-- Update the `wrangler.jsonc` file with the resulting KV ID:
+		b. Update the `wrangler.jsonc` file with the resulting KV ID:
 
-```json
-{
-	"kvNamespaces": [
+		```json
 		{
-			"binding": "OAUTH_KV",
-			"id": "<YOUR_KV_NAMESPACE_ID>"
+			"kvNamespaces": [
+				{
+					"binding": "OAUTH_KV",
+					"id": "<YOUR_KV_NAMESPACE_ID>"
+				}
+			]
 		}
-	]
-}
-```
+		```
 
-#### Deploy your server
+4. Deploy the MCP server to your Cloudflare `workers.dev` domain:
 
-Deploy the MCP server to your Cloudflare `workers.dev` domain:
+	```bash
+	npm run deploy
+	```
 
-```bash
-npm run deploy
-```
-
-#### Finally, connect to your MCP server
-
-Now that you've added the ID and secret of your production OAuth app, you should now be able to connect to your MCP server running at `worker-name.account-name.workers.dev/mcp` using the [AI Playground](https://playground.ai.cloudflare.com/), MCP inspector or ([other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients)), and authenticate with GitHub.
+5. Connect to your server running at `worker-name.account-name.workers.dev/mcp` using the [AI Playground](https://playground.ai.cloudflare.com/), MCP inspector or ([other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients)), and authenticate with GitHub.
 
 ## Next steps
 
