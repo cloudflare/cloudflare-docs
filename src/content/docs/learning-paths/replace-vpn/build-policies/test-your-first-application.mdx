@@ -17,12 +17,20 @@ If you cannot reach an application protected by Access or an external applicatio
 
 ### Troubleshoot WARP
 
-If your manual test fails, troubleshoot the WARP client. Cloudflare recommennds starting with reviewing your WARP configuration because misconfiguration is the most common cause of connectivity issues.
+If your manual test fails, troubleshoot the WARP client. Cloudflare recommends starting with reviewing your WARP configuration because misconfiguration is the most common cause of connectivity issues.
 
 - [WARP troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/): Step-by-step instructions to debug WARP client issues.
 - [WARP client errors](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/): If you are receiving an error, review the associated solutions.
 - [WARP connectivity status](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/connectivity-status/): Review the connectivity stage of the WARP daemon as it establishes a connection from the device to Cloudflare.
 - [WARP with Firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/): Ensure you have exempted the correct IP addresses and domains to allow the WARP client to connect.
+
+### Review analytics
+
+Analytics provide visualizations of [log data](/learning-paths/replace-vpn/build-policies/test-your-first-application/#review-logs). To review Access or Gateway analytics:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Dashboards**.
+2. Select **[Access event analytics](/cloudflare-one/insights/analytics/access/)** for a summary of login events or **[Application Access Report](/cloudflare-one/insights/analytics/application-access/)** for a summary of overall Access Activity. 
+3. Select the **HTTP request analytics**, **DNS query analytics** or **Network session analytics** depending on [your Gateway investigation scope](/cloudflare-one/insights/analytics/gateway/).
 
 ### Review logs
 
@@ -37,15 +45,7 @@ To review traffic activity in the [Gateway logs](/cloudflare-one/insights/logs/g
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Logs**.
 2. Select **HTTP request logs**, **Network logs**, or **DNS query logs** depending on your investigation scope.
 
-Refer to [Troubleshoot Gateway](/cloudflare-one/traffic-policies/troubleshoot-gateway/) if you have already debugged the WARP client and are still unable to reach your application.
-
-### Review analytics
-
-Analytics provide visualizations of the [log data you reviewed](/learning-paths/replace-vpn/build-policies/test-your-first-application/#review-logs) in the previous section. To review Access or Gateway analytics:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Dashboards**.
-2. Select **[Access event analytics](/cloudflare-one/insights/analytics/access/)** for a summary of login events or **[Application Access Report](/cloudflare-one/insights/analytics/application-access/)** for a summary of overall Access Activity. 
-3. Select the **HTTP request analytics**, **DNS query analytics** or **Network session analytics** depending on [your Gateway investigation scope](/cloudflare-one/insights/analytics/gateway/).
+Refer to [Troubleshoot Gateway](/cloudflare-one/traffic-policies/troubleshoot-gateway/) to troubleshoot common issues with Gateway egress policies.
 
 ## Monitor your policies and device connectivity
 
@@ -57,10 +57,10 @@ Refer to [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) fo
 
 ### Example use case 
 
-- Imagine that you have three devices with the WARP client installed set up in your testing environment.
+- Imagine that you have three devices, with the WARP client installed, set up in your testing environment.
 - You have set up a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and an [Access policy](/cloudflare-one/access-controls/policies/) for your internal wiki that is available at `wiki.acme.org`.
 - You [manually tested](/learning-paths/replace-vpn/build-policies/test-your-first-application/#manually-test-your-policies) the three WARP client devices, and you confirmed they can all reach `wiki.acme.org`.
-- You want to setup automated connectivity and performance testing to `wiki.acme.org` for each of these WARP client devices so you can monitor them overtime.
+- You want to set up automated connectivity and performance testing to `wiki.acme.org` for each of these WARP client devices so you can monitor them over time.
 - You set up a DEX test, and it sends an HTTP GET request to `wiki.acme.org` from all three WARP devices on a five minute interval.
 - If WARP device connectivity drops, or if there are performance problems, you can see the DEX test results to troubleshoot the problem.
 
