@@ -10,7 +10,6 @@ This component can be used to automatically generate a `jsonc` version of the `t
 
 ```mdx
 import { WranglerConfig } from "~/components";
-
 ```
 
 ## Usage
@@ -28,7 +27,9 @@ database_id = "<unique-ID-for-your-database>"
 </WranglerConfig>
 ````
 
-A `$today` value can be used in this component to automatically insert the today's date. This is useful for suggesting that users set the latest compatibility date.
+## Compatibility date
+
+Always use `$today` for the `compatibility_date` value. This magic string is automatically replaced with the current date at build time, ensuring documentation always suggests the latest date.
 
 ````mdx live
 import { WranglerConfig } from "~/components";
@@ -38,6 +39,24 @@ import { WranglerConfig } from "~/components";
 {
 	"name": "my-worker",
 	"compatibility_date": "$today"
+}
+```
+</WranglerConfig>
+````
+
+### Minimum compatibility dates
+
+Some features require a minimum compatibility date. When documenting these features, add an inline comment after the date to indicate the minimum requirement:
+
+````mdx live
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+```jsonc
+{
+	"name": "my-worker",
+	"compatibility_date": "$today", // Minimum: 2024-09-23
+	"compatibility_flags": ["nodejs_compat"]
 }
 ```
 </WranglerConfig>
