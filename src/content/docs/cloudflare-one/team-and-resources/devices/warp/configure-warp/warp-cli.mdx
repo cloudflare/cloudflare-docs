@@ -72,17 +72,16 @@ warp-cli <COMMAND> [SUBCOMMAND] [ARGUMENTS] [OPTIONS]
 
 The following options can be used with any `warp-cli` command:
 
-| Option                | Short | Description                                                                              |
-| --------------------- | ----- | ---------------------------------------------------------------------------------------- |
-| `--timeout <SECONDS>` | `-t`  | Timeout (in seconds) before IPC channel is considered hung.                              |
-| `--listen`            | `-l`  | Listen for status changes and DNS logs (if enabled).                                     |
-| `--accept-tos`        |       | Accept the Terms of Service agreement.                                                   |
-| `--verbose`           | `-v`  | Enable verbose output. Use multiple times for increased verbosity (for example, `-vvv`). |
-| `--json`              | `-j`  | Pretty print output as JSON.                                                             |
-| `--no-paginate`       |       | Disable automatic pagination.                                                            |
-| `--no-ansi`           |       | Disable ANSI characters in output.                                                       |
-| `--help`              | `-h`  | Print help information.                                                                  |
-| `--version`           | `-V`  | Print version information.                                                               |
+| Option          | Short | Description                                                                              |
+| --------------- | ----- | ---------------------------------------------------------------------------------------- |
+| `--listen`      | `-l`  | Listen for status changes and DNS logs (if enabled).                                     |
+| `--accept-tos`  |       | Accept the Terms of Service agreement.                                                   |
+| `--verbose`     | `-v`  | Enable verbose output. Use multiple times for increased verbosity (for example, `-vvv`). |
+| `--json`        | `-j`  | Pretty print output as JSON.                                                             |
+| `--no-paginate` |       | Disable automatic pagination.                                                            |
+| `--no-ansi`     |       | Disable ANSI characters in output.                                                       |
+| `--help`        | `-h`  | Print help information.                                                                  |
+| `--version`     | `-V`  | Print version information.                                                               |
 
 ---
 
@@ -351,29 +350,6 @@ Display DNS statistics.
 warp-cli dns stats
 ```
 
-### `dns endpoint`
-
-Configure a custom DNS over HTTPS endpoint.
-
-#### `dns endpoint set`
-
-Set a custom DoH endpoint.
-
-```sh
-warp-cli dns endpoint set <ENDPOINT>
-```
-
-- `ENDPOINT` <Type text="string" /> <MetaInfo text="required" />
-  - The custom DoH endpoint URL.
-
-#### `dns endpoint reset`
-
-Reset the DoH endpoint to the default.
-
-```sh
-warp-cli dns endpoint reset
-```
-
 ### `dns default-fallbacks`
 
 Show the default fallback DNS servers.
@@ -599,61 +575,6 @@ Reset MASQUE options to defaults.
 warp-cli tunnel masque-options reset
 ```
 
-### `tunnel mtu`
-
-Configure the tunnel MTU (Maximum Transmission Unit).
-
-#### `tunnel mtu set`
-
-Set a custom MTU value.
-
-```sh
-warp-cli tunnel mtu set <VALUE>
-```
-
-- `VALUE` <Type text="integer" /> <MetaInfo text="required" />
-  - The MTU value in bytes.
-
-#### `tunnel mtu reset`
-
-Reset MTU to the default value.
-
-```sh
-warp-cli tunnel mtu reset
-```
-
-### `tunnel pmtud`
-
-Configure Path MTU Discovery (PMTUD) for MASQUE.
-
-:::note[Elevated privileges required]
-These commands require elevated privileges (administrator or root access).
-:::
-
-#### `tunnel pmtud enable`
-
-Enable Path MTU Discovery.
-
-```sh
-warp-cli tunnel pmtud enable
-```
-
-#### `tunnel pmtud disable`
-
-Disable Path MTU Discovery.
-
-```sh
-warp-cli tunnel pmtud disable
-```
-
-#### `tunnel pmtud reset`
-
-Reset PMTUD to the default setting.
-
-```sh
-warp-cli tunnel pmtud reset
-```
-
 ---
 
 ## `trusted`
@@ -780,21 +701,6 @@ Stop the local network access override.
 ```sh
 warp-cli override local-network stop
 ```
-
-### `override generate`
-
-Generate an admin override code.
-
-```sh
-warp-cli override generate <HOURS>
-```
-
-- `HOURS` <Type text="integer" /> <MetaInfo text="required" />
-  - The number of hours the override code should be valid.
-
-:::note[Admin privileges required]
-This command requires administrator privileges on the device.
-:::
 
 ---
 
