@@ -1,0 +1,20 @@
+---
+title: LLM Summaries for Detections
+description: Cloudy summaries for detections are now available in the Cloudflare dashboard
+date: 2025-12-01T21:11:33Z
+---
+
+When we brought Cloudflare Email Security into the Cloudflare dashboard, we received feedback that our detections could feel vague. Customers often asked what specifically caused a message to be labeled as malicious, spam, or suspicious.
+
+We took that feedback seriously.
+
+Now, within the **Investigation** page for an email, you will see **Cloudy summaries** that explain the detections that triggered on the message. These summaries appear in the **Reasons for disposition** section, inside a new orange box labeled **Reasons summary by Cloudy**. The summary provides a plain-language explanation of why the email was flagged.
+
+For customers who want the full technical detail, nothing has been removed. You can still click **View all signatures** to see every model, rule, and signal that triggered on the message, just as before.
+
+**These summaries are not trained on customer data.** They are generated using the outputs of our existing detection models and analysis systems, translating those signals into clearer explanations.
+
+This feature is available for all Email Security packages:
+- **Advantage**
+- **Enterprise**
+- **Enterprise + PhishGuard**
