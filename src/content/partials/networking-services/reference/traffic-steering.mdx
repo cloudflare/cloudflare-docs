@@ -423,7 +423,7 @@ With this functionality, you can:
 
 ### BGP peering with the Magic routing table
 
-{props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect <a href={props.setupBgpPeering}>Advertised prefix list</a>.
+{props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
 If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
 
@@ -441,12 +441,12 @@ Cloudflare uses the following timers, which are not configurable:
 
 | Setting | Description |
 | ----- | ----- |
-| **Hold timer** | 240 seconds <br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
-| **Keepalive timer** | One third of the hold time. |
-| **Graceful restart** | 120 seconds |
+| **Hold timer** | 240 seconds for CNI and 90 seconds for GRE and IPsec tunnels<br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
+| **Keepalive timer** | One third of the hold timer. |
+| **Graceful restart** | 120 seconds (currently, only supported on CNI) |
 
-- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold time and that received from the peer in the open message.
-- **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the Hold Timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
+- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold timer and that received from the peer in the open message.
+- **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the hold timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
 - **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
 
 ### BGP limitations
@@ -458,7 +458,6 @@ BGP support currently has the following limitations:
 - The Cloudflare account ASN and your device ASN must be different. Only eBGP is supported.
 - Cloudflare always injects routes with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
-- Only Internet Protocol version 4 (IPv4) routes are supported.
 
 { props.magicWord === "Magic Transit" && (
   <>
