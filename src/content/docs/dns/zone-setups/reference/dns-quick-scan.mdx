@@ -53,6 +53,18 @@ The DNS records **Content** would be different for each zone but, based on recor
 
 The [use cases section](#use-case-examples) below provides some examples of DNS records **Type**/**Name** combinations that the scan usually finds.
 
+## Limitations
+
+Since the DNS records quick scan is based on this predefined list of commonly used record types and names, and is not tailored to the specific zone you are adding to Cloudflare, there can be cases where not all records are picked up.
+
+For example, if you have very specific hostnames - such as `my-store1900.example.com` instead of `store.example.com` - or if you have set up a [DKIM record](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/) that uses a more custom name - `this._domainkey` instead of `default._domainkey` - it is expected that the scan will not find the specific DNS records.
+
+:::caution[Important]
+
+You should always [review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) and manually add any missing ones before changing your nameservers.
+
+:::
+
 ## Use case examples
 
 ### Address records
@@ -116,15 +128,3 @@ Since it is still common that visitors type `www.<DOMAIN>` in their browsers exp
 </Example>
 
 Mail exchanger (`MX`) and other record types combined with names like `mail`, `webmail`, or `smtp`, are also commonly found. As explained in the [Set up email records page](/dns/manage-dns-records/how-to/email-records/), there are several DNS records that can be used to make sure email reaches your mail server and to prevent other email senders from spoofing your domain.
-
-## Limitations
-
-Since the DNS records quick scan is based on this predefined list of commonly used record types and names, and is not tailored to the specific zone you are adding to Cloudflare, there can be cases where not all records are picked up.
-
-For example, if you have very specific hostnames - such as `my-store1900.example.com` instead of `store.example.com` - or if you have set up a [DKIM record](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/) that uses a more custom name - `this._domainkey` instead of `default._domainkey` - it is expected that the scan will not find the specific DNS records.
-
-:::caution[Important]
-
-You should always [review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) and manually add any missing ones before changing your nameservers.
-
-:::
