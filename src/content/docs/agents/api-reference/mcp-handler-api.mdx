@@ -86,7 +86,7 @@ const handler = createMcpHandler(server, {
 
 #### authContext
 
-An authentication context object that will be available to MCP tools via [`getMcpAuthContext()`](/agents/model-context-protocol/mcp-handler-api#authentication-context).
+An authentication context object that will be available to MCP tools via [`getMcpAuthContext()`](/agents/api-reference/mcp-handler-api#authentication-context).
 
 When using the [`OAuthProvider`](/agents/model-context-protocol/authorization/) from `@cloudflare/workers-oauth-provider`, the authentication context is automatically populated with information from the OAuth flow. You typically don't need to set this manually.
 
@@ -494,4 +494,4 @@ server.tool("riskyOperation", "An operation that might fail", {}, async () => {
 - [Building MCP Servers](/agents/guides/remote-mcp-server/) — Learn how to build and deploy MCP servers on Cloudflare
 - [MCP Tools](/agents/model-context-protocol/tools/) — Add tools to your MCP server
 - [MCP Authorization](/agents/model-context-protocol/authorization/) — Authenticate users with OAuth
-- [McpAgent API Reference](/agents/model-context-protocol/mcp-agent-api/) — Build stateful MCP servers with the McpAgent class
+- [McpAgent API Reference](/agents/api-reference/mcp-agent-api/) — Build stateful MCP servers with the McpAgent class
