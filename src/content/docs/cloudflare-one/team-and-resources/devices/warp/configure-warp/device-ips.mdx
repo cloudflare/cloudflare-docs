@@ -24,9 +24,13 @@ import { Render, Details } from "~/components";
 
 </Details>
 
-A device IP identifies and routes traffic to a specific WARP device in your Zero Trust organization. Administrators can assign or verify static IP addresses for specific devices to ensure consistent connectivity for internal resources.
+A device IP identifies and routes traffic to a specific WARP device in your Zero Trust organization. When a user registers the WARP client, Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The WARP client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/cloudflare-one/networks/connectors/wan-tunnels/) on-ramps.
 
-When a user registers the WARP client, Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The WARP client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/cloudflare-one/networks/connectors/wan-tunnels/) on-ramps. By default, Cloudflare assigns device IPs from the following address space:
+You can verify device IPs and, if needed, reconfigure address pools to avoid overlapping IPs with existing internal resources.
+
+## Default device IPs
+
+By default, Cloudflare assigns device IPs from the following address space:
 
 - Default IPv4: `100.96.0.0/12`
 - Default IPv6: `2606:4700:0cf1:1000::/64`
@@ -36,6 +40,8 @@ If your organization already uses the default IPv4 range for internal networking
 The default IPv6 range is owned by Cloudflare and therefore should not conflict with services on your private network. The WARP IPv6 range is not configurable.
 
 ## Create an IP subnet
+
+Create a custom IP subnet when the [default IPv4 range](#default-device-ips) conflicts with services on your private network.
 
 To define a custom IPv4 subnet for device IPs:
 
@@ -55,15 +61,18 @@ To define a custom IPv4 subnet for device IPs:
 	:::
 5. Select **Add subnet** to save.
 
-You can now [assign this subnet](#assign-device-ips) to a group of devices.
+Next, [assign this subnet](#assign-device-ips) to a group of devices.
 
 ## Assign device IPs
+
+Assign [custom IP subnets](#create-an-ip-subnet) to ensure devices are provisioned within a predictable address space based on specific user identity criteria.
 
 ### Prerequisites
 
 - [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) is enabled in your [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
 
 ### Create an IP assignment
+
 To assign IP subnets to your devices:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
@@ -76,9 +85,11 @@ To assign IP subnets to your devices:
 
 Devices that match your rules are assigned a random IP from this address space upon registration. Only newly registered devices will receive a new IP; existing devices will not see any impact to connectivity. To assign a new IP to an existing device, you must [delete its registration](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration) and then [re-enroll the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 
+Organizations are currently [limited](/cloudflare-one/account-limits/#warp) to 30 custom device IP assignments per account.
+
 ### Selectors
 
-You can configure IP assignments to match against the following selectors, or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
+You can configure IP assignments to match against the following selectors or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
 
 #### User email
 
