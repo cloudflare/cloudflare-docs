@@ -8,7 +8,7 @@ import { Details, Example } from "~/components"
 
 To help all customers get started when a new zone is created, Cloudflare offers a DNS records quick scan.
 
-:::caution[Where to find the quick scan]
+:::note[Where to find the quick scan]
 On the dashboard, the quick scan is only available as you are onboaring a new domain. Via API, you can manually invoke the quick scan with the [Trigger DNS Records Scan endpoint](/api/resources/dns/subresources/records/methods/scan_trigger/).
 :::
 
@@ -79,7 +79,7 @@ You should always [review your DNS records](/dns/zone-setups/full-setup/setup/#r
 
 The value `@` indicates the domain apex - in the example above, `domain.test` or `example.com`.
 
-Virtually all zones on a primary setup (full) are expected to have at least one [address record](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) pointing to the IP address where the website or application is hosted.
+Virtually all zones on a [primary setup (full)](/dns/zone-setups/full-setup/) are expected to have at least one [address record](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) pointing to the IP address where the website or application is hosted.
 
 ### www records
 
