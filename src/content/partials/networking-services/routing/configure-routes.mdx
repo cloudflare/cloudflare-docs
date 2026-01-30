@@ -607,6 +607,29 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 	}}
 />
 
+### Important remarks for GRE/IPsec tunnels
+
+If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware of the following:
+
+- Your Customer Premises Equipment (CPE) must initiate the BGP peering session. Cloudflare will not initiate.
+- You need to configure your BGP speaker to peer with the tunnel's IPv4 interface address.
+  - Your CPE may use any IPv4 address for its side of the peering connection; it does not need to use the other address from the `/31` or `/30` interface subnet.
+  :::caution
+	If the tunnel is to an Azure VPN gateway, the tunnel interface address must not be in the link-local range. Azure will not initiate BGP sessions to peers using link-local addresses. Use an RFC 1918 address for your tunnel interface address instead.
+  :::
+- **Hold Time**
+  - You must set a hold time greater than `0` (BGP `KEEPALIVE` messages are required)
+  - Cloudflare recommends a hold time of at least 45 seconds.
+  - Cloudflare advertises a hold time of 90 seconds for GRE/IPsec tunnels. If you set a value greater than 90 seconds, the negotiated hold time will be  90 seconds, according to the standard way BGP has of negotiating hold times.
+- **Connect Retry Time**: Cloudflare recommends a low connect retry time (for example, five or 10 seconds).
+- Your CPE may advertise up to 5,000 prefixes on one BGP session.
+- MD5 authentication is optional.
+  - You can use a maximum of 80 characters. Supported characters include ``a-zA-Z0-9'!@#$%^&*()+[]{}<>/.,;:_-~`= \\|``
+  :::caution
+	MD5 authentication is not a security measure nor is it a valid security mechanism. The MD5 key is not treated as a secret value. This is only supported for preventing misconfiguration, not for defending against malicious attacks.
+  :::
+
+
 { props.magicWord !== "Magic Transit" && (
   <>
     <AnchorHeading title="Next steps" depth={2} />
@@ -614,3 +637,5 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
   </>
 )
 }
+
+
