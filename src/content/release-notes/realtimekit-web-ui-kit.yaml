@@ -16,7 +16,6 @@ entries:
       - Added `overrides` prop support on `rtk-meeting` and `rtk-ui-provider` for easier UI customization. Available overrides include:
         - `disablePrivateChat` - Disable private chat functionality.
         - `disableEmojiPicker` - Hide emoji picker in chat component.
-
         ```tsx
         <RtkMeeting meeting={meeting} overrides={{
           disablePrivateChat: true,
@@ -42,7 +41,6 @@ entries:
       **Breaking changes**
 
       Removed non-operational chat channel components to streamline the SDK. `rtk-chat` remains fully operational.
-
       - Removed `rtk-channel-creator`.
       - Removed `rtk-channel-header`.
       - Removed `rtk-channel-details`.
@@ -50,7 +48,6 @@ entries:
       - Removed `rtk-channel-selector-view`.
       - `rtk-chat-composer-ui` no longer accepts `channelId` prop.
       - `rtk-chat` no longer accepts `disablePrivateChat` prop. Use preset configuration instead, or pass as override:
-
         ```tsx
         <RtkMeeting meeting={meeting} overrides={{disablePrivateChat: true}} />
         ```
