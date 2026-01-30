@@ -197,6 +197,10 @@ Use the Cloudflare One dashboard to view a high-level overview of assigned and a
 
 If your subnet is approaching capacity, you can [expand your subnet](#edit-an-ip-subnet) to increase the number of available IPs. Alternatively, you can free up IPs by [deleting existing device registrations](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration), particularly revoked registrations that may be consuming IP space despite the device no longer being in use.
 
+:::tip[Delete device registrations instead of revoking]
+[Revoking a device registration](/cloudflare-one/team-and-resources/devices/device-registration/#revoke-a-device-registration) does not release the virtual IPs that are assigned to the registration. Because virtual IPs are a finite resource, Cloudflare strongly advises deleting a registration rather than revoking it.
+:::
+
 To get a list of all device registrations in a subnet (including revoked registrations), use the [Cloudflare API](/api/resources/zero_trust/subresources/devices/subresources/registrations/methods/list/). For example, the following script fetches all device registrations and their device IPs, and outputs all registrations within the specified CIDR block.
 
 <Details header="Example script to filter registrations by IP">
