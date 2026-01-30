@@ -479,8 +479,8 @@ To set this ASN:
     text={`
 		${props.productName} customers should also be aware of the following:
 		- The customer chooses their device ASN, which must be different from the Cloudflare-side ASN.
-		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled interconnect.
-		- The customer-announced \`AS_PATH\` is transitive between interconnects — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two ${props.productName}-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
+		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled on-ramp (interconnect, IPsec or GRE tunnel).
+		- The customer-announced \`AS_PATH\` is transitive between on-ramps — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two ${props.productName}-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
 			To enable routing between private networks over ${props.productName}, you should either:
 			- Assign a unique ASN to each site/network, or
 			- Configure your edge CPE to accept BGP routes that include its own ASN in the \`AS_PATH\`.
@@ -493,13 +493,9 @@ To set this ASN:
 
 ### Set up BGP peering
 
-:::caution
-BGP peering is only available to {props.productName} customers with CNI with Dataplane v2 (beta) as an on-ramp. If your network is set up with GRE or IPsec tunnels, you cannot use BGP peering.
-:::
-
 You need to configure two ASNs:
 - The Cloudflare [account-scoped ASN](#choose-an-asn-for-bgp-peering) named **CF Account ASN**.
-- One ASN for each interconnect you want to configure with BGP.
+- One ASN for each on-ramp you want to configure with BGP.
 
 If you have already set up your Cloudflare account ASN, skip steps two and three below.
 
