@@ -3,17 +3,19 @@ import type { CollectionConfig } from "astro/content/config";
 
 import { middlecacheLoader } from "../../util/custom-loaders";
 
-const productAvailabilityCollectionSchema = z.object({
+const productAvailabilitySchema = z.object({
 	availability: z.string().nullable(),
 });
 
+type ProductAvailability = z.infer<typeof productAvailabilitySchema>;
+
 const productAvailabilityCollectionConfig: CollectionConfig<
-	typeof productAvailabilityCollectionSchema
+	typeof productAvailabilitySchema
 > = {
 	loader: middlecacheLoader("v1/products/availability_certification.json", {
 		parser: (fileContent: string) => {
 			const data = JSON.parse(fileContent);
-			const lookup: Record<string, { availability: string | null }> = {};
+			const lookup: Record<string, ProductAvailability> = {};
 
 			for (const item of data) {
 				lookup[item.name] = { availability: item.availability };
@@ -22,10 +24,7 @@ const productAvailabilityCollectionConfig: CollectionConfig<
 			return lookup;
 		},
 	}),
-	schema: productAvailabilityCollectionSchema,
+	schema: productAvailabilitySchema,
 };
 
-export {
-	productAvailabilityCollectionConfig,
-	productAvailabilityCollectionSchema,
-};
+export { productAvailabilityCollectionConfig, productAvailabilitySchema };

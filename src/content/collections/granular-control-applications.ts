@@ -13,7 +13,9 @@ const granularControlApplicationsSchema = z.object({
 	applications: z.array(applicationSchema),
 });
 
-//const granularControlApplicationsSchema = z.array(categorySchema);
+type GranularControlApplications = z.infer<
+	typeof granularControlApplicationsSchema
+>;
 
 const granularControlApplicationsCollectionConfig: CollectionConfig<
 	typeof granularControlApplicationsSchema
@@ -21,19 +23,19 @@ const granularControlApplicationsCollectionConfig: CollectionConfig<
 	loader: middlecacheLoader("v1/application-controls/applications.json", {
 		parser: (fileContent: string) => {
 			const data = JSON.parse(fileContent);
-			const lookup: Record<
-				string,
-				{
-					display_id: string;
-					applications: [{ name: string; display_name: string }];
-				}
-			> = {};
+
+			const lookup: Record<string, GranularControlApplications> = {};
 
 			for (const item of data) {
-				const display_id = item.category
-					.split("-")
-					.map((w: string) => w[0].toUpperCase() + w.substring(1).toLowerCase())
-					.join(" ");
+				let display_id = "Uncategorized";
+				if (item.category && typeof item.category === "string")
+					display_id = item.category
+						.replace(/-/g, " ")
+						.replace(
+							/\w\S*/g,
+							(txt: string) =>
+								txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase(),
+						);
 
 				lookup[item.category] = {
 					display_id: display_id,
