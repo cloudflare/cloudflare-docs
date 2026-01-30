@@ -4,7 +4,7 @@ productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
   - publish_date: "2026-01-30"
-    title: RealtimeKit Web UI Kit 1.0.9
+    title: RealtimeKit Web UI Kit 1.1.0
     description: |-
       **Compatibility:** Works best with RealtimeKit Web Core 1.2.4 or later.
 

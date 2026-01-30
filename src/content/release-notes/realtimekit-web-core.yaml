@@ -6,7 +6,7 @@ entries:
   - publish_date: "2026-01-30"
     title: RealtimeKit Web Core 1.2.4
     description: |-
-      **Compatibility:** Works best with RealtimeKit Web UI Kit 1.0.9 or later.
+      **Compatibility:** Works best with RealtimeKit Web UI Kit 1.1.0 or later.
 
       **New APIs**
 
