@@ -38,7 +38,7 @@ For a **static site**, you will need to add the following to your wrangler file.
 ```jsonc
 {
 	"name": "<your-project-name>",
-	"compatibility_date": "2025-04-23",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "<your-build-directory>",
 	},
@@ -54,7 +54,7 @@ For a **single page application**, you will need to add the following to your wr
 ```jsonc
 {
 	"name": "<your-project-name>",
-	"compatibility_date": "2025-04-23",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "<your-build-directory>",
 		"not_found_handling": "single-page-application",
