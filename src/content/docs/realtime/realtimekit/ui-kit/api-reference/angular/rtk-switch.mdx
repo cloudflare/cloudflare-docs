@@ -1,0 +1,54 @@
+---
+title: rtk-switch
+description: API reference for rtk-switch component (Angular Library)
+---
+
+# rtk-switch
+
+A switch component which follows RTK Design System.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `checked` | `boolean` | ✅ | - | Whether the switch is enabled/checked |
+| `disabled` | `boolean` | ✅ | - | Whether switch is readonly |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `readonly` | `boolean` | ✅ | - | Whether switch is readonly |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-switch></rtk-switch>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-switch
+  [checked]=true
+  [disabled]=true
+  [readonly]=true>
+</rtk-switch>
+```
+

@@ -1,0 +1,67 @@
+---
+title: rtk-participant-tile
+description: API reference for rtk-participant-tile component (Angular Library)
+---
+
+# rtk-participant-tile
+
+A component which plays a participants video and allows for placement
+ of components like `rtk-name-tag`, `rtk-audio-visualizer` or any other component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `isPreview` | `boolean` | ✅ | - | Whether tile is used for preview |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `nameTagPosition` | `| 'bottom-left'
+    | 'bottom-right'
+    | 'bot...` | ✅ | - | Position of name tag |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `'solid' | 'gradient'` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-participant-tile></rtk-participant-tile>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-participant-tile
+  [isPreview]=true
+  [meeting]={meeting}
+  [nameTagPosition]=| 'bottom-left'
+    | 'bottom-right'
+    | 'bottom-center'
+    | 'top-left'
+    | 'top-right'
+    | 'top-center'>
+</rtk-participant-tile>
+```
+

@@ -1,0 +1,51 @@
+---
+title: rtk-draft-attachment-view
+description: API reference for rtk-draft-attachment-view component (Angular Library)
+---
+
+# rtk-draft-attachment-view
+
+A component which renders the draft attachment to send
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `attachment` | `{
+    type: 'image' | 'file'` | ✅ | - | Attachment to display |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-draft-attachment-view></rtk-draft-attachment-view>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-draft-attachment-view
+  [attachment]={}>
+</rtk-draft-attachment-view>
+```
+

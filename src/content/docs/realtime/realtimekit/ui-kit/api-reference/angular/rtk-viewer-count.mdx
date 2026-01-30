@@ -1,0 +1,52 @@
+---
+title: rtk-viewer-count
+description: API reference for rtk-viewer-count component (Angular Library)
+---
+
+# rtk-viewer-count
+
+A component which shows count of total joined participants in a meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ViewerCountVariant` | ✅ | - | Viewer count variant |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-viewer-count></rtk-viewer-count>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-viewer-count
+  [meeting]={meeting}
+  [variant]="primary">
+</rtk-viewer-count>
+```
+

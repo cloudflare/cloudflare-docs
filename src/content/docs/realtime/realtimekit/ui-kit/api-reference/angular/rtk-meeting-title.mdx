@@ -1,0 +1,50 @@
+---
+title: rtk-meeting-title
+description: API reference for rtk-meeting-title component (Angular Library)
+---
+
+# rtk-meeting-title
+
+Displays the title of the meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-meeting-title></rtk-meeting-title>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-meeting-title
+  [meeting]={meeting}>
+</rtk-meeting-title>
+```
+

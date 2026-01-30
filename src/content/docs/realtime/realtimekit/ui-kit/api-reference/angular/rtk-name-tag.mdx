@@ -1,0 +1,56 @@
+---
+title: rtk-name-tag
+description: API reference for rtk-name-tag component (Angular Library)
+---
+
+# rtk-name-tag
+
+A component which shows a participant's name.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `isScreenShare` | `boolean` | ✅ | - | Whether it is used in a screen share view |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `RtkNameTagVariant` | ✅ | - | Name tag variant |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-name-tag></rtk-name-tag>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-name-tag
+  [isScreenShare]=true
+  [meeting]={meeting}
+  [participant]={participant}>
+</rtk-name-tag>
+```
+

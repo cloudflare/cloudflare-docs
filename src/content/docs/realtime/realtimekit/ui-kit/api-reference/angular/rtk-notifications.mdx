@@ -1,0 +1,56 @@
+---
+title: rtk-notifications
+description: API reference for rtk-notifications component (Angular Library)
+---
+
+# rtk-notifications
+
+A component which handles notifications.
+ You can configure which notifications you want to see and which ones you want to hear.
+ There are also certain limits which you can set as well.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-notifications></rtk-notifications>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-notifications
+  [meeting]={meeting}
+  [size]="md">
+</rtk-notifications>
+```
+

@@ -1,0 +1,52 @@
+---
+title: rtk-chat-messages-ui-paginated
+description: API reference for rtk-chat-messages-ui-paginated component (Angular Library)
+---
+
+# rtk-chat-messages-ui-paginated
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `privateChatRecipient` | `Participant | null` | ✅ | - | Selected recipient for private chat; when unset, messages are loaded for public chat (Everyone). |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-chat-messages-ui-paginated></rtk-chat-messages-ui-paginated>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-chat-messages-ui-paginated
+  [meeting]={meeting}
+  [privateChatRecipient]=participant | null
+  [size]="md">
+</rtk-chat-messages-ui-paginated>
+```
+

@@ -1,0 +1,58 @@
+---
+title: rtk-simple-grid
+description: API reference for rtk-simple-grid component (Angular Library)
+---
+
+# rtk-simple-grid
+
+A grid component which renders only the participants in a simple grid.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `aspectRatio` | `string` | ✅ | - | Aspect Ratio of participant tile  Format: `width:height` |
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `gap` | `number` | ✅ | - | Gap between participant tiles |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participants` | `Peer[]` | ✅ | - | Participants |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-simple-grid></rtk-simple-grid>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-simple-grid
+  [aspectRatio]="example"
+  [gap]=42
+  [meeting]={meeting}>
+</rtk-simple-grid>
+```
+

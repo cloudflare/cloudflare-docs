@@ -1,0 +1,53 @@
+---
+title: rtk-participants-stage-queue
+description: API reference for rtk-participants-stage-queue component (Angular Library)
+---
+
+# rtk-participants-stage-queue
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-participants-stage-queue></rtk-participants-stage-queue>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-participants-stage-queue
+  [meeting]={meeting}
+  [size]="md"
+  [view]=participantsviewmode>
+</rtk-participants-stage-queue>
+```
+

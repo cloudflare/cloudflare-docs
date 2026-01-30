@@ -1,0 +1,48 @@
+---
+title: rtk-emoji-picker-button
+description: API reference for rtk-emoji-picker-button component (Angular Library)
+---
+
+# rtk-emoji-picker-button
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `isActive` | `boolean` | ✅ | - | Active state indicator |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-emoji-picker-button></rtk-emoji-picker-button>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-emoji-picker-button
+  [isActive]=true>
+</rtk-emoji-picker-button>
+```
+

@@ -1,0 +1,52 @@
+---
+title: rtk-livestream-toggle
+description: API reference for rtk-livestream-toggle component (Angular Library)
+---
+
+# rtk-livestream-toggle
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-livestream-toggle></rtk-livestream-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-livestream-toggle
+  [meeting]={meeting}
+  [size]="md"
+  [variant]="button">
+</rtk-livestream-toggle>
+```
+

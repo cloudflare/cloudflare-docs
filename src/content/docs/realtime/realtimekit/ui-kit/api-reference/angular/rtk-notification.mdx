@@ -1,0 +1,56 @@
+---
+title: rtk-notification
+description: API reference for rtk-notification component (Angular Library)
+---
+
+# rtk-notification
+
+A component which shows a notification.
+ You need to remove the element after you receive the
+ `rtkNotificationDismiss` event.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `notification` | `Notification` | ✅ | - | Message |
+| `paused` | `boolean` | ✅ | - | Stops timeout when true |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-notification></rtk-notification>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-notification
+  [notification]=notification
+  [paused]=true
+  [size]="md">
+</rtk-notification>
+```
+

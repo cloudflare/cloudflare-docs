@@ -1,0 +1,56 @@
+---
+title: rtk-tab-bar
+description: API reference for rtk-tab-bar component (Angular Library)
+---
+
+# rtk-tab-bar
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `activeTab` | `Tab` | ✅ | - | Active tab |
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `layout` | `GridLayout1` | ✅ | - | Grid Layout |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `tabs` | `Tab[]` | ✅ | - | Tabs |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-tab-bar></rtk-tab-bar>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-tab-bar
+  [activeTab]=tab
+  [layout]=gridlayout1
+  [meeting]={meeting}>
+</rtk-tab-bar>
+```
+

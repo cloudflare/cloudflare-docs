@@ -1,0 +1,32 @@
+---
+title: rtk-breakout-rooms-manager
+description: API reference for rtk-breakout-rooms-manager component (Core Library)
+---
+
+# rtk-breakout-rooms-manager
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-breakout-rooms-manager></rtk-breakout-rooms-manager>
+```
+
+### With Properties
+
+```html
+<rtk-breakout-rooms-manager
+  meeting={meeting}>
+</rtk-breakout-rooms-manager>
+```
+

@@ -1,0 +1,58 @@
+---
+title: rtk-dialog
+description: API reference for rtk-dialog component (Angular Library)
+---
+
+# rtk-dialog
+
+A dialog component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `disableEscapeKey` | `boolean` | ✅ | - | Whether Escape key can close the modal |
+| `hideCloseButton` | `boolean` | ✅ | - | Whether to show the close button |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `open` | `boolean` | ✅ | - | Whether a dialog is open or not |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-dialog></rtk-dialog>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-dialog
+  [disableEscapeKey]=true
+  [hideCloseButton]=true
+  [meeting]={meeting}>
+</rtk-dialog>
+```
+

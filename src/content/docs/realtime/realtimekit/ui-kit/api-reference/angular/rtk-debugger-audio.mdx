@@ -1,0 +1,51 @@
+---
+title: rtk-debugger-audio
+description: API reference for rtk-debugger-audio component (Angular Library)
+---
+
+# rtk-debugger-audio
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | States object |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-debugger-audio></rtk-debugger-audio>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-debugger-audio
+  [meeting]={meeting}
+  [size]="md">
+</rtk-debugger-audio>
+```
+

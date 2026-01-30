@@ -1,0 +1,52 @@
+---
+title: rtk-icon
+description: API reference for rtk-icon component (Angular Library)
+---
+
+# rtk-icon
+
+An icon component which accepts an svg string and renders it.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `icon` | `string` | ✅ | - | Icon |
+| `size` | `Size1` | ✅ | - | Size |
+| `variant` | `IconVariant` | ✅ | - | Icon variant |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-icon></rtk-icon>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-icon
+  [icon]="example"
+  [size]="md"
+  [variant]="primary">
+</rtk-icon>
+```
+

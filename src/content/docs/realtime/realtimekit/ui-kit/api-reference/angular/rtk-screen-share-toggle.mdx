@@ -1,0 +1,55 @@
+---
+title: rtk-screen-share-toggle
+description: API reference for rtk-screen-share-toggle component (Angular Library)
+---
+
+# rtk-screen-share-toggle
+
+A button which toggles your screenshare.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-screen-share-toggle></rtk-screen-share-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-screen-share-toggle
+  [meeting]={meeting}
+  [size]="md"
+  [variant]="button">
+</rtk-screen-share-toggle>
+```
+

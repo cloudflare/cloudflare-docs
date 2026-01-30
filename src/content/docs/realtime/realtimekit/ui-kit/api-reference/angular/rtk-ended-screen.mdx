@@ -1,0 +1,54 @@
+---
+title: rtk-ended-screen
+description: API reference for rtk-ended-screen component (Angular Library)
+---
+
+# rtk-ended-screen
+
+A screen which shows a meeting has ended.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Global states |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | Global states |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-ended-screen></rtk-ended-screen>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-ended-screen
+  [meeting]={meeting}
+  [size]="md">
+</rtk-ended-screen>
+```
+

@@ -1,0 +1,37 @@
+---
+title: rtk-plugins
+description: API reference for rtk-plugins component (Core Library)
+---
+
+# rtk-plugins
+
+A component which lists all available plugins from their preset,
+ and ability to enable or disable plugins.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-plugins></rtk-plugins>
+```
+
+### With Properties
+
+```html
+<rtk-plugins
+  meeting={meeting}
+  size="md">
+</rtk-plugins>
+```
+

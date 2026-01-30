@@ -1,0 +1,51 @@
+---
+title: rtk-clock
+description: API reference for rtk-clock component (Angular Library)
+---
+
+# rtk-clock
+
+Shows the time elapsed in a meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-clock></rtk-clock>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-clock
+  [meeting]={meeting}
+  [size]="md">
+</rtk-clock>
+```
+

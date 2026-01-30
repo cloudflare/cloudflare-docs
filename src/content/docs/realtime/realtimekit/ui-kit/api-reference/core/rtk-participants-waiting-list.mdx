@@ -1,0 +1,36 @@
+---
+title: rtk-participants-waiting-list
+description: API reference for rtk-participants-waiting-list component (Core Library)
+---
+
+# rtk-participants-waiting-list
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-participants-waiting-list></rtk-participants-waiting-list>
+```
+
+### With Properties
+
+```html
+<rtk-participants-waiting-list
+  meeting={meeting}
+  size="md"
+  view=participantsviewmode>
+</rtk-participants-waiting-list>
+```
+

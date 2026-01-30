@@ -1,0 +1,50 @@
+---
+title: rtk-menu-list
+description: API reference for rtk-menu-list component (Angular Library)
+---
+
+# rtk-menu-list
+
+A menu list component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `menuVariant` | `'primary' | 'secondary'` | ✅ | - | Variant |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-menu-list></rtk-menu-list>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-menu-list
+  [menuVariant]='primary' | 'secondary'>
+</rtk-menu-list>
+```
+

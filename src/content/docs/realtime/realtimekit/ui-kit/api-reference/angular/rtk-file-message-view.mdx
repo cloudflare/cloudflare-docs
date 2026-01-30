@@ -1,0 +1,53 @@
+---
+title: rtk-file-message-view
+description: API reference for rtk-file-message-view component (Angular Library)
+---
+
+# rtk-file-message-view
+
+A component which renders a file message.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `name` | `string` | ✅ | - | Name of the file |
+| `size` | `number` | ✅ | - | Size of the file |
+| `url` | `string` | ✅ | - | Url of the file |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-file-message-view></rtk-file-message-view>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-file-message-view
+  [name]="example"
+  [size]=42
+  [url]="example">
+</rtk-file-message-view>
+```
+

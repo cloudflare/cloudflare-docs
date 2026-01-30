@@ -1,0 +1,48 @@
+---
+title: rtk-file-dropzone
+description: API reference for rtk-file-dropzone component (Angular Library)
+---
+
+# rtk-file-dropzone
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hostEl` | `HTMLElement` | ✅ | - | Host element on which drop events to attach |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-file-dropzone></rtk-file-dropzone>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-file-dropzone
+  [hostEl]=htmlelement>
+</rtk-file-dropzone>
+```
+

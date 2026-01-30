@@ -1,0 +1,43 @@
+---
+title: RtkMenuList
+description: API reference for RtkMenuList component (React Library)
+---
+
+# RtkMenuList
+
+A menu list component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `menuVariant` | `'primary' | 'secondary'` | ✅ | - | Variant |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMenuList } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return <RtkMenuList />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMenuList } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return (
+    <RtkMenuList
+      menuVariant={'primary' | 'secondary'}
+    />
+  );
+}
+```
+

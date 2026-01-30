@@ -1,0 +1,49 @@
+---
+title: rtk-mute-all-confirmation
+description: API reference for rtk-mute-all-confirmation component (Angular Library)
+---
+
+# rtk-mute-all-confirmation
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-mute-all-confirmation></rtk-mute-all-confirmation>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-mute-all-confirmation
+  [meeting]={meeting}>
+</rtk-mute-all-confirmation>
+```
+

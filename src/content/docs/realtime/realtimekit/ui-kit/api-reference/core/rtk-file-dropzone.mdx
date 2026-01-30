@@ -1,0 +1,31 @@
+---
+title: rtk-file-dropzone
+description: API reference for rtk-file-dropzone component (Core Library)
+---
+
+# rtk-file-dropzone
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hostEl` | `HTMLElement` | ✅ | - | Host element on which drop events to attach |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-file-dropzone></rtk-file-dropzone>
+```
+
+### With Properties
+
+```html
+<rtk-file-dropzone
+  hostEl=htmlelement>
+</rtk-file-dropzone>
+```
+

@@ -1,0 +1,49 @@
+---
+title: rtk-breakout-rooms-manager
+description: API reference for rtk-breakout-rooms-manager component (Angular Library)
+---
+
+# rtk-breakout-rooms-manager
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-breakout-rooms-manager></rtk-breakout-rooms-manager>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-breakout-rooms-manager
+  [meeting]={meeting}>
+</rtk-breakout-rooms-manager>
+```
+

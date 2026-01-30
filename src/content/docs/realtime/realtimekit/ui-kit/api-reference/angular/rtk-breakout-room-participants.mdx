@@ -1,0 +1,55 @@
+---
+title: rtk-breakout-room-participants
+description: API reference for rtk-breakout-room-participants component (Angular Library)
+---
+
+# rtk-breakout-room-participants
+
+A component which lists all participants, with ability to
+ run privileged actions on each participant according to your permissions.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participantIds` | `string[]` | ✅ | - | Participant ids |
+| `selectedParticipantIds` | `string[]` | ✅ | - | selected participants |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-breakout-room-participants></rtk-breakout-room-participants>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-breakout-room-participants
+  [meeting]={meeting}
+  [participantIds]="example"
+  [selectedParticipantIds]="example">
+</rtk-breakout-room-participants>
+```
+

@@ -1,0 +1,56 @@
+---
+title: rtk-chat-messages-ui
+description: API reference for rtk-chat-messages-ui component (Angular Library)
+---
+
+# rtk-chat-messages-ui
+
+@deprecated Use `rtk-chat-messages-ui-paginated` instead.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `canPinMessages` | `boolean` | ✅ | - | Can current user pin/unpin messages |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `messages` | `Chat[]` | ✅ | - | Chat Messages |
+| `selectedGroup` | `string` | ✅ | - | Selected group key |
+| `selfUserId` | `string` | ✅ | - | User ID of self user |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-chat-messages-ui></rtk-chat-messages-ui>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-chat-messages-ui
+  [canPinMessages]=true
+  [messages]=[]
+  [selectedGroup]="example">
+</rtk-chat-messages-ui>
+```
+

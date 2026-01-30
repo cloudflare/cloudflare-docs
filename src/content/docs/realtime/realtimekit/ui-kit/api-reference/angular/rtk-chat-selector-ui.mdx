@@ -1,0 +1,53 @@
+---
+title: rtk-chat-selector-ui
+description: API reference for rtk-chat-selector-ui component (Angular Library)
+---
+
+# rtk-chat-selector-ui
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `groups` | `ChatGroup[]` | ✅ | - | Participants |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `selectedGroupId` | `string` | ✅ | - | Selected participant |
+| `selfUserId` | `string` | ✅ | - | Self User ID |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `unreadCounts` | `Record<string, number>` | ✅ | - | Unread counts |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-chat-selector-ui></rtk-chat-selector-ui>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-chat-selector-ui
+  [groups]=[]
+  [selectedGroupId]="example"
+  [selfUserId]="example">
+</rtk-chat-selector-ui>
+```
+

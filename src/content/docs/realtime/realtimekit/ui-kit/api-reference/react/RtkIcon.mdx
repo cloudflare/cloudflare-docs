@@ -1,0 +1,45 @@
+---
+title: RtkIcon
+description: API reference for RtkIcon component (React Library)
+---
+
+# RtkIcon
+
+An icon component which accepts an svg string and renders it.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `icon` | `string` | ✅ | - | Icon |
+| `size` | `Size1` | ✅ | - | Size |
+| `variant` | `IconVariant` | ✅ | - | Icon variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkIcon } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return <RtkIcon />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkIcon } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return (
+    <RtkIcon
+      icon="example"
+      size="md"
+      variant="primary"
+    />
+  );
+}
+```
+

@@ -1,0 +1,48 @@
+---
+title: RtkSidebarUi
+description: API reference for RtkSidebarUi component (React Library)
+---
+
+# RtkSidebarUi
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `currentTab` | `string` | ✅ | - | Default tab to open |
+| `focusCloseButton` | `boolean` | ✅ | - | Option to focus close button when opened |
+| `hideCloseAction` | `boolean` | ✅ | - | Hide Close Action |
+| `hideHeader` | `boolean` | ✅ | - | Hide Main Header |
+| `iconPack` | `{ people: string` | ✅ | - | Icon Pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `tabs` | `RtkSidebarTab1[]` | ✅ | - | Tabs |
+| `view` | `RtkSidebarView1` | ✅ | - | View |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSidebarUi } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return <RtkSidebarUi />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSidebarUi } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return (
+    <RtkSidebarUi
+      currentTab="example"
+      focusCloseButton={true}
+      hideCloseAction={true}
+    />
+  );
+}
+```
+

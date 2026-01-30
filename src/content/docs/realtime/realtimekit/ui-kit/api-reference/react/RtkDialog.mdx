@@ -1,0 +1,51 @@
+---
+title: RtkDialog
+description: API reference for RtkDialog component (React Library)
+---
+
+# RtkDialog
+
+A dialog component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `disableEscapeKey` | `boolean` | ✅ | - | Whether Escape key can close the modal |
+| `hideCloseButton` | `boolean` | ✅ | - | Whether to show the close button |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `open` | `boolean` | ✅ | - | Whether a dialog is open or not |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkDialog } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return <RtkDialog />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkDialog } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return (
+    <RtkDialog
+      disableEscapeKey={true}
+      hideCloseButton={true}
+      meeting={meeting}
+    />
+  );
+}
+```
+

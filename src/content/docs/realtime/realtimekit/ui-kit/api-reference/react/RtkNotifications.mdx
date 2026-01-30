@@ -1,0 +1,49 @@
+---
+title: RtkNotifications
+description: API reference for RtkNotifications component (React Library)
+---
+
+# RtkNotifications
+
+A component which handles notifications.
+ You can configure which notifications you want to see and which ones you want to hear.
+ There are also certain limits which you can set as well.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkNotifications } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return <RtkNotifications />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkNotifications } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return (
+    <RtkNotifications
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

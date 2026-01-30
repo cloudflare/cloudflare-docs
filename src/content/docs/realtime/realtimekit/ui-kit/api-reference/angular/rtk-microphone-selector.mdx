@@ -1,0 +1,62 @@
+---
+title: rtk-microphone-selector
+description: API reference for rtk-microphone-selector component (Angular Library)
+---
+
+# rtk-microphone-selector
+
+A component which lets to manage your audio devices and audio preferences.
+ Emits `rtkStateUpdate` event with data for muting notification sounds:
+ ```ts
+ {
+  prefs: {
+    muteNotificationSounds: boolean
+  }
+ }
+ ```
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `'full' | 'inline'` | ✅ | - | variant |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-microphone-selector></rtk-microphone-selector>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-microphone-selector
+  [meeting]={meeting}
+  [size]="md"
+  [variant]='full' | 'inline'>
+</rtk-microphone-selector>
+```
+

@@ -1,0 +1,33 @@
+---
+title: rtk-livestream-player
+description: API reference for rtk-livestream-player component (Core Library)
+---
+
+# rtk-livestream-player
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-livestream-player></rtk-livestream-player>
+```
+
+### With Properties
+
+```html
+<rtk-livestream-player
+  meeting={meeting}
+  size="md">
+</rtk-livestream-player>
+```
+

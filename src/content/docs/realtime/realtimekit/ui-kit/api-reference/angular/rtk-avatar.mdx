@@ -1,0 +1,54 @@
+---
+title: rtk-avatar
+description: API reference for rtk-avatar component (Angular Library)
+---
+
+# rtk-avatar
+
+Avatar component which renders a participant's image or their initials.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `participant` | `Peer | WaitlistedParticipant | { name: string` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `AvatarVariant` | ✅ | - | Avatar type |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-avatar></rtk-avatar>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-avatar
+  [participant]="example"
+  [size]="md"
+  [variant]="circular">
+</rtk-avatar>
+```
+

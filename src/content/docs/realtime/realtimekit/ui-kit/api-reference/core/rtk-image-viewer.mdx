@@ -1,0 +1,35 @@
+---
+title: rtk-image-viewer
+description: API reference for rtk-image-viewer component (Core Library)
+---
+
+# rtk-image-viewer
+
+A component which shows an image sent via chat.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `image` | `ImageMessage` | ✅ | - | Image message |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-image-viewer></rtk-image-viewer>
+```
+
+### With Properties
+
+```html
+<rtk-image-viewer
+  image=imagemessage
+  size="md">
+</rtk-image-viewer>
+```
+

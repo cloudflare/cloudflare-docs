@@ -1,0 +1,51 @@
+---
+title: rtk-stage
+description: API reference for rtk-stage component (Angular Library)
+---
+
+# rtk-stage
+
+A component used as a stage that commonly houses
+ the `grid` and `sidebar` components.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-stage></rtk-stage>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-stage
+  [iconPack]={'defaultIconPack'}
+  [t]=rtki18n>
+</rtk-stage>
+```
+

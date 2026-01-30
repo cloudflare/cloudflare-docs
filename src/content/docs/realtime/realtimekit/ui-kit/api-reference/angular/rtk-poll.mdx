@@ -1,0 +1,55 @@
+---
+title: rtk-poll
+description: API reference for rtk-poll component (Angular Library)
+---
+
+# rtk-poll
+
+A poll component.
+ Shows a poll where a user can vote.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `permissions` | `RTKPermissionsPreset` | ✅ | - | Permissions Object |
+| `poll` | `Poll` | ✅ | - | Poll |
+| `self` | `string` | ✅ | - | Self ID |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-poll></rtk-poll>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-poll
+  [permissions]=rtkpermissionspreset
+  [poll]=poll
+  [self]="example">
+</rtk-poll>
+```
+

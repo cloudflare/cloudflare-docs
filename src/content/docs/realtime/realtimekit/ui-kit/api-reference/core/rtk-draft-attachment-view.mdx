@@ -1,0 +1,34 @@
+---
+title: rtk-draft-attachment-view
+description: API reference for rtk-draft-attachment-view component (Core Library)
+---
+
+# rtk-draft-attachment-view
+
+A component which renders the draft attachment to send
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `attachment` | `{
+    type: 'image' | 'file'` | ✅ | - | Attachment to display |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-draft-attachment-view></rtk-draft-attachment-view>
+```
+
+### With Properties
+
+```html
+<rtk-draft-attachment-view
+  attachment={}>
+</rtk-draft-attachment-view>
+```
+

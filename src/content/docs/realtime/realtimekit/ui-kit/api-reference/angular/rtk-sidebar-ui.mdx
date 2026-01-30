@@ -1,0 +1,55 @@
+---
+title: rtk-sidebar-ui
+description: API reference for rtk-sidebar-ui component (Angular Library)
+---
+
+# rtk-sidebar-ui
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `currentTab` | `string` | ✅ | - | Default tab to open |
+| `focusCloseButton` | `boolean` | ✅ | - | Option to focus close button when opened |
+| `hideCloseAction` | `boolean` | ✅ | - | Hide Close Action |
+| `hideHeader` | `boolean` | ✅ | - | Hide Main Header |
+| `iconPack` | `{ people: string` | ✅ | - | Icon Pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `tabs` | `RtkSidebarTab1[]` | ✅ | - | Tabs |
+| `view` | `RtkSidebarView1` | ✅ | - | View |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-sidebar-ui></rtk-sidebar-ui>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-sidebar-ui
+  [currentTab]="example"
+  [focusCloseButton]=true
+  [hideCloseAction]=true>
+</rtk-sidebar-ui>
+```
+

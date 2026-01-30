@@ -1,0 +1,37 @@
+---
+title: rtk-menu
+description: API reference for rtk-menu component (Core Library)
+---
+
+# rtk-menu
+
+A menu component.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `offset` | `number` | ✅ | - | Offset in px |
+| `placement` | `Placement` | ✅ | - | Placement of menu |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-menu></rtk-menu>
+```
+
+### With Properties
+
+```html
+<rtk-menu
+  offset=42
+  placement=placement
+  size="md">
+</rtk-menu>
+```
+

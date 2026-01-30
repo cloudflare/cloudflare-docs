@@ -1,0 +1,52 @@
+---
+title: rtk-plugin-main
+description: API reference for rtk-plugin-main component (Angular Library)
+---
+
+# rtk-plugin-main
+
+A component which loads a plugin.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `plugin` | `RTKPlugin` | ✅ | - | Plugin |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-plugin-main></rtk-plugin-main>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-plugin-main
+  [meeting]={meeting}
+  [plugin]=rtkplugin>
+</rtk-plugin-main>
+```
+

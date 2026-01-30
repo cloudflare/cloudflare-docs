@@ -1,0 +1,59 @@
+---
+title: rtk-participants-stage-list
+description: API reference for rtk-participants-stage-list component (Angular Library)
+---
+
+# rtk-participants-stage-list
+
+A component which lists all participants, with ability to
+ run privileged actions on each participant according to your permissions.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `hideHeader` | `boolean` | ✅ | - | Hide Stage Participants Count Header |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `search` | `string` | ✅ | - | Search |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States1` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-participants-stage-list></rtk-participants-stage-list>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-participants-stage-list
+  [hideHeader]=true
+  [meeting]={meeting}
+  [search]="example">
+</rtk-participants-stage-list>
+```
+

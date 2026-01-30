@@ -1,0 +1,43 @@
+---
+title: RtkSpotlightIndicator
+description: API reference for RtkSpotlightIndicator component (React Library)
+---
+
+# RtkSpotlightIndicator
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSpotlightIndicator } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return <RtkSpotlightIndicator />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSpotlightIndicator } from '@cloudflare/realtimekit-ui/react';
+
+function MyComponent() {
+  return (
+    <RtkSpotlightIndicator
+      meeting={meeting}
+      size="md"
+    />
+  );
+}
+```
+

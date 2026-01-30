@@ -1,0 +1,32 @@
+---
+title: rtk-mute-all-confirmation
+description: API reference for rtk-mute-all-confirmation component (Core Library)
+---
+
+# rtk-mute-all-confirmation
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-mute-all-confirmation></rtk-mute-all-confirmation>
+```
+
+### With Properties
+
+```html
+<rtk-mute-all-confirmation
+  meeting={meeting}>
+</rtk-mute-all-confirmation>
+```
+

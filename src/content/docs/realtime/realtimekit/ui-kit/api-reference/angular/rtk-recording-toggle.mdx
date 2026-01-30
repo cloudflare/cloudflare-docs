@@ -1,0 +1,58 @@
+---
+title: rtk-recording-toggle
+description: API reference for rtk-recording-toggle component (Angular Library)
+---
+
+# rtk-recording-toggle
+
+A button which toggles recording state of a meeting.
+ Only a privileged user can perform this action,
+ thus the button will not be visible for participants
+ who don't have the permission to record a meeting.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `disabled` | `boolean` | ✅ | - | Disable the button |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-recording-toggle></rtk-recording-toggle>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-recording-toggle
+  [disabled]=true
+  [meeting]={meeting}
+  [size]="md">
+</rtk-recording-toggle>
+```
+

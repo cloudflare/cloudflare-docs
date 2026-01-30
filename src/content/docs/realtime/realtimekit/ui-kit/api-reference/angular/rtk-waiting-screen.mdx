@@ -1,0 +1,49 @@
+---
+title: rtk-waiting-screen
+description: API reference for rtk-waiting-screen component (Angular Library)
+---
+
+# rtk-waiting-screen
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Setup
+
+```typescript
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+
+defineCustomElements();
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }
+```
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-waiting-screen></rtk-waiting-screen>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-waiting-screen
+  [meeting]={meeting}>
+</rtk-waiting-screen>
+```
+
