@@ -8,6 +8,10 @@ import { Example } from "~/components"
 
 To help all customers get started when a new zone is created, Cloudflare offers a DNS records quick scan.
 
+:::caution[Where to find the quick scan]
+On the dashboard, the quick scan is only available as you are onboaring a new domain. Via API, you can manually invoke the quick scan with the [Trigger DNS Records Scan endpoint](/api/resources/dns/subresources/records/methods/scan_trigger/).
+:::
+
 ## How the quick scan works
 
 The scan is built upon a list of recurring patterns of DNS records `type` and `name`, that Cloudflare identifies as being used in existing active zones.
