@@ -1,0 +1,333 @@
+---
+pcx_content_type: concept
+title: Build an Email Agent
+sidebar:
+  order: 6
+---
+
+import { Details, Render, PackageManagers, TypeScriptExample } from "~/components";
+
+## Build an Email Processing Agent
+
+This guide shows you how to build an AI-powered email agent on Cloudflare Workers that can:
+
+- Receive and parse incoming emails
+- Route emails to specific agent instances based on email addresses
+- Automatically reply to emails with secure routing headers
+- Prevent auto-reply loops
+- Protect against security attacks with HMAC signatures
+
+Your Email Agent will be powered by the [Agents SDK](/agents/) and [Cloudflare Email Routing](/email-routing/), allowing you to process emails at scale with isolated state for each agent instance.
+
+You can view the full code for this example [on GitHub](https://github.com/cloudflare/agents/tree/main/examples/email-agent).
+
+## Prerequisites
+
+Before you begin, you will need:
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- [Node.js](https://nodejs.org/) installed (v18 or later)
+- A domain configured with [Cloudflare Email Routing](/email-routing/get-started/)
+- Basic understanding of [Agents](/agents/concepts/what-are-agents/)
+
+## 1. Set up your project
+
+Create a new project using the email agent example:
+
+<PackageManagers pkg="create-cloudflare@latest" args="my-email-agent -- --template=cloudflare/agents/examples/email-agent" />
+
+This will create a new directory with the email agent example code.
+
+Navigate to the project directory:
+
+```sh
+cd my-email-agent
+```
+
+Install dependencies:
+
+<PackageManagers type="install" />
+
+## 2. Configure the secret
+
+Email agents require a secret for signing outbound email headers. This enables secure reply routing and prevents various security attacks.
+
+Update `wrangler.jsonc` with a unique secret for local development:
+
+```jsonc
+{
+  "vars": {
+    "EMAIL_SECRET": "your-unique-secret-here-change-this"
+  }
+}
+```
+
+For production, use Wrangler secrets instead:
+
+```sh
+wrangler secret put EMAIL_SECRET
+```
+
+When prompted, enter a strong, randomly generated secret (for example, use `openssl rand -base64 32`).
+
+## 3. Understand the Agent implementation
+
+The core of your email agent is the `EmailAgent` class that extends the base `Agent` class:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import PostalMime from "postal-mime";
+
+interface EmailAgentState {
+  emailCount: number;
+  emails: EmailData[];
+  autoReplyEnabled: boolean;
+  lastUpdated: Date;
+}
+
+class EmailAgent extends Agent<Env, EmailAgentState> {
+  async onEmail(email: AgentEmail) {
+    // Parse the email
+    const parsed = await PostalMime.parse(await email.getRaw());
+
+    // Update agent state
+    const emailData = {
+      from: email.from,
+      to: email.to,
+      subject: email.headers.get("subject") || "",
+      timestamp: new Date().toISOString(),
+      body: parsed.text || ""
+    };
+
+    const newState = {
+      emailCount: this.state.emailCount + 1,
+      emails: [...this.state.emails.slice(-9), emailData],
+      autoReplyEnabled: this.state.autoReplyEnabled,
+      lastUpdated: new Date()
+    };
+
+    this.setState(newState);
+
+    // Send auto-reply with secure signature
+    if (newState.autoReplyEnabled && !this.isAutoReply(parsed)) {
+      await this.replyToEmail(email, {
+        fromName: "My Email Agent",
+        body: "Thank you for your email! Your message has been received.",
+        secret: this.env.EMAIL_SECRET
+      });
+    }
+  }
+
+  private isAutoReply(parsed: Awaited<ReturnType<typeof PostalMime.parse>>): boolean {
+    // Check for auto-reply indicators to prevent loops
+    for (const h of parsed.headers) {
+      const header = h as Record<string, string | undefined>;
+
+      if (header["auto-submitted"] && header["auto-submitted"].toLowerCase() !== "no") {
+        return true;
+      }
+
+      if (header["x-auto-response-suppress"]) {
+        return true;
+      }
+
+      const precedence = header.precedence;
+      if (precedence && ["bulk", "junk", "list", "auto_reply"].includes(precedence.toLowerCase())) {
+        return true;
+      }
+    }
+
+    const subject = (parsed.subject || "").toLowerCase();
+    return (
+      subject.includes("auto-reply") ||
+      subject.includes("out of office") ||
+      subject.includes("automatic reply")
+    );
+  }
+}
+```
+
+</TypeScriptExample>
+
+### Key features
+
+1. **Email parsing**: Uses [PostalMime](https://github.com/postalsys/postal-mime) to parse RFC 5322 email messages
+2. **State management**: Tracks email count and stores recent emails in agent state
+3. **Auto-reply loop prevention**: Detects auto-reply headers to avoid infinite loops
+4. **Secure signatures**: Signs outbound emails with HMAC for secure reply routing
+
+## 4. Set up email routing
+
+Your Worker needs to handle incoming emails and route them to the appropriate agent instances. The SDK provides routing helpers:
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentEmail, createAddressBasedEmailResolver, createSecureReplyEmailResolver } from "agents";
+
+export default {
+  async email(message, env, ctx) {
+    // Create resolvers
+    const secureReplyResolver = createSecureReplyEmailResolver(env.EMAIL_SECRET, {
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+      onInvalidSignature: (email, reason) => {
+        console.warn(`Invalid signature from ${email.from}: ${reason}`);
+      }
+    });
+
+    const addressResolver = createAddressBasedEmailResolver("EmailAgent");
+
+    // Route the email with fallback
+    await routeAgentEmail(message, env, {
+      resolver: async (email, env) => {
+        // Try secure reply routing first (for replies to our emails)
+        const replyRouting = await secureReplyResolver(email, env);
+        if (replyRouting) return replyRouting;
+
+        // Fall back to address-based routing (for new emails)
+        return addressResolver(email, env);
+      }
+    });
+  }
+};
+```
+
+</TypeScriptExample>
+
+### Routing strategies
+
+The Agents SDK supports multiple email routing strategies:
+
+#### Secure Reply Routing (Recommended for replies)
+
+Uses HMAC-signed headers to securely route email replies back to the correct agent instance. When your agent sends an outbound email, it includes signed headers:
+
+```
+X-Agent-Name: EmailAgent
+X-Agent-ID: customer123
+X-Agent-Sig: <HMAC-SHA256 signature>
+X-Agent-Sig-Ts: <Unix timestamp>
+```
+
+When a reply comes back, the signature is verified before routing. This prevents:
+
+| Attack | Protection |
+| --- | --- |
+| Forged headers | Signature verification |
+| Replay attacks | Timestamp expiration (default 30 days) |
+| Future timestamps | Clock skew limit (5 minutes) |
+| Timing attacks | Constant-time comparison |
+
+#### Address-Based Routing
+
+Routes emails based on the email address pattern:
+
+For emails **with sub-addresses** (using `+`):
+- `EmailAgent+customer123@domain.com` → `{ agentName: "EmailAgent", agentId: "customer123" }`
+
+For emails **without sub-addresses**:
+- `support@domain.com` → `{ agentName: "EmailAgent", agentId: "support" }`
+
+#### Catch-All Routing
+
+Routes all emails to a single agent instance:
+
+```ts
+const resolver = createCatchAllEmailResolver("EmailAgent", "main");
+// All emails route to EmailAgent:main
+```
+
+## 5. Test your agent locally
+
+Start the development server:
+
+<PackageManagers type="run" args="start" />
+
+The example includes a test endpoint. Send a test email:
+
+```sh
+curl -X POST http://localhost:8787/api/test-email \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from": "user@example.com",
+    "to": "EmailAgent+test123@example.com",
+    "subject": "Test Email",
+    "body": "Hello from test!"
+  }'
+```
+
+Run the automated test suite:
+
+<PackageManagers type="run" args="test" />
+
+This will run both functional and security tests against your agent.
+
+## 6. Security testing
+
+The email agent example includes comprehensive security tests that verify protection against common attacks:
+
+<PackageManagers type="run" args="test:security" />
+
+The security test suite includes 15 attack scenarios:
+
+- Forged headers without signature
+- Random or fake signatures
+- Expired signatures
+- Future timestamps
+- Malformed timestamps
+- SQL injection payloads
+- Path traversal attempts
+- Header injection (newlines)
+- Unicode normalization attacks
+- Case manipulation
+- Long payload DoS attempts
+- Null byte injection
+
+All tests should show as **BLOCKED**, indicating that the security defenses are working correctly.
+
+## 7. Deploy your agent
+
+Deploy to Cloudflare:
+
+<PackageManagers type="run" args="deploy" />
+
+## 8. Configure Email Routing
+
+After deploying, configure Email Routing in the Cloudflare Dashboard:
+
+1. Go to your domain in the [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. Navigate to **Email** > **Email Routing** > **Routes**
+3. Add a routing rule that points to your Worker
+
+For example, to route all emails to `support@yourdomain.com`:
+- **Match**: `support@yourdomain.com`
+- **Action**: Send to Worker
+- **Worker**: Select your deployed email agent worker
+
+## Next steps
+
+Now that you have a working email agent, you can extend it with:
+
+- **AI-powered responses**: Use [AI models](/agents/concepts/calling-llms/) to generate intelligent replies
+- **Email templates**: Create different reply templates for various scenarios
+- **Attachment processing**: Process and store email attachments
+- **CRM integration**: Connect to external services for customer management
+- **Email scheduling**: Use [scheduled tasks](/agents/api-reference/schedule-tasks/) for delayed sending
+- **Conversation threading**: Track email conversations across multiple messages
+
+## Example use cases
+
+- **Customer support**: Auto-acknowledge support requests and route to the appropriate agent
+- **Newsletter processing**: Parse incoming emails and update subscriber preferences
+- **Order notifications**: Process order confirmations and update order status
+- **Alert routing**: Route alert emails to different teams based on severity
+- **Document processing**: Extract data from email attachments and trigger workflows
+
+## Related resources
+
+- [Email Routing documentation](/email-routing/)
+- [Email Workers guide](/email-routing/email-workers/)
+- [Agent class reference](/agents/api-reference/agents-api/)
+- [Example code on GitHub](https://github.com/cloudflare/agents/tree/main/examples/email-agent)

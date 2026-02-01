@@ -364,12 +364,13 @@ class MyAgent extends Agent {
     const raw = await email.getRaw();
     console.log("Raw email size:", raw.length);
 
-    // Reply to the email
+    // Reply to the email with secure signature for reply routing
     await this.replyToEmail(email, {
       fromName: "My Agent",
       subject: "Re: " + email.headers.get("subject"),
       body: "Thanks for your email!",
-      contentType: "text/plain"
+      contentType: "text/plain",
+      secret: this.env.EMAIL_SECRET // Enable secure reply routing
     });
   }
 }
@@ -386,6 +387,46 @@ export default {
   }
 };
 ```
+
+#### Secure Reply Routing
+
+When replying to emails, you can include a `secret` parameter to enable HMAC-signed headers. This allows incoming replies to be securely routed back to the same agent instance, preventing header forgery and replay attacks:
+
+```ts
+await this.replyToEmail(email, {
+  fromName: "My Agent",
+  body: "Thanks for your email!",
+  secret: this.env.EMAIL_SECRET
+});
+```
+
+The outbound email will include signed headers (`X-Agent-Name`, `X-Agent-ID`, `X-Agent-Sig`, `X-Agent-Sig-Ts`). To verify these signatures on incoming emails, combine the secure reply resolver with address-based routing:
+
+```ts
+import { createSecureReplyEmailResolver, createAddressBasedEmailResolver } from "agents";
+
+const secureReplyResolver = createSecureReplyEmailResolver(env.EMAIL_SECRET, {
+  maxAge: 7 * 24 * 60 * 60, // 7 days
+  onInvalidSignature: (email, reason) => {
+    console.warn(`Invalid signature: ${reason}`);
+  }
+});
+
+const addressResolver = createAddressBasedEmailResolver("MyAgent");
+
+await routeAgentEmail(message, env, {
+  resolver: async (email, env) => {
+    // Try secure reply routing first
+    const replyRouting = await secureReplyResolver(email, env);
+    if (replyRouting) return replyRouting;
+
+    // Fall back to address-based routing
+    return addressResolver(email, env);
+  }
+});
+```
+
+For a complete example with security tests, refer to the [Email Agent guide](/agents/guides/email-agent/).
 
 ### Context Management
 
