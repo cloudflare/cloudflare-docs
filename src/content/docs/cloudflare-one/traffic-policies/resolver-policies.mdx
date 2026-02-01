@@ -10,7 +10,7 @@ head:
     content: Resolver policies
 ---
 
-import { Render, Badge, GlossaryTooltip } from "~/components";
+import { Render, Badge, GlossaryTooltip , MermaidDiagram } from "~/components";
 
 :::note
 Only available on Enterprise plans.
@@ -18,6 +18,7 @@ Only available on Enterprise plans.
 
 By default, Gateway sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudflare's public DNS resolver, for resolution. Enterprise users can instead create Gateway policies to route DNS queries to custom resolvers.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
     %% Accessibility
@@ -35,6 +36,7 @@ flowchart TD
 
     response--"Returns response"-->user
 ```
+</MermaidDiagram>
 
 Gateway will route user traffic to your configured DNS resolver based on the matching policy, even if your resolvers' IP addresses overlap.
 

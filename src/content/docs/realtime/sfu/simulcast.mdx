@@ -5,8 +5,11 @@ sidebar:
   order: 8
 ---
 
+import { MermaidDiagram } from "~/components";
+
 Simulcast is a feature of WebRTC that allows a publisher to send multiple video streams of the same media at different qualities. For example, this is useful for scenarios where you want to send a high quality stream for desktop users and a lower quality stream for mobile users.
 
+<MermaidDiagram>
 ```mermaid
 graph LR
     A[Publisher] -->|Low quality| B[Cloudflare Realtime SFU]
@@ -16,6 +19,7 @@ B -->|Low quality| C@{ shape: procs, label: "Subscribers"}
 B -->|Medium quality| D@{ shape: procs, label: "Subscribers"}
 B -->|High quality| E@{ shape: procs, label: "Subscribers"}
 ```
+</MermaidDiagram>
 
 ### How it works
 

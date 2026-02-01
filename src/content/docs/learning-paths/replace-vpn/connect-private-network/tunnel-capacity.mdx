@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render , MermaidDiagram } from "~/components";
 
 Now that you have a Cloudflare Tunnel up and running, evaluate whether `cloudflared` has enough system resources to handle the expected volume of requests from end users. <Render file="tunnel/tunnel-capacity-intro" product="cloudflare-one" />
 If you have exhausted the ports on a single machine, you will need to add additional servers running `cloudflared`.
@@ -25,6 +25,7 @@ To determine how many `cloudflared` host servers you need:
 
 There are two ways to scale Cloudflare Tunnel: you could either add additional replicas of the existing tunnel (Figure 1), or you could divide your network's IP space across multiple tunnels (Figure 2).
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
 accTitle: Figure 1: Multiple replicas of a tunnel that proxies all private networks.
@@ -41,7 +42,9 @@ replica1 <--> C((Cloudflare))
 replica2 <--> C
 replica3 <--> C
 ```
+</MermaidDiagram>
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
 accTitle: Figure 2: Multiple tunnels proxying different private networks.
@@ -58,6 +61,7 @@ tunnel-1 <--> C((Cloudflare))
 tunnel-2 <--> C
 tunnel-3 <--> C
 ```
+</MermaidDiagram>
 
 ### When to add replicas
 

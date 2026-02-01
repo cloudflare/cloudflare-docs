@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { GlossaryDefinition, TabItem, Tabs, APIRequest } from "~/components";
+import { GlossaryDefinition, TabItem, Tabs, APIRequest , MermaidDiagram } from "~/components";
 
 <GlossaryDefinition term="Cloudflare Browser Isolation" />
 
@@ -183,6 +183,7 @@ Many vendors that may exist within your security framework support URL manipulat
 
 For example, vendors like Zscaler and Proofpoint allow you to prepend links to URLs in a static or dynamic format. You can prepend the clientless isolation link generated for your Cloudflare account to derive additional security benefits for potentially risky clicks. This means that if you have traffic not sent through Cloudflare today (such as through another proxy), you can potentially prepend specific filtered requests with a link to automatically send the traffic to a Cloudflare isolated browser session without an endpoint agent installed.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
     %% Accessibility
@@ -203,3 +204,4 @@ flowchart TB
     biso--"User's browser goes to </br>customer.cloudflareaccess.com/browser/risky.example.com"-->inline
     end
 ```
+</MermaidDiagram>

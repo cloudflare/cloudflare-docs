@@ -6,10 +6,11 @@ sidebar:
   order: 3
 ---
 
-import { Render, Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { Render, Details, GlossaryTooltip, TabItem, Tabs , MermaidDiagram } from "~/components";
 
 This guide covers how to connect WARP client user devices to a private network behind WARP Connector. In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and install it on `10.0.0.1`.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -21,6 +22,7 @@ This guide covers how to connect WARP client user devices to a private network b
       end
       W[WARP clients]-->C((Cloudflare))-->router1
 ```
+</MermaidDiagram>
 
 ## Prerequisites
 
@@ -107,6 +109,7 @@ route /p add 100.96.0.0/12 mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 You can now send a request from a WARP client user device to a device behind WARP connector. For example, on the WARP client device run `ping 10.0.0.2`.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -118,6 +121,7 @@ You can now send a request from a WARP client user device to a device behind WAR
       end
       W[WARP client]--ping 10.0.0.2 -->C((Cloudflare))-->router1
 ```
+</MermaidDiagram>
 
 [^1]:
     <Render

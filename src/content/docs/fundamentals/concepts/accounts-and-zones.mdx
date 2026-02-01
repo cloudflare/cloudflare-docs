@@ -5,10 +5,11 @@ sidebar:
   order: 4
 ---
 
-import { Render } from "~/components";
+import { Render , MermaidDiagram } from "~/components";
 
 Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: user profiles, accounts, and zones.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Accounts contain zones and user profiles contain user settings
@@ -30,6 +31,7 @@ subgraph User profile
     I[Communication preferences]
 end
 ```
+</MermaidDiagram>
 
 ---
 

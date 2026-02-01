@@ -9,16 +9,22 @@ import { MermaidDiagram } from "~/components";
 Use the `MermaidDiagram` component to render Mermaid diagrams at build time using [Beautiful Mermaid](https://agents.craft.do/mermaid). Diagrams use a Cloudflare-themed color scheme with orange accents.
 
 <MermaidDiagram>
-	```mermaid flowchart LR A[Browser] --> B[Cloudflare Edge] B --> C[Origin
-	Server] ```
+```mermaid
+flowchart LR
+A[Browser] --> B[Cloudflare Edge]
+B --> C[Origin Server]
+```
 </MermaidDiagram>
 
 ```mdx
 import { MermaidDiagram } from "~/components";
 
 <MermaidDiagram>
-	\`\`\`mermaid flowchart LR A[Browser] --> B[Cloudflare Edge] B --> C[Origin
-	Server] \`\`\`
+\`\`\`mermaid
+flowchart LR
+A[Browser] --> B[Cloudflare Edge]
+B --> C[Origin Server]
+\`\`\`
 </MermaidDiagram>
 ```
 
@@ -29,30 +35,48 @@ The component supports flowcharts, sequence diagrams, state diagrams, class diag
 ### Sequence diagram
 
 <MermaidDiagram>
-	```mermaid sequenceDiagram accTitle: Request flow accDescr: Shows how requests
-	flow from client to server Client->>Server: Request Server-->>Client: Response
-	```
+```mermaid
+sequenceDiagram
+accTitle: Request flow
+accDescr: Shows how requests flow from client to server
+Client->>Server: Request
+Server-->>Client: Response
+```
 </MermaidDiagram>
 
 ```mdx
 <MermaidDiagram>
-	\`\`\`mermaid sequenceDiagram accTitle: Request flow accDescr: Shows how
-	requests flow from client to server Client->>Server: Request Server-->>Client:
-	Response \`\`\`
+\`\`\`mermaid
+sequenceDiagram
+accTitle: Request flow
+accDescr: Shows how requests flow from client to server
+Client->>Server: Request
+Server-->>Client: Response
+\`\`\`
 </MermaidDiagram>
 ```
 
 ### State diagram
 
 <MermaidDiagram>
-	```mermaid stateDiagram-v2 [*] --> Pending Pending --> Active : approve Active
-	--> Complete : finish Complete --> [*] ```
+```mermaid
+stateDiagram-v2
+[*] --> Pending
+Pending --> Active : approve
+Active --> Complete : finish
+Complete --> [*]
+```
 </MermaidDiagram>
 
 ```mdx
 <MermaidDiagram>
-	\`\`\`mermaid stateDiagram-v2 [*] --> Pending Pending --> Active : approve
-	Active --> Complete : finish Complete --> [*] \`\`\`
+\`\`\`mermaid
+stateDiagram-v2
+[*] --> Pending
+Pending --> Active : approve
+Active --> Complete : finish
+Complete --> [*]
+\`\`\`
 </MermaidDiagram>
 ```
 
@@ -75,12 +99,18 @@ The component preserves `accTitle` and `accDescr` metadata as `aria-label` and s
 ### Custom colors
 
 <MermaidDiagram accent="#0066FF" line="#0066FF" border="#0066FF">
-	```mermaid flowchart LR A[Start] --> B[Process] --> C[End] ```
+```mermaid
+flowchart LR
+A[Start] --> B[Process] --> C[End]
+```
 </MermaidDiagram>
 
 ```mdx
 <MermaidDiagram accent="#0066FF" line="#0066FF" border="#0066FF">
-	\`\`\`mermaid flowchart LR A[Start] --> B[Process] --> C[End] \`\`\`
+\`\`\`mermaid
+flowchart LR
+A[Start] --> B[Process] --> C[End]
+\`\`\`
 </MermaidDiagram>
 ```
 
@@ -105,6 +135,11 @@ Supported shapes include:
 | `>text]`   | Asymmetric |
 
 <MermaidDiagram>
-	```mermaid flowchart LR A[Rectangle] --> B(Rounded) B --> C{Diamond}C -->
-	D([Stadium]) D --> E((Circle)) ```
+```mermaid
+flowchart LR
+A[Rectangle] --> B(Rounded)
+B --> C{Diamond}
+C --> D([Stadium])
+D --> E((Circle))
+```
 </MermaidDiagram>

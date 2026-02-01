@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { MermaidDiagram } from "~/components";
+
 When you create a DNS location, Gateway assigns IPv4/IPv6 addresses and DoT/DoH hostnames to that location. These are the IP addresses and hostnames you send your DNS queries to for Gateway to resolve.
 
 To view the resolver endpoint IP addresses and hostnames for a DNS location:
@@ -17,6 +19,7 @@ To view the resolver endpoint IP addresses and hostnames for a DNS location:
 
 Gateway uses different methods to match a DNS query to DNS locations depending on the type of request and network:
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
     %% Accessibility
@@ -34,6 +37,7 @@ flowchart TB
     ipv4--"Yes"-->source["Look up location by<br />source IPv4 address"]
     ipv4--"No"-->destination["Look up location by<br />destination IPv6 address"]
 ```
+</MermaidDiagram>
 
 1. First, Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the DNS location by its unique hostname.
 2. Next, if the query was not sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the DNS location by the source IPv4 address.

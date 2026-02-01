@@ -5,20 +5,22 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, MermaidDiagram } from "~/components";
 
 Since DDoS attacks target your web servers, the way to prevent them is to reduce requests reaching those servers.
 
+<MermaidDiagram>
 ```mermaid
-flowchart TD;
-    A[Malicious device]-->|Request to application|CDN;
-    CDN -->|Sends remaining requests|Origin;
+flowchart TD
+    A[Malicious device]-->|Request to application|CDN
+    CDN -->|Sends remaining requests|Origin
     subgraph CDN
         WAF
         Cache
     end
     A --Prevent external connections---x Origin
 ```
+</MermaidDiagram>
 
 <br />
 
@@ -42,14 +44,16 @@ In the context of DDoS attacks, caching reduces the number of requests going to 
 
 A Web Application Firewall (WAF) creates a shield between a web app and the Internet. This shield checks incoming web requests and filters undesired traffic to help mitigate many common attacks.
 
+<MermaidDiagram>
 ```mermaid
-flowchart TD;
-    User-->|Sends Request|WAF;
-    WAF-->|Filters Request|Application;
-    Application-->|Sends Request|OriginServer;
-    OriginServer-->|Serves Content|Application;
-    Application-->|Serves Content|User;
+flowchart TD
+    User-->|Sends Request|WAF
+    WAF-->|Filters Request|Application
+    Application-->|Sends Request|OriginServer
+    OriginServer-->|Serves Content|Application
+    Application-->|Serves Content|User
 ```
+</MermaidDiagram>
 
 ## Prevent external connections
 
@@ -57,6 +61,7 @@ Generally, your origin server should only accept requests coming from your web a
 
 This is a general best practice for security, but especially important in the context of DDoS attacks. Any traffic that bypasses your web application will also bypass any WAF or caching and has a stronger chance of overwhelming your origin.
 
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
   participant Client
@@ -73,3 +78,4 @@ sequenceDiagram
   Note over Origin_Server: Potential DDoS Attack
   Origin_Server-->>-Client: Error response
 ```
+</MermaidDiagram>

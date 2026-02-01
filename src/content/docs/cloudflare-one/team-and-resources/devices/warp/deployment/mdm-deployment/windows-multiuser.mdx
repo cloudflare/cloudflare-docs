@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render , MermaidDiagram } from "~/components";
 
 <Details header="Feature availability">
 
@@ -89,6 +89,7 @@ When enabling multi-user mode for the first time, users will need to re-register
 
 The following flowchart shows how WARP registration settings take effect as users log in and out:
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
     start(["Enable multi-user mode"])-->reg["Active Windows user is prompted to register WARP"]
@@ -107,6 +108,7 @@ flowchart TB
 		regexists--"Yes"-->user["Switch to that user's registration"]
 		regexists-. "No" .->reg
 ```
+</MermaidDiagram>
 
 ### Fast user switching
 

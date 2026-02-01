@@ -4,17 +4,21 @@ title: TCP connections
 
 ---
 
+import { MermaidDiagram } from "~/components";
+
 The following section explains how Cloudflare directs traffic efficiently with anycast routing and serves as an intermediary between users and origin servers. The second part covers TCP connections and keep-alives for performance optimization, and lastly, TCP Fast Open (TFO), a protocol extension that enhances the speed of TCP connections.
 
 ## How Cloudflare connects user to origin
 
 Users connect to Cloudflare by sending requests from their devices to Cloudflare's global network. Cloudflare connects to the origin server by acting as an intermediary between the user and the origin.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Connections with Cloudflare
 A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[Origin server]
 ```
+</MermaidDiagram>
 
 <br/>
 

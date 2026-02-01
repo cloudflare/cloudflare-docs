@@ -10,7 +10,7 @@ description: Consider an example use case and the main steps involved in CNAME f
 
 ---
 
-import { Example } from "~/components"
+import { Example , MermaidDiagram } from "~/components";
 
 With CNAME flattening, Cloudflare returns an IP address instead of the target hostname that a CNAME record points to.
 This process supports a few features and delivers better performance and flexibility, as mentioned in the [CNAME flattening concept page](/dns/cname-flattening/).
@@ -47,6 +47,7 @@ Note that this is a simpler scenario. Cases where CNAME flattening is optional a
 
 In this case, the process to respond to queries for `domain.test` directly with the IP address can be represented by the following diagram:
 
+<MermaidDiagram>
 ```mermaid
 flowchart BT
 accTitle: CNAME flattening diagram
@@ -80,6 +81,7 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
  O --> B
  N --> B
 ```
+</MermaidDiagram>
 
 ## Aspects to consider
 

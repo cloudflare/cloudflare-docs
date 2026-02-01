@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, DashButton, Details } from "~/components";
+import { Render, DashButton, Details , MermaidDiagram } from "~/components";
 
 A [public load balancer](/load-balancing/load-balancers/) allows you to distribute traffic across the servers that are running your [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/).
 
@@ -68,6 +68,7 @@ Review common load balancing configurations for published applications behind Cl
 
 For this example, assume we have a web application that runs on servers in two different data centers. We want to connect the application to Cloudflare so that users can access the application from anywhere in the world. Additionally, we want Cloudflare to load balance between the servers such that if the primary server fails, the secondary server receives all traffic.
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 		subgraph LB["Public load balancer <br> app.example.com "]
@@ -98,6 +99,7 @@ graph LR
 		style r1 stroke-dasharray: 5 5
 		style r2 stroke-dasharray: 5 5
 ```
+</MermaidDiagram>
 
 As shown in the diagram, a typical setup includes:
 - A dedicated Cloudflare Tunnel per data center.
@@ -111,6 +113,7 @@ Users can now connect to the application using the load balancer hostname (`app.
 
 The following diagram illustrates how to steer traffic to two different applications on a private network using a single load balancer.
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 		subgraph LB["Public load balancer <br> lb.example.com"]
@@ -141,6 +144,7 @@ graph LR
 			cf1-->S3
 		end
 ```
+</MermaidDiagram>
 
 This load balancing setup includes:
 

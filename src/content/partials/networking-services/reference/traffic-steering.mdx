@@ -18,7 +18,7 @@ params:
   - tunnelHCsPage
 ---
 
-import { AnchorHeading, Aside, Markdown, Render } from "~/components";
+import { AnchorHeading, Aside, Markdown, Render , MermaidDiagram } from "~/components";
 
 ## Magic routing table
 
@@ -317,6 +317,7 @@ This diagram illustrates how ECMP distributes traffic equally across two paths w
 
 #### Normal traffic flow
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Tunnels diagram
@@ -335,6 +336,7 @@ E[Anycast IP] --> F[/"GRE Tunnel 1 / <br> priority 1 / <br> ~50% of flows"/] -->
 E[Anycast IP] --> G[/"GRE Tunnel 2 / <br> priority 1 / <br> ~50% of flows"/] --> J{{Customer <br> data center/ <br> network 2}}
 E[Anycast IP] --> H[/GRE Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> data center/ <br> network 3}}
 ```
+</MermaidDiagram>
 
 #### Failover traffic flow: Scenario 1
 
@@ -342,6 +344,7 @@ E[Anycast IP] --> H[/GRE Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{
 
 When {props.productName} health checks determine that Tunnel 2 is unhealthy, {props.productName} dynamically de-prioritizes that route, leaving Tunnel 1 as the sole top-priority route. As a result, {props.productName} steers traffic away from Tunnel 2, and all traffic flows to Tunnel 1.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Tunnels diagram
@@ -362,6 +365,7 @@ E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Cust
 classDef red fill:#EE4B2B,color: black
 classDef green fill:#00FF00,color: black
 ```
+</MermaidDiagram>
 
 #### Failover traffic flow: Scenario 2
 
@@ -369,6 +373,7 @@ classDef green fill:#00FF00,color: black
 
 When {props.productName} determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 with the top priority route. In that case, all traffic flows to Tunnel 3.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Tunnels diagram
@@ -389,6 +394,7 @@ E[Anycast IP] -->  H[/Tunnel 3 / <br> priority 2 / <br> 100% of flows/]:::green 
 classDef red fill:#EE4B2B,color: black
 classDef green fill:#00FF00,color: black
 ```
+</MermaidDiagram>
 
 When {props.productName} determines that Tunnels 1 and 2 are healthy again, it re-prioritizes those routes, and traffic flow returns to normal.
 

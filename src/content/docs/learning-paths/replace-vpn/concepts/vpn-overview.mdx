@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { MermaidDiagram } from "~/components";
+
 A virtual private network (VPN) is an Internet security service that allows users to access the Internet as though they were connected to a private network. This encrypts Internet communications and provides a strong degree of anonymity. Some of the most common reasons people use VPNs are to protect against snooping on public WiFi, to circumvent Internet censorship, or to connect to a business’s internal network for the purpose of remote work.
 
 ## Why use a VPN
@@ -18,6 +20,7 @@ Information about the user is exposed in every step of the website request. Sinc
 
 A user connecting to the Internet using a VPN service has a higher level of security and privacy.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: How a VPN works
@@ -26,6 +29,7 @@ A(VPN client)
 end
 A<--Encrypted VPN tunnel-->B(VPN server)<-->C((Internet))
 ```
+</MermaidDiagram>
 
 A VPN connection involves the following four steps:
 

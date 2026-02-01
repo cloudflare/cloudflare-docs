@@ -5,6 +5,8 @@ sidebar:
   order: 15
 ---
 
+import { MermaidDiagram } from "~/components";
+
 :::note
 Only available on Enterprise plans. For more information, contact your account team.
 :::
@@ -36,6 +38,7 @@ Each child account is subject to the default Zero Trust [account limits](/cloudf
 
 Gateway evaluates parent account policies before any child account policies. To allow a child account to override a specific parent account policy, you can use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint to set the policy's `allow_child_bypass` rule setting to `true`.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 %% Accessibility
@@ -65,11 +68,13 @@ flowchart TD
     n4@{ shape: lean-l}
     n5@{ shape: lean-l}
 ```
+</MermaidDiagram>
 
 ### Siloed accounts
 
 In a siloed account configuration, each account operates independently within the same tenant. MSPs manage each account's own security policies, resources, and configurations separately.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 %% Accessibility
@@ -92,3 +97,4 @@ flowchart TD
     n2@{ shape: lean-l}
     n3@{ shape: lean-l}
 ```
+</MermaidDiagram>

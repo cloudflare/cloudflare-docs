@@ -12,6 +12,7 @@ import {
 	TabItem,
 	Tabs,
 	Badge,
+	MermaidDiagram,
 } from "~/components";
 
 Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks.
@@ -135,6 +136,7 @@ FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/traffic-policies/htt
 
 When you use [Cloudflare Regional Services](/data-localization/regional-services/) in the United States and the WARP client to on-ramp TLS traffic to Gateway, traffic will egress from a Cloudflare data center within Cloudflare's FedRAMP boundary. If a user's closest data center is non-FedRAMP compliant, their traffic will still egress from a FedRAMP compliant data center, maintaining FedRAMP compliance for the traffic.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
  %% Accessibility
@@ -159,6 +161,7 @@ flowchart LR
 
     n5@{ shape: rect}
 ```
+</MermaidDiagram>
 
 ## Cipher suites
 

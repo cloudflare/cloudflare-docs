@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip , MermaidDiagram } from "~/components";
 
 When you have a partial zone (<GlossaryTooltip term="CNAME setup" link="/dns/zone-setups/partial-setup/">CNAME setup</GlossaryTooltip>), Cloudflare handles DNS records a bit differently from primary zones (full setup) in order to internally resolve the origin server where proxied HTTP requests are sent to.
 
@@ -28,6 +28,7 @@ Since Cloudflare contains both the CNAME and its target, our DNS resolution will
 
 This can cause issues if you already have DNS records for `sub2.partialzone.com` at your authoritative DNS provider. These records may point to `192.0.2.4`, another IP address, or another domain but - because Cloudflare contains the initial record and the target - it never queries your authoritative DNS provider for the record for `sub2.partialzone.com`.
 
+<MermaidDiagram>
 ```mermaid
     flowchart TD
       accTitle: DNS resolution flow with CNAME target in same partial zone
@@ -40,11 +41,13 @@ This can cause issues if you already have DNS records for `sub2.partialzone.com`
       E[<code>A</code> record for <code>sub2.partialzone.com</code> to <code>192.0.2.4</code>]
       end
 ```
+</MermaidDiagram>
 
 <br />
 
 When you avoid this situation - meaning you do not have the **target** of the CNAME record within your partial zone - this DNS resolution would happen differently.
 
+<MermaidDiagram>
 ```mermaid
     flowchart TD
       accTitle: DNS resolution flow with CNAME target not in partial zone
@@ -58,6 +61,7 @@ When you avoid this situation - meaning you do not have the **target** of the CN
         C
       end
 ```
+</MermaidDiagram>
 
 ***
 
@@ -67,6 +71,7 @@ You could also [create a CNAME record](/dns/manage-dns-records/how-to/create-dns
 
 In this case, Cloudflare will always resolve the CNAME target based on the value at your authoritative DNS provider of the CNAME target zone.
 
+<MermaidDiagram>
 ```mermaid
     flowchart TD
       accTitle: DNS resolution flow with CNAME target in a zone within the same account
@@ -85,6 +90,7 @@ In this case, Cloudflare will always resolve the CNAME target based on the value
       C
       end
 ```
+</MermaidDiagram>
 
 ### Auth DNS points to `cdn.cloudflare.net`
 
@@ -95,6 +101,7 @@ Considering the following scenario:
 
 If such setup is in place, the subdomain (`www.partialzone.com` in this example) will resolve to a Cloudflare proxy IP, which will ultimately result in an error. Consider using [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) and [Orange-to-Orange](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup instead.
 
+<MermaidDiagram>
 ```mermaid
     flowchart TD
       accTitle: DNS resolution flow with CNAME target in a zone within the same account and auth DNS pointing to cdn.cloudflare.net
@@ -113,3 +120,4 @@ If such setup is in place, the subdomain (`www.partialzone.com` in this example)
       C
       end
 ```
+</MermaidDiagram>

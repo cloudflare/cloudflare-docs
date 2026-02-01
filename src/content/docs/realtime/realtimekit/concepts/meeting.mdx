@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-import { Details } from "~/components";
+import { Details, MermaidDiagram } from "~/components";
 
 Meeting is a **re-usable virtual room** that you can join and interact in, in real-time.
 
@@ -16,50 +16,50 @@ Because Meetings do not have a specific date or time, you can create them well i
 
 The following diagram shows the blueprint of a Meeting:
 
+<MermaidDiagram>
 ```mermaid
----
-title: Meeting
----
 flowchart TB
   accTitle: Meeting blueprint
   accDescr: Diagram showing blueprint of a Meeting
 
-  subgraph details [ ]
-      direction LR
-      subgraph feat ["<b>Features</b>"]
-          feat-content["Chat<br>...<br>Recording<br>...<br>Transcriptions"]
-      end
-      subgraph config ["<b>Configuration</b>"]
-          config-content["record_on_start<br>...<br>persist_chat<br>...<br>ai_config"]
-      end
-  end
+subgraph details [ ]
+direction LR
+subgraph feat ["<b>Features</b>"]
+feat-content["Chat<br>...<br>Recording<br>...<br>Transcriptions"]
+end
+subgraph config ["<b>Configuration</b>"]
+config-content["record_on_start<br>...<br>persist_chat<br>...<br>ai_config"]
+end
+end
 
-  subgraph participants ["<b>Participants</b>"]
-      direction LR
-      subgraph participats-row2 [ ]
-          direction TB
-          P3["<br>Participant 3
-          <br>
-          "]
-          P4["<br>Participant 4
-          <br>
-          "]
-      end
-      subgraph participats-row1 [ ]
-          direction TB
-          P1["<br>Participant 1
-          <br>
-          "]
-          P2["<br>Participant 2
-          <br>
-          "]
-      end
-  end
+subgraph participants ["<b>Participants</b>"]
+direction LR
+subgraph participats-row2 [ ]
+direction TB
+P3["<br>Participant 3
+<br>
+"]
+P4["<br>Participant 4
+<br>
+"]
+end
+subgraph participats-row1 [ ]
+direction TB
+P1["<br>Participant 1
+<br>
+"]
+P2["<br>Participant 2
+<br>
+"]
+end
+end
 
-  style participats-row1 fill:none,stroke:none
-  style participats-row2 fill:none,stroke:none
-  style details fill:none,stroke:none
-```
+style participats-row1 fill:none,stroke:none
+style participats-row2 fill:none,stroke:none
+style details fill:none,stroke:none
+
+````
+</MermaidDiagram>
 
 ### Session
 
@@ -144,7 +144,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/realtime/kit/{AP
   --data '{
     "title": "My First Cloudflare RealtimeKit meeting"
     }'
-```
+````
 
 A successful response includes a unique `id` for the created meeting. Save this ID, as it is required for all future operations on this specific meeting,
 such as adding participants or disabling it.

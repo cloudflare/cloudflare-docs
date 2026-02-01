@@ -5,6 +5,8 @@ sidebar:
   order: 5
 ---
 
+import { MermaidDiagram } from "~/components";
+
 As part of the Data Localization Suite, the Customer Metadata Boundary (CMB) ensures that Customer Logs — any traffic metadata that can identify a customer’s end user (that is, contains the customer's [Account ID](/fundamentals/account/find-account-and-zone-ids/)) — will stay in the `EU` (European Union) or in the `US` (United States), depending on the region the customer selects. For example, if a customer selects the `EU` Customer Metadata Boundary, metadata will **only** be sent to our core data center located in the European Union.
 
 An exception is made if "Allow out-of-region access" is enabled. When enabled, Customer Logs will still be stored in the configured regions but will be accessible to authorized end users, regardless of physical location. Refer to [Out of region access](/data-localization/metadata-boundary/out-of-region-access/) for more details.
@@ -15,6 +17,7 @@ The following diagram is a high-level example of the flow of how metadata about 
 
 <br />
 
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
     participant UserEU as End user
@@ -30,6 +33,7 @@ sequenceDiagram
     EUCoreDC->>CloudflareSuperAdmin: Logs & Analytics
     CloudflarePoP->>UserEU: Response
 ```
+</MermaidDiagram>
 
 <br />
 

@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip , MermaidDiagram } from "~/components";
 
 Regional Services gives you the ability to accommodate regional restrictions by choosing which subset of data centers decrypt and service HTTPS traffic.
 
@@ -32,6 +32,7 @@ The following diagram is a high-level example of the flow of a request coming fr
 
 <br/>
 
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
     participant User in US as End user in US
@@ -54,6 +55,7 @@ sequenceDiagram
     Note right of CloudflarePoPDUB: TLS encryption
     CloudflarePoPDUB->>User in US: Forwards response with content
 ```
+</MermaidDiagram>
 
 <br/>
 

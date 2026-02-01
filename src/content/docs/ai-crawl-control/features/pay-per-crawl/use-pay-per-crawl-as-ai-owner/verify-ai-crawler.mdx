@@ -5,8 +5,9 @@ sidebar:
   order: 2
 ---
 
-import { Steps, DashButton } from "~/components";
+import { Steps, DashButton , MermaidDiagram } from "~/components";
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 A[Set up your<br>Cloudflare Account] --> B[Verify your<br>AI crawler]:::highlight
@@ -15,6 +16,7 @@ C --> D[Connect to<br>Stripe]
 D --> E[Crawl pages]
 classDef highlight fill:#F6821F,color:white
 ```
+</MermaidDiagram>
 
 Once you have connected your Stripe account, set up your AI crawler as a [verified bot](/bots/concepts/bot/verified-bots/).
 

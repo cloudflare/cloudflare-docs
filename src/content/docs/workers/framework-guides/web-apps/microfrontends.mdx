@@ -6,7 +6,7 @@ sidebar:
 description: Split a single application into independently deployable frontends, using a router worker and service bindings
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig , MermaidDiagram } from "~/components";
 
 Microfrontends let you split a single application into smaller, independently deployable units that render as one cohesive application. Different teams using different technologies can develop, test, and deploy each microfrontend.
 
@@ -26,6 +26,7 @@ This template automatically creates a router worker with pre-configured routing 
 
 ## How it works
 
+<MermaidDiagram>
 ```mermaid
 graph LR
     A[Browser Request] --> B[Router Worker]
@@ -33,6 +34,7 @@ graph LR
     B -->|Service Binding| D[Microfrontend B]
     B -->|Service Binding| E[Microfrontend C]
 ```
+</MermaidDiagram>
 
 The router worker:
 

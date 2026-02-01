@@ -8,12 +8,13 @@ sidebar:
   label: Enable MCP OAuth to self-hosted apps
 ---
 
-import { Render, GlossaryTooltip, APIRequest, Tabs, TabItem } from "~/components";
+import { Render, GlossaryTooltip, APIRequest, Tabs, TabItem , MermaidDiagram } from "~/components";
 
 Cloudflare Access can delegate access from any [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) to an [Access for SaaS MCP server](/cloudflare-one/access-controls/ai-controls/saas-mcp/) via [OAuth](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization). The OAuth access token authorizes the MCP server to make requests to your self-hosted applications on behalf of the user, using the user's specific permissions and scopes.
 
 For example, your organization may wish to deploy an MCP server that helps employees interact with internal applications. You can configure [Access policies](/cloudflare-one/access-controls/policies/#selectors) to ensure that only authorized users can access those applications, either directly or by using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Link MCP servers and self-hosted applications in Access
@@ -35,6 +36,7 @@ accTitle: Link MCP servers and self-hosted applications in Access
 		mcp -- Access token --> app2
 		idp[Identity provider] <--> SaaS
 ```
+</MermaidDiagram>
 
 This guide covers how to use the Cloudflare API to link a self-hosted application to a remote MCP server. The core of this feature is the Linked App Token rule type, which allows an Access policy on one application to accept OAuth access tokens generated for another.
 

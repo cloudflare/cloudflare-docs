@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { MermaidDiagram } from "~/components";
+
 ## Simple explanation
 
 When visitors request content from your domain, Cloudflare first attempts to serve content from the cache. If this attempt fails, Cloudflare sends a request — or an `origin pull` — back to your origin web server to get the content.
@@ -52,6 +54,7 @@ For more details, refer to [What is a TLS handshake?](https://www.cloudflare.com
 Without Authenticated Origin Pulls, Cloudflare performs standard TLS handshakes between a client device and Cloudflare and Cloudflare and your origin.
 This is true even if you have [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) encryption modes enabled.
 
+<MermaidDiagram>
 ```mermaid
     flowchart TD
       accTitle: Connection diagram without Authenticated Origin Pulls
@@ -59,6 +62,7 @@ This is true even if you have [**Full**](/ssl/origin-configuration/ssl-modes/ful
       B --Standard TLS Handshake--> C[Origin server]
       D[External device] --Standard TLS Handshake ----> C
 ```
+</MermaidDiagram>
 
 <br/>
 
@@ -66,6 +70,7 @@ This lack of authentication means that - even if your origin is [protected behin
 
 With Authenticated Origin Pulls, Cloudflare performs standard TLS handshakes between a client device and Cloudflare, but a client-authenticated TLS handshake between Cloudflare and your origin.
 
+<MermaidDiagram>
 ```mermaid
     flowchart TD
       accTitle: Connection diagram with Authenticated Origin Pulls
@@ -73,6 +78,7 @@ With Authenticated Origin Pulls, Cloudflare performs standard TLS handshakes bet
       B --Client authenticated TLS Handshake--> C[Origin server]
       D[External device] --Standard TLS Handshake -----x C
 ```
+</MermaidDiagram>
 
 <br/>
 

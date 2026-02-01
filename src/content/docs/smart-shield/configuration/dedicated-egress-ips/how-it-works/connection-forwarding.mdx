@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { MermaidDiagram } from "~/components";
+
 Since IPv6 address ranges are deployed globally, no forwarding is needed.
 
 For IPv4 traffic, based on [IPs allocation](/smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/#ips-allocation), not all egress data centers will have access to an applicable dedicated CDN egress IP.
@@ -17,6 +19,7 @@ After a request reaches Cloudflare on an ingress data center, and the cache serv
 
 If the server running the egress router has access to an applicable dedicated CDN egress IP, traffic egresses from that server.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Dedicated CDN Egress IPs and connection forwarding
@@ -30,6 +33,7 @@ flowchart LR
         A --ingress--> X
         B --egress--> C
 ```
+</MermaidDiagram>
 
 ### Connection forwarding is needed
 
@@ -37,6 +41,7 @@ If the server does not have access to an applicable IP, the following options ar
 
 * Another server in the same data center has access to an applicable IP and the connection is forwarded to that server.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Dedicated CDN Egress IPs and connection forwarding
@@ -51,9 +56,11 @@ flowchart LR
         A --ingress--> X
         Y --egress--> C
 ```
+</MermaidDiagram>
 
 * Another data center in the same location has access to an applicable IP and the connection is forwarded to that data center.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Dedicated CDN Egress IPs and connection forwarding
@@ -73,9 +80,11 @@ flowchart LR
         A --ingress--> X
         Y --egress--> C
 ```
+</MermaidDiagram>
 
 * Another data center in a different location has access to an applicable IP. The closest location is selected and connection is forwarded to that location.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Dedicated CDN Egress IPs and connection forwarding
@@ -97,3 +106,4 @@ flowchart LR
         A --ingress--> X
         Y --egress--> C
 ```
+</MermaidDiagram>

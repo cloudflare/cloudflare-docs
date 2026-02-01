@@ -10,7 +10,7 @@ head:
 description: Learn about random prefix attacks. As part of DNS Firewall, Cloudflare can protect your upstream authoritative nameservers from these attacks.
 ---
 
-import { Render } from "~/components";
+import { Render , MermaidDiagram } from "~/components";
 
 <Render file="random-prefix-attack-definition" product="dns" /> <br />
 
@@ -20,6 +20,7 @@ import { Render } from "~/components";
 
 If the request only involved nonexistent domains, the `NXDOMAIN` errors would only be served by the top-level domain (TLD) nameservers for `com.`. This means that the queries never reach the authoritative nameservers.
 
+<MermaidDiagram>
 ```mermaid
     flowchart TD
       accTitle: Random prefix attacks diagram
@@ -29,6 +30,7 @@ If the request only involved nonexistent domains, the `NXDOMAIN` errors would on
       B --"4)" <code>NXDOMAIN error</code>--> A
       D[Authoritative NS]
 ```
+</MermaidDiagram>
 
 <br />
 
@@ -36,6 +38,7 @@ If the request only involved nonexistent domains, the `NXDOMAIN` errors would on
 
 These attacks are successful because they target subdomains, which require a response from a domain's authoritative nameservers.
 
+<MermaidDiagram>
 ```mermaid
     flowchart TD
       accTitle: Random prefix attacks diagram
@@ -46,6 +49,7 @@ These attacks are successful because they target subdomains, which require a res
       D --"5)" <code>NXDOMAIN error</code>--> B
       B --"6)" <code>NXDOMAIN error</code>--> A
 ```
+</MermaidDiagram>
 
 <br />
 

@@ -3,6 +3,8 @@ pcx_content_type: concept
 title: Diagrams
 ---
 
+import { MermaidDiagram } from "~/components";
+
 ## Definition
 
 Visualizations that depict a process, architecture, or some other form of technology. We recommend either using [SVG files](#svg-diagrams) or [Mermaid diagrams](#mermaid-diagrams).
@@ -43,6 +45,7 @@ Our Mermaid diagrams are based on [`rehype-mermaid`](https://github.com/remcohas
 
 ### Template
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Tunnels diagram
@@ -60,8 +63,10 @@ E[Anycast IP] --> F[/Tunnel 1 / <br/> priority 1/] --> I{{Customer <br/> data ce
 E[Anycast IP] --> G[/Tunnel 2 / <br/> priority 1/] --> J{{Customer <br/> data center/ <br/> network 2}}
 E[Anycast IP] --> H[/Tunnel 3 / <br/> priority 2/] --> K{{Customer <br/> data center/ <br/> network 3}}
 ```
+</MermaidDiagram>
 
 ````
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Tunnels diagram
@@ -79,6 +84,7 @@ E[Anycast IP] --> F[/Tunnel 1 / <br/> priority 1/] --> I{{Customer <br/> data ce
 E[Anycast IP] --> G[/Tunnel 2 / <br/> priority 1/] --> J{{Customer <br/> data center/ <br/> network 2}}
 E[Anycast IP] --> H[/Tunnel 3 / <br/> priority 2/] --> K{{Customer <br/> data center/ <br/> network 3}}
 ```
+</MermaidDiagram>
 ````
 
 ## Related components

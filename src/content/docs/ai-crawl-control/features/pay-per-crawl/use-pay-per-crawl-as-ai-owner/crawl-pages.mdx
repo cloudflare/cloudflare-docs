@@ -5,8 +5,9 @@ sidebar:
   order: 5
 ---
 
-import { Steps } from "~/components";
+import { Steps , MermaidDiagram } from "~/components";
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 A[Set up your<br>Cloudflare Account] --> B[Verify your<br>AI crawler]
@@ -15,6 +16,7 @@ C --> D[Connect to<br>Stripe]
 D --> E[Crawl pages]:::highlight
 classDef highlight fill:#F6821F,color:white
 ```
+</MermaidDiagram>
 
 Once your AI crawler complies with Web Bot Auth, you can begin to crawl webpages. For more information on how pay per crawl works, refer to [What is Pay Per Crawl?](/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/)
 

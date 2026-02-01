@@ -8,25 +8,29 @@ head:
     content: How Dedicated CDN Egress IPs work
 ---
 
-import { Render } from "~/components";
+import { Render , MermaidDiagram } from "~/components";
 
 When you use Cloudflare [as a reverse proxy](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy), [Cloudflare's global network](https://www.cloudflare.com/network/) sits between client requests and your origin servers.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Cloudflare as a reverse proxy
         accDescr: Diagram showing Cloudflare's network between clients and the origin server.
         A[Client] <--> B((Cloudflare))<--> C[(Origin server)]
 ```
+</MermaidDiagram>
 
 Zooming into what happens as a request routes through Cloudflare, you can consider two parts of the process: ingress and egress.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Cloudflare as a reverse proxy
         accDescr: Diagram showing Cloudflare's network between clients and the origin server.
         A[Client] --ingress--> B((Cloudflare))--egress--> C[(Origin server)]
 ```
+</MermaidDiagram>
 
 Ingress refers to the data center where the client request lands on, based on Internet routing. From there on, the request will be processed according to your Cloudflare configurations and, if needed, a connection to the origin will be initiated via an egress data center.
 

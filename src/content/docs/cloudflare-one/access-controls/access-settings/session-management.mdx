@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render , MermaidDiagram } from "~/components";
 
 A user session determines how long a user can access an Access application without re-authenticating.
 
@@ -90,6 +90,7 @@ When [WARP authentication identity](/cloudflare-one/team-and-resources/devices/w
 
 The following flowchart illustrates how Access enforces user sessions for a self-hosted application.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
     %% Accessibility
@@ -114,6 +115,7 @@ flowchart TB
 
 
 ```
+</MermaidDiagram>
 
 ## Revoke user sessions
 

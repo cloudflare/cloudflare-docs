@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Example } from "~/components";
+import { Example , MermaidDiagram } from "~/components";
 
 Orange-to-Orange (O2O) is a specific traffic routing configuration where traffic routes through two Cloudflare zones: the first Cloudflare zone is owned by customer 1 and the second Cloudflare zone is owned by customer 2, who is considered a SaaS provider.
 
@@ -38,6 +38,7 @@ DNS management for **example.com**
 
 With O2O enabled, the settings configured in your Cloudflare zone will be applied to the traffic first, and then the settings configured in the SaaS provider's zone will be applied to the traffic second.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: O2O-enabled traffic flow diagram
@@ -55,6 +56,7 @@ A --> B
 B --> C
 C --> D
 ```
+</MermaidDiagram>
 
 ## Without O2O
 
@@ -62,6 +64,7 @@ If you do not have your own Cloudflare zone and have only onboarded one or more 
 
 Without O2O enabled, the settings configured in the SaaS Provider's zone will be applied to the traffic.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: Your zone using a SaaS provider, but without O2O
@@ -77,3 +80,4 @@ C[SaaS Provider Origin]
 A --> B
 B --> C
 ```
+</MermaidDiagram>

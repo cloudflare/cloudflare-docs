@@ -9,16 +9,18 @@ head:
 description: No encryption is used for traffic between browsers and Cloudflare or between Cloudflare and origins. Everything is cleartext HTTP.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs , MermaidDiagram } from "~/components";
 
 Setting your encryption mode to **Off (not recommended)** redirects any HTTPS request to plaintext HTTP.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
         accTitle: No SSL/TLS Encryption
         accDescr: With an encryption mode of Off, your application does not encrypt traffic between the visitor and Cloudflare or between Cloudflare and your server.
         A[Browser] <--Unencrypted--> B((Cloudflare))<--Unencrypted--> C[(Origin server)]
 ```
+</MermaidDiagram>
 
 ## Use when
 

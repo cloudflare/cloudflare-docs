@@ -9,15 +9,19 @@ head:
 
 ---
 
+import { MermaidDiagram } from "~/components";
+
 To limit access to the public bucket created for caching content, you can use Cloudflare's [WAF](/waf/custom-rules/use-cases/configure-token-authentication/). The WAF provides an additional security layer to filter requests and ensure that only authorized traffic reaches your bucket. 
 
 The following diagram illustrates the flow of a user's request through WAF, Cache, and R2.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Connections with Cloudflare
 A[User's request] --> B[WAF] --> C[Cache] --> D[R2]
 ```
+</MermaidDiagram>
 
 <br/>
 

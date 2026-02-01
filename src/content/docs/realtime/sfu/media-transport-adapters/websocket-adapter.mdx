@@ -7,7 +7,7 @@ sidebar:
   badge: Beta
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem , MermaidDiagram } from "~/components";
 
 :::note
 WebSocket adapter is in beta. The API may change.
@@ -33,6 +33,7 @@ Stream audio and video between WebRTC tracks and WebSocket endpoints. Supports i
 
 Ingest audio from external sources via WebSocket to create WebRTC tracks for distribution.
 
+<MermaidDiagram>
 ```mermaid
 graph LR
     A[External System] -->|Audio Data| B[WebSocket Endpoint]
@@ -40,6 +41,7 @@ graph LR
     C -->|New Session| D[WebRTC Track]
     D -->|WebRTC| E[WebRTC Clients]
 ```
+</MermaidDiagram>
 
 **Use cases:**
 - AI text-to-speech generation streaming into WebRTC
@@ -58,12 +60,14 @@ graph LR
 
 Stream audio and video from existing WebRTC tracks to external systems via WebSocket for processing or storage.
 
+<MermaidDiagram>
 ```mermaid
 graph LR
     A[WebRTC Source] -->|WebRTC| B[Realtime SFU Session]
     B -->|Adapter| C[WebSocket Endpoint]
     C -->|Media Data| D[External System]
 ```
+</MermaidDiagram>
 
 **Use cases:**
 - Real-time speech-to-text transcription

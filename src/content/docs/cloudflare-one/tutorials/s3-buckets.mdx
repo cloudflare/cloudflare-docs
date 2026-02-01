@@ -10,10 +10,13 @@ description: >-
   This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet.
 ---
 
+import { MermaidDiagram } from "~/components";
+
 This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudflare Zero Trust so that data in these buckets is not publicly exposed on the Internet. You can combine Cloudflare Access and AWS VPC endpoints. Enterprise may also use Cloudflare Gateway egress policies with dedicated egress IPs.
 
 ## Method 1: Via Cloudflare Access and VPC endpoints
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
     cf1[/Agentless and WARP </br>Zero Trust users/]--Access policy-->cf2{{Cloudflare}}
@@ -30,6 +33,7 @@ flowchart TB
 
     i1[/Users outside </br> Zero Trust/]-. "S3 access denied" .->s3_1
 ```
+</MermaidDiagram>
 
 ### Prerequisites
 
@@ -125,6 +129,7 @@ Users and applications that successfully authenticate via Cloudflare Access can 
 This method is only available on Enterprise plans.
 :::
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
     cf1[/WARP users/]--Egress policy-->cf2{{Cloudflare}}
@@ -137,6 +142,7 @@ flowchart TB
 
     i2[/Users outside </br> Zero Trust/]-. "IPs denied" .->s3_1
 ```
+</MermaidDiagram>
 
 ### Prerequisites
 

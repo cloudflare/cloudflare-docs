@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { MermaidDiagram } from "~/components";
+
 DNS filtering is a technique to block access to websites or online content. DNS filtering is implemented by specialized DNS resolvers (such as Cloudflare Gateway) that allow you to define a blocklist of domains or content categories. The DNS resolver acts as a filter by refusing to resolve queries for domains on the blocklist, thus preventing users from loading those websites.
 
 ## Purpose of DNS filtering
@@ -20,6 +22,7 @@ DNS filtering is commonly used to:
 
 DNS filtering involves configuring your browser, device, or router to send all DNS requests to a DNS filtering service. The DNS filtering service checks the domain or IP against your DNS policies. If the domain or IP matches a block policy, the DNS filtering service can redirect the request to an alternative IP address or block it altogether. The diagram below shows the logic for Cloudflare Gateway's DNS filtering service.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: DNS filtering
@@ -31,7 +34,9 @@ subgraph ide1 [Cloudflare Gateway]
 end
 C --> D[(Nameservers)]
 ```
+</MermaidDiagram>
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: DNS filtering logic
@@ -39,6 +44,7 @@ A[Blocked by DNS policy?] --Yes --> B[Block page is configured?] --Yes--> C[Retu
 B--No-->E[Return 0.0.0.0]
 A --No --> D[Return IP of www.example.com]
 ```
+</MermaidDiagram>
 
 ## DNS filtering vs. Secure Web Gateway
 

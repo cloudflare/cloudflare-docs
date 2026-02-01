@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { MermaidDiagram } from "~/components";
+
 Sandbox SDK lets you execute untrusted code safely from your Workers. It combines three Cloudflare technologies to provide secure, stateful, and isolated execution:
 
 - **Workers** - Your application logic that calls the Sandbox SDK
@@ -13,6 +15,7 @@ Sandbox SDK lets you execute untrusted code safely from your Workers. It combine
 
 ## Architecture overview
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
     accTitle: Sandbox SDK Architecture
@@ -37,6 +40,7 @@ flowchart TB
     style DO fill:#dce9f7,stroke:#1d8cf8,stroke-width:2px
     style Container fill:#d4f4e2,stroke:#17b26a,stroke-width:2px
 ```
+</MermaidDiagram>
 
 ### Layer 1: Client SDK
 

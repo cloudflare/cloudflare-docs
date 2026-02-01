@@ -7,6 +7,7 @@ sidebar:
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+import { MermaidDiagram } from "~/components";
 
 ## Prerequisites
 
@@ -38,6 +39,7 @@ The UI Kit components are able to understand and synchronize with each other bec
 
 Here's an example of how state synchronization works when opening the participants sidebar:
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
     accTitle: Sidebar State Synchronization Example
@@ -54,7 +56,9 @@ flowchart LR
 
     style Meeting fill:#F48120,stroke:#333,stroke-width:2px,color:#fff
     style App fill:#0051C3,stroke:#333,stroke-width:2px,color:#fff
-```
+
+````
+</MermaidDiagram>
 
 ## State Flow
 
@@ -123,7 +127,7 @@ function App() {
 		</RealtimeKitProvider>
 	);
 }
-```
+````
 
 ### Alternative: Using Refs (Multiple Meetings)
 

@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Example, Steps, Tabs, TabItem, DashButton } from "~/components";
+import { GlossaryTooltip, Example, Steps, Tabs, TabItem, DashButton , MermaidDiagram } from "~/components";
 
 AI Crawl Control works alongside other Cloudflare products, such as Cloudflare [Web Application Firewall (WAF)](/waf/). WAF checks incoming web and API requests, and filters undesired traffic based on rules. [WAF custom rules](/waf/custom-rules/) allow you to perform certain actions such as enforcing <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip>.
 
@@ -15,6 +15,7 @@ AI Crawl Control works alongside other Cloudflare products, such as Cloudflare [
 - AI Crawl Control uses WAF custom rules to block the selection of AI crawlers the site owner has decided to block.
 - AI Crawl Control's pay per crawl feature takes place after WAF.
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 A[Traffic] --> B[WAF custom rules<br>AI Crawl Control: Crawler blocks]
@@ -22,6 +23,7 @@ B --> C[Cloudflare<br>Bot Solutions]
 C --> D[AI Crawl Control:<br>Pay Per Crawl]
 classDef highlight fill:#F6821F,color:white
 ```
+</MermaidDiagram>
 
 For this reason, if you plan on using AI Crawl Control to manage AI crawlers, you may wish to modify your existing WAF custom rules such that it does not affect AI crawlers. This will allow you to manage AI crawlers only from AI Crawl Control, thereby streamlining your workflow.
 

@@ -6,10 +6,11 @@ sidebar:
   order: 3
 ---
 
-import { Render, Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { Render, Details, GlossaryTooltip, TabItem, Tabs , MermaidDiagram } from "~/components";
 
 This guide covers how to connect a private network to the Internet using WARP Connector. In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and install it on `10.0.0.1`.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -19,6 +20,7 @@ This guide covers how to connect a private network to the Internet using WARP Co
       end
       router1-->C((Cloudflare))-->I{Internet}
 ```
+</MermaidDiagram>
 
 ## Prerequisites
 
@@ -94,6 +96,7 @@ You can now test if traffic from your subnet routes through Cloudflare. For exam
 1. On the `10.0.0.2` device, run `curl --ipv4 www.google.com`.
 2. Check your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/) for queries from `warp_connector@<your-team-name>.cloudflareaccess.com`. Logs may take a few minutes to populate.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -103,6 +106,7 @@ You can now test if traffic from your subnet routes through Cloudflare. For exam
       end
       router1-->C((Cloudflare))-->I{Internet}
 ```
+</MermaidDiagram>
 
 [^1]:
     <Render

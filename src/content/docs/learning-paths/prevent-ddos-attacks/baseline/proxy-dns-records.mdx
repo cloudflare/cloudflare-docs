@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render , MermaidDiagram } from "~/components";
 
 The first - and often easiest - step of DDoS protection is making sure your DNS records are [proxied](/dns/proxy-status/) through Cloudflare.
 
@@ -24,11 +24,13 @@ When using Cloudflare with [unproxied DNS records](/dns/proxy-status/), DNS look
 
 Another way of thinking about this concept is that visitors directly connect with your origin server.
 
+<MermaidDiagram>
 ```mermaid
         flowchart LR
         accTitle: Connections without Cloudflare
         A[Visitor] <-- Connection --> B[Origin server]
 ```
+</MermaidDiagram>
 
 ### With Cloudflare
 
@@ -40,11 +42,13 @@ With Cloudflare — meaning your domain or subdomain is using [proxied DNS recor
 
 All requests intended for proxied hostnames are directed to Cloudflare first and then forwarded to your origin server.
 
+<MermaidDiagram>
 ```mermaid
         flowchart LR
         accTitle: Connections with Cloudflare
         A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[Origin server]
 ```
+</MermaidDiagram>
 
 Cloudflare assigns specific anycast IPs to your domain dynamically and these IPs may change at any time. This is an expected part of the operation of our anycast network and does not affect the proxy behavior described above.
 

@@ -8,7 +8,7 @@ head:
     content: Get Started
 ---
 
-import { TypeScriptExample, PackageManagers } from "~/components";
+import { TypeScriptExample, PackageManagers , MermaidDiagram } from "~/components";
 
 This guide will instruct you through setting up and deploying your first Workers AI project with embedded function calling. You will use Workers, a Workers AI binding, the [`ai-utils package`](https://github.com/cloudflare/ai-utils), and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network with embedded function calling.
 
@@ -87,6 +87,7 @@ Moreover, in this example we define and describe a list of tools that the LLM ca
 
 Abstracted by the `runWithTools` function, the following steps occur:
 
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
     participant Worker as Worker
@@ -98,6 +99,7 @@ sequenceDiagram
     Worker-->>+WorkersAI: Send messages, function calling prompt and function result
     WorkersAI-->>-Worker: Send response incorporating function output
 ```
+</MermaidDiagram>
 
 The `ai-utils package` is also open-sourced on [Github](https://github.com/cloudflare/ai-utils).
 

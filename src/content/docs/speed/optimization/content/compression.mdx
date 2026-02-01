@@ -9,7 +9,7 @@ head:
     content: Content compression | Brotli
 ---
 
-import { Stream, Render } from "~/components";
+import { Stream, Render , MermaidDiagram } from "~/components";
 
 Cloudflare compresses content in two ways: between Cloudflare and your website visitors and between Cloudflare and your origin server.
 
@@ -110,6 +110,7 @@ When Cloudflare compresses a response sent to the website visitor, it may omit t
 
 When requesting content from your origin server, Cloudflare supports Brotli compression, Gzip compression, or no compression.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Compressed responses sent from the origin server
@@ -128,6 +129,7 @@ style C stroke-width: 2px
 linkStyle 1,2 stroke-width: 2px
 linkStyle 0,3 stroke-width: 1px
 ```
+</MermaidDiagram>
 
 If your origin server responds to a Cloudflare request using Brotli/Gzip compression, we will keep the same compression in the response sent to the website visitor if:
 

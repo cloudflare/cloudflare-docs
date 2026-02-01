@@ -2,8 +2,9 @@
 {}
 ---
 
-import { Render, Details } from "~/components";
+import { Render, Details , MermaidDiagram } from "~/components";
 
+<MermaidDiagram>
 ```mermaid
 flowchart TB
     %% Accessibility
@@ -59,6 +60,7 @@ flowchart TB
     https@{ shape: hex}
     http0@{ shape: lean-r}
 ```
+</MermaidDiagram>
 
 :::caution[Order of enforcement change on 2025-07-14]
 On 2025-07-14, Gateway began evaluating network-level policies before application-level policies and verify the network path to an origin server before accepting a connection. This only affects your policies if you are applying HTTP policies in your account. For example:

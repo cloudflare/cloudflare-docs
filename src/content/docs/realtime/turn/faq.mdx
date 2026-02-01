@@ -5,6 +5,8 @@ sidebar:
   order: 20
 ---
 
+import { MermaidDiagram } from "~/components";
+
 ## General
 
 ### What is Cloudflare Realtime TURN pricing? How exactly is it calculated?
@@ -21,10 +23,8 @@ Traffic between Cloudflare Realtime TURN and Cloudflare Realtime SFU or Cloudfla
 
 <div class="full-img">
 
+<MermaidDiagram>
 ```mermaid
----
-title: Cloudflare Realtime TURN pricing
----
 flowchart LR
     Client[TURN Client]
     Server[TURN Server]
@@ -33,7 +33,9 @@ flowchart LR
     Server -->|"Egress (charged)"| Client
 
     Server <-->|Not part of billing| PeerA[Peer A]
+
 ```
+</MermaidDiagram>
 
 </div>
 
@@ -153,3 +155,4 @@ Even though this is not common, in certain scenarios TURN allocations may be dis
 ### What will happen if TURN credentials expire while the TURN allocation is in use?
 
 Cloudflare Realtime will immediately stop billing and recording usage for analytics. After a short delay, the connection will be disconnected.
+```

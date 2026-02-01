@@ -7,7 +7,7 @@ head: []
 description: Get started with Cloudflare for SaaS
 ---
 
-import { Example, Render } from "~/components";
+import { Example, Render , MermaidDiagram } from "~/components";
 
 ---
 
@@ -65,12 +65,14 @@ mystore.example.com CNAME customers.saasprovider.com
 
 This record would route traffic in the following way:
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: How traffic routing works with a CNAME target
 A[Request to <code>mystore.example.com</code>] --> B[<code>customers.saasprovider.com</code>]
 B --> C[<code>proxy-fallback.saasprovider.com</code>]
 ```
+</MermaidDiagram>
 
 <br />
 

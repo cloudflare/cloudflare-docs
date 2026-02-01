@@ -6,7 +6,7 @@ sidebar:
   hidden: true
 ---
 
-import { Render } from "~/components";
+import { Render , MermaidDiagram } from "~/components";
 
 Specify model or provider fallbacks with your [Universal endpoint](/ai-gateway/usage/universal/) to handle request failures and ensure reliability.
 
@@ -23,6 +23,7 @@ In the following example, a request first goes to the [Workers AI](/workers-ai/)
 1. Sends a request to Workers AI Inference API.
 2. If that request fails, proceeds to OpenAI.
 
+<MermaidDiagram>
 ```mermaid
 graph TD
     A[AI Gateway] --> B[Request to Workers AI Inference API]
@@ -30,6 +31,7 @@ graph TD
     B -->|Failure| D[Request to OpenAI API]
     D --> E[Return Response]
 ```
+</MermaidDiagram>
 
 <br />
 

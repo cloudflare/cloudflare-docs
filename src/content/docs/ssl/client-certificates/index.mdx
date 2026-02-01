@@ -8,7 +8,7 @@ description: Use Cloudflare public key infrastructure (PKI) to create client cer
 
 ---
 
-import { GlossaryDefinition, Render, DirectoryListing } from "~/components";
+import { GlossaryDefinition, Render, DirectoryListing , MermaidDiagram } from "~/components";
 
 Use Cloudflare's public key infrastructure (PKI) to create client certificates, or [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
 
@@ -48,9 +48,11 @@ Apart from the mTLS Workers binding, any of the above implementations can use yo
 
 Use the [mTLS Workers binding](/workers/runtime-apis/bindings/mtls/) when you need your worker to present a client certificate to an external service. To authenticate requests from a client to your worker instead, refer to [SSL/TLS > Client certificates](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/) and the regular [mTLS for application security](/learning-paths/mtls/mtls-app-security/) implementation.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: mTLS from client to worker versus mTLS from worker to external service
         accDescr: Diagram showing two different implementations that can be considered for mTLS with Cloudflare Workers.
         A[Client] <--App security mTLS--> B((Cloudflare))<--mTLS worker binding--> C[(External service)]
 ```
+</MermaidDiagram>

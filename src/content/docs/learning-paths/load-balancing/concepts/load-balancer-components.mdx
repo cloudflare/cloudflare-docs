@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render , MermaidDiagram } from "~/components";
 
 At it's most basic, load balancing is made up of three components:
 
@@ -24,6 +24,7 @@ With a load balancer, requests first go through the load balancer. Your load bal
 
 Within each pool, requests then go to individual endpoints. And that endpoint is what responds to the request.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       accTitle: Pool traffic flow
@@ -34,6 +35,7 @@ Within each pool, requests then go to individual endpoints. And that endpoint is
         Endpoint2((Endpoint 2))
       end
 ```
+</MermaidDiagram>
 
 <br/>
 

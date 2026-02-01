@@ -8,7 +8,7 @@ sidebar:
     hideIndex: true
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing , MermaidDiagram } from "~/components";
 
 When building a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server, you need both a way to allow users to login (authentication) and allow them to grant the MCP client access to resources on their account (authorization).
 
@@ -55,6 +55,7 @@ Refer to the [getting started example](/agents/guides/remote-mcp-server/) for a 
 
 The authorization flow in this case works like this:
 
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
     participant B as User-Agent (Browser)
@@ -74,6 +75,7 @@ sequenceDiagram
     C->>M: MCP Request with Access Token
     Note over C,M: Begin standard MCP message exchange
 ```
+</MermaidDiagram>
 
 Remember — [authentication is different from authorization](https://www.cloudflare.com/learning/access-management/authn-vs-authz/). Your MCP Server can handle authorization itself, while still relying on an external authentication service to first authenticate users. The [example](/agents/guides/remote-mcp-server) in getting started provides a mock authentication flow. You will need to implement your own authentication handler — either handling authentication yourself, or using an external authentication services.
 
@@ -106,6 +108,7 @@ export default new OAuthProvider({
 
 Note that as [defined in the Model Context Protocol specification](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/#292-flow-description) when you use a third-party OAuth provider, the MCP Server (your Worker) generates and issues its own token to the MCP client:
 
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
     participant B as User-Agent (Browser)
@@ -127,6 +130,7 @@ sequenceDiagram
     C->>M: Exchange code for token
     M->>C: MCP access token
 ```
+</MermaidDiagram>
 
 Read the docs for the [Workers oAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) for more details.
 

@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs , MermaidDiagram } from "~/components";
 
 :::note
 
@@ -32,6 +32,7 @@ Cloudflare sends all isolated traffic through our Secure Web Gateway inspection 
 
 In the following example, Policy 1 allows employees on corporate devices to access the application directly. Users who do not match Policy 1, such as employees and contractors on unmanaged devices, will load the application in an isolated browser.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Access policies for a private web application
@@ -48,6 +49,7 @@ D[Normal browsing]
 E["Isolated browsing
 with HTTP policies applied"]
 ```
+</MermaidDiagram>
 
 **Policy 1: Allow employees who pass device posture checks**
 

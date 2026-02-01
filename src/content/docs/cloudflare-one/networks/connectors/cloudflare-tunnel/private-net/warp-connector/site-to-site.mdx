@@ -6,10 +6,11 @@ sidebar:
   order: 3
 ---
 
-import { Render, Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { Render, Details, GlossaryTooltip, TabItem, Tabs , MermaidDiagram } from "~/components";
 
 This guide covers how to connect two independent subnets with WARP Connector. Each subnet must run its own WARP Connector on a Linux host. Installing on your router is the simplest setup, but if you do not have access to the router, you may choose any other machine on the subnet.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -22,6 +23,7 @@ This guide covers how to connect two independent subnets with WARP Connector. Ea
       end
       router1<-->C((Cloudflare))<-->router2
 ```
+</MermaidDiagram>
 
 In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and install it on `10.0.0.1`. We will then create a second WARP Connector for subnet `192.168.1.0/24` and install it on `192.168.1.97`.
 
@@ -52,6 +54,7 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
 
 The WARP Connector will now forward inbound requests to devices on the subnet.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -64,6 +67,7 @@ The WARP Connector will now forward inbound requests to devices on the subnet.
       C((Cloudflare))--Requests to 10.0.0.2--> router1 --> device
 
 ```
+</MermaidDiagram>
 
 ### DNS filtering
 
@@ -78,6 +82,7 @@ When you resolve DNS queries from WARP Connector through Gateway, Gateway will l
 
 The WARP Connector host will automatically forward DNS and network traffic to Cloudflare. Depending on where you installed the WARP Connector, you may need to configure other devices on the subnet to route outbound requests through WARP Connector.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -91,6 +96,7 @@ The WARP Connector host will automatically forward DNS and network traffic to Cl
 			192.168.1.0/24 --> router1 --> C((Cloudflare))
 
 ```
+</MermaidDiagram>
 
 ### Option 1: Default gateway
 
@@ -170,6 +176,7 @@ route /p add <DESTINATION-IP> mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 Repeat steps 1, 3, and 4 above to install an additional WARP Connector on subnet `192.168.1.0/24`. The device profile created in Step 2 will apply to all WARP Connectors.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -182,11 +189,13 @@ Repeat steps 1, 3, and 4 above to install an additional WARP Connector on subnet
       end
       router1<-->C((Cloudflare))<-->router2
 ```
+</MermaidDiagram>
 
 ## 6. Test the WARP Connector
 
 You can now test the connection between the two subnets. For example, on the `10.0.0.2` device run `ping 192.168.1.100`.
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
       subgraph subnet1[Subnet 10.0.0.0/24]
@@ -202,6 +211,7 @@ You can now test the connection between the two subnets. For example, on the `10
       end
       router1-->C((Cloudflare))-->router2
 ```
+</MermaidDiagram>
 
 :::note
 If you are testing with curl using private hostnames, add the `--ipv4` flag to your curl commands.

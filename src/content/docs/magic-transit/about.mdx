@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip , MermaidDiagram } from "~/components";
 
 Magic Transit is a network security and performance solution that offers Distributed Denial of Service (DDoS) protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
 
@@ -21,6 +21,7 @@ Once [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packe
 
 You have two options for your Magic Transit implementation: ingress traffic or ingress and [egress traffic](/magic-transit/reference/egress/). With an egress implementation, you must set up <GlossaryTooltip term="policy-based routing">policy-based routing (PBR)</GlossaryTooltip> or ensure default routing on your end forwards traffic to Cloudflare through tunnels.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Magic Transit
@@ -49,6 +50,7 @@ linkStyle 2 stroke-width:2px,stroke:#ADD8E6
 linkStyle 3 stroke-width:2px,stroke:gray
 linkStyle 4 stroke-width:3px,stroke:green
 ```
+</MermaidDiagram>
 
 :::note
 Cloudflare's China Network does not yet support Magic Transit.

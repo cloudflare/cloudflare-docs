@@ -8,7 +8,7 @@ learning_center:
   link: https://www.cloudflare.com/learning/bots/what-is-a-bot/
 ---
 
-import { Render } from "~/components";
+import { Render, MermaidDiagram } from "~/components";
 
 A **bot** is a software application programmed to do certain tasks.
 
@@ -24,7 +24,7 @@ For more background, refer to [What is a bot?](https://www.cloudflare.com/learni
 <Render file="verified-bots" product="bots" />
 
 :::note
-The method for allowing or blocking verified bots depends on [your plan](/bots/concepts/bot/verified-bots/#availability). 
+The method for allowing or blocking verified bots depends on [your plan](/bots/concepts/bot/verified-bots/#availability).
 :::
 
 ## AI bots
@@ -66,15 +66,14 @@ This behavior remains the same if the setting for verified, definitely automated
 
 For self-serve non-Bot Management customers, all rules for verified, definitely automated, and likely bots run in the phase following the AI bots rule.
 
+<MermaidDiagram>
 ```mermaid
----
-title: Rule phases
----
 flowchart LR
 accTitle: AI bots rule phases diagram
 accDescr: This diagram details the phases in which AI bots rules run.
 A[Custom rules] --> B[Block AI bots<br>managed rule] --> C[Allow verified bots rule]
 ```
+</MermaidDiagram>
 
 This feature is available on all Cloudflare plans.
 

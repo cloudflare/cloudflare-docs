@@ -17,6 +17,7 @@ import {
 	TabItem,
 	Tabs,
 	TypeScriptExample,
+	MermaidDiagram,
 } from "~/components";
 import { Icon } from "astro-icon/components";
 
@@ -30,6 +31,7 @@ Our API empowers users to upload and include static assets as part of a Worker. 
 
 <Tabs syncKey="workers-vs-platforms" IconComponent={Icon}>
 <TabItem icon="workers" label="Workers">
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
     participant User
@@ -38,8 +40,10 @@ sequenceDiagram
     User<<->>Workers API: Upload files<br/>POST /client/v4/accounts/:accountId/workers/assets/upload?base64=true
     User<<->>Workers API: Upload script version<br/>PUT /client/v4/accounts/:accountId/workers/scripts/:scriptName
 ```
+</MermaidDiagram>
 </TabItem>
 <TabItem icon="cloudflare-for-platforms" label="Workers for Platforms">
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
     participant User
@@ -48,6 +52,7 @@ sequenceDiagram
     User<<->>Workers API: Upload files<br/>POST /client/v4/accounts/:accountId/workers/assets/upload?base64=true
     User<<->>Workers API: Upload script version<br/>PUT /client/v4/accounts/:accountId/workers/dispatch/namespaces/:dispatchNamespace/scripts/:scriptName
 ```
+</MermaidDiagram>
 </TabItem>
 </Tabs>
 

@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { GlossaryTooltip, Example } from "~/components";
+import { GlossaryTooltip, Example , MermaidDiagram } from "~/components";
 
 AI Crawl Control works alongside other Cloudflare products, such as Cloudflare [bot solutions](/bots/). Bot solutions identifies traffic matching patterns of known bots, and can challenge or block the bots as you wish.
 
@@ -14,6 +14,7 @@ AI Crawl Control works alongside other Cloudflare products, such as Cloudflare [
 - AI Crawl Control's AI crawler blocking uses [WAF custom rules](/waf/custom-rules/), which take place before Cloudflare bot solutions.
 - AI Crawl Control's pay per crawl takes place after Cloudflare bot solutions.
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 A[Traffic] --> B[WAF custom rules<br>AI Crawl Control: Crawler blocks]
@@ -21,6 +22,7 @@ B --> C[Cloudflare<br>Bot Solutions]
 C --> D[AI Crawl Control:<br>Pay Per Crawl]
 classDef highlight fill:#F6821F,color:white
 ```
+</MermaidDiagram>
 
 For more information on how Cloudflare bot solutions works with WAF custom rules, refer to [How it works](/bots/concepts/bot/#how-it-works).
 

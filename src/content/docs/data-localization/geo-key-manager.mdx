@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { MermaidDiagram } from "~/components";
+
 Geo Key Manager offers enhanced control over the storage location of private SSL/TLS keys, ensuring compliance with regional data regulations and security requirements.
 
 ## Customize key storage
@@ -20,6 +22,7 @@ The following diagram is a high-level example of the flow of the Cloudflare data
 
 <br/>
 
+<MermaidDiagram>
 ```mermaid
 sequenceDiagram
     participant User as End user
@@ -34,6 +37,7 @@ sequenceDiagram
     CloudflarePoP-->>User: Subsequent requests use the Session Key
     User-->>CloudflarePoP: Subsequent requests use the Session Key
 ```
+</MermaidDiagram>
 
 <br/>
 

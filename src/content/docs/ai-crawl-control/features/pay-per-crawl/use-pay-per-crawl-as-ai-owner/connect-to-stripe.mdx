@@ -7,8 +7,9 @@ sidebar:
   order: 4
 ---
 
-import { Steps, DashButton } from "~/components";
+import { Steps, DashButton , MermaidDiagram } from "~/components";
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 A[Set up your<br>Cloudflare Account] --> B[Verify your<br>AI crawler]
@@ -17,6 +18,7 @@ C --> D[Connect to<br>Stripe]:::highlight
 D --> E[Crawl pages]
 classDef highlight fill:#F6821F,color:white
 ```
+</MermaidDiagram>
 
 Connect your Cloudflare account to Stripe to process payments. Pay per crawl uses Stripe to process payments between AI crawler owners and site owners.
 

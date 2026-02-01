@@ -7,8 +7,9 @@ sidebar:
   order: 6
 ---
 
-import { Steps, DashButton } from "~/components";
+import { Steps, DashButton , MermaidDiagram } from "~/components";
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 A[Enable in<br>account settings] --> B[Set a pay per <br/>crawl price ]
@@ -22,6 +23,7 @@ click B "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owne
 click C "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/select-crawlers-to-charge/"
 click D "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/"
 ```
+</MermaidDiagram>
 
 When you're ready to receive payments for your accrued crawler activity, connect your Cloudflare account to Stripe. This step can be completed at any time after enabling pay per crawl.
 

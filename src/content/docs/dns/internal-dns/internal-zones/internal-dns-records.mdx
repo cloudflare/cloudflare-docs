@@ -7,7 +7,7 @@ sidebar:
   label: Internal DNS records
 ---
 
-import { Details, Example } from "~/components";
+import { Details, Example , MermaidDiagram } from "~/components";
 
 Internal zones can contain the same [DNS record types](/dns/manage-dns-records/reference/dns-record-types/) that Cloudflare supports for public zones.
 
@@ -26,6 +26,7 @@ Cloudflare will try to flatten the CNAME record considering both the specified [
 - Query for the `A` record on `abc.example.local` with view ID 111.
 - Zone 600 references zone 700, which is not linked to any view.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Internal DNS zones and CNAME flattening example
@@ -46,6 +47,7 @@ end
 end
 end
 ```
+</MermaidDiagram>
 
 After finding the CNAME record that points to `xyz.net`, Cloudflare cannot resolve it within zone 600. However, since this zone is referencing zone 700, this will be considered in the resolution.
 

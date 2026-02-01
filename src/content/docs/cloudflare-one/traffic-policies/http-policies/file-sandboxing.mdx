@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Render, Details } from "~/components";
+import { Render, Details , MermaidDiagram } from "~/components";
 
 :::note
 Available as an add-on to Zero Trust Enterprise plans. For more information, contact your account team.
@@ -17,6 +17,7 @@ If AV scanning does not detect malware in a file download, Gateway will quaranti
 
 Gateway will log any file sandbox decisions in your [HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs).
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
     A(["User starts file download"]) --> B["File sent to AV scanner"]
@@ -44,6 +45,7 @@ flowchart TD
     style N stroke:#D50000
     style n3 stroke:#00C853
 ```
+</MermaidDiagram>
 
 ## Get started
 

@@ -5,8 +5,9 @@ sidebar:
   order: 4
 ---
 
-import { Steps } from "~/components";
+import { Steps , MermaidDiagram } from "~/components";
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 A[Set up your<br>Cloudflare Account] --> B[Verify your<br>AI crawler]
@@ -15,6 +16,7 @@ C --> D[Connect to<br>Stripe]
 D --> E[Crawl pages]
 classDef highlight fill:#F6821F,color:white
 ```
+</MermaidDiagram>
 
 The Pay Per Crawl Discovery API allows verified AI crawlers to discover which domains offer paid content access. This enables your crawler to proactively identify sites participating in Pay Per Crawl before making crawl requests.
 

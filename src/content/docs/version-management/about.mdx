@@ -6,10 +6,11 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render , MermaidDiagram } from "~/components";
 
 Version Management works through a combination of **environments** and **versions**.
 
+<MermaidDiagram>
 ```mermaid
 stateDiagram-v2
     V2: Version 2
@@ -41,6 +42,7 @@ stateDiagram-v2
             Once promoted into an environment, a version can be rolled back.
         end note
 ```
+</MermaidDiagram>
 
 ## Environments
 

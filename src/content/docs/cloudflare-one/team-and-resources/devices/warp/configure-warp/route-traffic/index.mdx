@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip , MermaidDiagram } from "~/components";
 
 When the WARP client is deployed on a device, Cloudflare will process all DNS queries and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS queries or network traffic from WARP. For example, you may need to resolve an internal hostname with a private DNS resolver instead of Cloudflare's [public DNS resolver](/1.1.1.1/).
 
@@ -27,6 +27,7 @@ Additionally, there are three options you can configure to exclude traffic from 
 
 When you use the WARP client together with `cloudflared` Tunnels or third-party VPNs, Cloudflare evaluates each request and routes it according to the following traffic flow:
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
     A["WARP user requests resource"] --> B["WARP client proxies all DNS traffic"]
@@ -57,6 +58,7 @@ flowchart TD
     MATCH --> CUST["Custom resolver"]
     CUST --> PNS["Private network services<br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"]
 ```
+</MermaidDiagram>
 #### Terms mentioned
 ####  On-ramps (how traffic gets onto Cloudflare)
 - <GlossaryTooltip term = "on-ramp">On-ramp</GlossaryTooltip>

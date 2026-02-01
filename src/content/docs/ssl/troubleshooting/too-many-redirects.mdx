@@ -7,10 +7,13 @@ head: []
 description: Learn how to troubleshoot ERR_TOO_MANY_REDIRECTS when using Cloudflare SSL/TLS.
 ---
 
+import { MermaidDiagram } from "~/components";
+
 After you [add a new domain](/fundamentals/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors.
 
 This error occurs when visitors get stuck in a redirect loop.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Redirect loops illustration
@@ -22,6 +25,7 @@ B
 C
 end
 ```
+</MermaidDiagram>
 
 <br />
 
@@ -51,6 +55,7 @@ If your domain's encryption mode is set to [**Flexible**](/ssl/origin-configurat
 
 Redirect loops will occur if your origin server automatically redirects all HTTP requests to HTTPS.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for Flexible mode
@@ -64,6 +69,7 @@ subgraph Origin server
 C
 end
 ```
+</MermaidDiagram>
 
 <br />
 
@@ -75,6 +81,7 @@ If your domain's encryption mode is set to [**Full**](/ssl/origin-configuration/
 
 Redirect loops will occur if your origin server automatically redirects all HTTPS requests to HTTP.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for Full or Full (strict) mode
@@ -88,6 +95,7 @@ subgraph Origin server
 C
 end
 ```
+</MermaidDiagram>
 
 <br />
 
@@ -103,6 +111,7 @@ If you have [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/alw
 
 Redirect loops will occur if your origin server automatically redirects all HTTPS requests to HTTP.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for Always Use HTTPS
@@ -116,6 +125,7 @@ subgraph Origin server
 C
 end
 ```
+</MermaidDiagram>
 
 <br />
 
@@ -127,6 +137,7 @@ If you have [**HTTP Strict Transport Security (HSTS)**](/ssl/edge-certificates/a
 
 Redirect loops will occur if your origin server automatically redirects all HTTPS requests to HTTP or if you have your domain's encryption mode set to [**Off**](/ssl/origin-configuration/ssl-modes/off/).
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for HTTP Strict Transport Security
@@ -143,6 +154,7 @@ subgraph Origin server
 D
 end
 ```
+</MermaidDiagram>
 
 <br />
 
@@ -156,6 +168,7 @@ Alternatively, [disable **HTTP Strict Transport Security (HSTS)**](/ssl/edge-cer
 
 Redirect loops can also occur if you have conflicting URL redirects.
 
+<MermaidDiagram>
 ```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for redirect rules
@@ -167,6 +180,7 @@ B
 C
 end
 ```
+</MermaidDiagram>
 
 <br />
 

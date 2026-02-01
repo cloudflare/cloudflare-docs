@@ -5,8 +5,9 @@ sidebar:
   order: 1
 ---
 
-import { Steps } from "~/components";
+import { Steps , MermaidDiagram } from "~/components";
 
+<MermaidDiagram>
 ```mermaid
 graph LR
 A[Set up your<br>Cloudflare Account]:::highlight --> B[Verify your<br>AI crawler]
@@ -15,6 +16,7 @@ C --> D[Connect to<br>Stripe]
 D --> E[Crawl pages]
 classDef highlight fill:#F6821F,color:white
 ```
+</MermaidDiagram>
 
 To begin using pay per crawl, set up your Cloudflare account.
 

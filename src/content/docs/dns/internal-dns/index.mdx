@@ -21,6 +21,7 @@ import {
 	DirectoryListing,
 	GlossaryTooltip,
 	Example,
+	MermaidDiagram,
 } from "~/components";
 
 <Description>
@@ -40,6 +41,7 @@ You can use different [connectivity options](/dns/internal-dns/connectivity/) to
 
 Internal DNS zones do not get assigned Cloudflare nameservers and can only be queried via Cloudflare Gateway resolver.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Internal DNS query overview
@@ -64,9 +66,11 @@ flowchart LR
 				A --Query--> X
 				C --Query--> Y
 ```
+</MermaidDiagram>
 
 Internal DNS zones are grouped into DNS views, which are selected by the resolver policy you define. Views are usually logical groupings relevant to your organization, such as different geographical locations.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Internal DNS views and zones
@@ -84,11 +88,13 @@ flowchart LR
 				W[Zone 701 <br /> net]
 				end
 ```
+</MermaidDiagram>
 
 Internal DNS zones contain the <GlossaryTooltip term="DNS record" link="/dns/internal-dns/internal-zones/internal-dns-records/">DNS records</ GlossaryTooltip> that should be used to resolve an internal DNS query. Also, if no internal record is found within a matching internal zone, Cloudflare will check if the matching internal zone is [referencing another internal zone](/dns/internal-dns/internal-zones/reference-zones/).
 
 <Example>
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Internal DNS zones and internal records
@@ -105,6 +111,7 @@ flowchart LR
 				end
 				end
 ```
+</MermaidDiagram>
 
 In this example, a query for `ghi.example.local` routed to view ID 111 would go to zone 600, which presents the longest matching zone name (`example.local`). Zone 600 does not contain a record for `ghi` but, if it is referencing zone 601, Cloudflare will then look for the queried record within the reference zone.
 

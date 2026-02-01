@@ -8,8 +8,11 @@ sidebar:
 
 ---
 
+import { MermaidDiagram } from "~/components";
+
 Many organizations in the past few years have recognized the importance of source-of-truth identity and have directly integrated their SSO provider with their internal applications. The SSO provider is only aware of the internal domain on which the application exists (via the configured ACS URL), which means the user must be connected to the local network in order to access the application. This security architecture makes sense for a traditional network perimeter, but it presents challenges for Zero Trust adoption. In the clientless access model, the user's device has no concept of an internal corporate network, only the specific, scoped applications to which they have access. The problem is summarized in the following diagram:
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Authorization flow with integrated SSO
@@ -22,6 +25,7 @@ app.internal.com")-->E("404 error
 Device cannot resolve
 app.internal.com")
 ```
+</MermaidDiagram>
 
 ## Potential solutions
 
@@ -40,6 +44,7 @@ If you are able to configure your SSO provider, we recommend presenting all inte
 
 With this approach, you do not need to make any changes to your existing DNS infrastructure. Cloudflare Tunnel in your network will manage the translation from external (Cloudflare public) DNS to internal DNS, which is how the system is designed to function. After you update the ACS URL in your SSO provider to the Cloudflare public hostname, the outcome will look like this:
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
 accTitle: Authorization flow with updated SSO ACS URL
@@ -50,5 +55,6 @@ to internal domain (app.internal.com)")-->C("app.internal.com redirects
 to integrated SSO")-->D("SSO ACS URL returns
 app.public.com")-->E("Browser displays app.public.com")
 ```
+</MermaidDiagram>
 
 All users - whether in the office, remote, using or not using the VPN client - will always route through the Cloudflare Access authentication flow at `app.public.com` to access a private application. This provides a single control plane for policy application and security audits, and no additional user training is necessary.

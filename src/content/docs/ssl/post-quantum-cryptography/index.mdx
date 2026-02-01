@@ -12,6 +12,8 @@ head: []
 description: Get an overview of how Cloudflare is deploying post-quantum cryptography to protect you against harvest now, decrypt later.
 ---
 
+import { MermaidDiagram } from "~/components";
+
 Post-quantum cryptography (PQC) refers to cryptographic algorithms that have been designed to resist attacks from [quantum computers](https://www.cloudflare.com/learning/ssl/quantum/what-is-quantum-computing/). Cloudflare has been researching and [writing about post-quantum](https://blog.cloudflare.com/tag/post-quantum/) since 2017.
 
 To protect you against the risk of [harvest now, decrypt later attacks](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later), and considering all the [connections](#three-connections-in-the-life-of-a-request) that take place when your website or application is on Cloudflare, we have deployed and are actively expanding the use of [post-quantum hybrid key agreement](#hybrid-key-agreement).
@@ -57,6 +59,7 @@ For details refer to [A look at the latest post-quantum signature standardizatio
 
 ## Three connections in the life of a request
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Three connections - from visitor to Cloudflare to origin server
@@ -72,6 +75,7 @@ flowchart LR
 				X --2--> B
         B --3--> C
 ```
+</MermaidDiagram>
 
 ### 1. Visitor to Cloudflare
 

@@ -12,12 +12,14 @@ import {
 	TabItem,
 	APIRequest,
 	GlossaryTooltip,
+	MermaidDiagram,
 } from "~/components";
 
 You can use Private Network Load Balancing to distribute WARP client traffic to private hostnames and IPs connected via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 
 For example, assume you have an internal application running in two data centers, and you want WARP users to access the application from the data center closest to their geographic location. A typical load balancing configuration is shown in the following diagram:
 
+<MermaidDiagram>
 ```mermaid
 graph LR
     W[WARP clients] --> C{Private load balancer <br> 100.112.0.0}
@@ -45,6 +47,7 @@ graph LR
 		style E stroke-width:2px,stroke-dasharray: 5 5
 		style F stroke-width:2px,stroke-dasharray: 5 5
 ```
+</MermaidDiagram>
 
 The components in the diagram include:
 

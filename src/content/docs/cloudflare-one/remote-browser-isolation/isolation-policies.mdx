@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, Badge, Tabs, TabItem, APIRequest } from "~/components";
+import { Render, Badge, Tabs, TabItem, APIRequest , MermaidDiagram } from "~/components";
 
 With Browser Isolation, you can define policies to dynamically isolate websites based on identity, security threats, or content.
 
@@ -47,6 +47,7 @@ The following optional settings appear in the Gateway HTTP policy builder when y
 
 ### Copy (from remote to client)
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
 			subgraph remotebrowser[Remote browser]
@@ -60,6 +61,7 @@ The following optional settings appear in the Gateway HTTP policy builder when y
       end
 			remoteclip-->localclip
 ```
+</MermaidDiagram>
 
 - _Allow_: (Default) Users can copy content from an isolated website to their local clipboard.
 - _Allow only within isolated browser_: Users can only copy content from an isolated website to the remote clipboard. Users cannot copy content out of the remote browser to the local clipboard. You can use this setting alongside [**Paste (from client to remote)**: _Allow only within isolated browser_](/cloudflare-one/remote-browser-isolation/isolation-policies/#paste-from-client-to-remote) to only allow copy-pasting between isolated websites.
@@ -67,6 +69,7 @@ The following optional settings appear in the Gateway HTTP policy builder when y
 
 ### Paste (from client to remote)
 
+<MermaidDiagram>
 ```mermaid
     flowchart LR
 			subgraph client[Client]
@@ -80,6 +83,7 @@ The following optional settings appear in the Gateway HTTP policy builder when y
       end
 			localclip--Data-->remoteclip
 ```
+</MermaidDiagram>
 
 - _Allow_: (Default) Users can paste content from their local clipboard to an isolated website.
 - _Allow only within isolated browser_: Users can only paste content from the remote clipboard to an isolated website. Users cannot paste content from their local clipboard to the remote browser. You can use this setting alongside [**Copy (from remote to client)**: _Allow only within isolated browser_](/cloudflare-one/remote-browser-isolation/isolation-policies/#copy-from-remote-to-client) to only allow copy-pasting between isolated websites.

@@ -11,7 +11,7 @@ sidebar:
 description: In IP address management, service binding refers to the association of IPs to specific Cloudflare services. Review the available options and the API endpoints to set up service bindings.
 ---
 
-import { DirectoryListing, Render } from "~/components";
+import { DirectoryListing, Render , MermaidDiagram } from "~/components";
 
 In IP address management, service bindings map the traffic destined for a given IP address to the Cloudflare service that it should be routed through.
 
@@ -55,12 +55,14 @@ The entire BYOIP prefix is primarily announced for Magic Transit, providing laye
 
 Also, traffic egressing to an IP in the prefix will always go to Magic Transit, even if there is an overlapping binding for CDN or Spectrum. This allows customers who want to use the same IP as ingress IP and as origin IP to do so.
 
+<MermaidDiagram>
 ```mermaid
 flowchart LR
         accTitle: Cloudflare as a reverse proxy
         accDescr: Diagram showing Cloudflare's network between clients and the origin server.
         A[Client] --ingress--> B((Cloudflare))--egress--> C[(Origin server)]
 ```
+</MermaidDiagram>
 
 When adding a service binding for a given IP address, it must be either a CDN service binding or a Spectrum service binding. It is not possible (or necessary) to bind both services.
 
