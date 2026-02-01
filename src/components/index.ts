@@ -36,6 +36,7 @@ export { default as LastReviewed } from "./LastReviewed.astro";
 export { default as LinkTitleCard } from "./LinkTitleCard.astro";
 export { default as ListTutorials } from "./ListTutorials.astro";
 export { default as Markdown } from "./Markdown.astro";
+export { default as MermaidDiagram } from "./MermaidDiagram.astro";
 export { default as MetaInfo } from "./MetaInfo.astro";
 export { default as PackageManagers } from "./PackageManagers.astro";
 export { default as PagesBuildEnvironment } from "./PagesBuildEnvironment.astro";

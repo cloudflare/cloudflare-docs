@@ -1,0 +1,117 @@
+---
+import { z } from "astro:schema";
+import { parse } from "node-html-parser";
+import { renderMermaid } from "beautiful-mermaid";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		fg: z.string().optional(),
+		bg: z.string().optional(),
+		line: z.string().optional(),
+		accent: z.string().optional(),
+		muted: z.string().optional(),
+		surface: z.string().optional(),
+		border: z.string().optional(),
+	})
+	.strict();
+
+const { fg, bg, line, accent, muted, surface, border } = props.parse(
+	Astro.props,
+);
+
+// Cloudflare default theme (light mode base)
+const cloudflareTheme = {
+	bg: bg ?? "#FFFDFB",
+	fg: fg ?? "#1d1d1d",
+	accent: accent ?? "#EC5829",
+	line: line ?? "#EC5829",
+	muted: muted,
+	surface: surface,
+	border: border ?? "#EC5829",
+};
+
+// Extract mermaid code from slot
+const slot = await Astro.slots.render("default");
+const html = parse(slot);
+const copy = html.querySelector("div.copy > button");
+
+if (!copy) {
+	throw new Error("[MermaidDiagram] No code block found in slot content");
+}
+
+let diagram = copy.attributes["data-code"];
+if (!diagram) {
+	throw new Error("[MermaidDiagram] No data-code attribute found");
+}
+
+// Restore newlines (encoded as \u007f by Expressive Code)
+diagram = diagram.replace(/\u007f/g, "\n");
+
+// Extract accessibility metadata before stripping
+const accTitleMatch = diagram.match(/accTitle:\s*(.+)/);
+const accDescrMatch = diagram.match(/accDescr:\s*(.+)/);
+const accTitle = accTitleMatch?.[1]?.trim();
+const accDescr = accDescrMatch?.[1]?.trim();
+
+// Generate unique ID for accessibility
+const uniqueId = Math.random().toString(36).substring(2, 9);
+
+// Strip unsupported mermaid directives
+diagram = diagram
+	.split("\n")
+	.filter((line) => {
+		const trimmed = line.trim();
+		return (
+			!trimmed.startsWith("accTitle:") &&
+			!trimmed.startsWith("accDescr:") &&
+			!trimmed.startsWith("linkStyle")
+		);
+	})
+	.join("\n");
+
+// Render at build time
+const svg = await renderMermaid(diagram, cloudflareTheme);
+---
+
+<figure
+	class="mermaid-diagram"
+	role="img"
+	aria-label={accTitle}
+	aria-describedby={accDescr ? `mermaid-desc-${uniqueId}` : undefined}
+>
+	<Fragment set:html={svg} />
+	{
+		accDescr && (
+			<figcaption id={`mermaid-desc-${uniqueId}`} class="sr-only">
+				{accDescr}
+			</figcaption>
+		)
+	}
+</figure>
+
+<style>
+	.mermaid-diagram {
+		margin: 1rem 0;
+	}
+
+	.mermaid-diagram :global(svg) {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* Screen reader only text */
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>

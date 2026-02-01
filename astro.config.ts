@@ -15,7 +15,6 @@ import { fileURLToPath } from "url";
 import remarkValidateImages from "./src/plugins/remark/validate-images";
 
 import rehypeTitleFigure from "rehype-title-figure";
-import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
@@ -68,7 +67,6 @@ export default defineConfig({
 		smartypants: false,
 		remarkPlugins: [remarkValidateImages],
 		rehypePlugins: [
-			rehypeMermaid,
 			rehypeExternalLinks,
 			rehypeHeadingSlugs,
 			rehypeAutolinkHeadings,
