@@ -8,23 +8,31 @@ sidebar:
 
 import { Render, Plan, Tabs, TabItem, DashButton } from "~/components";
 
-Browser Rendering limits are based on your [Cloudflare Workers plan](/workers/platform/pricing/):
+Browser Rendering limits are based on your [Cloudflare Workers plan](/workers/platform/pricing/).
 
-| Workers plan                                             | Free       | Paid      |
-| -------------------------------------------------------- | ------------------ | ----------------- |
-| Browser hours                                                    | 10 minutes per day | 10 hours per month + $0.09 for each additional hour       |
-| Concurrent browsers [^1] (Workers Bindings only) | 3 per account      | 10 per account included + $2.00 for each additional account [averaged monthly](/browser-rendering/pricing/#how-is-the-number-of-concurrent-browsers-calculated)     |
-| New browser instances (Workers Bindings only) | 3 per minute       | 30 per minute     |
-| Total requests (REST API only)                   | 6 per minute      | 180 per minute    |
+For pricing information, refer to [Browser Rendering pricing](/browser-rendering/pricing/).
 
-[^1]: Browsers close upon task completion or sixty seconds of inactivity (if you do not [extend your browser timeout](#browser-timeouts)), so many workflows do not require a high number of concurrent browsers.
+## Workers Free
 
-[More about Browser Rendering pricing](/browser-rendering/pricing/).
+| Feature                                                  | Limit           |
+| -------------------------------------------------------- | --------------- |
+| Browser hours                                            | 10 minutes per day |
+| Concurrent browsers per account [^1] (Workers Bindings only)  | 3 per account   |
+| New browser instances (Workers Bindings only) | 3 per minute    |
+| Total requests (REST API only)                    | 6 per minute    |
 
-To upgrade from Workers Free to Workers Paid, go to the **Workers plans** page in the Cloudflare dashboard.
-<DashButton url="/?to=/:account/workers/plans" />
+## Workers Paid
 
 If you are on a Workers Paid plan and you want to increase your limits beyond those listed here, Cloudflare will grant [requests for higher limits](https://forms.gle/CdueDKvb26mTaepa9) on a case-by-case basis.
+
+| Feature                                                  | Limit           |
+| -------------------------------------------------------- | --------------- |
+| Browser hours                                            | No limit  ([See pricing](/workers/platform/pricing/))      |
+| Concurrent browsers per account [^1] (Workers Bindings only)  | 30 per account ([See pricing](/workers/platform/pricing/)) |
+| New browser instances per minute (Workers Bindings only) | 30 per minute   |
+| Total requests per min (REST API only)                   | 180 per minute  |
+
+[^1]: Browsers close upon task completion or sixty seconds of inactivity (if you do not [extend your browser timeout](#browser-timeouts)). Therefore, in practice, many workflows do not require a high number of concurrent browsers.
 
 ## Browser timeouts
 Regardless of your plan, your browser will time out after sixty seconds if it is inactive. To keep your browser active, use the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). When you want to close the browser instance, use `browser.close()`.
