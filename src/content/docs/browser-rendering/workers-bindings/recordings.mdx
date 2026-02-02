@@ -1,0 +1,206 @@
+---
+pcx_content_type: how-to
+title: Session recording
+sidebar:
+  order: 4
+---
+
+import { Render, PackageManagers, WranglerConfig, TypeScriptExample, DashButton } from "~/components";
+
+Session recording allows you to capture and replay browser interactions during your automation workflows. This feature uses [rrweb](https://github.com/rrweb-io/rrweb) to record DOM changes, user interactions, and page navigation, which you can later replay to debug issues or analyze user behavior.
+
+When recording is enabled, Browser Rendering automatically captures all browser interactions. Recordings can be retrieved via the API or viewed directly in the Cloudflare dashboard.
+
+## Example: Test form submission with session recording
+
+This example demonstrates how to use session recording to test form submissions.
+
+<TypeScriptExample>
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+type Env = {
+  MYBROWSER: Fetcher;
+};
+type FormInput = { name: string; email: string; country: string };
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    if (request.method !== "POST") {
+      return new Response("Method Not Allowed", { status: 405 });
+    }
+
+    // Parse form data from request
+    let formData: FormInput;
+    try {
+      formData = await request.json<FormInput>();
+    } catch {
+      return new Response("Invalid JSON", { status: 400 });
+    }
+
+    // Launch a new browser session with recording enabled
+    const browser = await puppeteer.launch(env.MYBROWSER, { recording: true });
+
+    const page = await browser.newPage();
+    const sessionId = browser.sessionId();
+
+    let result;
+
+    try {
+      // Navigate to the form
+      await page.goto("https://example.com/complex-form");
+
+      // Fill in form fields
+      await page.type("#name", formData.name);
+      await page.type("#email", formData.email);
+      await page.select("#country", formData.country);
+
+      // Submit the form
+      await page.click('button[type="submit"]');
+
+      // Wait for success or error state
+      result = await Promise.race([
+        page.waitForSelector(".success-message", { timeout: 5000 }).then(() => ({ success: true }) as const),
+        page
+          .waitForSelector(".error-message", { timeout: 5000 })
+          .then(() => ({ success: false, error: "Form validation error" }) as const),
+      ]);
+    } catch (error) {
+      console.error("Error during form submission:", error);
+      result = { success: false, error: String(error) };
+    } finally {
+      // Close the browser to finalize the recording
+      await browser.close();
+    }
+
+    return Response.json(result);
+  },
+};
+```
+
+</TypeScriptExample>
+
+## Configure Wrangler
+
+Add the browser binding to your [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
+
+```jsonc
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "form-test-recorder",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-09-17",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "browser": {
+    "binding": "MYBROWSER"
+  }
+}
+```
+
+</WranglerConfig>
+
+## Retrieve recordings
+
+Recordings can be retrieved via the Browser Rendering API and contain a dictionary of events per browser target (tab or frame). Each recording includes:
+
+- **sessionId** - The unique identifier for the browser session.
+- **events** - A dictionary mapping target IDs to arrays of rrweb events.
+- **duration** - Total recording duration in milliseconds.
+
+To retrieve a recording programmatically, make a request to the Browser Rendering API:
+
+<TypeScriptExample>
+
+```ts
+// Fetch recording data
+const accountId = "your-account-id";
+const sessionId = "your-session-id";
+const apiToken = "your-api-token";
+
+const response = await fetch(
+  `https://api.cloudflare.com/client/v4/accounts/${accountId}/browser-rendering/recording/${sessionId}`,
+  {
+    headers: {
+      Authorization: `Bearer ${apiToken}`,
+    },
+  }
+);
+
+const recording = await response.json();
+
+if (recording.success) {
+  console.log(recording.result.sessionId); // Session ID
+  console.log(recording.result.events); // Events per target
+  console.log(recording.result.duration); // Duration in milliseconds
+}
+```
+
+</TypeScriptExample>
+
+### View recordings in the dashboard
+
+Recordings can also be viewed directly in the Cloudflare dashboard:
+
+1. Navigate to **Compute & AI** > **Browser Rendering**.
+
+   <DashButton url="/?to=/:account/workers/browser-rendering" />
+
+2. Select the **Logs** tab.
+3. Search for your session by ID.
+4. Select a session to view details and replay the recording.
+
+The dashboard provides a visual interface to:
+
+- Select and replay recordings from different tabs or frames.
+- View session metadata (start and end time, duration, close reason).
+- View session DOM state changes, console events, and network requests.
+- Export recording data for further analysis.
+
+### Recording API response format
+
+```json
+{
+  "success": true,
+  "result": {
+    "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+    "events": {
+      "target-1": [
+        {
+          "type": 0,
+          "data": {},
+          "timestamp": 1711621703608
+        },
+        {
+          "type": 4,
+          "data": { "href": "https://example.com", "width": 1920, "height": 1080 },
+          "timestamp": 1711621703708
+        }
+      ]
+    },
+    "duration": 65777
+  }
+}
+```
+
+## Storage and retention
+
+- Recordings are automatically captured when the browser session closes.
+- Recordings can be retrieved via the API after the session ends.
+- Default retention: seven days (configurable based on your plan).
+- File format: JSON containing rrweb events per target.
+- You can save recordings to your own R2 bucket for long-term storage.
+
+## Use cases
+
+Session recording is particularly useful for:
+
+- **Debugging automation failures** - See exactly what happened when a script fails.
+- **Compliance and audit trails** - Record user interactions for regulatory requirements.
+- **Quality assurance** - Verify that automated workflows behave as expected.
+- **Performance analysis** - Identify slow interactions or bottlenecks.
+- **Error reporting** - Attach recordings to error reports for faster debugging.
