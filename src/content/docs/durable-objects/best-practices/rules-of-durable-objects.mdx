@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { WranglerConfig, TypeScriptExample } from "~/components";
+import { WranglerConfig, TypeScriptExample, Render } from "~/components";
 
 Durable Objects provide a powerful primitive for building stateful, coordinated applications. Each Durable Object is a single-threaded, globally-unique instance with its own persistent storage. Understanding how to design around these properties is essential for building effective applications.
 
@@ -1359,6 +1359,12 @@ export class ChatRoom extends DurableObject<Env> {
 }
 ```
 </TypeScriptExample>
+
+### Design for unexpected shutdowns
+
+Durable Objects may shut down at any time due to deployments, inactivity, or runtime decisions. Rather than relying on shutdown hooks (which are not provided), design your application to write state incrementally.
+
+<Render file="working-without-shutdown-hooks" product="durable-objects" />
 
 ## Anti-patterns to avoid
 

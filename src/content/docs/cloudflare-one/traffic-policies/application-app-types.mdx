@@ -8,6 +8,7 @@ sidebar:
 import {
 	GlossaryDefinition,
 	GlossaryTooltip,
+	GranularControlApplicationsList,
 	Details,
 	Render,
 } from "~/components";
@@ -79,7 +80,7 @@ To ensure effective application behavior, Gateway only uses support hostnames in
 
 When you use the [_Application_ selector](/cloudflare-one/traffic-policies/http-policies/#granular-controls) in an HTTP policy with the _is_ operator, you can choose specific actions and operations to match application traffic. Supported applications and operations include:
 
-<Render file="gateway/granular-applications" product="cloudflare-one" />
+<GranularControlApplicationsList />
 
 For more information, refer to [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/granular-controls/).
 
