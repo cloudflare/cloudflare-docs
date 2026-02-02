@@ -378,6 +378,9 @@ class MyAgent extends Agent {
 To route emails to your Agent, use `routeAgentEmail` in your Worker's email handler:
 
 ```ts
+import { routeAgentEmail } from "agents";
+import { createAddressBasedEmailResolver } from "agents/email";
+
 export default {
   async email(message, env, ctx) {
     await routeAgentEmail(message, env, {
@@ -386,6 +389,8 @@ export default {
   }
 };
 ```
+
+For more details on email routing, resolvers, secure reply flows, and the full API, refer to [Email routing](/agents/api-reference/email-routing/).
 
 ### Context Management
 
