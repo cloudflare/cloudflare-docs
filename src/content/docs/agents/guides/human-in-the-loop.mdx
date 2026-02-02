@@ -540,6 +540,8 @@ The human-in-the-loop pattern works by intercepting tool calls before execution:
 4. **User decision**: The user reviews the action and makes a decision.
 5. **Execution or rejection**: Based on the user's choice, the tool either executes or returns a rejection message.
 
+When using `addToolResult` for tool approvals (lines 435-439 and 447-455), the approval response is sent to the server, which updates the message state in place. This prevents duplicate messages from being created when the conversation continues, ensuring each tool call has a single associated message with a consistent ID.
+
 ### Message streaming with confirmations
 
 The agent uses the Vercel AI SDK's streaming capabilities:

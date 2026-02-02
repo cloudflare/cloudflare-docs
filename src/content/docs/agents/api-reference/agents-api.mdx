@@ -1003,6 +1003,14 @@ function useAgentChat(options: UseAgentChatOptions): {
 		toolCallId: string;
 		result: any;
 	}) => void;
+	// Respond to a tool approval request (for tools with needsApproval)
+	addToolApprovalResponse: ({
+		id,
+		approved,
+	}: {
+		id: string;
+		approved: boolean;
+	}) => void;
 	// Current error if any
 	error: Error | undefined;
 };
@@ -1073,6 +1081,74 @@ function ChatInterface() {
 ```
 
 </TypeScriptExample>
+
+#### Tool approval handling
+
+The `useAgentChat` hook provides `addToolApprovalResponse` for handling tool approval workflows. This function is used with tools that have `needsApproval` set to `true`.
+
+When a tool requires approval:
+
+1. The tool part will have `state: "approval-requested"` or `state: "input-available"`
+2. Display approval UI to the user (Approve/Reject buttons)
+3. Call `addToolApprovalResponse` with the approval decision
+4. The server updates the message in place, preventing duplicate messages
+
+<TypeScriptExample>
+
+```tsx
+import { useAgentChat } from "agents/ai-react";
+import { useAgent } from "agents/react";
+import { isToolUIPart } from "ai";
+
+function ChatWithApproval() {
+	const agent = useAgent({ agent: "my-agent" });
+	const { messages, addToolApprovalResponse } = useAgentChat({ agent });
+
+	return (
+		<div>
+			{messages.map((message) =>
+				message.parts?.map((part) => {
+					if (isToolUIPart(part) && part.state === "input-available") {
+						// Tool needs approval - get the approval ID from the part
+						const approvalId = part.approval?.id;
+
+						return (
+							<div key={part.toolCallId}>
+								<p>Approve {part.type}?</p>
+								<button
+									onClick={() =>
+										addToolApprovalResponse({
+											id: approvalId,
+											approved: true,
+										})
+									}
+								>
+									Approve
+								</button>
+								<button
+									onClick={() =>
+										addToolApprovalResponse({
+											id: approvalId,
+											approved: false,
+										})
+									}
+								>
+									Reject
+								</button>
+							</div>
+						);
+					}
+					return null;
+				}),
+			)}
+		</div>
+	);
+}
+```
+
+</TypeScriptExample>
+
+The `addToolApprovalResponse` function automatically notifies the server before updating local state. This ensures that when you call other functions like `sendMessage` afterward, duplicate messages are prevented because the server has already updated the message with the existing ID.
 
 ### Next steps
 

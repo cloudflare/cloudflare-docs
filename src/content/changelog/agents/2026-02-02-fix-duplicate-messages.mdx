@@ -1,0 +1,32 @@
+---
+title: Fix duplicate messages with addToolApprovalResponse
+description: Prevent duplicate assistant messages when using addToolApprovalResponse for tools requiring approval
+products:
+  - agents
+  - workers
+date: 2026-02-02
+---
+
+Fixed a bug where using `addToolApprovalResponse` with tools that have `needsApproval` would create duplicate assistant messages in the conversation history.
+
+## What changed
+
+When a user approved a tool via `addToolApprovalResponse` and then called `sendMessage`, two assistant messages were persisted with the same content but different IDs:
+
+- Original message with server-generated ID stuck in pending state
+- New message with client-generated ID in completed state
+
+The fix ensures that `addToolApprovalResponse` now notifies the server to update the message in place using the existing ID, preventing duplicates when `sendMessage` is called afterward.
+
+## How it works
+
+The `addToolApprovalResponse` function now automatically:
+
+1. Sends a `CF_AGENT_TOOL_APPROVAL` message to the server with the tool call ID and approval decision
+2. Server updates the existing message state from `approval-requested` to `approval-responded`
+3. Message is updated in place with the existing server-generated ID
+4. When `sendMessage` is called next, no duplicate is created
+
+No code changes are required in your application - the fix is automatic when using `addToolApprovalResponse` from the `useAgentChat` hook.
+
+Refer to the [Human-in-the-Loop guide](/agents/guides/human-in-the-loop/) for examples of using tool approvals in your agents.
