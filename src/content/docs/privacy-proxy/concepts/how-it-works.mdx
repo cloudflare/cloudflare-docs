@@ -24,11 +24,11 @@ Privacy Proxy uses the MASQUE protocol suite to create encrypted tunnels between
            │◀──── Client IP hidden ────▶│◀──── Cloudflare Egress IP visible ──────────▶│
 ```
 
-1. **Connect and authenticate**: The client establishes an HTTP/2 or HTTP/3 connection to Privacy Proxy and presents credentials (PSK or Privacy Pass token) in the `Proxy-Authorization` header.
-2. **CONNECT request**: The client sends a CONNECT request specifying the destination hostname and port.
-3. **Tunnel established**: The proxy responds with `200 OK` to confirm the tunnel is ready.
-4. **Egress connection**: The proxy opens a connection to the destination using an egress IP address selected based on the client's geolocation.
-5. **Data transfer**: The client sends encrypted data through the tunnel. The proxy forwards bytes without inspection.
+1. The client establishes an HTTP/2 or HTTP/3 connection to Privacy Proxy and presents credentials (PSK or Privacy Pass token) in the `Proxy-Authorization` header.
+2. The client sends a CONNECT request specifying the destination hostname and port.
+3. The proxy responds with `200 OK` to confirm the tunnel is ready.
+4. The proxy opens a connection to the destination using an egress IP address selected based on the client's geolocation.
+5. The client sends encrypted data through the tunnel. The proxy forwards bytes without inspection.
 
 Throughout this process, the proxy learns the destination but not the content. The destination learns the egress IP address but not the client's real IP.
 
@@ -46,7 +46,7 @@ Both methods create encrypted tunnels where the proxy forwards traffic without i
 
 Privacy Proxy accepts connections over HTTP/2 (TLS over TCP) and HTTP/3 (QUIC), selecting the appropriate protocol based on client capabilities.
 
-For a technical deep dive into how these protocols work, refer to [A Primer on Proxies](https://blog.cloudflare.com/a-primer-on-proxies/).
+For a technical deep dive into how these protocols work, refer to our [blog post](https://blog.cloudflare.com/a-primer-on-proxies/).
 
 ## Privacy separation
 

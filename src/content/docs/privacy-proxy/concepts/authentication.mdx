@@ -36,7 +36,7 @@ The proxy validates the key and allows the connection if it matches.
 
 ### Limitations
 
-PSK authentication has limitations that make it unsuitable for production:
+PSK authentication has limitations that make it unsuitable for production.
 
 - **Shared secret**: All clients use the same key, so you cannot revoke access for individual users.
 - **No rate limiting per user**: You cannot enforce per-user quotas or limits.
@@ -82,7 +82,7 @@ Privacy Pass uses a three-party architecture:
 └──────────┘
 ```
 
-The Client sends the token request **through the Attester** to maintain unlinkability. This ensures the Issuer cannot correlate token requests with specific attestation events or Client identities.
+The Client sends the token request through the Attester to maintain unlinkability. This ensures the Issuer cannot correlate token requests with specific attestation events or Client identities.
 
 ### Token redemption
 
@@ -122,13 +122,13 @@ Host: example.com
 Proxy-Authorization: PrivateToken token=<base64-encoded-token>
 ```
 
-### Setting up Privacy Pass
+### Set up Privacy Pass
 
 For production deployments using Privacy Pass:
 
-1. **Choose an issuer**: Cloudflare can operate a token issuer, or you can integrate with a third-party issuer.
-2. **Configure attestation**: Define how clients prove their identity before receiving tokens.
-3. **Distribute issuer configuration**: Clients need the issuer's public key and endpoint to request tokens.
+1. Choose an issuer. Cloudflare can operate a token issuer, or you can integrate with a third-party issuer.
+2. Configure attestation to define how clients prove their identity before receiving tokens.
+3. Distribute issuer configuration. Clients need the issuer's public key and endpoint to request tokens.
 
 [Contact us](https://www.cloudflare.com/lp/privacy-edge/) to configure Privacy Pass for your deployment.
 
