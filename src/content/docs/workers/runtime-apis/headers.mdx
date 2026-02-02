@@ -29,7 +29,7 @@ headers.get('x-foo'); //=> "hello, world"
 
 ## Differences
 
-The Workers implementation of the `Headers` API differs from the web standard in several ways. These differences are intentional and reflect the server-side nature of the Workers runtime.
+The Workers implementation of the `Headers` API differs from the web standard in several ways. These differences are intentional, and reflect the server-side nature of the Workers runtime.
 
 :::note[TypeScript users]
 The `@cloudflare/workers-types` package defines a `Headers` type that includes Workers-specific methods like `getAll()`. This type is not directly compatible with the standard `Headers` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions.
