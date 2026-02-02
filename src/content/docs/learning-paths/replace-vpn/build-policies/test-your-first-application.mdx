@@ -1,0 +1,113 @@
+---
+title: Test your first application
+pcx_content_type: overview
+sidebar:
+  order: 4
+---
+
+import { DashButton, Render } from "~/components";
+
+You have now set up your [Zero Trust organization](/learning-paths/replace-vpn/get-started/), [configured the WARP client](/learning-paths/replace-vpn/configure-device-agent/), [installed it on devices](/learning-paths/replace-vpn/connect-devices/), and created your [Access and Gateway policies](/learning-paths/replace-vpn/build-policies/). The next step is to test those policies.
+
+## Manually test your policies
+
+Test if the Access or Gateway policy that you configured is working by using a device with the WARP client installed to reach an internal application or external website.
+
+If you cannot reach an application protected by Access or an external application through Gateway as expected, Cloudflare recommends starting with reviewing your WARP configuration.
+
+### Troubleshoot WARP
+
+If your manual test fails, troubleshoot the WARP client. Cloudflare recommends starting with reviewing your WARP configuration because misconfiguration is the most common cause of connectivity issues.
+
+- [WARP troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/): Step-by-step instructions to debug WARP client issues.
+- [WARP client errors](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/): If you are receiving an error, review the associated solutions.
+- [WARP connectivity status](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/connectivity-status/): Review the connectivity stage of the WARP daemon as it establishes a connection from the device to Cloudflare.
+- [WARP with Firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/): Ensure you have exempted the correct IP addresses and domains to allow the WARP client to connect.
+
+### Review analytics
+
+Analytics provide visualizations of [log data](/learning-paths/replace-vpn/build-policies/test-your-first-application/#review-logs). To review Access or Gateway analytics:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Dashboards**.
+2. Select **[Access event analytics](/cloudflare-one/insights/analytics/access/)** for a summary of login events or **[Application Access Report](/cloudflare-one/insights/analytics/application-access/)** for a summary of overall Access Activity. 
+3. Select the **HTTP request analytics**, **DNS query analytics** or **Network session analytics** depending on [your Gateway investigation scope](/cloudflare-one/insights/analytics/gateway/).
+
+### Review logs
+
+[Logs](/cloudflare-one/insights/logs/) provide event-level (such as an authentication attempt or a DNS query) visibility into your Cloudflare One environment. 
+
+To review traffic activity for applications protected by Access: 
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Logs**.
+2. Select **Access authentication logs**.
+3. Review the [per-request logs](/cloudflare-one/insights/logs/audit-logs/#per-request-logs) for your application.
+
+To review traffic activity in the [Gateway logs](/cloudflare-one/insights/logs/gateway-logs/): 
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Analytics** > **Logs**.
+2. Select **HTTP request logs**, **Network logs**, or **DNS query logs** depending on your investigation scope.
+
+Refer to [Troubleshoot Gateway](/cloudflare-one/traffic-policies/troubleshoot-gateway/) to troubleshoot common issues with Gateway egress policies.
+
+## Monitor your policies and device connectivity
+
+After you confirm your policies work by testing manually, use DEX to monitor connectivity and performance over time.
+
+<Render file="dex/intro" product="cloudflare-one" />
+
+Refer to [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) for more information.
+
+### Example use case 
+
+- Imagine that you have three devices, with the WARP client installed, set up in your testing environment.
+- You have set up a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and an [Access policy](/cloudflare-one/access-controls/policies/) for your internal wiki that is available at `wiki.acme.org`.
+- You [manually tested](/learning-paths/replace-vpn/build-policies/test-your-first-application/#manually-test-your-policies) the three WARP client devices, and you confirmed they can all reach `wiki.acme.org`.
+- You want to set up automated connectivity and performance testing to `wiki.acme.org` for each of these WARP client devices so you can monitor them over time.
+- You set up a DEX test, and it sends an HTTP GET request to `wiki.acme.org` from all three WARP devices on a five minute interval.
+- If WARP device connectivity drops, or if there are performance problems, you can see the DEX test results to troubleshoot the problem.
+
+### Create a DEX test
+
+<Render file="dex/tests-intro" product="cloudflare-one" />
+
+Refer to [DEX tests](/cloudflare-one/insights/dex/tests/) for more information.
+
+<Render file="dex/http-test-intro" product="cloudflare-one" />
+
+<Render file="dex/http-test-create-steps" product="cloudflare-one" />
+
+#### HTTP test results
+
+<Render file="dex/http-test-results-metrics" product="cloudflare-one" />
+
+### Notifications
+
+<Render file="dex/notifications-intro" product="cloudflare-one" />
+
+Refer to [DEX Notifications](/cloudflare-one/insights/dex/notifications/) for more information on DEX-specific notifications.
+
+#### Example notification setup
+
+Customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client can create a [Device connectivity anomaly](/cloudflare-one/insights/dex/notifications/#available-notifications) notification.
+
+To create a device connectivity anomaly notification:
+
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+  
+    <DashButton url="/?to=/:account/notifications" />
+2. Select **Add**.
+3. Find **Product** DEX and **Alert type** Device connectivity anomaly, and choose **Select**.
+4. Name the notification.
+5. Enter an email address to receive the notifications or set up a [webhook](/notifications/get-started/configure-webhooks/).
+6. (Optional) Specify any additional options for the notification, if required. For example, some notifications require that you select one or more domains or services.
+7. Select **Create**.
+
+Refer to [Notifications](/notifications/get-started/) for more information on editing, testing, and disabling notifications.
+
+## Conclusion
+
+Once your policies are live, you can use [DEX tests](/learning-paths/replace-vpn/build-policies/test-your-first-application/#create-a-dex-test) and [notifications](/learning-paths/replace-vpn/build-policies/test-your-first-application/#notifications) to ensure your team has secure, reliable access to internal and external resources.
+
+:::tip[How it all works together]
+
+To learn how to use Logs, Analytics, and DEX together during real-world situations, like onboarding, daily monitoring, and troubleshooting, refer to [Insights](/cloudflare-one/insights/) for more example use cases.
+
+:::

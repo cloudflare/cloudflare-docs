@@ -17,7 +17,7 @@ params:
 
 import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (only available over CNI with Dataplane v2 (beta)).
+Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (available over CNI with Dataplane v2 (beta), as well as IPsec and GRE tunnels (beta)).
 
 Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more information about all the technical aspects related to:
 - Routes' priorities and weights
@@ -406,13 +406,19 @@ Example:
 
 ## Configure BGP routes
 
-BGP peering is available when using [CNI with Dataplane v2 (beta)](/network-interconnect/) as an on-ramp.
+BGP peering is available when using the following on-ramps:
+- [CNI with Dataplane v2 (beta)](/network-interconnect/).
+- <a href={props.tunnelEndpoints}>IPsec and GRE tunnels (beta)</a>.
 
 ### Choose an ASN for BGP peering
 
 The Magic routing table is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
 
 By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
+
+:::note
+If you are setting up BGP over IPsec or GRE tunnels you cannot change this value.
+:::
 
 To set this ASN:
 
@@ -477,8 +483,8 @@ To set this ASN:
     text={`
 		${props.productName} customers should also be aware of the following:
 		- The customer chooses their device ASN, which must be different from the Cloudflare-side ASN.
-		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled interconnect.
-		- The customer-announced \`AS_PATH\` is transitive between interconnects — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two ${props.productName}-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
+		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled on-ramp (interconnect, IPsec or GRE tunnel).
+		- The customer-announced \`AS_PATH\` is transitive between on-ramps — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two ${props.productName}-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
 			To enable routing between private networks over ${props.productName}, you should either:
 			- Assign a unique ASN to each site/network, or
 			- Configure your edge CPE to accept BGP routes that include its own ASN in the \`AS_PATH\`.
@@ -491,15 +497,13 @@ To set this ASN:
 
 ### Set up BGP peering
 
-:::caution
-BGP peering is only available to {props.productName} customers with CNI with Dataplane v2 (beta) as an on-ramp. If your network is set up with GRE or IPsec tunnels, you cannot use BGP peering.
-:::
-
 You need to configure two ASNs:
 - The Cloudflare [account-scoped ASN](#choose-an-asn-for-bgp-peering) named **CF Account ASN**.
-- One ASN for each interconnect you want to configure with BGP.
+- One ASN for each on-ramp you want to configure with BGP.
 
 If you have already set up your Cloudflare account ASN, skip steps two and three below.
+
+#### Set up BGP for an interconnect
 
 {/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
 { props.magicWord === "WAN Tunnels" && (
@@ -537,25 +541,93 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 			`}
 			inline={false}
 		/>
+
+		<DashButton url="/?to=/:account/interconnects" />
 	</>
 )
 }
 
-5. Locate the CNI interconnect with Dataplane v2 (beta) to configure with BGP > select the **three dots** next to it > **Configure BGP**.
-6. In **Customer device ASN**, enter the ASN for your network.
+<Render
+	file="routing/bgp-config-steps"
+	product="networking-services"
+	params={{
+		locateText: "Locate the CNI interconnect with Dataplane v2 (beta) to configure with BGP > select the **three dots** next to it > **Configure BGP**.",
+		productGatewayOrEgress: props.productGatewayOrEgress,
+		magicWord: props.magicWord
+	}}
+/>
 
-	{ props.magicWord !== "Magic Transit" && (
-		<>
-		<Aside type="note">Multiple interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's <code>allowas-in</code> feature) to exchange routes between networks. </Aside>
-		</>
-		)
-	}
+#### Set up BGP for IPsec/GRE tunnels
 
-7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
-8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect. These prefixes advertise alongside your existing routes. Leave this blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
-	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
-	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/#add-ip-route-to-router).
-9. Select **Save**.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+			2. Go to **Routes** > **WAN configuration**.
+			3. In **Border Gateway Protocol (BGP) configuration**, select **Edit ASN** and enter your ASN.
+			4. Go to **Networks** > **Connectors** > **WAN Tunnels**.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+		<Markdown
+			text={`
+			1. Go to the Routes page.
+			`}
+			inline={false}
+		/>
+
+		<DashButton url="/?to=/:account/magic-networks/routes" />
+
+		<Markdown
+			text={`
+			2. Select **WAN configuration**.
+			3. In **CF Account ASN**, enter Cloudflare's ASN, and select **Update**.
+			4. Go to **Connectors**.
+			`}
+			inline={false}
+		/>
+
+		<DashButton url="/?to=/:account/magic-networks/connections" />
+	</>
+)
+}
+
+<Render
+	file="routing/bgp-config-steps"
+	product="networking-services"
+	params={{
+		locateText: "In **IPsec/GRE tunnels**, locate the tunnel you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.",
+		productGatewayOrEgress: props.productGatewayOrEgress,
+		magicWord: props.magicWord
+	}}
+/>
+
+### Important remarks for GRE/IPsec tunnels
+
+If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware of the following:
+
+- Your Customer Premises Equipment (CPE) must initiate the BGP peering session. Cloudflare will not initiate.
+- Your BGP speaker must peer with the tunnel's IPv4 interface address. Your CPE may use any IPv4 address for its side of the peering connection; it does not need to use the other address from the `/31` or `/30` interface subnet.
+  :::caution
+	If the tunnel is to an Azure VPN gateway, the tunnel interface address must not be in the link-local range. Azure will not initiate BGP sessions to peers using link-local addresses. Use an RFC 1918 address for your tunnel interface address instead.
+  :::
+- Hold time must be greater than 0 seconds (BGP `KEEPALIVE` messages are required). Cloudflare recommends at least 45 seconds. Cloudflare advertises a hold time of 90 seconds for GRE/IPsec tunnels. If you set a value greater than 90 seconds, the negotiated hold time will be 90 seconds, according to the standard way BGP has of negotiating hold times.
+- Connect retry time should be low (for example, five or 10 seconds).
+- Your CPE may advertise up to 5,000 prefixes on one BGP session.
+- MD5 authentication is optional. You can use a maximum of 80 characters. Supported characters include ``a-zA-Z0-9'!@#$%^&*()+[]{}<>/.,;:_-~`= \\|``
+  :::caution
+	MD5 authentication is not a security measure nor is it a valid security mechanism. The MD5 key is not treated as a secret value. This is only supported for preventing misconfiguration, not for defending against malicious attacks.
+  :::
+
 
 { props.magicWord !== "Magic Transit" && (
   <>
@@ -564,3 +636,5 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
   </>
 )
 }
+
+

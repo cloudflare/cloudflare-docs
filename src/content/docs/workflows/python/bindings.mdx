@@ -18,24 +18,31 @@ Also, Python Workflows requires `compatibility_date = "2025-08-01"`, or later, t
 
 The Python Workers platform leverages [FFI](https://en.wikipedia.org/wiki/Foreign_function_interface) to access bindings to Cloudflare resources. Refer to the [bindings](/workers/languages/python/ffi/#using-bindings-from-python-workers) documentation for more information.
 
-From the configuration perspective, enabling Python Workflows requires adding the `python_workflows` compatibility flag to your `wrangler.toml` file.
+From the configuration perspective, enabling Python Workflows requires adding the `python_workflows` compatibility flag to your Wrangler configuration file.
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-#:schema node_modules/wrangler/config-schema.json
-name = "workflows-starter"
-main = "src/index.ts"
-compatibility_date = "2025-10-24"
-compatibility_flags = ["python_workflows", "python_workers"]
-
-[[workflows]]
-# name of your workflow
-name = "workflows-starter"
-# binding name env.MY_WORKFLOW
-binding = "MY_WORKFLOW"
-# this is class that extends the Workflow class in src/index.ts
-class_name = "MyWorkflow"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workflows-starter",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-10-24",
+	"compatibility_flags": [
+		"python_workflows",
+		"python_workers"
+	],
+	"workflows": [
+		{
+			// name of your workflow
+			"name": "workflows-starter",
+			// binding name env.MY_WORKFLOW
+			"binding": "MY_WORKFLOW",
+			// this is class that extends the Workflow class in src/index.ts
+			"class_name": "MyWorkflow"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -96,8 +103,7 @@ The `create` method returns a [`WorkflowInstance`](/workflows/build/workers-api/
 
 Create (trigger) a batch of new workflow instances, up to 100 instances at a time. This is useful if you need to create multiple instances at once within the [instance creation limit](/workflows/reference/limits/).
 
-* <code>create_batch(batch)</code>
-  * `batch` - list of `WorkflowInstanceCreateOptions` to pass when creating an instance, including a user-provided ID and payload parameters.
+- <code>create_batch(batch)</code>* `batch` - list of `WorkflowInstanceCreateOptions` to pass when creating an instance, including a user-provided ID and payload parameters.
 
 Each element of the `batch` list is expected to include both `id` and `params` properties:
 
@@ -160,4 +166,4 @@ Refer to the [Workflows REST API documentation](/api/resources/workflows/subreso
 
 ## Command line (CLI)
 
-Refer to the [CLI quick start](/workflows/get-started/cli-quick-start/) to learn more about how to manage and trigger Workflows via the command-line.
+Refer to the [CLI quick start](/workflows/get-started/guide/) to learn more about how to manage and trigger Workflows via the command-line.

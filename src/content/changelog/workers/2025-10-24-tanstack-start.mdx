@@ -50,11 +50,16 @@ export default defineConfig({
 
 <WranglerConfig>
 
-```toml
-name = "my-tanstack-start-app"
-compatibility_date = "2025-10-11"
-compatibility_flags = ["nodejs_compat"]
-main = "@tanstack/react-start/server-entry"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-tanstack-start-app",
+	"compatibility_date": "2025-10-11",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"main": "@tanstack/react-start/server-entry"
+}
 ```
 
 </WranglerConfig>

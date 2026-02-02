@@ -72,10 +72,17 @@ To create a binding, open your newly generated `wrangler.jsonc` file and add the
 
 <WranglerConfig>
 
-```toml
-[[queues.producers]]
- queue = "MY-QUEUE-NAME"
- binding = "MY_QUEUE"
+```jsonc
+{
+	"queues": {
+		"producers": [
+			{
+				"queue": "MY-QUEUE-NAME",
+				"binding": "MY_QUEUE"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -190,13 +197,20 @@ To connect your queue to your consumer Worker, open your Wrangler file and add t
 
 <WranglerConfig>
 
-```toml
-[[queues.consumers]]
- queue = "<MY-QUEUE-NAME>"
- # Required: this should match the name of the queue you created in step 3.
- # If you misspell the name, you will receive an error when attempting to publish your Worker.
- max_batch_size = 10 # optional: defaults to 10
- max_batch_timeout = 5 # optional: defaults to 5 seconds
+```jsonc
+{
+	"queues": {
+		"consumers": [
+			{
+				"queue": "<MY-QUEUE-NAME>",
+				// Required: this should match the name of the queue you created in step 3.
+				// If you misspell the name, you will receive an error when attempting to publish your Worker.
+				"max_batch_size": 10, // optional: defaults to 10
+				"max_batch_timeout": 5 // optional: defaults to 5 seconds
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

@@ -12,25 +12,7 @@ import { TabItem, Tabs, Steps, DashButton } from "~/components";
 Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking).
 :::
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-
-2. Go to **Security** > **WAF** > **Tools**.
-
-3. Under **IP Access Rules**, enter the following details:
-   1. For **Value**, enter an IP address, IP range, country code/name, or Autonomous System Number (ASN). For details, refer to [Parameters](/waf/tools/ip-access-rules/parameters/).
-   2. Select an [action](/waf/tools/ip-access-rules/actions/).
-   3. For **Zone**, select whether the rule applies to the current website only or to all websites in the account.
-   4. (Optional) Enter a note for the rule (for example, `Payment Gateway`).
-
-4. Select **Add**.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 :::note
 IP Access Rules are only available in the new security dashboard if you have configured at least one IP access rule. Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of IP Access Rules.
@@ -51,6 +33,24 @@ IP Access Rules are only available in the new security dashboard if you have con
    4. (Optional) Enter a note for the rule (for example, `Payment Gateway`).
 
 4. Select **Create**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Tools**.
+
+3. Under **IP Access Rules**, enter the following details:
+   1. For **Value**, enter an IP address, IP range, country code/name, or Autonomous System Number (ASN). For details, refer to [Parameters](/waf/tools/ip-access-rules/parameters/).
+   2. Select an [action](/waf/tools/ip-access-rules/actions/).
+   3. For **Zone**, select whether the rule applies to the current website only or to all websites in the account.
+   4. (Optional) Enter a note for the rule (for example, `Payment Gateway`).
+
+4. Select **Add**.
 
 </Steps>
 

@@ -33,7 +33,7 @@ type OrderRow = {
 };
 
 // Elsewhere in your application
-// env.MY_DB is the D1 database binding from your wrangler.toml
+// env.MY_DB is the D1 database binding from your Wrangler configuration file
 const result = await env.MY_DB.prepare(
 	"SELECT Id, CustomerName, OrderDate FROM [Order] ORDER BY ShippedDate DESC LIMIT 100",
 ).run<OrderRow>();
@@ -102,11 +102,11 @@ Replace the contents of your `index.js` file with the code below to view the eff
 export default {
 	async fetch(request, env) {
 	  const { pathname } = new URL(request.url);
-		
+
 		// Sample data for testing
 		const companyName1 = `Bs Beverages`;
 		const companyName2 = `Around the Horn`;
-		
+
 		// Prepare reusable statements
 		const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
 		const stmtMulti = env.DB.prepare(`SELECT * FROM Customers; SELECT * FROM Customers WHERE CompanyName = ?`);

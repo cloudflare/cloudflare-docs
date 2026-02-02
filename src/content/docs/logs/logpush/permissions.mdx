@@ -35,6 +35,10 @@ The **Administrator Read only** and **Log Share Reader** roles only have access 
 
 To view, create, update, or delete Logpush jobs for Zero Trust datasets (Access, Gateway, and DEX) users must have both the `Logs Edit` and `Zero Trust: PII Read` permissions.
 
+If you encounter the error `reading job for product '<product>' is not allowed (1004)`, this indicates that the API token you are using does not have the required permissions. Ensure your token or user account has both permissions listed above.
+
+For more details, refer to the [Logpush Permission Update for Zero Trust Datasets](https://developers.cloudflare.com/changelog/2025-11-05-logpush-permissions-update/).
+
 ### Assign or remove a role
 
 To check the list of members in your account, or to manage roles and permissions:

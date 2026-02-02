@@ -77,7 +77,7 @@ entries:
       - [Workers Builds](/workers/ci-cd/builds/) now supports building projects that use **pnpm 10** as the package manager. If your build previously failed due to this unsupported version, retry your build. No config changes needed.
   - publish_date: "2025-02-13"
     description: |-
-      - [Smart Placement](/workers/configuration/smart-placement/) no longer runs Workers in the same location as D1 databases they are bound to. The same [placement logic](/workers/configuration/smart-placement/#understand-how-smart-placement-works) now applies to all Workers that use Smart Placement, regardless of whether they use D1 bindings.
+      - [Smart Placement](/workers/configuration/placement/) no longer runs Workers in the same location as D1 databases they are bound to. The same [placement logic](/workers/configuration/placement/#understand-how-smart-placement-works) now applies to all Workers that use Smart Placement, regardless of whether they use D1 bindings.
   - publish_date: "2025-02-11"
     description: |-
       - When Workers generate an "internal error" exception in response to certain failures, the exception message may provide a reference ID that customers can include in support communication for easier error identification.  For example, an exception with the new message might look like: `internal error; reference = 0123456789abcdefghijklmn`.
@@ -175,7 +175,7 @@ entries:
       - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards.
   - publish_date: "2024-06-03"
     description: |-
-      - Workers with [Smart Placement](/workers/configuration/smart-placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+      - Workers with [Smart Placement](/workers/configuration/placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
   - publish_date: "2024-05-17"
     description: |-
       - Updated v8 to version 12.6.

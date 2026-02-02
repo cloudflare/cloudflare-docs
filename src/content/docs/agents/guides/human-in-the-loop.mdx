@@ -67,26 +67,40 @@ touch .dev.vars
 OPENAI_API_KEY="your-openai-api-key"
 ```
 
-3. Update your `wrangler.toml` to configure your Agent:
+3. Update your wrangler configuration for your Agent:
 
 <WranglerConfig>
-```toml
-name = "human-in-the-loop"
-main = "./src/server.ts"
-compatibility_date = "2025-02-21"
-compatibility_flags = ["nodejs_compat", "nodejs_compat_populate_process_env"]
-
-assets = { directory = "public" }
-
-[[durable_objects.bindings]]
-name = "HumanInTheLoop"
-class_name = "HumanInTheLoop"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["HumanInTheLoop"]
-
-````
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "human-in-the-loop",
+	"main": "./src/server.ts",
+	"compatibility_date": "2025-02-21",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"nodejs_compat_populate_process_env"
+	],
+	"assets": {
+		"directory": "public"
+	},
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "HumanInTheLoop",
+				"class_name": "HumanInTheLoop"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"HumanInTheLoop"
+			]
+		}
+	]
+}
+```
 </WranglerConfig>
 
 ## 3. Define your tools

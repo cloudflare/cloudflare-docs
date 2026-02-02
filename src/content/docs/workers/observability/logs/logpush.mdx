@@ -84,16 +84,20 @@ Enable logging on your Worker by adding a new property, `logpush = true`, to you
 
 <WranglerConfig>
 
-```toml
-# Top-level configuration
-
-name = "my-worker"
-main = "src/index.js"
-compatibility_date = "2022-07-12"
-
-workers_dev = false
-logpush = true
-route = { pattern = "example.org/*", zone_name = "example.org" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// Top-level configuration
+	"name": "my-worker",
+	"main": "src/index.js",
+	"compatibility_date": "2022-07-12",
+	"workers_dev": false,
+	"logpush": true,
+	"route": {
+		"pattern": "example.org/*",
+		"zone_name": "example.org"
+	}
+}
 ```
 
 </WranglerConfig>

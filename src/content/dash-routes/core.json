@@ -272,62 +272,42 @@
 		"deeplink": "https://one.dash.cloudflare.com"
 	},
 	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/magic-networks/overview",
+		"parent": ["Networking"]
+	},
+	{
 		"name": "Network analytics",
-		"deeplink": "/?to=/:account/network-analytics",
-		"parent": ["Networking", "Analytics"]
-	},
-	{
-		"name": "Magic monitoring",
-		"deeplink": "/?to=/:account/network-monitoring",
-		"parent": ["Networking", "Analytics"]
-	},
-	{
-		"name": "Configuration",
-		"deeplink": "/?to=/:account/magic-transit/configuration",
-		"parent": ["Networking", "Magic Transit"]
+		"deeplink": "/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics",
+		"parent": ["Networking", "Insights"]
 	},
 	{
 		"name": "Network health",
-		"deeplink": "/?to=/:account/magic-transit/tunnel-healthchecks",
-		"parent": ["Networking", "Magic Transit"]
+		"deeplink": "/?to=/:account/networking-insights/health",
+		"parent": ["Networking", "Insights"]
 	},
 	{
-		"name": "Packet captures",
-		"deeplink": "/?to=/:account/magic-transit/packet-captures/captures",
-		"parent": ["Networking", "Magic Transit"]
+		"name": "Network flow",
+		"deeplink": "/?to=/:account/networking-insights/analytics/network-analytics/flow-analytics",
+		"parent": ["Networking", "Insights"]
 	},
 	{
-		"name": "Network overview",
-		"deeplink": "/?to=/:account/magic-wan/network",
-		"parent": ["Networking", "Magic WAN"]
+		"name": "Connectors",
+		"deeplink": "/?to=/:account/magic-networks/connections",
+		"parent": ["Networking"]
 	},
 	{
-		"name": "Connector on-ramps",
-		"deeplink": "/?to=/:account/magic-wan/mconn-onramp",
-		"parent": ["Networking", "Magic WAN"]
+		"name": "Interconnects",
+		"deeplink": "/?to=/:account/interconnects",
+		"parent": ["Networking"]
 	},
 	{
-		"name": "Cloud on-ramps",
-		"deeplink": "/?to=/:account/magic-wan/cloud-onramp",
-		"parent": ["Networking", "Magic WAN"]
+		"name": "Routes",
+		"deeplink": "/?to=/:account/magic-networks/routes",
+		"parent": ["Networking"]
 	},
 	{
-		"name": "Configuration",
-		"deeplink": "/?to=/:account/magic-wan/configuration",
-		"parent": ["Networking", "Magic WAN"]
-	},
-	{
-		"name": "Network health",
-		"deeplink": "/?to=/:account/magic-wan/tunnel-healthchecks",
-		"parent": ["Networking", "Magic WAN"]
-	},
-	{
-		"name": "Packet captures",
-		"deeplink": "/?to=/:account/magic-wan/packet-captures/captures",
-		"parent": ["Networking", "Magic WAN"]
-	},
-	{
-		"name": "Magic Firewall",
+		"name": "Firewall policies",
 		"deeplink": "/?to=/:account/network-security/magic_firewall",
 		"parent": ["Networking"]
 	},
@@ -337,18 +317,8 @@
 		"parent": ["Networking", "L3/4 DDoS protection"]
 	},
 	{
-		"name": "Interconnects",
-		"deeplink": "/?to=/:account/interconnects",
-		"parent": ["Networking"]
-	},
-	{
-		"name": "Cloud Integrations",
-		"deeplink": "/?to=/:account/mcn/integrations",
-		"parent": ["Networking"]
-	},
-	{
-		"name": "Leased IPs",
-		"deeplink": "/?to=/:account/ip-addresses/leased-ips",
+		"name": "Address space",
+		"deeplink": "/?to=/:account/ip-addresses/address-space",
 		"parent": ["Networking", "IP addresses"]
 	},
 	{
@@ -370,6 +340,11 @@
 		"name": "Analytics",
 		"deeplink": "/?to=/:account/dns-firewall/analytics",
 		"parent": ["Networking", "DNS Firewall"]
+	},
+	{
+		"name": "Cloud integrations",
+		"deeplink": "/?to=/:account/mcn/integrations",
+		"parent": ["Networking"]
 	},
 	{
 		"name": "Bulk redirects",

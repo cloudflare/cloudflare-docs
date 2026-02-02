@@ -7,6 +7,7 @@ title: Query D1 from Python Workers
 sidebar:
   order: 10
 description: Learn how to query D1 from a Python Worker
+reviewed: 2024-04-02
 ---
 
 import { WranglerConfig } from "~/components";
@@ -59,16 +60,23 @@ In your Wrangler file, create a new `[[d1_databases]]` configuration block and s
 
 <WranglerConfig>
 
-```toml
-name = "python-and-d1"
-main = "src/entry.py"
-compatibility_flags = ["python_workers"] # Required for Python Workers
-compatibility_date = "2024-03-29"
-
-[[d1_databases]]
-binding = "DB" # This will be how you refer to your database in your Worker
-database_name = "YOUR_DATABASE_NAME"
-database_id = "YOUR_DATABASE_ID"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "python-and-d1",
+	"main": "src/entry.py",
+	"compatibility_flags": [ // Required for Python Workers
+		"python_workers"
+	],
+	"compatibility_date": "2024-03-29",
+	"d1_databases": [
+		{
+			"binding": "DB", // This will be how you refer to your database in your Worker
+			"database_name": "YOUR_DATABASE_NAME",
+			"database_id": "YOUR_DATABASE_ID"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

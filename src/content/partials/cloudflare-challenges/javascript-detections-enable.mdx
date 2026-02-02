@@ -1,11 +1,20 @@
 ---
 {}
-
 ---
 
-import { Tabs, TabItem, Steps, DashButton } from '~/components';
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
+
+{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
+    <TabItem label="New dashboard" icon="rocket">
+        <Steps>
+            1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+                <DashButton url="/?to=/:account/:zone/security/settings" />
+            2. Under your bot traffic plan configurations, select the edit icon for **JS detections** and turn **JavaScript Detections** on.
+        </Steps>
+    </TabItem>
     <TabItem label="Old dashboard">
         <Steps>
             1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
@@ -14,12 +23,6 @@ import { Tabs, TabItem, Steps, DashButton } from '~/components';
             4. For **JavaScript Detections**, switch the toggle to **On**.
         </Steps>
     </TabItem>
-    <TabItem label="New dashboard" icon="rocket">
-        <Steps>
-            1. In the Cloudflare dashboard, go to the **Security Settings** page. 
-            
-                <DashButton url="/?to=/:account/:zone/security/settings" />
-            2. Under your bot traffic plan configurations, select the edit icon for **JS detections** and turn **JavaScript Detections** on.
-        </Steps>
-    </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}

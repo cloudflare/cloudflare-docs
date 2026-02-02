@@ -1,10 +1,16 @@
 ---
-{}
+params:
+  - rulesetName?
 ---
 
-import { Steps, DashButton } from "~/components";
+import { Steps, DashButton, Markdown } from "~/components";
+import { Image } from "astro:assets";
+import cloudflareManagedRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-cloudflare-managed-ruleset.png";
+import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-owasp-core-ruleset.png";
 
 <Steps>
+
+{/* prettier-ignore-start */}
 
 1. In the Cloudflare dashboard, go to the **Security rules** page.
 
@@ -12,10 +18,18 @@ import { Steps, DashButton } from "~/components";
 
 2. (Optional) Filter by **Managed rules**.
 
-3. Search for the managed ruleset you want to configure/browse. Look for a rule with an _Execute_ action.
+3. Search for {props.rulesetName ? <Markdown text={`**${props.rulesetName}**`} /> : "the managed ruleset you want to configure/browse"}. Look for a rule with an _Execute_ action.
 
 4. Select the rule name (containing the name of the managed ruleset), and then select **Browse rules**.
 
-   ![The Cloudflare dashboard displaying the list of rules in the Cloudflare Managed Ruleset](~/assets/images/waf/waf-browse-rules.png)
+   { props.rulesetName == "Cloudflare Managed Ruleset" && (
+     <Image src={cloudflareManagedRulesetImg} alt="The Cloudflare dashboard displaying the list of rules in the Cloudflare Managed Ruleset." />
+   )}
+
+   { props.rulesetName == "Cloudflare OWASP Core Ruleset" && (
+     <Image src={owaspCoreRulesetImg} alt="The Cloudflare dashboard displaying the list of rules in the Cloudflare OWASP Core Ruleset." />
+   )}
+
+{/* prettier-ignore-end */}
 
 </Steps>

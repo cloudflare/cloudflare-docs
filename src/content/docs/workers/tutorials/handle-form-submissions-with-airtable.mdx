@@ -242,14 +242,17 @@ Add a `vars` table at the end of your Wrangler file:
 
 <WranglerConfig>
 
-```toml null {7}
-name = "workers-airtable-form"
-main = "src/index.js"
-compatibility_date = "2023-06-13"
-
-[vars]
-AIRTABLE_BASE_ID = "exampleBaseId"
-AIRTABLE_TABLE_NAME = "Form Submissions"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "workers-airtable-form",
+	"main": "src/index.js",
+	"compatibility_date": "2023-06-13",
+	"vars": {
+		"AIRTABLE_BASE_ID": "exampleBaseId",
+		"AIRTABLE_TABLE_NAME": "Form Submissions"
+	}
+}
 ```
 
 </WranglerConfig>

@@ -3,13 +3,67 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-01-30"
+    title: RealtimeKit Web Core 1.2.4
+    description: |-
+      **Compatibility:** Works best with RealtimeKit Web UI Kit 1.1.0 or later.
+
+      **New APIs**
+
+      Added chat pagination support with the following methods:
+
+      - `meeting.chat.fetchPinnedMessages` - Fetch pinned messages from server.
+      - `meeting.chat.fetchPublicMessages` - Fetch public messages from server.
+      - `meeting.chat.fetchPrivateMessages` - Fetch private messages from server.
+
+      **Enhancements**
+
+      - Added JSDoc comments to all public-facing methods and classes for improved developer suggestions.
+      - Chat message operations (edit, delete, pin) are now available to all RealtimeKit clients without additional configuration.
+      - `pinMessage` and `unpinMessage` events on `meeting.chat` now emit reliably.
+      - Message pinning (`meeting.chat.pin` and `meeting.chat.unpin`) is now available to all participants.
+
+      **Removed APIs**
+
+      Removed non-operational chat channel APIs to streamline the RealtimeKit SDK. Meeting chat (`meeting.chat`) remains fully operational.
+
+      - Removed `meeting.self.permissions.chatChannel`.
+      - Removed `meeting.self.permissions.chatMessage`. Use `meeting.self.permissions.chatPublic` and `meeting.self.permissions.chatPrivate` instead.
+      - Removed `meeting.chat.channels`.
+      - Removed `meeting.chat.sendMessageToChannel`.
+      - Removed `meeting.chat.markLastReadMessage`.
+      - Removed events: `channelMessageUpdate`, `channelCreate`, and `channelUpdate` from `meeting.chat`.
+
+      **API changes**
+
+      - The following methods no longer accept a third optional `channelId` parameter:
+        - `meeting.chat.editTextMessage(messageId, message)`
+        - `meeting.chat.editImageMessage(messageId, imageFile)`
+        - `meeting.chat.editFileMessage(messageId, file)`
+        - `meeting.chat.editMessage(messageId, messagePayload)`
+        - `meeting.chat.deleteMessage(messageId)`
+
+      **Deprecations**
+
+      The following methods are deprecated due to scalability limitations (limited to 1,000 recent messages):
+
+      - `meeting.chat.messages` - Only fetches recent messages and new messages after joining.
+      - `meeting.chat.getMessagesByUser` - Use new fetch methods for scalable message retrieval.
+      - `meeting.chat.getMessagesByType` - Use new fetch methods for scalable message retrieval.
+      - `meeting.chat.getMessages` - Use `meeting.chat.fetchPublicMessages` or `meeting.chat.fetchPrivateMessages` instead.
+      - `meeting.chat.pinned` - Use `meeting.chat.fetchPinnedMessages` instead.
+      - `meeting.chat.searchMessages` - Use `meeting.chat.fetchPublicMessages` or `meeting.chat.fetchPrivateMessages` instead.
+
+      **Known limitations**
+
+      - Pinned messages are not supported for private chats.
   - publish_date: "2026-01-05"
     title: RealtimeKit Web Core 1.2.3
     description: |-
       **Fixes**
 
       - Fixed an issue where users who joined a meeting with audio and video disabled and then initiated tab screen sharing would experience SDP corruption upon stopping the screen share, preventing subsequent actions such as enabling audio or video.
-      
+
         Error thrown:
         ```text
         InvalidAccessError: Failed to execute 'setRemoteDescription' on 'RTCPeerConnection': Failed to set remote answer sdp: Failed to set remote audio description send parameters for m-section with mid='<N>'
@@ -25,7 +79,7 @@ entries:
 
         const { videoTrack, audioTrack } = media;
         ```
- 
+
       - Fixed an issue where an undefined variable caused `TypeError: Cannot read properties of undefined (reading 'getValue')` in media retrieval due to a race condition.
 
   - publish_date: "2025-12-17"

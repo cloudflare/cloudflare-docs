@@ -14,8 +14,8 @@ There are two types of on-ramps: single virtual private cloud (VPC) and hubs.
 Before creating on-ramps from your cloud networks to Magic WAN, make sure you:
 
 - {props.mwanAccount}
-- Went through process of [setting up your cloud provider](/magic-cloud-networking/get-started/).
-- Have the correct cloud resources. Refer to [Reference](/magic-cloud-networking/reference/) to check resource by cloud provider.
+- Went through the process of [setting up your cloud provider](/magic-cloud-networking/get-started/).
+- Have the correct cloud resources. Refer to [Reference](/magic-cloud-networking/reference/) to check resources by cloud provider.
 
 ## Available on-ramps
 
@@ -37,13 +37,13 @@ Choose this option if you have a single VPC in your cloud to connect to Magic WA
 
 1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Cloud (beta)** tab.
 3. Select **Add new on-ramp**.
 4. Go to **Connect an existing VPC to Cloudflare** > **Select**.
 5. Give your new on-ramp a name and a description (optional), then select **Continue**.
-6. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP and Azure. Then, select **Continue**.
+6. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP, and Azure. Then, select **Continue**.
 7. Select the network that you want to connect to. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/) you have already set up. When you are done, select **Continue**.
 8. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
    - **Add routes for your Magic WAN address space to your cloud network**: Select this option to install routes for reaching Magic WAN in your cloud network's route tables (refer to [Magic WAN address space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
@@ -74,7 +74,7 @@ When you configure a hub on-ramp, Cloudflare always manages the VPN tunnel betwe
 
 1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Cloud (beta)** tab.
 3. Select **Add new on-ramp**.
@@ -105,7 +105,7 @@ You have successfully created your Magic WAN on-ramp. However, on-ramp creation 
 
 1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Cloud (beta)** tab.
 3. Select **Add new on-ramp**.
@@ -156,7 +156,7 @@ Do not deploy the on-ramp using both Cloudflare and Terraform. If you plan to de
 
 1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Cloud (beta)** tab.
 3. In **Cloud on-ramps**, select **Add new on-ramp** and begin the **Create a Magic WAN cloud on-ramp** workflow following the standard steps.
@@ -169,7 +169,7 @@ Do not deploy the on-ramp using both Cloudflare and Terraform. If you plan to de
 
 1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Cloud (beta)** tab.
 3. In **Cloud on-ramps**, find the on-ramp you want to download > select the three dots > **Download as Terraform**.
@@ -186,7 +186,7 @@ After setting up your on-ramps, you need to update your network security groups 
 
 1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Cloud (beta)** tab.
 3. Select the on-ramp you want to edit.
@@ -203,7 +203,7 @@ After setting up your on-ramps, you need to update your network security groups 
 
 1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Cloud (beta)** tab.
 3. Select the on-ramp you want to delete.
@@ -212,7 +212,7 @@ After setting up your on-ramps, you need to update your network security groups 
 
 ---
 
-## Magic WAN Address Space
+## Magic WAN address space
 
 By default, Cloudflare installs the following summarized routes in your cloud route tables to direct traffic to Magic WAN:
 
@@ -244,7 +244,7 @@ You can view estimated costs associated with your cloud resources in the Cloudfl
 
 1. Go to the **Connectors** page.
 
-	<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+	<DashButton url="/?to=/:account/magic-networks/connections" />
 
 2. Select the **Cloud (beta)** tab.
 3. In **Cloud on-ramps**, find the cloud on-ramp for which you want to check the estimated costs > select the three dots > **Associated Resources**.

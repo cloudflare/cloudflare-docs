@@ -76,7 +76,7 @@ console.log(content);
 If you have raw HTML you want to generate a PDF from, use the `html` option. You can still apply custom styles using the `addStyleTag` parameter.
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -131,7 +131,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 The options `rejectResourceTypes` and `rejectRequestPattern` can be used to block requests during rendering. The opposite can also be done, _only_ allow certain requests using `allowResourceTypes` and `allowRequestPattern`.
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{

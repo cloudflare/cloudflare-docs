@@ -8,7 +8,7 @@ head:
     content: Troubleshooting Domain Control Validation
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
 
 Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), some situations may interfere with certificate issuance and renewal.
 
@@ -51,10 +51,32 @@ The errors below refer to situations that have to be addressed at the authoritat
 Consider the following when troubleshooting:
 
 - [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) must be configured correctly. You can use [DNSViz](https://dnsviz.net/) to understand and troubleshoot the deployment of DNSSEC.
-- Your [CAA records](/ssl/edge-certificates/caa-records/) should allow Cloudflare's partner [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) to issue certificates on your behalf.
-- Your [CAA records](/ssl/edge-certificates/caa-records/) must be resolvable from all locations.
 - The HTTP verification process is done preferably over **IPv6**, so if any AAAA record exists and does not point to the same dual-stack location as the A record, the validation will fail.
 - If an [NS record](/dns/manage-dns-records/reference/dns-record-types/#ns) is present for the hostname or its parent, DNS resolution will be managed externally by the DNS provider defined in the NS target. In this case, you must either add the DCV TXT record at the external DNS provider, or remove the NS record at Cloudflare.
+
+### CAA records
+
+- Your [CAA records](/ssl/edge-certificates/caa-records/) must be resolvable from all locations.
+- Your [CAA records](/ssl/edge-certificates/caa-records/) should allow Cloudflare's partner [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) to issue certificates on your behalf.
+- If you are using a [subdomain setup](/dns/zone-setups/subdomain-setup/) (`subdomain.example.com`) and Cloudflare is not the authoritative DNS provider for the parent domain (`example.com`), you should make sure that the parent domain (`example.com`) either has CAA records that allow [Cloudflare's partner CAs](/ssl/reference/certificate-authorities/), or has no CAA records at all.
+
+You can check the CAA records by running the following command:
+
+<Tabs>
+<TabItem label="macOS and Linux">
+
+```bash
+dig example.com CAA +short
+```
+</TabItem>
+
+<TabItem label="Windows">
+
+```powershell
+Resolve-DnsName -Name example.com -Type CAA
+```
+</TabItem>
+</Tabs>
 
 ## CA errors
 

@@ -14,18 +14,31 @@ To specify different D1 databases for different environments, use the following 
 
 <WranglerConfig>
 
-```toml
-# This is a staging environment
-[env.staging]
-d1_databases = [
-    { binding = "<BINDING_NAME_1>", database_name = "<DATABASE_NAME_1>", database_id = "<UUID1>" },
-]
-
-# This is a production environment
-[env.production]
-d1_databases = [
-    { binding = "<BINDING_NAME_2>", database_name = "<DATABASE_NAME_2>", database_id = "<UUID2>" },
-]
+```jsonc
+{
+	"env": {
+		// This is a staging environment
+		"staging": {
+			"d1_databases": [
+				{
+					"binding": "<BINDING_NAME_1>",
+					"database_name": "<DATABASE_NAME_1>",
+					"database_id": "<UUID1>"
+				}
+			]
+		},
+		// This is a production environment
+		"production": {
+			"d1_databases": [
+				{
+					"binding": "<BINDING_NAME_2>",
+					"database_name": "<DATABASE_NAME_2>",
+					"database_id": "<UUID2>"
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -38,11 +51,18 @@ If you need to specify different D1 databases for different environments, your [
 
 <WranglerConfig>
 
-```toml
-[[production.d1_databases]]
-binding = "DB"
-database_name = "DATABASE_NAME"
-database_id = "DATABASE_ID"
+```jsonc
+{
+	"production": {
+		"d1_databases": [
+			{
+				"binding": "DB",
+				"database_name": "DATABASE_NAME",
+				"database_id": "DATABASE_ID"
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -74,17 +94,29 @@ Therefore, the above binding is equivalent to:
 
 <WranglerConfig>
 
-```toml
-[[env.staging.d1_databases]]
-binding = "BINDING_NAME_1"
-database_name = "DATABASE_NAME_1"
-database_id = "UUID_1"
-
-[[env.production.d1_databases]]
-binding = "BINDING_NAME_2"
-database_name = "DATABASE_NAME_2"
-database_id = "UUID_2"
-
+```jsonc
+{
+	"env": {
+		"staging": {
+			"d1_databases": [
+				{
+					"binding": "BINDING_NAME_1",
+					"database_name": "DATABASE_NAME_1",
+					"database_id": "UUID_1"
+				}
+			]
+		},
+		"production": {
+			"d1_databases": [
+				{
+					"binding": "BINDING_NAME_2",
+					"database_name": "DATABASE_NAME_2",
+					"database_id": "UUID_2"
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>

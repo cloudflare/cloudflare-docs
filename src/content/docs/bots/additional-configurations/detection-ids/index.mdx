@@ -5,15 +5,14 @@ sidebar:
   order: 2
 ---
 
-import { Render, Tabs, TabItem, Steps, DashButton } from "~/components"
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
 Detection IDs are static rules used to detect predictable bot behavior with no overlap with human traffic. Detection IDs refer to the precise [detection](/bots/concepts/bot-detection-engines/) used to identify a bot, which could be from heuristics, verified bot detections, or anomaly detections. For example, a detection ID can identify if you sent your headers in a different order than what was expected of your browser.
 
 If you are having an issue with one of our heuristics, detection IDs allow you to decide which heuristics to enforce on your zones using customer configurable heuristics. You can choose unique actions for different bots, detected through Cloudflare’s heuristics engine. You can block, allow, or serve alternate content to specific bots to meet the unique needs of your site’s traffic.
 
 :::note
-
-A request can trigger multiple detection IDs. 
+A request can trigger multiple detection IDs.
 :::
 
 You can use `cf.bot_management.detection_ids` fields in tools such as:
@@ -26,7 +25,7 @@ You can use `cf.bot_management.detection_ids` fields in tools such as:
 Bot Detection IDs and tags are also available in [Bot Analytics](/bots/bot-analytics/) and [Security Analytics](/waf/analytics/security-analytics/).
 
 :::caution[Beta detections]
-Cloudflare may occasionally try beta detections as we continuously improve our detections. 
+Cloudflare may occasionally try beta detections as we continuously improve our detections.
 
 It is possible, but uncommon, for you to have beta detection IDs on the Cloudflare dashboard that are not actively collecting data on your zone.
 :::
@@ -46,30 +45,34 @@ Detection tags are available in Security Analytics, but not in the Security Even
 
 ## Create or edit an expression
 
-<Tabs syncKey="dashNewNav"> 
-	<TabItem label="Old dashboard">
-		<Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters. Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
-      3. Use the `cf.bot_management.detection_ids` field in the rule expression.
-      4. Select **Save**.
-    </Steps>
-  </TabItem> 
+{/* prettier-ignore-start */}
+
+<Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
-		<Steps>
+    <Steps>
       1. In the Cloudflare dashboard, go to the **Security Analytics** page.
 
           <DashButton url="/?to=/:account/:zone/security/analytics" />
-      2. Apply filters and select **Create custom security rule** to create a custom rule based on your filters. 
-        
+      2. Apply filters and select **Create custom security rule** to create a custom rule based on your filters.
+
           Alternatively, if you have already created a custom rule, you can go to the existing rule in **Security rules** and edit the expression based on your filters.
 
           <DashButton url="/?to=/:account/:zone/security/security-rules" />
       3. Use the `cf.bot_management.detection_ids` field in the rule expression.
       4. Select **Deploy**.
       </Steps>
-	</TabItem> 
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters. Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
+      3. Use the `cf.bot_management.detection_ids` field in the rule expression.
+      4. Select **Save**.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ---
 
@@ -100,6 +103,8 @@ and not any(cf.bot_management.detection_ids[*] in {3355446 12577893})
 
 You can create or edit existing Logpush jobs to include the new Bot Detection IDs field which will provide an array of IDs for each request that has heuristics match on it. The `BotDetectionIDs` field is available as part of the HTTP Requests dataset and you can add it to new or existing jobs via the Logpush API or on the Cloudflare dashboard. This is the primary method to discover Detection IDs.
 
+{/* prettier-ignore-start */}
+
 <Tabs>
   <TabItem label="Dashboard">
     <Steps>
@@ -118,6 +123,8 @@ You can create or edit existing Logpush jobs to include the new Bot Detection ID
     [Update your logpush job](/logs/logpush/logpush-job/log-output-options/) by adding `BotDetectionIDs` to the  `output_options:`  parameters.
   </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 ---
 
