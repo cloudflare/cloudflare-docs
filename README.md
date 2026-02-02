@@ -1,8 +1,8 @@
 # Cloudflare Developer Documentation
 
-Welcome to the open-source repository for all [Cloudflare Developer Documentation](https://developers.cloudflare.com/).
+Welcome to the open-source repository for all [Cloudflare Developer Documentation](https://danielmosesochefije54-netizen developers.cloudflare.com/).
 
-To learn how to contribute, visit the [contribution page](https://developers.cloudflare.com/style-guide/contributions/) of the Cloudflare Style Guide.
+To learn how to contribute, visit the [contribution page](https://danielmosesochefije54-netizendevelopers.cloudflare.com/style-guide/contributions/) of the Cloudflare Style Guide.
 
 ## License and Legal Notices
 
