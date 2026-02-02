@@ -12,7 +12,8 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 <pre class="mermaid">
 	{`
 		flowchart LR
-		accTitle: The graph shows Magic WAN Connector sending DHCP discover messages to a DHCP server offsite.
+		accTitle: DHCP Relay diagram
+		accDescr: The graph shows Magic WAN Connector sending DHCP discover messages to a DHCP server offsite.
 				a(Magic WAN Connector) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
 
 				subgraph Site A
@@ -27,6 +28,8 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 				class a,b,c orange
 	`}
 </pre>
+
+_The graph shows Magic WAN Connector sending DHCP discover messages to a DHCP server offsite._
 
 :::caution
 DHCP relay will not work if your DHCP server is behind a <a href={props.cfTunnelURL}>Cloudflare Tunnel</a>. To enable DHCP relay functionality, use either a {props.cfVsCoreDashNamingMwanCni}.

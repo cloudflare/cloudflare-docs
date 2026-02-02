@@ -490,7 +490,8 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 		<pre class="mermaid">
 		{`flowchart LR
-		accTitle: ${props.productName} set up as a DHCP server, and connecting to the Internet.
+		accTitle: Connector as WAN router
+		accDescr: ${props.productName} set up as a DHCP server, and connecting to the Internet.
     a(${props.productName})--> b(Internet) --> c(Cloudflare)
 
     subgraph Customer site
@@ -502,11 +503,14 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
     class a,c orange`}
 		</pre>
 
+		<p><em>{props.productName} set up as a DHCP server, and connecting to the Internet.</em></p>
+
 		<p>In the following example, the {props.productName} device sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.</p>
 
 		<pre class="mermaid">
 		{`flowchart LR
-		accTitle: ${props.productName} connects to the router in the site, and only some of the LANs connect to Connector.
+		accTitle: Connector behind site router
+		accDescr: ${props.productName} connects to the router in the site, and only some of the LANs connect to Connector.
     a(${props.productName})--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
 
     subgraph Customer site
@@ -519,6 +523,8 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
     classDef orange fill:#f48120,color: black
     class a,i orange`}
 		</pre>
+
+		<p><em>{props.productName} connects to the router in the site, and only some of the LANs connect to Connector.</em></p>
 
 		<p>Refer to <a href="/reference-architecture/diagrams/sase/magic-wan-connector-deployment/">{props.productName} deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
 
