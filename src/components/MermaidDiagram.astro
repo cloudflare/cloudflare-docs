@@ -1,7 +1,7 @@
 ---
 import { z } from "astro:schema";
 import { parse } from "node-html-parser";
-import { renderMermaid } from "beautiful-mermaid";
+import { renderMermaid } from "~/lib/beautiful-mermaid-patched.js";
 
 type Props = z.infer<typeof props>;
 
