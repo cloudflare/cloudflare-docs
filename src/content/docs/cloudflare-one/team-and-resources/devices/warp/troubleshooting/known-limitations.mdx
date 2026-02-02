@@ -212,7 +212,7 @@ If you are using Microsoft Intune to deploy the WARP client on Android with [Alw
 
 This is a known limitation of the Android OS, which has been reported to Google. You can track the status of the feature request on the [Google Issue Tracker](https://issuetracker.google.com/issues/238109298?pli=1).
 
-To work around this issue, you can disable Lockdown mode while keeping Always-On VPN enabled. This can be done by:
+To work around this issue, you can disable Lockdown mode while keeping Always-On VPN enabled:
 
 1.  In your Intune profile, disable **Lockdown mode** while keeping **Always-On VPN** enabled.
 2.  Use the [`auto_connect`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#auto_connect) and [`switch_locked`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#switch_locked) parameters in the managed configuration for seamless connectivity.
