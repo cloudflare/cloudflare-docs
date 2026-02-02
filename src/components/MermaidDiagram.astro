@@ -5,15 +5,19 @@ import { renderMermaid } from "beautiful-mermaid";
 
 type Props = z.infer<typeof props>;
 
+// Validate color props - allow hex, rgb/rgba, hsl/hsla, named colors, or CSS variables
+// Block semicolons and braces to prevent CSS injection
+const cssColorRegex = /^[^;{}]+$/;
+
 const props = z
 	.object({
-		fg: z.string().optional(),
-		bg: z.string().optional(),
-		line: z.string().optional(),
-		accent: z.string().optional(),
-		muted: z.string().optional(),
-		surface: z.string().optional(),
-		border: z.string().optional(),
+		fg: z.string().regex(cssColorRegex, "Invalid CSS color value").optional(),
+		bg: z.string().regex(cssColorRegex, "Invalid CSS color value").optional(),
+		line: z.string().regex(cssColorRegex, "Invalid CSS color value").optional(),
+		accent: z.string().regex(cssColorRegex, "Invalid CSS color value").optional(),
+		muted: z.string().regex(cssColorRegex, "Invalid CSS color value").optional(),
+		surface: z.string().regex(cssColorRegex, "Invalid CSS color value").optional(),
+		border: z.string().regex(cssColorRegex, "Invalid CSS color value").optional(),
 	})
 	.strict();
 
@@ -38,25 +42,33 @@ const html = parse(slot);
 const copy = html.querySelector("div.copy > button");
 
 if (!copy) {
-	throw new Error("[MermaidDiagram] No code block found in slot content");
+	throw new Error("[MermaidDiagram] No code block found in slot content. Ensure you have a mermaid code block inside the component.");
 }
 
 let diagram = copy.attributes["data-code"];
 if (!diagram) {
-	throw new Error("[MermaidDiagram] No data-code attribute found");
+	throw new Error("[MermaidDiagram] No data-code attribute found on code block.");
 }
 
 // Restore newlines (encoded as \u007f by Expressive Code)
 diagram = diagram.replace(/\u007f/g, "\n");
 
-// Extract accessibility metadata before stripping
-const accTitleMatch = diagram.match(/accTitle:\s*(.+)/);
-const accDescrMatch = diagram.match(/accDescr:\s*(.+)/);
-const accTitle = accTitleMatch?.[1]?.trim();
-const accDescr = accDescrMatch?.[1]?.trim();
+// Check for empty diagram content
+if (!diagram.trim()) {
+	throw new Error("[MermaidDiagram] Empty diagram content. Add mermaid syntax inside the code block.");
+}
 
-// Generate unique ID for accessibility
-const uniqueId = Math.random().toString(36).substring(2, 9);
+// Extract accessibility metadata before stripping
+// Handle single-line: accTitle: My Title
+const accTitleMatch = diagram.match(/accTitle:\s*(.+)/);
+// Handle both single-line (accDescr: text) and multi-line (accDescr { text })
+const accDescrSingleMatch = diagram.match(/accDescr:\s*([^\n{]+)/);
+const accDescrMultiMatch = diagram.match(/accDescr\s*\{([^}]+)\}/s);
+const accTitle = accTitleMatch?.[1]?.trim();
+const accDescr = accDescrMultiMatch?.[1]?.trim() || accDescrSingleMatch?.[1]?.trim();
+
+// Generate unique ID for accessibility using crypto for better randomness
+const uniqueId = crypto.randomUUID().slice(0, 8);
 
 // Strip unsupported mermaid directives
 diagram = diagram
@@ -66,13 +78,25 @@ diagram = diagram
 		return (
 			!trimmed.startsWith("accTitle:") &&
 			!trimmed.startsWith("accDescr:") &&
+			!trimmed.startsWith("accDescr {") &&
 			!trimmed.startsWith("linkStyle")
 		);
 	})
-	.join("\n");
+	.join("\n")
+	// Also remove multi-line accDescr blocks that span lines
+	.replace(/accDescr\s*\{[^}]*\}/gs, "");
 
-// Render at build time
-const svg = await renderMermaid(diagram, cloudflareTheme);
+// Render at build time with error handling
+let svg: string;
+try {
+	svg = await renderMermaid(diagram, cloudflareTheme);
+} catch (error) {
+	const message = error instanceof Error ? error.message : String(error);
+	const preview = diagram.slice(0, 300).replace(/\n/g, "\\n");
+	throw new Error(
+		`[MermaidDiagram] Failed to render diagram: ${message}\n\nDiagram preview: ${preview}${diagram.length > 300 ? "..." : ""}`
+	);
+}
 ---
 
 <figure
