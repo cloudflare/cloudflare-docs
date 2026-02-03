@@ -130,13 +130,13 @@ TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypo
    <TypeScriptExample filename="app/server.ts">
 
    ```ts
-   import RequestHandler from "@tanstack/react-start/server-entry";
+   import handler from "@tanstack/react-start/server-entry";
 
    // Export Durable Objects as named exports
    export { MyDurableObject } from "./my-durable-object";
 
    export default {
-   	fetch: RequestHandler.fetch,
+   	fetch: handler.fetch,
 
    	// Handle Queue messages
    	async queue(batch, env, ctx) {
