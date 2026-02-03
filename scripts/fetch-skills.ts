@@ -356,7 +356,7 @@ async function fetchAllSkills(config: SkillsConfig): Promise<IndexJson> {
 
 async function writeIndex(outputDir: string, index: IndexJson): Promise<void> {
 	const indexPath = join(outputDir, "index.json");
-	await writeFile(indexPath, JSON.stringify(index, null, "\t") + "\n");
+	await writeFile(indexPath, JSON.stringify(index));
 	log(`Wrote index.json with ${index.skills.length} skills`);
 }
 
