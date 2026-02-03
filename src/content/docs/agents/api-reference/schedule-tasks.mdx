@@ -7,9 +7,21 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-An Agent can schedule tasks to be run in the future by calling `this.schedule(when, callback, data)`, where `when` can be a delay, a `Date`, or a cron string; `callback` the function name to call, and `data` is an object of data to pass to the function.
+An Agent can schedule tasks to be run in the future using two methods:
+
+- `this.schedule(when, callback, data)` - where `when` can be a delay (seconds), a `Date`, or a cron string
+- `this.scheduleEvery(intervalSeconds, callback, data)` - for fixed-interval recurring tasks
 
 Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read+write state: scheduled tasks can invoke any regular method on your Agent.
+
+The scheduling system supports four modes:
+
+| Mode | Syntax | Use Case |
+| --- | --- | --- |
+| Delayed | `this.schedule(60, ...)` | Run in 60 seconds |
+| Scheduled | `this.schedule(new Date(...), ...)` | Run at specific time |
+| Cron | `this.schedule("0 8 * * *", ...)` | Run on recurring schedule |
+| Interval | `this.scheduleEvery(30, ...)` | Run every 30 seconds |
 
 :::note[Calling destroy() in scheduled tasks]
 
@@ -75,7 +87,94 @@ this.cancelSchedule(task.id);
 
 </TypeScriptExample>
 
-Calling `await this.schedule` returns a `Schedule`, which includes the task's randomly generated `id`. You can use this `id` to retrieve or cancel the task in the future. It also provides a `type` property that indicates the type of schedule, for example, one of `"scheduled" | "delayed" | "cron"`.
+Calling `await this.schedule` returns a `Schedule`, which includes the task's randomly generated `id`. You can use this `id` to retrieve or cancel the task in the future. It also provides a `type` property that indicates the type of schedule, for example, one of `"scheduled" | "delayed" | "cron" | "interval"`.
+
+### Scheduling tasks with fixed intervals
+
+Use `this.scheduleEvery()` to run a task at fixed intervals (in seconds). Unlike cron expressions, fixed intervals support sub-minute precision and arbitrary durations that do not fit standard cron patterns.
+
+<TypeScriptExample>
+
+```ts
+// Poll an API every 30 seconds
+await this.scheduleEvery(30, "pollAPI", { source: "api" });
+
+// Health check every 45 seconds
+await this.scheduleEvery(45, "healthCheck", {});
+
+// Sync data every 90 seconds (1.5 minutes - cannot be expressed in cron)
+await this.scheduleEvery(90, "syncData", { destination: "warehouse" });
+```
+
+</TypeScriptExample>
+
+#### Key differences from cron
+
+| Feature | Cron | Interval |
+| --- | --- | --- |
+| Minimum granularity | 1 minute | 1 second |
+| Arbitrary intervals | No (must fit cron pattern) | Yes |
+| Fixed schedule | Yes (for example, every day at 8am) | No (relative to start) |
+| Overlap prevention | No | Yes (built-in) |
+
+#### Overlap prevention
+
+If a callback takes longer than the interval to complete, the next execution is skipped (not queued). This prevents runaway resource usage:
+
+<TypeScriptExample>
+
+```ts
+export class PollingAgent extends Agent {
+	async poll(data) {
+		// If this takes 45 seconds and interval is 30 seconds,
+		// the next poll is skipped (with a warning logged)
+		const data = await slowExternalApi();
+		await this.processData(data);
+	}
+
+	async onRequest(request) {
+		// Set up 30-second interval
+		await this.scheduleEvery(30, "poll", {});
+		return new Response("Polling started");
+	}
+}
+```
+
+</TypeScriptExample>
+
+When a skip occurs, you will see a warning in logs:
+
+```
+Skipping interval schedule abc123: previous execution still running
+```
+
+#### Error resilience
+
+If the callback throws an error, the interval continues. Only that specific execution fails:
+
+<TypeScriptExample>
+
+```ts
+async syncData(data) {
+	// Even if this throws, the interval keeps running
+	const response = await fetch("https://api.example.com/data");
+	if (!response.ok) throw new Error("Sync failed");
+	// Process data...
+}
+```
+
+</TypeScriptExample>
+
+#### Use cases for fixed intervals
+
+- Sub-minute polling (every 10, 30, 45 seconds)
+- Intervals that do not map to cron expressions (every 90 seconds, every 7 minutes)
+- Rate-limited API polling with precise control
+- Real-time data synchronization
+
+#### Validation
+
+The interval must be greater than 0 seconds and cannot exceed 30 days (the maximum [Durable Object alarm limit](/durable-objects/api/alarms/)).
 
 :::note[Maximum scheduled tasks]
 
@@ -156,3 +255,98 @@ export class SchedulingAgent extends Agent {
 When `destroy()` is called from within a scheduled task, the Agent SDK defers the destruction to ensure the scheduled callback completes successfully. The Agent instance will be evicted immediately after the callback finishes executing.
 
 :::
+
+## API Reference
+
+### schedule()
+
+```typescript
+async schedule<T = string>(
+  when: Date | string | number,
+  callback: keyof this,
+  payload?: T
+): Promise<Schedule<T>>
+```
+
+Schedule a task for future execution.
+
+**Parameters:**
+
+- `when` - When to execute: `number` (seconds delay), `Date` (specific time), or `string` (cron expression)
+- `callback` - Name of the method to call
+- `payload` - Data to pass to the callback (must be JSON-serializable)
+
+**Returns:** A `Schedule` object with the task details
+
+### scheduleEvery()
+
+```typescript
+async scheduleEvery<T = string>(
+  intervalSeconds: number,
+  callback: keyof this,
+  payload?: T
+): Promise<Schedule<T>>
+```
+
+Schedule a task to run repeatedly at a fixed interval.
+
+**Parameters:**
+
+- `intervalSeconds` - Number of seconds between executions (must be greater than 0 and less than 30 days)
+- `callback` - Name of the method to call
+- `payload` - Data to pass to the callback (must be JSON-serializable)
+
+**Returns:** A `Schedule` object with `type: "interval"`
+
+**Behavior:**
+
+- First execution occurs after `intervalSeconds` (not immediately)
+- If callback is still running when next execution is due, it is skipped (overlap prevention)
+- If callback throws an error, the interval continues
+- Cancel with `cancelSchedule(id)` to stop the entire interval
+
+### getSchedule()
+
+```typescript
+async getSchedule<T = string>(id: string): Promise<Schedule<T> | undefined>
+```
+
+Get a scheduled task by ID. Returns `undefined` if the task does not exist.
+
+### getSchedules()
+
+```typescript
+getSchedules<T = string>(criteria?: {
+  id?: string;
+  type?: "scheduled" | "delayed" | "cron" | "interval";
+  timeRange?: { start?: Date; end?: Date };
+}): Schedule<T>[]
+```
+
+Get scheduled tasks matching the criteria.
+
+### cancelSchedule()
+
+```typescript
+async cancelSchedule(id: string): Promise<boolean>
+```
+
+Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
+
+### Schedule Object
+
+When you create or retrieve a schedule, you get a `Schedule` object:
+
+```typescript
+type Schedule<T = string> = {
+  id: string; // Unique identifier
+  callback: string; // Method name to call
+  payload: T; // Data passed to the callback
+  time: number; // Unix timestamp (seconds) of next execution
+} & (
+  | { type: "scheduled" } // One-time at specific date
+  | { type: "delayed"; delayInSeconds: number } // One-time after delay
+  | { type: "cron"; cron: string } // Recurring (cron expression)
+  | { type: "interval"; intervalSeconds: number } // Recurring (fixed interval)
+);
+```

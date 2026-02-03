@@ -8,7 +8,7 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-Learn how to call your Agents from Workers, including how to create Agents on-the-fly, address them, and route requests to specific instances of an Agent.
+Learn how to call your Agents from Workers and external clients. This guide covers creating Agents on-the-fly, addressing them, routing requests to specific instances, and exposing callable methods for WebSocket-based RPC from browsers and external applications.
 
 ### Calling your Agent
 
@@ -266,9 +266,394 @@ app.get('/code-review/:id', async (c) => {
 
 This ensures we only create Agents for authenticated users, and allows you to validate whether Agent names conform to your preferred naming scheme before instances are created.
 
+## Callable Methods
+
+Callable methods let external clients invoke Agent methods over WebSocket using RPC (Remote Procedure Call). Mark methods with the `@callable()` decorator to expose them to browsers, mobile apps, or other external services.
+
+### When to use @callable
+
+The `@callable()` decorator is specifically for WebSocket-based RPC from external clients. When calling from within the same Worker or another Agent, use standard Durable Object RPC directly.
+
+| Scenario                             | Use                           |
+| ------------------------------------ | ----------------------------- |
+| Browser or mobile calling Agent         | `@callable()`                 |
+| External service calling Agent       | `@callable()`                 |
+| Worker calling Agent (same codebase) | Durable Object RPC (no decorator needed)  |
+| Agent calling another Agent          | Durable Object RPC via `getAgentByName()` |
+
+### Defining callable methods
+
+Add the `@callable()` decorator to any method you want to expose to external clients.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+type State = {
+  count: number;
+  items: string[];
+};
+
+export class CounterAgent extends Agent<Env, State> {
+  initialState: State = { count: 0, items: [] };
+
+  @callable()
+  increment(): number {
+    this.setState({ ...this.state, count: this.state.count + 1 });
+    return this.state.count;
+  }
+
+  @callable()
+  decrement(): number {
+    this.setState({ ...this.state, count: this.state.count - 1 });
+    return this.state.count;
+  }
+
+  @callable()
+  async addItem(item: string): Promise<string[]> {
+    this.setState({ ...this.state, items: [...this.state.items, item] });
+    return this.state.items;
+  }
+
+  @callable()
+  getStats(): { count: number; itemCount: number } {
+    return {
+      count: this.state.count,
+      itemCount: this.state.items.length
+    };
+  }
+}
+```
+
+</TypeScriptExample>
+
+### Calling from the client
+
+There are two ways to call methods from external clients.
+
+**Using `agent.stub` (recommended):**
+
+<TypeScriptExample>
+
+```ts
+// Clean, typed syntax
+const count = await agent.stub.increment();
+const items = await agent.stub.addItem("new item");
+const stats = await agent.stub.getStats();
+```
+
+</TypeScriptExample>
+
+**Using `agent.call()`:**
+
+<TypeScriptExample>
+
+```ts
+// Explicit method name as string
+const count = await agent.call("increment");
+const items = await agent.call("addItem", ["new item"]);
+const stats = await agent.call("getStats");
+```
+
+</TypeScriptExample>
+
+The `stub` proxy provides better ergonomics and TypeScript support.
+
+### Method signatures
+
+Arguments and return values must be JSON-serializable. Both sync and async methods work.
+
+<TypeScriptExample>
+
+```ts
+// Valid - primitives and plain objects
+@callable()
+processData(input: { name: string; count: number }): { result: boolean } {
+  return { result: true };
+}
+
+// Valid - arrays
+@callable()
+processItems(items: string[]): number[] {
+  return items.map(item => item.length);
+}
+
+// Async method
+@callable()
+async fetchUser(id: string): Promise<User> {
+  const user = await this.sql`SELECT * FROM users WHERE id = ${id}`;
+  return user[0];
+}
+```
+
+</TypeScriptExample>
+
+Methods that do not return a value still return a Promise that resolves when the method completes.
+
+### Streaming responses
+
+For methods that produce data over time (like AI text generation), use streaming.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable, type StreamingResponse } from "agents";
+
+export class AIAgent extends Agent {
+  @callable({ streaming: true })
+  async generateText(stream: StreamingResponse, prompt: string) {
+    // First parameter is always StreamingResponse for streaming methods
+
+    for await (const chunk of this.llm.stream(prompt)) {
+      stream.send(chunk); // Send each chunk to the client
+    }
+
+    stream.end(); // Signal completion
+  }
+
+  @callable({ streaming: true })
+  async streamNumbers(stream: StreamingResponse, count: number) {
+    for (let i = 0; i < count; i++) {
+      stream.send(i);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    stream.end(count); // Optional final value
+  }
+}
+```
+
+</TypeScriptExample>
+
+### Consuming streams on the client
+
+<TypeScriptExample>
+
+```ts
+// Preferred format (supports timeout and other options)
+await agent.call("generateText", [prompt], {
+  stream: {
+    onChunk: (chunk) => {
+      // Called for each chunk
+      appendToOutput(chunk);
+    },
+    onDone: (finalValue) => {
+      // Called when stream ends
+      console.log("Stream complete", finalValue);
+    },
+    onError: (error) => {
+      // Called if an error occurs
+      console.error("Stream error:", error);
+    }
+  }
+});
+```
+
+</TypeScriptExample>
+
+### StreamingResponse API
+
+The `StreamingResponse` class provides methods for sending data and handling errors during streaming.
+
+| Method             | Description                                      |
+| ------------------ | ------------------------------------------------ |
+| `send(chunk)`      | Send a chunk to the client                       |
+| `end(finalChunk?)` | End the stream, optionally with a final value    |
+| `error(message)`   | Send an error to the client and close the stream |
+
+<TypeScriptExample>
+
+```ts
+@callable({ streaming: true })
+async processWithProgress(stream: StreamingResponse, items: string[]) {
+  for (let i = 0; i < items.length; i++) {
+    await this.process(items[i]);
+    stream.send({ progress: (i + 1) / items.length, item: items[i] });
+  }
+  stream.end({ completed: true, total: items.length });
+}
+```
+
+</TypeScriptExample>
+
+You can use `stream.error()` to gracefully send an error mid-stream.
+
+<TypeScriptExample>
+
+```ts
+@callable({ streaming: true })
+async processItems(stream: StreamingResponse, items: string[]) {
+  for (const item of items) {
+    try {
+      const result = await this.process(item);
+      stream.send(result);
+    } catch (e) {
+      stream.error(`Failed to process ${item}: ${e.message}`);
+      return; // Stream is now closed
+    }
+  }
+  stream.end();
+}
+```
+
+</TypeScriptExample>
+
+### Client-side RPC timeout
+
+You can specify a timeout for RPC calls. The call will reject if it does not complete within the specified time.
+
+<TypeScriptExample>
+
+```ts
+try {
+  // Timeout after 5 seconds
+  const result = await agent.call("slowMethod", [], { timeout: 5000 });
+} catch (error) {
+  console.error("Call timed out or failed:", error);
+}
+```
+
+</TypeScriptExample>
+
+### Error handling
+
+Errors thrown in callable methods are propagated to the client.
+
+<TypeScriptExample>
+
+```ts
+@callable()
+async riskyOperation(data: unknown): Promise<void> {
+  if (!isValid(data)) {
+    throw new Error("Invalid data format");
+  }
+
+  try {
+    await this.processData(data);
+  } catch (e) {
+    throw new Error("Processing failed: " + e.message);
+  }
+}
+```
+
+</TypeScriptExample>
+
+On the client side, handle errors using try-catch.
+
+<TypeScriptExample>
+
+```ts
+try {
+  const result = await agent.stub.riskyOperation(data);
+} catch (error) {
+  // Error thrown by the agent method
+  console.error("RPC failed:", error.message);
+}
+```
+
+</TypeScriptExample>
+
+### Connection close handling
+
+If the WebSocket connection closes while RPC calls are pending, they automatically reject with a "Connection closed" error.
+
+<TypeScriptExample>
+
+```ts
+try {
+  const result = await agent.call("longRunningMethod", []);
+} catch (error) {
+  if (error.message === "Connection closed") {
+    // Handle disconnection
+    console.log("Lost connection to agent");
+  }
+}
+```
+
+</TypeScriptExample>
+
+PartySocket automatically reconnects after disconnection. To retry a failed call after reconnection, await `agent.ready` before retrying.
+
+<TypeScriptExample>
+
+```ts
+async function callWithRetry<T>(
+  agent: AgentClient,
+  method: string,
+  args: unknown[] = []
+): Promise<T> {
+  try {
+    return await agent.call(method, args);
+  } catch (error) {
+    if (error.message === "Connection closed") {
+      await agent.ready; // Wait for reconnection
+      return await agent.call(method, args); // Retry once
+    }
+    throw error;
+  }
+}
+
+// Usage
+const result = await callWithRetry(agent, "processData", [data]);
+```
+
+</TypeScriptExample>
+
+:::note[Retry only idempotent operations]
+
+Only retry idempotent operations. If the server received the request but the connection dropped before the response arrived, retrying could cause duplicate execution.
+
+:::
+
+### TypeScript integration
+
+Pass your Agent class as a type parameter for full type safety.
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents/react";
+import type { MyAgent } from "./server";
+
+function App() {
+  const agent = useAgent<MyAgent, MyState>({
+    agent: "MyAgent",
+    name: "default"
+  });
+
+  // TypeScript knows the method signature
+  const result = await agent.stub.greet("World");
+  //    ^? string
+
+  // TypeScript catches errors
+  await agent.stub.greet(123); // Error: Argument of type 'number' is not assignable
+  await agent.stub.nonExistent(); // Error: Property 'nonExistent' does not exist
+}
+```
+
+</TypeScriptExample>
+
+### Introspection API
+
+The `getCallableMethods()` method returns a map of all callable methods on the Agent with their metadata. This is useful for introspection and auto-documentation.
+
+<TypeScriptExample>
+
+```ts
+const methods = agent.getCallableMethods();
+// Map<string, CallableMetadata>
+
+for (const [name, meta] of methods) {
+  console.log(`${name}: ${meta.description || "(no description)"}`);
+  if (meta.streaming) console.log("  (streaming)");
+}
+```
+
+</TypeScriptExample>
+
 ### Next steps
 
 * Review the [API documentation](/agents/api-reference/agents-api/) for the Agents class to learn how to define
 * [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the Agents SDK and deploy it to Workers.
 * Learn more [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
-* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the Agents SDK and [Workflows](/workflows).
+* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows/) from your Agent by combining the Agents SDK and [Workflows](/workflows/).

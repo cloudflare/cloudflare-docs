@@ -28,6 +28,9 @@ export class MyAgent extends Agent<Env, never> {
 			const result = await this.addMcpServer(
 				"Weather API",
 				"https://weather-mcp.example.com/mcp",
+				{
+					transport: { type: "streamable-http" }
+				}
 			);
 
 			if (result.state === "authenticating") {
@@ -53,6 +56,25 @@ Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and
 Add a connection to an MCP server and make its tools available to your Agent.
 
 ```ts
+// Preferred signature (options object)
+async addMcpServer(
+  serverName: string,
+  url: string,
+  options?: {
+    callbackHost?: string;
+    agentsPrefix?: string;
+    client?: ConstructorParameters<typeof Client>[1];
+    transport?: {
+      headers?: HeadersInit;
+      type?: "sse" | "streamable-http" | "auto";
+    };
+  }
+): Promise<
+  | { id: string; state: "authenticating"; authUrl: string }
+  | { id: string; state: "ready"; authUrl?: undefined }
+>
+
+// Legacy signature (still supported)
 async addMcpServer(
   serverName: string,
   url: string,
@@ -75,9 +97,9 @@ async addMcpServer(
 
 - **`serverName`** (string, required) — Display name for the MCP server
 - **`url`** (string, required) — URL of the MCP server endpoint
-- **`callbackHost`** (string, optional) — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
-- **`agentsPrefix`** (string, optional) — URL prefix for OAuth callback path. Default: `"agents"`
 - **`options`** (object, optional) — Connection configuration:
+  - **`callbackHost`** — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
+  - **`agentsPrefix`** — URL prefix for OAuth callback path. Default: `"agents"`
   - **`client`** — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas.
   - **`transport`** — Transport layer configuration:
     - **`headers`** — Custom HTTP headers for authentication
@@ -103,9 +125,13 @@ A Promise that resolves to a discriminated union based on connection state:
 ```ts title="src/index.ts"
 export class MyAgent extends Agent<Env, never> {
 	async onRequest(request: Request): Promise<Response> {
+		// New preferred format: options object as third parameter
 		const result = await this.addMcpServer(
 			"Weather API",
 			"https://weather-mcp.example.com/mcp",
+			{
+				transport: { type: "streamable-http" }
+			}
 		);
 
 		if (result.state === "authenticating") {
@@ -121,6 +147,28 @@ export class MyAgent extends Agent<Env, never> {
 ```
 
 </TypeScriptExample>
+
+The new options-based API is recommended as it avoids positional undefined parameters when you want to pass transport or client options without specifying callback configuration.
+
+Compare the two approaches:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+// New format: clean options object
+await this.addMcpServer("github", "https://mcp.github.com/mcp", {
+	transport: { type: "sse", headers: { Authorization: "Bearer token" } }
+});
+
+// Legacy format: requires undefined placeholders
+await this.addMcpServer("github", "https://mcp.github.com/mcp", undefined, undefined, {
+	transport: { type: "sse", headers: { Authorization: "Bearer token" } }
+});
+```
+
+</TypeScriptExample>
+
+The legacy signature with positional parameters is still supported for backward compatibility.
 
 If the MCP server requires OAuth authentication, `authUrl` will be returned for user authentication. Connections persist across requests and the Agent will automatically reconnect if the connection is lost.
 

@@ -30,7 +30,7 @@ import { Agent } from "agents";
 
 export class MyAgent extends Agent {
   // Update state in response to events
-  async incrementCounter() {
+  incrementCounter() {
     this.setState({
       ...this.state,
       counter: this.state.counter + 1,
@@ -55,6 +55,8 @@ export class MyAgent extends Agent {
 ```
 
 </TypeScriptExample>
+
+The `setState()` method is synchronous and does not return a Promise. However, code that uses `await setState()` will continue to work without modification.
 
 If you're using TypeScript, you can also provide a type for your Agent's state by passing in a type as a [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html#using-type-parameters-in-generic-constraints) as the _second_ type parameter to the `Agent` class definition.
 
@@ -123,6 +125,89 @@ class MyAgent extends Agent<Env, State> {
 
 Any initial state is synced to clients connecting via [the `useAgent` hook](#synchronizing-state).
 
+### Validating state changes
+
+You can override the `validateStateChange()` method to validate or reject state updates before they are persisted and broadcast. This method:
+
+* Runs synchronously before persistence and broadcast
+* Must be synchronous (it cannot be async)
+* Throwing an error rejects the update and prevents persistence and broadcast
+
+<TypeScriptExample>
+
+```ts
+type GameState = {
+  players: string[];
+  score: number;
+  status: "waiting" | "playing" | "finished";
+};
+
+export class GameAgent extends Agent<Env, GameState> {
+  initialState: GameState = {
+    players: [],
+    score: 0,
+    status: "waiting"
+  };
+
+  validateStateChange(nextState: GameState, source: Connection | "server") {
+    // Reject negative scores
+    if (nextState.score < 0) {
+      throw new Error("score cannot be negative");
+    }
+
+    // Reject more than 4 players
+    if (nextState.players.length > 4) {
+      throw new Error("maximum 4 players allowed");
+    }
+  }
+
+  onStateUpdate(state: GameState, source: Connection | "server") {
+    console.log("State validated and updated:", state);
+  }
+}
+```
+
+</TypeScriptExample>
+
+The `validateStateChange()` hook is useful for enforcing business rules and constraints before state changes are committed. If validation fails, the update is rejected entirely and `onStateUpdate()` will not be called.
+
+### Understanding state update execution order
+
+When `setState()` is called, the following operations occur in order:
+
+1. **validateStateChange()** (synchronous, gating): Runs first to validate the proposed state change. If this throws an error, the update is rejected and the remaining steps do not execute.
+2. **Persist to SQLite**: The new state is saved to the Agent's embedded SQL database.
+3. **Broadcast**: The new state is broadcast to all connected WebSocket clients.
+4. **onStateUpdate()** (asynchronous, non-gating): Runs via `queueMicrotask` after persistence and broadcast complete. This is a notification hook for side effects. If `onStateUpdate()` throws an error, it is routed to `onError()` but does not prevent the state update from completing.
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent<Env, State> {
+  // Step 1: Validate (synchronous, gating)
+  validateStateChange(nextState: State, source: Connection | "server") {
+    if (!this.isValidState(nextState)) {
+      throw new Error("Invalid state"); // Aborts the update
+    }
+  }
+
+  // Step 4: React to changes (asynchronous, non-gating)
+  onStateUpdate(state: State, source: Connection | "server") {
+    // This runs after persistence and broadcast
+    // Errors here go to onError() but do not block the update
+    console.log("State updated:", state);
+  }
+}
+```
+
+</TypeScriptExample>
+
+:::note
+
+The `onStateUpdate()` method is not intended for validation. Use `validateStateChange()` to enforce constraints and reject invalid updates.
+
+:::
+
 ### Synchronizing state
 
 Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `agents/react`.
@@ -172,7 +257,45 @@ Common use cases:
 * Multi-window/tab synchronization
 * Live updates across multiple devices
 * Maintaining consistent UI state across clients
-* When new clients connect, they automatically receive the current state from the Agent, ensuring all clients start with the latest data.
+
+When new clients connect, they automatically receive the current state from the Agent, ensuring all clients start with the latest data.
+
+### Understanding the source parameter
+
+Both `validateStateChange()` and `onStateUpdate()` receive a `source` parameter that indicates who triggered the state update:
+
+| Value | Meaning |
+|-------|---------|
+| `"server"` | The Agent called `setState()` |
+| `Connection` | A client pushed state via WebSocket |
+
+This is useful for:
+
+* Avoiding infinite loops by not reacting to your own updates
+* Validating client input differently than server updates
+* Triggering side effects only on client actions
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends Agent<Env, State> {
+  onStateUpdate(state: State, source: Connection | "server") {
+    // Ignore server-initiated updates to avoid infinite loops
+    if (source === "server") return;
+
+    // A client updated state - process it
+    const connection = source;
+    console.log(`Client ${connection.id} updated state`);
+
+    // Trigger side effects based on client actions
+    if (state.status === "submitted") {
+      this.processSubmission(state);
+    }
+  }
+}
+```
+
+</TypeScriptExample>
 
 ### SQL API
 
@@ -282,9 +405,39 @@ export class ReasoningAgent extends Agent<Env> {
 
 This works because each instance of an Agent has its _own_ database, the state stored in that database is private to that Agent: whether it's acting on behalf of a single user, a room or channel, or a deep research tool. By default, you don't have to manage contention or reach out over the network to a centralized database to retrieve and store state.
 
+### State must be serializable
+
+Agent state is stored as JSON, so it must be serializable. You can store plain objects, arrays, primitives, and JSON-compatible data structures.
+
+<TypeScriptExample>
+
+```ts
+// Good - plain objects, arrays, primitives
+this.setState({
+  items: ["a", "b", "c"],
+  count: 42,
+  active: true,
+  metadata: { key: "value" }
+});
+
+// Bad - functions, classes, circular references
+this.setState({
+  callback: () => {}, // Functions do not serialize
+  date: new Date(), // Becomes string, loses methods
+  self: this // Circular reference
+});
+
+// For dates, use ISO strings
+this.setState({
+  createdAt: new Date().toISOString()
+});
+```
+
+</TypeScriptExample>
+
 ### Next steps
 
 * Review the [API documentation](/agents/api-reference/agents-api/) for the Agents class to learn how to define them.
 * [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the Agents SDK and deploy it to Workers.
 * Learn more [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
-* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the Agents SDK and [Workflows](/workflows).
+* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows/) from your Agent by combining the Agents SDK and [Workflows](/workflows/).
