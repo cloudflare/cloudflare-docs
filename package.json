@@ -10,7 +10,6 @@
 		"check": "npm run check:astro && npm run check:worker",
 		"check:astro": "npx astro check",
 		"check:worker": "npx tsc --noEmit -p ./worker/tsconfig.json",
-		"predev": "npx tsx scripts/fetch-skills.ts",
 		"dev": "npx astro dev",
 		"format": "npm run format:core:fix && npm run format:data",
 		"format:core": "npx prettier \"**/*.{js,jsx,ts,tsx,mjs,css}\"",
