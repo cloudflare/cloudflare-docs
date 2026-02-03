@@ -11,6 +11,10 @@ head:
 
 import { DashButton } from "~/components";
 
+:::note
+Before troubleshooting, disable VPNs and proxies. These can interfere with the mTLS handshake.
+:::
+
 If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
 
 ---
@@ -20,10 +24,11 @@ If your query returns an error even after configuring and embedding a client SSL
 On your terminal, use the following command to check whether an SSL/TLS connection can be established successfully between the client and the API endpoint.
 
 ```sh
-curl --verbose --cert /path/to/certificate.pem --key /path/to/key.pem  https://your-api-endpoint.com
+curl --verbose --cert /path/to/certificate.pem --key /path/to/key.pem https://your-api-endpoint.com
 ```
 
 If the SSL/TLS handshake cannot be completed, check whether the certificate and the private key are correct.
+If the handshake completes but requests are still blocked, confirm that Cloudflare is verifying the client certificate.
 
 ---
 
@@ -53,3 +58,31 @@ To review mTLS rules, consider the steps below. For further guidance refer to [C
      ```
 
 4. To edit the rule, either use the user interface or select **Edit expression**.
+
+---
+
+## Advanced debugging with Workers
+
+You can use a Cloudflare Worker to inspect the client certificate properties Cloudflare receives from the client. These values are available in [`request.cf.tlsClientAuth`](/workers/runtime-apis/request/).
+
+1. Create a Worker that returns the `tlsClientAuth` object:
+
+   ```js
+   export default {
+     async fetch(request) {
+       const tlsClientAuth = request.cf?.tlsClientAuth ?? null;
+       console.info({ tlsClientAuth });
+       return new Response(JSON.stringify(tlsClientAuth, null, 2), {
+         headers: { "content-type": "application/json" },
+       });
+     },
+   };
+   ```
+
+2. Associate the Worker with the hostname where mTLS is enabled using a [Worker route](/workers/configuration/routing/routes/) or a [Custom Domain](/workers/configuration/routing/custom-domains/).
+
+3. Compare the response against expected values:
+
+   - Valid certificate: `"certPresented": "1"` and `"certVerified": "SUCCESS"`
+   - Invalid or self-signed certificate: `"certPresented": "1"` and `"certVerified"` starts with `"FAILED:"`
+   - No certificate: `"certPresented": "0"` and `"certVerified": "NONE"`
