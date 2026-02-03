@@ -11,11 +11,11 @@ head:
 
 import { DashButton } from "~/components";
 
+If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
+
 :::note
 Before troubleshooting, disable VPNs and proxies. These can interfere with the mTLS handshake.
 :::
-
-If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
 
 ---
 
@@ -61,28 +61,49 @@ To review mTLS rules, consider the steps below. For further guidance refer to [C
 
 ---
 
-## Advanced debugging with Workers
+## Advanced debugging
 
-You can use a Cloudflare Worker to inspect the client certificate properties Cloudflare receives from the client. These values are available in [`request.cf.tlsClientAuth`](/workers/runtime-apis/request/).
+You can use [Cloudflare Workers](/workers/) to debug client certificate validation failures.
 
-1. Create a Worker that returns the `tlsClientAuth` object:
+1. Create a Worker to debug print [cf.properties](/workers/runtime-apis/request/#incomingrequestcfproperties):
 
    ```js
    export default {
-     async fetch(request) {
-       const tlsClientAuth = request.cf?.tlsClientAuth ?? null;
-       console.info({ tlsClientAuth });
-       return new Response(JSON.stringify(tlsClientAuth, null, 2), {
-         headers: { "content-type": "application/json" },
-       });
-     },
+     async fetch(request, env, ctx) {
+       // You can view your logs in the Observability dashboard
+       console.info({ message: JSON.stringify(request.cf, null, 2) });
+       return new Response(JSON.stringify(request.cf, null, 2))
+     }
    };
    ```
 
 2. Associate the Worker with the hostname where mTLS is enabled using a [Worker route](/workers/configuration/routing/routes/) or a [Custom Domain](/workers/configuration/routing/custom-domains/).
 
-3. Compare the response against expected values:
+3. Make requests to the hostname and/or path configured, with and without sending the mTLS client cert. Then, compare the responses against expected values:
 
-   - Valid certificate: `"certPresented": "1"` and `"certVerified": "SUCCESS"`
-   - Invalid or self-signed certificate: `"certPresented": "1"` and `"certVerified"` starts with `"FAILED:"`
-   - No certificate: `"certPresented": "0"` and `"certVerified": "NONE"`
+- Valid certificate
+
+   ```json
+   "tlsClientAuth": {
+     "certPresented": "1",
+     "certVerified": "SUCCESS",
+   },
+   ```
+
+- Invalid certificate (for example, self-signed certificates)
+
+   ```json
+   "tlsClientAuth": {
+     "certPresented": "1",
+     "certVerified": "FAILED:self signed certificate",
+   },
+   ```
+
+- No certificate
+
+   ```json
+   "tlsClientAuth": {
+     "certPresented": "0",
+     "certVerified": "NONE",
+   },
+   ```

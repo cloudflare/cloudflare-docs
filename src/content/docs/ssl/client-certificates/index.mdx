@@ -24,22 +24,14 @@ For a broader overview, refer to the [mTLS at Cloudflare learning path](/learnin
 
 Client certificates issued from a given CA are installed on client devices that should be granted access. Then, for any host that has [mTLS enabled](/ssl/client-certificates/enable-mtls/), Cloudflare - acting as the server in this case - requires a certificate from the client trying to access the hostname.
 
-Cloudflare then validates the client certificate against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`), as long as the zones are under the same Cloudflare account and mTLS has been enabled for the requested hosts (`host.example.com`).
-
-### How mTLS works on Cloudflare
-
-When a client connects to a hostname configured for mTLS, Cloudflare does the following:
-
-1. Requests a client certificate during the TLS handshake.
-2. Validates the certificate against the Client CA configured on your account (Cloudflare-managed by default, or a custom CA on Enterprise accounts).
-3. Records the validation result in [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/?field-category=mTLS&field-category=SSL/TLS).
-
-You can enforce client certificate validation using [WAF custom rules](/waf/custom-rules/), [API Shield](/api-shield/security/mtls/configure/), Cloudflare Workers (by inspecting [`request.cf.tlsClientAuth`](/workers/runtime-apis/request/)), or by [forwarding a client certificate](/ssl/client-certificates/forward-a-client-certificate/) to your origin.
+If a certificate is presented, Cloudflare validates the client certificate against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`), as long as the zones are under the same Cloudflare account and mTLS has been enabled for the requested hosts (`host.example.com`).
 
 The account-level CAs can be:
 
 - The Cloudflare-managed CA: This is the default option. Certificates and hostname associations are listed on your [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
-- [BYOCA](/ssl/client-certificates/byo-ca/) certificates: This is an API-only option, available on Enterprise accounts. Certificates and hostname associations are **not** listed on your [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
+- [BYOCA](/ssl/client-certificates/byo-ca/) certificates: This is an API-only option, available on Enterprise accounts. Certificates and hostname associations are **not** listed on your dashboard.
+
+Cloudflare then records the validation result in [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/?field-category=mTLS&field-category=SSL/TLS).
 
 ---
 
