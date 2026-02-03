@@ -17,7 +17,7 @@ Refer to the following sections to learn how to manage certificates used with th
 
 ## Expired certificates
 
-Cloudflare does not delete client certificates upon expiration unless you send a delete request to the Cloudflare API for the relevant certificate ([delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/), [delete a hostname-level certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)). If your origin accepts only a valid client certificate, it will drop requests when the certificate expires.
+Cloudflare does not delete client certificates upon expiration unless you send a delete request to the Cloudflare API for the relevant certificate ([Delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/) or [Delete a hostname-level certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)). If your origin only accepts a valid client certificate, it will drop requests when the certificate expires.
 
 Make sure you have [notifications](/notifications/notification-available/#ssltls) set up to get alerts 30 days and 14 days before an AOP certificate expires.
 
@@ -34,7 +34,7 @@ First, set up [zone-level pulls](/ssl/origin-configuration/authenticated-origin-
 ## Replace a certificate without downtime
 
 :::caution[No automatic removal]
-Cloudflare does not delete client certificates upon expiration unless you send a delete request to the Cloudflare API for the relevant certificate ([delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/), [delete a hostname-level certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)).
+Cloudflare does not delete client certificates upon expiration unless you send a delete request to the Cloudflare API for the relevant certificate ([Delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/) or [Delete a hostname-level certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)).
 :::
 
 ### Per-hostname
