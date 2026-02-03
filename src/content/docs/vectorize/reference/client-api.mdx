@@ -222,10 +222,15 @@ Vectorize indexes are bound by name. A binding for an index named `production-do
 
 <WranglerConfig>
 
-```toml
-[[vectorize]]
-binding = "PROD_SEARCH" # the index will be available as env.PROD_SEARCH in your Worker
-index_name = "production-doc-search"
+```jsonc
+{
+	"vectorize": [
+		{
+			"binding": "PROD_SEARCH", // the index will be available as env.PROD_SEARCH in your Worker
+			"index_name": "production-doc-search"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

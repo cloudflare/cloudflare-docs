@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { TabItem, Tabs, GlossaryTooltip } from "~/components";
+import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components";
 
 This guide explains how the Cloudflare WARP client interacts with a device's operating system to route traffic in [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode.
 
@@ -180,80 +180,11 @@ S -- No --> U["Virtual interface<br> (172.16.0.2)"] --> G[Cloudflare Gateway]
 
 #### Virtual interface
 
-Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. WARP's virtual interface is what maintains the WireGuard/MASQUE connection between the device and Cloudflare. By default, its IP address is hardcoded as `172.16.0.2`. You can use [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) to override the default IP address with a unique <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>.
+Virtual interfaces allow the operating system to logically subdivide a physical interface, such as a network interface controller (NIC), into separate interfaces for the purposes of routing IP traffic. WARP's virtual interface is what maintains the WireGuard/MASQUE connection between the device and Cloudflare. By default, its IPv4 address is hardcoded as `172.16.0.2` for devices using WireGuard, whereas devices using MASQUE are [assigned a unique IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) from the CGNAT IP space (`100.96.0.0/12`). You can override the default virtual interface IP with a [custom device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
 
 To view a list of all network interfaces on the operating system:
 
-<Tabs> <TabItem label="macOS">
-
-On macOS, run `ifconfig`. When WARP is turned on, you will see a `utun` interface with IP address `172.16.0.2`.
-
-```sh
-ifconfig
-```
-
-```sh {3} output
-<redacted>
-utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
-	inet 172.16.0.2 --> 172.16.0.2 netmask 0xffffffff
-	inet6 fe80::f6d4:88ff:fe82:6d9e%utun3 prefixlen 64 scopeid 0x17
-	inet6 2606:4700:110:8c7d:7369:7526:a59b:5636 prefixlen 128
-	nd6 options=201<PERFORMNUD,DAD>
-```
-
-</TabItem> <TabItem label="Windows">
-
-On Windows, run `ipconfig`. When WARP is turned on, you will see an adapter called `CloudflareWARP` with IP address `172.16.0.2`.
-
-```powershell
-ipconfig
-```
-
-```txt {12} output
-Windows IP Configuration
-
-Unknown adapter CloudflareWARP:
-
-   Connection-specific DNS Suffix  . :
-   Description . . . . . . . . . . . : Cloudflare WARP Interface Tunnel
-   Physical Address. . . . . . . . . :
-   DHCP Enabled. . . . . . . . . . . : No
-   Autoconfiguration Enabled . . . . : Yes
-   IPv6 Address. . . . . . . . . . . : 2606:4700:110:8f79:145:f180:fc4:8106(Preferred)
-   Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%49(Preferred)
-   IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
-   Subnet Mask . . . . . . . . . . . : 255.255.255.255
-   Default Gateway . . . . . . . . . :
-   DNS Servers . . . . . . . . . . . : 127.0.2.2
-                                       127.0.2.3
-   NetBIOS over Tcpip. . . . . . . . : Enabled
-```
-
-</TabItem>
-
-<TabItem label="Linux">
-
-On Linux, run `ifconfig` or `ip addr`. When WARP is turned on, you will see a `utun` interface with IP address `172.16.0.2`.
-
-```sh null
-ip addr
-```
-
-```sh {4} output
-<redacted>
-3: CloudflareWARP: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1280 qdisc mq state UNKNOWN group default qlen 500
-    link/none
-    inet 172.16.0.2/32 scope global CloudflareWARP
-       valid_lft forever preferred_lft forever
-    inet6 2606:4700:110:8a2e:a5f7:a8de:a1f9:919/128 scope global
-       valid_lft forever preferred_lft forever
-    inet6 fe80::117e:276b:8a79:c498/64 scope link stable-privacy
-       valid_lft forever preferred_lft forever
-```
-
-</TabItem>
-
-</Tabs>
+<Render file="warp/check-network-interface-ip" product="cloudflare-one" />
 
 #### Routing table
 

@@ -1,6 +1,6 @@
 ---
 order: 1
-title: 📌 Durable Objects
+title: Durable Objects
 ---
 
 - [Durable Objects Reference](/durable-objects/api/)

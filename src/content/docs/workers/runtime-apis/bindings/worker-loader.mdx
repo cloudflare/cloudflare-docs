@@ -85,9 +85,14 @@ To add a dynamic worker loader binding to your worker, add it to your Wrangler c
 
 <WranglerConfig>
 
-```toml
-[[worker_loaders]]
-binding = "LOADER"
+```jsonc
+{
+	"worker_loaders": [
+		{
+			"binding": "LOADER"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

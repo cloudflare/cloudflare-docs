@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { Aside } from "~/components"
+
 ## Cloudflare Realtime vs. Traditional SFUs
 
 Cloudflare Realtime represents a paradigm shift in building real-time applications by leveraging a distributed real-time data plane. It creates a seamless experience in real-time communication, transcending traditional geographical limitations and scalability concerns. Realtime is designed for developers looking to integrate WebRTC functionalities in a server-client architecture without delving deep into the complexities of regional scaling or server management.
@@ -24,6 +26,10 @@ Cloudflare Realtime addresses these limitations by leveraging Cloudflare's globa
 - **Global Distribution Without Regions:** Unlike traditional SFUs, Cloudflare Realtime operates on a global scale without regional constraints. It utilizes Cloudflare's extensive network of over 250 locations worldwide to ensure low-latency video forwarding, making it fast and efficient for users globally.
 
 - **Decentralized Architecture:** There are no dedicated servers for Realtime. Every server within Cloudflare's network contributes to handling Realtime, ensuring scalability and reliability. This approach mirrors the distributed nature of Cloudflare's products such as 1.1.1.1 DNS or Cloudflare's CDN.
+
+<Aside type="tip">
+**See it in action:** Explore our [interactive Global SFU visualization](https://realtime-sfu.dev-demos.workers.dev) to see how participants connect to their nearest Cloudflare datacenter and how media flows across the global backbone.
+</Aside>
 
 ## How Cloudflare Realtime Works
 

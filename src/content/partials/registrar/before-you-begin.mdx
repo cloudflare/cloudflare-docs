@@ -23,7 +23,7 @@ import { Render, Details, GlossaryTooltip } from "~/components"
 If you are onboarding an existing domain to Cloudflare, make sure DNSSEC **is disabled** at your registrar. Otherwise, your domain will experience connectivity errors when you change your nameservers.
 
 1. Take note of the <GlossaryTooltip term="time-to-live (TTL)">TTL</GlossaryTooltip> value for the DS record at your current registrar.
-2. Remove DS records at your current registrar.
+2. Remove DS records at your current registrar[^1].
     <Render file="dnssec-providers" product="dns" />
 3. Wait at least the time corresponding to the DS record TTL. It is usually 24 hours, but refer to the value you got in step 1.
 4. Follow the steps to [transfer your domain](/registrar/get-started/transfer-domain-to-cloudflare/#set-up-a-domain-transfer) to Cloudflare Registrar.
@@ -32,3 +32,5 @@ If you are onboarding an existing domain to Cloudflare, make sure DNSSEC **is di
 <Details header="Why you have to disable DNSSEC">
 <Render file="why-disable-dnssec" product="dns" />
 </Details>
+
+[^1]: Removing the DS record at your registrar starts a DNSSEC unsigning process. This is expected when you are moving authoritative DNS providers, because it allows you to update your authoritative nameservers without DNSSEC validation failures.

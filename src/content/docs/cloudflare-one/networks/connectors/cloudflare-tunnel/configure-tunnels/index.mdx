@@ -3,6 +3,47 @@ title: Configure a tunnel
 pcx_content_type: navigation
 sidebar:
   order: 3
-  group:
-    hideIndex: true
 ---
+
+import { DirectoryListing  } from "~/components";
+
+After [creating your Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/), you can configure various aspects of how `cloudflared` runs and connects your infrastructure to Cloudflare's network. This section covers advanced configuration options to optimize tunnel performance, security, and availability.
+
+<DirectoryListing descriptions />
+
+## Common configuration scenarios
+
+### Optimize for production
+
+For production deployments, consider the following steps:
+
+- [Deploy replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/deploy-replicas/) - Run multiple `cloudflared` instances for redundancy.
+- [Configure logging](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#loglevel) - Set appropriate log levels for monitoring and troubleshooting.
+- [Review system requirements](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/) - Ensure your infrastructure meets performance needs.
+- [Configure firewall rules](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) - Implement egress-only traffic patterns for security.
+
+### Secure your tunnel
+
+All tunnel connections between `cloudflared` and Cloudflare's network are secured with TLS 1.3 and post-quantum encryption by default, ensuring your traffic is protected against current and future cryptographic threats.
+
+Enhance tunnel security with:
+
+- [Tunnel token management](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/) - Control access to your tunnel credentials.
+- [Egress-only firewall rules](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) - Allow only necessary outbound connections.
+- Least privilege permissions - Run `cloudflared` as a non-root user with minimal permissions needed for tunnel operation.
+
+### Improve reliability
+
+Maximize tunnel uptime with:
+
+- [Multiple replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) - Deploy `cloudflared` across different hosts.
+- [Health alerts](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/) - Get notified when your tunnel is degraded or goes down.
+- [Health metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#metrics) - Monitor tunnel resource usage to identify potential bottlenecks.
+- [Load balancing](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflare-load-balancers/) - Distribute traffic across tunnel connections.
+- [Automatic failover](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) - Leverage built-in connection redundancy.
+
+## Next steps
+
+- [Monitor your tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/) to track performance and troubleshoot issues.
+- [Configure routes](/cloudflare-one/networks/routes/) to control how traffic reaches your applications.
+- [Set up private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) for internal resource access.

@@ -1,0 +1,80 @@
+---
+{}
+---
+
+import { Tabs, TabItem} from "~/components";
+
+<Tabs>
+<TabItem label="Windows">
+
+On Windows, run `ipconfig`. When WARP is turned on, you will see an adapter called `CloudflareWARP` with your WARP device IP.
+
+```powershell
+ipconfig
+```
+
+```txt {12} output
+Windows IP Configuration
+
+Unknown adapter CloudflareWARP:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Cloudflare WARP Interface Tunnel
+   Physical Address. . . . . . . . . :
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : 2606:4700:110:8f79:145:f180:fc4:8106(Preferred)
+   Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%49(Preferred)
+   IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.255
+   Default Gateway . . . . . . . . . :
+   DNS Servers . . . . . . . . . . . : 127.0.2.2
+                                       127.0.2.3
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+```
+
+</TabItem>
+
+<TabItem label="macOS">
+
+On macOS, run `ifconfig`. When WARP is turned on, you will see a `utun` interface with your WARP device IP.
+
+```sh
+ifconfig
+```
+
+```sh {3} output
+<redacted>
+utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
+	inet 172.16.0.2 --> 172.16.0.2 netmask 0xffffffff
+	inet6 fe80::f6d4:88ff:fe82:6d9e%utun3 prefixlen 64 scopeid 0x17
+	inet6 2606:4700:110:8c7d:7369:7526:a59b:5636 prefixlen 128
+	nd6 options=201<PERFORMNUD,DAD>
+```
+</TabItem>
+
+<TabItem label="Linux">
+
+On Linux, run `ifconfig` or `ip addr`. When WARP is turned on, you will see a `utun` interface with your WARP device IP.
+
+```sh null
+ip addr
+```
+
+```sh {4} output
+<redacted>
+3: CloudflareWARP: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1280 qdisc mq state UNKNOWN group default qlen 500
+    link/none
+    inet 172.16.0.2/32 scope global CloudflareWARP
+       valid_lft forever preferred_lft forever
+    inet6 2606:4700:110:8a2e:a5f7:a8de:a1f9:919/128 scope global
+       valid_lft forever preferred_lft forever
+    inet6 fe80::117e:276b:8a79:c498/64 scope link stable-privacy
+       valid_lft forever preferred_lft forever
+```
+
+</TabItem>
+
+</Tabs>
+
+In the example above, the device IPv4 address is `172.16.0.2`.

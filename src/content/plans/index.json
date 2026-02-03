@@ -2166,7 +2166,7 @@
 				"hostname_management": {
 					"title": "Hostname management",
 					"link": "/turnstile/concepts/hostname-management/",
-					"free": "15 hostnames per widget",
+					"free": "10 hostnames per widget",
 					"ent": "Maximum of 200 hostnames per widget"
 				},
 				"anyhostname": {

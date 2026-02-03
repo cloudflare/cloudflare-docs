@@ -2,6 +2,7 @@
 params:
   - magicWord
   - productName
+  - virtualNetworkName
   - mFirewallName
   - mFirewallURL
   - warpClientURL
@@ -21,12 +22,12 @@ import { AnchorHeading, Aside, Markdown, Render } from "~/components";
 
 ## Magic routing table
 
-The Magic networking routing table is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
+The {props.virtualNetworkName} is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
 
 - Magic Transit delivery for [Denial of Service (DoS)](/ddos-protection/) and <a href={props.mFirewallURL}>{props.mFirewallName}</a> filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
 - {props.productName} packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as <a href={props.warpClientURL}>WARP Client</a>, <a href={props.remoteBrowserURL}>Remote Browser Isolation</a>, <a href={props.accessURL}>Access</a>, and <a href={props.gatewayURL}>Gateway</a>.
 
-The Magic routing table supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2 (beta)](/network-interconnect/). You can add entries to the Magic routing table through static route configuration or through routes learned through BGP peering (only available over CNI with Dataplane v2 (beta)).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
+The Magic routing table supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2](/network-interconnect/). You can add entries to the Magic routing table through static route configuration or through routes learned through BGP peering (beta).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
 
 
 ### Allowed IP ranges
@@ -202,7 +203,7 @@ In this initial release, ARR does not change routing for traffic between Magic W
 		inline={false}
 		/>
 
-		<AnchorHeading title="Unified routing mode" depth={2} />
+		<AnchorHeading title="Unified routing mode (beta)" depth={2} />
 		<Markdown
 		text={`
 The Unified routing mode is the newer Cloudflare One data plane that uses a single routing fabric for all supported connection types. Unified routing mode routes traffic across WARP, Cloudflare Tunnel, IPsec, GRE, and Cloudflare Network Interconnect (CNI) in a single system, making it easier to set up your Cloudflare One connections.
@@ -409,22 +410,20 @@ For more on {props.productName} tunnel weights, contact your Cloudflare customer
 
 ## BGP information
 
-When using a [CNI with Dataplane v2 (beta)](/network-interconnect/) connection as an on-ramp, you can use BGP peering between your network and your Magic routing table.
-
-Using BGP peering with a CNI allows you to:
+Using BGP peering allows you to:
 
 - Automate the process of adding or removing networks and subnets.
 - Take advantage of failure detection and session recovery features.
 
 With this functionality, you can:
 
-- Establish an eBGP session between your devices and the {props.productName} service when connected through CNI.
+- Establish an eBGP session between your devices and the {props.productName} service when connected through CNI, GRE or IPsec tunnels.
 - Secure the session by MD5 authentication to prevent misconfigurations.
 - Exchange routes dynamically between your devices and your Magic routing table.
 
 ### BGP peering with the Magic routing table
 
-{props.productName} BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect <a href={props.setupBgpPeering}>Advertised prefix list</a>.
+{props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
 If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
 
@@ -442,12 +441,12 @@ Cloudflare uses the following timers, which are not configurable:
 
 | Setting | Description |
 | ----- | ----- |
-| **Hold timer** | 240 seconds <br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
-| **Keepalive timer** | One third of the hold time. |
-| **Graceful restart** | 120 seconds |
+| **Hold timer** | 240 seconds for CNI and 90 seconds for GRE and IPsec tunnels<br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
+| **Keepalive timer** | One third of the hold timer. |
+| **Graceful restart** | 120 seconds (currently, only supported on CNI) |
 
-- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold time and that received from the peer in the open message.
-- **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the Hold Timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
+- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold timer and that received from the peer in the open message.
+- **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the hold timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
 - **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
 
 ### BGP limitations
@@ -459,7 +458,6 @@ BGP support currently has the following limitations:
 - The Cloudflare account ASN and your device ASN must be different. Only eBGP is supported.
 - Cloudflare always injects routes with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
-- Only Internet Protocol version 4 (IPv4) routes are supported.
 
 { props.magicWord === "Magic Transit" && (
   <>

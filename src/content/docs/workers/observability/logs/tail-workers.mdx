@@ -96,8 +96,14 @@ The following Worker code is an example of what the `events` object may look lik
 
 <WranglerConfig>
 
-```toml
-tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
+```jsonc
+{
+	"tail_consumers": [
+		{
+			"service": "<TAIL_WORKER_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

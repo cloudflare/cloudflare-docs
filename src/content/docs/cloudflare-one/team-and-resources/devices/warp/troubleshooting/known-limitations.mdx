@@ -206,7 +206,14 @@ The Ivanti Secure Access VPN client can conflict with WARP by installing Windows
 
 To resolve this, contact Ivanti support or your administrator to modify or remove the specific firewall rules blocking traffic to `127.0.2.2`.
 
-## Troubleshooting
+## Always-On VPN with Lockdown Mode in Microsoft Intune
 
-- [Troubleshooting](/cloudflare-one/faq/troubleshooting/) - Review Troubleshooting for other WARP-related troubleshooting errors and solutions.
-- [WARP Troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/)
+If you are using Microsoft Intune to deploy the WARP client on Android with [Always-On VPN and Lockdown mode enabled](https://learn.microsoft.com/en-us/intune/intune-service/configuration/device-restrictions-android-for-work?tabs=aecorporate#fully-managed-dedicated-and-corporate-owned-work-profile-devices-5), the Cloudflare One agent may fail to register. This is because Lockdown mode prevents the Cloudflare One agent from accessing the underlying network to complete the registration process.
+
+This is a known limitation of the Android OS, which has been reported to Google. You can track the status of the feature request on the [Google Issue Tracker](https://issuetracker.google.com/issues/238109298?pli=1).
+
+To work around this issue, you can disable Lockdown mode while keeping Always-On VPN enabled:
+
+1.  In your Intune profile, disable **Lockdown mode** while keeping **Always-On VPN** enabled.
+2.  Use the [`auto_connect`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#auto_connect) and [`switch_locked`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#switch_locked) parameters in the managed configuration for seamless connectivity.
+3.  Instruct users to launch the Cloudflare One agent app and complete the one-time registration manually.

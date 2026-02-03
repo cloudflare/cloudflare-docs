@@ -3,18 +3,29 @@ link: "/realtime/realtimekit/notice-board/"
 productName: RealtimeKit
 productLink: "/realtime/realtimekit"
 entries:
-  - publish_date: "2025-03-01"
+  - publish_date: "2026-01-30"
+    title: Chat Pagination Overhaul
+    description: |-
+      **Affected SDKs:** Web Core SDK 1.2.4+ and Web UI Kit 1.0.9+ (Angular/React/Web Components)
+
+      To streamline RealtimeKit SDK offerings, non-operational chat channel APIs have been removed. If you have a custom chat implementation using lower-level components instead of `rtk-chat`, please review the release notes thoroughly and test your implementation after upgrading.
+
+  - publish_date: "2025-11-21"
     title: Support for legacy media engine has been removed
     description: |-
+      **Affected SDKs:** Web Core SDK  1.2.0+ (Angular/React/Web Components)
+
       Legacy media engine support has been removed. 
 
       If your organization was created before March 1, 2025 and you are upgrading to `1.2.0` or above, you may experience recording issues.
 
       Please contact support to migrate you to the new Cloudflare SFU media engine to ensure continued recording functionality.
-      
+
   - publish_date: "2025-11-21"
     title: Update on meeting join issues in firefox 144+
     description: |-
+      **Affected SDKs:** Web Core SDK  < 1.2.0 (Angular/React/Web Components)
+
       In firefox 144+, users were not able to join the meetings, due to the browser's datachannel behavior change.
 
       Error: `x.data.arrayBuffer is not a function`

@@ -37,11 +37,7 @@ Clientless access methods are suited for organizations that cannot deploy the WA
 
 Cloudflare's [browser-based terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/) allows users to connect over SSH, RDP, and VNC without any configuration. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser. For RDP connections, users must authenticate to the Windows server using their Windows username and password in addition to being authenticated by Cloudflare Access.
 
-### Client-side cloudflared (legacy)
-
-:::note
-Not recommended for new deployments.
-:::
+### Client-side cloudflared
 
 Users can log in to the application by installing `cloudflared` on their device and running a hostname-specific command in their terminal. For more information, refer to [cloudflared authentication](/cloudflare-one/access-controls/applications/non-http/cloudflared-authentication/).
 

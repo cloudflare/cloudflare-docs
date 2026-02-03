@@ -53,8 +53,11 @@ The template project contains the following files and directories:
 
   <WranglerConfig>
 
-  ```toml
-  name = "my-site"
+  ```jsonc
+  {
+    "$schema": "./node_modules/wrangler/config-schema.json",
+    "name": "my-site"
+  }
   ```
 
   </WranglerConfig>
@@ -63,8 +66,10 @@ The template project contains the following files and directories:
 
   <WranglerConfig>
 
-  ```toml
-  compatibility_date = "yyyy-mm-dd"
+  ```jsonc
+  {
+    "compatibility_date": "yyyy-mm-dd"
+  }
   ```
 
   </WranglerConfig>
@@ -73,8 +78,10 @@ The template project contains the following files and directories:
 
   <WranglerConfig>
 
-  ```toml
-  route = "https://example.com/*"
+  ```jsonc
+  {
+    "route": "https://example.com/*"
+  }
   ```
 
   </WranglerConfig>
