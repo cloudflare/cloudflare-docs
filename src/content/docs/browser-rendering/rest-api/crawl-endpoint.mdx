@@ -12,14 +12,6 @@ The `/crawl` endpoint automates the process of scraping content from webpages st
 
 The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay`. All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`.
 
-However, if the starting URL belongs to a domain that is onboarded to your Cloudflare account, the crawler will bypass `robots.txt` restrictions. This allows you to crawl your own sites without `robots.txt` blocking the crawler.
-
-:::note
-To bypass `robots.txt` restrictions, the domain must be onboarded to the same Cloudflare account you are using to make the API request.
-
-Refer to [Add a site to Cloudflare](/fundamentals/setup/manage-domains/add-site/) for more information on adding a domain to your Cloudflare account.
-:::
-
 :::caution[Bot protection may block crawling]
 If you use Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the Browser Rendering crawler. Refer to [Will Browser Rendering bypass Cloudflare's Bot Protection?](/browser-rendering/faq/#will-browser-rendering-bypass-cloudflares-bot-protection) for instructions on creating a WAF skip rule.
 :::
@@ -107,7 +99,7 @@ The response includes a `status` field indicating the current state of the crawl
 You can also use optional query parameters to filter and paginate results:
 - `cursor` — Cursor for pagination.
 - `limit` — Maximum number of records to return.
-- `status` — Filter by URL status (`queued`, `completed`, `disallowed`, `errored`, or `cancelled`).
+- `status` — Filter by URL status (`queued`, `completed`, `disallowed`, `skipped`, `errored`, or `cancelled`). The `skipped` status appears when URLs are filtered due to `includeExternalLinks: false`, `includeSubdomains: false`, or `includePatterns`/`excludePatterns`.
 
 Example with optional query parameters:
 
@@ -185,6 +177,7 @@ The following optional parameters can be used in your crawl request, in addition
 | `formats` | Array of strings | Response format (default is HTML, other options are Markdown and JSON). |
 | `render` | Boolean | If false, does a fast HTML fetch without executing Javascript (default is true, [learn more about `render`](#render-parameter)). |
 | `maxAge` | Number | Maximum length of time the crawler can use a cached resource before it must re-fetch it from the origin server, in seconds (default is one day or 86,400 seconds, maximum is seven days or 604,800 seconds). Cache served from R2 storage only if URL and parameters exactly match the crawl request.|
+| `modifiedSince` | Number | Timestamp indicating to only crawl pages that were modified since this time. [TODO: Confirm exact format - Unix timestamp in seconds or milliseconds?] |
 | `jsonOptions` | Object | Only required if `formats` includes `json`. Contains `prompt`, `response_format`, and `custom_ai` properties (same types as the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/)). |
 | `options.includeExternalLinks` | Boolean | If true, follows links to external domains (default is false). |
 | `options.includeSubdomains` | Boolean | If true, follows links to subdomains of the starting URL (default is false). |
@@ -215,6 +208,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
     "formats": ["markdown"],
     "render": false,
     "maxAge": 7200,
+    "modifiedSince": 1704067200,
     "options": {
       "includeExternalLinks": true,
       "includeSubdomains": true,
