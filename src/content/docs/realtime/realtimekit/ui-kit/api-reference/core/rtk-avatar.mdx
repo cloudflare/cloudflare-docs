@@ -9,13 +9,13 @@ Avatar component which renders a participant's image or their initials.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `participant` | `Peer | WaitlistedParticipant | { name: string` | ✅ | - | Participant object |
-| `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `AvatarVariant` | ✅ | - | Avatar type |
+| Property      | Type            | Required              | Default            | Description |
+| ------------- | --------------- | --------------------- | ------------------ | ----------- | --- | ------------------ |
+| `iconPack`    | `IconPack`      | ❌                    | `defaultIconPack`  | Icon pack   |
+| `participant` | `Peer`          | WaitlistedParticipant | `{ name: string }` | ✅          | -   | Participant object |
+| `size`        | `Size`          | ✅                    | -                  | Size        |
+| `t`           | `RtkI18n`       | ❌                    | `useLanguage()`    | Language    |
+| `variant`     | `AvatarVariant` | ✅                    | -                  | Avatar type |
 
 ## Usage Examples
 
@@ -28,10 +28,5 @@ Avatar component which renders a participant's image or their initials.
 ### With Properties
 
 ```html
-<rtk-avatar
-  participant="example"
-  size="md"
-  variant="circular">
-</rtk-avatar>
+<rtk-avatar participant="example" size="md" variant="circular"> </rtk-avatar>
 ```
-

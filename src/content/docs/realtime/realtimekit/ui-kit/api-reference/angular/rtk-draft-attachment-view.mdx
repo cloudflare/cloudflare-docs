@@ -9,12 +9,11 @@ A component which renders the draft attachment to send
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `attachment` | `{
-    type: 'image' | 'file'` | ✅ | - | Attachment to display |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| Property     | Type              | Required | Default           | Description |
+| ------------ | ----------------- | -------- | ----------------- | ----------- | --------------------- |
+| `attachment` | `{type: 'image'}` | 'file'`  | ✅                | -           | Attachment to display |
+| `iconPack`   | `IconPack1`       | ❌       | `defaultIconPack` | Icon pack   |
+| `t`          | `RtkI18n1`        | ❌       | `useLanguage()`   | Language    |
 
 ## Usage Examples
 
@@ -22,15 +21,15 @@ A component which renders the draft attachment to send
 
 ```typescript
 // app.module.ts
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { defineCustomElements } from "@cloudflare/realtimekit-ui/loader";
 
 defineCustomElements();
 
 @NgModule({
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 ### Basic Usage
@@ -44,8 +43,5 @@ export class AppModule { }
 
 ```html
 <!-- component.html -->
-<rtk-draft-attachment-view
-  [attachment]={}>
-</rtk-draft-attachment-view>
+<rtk-draft-attachment-view [attachment]="{}"> </rtk-draft-attachment-view>
 ```
-

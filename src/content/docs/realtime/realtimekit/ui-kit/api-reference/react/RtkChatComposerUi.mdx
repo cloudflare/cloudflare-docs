@@ -9,41 +9,39 @@ description: API reference for RtkChatComposerUi component (React Library)
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `canSendFiles` | `boolean` | ✅ | - | Whether user can send file messages |
-| `canSendTextMessage` | `boolean` | ✅ | - | Whether user can send text messages |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `prefill` | `{
-    suggestedReplies?: string[]` | ❌ | - | prefill the composer |
-| `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property             | Type                             | Required | Default           | Description                         |
+| -------------------- | -------------------------------- | -------- | ----------------- | ----------------------------------- |
+| `canSendFiles`       | `boolean`                        | ✅       | -                 | Whether user can send file messages |
+| `canSendTextMessage` | `boolean`                        | ✅       | -                 | Whether user can send text messages |
+| `iconPack`           | `IconPack1`                      | ❌       | `defaultIconPack` | Icon pack                           |
+| `prefill`            | `{ suggestedReplies?: string[]}` | ❌       | -                 | prefill the composer                |
+| `size`               | `Size1`                          | ✅       | -                 | Size                                |
+| `t`                  | `RtkI18n`                        | ❌       | `useLanguage()`   | Language                            |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkChatComposerUi } from '@cloudflare/realtimekit-ui/react';
+import { RtkChatComposerUi } from "@cloudflare/realtimekit-ui/react";
 
 function MyComponent() {
-  return <RtkChatComposerUi />;
+	return <RtkChatComposerUi />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkChatComposerUi } from '@cloudflare/realtimekit-ui/react';
+import { RtkChatComposerUi } from "@cloudflare/realtimekit-ui/react";
 
 function MyComponent() {
-  return (
-    <RtkChatComposerUi
-      canSendFiles={true}
-      canSendTextMessage={true}
-      size="md"
-    />
-  );
+	return (
+		<RtkChatComposerUi
+			canSendFiles={true}
+			canSendTextMessage={true}
+			size="md"
+		/>
+	);
 }
 ```
-
