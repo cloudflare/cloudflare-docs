@@ -4,6 +4,10 @@ distmd/
 distllms/
 # generated types
 .astro/
+# generated skills (fetched at build time)
+public/.well-known/skills/
+# build cache
+.tmp/
 
 # dependencies
 node_modules/

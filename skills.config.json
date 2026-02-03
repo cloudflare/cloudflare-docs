@@ -1,0 +1,7 @@
+{
+	"skills_repo": "cloudflare/skills",
+	"skills_path": "skills",
+	"branch": "main",
+	"cache_control": 3600,
+	"output_dir": "public/.well-known/skills"
+}
