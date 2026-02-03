@@ -26,7 +26,7 @@ This error typically occurs because your Puppeteer launch is not receiving the b
 
 ### Error: 429 browser time limit exceeded
 
-This error (`Unable to create new browser: code: 429: message: Browser time limit exceeded for today`) indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are capped at 10 minutes of browser use a day](/browser-rendering/limits/#workers-free). Once you exceed that limit, further creation attempts return a 429 error until the next UTC day.
+This error (`Unable to create new browser: code: 429: message: Browser time limit exceeded for today`) indicates you have hit the daily browser-instance limit on the Workers Free plan. [Workers Free plan accounts are capped at 10 minutes of browser use a day](/browser-rendering/limits/#workers-free). Once you exceed that limit, further creation attempts return a 429 error until the next UTC day.
 
 To resolve this error, [upgrade to a Workers Paid plan](/workers/platform/pricing/) which allows for more than 10 minutes of usage a day and has higher [limits](/browser-rendering/limits/#workers-paid). If you recently upgraded but still see this error, try redeploying your Worker to ensure your usage is correctly associated with your new plan.
 
