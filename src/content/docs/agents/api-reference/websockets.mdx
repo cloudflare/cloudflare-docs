@@ -66,6 +66,38 @@ connection.send(
 
 </TypeScriptExample>
 
+#### Closing connections
+
+When you close an `AgentClient` connection using the `close()` method, any pending RPC calls are immediately rejected with a `Connection closed` error. This provides immediate feedback to your application when intentionally disconnecting, rather than waiting for the WebSocket close handshake to complete.
+
+<TypeScriptExample>
+
+```ts
+import { AgentClient } from "agents/client";
+
+const connection = new AgentClient({
+  agent: "dialogue-agent",
+  name: "insight-seeker",
+});
+
+// Start an RPC call
+const resultPromise = connection.call("analyzeData", [data]);
+
+// Close the connection - pending RPC calls will be rejected immediately
+connection.close();
+
+// Handle the rejection
+try {
+  await resultPromise;
+} catch (error) {
+  console.error("Call was interrupted:", error); // "Connection closed"
+}
+```
+
+</TypeScriptExample>
+
+This behavior ensures your application receives timely error handling when closing connections, preventing long waits for timeout periods.
+
 ### React clients
 
 React-based applications can import `agents/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
