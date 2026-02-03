@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { TypeScriptExample } from "~/components";
+
 ## What are Workflows?
 
 [Cloudflare Workflows](/workflows/) provide durable, multi-step execution for tasks that need to survive failures, retry automatically, and wait for external events. When integrated with Agents, Workflows handle long-running background processing while Agents manage real-time communication.
@@ -49,44 +51,79 @@ Agents can loop, branch, and interact directly with users. Workflows execute ste
 
 ## How Agents and Workflows communicate
 
-The `AgentWorkflow` class provides bidirectional communication between Workflows and their originating Agent.
+The `AgentWorkflow` class (imported from `agents/workflows`) provides bidirectional communication between Workflows and their originating Agent.
 
 ### Workflow to Agent
 
 Workflows can communicate with Agents through several mechanisms:
 
-- **RPC calls**: Directly call Agent methods with full type safety
-- **Progress reporting**: Send progress updates that trigger Agent callbacks
-- **State updates**: Modify Agent state, which broadcasts to connected clients
-- **Client broadcasts**: Send messages to all WebSocket clients through the Agent
+- **RPC calls**: Directly call Agent methods with full type safety via `this.agent`
+- **Progress reporting**: Send progress updates via `this.reportProgress()` that trigger Agent callbacks
+- **State updates**: Modify Agent state via `step.updateAgentState()` or `step.mergeAgentState()`, which broadcasts to connected clients
+- **Client broadcasts**: Send messages to all WebSocket clients via `this.broadcastToClients()`
+
+<TypeScriptExample>
+
+```ts
+// Inside a workflow's run() method
+await this.agent.updateTaskStatus(taskId, "processing"); // RPC call
+await this.reportProgress({ step: "process", percent: 0.5 }); // Progress (non-durable)
+this.broadcastToClients({ type: "update", taskId }); // Broadcast (non-durable)
+await step.mergeAgentState({ taskProgress: 0.5 }); // State update (durable)
+```
+
+</TypeScriptExample>
 
 ### Agent to Workflow
 
 Agents can interact with running Workflows by:
 
-- **Starting workflows**: Launch new workflow instances with parameters
-- **Sending events**: Dispatch events to workflows waiting for input
-- **Approval/rejection**: Respond to human-in-the-loop approval requests
-- **Status queries**: Check workflow progress and state
+- **Starting workflows**: Launch new workflow instances with `runWorkflow()`
+- **Sending events**: Dispatch events with `sendWorkflowEvent()`
+- **Approval/rejection**: Respond to approval requests with `approveWorkflow()` / `rejectWorkflow()`
+- **Workflow control**: Pause, resume, terminate, or restart workflows
+- **Status queries**: Check workflow progress with `getWorkflow()` / `getWorkflows()`
+
+## Durable vs. non-durable operations
+
+Understanding durability is key to using workflows effectively:
+
+### Non-durable (may repeat on retry)
+
+These operations are lightweight and suitable for frequent updates, but may execute multiple times if the workflow retries:
+
+- `this.reportProgress()` — Progress reporting
+- `this.broadcastToClients()` — WebSocket broadcasts
+- Direct RPC calls to `this.agent`
+
+### Durable (idempotent, won't repeat)
+
+These operations use the `step` parameter and are guaranteed to execute exactly once:
+
+- `step.do()` — Execute durable steps
+- `step.reportComplete()` / `step.reportError()` — Completion reporting
+- `step.sendEvent()` — Custom events
+- `step.updateAgentState()` / `step.mergeAgentState()` — State synchronization
 
 ## Durability guarantees
 
 Workflows provide durability through step-based execution:
 
-1. **Step completion is permanent** - Once a step completes, it will not re-execute even if the workflow restarts
-2. **Automatic retries** - Failed steps retry with configurable backoff
-3. **Event persistence** - Workflows can wait for events for up to one year
-4. **State recovery** - Workflow state survives infrastructure failures
+1. **Step completion is permanent** — Once a step completes, it will not re-execute even if the workflow restarts
+2. **Automatic retries** — Failed steps retry with configurable backoff
+3. **Event persistence** — Workflows can wait for events for up to one year
+4. **State recovery** — Workflow state survives infrastructure failures
 
 This durability model means workflows are well-suited for tasks where partial completion must be preserved, such as multi-stage data processing or transactions spanning multiple systems.
 
 ## Workflow tracking
 
-When an Agent starts a workflow using `runWorkflow()`, the workflow is automatically tracked in the Agent database. This enables:
+When an Agent starts a workflow using `runWorkflow()`, the workflow is automatically tracked in the Agent's internal database. This enables:
 
-- Querying workflow status by ID, name, or metadata
-- Monitoring progress through lifecycle callbacks
-- Cleaning up completed workflow records
+- Querying workflow status by ID, name, or metadata with cursor-based pagination
+- Monitoring progress through lifecycle callbacks (`onWorkflowProgress`, `onWorkflowComplete`, `onWorkflowError`)
+- Workflow control: pause, resume, terminate, restart
+- Cleaning up completed workflow records with `deleteWorkflow()` / `deleteWorkflows()`
 - Correlating workflows with users or sessions through metadata
 
 ## Common patterns
@@ -95,17 +132,52 @@ When an Agent starts a workflow using `runWorkflow()`, the workflow is automatic
 
 An Agent receives a request, starts a Workflow for heavy processing, and broadcasts progress updates to connected clients as the Workflow executes each step.
 
+<TypeScriptExample>
+
+```ts
+// Workflow reports progress after each item
+for (let i = 0; i < items.length; i++) {
+	await step.do(`process-${i}`, async () => processItem(items[i]));
+	await this.reportProgress({
+		step: `process-${i}`,
+		percent: (i + 1) / items.length,
+		message: `Processed ${i + 1}/${items.length}`,
+	});
+}
+```
+
+</TypeScriptExample>
+
 ### Human-in-the-loop approval
 
-A Workflow prepares a request, pauses to wait for approval, and the Agent provides UI for users to approve or reject. The Workflow resumes or terminates based on the decision.
+A Workflow prepares a request, pauses to wait for approval using `waitForApproval()`, and the Agent provides UI for users to approve or reject via `approveWorkflow()` / `rejectWorkflow()`. The Workflow resumes or throws `WorkflowRejectedError` based on the decision.
 
 ### Resilient external API calls
 
 A Workflow wraps external API calls in durable steps with retry logic. If the API fails or the workflow restarts, completed calls are not repeated and failed calls retry automatically.
 
+<TypeScriptExample>
+
+```ts
+const result = await step.do(
+	"call-api",
+	{
+		retries: { limit: 5, delay: "10 seconds", backoff: "exponential" },
+		timeout: "5 minutes",
+	},
+	async () => {
+		const response = await fetch("https://api.example.com/process");
+		if (!response.ok) throw new Error(`API error: ${response.status}`);
+		return response.json();
+	},
+);
+```
+
+</TypeScriptExample>
+
 ### State synchronization
 
-A Workflow updates Agent state at key milestones. These state changes broadcast to all connected clients, keeping UIs synchronized without polling.
+A Workflow updates Agent state at key milestones using `step.updateAgentState()` or `step.mergeAgentState()`. These state changes broadcast to all connected clients, keeping UIs synchronized without polling.
 
 ## Related resources
 
