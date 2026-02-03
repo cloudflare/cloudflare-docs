@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 A device registration represents an individual session of the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) on a physical device, linking a user (or service token) and the device to your [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization). A device registration is created when the WARP client first authenticates. Each device registration has associated configuration, which includes a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
 
@@ -18,10 +18,12 @@ A single physical device can have [multiple device registrations](/cloudflare-on
 | [User](/cloudflare-one/team-and-resources/users/seat-management/#manage-users) | An identity provider (IdP)-backed human identity that can connect new devices to your Zero Trust organization. |
 | [Seat](/cloudflare-one/team-and-resources/users/seat-management/) | A unique, billable user within your Zero Trust organization who has performed [an authentication event](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). Service tokens do not consume seats. |
 | [Service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) | A token used by automated systems (a non-human identity) to authenticate against your Cloudflare One policies. |
-| Device registration | An individual session of the WARP client on a physical device, with associated configuration including a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6). |
+| Device registration | An individual session of the WARP client on a physical device, with associated configuration including a unique public key, device profile, and [virtual IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/) (one IPv4 and one IPv6). |
 | [Session](/cloudflare-one/access-controls/access-settings/session-management/) | JSON Web Tokens (JWTs) that are generated when Access validates user identity against your Access policies and determines how long a user can access an Access application without re-authenticating. Unlike these session-based tokens, device registration is a persistent state that does not expire and will exist until permanently deleted. |
 
 ## Review device registration status
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To review how many device registrations are associated with a device:
 
@@ -36,12 +38,48 @@ To review a device registration's status:
 3. Scroll down to **Users** and find the user associated with the device.
 4. Review the status (such as `Active` or `Revoked`) of the device registration under **Status**.
 
-Registrations can have the following statuses:
+</TabItem>
+<TabItem label="API">
 
-| Status | Description |
-| --- | --- |
-| **Active** | Registered and able to connect via WARP. This is the expected operational state. |
-| **Revoked** | The registration's public key is invalidated. Revocation does not release the assigned virtual IP addresses. |
+To get a list of all device registrations, including active and revoked registrations:
+
+<APIRequest
+	path="/accounts/{account_id}/devices/registrations"
+	method="GET"
+	parameters={{
+  	status: "all",
+  	per_page: "50"
+}}
+/>
+
+```json output {12}
+{
+		"created_at": "2026-01-26T19:27:49.770372Z",
+		"device": {
+			"client_version": "2025.10.186",
+			"id": "11ffb86f-3f0c-4306-b4a2-e62f872b166a",
+			"name": "My Device"
+		},
+		"id": "11ffb86f-3f0c-4306-b4a2-e62f872b166a",
+		"key": "<U+QTP50RsWfeLGHF4tlGDnmGeuwtsz46KCHr5OyhWq00Rsdfl45mgnQAuEJ6CO0YrkyTl9FUf5iB0bwYR3g4EEFEHhtu6jFaqfMrBMBSz6itv9HQXkaR9OieKQ==",
+		"key_type": "secp256r1",
+		"last_seen_at": "2026-01-29T00:57:57.925979Z",
+		"revoked_at": "2026-01-29T00:58:16.704026Z",
+		"tunnel_type": "masque",
+		"updated_at": "2026-01-29T00:58:16.704026Z",
+		"user": {
+			"email": "user@example.com",
+			"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+			"name": ""
+		}
+	},
+
+```
+
+A `revoked_at` timestamp indicates that the device registration has a [revoked status](#registration-status). If `revoked_at` is null or not present, it means the registration status is active.
+
+</TabItem>
+</Tabs>
 
 A deleted device registration is permanently removed from the account and no longer appears in your device list. Deletion is permanent and requires re-registering the device.
 
@@ -49,13 +87,25 @@ A deleted device registration is permanently removed from the account and no lon
 
 Deleting or revoking a device registration is not permanent without [removing user access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-user-access) and [removing service token access](/cloudflare-one/team-and-resources/devices/device-registration/#remove-service-token-access).
 
-If the user or service token can successfully re-authenticate, a new device registration will be automatically created following a deletion or revocation. 
+If the user or service token can successfully re-authenticate, a new device registration will be automatically created following a deletion or revocation.
 
 :::
 
+### Registration status
+
+Registrations can have the following statuses:
+
+| Status | Description |
+| --- | --- |
+| **Active** | Registered and able to connect via WARP. This is the expected operational state. |
+| **Revoked** | The registration's public key is invalidated. Revocation does not release the assigned virtual IP addresses. |
+
+
 ## Delete a device registration
 
-Devices can have multiple device registrations. Deleting one registration does not affect other registrations on the same device. 
+Devices can have multiple device registrations. Deleting one registration does not affect other registrations on the same device.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To delete a device registration:
 
@@ -63,6 +113,29 @@ To delete a device registration:
 2. Select the device > **View details**.
 3. Go to **Users** and mark the checkbox next to the device registration you want to delete.
 4. Select **Action** > _Delete access_.
+
+</TabItem>
+<TabItem label="API">
+
+To delete a single device registration using the [API](/api/resources/zero_trust/subresources/devices/subresources/registrations/methods/delete/):
+
+<APIRequest
+	path="/accounts/{account_id}/devices/registrations/{registration_id}"
+	method="DELETE"
+/>
+
+To bulk delete multiple device registrations:
+
+```curl
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/device/registrations/registrations?id=reg_id_1&id=reg_id_2&id=reg_id_3" \
+	--request DELETE\
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+</TabItem>
+</Tabs>
+
+The device registration is now permanently deleted, and its virtual IP address is released back into the available pool for reassignment.
 
 :::caution[Automatic device re-registration]
 

@@ -25,21 +25,35 @@ Configure your Wrangler file as follows:
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "YOUR_QUEUE"
-
-[durable_objects]
-bindings = [
-  { name = "YOUR_DO_CLASS", class_name = "YourDurableObject" }
-]
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["YourDurableObject"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"queues": {
+		"producers": [
+			{
+				"queue": "my-queue",
+				"binding": "YOUR_QUEUE"
+			}
+		]
+	},
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "YOUR_DO_CLASS",
+				"class_name": "YourDurableObject"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"YourDurableObject"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -12,9 +12,11 @@ params:
   - biVsUniHealthCheck
   - tunnelHealthDash
   - biVsUniHealthCheckDefaults
-  - configureRoutesURL?
+  - configureRoutesURL
   - sitesURL?
   - configureARRURL?
+  - troubleshootTunnelHealthURL
+  - troubleshootIpsecURL
 ---
 
 import { AnchorHeading, APIRequest, CURL, DashButton, Details, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -137,6 +139,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 { props.magicWord !== "Magic Transit" && (<Markdown text={`16. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "17" : "16"}. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.`} inline={false} />
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
 
 </Details>
 
@@ -176,6 +179,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 { props.magicWord !== "Magic Transit" && (<Markdown text={`17. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. To add multiple tunnels, select **Add IPsec tunnel** for each new tunnel.`} inline={false} />
 <Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "20" : "19"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
 
 </Details>
 
@@ -454,16 +458,22 @@ For customers using the legacy health check system with a public IP range, Cloud
 - Configuring the tunnel health check target IP address to one within the `172.64.240.252/30` prefix range.
 - Applying a policy-based route that matches [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) with a source IP address equal to the configured tunnel health check target (for example `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.
 
+## Next steps
+
+Now that you have set up your tunnel endpoints, you need to configure routes to direct your traffic through Cloudflare. You have two routing options:
+
+- **Static routes**: Best for simple, stable networks where routes rarely change. You manually define each route.
+- **BGP peering**: Best for dynamic environments with frequently changing routes, multiple prefixes, or when you need automatic failover. Requires enabling BGP on your tunnel during creation.
+
+Refer to <a href={props.configureRoutesURL}>Configure routes</a> for detailed instructions on both options.
+
 { props.magicWord !== "Magic Transit" && (
-  <>
-    <AnchorHeading title="Next steps" depth={2} />
-    <Markdown
-      text={`
-			- Now that you have set up your tunnel endpoints you need to configure routes to route your traffic through Cloudflare. Refer to [Configure routes](${props.configureRoutesURL}) to learn more about static routing and BGP peering (only available through CNI with Dataplane v2 (beta) connection).
-			- After configuring either static routes or BGP routing, you need to [set up a site](${props.sitesURL}).
-      `}
-      inline={false}
-    />
-  </>
-)
-}
+  <p>After configuring your routes, you need to <a href={props.sitesURL}>set up a site</a>.</p>
+)}
+
+## Troubleshooting
+
+If you experience issues with your tunnels:
+
+- For tunnel health check problems, refer to <a href={props.troubleshootTunnelHealthURL}>Troubleshoot tunnel health</a>.
+- For IPsec tunnel establishment issues, refer to <a href={props.troubleshootIpsecURL}>Troubleshoot with IPsec logs</a>.

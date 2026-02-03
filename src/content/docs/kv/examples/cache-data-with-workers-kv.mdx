@@ -42,7 +42,7 @@ interface Env {
 export default {
   async fetch(request, env, ctx): Promise<Response> {
 
-    const EXPIRATION_TTL = 60; // Cache expiration in seconds
+     const EXPIRATION_TTL = 30; // Cache expiration in seconds
     const url = 'https://example.com';
     const cacheKey = "cache-json-example";
 

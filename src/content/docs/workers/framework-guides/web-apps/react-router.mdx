@@ -177,11 +177,16 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
 
     <WranglerConfig>
 
-    ```toml
-    [[workflows]]
-    name = "my-workflow"
-    binding = "MY_WORKFLOW"
-    class_name = "MyWorkflow"
+    ```jsonc
+    {
+      "workflows": [
+        {
+          "name": "my-workflow",
+          "binding": "MY_WORKFLOW",
+          "class_name": "MyWorkflow"
+        }
+      ]
+    }
     ```
 
     </WranglerConfig>

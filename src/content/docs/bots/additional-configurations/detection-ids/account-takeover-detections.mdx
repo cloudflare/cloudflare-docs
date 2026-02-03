@@ -15,8 +15,12 @@ Using the detection IDs below, you can detect and mitigate account takeover atta
 | `201326593`                                 | Observes all login traffic to the zone.                                                                                                                                                                                                                                                                                      |
 | `201326598`                                 | Sets a dynamic threshold based on the normal traffic that is unique to the zone.<br /><br /> When the ID matches a login failure, Bot Management sets the [bot score](/bots/concepts/bot-score/) to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
 
-:::note
-Not all login endpoints are automatically detected. However, endpoints [labeled](/api-shield/management-and-monitoring/endpoint-labels/#categories) as `cf-log-in` will be evaluated for account takeover detection IDs.
+:::caution[Login endpoints]
+Not all login endpoints are automatically detected. 
+
+By default, endpoints [labeled](/api-shield/management-and-monitoring/endpoint-labels/#categories) as `cf-log-in` will be evaluated for account takeover detection IDs.
+
+However, if you have a non-traditional login endpoint, you should label your login endpoint with `cf-log-in` using the [endpoint labeling service](/api-shield/management-and-monitoring/endpoint-labels/#create-a-label).
 :::
 
 ## Challenges for account takeover detections

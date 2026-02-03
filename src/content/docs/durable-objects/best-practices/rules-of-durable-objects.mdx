@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { WranglerConfig, TypeScriptExample } from "~/components";
+import { WranglerConfig, TypeScriptExample, Render } from "~/components";
 
 Durable Objects provide a powerful primitive for building stateful, coordinated applications. Each Durable Object is a single-threaded, globally-unique instance with its own persistent storage. Understanding how to design around these properties is essential for building effective applications.
 
@@ -1124,6 +1124,8 @@ export class ChatRoom extends DurableObject<Env> {
 		reason: string,
 		wasClean: boolean
 	) {
+		// Calling close() completes the WebSocket handshake
+		ws.close(code, reason);
 		console.log(`WebSocket closed: ${code} ${reason}`);
 	}
 
@@ -1136,6 +1138,11 @@ export class ChatRoom extends DurableObject<Env> {
 </TypeScriptExample>
 
 With the Hibernation API, your Durable Object can go to sleep when there is no active JavaScript execution, but WebSocket connections remain open. When a message arrives, the Durable Object wakes up automatically.
+
+Best practices:
+
+- The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) exposes `webSocketError`, `webSocketMessage`, and `webSocketClose` handlers for their respective WebSocket events.
+- When implementing `webSocketClose`, you **must** reciprocate the close by calling `ws.close()` to avoid swallowing the WebSocket close frame. Failing to do so results in `1006` errors, representing an abnormal close per the WebSocket specification.
 
 Refer to [WebSockets](/durable-objects/best-practices/websockets/) for more details.
 
@@ -1205,7 +1212,9 @@ export class ChatRoom extends DurableObject<Env> {
 		this.broadcast(chatMessage);
 	}
 
-	async webSocketClose(ws: WebSocket) {
+	async webSocketClose(ws: WebSocket, code: number, reason: string) {
+		// Calling close() completes the WebSocket handshake
+		ws.close(code, reason);
 		const state = ws.deserializeAttachment() as ConnectionState;
 		this.broadcast(`${state.username} left the chat`);
 	}
@@ -1351,6 +1360,12 @@ export class ChatRoom extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
+### Design for unexpected shutdowns
+
+Durable Objects may shut down at any time due to deployments, inactivity, or runtime decisions. Rather than relying on shutdown hooks (which are not provided), design your application to write state incrementally.
+
+<Render file="working-without-shutdown-hooks" product="durable-objects" />
+
 ## Anti-patterns to avoid
 
 ### Do not use a single Durable Object as a global singleton
@@ -1458,7 +1473,7 @@ export default defineWorkersConfig({
 	test: {
 		poolOptions: {
 			workers: {
-				wrangler: { configPath: "./wrangler.toml" },
+				wrangler: { configPath: "./wrangler.jsonc" },
 			},
 		},
 	},

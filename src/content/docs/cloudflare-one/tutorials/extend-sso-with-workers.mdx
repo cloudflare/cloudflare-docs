@@ -198,8 +198,13 @@ In the [Wrangler configuration file](/workers/wrangler/configuration/), [set up 
 
 <WranglerConfig>
 
-```toml
-route = { pattern= "app.example.com/*", zone_name="example.com"}
+```jsonc
+{
+	"route": {
+		"pattern": "app.example.com/*",
+		"zone_name": "example.com"
+	}
+}
 ```
 
 </WranglerConfig>

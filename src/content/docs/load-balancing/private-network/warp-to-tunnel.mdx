@@ -134,7 +134,7 @@ In order for WARP clients to connect to your load balancer, the load balancer's 
 4. Select **Manage**. Depending on the mode:
    - **Exclude mode**: Delete the IP range that contains your load balancer IP. For example, if your load balancer has a Cloudflare-assigned CGNAT IP, delete `100.64.0.0/10`. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not being used by your load balancer.
      :::note
-     Some IPs in the `100.64.0.0/10` range may be reserved for other Zero Trust services such as Gateway <GlossaryTooltip term = "initial resolved IP">initial resolved IPs</GlossaryTooltip> or <GlossaryTooltip term = "CGNAT IP">WARP CGNAT IPs</GlossaryTooltip>. These IPs should remain deleted from the Exclude list.
+     Some IPs in the `100.64.0.0/10` range may be reserved for other Zero Trust services such as Gateway <GlossaryTooltip term = "initial resolved IP">initial resolved IPs</GlossaryTooltip> or <GlossaryTooltip term = "WARP CGNAT IP">WARP CGNAT IPs</GlossaryTooltip>. These IPs should remain deleted from the Exclude list.
      :::
    - **Include mode**: Add your load balancer IP.
 

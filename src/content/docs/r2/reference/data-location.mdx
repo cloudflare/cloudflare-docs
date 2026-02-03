@@ -87,11 +87,20 @@ To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), yo
 
 <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-bindings = [
-  { binding = "MY_BUCKET", bucket_name = "<YOUR_BUCKET_NAME>", jurisdiction = "<JURISDICTION>" }
-]
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"bindings": [
+				{
+					"binding": "MY_BUCKET",
+					"bucket_name": "<YOUR_BUCKET_NAME>",
+					"jurisdiction": "<JURISDICTION>"
+				}
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>
