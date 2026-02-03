@@ -203,20 +203,17 @@ In this initial release, ARR does not change routing for traffic between Magic W
 		inline={false}
 		/>
 
-		<AnchorHeading title="Unified routing mode (beta)" depth={2} />
-		<Markdown
-		text={`
+	</>
+)}
+
+## Unified Routing mode (beta)
+
 The Unified routing mode is the newer Cloudflare One data plane that uses a single routing fabric for all supported connection types. Unified routing mode routes traffic across WARP, Cloudflare Tunnel, IPsec, GRE, and Cloudflare Network Interconnect (CNI) in a single system, making it easier to set up your Cloudflare One connections.
 
-In the Magic WAN dashboard, routing mode appears where you manage Magic routes:
+In the {props.productName} dashboard, routing mode appears where you manage Magic routes:
 
 - **Routing mode: Unified** — your account is on the unified data plane and supports the new routing features.
 - **Routing mode: Legacy** — your account uses the previous data plane and does not support all unified routing features.
-		`}
-		inline={false}
-		/>
-	</>
-)}
 
 ## Scoping routes to specific regions
 
