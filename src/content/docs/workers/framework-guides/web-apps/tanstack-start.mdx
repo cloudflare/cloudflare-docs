@@ -120,9 +120,8 @@ Preview the build locally before deploying:
 
 ## Custom entrypoints
 
-TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypoint. Create a custom server entrypoint to add additional Workers handlers. These include [Queues](/queues/), [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Objects](/durable-objects/), [Workflows](/workflows/), and [Service Bindings](/workers/runtime-apis/bindings/service-bindings/).
+TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypoint. Create a custom server entrypoint to add additional Workers handlers such as [Queues](/queues/) and [Cron Triggers](/workers/configuration/cron-triggers/). This is also where you can add additional exports such as [Durable Objects](/durable-objects/) and [Workflows](/workflows/).
 
-`createServerEntry()` returns a plain object that you can spread and extend with additional handlers:
 
 <Steps>
 
@@ -131,21 +130,13 @@ TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypo
    <TypeScriptExample filename="app/server.ts">
 
    ```ts
-   import handler, {
-   	createServerEntry,
-   } from "@tanstack/react-start/server-entry";
+   import handler from "@tanstack/react-start/server-entry";
 
    // Export Durable Objects as named exports
    export { MyDurableObject } from "./my-durable-object";
 
-   const serverEntry = createServerEntry({
-   	async fetch(request) {
-   		return await handler.fetch(request);
-   	},
-   });
-
    export default {
-   	...serverEntry,
+   	fetch: handler.fetch,
 
    	// Handle Queue messages
    	async queue(batch, env, ctx) {
@@ -180,10 +171,10 @@ TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypo
 
 ### Test scheduled handlers locally
 
-Test your scheduled handler locally using the `/__scheduled` endpoint:
+Test your scheduled handler locally using the `/cdn-cgi/handler/scheduled` endpoint:
 
 ```sh
-curl "http://localhost:5173/__scheduled?cron=*+*+*+*+*"
+curl "http://localhost:3000/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
 ```
 
 <Details header="Example: Using Workflows">
