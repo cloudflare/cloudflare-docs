@@ -131,16 +131,25 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 7. In **Customer GRE endpoint**, enter your router's public IP address. You do not need this value if you use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare provides it.
 8. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team. { props.magicWord === "Magic Transit" && (<>Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information on where to find your Cloudflare IP addresses.</>)}
 9. Leave the default values for **TTL** and **MTU**.
-10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare keeps sending traffic through the tunnel without the means to detect if the tunnel goes down. You must set up your own system to detect down tunnels, as Cloudflare cannot warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose a <a href={props.updateHCFrequencyPage}>health check rate</a> for your tunnel. Available options are _Low_, _Medium_, and _High_.
-12. The **Health check type** defaults to _Reply_ and to creating an ICMP (Internet Control Message Protocol) reply. If your firewall drops this type of packet because it assumes the packet is an attack, change this option to _Request_ which creates an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-13. The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
-14. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
-15. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
-{ props.magicWord !== "Magic Transit" && (<Markdown text={`16. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "17" : "16"}. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Cloudflare One unified routing (beta)</a> enabled. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
+10. _(Optional)_ Configure health check settings. Expand the following to learn more about each option:
+
+    <Render
+      file="routing/tunnel-health-check-options"
+      product="networking-services"
+      params={{
+        tunnelHealthDash: props.tunnelHealthDash,
+        tunnelHealthChecksPage: props.tunnelHealthChecksPage,
+        updateHCFrequencyPage: props.updateHCFrequencyPage,
+        biVsUniHealthCheck: props.biVsUniHealthCheck,
+        productName: props.productName
+      }}
+    />
+
+11. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
+{ props.magicWord !== "Magic Transit" && (<Markdown text={`12. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "13" : "12"}. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "14" : "13"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "15" : "14"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Cloudflare One unified routing (beta)</a> enabled. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
 
 </Details>
 
@@ -151,17 +160,25 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
 7. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router uses an IKE (Internet Key Exchange) ID of type `ID_IPV4_ADDR`.
 8. In **Cloudflare endpoint**, enter the anycast address you received from your account team. { props.magicWord === "Magic Transit" && (<>Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information on where to find your Cloudflare IP addresses.</>)}
-9. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare keeps sending traffic through the tunnel without the means to detect if the tunnel goes down. You must set up your own system to detect down tunnels, as Cloudflare cannot warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-10. _(Optional)_ If you keep **Tunnel health checks** enabled, choose a <a href={props.updateHCFrequencyPage}>health check rate</a> for your tunnel. Available options are _Low_, _Medium_ and _High_.
-11. _(Optional)_ The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet because it assumes the packet is an attack, change this option to _Request_ which creates an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-12. _(Optional)_ The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
-13. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
+9. _(Optional)_ Configure health check settings. Expand the following to learn more about each option:
+
+    <Render
+      file="routing/tunnel-health-check-options"
+      product="networking-services"
+      params={{
+        tunnelHealthDash: props.tunnelHealthDash,
+        tunnelHealthChecksPage: props.tunnelHealthChecksPage,
+        updateHCFrequencyPage: props.updateHCFrequencyPage,
+        biVsUniHealthCheck: props.biVsUniHealthCheck,
+        productName: props.productName
+      }}
+    />
 
     :::note
     IPsec tunnels will not function without a pre-shared key (PSK).
     :::
 
-14. If you do not have a pre-shared key yet:
+10. If you do not have a pre-shared key yet:
 
     1. Select **Add pre-shared key later**.
     2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels**.
@@ -169,18 +186,18 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
     4. The Cloudflare dashboard loads the list of tunnels you have configured. The IPsec tunnel you just created displays a warning triangle icon to indicate it is not yet functional. Select **Edit**.
     5. Choose **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Save the key to a safe place, and select **Done**.
 
-15. If you already have a pre-shared key:
+11. If you already have a pre-shared key:
 
     1. Select **Use my own pre-shared key**.
     2. Paste your key in **Your pre-shared key**.
     3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
     4. Select **Add tunnels**.
 
-16. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information.
-{ props.magicWord !== "Magic Transit" && (<Markdown text={`17. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "18" : "17"}. To add multiple tunnels, select **Add IPsec tunnel** for each new tunnel.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "19" : "18"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
-<Markdown text={`${props.magicWord !== "Magic Transit" ? "20" : "19"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Cloudflare One unified routing (beta)</a> enabled. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
+12. _(Optional)_ Enable **Replay protection** if you have devices that do not support disabling it. Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information.
+{ props.magicWord !== "Magic Transit" && (<Markdown text={`13. (Optional) Select **Automatic return routing** if you are setting up this tunnel for a site that only needs to send traffic to and receive responses from Cloudflare, and does not need to receive traffic from other sites in your WAN. Refer to [Configure Automatic Return Routing](${props.configureARRURL}) for more information.`} inline={false} />)}
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "14" : "13"}. To add multiple tunnels, select **Add IPsec tunnel** for each new tunnel.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "15" : "14"}. After adding your tunnel information, select **Add tunnels**.`} inline={false} />
+<Markdown text={`${props.magicWord !== "Magic Transit" ? "16" : "15"}. (Optional) Select **Allow BGP (Border Gateway Protocol) peering** (beta) if you want to dynamically exchange routes between your network and Cloudflare. This feature requires <a href="${props.unifiedRoutingURL}">Cloudflare One unified routing (beta)</a> enabled. <br /> BGP is recommended for environments with frequently changing routes or when you need automatic failover. Refer to [Configure BGP routes](${props.configureRoutesURL}#configure-bgp-routes) for more information.`} inline={false} />
 
 </Details>
 
