@@ -7,7 +7,7 @@ interface Props {
 	parentheses?: string;
 }
 
-const { product, parentheses = "false" } = Astro.props;
+const { product, parentheses = "true" } = Astro.props;
 
 let entry = await getEntry("product-availability", product);
 let output = "";
@@ -25,8 +25,11 @@ else if (entry.data.availability.toUpperCase() === "GA") {
 }
 // show an availability value
 else {
-	if (parentheses === "true") output = `(${entry.data.availability})`;
-	else output = entry.data.availability;
+	if (parentheses === "false") {
+		output = entry.data.availability;
+	} else {
+		output = `(${entry.data.availability})`;
+	}
 }
 ---
 
