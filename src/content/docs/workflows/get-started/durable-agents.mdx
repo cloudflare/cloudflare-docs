@@ -352,7 +352,7 @@ This is especially important for:
 
 ## 4. Write your Agent
 
-The Agent handles HTTP requests, WebSocket connections, and Workflow lifecycle events. It starts workflows with `runWorkflow()` and receives progress updates via callbacks.
+The Agent handles HTTP requests, WebSocket connections, and Workflow lifecycle events. It triggers a workflow instance `runWorkflow()` and receives progress updates via callbacks.
 
 <Steps>
 1. Create `src/agent.ts`:
