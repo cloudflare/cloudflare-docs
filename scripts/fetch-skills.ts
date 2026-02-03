@@ -5,9 +5,11 @@
  * 1. Reads configuration from skills.config.json
  * 2. Validates the repo is in the cloudflare/* org
  * 3. Checks cache to avoid unnecessary fetches
- * 4. Fetches all skills and their reference files from GitHub
- * 5. Generates index.json with skill metadata
- * 6. Falls back to stale cache on fetch errors
+ * 4. Uses Git Trees API to list all files (1 API call)
+ * 5. Fetches file contents via gh-code proxy (no rate limits)
+ * 6. Generates index.json with skill metadata
+ * 7. Falls back to stale cache on fetch errors
+ * 8. Fails open locally (skips skills if fetch fails)
  */
 
 import { mkdir, readFile, writeFile, rm, rename } from "fs/promises";
@@ -40,15 +42,25 @@ interface IndexJson {
 	skills: SkillMetadata[];
 }
 
-interface GitHubContent {
-	name: string;
+interface GitCommit {
+	sha: string;
+}
+
+interface GitTreeItem {
 	path: string;
-	type: "file" | "dir";
-	download_url: string | null;
+	type: "blob" | "tree";
+	sha: string;
+}
+
+interface GitTreeResponse {
+	sha: string;
+	tree: GitTreeItem[];
+	truncated: boolean;
 }
 
 const CACHE_DIR = ".tmp";
 const CACHE_FILE = "skills-cache.json";
+const GH_CODE_PROXY = "https://gh-code.developers.cloudflare.com";
 
 function log(message: string): void {
 	console.log(`[fetch-skills] ${message}`);
@@ -60,6 +72,10 @@ function warn(message: string): void {
 
 function error(message: string): void {
 	console.error(`[fetch-skills] ERROR: ${message}`);
+}
+
+function isCI(): boolean {
+	return process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
 }
 
 async function loadConfig(): Promise<SkillsConfig> {
@@ -146,27 +162,17 @@ async function outputExists(config: SkillsConfig): Promise<boolean> {
 	return existsSync(indexPath);
 }
 
-function getGitHubHeaders(): Record<string, string> {
-	const headers: Record<string, string> = {
-		Accept: "application/vnd.github.v3+json",
-		"User-Agent": "cloudflare-docs-skills-fetcher",
-	};
-	// Use GITHUB_TOKEN if available (5000 req/hour vs 60 unauthenticated)
-	if (process.env.GITHUB_TOKEN) {
-		headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-	}
-	return headers;
-}
-
 async function fetchGitHubJson<T>(url: string): Promise<T> {
-	const response = await fetch(url, { headers: getGitHubHeaders() });
+	const response = await fetch(url, {
+		headers: {
+			Accept: "application/vnd.github.v3+json",
+			"User-Agent": "cloudflare-docs-skills-fetcher",
+		},
+	});
 
 	if (!response.ok) {
 		if (response.status === 403 || response.status === 429) {
-			const authHint = process.env.GITHUB_TOKEN
-				? ""
-				: " Set GITHUB_TOKEN for higher rate limits.";
-			throw new Error(`GitHub API rate limit exceeded.${authHint}`);
+			throw new Error("GitHub API rate limit exceeded.");
 		}
 		throw new Error(
 			`GitHub API error: ${response.status} ${response.statusText}`,
@@ -176,26 +182,12 @@ async function fetchGitHubJson<T>(url: string): Promise<T> {
 	return response.json();
 }
 
-function isValidDownloadUrl(url: string): boolean {
-	try {
-		const parsed = new URL(url);
-		return (
-			parsed.protocol === "https:" &&
-			parsed.host === "raw.githubusercontent.com"
-		);
-	} catch {
-		return false;
-	}
-}
-
-async function fetchFileContent(url: string): Promise<string> {
-	// Validate URL points to GitHub raw content (defense-in-depth)
-	if (!isValidDownloadUrl(url)) {
-		throw new Error(
-			`Invalid download URL (must be raw.githubusercontent.com): ${url}`,
-		);
-	}
-
+async function fetchFileContent(
+	repo: string,
+	commit: string,
+	path: string,
+): Promise<string> {
+	const url = `${GH_CODE_PROXY}/${repo}/${commit}/${path}`;
 	const response = await fetch(url, {
 		headers: {
 			"User-Agent": "cloudflare-docs-skills-fetcher",
@@ -204,7 +196,7 @@ async function fetchFileContent(url: string): Promise<string> {
 
 	if (!response.ok) {
 		throw new Error(
-			`Failed to fetch file: ${response.status} ${response.statusText}`,
+			`Failed to fetch ${path}: ${response.status} ${response.statusText}`,
 		);
 	}
 
@@ -233,65 +225,63 @@ function parseFrontmatter(content: string): {
 	};
 }
 
-async function fetchDirectoryRecursive(
-	config: SkillsConfig,
-	path: string,
-): Promise<Array<{ path: string; download_url: string }>> {
-	const encodedPath = path.split("/").map(encodeURIComponent).join("/");
-	const url = `https://api.github.com/repos/${config.skills_repo}/contents/${encodedPath}?ref=${encodeURIComponent(config.branch)}`;
-	const contents = await fetchGitHubJson<GitHubContent[]>(url);
-	const files: Array<{ path: string; download_url: string }> = [];
+async function getCommitSha(repo: string, branch: string): Promise<string> {
+	const url = `https://api.github.com/repos/${repo}/commits/${encodeURIComponent(branch)}`;
+	const commit = await fetchGitHubJson<GitCommit>(url);
+	return commit.sha;
+}
 
-	for (const item of contents) {
-		if (item.type === "file" && item.download_url) {
-			files.push({ path: item.path, download_url: item.download_url });
-		} else if (item.type === "dir") {
-			const subFiles = await fetchDirectoryRecursive(config, item.path);
-			files.push(...subFiles);
-		}
+async function getFileTree(repo: string, sha: string): Promise<GitTreeItem[]> {
+	const url = `https://api.github.com/repos/${repo}/git/trees/${sha}?recursive=1`;
+	const tree = await fetchGitHubJson<GitTreeResponse>(url);
+
+	if (tree.truncated) {
+		warn("Git tree was truncated - some files may be missing");
 	}
 
-	return files;
+	return tree.tree;
 }
 
 async function fetchSkill(
 	config: SkillsConfig,
 	skillName: string,
+	skillFiles: string[],
+	commit: string,
+	outputDir: string,
 ): Promise<SkillMetadata | null> {
-	const skillPath = `${config.skills_path}/${skillName}`;
 	log(`Fetching skill: ${skillName}`);
+	const skillPrefix = `${config.skills_path}/${skillName}/`;
 
 	try {
-		// Fetch all files in the skill directory
-		const files = await fetchDirectoryRecursive(config, skillPath);
-
-		// Find and parse SKILL.md for metadata
-		const skillMdFile = files.find((f) => f.path.endsWith("SKILL.md"));
-		if (!skillMdFile) {
+		// Find SKILL.md
+		const skillMdPath = skillFiles.find((f) => f.endsWith("SKILL.md"));
+		if (!skillMdPath) {
 			warn(`No SKILL.md found for ${skillName}, skipping`);
 			return null;
 		}
 
-		const skillMdContent = await fetchFileContent(skillMdFile.download_url);
+		// Fetch and parse SKILL.md for metadata
+		const skillMdContent = await fetchFileContent(
+			config.skills_repo,
+			commit,
+			skillMdPath,
+		);
 		const { name, description } = parseFrontmatter(skillMdContent);
 
 		// Resolve the output directory for path traversal checks
-		const resolvedOutputDir = resolve(config.output_dir);
+		const resolvedOutputDir = resolve(outputDir);
 
 		// Write all files to output directory
 		const relativeFiles: string[] = [];
-		for (const file of files) {
-			const relativePath = file.path.replace(
-				`${config.skills_path}/${skillName}/`,
-				"",
-			);
+		for (const filePath of skillFiles) {
+			const relativePath = filePath.replace(skillPrefix, "");
 
-			const outputPath = join(config.output_dir, skillName, relativePath);
+			const outputPath = join(outputDir, skillName, relativePath);
 			const resolvedOutputPath = resolve(outputPath);
 
-			// SECURITY: Validate output path is within output directory (prevent path traversal)
+			// SECURITY: Validate output path is within output directory
 			if (!resolvedOutputPath.startsWith(resolvedOutputDir + "/")) {
-				warn(`Skipping file with path traversal attempt: ${file.path}`);
+				warn(`Skipping file with path traversal attempt: ${filePath}`);
 				continue;
 			}
 
@@ -299,10 +289,14 @@ async function fetchSkill(
 			await mkdir(dirname(outputPath), { recursive: true });
 
 			try {
-				const content = await fetchFileContent(file.download_url);
+				const content = await fetchFileContent(
+					config.skills_repo,
+					commit,
+					filePath,
+				);
 				await writeFile(outputPath, content);
 			} catch (err) {
-				warn(`Failed to fetch ${file.path}: ${err}`);
+				warn(`Failed to fetch ${filePath}: ${err}`);
 			}
 		}
 
@@ -318,31 +312,49 @@ async function fetchSkill(
 }
 
 async function fetchAllSkills(config: SkillsConfig): Promise<IndexJson> {
-	const encodedPath = config.skills_path
-		.split("/")
-		.map(encodeURIComponent)
-		.join("/");
-	const url = `https://api.github.com/repos/${config.skills_repo}/contents/${encodedPath}?ref=${encodeURIComponent(config.branch)}`;
-	log(`Fetching skill list from ${config.skills_repo}`);
+	log(`Fetching skills from ${config.skills_repo}`);
 
-	const contents = await fetchGitHubJson<GitHubContent[]>(url);
-	const skillDirs = contents.filter((item) => item.type === "dir" && item.name);
+	// Step 1: Get commit SHA for branch (1 API call)
+	log(`Resolving ${config.branch} to commit SHA...`);
+	const commit = await getCommitSha(config.skills_repo, config.branch);
+	log(`Resolved to ${commit.slice(0, 7)}`);
 
-	log(`Found ${skillDirs.length} skills to fetch`);
+	// Step 2: Get full file tree (1 API call)
+	log("Fetching file tree...");
+	const tree = await getFileTree(config.skills_repo, commit);
 
-	// Write to temp directory first, then swap on success (atomic update)
+	// Step 3: Filter to skills path and group by skill
+	const skillsPrefix = `${config.skills_path}/`;
+	const skillFiles = tree
+		.filter(
+			(item) => item.type === "blob" && item.path.startsWith(skillsPrefix),
+		)
+		.map((item) => item.path);
+
+	// Group files by skill name
+	const skillGroups = new Map<string, string[]>();
+	for (const filePath of skillFiles) {
+		const relativePath = filePath.slice(skillsPrefix.length);
+		const skillName = relativePath.split("/")[0];
+		if (!skillGroups.has(skillName)) {
+			skillGroups.set(skillName, []);
+		}
+		skillGroups.get(skillName)!.push(filePath);
+	}
+
+	log(`Found ${skillGroups.size} skills to fetch`);
+
+	// Step 4: Create temp directory
 	const tempDir = `${config.output_dir}.tmp`;
 	if (existsSync(tempDir)) {
 		await rm(tempDir, { recursive: true });
 	}
 	await mkdir(tempDir, { recursive: true });
 
-	// Temporarily override output_dir for fetchSkill calls
-	const tempConfig = { ...config, output_dir: tempDir };
-
+	// Step 5: Fetch each skill (file contents via proxy - no rate limit)
 	const skills: SkillMetadata[] = [];
-	for (const dir of skillDirs) {
-		const skill = await fetchSkill(tempConfig, dir.name);
+	for (const [skillName, files] of skillGroups) {
+		const skill = await fetchSkill(config, skillName, files, commit, tempDir);
 		if (skill) {
 			skills.push(skill);
 		}
@@ -361,11 +373,9 @@ async function writeIndex(outputDir: string, index: IndexJson): Promise<void> {
 }
 
 async function atomicSwap(tempDir: string, finalDir: string): Promise<void> {
-	// Remove existing output directory if it exists
 	if (existsSync(finalDir)) {
 		await rm(finalDir, { recursive: true });
 	}
-	// Move temp to final (atomic on same filesystem)
 	await rename(tempDir, finalDir);
 }
 
@@ -421,14 +431,21 @@ async function main(): Promise<void> {
 	} catch (err) {
 		error(`Fetch failed: ${err}`);
 
-		// Try to use stale cache (config already loaded successfully)
+		// Try to use stale cache
 		const cache = await loadCache();
 		if (cache && (await outputExists(config))) {
 			warn(`Using stale cache from ${cache.fetched_at}`);
 			return;
 		}
 
-		// No cache available, fail the build
+		// No cache available
+		if (!isCI()) {
+			// Fail open locally - skip skills
+			warn("No cache available. Skipping skills fetch (local dev).");
+			return;
+		}
+
+		// CI with no cache - fail the build
 		process.exit(1);
 	}
 }
