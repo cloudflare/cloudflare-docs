@@ -18,9 +18,7 @@ Using the detection IDs below, you can detect and mitigate account takeover atta
 :::caution[Login endpoints]
 Not all login endpoints are automatically detected. 
 
-Cloudflare evaluates and automatically detects your website or application's login endpoint. However, if you have a non-traditional login endpoint, you should label it with `cf-log-in` using the [endpoint labeling service](/api-shield/management-and-monitoring/endpoint-labels/#create-a-label). 
-
-Cloudflare will use the endpoint that you label instead of the endpoint that we detect.
+Cloudflare evaluates and automatically detects your website or application's login endpoint, but non-traditional login endpoints may not be recognized. If you have a non-traditional login endpoint, you should label it with `cf-log-in` using the [endpoint labeling service](/api-shield/management-and-monitoring/endpoint-labels/). Once you have applied the `cf-log-in` label, Cloudflare will use the labeled endpoint for account takeover detection decisions.
 :::
 
 ## Challenges for account takeover detections
