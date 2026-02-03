@@ -3,10 +3,14 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-02-03"
+    title: Custom metadata filtering
+    description: |-
+      Define up to 5 custom metadata fields per AI Search instance and filter search results by category, version, or any custom attribute. Attach metadata via R2 custom headers or HTML meta tags.
   - publish_date: "2026-01-22"
     title: New file type support
     description: |-
-      AI Search now supports EMACS Lisp (`.el`) files and the `.htm` extension for HTML documents. 
+      AI Search now supports EMACS Lisp (`.el`) files and the `.htm` extension for HTML documents.
   - publish_date: "2026-01-19"
     title: Path filtering for website and R2 data sources
     description: |-
