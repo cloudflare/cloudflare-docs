@@ -34,7 +34,7 @@ The folder of static assets to be served. For many frameworks, this is the `./pu
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "my-worker",
-	"compatibility_date": "2024-09-19",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./public/"
 	}
@@ -76,7 +76,7 @@ Controls whether to invoke the Worker script regardless of a request which would
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "my-worker",
-	"compatibility_date": "2024-09-19",
+	"compatibility_date": "$today",
 	"main": "src/index.ts",
 	// The following configuration unconditionally invokes the Worker script at
 	// `src/index.ts`, which can programatically fetch assets via the ASSETS binding
@@ -131,7 +131,7 @@ Configuring the optional [binding](/workers/runtime-apis/bindings) gives you acc
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "my-worker",
 	"main": "./src/index.js",
-	"compatibility_date": "2024-09-19",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./public/",
 		"binding": "ASSETS"

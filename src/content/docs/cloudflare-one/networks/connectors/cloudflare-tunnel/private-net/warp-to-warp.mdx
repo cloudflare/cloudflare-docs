@@ -12,7 +12,7 @@ import { Render, GlossaryTooltip, Tabs, TabItem } from "~/components";
 
 With Cloudflare Zero Trust, you can create a private network between any two or more devices running Cloudflare WARP. This means that you can have a private network between your phone and laptop without ever needing to be connected to the same physical network. If you already have an existing Zero Trust deployment, you can also enable this feature to add device-to-device connectivity to your private network with the press of a button. This will allow you to connect to any service that relies on TCP, UDP, or ICMP-based protocols through Cloudflare's network.
 
-Users in your organization can reach these services by enrolling into your organization's Zero Trust account. Once enrolled, each device is assigned a virtual IP address in the `100.96.0.0/12` range which will allow users or systems to address these devices directly. Administrators will then be able to build Zero Trust policies to determine who within your organization can reach those virtual IPs.
+Users in your organization can reach these services by enrolling into your organization's Zero Trust account. Once enrolled, each device is assigned a [virtual IP address](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/) which will allow users or systems to address these devices directly. Administrators will then be able to build Zero Trust policies to determine who within your organization can reach those virtual IPs.
 
 This guide covers how to:
 
@@ -32,7 +32,7 @@ This guide covers how to:
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Management**.
 2. Select **Peer to peer connectivity**.
 3. Turn on [**Allow all Cloudflare One traffic to reach enrolled devices**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
-4. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that traffic to `100.96.0.0/12` is going through WARP:
+4. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that traffic to your [device IPs](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/) goes through WARP. For example, if your devices use the default `100.96.0.0/12` range:
 
     <Tabs> <TabItem label="Exclude IPs and domains">
 		If using Split Tunnels in **Exclude** mode:
@@ -65,4 +65,4 @@ Once enrolled, your users and services will be able to connect to the virtual IP
 
 ### Check your firewall
 
-Verify that your local firewall allows traffic from the <GlossaryTooltip term="CGNAT IP">WARP CGNAT IPs</GlossaryTooltip>. For example, Windows Firewall blocks inbound traffic from `100.96.0.0/12` by default. On Windows devices, you will need to add a firewall rule that allows incoming requests from `100.96.0.0/12` for the desired protocols and/or ports.
+Verify that your local firewall allows traffic from the <GlossaryTooltip term="WARP CGNAT IP">WARP CGNAT IPs</GlossaryTooltip> (or your [custom device IP subnet](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/)). For example, Windows Firewall blocks inbound traffic from `100.96.0.0/12` by default. On Windows devices, you will need to add a firewall rule that allows incoming requests from `100.96.0.0/12` for the desired protocols and/or ports.

@@ -7,9 +7,9 @@ products:
   - magic-wan
 ---
 
-Magic WAN now allows you to configure the source IP address range used by Cloudflare services (such as Load Balancing, Gateway, and Browser Isolation) when sending traffic to your private networks.
+Cloudflare source IPs are the IP addresses used by Cloudflare services (such as Load Balancing, Gateway, and Browser Isolation) when sending traffic to your private networks.
 
-Previously, traffic to private networks was sourced from public Cloudflare IPs, which may have caused IP conflicts. With this feature, you can now configure a dedicated, non-Internet-routable private IP range to ensure:
+For customers using legacy mode routing, traffic to private networks is sourced from public Cloudflare IPs, which may cause IP conflicts. For customers using Unified Routing mode (beta), traffic to private networks is sourced from dedicated, non-Internet-routable private IPv4 range to ensure:
 
 - Symmetric routing over private network connections
 - Proper firewall state preservation
@@ -17,10 +17,10 @@ Previously, traffic to private networks was sourced from public Cloudflare IPs, 
 
 Key details:
 
-- **IPv4**: Sourced from `100.64.0.0/12` by default, configurable to any /12 CIDR
+- **IPv4**: Sourced from `100.64.0.0/12` by default, configurable to any `/12` CIDR
 - **IPv6**: Sourced from `2606:4700:cf1:5000::/64` (not configurable)
 - **Affected connectors**: GRE, IPsec, CNI, WARP Connector, and WARP Client (Cloudflare Tunnel is not affected)
 
-Configuring Cloudflare source IPs requires Cloudflare One Unified Routing (beta) and the "Cloudflare One Networks Write" permission.
+Configuring Cloudflare source IPs requires Cloudflare One Unified Routing (beta) and the `Cloudflare One Networks Write` permission.
 
 For configuration details, refer to [Configure Cloudflare source IPs](/magic-wan/configuration/manually/how-to/configure-cloudflare-source-ips/).

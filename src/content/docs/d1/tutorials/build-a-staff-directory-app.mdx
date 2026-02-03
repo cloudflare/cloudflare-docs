@@ -78,7 +78,7 @@ This binding enables your application to interact with Cloudflare resources such
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "staff-directory",
-	"compatibility_date": "2023-12-01"
+	"compatibility_date": "$today"
 }
 ```
 
@@ -449,7 +449,7 @@ After successful login, confirm that your Wrangler file is configured similarly 
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "staff-directory",
-	"compatibility_date": "2023-12-01",
+	"compatibility_date": "$today",
 	"r2_buckets": [
 		{
 			"binding": "MY_BUCKET",

@@ -5,7 +5,15 @@ sidebar:
   order: 1
 ---
 
-import { Render, Tabs, TabItem, GlossaryTooltip, Type, MetaInfo, TypeScriptExample } from "~/components";
+import {
+	Render,
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	Type,
+	MetaInfo,
+	TypeScriptExample,
+} from "~/components";
 
 The `DurableObject` base class is an abstract class which all Durable Objects inherit from. This base class provides a set of optional methods, frequently referred to as handler methods, which can respond to events, for example a `webSocketMessage` when using the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). To provide a concrete example, here is a Durable Object `MyDurableObject` which extends `DurableObject` and implements the fetch handler to return "Hello, World!" to the calling Worker.
 
@@ -18,11 +26,13 @@ export class MyDurableObject extends DurableObject {
 		super(ctx, env);
 	}
 
-	async fetch(request: Request) {
-		return new Response("Hello, World!");
-	}
+    async fetch(request: Request) {
+    	return new Response("Hello, World!");
+    }
+
 }
-```
+
+````
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -36,7 +46,7 @@ class MyDurableObject(DurableObject):
 
 	async def fetch(self, request):
 		return Response("Hello, World!")
-```
+````
 
 </TabItem>
 
@@ -46,12 +56,15 @@ class MyDurableObject(DurableObject):
 
 ### `fetch`
 
-- <code>fetch(request <Type text="Request"/>)</code>: <Type text="Response"/> | <Type text="Promise<Response>"/>
-
-  - Takes an HTTP [Request](https://developers.cloudflare.com/workers/runtime-apis/request/) and returns an HTTP [Response](https://developers.cloudflare.com/workers/runtime-apis/response/). This method allows the Durable Object to emulate an HTTP server where a Worker with a binding to that object is the client.
-
-  - This method can be `async`.
-
+- <code>
+  	fetch(request <Type text="Request" />)
+  </code>
+  : <Type text="Response" /> | <Type text="Promise<Response>" />- Takes an HTTP
+  [Request](https://developers.cloudflare.com/workers/runtime-apis/request/) and
+  returns an HTTP
+  [Response](https://developers.cloudflare.com/workers/runtime-apis/response/).
+  This method allows the Durable Object to emulate an HTTP server where a Worker
+  with a binding to that object is the client. - This method can be `async`.
   - Durable Objects support [RPC calls](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) as of compatibility date [2024-04-03](/workers/configuration/compatibility-flags/#durable-object-stubs-and-service-bindings-support-rpc). RPC methods are preferred over `fetch()` when your application does not follow HTTP request/response flow.
 
 #### Parameters
@@ -80,8 +93,10 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `alarm`
 
-- <code>alarm(alarmInfo? <Type text="AlarmInvocationInfo"/>)</code>: <Type text="void"/> | <Type text="Promise<void>"/>
-
+- <code>
+  	alarm(alarmInfo? <Type text="AlarmInvocationInfo" />)
+  </code>
+  : <Type text="void" /> | <Type text="Promise<void>" />
   - Called by the system when a scheduled alarm time is reached.
 
   - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two second delays for up to six retries. Retries will be performed if the method fails with an uncaught exception.
@@ -117,12 +132,15 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `webSocketMessage`
 
-- <code>webSocketMessage(ws <Type text="WebSocket" />, message <Type text="string | ArrayBuffer" />)</code>: <Type text="void"/> | <Type text="Promise<void>"/>
-
-  - Called by the system when an accepted WebSocket receives a message.
-
-  - This method is not called for WebSocket control frames. The system will respond to an incoming [WebSocket protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) automatically without interrupting hibernation.
-
+- <code>
+  	webSocketMessage(ws <Type text="WebSocket" />, message{" "}
+  	<Type text="string | ArrayBuffer" />)
+  </code>
+  : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
+  when an accepted WebSocket receives a message. - This method is not called for
+  WebSocket control frames. The system will respond to an incoming [WebSocket
+  protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2)
+  automatically without interrupting hibernation.
   - This method can be `async`.
 
 #### Parameters
@@ -152,12 +170,15 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `webSocketClose`
 
-- <code>webSocketClose(ws <Type text="WebSocket" />, code <Type text="number" />, reason <Type text="string" />, wasClean <Type text="boolean" />)</code>: <Type text="void"/> | <Type text="Promise<void>"/>
-
-  - Called by the system when a WebSocket connection is closed.
-
-  - You **must** call `ws.close(code, reason)` inside this handler to complete the WebSocket close handshake. Failing to reciprocate the close will result in `1006` errors on the client, representing an abnormal closure per the WebSocket specification.
-
+- <code>
+  	webSocketClose(ws <Type text="WebSocket" />, code <Type text="number" />,
+  	reason <Type text="string" />, wasClean <Type text="boolean" />)
+  </code>
+  : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
+  when a WebSocket connection is closed. - You **must** call `ws.close(code,
+  reason)` inside this handler to complete the WebSocket close handshake.
+  Failing to reciprocate the close will result in `1006` errors on the client,
+  representing an abnormal closure per the WebSocket specification.
   - This method can be `async`.
 
 #### Parameters
@@ -187,11 +208,12 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `webSocketError`
 
-- <code>webSocketError(ws <Type text="WebSocket" />, error <Type text="unknown" />)</code>: <Type text="void"/> | <Type text="Promise<void>"/>
-
-  - Called by the system when a non-disconnection error occurs on a WebSocket connection.
-
-  - This method can be `async`.
+- <code>
+  	webSocketError(ws <Type text="WebSocket" />, error <Type text="unknown" />)
+  </code>
+  : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
+  when a non-disconnection error occurs on a WebSocket connection. - This method
+  can be `async`.
 
 #### Parameters
 

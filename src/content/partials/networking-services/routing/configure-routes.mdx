@@ -17,12 +17,12 @@ params:
 
 import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (available over CNI with Dataplane v2 (beta), as well as IPsec and GRE tunnels (beta)).
+Magic Networking uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic routing table through static route configuration or routes learned from BGP peering (beta) (available over CNI with Dataplane v2, as well as IPsec and GRE tunnels).
 
 Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more information about all the technical aspects related to:
 - Routes' priorities and weights
 - Regional scoping of traffic to reduce latency
-- BGP peering
+- BGP peering (beta)
 { props.magicWord !== "Magic Transit" && (<Markdown text={`- Automatic Return Routing (ARR)`} inline={false} />)}
 
 { props.magicWord === "Magic Transit" && (
@@ -407,7 +407,7 @@ Example:
 ## Configure BGP routes
 
 BGP peering is available when using the following on-ramps:
-- [CNI with Dataplane v2 (beta)](/network-interconnect/).
+- [CNI with Dataplane v2](/network-interconnect/).
 - <a href={props.tunnelEndpoints}>IPsec and GRE tunnels (beta)</a>.
 
 ### Choose an ASN for BGP peering
@@ -551,7 +551,7 @@ If you have already set up your Cloudflare account ASN, skip steps two and three
 	file="routing/bgp-config-steps"
 	product="networking-services"
 	params={{
-		locateText: "Locate the CNI interconnect with Dataplane v2 (beta) to configure with BGP > select the **three dots** next to it > **Configure BGP**.",
+		locateText: "Locate the CNI interconnect with Dataplane v2 to configure with BGP > select the **three dots** next to it > **Configure BGP**.",
 		productGatewayOrEgress: props.productGatewayOrEgress,
 		magicWord: props.magicWord
 	}}

@@ -49,9 +49,9 @@ For example, if you onboard a `/20` IP prefix to Magic Transit, it can only be a
 Cloudflare offers multiple mechanisms to control the announcement and withdrawal of on-demand prefixes. Each method serves different deployment scenarios:
 
 - **Addressing API**: Manually control prefix advertisements through API calls. Refer to [Advertise or withdraw a BGP prefix](#advertise-or-withdraw-a-bgp-prefix).
-- **BGP peering with route reflectors**: Control advertisements through BGP sessions to Cloudflare's globally distributed route reflectors, either over the Internet or over a CNI connection with dataplane v1. Contact your Cloudflare account team if you need this option. Refer to [BGP control with Cloudflare Route Reflectors](#bgp-control-with-cloudflare-route-reflectors).
+- **BGP peering with route reflectors**: Control advertisements through BGP sessions to Cloudflare's globally distributed route reflectors, either over the Internet or over a CNI connection with Dataplane v1. Contact your Cloudflare account team if you need this option. Refer to [BGP control with Cloudflare Route Reflectors](#bgp-control-with-cloudflare-route-reflectors).
 - **Magic Network Monitoring**: Automatically announce prefixes based on user-defined traffic thresholds observed in your network. Refer to [Magic Network Monitoring](/magic-network-monitoring/).
-- **BGP peering with Magic Transit routing table**: Automatically control prefix advertisements based on BGP routes learned through CNI with Dataplane v2 (beta), or GRE and IPsec tunnels (beta). Refer to [BGP control to Magic routing table](#bgp-control-to-magic-routing-table).
+- **BGP peering with Magic Transit routing table**: Automatically control prefix advertisements based on BGP routes learned through CNI with Dataplane v2, or GRE and IPsec tunnels (beta). Refer to [BGP control to Magic routing table](#bgp-control-to-magic-routing-table).
 
 :::caution[Important]
 You should only use one control method per prefix at any given time. Mixing multiple control planes can lead to conflicting advertisement states, causing unpredictable routing behavior.
@@ -168,7 +168,7 @@ For example, if you have a CDN zone with a Magic Transit-protected origin that i
 
 ### Automatically announce and withdraw anycast-based Magic BGP routes
 
-If you use CNI with Dataplane v2 (beta), GRE or IPsec tunnels, you can:
+If you use CNI with Dataplane v2, GRE or IPsec tunnels, you can:
 - Automatically withdraw your prefixes from Cloudflare's global edge infrastructure when you withdraw all matching BGP learned prefixes from the Magic routing table.
 - Automatically advertise your prefixes through Cloudflare's global edge infrastructure when you have at least one matching BGP learned prefix in the Magic routing table.
 
@@ -307,7 +307,7 @@ neighbor 141.101.67.22 {
 
 ## BGP peering
 
-If you use CNI with Dataplane v2 (beta), GRE or IPsec tunnels to on-ramp your network traffic to Magic Transit, refer to [BGP information](/magic-transit/reference/traffic-steering/#bgp-information) to learn how to use BGP to handle traffic routing between Cloudflare and your network. Note that this is a different option to using BGP as a means to control the advertisement status of your prefix.
+If you use CNI with Dataplane v2, GRE or IPsec tunnels to on-ramp your network traffic to Magic Transit, refer to [BGP information](/magic-transit/reference/traffic-steering/#bgp-information) to learn how to use BGP to handle traffic routing between Cloudflare and your network. Note that this is a different option to using BGP as a means to control the advertisement status of your prefix.
 
 ## Regional settings
 
