@@ -8,6 +8,7 @@ import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
+import skills from "astro-skills";
 
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
@@ -198,6 +199,7 @@ export default defineConfig({
 			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
+		skills(),
 	],
 	vite: {
 		resolve: {

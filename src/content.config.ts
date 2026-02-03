@@ -7,6 +7,7 @@ import { glob, file } from "astro/loaders";
 
 import { productAvailabilityCollectionConfig } from "./content/collections/product-availability";
 import { granularControlApplicationsCollectionConfig } from "./content/collections/granular-control-applications";
+import { skillsLoader } from "astro-skills";
 
 import {
 	appsSchema,
@@ -123,4 +124,7 @@ export const collections = {
 	"granular-control-applications": defineCollection(
 		granularControlApplicationsCollectionConfig,
 	),
+	skills: defineCollection({
+		loader: skillsLoader({ base: "./skills" }),
+	}),
 };
