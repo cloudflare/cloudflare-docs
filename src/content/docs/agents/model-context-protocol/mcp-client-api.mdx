@@ -1,5 +1,5 @@
 ---
-title: McpClient — API reference
+title: Connecting to MCP servers
 pcx_content_type: concept
 tags:
   - MCP
@@ -9,57 +9,399 @@ sidebar:
 
 import { Render, TypeScriptExample } from "~/components";
 
-Your Agent can connect to external [Model Context Protocol (MCP)](https://modelcontextprotocol.io) servers to access tools, resources, and prompts. The `Agent` class provides three methods to manage MCP connections:
+Connect your agent to external MCP (Model Context Protocol) servers to use their tools, resources, and prompts. This enables your agent to interact with GitHub, Slack, databases, and other services through a standardized protocol.
+
+## Overview
+
+The MCP client capability lets your agent:
+
+- **Connect to external MCP servers** - GitHub, Slack, databases, AI services
+- **Use their tools** - Call functions exposed by MCP servers
+- **Access resources** - Read data from MCP servers
+- **Use prompts** - Leverage pre-built prompt templates
+
+:::note
+
+This page covers connecting to MCP servers as a client. To create your own MCP server, see [Creating MCP servers](/agents/model-context-protocol/mcp-agent-api/).
+
+:::
+
+## Quick start
 
 <TypeScriptExample>
 
-```ts title="src/index.ts"
+```ts
 import { Agent } from "agents";
 
-type Env = {
-	MyAgent: DurableObjectNamespace<MyAgent>;
-};
+export class MyAgent extends Agent {
+	async onRequest(request: Request) {
+		// Add an MCP server
+		const result = await this.addMcpServer(
+			"github",
+			"https://mcp.github.com/mcp",
+		);
 
-export class MyAgent extends Agent<Env, never> {
-	async onRequest(request: Request): Promise<Response> {
-		const url = new URL(request.url);
-
-		if (url.pathname === "/connect" && request.method === "POST") {
-			const result = await this.addMcpServer(
-				"Weather API",
-				"https://weather-mcp.example.com/mcp",
-			);
-
-			if (result.state === "authenticating") {
-				return new Response(JSON.stringify({ authUrl: result.authUrl }), {
-					headers: { "Content-Type": "application/json" },
-				});
-			}
-
-			return new Response(`Connected: ${result.id}`, { status: 200 });
+		if (result.state === "authenticating") {
+			// Server requires OAuth - redirect user to authorize
+			return Response.redirect(result.authUrl);
 		}
+
+		// Server is ready - tools are now available
+		const state = this.getMcpServers();
+		console.log(`Connected! ${state.tools.length} tools available`);
+
+		return new Response("MCP server connected");
 	}
 }
 ```
 
 </TypeScriptExample>
 
-Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and-sync-state), and when an Agent connects to an MCP server, all tools from that server become available automatically.
+Connections persist in the agent's [SQL storage](/agents/api-reference/store-and-sync-state/), and when an agent connects to an MCP server, all tools from that server become available automatically.
 
-## Agent MCP Client Methods
+## Adding MCP servers
 
-### `addMcpServer()`
+Use `addMcpServer()` to connect to an MCP server:
 
-Add a connection to an MCP server and make its tools available to your Agent.
+<TypeScriptExample>
+
+```ts
+// Simple connection
+await this.addMcpServer("notion", "https://mcp.notion.so/mcp");
+
+// With explicit callback host
+await this.addMcpServer("github", "https://mcp.github.com/mcp", {
+	callbackHost: "https://my-worker.workers.dev",
+});
+```
+
+</TypeScriptExample>
+
+### Transport options
+
+MCP supports multiple transport types:
+
+<TypeScriptExample>
+
+```ts
+await this.addMcpServer("server", "https://mcp.example.com/mcp", {
+	transport: {
+		type: "streamable-http",
+	},
+});
+```
+
+</TypeScriptExample>
+
+| Transport         | Description                                         |
+| ----------------- | --------------------------------------------------- |
+| `streamable-http` | HTTP with streaming - recommended default           |
+| `sse`             | Server-Sent Events - legacy/compatibility transport |
+| `auto`            | Auto-detect based on server response                |
+
+### Custom headers
+
+For servers behind authentication (like Cloudflare Access) or using bearer tokens:
+
+<TypeScriptExample>
+
+```ts
+await this.addMcpServer("internal", "https://internal-mcp.example.com/mcp", {
+	transport: {
+		headers: {
+			Authorization: "Bearer my-token",
+			"CF-Access-Client-Id": "...",
+			"CF-Access-Client-Secret": "...",
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+### Return value
+
+`addMcpServer()` returns the connection state:
+
+- **`ready`** - Server connected and tools discovered
+- **`authenticating`** - Server requires OAuth; redirect user to `authUrl`
+
+## OAuth authentication
+
+Many MCP servers require OAuth authentication. The agent handles the OAuth flow automatically.
+
+### How it works
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Agent
+    participant MCPServer
+
+    Client->>Agent: addMcpServer(name, url)
+    Agent->>MCPServer: Connect
+    MCPServer-->>Agent: Requires OAuth
+    Agent-->>Client: state: authenticating, authUrl
+    Client->>MCPServer: User authorizes
+    MCPServer->>Agent: Callback with code
+    Agent->>MCPServer: Exchange for token
+    Agent-->>Client: onMcpUpdate (ready)
+```
+
+### Handling OAuth in your agent
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onRequest(request: Request) {
+		const result = await this.addMcpServer(
+			"github",
+			"https://mcp.github.com/mcp",
+		);
+
+		if (result.state === "authenticating") {
+			// Option 1: Redirect the user
+			return Response.redirect(result.authUrl);
+
+			// Option 2: Return the URL for client-side redirect
+			return Response.json({
+				status: "needs_auth",
+				authUrl: result.authUrl,
+			});
+		}
+
+		return Response.json({ status: "connected", id: result.id });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### OAuth callback
+
+The callback URL is automatically constructed:
+
+```txt
+https://{host}/{agentsPrefix}/{agent-name}/{instance-name}/callback
+```
+
+For example: `https://my-worker.workers.dev/agents/my-agent/default/callback`
+
+OAuth tokens are securely stored in SQLite and persist across agent restarts.
+
+### Custom OAuth callback handling
+
+For custom OAuth completion behavior:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent {
+	onStart() {
+		this.mcp.configureOAuthCallback({
+			// Redirect after successful auth
+			successRedirect: "https://myapp.com/success",
+
+			// Redirect on error
+			errorRedirect: "https://myapp.com/error",
+
+			// Or use a custom handler
+			customHandler: (result) => {
+				if (result.authSuccess) {
+					// Close popup window after auth
+					return new Response("<script>window.close();</script>", {
+						headers: { "content-type": "text/html" },
+					});
+				}
+				return new Response("Auth failed", { status: 400 });
+			},
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Using MCP capabilities
+
+Once connected, access the server's capabilities:
+
+### Getting available tools
+
+<TypeScriptExample>
+
+```ts
+const state = this.getMcpServers();
+
+// All tools from all connected servers
+for (const tool of state.tools) {
+	console.log(`Tool: ${tool.name}`);
+	console.log(`  From server: ${tool.serverId}`);
+	console.log(`  Description: ${tool.description}`);
+}
+```
+
+</TypeScriptExample>
+
+### Resources and prompts
+
+<TypeScriptExample>
+
+```ts
+const state = this.getMcpServers();
+
+// Available resources
+for (const resource of state.resources) {
+	console.log(`Resource: ${resource.name} (${resource.uri})`);
+}
+
+// Available prompts
+for (const prompt of state.prompts) {
+	console.log(`Prompt: ${prompt.name}`);
+}
+```
+
+</TypeScriptExample>
+
+### Server status
+
+<TypeScriptExample>
+
+```ts
+const state = this.getMcpServers();
+
+for (const [id, server] of Object.entries(state.servers)) {
+	console.log(`${server.name}: ${server.state}`);
+	// state: "ready" | "authenticating" | "connecting" | "connected" | "discovering" | "failed"
+}
+```
+
+</TypeScriptExample>
+
+### Integration with AI SDK
+
+To use MCP tools with the Vercel AI SDK, use `this.mcp.getAITools()` which converts MCP tools to AI SDK format:
+
+<TypeScriptExample>
+
+```ts
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+export class MyAgent extends Agent {
+	async onRequest(request: Request) {
+		const response = await generateText({
+			model: openai("gpt-4"),
+			prompt: "What's the weather in San Francisco?",
+			tools: this.mcp.getAITools(), // Converts MCP tools to AI SDK format
+		});
+
+		return new Response(response.text);
+	}
+}
+```
+
+</TypeScriptExample>
+
+:::note
+
+`getMcpServers().tools` returns raw MCP `Tool` objects for inspection. Use `this.mcp.getAITools()` when passing tools to the AI SDK.
+
+:::
+
+## Managing servers
+
+### Removing a server
+
+<TypeScriptExample>
+
+```ts
+await this.removeMcpServer(serverId);
+```
+
+</TypeScriptExample>
+
+This disconnects from the server and removes it from storage.
+
+### Persistence
+
+MCP servers persist across agent restarts:
+
+- Server configuration stored in SQLite
+- OAuth tokens stored securely
+- Connections restored automatically when agent wakes
+
+### Listing all servers
+
+<TypeScriptExample>
+
+```ts
+const state = this.getMcpServers();
+
+for (const [id, server] of Object.entries(state.servers)) {
+	console.log(`${id}: ${server.name} (${server.server_url})`);
+}
+```
+
+</TypeScriptExample>
+
+## Client-side integration
+
+Connected clients receive real-time MCP updates via WebSocket:
+
+<TypeScriptExample>
+
+```tsx
+import { useAgent } from "agents/react";
+import { useState } from "react";
+
+function Dashboard() {
+	const [tools, setTools] = useState([]);
+	const [servers, setServers] = useState({});
+
+	const agent = useAgent({
+		agent: "MyAgent",
+		onMcpUpdate: (mcpState) => {
+			setTools(mcpState.tools);
+			setServers(mcpState.servers);
+		},
+	});
+
+	return (
+		<div>
+			<h2>Connected Servers</h2>
+			{Object.entries(servers).map(([id, server]) => (
+				<div key={id}>
+					{server.name}: {server.connectionState}
+				</div>
+			))}
+
+			<h2>Available Tools ({tools.length})</h2>
+			{tools.map((tool) => (
+				<div key={`${tool.serverId}-${tool.name}`}>{tool.name}</div>
+			))}
+		</div>
+	);
+}
+```
+
+</TypeScriptExample>
+
+## API reference
+
+### addMcpServer()
+
+Add a connection to an MCP server and make its tools available to your agent.
 
 ```ts
 async addMcpServer(
   serverName: string,
   url: string,
-  callbackHost?: string,
-  agentsPrefix?: string,
   options?: {
-    client?: ConstructorParameters<typeof Client>[1];
+    callbackHost?: string;
+    agentsPrefix?: string;
+    client?: ClientOptions;
     transport?: {
       headers?: HeadersInit;
       type?: "sse" | "streamable-http" | "auto";
@@ -67,7 +409,7 @@ async addMcpServer(
   }
 ): Promise<
   | { id: string; state: "authenticating"; authUrl: string }
-  | { id: string; state: "ready"; authUrl?: undefined }
+  | { id: string; state: "ready" }
 >
 ```
 
@@ -75,13 +417,14 @@ async addMcpServer(
 
 - **`serverName`** (string, required) — Display name for the MCP server
 - **`url`** (string, required) — URL of the MCP server endpoint
-- **`callbackHost`** (string, optional) — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
-- **`agentsPrefix`** (string, optional) — URL prefix for OAuth callback path. Default: `"agents"`
 - **`options`** (object, optional) — Connection configuration:
-  - **`client`** — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas.
+  - **`callbackHost`** — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
+  - **`agentsPrefix`** — URL prefix for OAuth callback path. Default: `"agents"`
+  - **`client`** — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
   - **`transport`** — Transport layer configuration:
     - **`headers`** — Custom HTTP headers for authentication
-    - **`type`** — Transport type: `"streamable-http"`, `"sse"` (deprecated), or `"auto"` (tries streamable-http first, falls back to sse)
+    - **`type`** — Transport type: `"streamable-http"` (default), `"sse"`, or `"auto"`
+
 #### Returns
 
 A Promise that resolves to a discriminated union based on connection state:
@@ -94,49 +437,8 @@ A Promise that resolves to a discriminated union based on connection state:
 - **When `state` is `"ready"`:**
   - **`id`** (string) — Unique identifier for this server connection
   - **`state`** (`"ready"`) — Server is fully connected and operational
-  - **`authUrl`** (undefined) — Not present when already authenticated
 
-#### Example
-
-<TypeScriptExample>
-
-```ts title="src/index.ts"
-export class MyAgent extends Agent<Env, never> {
-	async onRequest(request: Request): Promise<Response> {
-		const result = await this.addMcpServer(
-			"Weather API",
-			"https://weather-mcp.example.com/mcp",
-		);
-
-		if (result.state === "authenticating") {
-			// User needs to complete OAuth flow
-			return new Response(JSON.stringify({ serverId: result.id, authUrl: result.authUrl }), {
-				headers: { "Content-Type": "application/json" },
-			});
-		}
-
-		return new Response(`Connected: ${result.id}`, { status: 200 });
-	}
-}
-```
-
-</TypeScriptExample>
-
-If the MCP server requires OAuth authentication, `authUrl` will be returned for user authentication. Connections persist across requests and the Agent will automatically reconnect if the connection is lost.
-
-:::note[Default JSON Schema Validation]
-
-All MCP client connections automatically include JSON schema validation using `CfWorkerJsonSchemaValidator`. This ensures that tool parameters are validated against their schemas before execution, improving reliability and catching errors early. You can override this default by providing custom client options.
-
-:::
-
-**Related:**
-
-- [OAuth handling guide](/agents/guides/oauth-mcp-client)
-- [Transport options](/agents/model-context-protocol/transport)
-- [removeMcpServer()](#removemcpserver)
-
-### `removeMcpServer()`
+### removeMcpServer()
 
 Disconnect from an MCP server and clean up its resources.
 
@@ -148,34 +450,7 @@ async removeMcpServer(id: string): Promise<void>
 
 - **`id`** (string, required) — Server connection ID returned from `addMcpServer()`
 
-#### Returns
-
-A Promise that resolves when disconnection is complete.
-
-#### Example
-
-<TypeScriptExample>
-
-```ts title="src/index.ts"
-export class MyAgent extends Agent<Env, never> {
-	async onRequest(request: Request): Promise<Response> {
-		const url = new URL(request.url);
-
-		if (url.pathname === "/disconnect" && request.method === "POST") {
-			const { serverId } = await request.json();
-			await this.removeMcpServer(serverId);
-
-			return new Response("Disconnected", { status: 200 });
-		}
-	}
-}
-```
-
-</TypeScriptExample>
-
-Disconnects from the MCP server, removes all related resources, and deletes the server record from storage.
-
-### `getMcpServers()`
+### getMcpServers()
 
 Get the current state of all MCP server connections.
 
@@ -183,16 +458,10 @@ Get the current state of all MCP server connections.
 getMcpServers(): MCPServersState
 ```
 
-#### Parameters
-
-None.
-
 #### Returns
 
-An `MCPServersState` object containing:
-
 ```ts
-{
+type MCPServersState = {
 	servers: Record<
 		string,
 		{
@@ -214,32 +483,11 @@ An `MCPServersState` object containing:
 	prompts: Array<Prompt & { serverId: string }>;
 	resources: Array<Resource & { serverId: string }>;
 	resourceTemplates: Array<ResourceTemplate & { serverId: string }>;
-}
+};
 ```
-
-#### Example
-
-<TypeScriptExample>
-
-```ts title="src/index.ts"
-export class MyAgent extends Agent<Env, never> {
-	async onRequest(request: Request): Promise<Response> {
-		const url = new URL(request.url);
-
-		if (url.pathname === "/mcp-state") {
-			const mcpState = this.getMcpServers();
-
-			return new Response(JSON.stringify(mcpState, null, 2), {
-				headers: { "Content-Type": "application/json" },
-			});
-		}
-	}
-}
-```
-
-</TypeScriptExample>
 
 The `state` field indicates the connection lifecycle:
+
 - `authenticating` — Waiting for OAuth authorization to complete
 - `connecting` — Establishing transport connection
 - `connected` — Transport connection established
@@ -247,15 +495,65 @@ The `state` field indicates the connection lifecycle:
 - `ready` — Fully connected and operational
 - `failed` — Connection failed
 
-Use this method to monitor connection status, list available tools, or build UI for connected servers.
+## Advanced: MCPClientManager
 
-## Lifecycle Methods
+For fine-grained control, use `this.mcp` directly:
 
-The `this.mcp` property exposes additional methods for fine-grained control over MCP server connections.
+### Step-by-step connection
 
-### `this.mcp.registerServer()`
+<TypeScriptExample>
 
-Register a server without immediately connecting. Useful for pre-configuring servers that will be connected later.
+```ts
+// 1. Register the server
+await this.mcp.registerServer(id, {
+	url: "https://mcp.example.com/mcp",
+	name: "My Server",
+	callbackUrl: "https://my-worker.workers.dev/agents/my-agent/default/callback",
+	transport: { type: "auto" },
+});
+
+// 2. Connect
+const connectResult = await this.mcp.connectToServer(id);
+
+if (connectResult.state === "failed") {
+	console.error("Connection failed:", connectResult.error);
+	return;
+}
+
+if (connectResult.state === "authenticating") {
+	// Handle OAuth...
+	return;
+}
+
+// 3. Discover capabilities
+const discoverResult = await this.mcp.discoverIfConnected(id);
+
+if (!discoverResult?.success) {
+	console.error("Discovery failed:", discoverResult?.error);
+}
+```
+
+</TypeScriptExample>
+
+### Event subscription
+
+<TypeScriptExample>
+
+```ts
+// Listen for state changes
+this.mcp.onServerStateChanged(() => {
+	console.log("MCP server state changed");
+	this.broadcastMcpServers(); // Notify connected clients
+});
+```
+
+</TypeScriptExample>
+
+### Lifecycle methods
+
+#### this.mcp.registerServer()
+
+Register a server without immediately connecting.
 
 ```ts
 async registerServer(
@@ -270,44 +568,20 @@ async registerServer(
 ): Promise<string>
 ```
 
-#### Parameters
-
-- **`id`** (string, required) — Unique identifier for the server
-- **`options`** (object, required) — Server configuration:
-  - **`url`** — MCP server endpoint URL
-  - **`name`** — Display name for the server
-  - **`callbackUrl`** — OAuth callback URL
-  - **`clientOptions`** — MCP client configuration
-  - **`transportOptions`** — Transport layer settings
-
-#### Returns
-
-A Promise that resolves to the server ID.
-
-### `this.mcp.connectToServer()`
+#### this.mcp.connectToServer()
 
 Establish a connection to a previously registered server.
 
 ```ts
 async connectToServer(id: string): Promise<MCPConnectionResult>
-```
 
-#### Parameters
-
-- **`id`** (string, required) — Server ID from `registerServer()`
-
-#### Returns
-
-A Promise that resolves to an `MCPConnectionResult`:
-
-```ts
 type MCPConnectionResult =
   | { state: "failed"; error: string }
   | { state: "authenticating"; authUrl: string }
   | { state: "connected" }
 ```
 
-### `this.mcp.discoverIfConnected()`
+#### this.mcp.discoverIfConnected()
 
 Check server capabilities if a connection is active.
 
@@ -316,19 +590,7 @@ async discoverIfConnected(
   serverId: string,
   options?: { timeoutMs?: number }
 ): Promise<MCPDiscoverResult | undefined>
-```
 
-#### Parameters
-
-- **`serverId`** (string, required) — Server ID to check
-- **`options`** (object, optional):
-  - **`timeoutMs`** — Discovery timeout in milliseconds
-
-#### Returns
-
-A Promise that resolves to `MCPDiscoverResult` if connected, or `undefined` if not connected:
-
-```ts
 type MCPDiscoverResult = {
   success: boolean;
   state: MCPConnectionState;
@@ -336,7 +598,7 @@ type MCPDiscoverResult = {
 }
 ```
 
-### `this.mcp.closeConnection()`
+#### this.mcp.closeConnection()
 
 Close the connection to a specific server while keeping it registered.
 
@@ -344,7 +606,7 @@ Close the connection to a specific server while keeping it registered.
 async closeConnection(id: string): Promise<void>
 ```
 
-### `this.mcp.closeAllConnections()`
+#### this.mcp.closeAllConnections()
 
 Close all active server connections while preserving registrations.
 
@@ -352,79 +614,27 @@ Close all active server connections while preserving registrations.
 async closeAllConnections(): Promise<void>
 ```
 
-## Capabilities
+#### this.mcp.getAITools()
 
-### `this.mcp.getAITools()`
-
-Get all discovered MCP tools in a format compatible with the [AI SDK](https://ai-sdk.dev/).
+Get all discovered MCP tools in a format compatible with the AI SDK.
 
 ```ts
 getAITools(): ToolSet
 ```
 
-#### Returns
-
-A `ToolSet` object containing all tools from connected MCP servers, ready to use with AI SDK functions like `generateText()` or `streamText()`.
-
-#### Example
-
-<TypeScriptExample>
-
-```ts title="src/index.ts"
-import { generateText } from "ai";
-
-export class MyAgent extends Agent<Env, never> {
-	async onRequest(request: Request): Promise<Response> {
-		// Get all MCP tools as AI SDK compatible tools
-		const tools = this.mcp.getAITools();
-
-		const result = await generateText({
-			model: openai("gpt-4"),
-			prompt: "What's the weather in San Francisco?",
-			tools,
-		});
-
-		return new Response(result.text);
-	}
-}
-```
-
-</TypeScriptExample>
-
 Tools are automatically namespaced by server ID to prevent conflicts when multiple MCP servers expose tools with the same name.
 
-## OAuth Configuration
-
-Customize OAuth callback behavior using `this.mcp.configureOAuthCallback()`:
-
-<TypeScriptExample>
-
-```ts title="src/index.ts"
-export class MyAgent extends Agent<Env, never> {
-	onStart() {
-		this.mcp.configureOAuthCallback({
-			successRedirect: "/connected",
-			errorRedirect: "/auth-failed",
-		});
-	}
-}
-```
-
-</TypeScriptExample>
-
-You can also provide a `customHandler` function for full control over the callback response. Refer to the [OAuth handling guide](/agents/guides/oauth-mcp-client) for details.
-
-## Error Handling
+## Error handling
 
 Use error detection utilities to handle connection errors:
 
 <TypeScriptExample>
 
-```ts title="src/index.ts"
+```ts
 import { isUnauthorized, isTransportNotImplemented } from "agents/mcp";
 
-export class MyAgent extends Agent<Env, never> {
-	async onRequest(request: Request): Promise<Response> {
+export class MyAgent extends Agent {
+	async onRequest(request: Request) {
 		try {
 			await this.addMcpServer("Server", "https://mcp.example.com/mcp");
 		} catch (error) {
@@ -441,7 +651,8 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-## Next Steps
+## Next steps
 
-- [Connect your first MCP server](/agents/guides/connect-mcp-client) — Tutorial to get started
-- [Handle OAuth flows](/agents/guides/oauth-mcp-client) — Complete OAuth integration guide
+- [Creating MCP servers](/agents/model-context-protocol/mcp-agent-api/) — Build your own MCP server
+- [Client SDK](/agents/api-reference/client-sdk/) — Connect from browsers with `onMcpUpdate`
+- [Store and sync state](/agents/api-reference/store-and-sync-state/) — Learn about agent persistence
