@@ -5,7 +5,16 @@ sidebar:
   order: 3
 ---
 
-import { Details,LinkCard,Render,PackageManagers,WranglerConfig, GlossaryTooltip, Steps, DashButton} from "~/components";
+import {
+	Details,
+	LinkCard,
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	GlossaryTooltip,
+	Steps,
+	DashButton,
+} from "~/components";
 
 In this guide, you will build an AI agent that researches GitHub repositories. Give it a task like "Compare open-source LLM projects" and it will:
 
@@ -23,7 +32,7 @@ Each LLM call and tool call becomes a <GlossaryTooltip term="step">step</Glossar
 | Waiting for human approval   | `waitForEvent()` pauses for hours or days                 |
 | Polling for job completion   | `step.sleep()` between checks without consuming resources |
 
-This guide uses the Anthropic SDK, but the same patterns apply to any LLM SDK (OpenAI, Google AI, Mistral, etc.).
+This guide uses the [Agents SDK](/agents/) with Workflows for real-time progress updates and the Anthropic SDK for LLM calls. The same patterns apply to any LLM SDK (OpenAI, Google AI, Mistral, etc.).
 
 ## Quick start
 
@@ -74,7 +83,7 @@ You will also need an [Anthropic API key](https://platform.claude.com/settings/k
 3. Install dependencies:
 
    ```sh
-   npm install @anthropic-ai/sdk
+   npm install agents @anthropic-ai/sdk
    ```
 
 </Steps>
@@ -141,7 +150,10 @@ Tools are functions the LLM can call to interact with external systems. You defi
    		if (!response.ok) return `Search failed: ${response.status}`;
    		const data = await response.json<GitHubSearchResponse>();
    		return JSON.stringify(
-   			data.items.map((r) => ({ name: r.full_name, stars: r.stargazers_count })),
+   			data.items.map((r) => ({
+   				name: r.full_name,
+   				stars: r.stargazers_count,
+   			})),
    		);
    	},
    };
@@ -196,112 +208,129 @@ Tools are functions the LLM can call to interact with external systems. You defi
 
 These tools complement each other: `search_repos` finds repositories, and `get_repo` fetches details about specific ones.
 
-## 3. Write your agent Workflow
+## 3. Write your Workflow
 
-A Workflow extends `WorkflowEntrypoint` and implements a `run` method.
+The `AgentWorkflow` class from the Agents SDK extends Cloudflare Workflows with bidirectional Agent communication. Your Workflow can report progress, broadcast to WebSocket clients, and call Agent methods via RPC.
 
 - The [`step`](/workflows/build/workers-api/#step) object provides methods to define durable steps.
 - `step.do(name, callback)` executes code and persists the result. If the Workflow is interrupted, it resumes from the last successful step.
+- `this.reportProgress()` sends progress updates to the Agent (non-durable).
+- `this.broadcastToClients()` sends messages to all connected WebSocket clients (non-durable).
 
 For a gentler introduction, refer to [Build your first Workflow](/workflows/get-started/guide/).
 
-The agent loop sends messages to the LLM, executes any tool calls, and repeats until the task is complete. Each LLM call and tool execution is wrapped in `step.do()` for durability.
+Create `src/workflow.ts`:
 
-<Steps>
-1. Create `src/workflow.ts`:
+```ts title="src/workflow.ts"
+import { AgentWorkflow } from "agents/workflows";
+import type { AgentWorkflowEvent, AgentWorkflowStep } from "agents/workflows";
+import Anthropic from "@anthropic-ai/sdk";
+import {
+	tools,
+	searchReposTool,
+	getRepoTool,
+	type SearchReposInput,
+	type GetRepoInput,
+} from "./tools";
+import type { ResearchAgent } from "./agent";
 
-   ```ts title="src/workflow.ts"
-   import { WorkflowEntrypoint, WorkflowStep } from "cloudflare:workers";
-   import type { WorkflowEvent } from "cloudflare:workers";
-   import Anthropic from "@anthropic-ai/sdk";
-   import {
-   	tools,
-   	searchReposTool,
-   	getRepoTool,
-   	type SearchReposInput,
-   	type GetRepoInput,
-   } from "./tools";
+type Params = { task: string };
 
-   type Params = { task: string };
+export class ResearchWorkflow extends AgentWorkflow<ResearchAgent, Params> {
+	async run(event: AgentWorkflowEvent<Params>, step: AgentWorkflowStep) {
+		const client = new Anthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
 
-   export class AgentWorkflow extends WorkflowEntrypoint<Env, Params> {
-   	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-   		const client = new Anthropic({ apiKey: this.env.ANTHROPIC_API_KEY });
+		const messages: Anthropic.MessageParam[] = [
+			{ role: "user", content: event.payload.task },
+		];
 
-   		const messages: Anthropic.MessageParam[] = [
-   			{ role: "user", content: event.payload.task },
-   		];
+		const toolDefinitions = tools.map(({ run, ...rest }) => rest);
 
-   		const toolDefinitions = tools.map(({ run, ...rest }) => rest);
+		// Durable agent loop - each turn is checkpointed
+		for (let turn = 0; turn < 10; turn++) {
+			// Report progress to Agent and connected clients
+			await this.reportProgress({
+				step: `llm-turn-${turn}`,
+				status: "running",
+				percent: turn / 10,
+				message: `Processing turn ${turn + 1}...`,
+			});
 
-   		// Durable agent loop - each turn is checkpointed
-   		for (let turn = 0; turn < 10; turn++) {
-   			const response = (await step.do(
-   				`llm-turn-${turn}`,
-   				{ retries: { limit: 3, delay: "10 seconds", backoff: "exponential" } },
-   				async () => {
-   					const msg = await client.messages.create({
-   						model: "claude-sonnet-4-5-20250929",
-   						max_tokens: 4096,
-   						tools: toolDefinitions,
-   						messages,
-   					});
-   					// Serialize for Workflow state
-   					return JSON.parse(JSON.stringify(msg));
-   				},
-   			)) as Anthropic.Message;
+			const response = (await step.do(
+				`llm-turn-${turn}`,
+				{ retries: { limit: 3, delay: "10 seconds", backoff: "exponential" } },
+				async () => {
+					const msg = await client.messages.create({
+						model: "claude-sonnet-4-5-20250929",
+						max_tokens: 4096,
+						tools: toolDefinitions,
+						messages,
+					});
+					// Serialize for Workflow state
+					return JSON.parse(JSON.stringify(msg));
+				},
+			)) as Anthropic.Message;
 
-   			if (!response || !response.content) continue;
+			if (!response || !response.content) continue;
 
-   			messages.push({ role: "assistant", content: response.content });
+			messages.push({ role: "assistant", content: response.content });
 
-   			if (response.stop_reason === "end_turn") {
-   				const textBlock = response.content.find(
-   					(b): b is Anthropic.TextBlock => b.type === "text",
-   				);
-   				return {
-   					status: "complete",
-   					turns: turn + 1,
-   					result: textBlock?.text ?? null,
-   				};
-   			}
+			if (response.stop_reason === "end_turn") {
+				const textBlock = response.content.find(
+					(b): b is Anthropic.TextBlock => b.type === "text",
+				);
+				const result = {
+					status: "complete",
+					turns: turn + 1,
+					result: textBlock?.text ?? null,
+				};
 
-   			const toolResults: Anthropic.ToolResultBlockParam[] = [];
+				// Report completion (durable)
+				await step.reportComplete(result);
+				return result;
+			}
 
-   			for (const block of response.content) {
-   				if (block.type !== "tool_use") continue;
+			const toolResults: Anthropic.ToolResultBlockParam[] = [];
 
-   				const result = await step.do(
-   					`tool-${turn}-${block.id}`,
-   					{ retries: { limit: 2, delay: "5 seconds" } },
-   					async () => {
-   						switch (block.name) {
-   							case "search_repos":
-   								return searchReposTool.run(block.input as SearchReposInput);
-   							case "get_repo":
-   								return getRepoTool.run(block.input as GetRepoInput);
-   							default:
-   								return `Unknown tool: ${block.name}`;
-   						}
-   					},
-   				);
+			for (const block of response.content) {
+				if (block.type !== "tool_use") continue;
 
-   				toolResults.push({
-   					type: "tool_result",
-   					tool_use_id: block.id,
-   					content: result,
-   				});
-   			}
+				// Broadcast tool execution to clients
+				this.broadcastToClients({
+					type: "tool_call",
+					tool: block.name,
+					turn,
+				});
 
-   			messages.push({ role: "user", content: toolResults });
-   		}
+				const result = await step.do(
+					`tool-${turn}-${block.id}`,
+					{ retries: { limit: 2, delay: "5 seconds" } },
+					async () => {
+						switch (block.name) {
+							case "search_repos":
+								return searchReposTool.run(block.input as SearchReposInput);
+							case "get_repo":
+								return getRepoTool.run(block.input as GetRepoInput);
+							default:
+								return `Unknown tool: ${block.name}`;
+						}
+					},
+				);
 
-   		return { status: "max_turns_reached", turns: 10 };
-   	}
-   }
-   ```
-</Steps>
+				toolResults.push({
+					type: "tool_result",
+					tool_use_id: block.id,
+					content: result,
+				});
+			}
 
+			messages.push({ role: "user", content: toolResults });
+		}
+
+		return { status: "max_turns_reached", turns: 10 };
+	}
+}
+```
 
 <Details header="Why separate steps for LLM and tools?">
 
@@ -318,11 +347,76 @@ This is especially important for:
 
 </Details>
 
-## 4. Configure your Workflow
+## 4. Write your Agent
+
+The Agent handles HTTP requests, WebSocket connections, and Workflow lifecycle events. It triggers a workflow instance `runWorkflow()` and receives progress updates via callbacks.
+
+Create `src/agent.ts`:
+
+```ts title="src/agent.ts"
+import { Agent } from "agents";
+
+type State = {
+	currentWorkflow?: string;
+	status?: string;
+};
+
+export class ResearchAgent extends Agent<Env, State> {
+	initialState: State = {};
+
+	// Start a research task - called via HTTP or WebSocket
+	async startResearch(task: string) {
+		const instanceId = await this.runWorkflow("RESEARCH_WORKFLOW", { task });
+		this.setState({
+			...this.state,
+			currentWorkflow: instanceId,
+			status: "running",
+		});
+		return { instanceId };
+	}
+
+	// Get status of a workflow
+	async getResearchStatus(instanceId: string) {
+		return this.getWorkflow(instanceId);
+	}
+
+	// Called when workflow reports progress
+	async onWorkflowProgress(
+		workflowName: string,
+		instanceId: string,
+		progress: unknown,
+	) {
+		// Broadcast to all connected WebSocket clients
+		this.broadcast(JSON.stringify({ type: "progress", instanceId, progress }));
+	}
+
+	// Called when workflow completes
+	async onWorkflowComplete(
+		workflowName: string,
+		instanceId: string,
+		result?: unknown,
+	) {
+		this.setState({ ...this.state, status: "complete" });
+		this.broadcast(JSON.stringify({ type: "complete", instanceId, result }));
+	}
+
+	// Called when workflow errors
+	async onWorkflowError(
+		workflowName: string,
+		instanceId: string,
+		error: string,
+	) {
+		this.setState({ ...this.state, status: "error" });
+		this.broadcast(JSON.stringify({ type: "error", instanceId, error }));
+	}
+}
+```
+
+## 5. Configure your project
 
 <Steps>
 
-1. Open `wrangler.jsonc` and add the `workflow` configuration:
+1. Open `wrangler.jsonc` and add the Agent and Workflow configuration:
 
    <WranglerConfig>
 
@@ -335,11 +429,25 @@ This is especially important for:
    	"observability": {
    		"enabled": true
    	},
+   	"durable_objects": {
+   		"bindings": [
+   			{
+   				"name": "ResearchAgent",
+   				"class_name": "ResearchAgent"
+   			}
+   		]
+   	},
    	"workflows": [
    		{
-   			"name": "agent-workflow",
-   			"binding": "AGENT_WORKFLOW",
-   			"class_name": "AgentWorkflow"
+   			"name": "research-workflow",
+   			"binding": "RESEARCH_WORKFLOW",
+   			"class_name": "ResearchWorkflow"
+   		}
+   	],
+   	"migrations": [
+   		{
+   			"tag": "v1",
+   			"new_sqlite_classes": ["ResearchAgent"]
    		}
    	]
    }
@@ -347,61 +455,80 @@ This is especially important for:
 
    </WranglerConfig>
 
-   The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.AGENT_WORKFLOW`).
-
 2. Generate types for your bindings:
 
    ```sh
    npx wrangler types
    ```
 
-   This creates a `worker-configuration.d.ts` file with the `Env` type that includes your `AGENT_WORKFLOW` binding.
+   This creates a `worker-configuration.d.ts` file with the `Env` type that includes your bindings.
 
 </Steps>
 
-## 5. Write your API
+## 6. Write your API
 
-The Worker exposes an HTTP API to start new agent instances and check their status. Each instance runs independently and can be polled for results.
+The Worker routes requests to the Agent, which manages workflow lifecycle. Use `routeAgentRequest()` for WebSocket connections and `getAgentByName()` for server-side RPC calls.
+
+Replace `src/index.ts`:
+
+```ts title="src/index.ts"
+import { getAgentByName, routeAgentRequest } from "agents";
+
+export { ResearchAgent } from "./agent";
+export { ResearchWorkflow } from "./workflow";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		// Route WebSocket connections to /agents/research-agent/{name}
+		const agentResponse = await routeAgentRequest(request, env);
+		if (agentResponse) return agentResponse;
+
+		// HTTP API for starting research tasks
+		if (request.method === "POST" && url.pathname === "/research") {
+			const { task, agentId } = await request.json<{
+				task: string;
+				agentId?: string;
+			}>();
+
+			// Get agent instance by name (creates if doesn't exist)
+			const agent = await getAgentByName(
+				env.ResearchAgent,
+				agentId ?? "default",
+			);
+
+			// Start the research workflow via RPC
+			const result = await agent.startResearch(task);
+			return Response.json(result);
+		}
+
+		// Check workflow status
+		if (url.pathname === "/status") {
+			const instanceId = url.searchParams.get("instanceId");
+			const agentId = url.searchParams.get("agentId") ?? "default";
+
+			if (!instanceId) {
+				return Response.json({ error: "instanceId required" }, { status: 400 });
+			}
+
+			const agent = await getAgentByName(env.ResearchAgent, agentId);
+			const status = await agent.getResearchStatus(instanceId);
+
+			return Response.json(status);
+		}
+
+		return new Response("POST /research with { task } to start", {
+			status: 400,
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+## 7. Develop locally
 
 <Steps>
-1. Replace `src/index.ts`:
 
-   ```ts title="src/index.ts"
-   export { AgentWorkflow } from "./workflow";
-
-   export default {
-   	async fetch(request: Request, env: Env): Promise<Response> {
-   		const url = new URL(request.url);
-
-   		const instanceId = url.searchParams.get("instanceId");
-   		if (instanceId) {
-   			const instance = await env.AGENT_WORKFLOW.get(instanceId);
-   			const status = await instance.status();
-
-   			return Response.json({
-   				status: status.status,
-   				output: status.output,
-   			});
-   		}
-
-   		if (request.method === "POST") {
-   			const { task } = await request.json<{ task: string }>();
-   			const instance = await env.AGENT_WORKFLOW.create({
-   				params: { task },
-   			});
-   			return Response.json({ instanceId: instance.id });
-   		}
-
-   		return new Response("POST a task to start an agent", { status: 400 });
-   	},
-   } satisfies ExportedHandler<Env>;
-   ```
-
-</Steps>
-
-## 6. Develop locally
-
-<Steps>
 1. Create a [`.env` file](/workers/wrangler/environments/#secrets-in-local-development) for local development:
 
    ```sh title=".env"
@@ -414,10 +541,10 @@ The Worker exposes an HTTP API to start new agent instances and check their stat
    npx wrangler dev
    ```
 
-3. Start an agent that searches and compares repositories:
+3. Start a research task:
 
    ```sh
-   curl -X POST http://localhost:8787 \
+   curl -X POST http://localhost:8787/research \
      -H "Content-Type: application/json" \
      -d '{"task": "Compare open-source LLM projects"}'
    ```
@@ -429,16 +556,17 @@ The Worker exposes an HTTP API to start new agent instances and check their stat
 4. Check progress (may take a few seconds to complete):
 
    ```sh
-   curl "http://localhost:8787?instanceId=abc-123-def"
+   curl "http://localhost:8787/status?instanceId=abc-123-def"
    ```
 
 </Steps>
 
-The agent will search for repositories, fetch details, and return a comparison.
+The agent will search for repositories, fetch details, and return a comparison. Progress updates are broadcast to any connected WebSocket clients.
 
-## 7. Deploy
+## 8. Deploy
 
 <Steps>
+
 1. Deploy the Worker:
 
    ```sh
@@ -451,78 +579,75 @@ The agent will search for repositories, fetch details, and return a comparison.
    npx wrangler secret put ANTHROPIC_API_KEY
    ```
 
-3. Start an agent on your deployed Worker:
+3. Start a research task on your deployed Worker:
 
    ```sh
-   curl -X POST https://durable-ai-agent.<your-subdomain>.workers.dev \
+   curl -X POST https://durable-ai-agent.<your-subdomain>.workers.dev/research \
      -H "Content-Type: application/json" \
      -d '{"task": "Compare open-source LLM projects"}'
    ```
 
-4. Inspect agent runs with the CLI:
+4. Inspect workflow runs with the CLI:
 
    ```sh
-   npx wrangler workflows instances describe agent-workflow latest
+   npx wrangler workflows instances describe research-workflow latest
    ```
 
    This shows every step the agent took, including LLM calls, tool executions, timing, and any retries.
 
-   You can also view this in the Cloudflare dashboard under **agent-workflow**.
+   You can also view this in the Cloudflare dashboard under **research-workflow**.
 
    <DashButton url="/?to=/:account/workers/workflows" />
 
 </Steps>
 
-## Adding real-time updates with Agents SDK
+## Real-time client integration
 
-The polling approach works well for simple use cases, but for real-time UIs you can combine Workflows with the [Agents SDK](/agents/). The pattern is as follows:
+Connect to your Agent via WebSocket to receive real-time progress updates. The `useAgent` hook connects to `/agents/{agent-name}/{instance-name}`:
 
-1. Agent handles WebSocket connections and client state
-2. Workflow runs the durable agent loop and pushes updates to the Agent
-3. Agent broadcasts state changes to all connected clients
-
-In your Workflow, push updates to the Agent:
-
-```ts
-// agentId passed via workflow params
-const agent = this.env.RESEARCH_AGENT.get(
-	this.env.RESEARCH_AGENT.idFromName(agentId),
-);
-await agent.updateProgress({
-	status: "searching",
-	message: "Found 5 repositories...",
-});
 ```
-
-In your Agent, receive updates and broadcast to clients:
-
-```ts
-import { Agent } from "agents";
-
-export class ResearchAgent extends Agent<Env, State> {
-	async updateProgress(progress: { status: string; message: string }) {
-		this.setState({ ...this.state, ...progress }); // pushes to all connected clients
-	}
-}
+/agents/research-agent/default  → ResearchAgent instance "default"
+/agents/research-agent/user-123 → ResearchAgent instance "user-123"
 ```
-
-Clients use `useAgent()` to subscribe to state changes:
 
 ```tsx
 import { useAgent } from "agents/react";
 
-const [state, setState] = useState(initialState);
+function ResearchUI({ agentId = "default" }) {
+	const [progress, setProgress] = useState(null);
 
-useAgent({
-	agent: "research-agent",
-	onStateUpdate: (newState) => setState(newState),
-});
-// state updates in real-time as the Workflow progresses
+	const { state } = useAgent({
+		agent: "research-agent", // Maps to ResearchAgent class
+		name: agentId, // Instance name
+		onMessage: (message) => {
+			const data = JSON.parse(message.data);
+			if (data.type === "progress") {
+				setProgress(data.progress);
+			}
+		},
+	});
+
+	return (
+		<div>
+			{progress && (
+				<p>
+					{progress.message} ({Math.round(progress.percent * 100)}%)
+				</p>
+			)}
+		</div>
+	);
+}
 ```
 
-This gives you durable execution (Workflows) with real-time UI updates (Agents SDK). For a complete example with a React UI, refer to the [durableAgent template](https://github.com/cloudflare/docs-examples/tree/main/workflows/durableAgent).
+Agent class names are automatically converted to kebab-case for URLs (`ResearchAgent` → `research-agent`).
 
 ## Learn more
+
+<LinkCard
+	title="Agents SDK Workflows"
+	href="/agents/api-reference/run-workflows/"
+	description="Complete API reference for AgentWorkflow, lifecycle callbacks, and bidirectional communication."
+/>
 
 <LinkCard
 	title="Events and parameters"

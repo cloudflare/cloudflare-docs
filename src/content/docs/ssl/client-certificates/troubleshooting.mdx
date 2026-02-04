@@ -13,6 +13,10 @@ import { DashButton } from "~/components";
 
 If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
 
+:::note
+Before troubleshooting, disable VPNs and proxies. These can interfere with the mTLS handshake.
+:::
+
 ---
 
 ## Check SSL/TLS handshake
@@ -20,10 +24,11 @@ If your query returns an error even after configuring and embedding a client SSL
 On your terminal, use the following command to check whether an SSL/TLS connection can be established successfully between the client and the API endpoint.
 
 ```sh
-curl --verbose --cert /path/to/certificate.pem --key /path/to/key.pem  https://your-api-endpoint.com
+curl --verbose --cert /path/to/certificate.pem --key /path/to/key.pem https://your-api-endpoint.com
 ```
 
 If the SSL/TLS handshake cannot be completed, check whether the certificate and the private key are correct.
+If the handshake completes but requests are still blocked, confirm that Cloudflare is verifying the client certificate.
 
 ---
 
@@ -53,3 +58,56 @@ To review mTLS rules, consider the steps below. For further guidance refer to [C
      ```
 
 4. To edit the rule, either use the user interface or select **Edit expression**.
+
+---
+
+## Advanced debugging
+
+You can use [Cloudflare Workers](/workers/) to debug client certificate validation failures.
+
+1. Create a Worker to debug print [cf.properties](/workers/runtime-apis/request/#incomingrequestcfproperties):
+
+   ```js
+   export default {
+     async fetch(request, env, ctx) {
+       console.info({ message: JSON.stringify(request.cf, null, 2) });
+       return new Response(JSON.stringify(request.cf, null, 2))
+     }
+   };
+   ```
+
+2. Associate the Worker with the hostname where mTLS is enabled using a [Worker route](/workers/configuration/routing/routes/) or a [Custom Domain](/workers/configuration/routing/custom-domains/).
+
+3. Make requests to the hostname and/or path configured, with and without sending the mTLS client certificate.
+
+4. View your logs on the [Observability](/workers/observability/) dashboard and compare the responses against the expected values listed below.
+
+	 <DashButton url="/?to=/:account/workers-and-pages/observability" />
+
+- Valid certificate
+
+   ```json
+   "tlsClientAuth": {
+     "certPresented": "1",
+     "certVerified": "SUCCESS",
+   },
+   ```
+
+- Invalid certificate (for example, self-signed certificates)
+
+   ```json
+   "tlsClientAuth": {
+     "certPresented": "1",
+     "certVerified": "FAILED:self signed certificate",
+   },
+   ```
+
+- No certificate
+
+   ```json
+   "tlsClientAuth": {
+     "certPresented": "0",
+     "certVerified": "NONE",
+   },
+   ```
+
