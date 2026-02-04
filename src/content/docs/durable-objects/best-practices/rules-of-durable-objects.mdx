@@ -1318,7 +1318,7 @@ export class GameMatch extends DurableObject<Env> {
     }
 
     // Called when the alarm fires
-    async alarm() {
+    async alarm(alarmInfo) {
     	const isActive = await this.ctx.storage.get<boolean>("gameActive");
 
     	if (!isActive) {
@@ -1330,7 +1330,17 @@ export class GameMatch extends DurableObject<Env> {
     	await this.ctx.storage.put("gameEnded", Date.now());
 
     	// Calculate final scores, notify players, etc.
-    	await this.calculateFinalScores();
+        try {
+            await this.calculateFinalScores();
+        } catch (err) {
+            // If we're almost out of retries but still have work to do, schedule a new alarm
+            // rather than letting our retries run out to ensure we keep getting invoked.
+            if (alarmInfo.retryCount >= 5) {
+                await this.ctx.storage.setAlarm(Date.now() + 30 * 1000);
+                return;
+            }
+            throw err;
+        }
 
     	// Schedule the next alarm only if there's more work to do
     	// In this case, schedule cleanup in 24 hours
