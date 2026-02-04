@@ -3,7 +3,7 @@ title: Reduced minimum cache TTL for Workers KV to 30 seconds
 description: The minimum cacheTtl parameter has been reduced from 60 seconds to 30 seconds, enabling faster cache refreshes and more granular cache control.
 products:
   - kv
-date: 2026-01-20
+date: 2026-01-30T12:00:00Z
 ---
 
 The minimum `cacheTtl` parameter for Workers KV has been reduced from 60 seconds to 30 seconds. This change applies to both `get()` and `getWithMetadata()` methods.
@@ -23,6 +23,7 @@ const valueWithMetadata = await env.NAMESPACE.getWithMetadata("my-key", {
 	cacheTtl: 30, // Cache for minimum 30 seconds
 });
 ```
+
 The default cache TTL remains unchanged at 60 seconds. Upgrade to the latest version of Wrangler to be able to use 30 seconds `cacheTtl`.
 
 This change affects all KV read operations using the binding API. For more information, consult the [Workers KV cache TTL documentation](/kv/api/read-key-value-pairs/#cachettl-parameter).

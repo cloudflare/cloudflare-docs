@@ -1,0 +1,63 @@
+---
+title: "WAF Release - 2026-02-02"
+description: Cloudflare WAF managed rulesets 2026-02-02 release
+date: 2026-02-02
+---
+
+import { RuleID } from "~/components";
+
+This week’s release introduces new detections for CVE-2025-64459 and CVE-2025-24893.
+
+**Key Findings**
+
+- CVE-2025-64459: Django versions prior to 5.1.14, 5.2.8, and 4.2.26 are vulnerable to SQL injection via crafted dictionaries passed to QuerySet methods and the `Q()` class.
+- CVE-2025-24893: XWiki allows unauthenticated remote code execution through crafted requests to the SolrSearch endpoint, affecting the entire installation.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+    <tbody>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="7a47683eacce4abd870ab2c630698ff3" />
+      </td>
+      <td>N/A</td>
+      <td>XWiki - Remote Code Execution - CVE:CVE-2025-24893 2</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a new detection.</td>
+  </tr>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="ad5c52f6ca334ef4a844e5e5da8ba7e6" />
+      </td>
+      <td>N/A</td>
+      <td>Django SQLI - CVE:CVE-2025-64459</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a new detection.</td>
+  </tr>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="f3a89a84e3744021a2f8e9291b138b3e" />
+      </td>
+      <td>N/A</td>
+      <td>NoSQL, MongoDB - SQLi - Comparison</td>
+      <td>Block</td>
+      <td>Block</td>
+      <td>Changed the description of the rule.</td>
+  </tr>
+  </tbody>
+</table>

@@ -114,10 +114,9 @@ This setting is primarily used as a prerequisite for [WARP Connector](/cloudflar
 
 - `Disabled`: (default) Sets the local interface IP to `172.16.0.2` on all devices. This configuration is only respected by devices using [WireGuard](#device-tunnel-protocol) and does not affect devices using [MASQUE](#device-tunnel-protocol).
 
-- `Enabled`: Sets the local interface IP on each device to its <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>.
+- `Enabled`: Sets the local interface IP on each device to its <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP</GlossaryTooltip> or to a [custom device IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/).
 
-The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization or switches to a different registration. Disconnects and reconnects do not change the IP address assignment.
-
+The IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization or switches to a different registration. Disconnects and reconnects do not change the IP address assignment.
 
 ### Allow all Cloudflare One traffic to reach enrolled devices
 
@@ -131,10 +130,10 @@ The CGNAT IP assigned to a WARP device is permanent until the device unregisters
 
 Allows traffic on-ramped using [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/cloudflare-one/networks/connectors/wan-tunnels/) to route to WARP devices enrolled in your Zero Trust organization.
 
-Each WARP device is assigned a virtual IP address in the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> space (`100.96.0.0/12`). With this setting `Enabled`, users on your private network will be able to connect to these virtual IPs and access [TCP, UDP, and/or ICMP-based services](/cloudflare-one/traffic-policies/proxy/) on your WARP devices. You can create [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to control which users and devices can access the `100.96.0.0/12`.
+Each WARP device is assigned a virtual IP address in the <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP</GlossaryTooltip> space (`100.96.0.0/12`) or a [custom device IP range](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-ips/). With this setting `Enabled`, users on your private network will be able to connect to these device IPs and access [TCP, UDP, and/or ICMP-based services](/cloudflare-one/traffic-policies/proxy/) on your WARP devices. You can create [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to control which users and devices can access the device IPs.
 
 :::note
-Ensure that traffic destined to `100.96.0.0/12` routes from your private network to Cloudflare Gateway. For example, if you are making a [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) connection, you must configure your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) so that traffic to `100.96.0.0/12` routes through the WARP tunnel.
+Ensure that traffic destined to your device IPs routes from your private network to Cloudflare Gateway. For example, if you are making a [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) connection, you must configure your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) so that traffic to your device IPs routes through the WARP tunnel.
 :::
 
 ## Global disconnection settings

@@ -70,7 +70,7 @@ Now, with **Cloudflare Workers**:
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./dist/client/"
 	}
@@ -98,7 +98,7 @@ For a Single Page Application (SPA):
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./dist/client/",
 		"not_found_handling": "single-page-application"
@@ -115,7 +115,7 @@ For custom 404 pages:
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"assets": {
 		"directory": "./dist/client/",
 		"not_found_handling": "404-page"
@@ -156,7 +156,7 @@ Then, update your configuration file's `main` field to point to the location of 
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./dist/client/_worker.js", // or some other location if you moved the script out of the static asset directory
 	"assets": {
 		"directory": "./dist/client/"
@@ -185,7 +185,7 @@ Once the Worker script has been compiled, you can update your configuration file
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./dist/worker/index.js",
 	"assets": {
 		"directory": "./dist/client/"
@@ -206,7 +206,7 @@ Workers, on the other hand, will default to serving static assets ahead of your 
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./dist/worker/index.js",
 	"assets": {
 		"directory": "./dist/client/",
@@ -240,7 +240,7 @@ export default class extends WorkerEntrypoint {
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
 	"assets": {
 		"directory": "./dist/client/"
@@ -259,7 +259,7 @@ Pages automatically provided [an `ASSETS` binding](/pages/functions/api-referenc
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
 	"assets": {
 		"directory": "./dist/client/",
@@ -279,7 +279,7 @@ If you had customized [placement](/workers/configuration/placement/), or set a [
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./worker/index.ts",
 	"placement": {
@@ -328,7 +328,7 @@ To get a similar experience in Workers, you must:
    ```json
    {
    	"name": "my-worker",
-   	"compatibility_date": "2025-04-01",
+   	"compatibility_date": "$today",
    	"main": "./worker/index.ts",
    	"assets": {
    		"directory": "./dist/client/"
@@ -362,7 +362,7 @@ Where previously you were offered a `pages.dev` subdomain for your Pages project
 ```json
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-04-01",
+	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
 	"workers_dev": true
 }
