@@ -105,7 +105,7 @@ route /p add 100.96.0.0/12 mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 ## 5. Test the WARP Connector
 
-You can now send a request from a WARP client user device to a device behind WARP connector. For example, on the WARP client device run `ping 10.0.0.2`.
+You can now send a request from a WARP client user device to your subnet. To test connections to the WARP Connector host, on the WARP client device run `ping 10.0.0.1`. To connect to a device behind WARP connector, run `ping 10.0.0.2`.
 
 ```mermaid
     flowchart LR
