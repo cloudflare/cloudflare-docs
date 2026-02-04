@@ -127,7 +127,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 
 4. In **Name**, give your tunnel a descriptive name. This name must be unique, cannot contain spaces or special characters, and cannot be shared with other tunnels.
 5. _(Optional)_ Give your tunnel a description in **Description**.
-6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (`/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side.
+6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (`/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using a `/31` subnet, as it provides the most efficient use of IP address space.
 
 Expand the section below for your tunnel type to complete the configuration:
 
