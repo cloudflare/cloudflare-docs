@@ -5,7 +5,7 @@ sidebar:
   order: 9
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Agents can handle HTTP requests and stream responses using Server-Sent Events (SSE). This page covers the `onRequest` method and SSE patterns.
 
@@ -189,6 +189,20 @@ See [WebSockets](/agents/api-reference/websockets/) for WebSocket documentation.
 
 ## Next steps
 
-- Learn about [WebSockets](/agents/api-reference/websockets/) for bi-directional communication
-- Explore [state management](/agents/api-reference/store-and-sync-state/) for persisting stream progress
-- Build a [chat agent](/agents/getting-started/build-a-chat-agent/) with streaming responses
+<LinkCard
+	title="WebSockets"
+	href="/agents/api-reference/websockets/"
+	description="Bi-directional real-time communication."
+/>
+
+<LinkCard
+	title="State management"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Persist stream progress and agent state."
+/>
+
+<LinkCard
+	title="Build a chat agent"
+	href="/agents/getting-started/build-a-chat-agent/"
+	description="Streaming responses with AI chat."
+/>

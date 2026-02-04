@@ -7,7 +7,7 @@ sidebar:
   order: 9
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 MCP servers, like any web application, need to be secured so they can be used by trusted users without abuse. The MCP specification uses OAuth 2.1 for authentication between MCP clients and servers.
 
@@ -270,6 +270,20 @@ When reading the cookie, verify the HMAC signature before trusting the data. If 
 
 ## Next steps
 
-- Learn about [MCP authorization](/agents/model-context-protocol/authorization/)
-- Build a [remote MCP server](/agents/guides/remote-mcp-server/)
-- Review the [MCP specification security best practices](https://modelcontextprotocol.io/specification/draft/basic/security_best_practices)
+<LinkCard
+	title="MCP authorization"
+	href="/agents/model-context-protocol/authorization/"
+	description="OAuth and authentication for MCP servers."
+/>
+
+<LinkCard
+	title="Build a remote MCP server"
+	href="/agents/guides/remote-mcp-server/"
+	description="Deploy MCP servers on Cloudflare."
+/>
+
+<LinkCard
+	title="MCP security best practices"
+	href="https://modelcontextprotocol.io/specification/draft/basic/security_best_practices"
+	description="Official MCP specification security guide."
+/>

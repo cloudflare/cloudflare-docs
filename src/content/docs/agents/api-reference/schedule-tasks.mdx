@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Schedule tasks to run in the future — whether that is seconds from now, at a specific date/time, or on a recurring cron schedule. Scheduled tasks survive agent restarts and are persisted to SQLite.
 
@@ -752,6 +752,20 @@ Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
 
 ## Next steps
 
-- Learn about [queue tasks](/agents/api-reference/queue-tasks/) for immediate background processing.
-- Explore [running workflows](/agents/api-reference/run-workflows/) for durable multi-step processing.
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
+<LinkCard
+	title="Queue tasks"
+	href="/agents/api-reference/queue-tasks/"
+	description="Immediate background task processing."
+/>
+
+<LinkCard
+	title="Run Workflows"
+	href="/agents/api-reference/run-workflows/"
+	description="Durable multi-step background processing."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>

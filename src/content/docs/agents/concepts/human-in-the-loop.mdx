@@ -5,6 +5,8 @@ sidebar:
   order: 5
 ---
 
+import { LinkCard } from "~/components";
+
 Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into automated processes. These workflows pause at critical points for human review, validation, or decision-making before proceeding.
 
 ## Why human-in-the-loop?
@@ -116,6 +118,20 @@ Implement clear escalation paths for exceptional cases and automatic checkpointi
 
 ## Next steps
 
-- Follow the [Human-in-the-loop patterns guide](/agents/guides/human-in-the-loop/) for implementation examples
-- Learn about [Workflows](/agents/api-reference/run-workflows/) for the complete approval API
-- Explore [MCP server elicitation](/agents/model-context-protocol/mcp-agent-api/#elicitation-human-in-the-loop) for interactive input
+<LinkCard
+	title="Human-in-the-loop patterns"
+	href="/agents/guides/human-in-the-loop/"
+	description="Implementation examples for approval flows."
+/>
+
+<LinkCard
+	title="Run Workflows"
+	href="/agents/api-reference/run-workflows/"
+	description="Complete API for workflow approvals."
+/>
+
+<LinkCard
+	title="MCP elicitation"
+	href="/agents/model-context-protocol/mcp-agent-api/#elicitation-human-in-the-loop"
+	description="Interactive input from MCP clients."
+/>

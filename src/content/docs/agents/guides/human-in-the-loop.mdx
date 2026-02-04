@@ -6,7 +6,7 @@ sidebar:
 description: Implement human-in-the-loop functionality using Cloudflare Agents for workflow approvals and MCP elicitation
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
 Human-in-the-loop (HITL) patterns allow agents to pause execution and wait for human approval, confirmation, or input before proceeding. This is essential for compliance, safety, and oversight in agentic systems.
 
@@ -529,7 +529,26 @@ class MultiApprovalAgent extends Agent<Env, State> {
 
 ## Next steps
 
-- Learn more about [Workflows](/agents/api-reference/run-workflows/) for the complete `waitForApproval()` API
-- Explore [MCP servers](/agents/model-context-protocol/mcp-agent-api/) for building MCP agents with elicitation
-- Add [email notifications](/email-routing/email-workers/send-email-workers/) for pending approvals
-- Implement approval timeouts with [Schedules](/agents/api-reference/schedule-tasks/)
+<LinkCard
+	title="Run Workflows"
+	href="/agents/api-reference/run-workflows/"
+	description="Complete waitForApproval() API reference."
+/>
+
+<LinkCard
+	title="MCP servers"
+	href="/agents/model-context-protocol/mcp-agent-api/"
+	description="Build MCP agents with elicitation."
+/>
+
+<LinkCard
+	title="Email notifications"
+	href="/email-routing/email-workers/send-email-workers/"
+	description="Send notifications for pending approvals."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Implement approval timeouts with schedules."
+/>

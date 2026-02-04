@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
 This guide explains how requests are routed to agents, how naming works, and patterns for organizing your agents.
 
@@ -749,7 +749,26 @@ class SecureAgent extends Agent {
 
 ## Next steps
 
-- Learn about the [Client SDK](/agents/api-reference/client-sdk/) for connecting from browsers.
-- Review [cross-domain authentication](/agents/guides/cross-domain-authentication/) for WebSocket auth patterns.
-- Explore [callable methods](/agents/api-reference/callable-methods/) for RPC from clients.
-- Set up [configuration](/agents/api-reference/configuration/) for your agent bindings.
+<LinkCard
+	title="Client SDK"
+	href="/agents/api-reference/client-sdk/"
+	description="Connect from browsers with useAgent and AgentClient."
+/>
+
+<LinkCard
+	title="Cross-domain authentication"
+	href="/agents/guides/cross-domain-authentication/"
+	description="WebSocket authentication patterns."
+/>
+
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="RPC from clients over WebSocket."
+/>
+
+<LinkCard
+	title="Configuration"
+	href="/agents/api-reference/configuration/"
+	description="Set up agent bindings in wrangler.jsonc."
+/>

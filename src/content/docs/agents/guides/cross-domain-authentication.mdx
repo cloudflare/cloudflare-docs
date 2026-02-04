@@ -5,7 +5,7 @@ sidebar:
   order: 13
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 When your Agents are deployed, to keep things secure, send a token from the client, then verify it on the server. This guide covers authentication patterns for WebSocket connections to agents.
 
@@ -281,6 +281,20 @@ export class SecureAgent extends Agent {
 
 ## Next steps
 
-- Learn about [routing](/agents/api-reference/routing/) for routing and authentication hooks.
-- Explore [WebSocket connections](/agents/api-reference/websockets/) for real-time communication.
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
+<LinkCard
+	title="Routing"
+	href="/agents/api-reference/routing/"
+	description="Routing and authentication hooks."
+/>
+
+<LinkCard
+	title="WebSockets"
+	href="/agents/api-reference/websockets/"
+	description="Real-time bidirectional communication."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>

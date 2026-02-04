@@ -6,7 +6,13 @@ sidebar:
 reviewed: 2025-11-07
 ---
 
-import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
+import {
+	Details,
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
 
 ## Deploy your first ChatGPT App
 
@@ -844,7 +850,26 @@ Now that you have a working ChatGPT App, you can:
 
 ## Related resources
 
-- [Agents documentation](/agents/api-reference/agents-api)
-- [Durable Objects documentation](/durable-objects/)
-- [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
-- [OpenAI Apps SDK Reference](https://developers.openai.com/apps-sdk/)
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="Durable Objects"
+	href="/durable-objects/"
+	description="Learn about the underlying stateful infrastructure."
+/>
+
+<LinkCard
+	title="Model Context Protocol"
+	href="https://modelcontextprotocol.io/"
+	description="MCP specification and documentation."
+/>
+
+<LinkCard
+	title="OpenAI Apps SDK"
+	href="https://developers.openai.com/apps-sdk/"
+	description="Official OpenAI Apps SDK reference."
+/>

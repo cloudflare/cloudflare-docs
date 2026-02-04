@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Receive webhook events from external services and route them to dedicated agent instances. Each webhook source (repository, customer, device) can have its own agent with isolated state, persistent storage, and real-time client connections.
 
@@ -635,6 +635,20 @@ const secret = this.env.GITHUB_WEBHOOK_SECRET;
 
 ## Next steps
 
-- Learn about [queue tasks](/agents/api-reference/queue-tasks/) for background processing.
-- Explore [email routing](/agents/api-reference/email/) for handling inbound emails.
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
+<LinkCard
+	title="Queue tasks"
+	href="/agents/api-reference/queue-tasks/"
+	description="Background task processing."
+/>
+
+<LinkCard
+	title="Email routing"
+	href="/agents/api-reference/email/"
+	description="Handle inbound emails in your agent."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>

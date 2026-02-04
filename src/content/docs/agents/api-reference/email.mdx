@@ -5,7 +5,7 @@ sidebar:
   order: 16
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
 Agents can receive and process emails using Cloudflare [Email Routing](/email-routing/email-workers/). This guide covers how to route inbound emails to your Agents and handle replies securely.
 
@@ -527,6 +527,20 @@ Useful when sending emails through external services while maintaining secure re
 
 ## Next steps
 
-- Learn about [handling HTTP requests](/agents/api-reference/http-sse/) in your Agent.
-- Explore [webhooks](/agents/guides/webhooks/) for receiving events from external services.
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
+<LinkCard
+	title="HTTP and SSE"
+	href="/agents/api-reference/http-sse/"
+	description="Handle HTTP requests in your Agent."
+/>
+
+<LinkCard
+	title="Webhooks"
+	href="/agents/guides/webhooks/"
+	description="Receive events from external services."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>

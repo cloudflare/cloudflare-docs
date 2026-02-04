@@ -9,6 +9,7 @@ import {
 	PackageManagers,
 	TypeScriptExample,
 	WranglerConfig,
+	LinkCard,
 } from "~/components";
 
 This guide shows how to add agents to an existing Cloudflare Workers project. If you are starting fresh, see [Building a chat agent](/agents/getting-started/build-a-chat-agent/) instead.
@@ -468,7 +469,26 @@ Check that:
 
 ## Next steps
 
-- Learn about [state management](/agents/api-reference/store-and-sync-state/) for managing agent state.
-- Explore [scheduling](/agents/api-reference/schedule-tasks/) for background tasks and cron jobs.
-- Read the [Agent class internals](/agents/concepts/agent-class/) for the full lifecycle and methods.
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
+<LinkCard
+	title="State management"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Manage and synchronize agent state."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Background tasks and cron jobs."
+/>
+
+<LinkCard
+	title="Agent class internals"
+	href="/agents/concepts/agent-class/"
+	description="Full lifecycle and methods reference."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>

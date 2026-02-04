@@ -13,6 +13,7 @@ import {
 	TypeScriptExample,
 	PackageManagers,
 	Steps,
+	LinkCard,
 } from "~/components";
 
 Your Agent can connect to external [Model Context Protocol (MCP)](https://modelcontextprotocol.io) servers to access their tools and extend your Agent's capabilities. In this tutorial, you'll create an Agent that connects to an MCP server and uses one of its tools.
@@ -229,5 +230,14 @@ Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and
 
 ## Next steps
 
-- [Handle OAuth flows](/agents/guides/oauth-mcp-client) — Configure OAuth callbacks and error handling
-- [McpClient — API reference](/agents/model-context-protocol/mcp-client-api/) — Complete API documentation
+<LinkCard
+	title="Handle OAuth flows"
+	href="/agents/guides/oauth-mcp-client/"
+	description="Configure OAuth callbacks and error handling."
+/>
+
+<LinkCard
+	title="MCP Client API"
+	href="/agents/model-context-protocol/mcp-client-api/"
+	description="Complete API documentation for MCP clients."
+/>

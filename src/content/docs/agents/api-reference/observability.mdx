@@ -5,7 +5,7 @@ sidebar:
   order: 18
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 `Agent` instances use the `observability` property to emit various internal events that can be used for logging and monitoring.
 
@@ -154,6 +154,20 @@ const observability: Observability = {
 
 ## Next steps
 
-- Learn about [configuration](/agents/api-reference/configuration/) for wrangler.jsonc setup.
-- Explore [Cloudflare dashboard](/agents/api-reference/configuration/#dashboard-setup) for viewing logs.
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
+<LinkCard
+	title="Configuration"
+	href="/agents/api-reference/configuration/"
+	description="wrangler.jsonc setup and deployment."
+/>
+
+<LinkCard
+	title="Dashboard setup"
+	href="/agents/api-reference/configuration/#dashboard-setup"
+	description="View logs in the Cloudflare dashboard."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>

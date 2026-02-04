@@ -8,6 +8,8 @@ sidebar:
   order: 2
 ---
 
+import { LinkCard } from "~/components";
+
 An agent is an AI system that can autonomously execute tasks by making decisions about tool usage and process flow. Unlike traditional automation that follows predefined paths, agents can dynamically adapt their approach based on context and intermediate results. Agents are also distinct from co-pilots (such as traditional chat applications) in that they can fully automate a task, as opposed to simply augmenting and extending human input.
 
 - **Agents** → non-linear, non-deterministic (can change from run to run)
@@ -84,6 +86,20 @@ The Cloudflare Agents SDK provides the infrastructure for building production ag
 
 ## Next steps
 
-- Follow the [Quick start](/agents/getting-started/quick-start/) to build your first agent in 10 minutes
-- Explore the [Agents API](/agents/api-reference/agents-api/) for the complete reference
-- Learn about [using AI models](/agents/api-reference/using-ai-models/) in your agents
+<LinkCard
+	title="Quick start"
+	href="/agents/getting-started/quick-start/"
+	description="Build your first agent in 10 minutes."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="Using AI models"
+	href="/agents/api-reference/using-ai-models/"
+	description="Integrate OpenAI, Anthropic, and other providers."
+/>

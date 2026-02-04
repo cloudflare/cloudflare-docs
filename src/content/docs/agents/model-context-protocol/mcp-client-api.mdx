@@ -7,7 +7,7 @@ sidebar:
   order: 7
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { Render, TypeScriptExample, LinkCard } from "~/components";
 
 Connect your agent to external MCP (Model Context Protocol) servers to use their tools, resources, and prompts. This enables your agent to interact with GitHub, Slack, databases, and other services through a standardized protocol.
 
@@ -653,6 +653,20 @@ export class MyAgent extends Agent {
 
 ## Next steps
 
-- [Creating MCP servers](/agents/model-context-protocol/mcp-agent-api/) — Build your own MCP server
-- [Client SDK](/agents/api-reference/client-sdk/) — Connect from browsers with `onMcpUpdate`
-- [Store and sync state](/agents/api-reference/store-and-sync-state/) — Learn about agent persistence
+<LinkCard
+	title="Creating MCP servers"
+	href="/agents/model-context-protocol/mcp-agent-api/"
+	description="Build your own MCP server."
+/>
+
+<LinkCard
+	title="Client SDK"
+	href="/agents/api-reference/client-sdk/"
+	description="Connect from browsers with onMcpUpdate."
+/>
+
+<LinkCard
+	title="Store and sync state"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Learn about agent persistence."
+/>

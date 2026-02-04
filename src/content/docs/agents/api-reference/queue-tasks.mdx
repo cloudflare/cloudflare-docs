@@ -5,7 +5,7 @@ sidebar:
   order: 11
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 The Agents SDK provides a built-in queue system that allows you to schedule tasks for asynchronous execution. This is useful for background processing, delayed operations, and managing workloads that do not need immediate execution.
 
@@ -356,6 +356,20 @@ Use **queue** when you want tasks to execute as soon as possible in order. Use [
 
 ## Next steps
 
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
-- Learn about [scheduling tasks](/agents/api-reference/schedule-tasks/) for time-based execution.
-- Explore [running workflows](/agents/api-reference/run-workflows/) for durable multi-step processing.
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Time-based execution with cron and delays."
+/>
+
+<LinkCard
+	title="Run Workflows"
+	href="/agents/api-reference/run-workflows/"
+	description="Durable multi-step background processing."
+/>

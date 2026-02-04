@@ -5,7 +5,7 @@ sidebar:
   order: 17
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 The `getCurrentAgent()` function allows you to access the current agent context from anywhere in your code, including external utility functions and libraries. This is useful when you need agent information in functions that do not have direct access to `this`.
 
@@ -272,6 +272,20 @@ const { agent } = getCurrentAgent<MyAgent>();
 
 ## Next steps
 
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
-- Learn about [callable methods](/agents/api-reference/callable-methods/) for exposing methods to clients.
-- Explore [state management](/agents/api-reference/store-and-sync-state/) for managing agent state.
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="Expose methods to clients via RPC."
+/>
+
+<LinkCard
+	title="State management"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Manage and sync agent state."
+/>

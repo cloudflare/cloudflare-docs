@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Connect to agents from any JavaScript runtime — browsers, Node.js, Deno, Bun, or edge functions — using WebSockets or HTTP. The SDK provides real-time state synchronization, RPC method calls, and streaming responses.
 
@@ -589,7 +589,26 @@ client.addEventListener("message", () => {});
 
 ## Next steps
 
-- Learn about [routing](/agents/api-reference/routing/) for URL patterns and custom routing.
-- Explore [callable methods](/agents/api-reference/callable-methods/) for RPC over WebSocket.
-- Review [cross-domain authentication](/agents/guides/cross-domain-authentication/) for secure connections.
-- Build a [chat agent](/agents/getting-started/build-a-chat-agent/) with the complete client integration.
+<LinkCard
+	title="Routing"
+	href="/agents/api-reference/routing/"
+	description="URL patterns and custom routing options."
+/>
+
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="RPC over WebSocket for client-server method calls."
+/>
+
+<LinkCard
+	title="Cross-domain authentication"
+	href="/agents/guides/cross-domain-authentication/"
+	description="Secure WebSocket connections across domains."
+/>
+
+<LinkCard
+	title="Build a chat agent"
+	href="/agents/getting-started/build-a-chat-agent/"
+	description="Complete client integration with AI chat."
+/>

@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, LinkCard } from "~/components";
 
 This page provides an overview of the Agents SDK. For detailed documentation on each feature, see the linked reference pages.
 
@@ -186,7 +186,26 @@ See [Routing](/agents/api-reference/routing/) for custom paths, CORS, and instan
 
 ## Next steps
 
-- Follow the [Quick start](/agents/getting-started/quick-start/) to build your first agent
-- Learn about [configuration](/agents/api-reference/configuration/) and deployment
-- Explore [WebSockets](/agents/api-reference/websockets/) for real-time communication
-- Build AI applications with [AIChatAgent](/agents/getting-started/build-a-chat-agent/)
+<LinkCard
+	title="Quick start"
+	href="/agents/getting-started/quick-start/"
+	description="Build your first agent in about 10 minutes."
+/>
+
+<LinkCard
+	title="Configuration"
+	href="/agents/api-reference/configuration/"
+	description="Learn about wrangler.jsonc setup and deployment."
+/>
+
+<LinkCard
+	title="WebSockets"
+	href="/agents/api-reference/websockets/"
+	description="Real-time bidirectional communication with clients."
+/>
+
+<LinkCard
+	title="Build a chat agent"
+	href="/agents/getting-started/build-a-chat-agent/"
+	description="Build AI applications with AIChatAgent."
+/>

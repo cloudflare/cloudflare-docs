@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Agents support WebSocket connections for real-time, bi-directional communication. This page covers server-side WebSocket handling. For client-side connection, see the [Client SDK](/agents/api-reference/client-sdk/).
 
@@ -202,6 +202,20 @@ See [Client SDK](/agents/api-reference/client-sdk/) for full documentation.
 
 ## Next steps
 
-- Learn about [state synchronization](/agents/api-reference/store-and-sync-state/) between agents and clients
-- Explore [callable methods](/agents/api-reference/callable-methods/) for RPC over WebSockets
-- Review [cross-domain authentication](/agents/guides/cross-domain-authentication/) for secure connections
+<LinkCard
+	title="State synchronization"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Sync state between agents and clients."
+/>
+
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="RPC over WebSockets for method calls."
+/>
+
+<LinkCard
+	title="Cross-domain authentication"
+	href="/agents/guides/cross-domain-authentication/"
+	description="Secure WebSocket connections across domains."
+/>

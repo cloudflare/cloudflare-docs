@@ -7,7 +7,7 @@ sidebar:
   order: 5
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 When you build MCP Servers on Cloudflare, you extend the [`McpAgent` class](https://github.com/cloudflare/agents/blob/main/packages/agents/src/mcp.ts) from the Agents SDK:
 
@@ -401,8 +401,32 @@ For more human-in-the-loop patterns including workflow-based approval, see [Huma
 
 ## Next steps
 
-- Follow the [Build a Remote MCP server](/agents/guides/remote-mcp-server/) guide to get started
-- Learn about [Tools](/agents/model-context-protocol/tools/) and how to design them
-- Set up [Authorization](/agents/model-context-protocol/authorization/) with OAuth
-- Review [Securing MCP servers](/agents/guides/securing-mcp-server/) for production deployments
-- Explore [createMcpHandler](/agents/model-context-protocol/mcp-handler-api/) for stateless MCP servers
+<LinkCard
+	title="Build a Remote MCP server"
+	href="/agents/guides/remote-mcp-server/"
+	description="Get started with MCP servers on Cloudflare."
+/>
+
+<LinkCard
+	title="MCP Tools"
+	href="/agents/model-context-protocol/tools/"
+	description="Design and add tools to your MCP server."
+/>
+
+<LinkCard
+	title="Authorization"
+	href="/agents/model-context-protocol/authorization/"
+	description="Set up OAuth authentication."
+/>
+
+<LinkCard
+	title="Securing MCP servers"
+	href="/agents/guides/securing-mcp-server/"
+	description="Security best practices for production."
+/>
+
+<LinkCard
+	title="createMcpHandler"
+	href="/agents/model-context-protocol/mcp-handler-api/"
+	description="Build stateless MCP servers."
+/>

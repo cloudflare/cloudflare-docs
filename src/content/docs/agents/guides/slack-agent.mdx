@@ -5,7 +5,13 @@ sidebar:
   order: 5
 ---
 
-import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
+import {
+	Details,
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
 
 ## Deploy your first Slack Agent
 
@@ -455,7 +461,26 @@ export class MyAgent extends SlackAgent {
 
 ## Related resources
 
-- [Agents Framework documentation](/agents/)
-- [Durable Objects documentation](/durable-objects/)
-- [Slack API documentation](https://api.slack.com/)
-- [OpenAI API documentation](https://platform.openai.com/docs/)
+<LinkCard
+	title="Agents documentation"
+	href="/agents/"
+	description="Complete Agents framework documentation."
+/>
+
+<LinkCard
+	title="Durable Objects"
+	href="/durable-objects/"
+	description="Learn about the underlying stateful infrastructure."
+/>
+
+<LinkCard
+	title="Slack API"
+	href="https://api.slack.com/"
+	description="Official Slack API documentation."
+/>
+
+<LinkCard
+	title="OpenAI API"
+	href="https://platform.openai.com/docs/"
+	description="Official OpenAI API documentation."
+/>

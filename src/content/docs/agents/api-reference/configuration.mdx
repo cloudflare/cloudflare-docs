@@ -5,7 +5,12 @@ sidebar:
   order: 3
 ---
 
-import { FileTree, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	FileTree,
+	TypeScriptExample,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
 
 This guide covers everything you need to configure agents for local development and production deployment, including wrangler.jsonc setup, type generation, environment variables, and the Cloudflare dashboard.
 
@@ -861,6 +866,20 @@ Migration tags must be unique. If you see conflicts:
 
 ## Next steps
 
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
-- Learn about [routing](/agents/api-reference/routing/) to route requests to your agents.
-- Explore [schedule tasks](/agents/api-reference/schedule-tasks/) for background processing.
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="Routing"
+	href="/agents/api-reference/routing/"
+	description="Route requests to your agent instances."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Background processing with delayed and cron-based tasks."
+/>

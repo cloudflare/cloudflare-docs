@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Callable methods let clients invoke agent methods over WebSocket using RPC (Remote Procedure Call). Mark methods with `@callable()` to expose them to external clients like browsers, mobile apps, or other services.
 
@@ -708,6 +708,20 @@ for (const [name, meta] of methods) {
 
 ## Next steps
 
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
-- Learn about [WebSockets](/agents/api-reference/websockets/) for real-time communication.
-- Explore [state management](/agents/api-reference/store-and-sync-state/) for syncing state between agents and clients.
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="WebSockets"
+	href="/agents/api-reference/websockets/"
+	description="Real-time bidirectional communication with clients."
+/>
+
+<LinkCard
+	title="State management"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Sync state between agents and clients."
+/>

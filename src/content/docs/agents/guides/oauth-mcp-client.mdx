@@ -7,7 +7,12 @@ sidebar:
   order: 12
 ---
 
-import { Render, TypeScriptExample, PackageManagers } from "~/components";
+import {
+	Render,
+	TypeScriptExample,
+	PackageManagers,
+	LinkCard,
+} from "~/components";
 
 When connecting to OAuth-protected MCP servers (like Slack or Notion), your users need to authenticate before your Agent can access their data. This guide covers implementing OAuth flows for seamless authorization.
 
@@ -383,5 +388,14 @@ export default {
 
 ## Related
 
-- [Connect to an MCP server](/agents/guides/connect-mcp-client) — Get started (no OAuth)
-- [MCP Client API reference](/agents/model-context-protocol/mcp-client-api/)
+<LinkCard
+	title="Connect to an MCP server"
+	href="/agents/guides/connect-mcp-client/"
+	description="Get started without OAuth."
+/>
+
+<LinkCard
+	title="MCP Client API"
+	href="/agents/model-context-protocol/mcp-client-api/"
+	description="Complete API documentation for MCP clients."
+/>

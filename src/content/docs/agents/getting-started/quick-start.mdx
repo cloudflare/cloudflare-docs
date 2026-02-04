@@ -10,6 +10,7 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 	PackageManagers,
+	LinkCard,
 } from "~/components";
 
 Build AI agents that persist, think, and act. Agents run on Cloudflare's global network, maintain state across requests, and connect to clients in real-time via WebSockets.
@@ -287,10 +288,29 @@ agent.stub.increment();
 
 Now that you have a working agent, explore these topics:
 
-- **[State management](/agents/api-reference/store-and-sync-state/)** — Deep dive into `setState()`, `initialState`, and `onStateUpdate()`
-- **[Client SDK](/agents/api-reference/client-sdk/)** — Full `useAgent` and `AgentClient` API reference
-- **[Callable methods](/agents/api-reference/callable-methods/)** — Expose methods to clients with `@callable()`
-- **[Scheduling](/agents/api-reference/schedule-tasks/)** — Run tasks on a delay, schedule, or cron
+<LinkCard
+	title="State management"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Deep dive into setState(), initialState, and onStateUpdate()."
+/>
+
+<LinkCard
+	title="Client SDK"
+	href="/agents/api-reference/client-sdk/"
+	description="Full useAgent and AgentClient API reference."
+/>
+
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="Expose methods to clients with @callable()."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Run tasks on a delay, schedule, or cron."
+/>
 
 ### Common patterns
 

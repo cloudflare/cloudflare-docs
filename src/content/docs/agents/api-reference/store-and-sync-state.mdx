@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Agents provide built-in state management with automatic persistence and real-time synchronization across all connected clients.
 
@@ -714,7 +714,26 @@ This works because each instance of an Agent has its own database, and the state
 
 ## Next steps
 
-- Review the [Agents API documentation](/agents/api-reference/agents-api/) for the complete API reference.
-- [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the Agents SDK and deploy it to Workers.
-- Learn more about [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
-- [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows/) from your Agent by combining the Agents SDK and [Workflows](/workflows/).
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="Build a chat agent"
+	href="/agents/getting-started/build-a-chat-agent/"
+	description="Build and deploy an AI chat agent."
+/>
+
+<LinkCard
+	title="WebSockets"
+	href="/agents/api-reference/websockets/"
+	description="Build interactive agents with real-time data streaming."
+/>
+
+<LinkCard
+	title="Run Workflows"
+	href="/agents/api-reference/run-workflows/"
+	description="Orchestrate asynchronous workflows from your agent."
+/>
