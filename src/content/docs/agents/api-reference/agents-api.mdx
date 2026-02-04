@@ -780,14 +780,33 @@ import { useAgent } from "agents/react";
 // Options for the useAgent hook
 type UseAgentOptions<State = unknown> = Omit<
 	Parameters<typeof usePartySocket>[0],
-	"party" | "room"
+	"party" | "room" | "query"
 > & {
-	// Name of the agent to connect to
+	// Name of the agent to connect to (ignored if basePath is set)
 	agent: string;
-	// Name of the specific Agent instance (optional)
+	// Name of the specific Agent instance (ignored if basePath is set)
 	name?: string;
+	// Full URL path - bypasses agent/name URL construction
+	// When set, the client connects to this path directly
+	// Server must handle routing manually (e.g., with getAgentByName + fetch)
+	basePath?: string;
+	// Query parameters - can be static object or async function
+	// Async functions are cached and invalidated on reconnect to ensure fresh tokens
+	query?: Record<string, string | null> | (() => Promise<Record<string, string | null>>);
+	// Dependencies for async query caching
+	queryDeps?: unknown[];
+	// Cache TTL in milliseconds for auth tokens/time-sensitive data
+	cacheTtl?: number;
+	// Additional path to append to the URL
+	path?: string;
 	// Called when the Agent's state is updated
 	onStateUpdate?: (state: State, source: "server" | "client") => void;
+	// Called when MCP server state is updated
+	onMcpUpdate?: (mcpServers: MCPServersState) => void;
+	// Called when the server sends the agent's identity on connect
+	onIdentity?: (name: string, agent: string) => void;
+	// Called when identity changes on reconnect (different instance than before)
+	onIdentityChange?: (oldName: string, newName: string, oldAgent: string, newAgent: string) => void;
 };
 
 // React hook for connecting to an Agent
@@ -799,6 +818,49 @@ function useAgent<State = unknown>(
 	setState: (state: State) => void;
 };
 ```
+
+#### Authentication with async query functions
+
+The `query` parameter in `useAgent` can be an async function, which is useful for fetching authentication tokens or other dynamic query parameters. The hook automatically caches the result of async query functions to avoid redundant calls.
+
+When the WebSocket connection closes (due to network issues, server restarts, or explicit disconnection), the cache is automatically invalidated. This ensures that when the connection reconnects, the async query function is re-executed to fetch fresh authentication tokens.
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents/react";
+
+function MyComponent() {
+  const agent = useAgent({
+    agent: "my-agent",
+    name: "my-instance",
+    // Async function to fetch auth token
+    query: async () => {
+      const token = await fetchAuthToken();
+      return { token };
+    },
+    // Re-run query when user changes
+    queryDeps: [userId],
+    // Cache tokens for 5 minutes
+    cacheTtl: 5 * 60 * 1000,
+  });
+
+  return <div>Connected to agent</div>;
+}
+```
+
+</TypeScriptExample>
+
+Key behaviors:
+
+- **Automatic reconnection refresh**: When the WebSocket disconnects and reconnects, the async query function is automatically called again to ensure fresh tokens are used.
+- **Dependency tracking**: Use `queryDeps` to specify when the cache should be invalidated and the query re-executed (similar to React's `useEffect` dependencies).
+- **Cache TTL**: Set `cacheTtl` to control how long tokens are cached. After the TTL expires, the query function will be called again on the next connection attempt.
+
+This pattern is particularly useful for:
+- Fetching short-lived authentication tokens
+- Implementing token refresh logic
+- Ensuring secure reconnections after network interruptions
 
 ### Chat Agent
 

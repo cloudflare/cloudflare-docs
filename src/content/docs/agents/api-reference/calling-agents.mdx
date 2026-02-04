@@ -266,6 +266,36 @@ app.get('/code-review/:id', async (c) => {
 
 This ensures we only create Agents for authenticated users, and allows you to validate whether Agent names conform to your preferred naming scheme before instances are created.
 
+#### Client-side authentication
+
+When using the `useAgent` React hook, you can pass authentication tokens as query parameters using an async function. The hook automatically handles token refresh on reconnection:
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents/react";
+
+function MyComponent() {
+  const agent = useAgent({
+    agent: "my-agent",
+    name: "my-instance",
+    // Pass auth token as query parameter
+    query: async () => {
+      const token = await fetchAuthToken();
+      return { token };
+    },
+    // Re-fetch token when connection reconnects
+    cacheTtl: 5 * 60 * 1000, // Cache for 5 minutes
+  });
+
+  return <div>Connected to authenticated agent</div>;
+}
+```
+
+</TypeScriptExample>
+
+The async query function is automatically re-executed when the WebSocket reconnects, ensuring fresh tokens are used after network interruptions or server restarts. Refer to the [API documentation for useAgent](/agents/api-reference/agents-api/#authentication-with-async-query-functions) for more details.
+
 ### Next steps
 
 * Review the [API documentation](/agents/api-reference/agents-api/) for the Agents class to learn how to define
