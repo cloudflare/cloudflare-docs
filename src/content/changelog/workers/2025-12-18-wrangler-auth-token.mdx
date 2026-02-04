@@ -1,0 +1,36 @@
+---
+title: Retrieve your authentication token with `wrangler auth token`
+description: A new command to retrieve your current authentication credentials for use with other tools and scripts.
+products:
+  - workers
+date: 2025-12-18
+---
+
+Wrangler now includes a new [`wrangler auth token`](/workers/wrangler/commands/#auth-token) command that retrieves your current authentication token or credentials for use with other tools and scripts.
+
+```sh
+wrangler auth token
+```
+
+The command returns whichever authentication method is currently configured, in priority order: API token from `CLOUDFLARE_API_TOKEN`, or OAuth token from `wrangler login` (automatically refreshed if expired).
+
+Use the `--json` flag to get structured output including the token type:
+
+```sh
+wrangler auth token --json
+```
+
+The JSON output includes the authentication type:
+
+```jsonc
+// API token
+{ "type": "api_token", "token": "..." }
+
+// OAuth token
+{ "type": "oauth", "token": "..." }
+
+// API key/email (only available with --json)
+{ "type": "api_key", "key": "...", "email": "..." }
+```
+
+API key/email credentials from `CLOUDFLARE_API_KEY` and `CLOUDFLARE_EMAIL` require the `--json` flag since this method uses two values instead of a single token.

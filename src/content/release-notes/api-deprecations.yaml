@@ -21,13 +21,15 @@ entries:
 
       Replacement behavior:
 
-      To change a record's type, clients must:
-      * [Delete the existing DNS record](/api/resources/dns/subresources/records/methods/delete/)
+      * [Delete the existing DNS record](/api/resources/dns/subresources/records/methods/delete/) and [Create a new DNS record](/api/resources/dns/subresources/records/methods/create/) with the desired type and content.
 
         `DELETE /zones/{zone_id}/dns_records/{dns_record_id}`
-      * [Create a new DNS record with the desired type and content](/api/resources/dns/subresources/records/methods/create/)
 
         `POST /zones/{zone_id}/dns_records`
+
+      * Use the [Batch DNS records](/api/resources/dns/subresources/records/methods/batch/) API to perform both operations in a single request.
+
+        `POST /zones/{zone_id}/dns_records/batch`
 
       Customers and integrations that rely on in-place record type updates must migrate to a delete-and-recreate workflow before June 30, 2026 to ensure uninterrupted service. After this date, attempts to change a record's type via update operations will no longer be supported.
 
