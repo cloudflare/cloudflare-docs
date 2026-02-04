@@ -2,6 +2,8 @@
 title: Visualize Workflows
 pcx_content_type: concept
 sidebar:
+  badge:
+    text: Beta
   order: 12
 ---
 
@@ -12,3 +14,10 @@ The diagram illustrates your sequenced & parallel steps, conditionals, loops, an
 ![Example diagram](~/assets/images/changelog/workflows/2026-02-03-workflows-diagram.png)
 
 Workflow diagrams are currently in beta for all Typescript and Javascript Workers. View your Workflows in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/workflows) to see their diagrams.
+
+:::warning
+Note that this feature is currently in beta. 
+
+- Workflows that use third-party packages or frameworks to bundle or minify their code may display unexpected behavior.
+- Python Workflows are not currently supported.
+:::
