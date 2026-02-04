@@ -219,8 +219,7 @@ The `AgentWorkflow` class from the Agents SDK extends Cloudflare Workflows with 
 
 For a gentler introduction, refer to [Build your first Workflow](/workflows/get-started/guide/).
 
-<Steps>
-1. Create `src/workflow.ts`:
+Create `src/workflow.ts`:
 
 ```ts title="src/workflow.ts"
 import { AgentWorkflow } from "agents/workflows";
@@ -333,8 +332,6 @@ export class ResearchWorkflow extends AgentWorkflow<ResearchAgent, Params> {
 }
 ```
 
-</Steps>
-
 <Details header="Why separate steps for LLM and tools?">
 
 Each `step.do()` creates a checkpoint. If your Workflow crashes or the Worker restarts:
@@ -354,8 +351,7 @@ This is especially important for:
 
 The Agent handles HTTP requests, WebSocket connections, and Workflow lifecycle events. It triggers a workflow instance `runWorkflow()` and receives progress updates via callbacks.
 
-<Steps>
-1. Create `src/agent.ts`:
+Create `src/agent.ts`:
 
 ```ts title="src/agent.ts"
 import { Agent } from "agents";
@@ -416,8 +412,6 @@ export class ResearchAgent extends Agent<Env, State> {
 }
 ```
 
-</Steps>
-
 ## 5. Configure your project
 
 <Steps>
@@ -475,8 +469,7 @@ export class ResearchAgent extends Agent<Env, State> {
 
 The Worker routes requests to the Agent, which manages workflow lifecycle. Use `routeAgentRequest()` for WebSocket connections and `getAgentByName()` for server-side RPC calls.
 
-<Steps>
-1. Replace `src/index.ts`:
+Replace `src/index.ts`:
 
 ```ts title="src/index.ts"
 import { getAgentByName, routeAgentRequest } from "agents";
@@ -532,16 +525,15 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-</Steps>
-
 ## 7. Develop locally
 
 <Steps>
+
 1. Create a [`.env` file](/workers/wrangler/environments/#secrets-in-local-development) for local development:
 
-```sh title=".env"
-ANTHROPIC_API_KEY=your-api-key-here
-```
+   ```sh title=".env"
+   ANTHROPIC_API_KEY=your-api-key-here
+   ```
 
 2. Start the dev server:
 
@@ -574,11 +566,12 @@ The agent will search for repositories, fetch details, and return a comparison. 
 ## 8. Deploy
 
 <Steps>
+
 1. Deploy the Worker:
 
-```sh
-npx wrangler deploy
-```
+   ```sh
+   npx wrangler deploy
+   ```
 
 2. Add your API key as a secret:
 
