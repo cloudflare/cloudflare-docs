@@ -70,36 +70,6 @@ export default {
 
 </TypeScriptExample>
 
-### Enabling CORS
-
-For cross-origin requests (common when your frontend is on a different domain):
-
-<TypeScriptExample>
-
-```ts
-const response = await routeAgentRequest(request, env, {
-	cors: true, // Enable default CORS headers
-});
-```
-
-</TypeScriptExample>
-
-Or with custom CORS headers:
-
-<TypeScriptExample>
-
-```ts
-const response = await routeAgentRequest(request, env, {
-	cors: {
-		"Access-Control-Allow-Origin": "https://myapp.com",
-		"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-		"Access-Control-Allow-Headers": "Content-Type, Authorization",
-	},
-});
-```
-
-</TypeScriptExample>
-
 ## Instance naming patterns
 
 The instance name (the last part of the URL) determines which agent instance handles the request. Each unique name gets its own isolated agent with its own state.
@@ -368,6 +338,163 @@ When identity is disabled:
 | Legacy URL structure              | `basePath` + custom routing             |
 | Complex routing logic             | Custom routing in Worker                |
 
+## Routing options
+
+Both `routeAgentRequest()` and `getAgentByName()` accept options for customizing routing behavior.
+
+### CORS
+
+For cross-origin requests (common when your frontend is on a different domain):
+
+<TypeScriptExample>
+
+```ts
+const response = await routeAgentRequest(request, env, {
+	cors: true, // Enable default CORS headers
+});
+```
+
+</TypeScriptExample>
+
+Or with custom CORS headers:
+
+<TypeScriptExample>
+
+```ts
+const response = await routeAgentRequest(request, env, {
+	cors: {
+		"Access-Control-Allow-Origin": "https://myapp.com",
+		"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+		"Access-Control-Allow-Headers": "Content-Type, Authorization",
+	},
+});
+```
+
+</TypeScriptExample>
+
+### Location hints
+
+For latency-sensitive applications, hint where the agent should run:
+
+<TypeScriptExample>
+
+```ts
+// With getAgentByName
+const agent = await getAgentByName(env.MyAgent, "instance-name", {
+	locationHint: "enam", // Eastern North America
+});
+
+// With routeAgentRequest (applies to all matched agents)
+const response = await routeAgentRequest(request, env, {
+	locationHint: "enam",
+});
+```
+
+</TypeScriptExample>
+
+Available location hints: `wnam`, `enam`, `sam`, `weur`, `eeur`, `apac`, `oc`, `afr`, `me`
+
+### Jurisdiction
+
+For data residency requirements:
+
+<TypeScriptExample>
+
+```ts
+// With getAgentByName
+const agent = await getAgentByName(env.MyAgent, "instance-name", {
+	jurisdiction: "eu", // EU jurisdiction
+});
+
+// With routeAgentRequest (applies to all matched agents)
+const response = await routeAgentRequest(request, env, {
+	jurisdiction: "eu",
+});
+```
+
+</TypeScriptExample>
+
+### Props
+
+Since agents are instantiated by the runtime rather than constructed directly, `props` provides a way to pass initialization arguments:
+
+<TypeScriptExample>
+
+```ts
+const agent = await getAgentByName(env.MyAgent, "instance-name", {
+	props: {
+		userId: session.userId,
+		config: { maxRetries: 3 },
+	},
+});
+```
+
+</TypeScriptExample>
+
+Props are passed to the agent's `onStart` lifecycle method:
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent<Env, State> {
+	private userId?: string;
+	private config?: { maxRetries: number };
+
+	async onStart(props?: { userId: string; config: { maxRetries: number } }) {
+		this.userId = props?.userId;
+		this.config = props?.config;
+	}
+}
+```
+
+</TypeScriptExample>
+
+When using `props` with `routeAgentRequest`, the same props are passed to whichever agent matches the URL. This works well for universal context like authentication:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const session = await getSession(request);
+		return routeAgentRequest(request, env, {
+			props: { userId: session.userId, role: session.role },
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+For agent-specific initialization, use `getAgentByName` instead where you control exactly which agent receives the props.
+
+:::note
+For `McpAgent`, props are automatically stored and accessible via `this.props`. See [MCP servers](/agents/model-context-protocol/mcp-agent-api/) for details.
+:::
+
+### Hooks
+
+`routeAgentRequest` supports hooks for intercepting requests before they reach agents:
+
+<TypeScriptExample>
+
+```ts
+const response = await routeAgentRequest(request, env, {
+	onBeforeConnect: (req, lobby) => {
+		// Called before WebSocket connections
+		// Return a Response to reject, Request to modify, or void to continue
+	},
+	onBeforeRequest: (req, lobby) => {
+		// Called before HTTP requests
+		// Return a Response to reject, Request to modify, or void to continue
+	},
+});
+```
+
+</TypeScriptExample>
+
+These hooks are useful for authentication and validation. See [Cross-domain authentication](/agents/guides/cross-domain-authentication/) for detailed examples.
+
 ## Server-side agent access
 
 You can access agents from your Worker code using `getAgentByName()` for RPC calls:
@@ -399,35 +526,7 @@ export default {
 
 </TypeScriptExample>
 
-### With location hints
-
-For latency-sensitive applications, you can hint where the agent should run:
-
-<TypeScriptExample>
-
-```ts
-const agent = await getAgentByName(env.MyAgent, "instance-name", {
-	locationHint: "enam", // Eastern North America
-});
-```
-
-</TypeScriptExample>
-
-Available location hints: `wnam`, `enam`, `sam`, `weur`, `eeur`, `apac`, `oc`, `afr`, `me`
-
-### With jurisdiction
-
-For data residency requirements:
-
-<TypeScriptExample>
-
-```ts
-const agent = await getAgentByName(env.MyAgent, "instance-name", {
-	jurisdiction: "eu", // EU jurisdiction
-});
-```
-
-</TypeScriptExample>
+For options like `locationHint`, `jurisdiction`, and `props`, see [Routing options](#routing-options).
 
 ## Sub-paths and HTTP methods
 
@@ -684,11 +783,16 @@ The error message lists available agents. Check:
 
 Routes a request to the appropriate agent.
 
-| Parameter      | Type                     | Description                     |
-| -------------- | ------------------------ | ------------------------------- |
-| `request`      | `Request`                | The incoming request            |
-| `env`          | `Env`                    | Environment with agent bindings |
-| `options.cors` | `boolean \| HeadersInit` | Enable CORS headers             |
+| Parameter                 | Type                      | Description                                     |
+| ------------------------- | ------------------------- | ----------------------------------------------- |
+| `request`                 | `Request`                 | The incoming request                            |
+| `env`                     | `Env`                     | Environment with agent bindings                 |
+| `options.cors`            | `boolean \| HeadersInit`  | Enable CORS headers                             |
+| `options.props`           | `Record<string, unknown>` | Props passed to whichever agent handles request |
+| `options.locationHint`    | `string`                  | Preferred location for agent instances          |
+| `options.jurisdiction`    | `string`                  | Data jurisdiction for agent instances           |
+| `options.onBeforeConnect` | `Function`                | Callback before WebSocket connections           |
+| `options.onBeforeRequest` | `Function`                | Callback before HTTP requests                   |
 
 **Returns:** `Promise<Response | undefined>` - Response if matched, undefined if no agent route.
 
@@ -696,12 +800,13 @@ Routes a request to the appropriate agent.
 
 Get an agent instance by name for server-side RPC or request forwarding.
 
-| Parameter              | Type                        | Description            |
-| ---------------------- | --------------------------- | ---------------------- |
-| `namespace`            | `DurableObjectNamespace<T>` | Agent binding from env |
-| `name`                 | `string`                    | Instance name          |
-| `options.locationHint` | `string`                    | Preferred location     |
-| `options.jurisdiction` | `string`                    | Data jurisdiction      |
+| Parameter              | Type                        | Description                           |
+| ---------------------- | --------------------------- | ------------------------------------- |
+| `namespace`            | `DurableObjectNamespace<T>` | Agent binding from env                |
+| `name`                 | `string`                    | Instance name                         |
+| `options.locationHint` | `string`                    | Preferred location                    |
+| `options.jurisdiction` | `string`                    | Data jurisdiction                     |
+| `options.props`        | `Record<string, unknown>`   | Initialization properties for onStart |
 
 **Returns:** `Promise<DurableObjectStub<T>>` - Typed stub for calling agent methods or forwarding requests.
 

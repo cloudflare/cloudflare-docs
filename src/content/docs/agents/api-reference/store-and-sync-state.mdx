@@ -23,6 +23,10 @@ State within an Agent is:
 
 Agent state is stored in a SQL database embedded within each individual Agent instance. You can interact with it using the higher-level `this.setState` API (recommended), which allows you to sync state and trigger events on state changes, or by directly querying the database with `this.sql`.
 
+:::note[State vs Props]
+**State** is persistent data that survives restarts and syncs across clients. **[Props](/agents/api-reference/routing/#props)** are one-time initialization arguments passed when an agent is instantiated - use props for configuration that does not need to persist.
+:::
+
 <TypeScriptExample>
 
 ```ts
