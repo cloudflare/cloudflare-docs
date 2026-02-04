@@ -47,7 +47,7 @@ The latency from multiple round trips between Sydney and Frankfurt adds up. By p
 
 ![A user located in Sydney, AU connecting to a Worker in Frankfurt, DE which then makes multiple round trips to a database also located in Frankfurt, DE. ](~/assets/images/workers/platform/workers-smart-placement-enabled.png)
 
-## Use smart placement
+## Enable Smart Placement
 
 Smart Placement automatically analyzes your Worker's traffic patterns and places it in an optimal location. Use Smart Placement when:
 
@@ -139,7 +139,7 @@ The header value includes a placement type and an airport code indicating the da
 The `cf-placement` header may be removed before Smart Placement exits beta.
 :::
 
-## Use placement hints
+## Configure explicit Placement Hints
 
 Placement Hints let you explicitly specify where your Worker runs. Use Placement Hints when:
 
@@ -223,19 +223,19 @@ For a full list of region codes, refer to [AWS regions](https://docs.aws.amazon.
 
 ## Placement Behavior
 
-Workers Placement behaves in similar fashion when either Smart Placement or Placement hints are used. The following behavior applies to both.
+Workers placement behaves in similar fashion when either Smart Placement or Placement Hints are used. The following behavior applies to both.
 
 ### Review limitations
 
-The following limitations apply to both smart placement and placement hints:
+The following limitations apply to both Smart Placement and Placement Hints:
 
-- Smart Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). It does not affect [RPC methods](/workers/runtime-apis/rpc/) or [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints).
-  - Workers without a fetch event handler are ignored by Smart Placement.
+- Placement only affects the execution of [fetch event handlers](/workers/runtime-apis/handlers/fetch/). It does not affect [RPC methods](/workers/runtime-apis/rpc/) or [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints).
+  - Workers without a fetch event handler are ignored by placement.
   - [Static assets](/workers/static-assets/) are always served from the location nearest to the incoming request. If your code retrieves assets via the [static assets binding](/workers/static-assets/binding/), assets are served from the location where your Worker runs.
 
 ### `cf-placement` header
 
-Cloudflare adds a `cf-placement` header to all requests when placement is enabled. Use this header to check whether a request was routed with Smart Placement and where the Worker processed the request.
+Cloudflare adds a `cf-placement` header to all requests when placement is enabled. Use this header to check whether a request was routed with placement and where the Worker processed the request.
 
 The header value includes a placement type and an airport code indicating the data center location:
 

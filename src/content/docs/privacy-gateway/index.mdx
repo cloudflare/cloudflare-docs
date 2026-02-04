@@ -1,20 +1,18 @@
 ---
 title: Cloudflare Privacy Gateway
 pcx_content_type: overview
-sidebar:
-  order: 1
-  badge:
-    text: Beta
+wid: privacy-gateway
 head:
   - tag: title
     content: Overview
 ---
 
-import { Description, Feature, Plan } from "~/components"
+import { Description, Feature, Plan } from "~/components";
 
 <Description>
 
 Implements the Oblivious HTTP IETF standard to improve client privacy.
+
 </Description>
 
 <Plan type="enterprise" />
@@ -23,24 +21,36 @@ Implements the Oblivious HTTP IETF standard to improve client privacy.
 
 OHTTP introduces a trusted third party between client and server, called a relay, whose purpose is to forward encrypted requests and responses between client and server. These messages are encrypted between client and server such that the relay learns nothing of the application data, beyond the length of the encrypted message and the server the client is interacting with.
 
-***
+---
 
 ## Availability
 
 Privacy Gateway is currently in closed beta – available to select privacy-oriented companies and partners. If you are interested, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
 
-***
+---
 
 ## Features
 
-<Feature header="Get started" href="/privacy-gateway/get-started/" cta="Get started">
-Learn how to set up Privacy Gateway for your application.
+<Feature
+	header="Get started"
+	href="/privacy-gateway/get-started/"
+	cta="Get started"
+>
+	Learn how to set up Privacy Gateway for your application.
 </Feature>
 
-<Feature header="Legal" href="/privacy-gateway/reference/legal/" cta="Learn more">
-Learn about the different parties and data shared in Privacy Gateway.
+<Feature
+	header="Legal"
+	href="/privacy-gateway/reference/legal/"
+	cta="Learn more"
+>
+	Learn about the different parties and data shared in Privacy Gateway.
 </Feature>
 
-<Feature header="Metrics" href="/privacy-gateway/reference/metrics/" cta="Learn more">
-Learn about how to query Privacy Gateway metrics.
+<Feature
+	header="Metrics"
+	href="/privacy-gateway/reference/metrics/"
+	cta="Learn more"
+>
+	Learn about how to query Privacy Gateway metrics.
 </Feature>

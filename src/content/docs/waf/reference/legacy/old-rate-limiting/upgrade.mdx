@@ -55,6 +55,9 @@ For more details on the differences between old and new rate limiting rules, ref
 
 - **Customers on a Business plan (or higher) will have access to the [IP with NAT support](/waf/rate-limiting-rules/parameters/#use-cases-of-ip-with-nat-support) characteristic.** This characteristic is used to handle situations such as requests under NAT sharing the same IP address.
 
+- **Existing custom rules skipping old Rate Limiting will not be updated to skip the new version instead.** Cloudflare will not update existing custom rules that skip the previous version of Rate Limiting (skip rules with the option **More components to skip** > **Rate limiting rules (Previous version)**) to skip the new version.<br/>
+  For existing skip rules (custom rules with a _Skip_ action), you will have to manually update them, if required, to skip the new version of rate limiting rules (**WAF components to skip** > **All rate limiting rules** option) instead of the old implementation.
+
 ---
 
 ### Relevant changes in the dashboard
