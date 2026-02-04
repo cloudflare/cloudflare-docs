@@ -34,6 +34,21 @@ When you enable DNSSEC, Cloudflare signs your zone, publishes your public signin
 
 <Render file="dnssec-auto-add" product="dns" />
 
+### Automatic DS record updates with CDS/CDNSKEY
+
+When you enable DNSSEC, Cloudflare automatically publishes **CDS** (Child Delegation Signer) and **CDNSKEY** (Child DNSKEY) records in your zone. These records automate the chain of trust management between your domain and the Top-Level Domain registry.
+
+| Record | Purpose | Contents |
+| --- | --- | --- |
+| **CDS** | High-level instruction | A hashed version of the public key (same data as a DS record) |
+| **CDNSKEY** | Public key instruction | The full public Key Signing Key (KSK) for the parent to generate its own DS record |
+
+Registrars that support [RFC 8078](https://datatracker.ietf.org/doc/html/rfc8078) periodically scan your domain for these records and automatically update the DS record at the registry level. This eliminates manual DS record management and ensures seamless key rollovers.
+
+:::note
+Not all registrars support automatic CDS/CDNSKEY scanning. If your registrar does not support RFC 8078, you must manually add the DS record.
+:::
+
 ***
 
 ## Other DNSSEC setup options
@@ -53,3 +68,14 @@ If your registrar does not support DNSSEC with Cloudflare's preferred cipher cho
 * File a [complaint with ICANN](https://www.icann.org/compliance/complaint), citing your registrar's lack of compliance.
 
 If your top-level domain does not support DNSSEC with Algorithm 13 (also known as *ECDSA Curve P-256 with SHA-256*), [contact that top-level domain](https://www.iana.org/domains/root/db).
+
+***
+
+## Key management
+
+Cloudflare manages DNSSEC key rotation automatically:
+
+- **Key Signing Key (KSK)**: Rarely rotated and remains stable. When rotation occurs, CDS and CDNSKEY records signal the change to registrars that support RFC 8078.
+- **Zone Signing Key (ZSK)**: Rotated automatically by Cloudflare without user intervention.
+
+You do not need to take any action when Cloudflare rotates keys. If your registrar supports CDS scanning, the DS record updates automatically. Otherwise, Cloudflare will notify you if manual DS record updates are required.
