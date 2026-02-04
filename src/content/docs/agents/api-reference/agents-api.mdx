@@ -814,8 +814,24 @@ type UseAgentOptions<State = unknown> = Omit<
 function useAgent<State = unknown>(
 	options: UseAgentOptions<State>,
 ): PartySocket & {
+	// The agent class name (kebab-case)
+	agent: string;
+	// The agent instance name
+	name: string;
+	// Whether the agent identity has been received
+	identified: boolean;
+	// Promise that resolves when identity is received
+	ready: Promise<void>;
 	// Update the Agent's state
 	setState: (state: State) => void;
+	// Call methods on the Agent
+	call: <T = unknown>(
+		method: string,
+		args?: unknown[],
+		streamOptions?: StreamOptions,
+	) => Promise<T>;
+	// Stub object for calling Agent methods directly
+	stub: Record<string, (...args: unknown[]) => Promise<unknown>>;
 };
 ```
 
