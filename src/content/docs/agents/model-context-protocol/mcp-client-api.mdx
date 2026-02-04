@@ -208,6 +208,7 @@ An `MCPServersState` object containing:
 				| "failed";
 			capabilities: ServerCapabilities | null;
 			instructions: string | null;
+			error: string | null;
 		}
 	>;
 	tools: Array<Tool & { serverId: string }>;
@@ -245,7 +246,9 @@ The `state` field indicates the connection lifecycle:
 - `connected` — Transport connection established
 - `discovering` — Discovering server capabilities (tools, resources, prompts)
 - `ready` — Fully connected and operational
-- `failed` — Connection failed
+- `failed` — Connection failed (see `error` field for details)
+
+The `error` field contains an error message when `state` is `"failed"`. Error messages from external OAuth providers are automatically escaped to prevent XSS attacks, making them safe to display directly in your UI.
 
 Use this method to monitor connection status, list available tools, or build UI for connected servers.
 
