@@ -14,28 +14,36 @@ For pricing information, refer to [Browser Rendering pricing](/browser-rendering
 
 ## Workers Free
 
+:::note[Need higher limits?]
+If you are on a Workers Free plan and you want to increase your limits, upgrade to a Workers Paid plan in the **Workers plans** page of the Cloudflare dashboard:
+<DashButton url="/?to=/:account/workers/plans" />
+:::
+
 | Feature                                                  | Limit           |
 | -------------------------------------------------------- | --------------- |
 | Browser hours                                            | 10 minutes per day |
-| Concurrent browsers per account [^1] (Workers Bindings only)  | 3 per account   |
+| Concurrent browsers per account (Workers Bindings only) [^1]  | 3 per account   |
 | New browser instances (Workers Bindings only) | 3 per minute    |
+| Browser timeout                                           | 60 seconds [^2]  |
 | Total requests (REST API only)                    | 6 per minute    |
 
 ## Workers Paid
 
+:::note[Need higher limits?]
 If you are on a Workers Paid plan and you want to increase your limits beyond those listed here, Cloudflare will grant [requests for higher limits](https://forms.gle/CdueDKvb26mTaepa9) on a case-by-case basis.
+:::
 
 | Feature                                                  | Limit           |
 | -------------------------------------------------------- | --------------- |
-| Browser hours                                            | No limit  ([See pricing](/workers/platform/pricing/))      |
-| Concurrent browsers per account [^1] (Workers Bindings only)  | 30 per account ([See pricing](/workers/platform/pricing/)) |
+| Browser hours                                            | No limit  ([See pricing](/browser-rendering/pricing/))      |
+| Concurrent browsers per account  (Workers Bindings only) [^1] | 30 per account ([See pricing](/browser-rendering/pricing/)) |
 | New browser instances per minute (Workers Bindings only) | 30 per minute   |
+| Browser timeout                                           | 60 seconds [^2] |
 | Total requests per min (REST API only)                   | 180 per minute  |
 
-[^1]: Browsers close upon task completion or sixty seconds of inactivity (if you do not [extend your browser timeout](#browser-timeouts)). Therefore, in practice, many workflows do not require a high number of concurrent browsers.
+[^1]: Browsers close upon task completion or sixty seconds of inactivity (if you do not [extend your browser timeout](#can-i-increase-the-browser-timeout)). Therefore, in practice, many workflows do not require a high number of concurrent browsers.
 
-## Browser timeouts
-Regardless of your plan, your browser will time out after sixty seconds if it is inactive. To keep your browser active, use the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). When you want to close the browser instance, use `browser.close()`.
+[^2]: By default, a browser will time out after 60 seconds of inactivity. You can extend this to up to 10 minutes using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). Call `browser.close()` to release the browser instance immediately.
 
 ## Limits FAQ & troubleshooting
 
