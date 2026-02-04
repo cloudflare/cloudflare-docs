@@ -23,6 +23,7 @@ Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 - [`unstable_startWorker`](#unstable_startworker) - Start a server for running integration tests against your Worker.
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 - [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
+- [`getLocalWorkerdCompatibilityDate`](#getlocalworkerdcompatibilitydate) - Gets the latest compatibility date supported by the locally installed `workerd` package.
 
 ## `unstable_startWorker`
 
@@ -455,3 +456,34 @@ The bindings supported by `getPlatformProxy` are:
 
         If you are using Workers with Assets run:
         <PackageManagers type="exec" pkg="wrangler" args="dev -c path/to/workers-assets/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />
+
+## `getLocalWorkerdCompatibilityDate`
+
+The `getLocalWorkerdCompatibilityDate` function returns the latest [compatibility date](/workers/configuration/compatibility-dates/) supported by the locally installed [`workerd`](https://github.com/cloudflare/workerd) package.
+
+If the `workerd` package's compatibility date is in the future (which can happen on the day of a new release), today's date is returned instead to avoid potential issues.
+
+### Syntax
+
+```js
+import { getLocalWorkerdCompatibilityDate } from "wrangler";
+
+const compatibilityDate = getLocalWorkerdCompatibilityDate();
+```
+
+### Parameters
+
+This function takes no parameters.
+
+### Return Type
+
+`getLocalWorkerdCompatibilityDate()` returns a <Type text="string" /> in `YYYY-MM-DD` format (for example, `"2025-09-27"`).
+
+### Usage
+
+```js
+import { getLocalWorkerdCompatibilityDate } from "wrangler";
+
+const compatibilityDate = getLocalWorkerdCompatibilityDate();
+console.log(`Local workerd compatibility date: ${compatibilityDate}`);
+```
