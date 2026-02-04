@@ -149,7 +149,7 @@ Cloudflare adjusts route priority when using AS prepending with communities. For
 		<AnchorHeading title="Automatic Return Routing (beta)" depth={2} />
 		<Markdown
 		text={`
-Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode](#unified-routing-mode).
+Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode (beta)](#unified-routing-mode-beta).
 
 Instead of relying on static or dynamic routes for the return path, Magic WAN learns flows and remembers which connection a given flow arrived on. For any matching return traffic, Magic WAN uses this learned state to choose the next hop. This simplifies configuration, reduces the number of routes you must manage, and helps preserve symmetry for stateful traffic.
 
