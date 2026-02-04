@@ -70,7 +70,6 @@ You can use [Cloudflare Workers](/workers/) to debug client certificate validati
    ```js
    export default {
      async fetch(request, env, ctx) {
-       // You can view your logs in the Observability dashboard
        console.info({ message: JSON.stringify(request.cf, null, 2) });
        return new Response(JSON.stringify(request.cf, null, 2))
      }
@@ -79,7 +78,11 @@ You can use [Cloudflare Workers](/workers/) to debug client certificate validati
 
 2. Associate the Worker with the hostname where mTLS is enabled using a [Worker route](/workers/configuration/routing/routes/) or a [Custom Domain](/workers/configuration/routing/custom-domains/).
 
-3. Make requests to the hostname and/or path configured, with and without sending the mTLS client cert. Then, compare the responses against expected values:
+3. Make requests to the hostname and/or path configured, with and without sending the mTLS client certificate.
+
+4. View your logs on the [Observability](/workers/observability/) dashboard and compare the responses against the expected values listed below.
+
+	 <DashButton url="/?to=/:account/workers-and-pages/observability" />
 
 - Valid certificate
 
@@ -107,3 +110,4 @@ You can use [Cloudflare Workers](/workers/) to debug client certificate validati
      "certVerified": "NONE",
    },
    ```
+
