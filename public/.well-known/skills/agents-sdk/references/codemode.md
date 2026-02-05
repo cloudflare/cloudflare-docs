@@ -89,6 +89,8 @@ import { openai } from "@ai-sdk/openai";
 import { env } from "cloudflare:workers";
 import { z } from "zod";
 
+const model = openai("gpt-4o");
+
 const tools = {
   getWeather: tool({
     description: "Get weather for a location",
@@ -118,6 +120,7 @@ export class MyAgent extends Agent<Env, State> {
     this.tools = { ...tools, ...this.mcp.getAITools() };
 
     const { prompt, tools: wrappedTools } = await codemode({
+      model,  // Required: AI SDK-compatible model
       prompt: "You are a helpful assistant...",
       tools: this.tools,
       globalOutbound: env.globalOutbound,
@@ -133,7 +136,7 @@ export class MyAgent extends Agent<Env, State> {
 
     const result = streamText({
       system: prompt,
-      model: openai("gpt-4o"),
+      model,
       messages: await convertToModelMessages(this.state.messages),
       tools: wrappedTools  // Use wrapped tools, not original
     });
@@ -141,6 +144,45 @@ export class MyAgent extends Agent<Env, State> {
     // ... handle stream
   }
 }
+```
+
+## API Reference
+
+### `experimental_codemode(options)`
+
+Wraps your tools to enable code generation mode for the LLM.
+
+**Parameters:**
+
+- `options.model` (required): `LanguageModel` - AI SDK-compatible model instance (e.g., `openai("gpt-4o")`)
+- `options.tools`: `ToolSet` - Object containing tool definitions
+- `options.prompt`: `string` - System prompt for the agent
+- `options.globalOutbound`: `Fetcher` - Outbound fetch handler for security filtering
+- `options.loader`: `WorkerLoader` - Worker loader binding for dynamic code execution
+- `options.proxy`: `Fetcher<CodeModeProxy>` - Proxy for routing tool calls back to the agent
+
+**Returns:**
+
+```typescript
+Promise<{
+  prompt: string;
+  tools: ToolSet;
+}>
+```
+
+The returned `tools` should be used instead of your original tools when calling `streamText()`.
+
+**Example:**
+
+```typescript
+const { prompt, tools: wrappedTools } = await codemode({
+  model: openai("gpt-4o"),
+  prompt: "You are a helpful assistant...",
+  tools: myTools,
+  globalOutbound: env.globalOutbound,
+  loader: env.LOADER,
+  proxy: this.ctx.exports.CodeModeProxy({ props: { ... } })
+});
 ```
 
 ## Generated Code Example
@@ -198,6 +240,37 @@ async function executeTask() {
 | MCP multi-server workflows | Yes |
 | Token budget constrained | Yes |
 | Simple Q&A chat | No |
+
+## Migration from Previous Versions
+
+**Breaking Change in v0.0.6:** The `model` parameter is now required.
+
+**Before:**
+
+```typescript
+const { prompt, tools: wrappedTools } = await codemode({
+  prompt: "You are a helpful assistant...",
+  tools: myTools,
+  // ... other options
+});
+```
+
+**After:**
+
+```typescript
+import { openai } from "@ai-sdk/openai";
+
+const model = openai("gpt-4o");  // Or any AI SDK-compatible model
+
+const { prompt, tools: wrappedTools } = await codemode({
+  model,  // Now required
+  prompt: "You are a helpful assistant...",
+  tools: myTools,
+  // ... other options
+});
+```
+
+You can now use any AI SDK-compatible model provider (OpenAI, Anthropic, Google, etc.) instead of the previously hardcoded `gpt-4.1`.
 
 ## Limitations
 
