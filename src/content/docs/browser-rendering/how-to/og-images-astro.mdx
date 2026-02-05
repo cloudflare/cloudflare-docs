@@ -5,32 +5,28 @@ sidebar:
   order: 2
 ---
 
-import { Aside, WranglerConfig } from "~/components";
+import { WranglerConfig } from "~/components";
 
-Use Cloudflare Browser Rendering to automatically generate Open Graph (OG) images for your Astro blog posts. This tutorial shows you how to create dynamic, branded social preview images without manual design work.
+Open Graph (OG) images are the preview images that appear when you share a link on social media. Instead of manually creating these images for every blog post, you can use Cloudflare Browser Rendering to automatically generate branded social preview images from an Astro template.
 
-## Overview
+In this guide, you will:
 
-Open Graph images are the preview images that appear when you share a link on social media. Instead of manually creating these images in Figma for every blog post, you can:
+1. Create an Astro page that renders your OG image design.
+2. Use Browser Rendering to screenshot that page as a PNG.
+3. Serve the generated images to social media crawlers.
 
-1. Create an Astro template that renders your OG image design
-2. Use Browser Rendering to screenshot that template
-3. Serve the generated images to social media crawlers
-
-## Prerequisites
-
-- A Cloudflare account with Browser Rendering enabled
-- An Astro site deployed on Cloudflare Pages
-- Basic familiarity with Astro and Cloudflare Workers
-
-## Architecture
-
-This tutorial covers two approaches:
+This guide covers two approaches:
 
 | Approach | Best for | Trade-offs |
 |----------|----------|------------|
 | On-demand (Worker + R2) | Large sites, frequent updates | ~2s cold start on first request |
 | Build-time (Static) | Small sites, infrequent updates | Longer build times as site grows |
+
+## Prerequisites
+
+- A Cloudflare account with [Browser Rendering enabled](/browser-rendering/get-started/)
+- An Astro site deployed on [Cloudflare Pages](/pages/)
+- Basic familiarity with Astro and Cloudflare Workers
 
 ## 1. Create the OG image template
 
@@ -42,7 +38,9 @@ Create `src/pages/_internal/og.astro`:
 ---
 export const prerender = false;
 
-const { title, image, author } = Astro.url.searchParams;
+const title = Astro.url.searchParams.get("title") || "Untitled";
+const image = Astro.url.searchParams.get("image");
+const author = Astro.url.searchParams.get("author");
 ---
 
 <html>
@@ -95,7 +93,7 @@ Test locally by visiting `http://localhost:4321/_internal/og?title=My%20Blog%20P
 
 ## 2. Set up Browser Rendering
 
-### Option A: On-demand generation with a Worker
+### Option A: Generate on demand with a Worker
 
 This approach generates images on first request and caches them in R2.
 
@@ -119,9 +117,10 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     const slug = url.searchParams.get("slug");
+    const title = url.searchParams.get("title");
 
-    if (!slug) {
-      return new Response("Missing slug parameter", { status: 400 });
+    if (!slug || !title) {
+      return new Response("Missing slug or title parameter", { status: 400 });
     }
 
     // Check R2 cache first
@@ -143,8 +142,12 @@ export default {
 
     await page.setViewport({ width: 1200, height: 630 });
 
-    // Navigate to your OG template
-    const templateUrl = `https://your-blog.pages.dev/_internal/og?slug=${slug}`;
+    // Navigate to your OG template, forwarding the title as a query param
+    const templateParams = new URLSearchParams({ title });
+    const author = url.searchParams.get("author");
+    if (author) templateParams.set("author", author);
+
+    const templateUrl = `https://your-blog.pages.dev/_internal/og?${templateParams}`;
     await page.goto(templateUrl, { waitUntil: "networkidle0" });
 
     const screenshot = await page.screenshot({ type: "png" });
@@ -172,7 +175,8 @@ Configure the Wrangler configuration file:
 ```toml title="wrangler.toml"
 name = "og-image-generator"
 main = "src/index.ts"
-compatibility_date = "2024-01-01"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
 
 browser = { binding = "BROWSER" }
 
@@ -188,14 +192,14 @@ Deploy the Worker:
 npx wrangler deploy
 ```
 
-### Option B: Build-time generation
+### Option B: Generate at build time
 
-Generate all OG images during the Astro build process.
+Generate all OG images during the Astro build process. This script runs locally (or in your CI environment) using Puppeteer, not inside a Worker.
 
 Create `scripts/generate-og-images.ts`:
 
 ```ts
-import puppeteer from "@cloudflare/puppeteer";
+import puppeteer from "puppeteer";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 
@@ -206,8 +210,8 @@ interface Post {
 }
 
 async function generateOGImages() {
-  // Fetch your posts from your CMS
-  const posts: Post[] = await fetchPostsFromCMS();
+  // Replace this with your own data-fetching logic
+  const posts: Post[] = await getPosts();
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -255,16 +259,20 @@ Update your blog post layout to reference the generated images:
 ---
 // src/layouts/BlogPost.astro
 const { title, slug, author } = Astro.props;
+const siteUrl = Astro.site || "https://your-blog.pages.dev";
 
 // Option A: Worker URL
-const ogImageUrl = `https://og.your-domain.workers.dev/render?slug=${slug}`;
+const ogParams = new URLSearchParams({ slug, title });
+if (author) ogParams.set("author", author);
+const ogImageUrl = `https://og.your-domain.workers.dev/?${ogParams}`;
 
 // Option B: Static path
-// const ogImageUrl = `/og/${slug}.png`;
+// const ogImageUrl = new URL(`/og/${slug}.png`, siteUrl).href;
 ---
 
 <html>
   <head>
+    <meta property="og:title" content={title} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -285,13 +293,14 @@ Use these tools to verify your OG images render correctly:
 - [Twitter Card Validator](https://cards-dev.twitter.com/validator)
 - [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/)
 
-## Customizing the template
+## Customize the template
 
 ### Add a background image
 
 ```astro
 ---
-const { title, image } = Astro.url.searchParams;
+const title = Astro.url.searchParams.get("title") || "Untitled";
+const image = Astro.url.searchParams.get("image");
 ---
 
 <body style={image ? `background-image: url(${image})` : undefined}>
@@ -346,6 +355,16 @@ Consider running generated images through Cloudflare Images or Image Resizing fo
 // In your Worker
 const optimizedUrl = `https://your-domain.com/cdn-cgi/image/width=1200,format=auto/${cacheKey}`;
 ```
+
+## Next steps
+
+Your Astro site now automatically generates OG images using Browser Rendering. When you share a link on social media, crawlers will fetch the generated image from your Worker (Option A) or from the static path (Option B).
+
+From here, you can:
+
+- Customize your template with [custom fonts](#use-custom-fonts), [Tailwind CSS](#add-tailwind-css), or [background images](#add-a-background-image).
+- Add cache invalidation logic to regenerate images when post content changes.
+- Use [Cloudflare Images](/images/) or [Image Resizing](/images/transform-images/) for additional optimization.
 
 ## Related resources
 
