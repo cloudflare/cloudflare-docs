@@ -11,7 +11,7 @@ tags:
   - E2E
 ---
 
-import { Details, Tabs, TabItem } from "~/components";
+import { Details, Tabs, TabItem, TypeScriptExample } from "~/components";
 
 End-to-end (E2E) testing typically requires running browsers locally or in Docker containers within your CI/CD pipeline. This adds complexity: you need to install browsers, manage dependencies, and allocate resources for browser instances.
 
@@ -80,7 +80,9 @@ Create a Playwright fixture that conditionally connects to the remote browser. T
 
 Create a file called `cdp-fixture.ts` in your tests directory:
 
-```ts title="tests/cdp-fixture.ts"
+<TypeScriptExample filename="tests/cdp-fixture.ts">
+
+```ts
 import { test as base, chromium } from "@playwright/test";
 
 const CDP_ENDPOINT = process.env.CDP_ENDPOINT;
@@ -103,6 +105,8 @@ export const test = CDP_ENDPOINT
 export { expect } from "@playwright/test";
 ```
 
+</TypeScriptExample>
+
 This fixture checks for the `CDP_ENDPOINT` environment variable:
 - **If set**: Connects to Browser Rendering via CDP
 - **If not set**: Uses the default local browser (standard Playwright behavior)
@@ -111,7 +115,9 @@ This fixture checks for the `CDP_ENDPOINT` environment variable:
 
 Import the custom `test` function from your fixture instead of directly from `@playwright/test`:
 
-```ts title="tests/example.spec.ts"
+<TypeScriptExample filename="tests/example.spec.ts">
+
+```ts
 import { test, expect } from "./cdp-fixture";
 
 test("homepage has correct title", async ({ page }) => {
@@ -121,10 +127,12 @@ test("homepage has correct title", async ({ page }) => {
 
 test("user can navigate to about page", async ({ page }) => {
   await page.goto("https://your-app.example.com");
-  await page.click('a[href="/about"]');
+  await page.locator('a[href="/about"]').click();
   await expect(page).toHaveURL(/.*about/);
 });
 ```
+
+</TypeScriptExample>
 
 ## 4. Handle authentication (optional)
 
@@ -132,7 +140,9 @@ If your application is behind [Cloudflare Access](/cloudflare-one/policies/acces
 
 First, create a [service token](/cloudflare-one/identity/service-tokens/) for your CI pipeline. Then update your `playwright.config.ts`:
 
-```ts title="playwright.config.ts"
+<TypeScriptExample filename="playwright.config.ts">
+
+```ts
 import { defineConfig } from "@playwright/test";
 
 const CF_ACCESS_CLIENT_ID = process.env.CF_ACCESS_CLIENT_ID;
@@ -151,6 +161,8 @@ export default defineConfig({
   },
 });
 ```
+
+</TypeScriptExample>
 
 ## 5. Update your CI configuration
 
@@ -194,7 +206,7 @@ e2e-tests:
   stage: test
   variables:
     CDP_ENDPOINT: "wss://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/browser-rendering/cdp"
-    CDP_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+    CDP_API_TOKEN: "${CLOUDFLARE_API_TOKEN}"
   script:
     - npm ci
     - npx playwright test
@@ -224,12 +236,16 @@ Your CI pipeline will automatically use Browser Rendering when the `CDP_ENDPOINT
 
 If you experience connection timeouts, ensure your API token has the correct permissions and has not expired. You can also increase the connection timeout in your fixture:
 
+<TypeScriptExample>
+
 ```ts
 const browser = await chromium.connectOverCDP(CDP_ENDPOINT, {
   headers: { Authorization: `Bearer ${CDP_API_TOKEN}` },
   timeout: 60000, // 60 seconds
 });
 ```
+
+</TypeScriptExample>
 
 ### Tests pass locally but fail in CI
 
