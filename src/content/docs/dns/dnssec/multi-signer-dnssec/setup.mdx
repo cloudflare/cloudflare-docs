@@ -171,3 +171,43 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 1. Add DS records to your registrar, one for each provider. You can see your Cloudflare DS record on the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, under **DS Record**.
 
 2. Update the nameserver settings at your registrar to include the nameservers of all providers you will be using for your multi-signer DNSSEC setup.
+
+---
+
+## Best practices
+
+When setting up multi-signer DNSSEC, follow these best practices to ensure a smooth deployment:
+
+### Use Model 2
+
+Model 2 works best for multi-signer setups. In this model, each provider has their own KSK DNSKEY, resulting in two DS records (one for each provider). This provides better independence and flexibility.
+
+### Understand DNSKEY flags
+
+- **ZSKs** (Zone Signing Keys) have flag **256**
+- **KSKs** (Key Signing Keys) have flag **257**
+
+When exchanging keys between providers, ensure you are adding the correct key type (typically ZSKs) to the DNSKEY RRset.
+
+### Adhere to TTLs
+
+**Critical**: Always wait for the TTL duration after making changes to DNSKEYs and DS records before proceeding to the next step. This ensures that cached records expire before new records take effect, preventing validation failures.
+
+### Verify provider compatibility
+
+Not all DNS providers support adding external DNSKEYs to their DNSKEY RRset. Before starting a multi-signer migration:
+
+- Verify that your other provider supports multi-signer DNSSEC
+- Confirm they can add Cloudflare's ZSK to their DNSKEY records
+- Test the configuration in a non-production environment if possible
+
+Some third-party providers may not support the required functionality.
+
+### Test thoroughly
+
+Multi-signer DNSSEC involves coordinating cryptographic keys across multiple providers. Before deploying to production:
+
+1. Verify that both providers have each other's ZSKs in their DNSKEY RRsets
+2. Confirm that both DS records are present at the registrar
+3. Use DNSSEC validation tools to test resolution from both providers
+4. Monitor for validation errors during the transition period

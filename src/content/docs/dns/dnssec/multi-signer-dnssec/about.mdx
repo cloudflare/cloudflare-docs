@@ -40,3 +40,16 @@ Whereas in both models all providers have each other's Zone Signing Keys (ZSK) a
 ### Model 2
 
 In model 2, on the other hand, each provider uses its own KSK to sign its own DNSKEY record set, and these KSKs are then referenced by the DS record (Secure Entry Point).
+
+---
+
+## What happens when multi-signer is enabled
+
+When you enable multi-signer DNSSEC on Cloudflare (by setting `dnssec_multi_signer` to `true` [via API](/api/resources/dns/subresources/dnssec/methods/edit/)), the following changes occur:
+
+1. **Internal flag**: Cloudflare sets an internal flag that allows you to add DNSKEY records to your zone.
+2. **External ZSKs included**: When you add DNSKEY records from your secondary provider, Cloudflare includes them in the DNSKEY RRset.
+3. **Signing with Cloudflare's KSK**: Cloudflare signs the external ZSKs with Cloudflare's KSK, creating a Multi-signer DNSSEC Model 2 RRset.
+4. **CDS/CDNSKEY generation**: If you add your other provider's KSK (not required but recommended), Cloudflare produces CDS/CDNSKEY RRsets for compatibility with validation tools.
+
+This configuration ensures that resolvers can validate responses from either provider, as all ZSK DNSKEYs are signed by the appropriate KSKs referenced in the DS records.
