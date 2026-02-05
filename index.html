@@ -1,0 +1,229 @@
+<!DOCTYPE html>  
+<html lang="zh-TW">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Lightning Empire | 300天免費貢獻 × 日本豪雪AI回溫</title>  
+  <link rel="stylesheet" href="styles.css">  
+</head>  
+<body>  
+  <!-- 粒子背景畫布 -->  
+  <canvas id="particle-bg"></canvas>  
+  
+  <!-- 主標題區 -->  
+  <header class="hero-section">  
+    <div class="hero-content">  
+      <h1 class="hero-title" data-parallax="0.5">Lightning Empire Patents</h1>  
+      <p class="hero-subtitle">AI防震防颱風技術 × 300天免費回饋人類</p>  
+      <div class="hero-stats">  
+        <div class="stat-item">  
+          <span class="stat-number">35+</span>  
+          <span class="stat-label">2026日本豪雪死亡</span>  
+        </div>  
+        <div class="stat-item">  
+          <span class="stat-number">393</span>  
+          <span class="stat-label">受傷人數</span>  
+        </div>  
+        <div class="stat-item">  
+          <span class="stat-number">4.5m</span>  
+          <span class="stat-label">最深積雪(青森)</span>  
+        </div>  
+      </div>  
+    </div>  
+  </header>  
+  
+  <!-- 專利展示區 -->  
+  <section class="patent-section">  
+    <h2 class="section-title">核心技術專利</h2>  
+    <div class="patent-grid">  
+        
+      <!-- 卡片1: 防震防災 -->  
+      <div class="patent-card" data-speed="0.2">  
+        <div class="card-glow"></div>  
+        <div class="patent-image-wrapper">  
+          <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600"   
+               alt="防震技術" class="patent-image patent-bg">  
+          <div class="scan-line"></div>  
+        </div>  
+        <div class="patent-overlay">  
+          <h3 class="patent-title">防震抗災技術</h3>  
+          <p class="patent-subtitle">Earthquake & Typhoon Protection</p>  
+          <div class="patent-tags">  
+            <span class="tag">AI預測</span>  
+            <span class="tag">即時監控</span>  
+          </div>  
+        </div>  
+      </div>  
+  
+      <!-- 卡片2: 專利回溫 -->  
+      <div class="patent-card" data-speed="0.3">  
+        <div class="card-glow"></div>  
+        <div class="patent-image-wrapper">  
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600"   
+               alt="專利回溫" class="patent-image patent-bg">  
+          <div class="scan-line"></div>  
+        </div>  
+        <div class="patent-overlay">  
+          <h3 class="patent-title">專利回溫開發</h3>  
+          <p class="patent-subtitle">Patent Revitalization</p>  
+          <div class="patent-tags">  
+            <span class="tag">全球授權</span>  
+            <span class="tag">免費300天</span>  
+          </div>  
+        </div>  
+      </div>  
+  
+      <!-- 卡片3: AI指紋 -->  
+      <div class="patent-card ai-card" data-speed="0.4">  
+        <div class="card-glow ai-glow"></div>  
+        <div class="patent-image-wrapper fingerprint-container">  
+          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600"   
+               alt="AI指紋" class="patent-image patent-bg">  
+          <div class="fingerprint-scan"></div>  
+          <div class="pulse-ring"></div>  
+          <div class="pulse-ring" style="animation-delay: 0.5s;"></div>  
+        </div>  
+        <div class="patent-overlay">  
+          <h3 class="patent-title">AI指紋辨識技術</h3>  
+          <p class="patent-subtitle">AI Fingerprint Recognition</p>  
+          <div class="patent-tags">  
+            <span class="tag">生物識別</span>  
+            <span class="tag">邊緣運算</span>  
+          </div>  
+        </div>  
+      </div>  
+  
+    </div>  
+  </section>  
+  
+  <!-- 日本豪雪數據儀表板 -->  
+  <section class="snow-dashboard">  
+    <h2 class="section-title">2026日本豪雪事件 AI回溫監測</h2>  
+      
+    <!-- 即時數據卡片 -->  
+    <div class="data-cards">  
+      <div class="data-card" data-aos="fade-up">  
+        <div class="data-icon">❄️</div>  
+        <div class="data-value" id="death-count">35</div>  
+        <div class="data-label">死亡人數</div>  
+        <div class="data-trend">↑ 自1/20起</div>  
+      </div>  
+        
+      <div class="data-card" data-aos="fade-up" data-aos-delay="100">  
+        <div class="data-icon">🏥</div>  
+        <div class="data-value" id="injury-count">393</div>  
+        <div class="data-label">受傷人數</div>  
+        <div class="data-trend">126重傷</div>  
+      </div>  
+        
+      <div class="data-card" data-aos="fade-up" data-aos-delay="200">  
+        <div class="data-icon">📍</div>  
+        <div class="data-value">新潟</div>  
+        <div class="data-label">最多死亡縣</div>  
+        <div class="data-trend">12人</div>  
+      </div>  
+        
+      <div class="data-card" data-aos="fade-up" data-aos-delay="300">  
+        <div class="data-icon">🤖</div>  
+        <div class="data-value">NTT</div>  
+        <div class="data-label">AI自駕實證</div>  
+        <div class="data-trend">Level 4 豪雪</div>  
+      </div>  
+    </div>  
+  
+    <!-- 時間軸 -->  
+    <div class="timeline">  
+      <h3 class="timeline-title">事件時序</h3>  
+      <div class="timeline-track">  
+          
+        <div class="timeline-item" data-date="2026/1/14-24">  
+          <div class="timeline-dot"></div>  
+          <div class="timeline-content">  
+            <h4>NTT豪雪自駕實證</h4>  
+            <p>北海道千歲市，IOWN APN + 5G，積雪環境Level 4測試</p>  
+          </div>  
+        </div>  
+  
+        <div class="timeline-item" data-date="2026/1/20">  
+          <div class="timeline-dot critical"></div>  
+          <div class="timeline-content">  
+            <h4>記錄性豪雪開始</h4>  
+            <p>新潟、青森等地積雪2-4.5公尺，屋頂崩塌事故頻發</p>  
+          </div>  
+        </div>  
+  
+        <div class="timeline-item" data-date="2026/2/2">  
+          <div class="timeline-dot"></div>  
+          <div class="timeline-content">  
+            <h4>死亡27人</h4>  
+            <p>NHK報導，新潟12人、秋田6人，290人受傷</p>  
+          </div>  
+        </div>  
+  
+        <div class="timeline-item" data-date="2026/2/3">  
+          <div class="timeline-dot"></div>  
+          <div class="timeline-content">  
+            <h4>死亡30人</h4>  
+            <p>青森91歲婦人被3公尺雪埋葬，自衛隊出動除雪</p>  
+          </div>  
+        </div>  
+  
+        <div class="timeline-item" data-date="2026/2/4">  
+          <div class="timeline-dot critical"></div>  
+          <div class="timeline-content">  
+            <h4>死亡35人（最新）</h4>  
+            <p>消防廳數據，393傷，政府警告雪崩與屋頂落雪風險</p>  
+          </div>  
+        </div>  
+  
+      </div>  
+    </div>  
+  
+    <!-- AI廠商動態 -->  
+    <div class="ai-vendors">  
+      <h3 class="timeline-title">AI製造廠商極端天候動態</h3>  
+      <div class="vendor-grid">  
+          
+        <div class="vendor-card">  
+          <div class="vendor-logo">🚌</div>  
+          <h4>NTTドコモビジネス</h4>  
+          <p>豪雪地自動駕駛Level 4實證，IOWN低延遲大數據傳輸</p>  
+          <span class="vendor-tag">日本本土</span>  
+        </div>  
+  
+        <div class="vendor-card">  
+          <div class="vendor-logo">🧠</div>  
+          <h4>Cambricon (寒武紀)</h4>  
+          <p>AI晶片2026獲利上修，間接支援豪雪預測運算</p>  
+          <span class="vendor-tag">中國</span>  
+        </div>  
+  
+        <div class="vendor-card">  
+          <div class="vendor-logo">🌐</div>  
+          <h4>日本氣象廳AI計劃</h4>  
+          <p>招募30名AI開發者，建置本土豪雪預測模型</p>  
+          <span class="vendor-tag">政府</span>  
+        </div>  
+  
+        <div class="vendor-card">  
+          <div class="vendor-logo">🤖</div>  
+          <h4>AGRIST フィジカルAI</h4>  
+          <p>生成AI轉機器人動作，適用除雪/農業機器人</p>  
+          <span class="vendor-tag">日本</span>  
+        </div>  
+  
+      </div>  
+    </div>  
+  
+  </section>  
+  
+  <!-- 頁尾 -->  
+  <footer class="footer">  
+    <p>© 2026 Lightning Empire | Hus Chih Li (wshao777)</p>  
+    <p>300天免費技術貢獻 × 日本豪雪AI回溫監測</p>  
+    <p>資料來源：NHK、日本消防廳、NTT Group、國際媒體</p>  
+  </footer>  
+  
+  <script src="app.js"></script>  
+</body>  
+</html>
