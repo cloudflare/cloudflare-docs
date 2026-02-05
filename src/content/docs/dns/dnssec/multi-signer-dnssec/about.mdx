@@ -79,9 +79,9 @@ When exchanging keys between providers, ensure you are adding the correct key ty
 
 Not all DNS providers support adding external DNSKEYs to their DNSKEY RRset. Before starting a multi-signer migration:
 
-- Verify that your other provider supports multi-signer DNSSEC
-- Confirm they can add Cloudflare's ZSK to their DNSKEY records
-- Test the configuration in a non-production environment if possible
+- Verify that your other provider supports multi-signer DNSSEC.
+- Confirm they can add Cloudflare's ZSK to their DNSKEY records.
+- Test the configuration in a non-production environment if possible.
 
 Some third-party providers may not support the required functionality.
 
@@ -89,7 +89,7 @@ Some third-party providers may not support the required functionality.
 
 Multi-signer DNSSEC involves coordinating cryptographic keys across multiple providers. Before deploying to production:
 
-1. Verify that both providers have each other's ZSKs in their DNSKEY RRsets
-2. Confirm that both DS records are present at the registrar
-3. Use DNSSEC validation tools to test resolution from both providers
-4. Monitor for validation errors during the transition period
+1. Verify that both providers have each other's ZSKs in their DNSKEY RRsets.
+2. Confirm that both DS records are present at the registrar.
+3. Use DNSSEC validation tools to test resolution from both providers.
+4. Monitor for validation errors during the transition period.
