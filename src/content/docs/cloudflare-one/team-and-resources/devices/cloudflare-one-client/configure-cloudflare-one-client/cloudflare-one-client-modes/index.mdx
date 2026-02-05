@@ -1,11 +1,11 @@
 ---
 pcx_content_type: reference
-title: WARP modes
+title: Cloudflare One Client modes
 sidebar:
   order: 2
 ---
 
-You can deploy the WARP client in different modes to control the types of traffic sent to Cloudflare Gateway. The WARP mode determines which Zero Trust features are available on the device.
+You can deploy the Cloudflare One Client (formerly WARP Client) in different modes to control the types of traffic sent to Cloudflare Gateway. The client mode determines which Zero Trust features are available on the device.
 
 ## Gateway with WARP (default)
 
@@ -33,9 +33,9 @@ Secure Web Gateway without DNS filtering mode (sometimes referred to as tunnel-o
 
 :::note
 
-- Secure Web Gateway without DNS filtering mode disables all features that rely on WARP for DNS resolution, including [domain-based split tunneling](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels) and [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/).
+- Secure Web Gateway without DNS filtering mode disables all features that rely on the client for DNS resolution, including [domain-based split tunneling](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/#domain-based-split-tunnels) and [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/local-domains/).
 - Only available on Windows, Linux, and macOS.
-- Secure Web Gateway without DNS filtering mode has a known limitation concerning [DNS servers with IPv6 addresses](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/known-limitations/#ipv6-dns-resolution-in-secure-web-gateway-without-dns-filtering-mode).
+- Secure Web Gateway without DNS filtering mode has a known limitation concerning [DNS servers with IPv6 addresses](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/known-limitations/#ipv6-dns-resolution-in-secure-web-gateway-without-dns-filtering-mode).
 
 :::
 
@@ -49,7 +49,7 @@ Proxy mode is best suited for organizations that want to filter traffic directed
 
 ### Set up proxy mode
 
-When you create a Cloudflare One account, a default [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is created in `Gateway with WARP` service mode. To set up proxy mode, you will need to edit the default device profile or create a new device profile and set the WARP service mode to `Proxy mode`.
+When you create a Cloudflare One account, a default [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/device-profiles/) is created in `Gateway with WARP` service mode. To set up proxy mode, you will need to edit the default device profile or create a new device profile and set the client service mode to `Proxy mode`.
 
 The default profile is used for all devices that are not assigned to a specific profile. If you want to apply proxy mode to a specific group of devices, you will need to create a new device profile and assign it to those devices.
 
@@ -64,43 +64,43 @@ To set up proxy mode:
 
 :::note[MDM deployment]
 
-If you are deploying WARP through MDM, the configuration file will override any device profile settings, including the WARP service mode. Refer to the [`service_mode` parameter](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#service_mode) for more information.
+If you are deploying the Cloudflare One Client through MDM, the configuration file will override any device profile settings, including the service mode. Refer to the [`service_mode` parameter](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#service_mode) for more information.
 
 :::
 
-For devices using proxy mode, the WARP client listens on the configured port at the address `127.0.0.1` (`localhost`). Cloudflare uses `40000` as the default port for WARP in proxy mode, but you can modify this to any available port. You must explicitly configure individual applications or your system proxy settings to use this proxy.
+For devices using proxy mode, the Cloudflare One Client listens on the configured port at the address `127.0.0.1` (`localhost`). Cloudflare uses `40000` as the default port for proxy mode, but you can modify this to any available port. You must explicitly configure individual applications or your system proxy settings to use this proxy.
 
-Once configured, traffic to and from these applications will securely tunnel through WARP.
+Once configured, traffic to and from these applications will securely tunnel through the Cloudflare One Client.
 
 To make more complex routing decisions (such as, routing traffic directly to the Internet or other proxies), you can use a [PAC file](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/).
 
 ### Limitations
 
 - Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTP proxy communication.
-- Requires the MASQUE [device tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). Wireguard is not supported.
+- Requires the MASQUE [device tunnel protocol](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#device-tunnel-protocol). Wireguard is not supported.
 - Only available on Windows, Linux, and macOS.
 - Proxy mode has a timeout limit of 10 seconds for requests. If a request goes above the 10 second limit, Cloudflare will drop the connection.
 
 ## Device Information Only
 
-This mode is best suited for organizations that only want to enforce [WARP client device posture checks](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) for zones in your account. DNS, Network and HTTP traffic is handled by the default mechanisms on your devices. To setup Device Information Only mode, refer to the [dedicated page](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/device-information-only/).
+This mode is best suited for organizations that only want to enforce [Cloudflare One Client device posture checks](/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/) for zones in your account. DNS, Network and HTTP traffic is handled by the default mechanisms on your devices. To setup Device Information Only mode, refer to the [dedicated page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/device-information-only/).
 
 | DNS filtering | Network filtering | HTTP filtering | Features enabled                                                                     |
 | ------------- | ----------------- | -------------- | ------------------------------------------------------------------------------------ |
 | No            | No                | No             | Device posture rules in [Access policies](/cloudflare-one/access-controls/policies/) |
 
-## WARP modes comparison
+## Client modes comparison
 
-Each WARP mode offers a different set of Zero Trust features.
+Each client mode offers a different set of Zero Trust features.
 
-| WARP Mode                                                                                                                                                           | DNS Filtering | Network Filtering | HTTP Filtering | Service mode (displayed in `warp-cli settings`) |
+| Client Mode                                                                                                                                                           | DNS Filtering | Network Filtering | HTTP Filtering | Service mode (displayed in `warp-cli settings`) |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------- | -------------- | ----------------------------------------------- |
-| [**Gateway with WARP (default)**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default)                             | ✅            | ✅                | ✅             | `WarpWithDnsOverHttps`                          |
-| [**Gateway with DoH**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh)                                                 | ✅            | ❌                | ❌             | `DnsOverHttps`                                  |
-| [**Secure Web Gateway without DNS filtering**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) | ❌            | ✅                | ✅             | `TunnelOnly`                                    |
-| [**Proxy mode**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode)                                                             | ❌            | ❌                | ✅             | `WarpProxy on port 40000`                       |
-| [**Device Information Only**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#device-information-only)                                   | ❌            | ❌                | ❌             | `PostureOnly`                                   |
+| [**Gateway with WARP (default)**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/#gateway-with-warp-default)                             | ✅            | ✅                | ✅             | `WarpWithDnsOverHttps`                          |
+| [**Gateway with DoH**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/#gateway-with-doh)                                                 | ✅            | ❌                | ❌             | `DnsOverHttps`                                  |
+| [**Secure Web Gateway without DNS filtering**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/#secure-web-gateway-without-dns-filtering) | ❌            | ✅                | ✅             | `TunnelOnly`                                    |
+| [**Proxy mode**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/#proxy-mode)                                                             | ❌            | ❌                | ✅             | `WarpProxy on port 40000`                       |
+| [**Device Information Only**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/#device-information-only)                                   | ❌            | ❌                | ❌             | `PostureOnly`                                   |
 
 ## Related resources
 
-- [Connectivity status](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/connectivity-status/) - Learn about the status messages displayed by the WARP client during its connection process, and understand each stage as WARP establishes a secure tunnel to Cloudflare.
+- [Connectivity status](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/connectivity-status/) - Learn about the status messages displayed by the Cloudflare One Client during its connection process, and understand each stage as the client establishes a secure tunnel to Cloudflare.

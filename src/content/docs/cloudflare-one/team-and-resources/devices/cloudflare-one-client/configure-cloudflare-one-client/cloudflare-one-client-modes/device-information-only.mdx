@@ -34,19 +34,19 @@ Using the API, enable client certificate provisioning for [your zone](/fundament
 	}}
 />
 
-## 2. Configure the WARP client
+## 2. Configure the Cloudflare One Client
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
 
-2. Under **Profiles**, choose a [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) and select **Edit**.
+2. Under **Profiles**, choose a [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/device-profiles/) and select **Edit**.
 
 3. For **Service mode**, select **Device Information Only**.
 
 4. Select **Save profile**.
 
-5. [Enroll your device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) into your Zero Trust organization.
+5. [Enroll your device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) into your Zero Trust organization.
 
-   When enrolled in Device Information Only mode, the WARP client will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
+   When enrolled in Device Information Only mode, the Cloudflare One Client will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
 
 ## 3. (Optional) Verify the client certificate
 
@@ -97,13 +97,13 @@ Using the API, enable client certificate provisioning for [your zone](/fundament
         </TabItem>
         </Tabs>
 
-        The client certificate name should match the **Device ID** in your WARP client **Preferences**.
+        The client certificate name should match the **Device ID** in your Cloudflare One Client **Preferences**.
 
 2.  To verify the client certificate in your Cloudflare account:
     1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), select the zone for which you enabled client certificates.
     2. Go to **SSL/TLS** > **Client Certificates**.
 
-    The certificate name is the WARP enrollment **Device ID**.
+    The certificate name is the Cloudflare One Client enrollment **Device ID**.
     ![Example client certificate in the Cloudflare dashboard](~/assets/images/cloudflare-one/connections/device-information-only-cert.png)
 
 ## 4. Enforce the client certificate
@@ -120,7 +120,7 @@ To block traffic from devices that do not have a valid client certificate:
    | Hostname | equals | `app.mycompany.com` | | |
 5. Select **Deploy**.
 
-Device Information Only mode is now enabled on the device. To start enforcing device posture, set up a [WARP client check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) and add a _Require_ device posture rule to your [Access policy](/cloudflare-one/access-controls/policies/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by WARP.
+Device Information Only mode is now enabled on the device. To start enforcing device posture, set up a [Cloudflare One Client check](/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/) and add a _Require_ device posture rule to your [Access policy](/cloudflare-one/access-controls/policies/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by the Cloudflare One Client.
 
 <Width size="large">
 	![Browser prompts for client
@@ -129,4 +129,4 @@ Device Information Only mode is now enabled on the device. To start enforcing de
 
 ## Limitations
 
-Device Information mode is not compatible with the [Windows pre-login](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/) feature. The user must be logged into Windows because WARP needs to [install a certificate](#3-optional-verify-the-client-certificate) in the user store.
+Device Information mode is not compatible with the [Windows pre-login](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/windows-prelogin/) feature. The user must be logged into Windows because the Cloudflare One Client needs to [install a certificate](#3-optional-verify-the-client-certificate) in the user store.
