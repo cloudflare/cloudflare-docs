@@ -1,0 +1,525 @@
+/* ===== 全域設定 ===== */  
+* {  
+  margin: 0;  
+  padding: 0;  
+  box-sizing: border-box;  
+}  
+  
+:root {  
+  --primary-cyan: #00ffff;  
+  --primary-blue: #0080ff;  
+  --dark-bg: #0a0a0a;  
+  --card-bg: rgba(0, 0, 0, 0.85);  
+  --text-white: #ffffff;  
+  --text-gray: #cccccc;  
+  --shadow-glow: 0 0 20px rgba(0, 255, 255, 0.5);  
+}  
+  
+body {  
+  font-family: 'SF Pro Display', 'Segoe UI', -apple-system, sans-serif;  
+  background: var(--dark-bg);  
+  color: var(--text-white);  
+  overflow-x: hidden;  
+  line-height: 1.6;  
+}  
+  
+/* ===== 粒子背景 ===== */  
+#particle-bg {  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  z-index: -1;  
+  opacity: 0.4;  
+}  
+  
+/* ===== 主標題區 ===== */  
+.hero-section {  
+  position: relative;  
+  min-height: 100vh;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  text-align: center;  
+  padding: 2rem;  
+  background: radial-gradient(circle at 50% 50%, rgba(0, 128, 255, 0.1), transparent 70%);  
+}  
+  
+.hero-content {  
+  z-index: 1;  
+}  
+  
+.hero-title {  
+  font-size: clamp(2.5rem, 8vw, 5rem);  
+  font-weight: 800;  
+  background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));  
+  -webkit-background-clip: text;  
+  -webkit-text-fill-color: transparent;  
+  background-clip: text;  
+  margin-bottom: 1rem;  
+  text-shadow: 0 0 40px rgba(0, 255, 255, 0.3);  
+  transition: transform 0.3s ease;  
+}  
+  
+.hero-subtitle {  
+  font-size: clamp(1rem, 3vw, 1.5rem);  
+  color: var(--text-gray);  
+  margin-bottom: 3rem;  
+}  
+  
+.hero-stats {  
+  display: flex;  
+  gap: 3rem;  
+  justify-content: center;  
+  flex-wrap: wrap;  
+}  
+  
+.stat-item {  
+  text-align: center;  
+}  
+  
+.stat-number {  
+  display: block;  
+  font-size: 3rem;  
+  font-weight: 700;  
+  color: var(--primary-cyan);  
+  text-shadow: var(--shadow-glow);  
+}  
+  
+.stat-label {  
+  display: block;  
+  font-size: 0.9rem;  
+  color: var(--text-gray);  
+  margin-top: 0.5rem;  
+}  
+  
+/* ===== 章節標題 ===== */  
+.section-title {  
+  font-size: 2.5rem;  
+  text-align: center;  
+  margin: 4rem 0 3rem;  
+  background: linear-gradient(90deg, var(--primary-cyan), var(--primary-blue));  
+  -webkit-background-clip: text;  
+  -webkit-text-fill-color: transparent;  
+  background-clip: text;  
+}  
+  
+/* ===== 專利卡片網格 ===== */  
+.patent-section {  
+  padding: 4rem 2rem;  
+  max-width: 1400px;  
+  margin: 0 auto;  
+}  
+  
+.patent-grid {  
+  display: grid;  
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));  
+  gap: 2.5rem;  
+}  
+  
+.patent-card {  
+  position: relative;  
+  border-radius: 16px;  
+  overflow: hidden;  
+  background: var(--card-bg);  
+  transition: transform 0.4s ease, box-shadow 0.4s ease;  
+  opacity: 0;  
+  transform: translateY(50px);  
+  animation: fadeInUp 0.8s ease forwards;  
+}  
+  
+.patent-card:nth-child(1) { animation-delay: 0.1s; }  
+.patent-card:nth-child(2) { animation-delay: 0.2s; }  
+.patent-card:nth-child(3) { animation-delay: 0.3s; }  
+  
+@keyframes fadeInUp {  
+  to {  
+    opacity: 1;  
+    transform: translateY(0);  
+  }  
+}  
+  
+.patent-card:hover {  
+  transform: translateY(-12px) scale(1.02);  
+  box-shadow: 0 20px 60px rgba(0, 255, 255, 0.4);  
+}  
+  
+/* 發光邊框 */  
+.card-glow {  
+  position: absolute;  
+  inset: 0;  
+  border-radius: 16px;  
+  padding: 2px;  
+  background: linear-gradient(45deg, var(--primary-cyan), var(--primary-blue), var(--primary-cyan));  
+  background-size: 300% 300%;  
+  animation: gradientRotate 3s ease infinite;  
+  -webkit-mask:   
+    linear-gradient(#fff 0 0) content-box,   
+    linear-gradient(#fff 0 0);  
+  -webkit-mask-composite: xor;  
+  mask-composite: exclude;  
+  opacity: 0.6;  
+}  
+  
+.patent-card:hover .card-glow {  
+  opacity: 1;  
+}  
+  
+@keyframes gradientRotate {  
+  0%, 100% { background-position: 0% 50%; }  
+  50% { background-position: 100% 50%; }  
+}  
+  
+/* 圖片容器 */  
+.patent-image-wrapper {  
+  position: relative;  
+  width: 100%;  
+  height: 280px;  
+  overflow: hidden;  
+}  
+  
+.patent-image {  
+  width: 100%;  
+  height: 100%;  
+  object-fit: cover;  
+  opacity: 0.8;  
+  transition: transform 0.5s ease, opacity 0.3s ease;  
+}  
+  
+.patent-card:hover .patent-image {  
+  transform: scale(1.1);  
+  opacity: 1;  
+}  
+  
+/* 掃描線 */  
+.scan-line {  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 3px;  
+  background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);  
+  animation: scan 2.5s ease-in-out infinite;  
+  box-shadow: 0 0 15px var(--primary-cyan);  
+  opacity: 0;  
+}  
+  
+.patent-card:hover .scan-line {  
+  opacity: 1;  
+}  
+  
+@keyframes scan {  
+  0%, 100% { top: 0; opacity: 0; }  
+  50% { top: 100%; opacity: 1; }  
+}  
+  
+/* 指紋特效 */  
+.fingerprint-container {  
+  position: relative;  
+}  
+  
+.fingerprint-scan {  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 4px;  
+  background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);  
+  animation: fingerprintScan 3s ease-in-out infinite;  
+  box-shadow: 0 0 25px var(--primary-cyan);  
+}  
+  
+@keyframes fingerprintScan {  
+  0%, 100% { top: 0; opacity: 0; }  
+  50% { top: 100%; opacity: 1; }  
+}  
+  
+.pulse-ring {  
+  position: absolute;  
+  top: 50%;  
+  left: 50%;  
+  transform: translate(-50%, -50%);  
+  width: 100px;  
+  height: 100px;  
+  border: 3px solid var(--primary-cyan);  
+  border-radius: 50%;  
+  animation: pulse 2.5s ease-out infinite;  
+  opacity: 0;  
+}  
+  
+@keyframes pulse {  
+  0% {  
+    transform: translate(-50%, -50%) scale(0.5);  
+    opacity: 1;  
+  }  
+  100% {  
+    transform: translate(-50%, -50%) scale(2);  
+    opacity: 0;  
+  }  
+}  
+  
+/* 卡片覆蓋層 */  
+.patent-overlay {  
+  position: relative;  
+  padding: 1.5rem;  
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.7));  
+}  
+  
+.patent-title {  
+  font-size: 1.5rem;  
+  font-weight: 700;  
+  color: var(--primary-cyan);  
+  margin-bottom: 0.5rem;  
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);  
+}  
+  
+.patent-subtitle {  
+  font-size: 0.95rem;  
+  color: var(--text-gray);  
+  margin-bottom: 1rem;  
+}  
+  
+.patent-tags {  
+  display: flex;  
+  gap: 0.5rem;  
+  flex-wrap: wrap;  
+}  
+  
+.tag {  
+  padding: 0.3rem 0.8rem;  
+  background: rgba(0, 255, 255, 0.15);  
+  border: 1px solid var(--primary-cyan);  
+  border-radius: 20px;  
+  font-size: 0.75rem;  
+  color: var(--primary-cyan);  
+}  
+  
+/* ===== 豪雪數據儀表板 ===== */  
+.snow-dashboard {  
+  padding: 4rem 2rem;  
+  max-width: 1400px;  
+  margin: 0 auto;  
+}  
+  
+.data-cards {  
+  display: grid;  
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  
+  gap: 2rem;  
+  margin-bottom: 4rem;  
+}  
+  
+.data-card {  
+  background: var(--card-bg);  
+  border: 1px solid rgba(0, 255, 255, 0.3);  
+  border-radius: 12px;  
+  padding: 2rem;  
+  text-align: center;  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;  
+}  
+  
+.data-card:hover {  
+  transform: translateY(-8px);  
+  box-shadow: var(--shadow-glow);  
+}  
+  
+.data-icon {  
+  font-size: 3rem;  
+  margin-bottom: 1rem;  
+}  
+  
+.data-value {  
+  font-size: 2.5rem;  
+  font-weight: 700;  
+  color: var(--primary-cyan);  
+  margin-bottom: 0.5rem;  
+}  
+  
+.data-label {  
+  font-size: 1rem;  
+  color: var(--text-gray);  
+  margin-bottom: 0.5rem;  
+}  
+  
+.data-trend {  
+  font-size: 0.85rem;  
+  color: #ff6b6b;  
+  font-weight: 500;  
+}  
+  
+/* ===== 時間軸 ===== */  
+.timeline {  
+  margin: 4rem 0;  
+}  
+  
+.timeline-title {  
+  font-size: 2rem;  
+  color: var(--primary-cyan);  
+  margin-bottom: 2rem;  
+  text-align: center;  
+}  
+  
+.timeline-track {  
+  position: relative;  
+  padding-left: 3rem;  
+}  
+  
+.timeline-track::before {  
+  content: '';  
+  position: absolute;  
+  left: 1rem;  
+  top: 0;  
+  bottom: 0;  
+  width: 2px;  
+  background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue));  
+}  
+  
+.timeline-item {  
+  position: relative;  
+  margin-bottom: 3rem;  
+  padding-left: 2rem;  
+}  
+  
+.timeline-dot {  
+  position: absolute;  
+  left: 0.5rem;  
+  top: 0.5rem;  
+  width: 1rem;  
+  height: 1rem;  
+  background: var(--primary-cyan);  
+  border-radius: 50%;  
+  box-shadow: 0 0 15px var(--primary-cyan);  
+  animation: dotPulse 2s ease infinite;  
+}  
+  
+.timeline-dot.critical {  
+  background: #ff4444;  
+  box-shadow: 0 0 20px #ff4444;  
+}  
+  
+@keyframes dotPulse {  
+  0%, 100% { transform: scale(1); }  
+  50% { transform: scale(1.2); }  
+}  
+  
+.timeline-item::before {  
+  content: attr(data-date);  
+  position: absolute;  
+  left: -2.5rem;  
+  top: 0;  
+  font-size: 0.75rem;  
+  color: var(--text-gray);  
+  white-space: nowrap;  
+}  
+  
+.timeline-content {  
+  background: var(--card-bg);  
+  padding: 1.5rem;  
+  border-radius: 8px;  
+  border-left: 3px solid var(--primary-cyan);  
+}  
+  
+.timeline-content h4 {  
+  color: var(--primary-cyan);  
+  margin-bottom: 0.5rem;  
+  font-size: 1.2rem;  
+}  
+  
+.timeline-content p {  
+  color: var(--text-gray);  
+  font-size: 0.95rem;  
+}  
+  
+/* ===== AI廠商網格 ===== */  
+.ai-vendors {  
+  margin-top: 4rem;  
+}  
+  
+.vendor-grid {  
+  display: grid;  
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+  gap: 2rem;  
+}  
+  
+.vendor-card {  
+  background: var(--card-bg);  
+  border: 1px solid rgba(0, 255, 255, 0.2);  
+  border-radius: 12px;  
+  padding: 2rem;  
+  text-align: center;  
+  transition: transform 0.3s ease;  
+}  
+  
+.vendor-card:hover {  
+  transform: translateY(-5px);  
+  border-color: var(--primary-cyan);  
+}  
+  
+.vendor-logo {  
+  font-size: 3rem;  
+  margin-bottom: 1rem;  
+}  
+  
+.vendor-card h4 {  
+  color: var(--primary-cyan);  
+  margin-bottom: 1rem;  
+  font-size: 1.3rem;  
+}  
+  
+.vendor-card p {  
+  color: var(--text-gray);  
+  font-size: 0.9rem;  
+  margin-bottom: 1rem;  
+}  
+  
+.vendor-tag {  
+  display: inline-block;  
+  padding: 0.3rem 1rem;  
+  background: rgba(0, 128, 255, 0.2);  
+  border: 1px solid var(--primary-blue);  
+  border-radius: 20px;  
+  font-size: 0.75rem;  
+  color: var(--primary-blue);  
+}  
+  
+/* ===== 頁尾 ===== */  
+.footer {  
+  text-align: center;  
+  padding: 3rem 2rem;  
+  background: rgba(0, 0, 0, 0.95);  
+  border-top: 1px solid rgba(0, 255, 255, 0.3);  
+  margin-top: 4rem;  
+}  
+  
+.footer p {  
+  color: var(--text-gray);  
+  font-size: 0.9rem;  
+  margin: 0.5rem 0;  
+}  
+  
+/* ===== 響應式 ===== */  
+@media (max-width: 768px) {  
+  .hero-stats {  
+    gap: 1.5rem;  
+  }  
+    
+  .stat-number {  
+    font-size: 2rem;  
+  }  
+    
+  .timeline-track {  
+    padding-left: 2rem;  
+  }  
+    
+  .timeline-item::before {  
+    position: static;  
+    display: block;  
+    margin-bottom: 0.5rem;  
+  }  
+    
+  .patent-grid,  
+  .data-cards,  
+  .vendor-grid {  
+    grid-template-columns: 1fr;  
+  }  
+}
