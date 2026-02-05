@@ -215,6 +215,61 @@ In the {props.productName} dashboard, routing mode appears where you manage Magi
 - **Routing mode: Unified** — your account is on the unified data plane and supports the new routing features.
 - **Routing mode: Legacy** — your account uses the previous data plane and does not support all unified routing features.
 
+### Why use Unified Routing
+
+Unified Routing is the future of the dedicated virtual network overlay that powers Magic Transit and Cloudflare One network connectivity.
+
+{ props.magicWord === "Magic Transit" && (
+	<>
+		<Markdown
+		text={`
+For Magic Transit customers, the primary reason to consider Unified Routing is to evaluate [BGP for IPsec/GRE tunnels](#release-status), which depends on Unified Routing.
+		`}
+		inline={false}
+		/>
+	</>
+)}
+
+{ props.magicWord !== "Magic Transit" && (
+	<>
+		<Markdown
+		text={`
+For Cloudflare One customers, there are several reasons to consider moving to Unified Routing, as it is a prerequisite for several new capabilities:
+
+- [Automatic Return Routing](#automatic-return-routing-beta)
+- [BGP over IPsec/GRE](#release-status)
+- [Cloudflare Source IPs](/magic-wan/configuration/manually/how-to/configure-cloudflare-source-ips/) using private IP space with customizable IPv4 range
+- Customizable Cloudflare One Client IPv4 ranges
+- IPv6 support
+- Improved performance between Cloudflare One Client and IPsec/GRE/CNI
+- Support for Cloudflare Mesh client and IPsec/GRE/CNI connectivity
+		`}
+		inline={false}
+		/>
+	</>
+)}
+
+### Current limitations
+
+The following limitations apply to accounts using Unified Routing mode. This list will get shorter as Cloudflare adds support for additional features.
+
+| Limitation | Details |
+| --- | --- |
+| Performance | Typically around 150 Mbps for each onramp |
+| Network analytics | Not yet fully supported |
+| Basic packet captures | Do not include Automatic Return Routing or BGP-over-tunnels traffic |
+| Full packet captures | Not yet supported |
+| Advanced Magic Firewall features | GeoIP/Country rules, IP Lists, ASN Lists, Threat Intel Lists, IDS, Rate Limiting, SIP, Managed Rulesets |
+| Gateway filtering rules | Not supported on traffic where both the onramp and offramp is IPsec/GRE/CNI |
+| Load Balancer | Not supported to IPsec/GRE/CNI destinations |
+
+### Enroll in the Unified Routing beta
+
+Unified Routing is currently in closed beta. To sign up:
+
+- **Existing Magic WAN or Magic Transit customers**: Cloudflare recommends you evaluate the new functionality with your use case in a non-production account. Contact your account team to enable Unified Routing.
+- **New customers**: Contact your account team to enable Unified Routing in a proof-of-concept for your use case.
+
 ## Scoping routes to specific regions
 
 If you have multiple connectivity paths to a network segment and want to apply different route prioritization based on where traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user.
@@ -425,7 +480,7 @@ The following table outlines the current availability and recommended use cases 
 | Feature | Release stage | Recommended use | Prerequisites |
 | --- | --- | --- | --- |
 | **BGP over CNI** | Open Beta | Production | Cloudflare Network Interconnect (CNI) v2 |
-| **BGP over Anycast IPsec/GRE** | Closed Beta | Lab / Testing only | Unified Routing (contact your account team) |
+| **BGP over Anycast IPsec/GRE** | Closed Beta | Lab / Testing only | [Unified Routing (beta)](#unified-routing-mode-beta) - contact your account team to enroll |
 
 ### BGP architecture
 
