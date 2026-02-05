@@ -45,7 +45,7 @@ Microsoft has recently made changes to the IP addresses used by Microsoft 365 ap
 
 ## nslookup on Windows in DoH mode
 
-On Windows devices in [Gateway with DoH mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
+On Windows devices in [DNS only mode mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#dns-only-mode), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
 
 ```txt
 C:\Users\JohnDoe>nslookup google.com
@@ -192,13 +192,13 @@ Microsoft previously provided a [PowerShell script](https://github.com/microsoft
 
 Use of the WARP client in a Microsoft 365 Windows 10 Cloud PC is not supported. To work around this limitation, use Windows 11.
 
-## IPv6 DNS resolution in Secure Web Gateway without DNS filtering mode
+## IPv6 DNS resolution in Traffic only mode mode
 
-In [Secure Web Gateway without DNS filtering mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering), devices using IPv6 DNS servers may experience connectivity issues if these servers are not manually excluded from the WARP tunnel.
+In [Traffic only mode mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-only-mode), devices using IPv6 DNS servers may experience connectivity issues if these servers are not manually excluded from the WARP tunnel.
 
 Unlike common IPv4 DHCP configurations where DNS servers often fall within automatically excluded private address ranges, IPv6 environments typically require manual exclusion of DNS server addresses via split tunnel settings for proper operation.
 
-If your DNS server uses an IPv6 address, you must manually exclude it using [split tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) for Secure Web Gateway without DNS filtering mode to work properly.
+If your DNS server uses an IPv6 address, you must manually exclude it using [split tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) for Traffic only mode mode to work properly.
 
 ## Ivanti Secure Access (formerly Pulse Secure)
 

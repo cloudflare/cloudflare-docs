@@ -9,7 +9,7 @@ import { Badge, Tabs, TabItem, Render } from "~/components";
 
 You can forward [HTTP](/cloudflare-one/traffic-policies/initial-setup/http/) and [network](/cloudflare-one/traffic-policies/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel. When a user connects to the Gateway proxy, Gateway will accept the connection and establish a new, separate connection to the origin server.
 
-The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Gateway with WARP mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) on your devices.
+The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Traffic and DNS mode mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) on your devices.
 
 ## Proxy algorithm
 

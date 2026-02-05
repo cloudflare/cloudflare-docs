@@ -71,7 +71,7 @@ gRPC clients can connect to the server by installing Cloudflare WARP on the devi
 
 To set up the gRPC client:
 
-1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device in Gateway with WARP mode.
+1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device in Traffic and DNS mode mode.
 2. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 3. Install gRPC on the device by following this [quick start guide](https://grpc.io/docs/languages/python/quickstart/).
 4. Modify `greeter.py` to point to the private IP of your gRPC server. This is the same private IP configured in your [Cloudflare Tunnel routes](#2-connect-the-server-to-cloudflare). For example,
