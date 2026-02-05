@@ -1,0 +1,10 @@
+.patent-card {
+  touch-action: manipulation;
+}
+
+@media (hover: none) {
+  .patent-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
