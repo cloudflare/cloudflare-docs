@@ -89,7 +89,7 @@ import { openai } from "@ai-sdk/openai";
 import { env } from "cloudflare:workers";
 import { z } from "zod";
 
-const model = openai("gpt-4o");
+const model = openai("gpt-5.2");
 
 const tools = {
   getWeather: tool({
@@ -154,7 +154,7 @@ Wraps your tools to enable code generation mode for the LLM.
 
 **Parameters:**
 
-- `options.model` (required): `LanguageModel` - AI SDK-compatible model instance (e.g., `openai("gpt-4o")`)
+- `options.model` (required): `LanguageModel` - AI SDK-compatible model instance (e.g., `openai("gpt-5.2")`)
 - `options.tools`: `ToolSet` - Object containing tool definitions
 - `options.prompt`: `string` - System prompt for the agent
 - `options.globalOutbound`: `Fetcher` - Outbound fetch handler for security filtering
@@ -176,7 +176,7 @@ The returned `tools` should be used instead of your original tools when calling 
 
 ```typescript
 const { prompt, tools: wrappedTools } = await codemode({
-  model: openai("gpt-4o"),
+  model: openai("gpt-5.2"),
   prompt: "You are a helpful assistant...",
   tools: myTools,
   globalOutbound: env.globalOutbound,
@@ -260,7 +260,7 @@ const { prompt, tools: wrappedTools } = await codemode({
 ```typescript
 import { openai } from "@ai-sdk/openai";
 
-const model = openai("gpt-4o");  // Or any AI SDK-compatible model
+const model = openai("gpt-5.2");  // Or any AI SDK-compatible model
 
 const { prompt, tools: wrappedTools } = await codemode({
   model,  // Now required
