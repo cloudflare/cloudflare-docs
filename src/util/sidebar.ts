@@ -94,18 +94,17 @@ export async function generateSidebar(group: Group) {
 	}
 
 	const product = products.find((p) => p.id === group.label);
-	if (product && product.data.product.group === "Developer platform") {
+	const isDeveloperPlatform =
+		product?.data.product.group === "Developer platform" ||
+		product?.data.product.additional_groups?.includes("Developer platform");
+	if (product && isDeveloperPlatform) {
 		const links = [
 			["llms.txt", "/llms.txt"],
 			["prompt.txt", "/workers/prompt.txt"],
-			[`${product.data.name} llms-full.txt`, `/${product.id}/llms-full.txt`],
-			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
 		];
 
-		group.entries.push({
-			type: "group",
-			label: "LLM resources",
-			entries: links.map(([label, href]) => ({
+		for (const [label, href] of links) {
+			group.entries.push({
 				type: "link",
 				label,
 				href,
@@ -114,10 +113,8 @@ export async function generateSidebar(group: Group) {
 					target: "_blank",
 				},
 				badge: undefined,
-			})),
-			collapsed: true,
-			badge: undefined,
-		});
+			});
+		}
 	}
 
 	return group;

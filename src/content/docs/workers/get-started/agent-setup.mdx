@@ -1,0 +1,146 @@
+---
+title: AI agent setup
+pcx_content_type: how-to
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Set up your AI coding agent
+---
+
+import { Tabs, TabItem, Render } from "~/components";
+
+Configure your AI coding agent to build effectively on Cloudflare. This guide covers installing skills, connecting MCP servers, and creating API tokens for deployment.
+
+## Install the Cloudflare skill
+
+<Render file="cloudflare-skill-install" product="agents" />
+
+## Connect MCP servers
+
+MCP servers provide your agent with tools and context. Connect to Cloudflare's managed servers for documentation, observability, and more.
+
+<Tabs>
+	<TabItem label="Cursor">
+
+Use this [direct install link](https://cursor.com/en-US/install-mcp?name=cloudflare-docs&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D) for the Documentation server.
+
+Or add to your MCP configuration:
+
+```json
+{
+	"mcpServers": {
+		"cloudflare-docs": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+		}
+	}
+}
+```
+
+    </TabItem>
+    <TabItem label="VS Code">
+
+Use this [direct install link](vscode:mcp/install?%7B%22name%22%3A%22cloudflare-docs%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D) for the Documentation server.
+
+    </TabItem>
+    <TabItem label="Claude Desktop">
+
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+
+```json
+{
+	"mcpServers": {
+		"cloudflare-docs": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+		}
+	}
+}
+```
+
+    </TabItem>
+    <TabItem label="OpenCode">
+
+Add to `~/.config/opencode/.mcp.json`:
+
+```json
+{
+	"mcpServers": {
+		"cloudflare-docs": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+		}
+	}
+}
+```
+
+    </TabItem>
+
+</Tabs>
+
+For the full list of available servers, refer to [Cloudflare MCP servers](/cloudflare-for-agents/mcp-servers/).
+
+## Create an API token for deployment
+
+When your agent needs to deploy Workers or manage Cloudflare resources, create a scoped API token.
+
+### Create a Workers development token
+
+1. Go to the [Cloudflare dashboard API Tokens page](https://dash.cloudflare.com/profile/api-tokens).
+2. Select **Create Token**.
+3. Select **Create Custom Token**.
+4. Add a descriptive name like "AI Agent - Workers Development".
+5. Configure permissions:
+
+| Permission                   | Access |
+| ---------------------------- | ------ |
+| Account / Workers Scripts    | Edit   |
+| Account / Workers KV Storage | Edit   |
+| Account / D1                 | Edit   |
+| Account / R2 Storage         | Edit   |
+| Account / Durable Objects    | Edit   |
+| Zone / Workers Routes        | Edit   |
+
+6. Under **Account Resources**, select your account.
+7. Under **Zone Resources**, select **All zones** or specific zones.
+8. Select **Continue to summary**, then **Create Token**.
+9. Copy the token value. You will not see it again.
+
+### Use the token with Wrangler
+
+Set the token as an environment variable:
+
+```sh
+export CLOUDFLARE_API_TOKEN=<your-token>
+```
+
+Verify the token works:
+
+```sh
+npx wrangler whoami
+```
+
+Deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+### Security best practices
+
+- Use [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/) for CI/CD and agents instead of user tokens
+- Scope tokens to specific accounts and zones when possible
+- Set a TTL for temporary access
+- Rotate tokens regularly
+- Never commit tokens to version control
+
+## Use the Workers prompt
+
+For additional context, use the [Workers mega prompt](/workers/get-started/prompting/) in your AI tool. The prompt includes API examples, configuration guidance, and best practices.
+
+## Next steps
+
+- [Build your first Worker](/workers/get-started/guide/)
+- [Build an AI agent](/agents/getting-started/build-a-chat-agent/)
+- [Browse MCP servers](/cloudflare-for-agents/mcp-servers/)

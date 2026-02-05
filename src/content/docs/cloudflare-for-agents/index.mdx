@@ -1,0 +1,137 @@
+---
+title: Cloudflare for Agents
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Cloudflare for Agents
+---
+
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkButton,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+	Render,
+} from "~/components";
+
+<Description>
+
+Services and tools that help AI agents interact with Cloudflare and the web.
+
+</Description>
+
+Cloudflare provides services that AI agents can use to browse the web, process content, access Cloudflare APIs, and more. These services work with any AI agent, whether built with the [Cloudflare Agents SDK](/agents/) or other frameworks.
+
+<LinkButton href="/cloudflare-for-agents/mcp-servers/">
+	Browse MCP servers
+</LinkButton>
+
+---
+
+## Services
+
+<Feature
+	header="Skills"
+	href="https://github.com/cloudflare/skills"
+	cta="Browse Skills"
+>
+	Modular capabilities for AI agents to connect to tools, services, and APIs.
+	Skills provide reusable building blocks for agent functionality.
+</Feature>
+
+<Feature
+	header="MCP servers"
+	href="/cloudflare-for-agents/mcp-servers/"
+	cta="View MCP servers"
+>
+	Connect to Cloudflare's managed MCP servers for documentation, observability,
+	browser rendering, and more. Works with Claude, Cursor, Windsurf, and other
+	MCP clients.
+</Feature>
+
+<Feature
+	header="Markdown for Agents"
+	href="/cloudflare-for-agents/markdown-for-agents/"
+	cta="Enable Markdown for Agents"
+>
+	Convert any page on your zone to Markdown using content negotiation. Agents
+	request pages with `Accept: text/markdown` and receive clean, token-efficient
+	Markdown.
+</Feature>
+
+<Feature header="AI Gateway" href="/ai-gateway/" cta="Monitor agent LLM calls">
+	Observe and control your agent's LLM calls. Add logging, caching, fallbacks,
+	rate limits, and guardrails to every AI request your agent makes.
+</Feature>
+
+---
+
+## Content processing
+
+Cloudflare offers multiple ways to convert web content and documents to formats optimized for AI consumption.
+
+| Service                                                                       | Use case                          | How it works                                  |
+| ----------------------------------------------------------------------------- | --------------------------------- | --------------------------------------------- |
+| [Markdown for Agents](/cloudflare-for-agents/markdown-for-agents/)            | Convert pages on your own zone    | Zone setting + `Accept: text/markdown` header |
+| [Workers AI toMarkdown](/workers-ai/features/markdown-conversion/)            | Convert documents (PDF, images)   | `env.AI.toMarkdown()` binding or REST API     |
+| [Browser Rendering /markdown](/browser-rendering/rest-api/markdown-endpoint/) | Convert any URL with JS rendering | REST API that renders then converts           |
+
+---
+
+## Browser automation
+
+AI agents can browse and interact with web pages using these services.
+
+| Service                                                         | Use case                                            |
+| --------------------------------------------------------------- | --------------------------------------------------- |
+| [Browser Rendering REST API](/browser-rendering/rest-api/)      | Screenshots, scraping, content extraction           |
+| [Stagehand](/browser-rendering/stagehand/)                      | AI-powered browser automation with natural language |
+| [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) | MCP server for browser automation                   |
+
+---
+
+## RAG and search
+
+Build retrieval-augmented generation (RAG) systems with managed services.
+
+| Service                           | Use case                                     |
+| --------------------------------- | -------------------------------------------- |
+| [AI Search](/ai-search/)          | Managed RAG with automatic indexing          |
+| [Vectorize](/vectorize/)          | Vector database for embeddings               |
+| [NLWeb](/ai-search/how-to/nlweb/) | Add `/ask` and `/mcp` endpoints to your site |
+
+---
+
+## AI safety and control
+
+Protect your AI applications and control how agents access your content.
+
+| Service                                        | Use case                                            |
+| ---------------------------------------------- | --------------------------------------------------- |
+| [AI Gateway](/ai-gateway/)                     | Logging, caching, fallbacks, rate limits for agents |
+| [Guardrails](/ai-gateway/features/guardrails/) | Content moderation for prompts and responses        |
+| [AI Crawl Control](/ai-crawl-control/)         | Monitor and control AI crawler access               |
+
+---
+
+## Related
+
+<RelatedProduct header="Agents" href="/agents/" product="agents">
+	Build AI agents on Cloudflare using the Agents SDK. Create stateful agents
+	with WebSockets, scheduling, and MCP server support.
+</RelatedProduct>
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+	Run inference on machine learning models with serverless GPUs on Cloudflare's
+	global network.
+</RelatedProduct>
+
+<RelatedProduct header="AI Gateway" href="/ai-gateway/" product="ai-gateway">
+	Observe and control your AI applications with caching, rate limiting, and
+	model fallbacks.
+</RelatedProduct>

@@ -1,0 +1,47 @@
+The [Cloudflare skill](https://github.com/cloudflare/skills) teaches AI coding agents how to build on Cloudflare. It includes guidance for Workers, Pages, storage (KV, D1, R2), AI services, and the Agents SDK.
+
+<Tabs>
+<TabItem label="Claude Code">
+
+Install from the plugin marketplace:
+
+```sh
+/plugin marketplace add cloudflare/skills
+```
+
+</TabItem>
+<TabItem label="Cursor">
+
+Install from the Cursor Marketplace or add manually:
+
+1. Open **Settings** > **Rules**.
+2. Select **Add Rule** > **Remote Rule (GitHub)**.
+3. Enter `cloudflare/skills`.
+
+</TabItem>
+<TabItem label="OpenCode">
+
+Clone the skills repository and copy to your OpenCode skills directory:
+
+```sh
+git clone https://github.com/cloudflare/skills.git
+cp -r skills/* ~/.config/opencode/skill/
+```
+
+</TabItem>
+<TabItem label="npx skills">
+
+Install using the `npx skills` CLI:
+
+```sh
+npx skills add https://github.com/cloudflare/skills
+```
+
+</TabItem>
+</Tabs>
+
+The skill provides:
+
+- **Commands**: `/cloudflare:build-agent` and `/cloudflare:build-mcp` for guided workflows
+- **Contextual skills**: Auto-loaded guidance for Workers, Durable Objects, Agents SDK, Wrangler, and more
+- **MCP servers**: Pre-configured connections to Cloudflare documentation, bindings, builds, and observability servers

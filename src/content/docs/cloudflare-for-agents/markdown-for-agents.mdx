@@ -1,0 +1,106 @@
+---
+title: Markdown for Agents
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+import { Tabs, TabItem, Plan } from "~/components";
+
+<Plan type="pro" />
+
+Markdown for Agents converts HTML pages to Markdown in real-time using [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Content_negotiation). When enabled on a zone, clients can request any page with the `Accept: text/markdown` header and receive clean, token-efficient Markdown.
+
+Markdown's explicit structure enables reliable chunking and retrieval, and reduces token usage compared to raw HTML.
+
+## Enable Markdown for Agents
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select your zone.
+3. In the sidebar under **Quick Actions**, toggle **Markdown for Agents** to enable.
+
+</TabItem>
+<TabItem label="API">
+
+Send a `PATCH` request to enable markdown conversion:
+
+```bash
+curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/content_converter" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{"value": "on"}'
+```
+
+You need an API token with **Zone Settings:Edit** permission.
+
+</TabItem>
+</Tabs>
+
+## Request Markdown content
+
+Add the `Accept: text/markdown` header to request Markdown instead of HTML.
+
+### curl example
+
+```bash
+curl "https://example.com/docs/getting-started/" \
+  --header "Accept: text/markdown"
+```
+
+### JavaScript example
+
+```js
+const response = await fetch("https://example.com/docs/getting-started/", {
+	headers: {
+		Accept: "text/markdown",
+	},
+});
+
+const tokenCount = response.headers.get("x-markdown-tokens");
+const markdown = await response.text();
+```
+
+## Response headers
+
+Markdown responses include these headers:
+
+| Header              | Description                                    |
+| ------------------- | ---------------------------------------------- |
+| `content-type`      | Set to `text/markdown`                         |
+| `x-markdown-tokens` | Estimated token count of the converted content |
+
+The `x-markdown-tokens` header helps estimate context window usage and calculate costs when integrating with AI systems.
+
+### Example response
+
+```txt
+HTTP/2 200
+content-type: text/markdown
+x-markdown-tokens: 1234
+
+# Getting Started
+
+Welcome to our documentation...
+```
+
+## Other Markdown conversion options
+
+Cloudflare provides additional ways to convert content to Markdown:
+
+| Service                                                                       | Use case                                                                  |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| [Workers AI toMarkdown](/workers-ai/features/markdown-conversion/)            | Convert documents (PDF, images) to Markdown with AI-powered summarization |
+| [Browser Rendering /markdown](/browser-rendering/rest-api/markdown-endpoint/) | Render JavaScript-heavy pages then convert to Markdown                    |
+
+## Availability
+
+Markdown for Agents is available to Pro and Business plans, and SSL for SaaS customers at no additional cost.
+
+## Limitations
+
+- Converts HTML only. Other document types are not supported.
+- Compressed responses from the origin are not supported.
+- This is a zone-level setting. For different settings on subdomains, use separate zones.

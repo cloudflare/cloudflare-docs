@@ -1,0 +1,11 @@
+name: Cloudflare for Agents
+product:
+  title: Cloudflare for Agents
+  url: /cloudflare-for-agents/
+  group: AI
+  additional_groups: [Developer platform]
+  tags: [AI]
+meta:
+  title: Cloudflare for Agents docs
+  description: Services and tools that help AI agents interact with Cloudflare and the web
+  author: "@cloudflare"

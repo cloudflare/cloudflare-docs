@@ -1,22 +1,20 @@
 ---
-pcx_content_type: concept
-title: Cloudflare's own MCP servers
-tags:
-  - MCP
+title: MCP servers
+pcx_content_type: reference
 sidebar:
-  order: 8
+  order: 2
 ---
 
 import { Render, Tabs, TabItem } from "~/components";
 
-Cloudflare runs a catalog of managed remote MCP servers that you can connect to using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), [Cloudflare AI Playground](https://playground.ai.cloudflare.com/), or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
-
-These MCP servers allow your MCP client to read configurations from your account, process information, make suggestions based on data, and make changes for you. All servers support both `streamable-http` transport via `/mcp` and SSE transport (deprecated) via `/sse`.
+Cloudflare runs managed remote [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers that you can connect to from any MCP client. These servers provide tools for documentation search, observability, browser rendering, and more.
 
 ## Connect to MCP servers
 
+Connect using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), [Cloudflare AI Playground](https://playground.ai.cloudflare.com/), or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
+
 <Tabs>
-	<TabItem label="Cursor">
+<TabItem label="Cursor">
 
 Use this [direct install link](https://cursor.com/en-US/install-mcp?name=cloudflare-docs&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D) for the Documentation server.
 
@@ -33,13 +31,13 @@ Or add manually to your MCP config:
 }
 ```
 
-    </TabItem>
-    <TabItem label="VS Code">
+</TabItem>
+<TabItem label="VS Code">
 
 Use this [direct install link](vscode:mcp/install?%7B%22name%22%3A%22cloudflare-docs%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D) for the Documentation server.
 
-    </TabItem>
-    <TabItem label="Claude Desktop">
+</TabItem>
+<TabItem label="Claude Desktop">
 
 Add to your Claude Desktop configuration file:
 
@@ -57,8 +55,8 @@ Add to your Claude Desktop configuration file:
 }
 ```
 
-    </TabItem>
-    <TabItem label="OpenCode">
+</TabItem>
+<TabItem label="OpenCode">
 
 Add to your OpenCode MCP configuration at `~/.config/opencode/.mcp.json`:
 
@@ -73,12 +71,17 @@ Add to your OpenCode MCP configuration at `~/.config/opencode/.mcp.json`:
 }
 ```
 
-    </TabItem>
-
+</TabItem>
 </Tabs>
 
 ## Available servers
 
+All servers support both `streamable-http` transport via `/mcp` and SSE transport (deprecated) via `/sse`.
+
 <Render file="mcp-servers-table" product="agents" />
 
 For more information on each server, visit the [GitHub repository](https://github.com/cloudflare/mcp-server-cloudflare).
+
+## Build your own MCP server
+
+To build and deploy your own MCP server on Cloudflare, refer to the [MCP documentation](/agents/model-context-protocol/) in the Agents SDK.
