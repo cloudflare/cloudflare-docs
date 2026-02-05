@@ -9,11 +9,11 @@ import { Details, Render, TabItem, Tabs } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All modes                                                                                 | All plans                                                     |
 
-| System   | Availability | Minimum WARP version |
+| System   | Availability | Minimum client version |
 | -------- | ------------ | -------------------- |
 | Windows  | ✅           | 2025.1.861.0         |
 | macOS    | ✅           | 2025.1.861.0         |
@@ -24,7 +24,7 @@ import { Details, Render, TabItem, Tabs } from "~/components";
 
 </Details>
 
-Cloudflare WARP allows you to selectively apply specific [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) and WARP client settings when a device connects to a secure network location, such as an office. WARP identifies these managed networks by detecting a TLS endpoint you set up on the network.
+The Cloudflare One Client (formerly WARP Client) allows you to selectively apply specific [device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/device-profiles/) and client settings when a device connects to a secure network location, such as an office. The client identifies these managed networks by detecting a TLS endpoint you set up on the network.
 
 On this page, you will learn how to:
 
@@ -34,22 +34,22 @@ On this page, you will learn how to:
 
 ## Requirements
 
-- The WARP client scans for managed networks when the operating system's default route changes, the SSID of the active Wi-Fi connection changes, or the DNS servers of the default interface change. To minimize performance impact, reuse the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+- The Cloudflare One Client scans for managed networks when the operating system's default route changes, the SSID of the active Wi-Fi connection changes, or the DNS servers of the default interface change. To minimize performance impact, reuse the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
 - Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
 
 ## Managed network detection logic
 
-When you configure a managed network, the WARP client uses the TLS endpoint to determine whether the device is on that network.
+When you configure a managed network, the Cloudflare One Client uses the TLS endpoint to determine whether the device is on that network.
 
 The time it takes to apply the correct device profile depends on how quickly the TLS endpoint responds.
 
-If the TLS endpoint times out after 5 seconds, the WARP client will determine that the device is not on a managed network and will apply the default device profile. The WARP client only retries detection if a non-timeout error occurs. A timeout triggers fallback to the default device profile without further retries.
+If the TLS endpoint times out after 5 seconds, the Cloudflare One Client will determine that the device is not on a managed network and will apply the default device profile. The client only retries detection if a non-timeout error occurs. A timeout triggers fallback to the default device profile without further retries.
 
 ## 1. Choose a TLS endpoint
 
 A TLS endpoint is a host on your network that serves a TLS certificate. The TLS endpoint acts like a network location beacon — when a device connects to a network, the WARP client on the device detects the TLS endpoint and validates the TLS certificate against the SHA-256 fingerprint (if specified) or against the local certificate store to check that it is signed by a public certificate authority.
 
-The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. WARP will automatically exclude the managed network endpoint from all device profiles to ensure that users cannot connect to this endpoint over Cloudflare Tunnel. We recommend choosing a host that is physically in the office which remote users do not need to access, such as a printer.
+The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. The Cloudflare One Client will automatically exclude the managed network endpoint from all device profiles to ensure that users cannot connect to this endpoint over Cloudflare Tunnel. We recommend choosing a host that is physically in the office which remote users do not need to access, such as a printer.
 
 ### Create a new TLS endpoint
 
@@ -65,7 +65,7 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 
 	:::note
 
-	The WARP client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
+	The Cloudflare One Client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
 	:::
 
 2. Configure an HTTPS server on your network to use this certificate and key. The example below demonstrates how to serve the TLS certificate from an nginx container in Docker:
@@ -179,7 +179,7 @@ To create a TLS endpoint using Windows Internet Information Services (IIS) Manag
 
 ### Supported cipher suites
 
-The WARP client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your TLS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
+The Cloudflare One Client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your TLS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
 
 ## 2. Extract the SHA-256 fingerprint
 
@@ -200,7 +200,7 @@ The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed
    We recommend using the private IP of your managed network endpoint and not a hostname to prevent issues related to DNS lookups resolving the incorrect IP.
    :::
 
-5. (Optional) In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate. This field is only needed for self-signed certificates. If a TLS fingerprint is not supplied, WARP validates the certificate against the local certificate store and checks that it is signed by a public certificate authority.
+5. (Optional) In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate. This field is only needed for self-signed certificates. If a TLS fingerprint is not supplied, the Cloudflare One Client validates the certificate against the local certificate store and checks that it is signed by a public certificate authority.
 6. Select **Save**.
 
 </TabItem>
@@ -227,10 +227,10 @@ The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed
 </TabItem>
 </Tabs>
 
-WARP will automatically exclude the TLS endpoint from all device profiles if it is specified as a private IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of a private IP, WARP will not automatically exclude it.
+The Cloudflare One Client will automatically exclude the TLS endpoint from all device profiles if it is specified as a private IP address. This exclusion prevents remote users from accessing the endpoint through the tunnel on any port. If the TLS endpoint is specified as a hostname instead of a private IP, the client will not automatically exclude it.
 
 :::note[Split Tunnels in Include mode]
-If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that your Split Tunnel entries do not contain the TLS endpoint IP address; otherwise WARP will exclude the entire Split Tunnel entry from the tunnel. For example, if you are currently including `10.0.0.0/8` but your TLS endpoint is on `10.0.0.1`, use our [IP subtraction calculator](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to remove `10.0.0.1` from `10.0.0.0/8`.
+If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/) in **Include** mode, ensure that your Split Tunnel entries do not contain the TLS endpoint IP address; otherwise the client will exclude the entire Split Tunnel entry from the tunnel. For example, if you are currently including `10.0.0.0/8` but your TLS endpoint is on `10.0.0.1`, use our [IP subtraction calculator](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/#add-a-route) to remove `10.0.0.1` from `10.0.0.0/8`.
 :::
 
 ## 4. Configure device profile
@@ -239,7 +239,7 @@ If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devi
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
 
-2. Under **Profiles**, create a new [profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) or edit an existing profile.
+2. Under **Profiles**, create a new [profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/device-profiles/) or edit an existing profile.
 
 3. To apply this profile whenever a device connects to your network, add the following rule:
 
@@ -272,18 +272,18 @@ resource "cloudflare_zero_trust_device_custom_profile" "office" {
 </TabItem>
 </Tabs>
 
-Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing Wi-Fi networks), the WARP client will determine its network location and apply the corresponding settings profile.
+Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing Wi-Fi networks), the Cloudflare One Client will determine its network location and apply the corresponding settings profile.
 
 ## 5. Verify managed network
 
-To check if the WARP client detects the network location:
+To check if the Cloudflare One Client detects the network location:
 
-1. Turn on WARP.
+1. Turn on the Cloudflare One Client.
 2. Disconnect and reconnect to the network.
 3. Open a terminal and run `warp-cli debug alternate-network`.
 
 ## Related resources
 
-- [Device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) - How to create and manage the device profiles you apply via managed networks.
-- [WARP settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/) - Defines how WARP behaves and what users can do.
-- [WARP troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/) - Troubleshoot common WARP issues.
+- [Device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/device-profiles/) - How to create and manage the device profiles you apply via managed networks.
+- [Client settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/) - Defines how the Cloudflare One Client behaves and what users can do.
+- [Cloudflare One Client troubleshooting guide](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/troubleshooting-guide/) - Troubleshoot common Cloudflare One Client issues.

@@ -11,11 +11,11 @@ import { Render, Details } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
 
-| System   | Availability | Minimum WARP version |
+| System   | Availability | Minimum client version |
 | -------- | ------------ | -------------------- |
 | Windows  | ✅           |  2025.10.186.0         |
 | macOS    | ✅           |  2025.10.186.0          |
@@ -26,7 +26,7 @@ import { Render, Details } from "~/components";
 
 </Details>
 
-A device IP identifies and routes traffic to a specific WARP device in your Zero Trust organization. When a user registers the WARP client, Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The WARP client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/cloudflare-one/networks/connectors/wan-tunnels/) on-ramps.
+A device IP identifies and routes traffic to a specific device in your Zero Trust organization. When a user registers the Cloudflare One Client (formerly WARP Client), Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The Cloudflare One Client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/cloudflare-one-client-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/cloudflare-one/networks/connectors/wan-tunnels/) on-ramps.
 
 You can verify device IPs and, if needed, reconfigure address pools to avoid overlapping IPs with existing internal resources.
 
@@ -37,9 +37,9 @@ By default, Cloudflare assigns device IPs from the following address space:
 - Default IPv4: `100.96.0.0/12`
 - Default IPv6: `2606:4700:0cf1:1000::/64`
 
-If your organization already uses the default IPv4 range for internal networking, or if you require more granular IP assignments for firewall policy management, you can configure custom WARP IPv4 subnets. You can assign different IPv4 subnets to devices based on the user's identity.
+If your organization already uses the default IPv4 range for internal networking, or if you require more granular IP assignments for firewall policy management, you can configure custom IPv4 subnets. You can assign different IPv4 subnets to devices based on the user's identity.
 
-The default IPv6 range is owned by Cloudflare and therefore should not conflict with services on your private network. The WARP IPv6 range is not configurable.
+The default IPv6 range is owned by Cloudflare and therefore should not conflict with services on your private network. The IPv6 range is not configurable.
 
 ## Create an IP subnet
 
@@ -71,7 +71,7 @@ Assign [custom IP subnets](#create-an-ip-subnet) to ensure devices are provision
 
 ### Prerequisites
 
-- [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#assign-a-unique-ip-address-to-each-device) is enabled in your [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
+- [**Assign a unique IP address to each device**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#assign-a-unique-ip-address-to-each-device) is enabled in your [device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/device-profiles/).
 
 ### Create an IP assignment
 
@@ -85,13 +85,13 @@ To assign IP subnets to your devices:
 6. Select **Assign IP address**.
 7. (Optional) In the **Device IP assignment** table, change the [order of precedence](#order-of-precedence) of IP assignments.
 
-Devices that match your rules are assigned a random IP from this address space upon registration. Only newly registered devices will receive a new IP; existing devices will not see any impact to connectivity. To assign a new IP to an existing device, you must [delete its registration](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration) and then [re-enroll the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
+Devices that match your rules are assigned a random IP from this address space upon registration. Only newly registered devices will receive a new IP; existing devices will not see any impact to connectivity. To assign a new IP to an existing device, you must [delete its registration](/cloudflare-one/team-and-resources/devices/device-registration/#delete-a-device-registration) and then [re-enroll the device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) in your Zero Trust organization.
 
-Organizations are currently [limited](/cloudflare-one/account-limits/#warp) to 30 custom device IP assignments per account.
+Organizations are currently [limited](/cloudflare-one/account-limits/#cloudflare-one-client) to 30 custom device IP assignments per account.
 
 ### Selectors
 
-You can configure IP assignments to match against the following selectors or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
+You can configure IP assignments to match against the following selectors or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) by logging in to an identity provider (IdP).
 
 #### User email
 
@@ -177,7 +177,7 @@ To evaluate multiple conditions in an expression, select a logical operator:
 
 ### Order of precedence
 
-WARP checks the IP assignments from top to bottom as they appear in the Cloudflare One dashboard (lowest precedence number is checked first). WARP follows the first match principle — once a device matches an IP assignment, WARP stops evaluating and no subsequent IP assignments can override the decision. You can rearrange the IP assignments in the Cloudflare One dashboard according to your desired order of precedence.
+The Cloudflare One Client checks the IP assignments from top to bottom as they appear in the Cloudflare One dashboard (lowest precedence number is checked first). The client follows the first match principle — once a device matches an IP assignment, the client stops evaluating and no subsequent IP assignments can override the decision. You can rearrange the IP assignments in the Cloudflare One dashboard according to your desired order of precedence.
 
 ## Verify device IPs
 
@@ -194,7 +194,7 @@ To check the virtual IP addresses assigned to a specific device registration:
 
 ### Via the CLI
 
-To check the device IP used by WARP's virtual network interface:
+To check the device IP used by the Cloudflare One Client's virtual network interface:
 
 <Render file="warp/check-network-interface-ip" product="cloudflare-one" />
 

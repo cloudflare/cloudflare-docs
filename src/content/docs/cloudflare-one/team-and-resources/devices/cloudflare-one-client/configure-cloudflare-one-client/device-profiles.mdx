@@ -17,7 +17,7 @@ import { Render, TabItem, Tabs, APIRequest } from "~/components";
 2. In the **Profile** card, select **Create new profile**. This will make a copy of the **Default** profile.
 3. Enter any name for the profile.
 4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/traffic-policies/network-policies/#comparison-operators), and [Values](/cloudflare-one/traffic-policies/network-policies/#value).
-5. Configure [WARP settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-settings) for these devices.
+5. Configure [client settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#device-settings) for these devices.
 
 :::note
 
@@ -134,7 +134,7 @@ The device profile UUID is shown in the `Profile ID` field.
 
 ## Selectors
 
-You can configure device profiles to match against the following selectors, or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
+You can configure device profiles to match against the following selectors, or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) by logging in to an identity provider (IdP).
 
 ### User email
 
@@ -186,7 +186,7 @@ Apply a device profile based on the operating system of the device.
 
 ### Operating system version
 
-Apply a device profile based on the [OS version](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/#determine-the-os-version) of the device.
+Apply a device profile based on the [OS version](/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/os-version/#determine-the-os-version) of the device.
 
 | UI name                  | API example               |
 | ------------------------ | ------------------------- |
@@ -196,7 +196,7 @@ Apply a device profile based on the [OS version](/cloudflare-one/reusable-compon
 
 ### Managed network
 
-Apply a device profile based on the [managed network](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) that the device is connected to.
+Apply a device profile based on the [managed network](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/managed-networks/) that the device is connected to.
 
 | UI name         | API example                    |
 | --------------- | ------------------------------ |
@@ -210,7 +210,7 @@ Apply a device profile based on an attribute name and value from a [SAML IdP](/c
 
 ### Service token
 
-Apply a device profile based on the [service token](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#check-for-service-token) used to enroll the device.
+Apply a device profile based on the [service token](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/#check-for-service-token) used to enroll the device.
 
 | UI name       | API example                                                               |
 | ------------- | ------------------------------------------------------------------------- |
