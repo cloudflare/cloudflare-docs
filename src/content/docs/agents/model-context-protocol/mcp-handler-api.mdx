@@ -114,7 +114,13 @@ const handler = createMcpHandler(server, { transport });
 
 ## Stateless MCP Servers
 
-Many MCP Servers are stateless, meaning they don't maintain any session state between requests. The `createMcpHandler` function is a lightweight alternative to the `McpAgent` class that can be used to serve an MCP server straight from a Worker. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
+Many MCP Servers are stateless, meaning they do not maintain any session state between requests. The `createMcpHandler` function is a lightweight alternative to the `McpAgent` class that can be used to serve an MCP server straight from a Worker. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
+
+:::caution[Breaking change in MCP SDK 1.26.0]
+MCP SDK 1.26.0 introduces a guard that prevents connecting to a server instance that has already been connected to a transport. This fixes a security vulnerability ([CVE](https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-345p-7cg4-v4c7)) where sharing server or transport instances could leak cross-client response data.
+
+If your stateless MCP server declares `McpServer` or transport instances in the global scope, you must update your code to create new instances per request.
+:::
 
 <TypeScriptExample>
 
@@ -123,29 +129,35 @@ import { createMcpHandler } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-const server = new McpServer({
-	name: "Hello MCP Server",
-	version: "1.0.0",
-});
+function createServer() {
+	const server = new McpServer({
+		name: "Hello MCP Server",
+		version: "1.0.0",
+	});
 
-server.tool(
-	"hello",
-	"Returns a greeting message",
-	{ name: z.string().optional() },
-	async ({ name }) => {
-		return {
-			content: [
-				{
-					text: `Hello, ${name ?? "World"}!`,
-					type: "text",
-				},
-			],
-		};
-	},
-);
+	server.tool(
+		"hello",
+		"Returns a greeting message",
+		{ name: z.string().optional() },
+		async ({ name }) => {
+			return {
+				content: [
+					{
+						text: `Hello, ${name ?? "World"}!`,
+						type: "text",
+					},
+				],
+			};
+		},
+	);
+
+	return server;
+}
 
 export default {
 	fetch: async (request: Request, env: Env, ctx: ExecutionContext) => {
+		// Create a new server instance per request
+		const server = createServer();
 		const handler = createMcpHandler(server);
 		return handler(request, env, ctx);
 	},
@@ -154,7 +166,7 @@ export default {
 
 </TypeScriptExample>
 
-Each request to this MCP server creates a new session. The server doesn't maintain state between requests. This is the simplest way to implement an MCP server.
+Each request to this MCP server creates a new session and server instance. The server does not maintain state between requests. This is the simplest way to implement an MCP server.
 
 ## Stateful MCP Servers
 
