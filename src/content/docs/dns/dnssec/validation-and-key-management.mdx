@@ -19,7 +19,7 @@ DNSSEC validation follows a chain of trust from the root DNS servers to your zon
 This is why you cannot simply keep your existing DS record when migrating to Cloudflare. The cryptographic chain of trust requires either:
 
 - [Disabling DNSSEC](/dns/dnssec/) before migration and re-enabling it on Cloudflare
-- Using the [multi-signer DNSSEC]() approach to coordinate keys between providers.
+- Using the [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) approach to coordinate keys between providers.
 
 ---
 
@@ -32,7 +32,7 @@ When you enable DNSSEC, Cloudflare automatically publishes **CDS** (Child Delega
 | **CDS** | High-level instruction | A hashed version of the public key (same data as a DS record) |
 | **CDNSKEY** | Public key instruction | The full public Key Signing Key (KSK) for the parent to generate its own DS record |
 
-Registrars that support [RFC 8078](https://datatracker.ietf.org/doc/html/rfc8078) periodically scan your domain for these records and automatically update the DS record at the registry level. This eliminates manual DS record management and ensures seamless key rollovers.
+Registrars that support [RFC 8078](https://www.rfc-editor.org/rfc/rfc8078.html) periodically scan your domain for these records and automatically update the DS record at the registry level. This eliminates manual DS record management and ensures seamless key rollovers.
 
 :::note
 Not all registrars support automatic CDS/CDNSKEY scanning. If your registrar does not support RFC 8078, you must manually add the DS record.

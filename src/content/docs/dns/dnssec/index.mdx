@@ -60,7 +60,7 @@ If your top-level domain does not support DNSSEC with Algorithm 13 (also known a
 
 Cloudflare manages DNSSEC key rotation automatically:
 
-- **Key Signing Key (KSK)**: Rarely rotated and remains stable. When rotation occurs, CDS and CDNSKEY records signal the change to registrars that support RFC 8078.
+- **Key Signing Key (KSK)**: Rarely rotated and remains stable. When rotation occurs, CDS and CDNSKEY records signal the change to registrars that support [RFC 8078](https://www.rfc-editor.org/rfc/rfc8078.html).
 - **Zone Signing Key (ZSK)**: Rotated automatically by Cloudflare without user intervention.
 
 You do not need to take any action when Cloudflare rotates keys. If your registrar supports CDS scanning, the DS record updates automatically. Otherwise, Cloudflare will notify you if manual DS record updates are required.
