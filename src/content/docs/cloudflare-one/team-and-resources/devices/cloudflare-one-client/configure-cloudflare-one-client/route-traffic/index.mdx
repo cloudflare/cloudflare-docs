@@ -7,44 +7,44 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-When the WARP client is deployed on a device, Cloudflare will process all DNS queries and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS queries or network traffic from WARP. For example, you may need to resolve an internal hostname with a private DNS resolver instead of Cloudflare's [public DNS resolver](/1.1.1.1/).
+When the Cloudflare One Client (formerly WARP Client) is deployed on a device, Cloudflare will process all DNS queries and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS queries or network traffic from the Cloudflare One Client. For example, you may need to resolve an internal hostname with a private DNS resolver instead of Cloudflare's [public DNS resolver](/1.1.1.1/).
 
-Cloudflare recommends Enterprise users configure [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) to resolve traffic with custom resolvers. WARP will send private DNS queries to Gateway, then Gateway will send the queries to custom resolvers based on matching policies.
+Cloudflare recommends Enterprise users configure [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) to resolve traffic with custom resolvers. The Cloudflare One Client will send private DNS queries to Gateway, then Gateway will send the queries to custom resolvers based on matching policies.
 
-Additionally, there are three options you can configure to exclude traffic from WARP:
+Additionally, there are three options you can configure to exclude traffic from the Cloudflare One Client:
 
-- [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/): Use Local Domain Fallback to instruct the WARP client to proxy DNS requests for a specified domain to a resolver that is not Cloudflare Gateway. This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
+- [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/local-domains/): Use Local Domain Fallback to instruct the Cloudflare One Client to proxy DNS requests for a specified domain to a resolver that is not Cloudflare Gateway. This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
   :::caution
   Gateway will not encrypt, monitor, or apply DNS policies to DNS queries to domain names entered in Local Domain Fallback.
   :::
-- [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude mode: Use Exclude mode to instruct the WARP client to ignore traffic to a specified set of IP addresses or domains. Any traffic that is destined to an IP address or domain defined in the Split Tunnels Exclude configuration will be ignored by the WARP client and handled by the local machine. Use this mode when you want the majority of your traffic encrypted and processed by Gateway, but need to exclude certain routes due to app compatibility, or if you need WARP to run alongside a VPN.
-- [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) Include mode: Use Include mode to instruct the WARP client to only handle traffic to a specified set of IP addresses or domains. Any traffic that is not included by an IP address or domain defined in the Split Tunnel Include configuration will be ignored by the WARP client and handled by the local machine. Use this mode when you only want specific traffic processed by Gateway, such as when using Tunnels for a specific resource.
+- [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/) Exclude mode: Use Exclude mode to instruct the Cloudflare One Client to ignore traffic to a specified set of IP addresses or domains. Any traffic that is destined to an IP address or domain defined in the Split Tunnels Exclude configuration will be ignored by the Cloudflare One Client and handled by the local machine. Use this mode when you want the majority of your traffic encrypted and processed by Gateway, but need to exclude certain routes due to app compatibility, or if you need the Cloudflare One Client to run alongside a VPN.
+- [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/) Include mode: Use Include mode to instruct the Cloudflare One Client to only handle traffic to a specified set of IP addresses or domains. Any traffic that is not included by an IP address or domain defined in the Split Tunnel Include configuration will be ignored by the Cloudflare One Client and handled by the local machine. Use this mode when you only want specific traffic processed by Gateway, such as when using Tunnels for a specific resource.
   :::caution
-  Gateway will not encrypt, manage, or monitor traffic excluded from WARP by a Split Tunnel configuration.
+  Gateway will not encrypt, manage, or monitor traffic excluded from the Cloudflare One Client by a Split Tunnel configuration.
   :::
 
-## How the WARP client handles DNS requests
+## How the Cloudflare One Client handles DNS requests
 
-When you use the WARP client together with `cloudflared` Tunnels or third-party VPNs, Cloudflare evaluates each request and routes it according to the following traffic flow:
+When you use the Cloudflare One Client together with `cloudflared` Tunnels or third-party VPNs, Cloudflare evaluates each request and routes it according to the following traffic flow:
 
 ```mermaid
 flowchart TD
-    A["WARP user requests resource"] --> B["WARP client proxies all DNS traffic"]
-    B -- WARP checks if domain is listed in Local Domain Fallback policies --> C["Local Domain Fallback"]
+    A["User requests resource"] --> B["Cloudflare One Client proxies all DNS traffic"]
+    B -- Client checks if domain is listed in Local Domain Fallback policies --> C["Local Domain Fallback"]
 
     %% Left branch (LDF exists)
     C -- Domain exists in Local Domain Fallback policies --> ST["Split Tunnel processing"]
 
-    ST -- Resolver IP included in WARP Tunnel per Split Tunnel configuration --> QW["Query sent via WARP Tunnel to be resolved"]
-    ST -- Resolver IP not included in WARP Tunnel per Split Tunnel configuration --> QO["Query sent to resolver IP outside WARP Tunnel"]
+    ST -- Resolver IP included in client tunnel per Split Tunnel configuration --> QW["Query sent via client tunnel to be resolved"]
+    ST -- Resolver IP not included in client tunnel per Split Tunnel configuration --> QO["Query sent to resolver IP outside client tunnel"]
 
-    %% Gateway evaluation after query via WARP
+    %% Gateway evaluation after query via client
     QW -- Allowed by Gateway --> OR["Evaluated by Cloudflare on-ramp routes"]
     QW -- Blocked by Gateway Network or HTTP Policy --> BLK["Traffic blocked by Cloudflare"]
 
-    OR -- Onramp routes do not include resolver IP --> GP["Gateway proxies query to resolver IP via normal WARP egress route"]
+    OR -- Onramp routes do not include resolver IP --> GP["Gateway proxies query to resolver IP via normal egress route"]
     OR -- Onramp routes include resolver IP --> ADV["Cloudflare onramps advertise route that includes Resolver IP"]
-    ADV --> PR["Private resolver returns IP address to WARP client"]
+    ADV --> PR["Private resolver returns IP address to client"]
 
     %% Right branch (no LDF match)
     C -- Domain does not exist in Local Domain Fallback policies --> GWR["Gateway checks Resolver Policies (Enterprise only)"]
@@ -65,8 +65,8 @@ flowchart TD
 - [Magic WAN](/magic-wan/)
 
 #### Routing features (how queries are handled)
-- [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/)
-- [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/)
+- [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/local-domains/)
+- [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/)
 - [Gateway Resolver Policies](/cloudflare-one/traffic-policies/resolver-policies/)
 
 #### Resolvers (where queries are resolved)
@@ -77,7 +77,7 @@ flowchart TD
 
 ## Add a DNS suffix
 
-Support for DNS suffix search lists in WARP is currently in development. You can manually configure DNS suffixes at the device level using the following instructions.
+Support for DNS suffix search lists in the Cloudflare One Client is currently in development. You can manually configure DNS suffixes at the device level using the following instructions.
 
 ### macOS
 
