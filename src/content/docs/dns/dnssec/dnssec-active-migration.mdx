@@ -15,25 +15,7 @@ import { Details, APIRequest } from "~/components";
 
 Follow this tutorial to migrate an existing DNS zone to Cloudflare without having to disable DNSSEC.
 
-:::note[Cloudflare manages DNSSEC keys]
-Cloudflare does not support uploading private DNSSEC keys. When you enable DNSSEC on Cloudflare, Cloudflare generates and manages all keys for your zone. If you are migrating from another provider with DNSSEC enabled, you must either disable DNSSEC before migration or use the multi-signer approach described in this tutorial.
-:::
-
-## Understanding the chain of trust
-
-DNSSEC validation follows a chain of trust from the root DNS servers to your zone:
-
-1. A resolver queries your parent registry (for example, `.com`) for your DS record.
-2. The DS record contains a hash of your Key Signing Key (KSK).
-3. The resolver expects all Zone Signing Keys (ZSK) to be signed by that specific KSK.
-4. If Cloudflare uses a different KSK, validation fails when resolvers query Cloudflare nameservers.
-
-This is why you cannot simply keep your existing DS record when migrating to Cloudflare. The cryptographic chain of trust requires either:
-- Disabling DNSSEC before migration and re-enabling it on Cloudflare
-- Using the multi-signer DNSSEC approach described below to coordinate keys between providers
-
 :::caution
-
 This procedure involves cross-importing the [zone signing keys (ZSKs)](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) from one provider to the other. To learn more about this, consider this article [about multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) or refer to [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 :::
 

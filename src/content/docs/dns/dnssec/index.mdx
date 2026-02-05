@@ -34,21 +34,6 @@ When you enable DNSSEC, Cloudflare signs your zone, publishes your public signin
 
 <Render file="dnssec-auto-add" product="dns" />
 
-### Automatic DS record updates with CDS/CDNSKEY
-
-When you enable DNSSEC, Cloudflare automatically publishes **CDS** (Child Delegation Signer) and **CDNSKEY** (Child DNSKEY) records in your zone. These records automate the chain of trust management between your domain and the Top-Level Domain registry.
-
-| Record | Purpose | Contents |
-| --- | --- | --- |
-| **CDS** | High-level instruction | A hashed version of the public key (same data as a DS record) |
-| **CDNSKEY** | Public key instruction | The full public Key Signing Key (KSK) for the parent to generate its own DS record |
-
-Registrars that support [RFC 8078](https://datatracker.ietf.org/doc/html/rfc8078) periodically scan your domain for these records and automatically update the DS record at the registry level. This eliminates manual DS record management and ensures seamless key rollovers.
-
-:::note
-Not all registrars support automatic CDS/CDNSKEY scanning. If your registrar does not support RFC 8078, you must manually add the DS record.
-:::
-
 ***
 
 ## Other DNSSEC setup options

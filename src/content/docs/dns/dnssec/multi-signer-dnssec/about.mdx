@@ -66,14 +66,14 @@ Cloudflare recommends model 2 for multi-signer setups. In this model, each provi
 
 ### Understand DNSKEY flags
 
-- **ZSKs** (Zone Signing Keys) have flag **256**
-- **KSKs** (Key Signing Keys) have flag **257**
+- **ZSKs (Zone Signing Keys)**: flag `256`
+- **KSKs (Key Signing Keys)**: flag `257`
 
 When exchanging keys between providers, ensure you are adding the correct key type (typically ZSKs) to the DNSKEY RRset.
 
 ### Adhere to TTLs
 
-**Critical**: Always wait for the TTL duration after making changes to DNSKEYs and DS records before proceeding to the next step. This ensures that cached records expire before new records take effect, preventing validation failures.
+Always wait for the TTL duration after making changes to DNSKEYs and DS records before proceeding to the next step. This ensures that cached records expire before new records take effect, preventing validation failures.
 
 ### Verify provider compatibility
 
