@@ -1,0 +1,264 @@
+---
+title: Wrangler CLI
+pcx_content_type: how-to
+sidebar:
+  order: 5
+description: Give AI agents the ability to deploy and manage Cloudflare resources using the Wrangler CLI.
+---
+
+import { LinkCard } from "~/components";
+
+AI agents can use the [Wrangler CLI](/workers/wrangler/) to deploy Workers, manage KV namespaces, interact with R2 buckets, and perform other Cloudflare operations. This guide shows you how to create an API token with the right permissions and configure an agent to use it.
+
+## Why give an agent Wrangler access?
+
+Agents with Wrangler CLI access can:
+
+- Deploy and update Workers
+- Create and manage KV namespaces and data
+- Upload files to R2 buckets
+- Create and query D1 databases
+- Manage Queues and Durable Objects
+- Tail logs and debug running Workers
+
+This is useful for building agents that can autonomously deploy code, manage infrastructure, or help developers with Cloudflare-related tasks.
+
+## Create an API token
+
+API tokens provide scoped, revocable access to Cloudflare resources. For agents, create a dedicated token with only the permissions needed.
+
+### Step 1: Navigate to API Tokens
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com)
+2. Go to **My Profile** > **API Tokens** (for a user token), or **Manage Account** > **API Tokens** (for an account token)
+3. Select **Create Token**
+
+:::note
+For agents running in CI/CD or production environments, prefer **Account API tokens** over user tokens. Account tokens can be managed by account administrators and are not tied to a single user.
+:::
+
+### Step 2: Choose a template or create custom token
+
+For most Wrangler operations, use the **Edit Cloudflare Workers** template. This provides:
+
+| Permission         | Access |
+| ------------------ | ------ |
+| Workers Scripts    | Edit   |
+| Workers KV Storage | Edit   |
+| Workers R2 Storage | Edit   |
+| Workers Routes     | Edit   |
+| Workers Tail       | Read   |
+| Account Settings   | Read   |
+| User Details       | Read   |
+
+If your agent needs additional capabilities (like D1 or Durable Objects), select **Create Custom Token** instead and add:
+
+| Permission      | Access |
+| --------------- | ------ |
+| D1              | Edit   |
+| Durable Objects | Edit   |
+| Queues          | Edit   |
+| Vectorize       | Edit   |
+
+### Step 3: Scope the token
+
+1. Under **Account Resources**, select the specific account(s) the agent should access
+2. Under **Zone Resources**, select specific zones or **All zones** depending on your needs
+3. Optionally set **Client IP Address Filtering** to restrict where the token can be used from
+4. Optionally set a **TTL** (time to live) if the agent only needs temporary access
+
+### Step 4: Create and copy the token
+
+1. Select **Continue to summary**
+2. Review the permissions and select **Create Token**
+3. **Copy the token immediately** — it will not be shown again
+
+To verify your token works:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+## Configure your agent to use the token
+
+There are several ways to provide the API token to Wrangler when running commands from an agent.
+
+### Option 1: Environment variable (recommended)
+
+Set the `CLOUDFLARE_API_TOKEN` environment variable before running Wrangler commands:
+
+```sh
+export CLOUDFLARE_API_TOKEN=<your-api-token>
+export CLOUDFLARE_ACCOUNT_ID=<your-account-id>
+```
+
+Your agent can then run Wrangler commands normally:
+
+```sh
+npx wrangler deploy
+npx wrangler kv key put --namespace-id=<id> "mykey" "myvalue"
+npx wrangler r2 object put my-bucket/file.txt --file=./file.txt
+```
+
+### Option 2: Inline with command
+
+Pass the token inline for one-off commands:
+
+```sh
+CLOUDFLARE_API_TOKEN=<token> CLOUDFLARE_ACCOUNT_ID=<account-id> npx wrangler deploy
+```
+
+### Option 3: Using a `.env` file
+
+Create a `.env` file in the project directory:
+
+```txt title=".env"
+CLOUDFLARE_API_TOKEN=<your-api-token>
+CLOUDFLARE_ACCOUNT_ID=<your-account-id>
+```
+
+Wrangler automatically loads environment variables from `.env` files.
+
+:::caution
+Never commit `.env` files containing API tokens to version control. Add `.env` to your `.gitignore` file.
+:::
+
+## Common Wrangler commands for agents
+
+Here are the most useful Wrangler commands an agent might run:
+
+### Deploying Workers
+
+```sh
+# Deploy a Worker
+npx wrangler deploy
+
+# Deploy to a specific environment
+npx wrangler deploy --env production
+
+# Deploy with a custom name
+npx wrangler deploy --name my-worker
+```
+
+### Managing KV
+
+```sh
+# List KV namespaces
+npx wrangler kv namespace list
+
+# Create a KV namespace
+npx wrangler kv namespace create "MY_KV"
+
+# Write a key-value pair
+npx wrangler kv key put --namespace-id=<id> "key" "value"
+
+# Read a key
+npx wrangler kv key get --namespace-id=<id> "key"
+
+# List keys
+npx wrangler kv key list --namespace-id=<id>
+```
+
+### Managing R2
+
+```sh
+# List R2 buckets
+npx wrangler r2 bucket list
+
+# Create a bucket
+npx wrangler r2 bucket create my-bucket
+
+# Upload a file
+npx wrangler r2 object put my-bucket/path/file.txt --file=./local-file.txt
+
+# Download a file
+npx wrangler r2 object get my-bucket/path/file.txt --file=./downloaded.txt
+```
+
+### Managing D1
+
+```sh
+# List D1 databases
+npx wrangler d1 list
+
+# Create a database
+npx wrangler d1 create my-database
+
+# Execute SQL
+npx wrangler d1 execute my-database --command="SELECT * FROM users"
+
+# Run migrations
+npx wrangler d1 migrations apply my-database
+```
+
+### Debugging
+
+```sh
+# View live logs from a deployed Worker
+npx wrangler tail my-worker
+
+# Check authentication status
+npx wrangler whoami
+```
+
+## Verifying authentication
+
+Your agent can verify that authentication is working by running:
+
+```sh
+npx wrangler whoami
+```
+
+Or to get the current token programmatically:
+
+```sh
+npx wrangler auth token --json
+```
+
+This returns:
+
+```json
+{
+	"type": "api_token",
+	"token": "..."
+}
+```
+
+## Security best practices
+
+When giving agents access to Wrangler:
+
+1. **Use dedicated tokens** — Create a separate API token for each agent or use case. Never reuse tokens across multiple systems.
+
+2. **Apply least privilege** — Only grant the permissions the agent actually needs. If an agent only reads from KV, do not give it edit access.
+
+3. **Set token TTLs** — For temporary or testing purposes, set an expiration date on the token.
+
+4. **Rotate tokens regularly** — Periodically create new tokens and revoke old ones, especially for long-running agents.
+
+5. **Monitor token usage** — Use [Cloudflare Audit Logs](/fundamentals/setup/account/account-security/review-audit-logs/) to track what actions are being performed with your tokens.
+
+6. **Store tokens securely** — Use your platform's secret management (environment variables, secret stores) rather than hardcoding tokens.
+
+7. **Restrict by IP** — If your agent runs from known IP addresses, use IP filtering when creating the token.
+
+## Related resources
+
+<LinkCard
+	title="Wrangler commands"
+	href="/workers/wrangler/commands/"
+	description="Full reference of all Wrangler CLI commands"
+/>
+
+<LinkCard
+	title="API token permissions"
+	href="/fundamentals/api/reference/permissions/"
+	description="Complete list of available API token permissions"
+/>
+
+<LinkCard
+	title="Wrangler environment variables"
+	href="/workers/wrangler/system-environment-variables/"
+	description="All environment variables supported by Wrangler"
+/>

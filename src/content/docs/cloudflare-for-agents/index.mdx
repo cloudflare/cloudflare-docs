@@ -8,16 +8,7 @@ head:
     content: Cloudflare for Agents
 ---
 
-import {
-	CardGrid,
-	Description,
-	Feature,
-	LinkButton,
-	LinkTitleCard,
-	Plan,
-	RelatedProduct,
-	Render,
-} from "~/components";
+import { Description, Feature, LinkButton } from "~/components";
 
 <Description>
 
@@ -64,74 +55,11 @@ Cloudflare provides services that AI agents can use to browse the web, process c
 	Markdown.
 </Feature>
 
-<Feature header="AI Gateway" href="/ai-gateway/" cta="Monitor agent LLM calls">
-	Observe and control your agent's LLM calls. Add logging, caching, fallbacks,
-	rate limits, and guardrails to every AI request your agent makes.
+<Feature
+	header="Wrangler CLI"
+	href="/cloudflare-for-agents/wrangler-cli/"
+	cta="Set up Wrangler for agents"
+>
+	Give agents the ability to deploy Workers, manage KV, R2, D1, and other
+	Cloudflare resources using the Wrangler CLI with API tokens.
 </Feature>
-
----
-
-## Content processing
-
-Cloudflare offers multiple ways to convert web content and documents to formats optimized for AI consumption.
-
-| Service                                                                       | Use case                          | How it works                                  |
-| ----------------------------------------------------------------------------- | --------------------------------- | --------------------------------------------- |
-| [Markdown for Agents](/cloudflare-for-agents/markdown-for-agents/)            | Convert pages on your own zone    | Zone setting + `Accept: text/markdown` header |
-| [Workers AI toMarkdown](/workers-ai/features/markdown-conversion/)            | Convert documents (PDF, images)   | `env.AI.toMarkdown()` binding or REST API     |
-| [Browser Rendering /markdown](/browser-rendering/rest-api/markdown-endpoint/) | Convert any URL with JS rendering | REST API that renders then converts           |
-
----
-
-## Browser automation
-
-AI agents can browse and interact with web pages using these services.
-
-| Service                                                         | Use case                                            |
-| --------------------------------------------------------------- | --------------------------------------------------- |
-| [Browser Rendering REST API](/browser-rendering/rest-api/)      | Screenshots, scraping, content extraction           |
-| [Stagehand](/browser-rendering/stagehand/)                      | AI-powered browser automation with natural language |
-| [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) | MCP server for browser automation                   |
-
----
-
-## RAG and search
-
-Build retrieval-augmented generation (RAG) systems with managed services.
-
-| Service                           | Use case                                     |
-| --------------------------------- | -------------------------------------------- |
-| [AI Search](/ai-search/)          | Managed RAG with automatic indexing          |
-| [Vectorize](/vectorize/)          | Vector database for embeddings               |
-| [NLWeb](/ai-search/how-to/nlweb/) | Add `/ask` and `/mcp` endpoints to your site |
-
----
-
-## AI safety and control
-
-Protect your AI applications and control how agents access your content.
-
-| Service                                        | Use case                                            |
-| ---------------------------------------------- | --------------------------------------------------- |
-| [AI Gateway](/ai-gateway/)                     | Logging, caching, fallbacks, rate limits for agents |
-| [Guardrails](/ai-gateway/features/guardrails/) | Content moderation for prompts and responses        |
-| [AI Crawl Control](/ai-crawl-control/)         | Monitor and control AI crawler access               |
-
----
-
-## Related
-
-<RelatedProduct header="Agents" href="/agents/" product="agents">
-	Build AI agents on Cloudflare using the Agents SDK. Create stateful agents
-	with WebSockets, scheduling, and MCP server support.
-</RelatedProduct>
-
-<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
-	Run inference on machine learning models with serverless GPUs on Cloudflare's
-	global network.
-</RelatedProduct>
-
-<RelatedProduct header="AI Gateway" href="/ai-gateway/" product="ai-gateway">
-	Observe and control your AI applications with caching, rate limiting, and
-	model fallbacks.
-</RelatedProduct>
