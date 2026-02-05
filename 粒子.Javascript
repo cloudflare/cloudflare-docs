@@ -1,0 +1,1 @@
+const PARTICLE_COUNT = isLowEndDevice ? 20 : 60;
