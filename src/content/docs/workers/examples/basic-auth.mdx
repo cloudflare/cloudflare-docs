@@ -284,12 +284,12 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         "/admin" => {
             // The "Authorization" header is sent when authenticated.
             let authorization = req.headers().get("Authorization")?;
-            if authorization == None {
+            if authorization.is_none() {
                 let mut headers = Headers::new();
                 // Prompts the user for credentials.
                 headers.set(
                     "WWW-Authenticate",
-                    "Basic realm='my scope', charset='UTF-8'",
+                    "Basic realm=\"my scope\", charset=\"UTF-8\"",
                 )?;
                 return Ok(Response::error("You need to login.", 401)?.with_headers(headers));
             }
@@ -301,10 +301,12 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
                 return Response::error("Malformed authorization header.", 400);
             }
 
-            let scheme = auth[0];
             let encoded = auth[1];
 
-            let buff = BASE64_STANDARD.decode(encoded).unwrap();
+            let buff = match BASE64_STANDARD.decode(encoded) {
+                Ok(b) => b,
+                Err(_) => return Response::error("Invalid base64 in authorization header.", 400),
+            };
             let credentials = String::from_utf8_lossy(&buff);
             // The username & password are split by the first colon.
             //=> example: "username:password"
@@ -321,7 +323,7 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
                 // Prompts the user for credentials.
                 headers.set(
                     "WWW-Authenticate",
-                    "Basic realm='my scope', charset='UTF-8'",
+                    "Basic realm=\"my scope\", charset=\"UTF-8\"",
                 )?;
                 return Ok(Response::error("You need to login.", 401)?.with_headers(headers));
             }
