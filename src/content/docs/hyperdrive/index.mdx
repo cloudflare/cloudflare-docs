@@ -42,25 +42,26 @@ Use Hyperdrive's connection string from your Cloudflare Workers application with
 	<Tabs>
 	<TabItem label="index.ts">
 ```ts
-import postgres from 'postgres';
+import { Client } from "pg";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Hyperdrive provides a unique generated connection string to connect to
-		// your database via Hyperdrive that can be used with your existing tools
-		const sql = postgres(env.HYPERDRIVE.connectionString);
+		// Create a new client instance for each request.
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
 
-    	try {
-    		// Sample SQL query
-    		const results = await sql`SELECT * FROM pg_tables`;
-    		return Response.json(results);
-    	} catch (e) {
-    		return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
-    	}
-    },
-
+		try {
+			// Connect to the database
+			await client.connect();
+			// Sample SQL query
+			const result = await client.query("SELECT * FROM pg_tables");
+			return Response.json(result.rows);
+		} catch (e) {
+			return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
+		}
+	},
 } satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
-
 ```
 
     </TabItem>
@@ -94,7 +95,7 @@ export default {
 	<Tabs>
 	<TabItem label="index.ts">
 ```ts
-import { createConnection  } from 'mysql2/promise';
+import { createConnection } from 'mysql2/promise';
 
 export default {
   async fetch(request, env, ctx): Promise<Response> {
@@ -118,7 +119,7 @@ export default {
       'Access-Control-Allow-Origin': '\*',
     },
   });
-}} satisfies ExportedHandler<Env>;
+}} satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
 
 ```
 

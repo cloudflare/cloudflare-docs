@@ -54,7 +54,7 @@ export default {
 		} catch (error: any) {
 			console.error("Database error:", error.message);
 
-			new Response("Internal error occurred", { status: 500 });
+			return new Response("Internal error occurred", { status: 500 });
 		}
 	},
 };
