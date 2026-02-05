@@ -1,0 +1,6 @@
+/* 低效能模式 → 關閉重動畫 */
+.low-performance .pulse-ring,
+.low-performance .card-glow,
+.low-performance #particle-bg {
+  display: none;
+}
