@@ -12,17 +12,17 @@ head:
 
 import { Steps } from "~/components";
 
-Programmable Flow Protection is a DDoS protection system that protects against DDoS attacks over custom or standardized L7 UDP-based protocols, such as gaming protocols, financial services protocols, VoIP, telecom, and streaming. In terms of topology, it supports both asymmetric and symmetric configurations, but it will only inspect ingress traffic. 
+Programmable Flow Protection is a DDoS protection system that protects against DDoS attacks over custom or standardized Layer 7 UDP-based protocols, such as gaming protocols, financial services protocols, VoIP, telecom, and streaming. In terms of topology, it supports both asymmetric and symmetric configurations, but it will only inspect ingress traffic. 
 
 Programmable Flow Protection is currently in closed beta and available only as an add-on for the [Magic Transit](/magic-transit/) ([BYOIP](/byoip/) or Cloudflare-leased IPs) service only. If you would like to enable the system, contact your account team or fill this [form](https://www.cloudflare.com/lp/programmableddosprotection/).
 
 ## How it works
 
-The Programmable Flow Protection system allows you to write and run your own packet-layer stateful program in C across Cloudflare’s global anycast network as extended Berkeley Packet Filter (eBPF) programs running in the user space. An [eBPF program](https://docs.kernel.org/bpf/) is a packet filter system that allows a developer to write performant custom networking logic. 
+The Programmable Flow Protection system allows you to write and run your own packet-layer stateful program in C across Cloudflare's global anycast network as extended Berkeley Packet Filter (eBPF) programs running in the user space. An [eBPF program](https://docs.kernel.org/bpf/) is a packet filter system that allows a developer to write performant custom networking logic. 
 
-Programmable Flow Protection inspects and parses your UDP-based application's protocols (deep packet inspection) and determines the outcome of the packets based on your program. Using your custom program’s logic, you can permit authorized users while actively blocking attacks.
+Programmable Flow Protection inspects and parses your UDP-based application's protocols (deep packet inspection) and determines the outcome of the packets based on your program. Using your custom program's logic, you can permit authorized users while actively blocking attacks.
 
-The system is built on top of the `flowtrackd` platform, Cloudflare’s stateful mitigation platform. The Programmable Flow Protection system relies on the DDoS Advanced Protection system's [general settings](/ddos-protection/advanced-ddos-systems/overview/) to operate. It respects the [prefixes](/ddos-protection/advanced-ddos-systems/overview/#prefixes) that you have selected to route through the Advanced Protection systems, as well as the [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist). The DDoS Advanced Protection system should be [enabled](/ddos-protection/advanced-ddos-systems/overview/#enablement) for the Programmable Flow Protection system to operate,
+The system is built on top of the `flowtrackd` platform, Cloudflare's stateful mitigation platform. The Programmable Flow Protection system relies on the DDoS Advanced Protection system's [general settings](/ddos-protection/advanced-ddos-systems/overview/) to operate. It respects the [prefixes](/ddos-protection/advanced-ddos-systems/overview/#prefixes) that you have selected to route through the Advanced Protection systems, as well as the [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist). The DDoS Advanced Protection system should be [enabled](/ddos-protection/advanced-ddos-systems/overview/#enablement) for the Programmable Flow Protection system to operate,
 
 While in beta, Cloudflare will assist and provide guidance to users to write their own code. Out-of-the-box code snippets (templates) for popular gaming protocols such as Minecraft and CounterStrike, and VoIP protocols such as SIP, will also be provided later on.
 
@@ -35,14 +35,14 @@ After Programmable Flow Protection has been enabled to your account:
 <Steps>
 1. Write a C program and upload it via the API.  
   
-   The program is validated by the system and deployed to your userspace in Cloudflare’s servers across the world.  
+   The program is validated by the system and deployed to your userspace in Cloudflare's servers across the world.  
   
-   An activation [threshold](ddos-protection/advanced-ddos-systems/overview/#thresholds) is configured by Cloudflare to determine when you want the program to take effect. It can begin immediately for every packet, or after a certain packet per second rate.
+   An activation [threshold](/ddos-protection/advanced-ddos-systems/overview/#thresholds) is configured by Cloudflare to determine when you want the program to take effect. It can begin immediately for every packet, or after a certain packet per second rate.
 2. Create a [rule](/ddos-protection/advanced-ddos-systems/overview/#rules).
 
    - Select the program, the global scope, and the **Monitoring** setting.
 
-3. Observe the program’s behavior in the [Network Analytics](/analytics/network-analytics/) dashboard.  
+3. Observe the program's behavior in the [Network Analytics](/analytics/network-analytics/) dashboard.  
 4. When you are ready, enable the mitigation mode.
 </Steps>
 
@@ -65,7 +65,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 <Steps>
 1. Include Linux primitive header files.
 
-    The IP and UDP `headers` struct definitions are necessary to parse the program’s input packet. The `inet` header file contains helper functions to convert data between network and host order. 
+    The IP and UDP `headers` struct definitions are necessary to parse the program's input packet. The `inet` header file contains helper functions to convert data between network and host order. 
 
     :::note
     You must include the same files that a Linux BPF program would be compiled with.
@@ -94,7 +94,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 
 4. Define the entry function for packet processing.
 
-    Your program must have the exact function signature below to properly pass Cloudflare’s program verification. 
+    Your program must have the exact function signature below to properly pass Cloudflare's program verification. 
 
     The return type `uint64_t` dictates whether Cloudflare will pass or drop a packet. The function name `cf_ebpf_main` is used as the entrypoint to the program. The argument `void *state` refers to the data Cloudflare provides as input to your BPF program.   
 
@@ -148,7 +148,6 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
     /* Raw pointer to the last valid byte of the packet context data. */
     uint8_t        *data_end;
     };
-
     ```
 
 7. Write your custom logic.
@@ -177,7 +176,6 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
     ```
 
 8. Pass any packets that did not get dropped by program logic by returning `CF_EBPF_PASS`.
-
       
     The currently supported return values are: 
 
@@ -274,7 +272,7 @@ cf_ebpf_main(void *state)
 
 Cloudflare calculates the start of the UDP payload as the first byte after the end of the UDP header. The address of the UDP payload must be less than the total memory that Cloudflare was given in order to pass the verifier. 
 
-Once we have the correct offset, Cloudflare casts the UDP payload into the expected application header format. We perform another bounds check on the memory of the application header to pass the verifier. Then, we ensure that the last byte of the token is 0xCF to conform with our test condition.
+Once we have the correct offset, Cloudflare casts the UDP payload into the expected application header format. We perform another bounds check on the memory of the application header to pass the verifier. Then, we ensure that the last byte of the token is `0xCF` to conform with our test condition.
 
 ---
 
@@ -282,7 +280,7 @@ Once we have the correct offset, Cloudflare casts the UDP payload into the expec
 
 A helper function is a function provided by the Cloudflare runtime that a customer program calls. 
 
-Helper functions are crucial because the BPF ISA only supports certain system calls. For safety purposes, Cloudflare will only compile a BPF object file with a predetermined list of known libraries that a program developer cannot modify. 
+Helper functions are crucial because the BPF Instruction Set Architecture (ISA) only supports certain system calls. For safety purposes, Cloudflare will only compile a BPF object file with a predetermined list of known libraries that a program developer cannot modify. 
 
 :::note
 Helper functions may be removed or changed. New helper functions may be introduced in the future as well.
@@ -321,7 +319,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmab
      -d '{"scope": "global","name": "my global rule", "program_id": "{program_id}", "mode": "monitoring" }'
 ```
 
-Cloudflare recommends that any program is first executed with a rule in **Monitoring** mode. This ensures that your program executes on production traffic but does not drop any real traffic. Instead, Cloudflare will log your program’s expected verdict (pass or drop) to the Network Analytics dashboard.
+Cloudflare recommends that any program is first executed with a rule in **Monitoring** mode. This ensures that your program executes on production traffic but does not drop any real traffic. Instead, Cloudflare will log your program's expected verdict (pass or drop) to the [Network Analytics](/analytics/network-analytics/) dashboard.
 
 ### View all rules
 
@@ -401,7 +399,7 @@ You will want to safely deploy and test programs without impacting existing prod
 
 Each Cloudflare region or colo will apply the most granular rule. So, the colos or regions specified in the monitoring rule will execute the developer program in **Monitoring** mode, while every other Cloudflare location will not execute the program at all.
 
-Then, after verifying the correct behavior with Network Analytics, you can expand the monitoring rule’s scope. Eventually, you can delete the **Disabled** and **Monitoring** rules and apply a global **Enabled** rule.
+Then, after verifying the correct behavior with Network Analytics, you can expand the monitoring rule's scope. Eventually, you can delete the **Disabled** and **Monitoring** rules and apply a global **Enabled** rule.
 
 Currently, the only method to execute a program on a subset of IPs or prefixes is to add the filters directly into the BPF program.
 
@@ -409,13 +407,13 @@ Currently, the only method to execute a program on a subset of IPs or prefixes i
 
 ## Network Analytics
 
-Traffic flowing through Programmable Flow Protection can be found in the Network Analytics dashboard. 
+Traffic flowing through Programmable Flow Protection can be found in the [Network Analytics](/network-analytics/) dashboard. 
 
 You can use the Cloudflare [GraphQL](https://developers.cloudflare.com/analytics/graphql-api/) API to granularly query traffic data in the `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups` group. 
 
 For example, the curl command below executes a query that shows the total sum of bits and packets that went through Programmable Flow Protection in a time frame.
 
-`{TOKEN}` and `{ACCOUNT_TAG}` must be changed to correlate to the user’s account.
+`{TOKEN}` and `{ACCOUNT_TAG}` must be changed to correlate to the user's account.
 
 Cloudflare recommends using a [client](https://developers.cloudflare.com/analytics/graphql-api/getting-started/explore-graphql-schema/) like GraphiQL to explore all the dimensions and fields available for querying in `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups.`  
 
