@@ -143,6 +143,7 @@
 /agents/guides/build-mcp-server/ /agents/guides/remote-mcp-server/ 301
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
 /agents/api-reference/calling-agents/ /agents/api-reference/routing/ 301
+/agents/model-context-protocol/mcp-servers-for-cloudflare/ /cloudflare-for-agents/mcp-servers/ 301
 
 # ai
 /ai/ /use-cases/ai/ 301
