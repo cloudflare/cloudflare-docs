@@ -7,21 +7,21 @@ sidebar:
 
 import { Render } from "~/components";
 
-This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+This section covers the most common issues you might encounter as you deploy the Cloudflare One Client (formerly WARP Client) in your organization, or turn on new features that interact with the client. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 <Render file="warp/troubleshooting-guide-reference" product="cloudflare-one" />
 
-## Unable to connect WARP
+## Unable to connect Cloudflare One Client
 
-If WARP is stuck in the `Disconnected` state or frequently changes between `Connected` and `Disconnected`, this indicates that the client cannot establish a connection to Cloudflare's global network.
+If the Cloudflare One Client is stuck in the `Disconnected` state or frequently changes between `Connected` and `Disconnected`, this indicates that the client cannot establish a connection to Cloudflare's global network.
 
 <div class="medium-img">
 
-![Example of WARP client UI when unable to turn on WARP](~/assets/images/cloudflare-one/connections/warp-stuck-on-disconnected.png)
+![Example of Cloudflare One Client UI when unable to turn on the client](~/assets/images/cloudflare-one/connections/warp-stuck-on-disconnected.png)
 
 </div>
 
-In your [WARP debug logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/), `daemon.log` will typically show one or more of the following errors:
+In your [debug logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/cloudflare-one-client-logs/), `daemon.log` will typically show one or more of the following errors:
 
 - Happy Eyeball checks failing:
 
@@ -38,17 +38,17 @@ In your [WARP debug logs](/cloudflare-one/team-and-resources/devices/warp/troubl
 
 Here are the most common reasons why this issue occurs:
 
-### A third-party service is blocking WARP
+### A third-party service is blocking the Cloudflare One Client
 
-A third-party service (such as a hardware or software firewall, router, MDM/group policy configuration, or other networking interface) may have a security policy in place which blocks WARP from connecting.
+A third-party service (such as a hardware or software firewall, router, MDM/group policy configuration, or other networking interface) may have a security policy in place which blocks the Cloudflare One Client from connecting.
 
 #### Solution
 
-Configure the third-party service to exempt the [IP addresses required by WARP](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/).
+Configure the third-party service to exempt the [IP addresses required by the client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
 
-### A third-party VPN is interfering with WARP
+### A third-party VPN is interfering with the Cloudflare One Client
 
-The most common places we see interference with WARP from VPNs are:
+The most common places we see interference with the Cloudflare One Client from VPNs are:
 
 - **Control of traffic routing:** In `daemon.log`, you will see a large number of routing table changes. For example,
 
@@ -63,7 +63,7 @@ The most common places we see interference with WARP from VPNs are:
       Added; Interface: 8; Destination: 10.133.27.205/32; Next hop: 100.64.0.2;
   ```
 
-  This indicates that a third-party VPN is fighting WARP for control over the routing table.
+  This indicates that a third-party VPN is fighting the Cloudflare One Client for control over the routing table.
 
 - **Control of DNS:** In `daemon.log`, you will see a large number of DNS changes followed by this warning:
 
@@ -82,21 +82,21 @@ To confirm that the VPN is the source of the issue, temporarily uninstall (not d
 
 #### Solution
 
-1. Disable all DNS enforcement on the VPN. WARP must be the last client to touch the primary and secondary DNS server on the default interface.
-2. In [Cloudflare One](https://one.dash.cloudflare.com/), create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to exclude the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
-3. Configure your VPN to only include routes to your internal resources. Make sure that the VPN routes do not overlap with the routes [included in the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
+1. Disable all DNS enforcement on the VPN. The Cloudflare One Client must be the last client to touch the primary and secondary DNS server on the default interface.
+2. In [Cloudflare One](https://one.dash.cloudflare.com/), create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/) to exclude the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+3. Configure your VPN to only include routes to your internal resources. Make sure that the VPN routes do not overlap with the routes [included in the tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/).
 
-For more information, refer to our [guide](/cloudflare-one/team-and-resources/devices/warp/deployment/vpn/) for running VPNs alongside the WARP client.
+For more information, refer to our [guide](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/vpn/) for running VPNs alongside the Cloudflare One Client.
 
-### Your ISP or country is blocking WARP
+### Your ISP or country is blocking the Cloudflare One Client
 
 Some countries explicitly block the use of VPN or VPN-like software that intentionally encrypts traffic. These blocks are often inconsistently enforced and you may sometimes see successful connections.
 
-If you suspect your country may be blocking WARP traffic, contact your ISP to verify.
+If you suspect your country may be blocking Cloudflare One Client traffic, contact your ISP to verify.
 
 ### (Mac/Linux) The device's `/etc/resolv.conf` file has an invalid character
 
-WARP cannot parse `resolv.conf` files which contain an invalid hostname. In `daemon.log`, you will see an `unrecognized char` warning:
+The Cloudflare One Client cannot parse `resolv.conf` files which contain an invalid hostname. In `daemon.log`, you will see an `unrecognized char` warning:
 
 ```txt
 WARN main_loop: warp::warp_service: Tunnel connection experienced error error=Custom { kind: Other, error: ProtoError { kind: Msg("unrecognized char:  ") } }
@@ -106,11 +106,11 @@ WARN main_loop: warp::warp_service: Tunnel connection experienced error error=Cu
 
 1. Open the `/etc/resolv.conf` file on your device.
 2. In the `search` directives, check for invalid URL characters such as `!@#$%^&*()<>?`.
-3. Remove the invalid lines and rely on WARP and Gateway for DNS services.
+3. Remove the invalid lines and rely on the Cloudflare One Client and Gateway for DNS services.
 
-## Turned on WARP and can no longer browse the Internet
+## Turned on the Cloudflare One Client and can no longer browse the Internet
 
-If WARP shows as `Connected` but you cannot reach any websites or internal resources, this is likely due to one of the following configuration issues.
+If the Cloudflare One Client shows as `Connected` but you cannot reach any websites or internal resources, this is likely due to one of the following configuration issues.
 
 ### A Gateway firewall policy is blocking traffic
 
@@ -138,26 +138,26 @@ More and more applications (including browsers) are relying on their own certifi
 
 ### A third-party security product is interfering with Gateway
 
-WARP does not allow third-party DLP or proxy services to perform TLS decryption on traffic sent to Gateway.
+The Cloudflare One Client does not allow third-party DLP or proxy services to perform TLS decryption on traffic sent to Gateway.
 
-To diagnose the issue, go to `https://zero-trust-client.cloudflareclient.com/v0/client_config` and verify the certificate the HTTPS traffic is signed with. If the certificate is issued by your organization or a third-party service, the third-party service is performing TLS decryption on WARP traffic and re-signing with a certificate that we do not trust.
+To diagnose the issue, go to `https://zero-trust-client.cloudflareclient.com/v0/client_config` and verify the certificate the HTTPS traffic is signed with. If the certificate is issued by your organization or a third-party service, the third-party service is performing TLS decryption on client traffic and re-signing with a certificate that we do not trust.
 
 #### Solution
 
-In the third-party security product, disable HTTPS inspection and TLS decryption for the [WARP IP addresses](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/).
+In the third-party security product, disable HTTPS inspection and TLS decryption for the [Cloudflare One Client IP addresses](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
 
 ### Docker container is failing DNS resolution
 
-If you are using WARP and running a CI/CD pipeline inside a Docker container on Microsoft hardware to provide GitHub Actions with an egress IP, your container's `/etc/resolv.conf` file might be injecting a [custom nameserver with the IP address `168.63.129.16`](https://learn.microsoft.com/en-us/azure/virtual-network/what-is-ip-address-168-63-129-16) (specific to Azure infrastructure.)
-The `168.63.129.16` IP address is only accessible to Azure VMs and causes the container's traffic to fail when routed through the Cloudflare WARP tunnel.
+If you are using the Cloudflare One Client and running a CI/CD pipeline inside a Docker container on Microsoft hardware to provide GitHub Actions with an egress IP, your container's `/etc/resolv.conf` file might be injecting a [custom nameserver with the IP address `168.63.129.16`](https://learn.microsoft.com/en-us/azure/virtual-network/what-is-ip-address-168-63-129-16) (specific to Azure infrastructure.)
+The `168.63.129.16` IP address is only accessible to Azure VMs and causes the container's traffic to fail when routed through the Cloudflare One Client tunnel.
 
 #### Solution
 
-To fix this issue, you must exclude the Azure-specific nameserver IP (`168.63.129.16`) from being routed through WARP tunnel. Refer to [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) and follow the instructions to exclude the Azure-specific IP.
+To fix this issue, you must exclude the Azure-specific nameserver IP (`168.63.129.16`) from being routed through the tunnel. Refer to [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/#change-split-tunnels-mode) and follow the instructions to exclude the Azure-specific IP.
 
 ## Cannot connect to a specific app or website
 
-Below are the most common reasons why turning on WARP blocks a specific application from loading.
+Below are the most common reasons why turning on the Cloudflare One Client blocks a specific application from loading.
 
 ### TLS Decryption is enabled and the app or site does certificate pinning
 
@@ -183,13 +183,13 @@ You may have a Gateway DNS, Network, or HTTP in place that accidentally blocks a
 
 ### Split Tunnel settings are misconfigured for the app or site
 
-Some applications require traffic to flow either all inside or all outside of the WARP tunnel. For instance, in order to use AirDrop or communicate with a local printer, traffic must be outside the tunnel. For applications like Microsoft Teams to function properly, all Microsoft Teams traffic must be either fully inside the tunnel or fully outside the tunnel.
+Some applications require traffic to flow either all inside or all outside of the tunnel. For instance, in order to use AirDrop or communicate with a local printer, traffic must be outside the tunnel. For applications like Microsoft Teams to function properly, all Microsoft Teams traffic must be either fully inside the tunnel or fully outside the tunnel.
 
 #### Solution
 
 1. Determine the IP addresses and/or domains required for your application to function. Common Internet search terms include `<app-name> split tunnel list`, `<app-name> allow list`, or `<app-name> firewall ips`.
-2. In [Cloudflare One](https://one.dash.cloudflare.com/), go to your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
-3. Depending on the application, either include or exclude all of the necessary IPs and/or domains. For Microsoft applications, we provide a [one-click action](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) to exclude all Microsoft 365 IPs.
+2. In [Cloudflare One](https://one.dash.cloudflare.com/), go to your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/).
+3. Depending on the application, either include or exclude all of the necessary IPs and/or domains. For Microsoft applications, we provide a [one-click action](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#directly-route-microsoft-365-traffic) to exclude all Microsoft 365 IPs.
 
 ## Troubleshooting
 
