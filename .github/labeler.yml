@@ -98,10 +98,10 @@ product:ddos-protection:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/ddos-protection/**
-product:dmarc-management:
+product:new-product:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/dmarc-management/**
+          - src/content/docs/new-product/**
 product:dns:
   - changed-files:
       - any-glob-to-any-file:
