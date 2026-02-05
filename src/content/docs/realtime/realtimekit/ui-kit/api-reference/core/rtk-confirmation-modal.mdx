@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-confirmation-modal
-description: API reference for rtk-confirmation-modal component (Core Library)
+description: API reference for rtk-confirmation-modal component (Web Components (HTML) Library)
 ---
 A confirmation modal.
 
@@ -25,8 +25,15 @@ A confirmation modal.
 ### With Properties
 
 ```html
-<rtk-confirmation-modal
-  meeting={meeting}>
+<rtk-confirmation-modal>
 </rtk-confirmation-modal>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-confirmation-modal");
+
+  el.meeting= meeting
+</script>
+```

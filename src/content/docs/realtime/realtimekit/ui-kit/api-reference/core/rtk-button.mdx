@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-button
-description: API reference for rtk-button component (Core Library)
+description: API reference for rtk-button component (Web Components (HTML) Library)
 ---
 A button that follows RTK Design System.
 
@@ -27,10 +27,16 @@ A button that follows RTK Design System.
 ### With Properties
 
 ```html
-<rtk-button
-  disabled=true
-  kind=buttonkind
-  reverse=true>
+<rtk-button>
 </rtk-button>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-button");
+
+  el.disabled= true;
+  el.reverse= true;
+</script>
+```

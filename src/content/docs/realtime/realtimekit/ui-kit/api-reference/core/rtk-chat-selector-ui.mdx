@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-chat-selector-ui
-description: API reference for rtk-chat-selector-ui component (Core Library)
+description: API reference for rtk-chat-selector-ui component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -26,9 +26,16 @@ description: API reference for rtk-chat-selector-ui component (Core Library)
 
 ```html
 <rtk-chat-selector-ui
-  groups=[]
-  selectedGroupId="example"
-  selfUserId="example">
+ selectedGroupId="example"
+ selfUserId="example">
 </rtk-chat-selector-ui>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-chat-selector-ui");
+
+  el.groups= [];
+</script>
+```

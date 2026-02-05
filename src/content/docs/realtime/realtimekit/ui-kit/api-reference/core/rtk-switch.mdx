@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-switch
-description: API reference for rtk-switch component (Core Library)
+description: API reference for rtk-switch component (Web Components (HTML) Library)
 ---
 A switch component which follows RTK Design System.
 
@@ -26,10 +26,17 @@ A switch component which follows RTK Design System.
 ### With Properties
 
 ```html
-<rtk-switch
-  checked=true
-  disabled=true
-  readonly=true>
+<rtk-switch>
 </rtk-switch>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-switch");
+
+  el.checked= true;
+  el.disabled= true;
+  el.readonly= true;
+</script>
+```

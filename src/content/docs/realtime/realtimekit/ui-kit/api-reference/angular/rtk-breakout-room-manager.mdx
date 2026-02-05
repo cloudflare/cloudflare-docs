@@ -20,21 +20,6 @@ description: API reference for rtk-breakout-room-manager component (Angular Libr
 
 ## Usage Examples
 
-### Setup
-
-```typescript
-// app.module.ts
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
-
-defineCustomElements();
-
-@NgModule({
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-export class AppModule { }
-```
-
 ### Basic Usage
 
 ```html
@@ -47,9 +32,9 @@ export class AppModule { }
 ```html
 <!-- component.html -->
 <rtk-breakout-room-manager
-  [allowDelete]=true
-  [assigningParticipants]=true
-  [defaultExpanded]=true>
+ [allowDelete]="true"
+ [assigningParticipants]="true"
+ [defaultExpanded]="true">
 </rtk-breakout-room-manager>
 ```
 

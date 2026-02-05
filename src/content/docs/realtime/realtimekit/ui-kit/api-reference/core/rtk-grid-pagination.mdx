@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-grid-pagination
-description: API reference for rtk-grid-pagination component (Core Library)
+description: API reference for rtk-grid-pagination component (Web Components (HTML) Library)
 ---
 A component which allows you to change current page and view mode
  of active participants list. This is reflected in the `rtk-grid` component.
@@ -29,9 +29,15 @@ A component which allows you to change current page and view mode
 
 ```html
 <rtk-grid-pagination
-  meeting={meeting}
-  size="md"
-  variant=gridpaginationvariants>
+ size="md">
 </rtk-grid-pagination>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-grid-pagination");
+
+  el.meeting= meeting
+</script>
+```

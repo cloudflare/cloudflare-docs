@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-breakout-rooms-toggle
-description: API reference for rtk-breakout-rooms-toggle component (Core Library)
+description: API reference for rtk-breakout-rooms-toggle component (Web Components (HTML) Library)
 ---
 A button which toggles visibility of breakout rooms.
  You need to pass the `meeting` object to it.
@@ -29,9 +29,16 @@ A button which toggles visibility of breakout rooms.
 
 ```html
 <rtk-breakout-rooms-toggle
-  iconPack={defaultIconPack}
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-breakout-rooms-toggle>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-breakout-rooms-toggle");
+
+  el.iconPack= defaultIconPack
+  el.meeting= meeting
+</script>
+```

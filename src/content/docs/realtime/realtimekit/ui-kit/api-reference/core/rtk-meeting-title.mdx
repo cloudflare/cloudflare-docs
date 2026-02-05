@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-meeting-title
-description: API reference for rtk-meeting-title component (Core Library)
+description: API reference for rtk-meeting-title component (Web Components (HTML) Library)
 ---
 Displays the title of the meeting.
 
@@ -24,8 +24,15 @@ Displays the title of the meeting.
 ### With Properties
 
 ```html
-<rtk-meeting-title
-  meeting={meeting}>
+<rtk-meeting-title>
 </rtk-meeting-title>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-meeting-title");
+
+  el.meeting= meeting
+</script>
+```

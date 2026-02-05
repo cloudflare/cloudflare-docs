@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-overlay-modal
-description: API reference for rtk-overlay-modal component (Core Library)
+description: API reference for rtk-overlay-modal component (Web Components (HTML) Library)
 ---
 A confirmation modal.
 
@@ -25,8 +25,15 @@ A confirmation modal.
 ### With Properties
 
 ```html
-<rtk-overlay-modal
-  meeting={meeting}>
+<rtk-overlay-modal>
 </rtk-overlay-modal>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-overlay-modal");
+
+  el.meeting= meeting
+</script>
+```

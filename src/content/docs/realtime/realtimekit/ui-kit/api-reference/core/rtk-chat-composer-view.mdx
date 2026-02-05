@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-chat-composer-view
-description: API reference for rtk-chat-composer-view component (Core Library)
+description: API reference for rtk-chat-composer-view component (Web Components (HTML) Library)
 ---
 A component which renders a chat composer
 
@@ -33,9 +33,16 @@ A component which renders a chat composer
 
 ```html
 <rtk-chat-composer-view
-  canSendFiles=true
-  canSendTextMessage=true
-  inputTextPlaceholder="example">
+ inputTextPlaceholder="example">
 </rtk-chat-composer-view>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-chat-composer-view");
+
+  el.canSendFiles= true;
+  el.canSendTextMessage= true;
+</script>
+```

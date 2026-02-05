@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-ai-transcriptions
-description: API reference for rtk-ai-transcriptions component (Core Library)
+description: API reference for rtk-ai-transcriptions component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -22,9 +22,16 @@ description: API reference for rtk-ai-transcriptions component (Core Library)
 ### With Properties
 
 ```html
-<rtk-ai-transcriptions
-  initialTranscriptions=[]
-  meeting={meeting}>
+<rtk-ai-transcriptions>
 </rtk-ai-transcriptions>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-ai-transcriptions");
+
+  el.initialTranscriptions= [];
+  el.meeting= meeting
+</script>
+```

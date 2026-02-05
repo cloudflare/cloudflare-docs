@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-viewer-count
-description: API reference for rtk-viewer-count component (Core Library)
+description: API reference for rtk-viewer-count component (Web Components (HTML) Library)
 ---
 A component which shows count of total joined participants in a meeting.
 
@@ -26,8 +26,15 @@ A component which shows count of total joined participants in a meeting.
 
 ```html
 <rtk-viewer-count
-  meeting={meeting}
-  variant="primary">
+ variant="primary">
 </rtk-viewer-count>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-viewer-count");
+
+  el.meeting= meeting
+</script>
+```

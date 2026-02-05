@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-image-message
-description: API reference for rtk-image-message component (Core Library)
+description: API reference for rtk-image-message component (Web Components (HTML) Library)
 ---
 @deprecated `rtk-image-message` is deprecated and will be removed soon. Use `rtk-image-message-view` instead.
  A component which renders an image message from chat.
@@ -28,10 +28,15 @@ description: API reference for rtk-image-message component (Core Library)
 ### With Properties
 
 ```html
-<rtk-image-message
-  isContinued=true
-  message=imagemessage
-  now=date>
+<rtk-image-message>
 </rtk-image-message>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-image-message");
+
+  el.isContinued= true;
+</script>
+```

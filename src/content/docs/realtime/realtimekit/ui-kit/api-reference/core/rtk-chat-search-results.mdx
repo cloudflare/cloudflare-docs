@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-chat-search-results
-description: API reference for rtk-chat-search-results component (Core Library)
+description: API reference for rtk-chat-search-results component (Web Components (HTML) Library)
 ---
 @deprecated `rtk-chat-search-results` is deprecated and will be removed soon. Use `rtk-chat-messages-ui-paginated` instead. -
 
@@ -27,9 +27,16 @@ description: API reference for rtk-chat-search-results component (Core Library)
 
 ```html
 <rtk-chat-search-results
-  channelId="example"
-  meeting={meeting}
-  query="example">
+ channelId="example"
+ query="example">
 </rtk-chat-search-results>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-chat-search-results");
+
+  el.meeting= meeting
+</script>
+```

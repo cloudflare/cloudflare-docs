@@ -26,21 +26,6 @@ A component which lets to manage your audio devices and audio preferences.
 
 ## Usage Examples
 
-### Setup
-
-```typescript
-// app.module.ts
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
-
-defineCustomElements();
-
-@NgModule({
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-export class AppModule { }
-```
-
 ### Basic Usage
 
 ```html
@@ -53,9 +38,9 @@ export class AppModule { }
 ```html
 <!-- component.html -->
 <rtk-speaker-selector
-  [meeting]={meeting}
-  [size]="md"
-  [variant]='full' | 'inline'>
+ [meeting]="meeting"
+ size="md"
+ [variant]="'full' | 'inline'">
 </rtk-speaker-selector>
 ```
 

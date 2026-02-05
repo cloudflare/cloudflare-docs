@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-speaker-selector
-description: API reference for rtk-speaker-selector component (Core Library)
+description: API reference for rtk-speaker-selector component (Web Components (HTML) Library)
 ---
 A component which lets to manage your audio devices and audio preferences.
  Emits `rtkStateUpdate` event with data for muting notification sounds:
@@ -36,9 +36,15 @@ A component which lets to manage your audio devices and audio preferences.
 
 ```html
 <rtk-speaker-selector
-  meeting={meeting}
-  size="md"
-  variant='full' | 'inline'>
+ size="md">
 </rtk-speaker-selector>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-speaker-selector");
+
+  el.meeting= meeting
+</script>
+```

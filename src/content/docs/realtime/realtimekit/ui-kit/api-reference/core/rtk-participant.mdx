@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-participant
-description: API reference for rtk-participant component (Core Library)
+description: API reference for rtk-participant component (Web Components (HTML) Library)
 ---
 A participant entry component used inside `rtk-participants` which shows data like:
  name, picture and media device status.
@@ -30,10 +30,16 @@ A participant entry component used inside `rtk-participants` which shows data li
 ### With Properties
 
 ```html
-<rtk-participant
-  meeting={meeting}
-  participant={participant}
-  view=participantviewmode>
+<rtk-participant>
 </rtk-participant>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-participant");
+
+  el.meeting= meeting
+  el.participant= participant
+</script>
+```

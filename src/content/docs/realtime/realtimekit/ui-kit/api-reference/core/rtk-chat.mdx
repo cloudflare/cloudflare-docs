@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-chat
-description: API reference for rtk-chat component (Core Library)
+description: API reference for rtk-chat component (Web Components (HTML) Library)
 ---
 Fully featured chat component with image & file upload, emoji picker and auto-scroll.
 
@@ -28,8 +28,15 @@ Fully featured chat component with image & file upload, emoji picker and auto-sc
 
 ```html
 <rtk-chat
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-chat>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-chat");
+
+  el.meeting= meeting
+</script>
+```

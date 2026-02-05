@@ -17,21 +17,6 @@ A troubleshooting component to identify and fix any issues in the meeting.
 
 ## Usage Examples
 
-### Setup
-
-```typescript
-// app.module.ts
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
-
-defineCustomElements();
-
-@NgModule({
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-export class AppModule { }
-```
-
 ### Basic Usage
 
 ```html
@@ -44,8 +29,8 @@ export class AppModule { }
 ```html
 <!-- component.html -->
 <rtk-debugger
-  [meeting]={meeting}
-  [size]="md">
+ [meeting]="meeting"
+ size="md">
 </rtk-debugger>
 ```
 

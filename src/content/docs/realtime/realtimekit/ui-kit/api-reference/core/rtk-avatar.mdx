@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-avatar
-description: API reference for rtk-avatar component (Core Library)
+description: API reference for rtk-avatar component (Web Components (HTML) Library)
 ---
 Avatar component which renders a participant's image or their initials.
 
@@ -27,9 +27,17 @@ Avatar component which renders a participant's image or their initials.
 
 ```html
 <rtk-avatar
-  participant="example"
-  size="md"
-  variant="circular">
+ participant="example"
+ size="md"
+ variant="circular">
 </rtk-avatar>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-avatar");
+
+  el.participant= {};
+</script>
+```

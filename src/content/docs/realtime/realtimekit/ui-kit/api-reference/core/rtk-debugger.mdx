@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-debugger
-description: API reference for rtk-debugger component (Core Library)
+description: API reference for rtk-debugger component (Web Components (HTML) Library)
 ---
 A troubleshooting component to identify and fix any issues in the meeting.
 
@@ -27,8 +27,15 @@ A troubleshooting component to identify and fix any issues in the meeting.
 
 ```html
 <rtk-debugger
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-debugger>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-debugger");
+
+  el.meeting= meeting
+</script>
+```

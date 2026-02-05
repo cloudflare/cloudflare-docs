@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-emoji-picker-button
-description: API reference for rtk-emoji-picker-button component (Core Library)
+description: API reference for rtk-emoji-picker-button component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -22,8 +22,15 @@ description: API reference for rtk-emoji-picker-button component (Core Library)
 ### With Properties
 
 ```html
-<rtk-emoji-picker-button
-  isActive=true>
+<rtk-emoji-picker-button>
 </rtk-emoji-picker-button>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-emoji-picker-button");
+
+  el.isActive= true;
+</script>
+```

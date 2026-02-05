@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-message-view
-description: API reference for rtk-message-view component (Core Library)
+description: API reference for rtk-message-view component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -34,9 +34,16 @@ description: API reference for rtk-message-view component (Core Library)
 
 ```html
 <rtk-message-view
-  actions=[]
-  authorName="example"
-  avatarUrl="example">
+ authorName="example"
+ avatarUrl="example">
 </rtk-message-view>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-message-view");
+
+  el.actions= [];
+</script>
+```

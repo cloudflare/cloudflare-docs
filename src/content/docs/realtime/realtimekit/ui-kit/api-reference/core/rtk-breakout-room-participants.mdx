@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-breakout-room-participants
-description: API reference for rtk-breakout-room-participants component (Core Library)
+description: API reference for rtk-breakout-room-participants component (Web Components (HTML) Library)
 ---
 A component which lists all participants, with ability to
  run privileged actions on each participant according to your permissions.
@@ -28,9 +28,18 @@ A component which lists all participants, with ability to
 
 ```html
 <rtk-breakout-room-participants
-  meeting={meeting}
-  participantIds="example"
-  selectedParticipantIds="example">
+ participantIds="example"
+ selectedParticipantIds="example">
 </rtk-breakout-room-participants>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-breakout-room-participants");
+
+  el.meeting= meeting
+  el.participantIds= [];
+  el.selectedParticipantIds= [];
+</script>
+```

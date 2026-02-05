@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-caption-toggle
-description: API reference for rtk-caption-toggle component (Core Library)
+description: API reference for rtk-caption-toggle component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -27,9 +27,16 @@ description: API reference for rtk-caption-toggle component (Core Library)
 
 ```html
 <rtk-caption-toggle
-  meeting={meeting}
-  size="md"
-  variant="button">
+ size="md"
+ variant"button">
 </rtk-caption-toggle>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-caption-toggle");
+
+  el.meeting= meeting
+</script>
+```

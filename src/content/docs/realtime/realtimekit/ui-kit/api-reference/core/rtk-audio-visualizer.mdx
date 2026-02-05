@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-audio-visualizer
-description: API reference for rtk-audio-visualizer component (Core Library)
+description: API reference for rtk-audio-visualizer component (Web Components (HTML) Library)
 ---
 An audio visualizer component which visualizes a participants audio.
  Commonly used inside `rtk-name-tag`.
@@ -29,10 +29,17 @@ An audio visualizer component which visualizes a participants audio.
 ### With Properties
 
 ```html
-<rtk-audio-visualizer
-  hideMuted=true
-  isScreenShare=true
-  participant={participant}>
+<rtk-audio-visualizer>
 </rtk-audio-visualizer>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-audio-visualizer");
+
+  el.hideMuted= true;
+  el.isScreenShare= true;
+  el.participant= participant
+</script>
+```

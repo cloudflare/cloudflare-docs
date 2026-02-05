@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-ui-provider
-description: API reference for rtk-ui-provider component (Core Library)
+description: API reference for rtk-ui-provider component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -26,10 +26,17 @@ description: API reference for rtk-ui-provider component (Core Library)
 ### With Properties
 
 ```html
-<rtk-ui-provider
-  config={defaultUiConfig}
-  mode={meeting}
-  showSetupScreen=true>
+<rtk-ui-provider>
 </rtk-ui-provider>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-ui-provider");
+
+  el.config= defaultUiConfig
+  el.mode= meeting
+  el.showSetupScreen= true;
+</script>
+```

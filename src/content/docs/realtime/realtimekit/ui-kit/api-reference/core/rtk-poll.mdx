@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-poll
-description: API reference for rtk-poll component (Core Library)
+description: API reference for rtk-poll component (Web Components (HTML) Library)
 ---
 A poll component.
  Shows a poll where a user can vote.
@@ -28,9 +28,14 @@ A poll component.
 
 ```html
 <rtk-poll
-  permissions=rtkpermissionspreset
-  poll=poll
-  self="example">
+ self="example">
 </rtk-poll>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-poll");
+
+</script>
+```

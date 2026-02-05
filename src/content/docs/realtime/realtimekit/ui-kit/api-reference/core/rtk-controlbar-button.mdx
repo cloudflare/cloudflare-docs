@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-controlbar-button
-description: API reference for rtk-controlbar-button component (Core Library)
+description: API reference for rtk-controlbar-button component (Web Components (HTML) Library)
 ---
 A skeleton component used for composing custom controlbar buttons.
 
@@ -31,9 +31,16 @@ A skeleton component used for composing custom controlbar buttons.
 
 ```html
 <rtk-controlbar-button
-  brandIcon=true
-  disabled=true
-  icon="example">
+ icon="example">
 </rtk-controlbar-button>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-controlbar-button");
+
+  el.brandIcon= true;
+  el.disabled= true;
+</script>
+```

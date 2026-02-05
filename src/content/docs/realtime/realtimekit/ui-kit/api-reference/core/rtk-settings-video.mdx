@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-settings-video
-description: API reference for rtk-settings-video component (Core Library)
+description: API reference for rtk-settings-video component (Web Components (HTML) Library)
 ---
 A component which lets to manage your camera devices and your video preferences.
  Emits `rtkStateUpdate` event with data for toggling mirroring of self video:
@@ -35,8 +35,15 @@ A component which lets to manage your camera devices and your video preferences.
 
 ```html
 <rtk-settings-video
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-settings-video>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-settings-video");
+
+  el.meeting= meeting
+</script>
+```

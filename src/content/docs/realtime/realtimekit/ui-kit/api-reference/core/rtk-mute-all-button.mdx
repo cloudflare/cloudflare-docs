@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-mute-all-button
-description: API reference for rtk-mute-all-button component (Core Library)
+description: API reference for rtk-mute-all-button component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -25,9 +25,16 @@ description: API reference for rtk-mute-all-button component (Core Library)
 
 ```html
 <rtk-mute-all-button
-  meeting={meeting}
-  size="md"
-  variant="button">
+ size="md"
+ variant"button">
 </rtk-mute-all-button>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-mute-all-button");
+
+  el.meeting= meeting
+</script>
+```

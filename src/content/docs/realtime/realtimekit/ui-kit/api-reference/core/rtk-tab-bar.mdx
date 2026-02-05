@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-tab-bar
-description: API reference for rtk-tab-bar component (Core Library)
+description: API reference for rtk-tab-bar component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -28,10 +28,15 @@ description: API reference for rtk-tab-bar component (Core Library)
 ### With Properties
 
 ```html
-<rtk-tab-bar
-  activeTab=tab
-  layout=gridlayout1
-  meeting={meeting}>
+<rtk-tab-bar>
 </rtk-tab-bar>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-tab-bar");
+
+  el.meeting= meeting
+</script>
+```

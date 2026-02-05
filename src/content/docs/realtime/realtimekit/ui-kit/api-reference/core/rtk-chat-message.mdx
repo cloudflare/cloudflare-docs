@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-chat-message
-description: API reference for rtk-chat-message component (Core Library)
+description: API reference for rtk-chat-message component (Web Components (HTML) Library)
 ---
 @deprecated `rtk-chat-message` is deprecated and will be removed soon. Use `rtk-message-view` instead.
 
@@ -38,10 +38,17 @@ description: API reference for rtk-chat-message component (Core Library)
 ### With Properties
 
 ```html
-<rtk-chat-message
-  alignRight=true
-  canDelete=true
-  canEdit=true>
+<rtk-chat-message>
 </rtk-chat-message>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-chat-message");
+
+  el.alignRight= true;
+  el.canDelete= true;
+  el.canEdit= true;
+</script>
+```

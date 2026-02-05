@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-transcripts
-description: API reference for rtk-transcripts component (Core Library)
+description: API reference for rtk-transcripts component (Web Components (HTML) Library)
 ---
 A component which handles transcripts.
  You can configure which transcripts you want to see and which ones you want to hear.
@@ -27,8 +27,15 @@ A component which handles transcripts.
 ### With Properties
 
 ```html
-<rtk-transcripts
-  meeting={meeting}>
+<rtk-transcripts>
 </rtk-transcripts>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-transcripts");
+
+  el.meeting= meeting
+</script>
+```

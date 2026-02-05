@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-file-message
-description: API reference for rtk-file-message component (Core Library)
+description: API reference for rtk-file-message component (Web Components (HTML) Library)
 ---
 @deprecated `rtk-file-message` is deprecated and will be removed soon. Use `rtk-file-message-view` instead.
  A component which renders a file message from chat.
@@ -28,10 +28,15 @@ description: API reference for rtk-file-message component (Core Library)
 ### With Properties
 
 ```html
-<rtk-file-message
-  isContinued=true
-  message=filemessage
-  now=date>
+<rtk-file-message>
 </rtk-file-message>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-file-message");
+
+  el.isContinued= true;
+</script>
+```

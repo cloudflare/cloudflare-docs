@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-debugger-audio
-description: API reference for rtk-debugger-audio component (Core Library)
+description: API reference for rtk-debugger-audio component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -25,8 +25,15 @@ description: API reference for rtk-debugger-audio component (Core Library)
 
 ```html
 <rtk-debugger-audio
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-debugger-audio>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-debugger-audio");
+
+  el.meeting= meeting
+</script>
+```

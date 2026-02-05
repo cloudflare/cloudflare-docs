@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-counter
-description: API reference for rtk-counter component (Core Library)
+description: API reference for rtk-counter component (Web Components (HTML) Library)
 ---
 A number picker with increment and decrement buttons.
 
@@ -27,9 +27,16 @@ A number picker with increment and decrement buttons.
 
 ```html
 <rtk-counter
-  minValue=42
-  size="md"
-  value=42>
+ size="md">
 </rtk-counter>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-counter");
+
+  el.minValue= 42;
+  el.value= 42;
+</script>
+```

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-polls
-description: API reference for rtk-polls component (Core Library)
+description: API reference for rtk-polls component (Web Components (HTML) Library)
 ---
 A component which lists all available plugins a user can access with
  the ability to enable or disable them as per their permissions.
@@ -28,8 +28,15 @@ A component which lists all available plugins a user can access with
 
 ```html
 <rtk-polls
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-polls>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-polls");
+
+  el.meeting= meeting
+</script>
+```

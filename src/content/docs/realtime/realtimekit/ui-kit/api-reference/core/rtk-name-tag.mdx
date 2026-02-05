@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-name-tag
-description: API reference for rtk-name-tag component (Core Library)
+description: API reference for rtk-name-tag component (Web Components (HTML) Library)
 ---
 A component which shows a participant's name.
 
@@ -28,10 +28,17 @@ A component which shows a participant's name.
 ### With Properties
 
 ```html
-<rtk-name-tag
-  isScreenShare=true
-  meeting={meeting}
-  participant={participant}>
+<rtk-name-tag>
 </rtk-name-tag>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-name-tag");
+
+  el.isScreenShare= true;
+  el.meeting= meeting
+  el.participant= participant
+</script>
+```

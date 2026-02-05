@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-participants-viewer-list
-description: API reference for rtk-participants-viewer-list component (Core Library)
+description: API reference for rtk-participants-viewer-list component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -28,9 +28,16 @@ description: API reference for rtk-participants-viewer-list component (Core Libr
 
 ```html
 <rtk-participants-viewer-list
-  hideHeader=true
-  meeting={meeting}
-  search="example">
+ search="example">
 </rtk-participants-viewer-list>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-participants-viewer-list");
+
+  el.hideHeader= true;
+  el.meeting= meeting
+</script>
+```

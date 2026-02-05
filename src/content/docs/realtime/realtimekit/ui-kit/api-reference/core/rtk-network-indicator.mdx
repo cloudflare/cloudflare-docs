@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-network-indicator
-description: API reference for rtk-network-indicator component (Core Library)
+description: API reference for rtk-network-indicator component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -24,10 +24,17 @@ description: API reference for rtk-network-indicator component (Core Library)
 ### With Properties
 
 ```html
-<rtk-network-indicator
-  isScreenShare=true
-  meeting={meeting}
-  participant={participant}>
+<rtk-network-indicator>
 </rtk-network-indicator>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-network-indicator");
+
+  el.isScreenShare= true;
+  el.meeting= meeting
+  el.participant= participant
+</script>
+```

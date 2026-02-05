@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-screen-share-toggle
-description: API reference for rtk-screen-share-toggle component (Core Library)
+description: API reference for rtk-screen-share-toggle component (Web Components (HTML) Library)
 ---
 A button which toggles your screenshare.
 
@@ -28,9 +28,16 @@ A button which toggles your screenshare.
 
 ```html
 <rtk-screen-share-toggle
-  meeting={meeting}
-  size="md"
-  variant="button">
+ size="md"
+ variant"button">
 </rtk-screen-share-toggle>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-screen-share-toggle");
+
+  el.meeting= meeting
+</script>
+```

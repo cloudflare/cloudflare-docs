@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-information-tooltip
-description: API reference for rtk-information-tooltip component (Core Library)
+description: API reference for rtk-information-tooltip component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -20,8 +20,15 @@ description: API reference for rtk-information-tooltip component (Core Library)
 ### With Properties
 
 ```html
-<rtk-information-tooltip
-  iconPack={defaultIconPack}>
+<rtk-information-tooltip>
 </rtk-information-tooltip>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-information-tooltip");
+
+  el.iconPack= defaultIconPack
+</script>
+```

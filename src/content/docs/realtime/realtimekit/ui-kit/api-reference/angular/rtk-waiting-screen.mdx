@@ -14,21 +14,6 @@ description: API reference for rtk-waiting-screen component (Angular Library)
 
 ## Usage Examples
 
-### Setup
-
-```typescript
-// app.module.ts
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
-
-defineCustomElements();
-
-@NgModule({
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-export class AppModule { }
-```
-
 ### Basic Usage
 
 ```html
@@ -41,7 +26,7 @@ export class AppModule { }
 ```html
 <!-- component.html -->
 <rtk-waiting-screen
-  [meeting]={meeting}>
+ [meeting]="meeting">
 </rtk-waiting-screen>
 ```
 

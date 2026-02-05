@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-idle-screen
-description: API reference for rtk-idle-screen component (Core Library)
+description: API reference for rtk-idle-screen component (Web Components (HTML) Library)
 ---
 A screen that handles the idle state,
  i.e; when you are waiting for data about the meeting, specifically the `meeting` object.
@@ -26,8 +26,15 @@ A screen that handles the idle state,
 ### With Properties
 
 ```html
-<rtk-idle-screen
-  meeting={meeting}>
+<rtk-idle-screen>
 </rtk-idle-screen>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-idle-screen");
+
+  el.meeting= meeting
+</script>
+```

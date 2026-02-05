@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-mixed-grid
-description: API reference for rtk-mixed-grid component (Core Library)
+description: API reference for rtk-mixed-grid component (Web Components (HTML) Library)
 ---
 A grid component which handles screenshares, plugins and participants.
 
@@ -36,9 +36,16 @@ A grid component which handles screenshares, plugins and participants.
 
 ```html
 <rtk-mixed-grid
-  aspectRatio="example"
-  gap=42
-  gridSize="md">
+ aspectRatio="example"
+ gridSize="md">
 </rtk-mixed-grid>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-mixed-grid");
+
+  el.gap= 42;
+</script>
+```

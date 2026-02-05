@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-grid
-description: API reference for rtk-grid component (Core Library)
+description: API reference for rtk-grid component (Web Components (HTML) Library)
 ---
 The main grid component which abstracts all the grid handling logic and renders it for you.
 
@@ -33,9 +33,16 @@ The main grid component which abstracts all the grid handling logic and renders 
 
 ```html
 <rtk-grid
-  aspectRatio="example"
-  gap=42
-  gridSize="md">
+ aspectRatio="example"
+ gridSize="md">
 </rtk-grid>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-grid");
+
+  el.gap= 42;
+</script>
+```

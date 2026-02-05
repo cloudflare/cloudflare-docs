@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-settings-toggle
-description: API reference for rtk-settings-toggle component (Core Library)
+description: API reference for rtk-settings-toggle component (Web Components (HTML) Library)
 ---
 A button which toggles visibility of settings module.
  When clicked it emits a `rtkStateUpdate` event with the data:
@@ -31,8 +31,15 @@ A button which toggles visibility of settings module.
 
 ```html
 <rtk-settings-toggle
-  size="md"
-  variant="button">
+ size="md"
+ variant"button">
 </rtk-settings-toggle>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-settings-toggle");
+
+</script>
+```

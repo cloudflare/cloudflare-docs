@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-spotlight-indicator
-description: API reference for rtk-spotlight-indicator component (Core Library)
+description: API reference for rtk-spotlight-indicator component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -24,8 +24,15 @@ description: API reference for rtk-spotlight-indicator component (Core Library)
 
 ```html
 <rtk-spotlight-indicator
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-spotlight-indicator>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-spotlight-indicator");
+
+  el.meeting= meeting
+</script>
+```

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-waiting-screen
-description: API reference for rtk-waiting-screen component (Core Library)
+description: API reference for rtk-waiting-screen component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -23,8 +23,15 @@ description: API reference for rtk-waiting-screen component (Core Library)
 ### With Properties
 
 ```html
-<rtk-waiting-screen
-  meeting={meeting}>
+<rtk-waiting-screen>
 </rtk-waiting-screen>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-waiting-screen");
+
+  el.meeting= meeting
+</script>
+```

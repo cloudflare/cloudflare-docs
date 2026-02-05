@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-menu
-description: API reference for rtk-menu component (Core Library)
+description: API reference for rtk-menu component (Web Components (HTML) Library)
 ---
 A menu component.
 
@@ -27,9 +27,15 @@ A menu component.
 
 ```html
 <rtk-menu
-  offset=42
-  placement=placement
-  size="md">
+ size="md">
 </rtk-menu>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-menu");
+
+  el.offset= 42;
+</script>
+```

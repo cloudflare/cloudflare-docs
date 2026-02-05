@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-participants-waiting-list
-description: API reference for rtk-participants-waiting-list component (Core Library)
+description: API reference for rtk-participants-waiting-list component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -26,9 +26,15 @@ description: API reference for rtk-participants-waiting-list component (Core Lib
 
 ```html
 <rtk-participants-waiting-list
-  meeting={meeting}
-  size="md"
-  view=participantsviewmode>
+ size="md">
 </rtk-participants-waiting-list>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-participants-waiting-list");
+
+  el.meeting= meeting
+</script>
+```

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-dialog
-description: API reference for rtk-dialog component (Core Library)
+description: API reference for rtk-dialog component (Web Components (HTML) Library)
 ---
 A dialog component.
 
@@ -30,10 +30,17 @@ A dialog component.
 ### With Properties
 
 ```html
-<rtk-dialog
-  disableEscapeKey=true
-  hideCloseButton=true
-  meeting={meeting}>
+<rtk-dialog>
 </rtk-dialog>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-dialog");
+
+  el.disableEscapeKey= true;
+  el.hideCloseButton= true;
+  el.meeting= meeting
+</script>
+```

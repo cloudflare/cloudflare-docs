@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-plugin-main
-description: API reference for rtk-plugin-main component (Core Library)
+description: API reference for rtk-plugin-main component (Web Components (HTML) Library)
 ---
 A component which loads a plugin.
 
@@ -25,9 +25,15 @@ A component which loads a plugin.
 ### With Properties
 
 ```html
-<rtk-plugin-main
-  meeting={meeting}
-  plugin=rtkplugin>
+<rtk-plugin-main>
 </rtk-plugin-main>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-plugin-main");
+
+  el.meeting= meeting
+</script>
+```

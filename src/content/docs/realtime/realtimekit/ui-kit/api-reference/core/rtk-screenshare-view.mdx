@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-screenshare-view
-description: API reference for rtk-screenshare-view component (Core Library)
+description: API reference for rtk-screenshare-view component (Web Components (HTML) Library)
 ---
 A component which plays a participant's screenshared video.
  It also allows for placement of other components similar to `rtk-participant-tile`.
@@ -31,15 +31,16 @@ A component which plays a participant's screenshared video.
 ### With Properties
 
 ```html
-<rtk-screenshare-view
-  hideFullScreenButton=true
-  meeting={meeting}
-  nameTagPosition=| 'bottom-left'
-    | 'bottom-right'
-    | 'bottom-center'
-    | 'top-left'
-    | 'top-right'
-    | 'top-center'>
+<rtk-screenshare-view>
 </rtk-screenshare-view>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-screenshare-view");
+
+  el.hideFullScreenButton= true;
+  el.meeting= meeting
+</script>
+```

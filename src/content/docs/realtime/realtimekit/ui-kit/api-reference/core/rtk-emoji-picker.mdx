@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-emoji-picker
-description: API reference for rtk-emoji-picker component (Core Library)
+description: API reference for rtk-emoji-picker component (Web Components (HTML) Library)
 ---
 A very simple emoji picker component.
 
@@ -24,8 +24,15 @@ A very simple emoji picker component.
 ### With Properties
 
 ```html
-<rtk-emoji-picker
-  focusWhenOpened=true>
+<rtk-emoji-picker>
 </rtk-emoji-picker>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-emoji-picker");
+
+  el.focusWhenOpened= true;
+</script>
+```

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-ended-screen
-description: API reference for rtk-ended-screen component (Core Library)
+description: API reference for rtk-ended-screen component (Web Components (HTML) Library)
 ---
 A screen which shows a meeting has ended.
 
@@ -28,8 +28,15 @@ A screen which shows a meeting has ended.
 
 ```html
 <rtk-ended-screen
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-ended-screen>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-ended-screen");
+
+  el.meeting= meeting
+</script>
+```

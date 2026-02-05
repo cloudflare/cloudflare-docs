@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-broadcast-message-modal
-description: API reference for rtk-broadcast-message-modal component (Core Library)
+description: API reference for rtk-broadcast-message-modal component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -23,8 +23,15 @@ description: API reference for rtk-broadcast-message-modal component (Core Libra
 ### With Properties
 
 ```html
-<rtk-broadcast-message-modal
-  meeting={meeting}>
+<rtk-broadcast-message-modal>
 </rtk-broadcast-message-modal>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-broadcast-message-modal");
+
+  el.meeting= meeting
+</script>
+```

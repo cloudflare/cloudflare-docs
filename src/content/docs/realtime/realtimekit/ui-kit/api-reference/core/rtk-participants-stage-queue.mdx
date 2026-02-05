@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-participants-stage-queue
-description: API reference for rtk-participants-stage-queue component (Core Library)
+description: API reference for rtk-participants-stage-queue component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -26,9 +26,15 @@ description: API reference for rtk-participants-stage-queue component (Core Libr
 
 ```html
 <rtk-participants-stage-queue
-  meeting={meeting}
-  size="md"
-  view=participantsviewmode>
+ size="md">
 </rtk-participants-stage-queue>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-participants-stage-queue");
+
+  el.meeting= meeting
+</script>
+```

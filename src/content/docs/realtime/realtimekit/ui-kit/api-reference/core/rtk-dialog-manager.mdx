@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-dialog-manager
-description: API reference for rtk-dialog-manager component (Core Library)
+description: API reference for rtk-dialog-manager component (Web Components (HTML) Library)
 ---
 A component which handles all dialog elements in a component such as:
  - rtk-settings
@@ -34,8 +34,15 @@ A component which handles all dialog elements in a component such as:
 
 ```html
 <rtk-dialog-manager
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-dialog-manager>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-dialog-manager");
+
+  el.meeting= meeting
+</script>
+```

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-image-viewer
-description: API reference for rtk-image-viewer component (Core Library)
+description: API reference for rtk-image-viewer component (Web Components (HTML) Library)
 ---
 A component which shows an image sent via chat.
 
@@ -26,8 +26,14 @@ A component which shows an image sent via chat.
 
 ```html
 <rtk-image-viewer
-  image=imagemessage
-  size="md">
+ size="md">
 </rtk-image-viewer>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-image-viewer");
+
+</script>
+```

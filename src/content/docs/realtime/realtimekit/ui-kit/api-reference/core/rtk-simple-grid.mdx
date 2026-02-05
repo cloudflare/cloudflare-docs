@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-simple-grid
-description: API reference for rtk-simple-grid component (Core Library)
+description: API reference for rtk-simple-grid component (Web Components (HTML) Library)
 ---
 A grid component which renders only the participants in a simple grid.
 
@@ -31,9 +31,16 @@ A grid component which renders only the participants in a simple grid.
 
 ```html
 <rtk-simple-grid
-  aspectRatio="example"
-  gap=42
-  meeting={meeting}>
+ aspectRatio="example">
 </rtk-simple-grid>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-simple-grid");
+
+  el.gap= 42;
+  el.meeting= meeting
+</script>
+```

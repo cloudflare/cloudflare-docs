@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-participants
-description: API reference for rtk-participants component (Core Library)
+description: API reference for rtk-participants component (Web Components (HTML) Library)
 ---
 A component which lists all participants, with ability to
  run privileged actions on each participant according to your permissions.
@@ -30,9 +30,15 @@ A component which lists all participants, with ability to
 
 ```html
 <rtk-participants
-  defaultParticipantsTabId=participantstabid
-  meeting={meeting}
-  size="md">
+ size="md">
 </rtk-participants>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-participants");
+
+  el.meeting= meeting
+</script>
+```

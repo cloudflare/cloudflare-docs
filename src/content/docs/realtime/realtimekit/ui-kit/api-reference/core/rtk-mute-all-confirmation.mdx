@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-mute-all-confirmation
-description: API reference for rtk-mute-all-confirmation component (Core Library)
+description: API reference for rtk-mute-all-confirmation component (Web Components (HTML) Library)
 ---
 ## Properties
 
@@ -23,8 +23,15 @@ description: API reference for rtk-mute-all-confirmation component (Core Library
 ### With Properties
 
 ```html
-<rtk-mute-all-confirmation
-  meeting={meeting}>
+<rtk-mute-all-confirmation>
 </rtk-mute-all-confirmation>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-mute-all-confirmation");
+
+  el.meeting= meeting
+</script>
+```

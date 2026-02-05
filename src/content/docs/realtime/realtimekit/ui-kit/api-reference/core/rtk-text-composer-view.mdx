@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-text-composer-view
-description: API reference for rtk-text-composer-view component (Core Library)
+description: API reference for rtk-text-composer-view component (Web Components (HTML) Library)
 ---
 A component which renders a text composer
 
@@ -30,10 +30,16 @@ A component which renders a text composer
 ### With Properties
 
 ```html
-<rtk-text-composer-view
-  disabled=true
-  keyDownHandler=(e: keyboardevent)
-  maxLength=42>
+<rtk-text-composer-view>
 </rtk-text-composer-view>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-text-composer-view");
+
+  el.disabled= true;
+  el.maxLength= 42;
+</script>
+```

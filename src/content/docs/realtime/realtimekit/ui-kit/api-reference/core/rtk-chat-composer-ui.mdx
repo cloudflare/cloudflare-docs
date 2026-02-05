@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: rtk-chat-composer-ui
-description: API reference for rtk-chat-composer-ui component (Core Library)
+description: API reference for rtk-chat-composer-ui component (Web Components (HTML) Library)
 ---
 @deprecated . This component is deprecated, please use rtk-chat-composer-view instead.
 
@@ -28,9 +28,16 @@ description: API reference for rtk-chat-composer-ui component (Core Library)
 
 ```html
 <rtk-chat-composer-ui
-  canSendFiles=true
-  canSendTextMessage=true
-  size="md">
+ size="md">
 </rtk-chat-composer-ui>
 ```
 
+
+```html
+<script>
+  const el = document.querySelector("rtk-chat-composer-ui");
+
+  el.canSendFiles= true;
+  el.canSendTextMessage= true;
+</script>
+```
