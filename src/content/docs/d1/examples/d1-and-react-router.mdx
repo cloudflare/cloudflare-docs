@@ -11,7 +11,7 @@ description: Query your D1 database from a React Router application.
 
 import { TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
 
-[React Router v7](https://reactrouter.com/) is a full-stack web framework for building React applications. You can query your D1 database from React Router using the [data loading](https://reactrouter.com/start/framework/data-loading) API with the `loader` function and `useLoaderData` hook.
+[React Router v7](https://reactrouter.com/) is a full-stack web framework for building React applications. You can query your D1 database from React Router using the [data loading](https://reactrouter.com/start/framework/data-loading) API with the `loader` function.
 
 ## Set up a React Router project with D1
 
@@ -61,27 +61,17 @@ import type { Route } from "./+types/users";
 export async function loader({ context }: Route.LoaderArgs) {
   const env = context.cloudflare.env;
 
-  try {
-    const { results } = await env.DB.prepare(
-      "SELECT * FROM users LIMIT 5"
-    ).run();
-    return { users: results };
-  } catch (error) {
-    return { users: [], error: "Failed to fetch users" };
-  }
+  const { results } = await env.DB.prepare(
+    "SELECT * FROM users LIMIT 5"
+  ).run();
+  return { users: results };
 }
 
 export default function Users({ loaderData }: Route.ComponentProps) {
-  const { users, error } = loaderData;
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+    <div>
       <h1>Users</h1>
-      <pre>{JSON.stringify(users, null, 2)}</pre>
+      <pre>{JSON.stringify(loaderData.users, null, 2)}</pre>
     </div>
   );
 }
@@ -89,31 +79,26 @@ export default function Users({ loaderData }: Route.ComponentProps) {
 
 </TabItem> </Tabs>
 
-## Add type safety
+## Generate types
 
-For full type safety, extend the `CloudflareEnvironment` interface in your Worker entry file:
+The React Router Cloudflare template includes a `cf-typegen` script that runs [`wrangler types`](/workers/wrangler/commands/#types) to generate an `Env` interface from your Wrangler configuration. After adding the D1 binding to your Wrangler configuration, run the script to generate types:
 
-```ts title="workers/app.ts"
-import { createRequestHandler } from "react-router";
-
-declare global {
-	interface CloudflareEnvironment {
-		DB: D1Database;
-	}
-}
-
-const requestHandler = createRequestHandler(
-	() => import("virtual:react-router/server-build"),
-	import.meta.env.MODE,
-);
-
-export default {
-	async fetch(request, env, ctx) {
-		return requestHandler(request, {
-			cloudflare: { env, ctx },
-		});
-	},
-} satisfies ExportedHandler<CloudflareEnvironment>;
+```sh
+npm run cf-typegen
 ```
+
+This generates a `worker-configuration.d.ts` file that includes your D1 binding:
+
+```ts title="worker-configuration.d.ts"
+interface Env {
+  DB: D1Database;
+}
+```
+
+The `workers/app.ts` entry file in the template already uses this `Env` type, so your `context.cloudflare.env.DB` calls will be fully typed without any manual configuration.
+
+:::note
+Run `npm run cf-typegen` whenever you change bindings in your Wrangler configuration to keep your types in sync.
+:::
 
 For more information on using bindings with React Router, refer to the [React Router framework guide](/workers/framework-guides/web-apps/react-router/#use-bindings-with-react-router).
