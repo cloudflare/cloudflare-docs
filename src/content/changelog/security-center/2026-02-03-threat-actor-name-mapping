@@ -10,7 +10,7 @@ This new field is available in both the Cloudflare dashboard and via the API. In
 
 ## Key benefits
 
-* Easily map Cloudflare-tracked actors to the naming conventions used by other vendors without manual cross-referencing
+- Easily map Cloudflare-tracked actors to the naming conventions used by other vendors without manual cross-referencing.
 * Quickly identify if a detected threat actor matches a group your team is already monitoring via other intelligence feeds
 
 For more information on how to access this data, refer to the [Threat Events API documentation](https://developers.cloudflare.com/api/resources/cloudforce_one/subresources/threat_events/).
