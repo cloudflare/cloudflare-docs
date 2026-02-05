@@ -16,7 +16,7 @@ Enables the use of [`FinalizationRegistry`](https://developer.mozilla.org/en-US/
 - `WeakRef` creates a weak reference to an object, allowing it to be garbage-collected if no other strong references exist.
 
 :::note[Behaviour]
-`FinalizationRegistry` cleanup callbacks may execute at any point during your request lifecycle, even after your invoked handler has completed (similar to `ctx.waitUntil()`). These callbacks do not have an associated async context. You cannot perform any I/O within them, including emitting events to a tail Worker.
+`FinalizationRegistry` cleanup callbacks may execute at any point during your request lifecycle, even after your invoked handler has completed (similar to `ctx.waitUntil()`). These callbacks do not have an associated async context. You cannot perform any I/O within them, including emitting events to a [Tail Worker](/workers/observability/logs/tail-workers/).
 :::
 
 :::caution
