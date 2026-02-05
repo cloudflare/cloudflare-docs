@@ -3,7 +3,7 @@ title: Programmable Flow Protection (Beta)
 pcx_content_type: concept
 sidebar:
   order: 4
-  label: Programmmable Flow Protection
+  label: Programmable Flow Protection
   badge:
     text: Beta
 head:
@@ -13,17 +13,17 @@ head:
 
 import { Steps } from "~/components";
 
-Programmable Flow Protection is a DDoS protection system that protects against DDoS attacks over custom or standardized Layer 7 UDP-based protocols, such as gaming protocols, financial services protocols, VoIP, telecom, and streaming. In terms of topology, it supports both asymmetric and symmetric configurations, but it will only inspect ingress traffic. 
+Programmable Flow Protection is a DDoS protection system that protects against DDoS attacks over custom or standardized Layer 7 UDP-based protocols, such as gaming protocols, financial services protocols, VoIP, telecom, and streaming. In terms of topology, it supports both asymmetric and symmetric configurations, but it will only inspect ingress traffic.
 
 Programmable Flow Protection is currently in closed beta and available as an add-on for the [Magic Transit](/magic-transit/) ([BYOIP](/byoip/) or Cloudflare-leased IPs) service only. If you would like to enable the system, contact your account team or fill out this [form](https://www.cloudflare.com/lp/programmableddosprotection/).
 
 ## How it works
 
-The Programmable Flow Protection system allows you to write and run your own packet-layer stateful program in C across Cloudflare's global anycast network as an extended Berkeley Packet Filter (eBPF) programs running in the user space. An [eBPF program](https://docs.kernel.org/bpf/) is a packet filter system that allows a developer to write performant custom networking logic. 
+The Programmable Flow Protection system allows you to write and run your own packet-layer stateful program in C across Cloudflare's global anycast network as extended Berkeley Packet Filter (eBPF) programs running in the user space. An [eBPF program](https://docs.kernel.org/bpf/) is a packet filter system that allows a developer to write performant custom networking logic.
 
 Programmable Flow Protection inspects and parses your UDP-based application's protocols (deep packet inspection) and determines the outcome of the packets based on your program. Using your custom program's logic, you can permit authorized users while actively blocking attacks.
 
-The system is built on top of the `flowtrackd` platform, Cloudflare's stateful mitigation platform. The Programmable Flow Protection system relies on the DDoS Advanced Protection system's [general settings](/ddos-protection/advanced-ddos-systems/overview/) to operate. It respects the [prefixes](/ddos-protection/advanced-ddos-systems/overview/#prefixes) that you have selected to route through the Advanced Protection systems, as well as the [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist). The Advanced DDoS Protection system should be [enabled](/ddos-protection/advanced-ddos-systems/overview/#enablement) for the Programmable Flow Protection system to operate,
+The system is built on top of the `flowtrackd` platform, Cloudflare's stateful mitigation platform. The Programmable Flow Protection system relies on the DDoS Advanced Protection system's [general settings](/ddos-protection/advanced-ddos-systems/overview/) to operate. It respects the [prefixes](/ddos-protection/advanced-ddos-systems/overview/#prefixes) that you have selected to route through the Advanced Protection systems, as well as the [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist). The Advanced DDoS Protection system should be [enabled](/ddos-protection/advanced-ddos-systems/overview/#enablement) for the Programmable Flow Protection system to operate.
 
 While in beta, Cloudflare will assist and provide guidance to users to write their own code. Out-of-the-box code snippets (templates) for popular gaming protocols such as Minecraft and CounterStrike, and VoIP protocols such as SIP, will be provided later on.
 
@@ -41,10 +41,9 @@ After Programmable Flow Protection has been enabled to your account:
    An activation [threshold](/ddos-protection/advanced-ddos-systems/overview/#thresholds) is configured by Cloudflare to determine when you want the program to take effect. It can begin immediately for every packet, or after a certain packet per second rate.
 
 2. Create a [rule](/ddos-protection/advanced-ddos-systems/overview/#rules).
-
    - Select the program, the global scope, and the **Monitoring** setting.
 
-3. Observe the program's behavior in the [Network Analytics](/analytics/network-analytics/) dashboard.  
+3. Observe the program's behavior in the [Network Analytics](/analytics/network-analytics/) dashboard.
 
 4. When you are ready, enable the mitigation mode.
 </Steps>
@@ -53,13 +52,12 @@ You can create additional rules with different [rule settings](/ddos-protection/
 
 :::caution[Beta functionality limitations]
 
-- The current program limit for deployment is restricted to one program per account.   
-- The system does support the [Data Localization suite](/data-localization/).  
+- The current program limit for deployment is restricted to one program per account.
+- The system does support the [Data Localization suite](/data-localization/).
 - Currently, it is only possible to control the system via the API.
 - In the [Network Analytics](/analytics/network-analytics/) dashboard, you can only view the data for this system in the **All traffic** tab. A new tab will be added that is dedicated for the Programmable Flow Protection system.
 - For more information on beta services, refer to section 2.6 in the [Enterprise Terms of Service](https://www.cloudflare.com/enterpriseterms/).
-:::
-
+  :::
 
 ### Write a basic program
 
@@ -68,7 +66,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 <Steps>
 1. Include Linux primitive header files.
 
-    The IP and UDP `headers` struct definitions are necessary to parse the program's input packet. The `inet` header file contains helper functions to convert data between network and host order. 
+    The IP and UDP `headers` struct definitions are necessary to parse the program's input packet. The `inet` header file contains helper functions to convert data between network and host order.
 
     :::note
     You must include the same files that a Linux BPF program would be compiled with.
@@ -79,117 +77,118 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
     #include <linux/udp.h>
     #include <arpa/inet.h>
     ```
+
 2. Include the Cloudflare eBPF header files.
 
-    These files have [helper functions](#helper-functions) to parse the input packet data to the BPF program, as well as the versioning data for the Programmable Flow Protection API.
+   These files have [helper functions](#helper-functions) to parse the input packet data to the BPF program, as well as the versioning data for the Programmable Flow Protection API.
 
-    ```c
-    #include "cf_ebpf_defs.h"
-    #include "cf_ebpf_helper.h"
-    ```
+   ```c
+   #include "cf_ebpf_defs.h"
+   #include "cf_ebpf_helper.h"
+   ```
+
 3. Define a section header for the Programmable Flow Protection engine version.
 
-   As Cloudflare adds more features to the Programmable Flow Protection API, we will publish new versions of its API. Versions are guaranteed to be backwards compatible. 
+   As Cloudflare adds more features to the Programmable Flow Protection API, we will publish new versions of its API. Versions are guaranteed to be backwards compatible.
 
-    ```c
-    SEC(CF_EBPF_VERSION_1_0_0)
-    ```
+   ```c
+   SEC(CF_EBPF_VERSION_1_0_0)
+   ```
 
 4. Define the entry function for packet processing.
 
-    Your program must have the exact function signature below to properly pass Cloudflare's program verification. 
+   Your program must have the exact function signature below to properly pass Cloudflare's program verification.
 
-    The return type `uint64_t` dictates whether Cloudflare will pass or drop a packet. The function name `cf_ebpf_main` is used as the entrypoint to the program. The argument `void *state` refers to the data Cloudflare provides as input to your BPF program.   
+   The return type `uint64_t` dictates whether Cloudflare will pass or drop a packet. The function name `cf_ebpf_main` is used as the entrypoint to the program. The argument `void *state` refers to the data Cloudflare provides as input to your BPF program.
 
-    ```c
-    uint64_t cf_ebpf_main(void *state)
-    ```
+   ```c
+   uint64_t cf_ebpf_main(void *state)
+   ```
 
 5. Cast the input argument into usable structs.
 
-    Convert the input data into `cf_ebpf_generic_ctx`, which tells Cloudflare the data boundaries in the memory that we are reading.
+   Convert the input data into `cf_ebpf_generic_ctx`, which tells Cloudflare the data boundaries in the memory that we are reading.
 
-    Then, declare variables for data parsing. `cf_ebpf_parsed_headers` will contain the IPv4, IPv6, and UDP headers. `cf_packet_data_v1` will hold a copy of the original IP packet that Cloudflare received (maximum 1,500 bytes), as well as the packet length and IP header length. 
+   Then, declare variables for data parsing. `cf_ebpf_parsed_headers` will contain the IPv4, IPv6, and UDP headers. `cf_packet_data_v1` will hold a copy of the original IP packet that Cloudflare received (maximum 1,500 bytes), as well as the packet length and IP header length.
 
-    ```c
-    struct cf_ebpf_generic_ctx *ctx = state;
-    struct cf_ebpf_parsed_headers headers;
-    struct cf_ebpf_packet_data_v1 *p;
-    ```
+   ```c
+   struct cf_ebpf_generic_ctx *ctx = state;
+   struct cf_ebpf_parsed_headers headers;
+   struct cf_ebpf_packet_data_v1 *p;
+   ```
 
 6. Fill variables by calling the helper function.
 
-    You must fill in the variables by calling the helper function `parse_packet_data`, which Cloudflare has provided in a header file included in step 2.
+   You must fill in the variables by calling the helper function `parse_packet_data`, which Cloudflare has provided in a header file included in step 2.
 
-    The  `parse_packet_data` function performs the memory checks required to pass the program verifier. The  `parse_packet_data` function returns `0` on success. If it is successful, the input parameters are correctly populated.  The `parse_packet_data` function returns `1` on failure. If `parse_packet_data` fails, Cloudflare must return `CF_EBPF_DROP` to drop the packet in order to pass the verifier.
+   The `parse_packet_data` function performs the memory checks required to pass the program verifier. The `parse_packet_data` function returns `0` on success. If it is successful, the input parameters are correctly populated. The `parse_packet_data` function returns `1` on failure. If `parse_packet_data` fails, Cloudflare must return `CF_EBPF_DROP` to drop the packet in order to pass the verifier.
 
-    ```c
-    if (parse_packet_data(ctx, &p, &headers) != 0) {
-        return CF_EBPF_DROP;
-    }
-    ```
+   ```c
+   if (parse_packet_data(ctx, &p, &headers) != 0) {
+       return CF_EBPF_DROP;
+   }
+   ```
 
-    Available values after successful parsing:
+   Available values after successful parsing:
 
-    ```c
-    struct cf_ebpf_packet_data_v1 {
+   ```c
+   struct cf_ebpf_packet_data_v1 {
    /* Total length of the packet. */
    size_t   total_packet_length;
    /* Size of the IP header. Supports IPv4 (including options) and IPv6. */
    size_t   ip_header_length;
    /* Bytes of the packet, starting with the IP header. */
    uint8_t  packet_buffer[1500];
-    };
+   };
 
-    struct cf_ebpf_parsed_headers {
-    /* Pointer to the parsed IPv4 header, if present (otherwise null). */
-    struct iphdr   *ipv4;
-    /* Pointer to the parsed IPv6 header, if present (otherwise null). */
-    struct ipv6hdr *ipv6;
-    /* Pointer to the parsed UDP header. */
-    struct udphdr  *udp;
-    /* Raw pointer to the last valid byte of the packet context data. */
-    uint8_t        *data_end;
-    };
-    ```
+   struct cf_ebpf_parsed_headers {
+   /* Pointer to the parsed IPv4 header, if present (otherwise null). */
+   struct iphdr   *ipv4;
+   /* Pointer to the parsed IPv6 header, if present (otherwise null). */
+   struct ipv6hdr *ipv6;
+   /* Pointer to the parsed UDP header. */
+   struct udphdr  *udp;
+   /* Raw pointer to the last valid byte of the packet context data. */
+   uint8_t        *data_end;
+   };
+   ```
 
 7. Write your custom logic.
 
-    Prior steps have established the code that should be the same for any program that you write, regardless of its logic. 
+   Prior steps have established the code that should be the same for any program that you write, regardless of its logic.
 
-    Now, you can write your own custom logic. 
+   Now, you can write your own custom logic.
 
-    :::note
-    Programmable Flow Protection will only give UDP packets to a BPF program.
-    :::
+   :::note
+   Programmable Flow Protection will only give UDP packets to a BPF program.
+   :::
 
-    The `headers` struct populated in step 6 should allow you to verify its IPv6 and UDP contents. Cloudflare gives the BPF program an exact copy of the Layer 3 packet in host order. To validate the destination UDP port, you must convert it to the network order to have human-readable code. Cloudflare drops any packets where the IPv6 header exists or where the UDP destination port is 66.
+   The `headers` struct populated in step 6 should allow you to verify its IPv6 and UDP contents. Cloudflare gives the BPF program an exact copy of the Layer 3 packet in host order. To validate the destination UDP port, you must convert it to the network order to have human-readable code. Cloudflare drops any packets where the IPv6 header exists or where the UDP destination port is 66.
 
-    ```c
-    struct ipv6hdr *ipv6_hdr; 
-    struct udphdr *udp_hdr;
-    ipv6_hdr = (struct ipv6hdr *)headers.ipv6; 
-    if (ipv6_hdr != NULL) {
-	  return CF_EBPF_DROP;
-    }
-    udp_hdr = (struct udphdr *)headers.udp; 
-    if (htons(udp_hdr->dest) == 66) {
-        return CF_EBPF_DROP;
-    }
-    ```
+   ```c
+   struct ipv6hdr *ipv6_hdr;
+   struct udphdr *udp_hdr;
+   ipv6_hdr = (struct ipv6hdr *)headers.ipv6;
+   if (ipv6_hdr != NULL) {
+     return CF_EBPF_DROP;
+   }
+   udp_hdr = (struct udphdr *)headers.udp;
+   if (htons(udp_hdr->dest) == 66) {
+       return CF_EBPF_DROP;
+   }
+   ```
 
 8. Pass any packets that did not get dropped by program logic by returning `CF_EBPF_PASS`.
-      
-    The currently supported return values are: 
 
-    - `CF_EBPF_PASS = return value 0`  
-    - `CF_EBPF_DROP = return value 1`
+   The currently supported return values are:
+   - `CF_EBPF_PASS = return value 0`
+   - `CF_EBPF_DROP = return value 1`
 
-    The verifier, which runs when you upload a program to the API, will enforce that the program returns only known value types.
+   The verifier, which runs when you upload a program to the API, will enforce that the program returns only known value types.
 
-    ```c
-    return CF_EBPF_PASS;
-    ```
+   ```c
+   return CF_EBPF_PASS;
+   ```
 
 </Steps>
 
@@ -273,7 +272,7 @@ cf_ebpf_main(void *state)
 }
 ```
 
-Cloudflare calculates the start of the UDP payload as the first byte after the end of the UDP header. The address of the UDP payload must be less than the total memory that Cloudflare was given in order to pass the verifier. 
+Cloudflare calculates the start of the UDP payload as the first byte after the end of the UDP header. The address of the UDP payload must be less than the total memory that Cloudflare was given in order to pass the verifier.
 
 Once we have the correct offset, Cloudflare casts the UDP payload into the expected application header format. We perform another bounds check on the memory of the application header to pass the verifier. Then, we ensure that the last byte of the token is `0xCF` to conform with our test condition.
 
@@ -281,20 +280,20 @@ Once we have the correct offset, Cloudflare casts the UDP payload into the expec
 
 ## Helper functions
 
-A helper function is a function provided by the Cloudflare runtime that a customer program calls. 
+A helper function is a function provided by the Cloudflare runtime that a customer program calls.
 
-Helper functions are crucial because the BPF Instruction Set Architecture (ISA) only supports certain system calls. For safety purposes, Cloudflare will only compile a BPF object file with a predetermined list of known libraries that a program developer cannot modify. 
+Helper functions are crucial because the BPF Instruction Set Architecture (ISA) only supports certain system calls. For safety purposes, Cloudflare will only compile a BPF object file with a predetermined list of known libraries that a program developer cannot modify.
 
 :::note
 Helper functions may be removed or changed. New helper functions may be introduced in the future as well.
 :::
 
-The table below provides a list of currently supported helper functions: 
+The table below provides a list of currently supported helper functions:
 
-| Function name | Input parameters | Output parameters | Description |
-| --- | --- | --- | --- |
-| `cf_ebpf_rand` | None | `uint64_t` | Generates a random unsigned integer. |
-| `parse_packet_data` | `cf_ebpf_generic_ctx`<br />`cf_ebpf_packet_data_v1`<br />`cf_ebpf_parsed_headers` | `int` | Use input `cf_ebpf_generic_ctx` and `cf_ebpf_packet_data_v1` to generate valid `cf_ebpf_parsed_headers`.<br />Upon success, `cf_ebpf_parsed_headers` will contain valid IP and UDP headers.<br />Returns `0` on success or `1` on failure. |
+| Function name       | Input parameters                                                                  | Output parameters | Description                                                                                                                                                                                                                                |
+| ------------------- | --------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `cf_ebpf_rand`      | None                                                                              | `uint64_t`        | Generates a random unsigned integer.                                                                                                                                                                                                       |
+| `parse_packet_data` | `cf_ebpf_generic_ctx`<br />`cf_ebpf_packet_data_v1`<br />`cf_ebpf_parsed_headers` | `int`             | Use input `cf_ebpf_generic_ctx` and `cf_ebpf_packet_data_v1` to generate valid `cf_ebpf_parsed_headers`.<br />Upon success, `cf_ebpf_parsed_headers` will contain valid IP and UDP headers.<br />Returns `0` on success or `1` on failure. |
 
 ---
 
@@ -302,96 +301,105 @@ The table below provides a list of currently supported helper functions:
 
 ### Create a rule
 
-Once a program is uploaded, you must add a rule to execute it. To add a rule, use the following `POST` endpoint. 
+Once a program is uploaded, you must add a rule to execute it. To add a rule, use the following `POST` endpoint.
 
 Your rule must define a:
 
-- Name  
-- Program ID  
-- Scope (Global, Regional, Datacenter)  
+- Name
+- Program ID
+- Scope (Global, Regional, Datacenter)
 - Mode (Enabled, Monitoring, Disabled)
 
-Refer to the [Advanced DDoS Protection](/ddos-protection/advanced-ddos-systems/concepts/#scope) documentation for more information about scope and mode parameters. 
+Refer to the [Advanced DDoS Protection](/ddos-protection/advanced-ddos-systems/concepts/#scope) documentation for more information about scope and mode parameters.
 
 If it is successful, the API will return the created rule ID.
 
-```shell wrap
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules \
-     -X POST \
-     -H "Authorization: Bearer XYZ" \
-     -d '{"scope": "global","name": "my global rule", "program_id": "{program_id}", "mode": "monitoring" }'
+```bash wrap
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '{
+  "scope": "global",
+  "name": "my global rule",
+  "program_id": "<PROGRAM_ID>",
+  "mode": "monitoring"
+}'
 ```
 
 Cloudflare recommends that any program is first executed with a rule in **Monitoring** mode. This ensures that your program executes on production traffic but does not drop any real traffic. Instead, Cloudflare will log your program's expected verdict (pass or drop) to the [Network Analytics](/analytics/network-analytics/) dashboard.
 
 ### View all rules
 
-To view rules and their associated rule IDs, use the following `GET` endpoint. 
+To view rules and their associated rule IDs, use the following `GET` endpoint.
 
-```shell wrap
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules \
-     -H "Authorization: Bearer XYZ" 
+```bash wrap
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ### Update a rule
 
-To update an existing rule, use the following `PATCH` endpoint. 
+To update an existing rule, use the following `PATCH` endpoint.
 
 You can modify the mode and scope of an existing rule. This example modifies an existing rule to make it run in disabled mode.
 
-```shell wrap
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id} \
-     -X PATCH \
-     -H "Authorization: Bearer XYZ" \
-     -d '{ "mode": "disabled" }'
+```bash wrap
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules/$RULE_ID \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '{
+  "mode": "disabled"
+}'
 ```
 
 ### Delete a rule
 
 To delete an existing rule, use the following `DELETE` endpoint.
 
-This does not delete the referenced program, but deletes the directive to execute the program.  
+This does not delete the referenced program, but deletes the directive to execute the program.
 
-```shell wrap
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id} \
-     -X DELETE \
-     -H "Authorization: Bearer XYZ" 
+```bash wrap
+curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules/$RULE_ID \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 To delete all rules for an account, use the following `DELETE` endpoint.
 
-This does not delete the referenced program(s), but deletes the directive to execute all referenced program(s).  
+This does not delete the referenced program(s), but deletes the directive to execute all referenced program(s).
 
-```shell wrap
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules \
-     -X DELETE \
-     -H "Authorization: Bearer XYZ" 
+```bash wrap
+curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ### Debug Packet CAPture (PCAP)
 
-This API endpoint debugs a program by intaking: 
+This API endpoint debugs a program by intaking:
 
-- A local path to the input PCAP file provided as requested data in binary format. The input PCAP file has a maximum size limit of 5 MB and will be rejected if it is too large.  
-- An IP offset value provided as a query parameter. This is the number of bytes that the IP header is offset by in each packet of the input PCAP file.   
-  For example, if the PCAP file captures Ethernet packets, the IP offset value would be 14\. This endpoint assumes that all packets in a PCAP have the same IP offset value and will otherwise parse packets incorrectly.  
+- A local path to the input PCAP file provided as requested data in binary format. The input PCAP file has a maximum size limit of 5 MB and will be rejected if it is too large.
+- An IP offset value provided as a query parameter. This is the number of bytes that the IP header is offset by in each packet of the input PCAP file.  
+  For example, if the PCAP file captures Ethernet packets, the IP offset value would be 14\. This endpoint assumes that all packets in a PCAP have the same IP offset value and will otherwise parse packets incorrectly.
 - The program ID provided in the request path.
 
 This endpoint runs the referenced BPF program against the input PCAP and outputs a new annotated PCAP file. The output PCAP file will contain the exact same packets as the input PCAP file, and will also include the program verdict annotated in the **Packet Comment** section of each packet.
 
-```shell wrap
-curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}/pcap?ip_offset={ip_offset_value}' \
--X POST \
-      -H "Authorization: Bearer XYZ" \
--H "Content-Type: application/vnd.tcpdump.pcap" \
---data-binary @{path_to_input_pcap_file} >> output.pcap
+```bash wrap
+curl --request POST \
+'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap?ip_offset=<IP_OFFSET_VALUE>' \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/vnd.tcpdump.pcap" \
+--data-binary "@<PATH_TO_INPUT_PCAP_FILE>" \
+--output output.pcap
 ```
 
-The Packet Comment annotation may contain: 
+The Packet Comment annotation may contain:
 
-- Program return value: `<value>`.   
-  `CF_EBPF_PASS` correlates to `0` and `CF_EBPF_DROP` correlates to `1`.   
-  The verifier, which runs when you upload a program to the API, will enforce that the program returns only known value types.  
+- Program return value: `<value>`.  
+  `CF_EBPF_PASS` correlates to `0` and `CF_EBPF_DROP` correlates to `1`.  
+  The verifier, which runs when you upload a program to the API, will enforce that the program returns only known value types.
 - Ignored, if it is not UDP.
 
 ---
@@ -410,15 +418,15 @@ Currently, the only method to execute a program on a subset of IPs or prefixes i
 
 ## Network Analytics
 
-Traffic flowing through Programmable Flow Protection can be found in the [Network Analytics](/analytics/network-analytics/) dashboard. 
+Traffic flowing through Programmable Flow Protection can be found in the [Network Analytics](/analytics/network-analytics/) dashboard.
 
-You can use the Cloudflare [GraphQL](/analytics/graphql-api/) API to granularly query traffic data in the `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups` group. 
+You can use the Cloudflare [GraphQL](/analytics/graphql-api/) API to granularly query traffic data in the `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups` group.
 
 For example, the curl command below executes a query that shows the total sum of bits and packets that went through Programmable Flow Protection in a time frame.
 
 `{TOKEN}` and `{ACCOUNT_TAG}` must be changed to correlate to the user's account.
 
-Cloudflare recommends using a [client](/analytics/graphql-api/getting-started/explore-graphql-schema/) like GraphQL to explore all the dimensions and fields available for querying in `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups.`  
+Cloudflare recommends using a [client](/analytics/graphql-api/getting-started/explore-graphql-schema/) like GraphQL to explore all the dimensions and fields available for querying in `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups.`
 
 ```shell wrap
 echo '{ "query":
@@ -479,7 +487,7 @@ https://api.cloudflare.com/client/v4/graphql \
 
 ```c
 /*
-* cf_ebpf_generic_ctx is passed into the BPF program 
+* cf_ebpf_generic_ctx is passed into the BPF program
 */
 struct cf_ebpf_generic_ctx
 {
@@ -492,7 +500,7 @@ struct cf_ebpf_generic_ctx
 };
 
 /*
-* cf_ebpf_packet_data_v1 is passed into the BPF program 
+* cf_ebpf_packet_data_v1 is passed into the BPF program
 */
 struct cf_ebpf_packet_data_v1 {
    /* Total length of the packet. */
@@ -504,7 +512,7 @@ struct cf_ebpf_packet_data_v1 {
 };
 
 /*
-* cf_ebpf_parsed_headers can be populated from cf_ebpf_generic_ctx and 
+* cf_ebpf_parsed_headers can be populated from cf_ebpf_generic_ctx and
 * cf_ebpf_packet_data_v1 in the BPF program
 */
 struct cf_ebpf_parsed_headers {
@@ -519,7 +527,7 @@ struct cf_ebpf_parsed_headers {
 };
 
 
-/* Function to construct cf_ebpf_parsed_headers from cf_ebpf_generic_ctx and 
+/* Function to construct cf_ebpf_parsed_headers from cf_ebpf_generic_ctx and
 * cf_ebpf_packet_data_v1. Performs required memory checks to pass verifier.
 * Returns 0 on success and 1 on failure (e.g., packet too short, invalid length).
 * cf_ebpf_packet_data_v1 is filled with IP and UDP header data on success.
@@ -530,6 +538,6 @@ static inline int parse_packet_data(
    struct cf_ebpf_parsed_headers *out_headers
 )
 
-/* Function that returns random unsigned integer value */ 
+/* Function that returns random unsigned integer value */
 uint64_t cf_ebpf_rand()
 ```
