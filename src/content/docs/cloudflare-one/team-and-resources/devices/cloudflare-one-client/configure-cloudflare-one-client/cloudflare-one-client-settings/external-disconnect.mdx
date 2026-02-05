@@ -9,23 +9,23 @@ import { Details, Render, TabItem, Tabs, APIRequest } from "~/components";
 
 <Render file="warp/external-disconnect-availability" product="cloudflare-one" />
 
-The External Emergency Disconnect feature allows organizations to remotely disconnect and reconnect their fleet of WARP clients using their own infrastructure, independent of Cloudflare's infrastructure. For example, in the event of a [Cloudflare network outage](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/#use-cases) you ensure that you can still manage your devices even if Cloudflare’s systems are down or unreachable.
+The External Emergency Disconnect feature allows organizations to remotely disconnect and reconnect their fleet of Cloudflare One Clients (formerly WARP Clients) using their own infrastructure, independent of Cloudflare's infrastructure. For example, in the event of a [Cloudflare network outage](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/external-disconnect/#use-cases) you ensure that you can still manage your devices even if Cloudflare’s systems are down or unreachable.
 
-When External Emergency Disconnect is enabled, WARP clients will periodically poll a customer-hosted HTTPS endpoint. A client will only change its connection state if it receives a valid JSON payload with the new state. Any failure to successfully retrieve the state (such as endpoint unreachability, invalid certificate fingerprint, or an improperly structured payload) will not cause a state change on the client.
+When External Emergency Disconnect is enabled, Cloudflare One Clients will periodically poll a customer-hosted HTTPS endpoint. A client will only change its connection state if it receives a valid JSON payload with the new state. Any failure to successfully retrieve the state (such as endpoint unreachability, invalid certificate fingerprint, or an improperly structured payload) will not cause a state change on the client.
 
-You can use External Emergency Disconnect in combination with the dashboard-initiated [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) setting. A disconnect signal retrieved from the external endpoint will [take precedence](#warp-settings-precedence).
+You can use External Emergency Disconnect in combination with the dashboard-initiated [Disconnect Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#disconnect-cloudflare-one-client-on-all-devices) setting. A disconnect signal retrieved from the external endpoint will [take precedence](#client-settings-precedence).
 
 ## Use cases
 
 Use External Emergency Disconnect to mitigate single-point-of-failure risks and ensure business continuity during network disruptions. Example use cases include:
 
-- **Security Incident Response**: Provides the ability to quickly terminate all WARP tunnels across the entire fleet.
+- **Security Incident Response**: Provides the ability to quickly terminate all Cloudflare One Client tunnels across the entire fleet.
 - **Compliance and Auditing**: Fulfills requirements in sensitive or regulated environments that mandate an "emergency stop" capability that is fully isolated, auditable, and controlled by the organization's own infrastructure.
-- **Disaster Recovery**: If WARP devices cannot reach Cloudflare's API (due to a network outage, routing issue, or client-side misconfiguration), administrators retain the ability to force-disconnect the fleet via the customer-hosted endpoint.
+- **Disaster Recovery**: If devices running the Cloudflare One Client cannot reach Cloudflare's API (due to a network outage, routing issue, or client-side misconfiguration), administrators retain the ability to force-disconnect the fleet via the customer-hosted endpoint.
 
 ## External endpoint requirements
 
-An external disconnect endpoint is an HTTPS server hosted outside of Cloudflare from which WARP will fetch the emergency disconnect signal. The customer is fully responsible for managing this endpoint.
+An external disconnect endpoint is an HTTPS server hosted outside of Cloudflare from which the Cloudflare One Client will fetch the emergency disconnect signal. The customer is fully responsible for managing this endpoint.
 
 ### Endpoint URL
 
@@ -37,7 +37,7 @@ The external endpoint URL should:
 
 ### Response payload
 
-The WARP client expects a JSON response payload from the external endpoint with the following format:
+The Cloudflare One Client expects a JSON response payload from the external endpoint with the following format:
 
 ```json
 {
@@ -50,13 +50,13 @@ The WARP client expects a JSON response payload from the external endpoint with 
 
 ### Cipher suites
 
-The WARP client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your HTTPS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
+The Cloudflare One Client establishes a TLS connection using [Rustls](https://github.com/rustls/rustls). Make sure your HTTPS endpoint accepts one of the [cipher suites supported by Rustls](https://docs.rs/rustls/0.21.10/src/rustls/suites.rs.html#125-143).
 
 ## Set up External Emergency Disconnect
 
 ### 1. Create an external disconnect endpoint
 
-To configure External Emergency Disconnect, you will need an HTTPS endpoint in your own infrastructure that serves the global disconnect signal. The WARP client will poll the external endpoint and validate its TLS/SSL certificate against an SHA-256 fingerprint that you upload to Zero Trust. Refer to [External endpoint requirements](#external-endpoint-requirements) for more details.
+To configure External Emergency Disconnect, you will need an HTTPS endpoint in your own infrastructure that serves the global disconnect signal. The Cloudflare One Client will poll the external endpoint and validate its TLS/SSL certificate against an SHA-256 fingerprint that you upload to Zero Trust. Refer to [External endpoint requirements](#external-endpoint-requirements) for more details.
 
 The following example demonstrates how to deploy an external disconnect endpoint using an nginx container in Docker.
 
@@ -140,12 +140,12 @@ To configure External Emergency Disconnect using the dashboard:
 3. Find **Manage device connection using an external signal** and select **Edit**.
 4. Configure the following fields:
 	- **Endpoint IP address and port**: Enter the HTTPS URL from which to fetch the external disconnect signal (for example, `https://192.0.2.1:3333/status/disconnect`). The endpoint must use HTTPS and have an IPv4 or IPv6 address as the host.
-	- **Polling frequency**: Choose how often WARP should fetch the external disconnect signal.
+	- **Polling frequency**: Choose how often the Cloudflare One Client should fetch the external disconnect signal.
 	- **Certificate fingerprint**: Enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the HTTPS server certificate (for example, `DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662`).
 5. Select **Save**.
 6. Turn on **Manage device connection using an external signal**.
 
-All WARP clients in your organization will now start polling the external endpoint and connect or disconnect based on the response payload.
+All Cloudflare One Clients in your organization will now start polling the external endpoint and connect or disconnect based on the response payload.
 
 </TabItem>
 <TabItem label="API">
@@ -167,7 +167,7 @@ To configure External Emergency Disconnect using the API, send a `PATCH` request
 
 <TabItem label="MDM">
 
-To configure External Emergency Disconnect using an MDM, add the following parameters to your [MDM file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/):
+To configure External Emergency Disconnect using an MDM, add the following parameters to your [MDM file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/):
 
 ```xml
 <key>external_emergency_signal_url</key>
@@ -182,12 +182,12 @@ To configure External Emergency Disconnect using an MDM, add the following param
 </Tabs>
 
 :::note[Split Tunnels in Include mode]
-WARP will automatically exclude the external endpoint IP address from the WARP tunnel. If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that your Split Tunnel entries do not contain the external endpoint IP; otherwise WARP will exclude the entire Split Tunnel entry from the tunnel.
+The Cloudflare One Client will automatically exclude the external endpoint IP address from the tunnel. If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/) in **Include** mode, ensure that your Split Tunnel entries do not contain the external endpoint IP; otherwise the client will exclude the entire Split Tunnel entry from the tunnel.
 :::
 
 ### 4. Test External Emergency Disconnect
 
-1. Ensure that WARP is connected.
+1. Ensure that the Cloudflare One Client is connected.
 2. Ensure that the External Emergency Disconnect feature is [turned on](#3-turn-on-external-emergency-disconnect).
 3. In your [external endpoint](#create-an-external-disconnect-endpoint) configuration, change `emergency_disconnect` to `true`:
 	```json
@@ -199,7 +199,7 @@ WARP will automatically exclude the external endpoint IP address from the WARP t
 	docker exec <container-name-or-id> nginx -s reload
 	```
 
-WARP will automatically disconnect within the configured polling interval, and the WARP GUI will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect). To reconnect all devices, change `emergency_disconnect` back to `false`.
+The Cloudflare One Client will automatically disconnect within the configured polling interval, and the client GUI will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/client-errors/#admin-directed-disconnect). To reconnect all devices, change `emergency_disconnect` back to `false`.
 
 ## Logs
 
@@ -216,11 +216,11 @@ Merged configuration:
 (override)	Emergency disconnect: true (issued @ 2025-12-09T13:57:42.597864Z)
 ```
 
-The current status is also available in [WARP diagnosic logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#macoswindowslinux) in `warp-settings.txt`.
+The current status is also available in [Cloudflare One Client diagnostic logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/cloudflare-one-client-logs/#macoswindowslinux) in `warp-settings.txt`.
 
 ## Clear External Emergency Disconnect state
 
-If the external endpoint becomes unavailable or serves an invalid configuration, WARP clients can get stuck in the emergency disconnect state. You can recover clients by removing their External Emergency Disconnect configuration:
+If the external endpoint becomes unavailable or serves an invalid configuration, Cloudflare One Clients can get stuck in the emergency disconnect state. You can recover clients by removing their External Emergency Disconnect configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -251,9 +251,9 @@ Cloudflare will propagate the new settings to clients, instructing them to stop 
 
 <TabItem label="MDM">
 
-If you deployed External Emergency Disconnect using an MDM, remove the `external_emergency_signal_url` key (and other related keys) from the MDM profile. Then, use your MDM to push the changes to devices. WARP will stop polling the external endpoint and discard its cached emergency state.
+If you deployed External Emergency Disconnect using an MDM, remove the `external_emergency_signal_url` key (and other related keys) from the MDM profile. Then, use your MDM to push the changes to devices. The Cloudflare One Client will stop polling the external endpoint and discard its cached emergency state.
 
-Alternatively, users can switch WARP to a [different MDM configuration](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/) that does not have the feature configured.
+Alternatively, users can switch to a [different MDM configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/switch-organizations/) that does not have the feature configured.
 
 </TabItem>
 </Tabs>
@@ -266,28 +266,28 @@ As a last resort, you can use the CLI to reset External Emergency Disconnect on 
 warp-cli registration delete
 ```
 
-This command will clear the client registration, clear the local policy, and discard the cached emergency state. To reconnect, you will need to [turn off External Emergency Disconnect](#clear-external-emergency-disconnect-state) and then [re-enroll WARP](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) with your Zero Trust organization.
+This command will clear the client registration, clear the local policy, and discard the cached emergency state. To reconnect, you will need to [turn off External Emergency Disconnect](#clear-external-emergency-disconnect-state) and then [re-enroll the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) with your Zero Trust organization.
 
-## WARP settings precedence
+## Client settings precedence
 
-Learn how global disconnect settings interact and how they impact other WARP profile settings.
+Learn how global disconnect settings interact and how they impact other client profile settings.
 
 ### Global disconnection settings
 
-The client will honor disconnect signals from both the Cloudflare dashboard (via [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices)) and the external endpoint. A global disconnect is enforced if either source triggers it.
+The client will honor disconnect signals from both the Cloudflare dashboard (via [Disconnect Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#disconnect-cloudflare-one-client-on-all-devices)) and the external endpoint. A global disconnect is enforced if either source triggers it.
 
-| | [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) is `On` | [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) is `Off` |
+| | [Disconnect Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#disconnect-cloudflare-one-client-on-all-devices) is `On` | [Disconnect Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#disconnect-cloudflare-one-client-on-all-devices) is `Off` |
 | --- | --- | --- |
 | **External endpoint returns `true`** | Force disconnected | Force disconnected |
 | **External endpoint returns `false`** | Force disconnected | Normal operation |
 
 ### Auto connect
 
-[Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) does not apply while a global disconnect is in effect.
+[Auto connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#auto-connect) does not apply while a global disconnect is in effect.
 
-### Lock WARP switch
+### Lock client switch
 
-[Lock WARP switch](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#lock-warp-switch) does not apply while a global disconnect is in effect. Users will be unable to turn on WARP unless they have an [admin override code](#admin-override).
+[Lock client switch](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#lock-cloudflare-one-client-switch) does not apply while a global disconnect is in effect. Users will be unable to turn on the Cloudflare One Client unless they have an [admin override code](#admin-override).
 
 ### Admin override
 
