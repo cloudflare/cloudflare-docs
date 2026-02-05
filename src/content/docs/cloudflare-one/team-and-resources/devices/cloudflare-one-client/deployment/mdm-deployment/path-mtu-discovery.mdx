@@ -10,11 +10,11 @@ import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)                                               | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/)                                               | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul> | All plans                                                     |
 
-| System   | Availability | Minimum WARP version |
+| System   | Availability | Minimum client version |
 | -------- | ------------ | -------------------- |
 | Windows  | ✅           | 2025.9.173.1         |
 | macOS    | ✅           | 2025.9.173.1         |
@@ -25,9 +25,9 @@ import { Details, Render } from "~/components";
 
 </Details>
 
-The [Maximum Transmission Unit (MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) is the largest data packet size that a device can send over a network without fragmentation. When you connect to services through WARP, your data is encapsulated, which adds extra headers and increases the overall packet size. On some networks, especially cellular or guest Wi-Fi networks, the network's MTU may be smaller than WARP's [default packet size](#recommended-mtu). This mismatch forces packets to be fragmented or dropped entirely, leading to connection instability or complete connection failures.
+The [Maximum Transmission Unit (MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) is the largest data packet size that a device can send over a network without fragmentation. When you connect to services through the Cloudflare One Client (formerly WARP Client), your data is encapsulated, which adds extra headers and increases the overall packet size. On some networks, especially cellular or guest Wi-Fi networks, the network's MTU may be smaller than the Cloudflare One Client's [default packet size](#recommended-mtu). This mismatch forces packets to be fragmented or dropped entirely, leading to connection instability or complete connection failures.
 
-WARP's Path MTU Discovery (PMTUD) feature solves this problem by actively probing for the minimum MTU along the entire network path between the device and Cloudflare. WARP will then dynamically adjust its [tunnel interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface) MTU based on the probe results. This allows WARP to maintain a stable connection on low MTU networks and take advantage of higher MTUs when available.
+The Cloudflare One Client's Path MTU Discovery (PMTUD) feature solves this problem by actively probing for the minimum MTU along the entire network path between the device and Cloudflare. The client will then dynamically adjust its [tunnel interface](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/cloudflare-one-client-architecture/#virtual-interface) MTU based on the probe results. This allows the Cloudflare One Client to maintain a stable connection on low MTU networks and take advantage of higher MTUs when available.
 
 :::note
 Certain features may be disabled or degraded at low MTU thresholds. For details, refer to [Minimum MTUs](#minimum-mtus).
@@ -35,11 +35,11 @@ Certain features may be disabled or degraded at low MTU thresholds. For details,
 
 ## Prerequisites
 
-- WARP must be configured to use the [MASQUE tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol).
+- The Cloudflare One Client must be configured to use the [MASQUE tunnel protocol](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#device-tunnel-protocol).
 
 ## Enable Path MTU Discovery
 
-PMTUD is disabled by default. To enable PMTUD on your devices, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#windows) with the `enable_pmtud` key set to `true`. For example:
+PMTUD is disabled by default. To enable PMTUD on your devices, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#windows) with the `enable_pmtud` key set to `true`. For example:
 
 ```xml
 <dict>
@@ -54,7 +54,7 @@ PMTUD is disabled by default. To enable PMTUD on your devices, [deploy an MDM fi
 
 This configuration enables the PMTUD feature and explicitly configures the MASQUE tunnel protocol.
 
-WARP will now send active probes to detect the network path MTU and will update its tunnel interface MTU accordingly. You can expect PMTUD probes to generate an extra 25 Mb/day of traffic coming from the device.
+The Cloudflare One Client will now send active probes to detect the network path MTU and will update its tunnel interface MTU accordingly. You can expect PMTUD probes to generate an extra 25 Mb/day of traffic coming from the device.
 
 ## Verify PMTUD is enabled
 
@@ -74,7 +74,7 @@ If PMTUD is enabled, the output will show `PMTUD enabled: true`.
 
 ### Recommended MTU
 
-WARP requires the following MTUs for full functionality and performance:
+The Cloudflare One Client requires the following MTUs for full functionality and performance:
 
 | Device tunnel protocol| IPv4 | IPv6 |
 | --- | --- | --- |
@@ -86,28 +86,28 @@ WARP requires the following MTUs for full functionality and performance:
 For the PMTUD feature to work, the network path must support an MTU of at least 1281 bytes. The 1281 bytes consists of:
 
 - 1200 bytes: Minimum QUIC datagram
-- 53 bytes: WARP MASQUE encapsulation
+- 53 bytes: Cloudflare One Client MASQUE encapsulation
 - 28 bytes: IP/UDP headers
 
 ### IPv6
 
-To send IPv6 traffic through WARP, the network path must support an MTU of at least 1361 bytes. The 1361 bytes consists of:
+To send IPv6 traffic through the Cloudflare One Client, the network path must support an MTU of at least 1361 bytes. The 1361 bytes consists of:
 
 - 1280 bytes: Minimum IPv6 packet size
-- 53 bytes: WARP MASQUE encapsulation
+- 53 bytes: Cloudflare One Client MASQUE encapsulation
 - 28 bytes: IP/UDP headers
 
-If PMTUD is enabled and the MTU is less than 1361 bytes, then WARP will automatically disable IPv6 on the tunnel interface.
+If PMTUD is enabled and the MTU is less than 1361 bytes, the Cloudflare One Client will automatically disable IPv6 on the tunnel interface.
 
 ### WebRTC
 
-To send WebRTC traffic through WARP, the network path must support an MTU of at least 1361 bytes. Below 1361 bytes, WebRTC connections will experience progressively degraded performance. This minimum MTU impacts [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) and any other website that uses WebRTC (such as video conferencing and media streaming services).
+To send WebRTC traffic through the Cloudflare One Client, the network path must support an MTU of at least 1361 bytes. Below 1361 bytes, WebRTC connections will experience progressively degraded performance. This minimum MTU impacts [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) and any other website that uses WebRTC (such as video conferencing and media streaming services).
 
 ## Check your MTU
 
-You can check your current network path MTU by collecting [WARP diagnostic logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/).
+You can check your current network path MTU by collecting [Cloudflare One Client diagnostic logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/cloudflare-one-client-logs/).
 
-1. Run the `warp-diag` command on the device or [collect logs via the the dashboard](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#collect-logs-via-the-dashboard).
+1. Run the `warp-diag` command on the device or [collect logs via the the dashboard](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/cloudflare-one-client-logs/#collect-logs-via-the-dashboard).
 2. Open the resulting `warp-debugging-info-<date>-<time>.zip` file.
 3. Open `connectivity.txt` and search for `PMTU`.
 
@@ -132,4 +132,4 @@ You can check your current network path MTU by collecting [WARP diagnostic logs]
 	"
 	```
 
-The example above shows an MTU of 1500 bytes, which meets the [recommended MTU requirements](#recommended-mtu) for WARP. If your MTU falls below the recommended threshold, consider [enabling Path MTU Discovery](#enable-path-mtu-discovery) to optimize connection performance.
+The example above shows an MTU of 1500 bytes, which meets the [recommended MTU requirements](#recommended-mtu) for the Cloudflare One Client. If your MTU falls below the recommended threshold, consider [enabling Path MTU Discovery](#enable-path-mtu-discovery) to optimize connection performance.

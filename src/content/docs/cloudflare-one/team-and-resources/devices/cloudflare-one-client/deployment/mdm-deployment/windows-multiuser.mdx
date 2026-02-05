@@ -9,11 +9,11 @@ import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All modes                                                                                 | All plans                                                     |
 
-| System   | Availability | Minimum WARP version |
+| System   | Availability | Minimum client version |
 | -------- | ------------ | -------------------- |
 | Windows  | ✅           |  2025.6.1400.0       |
 | macOS    | ❌           |                      |
@@ -24,15 +24,15 @@ import { Details, Render } from "~/components";
 
 </Details>
 
-Cloudflare WARP supports multiple users on a single Windows device. In multi-user mode, each user has their own [device registration](/cloudflare-one/team-and-resources/devices/device-registration/), and WARP will automatically switch device registrations when a user logs in to their Windows account. All traffic to Cloudflare will be attributed to the currently active Windows user. This allows administrators to apply identity-based policies and device settings, audit user activity, and remove individual users from a shared workstation.
+The Cloudflare One Client (formerly WARP Client) supports multiple users on a single Windows device. In multi-user mode, each user has their own [device registration](/cloudflare-one/team-and-resources/devices/device-registration/), and the Cloudflare One Client will automatically switch device registrations when a user logs in to their Windows account. All traffic to Cloudflare will be attributed to the currently active Windows user. This allows administrators to apply identity-based policies and device settings, audit user activity, and remove individual users from a shared workstation.
 
 :::caution[DNS logging]
-If a user enables **Log DNS queries** in the WARP GUI (or runs `warp-cli dns log enable`), WARP will store all DNS queries on the device onto disk. Any user on the device will be able to examine the DNS queries of another user.
+If a user enables **Log DNS queries** in the Cloudflare One Client GUI (or runs `warp-cli dns log enable`), the client will store all DNS queries on the device onto disk. Any user on the device will be able to examine the DNS queries of another user.
 :::
 
 ## Enable multi-user mode
 
-To enable multi-user support on Windows, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#windows) onto the device with the `multi_user` key set to `true`. For example:
+To enable multi-user support on Windows, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#windows) onto the device with the `multi_user` key set to `true`. For example:
 
 ```xml
 <dict>
@@ -50,7 +50,7 @@ To enable multi-user support on Windows, [deploy an MDM file](/cloudflare-one/te
 </dict>
 ```
 
-To use multi-user mode alongside the [Windows pre-login](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/) and [Switch between Zero Trust organizations](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/) options:
+To use multi-user mode alongside the [Windows pre-login](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/windows-prelogin/) and [Switch between Zero Trust organizations](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/switch-organizations/) options:
 
 ```xml
 <dict>
@@ -85,13 +85,13 @@ To use multi-user mode alongside the [Windows pre-login](/cloudflare-one/team-an
 
 When enabling multi-user mode for the first time, users will need to re-register even if they had a previous registration.
 
-## WARP registration logic
+## Registration logic
 
-The following flowchart shows how WARP registration settings take effect as users log in and out:
+The following flowchart shows how Cloudflare One Client registration settings take effect as users log in and out:
 
 ```mermaid
 flowchart TB
-    start(["Enable multi-user mode"])-->reg["Active Windows user is prompted to register WARP"]
+    start(["Enable multi-user mode"])-->reg["Active Windows user is prompted to register the Cloudflare One Client"]
 		reg--"Log out of Windows"-->prelogin
 		reg--"Switch user"-->regexists
 
@@ -103,7 +103,7 @@ flowchart TB
 		preloginno["Stay registered as <br />previous Windows user"]
 		end
 
-		preloginbehavior--"Log in to Windows"---->regexists{{"Has the user already registered with WARP?"}}
+		preloginbehavior--"Log in to Windows"---->		regexists{{"Has the user already registered with the Cloudflare One Client?"}}
 		regexists--"Yes"-->user["Switch to that user's registration"]
 		regexists-. "No" .->reg
 ```
@@ -114,7 +114,7 @@ flowchart TB
 Requires [multi-user mode](#enable-multi-user-mode).
 :::
 
-[Fast user switching](https://learn.microsoft.com/windows/win32/shell/fast-user-switching) is a Windows feature that allows users to switch accounts without logging out. With fast user switching, multiple users may be logged in to the device and generating network traffic. The WARP client will attribute all traffic to the user who has the [interactive windows station](http://techcommunity.microsoft.com/blog/askperf/sessions-desktops-and-windows-stations/372473). For example, if user A is logged in and fast user switches to user B, traffic from both accounts will appear to come from user B. This is because user B is now actively using the Windows desktop GUI. Now assume that user B logs out and there is no [pre-login registration](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/); WARP will continue to attribute traffic to user B until user A logs back in to the Windows desktop.
+[Fast user switching](https://learn.microsoft.com/windows/win32/shell/fast-user-switching) is a Windows feature that allows users to switch accounts without logging out. With fast user switching, multiple users may be logged in to the device and generating network traffic. The Cloudflare One Client will attribute all traffic to the user who has the [interactive windows station](http://techcommunity.microsoft.com/blog/askperf/sessions-desktops-and-windows-stations/372473). For example, if user A is logged in and fast user switches to user B, traffic from both accounts will appear to come from user B. This is because user B is now actively using the Windows desktop GUI. Now assume that user B logs out and there is no [pre-login registration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/windows-prelogin/); the Cloudflare One Client will continue to attribute traffic to user B until user A logs back in to the Windows desktop.
 
-To accurately attribute network traffic to specific users, Cloudflare recommends disabling fast user switching or at the very least configuring a [pre-login registration](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/).
+To accurately attribute network traffic to specific users, Cloudflare recommends disabling fast user switching or at the very least configuring a [pre-login registration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/windows-prelogin/).
 
