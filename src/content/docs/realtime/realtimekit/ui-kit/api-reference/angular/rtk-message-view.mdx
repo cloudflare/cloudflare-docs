@@ -1,10 +1,7 @@
 ---
-title: rtk-message-view
-description: API reference for rtk-message-view component (Angular Library)
----
-
-# rtk-message-view
-
+      title: rtk-message-view
+      description: API reference for rtk-message-view component (Angular Library)
+      ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
@@ -21,8 +18,8 @@ description: API reference for rtk-message-view component (Angular Library)
 | `messageType` | `Message['type']` | ✅ | - | Type of message |
 | `pinned` | `boolean` | ✅ | - | Is message pinned |
 | `time` | `Date` | ✅ | - | Time when message was sent |
-| `variant` | `'plain' | 'bubble'` | ✅ | - | Appearance |
-| `viewType` | `'incoming' | 'outgoing'` | ✅ | - | Render |
+| `variant` | `'plain' \| 'bubble'` | ✅ | - | Appearance |
+| `viewType` | `'incoming' \| 'outgoing'` | ✅ | - | Render |
 
 ## Usage Examples
 
@@ -31,7 +28,7 @@ description: API reference for rtk-message-view component (Angular Library)
 ```typescript
 // app.module.ts
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
 
 defineCustomElements();
 

@@ -1,10 +1,7 @@
 ---
-title: RtkStage
-description: API reference for RtkStage component (React Library)
----
-
-# RtkStage
-
+      title: RtkStage
+      description: API reference for RtkStage component (React Library)
+      ---
 A component used as a stage that commonly houses
  the `grid` and `sidebar` components.
 
@@ -20,7 +17,7 @@ A component used as a stage that commonly houses
 ### Basic Usage
 
 ```tsx
-import { RtkStage } from '@cloudflare/realtimekit-ui/react';
+import { RtkStage } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return <RtkStage />;
@@ -30,12 +27,12 @@ function MyComponent() {
 ### With Properties
 
 ```tsx
-import { RtkStage } from '@cloudflare/realtimekit-ui/react';
+import { RtkStage } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return (
     <RtkStage
-      iconPack={'defaultIconPack'}
+      iconPack={defaultIconPack}
       t={rtki18n}
     />
   );

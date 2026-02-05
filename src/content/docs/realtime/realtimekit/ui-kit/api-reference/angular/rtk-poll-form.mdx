@@ -1,10 +1,7 @@
 ---
-title: rtk-poll-form
-description: API reference for rtk-poll-form component (Angular Library)
----
-
-# rtk-poll-form
-
+      title: rtk-poll-form
+      description: API reference for rtk-poll-form component (Angular Library)
+      ---
 A component that lets you create a poll.
 
 ## Properties
@@ -21,7 +18,7 @@ A component that lets you create a poll.
 ```typescript
 // app.module.ts
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
 
 defineCustomElements();
 
@@ -43,7 +40,7 @@ export class AppModule { }
 ```html
 <!-- component.html -->
 <rtk-poll-form
-  [iconPack]={'defaultIconPack'}
+  [iconPack]={defaultIconPack}
   [t]=rtki18n>
 </rtk-poll-form>
 ```

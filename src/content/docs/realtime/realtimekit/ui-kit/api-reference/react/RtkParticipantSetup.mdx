@@ -1,10 +1,7 @@
 ---
-title: RtkParticipantSetup
-description: API reference for RtkParticipantSetup component (React Library)
----
-
-# RtkParticipantSetup
-
+      title: RtkParticipantSetup
+      description: API reference for RtkParticipantSetup component (React Library)
+      ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
@@ -12,21 +9,19 @@ description: API reference for RtkParticipantSetup component (React Library)
 | `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
 | `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `isPreview` | `boolean` | ✅ | - | Whether tile is used for preview |
-| `nameTagPosition` | `| 'bottom-left'
-    | 'bottom-right'
-    | 'bot...` | ✅ | - | Position of name tag |
+| `nameTagPosition` | `\| 'bottom-left'     \| 'bottom-right'     \| 'bottom-center'     \| 'top-left'     \| 'top-right'     \| 'top-center'` | ✅ | - | Position of name tag |
 | `participant` | `Peer` | ✅ | - | Participant object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
 | `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'solid' | 'gradient'` | ✅ | - | Variant |
+| `variant` | `'solid' \| 'gradient'` | ✅ | - | Variant |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkParticipantSetup } from '@cloudflare/realtimekit-ui/react';
+import { RtkParticipantSetup } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return <RtkParticipantSetup />;
@@ -36,7 +31,7 @@ function MyComponent() {
 ### With Properties
 
 ```tsx
-import { RtkParticipantSetup } from '@cloudflare/realtimekit-ui/react';
+import { RtkParticipantSetup } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return (

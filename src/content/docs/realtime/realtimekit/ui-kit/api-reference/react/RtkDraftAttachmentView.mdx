@@ -1,38 +1,40 @@
 ---
-title: RtkDraftAttachmentView
-description: API reference for RtkDraftAttachmentView component (React Library)
----
-
-# RtkDraftAttachmentView
-
+      title: RtkDraftAttachmentView
+      description: API reference for RtkDraftAttachmentView component (React Library)
+      ---
 A component which renders the draft attachment to send
 
 ## Properties
 
-| Property     | Type              | Required | Default           | Description |
-| ------------ | ----------------- | -------- | ----------------- | ----------- | --------------------- |
-| `attachment` | `{type: 'image'}` | 'file'`  | ✅                | -           | Attachment to display |
-| `iconPack`   | `IconPack1`       | ❌       | `defaultIconPack` | Icon pack   |
-| `t`          | `RtkI18n1`        | ❌       | `useLanguage()`   | Language    |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `attachment` | `{     type: 'image' \| 'file';     file: File;   }` | ✅ | - | Attachment to display |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkDraftAttachmentView } from "@cloudflare/realtimekit-ui/react";
+import { RtkDraftAttachmentView } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkDraftAttachmentView />;
+  return <RtkDraftAttachmentView />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkDraftAttachmentView } from "@cloudflare/realtimekit-ui/react";
+import { RtkDraftAttachmentView } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
-	return <RtkDraftAttachmentView attachment={{}} />;
+  return (
+    <RtkDraftAttachmentView
+      attachment={{}}
+    />
+  );
 }
 ```
+

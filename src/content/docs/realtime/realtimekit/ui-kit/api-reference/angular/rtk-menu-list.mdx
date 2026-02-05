@@ -1,10 +1,7 @@
 ---
-title: rtk-menu-list
-description: API reference for rtk-menu-list component (Angular Library)
----
-
-# rtk-menu-list
-
+      title: rtk-menu-list
+      description: API reference for rtk-menu-list component (Angular Library)
+      ---
 A menu list component.
 
 ## Properties
@@ -12,7 +9,7 @@ A menu list component.
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `menuVariant` | `'primary' | 'secondary'` | ✅ | - | Variant |
+| `menuVariant` | `'primary' \| 'secondary'` | ✅ | - | Variant |
 | `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
@@ -22,7 +19,7 @@ A menu list component.
 ```typescript
 // app.module.ts
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
 
 defineCustomElements();
 

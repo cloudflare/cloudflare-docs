@@ -1,10 +1,7 @@
 ---
-title: rtk-breakout-room-manager
-description: API reference for rtk-breakout-room-manager component (Angular Library)
----
-
-# rtk-breakout-room-manager
-
+      title: rtk-breakout-room-manager
+      description: API reference for rtk-breakout-room-manager component (Angular Library)
+      ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
@@ -15,7 +12,7 @@ description: API reference for rtk-breakout-room-manager component (Angular Libr
 | `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `isDragMode` | `boolean` | ✅ | - | Drag mode |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `mode` | `'edit' | 'create'` | ✅ | - | Mode in which selector is used |
+| `mode` | `'edit' \| 'create'` | ✅ | - | Mode in which selector is used |
 | `room` | `DraftMeeting` | ✅ | - | Connected Room Config Object |
 | `states` | `States` | ✅ | - | States object |
 | `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
@@ -27,7 +24,7 @@ description: API reference for rtk-breakout-room-manager component (Angular Libr
 ```typescript
 // app.module.ts
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
 
 defineCustomElements();
 

@@ -1,10 +1,7 @@
 ---
-title: RtkPollForm
-description: API reference for RtkPollForm component (React Library)
----
-
-# RtkPollForm
-
+      title: RtkPollForm
+      description: API reference for RtkPollForm component (React Library)
+      ---
 A component that lets you create a poll.
 
 ## Properties
@@ -19,7 +16,7 @@ A component that lets you create a poll.
 ### Basic Usage
 
 ```tsx
-import { RtkPollForm } from '@cloudflare/realtimekit-ui/react';
+import { RtkPollForm } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return <RtkPollForm />;
@@ -29,12 +26,12 @@ function MyComponent() {
 ### With Properties
 
 ```tsx
-import { RtkPollForm } from '@cloudflare/realtimekit-ui/react';
+import { RtkPollForm } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return (
     <RtkPollForm
-      iconPack={'defaultIconPack'}
+      iconPack={defaultIconPack}
       t={rtki18n}
     />
   );

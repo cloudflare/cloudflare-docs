@@ -1,10 +1,7 @@
 ---
-title: rtk-information-tooltip
-description: API reference for rtk-information-tooltip component (Angular Library)
----
-
-# rtk-information-tooltip
-
+      title: rtk-information-tooltip
+      description: API reference for rtk-information-tooltip component (Angular Library)
+      ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
@@ -18,7 +15,7 @@ description: API reference for rtk-information-tooltip component (Angular Librar
 ```typescript
 // app.module.ts
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { defineCustomElements } from '@cloudflare/realtimekit-ui/loader';
+import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
 
 defineCustomElements();
 
@@ -40,7 +37,7 @@ export class AppModule { }
 ```html
 <!-- component.html -->
 <rtk-information-tooltip
-  [iconPack]={'defaultIconPack'}>
+  [iconPack]={defaultIconPack}>
 </rtk-information-tooltip>
 ```
 

@@ -1,10 +1,7 @@
 ---
-title: RtkControlbar
-description: API reference for RtkControlbar component (React Library)
----
-
-# RtkControlbar
-
+      title: RtkControlbar
+      description: API reference for RtkControlbar component (React Library)
+      ---
 Controlbar component provides you with various designs as variants.
 
 ## Properties
@@ -18,14 +15,14 @@ Controlbar component provides you with various designs as variants.
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States |
 | `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'solid' | 'boxed'` | ✅ | - | Variant |
+| `variant` | `'solid' \| 'boxed'` | ✅ | - | Variant |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkControlbar } from '@cloudflare/realtimekit-ui/react';
+import { RtkControlbar } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return <RtkControlbar />;
@@ -35,7 +32,7 @@ function MyComponent() {
 ### With Properties
 
 ```tsx
-import { RtkControlbar } from '@cloudflare/realtimekit-ui/react';
+import { RtkControlbar } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return (

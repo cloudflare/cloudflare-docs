@@ -1,22 +1,19 @@
 ---
-title: rtk-chat-composer-ui
-description: API reference for rtk-chat-composer-ui component (Angular Library)
----
-
-# rtk-chat-composer-ui
-
+      title: rtk-chat-composer-ui
+      description: API reference for rtk-chat-composer-ui component (Angular Library)
+      ---
 @deprecated . This component is deprecated, please use rtk-chat-composer-view instead.
 
 ## Properties
 
-| Property             | Type                             | Required | Default           | Description                         |
-| -------------------- | -------------------------------- | -------- | ----------------- | ----------------------------------- |
-| `canSendFiles`       | `boolean`                        | ✅       | -                 | Whether user can send file messages |
-| `canSendTextMessage` | `boolean`                        | ✅       | -                 | Whether user can send text messages |
-| `iconPack`           | `IconPack1`                      | ❌       | `defaultIconPack` | Icon pack                           |
-| `prefill`            | `{ suggestedReplies?: string[]}` | ❌       | -                 | prefill the composer                |
-| `size`               | `Size1`                          | ✅       | -                 | Size                                |
-| `t`                  | `RtkI18n`                        | ❌       | `useLanguage()`   | Language                            |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `canSendFiles` | `boolean` | ✅ | - | Whether user can send file messages |
+| `canSendTextMessage` | `boolean` | ✅ | - | Whether user can send text messages |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `prefill` | `{     suggestedReplies?: string[];     editMessage?: TextMessage;     replyMessage?: TextMessage;   }` | ❌ | - | prefill the composer |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -24,15 +21,15 @@ description: API reference for rtk-chat-composer-ui component (Angular Library)
 
 ```typescript
 // app.module.ts
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { defineCustomElements } from "@cloudflare/realtimekit-ui/loader";
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { defineCustomElements } from '@cloudflare/realtimekit-angular-ui/loader';
 
 defineCustomElements();
 
 @NgModule({
-	schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }
 ```
 
 ### Basic Usage
@@ -47,9 +44,9 @@ export class AppModule {}
 ```html
 <!-- component.html -->
 <rtk-chat-composer-ui
-	[canSendFiles]="true"
-	[canSendTextMessage]="true"
-	[size]="md"
->
+  [canSendFiles]=true
+  [canSendTextMessage]=true
+  [size]="md">
 </rtk-chat-composer-ui>
 ```
+

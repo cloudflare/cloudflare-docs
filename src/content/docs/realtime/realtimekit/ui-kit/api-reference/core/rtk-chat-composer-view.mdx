@@ -1,10 +1,7 @@
 ---
-title: rtk-chat-composer-view
-description: API reference for rtk-chat-composer-view component (Core Library)
----
-
-# rtk-chat-composer-view
-
+      title: rtk-chat-composer-view
+      description: API reference for rtk-chat-composer-view component (Core Library)
+      ---
 A component which renders a chat composer
 
 ## Properties
@@ -19,7 +16,7 @@ A component which renders a chat composer
 | `maxLength` | `number` | ✅ | - | Max length for text input |
 | `message` | `string` | ✅ | - | Message to be pre-populated |
 | `quotedMessage` | `string` | ✅ | - | Quote message to be displayed |
-| `rateLimits` | `{ period: number` | ✅ | - | Rate limits |
+| `rateLimits` | `{ period: number; maxInvocations: number; }` | ✅ | - | Rate limits |
 | `storageKey` | `string` | ✅ | - | Key for storing message in localStorage |
 | `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 

@@ -1,10 +1,7 @@
 ---
-title: RtkPaginatedList
-description: API reference for RtkPaginatedList component (React Library)
----
-
-# RtkPaginatedList
-
+      title: RtkPaginatedList
+      description: API reference for RtkPaginatedList component (React Library)
+      ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
@@ -12,7 +9,7 @@ description: API reference for RtkPaginatedList component (React Library)
 | `autoScroll` | `boolean` | ✅ | - | auto scroll list to bottom |
 | `createNodes` | `(data: unknown[])` | ✅ | - | Create nodes |
 | `emptyListLabel` | `string` | ✅ | - | label to show when empty |
-| `fetchData` | `(timestamp: number, size: number, reversed: boo...` | ✅ | - | Fetch the data |
+| `fetchData` | `(timestamp: number, size: number, reversed: boolean)` | ✅ | - | Fetch the data |
 | `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `pageSize` | `number` | ✅ | - | Page Size |
 | `pagesAllowed` | `number` | ✅ | - | Number of pages allowed to be shown |
@@ -25,7 +22,7 @@ description: API reference for RtkPaginatedList component (React Library)
 ### Basic Usage
 
 ```tsx
-import { RtkPaginatedList } from '@cloudflare/realtimekit-ui/react';
+import { RtkPaginatedList } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return <RtkPaginatedList />;
@@ -35,7 +32,7 @@ function MyComponent() {
 ### With Properties
 
 ```tsx
-import { RtkPaginatedList } from '@cloudflare/realtimekit-ui/react';
+import { RtkPaginatedList } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return (
