@@ -182,6 +182,8 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
+		// Create a new client on each request. Hyperdrive maintains the underlying
+		// database connection pool, so creating a new client is fast.
 		const client = new Client({
 			connectionString: env.HYPERDRIVE.connectionString,
 		});
@@ -206,6 +208,10 @@ export default {
 				JSON.stringify(productData),
 			]);
 
+			// Clean up the client after the response is returned.
+			// Hyperdrive keeps the underlying connection open in its pool.
+			ctx.waitUntil(client.end());
+
 			// Collect the raw row count inserted to return
 			const resp = new Response(JSON.stringify(insertResult.rowCount), {
 				headers: { "Content-Type": "application/json" },
@@ -222,6 +228,9 @@ export default {
 				"SELECT * FROM readings ORDER BY ts DESC LIMIT $1",
 				[limit],
 			);
+
+			// Clean up the client after the response is returned.
+			ctx.waitUntil(client.end());
 
 			// Return the result as JSON
 			const resp = new Response(JSON.stringify(result.rows), {
