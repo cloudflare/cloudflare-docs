@@ -5,6 +5,7 @@ title: Build a counter
 sidebar:
   order: 3
 description: Build a counter using Durable Objects and Workers with RPC methods.
+reviewed: 2023-08-04
 ---
 
 import { TabItem, Tabs, WranglerConfig } from "~/components";
@@ -216,17 +217,28 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-counter"
-main = "src/index.ts"
-
-[[durable_objects.bindings]]
-name = "COUNTERS"
-class_name = "Counter"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["Counter"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-counter",
+	"main": "src/index.ts",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "COUNTERS",
+				"class_name": "Counter"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"Counter"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

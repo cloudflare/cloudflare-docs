@@ -17,10 +17,6 @@ entries:
     general_definition: |-
       a login screen shown to users when they connect to a public Wi-Fi. Captive portals typically occur in places such as airports, cafes, and hotels.
 
-  - term: CGNAT IP
-    general_definition: |-
-      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device in **Team & Resources** > **Devices** > **Virtual IPv4/IPv6**.
-
   - term: cloudflared
     general_definition: |-
       the software powering Cloudflare Tunnel. It runs on origin servers to connect applications or private networks to Cloudflare.
@@ -82,6 +78,10 @@ entries:
   - term: device profile
     general_definition: |-
       a collection of WARP client settings applied to a specific set of devices in your organization.
+
+  - term: device registration
+    general_definition: |-
+      an individual session of the WARP client on a physical device, with associated configuration including a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
 
   - term: DNS filtering
     general_definition: |-
@@ -199,7 +199,7 @@ entries:
 
   - term: seat
     general_definition: |-
-      a unique user authenticating to an Access application or enrolling in WARP,
+      a unique, billable user within your Zero Trust organization who has performed [an authentication event](/cloudflare-one/team-and-resources/users/seat-management/#authentication-events). Service tokens do not consume seats.
 
   - term: service provider (SP)
     general_definition: |-
@@ -280,6 +280,10 @@ entries:
   - term: WARP client
     general_definition: |-
       an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
+
+  - term: WARP CGNAT IP
+    general_definition: |-
+      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range.
 
   - term: WARP Connector
     general_definition: |-

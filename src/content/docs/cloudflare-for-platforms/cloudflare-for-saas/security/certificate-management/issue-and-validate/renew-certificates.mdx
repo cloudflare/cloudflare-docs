@@ -12,13 +12,19 @@ import { Render } from "~/components";
 
 The exact method for certificate renewal depends on whether that hostname is active[^1] and whether it is a wildcard certificate.
 
-Custom hostnames certificates have a 90-day validity period and are available for renewal 30 days before their expiration.
+Custom hostname certificates have a 90-day validity period and are available for renewal 30 days before their expiration.
 
 ## Non-wildcard hostnames
 
-If you are using a non-wildcard hostname and the hostname is active, Cloudflare will try to perform DCV automatically on the hostname's behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
+If all of the following are true, Cloudflare will try to perform DCV automatically on the hostname's behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
+
+- You are using a non-wildcard hostname.
+- The hostname is active.
+- You are not using [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/).
 
 If the custom hostname is not active, then the custom hostname domain owner will need to add the TXT or HTTP DCV token for the new certificate to validate and issue. As the SaaS provider, you will be responsible for sharing this token with the custom hostname domain owner.
+
+If you are using Delegated DCV, Cloudflare will continue to add TXT DCV tokens on your behalf as explained in [Issue and validate certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/).
 
 ## Wildcard hostnames
 

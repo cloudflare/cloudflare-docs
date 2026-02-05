@@ -4,10 +4,10 @@ title: createMcpHandler — API Reference
 tags:
   - MCP
 sidebar:
-  order: 8
+  order: 6
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { Render, TypeScriptExample, LinkCard } from "~/components";
 
 The `createMcpHandler` function creates a fetch handler to serve your MCP server. You can use it as an alternative to the [`McpAgent`](/agents/model-context-protocol/mcp-agent-api) class when you don't need the deprecated SSE transport.
 
@@ -491,7 +491,26 @@ server.tool("riskyOperation", "An operation that might fail", {}, async () => {
 
 ## Related Resources
 
-- [Building MCP Servers](/agents/guides/remote-mcp-server/) — Learn how to build and deploy MCP servers on Cloudflare
-- [MCP Tools](/agents/model-context-protocol/tools/) — Add tools to your MCP server
-- [MCP Authorization](/agents/model-context-protocol/authorization/) — Authenticate users with OAuth
-- [McpAgent API Reference](/agents/model-context-protocol/mcp-agent-api/) — Build stateful MCP servers with the McpAgent class
+<LinkCard
+	title="Building MCP Servers"
+	href="/agents/guides/remote-mcp-server/"
+	description="Build and deploy MCP servers on Cloudflare."
+/>
+
+<LinkCard
+	title="MCP Tools"
+	href="/agents/model-context-protocol/tools/"
+	description="Add tools to your MCP server."
+/>
+
+<LinkCard
+	title="MCP Authorization"
+	href="/agents/model-context-protocol/authorization/"
+	description="Authenticate users with OAuth."
+/>
+
+<LinkCard
+	title="McpAgent API"
+	href="/agents/model-context-protocol/mcp-agent-api/"
+	description="Build stateful MCP servers."
+/>

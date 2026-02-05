@@ -6,10 +6,9 @@ sidebar:
 learning_center:
   title: What is bot management?
   link: https://www.cloudflare.com/learning/bots/what-is-bot-management/
-
 ---
 
-import { Tabs, TabItem, Steps, Render, DashButton } from '~/components';
+import { Tabs, TabItem, Steps, Render, DashButton } from "~/components";
 
 Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your domain. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard.
 
@@ -25,15 +24,9 @@ This Enterprise product provides the most flexibility to customers by:
 
 Bot Management is automatically enabled for Enterprise zones entitled with the add-on.
 
+{/* prettier-ignore-start */}
+
 <Tabs syncKey="dashNewNav">
-  <TabItem label="Old dashboard">
-      To enable a [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/security/bots) trial on Enterprise zones without the Bot Management add-on entitled:
-    <Steps>
-      1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **Bots**.
-      3. Select **Add Bot Management**.
-    </Steps>
-  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. In the Cloudflare dashboard, go to the **Security Settings** page.
@@ -49,7 +42,17 @@ Bot Management is automatically enabled for Enterprise zones entitled with the a
             - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
       </Steps>
   </TabItem>
+  <TabItem label="Old dashboard">
+      To enable a [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/security/bots) trial on Enterprise zones without the Bot Management add-on entitled:
+    <Steps>
+      1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Bots**.
+      3. Select **Add Bot Management**.
+    </Steps>
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}
 
 :::note
 
@@ -80,18 +83,18 @@ Cloudflare has [default templates](https://dash.cloudflare.com/?to=/:account/:zo
 
 - [Definite Bots template](https://dash.cloudflare.com/?to=/:account/:zone:/security/security-rules/custom-rules/create?template=Definitely%20Bots): Targets malicious bot traffic while ignoring verified bots and routes delivering static content.
 
-    ```txt wrap
-    (cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)
-    ```
+  ```txt wrap
+  (cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)
+  ```
 
 - [Likely Bots template](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules/custom-rules/create?template=Likely%20Bots): Targets traffic likely to be malicious bots while ignoring verified bots and routes with static content. It may contain a small amount of non-bot traffic.
 
-    ```txt wrap
-    (cf.bot_management.score ge 2 and cf.bot_management.score le 29 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)
-    ```
+  ```txt wrap
+  (cf.bot_management.score ge 2 and cf.bot_management.score le 29 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)
+  ```
 
 - (Optional) [JavaScript detections template](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules/custom-rules/create?template=JavaScript%20Verified%20URLs): If you enabled JavaScript detections, then set up a [managed challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge-recommended), make sure to add a method and URI path. JavaScript detections improves security for URLs that should only expect JavaScript-enabled clients.
 
-    ```txt wrap
-    (not cf.bot_management.js_detection.passed and http.request.method eq "" and http.request.uri.path in {""})
-    ```
+  ```txt wrap
+  (not cf.bot_management.js_detection.passed and http.request.method eq "" and http.request.uri.path in {""})
+  ```

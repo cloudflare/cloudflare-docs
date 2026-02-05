@@ -48,17 +48,22 @@ export CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE="postgres://user
 npx wrangler dev
 ```
 
-### Configure in wrangler.toml
+### Configure in Wrangler configuration file
 
 Alternatively, you can set `localConnectionString` in your [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
-```toml
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "c020574a-5623-407b-be0c-cd192bab9545"
-localConnectionString = "postgres://user:password@localhost:5432/databasename"
+```jsonc
+{
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "c020574a-5623-407b-be0c-cd192bab9545",
+			"localConnectionString": "postgres://user:password@localhost:5432/databasename"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -52,7 +52,7 @@ We've made a number of improvements to the [Agents SDK](/agents/), including:
 - Support for building MCP servers with the new `MCPAgent` class.
 - The ability to export the current agent, request and WebSocket connection context using `import { context } from "agents"`, allowing you to minimize or avoid direct dependency injection when calling tools.
 - Fixed a bug that prevented query parameters from being sent to the Agent server from the `useAgent` React hook.
-- Automatically converting the `agent` name in `useAgent` or `useAgentChat` to kebab-case to ensure it matches the naming convention expected by [`routeAgentRequest`](/agents/api-reference/calling-agents/#calling-your-agent).
+- Automatically converting the `agent` name in `useAgent` or `useAgentChat` to kebab-case to ensure it matches the naming convention expected by [`routeAgentRequest`](/agents/api-reference/routing/).
 
 To install or update the Agents SDK, run `npm i agents@latest` in an existing project, or explore the `agents-starter` project:
 

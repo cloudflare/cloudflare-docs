@@ -18,22 +18,22 @@ With bindings, each of your users can have their own:
 
 #### Resource isolation
 
-Each User Worker can only access the bindings that are explicitly attached to it. For complete isolation, you can create and attach a unique resource (like a D1 database or KV namespace) to every User Worker. 
+Each User Worker can only access the bindings that are explicitly attached to it. For complete isolation, you can create and attach a unique resource (like a D1 database or KV namespace) to every User Worker.
 
 ![Resource Isolation Model](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-5.svg "Resource Isolation Model")
 
 ## Adding a KV Namespace to a User Worker
-This example walks through how to create a [KV namespace](/kv/) and attach it to a User Worker. The same process can be used to attach to other [bindings](/workers/runtime-apis/bindings/). 
+This example walks through how to create a [KV namespace](/kv/) and attach it to a User Worker. The same process can be used to attach to other [bindings](/workers/runtime-apis/bindings/).
 
 ### 1. Create a KV namespace
-Create a KV namespace using the [Cloudflare API](/api/resources/kv/subresources/namespaces/methods/bulk_update/). 
+Create a KV namespace using the [Cloudflare API](/api/resources/kv/subresources/namespaces/methods/bulk_update/).
 
 ### 2. Attach the KV namespace to the User Worker
 
-Use the [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to attach the KV namespace binding to the Worker. You can do this when you're first uploading the Worker script or when updating an existing Worker. 
+Use the [Upload User Worker API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to attach the KV namespace binding to the Worker. You can do this when you're first uploading the Worker script or when updating an existing Worker.
 
-:::note 
-When using the API to upload scripts, bindings must be specified in the `metadata` object of your multipart upload request. You cannot upload the `wrangler.toml` file as a module to configure the bindings. For more details about multipart uploads, see [Multipart upload metadata](/workers/configuration/multipart-upload-metadata/).
+:::note
+When using the API to upload scripts, bindings must be specified in the `metadata` object of your multipart upload request. You cannot upload the Wrangler configuration file as a module to configure the bindings. For more details about multipart uploads, see [Multipart upload metadata](/workers/configuration/multipart-upload-metadata/).
 :::
 
 ##### Example API request
@@ -57,7 +57,7 @@ curl -X PUT \
 ```
 Now, the User Worker has can access the `USER_KV` binding through the `env` argument using `env.USER_DATA.get()`, `env.USER_DATA.put()`, and other KV methods.
 
-Note: If you plan to add new bindings to the Worker, use the `keep_bindings` parameter to ensure existing bindings are preserved while adding new ones. 
+Note: If you plan to add new bindings to the Worker, use the `keep_bindings` parameter to ensure existing bindings are preserved while adding new ones.
 
 ```bash
 curl -X PUT \
@@ -68,7 +68,7 @@ curl -X PUT \
     "bindings": [
       {
         "type": "r2_bucket",
-        "name": "STORAGE", 
+        "name": "STORAGE",
         "bucket_name": "<your-bucket-name>"
       }
     ],

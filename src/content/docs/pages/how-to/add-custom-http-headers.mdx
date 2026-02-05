@@ -71,13 +71,15 @@ To operate your Workers function alongside your Pages application, deploy it to 
 
 <WranglerConfig>
 
-```toml null {4,6,7}
-name = "custom-headers-example"
-
-account_id = "FILL-IN-YOUR-ACCOUNT-ID"
-workers_dev = false
-route = "FILL-IN-YOUR-WEBSITE.com/*"
-zone_id = "FILL-IN-YOUR-ZONE-ID"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "custom-headers-example",
+	"account_id": "FILL-IN-YOUR-ACCOUNT-ID",
+	"workers_dev": false,
+	"route": "FILL-IN-YOUR-WEBSITE.com/*",
+	"zone_id": "FILL-IN-YOUR-ZONE-ID"
+}
 ```
 
 </WranglerConfig>
