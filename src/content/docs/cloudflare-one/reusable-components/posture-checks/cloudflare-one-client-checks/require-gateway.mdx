@@ -10,7 +10,7 @@ head:
 
 import { Render } from "~/components";
 
-With Require Gateway, you can allow access to your applications only to devices enrolled in your Zero Trust organization. Unlike [Require WARP](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-warp/), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
+With Require Gateway, you can allow access to your applications only to devices enrolled in your Zero Trust organization. Unlike [Require Cloudflare One Client](/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/require-cloudflare-one-client/), which will check for any Cloudflare One Client instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
 
 ## Prerequisites
 
@@ -18,8 +18,8 @@ With Require Gateway, you can allow access to your applications only to devices 
   	file="posture/prereqs-warp-is-deployed"
   	product="cloudflare-one"
   	params={{
-  		name: "WARP Client Checks",
-  		link: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/",
+  		name: "Cloudflare One Client checks",
+  		link: "/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/",
   	}}
   />
 
@@ -27,7 +27,7 @@ With Require Gateway, you can allow access to your applications only to devices 
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Reusable components** > **Posture checks**.
 
-2. Go to **WARP client checks** and select **Add a check**.
+2. Go to **Cloudflare One Client checks** and select **Add a check**.
 
 3. Select **Gateway**, then select **Save**.
 
@@ -43,4 +43,4 @@ With Require Gateway, you can allow access to your applications only to devices 
 
 5. Save the Access application.
 
-Before granting access to the application, the policy will check that the device is running the WARP client and enrolled in your Zero Trust organization.
+Before granting access to the application, the policy will check that the device is running the Cloudflare One Client and enrolled in your Zero Trust organization.

@@ -1,22 +1,22 @@
 ---
-title: Require WARP
+title: Require Cloudflare One Client
 pcx_content_type: how-to
 sidebar:
   order: 10
 head:
   - tag: title
-    content: Require WARP
+    content: Require Cloudflare One Client
 ---
 
 import { Render } from "~/components";
 
 :::note
 
-This device posture attribute will check for all versions of WARP, including the consumer version.
+This device posture attribute will check for all versions of the Cloudflare One Client (formerly WARP Client), including the consumer version.
 
 :::
 
-Cloudflare One enables you to restrict access to your applications to devices running the Cloudflare WARP client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare One.
+Cloudflare One enables you to restrict access to your applications to devices running the Cloudflare One Client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare One.
 
 ## Prerequisites
 
@@ -24,18 +24,18 @@ Cloudflare One enables you to restrict access to your applications to devices ru
   	file="posture/prereqs-warp-is-deployed"
   	product="cloudflare-one"
   	params={{
-  		name: "WARP Client Checks",
-  		link: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/",
+  		name: "Cloudflare One Client checks",
+  		link: "/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/",
   	}}
   />
 
-## 1. Enable the WARP check
+## 1. Enable the Cloudflare One Client check
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
 2. Ensure that *Allow Secure Web Gateway to proxy traffic** is enabled.
 3. Go to **Reusable components** > **Posture checks**.
-4. In **WARP client checks**, select **Add a check**.
-5. Select **WARP**, then select **Save**.
+4. In **Cloudflare One Client checks**, select **Add a check**.
+5. Select **Cloudflare One Client**, then select **Save**.
 
 ## 2. Add the check to an Access policy
 
@@ -45,8 +45,8 @@ Cloudflare One enables you to restrict access to your applications to devices ru
 
 3. In the **Policies** tab, create a new Access policy or edit an existing policy.
 
-4. In the policy builder, add an Include or Require rule which uses the _WARP_ selector. Save the policy.
+4. In the policy builder, add an Include or Require rule which uses the _Cloudflare One Client_ selector. Save the policy.
 
 5. Save the Access application.
 
-Before granting access to the application, the policy will check that the device is running the WARP client.
+Before granting access to the application, the policy will check that the device is running the Cloudflare One Client.

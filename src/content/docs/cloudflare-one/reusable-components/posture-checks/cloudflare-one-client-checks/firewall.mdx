@@ -18,15 +18,15 @@ The Firewall device posture attribute ensures that a firewall is running on a de
   	file="posture/prereqs-warp-is-deployed"
   	product="cloudflare-one"
   	params={{
-  		name: "WARP Client Checks",
-  		link: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/",
+  		name: "Cloudflare One Client checks",
+  		link: "/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/",
   	}}
   />
 
 ## Enable the firewall check
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Reusable components** > **Posture checks**.
-2. Go to **WARP client checks** and select **Add a check**.
+2. Go to **Cloudflare One Client checks** and select **Add a check**.
 3. Select **Firewall**.
 4. Enter a descriptive name for the check.
 5. Select your operating system.
@@ -35,7 +35,7 @@ The Firewall device posture attribute ensures that a firewall is running on a de
 	- **Disabled**: The posture check passes only if the firewall is turned off.
 
 	:::note
-	The **Enable firewall check** toggle does not turn the posture check on or off; rather, the toggle determines whether the WARP client looks for an active or inactive firewall.
+	The **Enable firewall check** toggle does not turn the posture check on or off; rather, the toggle determines whether the Cloudflare One Client looks for an active or inactive firewall.
 	:::
 7. Select **Save**.
 
@@ -43,11 +43,11 @@ Next, go to **Insights** > **Logs** > **Posture logs** and verify that the firew
 
 ## Validate firewall status
 
-Operating systems determine firewall configuration in various ways. Follow the steps below to understand how the WARP client determines if the firewall is enabled.
+Operating systems determine firewall configuration in various ways. Follow the steps below to understand how the Cloudflare One Client determines if the firewall is enabled.
 
 ### On macOS
 
-macOS has two firewalls: an application-based firewall and a port-based firewall. The WARP client will report a firewall is enabled if either firewall is running.
+macOS has two firewalls: an application-based firewall and a port-based firewall. The Cloudflare One Client will report a firewall is enabled if either firewall is running.
 
 #### Application-based firewall
 

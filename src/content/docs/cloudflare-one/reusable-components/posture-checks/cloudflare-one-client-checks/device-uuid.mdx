@@ -15,18 +15,18 @@ Cloudflare One allows you to build Zero Trust rules based on device UUIDs suppli
   	file="posture/prereqs-warp-is-deployed"
   	product="cloudflare-one"
   	params={{
-  		name: "WARP Client Checks",
-  		link: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/",
+  		name: "Cloudflare One Client checks",
+  		link: "/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/",
   	}}
   />
 
 ## 1. Assign UUIDs to devices
 
-You will need to use a [managed deployment tool](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/) to assign UUIDs. It is not possible to assign them manually.
+You will need to use a [managed deployment tool](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/) to assign UUIDs. It is not possible to assign them manually.
 
 1. Generate a unique identifier for each corporate device. For best practices on choosing UUIDs, refer to the [Android documentation](https://developer.android.com/training/articles/user-data-ids#best-practices-android-identifiers).
 
-2. Enter the UUIDs into your MDM configuration file using the [`unique_client_id` key](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#unique_client_id).
+2. Enter the UUIDs into your MDM configuration file using the [`unique_client_id` key](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#unique_client_id).
 
 ## 2. Create a list of UUIDs
 
@@ -53,7 +53,7 @@ Hyphens are automatically stripped from UUIDs. For example, the posture check wi
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Reusable components** > **Posture checks**.
 
-2. Go to **WARP client checks** and select **Add a check**.
+2. Go to **Cloudflare One Client checks** and select **Add a check**.
 
 3. Select **Unique Client ID**.
 
