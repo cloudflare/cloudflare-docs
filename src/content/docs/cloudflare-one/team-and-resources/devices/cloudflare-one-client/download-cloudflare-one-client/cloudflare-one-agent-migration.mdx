@@ -7,13 +7,13 @@ sidebar:
 
 import { TabItem, Tabs } from "~/components";
 
-Users can connect to Cloudflare Zero Trust services through an agent that runs on their device. Cloudflare previously bundled that functionality into the [WARP client](/warp-client/), an application that also provides privacy-focused DNS and VPN services for consumers (known as 1.1.1.1 w/ WARP). Supporting both enterprise and consumer functionality in the same application allowed us to build Zero Trust upon the same foundation used by millions of consumers across the globe, but has limited the pace at which changes could be released. As a result, we are launching a dedicated Cloudflare One Agent that replaces the WARP client for Zero Trust deployments.
+Users can connect to Cloudflare Zero Trust services through an agent that runs on their device. Cloudflare previously bundled that functionality into the [WARP client](/warp-client/), an application that also provides privacy-focused DNS and VPN services for consumers (known as 1.1.1.1 w/ WARP). Supporting both enterprise and consumer functionality in the same application allowed us to build Zero Trust upon the same foundation used by millions of consumers across the globe, but has limited the pace at which changes could be released. As a result, we are launching a dedicated Cloudflare One Agent (also known as Cloudflare One Client) that replaces the WARP client for Zero Trust deployments.
 
 The Cloudflare One Agent supports all existing Zero Trust functionality. The underlying connection technology remains the same, and improvements made to performance and reliability based on feedback from 1.1.1.1 w/ WARP users will continue to be built into the Cloudflare One Agent.
 
 ## macOS, Windows, and Linux
 
-No action is required for desktop clients at this time. The existing Cloudflare WARP client will continue to support both Zero Trust and 1.1.1.1 functionality.
+No action is required for desktop clients at this time. The existing Cloudflare One Client (formerly WARP client) will continue to support both Zero Trust and 1.1.1.1 functionality.
 
 ## iOS and Android
 
@@ -39,12 +39,12 @@ If you downloaded and installed the 1.1.1.1 app manually, here are the recommend
 
    This prevents certificate pinning issues when performing the Android migration.
 
-3. Follow [these instructions](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/#ios-android-and-chromeos) to install and enroll the Cloudflare One Agent.
+3. Follow [these instructions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/#ios-android-and-chromeos) to install and enroll the Cloudflare One Agent.
 
 </TabItem> <TabItem label="ios">
 
 1. Update the **1.1.1.1** app to version 6.22 or above. The update ensures that 1.1.1.1 can [co-exist](#what-to-do-with-the-old-app) with the new Cloudflare One Agent app.
-2. [Download](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios) the **Cloudflare One Agent** app.
+2. [Download](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download-cloudflare-one-client/#ios) the **Cloudflare One Agent** app.
 3. Launch the Cloudflare One Agent app. All settings from 1.1.1.1 will automatically migrate over to the Cloudflare One Agent. The user does not need to reauthenticate.
 
 </TabItem> </Tabs>
@@ -61,11 +61,11 @@ To access your company's resources, you must use the Cloudflare One Agent app.
 
 You can use the 1.1.1.1 app for personal browsing. When connected to 1.1.1.1 w/ WARP, your traffic will be encrypted and privately routed via Cloudflare's network, and your employer will not be able to see any of your browsing activity. To learn more about consumer WARP services, refer to [WARP client](/warp-client/).
 
-If you do not wish to use the old 1.1.1.1 app for personal browsing, you may [uninstall](/cloudflare-one/team-and-resources/devices/warp/remove-warp/#ios-and-android) it.
+If you do not wish to use the old 1.1.1.1 app for personal browsing, you may [uninstall](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/remove-cloudflare-one-client/#ios-and-android) it.
 
 ### Migrate managed deployments
 
-If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/), perform the migration as follows:
+If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/), perform the migration as follows:
 
 <Tabs> <TabItem label="android">
 
@@ -73,13 +73,13 @@ If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/team-and-
 
 2. Add the **Cloudflare One Agent** app from the Google Play store. Its application ID is `com.cloudflare.cloudflareoneagent`.
 
-3. Copy your [MDM deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#android--chromeos) for the **1.1.1.1** app.
+3. Copy your [MDM deployment parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#android--chromeos) for the **1.1.1.1** app.
 
 4. Paste the MDM deployment parameters into the **Cloudflare One Agent** app configuration. Make sure that you do not accidentally overwrite the application ID (`com.cloudflare.cloudflareoneagent`).
 
 5. Using your MDM tool, install the **Cloudflare One Agent** on your devices.
 
-6. On Android, the user will need to [re-authenticate](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/#ios-android-and-chromeos) to the new application, following the same onboarding steps they went through initially.
+6. On Android, the user will need to [re-authenticate](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/#ios-android-and-chromeos) to the new application, following the same onboarding steps they went through initially.
 
 </TabItem> <TabItem label="ios">
 
@@ -87,7 +87,7 @@ If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/team-and-
 
 2. Add the **Cloudflare One Agent** app from the App store. Its application ID is `com.cloudflare.cloudflareoneagent`.
 
-3. Copy your [MDM deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#ios) for the **1.1.1.1** app.
+3. Copy your [MDM deployment parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#ios) for the **1.1.1.1** app.
 
 4. Paste the MDM deployment parameters into the **Cloudflare One Agent** app configuration. Make sure that you do not accidentally overwrite the application ID (`com.cloudflare.cloudflareoneagent`).
 
