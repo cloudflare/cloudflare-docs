@@ -1,0 +1,79 @@
+/* 發光邊框動畫 */  
+.ai-section {  
+  position: relative;  
+  padding: 3rem;  
+  background: rgba(0, 0, 0, 0.85);  
+  overflow: hidden;  
+}  
+  
+.ai-section::before {  
+  content: '';  
+  position: absolute;  
+  inset: 0;  
+  border-radius: 12px;  
+  padding: 2px;  
+  background: linear-gradient(  
+    45deg,  
+    #00ffff,  
+    #0080ff,  
+    #00ffff,  
+    #0080ff  
+  );  
+  background-size: 300% 300%;  
+  animation: gradientRotate 3s ease infinite;  
+  -webkit-mask:   
+    linear-gradient(#fff 0 0) content-box,   
+    linear-gradient(#fff 0 0);  
+  -webkit-mask-composite: xor;  
+  mask-composite: exclude;  
+}  
+  
+@keyframes gradientRotate {  
+  0%, 100% { background-position: 0% 50%; }  
+  50% { background-position: 100% 50%; }  
+}  
+  
+/* 指紋掃描效果 */  
+.fingerprint-container {  
+  position: relative;  
+  display: inline-block;  
+}  
+  
+.fingerprint-scan {  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 3px;  
+  background: linear-gradient(90deg,   
+    transparent,  
+    #00ffff,  
+    transparent  
+  );  
+  animation: scan 2s ease-in-out infinite;  
+  box-shadow: 0 0 20px #00ffff;  
+}  
+  
+@keyframes scan {  
+  0%, 100% { top: 0; opacity: 0; }  
+  50% { top: 100%; opacity: 1; }  
+}  
+  
+/* 脈衝光環 */  
+.pulse-ring {  
+  position: absolute;  
+  border: 2px solid #00ffff;  
+  border-radius: 50%;  
+  animation: pulse 2s ease-out infinite;  
+}  
+  
+@keyframes pulse {  
+  0% {  
+    transform: scale(0.8);  
+    opacity: 1;  
+  }  
+  100% {  
+    transform: scale(1.5);  
+    opacity: 0;  
+  }  
+}
