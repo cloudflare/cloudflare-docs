@@ -454,11 +454,7 @@ Cloudflare's data plane is designed for high availability. If the edge location 
 - **Stale path retention**: Because the FIB is frozen during this mode, forwarding decisions remain active even if the underlying BGP session with your router flaps or resets.
 - **Continuous health monitoring**: While BGP updates are frozen, tunnel health checks remain active. These are sent from all Cloudflare data centers, allowing the edge at any ingress node to detect if a physical connection to your router has failed. If a health check fails, the ingress node at the edge will deprioritize that specific path, preventing traffic from being sent into a black hole despite the frozen routing state.
 - **Update freeze**: During this state, the global control plane is frozen. New BGP updates received from your router will be held locally at the edge and will not propagate globally until connectivity to the centralized relay is restored.
-{ props.magicWord === "Magic Transit" && (
-<>
-- **Magic Transit edge announcement**: During this frozen state, your BYOIP prefix(es) will continue to be announced at Cloudflare's global edge. You can manually change this announcement status via the API or dashboard.
-</>
-)}
+{ props.magicWord === "Magic Transit" && (<Markdown text={`- **Magic Transit edge announcement**: During this frozen state, your BYOIP prefix(es) will continue to be announced at Cloudflare's global edge. You can manually change this announcement status via the API or dashboard.`} inline={false} />)}
 
 :::caution[Traffic persistence during BGP resets]
 In Edge Resiliency Mode, Cloudflare prioritizes forwarding continuity. If your on-premises router resets or the BGP session flaps, the edge will continue to forward traffic toward your peer device based on the last known valid routing state — provided that the underlying tunnel health checks remain successful.
