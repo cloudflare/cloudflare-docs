@@ -2221,7 +2221,7 @@
 /cloudflare-one/policies/zero-trust/common-configs/ /cloudflare-one/policies/access/ 301
 /cloudflare-one/applications/casb/troubleshooting/ /cloudflare-one/applications/casb/troubleshooting/troubleshoot-integrations/ 301
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/gateway-logs/ 301
-/cloudflare-one/identity/devices/os-version/ /cloudflare-one/identity/devices/warp-client-checks/os-version/ 301
+/cloudflare-one/identity/devices/os-version/ /cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/os-version/ 301
 /cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
 /cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/users/groups/ /cloudflare-one/policies/access/groups/ 301
@@ -2271,7 +2271,7 @@
 /cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
 /cloudflare-one/applications/scan-apps/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/ 301
-/cloudflare-one/connections/connect-devices/warp/exclude-traffic/ /cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/ 301
+/cloudflare-one/connections/connect-devices/warp/exclude-traffic/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/split-tunnels/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
@@ -2282,8 +2282,8 @@
 /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
 /cloudflare-one/identity/devices/crowdstrike/ /cloudflare-one/integrations/service-providers/crowdstrike/ 301
 /cloudflare-one/identity/devices/microsoft/ /cloudflare-one/integrations/service-providers/microsoft/ 301
-/cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-gateway/ 301
-/cloudflare-one/identity/devices/require-warp/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-warp/ 301
+/cloudflare-one/identity/devices/require-gateway/ /cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/require-gateway/ 301
+/cloudflare-one/identity/devices/require-warp/ /cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/require-cloudflare-one-client/ 301
 /cloudflare-one/identity/devices/service-providers/custom/ /cloudflare-one/integrations/service-providers/custom/ 301
 /cloudflare-one/identity/devices/service-providers/ /cloudflare-one/integrations/service-providers/ 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
@@ -2295,7 +2295,7 @@
 /cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-policies/initial-setup/dns/ 301
 
 # More specific redirects from nav revamp (before catch-alls)
-/cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/warp-client-checks/tanium/ 301
+/cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/tanium/ 301
 /cloudflare-one/identity/authorization-cookie/application-token/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/ 301
 /cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
 /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
@@ -2404,7 +2404,7 @@
 /cloudflare-one/connections/connect-devices/agentless/* /cloudflare-one/networks/resolvers-and-proxies/:splat 301
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/* /cloudflare-one/connections/connect-devices/user-side-certificates/:splat 301
-/cloudflare-one/connections/connect-devices/warp/warp-settings/* /cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/:splat 301
+/cloudflare-one/connections/connect-devices/warp/warp-settings/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/:splat 301
 /cloudflare-one/email-security/directories/manage-ms-directories/* /cloudflare-one/email-security/directories/manage-integrated-directories/:splat 301
 /cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
 /cloudflare-one/faq/teams-* /cloudflare-one/faq/:splat 301
@@ -2436,6 +2436,22 @@
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
 /cloudflare-one/team-and-resources/devices/agentless/dns/* /cloudflare-one/networks/resolvers-and-proxies/dns/:splat 301
 /cloudflare-one/api-terraform/access-api-examples/* /api/resources/zero_trust/subresources/access/subresources/policies/ 301
+
+# WARP Client → Cloudflare One Client rename (static redirects for slug renames)
+/cloudflare-one/team-and-resources/devices/warp/set-up-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up-cloudflare-one-client/ 301
+/cloudflare-one/team-and-resources/devices/warp/remove-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/remove-cloudflare-one-client/ 301
+/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/download-cloudflare-one-client/update-cloudflare-one-client/ 301
+/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/route-traffic/cloudflare-one-client-architecture/ 301
+/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-sessions/ 301
+/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/cloudflare-one-client-logs/ 301
+/cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-warp/ /cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/require-cloudflare-one-client/ 301
+/learning-paths/warp-overview-course/series/warp-basics-1/ /learning-paths/cloudflare-one-client-overview-course/series/cloudflare-one-client-basics-1/ 301
+/learning-paths/warp-overview-course/series/warp-basics-2/ /learning-paths/cloudflare-one-client-overview-course/series/cloudflare-one-client-basics-2/ 301
+
+# WARP Client → Cloudflare One Client rename (dynamic redirects for folder renames)
+/cloudflare-one/team-and-resources/devices/warp/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/:splat 301
+/cloudflare-one/reusable-components/posture-checks/warp-client-checks/* /cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/:splat 301
+/learning-paths/warp-overview-course/* /learning-paths/cloudflare-one-client-overview-course/:splat 301
 
 # Email Security nav revamp (dynamics)
 /cloudflare-one/email-security/detection-settings/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
