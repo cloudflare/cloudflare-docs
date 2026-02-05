@@ -51,7 +51,7 @@ A unique transformation is a request to transform an original image based on a s
 
 For example, if you transform `thumbnail.jpg` as 100x100, then this counts as one unique transformation. If you transform the same `thumbnail.jpg` as 200x200, then this counts as a separate unique transformation.
 
-You are billed on the number of unique transformations per calendar month. Repeat requests for the same transformation within the same month are only charged once for that month.
+You are billed on the number of unique transformations that are requested within each calendar month. Repeat requests for the same transformation within the same month are counted only once for that month.
 
 The `format` parameter counts as only one billable transformation, even if multiple copies of an image are served. In other words, if `width=100,format=auto/thumbnail.jpg` is served to some users as AVIF and to others as WebP, then this counts as one unique transformation instead of two.
 
