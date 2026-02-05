@@ -13,8 +13,8 @@ Agents provide built-in state management with automatic persistence and real-tim
 
 State within an Agent is:
 
-- **Persistent** - Automatically saved to SQLite, survives restarts and hibernation
-- **Synchronized** - Changes broadcast to all connected WebSocket clients instantly
+- **Persistent** - Automatically saves to SQLite, survives restarts and hibernation
+- **Synchronized** - Changes are broadcast to all connected WebSocket clients instantly
 - **Bidirectional** - Both server and clients can update state
 - **Type-safe** - Full TypeScript support with generics
 - **Immediately consistent** - Read your own writes
@@ -252,7 +252,7 @@ class MyAgent extends Agent<Env, GameState> {
 
 ### The source parameter
 
-The `source` tells you who triggered the update:
+The `source` shows who triggered the update:
 
 | Value        | Meaning                             |
 | ------------ | ----------------------------------- |
@@ -320,9 +320,9 @@ class MyAgent extends Agent<Env, { messages: Message[] }> {
 
 If you want to validate or reject state updates, override `validateStateChange()`:
 
-- **Runs before persistence and broadcast**
-- **Must be synchronous**
-- **Throwing aborts the update**
+- Runs before persistence and broadcast
+- Must be synchronous
+- Throwing aborts the update
 
 <TypeScriptExample>
 
@@ -496,7 +496,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-You do not need to specify an array type (`User[]` or `Array<User>`) as `this.sql` will always return an array of the specified type.
+You do not need to specify an array type (`User[]` or `Array<User>`), as `this.sql` will always return an array of the specified type.
 
 :::note
 
@@ -504,7 +504,7 @@ Providing a type parameter does not validate that the result matches your type d
 
 :::
 
-The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/sqlite-storage-api/#sql-api). You can use the same SQL queries with the Agent's database, create tables, and query data, just as you would with Durable Objects or [D1](/d1/).
+The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/sqlite-storage-api/#sql-api). You can use the same SQL queries with the Agent's database. Create tables and query data, just as you would with Durable Objects or [D1](/d1/).
 
 ## Best practices
 

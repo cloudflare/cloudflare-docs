@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, LinkCard } from "~/components";
 
-This page provides an overview of the Agents SDK. For detailed documentation on each feature, see the linked reference pages.
+This page provides an overview of the Agents SDK. For detailed documentation on each feature, refer to the linked reference pages.
 
 ## Overview
 
@@ -20,7 +20,7 @@ The Agents SDK provides two main APIs:
 
 :::note
 
-Agents require [Cloudflare Durable Objects](/durable-objects/). See [Configuration](/agents/api-reference/configuration/) to learn how to add the required bindings.
+Agents require [Cloudflare Durable Objects](/durable-objects/). Refer to [Configuration](/agents/api-reference/configuration/) to learn how to add the required bindings.
 
 :::
 
@@ -55,7 +55,7 @@ flowchart TD
 
 | Method                                        | When it runs                                                                                                                                                                           |
 | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `onStart(props?)`                             | When the instance starts or wakes from hibernation. Receives optional [initialization props](/agents/api-reference/routing/#props) passed via `getAgentByName` or `routeAgentRequest`. |
+| `onStart(props?)`                             | When the instance starts, or wakes from hibernation. Receives optional [initialization props](/agents/api-reference/routing/#props) passed via `getAgentByName` or `routeAgentRequest`. |
 | `onRequest(request)`                          | For each HTTP request to the instance                                                                                                                                                  |
 | `onConnect(connection, ctx)`                  | When a WebSocket connection is established                                                                                                                                             |
 | `onMessage(connection, message)`              | For each WebSocket message received                                                                                                                                                    |
@@ -112,8 +112,8 @@ For state that needs to sync with clients, use the [State API](/agents/api-refer
 | Feature              | Methods          | Documentation                                   |
 | -------------------- | ---------------- | ----------------------------------------------- |
 | **WebSocket client** | `AgentClient`    | [Client SDK](/agents/api-reference/client-sdk/) |
-| **HTTP client**      | `agentFetch()`   | [Client SDK](/agents/api-reference/client-sdk/) |
-| **React hook**       | `useAgent()`     | [Client SDK](/agents/api-reference/client-sdk/) |
+| **HTTP client**      | `agentFetch()`   | [Client SDK](/agents/api-reference/client-sdk/#http-requests-with-agentfetch) |
+| **React hook**       | `useAgent()`     | [Client SDK](/agents/api-reference/client-sdk/#react) |
 | **Chat hook**        | `useAgentChat()` | [Client SDK](/agents/api-reference/client-sdk/) |
 
 ### Quick example
@@ -157,7 +157,7 @@ Features include:
 - Automatic resumable streaming (reconnect mid-stream)
 - Works with `useAgentChat` React hook
 
-See [Build a chat agent](/agents/getting-started/build-a-chat-agent/) for a complete tutorial.
+Refer to [Build a chat agent](/agents/getting-started/build-a-chat-agent/) for a complete tutorial.
 
 ## Routing
 
@@ -182,7 +182,7 @@ export default {
 };
 ```
 
-See [Routing](/agents/api-reference/routing/) for custom paths, CORS, and instance naming patterns.
+Refer to [Routing](/agents/api-reference/routing/) for custom paths, CORS, and instance naming patterns.
 
 ## Next steps
 

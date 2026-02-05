@@ -13,7 +13,7 @@ The Agents SDK provides a built-in queue system that allows you to schedule task
 
 The queue system is built into the base `Agent` class. Tasks are stored in a SQLite table and processed automatically in FIFO (First In, First Out) order.
 
-## QueueItem type
+## `QueueItem` type
 
 ```ts
 type QueueItem<T> = {
@@ -26,7 +26,7 @@ type QueueItem<T> = {
 
 ## Core methods
 
-### queue()
+### `queue()`
 
 Adds a task to the queue for future execution.
 
@@ -66,7 +66,7 @@ class MyAgent extends Agent {
 
 </TypeScriptExample>
 
-### dequeue()
+### `dequeue()`
 
 Removes a specific task from the queue by ID.
 
@@ -89,7 +89,7 @@ await agent.dequeue("abc123def");
 
 </TypeScriptExample>
 
-### dequeueAll()
+### `dequeueAll()`
 
 Removes all tasks from the queue.
 
@@ -108,7 +108,7 @@ await agent.dequeueAll();
 
 </TypeScriptExample>
 
-### dequeueAllByCallback()
+### `dequeueAllByCallback()`
 
 Removes all tasks that match a specific callback method.
 
@@ -131,7 +131,7 @@ await agent.dequeueAllByCallback("processEmail");
 
 </TypeScriptExample>
 
-### getQueue()
+### `getQueue()`
 
 Retrieves a specific queued task by ID.
 
@@ -161,7 +161,7 @@ if (task) {
 
 </TypeScriptExample>
 
-### getQueues()
+### `getQueues()`
 
 Retrieves all queued tasks that match a specific key-value pair in their payload.
 

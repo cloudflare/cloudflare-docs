@@ -22,7 +22,7 @@ The MCP client capability lets your agent:
 
 :::note
 
-This page covers connecting to MCP servers as a client. To create your own MCP server, see [Creating MCP servers](/agents/model-context-protocol/mcp-agent-api/).
+This page covers connecting to MCP servers as a client. To create your own MCP server, refer to [Creating MCP servers](/agents/model-context-protocol/mcp-agent-api/).
 
 :::
 
@@ -123,8 +123,8 @@ await this.addMcpServer("internal", "https://internal-mcp.example.com/mcp", {
 
 `addMcpServer()` returns the connection state:
 
-- **`ready`** - Server connected and tools discovered
-- **`authenticating`** - Server requires OAuth; redirect user to `authUrl`
+- `ready` - Server connected and tools discovered
+- `authenticating` - Server requires OAuth; redirect user to `authUrl`
 
 ## OAuth authentication
 
@@ -188,7 +188,7 @@ https://{host}/{agentsPrefix}/{agent-name}/{instance-name}/callback
 
 For example: `https://my-worker.workers.dev/agents/my-agent/default/callback`
 
-OAuth tokens are securely stored in SQLite and persist across agent restarts.
+OAuth tokens are securely stored in SQLite, and persist across agent restarts.
 
 ### Custom OAuth callback handling
 
@@ -390,7 +390,7 @@ function Dashboard() {
 
 ## API reference
 
-### addMcpServer()
+### `addMcpServer()`
 
 Add a connection to an MCP server and make its tools available to your agent.
 
@@ -415,30 +415,30 @@ async addMcpServer(
 
 #### Parameters
 
-- **`serverName`** (string, required) — Display name for the MCP server
-- **`url`** (string, required) — URL of the MCP server endpoint
-- **`options`** (object, optional) — Connection configuration:
-  - **`callbackHost`** — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
-  - **`agentsPrefix`** — URL prefix for OAuth callback path. Default: `"agents"`
-  - **`client`** — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
-  - **`transport`** — Transport layer configuration:
-    - **`headers`** — Custom HTTP headers for authentication
-    - **`type`** — Transport type: `"streamable-http"` (default), `"sse"`, or `"auto"`
+- `serverName` (string, required) — Display name for the MCP server
+- `url` (string, required) — URL of the MCP server endpoint
+- `options` (object, optional) — Connection configuration:
+  - `callbackHost` — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
+  - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`
+  - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
+  - `transport` — Transport layer configuration:
+    - `headers` — Custom HTTP headers for authentication
+    - `type` — Transport type: `"streamable-http"` (default), `"sse"`, or `"auto"`
 
 #### Returns
 
 A Promise that resolves to a discriminated union based on connection state:
 
-- **When `state` is `"authenticating"`:**
-  - **`id`** (string) — Unique identifier for this server connection
-  - **`state`** (`"authenticating"`) — Server is waiting for OAuth authorization
-  - **`authUrl`** (string) — OAuth authorization URL for user authentication
+- When `state` is `"authenticating"`:
+  - `id` (string) — Unique identifier for this server connection
+  - `state` (`"authenticating"`) — Server is waiting for OAuth authorization
+  - `authUrl` (string) — OAuth authorization URL for user authentication
 
-- **When `state` is `"ready"`:**
-  - **`id`** (string) — Unique identifier for this server connection
-  - **`state`** (`"ready"`) — Server is fully connected and operational
+- When `state` is `"ready"`:
+  - `id` (string) — Unique identifier for this server connection
+  - `state` (`"ready"`) — Server is fully connected and operational
 
-### removeMcpServer()
+### `removeMcpServer()`
 
 Disconnect from an MCP server and clean up its resources.
 
@@ -448,9 +448,9 @@ async removeMcpServer(id: string): Promise<void>
 
 #### Parameters
 
-- **`id`** (string, required) — Server connection ID returned from `addMcpServer()`
+- `id` (string, required) — Server connection ID returned from `addMcpServer()`
 
-### getMcpServers()
+### `getMcpServers()`
 
 Get the current state of all MCP server connections.
 
@@ -551,7 +551,7 @@ this.mcp.onServerStateChanged(() => {
 
 ### Lifecycle methods
 
-#### this.mcp.registerServer()
+#### `this.mcp.registerServer()`
 
 Register a server without immediately connecting.
 
@@ -568,7 +568,7 @@ async registerServer(
 ): Promise<string>
 ```
 
-#### this.mcp.connectToServer()
+#### `this.mcp.connectToServer()`
 
 Establish a connection to a previously registered server.
 
@@ -581,7 +581,7 @@ type MCPConnectionResult =
   | { state: "connected" }
 ```
 
-#### this.mcp.discoverIfConnected()
+#### `this.mcp.discoverIfConnected()`
 
 Check server capabilities if a connection is active.
 
@@ -598,7 +598,7 @@ type MCPDiscoverResult = {
 }
 ```
 
-#### this.mcp.closeConnection()
+#### `this.mcp.closeConnection()`
 
 Close the connection to a specific server while keeping it registered.
 
@@ -606,7 +606,7 @@ Close the connection to a specific server while keeping it registered.
 async closeConnection(id: string): Promise<void>
 ```
 
-#### this.mcp.closeAllConnections()
+#### `this.mcp.closeAllConnections()`
 
 Close all active server connections while preserving registrations.
 
@@ -614,7 +614,7 @@ Close all active server connections while preserving registrations.
 async closeAllConnections(): Promise<void>
 ```
 
-#### this.mcp.getAITools()
+#### `this.mcp.getAITools()`
 
 Get all discovered MCP tools in a format compatible with the AI SDK.
 

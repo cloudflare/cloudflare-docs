@@ -38,7 +38,7 @@ export class MyAgent extends AIChatAgent {
 
 </TypeScriptExample>
 
-Zero configuration required. The framework automatically:
+No configuration is required. The framework automatically:
 
 1. Scans your agent class for custom methods.
 2. Wraps them with agent context during initialization.
@@ -178,7 +178,7 @@ function logRequestInfo() {
 
 ## API reference
 
-### getCurrentAgent()
+### `getCurrentAgent()`
 
 Gets the current agent from any context where it is available.
 
@@ -197,7 +197,7 @@ function getCurrentAgent<T extends Agent>(): {
 
 </TypeScriptExample>
 
-**Returns:**
+#### Returns:
 
 | Property     | Type                      | Description                                                   |
 | ------------ | ------------------------- | ------------------------------------------------------------- |
@@ -206,7 +206,7 @@ function getCurrentAgent<T extends Agent>(): {
 | `request`    | `Request \| undefined`    | The HTTP request (if called from a request handler)           |
 | `email`      | `AgentEmail \| undefined` | The email (if called from an email handler)                   |
 
-**Usage:**
+#### Usage:
 
 <TypeScriptExample>
 
@@ -247,28 +247,28 @@ The context available depends on how the method was invoked:
 
 3. **Check for undefined**: The returned values may be `undefined` if called outside an agent context.
 
-<TypeScriptExample>
+   <TypeScriptExample>
 
-```ts
-const { agent } = getCurrentAgent();
-if (agent) {
-	// Safe to use agent
-	console.log(agent.name);
-}
-```
+   ```ts
+   const { agent } = getCurrentAgent();
+   if (agent) {
+   	// Safe to use agent
+   	console.log(agent.name);
+   }
+   ```
 
-</TypeScriptExample>
+   </TypeScriptExample>
 
 4. **Type the agent**: Pass your agent class as a type parameter for proper typing.
 
-<TypeScriptExample>
+   <TypeScriptExample>
 
-```ts
-const { agent } = getCurrentAgent<MyAgent>();
-// agent is typed as MyAgent | undefined
-```
+   ```ts
+   const { agent } = getCurrentAgent<MyAgent>();
+   // agent is typed as MyAgent | undefined
+   ```
 
-</TypeScriptExample>
+   </TypeScriptExample>
 
 ## Next steps
 

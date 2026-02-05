@@ -53,7 +53,7 @@ export default {
 
 Resolvers determine which Agent instance receives an incoming email. Choose the resolver that matches your use case.
 
-### createAddressBasedEmailResolver
+### `createAddressBasedEmailResolver`
 
 Recommended for inbound mail. Routes emails based on the recipient address.
 
@@ -77,7 +77,7 @@ const resolver = createAddressBasedEmailResolver("EmailAgent");
 
 The sub-address format (`agent+id@domain`) allows routing to different agent namespaces and instances from a single email domain.
 
-### createSecureReplyEmailResolver
+### `createSecureReplyEmailResolver`
 
 For reply flows with signature verification. Verifies that incoming emails are authentic replies to your outbound emails, preventing attackers from routing emails to arbitrary agent instances.
 
@@ -114,7 +114,7 @@ const resolver = createSecureReplyEmailResolver(env.EMAIL_SECRET, {
 
 **When to use:** If your agent initiates email conversations and you need replies to route back to the same agent instance securely.
 
-### createCatchAllEmailResolver
+### `createCatchAllEmailResolver`
 
 For single-instance routing. Routes all emails to a specific agent instance regardless of the recipient address.
 
@@ -312,66 +312,66 @@ When your agent sends emails and expects replies, use secure reply routing to pr
 
 1. Add a secret to your `wrangler.jsonc`:
 
-<WranglerConfig>
+   <WranglerConfig>
 
-```jsonc
-{
-	"vars": {
-		"EMAIL_SECRET": "change-me-in-production",
-	},
-}
-```
+   ```jsonc
+   {
+	   "vars": {
+		   "EMAIL_SECRET": "change-me-in-production",
+	   },
+   }
+   ```
 
-</WranglerConfig>
+   </WranglerConfig>
 
-For production, use Wrangler secrets instead:
+   For production, use Wrangler secrets instead:
 
-```sh
-npx wrangler secret put EMAIL_SECRET
-```
+   ```sh
+   npx wrangler secret put EMAIL_SECRET
+   ```
 
 2. Use the combined resolver pattern:
 
-<TypeScriptExample>
+   <TypeScriptExample>
 
-```ts
-export default {
-	async email(message, env) {
-		const secureReplyResolver = createSecureReplyEmailResolver(
-			env.EMAIL_SECRET,
-		);
-		const addressResolver = createAddressBasedEmailResolver("EmailAgent");
+   ```ts
+   export default {
+   	async email(message, env) {
+   		const secureReplyResolver = createSecureReplyEmailResolver(
+   			env.EMAIL_SECRET,
+   		);
+   		const addressResolver = createAddressBasedEmailResolver("EmailAgent");
 
-		await routeAgentEmail(message, env, {
-			resolver: async (email, env) => {
-				const replyRouting = await secureReplyResolver(email, env);
-				if (replyRouting) return replyRouting;
-				return addressResolver(email, env);
-			},
-		});
-	},
-};
-```
+   		await routeAgentEmail(message, env, {
+   			resolver: async (email, env) => {
+   				const replyRouting = await secureReplyResolver(email, env);
+   				if (replyRouting) return replyRouting;
+   				return addressResolver(email, env);
+   			},
+   		});
+   	},
+   };
+   ```
 
-</TypeScriptExample>
+   </TypeScriptExample>
 
 3. Sign outbound emails:
 
-<TypeScriptExample>
+   <TypeScriptExample>
 
-```ts
-class MyAgent extends Agent {
-	async onEmail(email: AgentEmail) {
-		await this.replyToEmail(email, {
-			fromName: "My Agent",
-			body: "Thanks for your email!",
-			secret: this.env.EMAIL_SECRET, // Signs the routing headers
-		});
-	}
-}
-```
+   ```ts
+   class MyAgent extends Agent {
+   	async onEmail(email: AgentEmail) {
+   		await this.replyToEmail(email, {
+   			fromName: "My Agent",
+   			body: "Thanks for your email!",
+   			secret: this.env.EMAIL_SECRET, // Signs the routing headers
+   		});
+   	}
+   }
+   ```
 
-</TypeScriptExample>
+   </TypeScriptExample>
 
 ### Enforcement behavior
 
@@ -462,7 +462,7 @@ export default {
 
 ## API reference
 
-### routeAgentEmail
+### `routeAgentEmail`
 
 ```ts
 function routeAgentEmail<Env>(
@@ -482,7 +482,7 @@ Routes an incoming email to the appropriate Agent based on the resolver's decisi
 | `resolver`  | Function that determines which agent to route the email to                                                                                                                              |
 | `onNoRoute` | Optional callback invoked when no routing information is found. Use this to reject the email or perform custom handling. If not provided, a warning is logged and the email is dropped. |
 
-### createSecureReplyEmailResolver
+### `createSecureReplyEmailResolver`
 
 ```ts
 function createSecureReplyEmailResolver(
@@ -511,7 +511,7 @@ Creates a resolver for routing email replies with signature verification.
 | `maxAge`             | Maximum age of signature in seconds (default: 30 days / 2592000 seconds) |
 | `onInvalidSignature` | Optional callback for logging when signature verification fails          |
 
-### signAgentHeaders
+### `signAgentHeaders`
 
 ```ts
 function signAgentHeaders(

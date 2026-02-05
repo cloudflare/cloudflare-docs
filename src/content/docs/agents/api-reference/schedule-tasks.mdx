@@ -545,7 +545,7 @@ When `destroy()` is called from within a scheduled task, the Agent SDK defers th
 
 The SDK includes utilities for parsing natural language scheduling requests with AI.
 
-### getSchedulePrompt()
+### `getSchedulePrompt()`
 
 Returns a system prompt for parsing natural language into scheduling parameters:
 
@@ -603,7 +603,7 @@ class SmartScheduler extends Agent {
 
 </TypeScriptExample>
 
-### scheduleSchema
+### `scheduleSchema`
 
 A Zod schema for validating parsed scheduling data:
 
@@ -638,19 +638,19 @@ import { scheduleSchema } from "agents";
 | **Complex logic**  | No                 | No                | Yes                 |
 | **Human approval** | No                 | No                | Yes                 |
 
-**Use Queue when:**
+Use Queue when:
 
 - You need background processing without blocking the response
 - Tasks should run ASAP but do not need to block
 - Order matters (FIFO)
 
-**Use Scheduling when:**
+Use Scheduling when:
 
 - Tasks need to run at a specific time
 - You need recurring jobs (cron)
 - Delayed execution (debouncing, retries)
 
-**Use Workflows when:**
+Use Workflows when:
 
 - Multi-step processes with dependencies
 - Automatic retries with backoff
@@ -659,7 +659,7 @@ import { scheduleSchema } from "agents";
 
 ## API reference
 
-### schedule()
+### `schedule()`
 
 ```ts
 async schedule<T>(
@@ -685,7 +685,7 @@ Tasks that set a callback for a method that does not exist will throw an excepti
 
 :::
 
-### scheduleEvery()
+### `scheduleEvery()`
 
 ```ts
 async scheduleEvery<T>(
@@ -712,7 +712,7 @@ Schedule a task to run repeatedly at a fixed interval.
 - If callback throws an error, the interval continues
 - Cancel with `cancelSchedule(id)` to stop the entire interval
 
-### getSchedule()
+### `getSchedule()`
 
 ```ts
 async getSchedule<T>(id: string): Promise<Schedule<T> | undefined>
@@ -720,7 +720,7 @@ async getSchedule<T>(id: string): Promise<Schedule<T> | undefined>
 
 Get a scheduled task by ID. Returns `undefined` if not found.
 
-### getSchedules()
+### `getSchedules()`
 
 ```ts
 getSchedules<T>(criteria?: {
@@ -732,7 +732,7 @@ getSchedules<T>(criteria?: {
 
 Get scheduled tasks matching the criteria.
 
-### cancelSchedule()
+### `cancelSchedule()`
 
 ```ts
 async cancelSchedule(id: string): Promise<boolean>

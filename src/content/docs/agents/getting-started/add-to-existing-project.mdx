@@ -12,12 +12,12 @@ import {
 	LinkCard,
 } from "~/components";
 
-This guide shows how to add agents to an existing Cloudflare Workers project. If you are starting fresh, see [Building a chat agent](/agents/getting-started/build-a-chat-agent/) instead.
+This guide shows how to add agents to an existing Cloudflare Workers project. If you are starting fresh, refer to [Building a chat agent](/agents/getting-started/build-a-chat-agent/) instead.
 
 ## Prerequisites
 
-- An existing Cloudflare Workers project with `wrangler.jsonc`
-- Node.js 18+
+- An existing Cloudflare Workers project with a Wrangler configuration file
+- Node.js 18 or newer
 
 ## 1. Install the package
 
@@ -59,7 +59,7 @@ export class Counter extends Agent<Env, CounterState> {
 
 </TypeScriptExample>
 
-## 3. Update wrangler.jsonc
+## 3. Update Wrangler configuration
 
 Add the Durable Object binding and migration:
 
@@ -95,9 +95,9 @@ Add the Durable Object binding and migration:
 **Key points:**
 
 - `name` in bindings becomes the property on `env` (for example, `env.Counter`)
-- `class_name` must match your exported class name exactly
+- `class_name` must exactly match your exported class name
 - `new_sqlite_classes` enables SQLite storage for state persistence
-- The `nodejs_compat` flag is required for the agents package
+- `nodejs_compat` flag is required for the agents package
 
 ## 4. Export the Agent class
 
@@ -196,7 +196,7 @@ export default {
 
 </TypeScriptExample>
 
-Configure assets in `wrangler.jsonc`:
+Configure assets in the Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -212,7 +212,7 @@ Configure assets in `wrangler.jsonc`:
 
 ## 6. Add TypeScript types
 
-You can generate types automatically from your `wrangler.jsonc`:
+You can generate types automatically from your Wrangler configuration file:
 
 ```sh
 npx wrangler types env.d.ts
@@ -233,7 +233,7 @@ interface Env {
 }
 ```
 
-See [Configuration](/agents/api-reference/configuration/#generating-types) for more details on type generation.
+Refer to [Configuration](/agents/api-reference/configuration/#generating-types) for more details on type generation.
 
 ## 7. Connect from the frontend
 
@@ -308,7 +308,7 @@ export class Scheduler extends Agent {
 
 </TypeScriptExample>
 
-Update `wrangler.jsonc`:
+Update the Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -389,7 +389,7 @@ const agentResponse = await routeAgentRequest(request, env, {
 
 </TypeScriptExample>
 
-See [Routing](/agents/api-reference/routing/) for more options including CORS, custom instance naming, and location hints.
+Refer to [Routing](/agents/api-reference/routing/) for more options including CORS, custom instance naming, and location hints.
 
 ### Accessing agents from server code
 
@@ -417,15 +417,15 @@ export default {
 
 ## Troubleshooting
 
-### Agent not found or 404 errors
+### Agent not found, or 404 errors
 
 1. **Check the export** - Agent class must be exported from your main entry point.
-2. **Check the binding** - `class_name` in `wrangler.jsonc` must match the exported class name exactly.
+2. **Check the binding** - `class_name` in the Wrangler configuration file must exactly match the exported class name.
 3. **Check the route** - Default route is `/agents/{agent-name}/{instance-name}`.
 
 ### No such Durable Object class error
 
-Add the migration to `wrangler.jsonc`:
+Add the migration to the Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -444,7 +444,7 @@ Add the migration to `wrangler.jsonc`:
 
 ### WebSocket connection fails
 
-Ensure your routing passes the response through unchanged:
+Ensure your routing passes the response unchanged:
 
 <TypeScriptExample>
 

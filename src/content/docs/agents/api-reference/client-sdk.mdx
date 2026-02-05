@@ -464,7 +464,7 @@ const user = await agent.call("getUser", [id]);
 
 ### 2. Reconnection is automatic
 
-The client auto-reconnects and the agent automatically sends the current state on each connection. Your `onStateUpdate` callback will fire with the latest state — no manual re-sync needed.
+The client auto-reconnects and the agent automatically sends the current state on each connection. Your `onStateUpdate` callback will fire with the latest state — no manual re-sync is needed.
 
 ### 3. Optimize query caching
 

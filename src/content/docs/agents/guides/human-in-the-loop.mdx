@@ -36,7 +36,7 @@ Cloudflare provides two main patterns for human-in-the-loop:
 | **Workflow approval** | Multi-step processes, durable approval gates | `waitForApproval()` |
 | **MCP elicitation**   | MCP servers requesting structured user input | `elicitInput()`     |
 
-**Decision guide:**
+Decision guide:
 
 - Use **Workflow approval** when you need durable, multi-step processes with approval gates that can wait hours, days, or weeks
 - Use **MCP elicitation** when building MCP servers that need to request additional structured input from users during tool execution
@@ -311,7 +311,7 @@ class ExpenseAgent extends Agent<Env, ExpenseState> {
 {
 	"name": "expense-approval",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-02-11",
+	"compatibility_date": "2026-01-20",
 	"compatibility_flags": ["nodejs_compat"],
 	"durable_objects": {
 		"bindings": [{ "name": "EXPENSE_AGENT", "class_name": "ExpenseAgent" }],
@@ -409,7 +409,7 @@ export class CounterMCP extends McpAgent<Env, State, {}> {
 
 </TypeScriptExample>
 
-### Elicitation vs workflow approval
+## Elicitation vs workflow approval
 
 | Aspect       | MCP Elicitation               | Workflow Approval             |
 | ------------ | ----------------------------- | ----------------------------- |

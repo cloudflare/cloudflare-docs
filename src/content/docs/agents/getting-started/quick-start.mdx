@@ -162,9 +162,9 @@ export default function App() {
 
 Key points:
 
-- **`useAgent`** connects to your agent via WebSocket
-- **`onStateUpdate`** fires whenever the agent's state changes
-- **`agent.stub.methodName()`** calls methods marked with `@callable()` on your agent
+- `useAgent` connects to your agent via WebSocket
+- `onStateUpdate` fires whenever the agent's state changes
+- `agent.stub.methodName()` calls methods marked with `@callable()` on your agent
 
 ## What just happened?
 
@@ -288,6 +288,18 @@ agent.stub.increment();
 
 Now that you have a working agent, explore these topics:
 
+### Common patterns
+
+| Learn how to             | Refer to                                                     |
+| ------------------------ | ------------------------------------------------------------ |
+| Add AI/LLM capabilities  | [Using AI models](/agents/api-reference/using-ai-models/)    |
+| Expose tools via MCP     | [MCP servers](/agents/model-context-protocol/mcp-agent-api/) |
+| Run background tasks     | [Schedule tasks](/agents/api-reference/schedule-tasks/)      |
+| Handle emails            | [Email routing](/agents/api-reference/email/)                |
+| Use Cloudflare Workflows | [Run Workflows](/agents/api-reference/run-workflows/)        |
+
+### Explore more
+
 <LinkCard
 	title="State management"
 	href="/agents/api-reference/store-and-sync-state/"
@@ -311,13 +323,3 @@ Now that you have a working agent, explore these topics:
 	href="/agents/api-reference/schedule-tasks/"
 	description="Run tasks on a delay, schedule, or cron."
 />
-
-### Common patterns
-
-| I want to...             | Read...                                                      |
-| ------------------------ | ------------------------------------------------------------ |
-| Add AI/LLM capabilities  | [Using AI models](/agents/api-reference/using-ai-models/)    |
-| Expose tools via MCP     | [MCP servers](/agents/model-context-protocol/mcp-agent-api/) |
-| Run background tasks     | [Schedule tasks](/agents/api-reference/schedule-tasks/)      |
-| Handle emails            | [Email routing](/agents/api-reference/email/)                |
-| Use Cloudflare Workflows | [Run Workflows](/agents/api-reference/run-workflows/)        |

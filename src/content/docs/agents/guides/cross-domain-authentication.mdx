@@ -13,19 +13,19 @@ When your Agents are deployed, to keep things secure, send a token from the clie
 
 WebSockets are not HTTP, so the handshake is limited when making cross-domain connections.
 
-**What you cannot send:**
+You cannot send:
 
 - Custom headers during the upgrade
 - `Authorization: Bearer ...` on connect
 
-**What works:**
+You can:
 
 - Put a signed, short-lived token in the connection URL as query parameters
 - Verify the token in your server's connect path
 
 :::note
 
-Never place raw secrets in URLs. Prefer a JWT or a signed token that expires quickly and is scoped to the user or room.
+Never place raw secrets in URLs. Use a JWT or a signed token that expires quickly, and is scoped to the user or room.
 
 :::
 

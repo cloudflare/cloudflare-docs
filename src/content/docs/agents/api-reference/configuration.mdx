@@ -10,9 +10,10 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 	LinkCard,
+	DashButton
 } from "~/components";
 
-This guide covers everything you need to configure agents for local development and production deployment, including wrangler.jsonc setup, type generation, environment variables, and the Cloudflare dashboard.
+This guide covers everything you need to configure agents for local development and production deployment, including Wrangler configuration file setup, type generation, environment variables, and the Cloudflare dashboard.
 
 ## Project structure
 
@@ -33,7 +34,7 @@ The typical file structure for an Agent project created from `npm create cloudfl
 - wrangler.jsonc your Workers and Agent configuration
 </FileTree>
 
-## wrangler.jsonc
+## Wrangler configuration file
 
 The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. Here is a complete example for an agents project:
 
@@ -91,7 +92,7 @@ The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. He
 
 ### Key fields
 
-#### compatibility_flags
+#### `compatibility_flags`
 
 The `nodejs_compat` flag is required for agents:
 
@@ -107,7 +108,7 @@ The `nodejs_compat` flag is required for agents:
 
 This enables Node.js compatibility mode, which agents depend on for crypto, streams, and other Node.js APIs.
 
-#### durable_objects.bindings
+#### `durable_objects.bindings`
 
 Each agent class needs a binding:
 
@@ -133,7 +134,9 @@ Each agent class needs a binding:
 | `name`       | The property name on `env`. Use this in code: `env.Counter` |
 | `class_name` | Must match the exported class name exactly                  |
 
-**When name and class_name differ:**
+:::note[When `name` and `class_name` differ]
+
+When `name` and `class_name` differ, follow the pattern shown below:
 
 <WranglerConfig>
 
@@ -153,8 +156,9 @@ Each agent class needs a binding:
 </WranglerConfig>
 
 This is useful when you want environment variable-style naming (`COUNTER_DO`) but more descriptive class names (`CounterAgent`).
+:::
 
-#### migrations
+#### `migrations`
 
 Migrations tell Cloudflare how to set up storage for your Durable Objects:
 
@@ -180,7 +184,7 @@ Migrations tell Cloudflare how to set up storage for your Durable Objects:
 | `deleted_classes`    | Classes being removed                                        |
 | `renamed_classes`    | Classes being renamed                                        |
 
-#### assets
+#### `assets`
 
 For serving static files (HTML, CSS, JS):
 
@@ -218,7 +222,7 @@ export default {
 
 </TypeScriptExample>
 
-#### ai
+#### `ai`
 
 For Workers AI integration:
 
@@ -339,7 +343,7 @@ Add a script for easy regeneration:
 
 ## Environment variables and secrets
 
-### Local development (.dev.vars)
+### Local development (`.dev.vars`)
 
 Create a `.dev.vars` file for local secrets (add to `.gitignore`):
 
@@ -382,7 +386,7 @@ npx wrangler secret delete OPENAI_API_KEY
 
 ### Non-secret variables
 
-For non-sensitive configuration, use `vars` in wrangler.jsonc:
+For non-sensitive configuration, use `vars` in the Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -466,14 +470,15 @@ npx wrangler dev
 
 Durable Object state is persisted locally in `.wrangler/state/`:
 
-```txt
-.wrangler/
-└── state/
-    └── v3/
-        └── d1/
-            └── miniflare-D1DatabaseObject/
-                └── ... (SQLite files)
-```
+{/* prettier-ignore */}
+<FileTree>
+- .wrangler/
+  - state/
+    - v3/
+      - d1/
+        - miniflare-D1DatabaseObject/
+          - ... (SQLite files)
+</FileTree>
 
 ### Clearing local state
 
@@ -513,10 +518,9 @@ When you deploy, Cloudflare automatically creates:
 
 ### Viewing Durable Objects
 
-1. Go to [dash.cloudflare.com](https://dash.cloudflare.com).
-2. Select your account, then Workers & Pages.
-3. Select your Worker.
-4. Go to the **Durable Objects** tab.
+Log in to the Cloudflare dashboard, then go to Durable Objects.
+
+<DashButton url="/?to=/:account/workers/durable-objects" />
 
 Here you can:
 
@@ -562,7 +566,7 @@ This:
 
 ### Custom domain
 
-Add a route in wrangler.jsonc:
+Add a route in the Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -618,7 +622,7 @@ npx wrangler rollback
 
 ### Environment configuration
 
-Define environments in wrangler.jsonc:
+Define environments in the Wrangler configuration file:
 
 <WranglerConfig>
 

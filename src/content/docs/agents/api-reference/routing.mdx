@@ -15,9 +15,9 @@ When a request comes in, `routeAgentRequest()` examines the URL and routes it to
 
 ```txt
 https://your-worker.dev/agents/{agent-name}/{instance-name}
-                         └─────┬─────┘   └─────┬──────┘
-                        Class name     Unique instance ID
-                       (kebab-case)
+                               └────┬────┘   └─────┬─────┘
+                               Class name     Unique instance ID
+                              (kebab-case)
 ```
 
 **Example URLs:**
@@ -39,7 +39,7 @@ Agent class names are automatically converted to kebab-case for URLs:
 | `ChatRoom`    | `/agents/chat-room/...`    |
 | `AIAssistant` | `/agents/ai-assistant/...` |
 
-The router matches both the original name and kebab-case version, so these all work:
+The router matches both the original name and kebab-case version, so you can use either:
 
 - `useAgent({ agent: "Counter" })` → `/agents/counter/...`
 - `useAgent({ agent: "counter" })` → `/agents/counter/...`
@@ -240,7 +240,7 @@ if (url.pathname.startsWith("/doc/")) {
 
 ### Receiving the instance identity (client-side)
 
-When using `basePath`, the client does not know which instance it connected to until the server tells it. The agent automatically sends its identity on connection:
+When using `basePath`, the client does not know which instance it connected to until the server returns this information. The agent automatically sends its identity on connection:
 
 <TypeScriptExample>
 
@@ -469,7 +469,7 @@ export default {
 For agent-specific initialization, use `getAgentByName` instead where you control exactly which agent receives the props.
 
 :::note
-For `McpAgent`, props are automatically stored and accessible via `this.props`. See [MCP servers](/agents/model-context-protocol/mcp-agent-api/) for details.
+For `McpAgent`, props are automatically stored and accessible via `this.props`. Refer to [MCP servers](/agents/model-context-protocol/mcp-agent-api/) for details.
 :::
 
 ### Hooks
@@ -493,7 +493,7 @@ const response = await routeAgentRequest(request, env, {
 
 </TypeScriptExample>
 
-These hooks are useful for authentication and validation. See [Cross-domain authentication](/agents/guides/cross-domain-authentication/) for detailed examples.
+These hooks are useful for authentication and validation. Refer to [Cross-domain authentication](/agents/guides/cross-domain-authentication/) for detailed examples.
 
 ## Server-side agent access
 
@@ -526,7 +526,7 @@ export default {
 
 </TypeScriptExample>
 
-For options like `locationHint`, `jurisdiction`, and `props`, see [Routing options](#routing-options).
+For options like `locationHint`, `jurisdiction`, and `props`, refer to [Routing options](#routing-options).
 
 ## Sub-paths and HTTP methods
 
@@ -746,7 +746,7 @@ export default app;
 
 </TypeScriptExample>
 
-For WebSocket authentication patterns (tokens in URLs, JWT refresh), see [Cross-domain authentication](/agents/guides/cross-domain-authentication/).
+For WebSocket authentication patterns (tokens in URLs, JWT refresh), refer to [Cross-domain authentication](/agents/guides/cross-domain-authentication/).
 
 ## Troubleshooting
 
@@ -770,7 +770,7 @@ The error message lists available agents. Check:
 2. Ensure CORS is enabled if connecting from a different origin.
 3. Check browser dev tools for the actual error.
 
-### basePath not working
+### `basePath` not working
 
 1. Ensure your Worker handles the custom path and forwards to the agent.
 2. Use `getAgentByName()` + `agent.fetch(request)` to forward requests.
@@ -779,7 +779,7 @@ The error message lists available agents. Check:
 
 ## API reference
 
-### routeAgentRequest(request, env, options?)
+### `routeAgentRequest(request, env, options?)`
 
 Routes a request to the appropriate agent.
 
@@ -796,7 +796,7 @@ Routes a request to the appropriate agent.
 
 **Returns:** `Promise<Response | undefined>` - Response if matched, undefined if no agent route.
 
-### getAgentByName(namespace, name, options?)
+### `getAgentByName(namespace, name, options?)`
 
 Get an agent instance by name for server-side RPC or request forwarding.
 
@@ -810,7 +810,7 @@ Get an agent instance by name for server-side RPC or request forwarding.
 
 **Returns:** `Promise<DurableObjectStub<T>>` - Typed stub for calling agent methods or forwarding requests.
 
-### useAgent(options) / AgentClient options
+### `useAgent(options)` / `AgentClient` options
 
 Client connection options for custom routing:
 
@@ -832,7 +832,7 @@ Client connection options for custom routing:
 | `identified` | `boolean`       | Whether identity has been received (reactive) |
 | `ready`      | `Promise<void>` | Resolves when identity is received            |
 
-### Agent.options (server)
+### `Agent.options` (server)
 
 Static options for agent configuration:
 
