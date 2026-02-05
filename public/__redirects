@@ -2335,6 +2335,9 @@
 # Pub/Sub (removed product)
 /pub-sub/* / 301
 
+# DMARC Management renamed to New Product
+/dmarc-management/* /new-product/:splat 301
+
 # AI Gateway
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
 /ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
