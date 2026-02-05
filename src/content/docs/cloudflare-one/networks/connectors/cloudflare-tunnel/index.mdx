@@ -7,7 +7,9 @@ sidebar:
 
 import { Render, Stream } from "~/components";
 
-Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. With Tunnel, you do not send traffic to an external IP — instead, a lightweight daemon in your infrastructure (`cloudflared`) creates [outbound-only connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/#outbound-only-connection) to Cloudflare's global network. Cloudflare Tunnel can connect HTTP web servers, [SSH servers](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/), [remote desktops](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/), and other protocols safely to Cloudflare. This way, your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
+Cloudflare Tunnel provides you with a secure way to connect your resources (HTTP web servers, [SSH servers](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/), [remote desktops](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/), and other protocols) to Cloudflare without a publicly routable IP address.
+
+With Tunnel, you do not send traffic to an external IP — instead, a lightweight daemon in your infrastructure (`cloudflared`) creates [outbound-only connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/#outbound-only-connection) to Cloudflare's global network. This way, your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
 
 Refer to our [reference architecture](/reference-architecture/architectures/sase/) for details on how to implement Cloudflare Tunnel into your existing infrastructure.
 
@@ -19,7 +21,48 @@ Refer to our [reference architecture](/reference-architecture/architectures/sase
 
 ## How it works
 
-Cloudflared establishes [outbound connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/#outbound-only-connection) (tunnels) between your resources and Cloudflare's global network. Tunnels are persistent objects that route traffic to DNS records. Within the same tunnel, you can run as many 'cloudflared' processes (connectors) as needed. These processes will establish connections to Cloudflare and send traffic to the nearest Cloudflare data center.
+A Cloudflare Tunnel is a secure, outbound-only pathway you can establish between your infrastructure and Cloudflare's global network. You make a Tunnel operational with three elements: 
+
+- Tunnel configuration (a Tunnel name, a Tunnel ID, and Tunnel routes)
+- `cloudflared` daemon.
+- At least one `cloudflared` replica.
+
+`cloudflared` establishes [outbound-only connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/#outbound-only-connection) (tunnels) between your resources and Cloudflare's global network. Tunnels are persistent objects that route traffic from the public Internet and private users to applications and services (such as RDP, SSH, and SMB) in your environment.
+
+Each Tunnel must run one or more `cloudflared` replicas to proxy traffic. Replicas are unique instances of `cloudflared` running on a host machine. Without a running replica, the tunnel exists only as a configuration container and will not function. For high availability, you can run up to 25 replicas per tunnel. Each replica maintains four connections to the nearest Cloudflare data centers.
+
+### 1. Set up a Tunnel
+
+To make a Cloudflare Tunnel operational, you will complete the following steps:
+
+1. [Create a Tunnel]() in the Cloudflare dashboard to generate a unique Tunnel ID.
+2. Install `cloudflared` on your host machine.
+3. Run at least one `cloudflared` [replica]() on your host machine using the specific Tunnel token provided in the Cloudflare dashboard during setup.
+
+Tunnel configuration (such as Tunnel ID, Tunnel name, Tunnel routes) lives on the Cloudflare dashboard. The `cloudflared` replica and `cloudflared` software live on your host machine. 
+
+At this point, the running `cloudflared` replica has connected the Tunnel to Cloudflare data centers, but no traffic is being sent to it from the public Internet or private users. The Tunnel also does not yet know where to send traffic even if it were received.
+
+:::note
+
+You can also create a locally-managed tunnel. 
+
+TODO: what's our current stance on local tunnels?
+
+:::
+
+### 2. Route traffic to your Tunnel and your resources
+
+Routes are a Tunnel configuration that describes which traffic is sent to the Tunnel and allows the Tunnel to decide where that traffic should be routed after it arrives at a specific replica. Each route has two elements:
+
+- **Source**: Describes how users connect to the Tunnel (such as, a DNS record like `blog.example.com`.)
+- **Destination**: Describes where the replica must route that traffic (such as, `localhost:3000`)
+
+#### Private vs. public routing
+
+Public routing uses published application routes. In published application routes, the source is a hostname (such as, `blog.example.com`) and the destination is a service on the host machine (such as, `localhost:3000`). When you set up a published application route and configure a hostname in the Cloudflare dashboard, Cloudflare will automatically create a DNS record for that hostname. If the route is created any other method (like CLI or API), the DNS record needs to be created manually.
+
+In private routing, the source and destination are the same because the request is received by the Tunnel within a private network and sent to a resource on the same private network. Administrators can configure private routes by adding a CIDR range or a private hostname in the Cloudflare dashboard. Private routes are accessible only by users running WARP (or RBI, or another onramp) connected to your specific [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization). Private routes are not accessible by public Internet.
 
 ![How an HTTP request reaches a private application connected with Cloudflare Tunnel](~/assets/images/cloudflare-one/connections/connect-apps/handshake.jpg)
 
