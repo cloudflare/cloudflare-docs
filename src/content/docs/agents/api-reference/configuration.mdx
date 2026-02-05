@@ -10,7 +10,7 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 	LinkCard,
-	DashButton
+	DashButton,
 } from "~/components";
 
 This guide covers everything you need to configure agents for local development and production deployment, including Wrangler configuration file setup, type generation, environment variables, and the Cloudflare dashboard.
@@ -284,8 +284,6 @@ This generates just your bindings without Cloudflare runtime types.
 
 ### Example generated output
 
-<TypeScriptExample>
-
 ```ts
 // env.d.ts (generated)
 declare namespace Cloudflare {
@@ -297,8 +295,6 @@ declare namespace Cloudflare {
 }
 interface Env extends Cloudflare.Env {}
 ```
-
-</TypeScriptExample>
 
 ### Manual type definition
 
@@ -540,7 +536,7 @@ npx wrangler tail
 Or in the dashboard:
 
 1. Go to your Worker.
-2. Select the **Logs** tab.
+2. Select the **Observability** tab.
 3. Enable real-time logs.
 
 Filter by:
