@@ -3,14 +3,14 @@ pcx_content_type: how-to
 title: Hexnode
 sidebar:
   order: 2
-description: Deploy Cloudflare WARP with Hexnode MDM - Step-by-step guide for Windows, macOS, iOS, and Android.
+description: Deploy the Cloudflare One Client with Hexnode MDM - Step-by-step guide for Windows, macOS, iOS, and Android.
 ---
 
 import { Render } from "~/components";
 
 ## Windows
 
-1. Create a script file with `.bat`, `.cmd`, and `.ps1` file formats to download, install and configure the Cloudflare WARP client Windows application on the device. Listed below is a sample script with all of the configurable parameters:
+1. Create a script file with `.bat`, `.cmd`, and `.ps1` file formats to download, install and configure the Cloudflare One Client (formerly WARP Client) Windows application on the device. Listed below is a sample script with all of the configurable parameters:
 
    ```python
    <# Choose file name for downloading application #>
@@ -52,7 +52,7 @@ import { Render } from "~/components";
 
 ## macOS
 
-1. [Download](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) the Cloudflare WARP client for macOS.
+1. [Download](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download-cloudflare-one-client/#macos) the Cloudflare One Client for macOS.
 
 2. On your Hexnode console, go to **Apps** > **Add Apps** > **Enterprise App**.
 
@@ -90,11 +90,11 @@ import { Render } from "~/components";
 
 9. Go to **macOS** > **App Management** > **Mandatory Apps** and start setting up the policy.
 
-10. Select **Add** and select the previously uploaded WARP client app.
+10. Select **Add** and select the previously uploaded Cloudflare One Client app.
 
 11. Go to **App Configurations** > **Add new configuration**.
 
-12. Select the _WARP client_ app and upload the XML file from Step 6.
+12. Select the Cloudflare One Client app and upload the XML file from Step 6.
 
 13. Now go to **Policy Targets** and associate the policy with the target entities.
 

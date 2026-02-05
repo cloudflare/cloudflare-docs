@@ -7,15 +7,15 @@ sidebar:
 
 import { Render } from "~/components";
 
-This guide covers how to deploy the Cloudflare WARP client using Microsoft Intune.
+This guide covers how to deploy the Cloudflare One Client (formerly WARP Client) using Microsoft Intune.
 
 ## Windows
 
-### Deploy the WARP client
+### Deploy the Cloudflare One Client
 
-To deploy WARP on Windows using Intune:
+To deploy the Cloudflare One Client on Windows using Intune:
 
-1. [Download the `Cloudflare_WARP_<VERSION>.msi` installer](/cloudflare-one/team-and-resources/devices/warp/download-warp/#windows).
+1. [Download the `Cloudflare_WARP_<VERSION>.msi` installer](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download-cloudflare-one-client/#windows).
 2. Log in to your Microsoft Intune account.
 3. Go to **Apps** > **All Apps** > **Add**.
 4. In **App type**, select _Line-of-business app_ from the drop-down menu. Select **Select**.
@@ -29,16 +29,16 @@ To deploy WARP on Windows using Intune:
    ```txt
    /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
    ```
-   Refer to [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument. You can change these parameters at any time by pushing a new [MDM file](#update-mdm-parameters).
+   Refer to [deployment parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/) for a description of each argument. You can change these parameters at any time by pushing a new [MDM file](#update-mdm-parameters).
 12. Select **Next**.
-13. Add the users or groups who require Cloudflare WARP and select **Next**.
+13. Add the users or groups who require the Cloudflare One Client and select **Next**.
 14. Review your configuration and select **Create**.
 
-Intune is now configured to deploy the WARP client.
+Intune is now configured to deploy the Cloudflare One Client.
 
 ### Update MDM parameters
 
-You can use Intune to update [MDM parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/) for the WARP client. On Windows, these parameters are stored on the local device in `C:\ProgramData\Cloudflare\mdm.xml`.
+You can use Intune to update [MDM parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/) for the Cloudflare One Client. On Windows, these parameters are stored on the local device in `C:\ProgramData\Cloudflare\mdm.xml`.
 
 To push a new `mdm.xml` file using Intune:
 
@@ -46,8 +46,8 @@ To push a new `mdm.xml` file using Intune:
 2.  Go to **Devices** > **Scripts and remediations**.
 3.  Select the **Platform scripts** tab and select **Add**.
 4.  Select **Windows 10 and later**.
-5.  Enter a name for the script (for example, `Deploy Cloudflare mdm.xml`).
-6.  In **PowerShell script**, upload the following `.ps1` file. Be sure to modify the XML content with your desired [parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
+5. Enter a name for the script (for example, `Deploy Cloudflare mdm.xml`).
+6. In **PowerShell script**, upload the following `.ps1` file. Be sure to modify the XML content with your desired [parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/).
 
         ```powershell title="mdm-template.ps1"
         # Define the path to the file
@@ -104,13 +104,13 @@ To push a new `mdm.xml` file using Intune:
 7.  In **Assignments**, select the Windows devices that should receive the new `mdm.xml` file.
 8.  To deploy the script, select **Add**.
 
-Intune will now execute the Powershell script on the target devices and overwrite the previous `mdm.xml` file. Once the new `mdm.xml` file is created, WARP will immediately start using the new configuration. <Render file="warp/connectivity-status-check" product="cloudflare-one" />
+Intune will now execute the Powershell script on the target devices and overwrite the previous `mdm.xml` file. Once the new `mdm.xml` file is created, the Cloudflare One Client will immediately start using the new configuration. <Render file="warp/connectivity-status-check" product="cloudflare-one" />
 
 If you prefer to use Intune's Win32 App tool to run the Powershell script, refer to the [Intune documentation](https://learn.microsoft.com/en-us/mem/intune/apps/apps-win32-app-management).
 
 ## macOS
 
-The following steps outline deploying WARP on macOS using Intune.
+The following steps outline deploying the Cloudflare One Client on macOS using Intune.
 
 <Render file="warp/intune-lob-caution" product="cloudflare-one" />
 
@@ -123,13 +123,13 @@ The following steps outline deploying WARP on macOS using Intune.
 ### Deployment order
 
 :::tip[Best practice]
-Deploy configuration profiles (steps 1, 2, and 3) before the WARP application (step 4) itself. This order ensures that when the WARP client installs, it already has the required permissions and certificates, avoiding failed installations.
+Deploy configuration profiles (steps 1, 2, and 3) before the Cloudflare One Client application (step 4) itself. This order ensures that when the client installs, it already has the required permissions and certificates, avoiding failed installations.
 :::
 
 - Upload user-side certificate.
 - Allow system extensions (bundle ID and team identifier policy).
 - Upload MobileConfig (custom configuration policy).
-- Upload and assign the WARP `.pkg` (application policy).
+- Upload and assign the Cloudflare One Client `.pkg` (application policy).
 
 ### 1. Upload user-side certificate
 
@@ -163,9 +163,9 @@ Deploy configuration profiles (steps 1, 2, and 3) before the WARP application (s
 
 Sharing this certificate with Intune automates the installation of this certificate on your user devices, creating trust between browsers on a user's device and Cloudflare.
 
-### 2. Allow WARP system extensions
+### 2. Allow Cloudflare One Client system extensions
 
-Before deploying WARP, you need to allow its system extensions.
+Before deploying the Cloudflare One Client, you need to allow its system extensions.
 
 1. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > **macOS**.
 
@@ -175,7 +175,7 @@ Before deploying WARP, you need to allow its system extensions.
 
 4. For **Profile type**, select _Settings catalog_ > select **Create**.
 
-5. In **Basics**, input the necessary field(s) and give your policy a name like `WARP System Extensions` > select **Next**.
+5. In **Basics**, input the necessary field(s) and give your policy a name like `Cloudflare One Client System Extensions` > select **Next**.
 
 6. In **Configuration settings**, select **Add settings**.
 
@@ -209,7 +209,7 @@ Before deploying WARP, you need to allow its system extensions.
 
 13. Review your configuration and select **Create**.
 
-This step allows WARP to install without user interaction. By completing this step, you allow WARP to install and manage its required system extensions without end-user prompts.
+This step allows the Cloudflare One Client to install without user interaction. By completing this step, you allow the client to install and manage its required system extensions without end-user prompts.
 
 ### 3. Upload `MobileConfig` configuration
 
@@ -267,7 +267,7 @@ This step allows WARP to install without user interaction. By completing this st
 
 3. Update your organization's string (`YOUR_TEAM_NAME_HERE`) with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name).
 
-4. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
+4. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/).
 
    ```xml
    <array>
@@ -301,34 +301,34 @@ This step allows WARP to install without user interaction. By completing this st
 
 14. Review your configuration and create your policy.
 
-By completing this step, you preconfigure WARP with your team settings so it connects automatically upon installation.
+By completing this step, you preconfigure the Cloudflare One Client with your team settings so it connects automatically upon installation.
 
-### 4. Upload WARP client `.pkg`
+### 4. Upload Cloudflare One Client `.pkg`
 
 :::tip[Best practice]
 Complete Step 4 at least one hour after steps 1, 2, and 3 so clients have enough time to check in and update their device configurations.
 :::
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), [download the WARP client](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) in `.pkg` format.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), [download the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download-cloudflare-one-client/#macos) in `.pkg` format.
 
-   :::note[Repeat this step to update WARP when a new release is available]
-   Every time WARP releases a new version, you must repeat this process and get a new `.pkg` file for the new WARP version.
+   :::note[Repeat this step to update the Cloudflare One Client when a new release is available]
+   Every time a new version is released, you must repeat this process and get a new `.pkg` file for the new version.
    :::
 
 2. Log in to the [Microsoft Intune admin center](https://intune.microsoft.com), and go to **Apps** > **macOS**.
 3. Select **Create**.
 4. For **App type**, select _macOS app (PKG)_.
 5. In **App information**, select the `.pkg` file you downloaded and input required details. Enter `Cloudflare` as the Publisher.
-6. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) and find what matches for you.
-7. In **Detection rules**, note that the WARP package will have filled in the App bundle ID and App version.
+6. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download-cloudflare-one-client/#macos) and find what matches for you.
+7. In **Detection rules**, note that the package will have filled in the App bundle ID and App version.
 8. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
 9. Review your configuration in **Review + create** and select **Create**.
 
-By completing this step, you deliver the WARP client to targeted macOS devices, either automatically (assignment scope set as **Required**) or on-demand (assignment scope as **Available**) through your company portal.
+By completing this step, you deliver the Cloudflare One Client to targeted macOS devices, either automatically (assignment scope set as **Required**) or on-demand (assignment scope as **Available**) through your company portal.
 
 ## iOS
 
-The following steps outline how to deploy the Cloudflare One Agent (WARP client) on iOS using Microsoft Intune and preconfigure it with MDM parameters.
+The following steps outline how to deploy the Cloudflare One Agent (Cloudflare One Client) on iOS using Microsoft Intune and preconfigure it with MDM parameters.
 
 ### Prerequisites
 
@@ -377,11 +377,11 @@ Sharing this certificate with Intune automates the installation of this certific
 
 3. For App type, select _iOS store app_ > select **Select** to continue.
 
-4. Select **Search the App Store** and search for the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios). After you have found the Cloudflare One Agent, select it and select **Select** to continue.
+4. Select **Search the App Store** and search for the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download-cloudflare-one-client/#ios). After you have found the Cloudflare One Agent, select it and select **Select** to continue.
 
 	:::caution[Add the right app]
 	
-	Make sure to add the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios) application. Do not add the 1.1.1.1 app.
+	Make sure to add the [Cloudflare One Agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download-cloudflare-one-client/#ios) application. Do not add the 1.1.1.1 app.
 
 	:::
 
@@ -391,7 +391,7 @@ Sharing this certificate with Intune automates the installation of this certific
 
 7. Review your configuration in **Review + create** and select **Create**.
 
-By completing this step, you deliver the WARP client to targeted iOS devices, either automatically (assignment scope set as **Required**) or on-demand (assignment scope as **Available**) through your company portal.
+By completing this step, you deliver the Cloudflare One Client to targeted iOS devices, either automatically (assignment scope set as **Required**) or on-demand (assignment scope as **Available**) through your company portal.
 
 ### 3. Configure Cloudflare One Agent app
 
@@ -412,11 +412,11 @@ By completing this step, you deliver the WARP client to targeted iOS devices, ei
 	</dict>
 	```
 
-	Replace `YOUR_TEAM_NAME_HERE` with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name). Review the definitions of the above parameters in the [Parameters documentation](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/).
+	Replace `YOUR_TEAM_NAME_HERE` with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name). Review the definitions of the above parameters in the [Parameters documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/).
 
 	:::tip[Successfuly complete your registration]
 
-	You should set the [`auto_connect`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#auto_connect) parameter to `1` to ensure the WARP client auto-connects to Cloudflare. If you set this parameter to `0` or exclude it, the client will not auto-connect, and registration will not complete successfully.
+	You should set the [`auto_connect`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#auto_connect) parameter to `1` to ensure the Cloudflare One Client auto-connects to Cloudflare. If you set this parameter to `0` or exclude it, the client will not auto-connect, and registration will not complete successfully.
 	
 	If you do not include this parameter, registration will not be complete without manual intervention by the user. Manual intervention requires opening the WARP application and attempting to connect.
 
@@ -430,7 +430,7 @@ By completing this step, you preconfigure the Cloudflare One Agent with your [Ze
 
 ### Intune configuration
 
-Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/device-uuid/) deployment.
+Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/reusable-components/posture-checks/cloudflare-one-client-checks/device-uuid/) deployment.
 
 ### Per-app VPN for iOS
 
@@ -438,7 +438,7 @@ Intune allows you to insert [predefined variables](https://learn.microsoft.com/e
 Per-app VPN is supported on Cloudflare One Agent version `1.8` or greater for iOS.
 :::
 
-Before proceeding with per-app VPN configuration, you must make sure [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) is disabled in Zero Trust. To disable Auto connect:
+Before proceeding with per-app VPN configuration, you must make sure [Auto connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure-cloudflare-one-client/cloudflare-one-client-settings/#auto-connect) is disabled in Zero Trust. To disable Auto connect:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles**.
 2. Under **Profiles**, select your device profile and select **Edit**.
@@ -491,7 +491,7 @@ Cloudflare One cannot apply split tunnel setting for a per app VPN. Included or 
 
 ## Android
 
-To deploy WARP on Android devices:
+To deploy the Cloudflare One Client on Android devices:
 
 1. Log in to your Microsoft Intune account.
 2. Go to **Apps** > **Android** >**Add**.
@@ -569,7 +569,7 @@ To deploy WARP on Android devices:
 Intune will now deploy the Cloudflare One Agent to user devices.
 
 :::caution
-If Cloudflare One Agent fails to register on Android with Always-On VPN enabled, review the limitation for [Always-On VPN with Lockdown Mode in Microsoft Intune](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/known-limitations/#always-on-vpn-with-lockdown-mode-in-microsoft-intune).
+If Cloudflare One Agent fails to register on Android with Always-On VPN enabled, review the limitation for [Always-On VPN with Lockdown Mode in Microsoft Intune](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/known-limitations/#always-on-vpn-with-lockdown-mode-in-microsoft-intune).
 :::
 
 ### Per-app VPN for Android
@@ -691,7 +691,7 @@ To configure your Cloudflare One Agent app policy:
       }
       ```
 
-      Refer to [Per-app VPN parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#per-app-vpn-parameters-android) to learn more about the MDM parameters introduced to support the per-app VPN for Android devices.
+      Refer to [Per-app VPN parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#per-app-vpn-parameters-android) to learn more about the MDM parameters introduced to support the per-app VPN for Android devices.
 
    3. After you have configured the deployment parameters, click **Next**.
 
