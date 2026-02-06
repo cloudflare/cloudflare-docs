@@ -7,11 +7,11 @@ sidebar:
 
 This guide describes how to configure detection settings to mitigate impersonation risks while ensuring legitimate delivery.
 
-Once you configure the [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/), to mitigate spoof detections, you can add emails in the impersonation registry as secondary email. Refer to [Edit users](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/#edit-users) to learn how to add a secondary email address. 
+Once you configure the [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/) to mitigate spoof detections, you can add emails in the impersonation registry as secondary email. Refer to [Edit users](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/#edit-users) to learn how to add a secondary email address. 
 
-For impersonation events that are caused by systems, we recommend that you configure an [allow policy](/cloudflare-one/email-security/settings/detection-settings/allow-policies/) to mitigate delivery disruptions.
+For impersonation events that are caused by systems, Cloudflare recommends that you configure an [allow policy](/cloudflare-one/email-security/settings/detection-settings/allow-policies/) to mitigate delivery disruptions.
 
-To maintain a higher security posture, allow policies should be defined with the narrowest possible scope. Start with specific expressions or email addresses that will target the actual sender or system. If the system is sending from a variety of addresses, then, create an expression that is wider while keeping the expression specific.  In some situations,  it is better to have multiple specific entries  than creating a more generic policy that allows a whole domain.
+To maintain a higher security posture, allow policies should be defined with the narrowest possible scope. Start with specific expressions or email addresses that will target the actual sender or system. If the system is sending from a variety of addresses, you can create an expression that is wider while keeping the expression specific.  In some situations, it is better to have multiple specific entries than a more generic policy that allows a whole domain.
 
 ## Policy selection criteria
 
@@ -23,7 +23,7 @@ Use **Accept sender** with **Sender verification (recommended)** turned on for s
 
 Use **Trusted Sender** for emails that do not require phishing inspections. This will exempt messages from any phishing analysis, including links analysis.
 
-Example use case:
+Example use cases:
 
 - Temporary rules (to avoid over-detection)
 - Phishing simulations
