@@ -72,7 +72,7 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
         `react-router.config.ts` is your [React Router config file](https://reactrouter.com/explanation/special-files#react-routerconfigts).
         In this file:
         	- `ssr` is set to `true`, meaning that your application will use server-side rendering.
-        	- `future.unstable_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+        	- `future.v8_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 
         `vite.config.ts` is your [Vite config file](https://vite.dev/config/).
@@ -144,7 +144,7 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
     };
 
     export class MyWorkflow extends WorkflowEntrypoint<Env> {
-    	override async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+    	override async run(event: WorkflowEvent<{ hello: string }>, step: WorkflowStep) {
     		await step.do("first step", async () => {
     			return { output: "First step result" };
     		});
@@ -194,10 +194,10 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
     And then use it in your application:
 
     ```ts title="app/routes/home.tsx"
-    export async function action({ context }: Route.LoaderArgs) {
+    export async function action({ context }: Route.ActionArgs) {
     	const env = context.cloudflare.env;
-    	const instance = await env.MY_WORKFLOW.create({ params: { "hello": "world" })
-    	return { id: instance.id, details: instance.status() };
+    	const instance = await env.MY_WORKFLOW.create({ params: { "hello": "world" } })
+    	return { id: instance.id, details: await instance.status() };
     }
     ```
 
