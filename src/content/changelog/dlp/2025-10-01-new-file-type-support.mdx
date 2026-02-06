@@ -12,7 +12,7 @@ We have expanded Gateway's file type controls to include:
 - Microsoft Software Installer (msix, appx)
 - Apple Software Package (pkg)
 
-You can find these new options within the [_Upload File Types_ and _Download File Types_ selectors](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) when creating or editing an HTTP policy. The file types are categorized as follows:
+You can find these new options within the [_Upload File Types_ and _Download File Types_ selectors](/cloudflare-one/traffic-policies/http-policies/#download-and-upload-file-types) when creating or editing an HTTP policy. The file types are categorized as follows:
 
 - **System**: _Apple Disk Image (dmg)_
 - **Executable**: _Microsoft Software Installer (msix)_, _Microsoft Software Installer (appx)_, _Apple Software Package (pkg)_
@@ -22,4 +22,4 @@ To ensure these file types are blocked effectively, please note the following be
 - DMG: Due to their file structure, DMG files are blocked at the very end of the transfer. A user's download may appear to progress but will fail at the last moment, preventing the browser from saving the file.
 - MSIX: To comprehensively block Microsoft Software Installers, you should also include the file type _Unscannable_. MSIX files larger than 100 MB are identified as Unscannable ZIP files during inspection.
 
-To get started, go to your HTTP policies in Zero Trust. For a full list of file types, refer to [supported file types](/cloudflare-one/policies/gateway/http-policies/#supported-file-types).
+To get started, go to your HTTP policies in Zero Trust. For a full list of file types, refer to [supported file types](/cloudflare-one/traffic-policies/http-policies/#supported-file-types).

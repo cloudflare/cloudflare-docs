@@ -21,13 +21,7 @@ System prompts are particularly useful for:
 - Applying domain-specific tone or terminology
 - Encouraging consistent, high-quality output
 
-## How to set your system prompt
-
-The system prompt for your AI Search can be set after it has been created by:
-
-1. Navigating to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/autorag), and go to AI > AI Search
-2. Select your AI Search
-3. Go to Settings page and find the System prompt setting for either Query rewrite or Generation
+## System prompt configuration
 
 ### Default system prompt
 
@@ -38,6 +32,31 @@ You can view the effective system prompt used for any AI Search's model call thr
 :::note
 The default system prompt can change and evolve over time to improve performance and quality.
 :::
+
+### Configure via API
+
+When you make a `/ai-search` request using the [Workers Binding](/ai-search/usage/workers-binding/) or [REST API](/ai-search/usage/rest-api/), you can set the system prompt programmatically.
+
+For example:
+
+```javascript
+const answer = await env.AI.autorag("my-autorag").aiSearch({
+  query: "How do I train a llama to deliver coffee?",
+  model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  system_prompt: "You are a helpful assistant."
+});
+```
+
+import { DashButton } from "~/components";
+
+### Configure via Dashboard
+The system prompt for your AI Search can be set after it has been created:
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+   <DashButton url="/?to=/:account/ai/ai-search" />
+2. Select an existing AI Search instance.
+3. Go to the **Settings** tab.
+4. Go to **Query rewrite** or **Generation**, and edit the **System prompt**.
 
 ## Query rewriting system prompt
 

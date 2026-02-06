@@ -8,7 +8,7 @@ head:
     content: Public DNS setup - Keyless SSL
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, DashButton } from "~/components";
 
 If you cannot use a [Cloudflare Tunnel setup](/ssl/keyless-ssl/configuration/cloudflare-tunnel/), you can also create a public DNS record for your key server.
 
@@ -42,10 +42,12 @@ As a security measure, you should hide the hostname of your key server.
 
 To create a Keyless certificate in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
-2. Go to **SSL/TLS** > **Edge Certificates**.
-3. Select **Upload Keyless SSL Certificate**.
-4. Fill in the upload modal with the certificate and other details and select **Add**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. Select **Upload Keyless SSL Certificate**.
+3. Fill in the upload modal with the certificate and other details and select **Add**.
 
 | Label               | Description                                                                                                                                                    | Example Values                                               |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |

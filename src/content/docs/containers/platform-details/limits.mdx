@@ -14,11 +14,30 @@ Six instance types are currently available:
 
 <Render product="containers" file="instance-types" />
 
-These are specified using the [`instance_type` property](/workers/wrangler/configuration/#containers) in your Worker's Wrangler configuration file. Looking for larger instances? [Give us feedback here](/containers/beta-info/#feedback-wanted) and tell us what size instances you need, and what you want to use them for.
+These are specified using the [`instance_type` property](/workers/wrangler/configuration/#containers) in your Worker's Wrangler configuration file.
 
 :::note
 The `dev` and `standard` instance types are preserved for backward compatibility and are aliases for `lite` and `standard-1`, respectively.
 :::
+
+### Custom Instance Types
+
+In addition to the predefined instance types, you can configure custom instance types by specifying `vcpu`, `memory_mib`, and `disk_mb` values. See the [Wrangler configuration documentation](/workers/wrangler/configuration/#custom-instance-types) for configuration details.
+
+Custom instance types have the following constraints:
+
+| Resource             | Limit                               |
+| -------------------- | ----------------------------------- |
+| Minimum vCPU         | 1                                   |
+| Maximum vCPU         | 4                                   |
+| Maximum Memory       | 12 GiB                              |
+| Maximum Disk         | 20 GB                               |
+| Memory to vCPU ratio | Minimum 3 GiB memory per vCPU       |
+| Disk to Memory ratio | Maximum 2 GB disk per 1 GiB memory  |
+
+For workloads requiring less than 1 vCPU, use the predefined instance types such as `lite` or `basic`.
+
+Looking for larger instances? [Give us feedback here](/containers/beta-info/#feedback-wanted) and tell us what size instances you need, and what you want to use them for.
 
 ## Limits
 

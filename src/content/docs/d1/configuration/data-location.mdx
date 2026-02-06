@@ -7,11 +7,54 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-Learn how the location of data stored in D1 is determined, including where the leader is placed and how you optimize that location based on your needs.
+Learn how the location of data stored in D1 is determined, including where the database runs and how you optimize that location based on your needs.
 
 ## Automatic (recommended)
 
 By default, D1 will automatically create your primary database instance in a location close to where you issued the request to create a database. In most cases this allows D1 to choose the optimal location for your database on your behalf.
+
+## Restrict database to a jurisdiction
+
+Jurisdictions are used to create D1 databases that only run and store data within a region to help comply with data locality regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+
+Workers may still access the database constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the database itself runs and persists data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
+
+:::note
+
+Jurisdictions can only be set on database creation and cannot be added or updated after the database exists. If a jurisdiction and a location hint are both provided, the jurisdiction takes precedence and the location hint is ignored.
+:::
+
+### Supported jurisdictions
+
+| Parameter | Location                       |
+| --------- | ------------------------------ |
+| eu        | The European Union             |
+| fedramp   | FedRAMP-compliant data centers |
+
+### Use the dashboard
+
+1. In the Cloudflare dashboard, go to the **D1 SQL Database** page.
+
+   <DashButton url="/?to=/:account/workers/d1" />
+
+2. Select **Create Database**.
+3. Under **Data location**, select **Specify jurisdiction** and choose a jurisdiction from the list.
+4. Select **Create** to create your database.
+
+### Use wrangler
+
+```sh
+npx wrangler@latest d1 create db-with-jurisdiction --jurisdiction=eu
+```
+
+### Use REST API
+
+```curl
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/d1/database" \
+     -H "Authorization: Bearer $TOKENn" \
+     -H "Content-Type: application/json" \
+     --data '{"name": "db-wth-jurisdiction", "jurisdiction": "eu" }'
+```
 
 ## Provide a location hint
 
@@ -32,10 +75,10 @@ Provide a location hint when creating a D1 database when:
 Providing a location hint does not guarantee that D1 runs in your preferred location. Instead, it will run in the nearest possible location (by latency) to your preference.
 :::
 
-### Use Wrangler
+### Use wrangler
 
 :::note
-To install Wrangler, the command-line interface for D1 and Workers, refer to [Install and Update Wrangler](/workers/wrangler/install-and-update/).
+To install wrangler, the command-line interface for D1 and Workers, refer to [Install and Update Wrangler](/workers/wrangler/install-and-update/).
 :::
 
 To provide a location hint when creating a new database, pass the `--location` flag with a valid location hint:
@@ -48,14 +91,15 @@ wrangler d1 create new-database --location=weur
 
 To provide a location hint when creating a database via the dashboard:
 
-1. In the Cloudflare dashboard, go to the **D1** page.
+1. In the Cloudflare dashboard, go to the **D1 SQL Database** page.
 
    <DashButton url="/?to=/:account/workers/d1" />
+
 2. Select **Create database**.
 3. Provide a database name and an optional **Location**.
 4. Select **Create** to create your database.
 
-## Available location hints
+### Available location hints
 
 D1 supports the following location hints:
 
@@ -77,5 +121,7 @@ D1 location hints are not currently supported for South America (`sam`), Africa 
 With read replication enabled, D1 creates and distributes read-only copies of the primary database instance around the world. This reduces the query latency for users located far away from the primary database instance.
 
 When using D1 read replication, D1 automatically creates a read replica in [every available region](/d1/configuration/data-location#available-location-hints), including the region where the primary database instance is located.
+
+If a jurisdiction is configured, read replicas are only created within the jurisdiction set on database creation.
 
 Refer to [D1 read replication](/d1/best-practices/read-replication/) for more information.

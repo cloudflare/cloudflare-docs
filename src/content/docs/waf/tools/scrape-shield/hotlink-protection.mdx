@@ -6,13 +6,11 @@ sidebar:
   order: 3
 ---
 
-import { Render, TabItem, Tabs, Steps } from "~/components";
+import { Render, TabItem, Tabs, Steps, DashButton } from "~/components";
 
 Hotlink Protection prevents your images from being used by other sites, which can reduce the bandwidth consumed by your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
-:::note
 The supported file extensions are `gif`, `ico`, `jpg`, `jpeg`, and `png`.
-:::
 
 ## Background
 
@@ -31,10 +29,11 @@ To enable **Hotlink Protection** in the dashboard:
 
 <Steps>
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and website.
-3. Go to **Scrape Shield**.
-4. For **Hotlink Protection**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **Scrape Shield** page.
+
+   <DashButton url="/?to=/:account/:zone/content-protection" />
+
+2. For **Hotlink Protection**, switch the toggle to **On**.
 
 </Steps>
 

@@ -1,0 +1,18 @@
+---
+params:
+  - APIendpoint
+---
+
+import { Render } from "~/components";
+
+Use this selector to match against a domain and all subdomains. For example, you can match `example.com` and its subdomains, such as `www.example.com`.
+
+| UI name | API example                                               | Evaluation phase      |
+| ------- | --------------------------------------------------------- | --------------------- |
+| Domain  | <code>any({props.APIendpoint}[*] == "example.com")</code> | Before DNS resolution |
+
+<Render
+	file="gateway/selectors/non-latin-characters"
+	product="cloudflare-one"
+	params={{ inputType: "domain" }}
+/>

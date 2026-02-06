@@ -4,7 +4,7 @@ title: Configure routes
 sidebar:
   order: 2
 head: []
-description: Magic Transit uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. If you are connected through Direct CNI you also have access to BGP peering. Learn how to configure routing.
+description: Magic Transit uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. If you are connected through CNI with Dataplane v2, you also have access to BGP peering (beta).
 
 ---
 
@@ -21,7 +21,6 @@ import { Render } from "~/components"
 		routePrioritization: "/magic-transit/reference/traffic-steering/#route-prioritization",
 		chooseWeights: "/magic-transit/reference/traffic-steering/#set-priority-and-weights-for-static-routes",
 		publicAsnMT: "[Public ASNs used for Magic Transit](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn) are verified during the onboarding process.",
-		productGatewayOrEgress: "Magic Transit with Egress",
-		dashButtonPath: "/?to=/:account/magic-transit/configuration"
+		productGatewayOrEgress: "Magic Transit with Egress"
 	}}
 />

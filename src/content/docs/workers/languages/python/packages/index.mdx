@@ -25,7 +25,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["workers-py"]
+dev = [
+	"workers-py",
+	"workers-runtime-sdk"
+]
 ```
 
 The above will allow your worker to depend on the [FastAPI](https://fastapi.tiangolo.com/) package.

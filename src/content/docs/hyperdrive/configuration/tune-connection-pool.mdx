@@ -1,0 +1,91 @@
+---
+pcx_content_type: how-to
+title: Tune connection pooling
+sidebar:
+  order: 7
+---
+
+import { TabItem, Tabs, DashButton } from "~/components";
+
+Hyperdrive maintains a pool of connections to your database that are shared across Worker invocations. You can configure the maximum number of these connections based on your database capacity and application requirements.
+
+:::note
+Hyperdrive does not have a limit on the number of concurrent _client_ connections made from your Workers to Hyperdrive.
+
+Hyperdrive does have a limit of _origin_ connections that can be made from Hyperdrive to your database. These are shared across Workers, with each Worker using one of these connections over the course of a database transaction. Refer to [transaction pooling mode](/hyperdrive/concepts/connection-pooling/#pooling-mode) for more information.
+
+:::
+
+## Configure connection pool size
+
+You can configure the connection pool size using the Cloudflare dashboard, the Wrangler CLI, or the Cloudflare API.
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+To configure connection pool size via the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Storage & databases** > **Hyperdrive**.
+
+   <DashButton url="/?to=/:account/workers/hyperdrive" />
+
+3. Select your Hyperdrive configuration.
+4. Select **Settings**.
+5. In the **Origin connection limit** section, adjust the **Maximum connections** value.
+6. Select **Save**.
+
+</TabItem>
+
+<TabItem label="Wrangler">
+
+Use the [`wrangler hyperdrive update`](/hyperdrive/reference/wrangler-commands/#hyperdrive-update) command with the `--origin-connection-limit` flag:
+
+```sh
+npx wrangler hyperdrive update <HYPERDRIVE_ID> --origin-connection-limit=<MAX_CONNECTIONS>
+```
+
+</TabItem>
+
+<TabItem label="API">
+
+Use the [Hyperdrive REST API](/api/resources/hyperdrive/subresources/configs/methods/update/) to update your configuration:
+
+```sh
+curl --request PATCH \
+  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/hyperdrive/configs/<HYPERDRIVE_ID> \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer <API_TOKEN>' \
+  --data '{
+    "origin_connection_limit": <MAX_CONNECTIONS>
+  }'
+```
+
+</TabItem>
+</Tabs>
+
+All Hyperdrive configurations have a minimum of 5 connections. The maximum connection count depends on your [Workers plan](/hyperdrive/platform/limits/).
+
+:::note
+The Hyperdrive connection pool limit is a "soft limit". This means that it is possible for Hyperdrive to make more connections to your database than this limit in the event of network failure to ensure high availability. We recommend that you set the Hyperdrive connection limit to be lower than the limit of your origin database to account for occasions where Hyperdrive needs to create more connections for resiliency.
+
+:::
+
+:::note
+You can request adjustments to Hyperdrive's origin connection limits. To request an increase, submit a [Limit Increase Request](https://forms.gle/ukpeZVLWLnKeixDu7) and Cloudflare will contact you with next steps. Cloudflare also regularly monitors the Hyperdrive channel in [Cloudflare's Discord community](https://discord.cloudflare.com/) and can answer questions regarding limits and requests.
+:::
+
+## Best practices
+
+- **Start conservatively**: Begin with a lower connection count and gradually increase it based on your application's performance.
+- **Monitor database metrics**: Watch your database's connection usage and performance metrics to optimize the connection count.
+- **Consider database limits**: Ensure your configured connection count does not exceed your database's maximum connection limit.
+- **Account for multiple configurations**: If you have multiple Hyperdrive configurations connecting to the same database, consider the total connection count across all configurations.
+
+## Related resources
+
+- [Connection pooling concepts](/hyperdrive/concepts/connection-pooling/)
+- [Connection lifecycle](/hyperdrive/concepts/connection-lifecycle/)
+- [Metrics and analytics](/hyperdrive/observability/metrics/)
+- [Hyperdrive limits](/hyperdrive/platform/limits/)
+- [Query caching](/hyperdrive/concepts/query-caching/)

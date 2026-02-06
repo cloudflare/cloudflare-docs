@@ -5,15 +5,17 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 Adding or editing Email Workers is straightforward. You can rename, delete or edit Email Workers, as well as change the routes bound to a specific Email Worker.
 
 ## Add an Email worker
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Email Routing** page.
 
-2. Go to **Email** > **Email Routing** > **Email Workers**.
+   <DashButton url="/?to=/:account/:zone/email/routing" />
+
+2. Select **Email Workers**.
 
 3. Select **Create**.
 
@@ -21,9 +23,11 @@ Adding or editing Email Workers is straightforward. You can rename, delete or ed
 
 ## Edit an Email Worker
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Email Routing** page.
 
-2. Go to **Email** > **Email Routing** > **Email Workers**.
+   <DashButton url="/?to=/:account/:zone/email/routing" />
+
+2. Select **Email Workers**.
 
 3. Find the Email Worker you want to rename, and select the three-dot button next to it.
 
@@ -37,9 +41,11 @@ Adding or editing Email Workers is straightforward. You can rename, delete or ed
 
 When you rename an Email Worker, you will lose the route that was previously bound to it. You will need to configure the route again after renaming the Email Worker.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Email Routing** page.
 
-2. Go to **Email** > **Email Routing** > **Email workers**.
+   <DashButton url="/?to=/:account/:zone/email/routing" />
+
+2. Select **Email Workers**.
 
 3. Find the Email Worker you want to rename, and select the three-dot button next to it.
 
@@ -63,9 +69,11 @@ When you rename an Email Worker, you will lose the route that was previously bou
 
 The following steps show how to change a route associated with an Email Worker.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Email Routing** page.
 
-2. Go to **Email** > **Email Routing** > **Email workers**.
+   <DashButton url="/?to=/:account/:zone/email/routing" />
+
+2. Select **Email Workers**.
 
 3. Find the Email Worker you want to change the associated route, and select **route** on its card.
 
@@ -75,14 +83,16 @@ The following steps show how to change a route associated with an Email Worker.
 
 ## Delete an Email Worker
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+11. In the Cloudflare dashboard, go to the **Email Routing** page.
 
-2. Go to **Email** > **Email Routing** > **Email workers**.
+    <DashButton url="/?to=/:account/:zone/email/routing" />
 
-3. Find the Email Worker you want to delete, and select the three-dot button next to it.
+12. Select **Email Workers**.
 
-4. From the drop-down menu, select **Manage Worker**.
+13. Find the Email Worker you want to delete, and select the three-dot button next to it.
 
-5. Select **Manage Service** > **Delete**.
+14. From the drop-down menu, select **Manage Worker**.
 
-6. Type the name of the Email Worker to confirm you want to delete it, and select **Delete**.
+15. Select **Manage Service** > **Delete**.
+
+16. Type the name of the Email Worker to confirm you want to delete it, and select **Delete**.

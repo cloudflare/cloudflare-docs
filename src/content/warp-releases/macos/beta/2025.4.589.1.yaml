@@ -5,10 +5,10 @@ releaseNotes: |-
   - Fixed an issue causing client notifications to fail in IPv6 only environments which prevented the client from receiving configuration changes to settings like device profile.
   - Improved captive portal detection.
   - Added a TCP fallback for the MASQUE tunnel protocol to improve compatibility with networks on MASQUE.
-  - Added new IP addresses for [tunnel connectivity checks](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks). If your organization uses a firewall or other policies you will need to exempt these IPs.
+  - Added new IP addresses for [tunnel connectivity checks](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#connectivity-checks). If your organization uses a firewall or other policies you will need to exempt these IPs.
   - DNS over HTTPS traffic is now included in the WARP tunnel by default.
   - Improved the error message displayed in the client GUI when the rate limit for entering an incorrect admin override code is met.
-  - Added a [Collect Captive Portal Diag](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/#get-captive-portal-logs) button in the client GUI to make it easier for users to collect captive portal debugging diagnostics.
+  - Added a [Collect Captive Portal Diag](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/captive-portals/#get-captive-portal-logs) button in the client GUI to make it easier for users to collect captive portal debugging diagnostics.
   - Improved handling of non-SLAAC IPv6 interface addresses for better connectivity in IPv6 only environments.
   - Fixed an issue where frequent network changes could cause WARP to become unresponsive.
 

@@ -21,7 +21,7 @@ You can check whether or not APO is working by verifying APO headers are present
 - `cf-edge-cache` | `cache, platform=wordpress`
   - The `cf-edge-cache` headers confirms the WordPress plugin is installed and enabled.
 
-In a terminal, use the following cURL. The header `'accept: text/html'` is important
+In a terminal, use the following cURL. The header `'accept: text/html'` is important.
 
 ```sh
 curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1 | grep 'cf-cache-status\|cf-edge\|cf-apo-via'
@@ -42,4 +42,4 @@ As always, `cf-cache-status` displays if the asset hit the cache or was consider
 
 ## Verify the APO integration and WordPress integration work
 
-Open your WordPress site and publish a change. When the integration is working, the page is cached with `cf-cache-status: HIT` and `cf-apo-via: tcache`
+Open your WordPress site and publish a change. When the integration is working, the page is cached with `cf-cache-status: HIT` and `cf-apo-via: tcache`.

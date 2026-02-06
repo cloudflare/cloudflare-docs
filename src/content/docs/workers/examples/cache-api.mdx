@@ -12,6 +12,7 @@ title: Using the Cache API
 sidebar:
   order: 1001
 description: Use the Cache API to store responses in Cloudflare's cache.
+reviewed: 2020-09-30
 ---
 
 If you want to get started quickly, click on the button below.
@@ -47,7 +48,7 @@ export default {
 			// Must use Response constructor to inherit all of response's fields
 			response = new Response(response.body, response);
 
-			// Cache API respects Cache-Control headers. Setting s-max-age to 10
+			// Cache API respects Cache-Control headers. Setting s-maxage to 10
 			// will limit the response to be in cache for 10 seconds max
 
 			// Any changes made to the response here will be reflected in the cached value
@@ -88,7 +89,7 @@ export default {
 			// Must use Response constructor to inherit all of response's fields
 			response = new Response(response.body, response);
 
-			// Cache API respects Cache-Control headers. Setting s-max-age to 10
+			// Cache API respects Cache-Control headers. Setting s-maxage to 10
 			// will limit the response to be in cache for 10 seconds max
 
 			// Any changes made to the response here will be reflected in the cached value

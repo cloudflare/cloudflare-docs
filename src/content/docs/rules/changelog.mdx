@@ -1,15 +1,16 @@
 ---
 pcx_content_type: changelog
-title: Changelog
+title: Rules changelog
 sidebar:
   order: 25
+  label: Changelog
 ---
 
 import { ProductChangelog } from "~/components";
 
 {/* <!-- Actual content lives in /src/content/release-notes/rules.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
 
-<ProductChangelog product="rules" hideEntry="2024-09-05-rules-templates"/>
+<ProductChangelog product="rules" hideEntry="2024-09-05-rules-templates" />
 
 ## 2024-09-20
 
@@ -31,7 +32,7 @@ The Cloudflare dashboard now automatically validates [DNS records](https://devel
 
 ## 2024-09-10
 
-**wildcard\_replace() function now supported in URL rewrites**
+**wildcard_replace() function now supported in URL rewrites**
 
 You can now use the [`wildcard_replace()`](https://developers.cloudflare.com/ruleset-engine/rules-language/functions/#wildcard_replace) function in rewrite expressions of [URL rewrites](https://developers.cloudflare.com/rules/transform/url-rewrite/).
 
@@ -71,8 +72,8 @@ Cloudflare Snippets (alpha) now allow multiple subrequests depending on your pla
 
 Wildcards are now supported across our Ruleset Engine-based products, including Single Redirects, Cache Rules, Transform Rules, WAF, Waiting Room, and more:
 
-* You can now use the `wildcard` and `strict wildcard` operators with any string field in the Ruleset Engine, such as full URI, host, headers, cookies, user-agent, and country. For more details, refer to [Operators](https://developers.cloudflare.com/ruleset-engine/rules-language/operators/) and [Wildcard matching](https://developers.cloudflare.com/ruleset-engine/rules-language/operators/#wildcard-matching).
-* In [Single Redirects](https://developers.cloudflare.com/rules/url-forwarding/single-redirects/), the `wildcard_replace()` function allows you to use segments matched by the `wildcard` and `strict wildcard` operators in redirect URL targets. For more information, refer to [Functions](https://developers.cloudflare.com/ruleset-engine/rules-language/functions/#wildcard_replace).
+- You can now use the `wildcard` and `strict wildcard` operators with any string field in the Ruleset Engine, such as full URI, host, headers, cookies, user-agent, and country. For more details, refer to [Operators](https://developers.cloudflare.com/ruleset-engine/rules-language/operators/) and [Wildcard matching](https://developers.cloudflare.com/ruleset-engine/rules-language/operators/#wildcard-matching).
+- In [Single Redirects](https://developers.cloudflare.com/rules/url-forwarding/single-redirects/), the `wildcard_replace()` function allows you to use segments matched by the `wildcard` and `strict wildcard` operators in redirect URL targets. For more information, refer to [Functions](https://developers.cloudflare.com/ruleset-engine/rules-language/functions/#wildcard_replace).
 
 ## 2024-07-01
 

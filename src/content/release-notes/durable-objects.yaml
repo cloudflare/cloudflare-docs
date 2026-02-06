@@ -3,6 +3,17 @@ link: "/durable-objects/release-notes/"
 productName: Durable Objects
 productLink: "/durable-objects/"
 entries:
+  - publish_date: "2026-01-07"
+    title: Billing for SQLite Storage
+    description: |-
+      Storage billing for SQLite-backed Durable Objects will be enabled in January 2026, with a target date of January 7, 2026 (no earlier). For more details, refer to the [Billing for SQLite Storage](/changelog/durable-objects/2026-01-07-durable-objects-sqlite-storage-billing/).
+  - publish_date: "2025-10-25"
+    description: |-
+      - The maximum WebSocket message size limit has been increased from 1 MiB to 32 MiB.
+  - publish_date: "2025-10-16"
+    title: Durable Objects can access stored data with UI editor
+    description: |-
+      Durable Objects stored data can be viewed and written using [Data Studio](/durable-objects/observability/data-studio/) on the Cloudflare dashboard. Only Durable Objects using [SQLite storage](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) can use Data Studio.
   - publish_date: "2025-08-21"
     title: Durable Objects stubs can now be directly constructed by name
     description: |-

@@ -16,7 +16,7 @@ A default cache key includes:
 1. Full URL:
    * scheme - could be HTTP or HTTPS.
    * host - for example, `www.cloudflare.com`
-   * URI with query string - for example, `/logo.jpg`
+   * URI with query string - for example, `/logo.jpg?utm_source=newsletter`
 2. Origin header sent by client (for CORS support).
 3. `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
 4. `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless http or https), `x-original-url`, `x-rewrite-url`, and `forwarded` headers.
@@ -153,6 +153,10 @@ User feature fields add features about the end-user (client) into the Cache Key.
 Cache keys options availability varies according to your plan.
 
 <FeatureTable id="cache.cache_key" />
+
+## Troubleshooting
+
+You can use [Cloudflare Trace](/rules/trace-request/) to find which Cache Key settings were applied to your request. When you send a request through the Trace tool, if the request was served from cache, it will show a cache hit in the **Cache Paremeters** section. Then select **View paremeter detail** to see exactly which Cache Key properties were used.
 
 ## Limitations
 

@@ -3,7 +3,7 @@
 		"title": "Account options",
 		"single_sign_on": {
 			"title": "Cloudflare dashboard single sign-on",
-			"link": "/cloudflare-one/applications/configure-apps/dash-sso-apps/",
+			"link": "/fundamentals/manage-members/dashboard-sso/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -1096,20 +1096,6 @@
 				}
 			}
 		},
-		"response_buffering": {
-			"title": "Response buffering",
-			"link": "/network/response-buffering/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Enterprise-only",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "Yes"
-				}
-			}
-		},
 		"true_client_ip_header": {
 			"title": "True Client IP Header",
 			"link": "/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only",
@@ -1282,7 +1268,7 @@
 					"ent": "Yes"
 				},
 				"z_origin_error_pages": {
-					"title": "Enable Origin Error Pages",
+					"title": "Origin Error Pages",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1913,8 +1899,16 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
-				"z_custom_rulesets": {
-					"title": "Custom rulesets",
+				"x_custom_rulesets_zone": {
+					"title": "Number of custom rulesets (zone)",
+					"link": "/waf/account/custom-rulesets/",
+					"free": "1",
+					"pro": "2",
+					"biz": "5",
+					"ent": "10"
+				},
+				"z_custom_rulesets_account": {
+					"title": "Account-level custom rulesets",
 					"link": "/waf/account/custom-rulesets/",
 					"summary": "Enterprise with add-on",
 					"free": "No",
@@ -2172,7 +2166,7 @@
 				"hostname_management": {
 					"title": "Hostname management",
 					"link": "/turnstile/concepts/hostname-management/",
-					"free": "15 hostnames per widget",
+					"free": "10 hostnames per widget",
 					"ent": "Maximum of 200 hostnames per widget"
 				},
 				"anyhostname": {
@@ -2321,20 +2315,6 @@
 	},
 	"speed": {
 		"title": "Speed",
-		"amp": {
-			"title": "AMP Real URL",
-			"link": "/speed/optimization/other/amp-real-url/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Available on all plans",
-					"free": "Yes",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
 		"automatic_platform_optimization": {
 			"title": "Automatic Platform Optimization",
 			"link": "/automatic-platform-optimization/",
@@ -2343,20 +2323,6 @@
 					"title": "Availability",
 					"summary": "Included with Pro and above",
 					"free": "Paid add-on",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
-		"automatic_signed_exchanges": {
-			"title": "Automatic Signed Exchanges (SXGs)",
-			"link": "/speed/optimization/other/signed-exchanges/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Included with Pro and above or [Automatic Platform Optimization](/automatic-platform-optimization/)",
-					"free": "No",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
@@ -2469,20 +2435,6 @@
 					"pro": "Paid add-on",
 					"biz": "Paid add-on",
 					"ent": "Paid add-on"
-				}
-			}
-		},
-		"mirage": {
-			"title": "Mirage (deprecated)",
-			"link": "/speed/optimization/images/mirage/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Pro and above",
-					"free": "No",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
 				}
 			}
 		},

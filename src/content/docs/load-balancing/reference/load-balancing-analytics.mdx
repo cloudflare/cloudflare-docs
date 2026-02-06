@@ -54,6 +54,98 @@ To view latency information for your load balancer, go to **Traffic** > **Load B
 
 **Logs** provide a history of all endpoint status changes and how they affect your load balancing pools. Load Balancing only logs events that represent a status change for an endpoint, from healthy to unhealthy or vice versa.
 
+When a Monitor Group is attached to a pool, each logged health event includes the `monitors` field.
+This field lists the individual monitors within the group and their results, making it easier to see which monitor contributed to a status change.
+
+Example event (truncated):
+
+```json
+{
+	"id": <id>,
+	"timestamp": "2025-09-22 19:22:00",
+	"pool": {
+		"id": "<id>",
+		"name": "example-monitor-group-test-pool-us",
+		"healthy": true,
+		"changed": false,
+		"minimum_origins": 1
+	},
+	"origins": [
+		{
+			"name": "origin-a",
+			"ip": "192.0.2.10",
+			"enabled": true,
+			"healthy": true,
+			"failure_reason": "No failures",
+			"response_code": 200,
+			"monitors": [
+				{
+					"id": "<id>",
+					"healthy": true,
+					"failure_reason": "No failures",
+					"response_code": 200,
+					"must_be_healthy": true,
+					"monitoring_only": false
+				},
+				{
+					"id": "<id>",
+					"healthy": true,
+					"failure_reason": "No failures",
+					"response_code": 200,
+					"must_be_healthy": true,
+					"monitoring_only": false
+				},
+				{
+					"id": "<id>",
+					"healthy": false,
+					"failure_reason": "HTTP timeout occurred",
+					"must_be_healthy": false,
+					"monitoring_only": true
+				}
+			]
+		},
+		{
+			"name": "origin-b",
+			"ip": "198.51.100.25",
+			"enabled": true,
+			"healthy": false,
+			"failure_reason": "TCP connection failed",
+			"changed": true,
+			"monitors": [
+				{
+					"id": "<id>",
+					"healthy": false,
+					"failure_reason": "TCP connection failed",
+					"must_be_healthy": true,
+					"monitoring_only": false
+				},
+				{
+					"id": "<id>",
+					"healthy": true,
+					"failure_reason": "No failures",
+					"response_code": 200,
+					"must_be_healthy": true,
+					"monitoring_only": false
+				},
+				{
+					"id": "<id>",
+					"healthy": false,
+					"failure_reason": "HTTP timeout occurred",
+					"must_be_healthy": false,
+					"monitoring_only": true
+				}
+			]
+		}
+	]
+}
+```
+
+In this example:
+
+- Each origin includes a `monitors` array listing all monitors within the attached group.
+- Fields such as `must_be_healthy` `and monitoring_only` indicate each monitor's role in determining the origin's overall health.
+- The `healthy` and `failure_reason` fields show which individual monitor checks succeeded or failed.
+
 To access logs in the dashboard, go to **Traffic** > **Load Balancing Analytics**.
 
 ## GraphQL Analytics

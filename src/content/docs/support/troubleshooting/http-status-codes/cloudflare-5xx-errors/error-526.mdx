@@ -35,14 +35,11 @@ Here are some options to fix or workaround this issue:
 
   ![Screen showing an SSL certificate with no errors.](~/assets/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-
-
 ### Error 526 in the Zero Trust context
 
-When using [Cloudflare Gateway](/cloudflare-one/policies/gateway/), an HTTP Error `526` might be returned in the [following cases](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website):
+When using [Cloudflare Gateway](/cloudflare-one/traffic-policies/), an HTTP Error `526` might be returned in the [following cases](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website):
 
 - **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
-
   - The server certificate issuer is unknown or is not trusted by the service.
   - The server certificate is revoked and fails a CRL check.
   - There is at least one expired certificate in the certificate chain for the server certificate.
@@ -50,11 +47,9 @@ When using [Cloudflare Gateway](/cloudflare-one/policies/gateway/), an HTTP Erro
   - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
 
 - **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
-
   - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
-  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
   - Redirect all HTTPS requests to HTTP.
-
 
 ### Error 526 in the Workers context
 
@@ -64,12 +59,5 @@ Workers subrequests to any hostname outside your Cloudflare zone that is not pro
 
 - Make sure the SSL certificate configured at the origin is valid.
 
-- Add your self-signed SSL certificate to the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) and enable the [`cots_on_external_fetch` compatibility flag](/workers/configuration/compatibility-flags/#do-not-use-the-custom-origin-trust-store-for-external-subrequests) in your Worker's configuration. 
-This flag enables the use of the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) when making external (grey-clouded) subrequests from a Cloudflare Worker.
-
-
-
-
-
-
-
+- Add your self-signed SSL certificate to the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) and enable the [`cots_on_external_fetch` compatibility flag](/workers/configuration/compatibility-flags/#do-not-use-the-custom-origin-trust-store-for-external-subrequests) in your Worker's configuration.
+  This flag enables the use of the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) when making external (grey-clouded) subrequests from a Cloudflare Worker.

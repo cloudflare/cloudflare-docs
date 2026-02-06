@@ -3,18 +3,17 @@ title: Allowed patterns
 pcx_content_type: concept
 sidebar:
   order: 1
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
-When you set up **allowed patterns**, Email Security email security exempts messages that match certain patterns from normal detection scanning.
+When you set up **allowed patterns**, Email security email security exempts messages that match certain patterns from normal detection scanning.
 
 ## Add an allowed pattern
 
 To create a new allowed pattern:
 
-1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
+1. Log in to the [Email security dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
@@ -23,22 +22,19 @@ To create a new allowed pattern:
 4. Select **+ New Pattern**.
 
 5. Enter the pattern information:
+   - **Allowed Pattern**: Enter one of the following types of pattern:
+     - **Email addresses**: Must be a valid email.
+     - **IP addresses**: Can only be IPv4. IPv6 and CIDR are invalid entries.
+     - **Regular expressions**: Must be [valid Java expressions](https://www.freeformatter.com/java-regex-tester.html).
 
-   * **Allowed Pattern**: Enter one of the following types of pattern:
+   - **Allow Type**: Choose one or more of the following types:
+     - **Trusted Sender**: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Email security. Typically, only applies to <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> simulations from vendors such as KnowBe4.
+     - **Exempt Recipient**: Will exempt messages from all Email security [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
+     - **Acceptable Sender**: Will exempt messages from the `SPAM`, `SPOOF`, and `BULK` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `MALICIOUS` or `SUSPICIOUS`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
 
-     * **Email addresses**: Must be a valid email.
-     * **IP addresses**: Can only be IPv4. IPv6 and CIDR are invalid entries.
-     * **Regular expressions**: Must be [valid Java expressions](https://www.freeformatter.com/java-regex-tester.html).
+   - **Notes**: Provide additional notes about the allowed pattern.
 
-   * **Allow Type**: Choose one or more of the following types:
-
-     * **Trusted Sender**: Messages will bypass all [detections](/email-security/reference/dispositions-and-attributes/) and link following by Email Security. Typically, only applies to <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> simulations from vendors such as KnowBe4.
-     * **Exempt Recipient**: Will exempt messages from all Email Security [detections](/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
-     * **Acceptable Sender**: Will exempt messages from the `SPAM`, `SPOOF`, and `BULK` [dispositions](/email-security/reference/dispositions-and-attributes/#available-values) (but not `MALICIOUS` or `SUSPICIOUS`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
-
-   * **Notes**: Provide additional notes about the allowed pattern.
-
-6. If you chose *Trusted Sender* or *Acceptable Sender* in the previous step, you will be able to choose whether to verify the sender. When the **Verify Sender** option is selected, the allow list entry will only be honored if it aligns with a passing authentication by DMARC or SPF or DKIM.
+6. If you chose _Trusted Sender_ or _Acceptable Sender_ in the previous step, you will be able to choose whether to verify the sender. When the **Verify Sender** option is selected, the allow list entry will only be honored if it aligns with a passing authentication by DMARC or SPF or DKIM.
 
 7. Select **Save**.
 

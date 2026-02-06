@@ -11,6 +11,11 @@ Cloudflare Logpush supports pushing logs directly to R2. You can do so via the a
 
 For more information about R2, refer to the [Cloudflare R2](/r2/) documentation.
 
+:::note
+If you want to set up R2 as destination for a zone on [FedRAMP High](https://www.cloudflare.com/cloudflare-for-government/), you need to use an [S3-compatible endpoint](/logs/logpush/logpush-job/enable-destinations/s3-compatible-endpoints/) with the following `Endpoint URL`:
+`<ACCOUNT_ID>.r2.fed.cloudflarestorage.com`
+:::
+
 ## Automatic setup
 
 If you want to use the automatic setup for your logpush job:
@@ -146,7 +151,7 @@ Cloudflare R2 is S3-compatible, so you can use the AWS CLI to interact with it.
 - Use the `aws s3 cp` command to download the log file:
 
 ```bash
-aws s3 cp s3://<BUCKET-NAME>/<PATH-TO-LOG-FILE><LOCAL-DESTINATION>`
+aws s3 cp s3://<BUCKET-NAME>/<PATH-TO-LOG-FILE> <LOCAL-DESTINATION>
 ```
 
 Replace `<bucket-name>`, `<path-to-log-file>`, and `<local-destination>` with your specific details.

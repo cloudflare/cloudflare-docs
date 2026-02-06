@@ -2,7 +2,7 @@ releaseNotes: |
   This release contains minor fixes and improvements.
 
   **Changes and improvements:**
-  - Consumers can now set the tunnel protocol using "warp-cli tunnel protocol set <proto>".
+  - Consumers can now set the tunnel protocol using "warp-cli tunnel protocol set &lt;proto&gt;".
   - Extended diagnostics collection time in warp-diag to ensure logs are captured reliably.
   - Improved captive portal support by disabling the firewall during captive portal login flows.
   - Improved captive portal detection on certain public networks.

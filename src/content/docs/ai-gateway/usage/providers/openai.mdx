@@ -3,137 +3,202 @@ title: OpenAI
 pcx_content_type: get-started
 ---
 
-[OpenAI](https://openai.com/about/) helps you build with ChatGPT.
+import {
+	Details,
+  Tabs,
+  TabItem
+} from "~/components";
 
+[OpenAI](https://openai.com/about/) helps you build with GPT models.
 ## Endpoint
 
-```txt
+**Base URL**
+
+```
 https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai
 ```
 
-### Chat completions endpoint
-
-```txt
-https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-```
-
-### Responses endpoint
-
-```txt
-https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/responses \
-```
-
-## URL structure
-
 When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you are currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`.
 
-## Prerequisites
 
-When making requests to OpenAI, ensure you have the following:
+**Chat completions endpoint**
 
-- Your AI Gateway Account ID.
-- Your AI Gateway gateway name.
-- An active OpenAI API token.
-- The name of the OpenAI model you want to use.
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions`
 
-## Chat completions endpoint
+**Responses endpoint**
 
-### cURL example
+`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/responses`
 
-```bash
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
---header 'Authorization: Bearer {openai_token}' \
---header 'Content-Type: application/json' \
---data '{
-  "model": "gpt-4o-mini",
-  "messages": [
-    {
-      "role": "user",
-      "content": "What is Cloudflare?"
-    }
-  ]
-}'
-```
 
-### JavaScript SDK example
+## Examples
 
-```js
+### OpenAI SDK
+
+<Details header="With Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```js title=""
 import OpenAI from "openai";
 
-const apiKey = "my api key"; // or process.env["OPENAI_API_KEY"]
-const accountId = "{account_id}";
-const gatewayId = "{gateway_id}";
-const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/openai`;
-
-const openai = new OpenAI({
-	apiKey,
-	baseURL,
+const client = new OpenAI({
+	apiKey: "YOUR_OPENAI_API_KEY",
+	defaultHeaders: {
+		"cf-aig-authorization": `Bearer {cf_api_token}`,
+	},
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai",
 });
 
-try {
-	const model = "gpt-5-mini";
-	const messages = [{ role: "user", content: "What is a neuron?" }];
-	const maxTokens = 100;
-	const chatCompletion = await openai.chat.completions.create({
-		model,
-		messages,
-		max_tokens: maxTokens,
-	});
-	const response = chatCompletion.choices[0].message;
-	console.log(response);
-} catch (e) {
-	console.error(e);
-}
+const response = await client.chat.completions.create({
+	model: "gpt-4o-mini",
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
 ```
-
-## OpenAI Responses endpoint
-
-### cURL example
-
-```bash
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/responses \
---header 'Authorization: Bearer {openai_token}' \
---header 'Content-Type: application/json' \
---data '{
-  "model": "gpt-4.1",
-  "input": [
-    {
-      "role": "user",
-      "content": "Write a one-sentence bedtime story about a unicorn."
-    }
-  ]
-}'
-```
-
-### JavaScript SDK example
-
-```js
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```js title=""
 import OpenAI from "openai";
 
-const apiKey = "my api key"; // or process.env["OPENAI_API_KEY"]
-const accountId = "{account_id}";
-const gatewayId = "{gateway_id}";
-const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/openai`;
-
-const openai = new OpenAI({
-	apiKey,
-	baseURL,
+const client = new OpenAI({
+	apiKey: "YOUR_OPENAI_API_KEY",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai",
 });
 
-try {
-	const model = "gpt-4.1";
-	const input = [
-		{
-			role: "user",
-			content: "Write a one-sentence bedtime story about a unicorn.",
-		},
-	];
-	const response = await openai.responses.create({
-		model,
-		input,
-	});
-	console.log(response.output_text);
-} catch (e) {
-	console.error(e);
-}
+const response = await client.chat.completions.create({
+	model: "gpt-4o-mini",
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
 ```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```js title=""
+import OpenAI from "openai";
+
+const client = new OpenAI({
+	apiKey: "{cf_api_token}",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai",
+});
+
+// Ensure your OpenAI API key is stored with BYOK
+// or Unified Billing has credits
+const response = await client.chat.completions.create({
+	model: "gpt-4o-mini",
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
+```
+</Details>
+
+
+### cURL
+
+<Details header="Responses API with API Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```bash title=""
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/responses \
+  --header 'Authorization: Bearer {OPENAI_API_KEY}' \
+  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  	"model": "gpt-5.1",
+  	"input": [
+    	{
+      	"role": "user",
+      	"content": "Write a one-sentence bedtime story about a unicorn."
+    	}
+  	]
+  }'
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```bash title=""
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/responses \
+  --header 'Authorization: Bearer {OPENAI_API_KEY}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  	"model": "gpt-5.1",
+  	"input": [
+    	{
+      	"role": "user",
+      	"content": "Write a one-sentence bedtime story about a unicorn."
+    	}
+  	]
+  }'
+```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="Chat Completions with API Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```bash title=""
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'Authorization: Bearer {OPENAI_API_KEY}' \
+  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```bash title=""
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'Authorization: Bearer {OPENAI_API_KEY}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="Responses API with Stored Keys (BYOK) / Unified Billing">
+```bash title=""
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/responses \
+  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  	"model": "gpt-5.1",
+  	"input": [
+    	{
+      	"role": "user",
+      	"content": "Write a one-sentence bedtime story about a unicorn."
+    	}
+  	]
+  }'
+```
+</Details>
+<Details header="Chat Completions with Stored Keys (BYOK) / Unified Billing" open>
+```bash title=""
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+  --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+</Details>
+

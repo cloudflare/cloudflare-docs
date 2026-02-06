@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, DashButton } from "~/components";
 
 <Render file="waf-intro" product="waf" />
 
@@ -37,7 +37,6 @@ The two main roles of the Cloudflare WAF are the following:
 - **Mitigation**: Blocks, challenges, or throttles requests through different mitigation features such as [custom rules](/waf/custom-rules/), [Managed Rules](/waf/managed-rules/), and [rate limiting rules](/waf/rate-limiting-rules/). Rules that mitigate traffic can include scores from traffic scans in their expressions to better address possibly malicious requests.
 
 :::caution[Warning]
-
 Enabling traffic detections will not apply any mitigation measures to incoming traffic; detections only provide signals that you can use to define your attack mitigation strategy.
 :::
 
@@ -51,10 +50,12 @@ The WAF currently provides the following detections for finding security threats
 - [**Firewall for AI**](/waf/detections/firewall-for-ai/): Helps protect your services powered by large language models (LLMs) against abuse.
 - [**Bot score**](/bots/concepts/bot-score/): Scores traffic on a scale from 1 (likely to be a bot) to 99 (likely to be human).
 
-To enable traffic detections in the Cloudflare dashboard, go to your domain > **Security** > **Settings**.
+To enable traffic detections in the Cloudflare dashboard, go to the Security **Settings** page.
+
+<DashButton url="/?to=/:account/:zone/security/settings" />
 
 :::note
-Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from **Security** > **Settings**. Refer to the documentation of each feature for availability details.
+Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from the **Settings** page. Refer to the documentation of each feature for availability details.
 :::
 
 ---

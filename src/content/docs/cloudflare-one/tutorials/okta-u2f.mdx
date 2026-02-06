@@ -1,7 +1,7 @@
 ---
 reviewed: 2020-12-07
-category: 🔐 Zero Trust
-difficulty: Medium
+category: Zero Trust
+difficulty: Intermediate
 pcx_content_type: tutorial
 title: Require U2F with Okta
 description: >-
@@ -14,10 +14,10 @@ Some second factor methods are more resistant to phishing. U2F options require y
 
 **This tutorial covers how to:**
 
-* Integrate Cloudflare Access with Okta
-* Configure Okta for U2F enrollment
-* Build an [Access policy](/cloudflare-one/policies/access/) that require users login with a hardware key
-* Specify that policy to apply to certain Access applications
+- Integrate Cloudflare Access with Okta
+- Configure Okta for U2F enrollment
+- Build an [Access policy](/cloudflare-one/access-controls/policies/) that require users login with a hardware key
+- Specify that policy to apply to certain Access applications
 
 The first two sections of this tutorial link to guides to set up Cloudflare Access and integrate Okta. If you already use Cloudflare Access with Okta, you can skip ahead to the fourth section.
 
@@ -25,7 +25,7 @@ The first two sections of this tutorial link to guides to set up Cloudflare Acce
 
 20 minutes
 
-***
+---
 
 ## Configure Cloudflare Access
 
@@ -33,7 +33,7 @@ Before you begin, you'll need to follow [these instructions](/cloudflare-one/set
 
 ## Integrate Okta
 
-Follow [these instructions](/cloudflare-one/identity/idp-integration/okta/) to integrate Okta with your Cloudflare Access account. Once integrated, Access will be able to apply rules using identity, group membership, and multifactor method from Okta.
+Follow [these instructions](/cloudflare-one/integrations/identity-providers/okta/) to integrate Okta with your Cloudflare Access account. Once integrated, Access will be able to apply rules using identity, group membership, and multifactor method from Okta.
 
 ## Configure Okta for U2F
 
@@ -43,7 +43,10 @@ An Okta administrator in your organization must first [enable U2F support](https
 
 You can begin building U2F policies by testing your Okta integration.
 
-In [Zero Trust](https://one.dash.cloudflare.com/), go to the **Settings** > **Authentication**. Next, choose the row for Okta and select **Test**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to the **Access controls** > **Access settings**.
+2. In **Manage your App Launcher**, select **Manage**.
+3. Choose **Login methods**.
+4. Choose the row for Okta and select **Test**.
 
 Cloudflare Access will prompt you to login with your Okta account. For the purposes of the test, use a second factor option like an app-based code. Okta will return `amr` values to Cloudflare Access - these are standard indicators of multifactor methods shared between identity control systems.
 

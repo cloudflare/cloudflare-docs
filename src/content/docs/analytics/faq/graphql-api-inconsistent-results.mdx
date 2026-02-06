@@ -1,0 +1,116 @@
+---
+pcx_content_type: faq
+title: GraphQL API inconsistent results
+sidebar:
+  order: 5
+---
+
+If you run the same GraphQL Analytics API query multiple times and receive slightly different results, this is caused by Adaptive Bit Rate (ABR) sampling. ABR dynamically adjusts data resolution based on query complexity and timing, which can result in slight variations between query runs.
+
+To reduce variation, query shorter timeframes (daily or weekly instead of monthly), use aggregated datasets (nodes with the `Groups` suffix), and request confidence intervals to understand data quality. For more information, refer to [Sampling](/analytics/graphql-api/sampling/).
+
+## What is sampling?
+
+Cloudflare's data pipeline handles over 700 million events per second across the global network. Processing all this data in real-time for every query would be prohibitively expensive and time-consuming.
+
+Sampling analyzes a subset of data rather than every individual data point. Cloudflare uses Adaptive Bit Rate (ABR) sampling to ensure queries complete quickly, even when working with large datasets.
+
+ABR stores data at multiple resolutions:
+
+- **100%** — Full data (used for smaller datasets)
+- **10%** — 10% sample (medium resolution)
+- **1%** — 1% sample (lower resolution)
+
+When you run a query, ABR dynamically selects the best resolution based on query complexity, time range requested, number of rows to retrieve, and current system load.
+
+## Why do results vary between query runs?
+
+Results can vary for several reasons:
+
+- **Dynamic resolution selection** — ABR may choose different sampling resolutions on different query runs based on system conditions.
+- **Long time ranges** — Querying 30 days at once is an expensive operation that triggers more aggressive sampling.
+- **High query complexity** — Complex queries with many filters or aggregations may be sampled differently.
+- **System load** — During high-traffic periods, the system may apply more aggressive sampling to ensure fair resource distribution.
+
+For example, running the same 30-day query twice might return 3,500 objects one time and 3,600 objects another time. This indicates different sampling resolutions were used.
+
+## Can I trust sampled data?
+
+Yes. Sampled data is highly reliable and provides insights as dependable as those derived from full datasets. Cloudflare's sampling techniques capture the essential characteristics of the entire dataset.
+
+Aggregated metrics (totals, averages, percentiles) are extrapolated based on the sample size, so reported metrics accurately represent the entire dataset. Results based on thousands of rows are highly likely to be representative.
+
+:::note
+Sampling may not capture extremely rare events with very low occurrence rates.
+:::
+
+## How can I reduce variation in my query results?
+
+### Query shorter time ranges
+
+Instead of querying an entire month at once, break queries into smaller intervals (daily or weekly).
+
+Before (more variable):
+
+```graphql
+datetime_geq: "2024-09-01T00:00:00Z"
+datetime_lt: "2024-10-01T00:00:00Z"
+```
+
+After (more consistent):
+
+```graphql
+datetime_geq: "2024-09-01T00:00:00Z"
+datetime_lt: "2024-09-02T00:00:00Z"
+```
+
+Then aggregate the results client-side. Smaller time windows are less likely to trigger aggressive sampling thresholds.
+
+### Use aggregated datasets
+
+Prefer data nodes with the `Groups` suffix over raw adaptive datasets. Aggregated data is pre-processed and less subject to sampling variability.
+
+For example, use `httpRequestsAdaptiveGroups` instead of raw event data.
+
+### Add explicit sorting
+
+Always include `orderBy` in your queries to ensure consistent result ordering:
+
+```graphql
+orderBy: [datetime_ASC]
+```
+
+### Use confidence intervals
+
+For adaptive datasets, request [confidence intervals](/analytics/graphql-api/features/confidence-intervals/) to understand data quality and verify sampling:
+
+```graphql
+confidence(level: 0.95) {
+  count {
+    estimate
+    lower
+    upper
+    sampleSize
+  }
+}
+```
+
+A higher `sampleSize` indicates more reliable results.
+
+## Quick reference
+
+| Issue                                | Mitigation                                                          |
+| ------------------------------------ | ------------------------------------------------------------------- |
+| Results vary between runs            | Query shorter time ranges (daily or weekly instead of monthly)      |
+| Aggressive sampling on large queries | Break queries into smaller time intervals and aggregate client-side |
+| Need consistent ordering             | Add `orderBy` clause to all queries                                 |
+| Need to verify data quality          | Request `confidence` intervals to check sample size and accuracy    |
+| Using raw adaptive data              | Switch to aggregated datasets (nodes with `Groups` suffix)          |
+
+## Related resources
+
+- [Understanding Sampling in Cloudflare Analytics](/analytics/sampling/)
+- [GraphQL API Sampling](/analytics/graphql-api/sampling/)
+- [Confidence Intervals](/analytics/graphql-api/features/confidence-intervals/)
+- [GraphQL API Limits](/analytics/graphql-api/limits/)
+- [Adaptive Bit Rate blog post](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/)

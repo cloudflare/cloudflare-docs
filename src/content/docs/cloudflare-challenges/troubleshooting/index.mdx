@@ -22,9 +22,47 @@ Challenges are not supported by Microsoft Internet Explorer. If you are currentl
 
 ### Referer header
 
-When a request is sent with a referer header, the user will receive a Challenge Page as a response. Upon solving the Challenge Page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will be inaccurate. This affects tools such as Google Analytics, which reads the referer from JavaScript.
+Your visitor's HTTP request contains a referer header set to the website that they came from. When they encounter and solve a Challenge Page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will not be accurate. 
 
-You can add tracking scripts to Challenge Pages to capture the correct referer header on the initial request.
+For example, a visitor coming from a given website is challenged by a [WAF rule](/waf/custom-rules/) via an interstitial Challenge Page served by your domain. Once the visitor loads the website's home page, the `document.referer` value is your domain, not the origin website. 
+
+This affects tools like Google Analytics, which reads the referer from JavaScript, since it replaces the previous website that visitors came from.
+
+You can add tracking scripts, such as the Google Tag Manager Javascript, within an existing [Challenge Page](/rules/custom-errors/) to capture the correct referer header on the initial request. 
+
+```js title="Example JavaScript"
+<script>
+    (function () {
+      const gaIds = {
+        "<YOUR_DOMAIN>": "<GA_TRACKING_ID>",
+      };
+
+      const gaId = gaIds[window.location.hostname];
+
+      if (gaId) {
+        const src = "https://www.googletagmanager.com/gtag/js?id=";
+
+        const gaScript = document.createElement("script");
+        gaScript.src = src.concat(gaId);
+        document.body.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", gaId);
+      } else {
+        console.warn(
+          "Google Analytics ID not found for host:",
+          window.location.hostname,
+        );
+      }
+    })();
+  </script>
+</body>
+
+```
 
 ### Cross-origin resource sharing (CORS) preflight requests
 

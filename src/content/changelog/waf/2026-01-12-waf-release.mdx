@@ -1,0 +1,52 @@
+---
+title: "WAF Release - 2026-01-12"
+description: Cloudflare WAF managed rulesets 2026-01-12 release
+date: 2026-01-12
+---
+
+import { RuleID } from "~/components";
+
+This week's release focuses on improvements to existing detections to enhance coverage. 
+
+**Key Findings**
+
+- Existing rule enhancements have been deployed to improve detection resilience against SQL Injection.
+
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+    <tbody>
+	<tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="72963b917ef74697b5bde02f48a1841a" />
+      </td>
+      <td>N/A</td>
+      <td>SQLi - AND/OR MAKE_SET/ELT - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule is merged into the original rule "SQLi - AND/OR MAKE_SET/ELT" (ID: <RuleID id="0f41a593c8fe42c38a26f709252d3934" />)</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="adf076af09b2484ca9e7881f9e553ad3" />
+      </td>
+      <td>N/A</td>
+      <td>SQLi - Benchmark Function - Beta</td>
+      <td>Log</td>
+      <td>Block</td>      
+      <td>This rule is merged into the original rule "SQLi - Benchmark Function" (ID: <RuleID id="ac4e9ebfb43a4f3998f6072d2ebc44ad" />)</td>
+   </tr>
+  </tbody>    
+</table>

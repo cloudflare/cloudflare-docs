@@ -8,7 +8,6 @@ sidebar:
   order: 4
   badge:
     text: Beta
-
 ---
 
 import { WranglerConfig } from "~/components";
@@ -19,7 +18,15 @@ Tail Workers are available to all customers on the Workers Paid and Enterprise t
 
 ![Tail Worker diagram](~/assets/images/workers/platform/tail-workers.png)
 
-A Tail Worker is automatically invoked after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. Events throughout the request lifecycle, including potential sub-requests via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and [Dynamic Dispatch](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/), will be included. You can filter, change the format of the data, and send events to any HTTP endpoint. For quick debugging, Tail Workers can be used to send logs to [KV](/kv/api/) or any database.
+A Tail Worker is automatically invoked after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. Events throughout the request lifecycle, including potential sub-requests via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and [Dynamic Dispatch](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/), will be included. You can filter, change the format of the data, and send events to any HTTP endpoint. For quick debugging, Tail Workers can be used to send logs to [KV](/kv/api/) or any database.
+
+:::note[Export batches of logs and traces to Sentry, Grafana, Honeycomb and more]
+If you are using Tail Workers to export logs and errors to observability tools like Sentry, Grafana, Honeycomb and more — you may not need to use Tail Workers.
+
+Instead, you can configure your Worker to [export OpenTelemetry (OTEL) format logs and traces](/workers/observability/exporting-opentelemetry-data/) to these tools. Unlike Tail Workers, when you configure an OTEL destination, logs and traces are sent in batches to your destination, rather than sent after each invocation of the Worker.
+
+You should think of Tail Workers as the advanced-mode option, for when you need to do something custom that is not built into the Workers observability platform.
+:::
 
 ## Configure Tail Workers
 
@@ -30,58 +37,58 @@ To configure a Tail Worker:
 
 ```js
 export default {
-  async tail(events) {
-    fetch("https://example.com/endpoint", {
-      method: "POST",
-      body: JSON.stringify(events),
-    })
-  }
-}
+	async tail(events) {
+		fetch("https://example.com/endpoint", {
+			method: "POST",
+			body: JSON.stringify(events),
+		});
+	},
+};
 ```
 
 The following Worker code is an example of what the `events` object may look like:
 
 ```json
 [
-  {
-    "scriptName": "Example script",
-    "outcome": "exception",
-    "eventTimestamp": 1587058642005,
-    "event": {
-      "request": {
-        "url": "https://example.com/some/requested/url",
-        "method": "GET",
-        "headers": {
-          "cf-ray": "57d55f210d7b95f3",
-          "x-custom-header-name": "my-header-value"
-        },
-        "cf": {
-          "colo": "SJC"
-        }
-      }
-    },
-    "logs": [
-      {
-        "message": ["string passed to console.log()"],
-        "level": "log",
-        "timestamp": 1587058642005
-      }
-    ],
-    "exceptions": [
-      {
-        "name": "Error",
-        "message": "Threw a sample exception",
-        "timestamp": 1587058642005
-      }
-    ],
-    "diagnosticsChannelEvents": [
-      {
-        "channel": "foo",
-        "message": "The diagnostic channel message",
-        "timestamp": 1587058642005
-      }
-    ]
-  }
+	{
+		"scriptName": "Example script",
+		"outcome": "exception",
+		"eventTimestamp": 1587058642005,
+		"event": {
+			"request": {
+				"url": "https://example.com/some/requested/url",
+				"method": "GET",
+				"headers": {
+					"cf-ray": "57d55f210d7b95f3",
+					"x-custom-header-name": "my-header-value"
+				},
+				"cf": {
+					"colo": "SJC"
+				}
+			}
+		},
+		"logs": [
+			{
+				"message": ["string passed to console.log()"],
+				"level": "log",
+				"timestamp": 1587058642005
+			}
+		],
+		"exceptions": [
+			{
+				"name": "Error",
+				"message": "Threw a sample exception",
+				"timestamp": 1587058642005
+			}
+		],
+		"diagnosticsChannelEvents": [
+			{
+				"channel": "foo",
+				"message": "The diagnostic channel message",
+				"timestamp": 1587058642005
+			}
+		]
+	}
 ]
 ```
 
@@ -89,21 +96,50 @@ The following Worker code is an example of what the `events` object may look lik
 
 <WranglerConfig>
 
-```toml
-tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
+```jsonc
+{
+	"tail_consumers": [
+		{
+			"service": "<TAIL_WORKER_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
 
 :::note
 
-The Worker that you add a `tail_consumers` binding to must have a `tail()` handler defined.
+Workers added to the `tail_consumers` array must have a `tail()` handler defined.
+
 :::
+
+## Use Analytics Engine for aggregated metrics
+
+If you need aggregated analytics rather than individual log events, consider writing to [Workers Analytics Engine](/analytics/analytics-engine/) from your Tail Worker. Analytics Engine is optimized for high-cardinality, time-series data that you can query with SQL.
+
+For example, you can use a Tail Worker to count errors by endpoint, track response times by customer, or build usage metrics, then write those aggregates to Analytics Engine for querying and visualization.
+
+```js
+export default {
+	async tail(events, env) {
+		for (const event of events) {
+			env.ANALYTICS.writeDataPoint({
+				blobs: [event.scriptName, event.outcome],
+				doubles: [1],
+				indexes: [event.event?.request?.cf?.colo ?? "unknown"],
+			});
+		}
+	},
+};
+```
+
+Refer to the [Analytics Engine documentation](/analytics/analytics-engine/) for more details on writing and querying data.
 
 ## Related resources
 
-* [`tail()`](/workers/runtime-apis/handlers/tail/) Handler API docs - Learn how to set up a `tail()` handler in your Worker.
-
+- [`tail()`](/workers/runtime-apis/handlers/tail/) Handler API docs - Learn how to set up a `tail()` handler in your Worker.
+- [Analytics Engine](/analytics/analytics-engine/) - Write custom analytics from your Worker for high-cardinality, time-series queries.
 - [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
 - [Local development and testing](/workers/development-testing/) - Develop and test you Workers locally.
 - [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.

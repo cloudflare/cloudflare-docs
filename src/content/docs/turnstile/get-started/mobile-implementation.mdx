@@ -6,44 +6,186 @@ sidebar:
 
 ---
 
-Turnstile is designed to run in a standard browser environment, which includes mobile devices. On native mobile applications, Turnstile can be used with WebViews. This applies to native web applications for iOS and Android. When implementing Turnstile for mobile, ensure you address the common issues below to avoid integration problems.
+Turnstile is designed to run in standard browser environments, which includes mobile devices accessing your website through mobile browsers. 
 
-Any modifications to the environment, such as the User Agent, [Content Security Policy settings](/turnstile/reference/content-security-policy/), or domain allowlisting, can disrupt the successful completion of Turnstile challenges. To ensure compatibility, it is recommended to start with a default, unmodified environment and gradually introduce changes, validating Turnstile's functionality after each adjustment.
+For native mobile applications, Turnstile can be integrated using WebViews that render your web content containing Turnstile widgets.
 
+---
 
-## WebView configurations
+## WebView integration
 
-Turnstile requires specific WebView settings to function properly. For Android implementations, refer to [`setJavaScriptEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setJavaScriptEnabled(boolean)) to tell the WebView to enable JavaScript execution and [`setDomStorageEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setDomStorageEnabled(boolean)) to enable the DOM storage API.
+WebViews are components that allow native mobile applications to display web content. They embed a browser engine within your native application, enabling you to show web pages, forms, and JavaScript-powered content like Turnstile widgets.
 
-These settings ensure that the mobile WebView can properly load and execute the Turnstile challenge. If these configurations are missing, Turnstile may malfunction.
+### Requirements
 
-## Update allowed origins
+For Turnstile to function properly in WebView, the following requirements must be met.
 
-In addition to ensuring proper WebView settings, if you have allowed origins configured, it is essential to update the list to include:
+#### JavaScript support
+  
+- JavaScript execution must be enabled.
+- DOM storage API must be available.
+- Standard web APIs must be accessible.
 
-```txt
+#### Network access
 
-challenges.cloudflare.com, about:blank, about:srcdoc
+- Access to `challenges.cloudflare.com`
+- Support for both HTTP and HTTPS connections.
+- Allow connections to `about:blank` and `about:srcdoc`
 
+#### Environment consistency
+
+- Consistent User Agent throughout the session
+- Stable device and browser characteristics
+- No modification to core browser behavior
+
+### Platform-specific implementation
+
+#### Android WebView
+
+```js wrap 
+WebView webView = findViewById(R.id.webview);
+WebSettings webSettings = webView.getSettings();
+
+// Required: Enable JavaScript
+webSettings.setJavaScriptEnabled(true);
+
+// Required: Enable DOM storage
+webSettings.setDomStorageEnabled(true);
+
+// Recommended: Enable other web features
+webSettings.setLoadWithOverviewMode(true);
+webSettings.setUseWideViewPort(true);
+webSettings.setAllowFileAccess(true);
+webSettings.setAllowContentAccess(true);
+
+// Load your web content with Turnstile
+webView.loadUrl("https://yoursite.com/protected-form");
 ```
 
-:::note
+#### iOS WKWebView (Swift)
 
-Only [React Native](https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md#originwhitelist) contains the allowed origins above by default.
-:::
+```js wrap
+import WebKit
 
-Without this, Turnstile challenges might fail to load. WebView should also be configured to allow insecure connections (`http` and `https`).
+class ViewController: UIViewController {
+    @IBOutlet weak var webView: WKWebView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Configure WebView
+        let configuration = WKWebViewConfiguration()
+        configuration.preferences.javaScriptEnabled = true
+        
+        // Load your web content with Turnstile
+        if let url = URL(string: "https://yoursite.com/protected-form") {
+            webView.load(URLRequest(url: url))
+        }
+    }
+}
+```
 
-## Maintain a consistent user agent
+#### React Native WebView
 
-When implementing Turnstile with WebViews, the user agent must stay consistent as changing the user agent will cause the challenges to fail.
+```js wrap
+import { WebView } from 'react-native-webview';
 
-## Use clearance cookies
+export default function App() {
+  return (
+    <WebView
+      source={{ uri: 'https://yoursite.com/protected-form' }}
+      javaScriptEnabled={true}
+      domStorageEnabled={true}
+      allowsInlineMediaPlayback={true}
+      mediaPlaybackRequiresUserAction={false}
+    />
+  );
+}
+```
 
-When using [clearance cookies](/cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile) with Turnstile, make sure that it is executed in the same environment where the challenges will occur, including the same browser and device configuration. The `cf_clearance` cookie will be only accepted in the same configured domain for Turnstile widget with the corresponding zone. Domains configured with the Turnstile widget must match the Cloudflare zone that issues [challenges](/cloudflare-challenges/).
+#### Flutter WebView
 
-If pre-clearance is done in a different environment, the clearance cookie may become invalid and lead to more issued challenges.
+```js wrap
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-## Use Flutter with Turnstile
+class WebViewScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return InAppWebView(
+      initialUrlRequest: URLRequest(
+        url: Uri.parse('https://yoursite.com/protected-form')
+      ),
+      initialOptions: InAppWebViewGroupOptions(
+        crossPlatform: InAppWebViewOptions(
+          javaScriptEnabled: true,
+          useShouldOverrideUrlLoading: false,
+        ),
+        android: AndroidInAppWebViewOptions(
+          domStorageEnabled: true,
+        ),
+        ios: IOSInAppWebViewOptions(
+          allowsInlineMediaPlayback: true,
+        ),
+      ),
+    );
+  }
+}
+```
 
-For developers using [Flutter](https://pub.dev/packages/flutter_inappwebview), Turnstile is compatible and tested with Flutter's WebView implementation. Refer to the official Flutter WebView package for more details and usage. 
+---
+
+## Common implementation issues
+
+### User Agent consistency
+
+Changing the User Agent during a session causes Turnstile challenges to fail because the system relies on consistent browser characteristics to validate the visitor's authenticity. When the User Agent changes mid-session, Turnstile treats this as a potential security risk and rejects the challenge.
+
+```js wrap
+// Android - Set consistent User Agent
+webSettings.setUserAgentString(webSettings.getUserAgentString());
+```
+```js wrap
+// iOS - Maintain default User Agent
+webView.customUserAgent = webView.value(forKey: "userAgent") as? String
+```
+
+### Content Security Policy (CSP)
+
+Strict [Content Security Policy](/turnstile/reference/content-security-policy/) settings can prevent Turnstile from loading the necessary scripts and making required network connections. This happens when CSP headers or meta tags block access to the domains and resources that Turnstile needs to function properly.
+
+```html wrap
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self'; 
+  script-src 'self' challenges.cloudflare.com 'unsafe-inline'; 
+  connect-src 'self' challenges.cloudflare.com;
+  frame-src 'self' challenges.cloudflare.com;
+">
+```
+
+### Domain configuration 
+
+WebView security restrictions can prevent access to the domains that Turnstile requires for proper operation. Some WebViews are configured to only allow specific domains or block certain types of connections, which can interfere with Turnstile's ability to load challenges and communicate with Cloudflare's servers.
+
+To resolve this, configure your WebView's allowed origins to include all domains that Turnstile needs: 
+
+- `challenges.cloudflare.com`
+- `about:blank`
+- `about:srcdoc`
+- Your own domain(s)
+
+The exact configuration method varies by platform, but the principle is to explicitly allow network access for these domains.
+
+### Cookie and storage issues
+
+Cookies and local storage not persisting between sessions can cause Turnstile to fail because it relies on these mechanisms to maintain state and track visitor behavior. This commonly occurs when WebView storage settings are too restrictive or when the app clears storage between sessions. Ensure that your WebView is configured to properly handle cookies and local storage.
+
+```js wrap
+// Android - Enable cookies
+CookieManager.getInstance().setAcceptCookie(true);
+CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+```
+
+```js wrap
+// iOS - Configure cookie storage
+webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
+```

@@ -9,6 +9,55 @@ head:
 
 ---
 
+import { Badge } from "~/components"
+
+## formatDateTime
+
+Usage:
+
+```sql
+formatDateTime(<datetime expression>, <format string>[, <timezone string>])
+```
+
+`formatDateTime` prints a datetime as a string according to a provided format string. Refer to
+[ClickHouse's documentation](https://clickhouse.com/docs/en/sql-reference/functions/date-time-functions/#formatdatetime)
+for a list of supported formatting options.
+
+Examples:
+
+```sql
+-- prints the current YYYY-MM-DD in UTC
+formatDateTime(now(), '%Y-%m-%d')
+
+-- prints YYYY-MM-DD in the datetime's timezone
+formatDateTime(<a datetime with a timezone>, '%Y-%m-%d')
+formatDateTime(toDateTime('2022-12-01 16:17:00', 'America/New_York'), '%Y-%m-%d')
+
+-- prints YYYY-MM-DD in UTC
+formatDateTime(<a datetime with a timezone>, '%Y-%m-%d', 'Etc/UTC')
+formatDateTime(toDateTime('2022-12-01 16:17:00', 'America/New_York'), '%Y-%m-%d', 'Etc/UTC')
+```
+
+## now
+
+Usage:
+
+```sql
+now()
+```
+
+Returns the current time as a DateTime.
+
+## today <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+now()
+```
+
+Returns the current date as a `Date`.
+
 ## toDateTime
 
 Usage:
@@ -37,15 +86,132 @@ toDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:s
 toDateTime('2022-12-01 16:17:00', 'America/New_York')
 ```
 
-## now
+## toYear <Badge text="New" variant="tip" size="small" />
 
 Usage:
 
 ```sql
-now()
+toYear(<datetime>)
 ```
 
-Returns the current time as a DateTime.
+`toYear` returns the year of a datetime.
+
+Examples:
+
+```sql
+-- returns the number 2025
+toYear(toDateTime('2025-10-27 00:00:00'))
+```
+
+## toMonth <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toMonth(<datetime>)
+```
+
+`toMonth` returns the year of a datetime.
+
+Examples:
+
+```sql
+-- returns the number 10
+toMonth(toDateTime('2025-10-27 00:00:00'))
+```
+
+## toDayOfWeek <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toDayOfWeek(<datetime>)
+```
+
+`toDayOfWeek` takes a datetime and returns its numerical day of the week.
+
+Returns `1` to indicate Monday, `2` to indicate Tuesday, and so on.
+
+Examples:
+
+```sql
+-- returns the number 1 for Monday 27th October 2025
+toDayOfWeek(toDateTime('2025-10-27 00:00:00'))
+
+-- returns the number 2 for Tuesday 28th October 2025
+toDayOfWeek(toDateTime('2025-10-28 00:00:00'))
+
+-- returns the number 7 for Sunday 2nd November 2025
+toDayOfWeek(toDateTime('2025-11-02 00:00:00'))
+```
+
+## toDayOfMonth <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toDayOfMonth(<datetime>)
+```
+
+`toDayOfMonth` returns the day of the month from a datetime.
+
+Examples:
+
+```sql
+-- returns the number 27
+toDayOfMonth(toDateTime('2025-10-27 00:00:00'))
+```
+
+## toHour <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toHour(<datetime>)
+```
+
+`toHour` returns the hour of the day from a datetime.
+
+Examples:
+
+```sql
+-- returns the number 9
+toHour(toDateTime('2025-10-27 09:11:13'))
+```
+
+## toMinute <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toMinute(<datetime>)
+```
+
+`toMinute` returns the minute of the hour from a datetime.
+
+Examples:
+
+```sql
+-- returns the number 11
+toMinute(toDateTime('2025-10-27 09:11:13'))
+```
+
+## toSecond <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toSecond(<datetime>)
+```
+
+`toSecond` returns the second of the minute from a datetime.
+
+Examples:
+
+```sql
+-- returns the number 13
+toSecond(toDateTime('2025-10-27 09:11:13'))
+```
 
 ## toUnixTimestamp
 
@@ -62,33 +228,6 @@ Examples:
 ```sql
 -- get the current unix timestamp
 toUnixTimestamp(now())
-```
-
-## formatDateTime
-
-Usage:
-
-```sql
-formatDateTime(<datetime expression>, <format string>[, <timezone string>])
-```
-
-`formatDateTime` prints a datetime as a string according to a provided format string. Refer to
-[ClickHouse's documentation](https://clickhouse.com/docs/en/sql-reference/functions/date-time-functions/#formatdatetime)
-for a list of supported formatting options.
-
-Examples:
-
-```sql
--- prints the current YYYY-MM-DD in UTC
-formatDateTime(now(), '%Y-%m-%d')
-
--- prints YYYY-MM-DD in the datetime's timezone
-formatDateTime(<a datetime with a timezone>, '%Y-%m-%d')
-formatDateTime(toDateTime('2022-12-01 16:17:00', 'America/New_York'), '%Y-%m-%d')
-
--- prints YYYY-MM-DD in UTC
-formatDateTime(<a datetime with a timezone>, '%Y-%m-%d', 'Etc/UTC')
-formatDateTime(toDateTime('2022-12-01 16:17:00', 'America/New_York'), '%Y-%m-%d', 'Etc/UTC')
 ```
 
 ## toStartOfInterval
@@ -118,4 +257,189 @@ SELECT
 FROM your_dataset
 GROUP BY hour
 ORDER BY hour ASC
+```
+
+## toStartOfYear <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfYear(<datetime>)
+```
+
+`toStartOfYear` rounds down a datetime to the nearest start of year. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-01-01 00:00:00
+toStartOfYear(toDateTime('2025-10-27 00:00:00'))
+```
+
+## toStartOfMonth <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfMonth(<datetime>)
+```
+
+`toStartOfMonth` rounds down a datetime to the nearest start of month. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-01 00:00:00
+toStartOfMonth(toDateTime('2025-10-27 00:00:00'))
+```
+
+## toStartOfWeek <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfWeek(<datetime>)
+```
+
+`toStartOfWeek` rounds down a datetime to the start of the week. This can be useful
+for grouping data into equal-sized time ranges.
+
+Treats Monday as the first day of the week.
+
+Examples:
+
+```sql
+-- round a time on a Monday down to Monday 2025-10-27 00:00:00
+toStartOfWeek(toDateTime('2025-10-27 00:00:00'))
+
+-- round a time on a Wednesday down to Monday 2025-10-27 00:00:00
+toStartOfWeek(toDateTime('2025-10-29 00:00:00'))
+```
+
+## toStartOfDay <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfDay(<datetime>)
+```
+
+`toStartOfDay` rounds down a datetime to the nearest start of day. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-27 00:00:00
+toStartOfDay(toDateTime('2025-10-27 00:00:00'))
+```
+
+## toStartOfHour <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfHour(<datetime>)
+```
+
+`toStartOfHour` rounds down a datetime to the nearest start of hour. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-27 16:00:00
+toStartOfHour(toDateTime('2025-10-27 16:55:25'))
+```
+
+## toStartOfFifteenMinutes <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfFifteenMinutes(<datetime>)
+```
+
+`toStartOfFifteenMinutes` rounds down a datetime to the nearest fifteen minutes. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-27 16:45:00
+toStartOfFifteenMinutes(toDateTime('2025-10-27 16:55:25'))
+```
+
+## toStartOfTenMinutes <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfTenMinutes(<datetime>)
+```
+
+`toStartOfTenMinutes` rounds down a datetime to the nearest ten minutes. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-27 16:50:00
+toStartOfTenMinutes(toDateTime('2025-10-27 16:55:25'))
+```
+
+## toStartOfFiveMinutes <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfFiveMinutes(<datetime>)
+```
+
+`toStartOfFiveMinutes` rounds down a datetime to the nearest five minutes. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-27 16:55:00
+toStartOfFiveMinutes(toDateTime('2025-10-27 16:55:25'))
+```
+
+## toStartOfMinute <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toStartOfMinute(<datetime>)
+```
+
+`toStartOfMinute` rounds down a datetime to the nearest minute. This can be useful
+for grouping data into equal-sized time ranges.
+
+Examples:
+
+```sql
+-- round a timestamp down to 2025-10-27 16:55:00
+toStartOfMinute(toDateTime('2025-10-27 16:55:25'))
+```
+
+## toYYYYMM <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+toYYYYMM(<datetime>)
+```
+
+`toYYYYMM` returns a number representing year and month of a datetime.
+For instance a datetime on `2025-05-03` would return the number `202505`.
+
+Examples:
+
+```sql
+-- returns the number 202510
+toYYYYMM(toDateTime('2025-10-27 16:55:25'))
 ```

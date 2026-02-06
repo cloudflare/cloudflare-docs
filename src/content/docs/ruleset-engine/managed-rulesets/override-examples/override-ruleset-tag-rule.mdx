@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Details, APIRequest } from "~/components";
+import { Details, APIRequest, Render } from "~/components";
 
 Customize the execution of managed rulesets with a combination of ruleset overrides, tag overrides, and rule overrides in your phase entry point ruleset.
 
@@ -14,13 +14,13 @@ Customize the execution of managed rulesets with a combination of ruleset overri
 3. [Configure a tag override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets an action for rules with a given tag.
 4. [Configure a rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets an action for the rules you want to execute.
 
-The request below uses the [Update a zone entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to execute the following in a single `PUT` request:
+## Zone-level example
+
+This example uses the [Update a zone entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to execute the following in a single `PUT` request:
 
 - Add a rule to the `http_request_firewall_managed` phase entry point ruleset that executes a managed ruleset.
 - Use category overrides to enable rules with `wordpress` and `drupal` tags and set their actions to `log`.
 - Add a rule override that enables a single rule.
-
-<Details header="Example: Execute a managed ruleset at the zone level with overrides">
 
 In this example:
 
@@ -70,9 +70,13 @@ In this example:
 	}}
 />
 
-</Details>
+## Account-level example
 
-<Details header="Example: Execute a managed ruleset at the account level with overrides">
+This example uses the [Update an account entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to execute the following in a single `PUT` request:
+
+- Add a rule to the `http_request_firewall_managed` phase entry point ruleset that executes a managed ruleset for the zone `example.com`.
+- Use category overrides to enable rules with `wordpress` and `drupal` tags and set their actions to `log`.
+- Add a rule override that enables a single rule.
 
 In this example:
 
@@ -80,6 +84,8 @@ In this example:
 - `"enabled": false` defines an override at the ruleset level to disable all rules in the managed ruleset.
 - `"categories": [{"category": "wordpress", "action": "log", "enabled": true}, {"category": "drupal", "action": "log", "enabled": true}]` defines an override at the tag level to enable rules tagged with `wordpress` or `drupal` and sets their action to `log`.
 - `"rules": [{"id": "<RULE_ID>", "action": "block", "enabled": true}]` defines an override at the rule level that enables one individual rule and sets the action to `block`.
+
+<Render file="deploy-account-ruleset-requirement" product="ruleset-engine" />
 
 <APIRequest
 	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
@@ -121,5 +127,3 @@ In this example:
 		],
 	}}
 />
-
-</Details>

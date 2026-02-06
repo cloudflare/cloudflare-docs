@@ -10,6 +10,10 @@ import { Render, DashButton, Steps } from "~/components";
 
 A `cf_clearance` cookie proves to Cloudflare that the visitor is a verified human and has passed the Challenge presented to them. 
 
+The `cf_clearance` cookie is securely tied to the specific visitor and device it was issued to. This binding is a security feature designed to prevent the cookie from being easily transferred and re-used on other machines.
+
+As an additional layer of security, Cloudflare recommends that customers [add a rate limiting rule](/waf/rate-limiting-rules/) based on the `cf_clearance` cookie value. This ensures that a single, valid cookie cannot be abused by a single machine to send an excessive volume of requests.
+
 If a visitor passes an Interactive Challenge (highest security level), then the `cf_clearance` cookie indicates this to the origin and allows the visitor to bypass any other Challenge on the website, whether it is another Interactive Challenge, a Managed Challenge, or a non-interactive JavaScript Challenge for as long as the cookie is valid.
 
 If a visitor receives a `cf_clearance` cookie on a page that uses a WAF rule with Managed or JavaScript Challenge (lower security levels), then encountering a different page with a higher security clearance level Challenge will prompt them to solve the Challenge again.

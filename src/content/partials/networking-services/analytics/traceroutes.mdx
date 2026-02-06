@@ -1,26 +1,58 @@
 ---
 params:
   - productName
-  - dashButtonPath
+  - magicWord
 ---
 
-import { DashButton } from "~/components";
+import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 
-Magic {props.productName} customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare's network to their own network.
+You can run traceroutes to analyze the hop-by-hop Internet path and latency between Cloudflare's network and your network.
 
+{ props.magicWord === "WAN Tunnels" && (
+  <>
+    <Markdown
+      text={`
 To run a traceroute from a specific Cloudflare data center to your network:
 
-1. In the Cloudflare dashboard, go to Magic {props.productName}'s **Network health** page.
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
+2. Go to **Network health** > **WAN connector health**.
+3. Find the tunnel for the traceroute.
+4. Select the three dots > **Traceroute details**.
+      `}
+      inline={false}
+    />
+  </>
+)}
 
-	 <DashButton url={props.dashButtonPath} />
+{ props.magicWord !== "WAN Tunnels" && (
+  <>
+    <Markdown
+      text={`
+To run a traceroute from a specific Cloudflare data center to your network:
 
-2. Expand a Magic Tunnel, and find the Cloudflare data center where the traceroute will be run from.
-3. Select **Traceroute for details**.
+1. Go to the **Network health** page.
+      `}
+      inline={false}
+    />
+
+<DashButton url="/?to=/:account/networking-insights/health" />
+
+	<Markdown
+		text={`
+2. Select **Connector health**.
+3. Select the tunnel for the traceroute.
+4. Select the three dots > **Traceroute details**.
+      `}
+		inline={false}
+	/>
+
+  </>
+)}
 
 You can access detailed data from the traceroute, including:
 
-- TTL Host
-- AS Number
+- Time to live (TTL) and host
+- Autonomous system (AS) number
 - [Packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) sent in the traceroute
 - Average, minimum, and maximum latency
 - Standard deviation of latency

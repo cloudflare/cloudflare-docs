@@ -4,20 +4,17 @@ title: FAQs
 structured_data: true
 sidebar:
   order: 9
-
 ---
 
 ## Are DLP and DLS the same?
 
-No, they are not. DLP stands for [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), and it is part of Cloudflare’s Zero Trust offering (requiring Gateway). It allows customers to scan web traffic and SaaS apps for sensitive data like secret keys, financial information (credit card numbers), and other keywords.
+No, they are not. DLP stands for [Data Loss Prevention](/cloudflare-one/data-loss-prevention/), and it is part of Cloudflare’s Zero Trust offering (requiring Gateway). It allows customers to scan web traffic and SaaS apps for sensitive data like secret keys, financial information (credit card numbers), and other keywords.
 
 [Data Localization Suite](/data-localization/) (DLS) is a suite of features that can provide localization and data residency features.
-
 
 ## Are Cloudflare’s services GDPR compliant?
 
 Yes, even without DLS, Cloudflare services are designed to satisfy the GDPR’s requirements. Cloudflare services are also verified compliant with the EU Cloud CoC, Verification-ID: 2023LVL02SCOPE4316. For further information, visit EU Cloud CoC [public register](https://eucoc.cloud/en/public-register).
-
 
 ## How can I use DLS?
 
@@ -27,19 +24,16 @@ Once you have purchased DLS, the post-sales team will entitle DLS for you, and y
 
 Not yet.
 
-
 ## Are there other options if I prefer not to have Cloudflare handle TLS termination (decryption)?
 
 Yes, you have these options available:
 
-* [Spectrum TCP/UDP Apps](/spectrum/) (without TLS Termination)
-* [Magic Transit](/magic-transit/)
-* [Privacy Gateway](/privacy-gateway/)
+- [Spectrum TCP/UDP Apps](/spectrum/) (without TLS Termination)
+- [Magic Transit](/magic-transit/)
+- [Privacy Gateway](/privacy-gateway/)
 
 These options only offer L3/L4 DDoS protection and using them imply that no application / L7 security or performance services can be applied.
 
 ## I have configured [Customer Metadata Boundary](/data-localization/metadata-boundary/) for EU region, I'm accessing the Cloudflare Dashboard from Europe, why am I getting an error `Data not available due to your account's Customer Metadata Boundary configuration`?
 
 Based on Internet conditions that vary over time, users may be dynamically steered to a data center that is physically further away. This can be based on a variety of factors, including latency and network congestion. [Out of region access](/data-localization/metadata-boundary/out-of-region-access/) allows requests arriving in the United States to pull Customer Logs from the European Union and vice-versa. The analytics are still exclusively stored in the CMB configured region.
-
-

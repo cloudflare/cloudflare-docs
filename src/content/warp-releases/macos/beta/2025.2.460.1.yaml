@@ -5,7 +5,7 @@ releaseNotes: >-
 
   **Changes and improvements**
 
-  - Improved [captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/) to make more public networks compatible
+  - Improved [captive portal detection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/captive-portals/) to make more public networks compatible
   and have faster detection.
 
   - Improved error messages shown in the app.

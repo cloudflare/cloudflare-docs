@@ -10,7 +10,16 @@ import { DashButton } from "~/components";
 
 ## Submit reports
 
-Visit [Submit an abuse report](https://abuse.cloudflare.com/) to submit a report.
+Cloudflare helps you prevent online abuse and make your website more secure. If abuse is identified on your website, Cloudflare gives you a mechanism to present your grievances to the party best positioned to address them.
+
+Cloudflare offers three ways for you to submit an abuse report:
+
+- Public form: Refer to [Submit an Abuse Report](https://abuse.cloudflare.com/) to learn more.
+- The Cloudflare dashboard, on the **Abuse reports** page.
+
+    <DashButton url="/?to=/:account/abuse-reports" />
+  Optionally, filter the reports based on date, report status, report type, and domain.
+- The Cloudflare API: Use the [Abuse Reports API](/api/resources/abuse_reports/) to submit an abuse report.
 
 ## View submitted reports
 
@@ -24,6 +33,6 @@ Users with Admin, Super Admin, or Trust & Safety roles can view any abuse report
 
 ## Receive notifications
 
-You can enable Trust & Safety notifications for your account for information about new blocks, removed blocks, or updates related to content. 
+You can enable abuse notifications for your account to configure email, webhook, or PagerDuty alerts about new abuse reports against your websites. 
 
 For help setting up alerts, refer to [Configure Cloudflare notifications](/notifications/get-started/).

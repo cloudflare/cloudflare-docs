@@ -1,0 +1,47 @@
+---
+title: Advanced configuration
+pcx_content_type: reference
+sidebar:
+  order: 25
+---
+
+import { DashButton } from "~/components";
+
+## Disable Pay Per Crawl by URI pattern
+
+You may want to offer free access to certain pages while charging for others:
+
+- Allow free access to **homepages, category pages, or navigation** to help crawlers discover paid content.
+- Exclude functional pages like **login, search, or API endpoints** that don't contain chargeable content.
+- Start with Pay Per Crawl on **a small section of your site** before expanding.
+- Offer free access to **promotional or archived content** while charging for premium articles.
+
+To get started, use [Configuration Rules](/rules/configuration-rules/) to exclude specific URI patterns from charging.
+
+1. Go to **Rules** > **Overview** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Select **Create rule** > **Configuration Rule**.
+
+3. **When incoming requests match**: Set your URI pattern.
+   - Field: `URI Full`
+   - Operator: `wildcard`
+   - Value: `https://*example.com/public/*`
+
+4. Select **Disable Pay Per Crawl** > **Add**
+
+5. Select **Deploy**.
+
+**Example patterns:**
+
+- Free homepage: `URI Full` equals `https://example.com/`
+- Free directory: `URI Full` wildcard `https://*example.com/public/*`
+
+:::note
+Some paths are always free to crawl. These paths are: `/robots.txt`, `/sitemap.xml`, `/security.txt`, `/.well-known/security.txt`, `/crawlers.json`
+:::
+
+## Additional resources
+
+- [Configuration Rules documentation](/rules/configuration-rules/)

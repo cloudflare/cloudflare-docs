@@ -5,6 +5,7 @@ pcx_content_type: tutorial
 products: [pipelines, r2, r2-sql, r2-data-catalog]
 description: >-
   This tutorial demonstrates how to build a complete data pipeline using Cloudflare Pipelines, R2 Data Catalog, and R2 SQL.
+reviewed: 2025-09-24
 ---
 
 import {
@@ -143,7 +144,7 @@ Copy the `warehouse` (ACCOUNTID_BUCKETNAME) and paste it in the `export` below. 
 :::
 
 ```bash
-export $WAREHOUSE= #Paste your warehouse here
+export WAREHOUSE= #Paste your warehouse here
 ```
 
 ### (Optional) Enable compaction on your R2 Data Catalog
@@ -285,7 +286,7 @@ npx wrangler pipelines create raw_events_pipeline \
 
 1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
 
-   <DashButton url="/?to=/:account/pipelines" />
+   <DashButton url="/?to=/:account/pipelines/overview" />
 
 2. Select **Create Pipeline**.
 

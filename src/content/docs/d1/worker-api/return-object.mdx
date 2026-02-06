@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 Some D1 Worker Binding APIs return a typed object.
 
 | D1 Worker Binding API                                                                                                          | Return object |
@@ -45,12 +47,24 @@ The methods [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run
 
 ### Example
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 const returnValue = await stmt.run();
 return Response.json(returnValue)
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import Response
+
+some_variable = "Bs Beverages"
+stmt = self.env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(some_variable)
+return_value = await stmt.run()
+return Response.json(return_value)
+```
+</TabItem> </Tabs>
+
 ```json
 {
   "success": true,
@@ -100,11 +114,21 @@ The method [`D1Database::exec`](/d1/worker-api/d1-database/#exec) returns a type
 
 ### Example
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"`);
 return Response.json(returnValue);
 ```
-```js output
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import Response
+
+return_value = await self.env.DB.exec('SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"')
+return Response.json(return_value)
+```
+</TabItem> </Tabs>
+
+```json output
 {
   "count": 1,
   "duration": 1

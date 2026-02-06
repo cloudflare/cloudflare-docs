@@ -7,7 +7,7 @@ releaseNotes: |-
   - Improvement to managed network detection checks for faster switching between managed networks.
 
   **Known issues**
-  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
 version: 2025.6.824.1
 releaseDate: 2025-07-23T21:24:34.194Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/centos8-arm/version/2025.6.824.1

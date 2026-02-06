@@ -81,12 +81,13 @@ If you previously [created a peer DNS server](#2-create-peer-dns-server-optional
 
 To link a primary zone to a peer using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
-3. Go to **DNS** > **Settings**.
-4. For **DNS Zone Transfers**, select **Manage linked peers**.
-5. Select a peer.
-6. Select **Save**.
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
+
+2. For **DNS Zone Transfers**, select **Manage linked peers**.
+3. Select a peer.
+4. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
@@ -116,10 +117,12 @@ If your account [zone defaults](/dns/additional-options/dns-zone-defaults/) are 
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
-3. Go to **DNS** > **Settings**.
-4. Enable **Multi-provider DNS**.
+
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
+
+2. Enable **Multi-provider DNS**.
 
 </TabItem> <TabItem label="API">
 
@@ -145,10 +148,11 @@ When you enable outgoing zone transfers, this will send a DNS NOTIFY message to 
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account and zone.
-3. Go to **DNS** > **Settings**.
-4. For **Outgoing Zone Transfers**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
+
+2. For **Outgoing Zone Transfers**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 

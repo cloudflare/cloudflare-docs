@@ -1,5 +1,5 @@
 {
-    "id": "d2f07a41-c152-4061-8083-ec655cbf91a1",
+    "id": "15631501-2742-4346-a469-22fe202188a2",
     "source": 1,
     "name": "@cf/google/embeddinggemma-300m",
     "description": "EmbeddingGemma is a 300M parameter, state-of-the-art for its size, open embedding model from Google, built from Gemma 3 (with T5Gemma initialization) and the same research and technology used to create Gemini models. EmbeddingGemma produces vector representations of text, making it well-suited for search and retrieval tasks, including classification, clustering, and semantic similarity search. This model was trained with data in 100+ spoken languages.",
@@ -8,7 +8,7 @@
         "name": "Text Embeddings",
         "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
     },
-    "created_at": "2025-09-03 20:48:38.784",
+    "created_at": "2025-09-04 16:38:44.980",
     "tags": [],
     "properties": [],
     "schema": {
@@ -16,43 +16,51 @@
             "type": "object",
             "properties": {
                 "text": {
-                    "oneOf": [{
-                        "type": "string"
-                    }, {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "description": "The text to embed",
+                            "minLength": 1
+                        },
+                        {
+                            "type": "array",
+                            "description": "Batch of text values to embed",
+                            "items": {
+                                "type": "string",
+                                "description": "The text to embed",
+                                "minLength": 1
+                            },
+                            "maxItems": 100
                         }
-                    }],
-                    "description": "Input text to embed. Can be a single string or a list of strings."
+                    ]
                 }
             },
-            "required": ["text"]
+            "required": [
+                "text"
+            ]
         },
         "output": {
             "type": "object",
+            "contentType": "application/json",
             "properties": {
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "type": "array",
-                        "items": {
-                            "type": "number"
-                        }
-                    },
-                    "description": "Embedding vectors, where each vector is a list of floats."
-                },
                 "shape": {
                     "type": "array",
                     "items": {
-                        "type": "integer"
-                    },
-                    "minItems": 2,
-                    "maxItems": 2,
-                    "description": "Shape of the embedding data as [number_of_embeddings, embedding_dimension]."
+                        "type": "number"
+                    }
+                },
+                "data": {
+                    "type": "array",
+                    "description": "Embeddings of the requested text values",
+                    "items": {
+                        "type": "array",
+                        "description": "Floating point embedding representation shaped by the embedding model",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
                 }
-            },
-            "required": ["data", "shape"]
+            }
         }
     }
 }

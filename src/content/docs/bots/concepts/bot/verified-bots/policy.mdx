@@ -9,13 +9,17 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components"
 
-In order to be listed by Cloudflare as a <GlossaryTooltip term="verified bot" link="/bots/concepts/bot/#verified-bots">verified bot</GlossaryTooltip>, your <GlossaryTooltip term="bot">bot</GlossaryTooltip> must conform to the below requirements. To provide the best possible protection to our customers, this policy may change in the future as we adapt to new bot behaviors.
+In order to be listed by Cloudflare as a <GlossaryTooltip term="verified bot" link="/bots/concepts/bot/verified-bots/">verified bot</GlossaryTooltip>, your <GlossaryTooltip term="bot">bot</GlossaryTooltip> must conform to the below requirements. To provide the best possible protection to our customers, this policy may change in the future as we adapt to new bot behaviors.
 
 ## Bot policy
 
 ### Minimum traffic
 
 A bot or proxy must have a minimum amount of traffic for Cloudflare to be able to find it in the sampled data. The minimum traffic should have more than 1,000 requests per day across multiple domains.
+
+:::note
+Minimum traffic is not a requirement if you are using [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/) as an authentication method.
+:::
 
 ### Minimum zones
 

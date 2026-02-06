@@ -221,7 +221,7 @@ String comparison in rule expressions is case-sensitive. To account for possible
 lower(http.request.uri.path) contains "/wp-login.php"
 ```
 
-Wildcard matching is only supported with the `wildcard` and `strict wildcard` operators, and regular expression matching is only supported with the `matches` operator.
+[Wildcard matching](#wildcard-matching) is only supported with the `wildcard` and `strict wildcard` operators, and [regular expression matching](#regular-expression-matching) is only supported with the `matches` operator.
 
 ### Wildcard matching
 
@@ -261,6 +261,8 @@ http.request.full_uri wildcard "*.example.com/*/page.html"
 # - https://sub.example.com/folder2/page.html?s=value  (http.request.full_uri includes the query string and its full value does not match)
 # - https://sub.example.com/a/                         ('page.html' is missing)
 ```
+
+Slashes (`/`) have no special meaning in wildcard matches. In this example, the second `*` metacharacter in the expression `http.request.full_uri wildcard "*.example.com/*/page.html"` matched `folder`, `team`, and `team/subteam`.
 
 </Details>
 

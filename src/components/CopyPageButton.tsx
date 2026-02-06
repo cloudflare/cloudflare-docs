@@ -15,7 +15,8 @@ import {
 	PiArrowSquareOutLight,
 	PiCheckCircleLight,
 	PiXCircleLight,
-	PiChatCircleLight,
+	PiLinkLight,
+	PiPlugsConnectedLight,
 } from "react-icons/pi";
 import ClaudeIcon from "./icons/ClaudeIcon";
 import ChatGPTIcon from "./icons/ChatGPTIcon";
@@ -50,12 +51,12 @@ export default function CopyPageButton() {
 		window.open(markdownUrl, "_blank");
 	};
 
-	const handleDocsAI = () => {
-		const docsAIUrl = "https://developers.cloudflare.com/support/ai/";
+	const handleViewAIOptions = () => {
+		const aiOptionsUrl = "/style-guide/ai-tooling/";
 		track("clicked copy page button", {
-			value: "docs ai",
+			value: "view ai options",
 		});
-		window.open(docsAIUrl, "_blank");
+		window.open(aiOptionsUrl, "_blank");
 	};
 
 	const handleExternalAI = (url: string, vendor: string) => {
@@ -63,8 +64,7 @@ export default function CopyPageButton() {
 		const indexMdUrl = new URL("index.md", window.location.href).toString();
 		const prompt = `Read this page from the Cloudflare docs: ${encodeURIComponent(indexMdUrl)} and answer questions about the content.`;
 		track("clicked copy page button", {
-			value: "docs ai",
-			label: vendor,
+			value: `${vendor} ai`,
 		});
 		window.open(`${externalAIURL}${prompt}`, "_blank");
 	};
@@ -100,7 +100,34 @@ export default function CopyPageButton() {
 		}
 	};
 
+	const handleCopyPageLink = async () => {
+		try {
+			await navigator.clipboard.writeText(window.location.href);
+			track("clicked copy page button", {
+				value: "copy page link",
+			});
+
+			setCopyState("success");
+			setTimeout(() => {
+				setCopyState("idle");
+			}, 1500);
+		} catch (error) {
+			console.error("Failed to copy page link:", error);
+
+			setCopyState("error");
+			setTimeout(() => {
+				setCopyState("idle");
+			}, 1500);
+		}
+	};
+
 	const options = [
+		{
+			label: "Copy page link",
+			description: "Copy the current page URL to clipboard",
+			icon: PiLinkLight,
+			onClick: handleCopyPageLink,
+		},
 		{
 			label: "View Page as Markdown",
 			description: "Open the Markdown file in a new tab",
@@ -121,10 +148,10 @@ export default function CopyPageButton() {
 				handleExternalAI("https://chat.openai.com/?prompt=", "chatgpt"),
 		},
 		{
-			label: "Ask Docs AI",
-			description: "Open our Docs AI assistant in a new tab",
-			icon: PiChatCircleLight,
-			onClick: handleDocsAI,
+			label: "View other AI options",
+			description: "Explore more AI tooling options",
+			icon: PiPlugsConnectedLight,
+			onClick: handleViewAIOptions,
 		},
 	];
 

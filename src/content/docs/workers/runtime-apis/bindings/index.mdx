@@ -12,7 +12,7 @@ import { DirectoryListing, WranglerConfig } from "~/components";
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform. Bindings provide better performance and less restrictions when accessing resources from Workers than the [REST APIs](/api/) which are intended for non-Workers applications.
 
-The following bindings available today:
+The following bindings are available today:
 
 <DirectoryListing />
 
@@ -22,11 +22,16 @@ When you declare a binding on your Worker, you grant it a specific capability, s
 
 <WranglerConfig>
 
-```toml
-main = "./src/index.js"
-r2_buckets = [
-  { binding = "MY_BUCKET", bucket_name = "<MY_BUCKET_NAME>" }
-]
+```jsonc
+{
+	"main": "./src/index.js",
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "<MY_BUCKET_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

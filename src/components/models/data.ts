@@ -10,6 +10,7 @@ import qwen from "../../assets/images/workers-ai/qwen.svg";
 import blackforestlabs from "../../assets/images/workers-ai/blackforestlabs.svg";
 import deepgram from "../../assets/images/workers-ai/deepgram.svg";
 import leonardo from "../../assets/images/workers-ai/leonardo.svg";
+import ibm from "../../assets/images/workers-ai/ibm.svg";
 
 export const authorData: Record<string, { name: string; logo: string }> = {
 	openai: {
@@ -63,5 +64,9 @@ export const authorData: Record<string, { name: string; logo: string }> = {
 	leonardo: {
 		name: "Leonardo",
 		logo: leonardo.src,
+	},
+	"ibm-granite": {
+		name: "IBM",
+		logo: ibm.src,
 	},
 };

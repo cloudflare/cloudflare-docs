@@ -4,11 +4,9 @@ source: https://support.cloudflare.com/hc/en-us/articles/360037684251-Understand
 title: Zone Analytics
 sidebar:
   order: 1
-
 ---
 
-import { Badge, DashButton  } from "~/components";
-
+import { Badge, DashButton } from "~/components";
 
 The Cloudflare zone analytics is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
 
@@ -20,24 +18,24 @@ You can also understand the characteristics of the data that Cloudflare
 captures and processes.
 :::
 
-***
+---
 
 ## View your website analytics
 
 To view metrics for your website, in the Cloudflare dashboard, go to the **Analytis & Logs** page.
 
-   <DashButton url="/?to=/:account/:zone/analytics" />
+<DashButton url="/?to=/:account/:zone/analytics/traffic" />
 
-Once it loads, you can find tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to *Review your website metrics* below.
+Once it loads, you can find tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to _Review your website metrics_ below.
 
-***
+---
 
 ## Review your website metrics
 
 This section outlines the metrics available under each Analytics app tab. Before proceeding, note that each tab may contain:
 
-* One or more panels to further categorize the underlying metrics.
-* A dropdown (on the panel's top right) to filter metrics for a specific time period. The time period you can select may vary based on the Cloudflare plan that your domain is associated with.
+- One or more panels to further categorize the underlying metrics.
+- A dropdown (on the panel's top right) to filter metrics for a specific time period. The time period you can select may vary based on the Cloudflare plan that your domain is associated with.
 
 Below is a summary of each Analytics app tab.
 
@@ -47,8 +45,8 @@ Below is a summary of each Analytics app tab.
 
 These metrics include legitimate user requests as well as crawlers and threats. The HTTP Traffic tab features the following panels: 
 
-* **Web Traffic** - Displays metrics for *Requests*, *Bandwidth*, and *Unique Visitors*. If you are using Cloudflare Workers, subrequests data will not be visible in zone Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
-* **Web Traffic Requests by Country** - Is an interactive map that breaks down the number of requests by country.  This panel also includes a data table for **Top Traffic Countries / Regions** that display the countries with the most number of requests (up to five, if the data exists).
+- **Web Traffic** - Displays metrics for _Requests_, _Bandwidth_, and _Unique Visitors_. If you are using Cloudflare Workers, subrequests data will not be visible in zone Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
+- **Web Traffic Requests by Country** - Is an interactive map that breaks down the number of requests by country.  This panel also includes a data table for **Top Traffic Countries / Regions** that display the countries with the most number of requests (up to five, if the data exists).
 
 #### Pro, Business, or Enterprise plan
 
@@ -60,40 +58,41 @@ and Enterprise plans.
 
 Analytics are based on Cloudflare's edge logs, with no need for third party scripts or trackers. The HTTP Traffic tab features the following metrics:
 
-* **Requests** - An HTTP request. A typical page view requires many requests. If you are using Cloudflare Workers, subrequests data will not be visible in zone HTTP Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
-* **Data Transfer** - Total HTTP data transferred in responses.
-* <a id="page-views" /> **Page views** - A page view is defined as a successful HTTP response with a content-type of HTML.
-* **Visits** - A visit is defined as a [page view](#page-views) that originated from a different website, or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
-* **API Requests** - An HTTP request for API data.
+- **Requests** - An HTTP request. A typical page view requires many requests. If you are using Cloudflare Workers, subrequests data will not be visible in zone HTTP Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
+- **Data Transfer** - Total HTTP data transferred in responses.
+- <a id="page-views" /> **Page views** - A page view is defined as a successful
+  HTTP response with a content-type of HTML.
+- **Visits** - A visit is defined as a [page view](#page-views) that originated from a different website, or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
+- **API Requests** - An HTTP request for API data.
 
 To receive more detailed metrics, **Add filter**. You can also filter each metric by:
 
-* Cache status
-* Data center
-* Source ASN
-* Country
-* Source device type
-* Source IP
-* Referer host
-* Host
-* HTTP method
-* HTTP version
-* Path
-* Query string
-* Content type
-* Edge status code
-* Origin status code
-* Security Action
-* Security Source
-* Source browser
-* Source operating system
-* Source user agent
-* X-Requested-With header
+- Cache status
+- Data center
+- Source ASN
+- Country
+- Source device type
+- Source IP
+- Referer host
+- Host
+- HTTP method
+- HTTP version
+- Path
+- Query string
+- Content type
+- Edge status code
+- Origin status code
+- Security Action
+- Security Source
+- Source browser
+- Source operating system
+- Source user agent
+- X-Requested-With header
 
 In addition, the following filters are available to Enterprise [Bot Management](/bots/get-started/bot-management/) customers only.
 
-* Source JA4 fingerprint
-* Source JA3 fingerprint
+- Source JA4 fingerprint
+- Source JA3 fingerprint
 
 To change the time period, use the dropdown menu on the right-hand side above the graph. You can also drag to zoom on the graph.
 
@@ -101,17 +100,17 @@ To change the time period, use the dropdown menu on the right-hand side above th
 
 For this tab, the number and type of charts may vary based on existing data and customer plan. Most of the metrics in this tab come from the Cloudflare Firewall app. The panels available include:
 
-* **Threats** - Displays a data summary and an area chart showing threats against the site.
-* **Threats by Country** - Is an interactive map highlighting the countries where threats originated. It also includes data tables with statistics on **Top Threat Countries / Regions** and **Top Crawlers / Bots.**
-* **Rate Limiting** (add-on service) - Features a line chart highlighting matching and blocked requests, based on rate limits.  To learn more, consult [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics).
-* **Overview** - Displays a set of pie charts for: **Total Threats Stopped**, **Traffic Served Over SSL**, and **Types of Threats Mitigated**. If available, the expandable **Details** link display a table with numerical data.
+- **Threats** - Displays a data summary and an area chart showing threats against the site.
+- **Threats by Country** - Is an interactive map highlighting the countries where threats originated. It also includes data tables with statistics on **Top Threat Countries / Regions** and **Top Crawlers / Bots.**
+- **Rate Limiting** (add-on service) - Features a line chart highlighting matching and blocked requests, based on rate limits.  To learn more, consult [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics).
+- **Overview** - Displays a set of pie charts for: **Total Threats Stopped**, **Traffic Served Over SSL**, and **Types of Threats Mitigated**. If available, the expandable **Details** link display a table with numerical data.
 
 ### Performance
 
 The metrics aggregated under this tab span multiple Cloudflare services.  The panels available include:
 
-* **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](/argo-smart-routing/analytics/).
-* **Overview** - Displays a set of pie charts for: **Client HTTP Version Used**, **Bandwidth Saved**, and **Content Type Breakdown**. If available, the expandable **Details** link display a table with numerical data.
+- **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](/argo-smart-routing/analytics/).
+- **Overview** - Displays a set of pie charts for: **Client HTTP Version Used**, **Bandwidth Saved**, and **Content Type Breakdown**. If available, the expandable **Details** link display a table with numerical data.
 
 ### Workers
 

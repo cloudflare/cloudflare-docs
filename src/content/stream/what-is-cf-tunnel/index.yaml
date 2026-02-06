@@ -1,0 +1,10 @@
+---
+id: 4fa0fe257187f18929c07754a4a4df09
+url: what-is-cf-tunnel
+title: What is Cloudflare Tunnel?
+description: Learn how Cloudflare Tunnel is like a private, secure pathway from your computer to the Internet, so you don't have to leave the front door (your network) wide open.
+pcx_content_type: video
+products:
+  - cloudflare-one
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/tunnel%201_%20what%20is%20cloudflare%20tunnel.png

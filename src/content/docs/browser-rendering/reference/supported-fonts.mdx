@@ -69,8 +69,10 @@ Browser Rendering includes additional font packages for non-Latin scripts and em
 
 If a required font is not pre-installed, you can inject it into the page at render time using `addStyleTag`. This allows you to load fonts from an external URL or embed them directly as a Base64 string.
 
+### Workers binding
+
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-Example with puppeteer and a CDN source:
+Example with [Puppeteer](/browser-rendering/puppeteer/) and a CDN source:
 
 ```js
 const browser = await puppeteer.launch(env.MYBROWSER);
@@ -92,7 +94,7 @@ await page.addStyleTag({
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-Example with puppeteer and a CDN source:
+Example with [Puppeteer](/browser-rendering/puppeteer/) and a CDN source:
 
 ```ts
 const browser = await puppeteer.launch(env.MYBROWSER);
@@ -117,7 +119,7 @@ await page.addStyleTag({
 
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-Example with playwright and a Base64 encoded data source:
+Example with [Playwright](/browser-rendering/playwright/) and a Base64 encoded data source:
 
 ```js
 const browser = await playwright.launch(env.MYBROWSER);
@@ -139,10 +141,10 @@ await page.addStyleTag({
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-Example with playwright and a Base64 encoded data source:
+Example with [Playwright](/browser-rendering/playwright/) and a Base64 encoded data source:
 
 ```ts
-const browser = await puppeteer.launch(env.MYBROWSER);
+const browser = await playwright.launch(env.MYBROWSER);
 const page = await browser.newPage();
 await page.addStyleTag({
   content: `
@@ -161,3 +163,43 @@ await page.addStyleTag({
 ```
 
 </TabItem> </Tabs>
+
+### REST API
+
+When using the [REST API](/browser-rendering/rest-api/), you can load custom fonts by including the `addStyleTag` parameter in your request body. This works with both the [screenshot](/browser-rendering/rest-api/screenshot-endpoint/) and [PDF](/browser-rendering/rest-api/pdf-endpoint/) endpoints.
+
+Example with a CDN-hosted font:
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "addStyleTag": [
+      {
+        "content": "@font-face { font-family: '\''CustomFont'\''; src: url('\''https://your-cdn.com/fonts/MyFont.woff2'\'') format('\''woff2'\''); font-weight: normal; font-style: normal; } body { font-family: '\''CustomFont'\'', sans-serif; }"
+      }
+    ]
+  }' \
+  --output "screenshot.png"
+```
+
+Example with a Base64-encoded font:
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "addStyleTag": [
+      {
+        "content": "@font-face { font-family: '\''CustomFont'\''; src: url('\''data:font/woff2;base64,<BASE64_STRING>'\'') format('\''woff2'\''); font-weight: normal; font-style: normal; } body { font-family: '\''CustomFont'\'', sans-serif; }"
+      }
+    ]
+  }' \
+  --output "screenshot.png"
+```
+
+For more details on using `addStyleTag` with the REST API, refer to [Customize CSS and embed custom JavaScript](/browser-rendering/rest-api/screenshot-endpoint/#customize-css-and-embed-custom-javascript).

@@ -12,14 +12,17 @@ import { Type } from "~/components";
 The leaked credentials [traffic detection](/waf/detections/) scans incoming requests for credentials (usernames and passwords) previously leaked from [data breaches](https://www.cloudflare.com/learning/security/what-is-a-data-breach/).
 
 :::note
-If you are currently using [Exposed Credentials Check](/waf/managed-rules/check-for-exposed-credentials/) (a previous implementation) and want to upgrade to leaked credentials detection, refer to our [upgrade guide](/waf/managed-rules/check-for-exposed-credentials/upgrade-to-leaked-credentials-detection/).
+If you are currently using [Exposed Credentials Check](/waf/managed-rules/check-for-exposed-credentials/) (a previous implementation) and want to upgrade to leaked credentials detection, refer to [Upgrade to leaked credentials detection](/waf/managed-rules/check-for-exposed-credentials/upgrade-to-leaked-credentials-detection/).
 :::
 
 ## How it works
 
 Once enabled, leaked credentials detection will scan incoming HTTP requests for known authentication patterns from common web apps and any custom detection locations you configure.
 
-If Cloudflare detects authentication credentials in the request, those credentials are checked against a list of known leaked credentials. This list of credentials consists of Cloudflare-collected credentials, in addition to the [Have I been Pwned (HIBP)](https://haveibeenpwned.com) matched passwords dataset.
+If Cloudflare detects authentication credentials in the request, those credentials are checked against a list of known leaked credentials. This list of credentials consists of:
+
+- The [Have I been Pwned (HIBP)](https://haveibeenpwned.com) matched passwords dataset (passwords only)
+- Cloudflare-collected credentials (usernames)
 
 Cloudflare will populate the existing [leaked credentials fields](#leaked-credentials-fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against the usage of compromised credentials by your end users, and also against leaked credential attacks. Cloudflare may detect leaked credentials either because an attacker is performing a [credential stuffing](https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/) attack or because a legitimate end user is reusing a previously leaked password.
 

@@ -10,7 +10,7 @@ head:
 
 import { FeatureTable, Render, Steps } from "~/components";
 
-Use Custom Errors to return custom content to your website visitors in case of HTTP errors returned by an origin server or by a Cloudflare product (including Workers), or when showing a [security challenge](/cloudflare-challenges/).
+Use Custom Errors to return custom content to your website visitors in case of HTTP errors returned by an origin server or by a Cloudflare product (including [Cloudflare Workers](/workers/)), or when showing a [security challenge](/cloudflare-challenges/).
 
 You can configure custom error content using the following methods:
 
@@ -56,7 +56,7 @@ Error Pages do not apply to responses with an HTTP status code of `500`, `501`, 
 
 If you are on a Cloudflare paid plan, you can create custom error pages at the zone level or for your entire account. Zone-level error pages have priority over account-level error pages.
 
-Additionally, Enterprise customers can customize 5XX error pages (except errors `520`-`527`) at their origin via **Enable Origin Error Pages** in **Error Pages** in the dashboard.
+Additionally, Enterprise customers can customize 5XX error pages (except errors `520`-`527`) at their origin by turning on **Origin Error Pages** in **Error Pages** in the dashboard.
 
 You can design custom error pages to appear during a security challenge or when an error occurs. For more information on the different error page types, refer to [Error page types](/rules/custom-errors/reference/error-page-types/).
 
@@ -84,4 +84,4 @@ A custom error asset corresponds to a web resource such as an HTML web page (inc
 
 Once the custom error asset is stored in Cloudflare's global network, the URL you initially provided no longer needs to be available. You can update an existing custom error asset by fetching it again. The metadata associated with each custom error asset includes the timestamp when the last fetch occurred, and this information is displayed in the dashboard.
 
-You can use a custom error asset in one or more custom error rules in the same scope where you defined the asset (zone or account).
+You can use a custom error asset in one or more [custom error rules](#custom-error-rules) in the same scope where you defined the asset (zone or account).

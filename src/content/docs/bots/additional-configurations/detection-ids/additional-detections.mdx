@@ -1,0 +1,15 @@
+---
+pcx_content_type: concept
+title: Additional detections
+sidebar:
+  order: 4
+---
+
+Cloudflare bot detection includes additional signals to catch different kinds of automated traffic.
+
+Bot management customers automatically benefit from the residential proxy detection improvement below, which lowers the [bot score](/bots/concepts/bot-score/) for matched requests. Using the detection ID in [custom rules](/waf/custom-rules/) provides even more visibility and control over mitigating residential proxy traffic.
+
+
+| <div style="width:100px">Detection ID</div> | Description                              |
+| ------------------------------------------ | ---------------------------------------- |
+| `50331651`                                 | Observes traffic from residential proxy networks and similar commercial proxies. <br /><br />When the ID matches a request, Bot Management sets the bot score to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |

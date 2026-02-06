@@ -11,7 +11,15 @@ head:
 description: Learn how to set up AI Crawl Control.
 ---
 
-import { Details, Render, Steps, Tabs, TabItem, GlossaryTooltip, DashButton } from "~/components";
+import {
+	Details,
+	Render,
+	Steps,
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	DashButton,
+} from "~/components";
 
 This guide instructs you on how to:
 
@@ -24,12 +32,7 @@ This guide instructs you on how to:
 2. [Connect your domain to Cloudflare](/fundamentals/manage-domains/add-site/).
 3. Make sure your domain is [proxying traffic through Cloudflare](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy).
 
-## 1. Block specific AI crawlers
-
-<Tabs syncKey="plans">
-<TabItem label="All plans">
-
-To only block specific AI crawlers:
+## 1. Monitor AI crawler activity at a glance
 
 {/* prettier-ignore */}
 <Steps>
@@ -37,9 +40,25 @@ To only block specific AI crawlers:
 
    <DashButton url="/?to=/:account/:zone/ai" />
 
-2. From the **Crawlers** tab, go to the list of AI crawlers.
-3. Review the AI crawlers that are accessing your domain.
-4. From the **Block** column, select the option **Block**.
+2. Review the snapshot of your AI crawler activity in the **Overview** tab.
+3. Use the filters to view activity by specific date ranges, crawlers, operators, hostnames, or paths.
+</Steps>
+
+## 2. Block specific AI crawlers
+
+<Tabs syncKey="plans">
+<TabItem label="All plans">
+
+To block specific AI crawlers:
+
+{/* prettier-ignore */}
+<Steps>
+1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
+2. Review which AI crawlers are accessing your domain in the **Crawlers** tab.
+3. In the **Action** column, select **Block**.
 </Steps>
 
 :::note[Quality of AI crawler detection]
@@ -50,7 +69,7 @@ Upgrade your plan to enable a more thorough detection using Cloudflare's [Bot Ma
 
 </TabItem> <TabItem label="Paid plans">
 
-To only block specific AI crawlers:
+To block specific AI crawlers:
 
 {/* prettier-ignore */}
 <Steps>
@@ -58,12 +77,8 @@ To only block specific AI crawlers:
 
    <DashButton url="/?to=/:account/:zone/ai" />
 
-2. From the **Crawlers** tab, go to the list of AI crawlers.
-3. Review key information such as:
-   - Bot operator
-   - Number of requests sent by the AI crawler
-   - Whether the AI crawler is allowed according to your `robots.txt`, or the number of times the AI crawler has violated your `robots.txt`.
-4. From the **Block** column, toggle the switch for AI crawlers you wish to block.
+2. Review which AI crawlers are accessing your domain in the **Crawlers** tab.
+3. In the **Action** column, select **Block**.
 </Steps>
 
 </TabItem>
@@ -73,19 +88,19 @@ For more information, refer to [Manage AI crawlers](/ai-crawl-control/features/m
 
 You can also create more complex rules when taking action on AI crawlers, using [Cloudflare WAF](/waf/). For more information on creating more specific rules, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
-## 2. Review detected AI crawlers
+## 3. Explore detailed metrics
 
 <Tabs>
 <TabItem label="All plans">
 
-Review the AI crawlers detected on your site.
+For more detailed analytics, use the **Metrics** tab.
 
 <Steps>
 1. Go to **AI Crawl Control**.
 
    <DashButton url="/?to=/:account/:zone/ai" />
 
-2. From the **Metrics** tab, view key metrics on AI crawlers.
+2. Review detailed breakdowns by date range, crawler, operator, status code, hostname, or path in the **Metrics** tab.
 </Steps>
 </TabItem>
 </Tabs>

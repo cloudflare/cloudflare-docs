@@ -4,9 +4,7 @@ title: Configure tunnel endpoints
 sidebar:
   order: 1
 head: []
-description: Cloudflare recommends two tunnels for each ISP and network location
-  router combination, one per Cloudflare endpoint. Learn how to configure IPsec
-  or GRE tunnels.
+description: Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Learn how to configure IPsec or GRE tunnels.
 ---
 
 import { Render } from "~/components";
@@ -20,16 +18,14 @@ import { Render } from "~/components";
 		ciphersPagePath: "/magic-transit/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
 		antiReplayPagePath: "/magic-transit/reference/anti-replay-protection/",
 		cniLink: "/magic-transit/network-interconnect/",
-		targetPageName: "Configuration",
-		dashButtonPath: "/?to=/:account/magic-transit/configuration",
 		updateHCFrequencyPage: "/magic-transit/network-health/update-tunnel-health-checks-frequency/",
 		tunnelHealthChecksPage: "/magic-transit/reference/tunnel-health-checks/",
-		antiReplayPagePath: "/magic-transit/reference/anti-replay-protection/",
 		biVsUniHealthCheck: "unidirectional",
 		tunnelHealthDash: "/magic-transit/network-health/check-tunnel-health-dashboard/",
-		biVsUniHealthCheckDefaults: "For Magic Transit this option defaults to unidirectional"
-	}} />
-
-## Next steps
-
-Now that you have set up your tunnel endpoints, you need to configure routes to route your traffic through Cloudflare. Refer to [Configure routes](/magic-transit/how-to/configure-routes/) to learn more about static routing and BGP peering (only available through Direct CNI connection).
+		biVsUniHealthCheckDefaults: "For Magic Transit this option defaults to unidirectional",
+		configureRoutesURL: "/magic-transit/how-to/configure-routes/",
+		unifiedRoutingURL: "/magic-transit/reference/traffic-steering/#unified-routing-mode-beta",
+		troubleshootTunnelHealthURL: "/magic-transit/troubleshooting/tunnel-health/",
+		troubleshootIpsecURL: "/magic-transit/troubleshooting/ipsec-troubleshoot/"
+	}}
+/>

@@ -1,0 +1,96 @@
+---
+title: HTTP headers
+pcx_content_type: reference
+sidebar:
+  order: 2
+---
+
+This page documents the HTTP headers used by Privacy Proxy for authentication, geolocation, and observability.
+
+## Request headers
+
+Clients include the following headers when connecting to Privacy Proxy.
+
+### `Proxy-Authorization`
+
+Authenticates the client to the proxy. Required for all requests.
+
+Pre-shared key format:
+
+```http
+Proxy-Authorization: Preshared <key>
+```
+
+Privacy Pass token format:
+
+```http
+Proxy-Authorization: PrivateToken token=<base64-encoded-token>
+```
+
+| Parameter | Description |
+| ----------- | ------------- |
+| `<key>` | The pre-shared key provided by Cloudflare |
+| `<base64-encoded-token>` | A base64-encoded Privacy Pass token |
+
+### `sec-ch-geohash`
+
+Specifies the client's geographic location for egress IP selection. Optional but recommended for accurate geolocation.
+
+```http
+sec-ch-geohash: <geohash>-<country_code>
+```
+
+| Parameter | Description |
+| ----------- | ------------- |
+| `<geohash>` | A [geohash](https://en.wikipedia.org/wiki/Geohash) string (typically 4-8 characters) |
+| `<country_code>` | ISO 3166-1 alpha-2 country code |
+
+```http title="Example"
+sec-ch-geohash: u4pruydqqvj-GB
+```
+
+This example specifies a location in the United Kingdom.
+
+---
+
+## Response headers
+
+Privacy Proxy includes the following headers in responses.
+
+### `Server-Timing`
+
+Provides timing information about proxy processing. Use this to measure latency introduced by the proxy.
+
+```http
+Server-Timing: proxy;dur=<milliseconds>
+```
+
+| Parameter | Description |
+| ----------- | ------------- |
+| `<milliseconds>` | Processing time in milliseconds |
+
+```http title="Example"
+Server-Timing: proxy;dur=8.2
+```
+
+---
+
+## `CONNECT` request format
+
+A complete `CONNECT` request to Privacy Proxy looks like this:
+
+```http
+CONNECT example.com:443 HTTP/2
+Host: example.com
+Proxy-Authorization: Preshared abc123xyz
+sec-ch-geohash: 9q8yy-US
+```
+
+The proxy responds with a status code indicating success or failure:
+
+| Status | Meaning |
+| -------- | --------- |
+| `200 OK` | Tunnel established successfully |
+| `403 Forbidden` | Authentication failed |
+| `502 Bad Gateway` | Could not connect to destination |
+| `503 Service Unavailable` | Proxy temporarily unavailable |

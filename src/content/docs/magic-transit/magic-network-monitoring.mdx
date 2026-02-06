@@ -8,4 +8,11 @@ sidebar:
 
 import { Render } from "~/components"
 
-<Render file="mnm-magic-transit-integration" product="networking-services" />
+<Render
+	file="mnm-magic-transit-integration"
+	product="networking-services"
+	params={{
+		productName: "Magic Network Monitoring",
+		rulesAutoAdvertiseURL: "/magic-network-monitoring/rules/#rule-auto-advertisement"
+	}}
+/>

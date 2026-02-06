@@ -1,135 +1,221 @@
 ---
-title: Using WebSockets
-pcx_content_type: concept
+title: WebSockets
+pcx_content_type: reference
 sidebar:
-  order: 10
-
+  order: 8
 ---
 
-import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
-Users and clients can connect to an Agent directly over WebSockets, allowing long-running, bi-directional communication with your Agent as it operates.
+Agents support WebSocket connections for real-time, bi-directional communication. This page covers server-side WebSocket handling. For client-side connection, refer to the [Client SDK](/agents/api-reference/client-sdk/).
 
-To enable an Agent to accept WebSockets, define `onConnect` and `onMessage` methods on your Agent.
+## Handling connections
 
-* `onConnect(connection: Connection, ctx: ConnectionContext)` is called when a client establishes a new WebSocket connection. The original HTTP request, including request headers, cookies, and the URL itself, are available on `ctx.request`.
-* `onMessage(connection: Connection, message: WSMessage)` is called for each incoming WebSocket message. Messages are one of `ArrayBuffer | ArrayBufferView | string`, and you can send messages back to a client using `connection.send()`. You can distinguish between client connections by checking `connection.id`, which is unique for each connected client.
-
-Here's an example of an Agent that echoes back any message it receives:
+Define `onConnect` and `onMessage` methods on your Agent to accept WebSocket connections:
 
 <TypeScriptExample>
 
 ```ts
-import { Agent, Connection } from "agents";
+import { Agent, Connection, ConnectionContext, WSMessage } from "agents";
 
 export class ChatAgent extends Agent {
 	async onConnect(connection: Connection, ctx: ConnectionContext) {
-  	// Connections are automatically accepted by the SDK.
-    // You can also explicitly close a connection here with connection.close()
-    // Access the Request on ctx.request to inspect headers, cookies and the URL
-  }
+		// Connections are automatically accepted
+		// Access the original request for auth, headers, cookies
+		const url = new URL(ctx.request.url);
+		const token = url.searchParams.get("token");
 
-  async onMessage(connection: Connection, message: WSMessage) {
-    // const response = await longRunningAITask(message)
-    await connection.send(message)
-  }
+		if (!token) {
+			connection.close(4001, "Unauthorized");
+			return;
+		}
+
+		// Store user info on this connection
+		connection.setState({ authenticated: true });
+	}
+
+	async onMessage(connection: Connection, message: WSMessage) {
+		if (typeof message === "string") {
+			// Handle text message
+			const data = JSON.parse(message);
+			connection.send(JSON.stringify({ received: data }));
+		}
+	}
 }
 ```
 
 </TypeScriptExample>
 
-### Connecting clients
+## Connection object
 
-The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `agents/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
+Each connected client has a unique `Connection` object:
 
-<TypeScriptExample>
+| Property/Method         | Type     | Description                           |
+| ----------------------- | -------- | ------------------------------------- |
+| `id`                    | `string` | Unique identifier for this connection |
+| `state`                 | `State`  | Per-connection state object           |
+| `setState(state)`       | `void`   | Update connection state               |
+| `send(message)`         | `void`   | Send message to this client           |
+| `close(code?, reason?)` | `void`   | Close the connection                  |
 
-```ts
-import { AgentClient } from "agents/client";
+### Per-connection state
 
-const connection = new AgentClient({
-  agent: "dialogue-agent",
-  name: "insight-seeker",
-});
-
-connection.addEventListener("message", (event) => {
-  console.log("Received:", event.data);
-});
-
-connection.send(
-  JSON.stringify({
-    type: "inquiry",
-    content: "What patterns do you see?",
-  })
-);
-```
-
-</TypeScriptExample>
-
-### React clients
-
-React-based applications can import `agents/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
+Store data specific to each connection (user info, preferences, etc.):
 
 <TypeScriptExample>
 
 ```ts
-import { useAgent } from "agents/react";
-
-function AgentInterface() {
-  const connection = useAgent({
-    agent: "dialogue-agent",
-    name: "insight-seeker",
-    onMessage: (message) => {
-      console.log("Understanding received:", message.data);
-    },
-    onOpen: () => console.log("Connection established"),
-    onClose: () => console.log("Connection closed"),
-  });
-
-  const inquire = () => {
-    connection.send(
-      JSON.stringify({
-        type: "inquiry",
-        content: "What insights have you gathered?",
-      })
-    );
-  };
-
-  return (
-    <div className="agent-interface">
-      <button onClick={inquire}>Seek Understanding</button>
-    </div>
-  );
+interface ConnectionState {
+	userId: string;
+	role: "admin" | "user";
+	joinedAt: number;
 }
-
-```
-</TypeScriptExample>
-
-The `useAgent` hook automatically handles the lifecycle of the connection, ensuring that it is properly initialized and cleaned up when the component mounts and unmounts. You can also [combine `useAgent` with `useState`](/agents/api-reference/store-and-sync-state/) to automatically synchronize state across all clients connected to your Agent.
-
-### Handling WebSocket events
-
-Define `onError` and `onClose` methods on your Agent to explicitly handle WebSocket client errors and close events. Log errors, clean up state, and/or emit metrics:
-
-<TypeScriptExample>
-
-```ts
-import { Agent, Connection } from "agents";
 
 export class ChatAgent extends Agent {
- 	// onConnect and onMessage methods
-  // ...
+	async onConnect(
+		connection: Connection<ConnectionState>,
+		ctx: ConnectionContext,
+	) {
+		const userId = new URL(ctx.request.url).searchParams.get("userId");
 
-  // WebSocket error and disconnection (close) handling.
-  async onError(connection: Connection, error: unknown): Promise<void> {
-		console.error(`WS error: ${error}`);
+		connection.setState({
+			userId: userId || "anonymous",
+			role: "user",
+			joinedAt: Date.now(),
+		});
 	}
-	async onClose(connection: Connection, code: number, reason: string, wasClean: boolean): Promise<void> {
-		console.log(`WS closed: ${code} - ${reason} - wasClean: ${wasClean}`);
-		connection.close();
+
+	async onMessage(connection: Connection<ConnectionState>, message: WSMessage) {
+		// Access connection-specific state
+		console.log(`Message from ${connection.state.userId}`);
 	}
 }
-
 ```
 
 </TypeScriptExample>
+
+## Broadcasting to all clients
+
+Use `this.broadcast()` to send a message to all connected clients:
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends Agent {
+	async onMessage(connection: Connection, message: WSMessage) {
+		// Broadcast to all connected clients
+		this.broadcast(
+			JSON.stringify({
+				from: connection.id,
+				message: message,
+				timestamp: Date.now(),
+			}),
+		);
+	}
+
+	// Broadcast from any method
+	async notifyAll(event: string, data: unknown) {
+		this.broadcast(JSON.stringify({ event, data }));
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Handling binary data
+
+Messages can be strings or binary (`ArrayBuffer` / `ArrayBufferView`):
+
+<TypeScriptExample>
+
+```ts
+export class FileAgent extends Agent {
+	async onMessage(connection: Connection, message: WSMessage) {
+		if (message instanceof ArrayBuffer) {
+			// Handle binary upload
+			const bytes = new Uint8Array(message);
+			await this.processFile(bytes);
+			connection.send(
+				JSON.stringify({ status: "received", size: bytes.length }),
+			);
+		} else if (typeof message === "string") {
+			// Handle text command
+			const command = JSON.parse(message);
+			// ...
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Error and close handling
+
+Handle connection errors and disconnections:
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends Agent {
+	async onError(connection: Connection, error: unknown) {
+		console.error(`Connection ${connection.id} error:`, error);
+		// Clean up any resources for this connection
+	}
+
+	async onClose(
+		connection: Connection,
+		code: number,
+		reason: string,
+		wasClean: boolean,
+	) {
+		console.log(`Connection ${connection.id} closed: ${code} ${reason}`);
+
+		// Notify other clients
+		this.broadcast(
+			JSON.stringify({
+				event: "user-left",
+				userId: connection.state?.userId,
+			}),
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Message types
+
+| Type              | Description                     |
+| ----------------- | ------------------------------- |
+| `string`          | Text message (typically JSON)   |
+| `ArrayBuffer`     | Binary data                     |
+| `ArrayBufferView` | Typed array view of binary data |
+
+## Connecting from clients
+
+For browser connections, use the Agents client SDK:
+
+- **Vanilla JS**: `AgentClient` from `agents/client`
+- **React**: `useAgent` hook from `agents/react`
+
+Refer to [Client SDK](/agents/api-reference/client-sdk/) for full documentation.
+
+## Next steps
+
+<LinkCard
+	title="State synchronization"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Sync state between agents and clients."
+/>
+
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="RPC over WebSockets for method calls."
+/>
+
+<LinkCard
+	title="Cross-domain authentication"
+	href="/agents/guides/cross-domain-authentication/"
+	description="Secure WebSocket connections across domains."
+/>

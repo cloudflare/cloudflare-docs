@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Type } from "~/components";
+import { Type, TypeScriptExample, Tabs, TabItem } from "~/components";
 
 Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and receive messages, you must use a Worker.
 
@@ -23,6 +23,8 @@ These APIs allow a producer Worker to send messages to a Queue.
 
 An example of writing a single message to a Queue:
 
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 type Environment = {
   readonly MY_QUEUE: Queue;
@@ -39,9 +41,28 @@ export default {
   },
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+from pyodide.ffi import to_js
+from workers import Response, WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        await self.env.MY_QUEUE.send(to_js({
+            "url": request.url,
+            "method": request.method,
+            "headers": dict(request.headers),
+        }))
+        return Response("Sent!")
+```
+</TabItem>
+</Tabs>
 
 The Queues API also supports writing multiple messages at once:
 
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 const sendResultsToQueue = async (results: Array<any>, env: Environment) => {
   const batch: MessageSendRequest[] = results.map((value) => ({
@@ -50,6 +71,21 @@ const sendResultsToQueue = async (results: Array<any>, env: Environment) => {
   await env.queue.sendBatch(batch);
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+import json
+from pyodide.ffi import to_js
+
+async def send_results_to_queue(results, env):
+    batch = [
+        {"body": json.dumps(value)}
+        for value in results
+    ]
+    await env.queue.sendBatch(to_js(batch))
+```
+</TabItem>
+</Tabs>
 
 ### `Queue`
 
@@ -170,6 +206,8 @@ If the `queue()` function throws, or the promise returned by it or any of the pr
 
 :::
 
+<Tabs syncKey="workersExamples">
+<TypeScriptExample filename="index.ts" omitTabs={true}>
 ```ts
 export default {
   async queue(
@@ -183,6 +221,18 @@ export default {
   },
 };
 ```
+</TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def queue(self, batch):
+        for message in batch.messages:
+            print("Received", message)
+```
+</TabItem>
+</Tabs>
 
 The `env` and `ctx` fields are as [documented in the Workers documentation](/workers/reference/migrate-to-module-workers/).
 

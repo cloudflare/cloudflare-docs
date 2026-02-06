@@ -14,6 +14,7 @@ You can review build errors in your Pages build log. To access your build log:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select your Pages project.
 3. Go to **Deployments** > **View details** > **Build log**.
 
@@ -98,7 +99,7 @@ If your [custom domain](/pages/configuration/custom-domains/) has not moved from
 
 ### Blocked HTTP validation
 
-Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/policies/access/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), etc.), validation cannot be completed.
+Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/access-controls/policies/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), etc.), validation cannot be completed.
 
 To check this, run a `curl` command against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 
@@ -185,7 +186,6 @@ If you have done the steps above and your domain is still verifying after 15 min
 If you see a `404` error on the root `pages.dev` URL (`example.pages.dev`), you are likely missing an `index.html` file in your project.
 
 Upload an `index.html` file to resolve this issue.
-
 
 ## Resources
 

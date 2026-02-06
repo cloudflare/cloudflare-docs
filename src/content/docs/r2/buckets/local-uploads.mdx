@@ -1,0 +1,107 @@
+---
+title: Local uploads
+pcx_content_type: concept
+sidebar:
+  order: 8
+  badge: Beta
+---
+
+import { Tabs, TabItem, DashButton, R2LocalUploadsDiagram } from "~/components";
+
+You can enable Local Uploads on your bucket to improve the performance of upload requests when clients upload data from a different region than your bucket. Local Uploads writes object data to a nearby location, then asynchronously copies it to your bucket. Data is available immediately and remains strongly consistent.
+
+## How it works
+
+The following sections describe how R2 handles upload requests with and without Local Uploads enabled.
+
+### Without Local Uploads
+
+When a client uploads an object to your R2 bucket, the object data must travel from the client to the storage infrastructure of your bucket. This behavior can result in higher latency and lower reliability when your client is in a different region than the bucket. Refer to [How R2 works](/r2/how-r2-works/) for details.
+
+### With Local Uploads
+
+When you make an upload request (i.e. `PutObject` and `UploadPart`) to a bucket with Local Uploads enabled, there are two cases that are handled:
+
+- **Client and bucket in same region:** R2 follows the normal upload flow where object data is uploaded from the client to the storage infrastructure of your bucket.
+- **Client and bucket in different regions:** Object data is written to storage near the client, then asynchronously replicated to your bucket. The object is immediately accessible and remains durable during the process.
+
+<R2LocalUploadsDiagram />
+
+## When to use local uploads
+
+Local uploads are built for workloads that receive a lot of uploads originating from different geographic regions than where your bucket is located. This feature is ideal when:
+
+- Your users are globally distributed
+- Upload performance and reliability is critical to your application
+- You want to optimize write performance without changing your bucket's primary location
+
+To understand the geographic distribution of where your read and write requests are initiated:
+
+1. Log in to the Cloudflare dashboard, and go to R2 Overview.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+
+2. Select your bucket.
+3. Select **Metrics** and view the **Request Distribution** chart.
+
+### Read latency considerations
+
+When local uploads is enabled, uploaded data may temporarily reside near the client before replication completes.
+
+If your workload requires immediate read after write, consider where your read requests originate. Reads from the uploader's region will be fast, while reads from near the bucket's region may experience cross-region latency until replication completes.
+
+### Jurisdiction restriction
+
+Local uploads are not supported for buckets with [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions), because it requires temporarily routing data through locations outside the bucket’s region.
+
+## Enable local uploads
+
+When you enable Local Uploads, existing uploads will complete as expected with no interruption to traffic.
+
+<Tabs> <TabItem label="Dashboard">
+
+1. Log in to the Cloudflare dashboard, and go to R2 Overview.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+
+2. Select your bucket.
+3. Select **Settings**.
+4. Under **Local Uploads**, select **Enable**.
+
+</TabItem> <TabItem label="Wrangler">
+
+Run the following command:
+
+```sh
+npx wrangler r2 bucket local-uploads enable <BUCKET_NAME>
+```
+
+</TabItem> </Tabs>
+
+## Disable local uploads
+
+You can disable local uploads at any time. Existing requests made with local uploads will complete replication with no interruption to your traffic.
+
+<Tabs> <TabItem label="Dashboard">
+
+1. Log in to the Cloudflare dashboard, and go to R2 Overview.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+
+2. Select your bucket.
+3. Select **Settings**.
+4. Under **Local Uploads**, select **Disable**.
+
+</TabItem> <TabItem label="Wrangler">
+
+Run the following command:
+
+```sh
+npx wrangler r2 bucket local-uploads disable <BUCKET_NAME>
+```
+
+</TabItem> </Tabs>
+
+## Pricing
+
+There is **no additional cost** to enable local uploads. Upload requests made with this feature enabled incur the standard [Class A operation costs](/r2/pricing/), same as upload requests made without local uploads.
