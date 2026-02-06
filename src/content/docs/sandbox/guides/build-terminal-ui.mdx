@@ -1,0 +1,838 @@
+---
+title: Build terminal UIs
+pcx_content_type: how-to
+description: Create browser-based terminal interfaces that connect to sandbox shells
+sidebar:
+  order: 9
+---
+
+import { PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
+
+Browser-based terminals enable users to interact directly with sandbox shells through a web interface. This guide shows how to build terminal UIs using the Sandbox SDK's PTY support with automatic reconnection and output buffering.
+
+## Overview
+
+The Sandbox SDK provides WebSocket-based terminal connections that support:
+
+- **Real-time shell interaction** — Direct connection to bash/shell processes
+- **Multiple terminals per sandbox** — Session-isolated terminals with separate working directories
+- **Automatic reconnection** — Built-in recovery with output history preservation
+- **xterm.js integration** — Purpose-built addon for popular terminal library
+
+## Basic terminal setup
+
+### 1. Install dependencies
+
+<PackageManagers 
+  type="install"
+  pkg="@cloudflare/sandbox @xterm/xterm @xterm/addon-fit"
+/>
+
+### 2. Configure Worker
+
+Create a Worker that handles WebSocket terminal connections:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: any): Promise<Response> {
+    const url = new URL(request.url);
+    
+    // Serve terminal WebSocket
+    if (url.pathname === '/ws/terminal') {
+      const sandbox = getSandbox(env.SANDBOX, 'terminal-demo');
+      return sandbox.terminal(request, {
+        cols: 80,
+        rows: 24
+      });
+    }
+    
+    // Serve static HTML
+    if (url.pathname === '/') {
+      return new Response(html, {
+        headers: { 'Content-Type': 'text/html' }
+      });
+    }
+    
+    return new Response('Not found', { status: 404 });
+  }
+};
+
+const html = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Sandbox Terminal</title>
+  <link rel="stylesheet" href="https://unpkg.com/@xterm/xterm@5.5.0/css/xterm.css" />
+  <style>
+    body { margin: 0; padding: 20px; background: #000; }
+    #terminal { height: 600px; }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <script type="module">
+    import { Terminal } from 'https://unpkg.com/@xterm/xterm@5.5.0/lib/xterm.js';
+    import { FitAddon } from 'https://unpkg.com/@xterm/addon-fit@0.10.0/lib/addon-fit.js';
+    
+    const term = new Terminal({
+      cursorBlink: true,
+      theme: {
+        background: '#000000',
+        foreground: '#ffffff'
+      }
+    });
+    
+    const fitAddon = new FitAddon();
+    term.loadAddon(fitAddon);
+    term.open(document.getElementById('terminal'));
+    fitAddon.fit();
+    
+    // Connect WebSocket
+    const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(\`\${protocol}//\${location.host}/ws/terminal\`);
+    
+    ws.binaryType = 'arraybuffer';
+    
+    ws.onopen = () => {
+      term.onData(data => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(new TextEncoder().encode(data));
+        }
+      });
+      
+      term.onResize(({ cols, rows }) => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ type: 'resize', cols, rows }));
+        }
+      });
+    };
+    
+    ws.onmessage = event => {
+      if (event.data instanceof ArrayBuffer) {
+        term.write(new Uint8Array(event.data));
+      } else {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'ready') {
+          term.focus();
+        }
+      }
+    };
+  </script>
+</body>
+</html>`;
+```
+
+</TypeScriptExample>
+
+### 3. Configure wrangler
+
+<WranglerConfig>
+
+```toml
+name = "terminal-demo"
+main = "src/index.ts"
+compatibility_date = "2024-01-15"
+
+[env.production]
+# Configure container binding
+containers = [
+  { name = "SANDBOX", image = "cloudflare/sandbox:latest" }
+]
+```
+
+</WranglerConfig>
+
+### 4. Test the terminal
+
+<PackageManagers type="run" pkg="dev" />
+
+Visit your development URL to see a fully functional terminal interface.
+
+## Advanced terminal with SandboxAddon
+
+For production applications, use the built-in `SandboxAddon` which provides automatic reconnection, output buffering, and better error handling:
+
+<TypeScriptExample>
+
+```ts
+// client.js
+import { Terminal } from '@xterm/xterm';
+import { FitAddon } from '@xterm/addon-fit';
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+
+class TerminalManager {
+  constructor() {
+    this.terminal = new Terminal({
+      cursorBlink: true,
+      cursorStyle: 'bar',
+      theme: {
+        background: '#1e1e1e',
+        foreground: '#cccccc',
+        cursor: '#528bff',
+        selection: '#528bff40'
+      },
+      fontSize: 14,
+      fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace'
+    });
+    
+    this.fitAddon = new FitAddon();
+    this.sandboxAddon = new SandboxAddon({
+      sandboxId: 'my-terminal',
+      sessionId: undefined, // Default session
+      getWebSocketUrl: ({ sandboxId, sessionId }) => {
+        const params = new URLSearchParams();
+        if (sessionId) params.set('sessionId', sessionId);
+        return `${this.getWsProtocol()}//${location.host}/ws/terminal?${params}`;
+      },
+      onStateChange: this.handleConnectionState.bind(this),
+      reconnect: true
+    });
+    
+    this.setupAddons();
+  }
+  
+  setupAddons() {
+    this.terminal.loadAddon(this.fitAddon);
+    this.terminal.loadAddon(this.sandboxAddon);
+  }
+  
+  mount(element) {
+    this.terminal.open(element);
+    this.fitAddon.fit();
+    this.sandboxAddon.connect();
+    
+    // Handle window resize
+    window.addEventListener('resize', () => this.fitAddon.fit());
+  }
+  
+  handleConnectionState(state, error) {
+    const indicator = document.getElementById('connection-status');
+    
+    switch (state) {
+      case 'connecting':
+        indicator.textContent = 'Connecting...';
+        indicator.className = 'status connecting';
+        break;
+        
+      case 'connected':
+        indicator.textContent = 'Connected';
+        indicator.className = 'status connected';
+        this.terminal.focus();
+        break;
+        
+      case 'disconnected':
+        indicator.textContent = error ? `Error: ${error.message}` : 'Disconnected';
+        indicator.className = 'status disconnected';
+        break;
+    }
+  }
+  
+  getWsProtocol() {
+    return location.protocol === 'https:' ? 'wss:' : 'ws:';
+  }
+  
+  switchSession(sessionId) {
+    this.sandboxAddon.setSession(sessionId);
+  }
+  
+  disconnect() {
+    this.sandboxAddon.disconnect();
+  }
+}
+
+// Initialize terminal
+const terminal = new TerminalManager();
+terminal.mount(document.getElementById('terminal'));
+```
+
+</TypeScriptExample>
+
+## Multi-session terminals
+
+Enable users to work in multiple isolated terminals simultaneously:
+
+### Worker setup
+
+<TypeScriptExample>
+
+```ts
+export default {
+  async fetch(request: Request, env: any): Promise<Response> {
+    const url = new URL(request.url);
+    const sessionId = url.searchParams.get('sessionId');
+    
+    if (url.pathname === '/ws/terminal') {
+      const sandbox = getSandbox(env.SANDBOX, 'multi-terminal');
+      
+      if (sessionId) {
+        // Session-specific terminal
+        const session = await sandbox.getSession(sessionId);
+        return session.terminal(request, {
+          cols: parseInt(url.searchParams.get('cols') || '80'),
+          rows: parseInt(url.searchParams.get('rows') || '24')
+        });
+      }
+      
+      // Default session terminal
+      return sandbox.terminal(request);
+    }
+    
+    return new Response('Not found', { status: 404 });
+  }
+};
+```
+
+</TypeScriptExample>
+
+### Client-side session management
+
+<TypeScriptExample>
+
+```ts
+class MultiTerminalManager {
+  constructor() {
+    this.terminals = new Map();
+    this.activeTerminal = null;
+  }
+  
+  createTerminal(sessionId = 'default') {
+    if (this.terminals.has(sessionId)) {
+      return this.showTerminal(sessionId);
+    }
+    
+    const container = this.createTerminalContainer(sessionId);
+    const terminal = new Terminal();
+    const fitAddon = new FitAddon();
+    const sandboxAddon = new SandboxAddon({
+      sandboxId: 'multi-terminal',
+      sessionId: sessionId === 'default' ? undefined : sessionId,
+      getWebSocketUrl: ({ sessionId }) => {
+        const params = new URLSearchParams();
+        if (sessionId) params.set('sessionId', sessionId);
+        return `${this.getWsProtocol()}//${location.host}/ws/terminal?${params}`;
+      },
+      onStateChange: (state, error) => {
+        this.updateSessionStatus(sessionId, state, error);
+      }
+    });
+    
+    terminal.loadAddon(fitAddon);
+    terminal.loadAddon(sandboxAddon);
+    terminal.open(container.querySelector('.terminal-content'));
+    
+    fitAddon.fit();
+    sandboxAddon.connect();
+    
+    this.terminals.set(sessionId, {
+      terminal,
+      fitAddon,
+      sandboxAddon,
+      container
+    });
+    
+    this.showTerminal(sessionId);
+    return this.terminals.get(sessionId);
+  }
+  
+  createTerminalContainer(sessionId) {
+    const container = document.createElement('div');
+    container.className = 'terminal-container';
+    container.innerHTML = `
+      <div class="terminal-header">
+        <span class="session-name">${sessionId}</span>
+        <span class="status-indicator"></span>
+        <button class="close-btn" onclick="closeTerminal('${sessionId}')">×</button>
+      </div>
+      <div class="terminal-content"></div>
+    `;
+    
+    document.getElementById('terminals').appendChild(container);
+    return container;
+  }
+  
+  showTerminal(sessionId) {
+    // Hide all terminals
+    this.terminals.forEach(({ container }) => {
+      container.style.display = 'none';
+    });
+    
+    // Show selected terminal
+    const terminal = this.terminals.get(sessionId);
+    if (terminal) {
+      terminal.container.style.display = 'block';
+      terminal.fitAddon.fit();
+      terminal.terminal.focus();
+      this.activeTerminal = sessionId;
+    }
+  }
+  
+  closeTerminal(sessionId) {
+    const terminal = this.terminals.get(sessionId);
+    if (terminal) {
+      terminal.sandboxAddon.disconnect();
+      terminal.container.remove();
+      this.terminals.delete(sessionId);
+      
+      if (this.activeTerminal === sessionId) {
+        // Switch to another terminal or create default
+        const remaining = Array.from(this.terminals.keys());
+        if (remaining.length > 0) {
+          this.showTerminal(remaining[0]);
+        } else {
+          this.createTerminal();
+        }
+      }
+    }
+  }
+  
+  updateSessionStatus(sessionId, state, error) {
+    const terminal = this.terminals.get(sessionId);
+    if (!terminal) return;
+    
+    const indicator = terminal.container.querySelector('.status-indicator');
+    indicator.textContent = state;
+    indicator.className = `status-indicator ${state}`;
+    
+    if (error) {
+      console.error(`Terminal ${sessionId} error:`, error);
+    }
+  }
+  
+  getWsProtocol() {
+    return location.protocol === 'https:' ? 'wss:' : 'ws:';
+  }
+}
+
+// Global terminal manager
+const terminalManager = new MultiTerminalManager();
+
+// Create initial terminal
+terminalManager.createTerminal();
+
+// Helper functions for HTML onclick handlers
+window.createNewTerminal = () => {
+  const sessionId = `session-${Date.now()}`;
+  terminalManager.createTerminal(sessionId);
+};
+
+window.closeTerminal = (sessionId) => {
+  terminalManager.closeTerminal(sessionId);
+};
+```
+
+</TypeScriptExample>
+
+## Terminal customization
+
+### Custom themes and styling
+
+<TypeScriptExample>
+
+```ts
+const customTheme = {
+  // Dark theme inspired by VS Code
+  background: '#1e1e1e',
+  foreground: '#cccccc',
+  cursor: '#528bff',
+  cursorAccent: '#1e1e1e',
+  selectionBackground: '#528bff40',
+  
+  // ANSI colors
+  black: '#000000',
+  red: '#f44747',
+  green: '#4ec9b0',
+  yellow: '#ffcc02',
+  blue: '#569cd6',
+  magenta: '#c586c0',
+  cyan: '#9cdcfe',
+  white: '#cccccc',
+  
+  // Bright colors
+  brightBlack: '#666666',
+  brightRed: '#f44747',
+  brightGreen: '#4ec9b0',
+  brightYellow: '#ffcc02',
+  brightBlue: '#569cd6',
+  brightMagenta: '#c586c0',
+  brightCyan: '#9cdcfe',
+  brightWhite: '#ffffff'
+};
+
+const terminal = new Terminal({
+  theme: customTheme,
+  fontSize: 14,
+  fontFamily: '"Fira Code", Monaco, "Consolas", monospace',
+  fontWeight: 'normal',
+  fontWeightBold: 'bold',
+  letterSpacing: 0,
+  lineHeight: 1.4,
+  cursorBlink: true,
+  cursorStyle: 'block',
+  scrollback: 10000,
+  tabStopWidth: 4
+});
+```
+
+</TypeScriptExample>
+
+### Terminal with additional features
+
+<TypeScriptExample>
+
+```ts
+import { Terminal } from '@xterm/xterm';
+import { FitAddon } from '@xterm/addon-fit';
+import { WebLinksAddon } from '@xterm/addon-web-links';
+import { SearchAddon } from '@xterm/addon-search';
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+
+class EnhancedTerminal {
+  constructor(options = {}) {
+    this.terminal = new Terminal({
+      ...this.getDefaultConfig(),
+      ...options.terminalConfig
+    });
+    
+    this.setupAddons(options);
+    this.setupKeyboardShortcuts();
+  }
+  
+  getDefaultConfig() {
+    return {
+      cursorBlink: true,
+      cursorStyle: 'bar',
+      fontSize: 14,
+      fontFamily: '"JetBrains Mono", "Fira Code", Monaco, monospace',
+      theme: {
+        background: '#0c0c0c',
+        foreground: '#d4d4d8',
+        cursor: '#f97316',
+        selection: '#f9731640'
+      },
+      scrollback: 50000,
+      convertEol: true
+    };
+  }
+  
+  setupAddons(options) {
+    // Core addons
+    this.fitAddon = new FitAddon();
+    this.terminal.loadAddon(this.fitAddon);
+    
+    // Web links (clickable URLs)
+    this.webLinksAddon = new WebLinksAddon();
+    this.terminal.loadAddon(this.webLinksAddon);
+    
+    // Search functionality
+    this.searchAddon = new SearchAddon();
+    this.terminal.loadAddon(this.searchAddon);
+    
+    // Sandbox connection
+    this.sandboxAddon = new SandboxAddon({
+      sandboxId: options.sandboxId,
+      sessionId: options.sessionId,
+      getWebSocketUrl: options.getWebSocketUrl,
+      onStateChange: options.onStateChange,
+      reconnect: true
+    });
+    this.terminal.loadAddon(this.sandboxAddon);
+  }
+  
+  setupKeyboardShortcuts() {
+    this.terminal.attachCustomKeyEventHandler((event) => {
+      // Ctrl+F for search
+      if (event.ctrlKey && event.code === 'KeyF' && event.type === 'keydown') {
+        this.showSearchBox();
+        return false;
+      }
+      
+      // Ctrl+C for copy (when text is selected)
+      if (event.ctrlKey && event.code === 'KeyC' && event.type === 'keydown') {
+        if (this.terminal.hasSelection()) {
+          this.copySelection();
+          return false;
+        }
+      }
+      
+      // Ctrl+V for paste
+      if (event.ctrlKey && event.code === 'KeyV' && event.type === 'keydown') {
+        this.paste();
+        return false;
+      }
+      
+      return true;
+    });
+  }
+  
+  mount(element) {
+    this.terminal.open(element);
+    this.fitAddon.fit();
+    this.sandboxAddon.connect();
+    
+    // Auto-resize on window resize
+    window.addEventListener('resize', () => {
+      this.fitAddon.fit();
+    });
+    
+    // Focus terminal when container is clicked
+    element.addEventListener('click', () => {
+      this.terminal.focus();
+    });
+  }
+  
+  showSearchBox() {
+    // Implementation depends on your UI framework
+    const searchTerm = prompt('Search terminal:');
+    if (searchTerm) {
+      this.searchAddon.findNext(searchTerm);
+    }
+  }
+  
+  copySelection() {
+    const selection = this.terminal.getSelection();
+    if (selection) {
+      navigator.clipboard.writeText(selection);
+    }
+  }
+  
+  async paste() {
+    try {
+      const text = await navigator.clipboard.readText();
+      this.terminal.paste(text);
+    } catch (err) {
+      console.error('Failed to paste:', err);
+    }
+  }
+  
+  switchSession(sessionId) {
+    this.sandboxAddon.setSession(sessionId);
+  }
+  
+  clear() {
+    this.terminal.clear();
+  }
+  
+  dispose() {
+    this.sandboxAddon.disconnect();
+    this.terminal.dispose();
+  }
+}
+```
+
+</TypeScriptExample>
+
+## Error handling and recovery
+
+Implement robust error handling for production terminal applications:
+
+<TypeScriptExample>
+
+```ts
+class RobustTerminal {
+  constructor(options) {
+    this.options = options;
+    this.reconnectAttempts = 0;
+    this.maxReconnectAttempts = 5;
+    this.setupTerminal();
+  }
+  
+  setupTerminal() {
+    this.terminal = new Terminal(this.options.terminalConfig);
+    this.fitAddon = new FitAddon();
+    this.sandboxAddon = new SandboxAddon({
+      ...this.options.sandboxConfig,
+      onStateChange: this.handleStateChange.bind(this)
+    });
+    
+    this.terminal.loadAddon(this.fitAddon);
+    this.terminal.loadAddon(this.sandboxAddon);
+  }
+  
+  handleStateChange(state, error) {
+    switch (state) {
+      case 'connecting':
+        this.showStatus('Connecting to terminal...', 'connecting');
+        break;
+        
+      case 'connected':
+        this.reconnectAttempts = 0;
+        this.showStatus('Connected', 'connected');
+        setTimeout(() => this.hideStatus(), 2000);
+        break;
+        
+      case 'disconnected':
+        if (error) {
+          this.handleError(error);
+        } else {
+          this.showStatus('Disconnected', 'disconnected');
+        }
+        break;
+    }
+  }
+  
+  handleError(error) {
+    console.error('Terminal error:', error);
+    
+    const errorHandlers = {
+      'Session not found': () => this.handleSessionError(),
+      'WebSocket upgrade failed': () => this.handleUpgradeError(),
+      'Max reconnection attempts exceeded': () => this.handleMaxReconnectError(),
+      'Container not ready': () => this.handleContainerNotReady()
+    };
+    
+    const handler = errorHandlers[error.message];
+    if (handler) {
+      handler();
+    } else {
+      this.showError(`Terminal error: ${error.message}`);
+    }
+  }
+  
+  handleSessionError() {
+    this.showError('Session expired or invalid. Creating new session...');
+    // Reset to default session
+    this.sandboxAddon.setSession(undefined);
+  }
+  
+  handleUpgradeError() {
+    this.showError('Connection failed. Please refresh the page.');
+    this.showRetryButton();
+  }
+  
+  handleMaxReconnectError() {
+    this.showError('Connection lost. Check your internet connection.');
+    this.showRetryButton();
+  }
+  
+  handleContainerNotReady() {
+    this.showStatus('Starting sandbox container...', 'connecting');
+    // Retry after container startup delay
+    setTimeout(() => {
+      if (this.reconnectAttempts < this.maxReconnectAttempts) {
+        this.reconnectAttempts++;
+        this.sandboxAddon.connect();
+      }
+    }, 3000);
+  }
+  
+  showStatus(message, type) {
+    const statusEl = document.getElementById('terminal-status');
+    if (statusEl) {
+      statusEl.textContent = message;
+      statusEl.className = `terminal-status ${type}`;
+      statusEl.style.display = 'block';
+    }
+  }
+  
+  hideStatus() {
+    const statusEl = document.getElementById('terminal-status');
+    if (statusEl) {
+      statusEl.style.display = 'none';
+    }
+  }
+  
+  showError(message) {
+    this.showStatus(message, 'error');
+    // Auto-hide after 10 seconds
+    setTimeout(() => this.hideStatus(), 10000);
+  }
+  
+  showRetryButton() {
+    const retryBtn = document.getElementById('retry-button');
+    if (retryBtn) {
+      retryBtn.style.display = 'block';
+      retryBtn.onclick = () => {
+        retryBtn.style.display = 'none';
+        this.reconnectAttempts = 0;
+        this.sandboxAddon.connect();
+      };
+    }
+  }
+}
+```
+
+</TypeScriptExample>
+
+## Performance optimization
+
+For high-performance terminal applications:
+
+### 1. Efficient rendering
+
+<TypeScriptExample>
+
+```ts
+const terminal = new Terminal({
+  // Reduce resource usage
+  scrollback: 10000,  // Don't keep unlimited history
+  fontSize: 14,       // Reasonable font size
+  
+  // Enable optimizations
+  disableStdin: false,
+  convertEol: true,
+  
+  // Custom renderer settings
+  rendererType: 'dom', // or 'canvas' for better performance
+});
+
+// Load WebGL addon for better performance (optional)
+import { WebglAddon } from '@xterm/addon-webgl';
+const webglAddon = new WebglAddon();
+terminal.loadAddon(webglAddon);
+```
+
+</TypeScriptExample>
+
+### 2. Connection pooling
+
+<TypeScriptExample>
+
+```ts
+class TerminalPool {
+  constructor(maxConnections = 5) {
+    this.connections = new Map();
+    this.maxConnections = maxConnections;
+  }
+  
+  getConnection(sessionId) {
+    if (!this.connections.has(sessionId)) {
+      if (this.connections.size >= this.maxConnections) {
+        this.closeOldestConnection();
+      }
+      
+      this.connections.set(sessionId, this.createConnection(sessionId));
+    }
+    
+    return this.connections.get(sessionId);
+  }
+  
+  createConnection(sessionId) {
+    return new SandboxAddon({
+      sandboxId: 'pooled-terminal',
+      sessionId,
+      getWebSocketUrl: ({ sessionId }) => {
+        return `wss://your-app.workers.dev/ws/terminal?sessionId=${sessionId}`;
+      }
+    });
+  }
+  
+  closeOldestConnection() {
+    const [oldestSession] = this.connections.keys();
+    const connection = this.connections.get(oldestSession);
+    connection.disconnect();
+    this.connections.delete(oldestSession);
+  }
+}
+```
+
+</TypeScriptExample>
+
+## Next steps
+
+- **Explore the [collaborative terminal example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/collaborative-terminal)** — Full implementation with multi-user support
+- **Check out [terminal API reference](/sandbox/api/terminal/)** — Complete API documentation
+- **Learn about [session management](/sandbox/api/sessions/)** — Isolated execution contexts
+- **Review [WebSocket patterns](/sandbox/guides/websocket-connections/)** — Advanced connection handling

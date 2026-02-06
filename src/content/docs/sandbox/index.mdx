@@ -120,6 +120,30 @@ With Sandbox, you can execute Python scripts, run Node.js applications, analyze 
 		```
 	</TabItem>
 
+	<TabItem label="Terminal Access">
+		```typescript
+		import { getSandbox } from '@cloudflare/sandbox';
+
+		export { Sandbox } from '@cloudflare/sandbox';
+
+		export default {
+			async fetch(request: Request, env: Env): Promise<Response> {
+				const url = new URL(request.url);
+				
+				// Terminal WebSocket connection
+				if (url.pathname === '/ws/terminal') {
+					const sandbox = getSandbox(env.Sandbox, 'user-123');
+					return sandbox.terminal(request, { cols: 80, rows: 24 });
+				}
+
+				return Response.json({ message: 'Terminal endpoint' });
+			}
+		};
+		```
+
+		Connect browser terminals directly to sandbox shells via WebSocket. Learn more: [Build Terminal UIs](/sandbox/guides/build-terminal-ui/).
+	</TabItem>
+
 	<TabItem label="WebSocket Connections">
 		```typescript
 		import { getSandbox } from '@cloudflare/sandbox';
@@ -176,6 +200,12 @@ Expose HTTP services running in your sandbox with automatically generated previe
 <Feature header="Execute code directly" href="/sandbox/guides/code-execution/" cta="Learn about code execution">
 
 Execute Python and JavaScript code with rich outputs including charts, tables, and images. Maintain persistent state between executions for AI-generated code and interactive workflows.
+
+</Feature>
+
+<Feature header="Build interactive terminals" href="/sandbox/guides/build-terminal-ui/" cta="Learn about terminal UIs">
+
+Create browser-based terminal interfaces that connect directly to sandbox shells via WebSocket. Build collaborative terminals, interactive development environments, and real-time shell access with automatic reconnection.
 
 </Feature>
 
