@@ -418,6 +418,58 @@ With this functionality, you can:
 - Secure the session by MD5 authentication to prevent misconfigurations.
 - Exchange routes dynamically between your devices and your Magic routing table.
 
+### Release status
+
+The following table outlines the current availability and recommended use cases for BGP across different connectivity methods.
+
+| Feature | Release stage | Recommended use | Prerequisites |
+| --- | --- | --- | --- |
+| **BGP over CNI** | Open Beta | Production | Cloudflare Network Interconnect (CNI) v2 |
+| **BGP over Anycast IPsec/GRE** | Closed Beta | Lab / Testing only | Unified Routing (contact your account team) |
+
+### BGP architecture
+
+#### Global routing and anycast edge
+
+Magic Networking makes a one-pass, per-packet routing decision at the Cloudflare data center that first processes the packet (the ingress node). This ensures that even when a packet traverses multiple nodes within the Cloudflare backbone, its path is determined at the point of entry for maximum efficiency.
+
+Your BGP session over IPsec, GRE, or CNI is established with the Cloudflare data center closest to your BGP peer device. Routes learned here must propagate to Cloudflare's global edge to govern how traffic is routed across the entire network.
+
+- **Convergence time**: Global route convergence typically completes within 20 seconds.
+- **Visibility**: You can monitor learned routes and their propagation status via the Cloudflare dashboard or API.
+
+#### Centralized route propagation
+
+Magic Networking uses a centralized control plane for route propagation, functioning similarly to a BGP Route Reflector. This architecture decouples the physical BGP session from global route distribution:
+
+- **Session termination**: BGP peering sessions are terminated at the Cloudflare edge location closest to your router.
+- **SDN conversion**: Ingress BGP updates are converted into Software-Defined Networking (SDN) state and transmitted to a centralized relay function.
+- **Global dissemination**: The relay propagates these instructions to every Cloudflare data center globally, updating the local Forwarding Information Base (FIB) at each site.
+
+#### Edge Resiliency Mode (Non-Stop Forwarding)
+
+Cloudflare's data plane is designed for high availability. If the edge location loses communication with the centralized relay, the system enters Edge Resiliency Mode, mimicking Non-Stop Forwarding (NSF) behavior:
+
+- **Forwarding continuity**: Edge locations continue to route traffic using the last-known-good forwarding table (FIB). Data plane traffic remains uninterrupted.
+- **Stale path retention**: Because the FIB is frozen during this mode, forwarding decisions remain active even if the underlying BGP session with your router flaps or resets.
+- **Continuous health monitoring**: While BGP updates are frozen, tunnel health checks remain active. These are sent from all Cloudflare data centers, allowing the edge at any ingress node to detect if a physical connection to your router has failed. If a health check fails, the ingress node at the edge will deprioritize that specific path, preventing traffic from being sent into a black hole despite the frozen routing state.
+- **Update freeze**: During this state, the global control plane is frozen. New BGP updates received from your router will be held locally at the edge and will not propagate globally until connectivity to the centralized relay is restored.
+{ props.magicWord === "Magic Transit" && (<Markdown text={`- **Magic Transit edge announcement**: During this frozen state, your BYOIP prefix(es) will continue to be announced at Cloudflare's global edge. You can manually change this announcement status via the API or dashboard.`} inline={false} />)}
+
+:::caution[Traffic persistence during BGP resets]
+In Edge Resiliency Mode, Cloudflare prioritizes forwarding continuity. If your on-premises router resets or the BGP session flaps, the edge will continue to forward traffic toward your peer device based on the last known valid routing state — provided that the underlying tunnel health checks remain successful.
+
+If the BGP session resets **and** the tunnel health checks fail (for example, your router is completely offline), the edge will typically take alternate paths until connectivity is restored.
+:::
+
+#### System recovery and re-synchronization
+
+Once connectivity between the Cloudflare edge and the centralized relay is restored, the system automatically exits Edge Resiliency Mode and performs a stateful re-synchronization:
+
+1. **RIB-to-relay sync**: The edge pushes all currently held BGP updates (the current RIB state) to the relay.
+2. **Global update**: The relay reconciles these updates and propagates any changes to the rest of the Cloudflare global network.
+3. **FIB unfreeze**: The local forwarding tables at the edge are unfrozen and updated with the latest validated routing instructions.
+
 ### BGP peering with the Magic routing table
 
 {props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.

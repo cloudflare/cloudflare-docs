@@ -2,148 +2,532 @@
 title: Schedule tasks
 pcx_content_type: concept
 sidebar:
-  order: 4
+  order: 10
 ---
 
-import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
-An Agent can schedule tasks to be run in the future by calling `this.schedule(when, callback, data)`, where `when` can be a delay, a `Date`, or a cron string; `callback` the function name to call, and `data` is an object of data to pass to the function.
+Schedule tasks to run in the future — whether that is seconds from now, at a specific date/time, or on a recurring cron schedule. Scheduled tasks survive agent restarts and are persisted to SQLite.
 
-Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read+write state: scheduled tasks can invoke any regular method on your Agent.
+Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read and write state. Scheduled tasks can invoke any regular method on your Agent.
 
-:::note[Calling destroy() in scheduled tasks]
+## Overview
 
-You can safely call `this.destroy()` within a scheduled task callback. The Agent will properly handle cleanup and eviction, skipping any remaining database updates after the destroy flag is set.
+The scheduling system supports four modes:
 
-:::
+| Mode          | Syntax                              | Use case                  |
+| ------------- | ----------------------------------- | ------------------------- |
+| **Delayed**   | `this.schedule(60, ...)`            | Run in 60 seconds         |
+| **Scheduled** | `this.schedule(new Date(...), ...)` | Run at specific time      |
+| **Cron**      | `this.schedule("0 8 * * *", ...)`   | Run on recurring schedule |
+| **Interval**  | `this.scheduleEvery(30, ...)`       | Run every 30 seconds      |
 
-### Scheduling tasks
+Under the hood, scheduling uses [Durable Object alarms](/durable-objects/api/alarms/) to wake the agent at the right time. Tasks are stored in a SQLite table and executed in order.
 
-You can call `this.schedule` within any method on an Agent, and schedule tens-of-thousands of tasks per individual Agent:
+## Quick start
 
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents"
+import { Agent } from "agents";
 
-export class SchedulingAgent extends Agent {
-	async onRequest(request) {
-		// Handle an incoming request
-		// Schedule a task 10 minutes from now
-		// Calls the "checkFlights" method
-		let { taskId } = await this.schedule(600, "checkFlights", { flight: "DL264", date: "2025-02-23" });
-		return Response.json({ taskId });
+export class ReminderAgent extends Agent {
+	async onRequest(request: Request) {
+		const url = new URL(request.url);
+
+		// Schedule in 30 seconds
+		await this.schedule(30, "sendReminder", {
+			message: "Check your email",
+		});
+
+		// Schedule at specific time
+		await this.schedule(new Date("2025-02-01T09:00:00Z"), "sendReminder", {
+			message: "Monthly report due",
+		});
+
+		// Schedule recurring (every day at 8am)
+		await this.schedule("0 8 * * *", "dailyDigest", {
+			userId: url.searchParams.get("userId"),
+		});
+
+		return new Response("Scheduled!");
 	}
 
-	async checkFlights(data) {
-		// Invoked when our scheduled task runs
-		// We can also call this.schedule here to schedule another task
+	async sendReminder(payload: { message: string }) {
+		console.log(`Reminder: ${payload.message}`);
+		// Send notification, email, etc.
+	}
+
+	async dailyDigest(payload: { userId: string }) {
+		console.log(`Sending daily digest to ${payload.userId}`);
+		// Generate and send digest
 	}
 }
 ```
+
 </TypeScriptExample>
 
-:::caution
+## Scheduling modes
 
-Tasks that set a callback for a method that does not exist will throw an exception: ensure that the method named in the `callback` argument of `this.schedule` exists on your `Agent` class.
+### Delayed execution
 
-:::
-
-You can schedule tasks in multiple ways:
+Pass a number to schedule a task to run after a delay in **seconds**:
 
 <TypeScriptExample>
 
 ```ts
-// schedule a task to run immediately
-let task = await this.schedule(0, "someTask", { message: "hello" });
+// Run in 10 seconds
+await this.schedule(10, "processTask", { taskId: "123" });
 
-// schedule a task to run in 10 seconds
-let task = await this.schedule(10, "someTask", { message: "hello" });
+// Run in 5 minutes (300 seconds)
+await this.schedule(300, "sendFollowUp", { email: "user@example.com" });
 
-// schedule a task to run at a specific date
-let task = await this.schedule(new Date("2025-01-01"), "someTask", {});
-
-// schedule a task to run every 10 minutes
-let { id } = await this.schedule("*/10 * * * *", "someTask", { message: "hello" });
-
-// schedule a task to run every 10 minutes, but only on Mondays
-let task = await this.schedule("*/10 * * * 1", "someTask", { message: "hello" });
-
-// cancel a scheduled task
-this.cancelSchedule(task.id);
+// Run in 1 hour
+await this.schedule(3600, "checkStatus", { orderId: "abc" });
 ```
 
 </TypeScriptExample>
 
-Calling `await this.schedule` returns a `Schedule`, which includes the task's randomly generated `id`. You can use this `id` to retrieve or cancel the task in the future. It also provides a `type` property that indicates the type of schedule, for example, one of `"scheduled" | "delayed" | "cron"`.
+**Use cases:**
 
-:::note[Maximum scheduled tasks]
+- Debouncing rapid events
+- Delayed notifications ("You left items in your cart")
+- Retry with backoff
+- Rate limiting
 
-Each task is mapped to a row in the Agent's underlying [SQLite database](/durable-objects/api/sqlite-storage-api/), which means that each task can be up to 2 MB in size. The maximum number of tasks must be `(task_size * tasks) + all_other_state < maximum_database_size` (currently 1GB per Agent).
+### Scheduled execution
 
-:::
-
-:::note[Destroying an Agent from a scheduled task]
-
-You can safely call `this.destroy()` from within a scheduled task callback. The Agent SDK handles this scenario by setting an internal flag to prevent database updates after destruction and deferring the context abort to allow the alarm handler to complete cleanly. This prevents errors that would otherwise occur when the alarm handler attempts to update the schedule table after storage has been cleared.
-
-:::
-
-### Managing scheduled tasks
-
-You can get, cancel and filter across scheduled tasks within an Agent using the scheduling API:
+Pass a `Date` object to schedule a task at a specific time:
 
 <TypeScriptExample>
 
 ```ts
-// Get a specific schedule by ID
-// Returns undefined if the task does not exist
-let task = await this.getSchedule(task.id)
+// Run tomorrow at noon
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+tomorrow.setHours(12, 0, 0, 0);
+await this.schedule(tomorrow, "sendReminder", { message: "Meeting time!" });
 
-// Get all scheduled tasks
-// Returns an array of Schedule objects
-let tasks = this.getSchedules();
+// Run at a specific timestamp
+await this.schedule(new Date("2025-06-15T14:30:00Z"), "triggerEvent", {
+	eventId: "conference-2025",
+});
 
-// Cancel a task by its ID
-// Returns true if the task was cancelled, false if it did not exist
-await this.cancelSchedule(task.id);
+// Run in 2 hours using Date math
+const twoHoursFromNow = new Date(Date.now() + 2 * 60 * 60 * 1000);
+await this.schedule(twoHoursFromNow, "checkIn", {});
+```
 
-// Filter for specific tasks
-// e.g. all tasks starting in the next hour
-let tasks = this.getSchedules({
-	timeRange: {
-		start: new Date(Date.now()),
-		end: new Date(Date.now() + 60 * 60 * 1000),
+</TypeScriptExample>
+
+**Use cases:**
+
+- Appointment reminders
+- Deadline notifications
+- Scheduled content publishing
+- Time-based triggers
+
+### Recurring (cron)
+
+Pass a cron expression string for recurring schedules:
+
+<TypeScriptExample>
+
+```ts
+// Every day at 8:00 AM
+await this.schedule("0 8 * * *", "dailyReport", {});
+
+// Every hour
+await this.schedule("0 * * * *", "hourlyCheck", {});
+
+// Every Monday at 9:00 AM
+await this.schedule("0 9 * * 1", "weeklySync", {});
+
+// Every 15 minutes
+await this.schedule("*/15 * * * *", "pollForUpdates", {});
+
+// First day of every month at midnight
+await this.schedule("0 0 1 * *", "monthlyCleanup", {});
+```
+
+</TypeScriptExample>
+
+**Cron syntax:** `minute hour day month weekday`
+
+| Field        | Values         | Special characters |
+| ------------ | -------------- | ------------------ |
+| Minute       | 0-59           | `*` `,` `-` `/`    |
+| Hour         | 0-23           | `*` `,` `-` `/`    |
+| Day of Month | 1-31           | `*` `,` `-` `/`    |
+| Month        | 1-12           | `*` `,` `-` `/`    |
+| Day of Week  | 0-6 (0=Sunday) | `*` `,` `-` `/`    |
+
+**Common patterns:**
+
+<TypeScriptExample>
+
+```ts
+"* * * * *"; // Every minute
+"*/5 * * * *"; // Every 5 minutes
+"0 * * * *"; // Every hour (on the hour)
+"0 0 * * *"; // Every day at midnight
+"0 8 * * 1-5"; // Weekdays at 8am
+"0 0 * * 0"; // Every Sunday at midnight
+"0 0 1 * *"; // First of every month
+```
+
+</TypeScriptExample>
+
+**Use cases:**
+
+- Daily/weekly reports
+- Periodic cleanup jobs
+- Polling external services
+- Health checks
+- Subscription renewals
+
+### Interval
+
+Use `scheduleEvery()` to run a task at fixed intervals (in seconds). Unlike cron, intervals support sub-minute precision and arbitrary durations:
+
+<TypeScriptExample>
+
+```ts
+// Poll every 30 seconds
+await this.scheduleEvery(30, "poll", { source: "api" });
+
+// Health check every 45 seconds
+await this.scheduleEvery(45, "healthCheck", {});
+
+// Sync every 90 seconds (1.5 minutes - cannot be expressed in cron)
+await this.scheduleEvery(90, "syncData", { destination: "warehouse" });
+```
+
+</TypeScriptExample>
+
+**Key differences from cron:**
+
+| Feature             | Cron                                  | Interval               |
+| ------------------- | ------------------------------------- | ---------------------- |
+| Minimum granularity | 1 minute                              | 1 second               |
+| Arbitrary intervals | No (must fit cron pattern)            | Yes                    |
+| Fixed schedule      | Yes (for example, "every day at 8am") | No (relative to start) |
+| Overlap prevention  | No                                    | Yes (built-in)         |
+
+**Overlap prevention:**
+
+If a callback takes longer than the interval, the next execution is skipped (not queued). This prevents runaway resource usage:
+
+<TypeScriptExample>
+
+```ts
+class PollingAgent extends Agent {
+	async poll() {
+		// If this takes 45 seconds and interval is 30 seconds,
+		// the next poll is skipped (with a warning logged)
+		const data = await slowExternalApi();
+		await this.processData(data);
 	}
+}
+
+// Set up 30-second interval
+await this.scheduleEvery(30, "poll", {});
+```
+
+</TypeScriptExample>
+
+When a skip occurs, you will see a warning in logs:
+
+```txt
+Skipping interval schedule abc123: previous execution still running
+```
+
+**Error resilience:**
+
+If the callback throws an error, the interval continues — only that execution fails:
+
+<TypeScriptExample>
+
+```ts
+class SyncAgent extends Agent {
+	async syncData() {
+		// Even if this throws, the interval keeps running
+		const response = await fetch("https://api.example.com/data");
+		if (!response.ok) throw new Error("Sync failed");
+		// ...
+	}
+}
+```
+
+</TypeScriptExample>
+
+**Use cases:**
+
+- Sub-minute polling (every 10, 30, 45 seconds)
+- Intervals that do not map to cron (every 90 seconds, every 7 minutes)
+- Rate-limited API polling with precise control
+- Real-time data synchronization
+
+## Managing scheduled tasks
+
+### Get a schedule
+
+Retrieve a scheduled task by its ID:
+
+<TypeScriptExample>
+
+```ts
+const schedule = await this.getSchedule(scheduleId);
+
+if (schedule) {
+	console.log(
+		`Task ${schedule.id} will run at ${new Date(schedule.time * 1000)}`,
+	);
+	console.log(`Callback: ${schedule.callback}`);
+	console.log(`Type: ${schedule.type}`); // "scheduled" | "delayed" | "cron" | "interval"
+} else {
+	console.log("Schedule not found");
+}
+```
+
+</TypeScriptExample>
+
+### List schedules
+
+Query scheduled tasks with optional filters:
+
+<TypeScriptExample>
+
+```ts
+// Get all scheduled tasks
+const allSchedules = this.getSchedules();
+
+// Get only cron jobs
+const cronJobs = this.getSchedules({ type: "cron" });
+
+// Get tasks in the next hour
+const upcoming = this.getSchedules({
+	timeRange: {
+		start: new Date(),
+		end: new Date(Date.now() + 60 * 60 * 1000),
+	},
+});
+
+// Get a specific task by ID
+const specific = this.getSchedules({ id: "abc123" });
+
+// Combine filters
+const upcomingCronJobs = this.getSchedules({
+	type: "cron",
+	timeRange: {
+		start: new Date(),
+		end: new Date(Date.now() + 24 * 60 * 60 * 1000),
+	},
 });
 ```
 
 </TypeScriptExample>
 
-### Lifecycle management with scheduled tasks
+### Cancel a schedule
 
-When working with scheduled tasks, you can safely call `this.destroy()` from within a scheduled callback to terminate the Agent instance after completing a task. The Agent SDK properly handles the cleanup process to ensure scheduled tasks complete successfully before the Agent is evicted.
+Remove a scheduled task before it executes:
 
 <TypeScriptExample>
 
 ```ts
-export class SchedulingAgent extends Agent {
-	async onRequest(request) {
-		// Schedule a self-destructing task
-		await this.schedule(60, "cleanupAndDestroy");
-		return new Response("Agent will self-destruct in 60 seconds");
-	}
+const cancelled = await this.cancelSchedule(scheduleId);
 
-	async cleanupAndDestroy(data) {
-		// Perform final cleanup operations
-		await this.sendEmail({
-			to: "admin@example.com",
-			subject: "Task completed",
-			body: "Agent task finished, shutting down"
+if (cancelled) {
+	console.log("Schedule cancelled successfully");
+} else {
+	console.log("Schedule not found (may have already executed)");
+}
+```
+
+</TypeScriptExample>
+
+**Example: Cancellable reminders**
+
+<TypeScriptExample>
+
+```ts
+class ReminderAgent extends Agent {
+	async setReminder(userId: string, message: string, delaySeconds: number) {
+		const schedule = await this.schedule(delaySeconds, "sendReminder", {
+			userId,
+			message,
 		});
 
-		// Safely destroy the Agent instance
-		// The destroy operation will complete after this callback finishes
+		// Store the schedule ID so user can cancel later
+		this.sql`
+      INSERT INTO user_reminders (user_id, schedule_id, message)
+      VALUES (${userId}, ${schedule.id}, ${message})
+    `;
+
+		return schedule.id;
+	}
+
+	async cancelReminder(scheduleId: string) {
+		const cancelled = await this.cancelSchedule(scheduleId);
+
+		if (cancelled) {
+			this.sql`DELETE FROM user_reminders WHERE schedule_id = ${scheduleId}`;
+		}
+
+		return cancelled;
+	}
+
+	async sendReminder(payload: { userId: string; message: string }) {
+		// Send the reminder...
+
+		// Clean up the record
+		this.sql`DELETE FROM user_reminders WHERE user_id = ${payload.userId}`;
+	}
+}
+```
+
+</TypeScriptExample>
+
+## The Schedule object
+
+When you create or retrieve a schedule, you get a `Schedule` object:
+
+```ts
+type Schedule<T> = {
+	id: string; // Unique identifier
+	callback: string; // Method name to call
+	payload: T; // Data passed to the callback
+	time: number; // Unix timestamp (seconds) of next execution
+} & (
+	| { type: "scheduled" } // One-time at specific date
+	| { type: "delayed"; delayInSeconds: number } // One-time after delay
+	| { type: "cron"; cron: string } // Recurring (cron expression)
+	| { type: "interval"; intervalSeconds: number } // Recurring (fixed interval)
+);
+```
+
+**Example:**
+
+<TypeScriptExample>
+
+```ts
+const schedule = await this.schedule(60, "myTask", { foo: "bar" });
+
+console.log(schedule);
+// {
+//   id: "abc123xyz",
+//   callback: "myTask",
+//   payload: { foo: "bar" },
+//   time: 1706745600,
+//   type: "delayed",
+//   delayInSeconds: 60
+// }
+```
+
+</TypeScriptExample>
+
+## Patterns
+
+### Rescheduling from callbacks
+
+For dynamic recurring schedules, schedule the next run from within the callback:
+
+<TypeScriptExample>
+
+```ts
+class PollingAgent extends Agent {
+	async startPolling(intervalSeconds: number) {
+		await this.schedule(intervalSeconds, "poll", { interval: intervalSeconds });
+	}
+
+	async poll(payload: { interval: number }) {
+		try {
+			const data = await fetch("https://api.example.com/updates");
+			await this.processUpdates(await data.json());
+		} catch (error) {
+			console.error("Polling failed:", error);
+		}
+
+		// Schedule the next poll (regardless of success/failure)
+		await this.schedule(payload.interval, "poll", payload);
+	}
+
+	async stopPolling() {
+		// Cancel all polling schedules
+		const schedules = this.getSchedules({ type: "delayed" });
+		for (const schedule of schedules) {
+			if (schedule.callback === "poll") {
+				await this.cancelSchedule(schedule.id);
+			}
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Exponential backoff retry
+
+<TypeScriptExample>
+
+```ts
+class RetryAgent extends Agent {
+	async attemptTask(payload: {
+		taskId: string;
+		attempt: number;
+		maxAttempts: number;
+	}) {
+		try {
+			await this.doWork(payload.taskId);
+			console.log(
+				`Task ${payload.taskId} succeeded on attempt ${payload.attempt}`,
+			);
+		} catch (error) {
+			if (payload.attempt >= payload.maxAttempts) {
+				console.error(
+					`Task ${payload.taskId} failed after ${payload.maxAttempts} attempts`,
+				);
+				return;
+			}
+
+			// Exponential backoff: 2^attempt seconds (2s, 4s, 8s, 16s...)
+			const delaySeconds = Math.pow(2, payload.attempt);
+
+			await this.schedule(delaySeconds, "attemptTask", {
+				...payload,
+				attempt: payload.attempt + 1,
+			});
+
+			console.log(`Retrying task ${payload.taskId} in ${delaySeconds}s`);
+		}
+	}
+
+	async doWork(taskId: string) {
+		// Your actual work here
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Self-destructing agents
+
+You can safely call `this.destroy()` from within a scheduled callback:
+
+<TypeScriptExample>
+
+```ts
+class TemporaryAgent extends Agent {
+	async onStart() {
+		// Self-destruct in 24 hours
+		await this.schedule(24 * 60 * 60, "cleanup", {});
+	}
+
+	async cleanup() {
+		// Perform final cleanup
+		console.log("Agent lifetime expired, cleaning up...");
+
+		// This is safe to call from a scheduled callback
 		await this.destroy();
 	}
 }
@@ -156,3 +540,232 @@ export class SchedulingAgent extends Agent {
 When `destroy()` is called from within a scheduled task, the Agent SDK defers the destruction to ensure the scheduled callback completes successfully. The Agent instance will be evicted immediately after the callback finishes executing.
 
 :::
+
+## AI-assisted scheduling
+
+The SDK includes utilities for parsing natural language scheduling requests with AI.
+
+### `getSchedulePrompt()`
+
+Returns a system prompt for parsing natural language into scheduling parameters:
+
+<TypeScriptExample>
+
+```ts
+import { getSchedulePrompt, scheduleSchema } from "agents";
+import { generateObject } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+class SmartScheduler extends Agent {
+	async parseScheduleRequest(userInput: string) {
+		const result = await generateObject({
+			model: openai("gpt-4o"),
+			system: getSchedulePrompt({ date: new Date() }),
+			prompt: userInput,
+			schema: scheduleSchema,
+		});
+
+		return result.object;
+	}
+
+	async handleUserRequest(input: string) {
+		// Parse: "remind me to call mom tomorrow at 3pm"
+		const parsed = await this.parseScheduleRequest(input);
+
+		// parsed = {
+		//   description: "call mom",
+		//   when: {
+		//     type: "scheduled",
+		//     date: "2025-01-30T15:00:00Z"
+		//   }
+		// }
+
+		if (parsed.when.type === "scheduled" && parsed.when.date) {
+			await this.schedule(new Date(parsed.when.date), "sendReminder", {
+				message: parsed.description,
+			});
+		} else if (parsed.when.type === "delayed" && parsed.when.delayInSeconds) {
+			await this.schedule(parsed.when.delayInSeconds, "sendReminder", {
+				message: parsed.description,
+			});
+		} else if (parsed.when.type === "cron" && parsed.when.cron) {
+			await this.schedule(parsed.when.cron, "sendReminder", {
+				message: parsed.description,
+			});
+		}
+	}
+
+	async sendReminder(payload: { message: string }) {
+		console.log(`Reminder: ${payload.message}`);
+	}
+}
+```
+
+</TypeScriptExample>
+
+### `scheduleSchema`
+
+A Zod schema for validating parsed scheduling data:
+
+<TypeScriptExample>
+
+```ts
+import { scheduleSchema } from "agents";
+
+// The schema shape:
+// {
+//   description: string,
+//   when: {
+//     type: "scheduled" | "delayed" | "cron" | "no-schedule",
+//     date?: Date,            // for "scheduled"
+//     delayInSeconds?: number, // for "delayed"
+//     cron?: string           // for "cron"
+//   }
+// }
+```
+
+</TypeScriptExample>
+
+## Scheduling vs Queue vs Workflows
+
+| Feature            | Queue              | Scheduling        | Workflows           |
+| ------------------ | ------------------ | ----------------- | ------------------- |
+| **When**           | Immediately (FIFO) | Future time       | Future time         |
+| **Execution**      | Sequential         | At scheduled time | Multi-step          |
+| **Retries**        | Manual             | Manual            | Automatic           |
+| **Persistence**    | SQLite             | SQLite            | Workflow engine     |
+| **Recurring**      | No                 | Yes (cron)        | No (use scheduling) |
+| **Complex logic**  | No                 | No                | Yes                 |
+| **Human approval** | No                 | No                | Yes                 |
+
+Use Queue when:
+
+- You need background processing without blocking the response
+- Tasks should run ASAP but do not need to block
+- Order matters (FIFO)
+
+Use Scheduling when:
+
+- Tasks need to run at a specific time
+- You need recurring jobs (cron)
+- Delayed execution (debouncing, retries)
+
+Use Workflows when:
+
+- Multi-step processes with dependencies
+- Automatic retries with backoff
+- Human-in-the-loop approvals
+- Long-running tasks (minutes to hours)
+
+## API reference
+
+### `schedule()`
+
+```ts
+async schedule<T>(
+  when: Date | string | number,
+  callback: keyof this,
+  payload?: T
+): Promise<Schedule<T>>
+```
+
+Schedule a task for future execution.
+
+**Parameters:**
+
+- `when` - When to execute: `number` (seconds delay), `Date` (specific time), or `string` (cron expression)
+- `callback` - Name of the method to call
+- `payload` - Data to pass to the callback (must be JSON-serializable)
+
+**Returns:** A `Schedule` object with the task details
+
+:::caution
+
+Tasks that set a callback for a method that does not exist will throw an exception. Ensure that the method named in the `callback` argument exists on your `Agent` class.
+
+:::
+
+### `scheduleEvery()`
+
+```ts
+async scheduleEvery<T>(
+  intervalSeconds: number,
+  callback: keyof this,
+  payload?: T
+): Promise<Schedule<T>>
+```
+
+Schedule a task to run repeatedly at a fixed interval.
+
+**Parameters:**
+
+- `intervalSeconds` - Number of seconds between executions (must be greater than 0)
+- `callback` - Name of the method to call
+- `payload` - Data to pass to the callback (must be JSON-serializable)
+
+**Returns:** A `Schedule` object with `type: "interval"`
+
+**Behavior:**
+
+- First execution occurs after `intervalSeconds` (not immediately)
+- If callback is still running when next execution is due, it is skipped (overlap prevention)
+- If callback throws an error, the interval continues
+- Cancel with `cancelSchedule(id)` to stop the entire interval
+
+### `getSchedule()`
+
+```ts
+async getSchedule<T>(id: string): Promise<Schedule<T> | undefined>
+```
+
+Get a scheduled task by ID. Returns `undefined` if not found.
+
+### `getSchedules()`
+
+```ts
+getSchedules<T>(criteria?: {
+  id?: string;
+  type?: "scheduled" | "delayed" | "cron" | "interval";
+  timeRange?: { start?: Date; end?: Date };
+}): Schedule<T>[]
+```
+
+Get scheduled tasks matching the criteria.
+
+### `cancelSchedule()`
+
+```ts
+async cancelSchedule(id: string): Promise<boolean>
+```
+
+Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
+
+## Limits
+
+- **Maximum tasks:** Limited by SQLite storage (each task is a row). Practical limit is tens of thousands per agent.
+- **Task size:** Each task (including payload) can be up to 2MB.
+- **Minimum delay:** 0 seconds (runs on next alarm tick)
+- **Cron precision:** Minute-level (not seconds)
+- **Interval precision:** Second-level
+- **Cron jobs:** After execution, automatically rescheduled for the next occurrence
+- **Interval jobs:** After execution, rescheduled for `now + intervalSeconds`; skipped if still running
+
+## Next steps
+
+<LinkCard
+	title="Queue tasks"
+	href="/agents/api-reference/queue-tasks/"
+	description="Immediate background task processing."
+/>
+
+<LinkCard
+	title="Run Workflows"
+	href="/agents/api-reference/run-workflows/"
+	description="Durable multi-step background processing."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>

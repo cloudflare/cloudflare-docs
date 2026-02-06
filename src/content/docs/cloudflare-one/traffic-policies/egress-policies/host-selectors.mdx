@@ -11,7 +11,7 @@ import { Tabs, TabItem, Details, APIRequest, Render } from "~/components";
 
 | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Gateway with WARP                                                                        | Enterprise                                                    |
+| Traffic and DNS mode                                                                        | Enterprise                                                    |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
@@ -95,7 +95,7 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 
 2. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
 
-The WARP client must be set to _Gateway with WARP_ mode for traffic affected by these selectors to route correctly.
+The WARP client must be set to _Traffic and DNS mode_ mode for traffic affected by these selectors to route correctly.
 
 {/* prettier-ignore-end */}
 

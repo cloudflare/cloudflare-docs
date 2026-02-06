@@ -33,7 +33,7 @@ Client-side `cloudflared` can be used in conjunction with [routing over WARP](/c
    ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
    ```
 
-   The `cloudflared` path may be different depending on your OS and package manager. For example, if you installed `cloudflared` on macOS with Homebrew, the path is `/opt/homebrew/bin/cloudflared`.
+   The `cloudflared` path may be different depending on your OS and package manager. For example, if you installed `cloudflared` on macOS with Homebrew, check its path by running `brew --prefix cloudflared`.
 
 4. You can now test the connection by running a command to reach the service:
 

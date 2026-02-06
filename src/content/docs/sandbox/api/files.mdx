@@ -189,9 +189,9 @@ await sandbox.gitCheckout(repoUrl: string, options?: GitCheckoutOptions): Promis
 **Parameters**:
 - `repoUrl` - Git repository URL
 - `options` (optional):
-  - `branch` - Branch to checkout (default: main branch)
-  - `targetDir` - Directory to clone into (default: repo name)
-  - `depth` - Clone depth for shallow clone
+  - `branch` - Branch to checkout (default: repository default branch)
+  - `targetDir` - Directory to clone into (default: `/workspace/{repoName}`)
+  - `depth` - Clone depth for shallow clones (e.g., `1` for latest commit only)
 
 <TypeScriptExample>
 ```
@@ -200,7 +200,12 @@ await sandbox.gitCheckout('https://github.com/user/repo');
 // Specific branch
 await sandbox.gitCheckout('https://github.com/user/repo', {
   branch: 'develop',
-  targetDir: 'my-project'
+  targetDir: '/workspace/my-project'
+});
+
+// Shallow clone (faster for large repositories)
+await sandbox.gitCheckout('https://github.com/facebook/react', {
+  depth: 1
 });
 ```
 </TypeScriptExample>

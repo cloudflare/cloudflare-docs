@@ -54,7 +54,9 @@ You can create a request header transform rule [in the dashboard](/rules/transfo
 
 - Due to protocol compliance reasons, modifying or removing request headers with [forbidden header names](https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name) (such as `Accept-Encoding`) is generally not allowed in Request Header Transform Rules.
 
-- You cannot modify the value of any header commonly used to identify the website visitor's IP address or initial protocol, such as `x-forwarded-for`, `true-client-ip`, `x-real-ip`, or `x-forwarded-proto`. Additionally, you cannot remove the `x-forwarded-for` and `x-forwarded-proto` headers.
+- You cannot modify the value of any header commonly used to identify the website visitor's IP address or initial protocol, such as `x-forwarded-for`, `true-client-ip`, `x-real-ip`, or `x-forwarded-proto`.
+
+- Although you can remove the `x-forwarded-for` header, it will be added back by Cloudflare's cache service (with a different value), and this header will reach your origin server. If you remove the `x-forwarded-for` header and the request is handled by Cloudflare Workers — which [run before the cache](/workers/reference/how-the-cache-works/) — the `x-forwarded-for` request header will be absent.
 
 - You cannot set or modify the value of `cookie` HTTP request headers, but you can remove these headers. Configuring a rule that removes the `cookie` HTTP request header will remove all `cookie` headers in matching requests.
 

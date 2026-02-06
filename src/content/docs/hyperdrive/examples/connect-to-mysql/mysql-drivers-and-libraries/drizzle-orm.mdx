@@ -66,7 +66,7 @@ Populate your `index.ts` file as shown below.
 // src/index.ts
 
 import { drizzle } from "drizzle-orm/mysql2";
-import { createConnection } from "mysql2";
+import { createConnection } from "mysql2/promise";
 import { users } from "./db/schema";
 
 export interface Env {
@@ -92,6 +92,10 @@ export default {
 
 		// Sample query to get all users
 		const allUsers = await db.select().from(users);
+
+		// Clean up the client after the response is returned.
+		// Hyperdrive keeps the underlying connection open in its pool.
+		ctx.waitUntil(connection.end());
 
 		return Response.json(allUsers);
 	},
