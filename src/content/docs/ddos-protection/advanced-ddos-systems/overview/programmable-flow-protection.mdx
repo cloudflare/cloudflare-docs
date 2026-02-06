@@ -34,11 +34,10 @@ While in beta, Cloudflare will assist and provide guidance to users to write the
 After Programmable Flow Protection has been enabled to your account:
 
 <Steps>
-1. Write a C program and upload it via the [API](/api/).  
+1. Write a C program and upload it via the API.  
   
-   The program is validated by the system and deployed to your userspace in Cloudflare's servers across the world.  
+   The program is validated by the system and deployed to your userspace in Cloudflare's servers across the world. The API compiles the program, then runs a verifier against the compiled program to enforce memory checks and verify program termination. If the program fails compilation or verification, the API will return a detailed error message.
   
-   An activation [threshold](/ddos-protection/advanced-ddos-systems/overview/#thresholds) is configured by Cloudflare to determine when you want the program to take effect. It can begin immediately for every packet, or after a certain packet per second rate.
 
 2. Create a [rule](/ddos-protection/advanced-ddos-systems/overview/#rules).
    - Select the program, the global scope, and the **Monitoring** setting.
@@ -48,7 +47,7 @@ After Programmable Flow Protection has been enabled to your account:
 4. When you are ready, enable the mitigation mode.
 </Steps>
 
-You can create additional rules with different [rule settings](/ddos-protection/advanced-ddos-systems/concepts/#rule-settings) [scoped](/ddos-protection/advanced-ddos-systems/concepts/#scope) to various regions and Cloudflare locations to change the [sensitivity level](/ddos-protection/advanced-ddos-systems/concepts/#rate-sensitivity), and [mode](/ddos-protection/advanced-ddos-systems/concepts/#mode) (Mitigation or Monitoring) to accommodate for your traffic patterns and business use cases.
+You can create additional rules with different [rule settings](/ddos-protection/advanced-ddos-systems/concepts/#rule-settings) [scoped](/ddos-protection/advanced-ddos-systems/concepts/#scope) to various regions and Cloudflare locations to change the [mode](/ddos-protection/advanced-ddos-systems/concepts/#mode) (Mitigation or Monitoring) to accommodate for your traffic patterns and business use cases.
 
 :::caution[Beta functionality limitations]
 
@@ -87,12 +86,12 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    #include "cf_ebpf_helper.h"
    ```
 
-3. Define a section header for the Programmable Flow Protection engine version.
+3. Add a define directive to specify the versioned helper functions in use.
 
    As Cloudflare adds more features to the Programmable Flow Protection API, we will publish new versions of its API. Versions are guaranteed to be backwards compatible.
 
    ```c
-   SEC(CF_EBPF_VERSION_1_0_0)
+   #define CF_EBPF_HELPER_V0
    ```
 
 4. Define the entry function for packet processing.
@@ -109,12 +108,12 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 
    Convert the input data into `cf_ebpf_generic_ctx`, which tells Cloudflare the data boundaries in the memory that we are reading.
 
-   Then, declare variables for data parsing. `cf_ebpf_parsed_headers` will contain the IPv4, IPv6, and UDP headers. `cf_packet_data_v1` will hold a copy of the original IP packet that Cloudflare received (maximum 1,500 bytes), as well as the packet length and IP header length.
+   Then, declare variables for data parsing. `cf_ebpf_parsed_headers` will contain the IPv4, IPv6, and UDP headers. `cf_ebpf_packet_data` will hold a copy of the original IP packet that Cloudflare received (maximum 1,500 bytes), as well as the packet length and IP header length.
 
    ```c
    struct cf_ebpf_generic_ctx *ctx = state;
    struct cf_ebpf_parsed_headers headers;
-   struct cf_ebpf_packet_data_v1 *p;
+   struct cf_ebpf_packet_data *p;
    ```
 
 6. Fill variables by calling the helper function.
@@ -309,6 +308,7 @@ Your rule must define a:
 - Program ID
 - Scope (Global, Regional, Datacenter)
 - Mode (Enabled, Monitoring, Disabled)
+- Expression
 
 Refer to the [Advanced DDoS Protection](/ddos-protection/advanced-ddos-systems/concepts/#scope) documentation for more information about scope and mode parameters.
 
