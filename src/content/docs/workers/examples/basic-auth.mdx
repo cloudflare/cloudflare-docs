@@ -283,8 +283,7 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         "/logout" => Response::error("Logged out.", 401),
         "/admin" => {
             // The "Authorization" header is sent when authenticated.
-            let authorization = req.headers().get("Authorization")?;
-            if authorization.is_none() {
+            let Some(authorization) = req.headers().get("Authorization")? else {
                 let mut headers = Headers::new();
                 // Prompts the user for credentials.
                 headers.set(
@@ -292,16 +291,15 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
                     "Basic realm=\"my scope\", charset=\"UTF-8\"",
                 )?;
                 return Ok(Response::error("You need to login.", 401)?.with_headers(headers));
-            }
-            let authorization = authorization.unwrap();
-            let auth: Vec<&str> = authorization.split(" ").collect();
+            };
 
             // The Authorization header must start with Basic, followed by a space.
-            if auth.len() < 2 || auth[0] != "Basic" || auth[1].is_empty() {
+            let mut parts = authorization.splitn(2, ' ');
+            let scheme = parts.next().unwrap_or("");
+            let encoded = parts.next().unwrap_or("");
+            if scheme != "Basic" || encoded.is_empty() {
                 return Response::error("Malformed authorization header.", 400);
             }
-
-            let encoded = auth[1];
 
             let buff = match BASE64_STANDARD.decode(encoded) {
                 Ok(b) => b,
@@ -310,11 +308,9 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
             let credentials = String::from_utf8_lossy(&buff);
             // The username & password are split by the first colon.
             //=> example: "username:password"
-            let index = credentials.find(':');
-            if index.is_none() {
+            let Some(index) = credentials.find(':') else {
                 return Response::error("Malformed credentials.", 400);
-            }
-            let index = index.unwrap();
+            };
             let user = &credentials[..index];
             let pass = &credentials[index + 1..];
 
