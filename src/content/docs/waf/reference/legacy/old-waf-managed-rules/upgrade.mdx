@@ -112,7 +112,7 @@ Once the upgrade is complete, the APIs for interacting with WAF managed rules **
 If you have any integrations using the WAF managed rules APIs stated above, you must update them before upgrading to the new WAF Managed Rules.
 :::
 
-To work with WAF Managed Rules you must use the [Rulesets API](/ruleset-engine/managed-rulesets/). For more information on deploying WAF Managed Rules via API, refer to [Deploy managed rulesets via API](/waf/managed-rules/deploy-api/).
+To work with WAF Managed Rules you must use the [Rulesets API](/ruleset-engine/managed-rulesets/). For more information on deploying WAF Managed Rules via API, refer to [Deploy a WAF managed ruleset via API (zone)](/waf/managed-rules/deploy-api/).
 
 ### Terraform changes
 
@@ -382,7 +382,7 @@ Go to [sampled logs](/waf/analytics/security-events/#sampled-logs) in Security E
 
 Business and Professional customers do not have access to validation mode, which means that they will be able to check the new WAF behavior after they upgrade to the new WAF Managed Rules.
 
-In the days following the upgrade, check [sampled logs](/waf/analytics/security-events/#sampled-logs) in Security Events looking for any legitimate requests being blocked by WAF Managed Rules. If you identify any incorrectly blocked requests, adjust the corresponding WAF rule action to Log. For more information on changing the action of a managed ruleset rule, refer to [Configure a single rule in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-single-rule-in-a-managed-ruleset).
+In the days following the upgrade, check [sampled logs](/waf/analytics/security-events/#sampled-logs) in Security Events looking for any legitimate requests being blocked by WAF Managed Rules. If you identify any incorrectly blocked requests, adjust the corresponding WAF rule action to Log. For more information on changing the action of a managed ruleset rule, refer to [Configure individual rules of a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-individual-rules-of-a-managed-ruleset).
 
 Additionally, check for requests that should have been blocked. In this situation, consider creating a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) or a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block these requests.
 
