@@ -1,0 +1,437 @@
+---
+title: Terminal Integration
+pcx_content_type: how-to
+sidebar:
+  order: 11
+description: Step-by-step guide to embedding interactive terminal sessions in web applications using xterm.js and the Sandbox SDK.
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+This guide shows how to integrate interactive terminal sessions directly into your web applications. The Sandbox SDK provides seamless WebSocket-based terminal integration using the popular xterm.js library, allowing users to interact with sandbox environments through a familiar terminal interface.
+
+## Overview
+
+Terminal integration consists of three main components:
+
+1. **Frontend terminal** - xterm.js terminal emulator in the browser
+2. **SandboxAddon** - WebSocket connection manager from the Sandbox SDK  
+3. **Backend routing** - WebSocket endpoints that connect to sandbox sessions
+
+The flow works like this:
+
+```
+Browser Terminal (xterm.js) 
+    ↕ WebSocket
+Worker/Backend
+    ↕ Sandbox SDK
+Container PTY
+```
+
+## Prerequisites
+
+- A Cloudflare Worker with Sandbox SDK access
+- A web application that can load JavaScript modules
+- Basic knowledge of WebSocket connections
+
+## Step 1: Install Dependencies
+
+Install the required packages for terminal integration:
+
+<PackageManagers
+  pkg="@cloudflare/sandbox @xterm/xterm @xterm/addon-fit @xterm/addon-web-links"
+  managers={["npm", "pnpm", "yarn"]}
+/>
+
+If you are using TypeScript, also install type definitions:
+
+<PackageManagers
+  pkg="@types/node"
+  dev={true}
+  managers={["npm", "pnpm", "yarn"]}
+/>
+
+## Step 2: Set Up Backend WebSocket Handler
+
+Create a WebSocket endpoint in your Worker that connects to the sandbox terminal:
+
+<TypeScriptExample>
+```typescript
+// worker.ts
+import { getSandbox } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+    
+    // Handle WebSocket terminal connections
+    if (url.pathname.startsWith('/ws/terminal/')) {
+      const sessionId = url.pathname.split('/').pop();
+      const sandboxId = url.searchParams.get('sandboxId');
+      
+      if (!sandboxId || !sessionId) {
+        return new Response('Missing sandboxId or sessionId', { status: 400 });
+      }
+
+      // Get sandbox instance and session
+      const sandbox = getSandbox(env.SANDBOX, sandboxId);
+      const session = await sandbox.getSession(sessionId);
+      
+      // Proxy WebSocket connection directly to the sandbox PTY
+      return session.terminal(request);
+    }
+    
+    // Handle other routes...
+    return new Response('Not found', { status: 404 });
+  }
+};
+
+interface Env {
+  SANDBOX: DurableObjectNamespace;
+}
+```
+</TypeScriptExample>
+
+## Step 3: Create Terminal Component
+
+Create a React component that integrates xterm.js with the SandboxAddon:
+
+<TypeScriptExample>
+```typescript
+// Terminal.tsx
+import { SandboxAddon, type ConnectionState } from '@cloudflare/sandbox/xterm';
+import { FitAddon } from '@xterm/addon-fit';
+import { WebLinksAddon } from '@xterm/addon-web-links';
+import { Terminal as XTerm } from '@xterm/xterm';
+import { useEffect, useRef, useState } from 'react';
+import '@xterm/xterm/css/xterm.css';
+
+interface TerminalProps {
+  sandboxId: string;
+  sessionId?: string;
+  onConnectionChange?: (state: ConnectionState) => void;
+}
+
+export function Terminal({ 
+  sandboxId, 
+  sessionId = 'main',
+  onConnectionChange 
+}: TerminalProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState<ConnectionState>('disconnected');
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Create terminal with custom styling
+    const terminal = new XTerm({
+      cursorBlink: true,
+      fontFamily: '"JetBrains Mono", "Fira Code", monospace',
+      fontSize: 14,
+      lineHeight: 1.2,
+      theme: {
+        background: '#1a1a1a',
+        foreground: '#ffffff',
+        cursor: '#00ff00',
+        selection: '#2d2d2d'
+      }
+    });
+
+    // Set up addons
+    const fitAddon = new FitAddon();
+    const webLinksAddon = new WebLinksAddon();
+    const sandboxAddon = new SandboxAddon({
+      getWebSocketUrl: ({ origin, sessionId: sid }) => 
+        `${origin}/ws/terminal/${sid}?sandboxId=${sandboxId}`,
+      onStateChange: (newState, error) => {
+        setState(newState);
+        onConnectionChange?.(newState);
+        
+        if (error) {
+          console.error('Terminal connection error:', error);
+        }
+      }
+    });
+
+    // Load addons and open terminal
+    terminal.loadAddon(fitAddon);
+    terminal.loadAddon(webLinksAddon);
+    terminal.loadAddon(sandboxAddon);
+    terminal.open(containerRef.current);
+
+    // Fit terminal to container
+    fitAddon.fit();
+
+    // Connect to sandbox session
+    sandboxAddon.connect({ sandboxId, sessionId });
+
+    // Handle window resize
+    const handleResize = () => fitAddon.fit();
+    window.addEventListener('resize', handleResize);
+
+    // Focus terminal on mount
+    terminal.focus();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      terminal.dispose();
+    };
+  }, [sandboxId, sessionId, onConnectionChange]);
+
+  return (
+    <div className="relative h-full w-full">
+      <div ref={containerRef} className="h-full w-full" />
+      
+      {/* Connection status overlay */}
+      {state !== 'connected' && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="flex items-center space-x-2 text-white">
+            {state === 'connecting' && (
+              <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+            )}
+            <span>
+              {state === 'connecting' ? 'Connecting...' : 'Disconnected'}
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+</TypeScriptExample>
+
+## Step 4: Add Terminal to Your Application
+
+Use the terminal component in your main application:
+
+<TypeScriptExample>
+```typescript
+// App.tsx
+import { useState } from 'react';
+import { Terminal } from './components/Terminal';
+import type { ConnectionState } from '@cloudflare/sandbox/xterm';
+
+export function App() {
+  const [connectionState, setConnectionState] = useState<ConnectionState>('disconnected');
+  const [sandboxId] = useState(() => `user-${Math.random().toString(36).slice(2)}`);
+
+  return (
+    <div className="h-screen flex flex-col">
+      <header className="bg-gray-900 text-white p-4">
+        <h1 className="text-xl font-bold">My Terminal App</h1>
+        <div className="flex items-center space-x-2 mt-2">
+          <div className={`h-2 w-2 rounded-full ${
+            connectionState === 'connected' ? 'bg-green-500' :
+            connectionState === 'connecting' ? 'bg-yellow-500' :
+            'bg-red-500'
+          }`} />
+          <span className="text-sm">
+            Sandbox: {sandboxId} ({connectionState})
+          </span>
+        </div>
+      </header>
+      
+      <main className="flex-1">
+        <Terminal
+          sandboxId={sandboxId}
+          sessionId="main"
+          onConnectionChange={setConnectionState}
+        />
+      </main>
+    </div>
+  );
+}
+```
+</TypeScriptExample>
+
+## Step 5: Handle Multiple Sessions
+
+You can create multiple isolated sessions within the same sandbox:
+
+<TypeScriptExample>
+```typescript
+// MultiSessionTerminal.tsx
+import { useState } from 'react';
+import { Terminal } from './Terminal';
+
+export function MultiSessionTerminal() {
+  const [activeSession, setActiveSession] = useState('main');
+  const [sessions] = useState(['main', 'session-1', 'session-2']);
+  const sandboxId = 'shared-sandbox';
+
+  return (
+    <div className="h-screen flex">
+      {/* Session tabs */}
+      <div className="w-48 bg-gray-800 text-white">
+        <h3 className="p-4 font-bold">Sessions</h3>
+        <div className="space-y-1">
+          {sessions.map((sessionId) => (
+            <button
+              key={sessionId}
+              onClick={() => setActiveSession(sessionId)}
+              className={`w-full text-left px-4 py-2 hover:bg-gray-700 ${
+                activeSession === sessionId ? 'bg-gray-700' : ''
+              }`}
+            >
+              {sessionId}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      {/* Terminal */}
+      <div className="flex-1">
+        <Terminal
+          sandboxId={sandboxId}
+          sessionId={activeSession}
+        />
+      </div>
+    </div>
+  );
+}
+```
+</TypeScriptExample>
+
+## Advanced Features
+
+### Custom Terminal Themes
+
+You can customize the terminal appearance:
+
+<TypeScriptExample>
+```typescript
+const darkTheme = {
+  background: '#1a1a1a',
+  foreground: '#ffffff',
+  cursor: '#00ff00',
+  black: '#000000',
+  red: '#ff5555',
+  green: '#50fa7b',
+  yellow: '#f1fa8c',
+  blue: '#6272a4',
+  magenta: '#ff79c6',
+  cyan: '#8be9fd',
+  white: '#f8f8f2'
+};
+
+const terminal = new XTerm({
+  theme: darkTheme,
+  fontFamily: '"JetBrains Mono", monospace',
+  fontSize: 14,
+  cursorBlink: true
+});
+```
+</TypeScriptExample>
+
+### Handling Connection Events
+
+Monitor connection status and handle errors:
+
+<TypeScriptExample>
+```typescript
+const sandboxAddon = new SandboxAddon({
+  getWebSocketUrl: ({ origin, sessionId }) => 
+    `${origin}/ws/terminal/${sessionId}`,
+  reconnect: true,
+  onStateChange: (state, error) => {
+    console.log('Connection state:', state);
+    
+    if (error) {
+      console.error('Connection error:', error.message);
+      // Show user-friendly error message
+      showNotification(`Terminal connection failed: ${error.message}`);
+    }
+    
+    // Update UI based on connection state
+    updateConnectionIndicator(state);
+  }
+});
+```
+</TypeScriptExample>
+
+### Terminal Resizing
+
+The FitAddon automatically handles terminal resizing, but you can also manually control it:
+
+<TypeScriptExample>
+```typescript
+const fitAddon = new FitAddon();
+terminal.loadAddon(fitAddon);
+
+// Fit on window resize
+window.addEventListener('resize', () => {
+  fitAddon.fit();
+});
+
+// Manual resize
+const resizeTerminal = (cols: number, rows: number) => {
+  terminal.resize(cols, rows);
+};
+```
+</TypeScriptExample>
+
+### Session Management
+
+Switch between sessions dynamically:
+
+<TypeScriptExample>
+```typescript
+const switchSession = (newSessionId: string) => {
+  // The addon automatically handles session switching
+  sandboxAddon.connect({ 
+    sandboxId: currentSandboxId, 
+    sessionId: newSessionId 
+  });
+};
+
+// Create a new session
+const createSession = async (sessionId: string) => {
+  // First create the session on the backend
+  await fetch('/api/sessions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sandboxId: currentSandboxId, sessionId })
+  });
+  
+  // Then connect the terminal
+  switchSession(sessionId);
+};
+```
+</TypeScriptExample>
+
+## Troubleshooting
+
+### Connection Issues
+
+If the terminal fails to connect:
+
+1. **Check WebSocket URL**: Ensure your `getWebSocketUrl` function returns the correct WebSocket URL
+2. **Verify sandbox access**: Make sure your Worker has access to the Sandbox Durable Object
+3. **Check CORS settings**: Ensure WebSocket connections are allowed from your domain
+4. **Review network logs**: Use browser DevTools to inspect WebSocket connection attempts
+
+### Performance Considerations
+
+For optimal performance:
+
+1. **Limit session count**: Each session uses memory; clean up unused sessions
+2. **Use session timeouts**: Implement automatic session cleanup after inactivity
+3. **Optimize terminal size**: Large terminal dimensions increase memory usage
+4. **Monitor connection health**: Implement health checks for long-lived connections
+
+### Security
+
+When implementing terminal access:
+
+1. **Authenticate users**: Verify user permissions before allowing terminal access
+2. **Limit sandbox access**: Restrict which sandboxes users can access
+3. **Session isolation**: Ensure sessions cannot access each other's data
+4. **Audit logging**: Log terminal access and commands for security monitoring
+
+## Related
+
+- [Terminal Integration API](/sandbox/api/terminal/) - Complete API reference
+- [Sessions](/sandbox/api/sessions/) - Session management and isolation
+- [WebSocket Connections](/sandbox/guides/websocket-connections/) - Direct WebSocket integration guide
+- [Collaborative Terminal Example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/collaborative-terminal) - Complete example application

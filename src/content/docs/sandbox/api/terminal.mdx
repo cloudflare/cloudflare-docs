@@ -1,0 +1,333 @@
+---
+title: Terminal Integration
+description: Integrate interactive terminal sessions directly into web applications using xterm.js and WebSocket connections.
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+The Sandbox SDK provides terminal integration capabilities through the `@cloudflare/sandbox/xterm` package, allowing you to embed interactive terminal sessions directly into web applications. The integration uses WebSocket connections for real-time terminal I/O and works seamlessly with the popular [xterm.js](https://xtermjs.org/) terminal emulator.
+
+## Installation
+
+Install the required dependencies for terminal integration:
+
+<PackageManagers
+  pkg="@cloudflare/sandbox @xterm/xterm @xterm/addon-fit"
+  managers={["npm", "pnpm", "yarn"]}
+/>
+
+Additional recommended addons:
+
+<PackageManagers
+  pkg="@xterm/addon-web-links"
+  managers={["npm", "pnpm", "yarn"]}
+/>
+
+## SandboxAddon Class
+
+The `SandboxAddon` class connects xterm.js terminals to sandbox sessions via WebSocket.
+
+### Constructor
+
+<TypeScriptExample>
+```typescript
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+
+const addon = new SandboxAddon(options);
+```
+</TypeScriptExample>
+
+### Options
+
+The constructor accepts a `SandboxAddonOptions` object with the following properties:
+
+#### getWebSocketUrl
+
+**Required.** Function that returns the WebSocket URL for connecting to the terminal.
+
+<TypeScriptExample>
+```typescript
+getWebSocketUrl: (params: {
+  sandboxId: string;
+  sessionId?: string;
+  origin: string; // WebSocket origin (e.g., "wss://example.com")
+}) => string
+```
+</TypeScriptExample>
+
+#### reconnect
+
+Whether to automatically reconnect on disconnection using exponential backoff with jitter.
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+#### onStateChange
+
+Callback function called when the connection state changes. Use this to update UI elements like loading spinners or connection indicators.
+
+<TypeScriptExample>
+```typescript
+onStateChange?: (state: ConnectionState, error?: Error) => void
+```
+</TypeScriptExample>
+
+### Methods
+
+#### connect(target)
+
+Connects the terminal to a specific sandbox session.
+
+<TypeScriptExample>
+```typescript
+addon.connect({
+  sandboxId: 'my-sandbox',
+  sessionId: 'main' // optional, defaults to 'main'
+});
+```
+</TypeScriptExample>
+
+**Parameters:**
+- `target.sandboxId` (string): The sandbox identifier
+- `target.sessionId` (string, optional): The session identifier within the sandbox
+
+#### disconnect()
+
+Manually disconnects the terminal WebSocket connection.
+
+<TypeScriptExample>
+```typescript
+addon.disconnect();
+```
+</TypeScriptExample>
+
+#### dispose()
+
+Cleans up the addon and closes the WebSocket connection. Call this when unmounting your terminal component.
+
+<TypeScriptExample>
+```typescript
+addon.dispose();
+```
+</TypeScriptExample>
+
+### Properties
+
+#### state
+
+Returns the current connection state.
+
+<TypeScriptExample>
+```typescript
+const state: ConnectionState = addon.state;
+// 'disconnected' | 'connecting' | 'connected'
+```
+</TypeScriptExample>
+
+#### sandboxId
+
+Returns the currently connected sandbox ID.
+
+<TypeScriptExample>
+```typescript
+const sandboxId: string | undefined = addon.sandboxId;
+```
+</TypeScriptExample>
+
+#### sessionId
+
+Returns the currently connected session ID.
+
+<TypeScriptExample>
+```typescript
+const sessionId: string | undefined = addon.sessionId;
+```
+</TypeScriptExample>
+
+## Basic Terminal Integration
+
+Here is a complete example of integrating a terminal into a React application:
+
+<TypeScriptExample>
+```typescript
+import { SandboxAddon, type ConnectionState } from '@cloudflare/sandbox/xterm';
+import { FitAddon } from '@xterm/addon-fit';
+import { WebLinksAddon } from '@xterm/addon-web-links';
+import { Terminal } from '@xterm/xterm';
+import { useEffect, useRef, useState } from 'react';
+import '@xterm/xterm/css/xterm.css';
+
+interface TerminalComponentProps {
+  sandboxId: string;
+  sessionId?: string;
+}
+
+export function TerminalComponent({ 
+  sandboxId, 
+  sessionId = 'main' 
+}: TerminalComponentProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [connectionState, setConnectionState] = useState<ConnectionState>('disconnected');
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Create terminal instance
+    const terminal = new Terminal({
+      cursorBlink: true,
+      fontFamily: 'monospace',
+      fontSize: 14,
+      theme: {
+        background: '#1a1a1a',
+        foreground: '#ffffff'
+      }
+    });
+
+    // Create addons
+    const fitAddon = new FitAddon();
+    const webLinksAddon = new WebLinksAddon();
+    const sandboxAddon = new SandboxAddon({
+      getWebSocketUrl: ({ origin, sessionId: sid }) => 
+        `${origin}/api/terminal/${sid}`,
+      onStateChange: (state) => setConnectionState(state)
+    });
+
+    // Load addons and open terminal
+    terminal.loadAddon(fitAddon);
+    terminal.loadAddon(webLinksAddon);
+    terminal.loadAddon(sandboxAddon);
+    terminal.open(containerRef.current);
+    
+    // Fit terminal to container
+    fitAddon.fit();
+
+    // Connect to sandbox
+    sandboxAddon.connect({ sandboxId, sessionId });
+
+    // Handle window resize
+    const handleResize = () => fitAddon.fit();
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      terminal.dispose();
+    };
+  }, [sandboxId, sessionId]);
+
+  return (
+    <div className="terminal-container" style={{ height: '400px' }}>
+      <div ref={containerRef} style={{ height: '100%' }} />
+      {connectionState !== 'connected' && (
+        <div className="connection-overlay">
+          {connectionState === 'connecting' ? 'Connecting...' : 'Disconnected'}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+</TypeScriptExample>
+
+## Advanced Usage
+
+### Multi-Session Switching
+
+You can switch between different sessions using the same addon instance:
+
+<TypeScriptExample>
+```typescript
+// Switch to a different session
+addon.connect({ 
+  sandboxId: 'my-sandbox', 
+  sessionId: 'session-2' 
+});
+
+// Switch back to main session
+addon.connect({ 
+  sandboxId: 'my-sandbox', 
+  sessionId: 'main' 
+});
+```
+</TypeScriptExample>
+
+### Connection State Management
+
+Use the connection state to provide user feedback:
+
+<TypeScriptExample>
+```typescript
+const [state, setState] = useState<ConnectionState>('disconnected');
+
+const sandboxAddon = new SandboxAddon({
+  getWebSocketUrl: ({ origin, sessionId }) => 
+    `${origin}/api/terminal/${sessionId}`,
+  onStateChange: (newState, error) => {
+    setState(newState);
+    
+    if (error) {
+      console.error('Terminal connection error:', error);
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+### Custom WebSocket Routing
+
+Customize the WebSocket URL construction for your application's routing:
+
+<TypeScriptExample>
+```typescript
+const sandboxAddon = new SandboxAddon({
+  getWebSocketUrl: ({ origin, sandboxId, sessionId }) => {
+    // Custom routing with authentication
+    const token = getAuthToken();
+    return `${origin}/ws/terminal/${sandboxId}/${sessionId}?token=${token}`;
+  }
+});
+```
+</TypeScriptExample>
+
+## WebSocket Protocol
+
+The terminal integration uses a WebSocket connection that handles:
+
+- **Binary data**: Raw terminal output and input
+- **JSON control messages**: Status updates and connection state
+- **Automatic reconnection**: With exponential backoff and jitter
+- **Terminal resizing**: Automatic PTY size updates
+
+### Protocol Details
+
+- Terminal output is sent as binary WebSocket frames
+- User input is sent as binary frames to the server
+- Control messages (like resize events) are sent as JSON text frames
+- The connection automatically handles PTY resizing when the terminal dimensions change
+
+## Error Handling
+
+The addon automatically handles common connection errors and provides reconnection capabilities:
+
+<TypeScriptExample>
+```typescript
+const sandboxAddon = new SandboxAddon({
+  getWebSocketUrl: ({ origin, sessionId }) => 
+    `${origin}/api/terminal/${sessionId}`,
+  reconnect: true, // Enable automatic reconnection
+  onStateChange: (state, error) => {
+    if (error) {
+      console.error('Terminal error:', error.message);
+      // Handle error in your UI
+      showErrorMessage(`Connection failed: ${error.message}`);
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Related
+
+- [Sessions](/sandbox/api/sessions/) - Session management and isolation
+- [WebSocket Connections](/sandbox/guides/websocket-connections/) - Direct WebSocket integration guide
+- [Collaborative Terminal Example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/collaborative-terminal) - Complete example application

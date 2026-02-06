@@ -227,8 +227,53 @@ An automated testing pipeline that:
 - Installs dependencies automatically
 - Runs tests and reports results
 
+## Browser testing integration
+
+For projects that require browser testing (like E2E tests with Playwright or Puppeteer), you can extend your pipeline to support headless browser automation:
+
+```typescript
+// Enhanced test runner with browser support
+async function runTests(sandbox: Sandbox): Promise<TestResult> {
+  // Install browser dependencies for E2E testing
+  const installBrowsers = await sandbox.exec('npx playwright install chromium', {
+    shell: 'bash'
+  });
+  
+  if (installBrowsers.exitCode !== 0) {
+    return {
+      success: false,
+      exitCode: installBrowsers.exitCode,
+      message: 'Failed to install browser dependencies'
+    };
+  }
+  
+  // Run tests with headless browser
+  const testResult = await sandbox.exec('npm test -- --headless', {
+    shell: 'bash',
+    env: {
+      CI: 'true',
+      PLAYWRIGHT_BROWSERS_PATH: '/tmp/ms-playwright'
+    }
+  });
+  
+  return {
+    success: testResult.exitCode === 0,
+    exitCode: testResult.exitCode,
+    projectType: 'browser-testing',
+    message: testResult.exitCode === 0 ? 'All browser tests passed' : testResult.stderr
+  };
+}
+```
+
+Browser testing capabilities include:
+- **Playwright/Puppeteer support** - Run headless Chrome, Firefox, Safari
+- **Visual regression testing** - Compare screenshots across test runs  
+- **Interactive testing** - Use terminal integration for debugging test failures
+- **Parallel execution** - Run multiple browser instances using sessions
+
 ## Next steps
 
 - [Streaming output](/sandbox/guides/streaming-output/) - Add real-time test output
 - [Background processes](/sandbox/guides/background-processes/) - Handle long-running tests
 - [Sessions API](/sandbox/api/sessions/) - Cache dependencies between runs
+- [Terminal Integration](/sandbox/guides/terminal-integration/) - Debug test failures interactively
