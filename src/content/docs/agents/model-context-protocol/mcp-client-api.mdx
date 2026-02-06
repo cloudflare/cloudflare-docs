@@ -221,9 +221,13 @@ export class MyAgent extends Agent {
 					});
 				}
 				// Handle error - must check authSuccess to avoid ignoring failures
-				return new Response(`Auth failed: ${result.authError}`, {
-					status: 400
-				});
+				return new Response(
+					`Auth failed: ${result.authError ?? "Unknown error"}`,
+					{
+						status: 400,
+						headers: { "content-type": "text/plain" },
+					},
+				);
 			},
 		});
 	}
@@ -573,9 +577,13 @@ export class MyAgent extends Agent {
 						headers: { "content-type": "text/html" },
 					});
 				}
-				return new Response(`Auth failed: ${result.authError}`, {
-					status: 400,
-				});
+				return new Response(
+					`Auth failed: ${result.authError ?? "Unknown error"}`,
+					{
+						status: 400,
+						headers: { "content-type": "text/plain" },
+					},
+				);
 			},
 		});
 	}
