@@ -43,7 +43,7 @@ await sandbox.startProcess('python -m http.server 8000');
 const exposed = await sandbox.exposePort(8000, { hostname });
 
 console.log('Available at:', exposed.url);
-// https://8000-sandbox-id-abc123random.example.com
+// https://8000-sandbox-id-abc123random.yourdomain.com
 
 // With custom token for stable URLs across restarts
 const stable = await sandbox.exposePort(8080, {
@@ -51,7 +51,7 @@ const stable = await sandbox.exposePort(8080, {
   token: 'my_service_v1' // 1-16 chars: a-z, 0-9, _
 });
 console.log('Stable URL:', stable.url);
-// https://8080-sandbox-id-my_service_v1.example.com
+// https://8080-sandbox-id-my_service_v1.yourdomain.com
 
 // With custom token for stable URLs across deployments
 await sandbox.startProcess('node api.js');
