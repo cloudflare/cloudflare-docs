@@ -143,6 +143,32 @@ Using any other type of `ReadableStream` as the body of a response will result i
 
 ***
 
+## Differences
+
+The Workers implementation of the `Response` interface includes several extensions to the web standard `Response` API. These differences are intentional and provide additional functionality specific to the Workers runtime.
+
+:::note[TypeScript users]
+Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/#types)) define a `Response` type that includes Workers-specific properties like `cf` and `webSocket`. This type is not directly compatible with the standard `Response` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions.
+:::
+
+### The `cf` property
+
+Workers adds an optional `cf` property to the `Response` object. This property can be set in the `ResponseInit` options and is used for informational purposes by consumers of the Response. It does not affect Workers behavior.
+
+### The `webSocket` property
+
+Workers adds a `webSocket` property to the `Response` object to support WebSocket connections. This property is present in successful WebSocket handshake responses. Refer to [WebSockets](/workers/runtime-apis/websockets/) for more information.
+
+### The `encodeBody` option
+
+Workers adds an `encodeBody` option in `ResponseInit` that controls how the response body is compressed. Set this to `"manual"` when serving pre-compressed data to prevent automatic compression.
+
+### The `headers` property
+
+The `headers` property returns a Workers-specific [`Headers`](/workers/runtime-apis/headers/) object that includes additional methods like `getAll()` for `Set-Cookie` headers. Refer to the [Headers documentation](/workers/runtime-apis/headers/#differences) for details on how the Workers `Headers` implementation differs from the web standard.
+
+---
+
 ## Related resources
 
 * [Examples: Modify response](/workers/examples/modify-response/)

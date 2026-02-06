@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { APIRequest, Details, GlossaryTooltip, Render, Tabs, TabItem, DashButton } from "~/components"
+import { APIRequest, DashButton, Details, GlossaryTooltip, Render, Tabs, TabItem } from "~/components"
 
 ## Onboard prefixes
 
@@ -49,9 +49,9 @@ For example, if you onboard a `/20` IP prefix to Magic Transit, it can only be a
 Cloudflare offers multiple mechanisms to control the announcement and withdrawal of on-demand prefixes. Each method serves different deployment scenarios:
 
 - **Addressing API**: Manually control prefix advertisements through API calls. Refer to [Advertise or withdraw a BGP prefix](#advertise-or-withdraw-a-bgp-prefix).
-- **BGP peering with route reflectors**: Control advertisements through BGP sessions to Cloudflare's globally distributed route reflectors, either over the Internet or over a CNI connection with dataplane v1. Contact your Cloudflare account team if you need this option. Refer to [BGP control with Cloudflare Route Reflectors](#bgp-control-with-cloudflare-route-reflectors).
+- **BGP peering with route reflectors**: Control advertisements through BGP sessions to Cloudflare's globally distributed route reflectors, either over the Internet or over a CNI connection with Dataplane v1. Contact your Cloudflare account team if you need this option. Refer to [BGP control with Cloudflare Route Reflectors](#bgp-control-with-cloudflare-route-reflectors).
 - **Magic Network Monitoring**: Automatically announce prefixes based on user-defined traffic thresholds observed in your network. Refer to [Magic Network Monitoring](/magic-network-monitoring/).
-- **BGP peering with Magic Transit routing table**: Automatically control prefix advertisements based on BGP routes learned through CNI with Dataplane v2 (beta). Refer to [BGP control to Magic routing table](#bgp-control-to-magic-routing-table).
+- **BGP peering with Magic Transit routing table**: Automatically control prefix advertisements based on BGP routes learned through CNI with Dataplane v2, or GRE and IPsec tunnels (beta). Refer to [BGP control to Magic routing table](#bgp-control-to-magic-routing-table).
 
 :::caution[Important]
 You should only use one control method per prefix at any given time. Mixing multiple control planes can lead to conflicting advertisement states, causing unpredictable routing behavior.
@@ -82,11 +82,11 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 		Currently, only the default BGP prefix (that matches the IP prefix) can be controlled through the Cloudflare dashboard.
 		:::
 
-		1. Go to the **Configuration** page.
+		1. Go to the **Routes** page.
 
-		<DashButton url="/?to=/:account/magic-transit/configuration" />
+	<DashButton url="/?to=/:account/magic-networks/routes" />
 
-		2. From the **IP Prefixes** tab, select the prefix to modify > **Edit**.
+		2. From the **IP prefixes** tab, select the prefix you want to modify > **Edit**.
 		3. From the **Status** drop-down menu, select _Advertised_ or _Withdrawn_.
 		4. (Optional) Edit the description for your prefix.
 		5. Select **Edit IP Prefix** to save your changes.
@@ -116,8 +116,12 @@ Refer to [Safely withdraw a BYOIP prefix](#safely-withdraw-a-byoip-prefix) for m
 
 You can only delete a prefix with an *Unapproved* status. To delete prefixes with a different status, contact your administrator or account manager.
 
-1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Delete**.
-2. Confirm your choice from the modal by selecting **Delete**.
+1. Go to the **Routes** page.
+
+<DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Delete**.
+3. Confirm your choice from the modal by selecting **Delete**.
 
 ### Use the API to set AS prepends on a BGP prefix
 
@@ -164,7 +168,7 @@ For example, if you have a CDN zone with a Magic Transit-protected origin that i
 
 ### Automatically announce and withdraw anycast-based Magic BGP routes
 
-If you use CNI with Dataplane v2 (beta), you can:
+If you use CNI with Dataplane v2, GRE or IPsec tunnels, you can:
 - Automatically withdraw your prefixes from Cloudflare's global edge infrastructure when you withdraw all matching BGP learned prefixes from the Magic routing table.
 - Automatically advertise your prefixes through Cloudflare's global edge infrastructure when you have at least one matching BGP learned prefix in the Magic routing table.
 
@@ -303,11 +307,11 @@ neighbor 141.101.67.22 {
 
 ## BGP peering
 
-If you use CNI with Dataplane v2 (beta) as a way to on-ramp your network traffic to Magic Transit, refer to [BGP information](/magic-transit/reference/traffic-steering/#bgp-information) to learn how to use BGP to handle traffic routing between Cloudflare and your network. Note that this is a different option to using BGP as a means to control the advertisement status of your prefix.
+If you use CNI with Dataplane v2, GRE or IPsec tunnels to on-ramp your network traffic to Magic Transit, refer to [BGP information](/magic-transit/reference/traffic-steering/#bgp-information) to learn how to use BGP to handle traffic routing between Cloudflare and your network. Note that this is a different option to using BGP as a means to control the advertisement status of your prefix.
 
 ## Regional settings
 
-Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (for GRE and IPsec tunnels). For CNI, both static routing and BGP options are available. Cloudflare does not currently support advertisement of routes for traffic engineering purposes. As a best practice to reduce last-hop latency, consider scoping your routes regionally.
+Magic Transit supports both static routing and BGP to steer traffic from Cloudflare's network to your configured off-ramps (GRE tunnels, IPsec tunnels, or CNI). Cloudflare does not currently support advertisement of routes for traffic engineering purposes. As a best practice to reduce last-hop latency, consider scoping your routes regionally.
 
 <Render file="reference/traffic-steering-region-codes" product="networking-services" />
 

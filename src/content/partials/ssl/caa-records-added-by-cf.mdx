@@ -10,6 +10,10 @@ Cloudflare adds CAA records automatically in the following situations:
 
 These records make sure Cloudflare can still issue Universal certificates on your behalf.
 
+:::note[Subdomain zones caveat]
+CAA records are inherited. This means that, if you are using a [subdomain setup](/dns/zone-setups/subdomain-setup/) -  with `subdomain.example.com` on Cloudflare but `example.com` on a different DNS provider -, you should make sure that the parent domain (`example.com`) either has CAA records that allow [Cloudflare's partner CAs](/ssl/reference/certificate-authorities/), or has no CAA records at all.
+:::
+
 If Cloudflare has automatically added CAA records on your behalf, these records will not appear in the Cloudflare dashboard. However, if you run a command line query using `dig`, you can see any existing CAA records, including those added by Cloudflare (replacing `example.com` with your own domain on Cloudflare):
 
 ```bash

@@ -189,6 +189,18 @@ Before deploying WARP, you need to allow its system extensions.
 
    ![Intune admin console where you enter team identifier and bundle identifier](~/assets/images/cloudflare-one/connections/intune/intune-bundle-team-identifier.png)
 
+   Running the following command in the terminal will return the verified identifiers. This validation ensures that the values you enter into Intune match the official application signatures guaranteed by Apple.
+
+   ```bash
+   codesign -dv --verbose=4 /Applications/Cloudflare\ WARP.app 2>&1 | grep Identifier
+   ```
+   Expected output:
+
+   ```output
+   Identifier=com.cloudflare.1dot1dot1dot1.macos
+   TeamIdentifier=68WVV388M8
+   ```
+
 10. Select **Save**.
 
 11. In **Scope tags**, select **Next**.
@@ -555,6 +567,10 @@ To deploy WARP on Android devices:
     3. Select **Review + save** > **Save**.
 
 Intune will now deploy the Cloudflare One Agent to user devices.
+
+:::caution
+If Cloudflare One Agent fails to register on Android with Always-On VPN enabled, review the limitation for [Always-On VPN with Lockdown Mode in Microsoft Intune](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/known-limitations/#always-on-vpn-with-lockdown-mode-in-microsoft-intune).
+:::
 
 ### Per-app VPN for Android
 

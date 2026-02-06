@@ -8,7 +8,7 @@ import { CURL, Render } from "~/components";
 ## NetFlow exports from Magic WAN Connector to Magic Network Monitoring
 
 {/* only renders the link on the analytics > Netflow statistics page */}
-You can configure your Magic WAN Connector to export Netflow statistics for {props.breakoutTrafficURL ? <a href={props.breakoutTrafficURL}>local breakout traffic</a> : <>local breakout traffic</>} to <a href="/magic-network-monitoring">Magic Network Monitoring</a>. This provides visibility into traffic that leaves your site directly, bypassing the Cloudflare network.
+You can configure your Magic WAN Connector to export Netflow statistics for {props.breakoutTrafficURL ? <a href={props.breakoutTrafficURL}>local breakout traffic</a> : <>local breakout traffic</>} to <a href="/magic-network-monitoring">Magic Network Monitoring</a>. This provides insights into traffic that leaves your site directly, bypassing the Cloudflare network.
 
 The Magic WAN Connector appliance uses NetFlow v9 to export flow data for breakout traffic only. You can enable and configure this export by setting the Netflow configuration for the associated site via the Cloudflare API.
 
@@ -49,4 +49,4 @@ Full configuration example:
 	}}
 />
 
-Your Magic WAN Connector will now begin exporting Netflow data for its breakout traffic, which will be ingested and visualized within your Magic Network Monitoring dashboard. You can retrieve the current settings by sending a `GET` request, or disable the export by sending a `DELETE` request to the same endpoint.
+Your Magic WAN Connector will now begin exporting Netflow data for its breakout traffic, which will be ingested and displayed within your Magic Network Monitoring dashboard. You can retrieve the current settings by sending a `GET` request, or disable the export by sending a `DELETE` request to the same endpoint.

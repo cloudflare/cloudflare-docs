@@ -1,6 +1,6 @@
 ---
-pcx_content_type: navigation
-title: Remote Participants Events
+pcx_content_type: reference
+title: Events
 sidebar:
   label: Events
   order: 2
@@ -12,20 +12,20 @@ import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnipp
 This page provides an overview of the events emitted by `meeting.participants` and related participant maps, which you can use to keep your UI in sync with changes such as participants joining or leaving, pinning updates, active speaker changes, and grid view mode or page changes.
 
 :::note[Prerequisites]
-This page assumes you've already initialized the SDK and understand the meeting object structure. Refer to [Initialize SDK](/realtime/realtimekit/core/) and [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) if needed.
+This page assumes you have already initialized the SDK and understand the meeting object structure. Refer to [Initialize SDK](/realtime/realtimekit/core/) and [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) if needed.
 :::
 
 <RTKSDKSelector />
 
-## Grid
+## Grid events
 
-These events allow users to monitor changes to the grid.
+These events allow you to monitor changes to the grid.
 
-### View Mode Change
+### View mode change
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
-Triggered when the type of grid changes:
+Triggered when the view mode changes between `ACTIVE_GRID` and `PAGINATED`.
 
 ```js
 meeting.participants.on(
@@ -39,6 +39,8 @@ meeting.participants.on(
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
+
+Triggered when the view mode changes between `ACTIVE_GRID` and `PAGINATED`.
 
 ```jsx
 const viewMode = useRealtimeKitSelector((m) => m.participants.viewMode);
@@ -57,11 +59,38 @@ meeting.participants.on(
 
 </RTKCodeSnippet>
 
-### Page Change
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
 
-Triggered when the page changes in paginated mode:
+This event is not available on this platform.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Triggered when the view mode changes between `ACTIVE_GRID` and `PAGINATED`.
+
+```tsx
+const viewMode = useRealtimeKitSelector((m) => m.participants.viewMode);
+```
+
+Or use event listener:
+
+```tsx
+meeting.participants.on(
+	"viewModeChanged",
+	({ viewMode, currentPage, pageCount }) => {
+		console.log("view mode changed", viewMode);
+	},
+);
+```
+
+</RTKCodeSnippet>
+
+### Page change
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+Triggered when the page changes in paginated mode.
 
 ```js
 meeting.participants.on(
@@ -76,24 +105,35 @@ meeting.participants.on(
 
 <RTKCodeSnippet id="web-react">
 
+Triggered when the page changes in paginated mode.
+
 ```jsx
 const currentPage = useRealtimeKitSelector((m) => m.participants.currentPage);
 const pageCount = useRealtimeKitSelector((m) => m.participants.pageCount);
 ```
 
-Or use event listener:
+</RTKCodeSnippet>
 
-```js
-meeting.participants.on("activeSpeaker", (participant) => {
-	console.log(`${participant.id} is currently speaking`);
-});
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+
+This event is not available on this platform.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Triggered when the page changes in paginated mode.
+
+```tsx
+const currentPage = useRealtimeKitSelector((m) => m.participants.currentPage);
+const pageCount = useRealtimeKitSelector((m) => m.participants.pageCount);
 ```
 
 </RTKCodeSnippet>
 
-### Active Speaker
+### Active speaker
 
-Triggered when a participant starts speaking:
+Triggered when a participant starts speaking.
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
@@ -123,13 +163,78 @@ meeting.participants.on("activeSpeaker", (participant) => {
 
 </RTKCodeSnippet>
 
-## Participant Maps
+<RTKCodeSnippet id="mobile-android">
 
-These events allow users to monitor changes to remote participant maps. Ideal if you want to get notified when a participant joins or leaves the meeting, is pinned or moves out of the grid.
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onActiveSpeakerChanged(participant: RtkRemoteParticipant?) {
+		participant?.let {
+			println("${it.id} is currently speaking")
+		}
+	}
+})
+```
 
-### Participant Joined
+</RTKCodeSnippet>
 
-Triggered when any participant joins the meeting:
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onActiveSpeakerChanged(participant: RtkRemoteParticipant?) {
+		if let participant = participant {
+			print("\(participant.id) is currently speaking")
+		}
+	}
+}
+
+meeting.addParticipantsEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantsNotifier extends RtkParticipantsEventListener {
+	@override
+	void onActiveSpeakerChanged(RtkRemoteParticipant? participant) {
+		if (participant != null) {
+			print('${participant.id} is currently speaking');
+		}
+	}
+}
+
+meeting.addParticipantsEventListener(ParticipantsNotifier());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+const activeSpeaker = useRealtimeKitSelector(
+	(m) => m.participants.lastActiveSpeaker,
+);
+```
+
+Or use event listener:
+
+```tsx
+meeting.participants.on("activeSpeaker", (participant) => {
+	console.log(`${participant.id} is currently speaking`);
+});
+```
+
+</RTKCodeSnippet>
+
+## Participant map events
+
+These events allow you to monitor changes to remote participant maps. Use them to get notified when a participant joins or leaves the meeting, is pinned, or moves out of the grid.
+
+### Participant joined
+
+Triggered when any participant joins the meeting.
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
@@ -157,9 +262,66 @@ meeting.participants.joined.on("participantJoined", (participant) => {
 
 </RTKCodeSnippet>
 
-### Participant Left
+<RTKCodeSnippet id="mobile-android">
 
-Triggered when any participant leaves the meeting:
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onParticipantJoin(participant: RtkRemoteParticipant) {
+		println("A participant with id ${participant.id} has joined")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onParticipantJoin(participant: RtkRemoteParticipant) {
+		print("A participant with id \(participant.id) has joined")
+	}
+}
+
+meeting.addParticipantsEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantsNotifier extends RtkParticipantsEventListener {
+	@override
+	void onParticipantJoin(RtkRemoteParticipant participant) {
+		print('A participant with id ${participant.id} has joined');
+	}
+}
+
+meeting.addParticipantsEventListener(ParticipantsNotifier());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+const joinedParticipants = useRealtimeKitSelector((m) => m.participants.joined);
+```
+
+Or use event listener:
+
+```tsx
+meeting.participants.joined.on("participantJoined", (participant) => {
+	console.log(`A participant with id "${participant.id}" has joined`);
+});
+```
+
+</RTKCodeSnippet>
+
+### Participant left
+
+Triggered when any participant leaves the meeting.
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
@@ -187,9 +349,127 @@ meeting.participants.joined.on("participantLeft", (participant) => {
 
 </RTKCodeSnippet>
 
-### Participant Pinned
+<RTKCodeSnippet id="mobile-android">
 
-Triggered when a participant is pinned:
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onParticipantLeave(participant: RtkRemoteParticipant) {
+		println("A participant with id ${participant.id} has left the meeting")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onParticipantLeave(participant: RtkRemoteParticipant) {
+		print("A participant with id \(participant.id) has left the meeting")
+	}
+}
+
+meeting.addParticipantsEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantsNotifier extends RtkParticipantsEventListener {
+	@override
+	void onParticipantLeave(RtkRemoteParticipant participant) {
+		print('A participant with id ${participant.id} has left the meeting');
+	}
+}
+
+meeting.addParticipantsEventListener(ParticipantsNotifier());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+const joinedParticipants = useRealtimeKitSelector((m) => m.participants.joined);
+```
+
+Or use event listener:
+
+```tsx
+meeting.participants.joined.on("participantLeft", (participant) => {
+	console.log(`A participant with id "${participant.id}" has left the meeting`);
+});
+```
+
+</RTKCodeSnippet>
+
+### Active participants changed
+
+<RTKCodeSnippet id={["web-web-components", "web-angular", "web-react", "mobile-react-native"]}>
+
+Each participant map emits `participantJoined` and `participantLeft` events:
+
+```js
+// Listen for when a participant gets pinned
+meeting.participants.pinned.on("participantJoined", (participant) => {
+	console.log(`Participant ${participant.name} got pinned`);
+});
+
+// Listen for when a participant gets unpinned
+meeting.participants.pinned.on("participantLeft", (participant) => {
+	console.log(`Participant ${participant.name} got unpinned`);
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onActiveParticipantsChanged(active: List<RtkRemoteParticipant>) {
+		// Called when active participants change
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onActiveParticipantsChanged(active: [RtkRemoteParticipant]) {
+		// Called when active participants change
+	}
+}
+
+meeting.addParticipantsEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantsNotifier extends RtkParticipantsEventListener {
+	@override
+	void onActiveParticipantsChanged(List<RtkRemoteParticipant> active) {
+		// Called when active participants change
+	}
+}
+
+meeting.addParticipantsEventListener(ParticipantsNotifier());
+```
+
+</RTKCodeSnippet>
+
+### Participant pinned
+
+Triggered when a participant is pinned.
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
@@ -217,9 +497,66 @@ meeting.participants.joined.on("pinned", (participant) => {
 
 </RTKCodeSnippet>
 
-### Participant Unpinned
+<RTKCodeSnippet id="mobile-android">
 
-Triggered when a participant is unpinned:
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onParticipantPinned(participant: RtkRemoteParticipant) {
+		println("Participant with id ${participant.id} was pinned")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onParticipantPinned(participant: RtkRemoteParticipant) {
+		print("Participant with id \(participant.id) was pinned")
+	}
+}
+
+meeting.addParticipantsEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantsNotifier extends RtkParticipantsEventListener {
+	@override
+	void onParticipantPinned(RtkRemoteParticipant participant) {
+		print('Participant with id ${participant.id} was pinned');
+	}
+}
+
+meeting.addParticipantsEventListener(ParticipantsNotifier());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+const pinnedParticipants = useRealtimeKitSelector((m) => m.participants.pinned);
+```
+
+Or use event listener:
+
+```tsx
+meeting.participants.joined.on("pinned", (participant) => {
+	console.log(`Participant with id "${participant.id}" was pinned`);
+});
+```
+
+</RTKCodeSnippet>
+
+### Participant unpinned
+
+Triggered when a participant is unpinned.
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
@@ -241,21 +578,78 @@ Or use event listener:
 
 ```jsx
 meeting.participants.joined.on("unpinned", (participant) => {
-	console.log(`Participant with id "${participant.id}" was pinned`);
+	console.log(`Participant with id "${participant.id}" was unpinned`);
 });
 ```
 
 </RTKCodeSnippet>
 
-## Participant
+<RTKCodeSnippet id="mobile-android">
 
-You can monitor changes to a specific participant using the following events:
+```kotlin
+meeting.addParticipantsEventListener(object : RtkParticipantsEventListener {
+	override fun onParticipantUnpinned(participant: RtkRemoteParticipant) {
+		println("Participant with id ${participant.id} was unpinned")
+	}
+})
+```
 
-### Video Update
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantsEventListener {
+	func onParticipantUnpinned(participant: RtkRemoteParticipant) {
+		print("Participant with id \(participant.id) was unpinned")
+	}
+}
+
+meeting.addParticipantsEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantsNotifier extends RtkParticipantsEventListener {
+	@override
+	void onParticipantUnpinned(RtkRemoteParticipant participant) {
+		print('Participant with id ${participant.id} was unpinned');
+	}
+}
+
+meeting.addParticipantsEventListener(ParticipantsNotifier());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+const pinnedParticipants = useRealtimeKitSelector((m) => m.participants.pinned);
+```
+
+Or use event listener:
+
+```tsx
+meeting.participants.joined.on("unpinned", (participant) => {
+	console.log(`Participant with id "${participant.id}" was unpinned`);
+});
+```
+
+</RTKCodeSnippet>
+
+## Participant events
+
+You can monitor changes to a specific participant using the following events.
+
+### Video update
+
+Triggered when any participant starts or stops video.
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
-
-Triggered when any participant starts/stops video:
 
 ```js
 meeting.participants.joined.on("videoUpdate", (participant) => {
@@ -285,27 +679,72 @@ const videoEnabled = useRealtimeKitSelector(
 const videoEnabledParticipants = useRealtimeKitSelector((m) =>
 	m.participants.joined.toArray().filter((p) => p.videoEnabled),
 );
-
-meeting.participants.joined.on("videoUpdate", (participant) => {
-	console.log(
-		`A participant with id "${participant.id}" updated their video track`,
-	);
-
-	if (participant.videoEnabled) {
-		// Use participant.videoTrack
-	} else {
-		// Handle stop video
-	}
-});
 ```
 
 </RTKCodeSnippet>
 
-### Audio Update
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addParticipantEventListener(object : RtkParticipantEventListener {
+	override fun onVideoUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		println("Participant ${participant.id} video is now ${if (isEnabled) "enabled" else "disabled"}")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantEventListener {
+	func onVideoUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		print("Participant \(participant.id) video is now \(isEnabled ? "enabled" : "disabled")")
+	}
+}
+
+meeting.addParticipantEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantUpdateHandler extends RtkParticipantUpdateListener {
+	@override
+	void onVideoUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		print('Participant ${participant.id} video is now ${isEnabled ? "enabled" : "disabled"}');
+	}
+}
+
+participant.addParticipantUpdateListener(ParticipantUpdateHandler());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+// Check for one participant
+const videoEnabled = useRealtimeKitSelector(
+	(m) => m.participants.joined.get(participantId)?.videoEnabled,
+);
+
+// All video enabled participants
+const videoEnabledParticipants = useRealtimeKitSelector((m) =>
+	m.participants.joined.toArray().filter((p) => p.videoEnabled),
+);
+```
+
+</RTKCodeSnippet>
+
+### Audio update
+
+Triggered when any participant starts or stops audio.
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
-
-Triggered when any participant starts/stops audio:
 
 ```js
 meeting.participants.joined.on("audioUpdate", (participant) => {
@@ -335,25 +774,70 @@ const audioEnabled = useRealtimeKitSelector(
 const audioEnabledParticipants = useRealtimeKitSelector((m) =>
 	m.participants.joined.toArray().filter((p) => p.audioEnabled),
 );
-
-meeting.participants.joined.on("audioUpdate", (participant) => {
-	console.log(
-		`A participant with id "${participant.id}" updated their audio track`,
-	);
-
-	if (participant.audioEnabled) {
-		// Use participant.audioTrack
-	} else {
-		// Handle stop audio
-	}
-});
 ```
 
 </RTKCodeSnippet>
 
-### Screen Share Update
+<RTKCodeSnippet id="mobile-android">
 
-Triggered when any participant starts/stops screen share:
+```kotlin
+meeting.addParticipantEventListener(object : RtkParticipantEventListener {
+	override fun onAudioUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		println("Participant ${participant.id} audio is now ${if (isEnabled) "enabled" else "disabled"}")
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantEventListener {
+	func onAudioUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		print("Participant \(participant.id) audio is now \(isEnabled ? "enabled" : "disabled")")
+	}
+}
+
+meeting.addParticipantEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantUpdateHandler extends RtkParticipantUpdateListener {
+	@override
+	void onAudioUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		print('Participant ${participant.id} audio is now ${isEnabled ? "enabled" : "disabled"}');
+	}
+}
+
+participant.addParticipantUpdateListener(ParticipantUpdateHandler());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+// Check for one participant
+const audioEnabled = useRealtimeKitSelector(
+	(m) => m.participants.joined.get(participantId)?.audioEnabled,
+);
+
+// All audio enabled participants
+const audioEnabledParticipants = useRealtimeKitSelector((m) =>
+	m.participants.joined.toArray().filter((p) => p.audioEnabled),
+);
+```
+
+</RTKCodeSnippet>
+
+### Screen share update
+
+Triggered when any participant starts or stops screen share.
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
@@ -387,27 +871,70 @@ const screenSharingParticipants = useRealtimeKitSelector((m) =>
 );
 ```
 
-```js
-meeting.participants.joined.on("screenShareUpdate", (participant) => {
-	console.log(
-		`A participant with id "${participant.id}" updated their screen share`,
-	);
+</RTKCodeSnippet>
 
-	if (participant.screenShareEnabled) {
-		// Use participant.screenShareTracks
-	} else {
-		// Handle stop screen share
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+meeting.addParticipantEventListener(object : RtkParticipantEventListener {
+	override fun onScreenShareUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		println("Participant ${participant.id} screen share is now ${if (isEnabled) "enabled" else "disabled"}")
 	}
-});
+})
 ```
 
 </RTKCodeSnippet>
 
-### Network Quality Score
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+extension MeetingViewModel: RtkParticipantEventListener {
+	func onScreenShareUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		print("Participant \(participant.id) screen share is now \(isEnabled ? "enabled" : "disabled")")
+	}
+}
+
+meeting.addParticipantEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+```dart
+class ParticipantUpdateHandler extends RtkParticipantUpdateListener {
+	@override
+	void onScreenShareUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		print('Participant ${participant.id} screen share is now ${isEnabled ? "enabled" : "disabled"}');
+	}
+}
+
+participant.addParticipantUpdateListener(ParticipantUpdateHandler());
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+// Check for one participant
+const screensharingParticipant = useRealtimeKitSelector((m) =>
+	m.participants.joined.toArray().find((p) => p.screenShareEnabled),
+);
+
+// All screen sharing participants
+const screenSharingParticipants = useRealtimeKitSelector((m) =>
+	m.participants.joined.toArray().filter((p) => p.screenShareEnabled),
+);
+```
+
+</RTKCodeSnippet>
+
+### Network quality score
 
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
-Monitor participant network quality:
+Monitor participant network quality using the `mediaScoreUpdate` event.
 
 ```js
 meeting.participants.joined.on(
@@ -438,7 +965,11 @@ meeting.participants.joined.on(
 
 <RTKCodeSnippet id="web-react">
 
+Monitor participant network quality using the `mediaScoreUpdate` event.
+
 ```jsx
+import { useEffect } from "react";
+
 // Use event listener for media score updates
 useEffect(() => {
 	if (!meeting) return;
@@ -468,6 +999,264 @@ useEffect(() => {
 		meeting.participants.joined.off("mediaScoreUpdate", handleMediaScoreUpdate);
 	};
 }, [meeting]);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+
+This event is not available on this platform.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Monitor participant network quality using the `mediaScoreUpdate` event.
+
+```tsx
+import { useEffect } from "react";
+
+// Use event listener for media score updates
+useEffect(() => {
+	if (!meeting) return;
+
+	const handleMediaScoreUpdate = ({
+		participantId,
+		kind,
+		isScreenshare,
+		score,
+		scoreStats,
+	}) => {
+		if (kind === "video") {
+			console.log(
+				`Participant ${participantId}'s ${isScreenshare ? "screenshare" : "video"} quality score is`,
+				score,
+			);
+		}
+
+		if (score < 5) {
+			console.log(`Participant ${participantId}'s media quality is poor`);
+		}
+	};
+
+	meeting.participants.joined.on("mediaScoreUpdate", handleMediaScoreUpdate);
+
+	return () => {
+		meeting.participants.joined.off("mediaScoreUpdate", handleMediaScoreUpdate);
+	};
+}, [meeting]);
+```
+
+</RTKCodeSnippet>
+
+## Listen to participant events
+
+<RTKCodeSnippet id={["web-web-components", "web-angular"]}>
+
+Each participant object is an event emitter:
+
+```js
+meeting.participants.joined
+	.get(participantId)
+	.on("audioUpdate", ({ audioEnabled, audioTrack }) => {
+		console.log(
+			"The participant with id",
+			participantId,
+			"has toggled their mic to",
+			audioEnabled,
+		);
+	});
+```
+
+Alternatively, listen on the participant map for all participants:
+
+```js
+meeting.participants.joined.on(
+	"audioUpdate",
+	(participant, { audioEnabled, audioTrack }) => {
+		console.log(
+			"The participant with id",
+			participant.id,
+			"has toggled their mic to",
+			audioEnabled,
+		);
+	},
+);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+```jsx
+import { useRealtimeKitClient } from "@cloudflare/realtimekit-react";
+import { useEffect } from "react";
+
+function ParticipantAudioListener({ participantId }) {
+	const [meeting] = useRealtimeKitClient();
+
+	useEffect(() => {
+		if (!meeting) return;
+
+		const handleAudioUpdate = ({ audioEnabled, audioTrack }) => {
+			console.log(
+				"The participant with id",
+				participantId,
+				"has toggled their mic to",
+				audioEnabled,
+			);
+		};
+
+		const participant = meeting.participants.joined.get(participantId);
+		participant.on("audioUpdate", handleAudioUpdate);
+
+		return () => {
+			participant.off("audioUpdate", handleAudioUpdate);
+		};
+	}, [meeting, participantId]);
+}
+```
+
+Or use the selector for specific properties:
+
+```jsx
+const audioEnabled = useRealtimeKitSelector(
+	(m) => m.participants.joined.get(participantId)?.audioEnabled,
+);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+Implement the `RtkParticipantEventListener` interface to receive participant event updates:
+
+```kotlin
+meeting.addParticipantEventListener(object : RtkParticipantEventListener {
+	override fun onVideoUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		// Called when participant's video state changes
+	}
+
+	override fun onAudioUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		// Called when participant's audio state changes
+	}
+
+	override fun onScreenShareUpdate(participant: RtkRemoteParticipant, isEnabled: Boolean) {
+		// Called when participant's screen share state changes
+	}
+})
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+Implement the `RtkParticipantEventListener` protocol to receive participant event updates:
+
+```swift
+extension MeetingViewModel: RtkParticipantEventListener {
+	func onVideoUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		// Called when participant's video state changes
+	}
+
+	func onAudioUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		// Called when participant's audio state changes
+	}
+
+	func onScreenShareUpdate(participant: RtkRemoteParticipant, isEnabled: Bool) {
+		// Called when participant's screen share state changes
+	}
+}
+
+meeting.addParticipantEventListener(self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+Implement the `RtkParticipantUpdateListener` interface and add the listener on a participant:
+
+```dart
+class ParticipantUpdateHandler extends RtkParticipantUpdateListener {
+	@override
+	void onVideoUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		print("${participant.name}'s video is now ${isEnabled ? 'on' : 'off'}");
+	}
+
+	@override
+	void onAudioUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		print("${participant.name}'s audio is now ${isEnabled ? 'on' : 'off'}");
+	}
+
+	@override
+	void onPinned(RtkRemoteParticipant participant) {
+		print("${participant.name} was pinned");
+	}
+
+	@override
+	void onUnpinned(RtkRemoteParticipant participant) {
+		print("${participant.name} was unpinned");
+	}
+
+	@override
+	void onScreenShareUpdate(RtkRemoteParticipant participant, bool isEnabled) {
+		print("${participant.name}'s screen-share is now ${isEnabled ? 'on' : 'off'}");
+	}
+
+	@override
+	void onUpdate(RtkRemoteParticipant participant) {
+		print("${participant.name} was updated");
+	}
+}
+
+// Register the listener with a specific participant
+final listener = ParticipantUpdateHandler();
+participant.addParticipantUpdateListener(listener);
+
+// When done listening, remove the listener
+participant.removeParticipantUpdateListener(listener);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```tsx
+import { useRealtimeKitClient } from "@cloudflare/realtimekit-react-native";
+import { useEffect } from "react";
+
+function ParticipantAudioListener({ participantId }) {
+	const [meeting] = useRealtimeKitClient();
+
+	useEffect(() => {
+		if (!meeting) return;
+
+		const handleAudioUpdate = ({ audioEnabled, audioTrack }) => {
+			console.log(
+				"The participant with id",
+				participantId,
+				"has toggled their mic to",
+				audioEnabled,
+			);
+		};
+
+		const participant = meeting.participants.joined.get(participantId);
+		participant.on("audioUpdate", handleAudioUpdate);
+
+		return () => {
+			participant.off("audioUpdate", handleAudioUpdate);
+		};
+	}, [meeting, participantId]);
+}
+```
+
+Or use the selector for specific properties:
+
+```tsx
+const audioEnabled = useRealtimeKitSelector(
+	(m) => m.participants.joined.get(participantId)?.audioEnabled,
+);
 ```
 
 </RTKCodeSnippet>

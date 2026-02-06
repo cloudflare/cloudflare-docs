@@ -32,10 +32,17 @@ Use `new_sqlite_classes` on the migration in your Worker's Wrangler file:
 
 <WranglerConfig>
 
-```toml
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_sqlite_classes = ["MyDurableObject"] # Array of new classes
+```jsonc
+{
+	"migrations": [
+		{
+			"tag": "v1", // Should be unique for each entry
+			"new_sqlite_classes": [ // Array of new classes
+				"MyDurableObject"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

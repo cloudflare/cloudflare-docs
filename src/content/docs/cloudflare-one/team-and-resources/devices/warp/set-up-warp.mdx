@@ -12,7 +12,7 @@ import { GlossaryTooltip } from "~/components";
 
 This is a high-level, step-by-step walkthrough on how to get started with WARP in your organization. From downloading the client to sending the first queries to Cloudflare's edge, here is a guide on how to do it for the first time.
 
-## Gateway with WARP (default)
+## Traffic and DNS mode (default)
 
 This mode enables our complete suite of [device security features](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes).
 
@@ -44,7 +44,7 @@ Once the WARP client is installed on the device, [log in to your Zero Trust orga
 
 Next, build [Secure Web Gateway policies](/cloudflare-one/traffic-policies/) to filter DNS, HTTP, and Network traffic on your devices.
 
-## Gateway with DoH
+## DNS only mode
 
 This mode is best suited for organizations that only want to apply DNS filtering to outbound traffic from their company devices. It does not enable advanced HTTP filtering features such as HTTP policies, identity-based policies, device posture checks, or Browser Isolation.
 

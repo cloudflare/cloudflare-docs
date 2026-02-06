@@ -13,7 +13,12 @@ const fields = entry.data.entries;
 ---
 
 <StarlightPage
-	frontmatter={{ title: "Fields reference", tableOfContents: false }}
+	frontmatter={{
+		title: "Fields reference",
+		tableOfContents: false,
+		editUrl:
+			"https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml",
+	}}
 >
 	<FieldCatalog fields={fields} client:load />
 </StarlightPage>

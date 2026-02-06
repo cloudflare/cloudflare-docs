@@ -36,6 +36,10 @@ In addition to the integrity score, Cloudflare will also provide individual scor
 
 You can [configure Malicious Script Alerts](/page-shield/alerts/configure/) to receive an alert notification as soon as Cloudflare detects JavaScript code classified as malicious in your domain.
 
+:::note
+Currently, the script classifier only runs on scripts up to 300 KB. It is recommended that you take into account other signals in your monitoring strategy, such as signals based on threat intelligence feeds (malicious URL/domain checks).
+:::
+
 ## Malicious URL checks
 
 Cloudflare will search for the URLs of your JavaScript dependencies in threat intelligence feeds to determine if any of those scripts should be categorized as malicious.

@@ -133,14 +133,20 @@ You can convert an existing Next.js application to run on Cloudflare
     In your project root, create a [Wrangler configuration file](/workers/wrangler/configuration/) with the following content:
 
         		<WranglerConfig>
-        		```toml
-        			main = ".open-next/worker.js"
-        			name = "my-app"
-        			compatibility_date = "$today"
-        			compatibility_flags = ["nodejs_compat"]
-        			[assets]
-        			directory = ".open-next/assets"
-        			binding = "ASSETS"
+        		```jsonc
+        		{
+        			"$schema": "./node_modules/wrangler/config-schema.json",
+        			"main": ".open-next/worker.js",
+        			"name": "my-app",
+        			"compatibility_date": "$today",
+        			"compatibility_flags": [
+        				"nodejs_compat"
+        			],
+        			"assets": {
+        				"directory": ".open-next/assets",
+        				"binding": "ASSETS"
+        			}
+        		}
         		```
         	</WranglerConfig>
 
