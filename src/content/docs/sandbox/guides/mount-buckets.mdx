@@ -99,19 +99,31 @@ Mount a specific subdirectory within a bucket using the `prefix` option. Only co
 
 <TypeScriptExample>
 ```typescript
-// Mount only /uploads/images/ subdirectory
+// Mount only the /uploads/images/ subdirectory
 await sandbox.mountBucket('my-bucket', '/images', {
 	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
 	prefix: '/uploads/images/'
 });
 
-// Access files directly under the prefix
+// Files appear at mount point without the prefix
+// Bucket: my-bucket/uploads/images/photo.jpg
+// Mounted path: /images/photo.jpg
 await sandbox.exec('ls', { args: ['/images'] });
-// Shows files from my-bucket:/uploads/images/ subdirectory
 
 // Write to subdirectory
 await sandbox.writeFile('/images/photo.jpg', imageData);
 // Creates my-bucket:/uploads/images/photo.jpg
+
+// Mount different prefixes to different paths
+await sandbox.mountBucket('datasets', '/training-data', {
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+	prefix: '/ml/training/'
+});
+
+await sandbox.mountBucket('datasets', '/test-data', {
+	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+	prefix: '/ml/testing/'
+});
 ```
 </TypeScriptExample>
 
@@ -137,40 +149,6 @@ await sandbox.exec('cat', { args: ['/data/dataset.csv'] });
 await sandbox.writeFile('/data/new-file.txt', 'data');  // Error: Read-only filesystem
 ```
 </TypeScriptExample>
-
-## Mount bucket subdirectories
-
-Mount specific subdirectories within a bucket using the `prefix` option. Only the contents under the prefix will be visible at the mount point.
-
-<TypeScriptExample>
-```typescript
-// Mount only the /user-data/uploads/ subdirectory
-await sandbox.mountBucket('my-bucket', '/uploads', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	prefix: '/user-data/uploads/'
-});
-
-// Files appear at mount point without the prefix
-// Bucket: my-bucket/user-data/uploads/file.txt
-// Mounted path: /uploads/file.txt
-await sandbox.exec('ls', { args: ['/uploads'] });
-
-// Mount different prefixes to different paths
-await sandbox.mountBucket('datasets', '/training-data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	prefix: '/ml/training/'
-});
-
-await sandbox.mountBucket('datasets', '/test-data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	prefix: '/ml/testing/'
-});
-```
-</TypeScriptExample>
-
-:::note[Prefix format]
-The `prefix` must start and end with `/` (for example, `/data/uploads/`). This follows s3fs format requirements.
-:::
 
 ## Unmount buckets
 

@@ -41,12 +41,6 @@ await sandbox.mountBucket('my-bucket', '/data', {
 const data = await sandbox.readFile('/data/config.json');
 await sandbox.writeFile('/data/results.json', JSON.stringify(data));
 
-// Mount subdirectory within bucket using prefix
-await sandbox.mountBucket('my-bucket', '/uploads', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	prefix: '/user-data/uploads/'
-});
-
 // Mount with explicit credentials
 await sandbox.mountBucket('my-bucket', '/storage', {
   endpoint: 'https://s3.amazonaws.com',
@@ -65,13 +59,7 @@ await sandbox.mountBucket('datasets', '/datasets', {
 // Mount a subdirectory within the bucket
 await sandbox.mountBucket('shared-bucket', '/user-data', {
   endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-  prefix: '/users/user-123'
-});
-
-// Mount subdirectory with prefix
-await sandbox.mountBucket('my-bucket', '/data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	prefix: '/uploads/images/'
+  prefix: '/users/user-123/'
 });
 ```
 </TypeScriptExample>
