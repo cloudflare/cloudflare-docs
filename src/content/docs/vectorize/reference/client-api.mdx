@@ -129,6 +129,12 @@ Retrieves the configuration of a given index directly, including its configured 
 
 ### List Vectors
 
+:::note[Python SDK availability]
+
+The `client.vectorize.indexes.list_vectors()` method is not yet available in the current release of the [Cloudflare Python SDK](https://pypi.org/project/cloudflare/). While the method appears in the [API reference](/api/python/resources/vectorize/subresources/indexes/methods/list_vectors/), it has not been included in a published SDK version as of v4.3.1. In the meantime, you can use the [REST API](/api/resources/vectorize/subresources/indexes/methods/list_vectors/) or the Wrangler CLI to list vectors.
+
+:::
+
 List all vector identifiers in an index using paginated requests, returning up to 1000 vector identifiers per page.
 
 ```sh
