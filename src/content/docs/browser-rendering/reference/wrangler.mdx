@@ -26,14 +26,20 @@ To deploy a Browser Rendering Worker, you must declare a [browser binding](/work
 
 <WranglerConfig>
 
-```toml
-# Top-level configuration
-name = "browser-rendering"
-main = "src/index.ts"
-workers_dev = true
-compatibility_flags = ["nodejs_compat_v2"]
-
-browser = { binding = "MYBROWSER" }
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// Top-level configuration
+	"name": "browser-rendering",
+	"main": "src/index.ts",
+	"workers_dev": true,
+	"compatibility_flags": [
+		"nodejs_compat_v2"
+	],
+	"browser": {
+		"binding": "MYBROWSER"
+	}
+}
 ```
 
 </WranglerConfig>

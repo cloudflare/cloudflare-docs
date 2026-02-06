@@ -589,6 +589,10 @@ export default {
 
 </TypeScriptExample>
 
+### Limit timeouts to 30 minutes or less
+
+When setting a [WorkflowStep timeout](/workflows/build/workers-api/#workflowstep), ensure that its duration is 30 minutes or less. If your use case requires a timeout greater than 30 minutes, consider using `step.waitForEvent()` instead.
+
 ### Keep step return values under 1 MiB
 
 Each step can persist up to 1 MiB (2^20 bytes) of state. If your step returns data exceeding this limit, the step will fail. This is a common issue when fetching large API responses or processing large files.

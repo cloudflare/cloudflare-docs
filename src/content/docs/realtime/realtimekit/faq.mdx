@@ -120,3 +120,65 @@ Read more about presets [here](/realtime/realtimekit/concepts/preset/).
     For more information please refer to our [SDK Selection Guide](/realtime/realtimekit/sdk-selection/)
 
 </Details>
+
+### Camera
+
+<Details header="How can I set an end user's camera quality to 1080p?">
+
+When initializing RealtimeKit, you can set the media configurations for camera quality.
+
+Refer to the media configurations [here](/realtime/realtimekit/core/#advanced-options) for more details.
+
+Higher camera quality increases bandwidth usage and may impact meeting performance on lower-end devices if the end user's device is not powerful enough to handle 1080p from multiple peers.
+
+</Details>
+
+<Details header="How can I set a custom frame rate for an end user's camera feed?">
+
+When initializing RealtimeKit, you can set the media configurations for camera.
+
+Refer to the media configurations [here](/realtime/realtimekit/core/#advanced-options) for more details.
+
+Higher video frame rates increase bandwidth usage and may impact the video feed quality of other peers in the meeting if there are bandwidth issues with the end user's device. Set the video frame rate to a lower value (for example, &lt;= 30) in group calls. The current default is 24/30 FPS based on the simulcast layer.
+
+</Details>
+
+### Microphone
+
+<Details header="Why is my microphone not auto-selected when plugged in?">
+
+RealtimeKit SDK attempts to provide the best experience by auto-selecting the microphone. It prefers Bluetooth devices over wired devices. However, if the device was already plugged in before joining a RealtimeKit meeting and the device does not have `bluetooth`, `headset`, or `earphone` in its label, it may be missed.
+
+We support auto-selection of microphones with the label `bluetooth`, `headset`, `earphone`, or `microphone`, and USB devices with labels such as `usb` and `wired`. Some commonly used devices such as AirPods or Airdopes are also supported. We do not auto-select virtual devices.
+
+If auto-selection fails, end users can manually select the microphone from the Settings button in the meeting and the SDK will remember the selection for future sessions. If you have a device that you believe is commonly used, please contact support to request first-hand auto-selection support for it.
+
+</Details>
+
+### Screen Share
+
+<Details header="How can I set a custom frame rate for screen share?">
+
+When initializing RealtimeKit, you can set the media configurations for screen share.
+
+Refer to the media configurations [here](/realtime/realtimekit/core/#advanced-options) for more details.
+
+Higher screen share frame rates increase bandwidth usage and may impact the video feed quality of other peers in the meeting if there are bandwidth issues with the end user's device. Set the screen share frame rate to a lower value (for example, &lt;= 30) in group calls. In most use cases, 5 FPS (default) is sufficient for screen share.
+
+</Details>
+
+### Chat
+
+<Details header="I cannot send a chat message">
+
+There could be multiple reasons for this.
+
+First, try a sample meeting on the [demo app](https://demo.realtime.cloudflare.com/). If you cannot send a message in the demo app, contact support. If you can send a message in the demo app, the issue is on the integration side.
+
+To troubleshoot integration issues, first check if the user has joined the meeting successfully. If the user has [joined](/realtime/realtimekit/core/meeting-object-explained/) the meeting successfully, check if the user's [preset](/realtime/realtimekit/concepts/preset/) has permissions to send messages. If you are using a custom UI, check if the core [Chat APIs](/realtime/realtimekit/core/chat/) are working to eliminate the Core SDK from the usual suspects.
+
+If this does not solve the issue, check if your framework is blocking the UI. Frameworks like Material UI can block input focus using focus traps in Drawer component. There is usually a prop to disable the focus trap. Material UI has a `disableEnforceFocus` prop for this purpose.
+
+If you are still unable to send a message, please contact support.
+
+</Details>

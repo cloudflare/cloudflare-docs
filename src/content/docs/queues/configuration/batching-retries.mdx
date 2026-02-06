@@ -279,15 +279,24 @@ Delays can also be configured in the [Wrangler configuration file](/workers/wran
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[queues.producers]]
-  binding = "<BINDING_NAME>"
-  queue = "<QUEUE-NAME>"
-  delivery_delay = 60 # delay every message delivery by 1 minute
-
-[[queues.consumers]]
-  queue = "my-queue"
-  retry_delay = 300 # delay any retried message by 5 minutes before re-attempting delivery
+```jsonc
+{
+	"queues": {
+		"producers": [
+			{
+				"binding": "<BINDING_NAME>",
+				"queue": "<QUEUE-NAME>",
+				"delivery_delay": 60 // delay every message delivery by 1 minute
+			}
+		],
+		"consumers": [
+			{
+				"queue": "my-queue",
+				"retry_delay": 300 // delay any retried message by 5 minutes before re-attempting delivery
+			}
+		]
+	}
+}
 ```
 
 </WranglerConfig>

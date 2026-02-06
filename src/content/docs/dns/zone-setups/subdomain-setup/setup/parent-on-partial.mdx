@@ -11,7 +11,7 @@ head:
 
 import { Details, TabItem, Tabs } from "~/components"
 
-When the parent zone is using a [partial setup](/dns/zone-setups/partial-setup/)[^2], the steps to set up your child zone depend on whether the subdomain already exists in the parent domain.
+When the parent zone is using a [CNAME setup (partial)](/dns/zone-setups/partial-setup/)[^2], the steps to set up your child zone depend on whether the subdomain already exists in the parent domain.
 
 ## Subdomain does not exist
 
@@ -48,7 +48,7 @@ After creating the record, you can use this [Dig Web Interface link](https://dig
 
 </Details>
 
-That record must remain in place for as long as your subdomain is active on the partial setup on Cloudflare.
+That record must remain in place for as long as your subdomain is active on the CNAME setup (partial) on Cloudflare.
 
 6. Within a short period of time, the child zone should be active.
 7. At your authoritative DNS provider, add `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` for the subdomain you have added and any deeper subdomain records you want to proxy through Cloudflare.
@@ -80,7 +80,7 @@ If you have already created a DNS record covering your subdomain in the parent z
 3. In your child zone, [re-create all DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that relate to your subdomain. This includes all DNS records deeper than the delegated subdomain, meaning that if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
 
    :::note
-   If your child zone is on a full setup, consider [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent zone, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone. 
+   If your child zone is on a primary setup (full), consider [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent zone, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
    :::
 
 4. Make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child zone.
@@ -104,7 +104,7 @@ If you have already created a DNS record covering your subdomain in the parent z
 4. In your child zone, [re-create all DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that relate to your subdomain. This includes all DNS records deeper than the subdomain you used to create the zone - if you are creating a zone for `www.example.com`, you should also move over records for `api.www.example.com`.
 
    :::note
-   Cloudflare recommends [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent zone, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone. 
+   Cloudflare recommends [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent zone, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
    :::
 
 5. Make sure that you migrate over any settings ([WAF custom rules](/waf/custom-rules/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child zone.
@@ -129,7 +129,7 @@ After creating the record, you can use this [Dig Web Interface link](https://dig
 
 </Details>
 
-That record must remain in place for as long as your subdomain is active on the partial setup on Cloudflare.
+That record must remain in place for as long as your subdomain is active on the CNAME setup (partial) on Cloudflare.
 
 8. Within a short period of time, the child zone should be active.
 9. On the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any previous `A`, `AAAA`, or `CNAME` records referencing the subdomain or any of its deeper subdomains.

@@ -5,25 +5,69 @@ sidebar:
   order: 5
 ---
 
-### What is Human-in-the-Loop?
+import { LinkCard } from "~/components";
 
-Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into automated processes. These workflows pause at critical points for human review, validation, or decision-making before proceeding. This approach combines the efficiency of automation with human expertise and oversight where it matters most.
+Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into automated processes. These workflows pause at critical points for human review, validation, or decision-making before proceeding.
+
+## Why human-in-the-loop?
+
+- **Compliance**: Regulatory requirements may mandate human approval for certain actions.
+- **Safety**: High-stakes operations (payments, deletions, external communications) need oversight.
+- **Quality**: Human review catches errors AI might miss.
+- **Trust**: Users feel more confident when they can approve critical actions.
+
+### Common use cases
+
+| Use Case            | Example                              |
+| ------------------- | ------------------------------------ |
+| Financial approvals | Expense reports, payment processing  |
+| Content moderation  | Publishing, email sending            |
+| Data operations     | Bulk deletions, exports              |
+| AI tool execution   | Confirming tool calls before running |
+| Access control      | Granting permissions, role changes   |
+
+## Patterns for human-in-the-loop
+
+Cloudflare provides two main patterns for implementing human-in-the-loop:
+
+### Workflow approval
+
+For durable, multi-step processes with approval gates that can wait hours, days, or weeks. Use [Cloudflare Workflows](/workflows/) with the `waitForApproval()` method.
+
+**Key APIs:**
+
+- `waitForApproval(step, { timeout })` — Pause workflow until approved
+- `approveWorkflow(instanceId, options)` — Approve a waiting workflow
+- `rejectWorkflow(instanceId, options)` — Reject a waiting workflow
+
+**Best for:** Expense approvals, content publishing pipelines, data export requests
+
+### MCP elicitation
+
+For MCP servers that need to request additional structured input from users during tool execution. The MCP client renders a form based on your JSON Schema.
+
+**Key API:**
+
+- `elicitInput(options, context)` — Request structured input from the user
+
+**Best for:** Interactive tool confirmations, gathering additional parameters mid-execution
+
+## How workflows handle approvals
 
 ![A human-in-the-loop diagram](~/assets/images/agents/human-in-the-loop.svg)
 
-#### Understanding Human-in-the-Loop workflows
+In a workflow-based approval:
 
-In a Human-in-the-Loop workflow, processes are not fully automated. Instead, they include designated checkpoints where human intervention is required. For example, in a travel booking system, a human may want to confirm the travel before an agent follows through with a transaction. The workflow manages this interaction, ensuring that:
+1. The workflow reaches an approval step and calls `waitForApproval()`
+2. The workflow pauses and reports progress to the agent
+3. The agent updates its state with the pending approval
+4. Connected clients see the pending approval and can approve or reject
+5. When approved, the workflow resumes with the approval metadata
+6. If rejected or timed out, the workflow handles the rejection appropriately
 
-1. The process pauses at appropriate review points
-2. Human reviewers receive necessary context
-3. The system maintains state during the review period
-4. Review decisions are properly incorporated
-5. The process continues once approval is received
+## Best practices
 
-### Best practices for Human-in-the-Loop workflows
-
-#### Long-Term State Persistence
+### Long-term state persistence
 
 Human review processes do not operate on predictable timelines. A reviewer might need days or weeks to make a decision, especially for complex cases requiring additional investigation or multiple approvals. Your system needs to maintain perfect state consistency throughout this period, including:
 
@@ -36,16 +80,58 @@ Human review processes do not operate on predictable timelines. A reviewer might
 [Durable Objects](/durable-objects/) provide an ideal solution for managing state in Human-in-the-Loop workflows, offering persistent compute instances that maintain state for hours, weeks, or months.
 :::
 
-#### Continuous Improvement Through Evals
+### Timeouts and escalation
 
-Human reviewers play a crucial role in evaluating and improving LLM performance. Implement a systematic evaluation process where human feedback is collected not just on the final output, but on the LLM's decision-making process. This can include:
+Set timeouts to prevent workflows from waiting indefinitely. Use [scheduling](/agents/api-reference/schedule-tasks/) to:
 
-- Decision Quality Assessment: Have reviewers evaluate the LLM's reasoning process and decision points, not just the final output.
-- Edge Case Identification: Use human expertise to identify scenarios where the LLM's performance could be improved.
-- Feedback Collection: Gather structured feedback that can be used to fine-tune the LLM or adjust the workflow. [AI Gateway](/ai-gateway/evaluations/add-human-feedback/) can be a useful tool for setting up an LLM feedback loop.
+- Send reminders after a period of inactivity
+- Escalate to managers or alternative approvers
+- Auto-reject or auto-approve based on business rules
 
-#### Error handling and recovery
+### Audit trails
 
-Robust error handling is essential for maintaining workflow integrity. Your system should gracefully handle various failure scenarios, including reviewer unavailability, system outages, or conflicting reviews. Implement clear escalation paths for handling exceptional cases that fall outside normal parameters.
+Maintain immutable audit logs of all approval decisions using the [SQL API](/agents/api-reference/store-and-sync-state/). Record:
 
-The system should maintain stability during paused states, ensuring that no work is lost even during extended review periods. Consider implementing automatic checkpointing that allows workflows to be resumed from the last stable state after any interruption.
+- Who made the decision
+- When the decision was made
+- The reason or justification
+- Any relevant metadata
+
+### Continuous improvement
+
+Human reviewers play a crucial role in evaluating and improving LLM performance. Implement a systematic evaluation process where human feedback is collected not just on the final output, but on the LLM's decision-making process:
+
+- **Decision quality assessment**: Have reviewers evaluate the LLM's reasoning process and decision points.
+- **Edge case identification**: Use human expertise to identify scenarios where performance could be improved.
+- **Feedback collection**: Gather structured feedback that can be used to fine-tune the LLM. [AI Gateway](/ai-gateway/evaluations/add-human-feedback/) can help set up an LLM feedback loop.
+
+### Error handling and recovery
+
+Robust error handling is essential for maintaining workflow integrity. Your system should gracefully handle:
+
+- Reviewer unavailability
+- System outages
+- Conflicting reviews
+- Timeout expiration
+
+Implement clear escalation paths for exceptional cases and automatic checkpointing that allows workflows to resume from the last stable state after any interruption.
+
+## Next steps
+
+<LinkCard
+	title="Human-in-the-loop patterns"
+	href="/agents/guides/human-in-the-loop/"
+	description="Implementation examples for approval flows."
+/>
+
+<LinkCard
+	title="Run Workflows"
+	href="/agents/api-reference/run-workflows/"
+	description="Complete API for workflow approvals."
+/>
+
+<LinkCard
+	title="MCP elicitation"
+	href="/agents/model-context-protocol/mcp-agent-api/#elicitation-human-in-the-loop"
+	description="Interactive input from MCP clients."
+/>

@@ -155,14 +155,12 @@ To configure External Emergency Disconnect using the API, send a `PATCH` request
 <APIRequest
   path="/accounts/{account_id}/devices/settings"
   method="PATCH"
-	json={[
-		{
-		  "external_emergency_signal_enabled": false,
-  		"external_emergency_signal_url": "https://192.0.2.1:3333/status/disconnect",
-  		"external_emergency_signal_fingerprint": "DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662",
-  		"external_emergency_signal_interval": "1m"
-		}
-	]}
+  json={{
+    external_emergency_signal_enabled: true,
+    external_emergency_signal_url: "https://192.0.2.1:3333/status/disconnect",
+    external_emergency_signal_fingerprint: "DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662",
+    external_emergency_signal_interval: "1m"
+  }}
 />
 
 </TabItem>
@@ -240,14 +238,12 @@ Send a `PATCH` request with the endpoint URL and fingerprint set to empty string
 <APIRequest
   path="/accounts/{account_id}/devices/settings"
   method="PATCH"
-	json={[
-		{
-		  "external_emergency_signal_enabled": false,
-  		"external_emergency_signal_url": "",
-  		"external_emergency_signal_fingerprint": "",
-  		"external_emergency_signal_interval": "1m"
-		}
-	]}
+  json={{
+    external_emergency_signal_enabled: false,
+    external_emergency_signal_url: "",
+    external_emergency_signal_fingerprint: "",
+    external_emergency_signal_interval: "1m"
+  }}
 />
 
 Cloudflare will propagate the new settings to clients, instructing them to stop polling and discard its cached emergency state.

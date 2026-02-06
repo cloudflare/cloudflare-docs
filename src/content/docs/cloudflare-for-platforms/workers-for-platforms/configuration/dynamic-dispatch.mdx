@@ -34,10 +34,15 @@ To allow your dynamic dispatch Worker to dynamically route requests to Workers i
 
 <WranglerConfig>
 
-```toml
-[[dispatch_namespaces]]
-binding = "DISPATCHER"
-namespace = "my-dispatch-namespace"
+```jsonc
+{
+	"dispatch_namespaces": [
+		{
+			"binding": "DISPATCHER",
+			"namespace": "my-dispatch-namespace"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

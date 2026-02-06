@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: http
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 <Render file="nodejs-compat-howto" product="workers" />
 
@@ -13,27 +13,49 @@ import { Render } from "~/components";
 
 To use the HTTP client-side methods (`http.get`, `http.request`, etc.), you must enable the [`enable_nodejs_http_modules`](/workers/configuration/compatibility-flags/) compatibility flag in addition to the [`nodejs_compat`](/workers/runtime-apis/nodejs/) flag.
 
-This flag is automatically enabled for Workers using a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-08-15` or later when `nodejs_compat` is enabled. For Workers using an earlier compatibility date, you can manually enable it by adding the flag to your `wrangler.toml`:
+This flag is automatically enabled for Workers using a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-08-15` or later when `nodejs_compat` is enabled. For Workers using an earlier compatibility date, you can manually enable it by adding the flag to your Wrangler configuration file:
 
-```toml
-compatibility_flags = ["nodejs_compat", "enable_nodejs_http_modules"]
+<WranglerConfig>
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat",
+		"enable_nodejs_http_modules"
+	]
+}
 ```
+</WranglerConfig>
 
 ### Server-side methods
 
 To use the HTTP server-side methods (`http.createServer`, `http.Server`, `http.ServerResponse`), you must enable the `enable_nodejs_http_server_modules` compatibility flag in addition to the [`nodejs_compat`](/workers/runtime-apis/nodejs/) flag.
 
-This flag is automatically enabled for Workers using a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-09-01` or later when `nodejs_compat` is enabled. For Workers using an earlier compatibility date, you can manually enable it by adding the flag to your `wrangler.toml`:
+This flag is automatically enabled for Workers using a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-09-01` or later when `nodejs_compat` is enabled. For Workers using an earlier compatibility date, you can manually enable it by adding the flag to your Wrangler configuration file:
 
-```toml
-compatibility_flags = ["nodejs_compat", "enable_nodejs_http_server_modules"]
+<WranglerConfig>
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat",
+		"enable_nodejs_http_server_modules"
+	]
+}
 ```
+</WranglerConfig>
 
 To use both client-side and server-side methods, enable both flags:
 
-```toml
-compatibility_flags = ["nodejs_compat", "enable_nodejs_http_modules", "enable_nodejs_http_server_modules"]
+<WranglerConfig>
+```jsonc
+{
+	"compatibility_flags": [
+		"nodejs_compat",
+		"enable_nodejs_http_modules",
+		"enable_nodejs_http_server_modules"
+	]
+}
 ```
+</WranglerConfig>
 
 ## get
 

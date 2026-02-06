@@ -35,11 +35,21 @@ Make sure that you have `wrangler@3.3.0` or later [installed](/workers/wrangler/
 
 <WranglerConfig>
 
-```toml
-[[dispatch_namespaces]]
-binding = "dispatcher"
-namespace = "<NAMESPACE_NAME>"
-outbound = {service = "<SERVICE_NAME>", parameters = ["params_object"]}
+```jsonc
+{
+	"dispatch_namespaces": [
+		{
+			"binding": "dispatcher",
+			"namespace": "<NAMESPACE_NAME>",
+			"outbound": {
+				"service": "<SERVICE_NAME>",
+				"parameters": [
+					"params_object"
+				]
+			}
+		}
+	]
+}
 ```
 
 </WranglerConfig>

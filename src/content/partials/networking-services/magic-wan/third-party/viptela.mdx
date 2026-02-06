@@ -5,18 +5,18 @@ params:
   - ciscoIosXeUrl
 ---
 
-Cloudflare partners with Cisco's SD-WAN solution to provide users with an integrated SASE solution. The Cisco SD-WAN appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast Tunnels are set up between these SD-WAN edge devices and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco Catalyst 8000 Edge Platforms (physical or virtual) in the SD-WAN mode for north-south (Internet-bound) use cases.
+Cloudflare partners with Cisco's SD-WAN solution to provide users with an integrated SASE solution. The Cisco SD-WAN appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast tunnels are set up between these SD-WAN edge devices and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco Catalyst 8000 Edge Platforms (physical or virtual) in the SD-WAN mode for north-south (Internet-bound) use cases.
 
 ## Prerequisites
 
 Before setting up a connection between Cisco SD-WAN and Cloudflare, you must have:
 
 - Purchased Magic WAN and Secure Web Gateway.
-- Cloudflare provision Magic WAN and Secure Web Gateway.
+- Cloudflare provisions Magic WAN and Secure Web Gateway.
 - Received two Cloudflare tunnel endpoints (anycast IP address) assigned to Magic WAN.
 - Cisco SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
 - A static IP pair to use with the tunnel endpoints. The static IPs should be `/31` addresses separate from the IPs used in the subnet deployment.
-- Release 20.6 Controllers and vEdge Device Builds. You should also pair them with devices that are on at least version Cisco IOS XE SD-WAN 17.6. Refer to [Cisco documentation](https://www.cisco.com/c/en/us/support/docs/routers/sd-wan/215676-cisco-tac-and-bu-recommended-sd-wan-soft.html) to learn more Cisco softweare versions.
+- Release 20.6 Controllers and vEdge Device Builds. You should also pair them with devices that are on at least version Cisco IOS XE SD-WAN 17.6. Refer to [Cisco documentation](https://www.cisco.com/c/en/us/support/docs/routers/sd-wan/215676-cisco-tac-and-bu-recommended-sd-wan-soft.html) to learn more about Cisco software versions.
 
 :::note[Note]
 The SASE integration between Cisco SD-WAN and Cloudflare SSE was validated with Cisco SD-WAN 20.6.2 version with Catalyst 8kv router. For connectivity, we used GRE tunnels.
@@ -33,7 +33,7 @@ For this example scenario, a generic template for `SIG-Branch` was created.
 To create a Secure Internet Gateway (SIG) using vManage:
 
 1. From **Cisco vManage** under **Configuration**, select **Generic** and **Add Tunnel**.
-2. Refer to the table below for the setting fields and their options.
+2. The table below shows the setting fields and their options.
 
 | Setting             | Type/Detail                               |
 | ------------------- | ----------------------------------------- |
@@ -76,7 +76,7 @@ Because the template was created to add GRE tunnels, you only need to update the
 
 Refer to <a href={props.configureTunnelEndpointsUrl}>Configure tunnel endpoints</a> for more information on creating a GRE tunnel.
 
-![Established GRE tunne in Cloudflash dashboard](~/assets/images/magic-wan/third-party/viptela/viptela-gre-tunnel.png)
+![Established GRE tunnel in Cloudflare dashboard](~/assets/images/magic-wan/third-party/viptela/viptela-gre-tunnel.png)
 
 ## 4. Define static routes
 
@@ -86,7 +86,7 @@ Refer to <a href={props.configureStaticRoutesUrl}>Configure static routes</a> fo
 
 ## 5. Validate traffic flow
 
-In the example below, a request for `neverssl.com` was issued, which has a Cloudflare policy blocking traffic to `neverssl`.com.
+In the example below, a request for `neverssl.com` was issued, which has a Cloudflare policy blocking traffic to `neverssl.com`.
 
 On the client VM (192.168.30.3), a blocked response is visible.
 
