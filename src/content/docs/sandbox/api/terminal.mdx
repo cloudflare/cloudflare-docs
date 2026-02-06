@@ -45,7 +45,6 @@ The constructor accepts a `SandboxAddonOptions` object with the following proper
 
 **Required.** Function that returns the WebSocket URL for connecting to the terminal.
 
-<TypeScriptExample>
 ```typescript
 getWebSocketUrl: (params: {
   sandboxId: string;
@@ -53,7 +52,6 @@ getWebSocketUrl: (params: {
   origin: string; // WebSocket origin (e.g., "wss://example.com")
 }) => string
 ```
-</TypeScriptExample>
 
 #### reconnect
 
@@ -66,11 +64,9 @@ Whether to automatically reconnect on disconnection using exponential backoff wi
 
 Callback function called when the connection state changes. Use this to update UI elements like loading spinners or connection indicators.
 
-<TypeScriptExample>
 ```typescript
 onStateChange?: (state: ConnectionState, error?: Error) => void
 ```
-</TypeScriptExample>
 
 ### Methods
 

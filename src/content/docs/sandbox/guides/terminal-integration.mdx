@@ -58,7 +58,9 @@ Create a WebSocket endpoint in your Worker that connects to the sandbox terminal
 <TypeScriptExample>
 ```typescript
 // worker.ts
-import { getSandbox } from '@cloudflare/sandbox';
+import { getSandbox, type Sandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -74,7 +76,7 @@ export default {
       }
 
       // Get sandbox instance and session
-      const sandbox = getSandbox(env.SANDBOX, sandboxId);
+      const sandbox = getSandbox(env.Sandbox, sandboxId);
       const session = await sandbox.getSession(sessionId);
       
       // Proxy WebSocket connection directly to the sandbox PTY
@@ -87,7 +89,7 @@ export default {
 };
 
 interface Env {
-  SANDBOX: DurableObjectNamespace;
+  Sandbox: DurableObjectNamespace<Sandbox>;
 }
 ```
 </TypeScriptExample>
