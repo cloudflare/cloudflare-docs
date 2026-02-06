@@ -20,12 +20,11 @@ import { Render, Steps } from "~/components";
 
 ## 1. Install Drizzle
 
-Install the Drizzle ORM and its dependencies such as the [postgres](https://github.com/porsager/postgres) driver:
+Install the Drizzle ORM and its dependencies such as the [node-postgres](https://node-postgres.com/) (`pg`) driver:
 
 ```sh
-# postgres 3.4.5 or later is recommended
-npm i drizzle-orm postgres dotenv
-npm i -D drizzle-kit tsx @types/node
+npm i drizzle-orm pg dotenv
+npm i -D drizzle-kit tsx @types/pg @types/node
 ```
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.jsonc` file:
@@ -64,8 +63,8 @@ Populate your `index.ts` file as shown below.
 
 ```ts title="src/index.ts"
 // src/index.ts
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { Client } from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
 import { users } from "./db/schema";
 
 export interface Env {
@@ -74,16 +73,16 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Create a database client with postgres.js driver connected via Hyperdrive
-		const sql = postgres(env.HYPERDRIVE.connectionString, {
-			// Limit the connections for the Worker request to 5 due to Workers' limits on concurrent external connections
-			max: 5,
-			// If you are not using array types in your Postgres schema, disable `fetch_types` to avoid an additional round-trip (unnecessary latency)
-			fetch_types: false,
+		// Create a new client instance for each request.
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
 		});
 
-		// Create the Drizzle client with the postgres.js connection
-		const db = drizzle(sql);
+		// Connect to the database
+		await client.connect();
+
+		// Create the Drizzle client with the node-postgres connection
+		const db = drizzle(client);
 
 		// Sample query to get all users
 		const allUsers = await db.select().from(users);
