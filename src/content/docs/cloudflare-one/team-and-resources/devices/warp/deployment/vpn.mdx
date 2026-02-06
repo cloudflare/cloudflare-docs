@@ -15,11 +15,11 @@ The Cloudflare WARP client can run alongside most legacy third-party VPNs. Becau
 
 For the most stable and consistent connection, we recommend connecting your [private network or individual applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) to Cloudflare instead of using a legacy VPN. However, until you can migrate, the following guidelines will help get your Zero Trust deployment up and running.
 
-## Gateway with WARP
+## Traffic and DNS mode
 
-In [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode, WARP must be allowed to capture and route all DNS traffic on the device. You can use [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) to send DNS requests to a server behind your third-party VPN or firewall, but the request must first go through WARP's local DNS proxy. Refer to [WARP architecture](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/) for more information about this requirement.
+In [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-and-dns-mode-default) mode, WARP must be allowed to capture and route all DNS traffic on the device. You can use [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) to send DNS requests to a server behind your third-party VPN or firewall, but the request must first go through WARP's local DNS proxy. Refer to [WARP architecture](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/) for more information about this requirement.
 
-If you cannot disable DNS on your VPN, switch to [Secure Web Gateway without DNS filtering](#secure-web-gateway-without-dns-filtering) mode to disable DNS in WARP.
+If you cannot disable DNS on your VPN, switch to [Traffic only mode](#secure-web-gateway-without-dns-filtering) mode to disable DNS in WARP.
 
 ### 1. Configure the VPN
 
@@ -40,9 +40,9 @@ Perform these steps in your third-party VPN software. Refer to your VPN's docume
 
 You can now [test](#test-the-configuration) if WARP runs alongside the VPN.
 
-## Secure Web Gateway without DNS filtering
+## Traffic only mode
 
-In [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode, WARP does not perform any DNS functions on the device. Therefore, all you need to do is split tunnel your IP traffic.
+In [Traffic only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-only-mode) mode, WARP does not perform any DNS functions on the device. Therefore, all you need to do is split tunnel your IP traffic.
 
 ### 1. Configure the VPN
 
@@ -52,7 +52,7 @@ Enable split tunneling in your third-party VPN software. Refer to your VPN's doc
 
 <Render file="warp/vpn-ip-traffic" product="cloudflare-one" />
 
-3. In your device profile, verify that **Service mode** is set to **Secure Web Gateway without DNS filtering**.
+3. In your device profile, verify that **Service mode** is set to **Traffic only mode**.
 
 ## Test the configuration
 

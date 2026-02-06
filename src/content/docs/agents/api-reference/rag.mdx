@@ -2,11 +2,16 @@
 title: Retrieval Augmented Generation
 pcx_content_type: concept
 sidebar:
-  order: 9
-
+  order: 14
 ---
 
-import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	MetaInfo,
+	Render,
+	Type,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 Agents can use Retrieval Augmented Generation (RAG) to retrieve relevant information and use it augment [calls to AI models](/agents/api-reference/using-ai-models/). Store a user's chat history to use as context for future conversations, summarize documents to bootstrap an Agent's knowledge base, and/or use data from your Agent's [web browsing](/agents/api-reference/browse-the-web/) tasks to enhance your Agent's capabilities.
 
@@ -40,14 +45,14 @@ export class RAGAgent extends Agent<Env> {
 	//
 	async queryKnowledge(userQuery: string) {
 		// Turn a query into an embedding
-		const queryVector = await this.env.AI.run('@cf/baai/bge-base-en-v1.5', {
+		const queryVector = await this.env.AI.run("@cf/baai/bge-base-en-v1.5", {
 			text: [userQuery],
 		});
 
 		// Retrieve results from our vector index
 		let searchResults = await this.env.VECTOR_DB.query(queryVector.data[0], {
 			topK: 10,
-			returnMetadata: 'all',
+			returnMetadata: "all",
 		});
 
 		let knowledge = [];
@@ -58,7 +63,8 @@ export class RAGAgent extends Agent<Env> {
 
 		// Use the metadata to re-associate the vector search results
 		// with data in our Agent's SQL database
-		let results = this.sql`SELECT * FROM knowledge WHERE id IN (${knowledge.map((k) => k.id)})`;
+		let results = this
+			.sql`SELECT * FROM knowledge WHERE id IN (${knowledge.map((k) => k.id)})`;
 
 		// Return them
 		return results;
@@ -75,13 +81,13 @@ You'll also need to connect your Agent to your vector indexes:
 ```jsonc
 {
 	// ...
-  "vectorize": [
-    {
-      "binding": "VECTOR_DB",
-      "index_name": "your-vectorize-index-name"
-    }
-  ]
-  // ...
+	"vectorize": [
+		{
+			"binding": "VECTOR_DB",
+			"index_name": "your-vectorize-index-name",
+		},
+	],
+	// ...
 }
 ```
 
@@ -91,6 +97,6 @@ If you have multiple indexes you want to make available, you can provide an arra
 
 #### Next steps
 
-* Learn more on how to [combine Vectorize and Workers AI](/vectorize/get-started/embeddings/)
-* Review the [Vectorize query API](/vectorize/reference/client-api/)
-* Use [metadata filtering](/vectorize/reference/metadata-filtering/) to add context to your results
+- Learn more on how to [combine Vectorize and Workers AI](/vectorize/get-started/embeddings/)
+- Review the [Vectorize query API](/vectorize/reference/client-api/)
+- Use [metadata filtering](/vectorize/reference/metadata-filtering/) to add context to your results

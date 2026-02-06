@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { Render } from "~/components";
 
 This section describes the lifecycle of a [Durable Object](/durable-objects/concepts/what-are-durable-objects/).
 
@@ -39,7 +39,6 @@ Assuming a Durable Object does not run, the first incoming request or event (lik
 
 At this point the Durable Object is in the **active in-memory state**.
 
-
 Once all incoming requests or events have been processed, the Durable Object remains idle in-memory for a few seconds either in a hibernateable state or in a non-hibernateable state.
 
 Hibernation can only occur if **all** of the conditions below are true:
@@ -68,3 +67,28 @@ The next incoming request or event starts the cycle again.
 :::note[Lifecycle states incurring duration charges]
 A Durable Object incurs charges only when it is **actively running in-memory**, or when it is **idle in-memory and non-hibernateable** (indicated as green rectangles in the diagram).
 :::
+
+## Shutdown behavior
+
+Durable Objects will occasionally shut down and objects are restarted, which will run your Durable Object class constructor. This can happen for various reasons, including:
+
+- New Worker [deployments](/workers/configuration/versions-and-deployments/) with code updates
+- Lack of requests to an object following the state transitions documented above
+- Cloudflare updates to the Workers runtime system
+- Workers runtime decisions on where to host objects
+
+When a Durable Object is shut down, the object instance is automatically restarted and new requests are routed to the new instance. In-flight requests are handled as follows:
+
+- **HTTP requests**: In-flight requests are allowed to finish for up to 30 seconds. However, if a request attempts to access a Durable Object's storage during this grace period, it will be stopped immediately to maintain Durable Objects global uniqueness property.
+- **WebSocket connections**: WebSocket requests are terminated automatically during shutdown. This is so that the new instance can take over the connection as soon as possible.
+- **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
+
+It is important to ensure that any services using Durable Objects are designed to handle the possibility of a Durable Object being shut down.
+
+### Code updates
+
+When your Durable Object code is updated, your Worker and Durable Objects are released globally in an eventually consistent manner. This will cause a Durable Object to shut down, with the behavior described above. Updates can also create a situation where a request reaches a new version of your Worker in one location, and calls to a Durable Object still running a previous version elsewhere. Refer to [Code updates](/durable-objects/platform/known-issues/#code-updates) for more information about handling this scenario.
+
+### Working without shutdown hooks
+
+<Render file="working-without-shutdown-hooks" product="durable-objects" />

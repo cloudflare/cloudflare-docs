@@ -41,7 +41,7 @@ This feature allows you to have multiple [virtual LANs](https://www.cloudflare.c
 
 A non-zero value set up for the VLAN ID field in your WAN/LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Magic WAN Connector through WAN/LAN.
 
-You can setup VLAN IDs both for WAN and LAN. Refer to <a href={props.hardConnectorURL}>Configure hardware Connector</a> or <a href={props.virtualConnectorURL}>Configure Virtual Connector</a> to learn where you can set up VLAN IDs.
+You can setup VLAN IDs both for WAN and LAN. For instructions on setting up VLAN IDs, refer to <a href={props.hardConnectorURL}>Configure hardware Connector</a> or <a href={props.virtualConnectorURL}>Configure Virtual Connector</a>.
 
 ## High availability configurations
 
@@ -108,22 +108,22 @@ If you do not have more than one anycast IP configured in your account, and you 
 
 ### WAN settings
 
-- **Interface number:** When using the hardware version of Magic WAN Connector, this refers to the Ethernet port that you are using for your WAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to <a href={props.sfpURL}>SFP+ port information</a> for more information on the hardware supported. <br />  If you are using Virtual Connector, this needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in your virtual machine.
+- **Interface number:** When using the hardware version of Magic WAN Connector, this refers to the Ethernet port that you are using for your WAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. For details on supported hardware, refer to <a href={props.sfpURL}>SFP+ port information</a>. <br />  If you are using Virtual Connector, this needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in your virtual machine.
 - **VLAN ID**: Allows you to have multiple virtual WANs configured over the same port on your Magic WAN Connector. Refer to <a href={props.vlanIdURL}>VLAN ID</a> for more information.
-- **Priority**: Assigns a priority to the WAN interface. Lower numbers have higher priority. Refer to <a href={props.trafficSteeringURL}>Traffic steering</a> to learn more about how Cloudflare calculates priorities.
-- **Health check rate:** Configures the health check frequency for your WAN. Options are low, mid, and high. Refer to <a href={props.hcFrequencyURL}>Update tunnel health checks frequency</a> for more information.
+- **Priority**: Assigns a priority to the WAN interface. Lower numbers have higher priority. For details on how Cloudflare calculates priorities, refer to <a href={props.trafficSteeringURL}>Traffic steering</a>.
+- **Health check rate:** Configures the health check frequency for your WAN. Options are low, mid, and high. For details, refer to <a href={props.hcFrequencyURL}>Update tunnel health checks frequency</a>.
 - **Addressing:** Configures the Magic WAN Connector to work in a DHCP or static IP environment.
 
 ## LAN settings
 
-- **Interface number:** When using the hardware version of Magic WAN Connector, this refers to the Ethernet port that you are using for your LAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to <a href={props.sfpURL}>SFP+ port information</a> for more information on the hardware supported. <br />  If you are using the Virtual Connector, this needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in your virtual machine.
+- **Interface number:** When using the hardware version of Magic WAN Connector, this refers to the Ethernet port that you are using for your LAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. For details on supported hardware, refer to <a href={props.sfpURL}>SFP+ port information</a>. <br />  If you are using the Virtual Connector, this needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in your virtual machine.
 - **VLAN ID**: Allows you to have multiple virtual LANs configured over the same port on your Magic WAN Connector. Refer to <a href={props.vlanIdURL}>VLAN ID</a> for more information.
-- **Static addressing:** Configures the type of IP addressing for your Connector. Depending on your use case, this is where you configure your LAN interface IP address, or enable  DHCP server or DHCP relay. Refer to <a href={props.dhcpURL}>DHCP options</a> to learn more.
+- **Static addressing:** Configures the type of IP addressing for your Connector. Depending on your use case, this is where you configure your LAN interface IP address, or enable  DHCP server or DHCP relay. For details, refer to <a href={props.dhcpURL}>DHCP options</a>.
 - **Static NAT prefix**: Enable NAT (network address translation). This is an optional setting.
-- **Routed subnets:** Configures additional subnets behind a layer 3 router. Refer to <a href={props.routedSubnetsURL}>Routed subnets</a> for more information.
+- **Routed subnets:** Configures additional subnets behind a layer 3 router. For details, refer to <a href={props.routedSubnetsURL}>Routed subnets</a>.
 
 ### Restrict traffic to your premises
 
 Depending on your use case, you can define policies in your Magic WAN Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
-Refer to <a href={props.networkSegmentationURL}>Network segmentation</a> for more information.
+For details, refer to <a href={props.networkSegmentationURL}>Network segmentation</a>.

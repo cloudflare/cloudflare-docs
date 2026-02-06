@@ -31,6 +31,13 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
    cloudflared service install
    ```
 
+	:::note
+	Installing the `cloudflared` systemd service on Linux typically requires elevated privileges. When the install command is run with `sudo`, `$HOME` points to `/root`, which may prevent `cloudflared` from locating a configuration file created in `/home/<USER>/.cloudflared/config.yml`. In this case, the config path can be passed explicitly:
+	```sh
+	sudo cloudflared --config /home/<USER>/.cloudflared/config.yml service install
+	```
+	:::
+
 2. Start the service.
 
    ```sh

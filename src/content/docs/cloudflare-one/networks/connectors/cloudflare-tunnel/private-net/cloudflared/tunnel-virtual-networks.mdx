@@ -11,7 +11,7 @@ import { Details, Render, Tabs, TabItem } from "~/components";
 
 | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>  | All plans                                                     |
+| <ul><li> Traffic and DNS mode</li><li> Traffic only mode </li></ul>  | All plans                                                     |
 
 | System   | Availability |
 | -------- | ------------ |
@@ -271,7 +271,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 ### Windows, macOS, and Linux
 
 1. Open the WARP client.
-2. Go to **Settings** > **Gateway with WARP** > **Virtual Networks**.
+2. Go to **Settings** > **Traffic and DNS mode** > **Virtual Networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
 When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.

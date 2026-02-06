@@ -4,7 +4,7 @@ title: Webflow
 head:
   - tag: title
     content: Webflow | Provider guides
-description: Learn how to configure your Enterprise zone with Webflow.
+description: Learn how to configure your Cloudflare zone with Webflow.
 ---
 
 import { Render } from "~/components";
@@ -27,12 +27,11 @@ For more details about how O2O is different than other Cloudflare setups, refer 
 
 Webflow customers can enable O2O on any Cloudflare zone plan.
 
-To enable O2O for a specific hostname within a Cloudflare Zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` or `A` DNS record with your Webflow site name as the target. Webflow's domain addition setup will walk you through other validation steps.
+To enable O2O for a specific hostname within a Cloudflare Zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with your Webflow site name as the target. Webflow's domain addition setup will walk you through other validation steps.
 
 | Type    | Name                 | Target                | Proxy status |
 | ------- | -------------------- | --------------------- | ------------ |
 | `CNAME` | `<YOUR_DOMAIN>`      | `cdn.webflow.com`     | Proxied      |
-| `A`     | `@`                  | `198.202.211.1`       | Proxied      |
 
 ## Zone hold
 

@@ -37,7 +37,7 @@ There are 2 branch offices each with distinct subnets.
 
 ![Table of branch subnet information](~/assets/images/magic-wan/third-party/aruba-edge-connect/branch-subnets.png)
 
-Below is an example of the **east_branch** deployment on the Orchestrator.
+The following example shows the **east_branch** deployment on the Orchestrator.
 
 ![GCP East deployment configuration](~/assets/images/magic-wan/third-party/aruba-edge-connect/east-branch-deployment.png)
 
@@ -60,7 +60,7 @@ The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminat
 
 ![IPsec tunnel values for east and west branches](~/assets/images/magic-wan/third-party/aruba-edge-connect/central-west-branch-ipsec.png)
 
-Below is an example of the **central_branch** deployment on the Orchestrator.
+The following example shows the **central_branch** deployment on the Orchestrator.
 
 ![Values for central branch configuration within Orchestrator](~/assets/images/magic-wan/third-party/aruba-edge-connect/orchestrator-ipsec.png)
 
@@ -81,11 +81,11 @@ This step is only required if Cloudflare is used for east-west traffic routing.
 
 ## 2. Configure overlay policies
 
-We use Aruba Orchestrator's Business Intent Overlays to create intuitive policies which automatically identify and steer application traffic to Cloudflare. Two Business Intent Overlay (BIO) policies are created in this example.
+Aruba Orchestrator's Business Intent Overlays create intuitive policies which automatically identify and steer application traffic to Cloudflare. This example creates two Business Intent Overlay (BIO) policies.
 
 <Details header="GRE tunnel configuration">
 
-Cloudflare's <a href={props.tunnelHealthCheckUrl}>tunnel health checks</a> are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare's <a href={props.tunnelHealthCheckUrl}>tunnel health checks</a> are ping reply packets encapsulated in GRE packets. The source IP is the EdgeConnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -104,7 +104,7 @@ The service name used to send traffic through the tunnel created in the next ste
 
 <Details header="IPsec tunnel configuration">
 
-Cloudflare's <a href={props.tunnelHealthCheckUrl}>tunnel health checks</a> are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare's <a href={props.tunnelHealthCheckUrl}>tunnel health checks</a> are ping reply packets encapsulated in IPsec packets. The source IP is the EdgeConnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -266,13 +266,13 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 1. Define static routes on the Cloudflare dashboard for the LAN subnet(s) attached to the EdgeConnect appliance. Use the private IP pair for the EdgeConnect tunnel endpoint.
 
-   In the example below, the traffic to subnet `10.3.0.0/16` attached to the **east_branch** EdgeConnect appliance has a next hop of `10.40.8.10`.
+   In this example, the traffic to subnet `10.3.0.0/16` attached to the **east_branch** EdgeConnect appliance has a next hop of `10.40.8.10`.
 
 ![Static route information for each branch](~/assets/images/magic-wan/third-party/aruba-edge-connect/static-routes-cf.png)
 
 2. Define static routes on the Orchestrator so Cloudflare can route traffic between sites.
 
-   In the example below, we create a route for the subnet `10.30.0.0/24` on the **west_branch** to be routed via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
+   This example creates a route for the subnet `10.30.0.0/24` on the **west_branch** to route via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
 
 ![Static route information for each branch](~/assets/images/magic-wan/third-party/aruba-edge-connect/static-routes-edgeconnect.png)
 
@@ -298,7 +298,7 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 **Validate Secure Web Gateway**
 
-To validate traffic flow from the local subnet through Cloudflare's Secure Web Gateway, perform a curl as show in the example below.
+To validate traffic flow from the local subnet through Cloudflare's Secure Web Gateway, perform a cURL as shown in this example.
 
 ![Curl example for validating Secure Web Gateway](~/assets/images/magic-wan/third-party/aruba-edge-connect/validate-swg-curl.png)
 
@@ -328,11 +328,11 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 **Validate Secure Web Gateway**
 
-To validate traffic flow from the local subnet through Cloudflare's Secure Web Gateway, perform a cURL as shown in the example below.
+To validate traffic flow from the local subnet through Cloudflare's Secure Web Gateway, perform a cURL as shown in this example.
 
 ![cURL example for validating traffic](~/assets/images/magic-wan/third-party/aruba-edge-connect/static-routes-west-ipsec.png)
 
-You can validate the request was sent through Secure Web Gateway with the presence of the `Cf-Team` response header or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
+You can validate the request went through Secure Web Gateway with the presence of the `Cf-Team` response header or by looking at the logs in the dashboard under **Logs** > **Gateway** > **HTTP**.
 
 ![Dashboard example for validating Secure Web Gateway](~/assets/images/magic-wan/third-party/aruba-edge-connect/dash-validation-ipsec.png)
 

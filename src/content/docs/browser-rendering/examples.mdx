@@ -7,9 +7,9 @@ sidebar:
 
 import { CardGrid, LinkCard } from "~/components"
 
-Use the examples below to immediately perform quick, common tasks with our [REST API](/browser-rendering/rest-api/).
+## REST API examples
 
-For dynamic, multi-step automation, see our guides on integrating Cloudflare Browser Rendering with [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), or [Stagehand](/browser-rendering/stagehand/).
+Use these [REST API](/browser-rendering/rest-api/) examples to perform quick, common tasks.
 
 <CardGrid>
     <LinkCard
@@ -61,5 +61,47 @@ For dynamic, multi-step automation, see our guides on integrating Cloudflare Bro
         title="Retrieve links from a URL"
         description="Retrieve all links from a webpage, including hidden ones."
         href="/browser-rendering/rest-api/links-endpoint/#get-all-links-on-a-page"
+    />
+</CardGrid>
+
+## Workers Bindings examples
+
+Use [Workers Bindings](/browser-rendering/workers-bindings/) for dynamic, multi-step browser automation with [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), or [Stagehand](/browser-rendering/stagehand/).
+
+<CardGrid>
+    <LinkCard
+        title="Get page metrics with Puppeteer"
+        description="Use Puppeteer to navigate to a page and retrieve performance metrics in a Worker."
+        href="/browser-rendering/puppeteer/#use-puppeteer-in-a-worker"
+    />
+    <LinkCard
+        title="Take a screenshot with Playwright"
+        description="Use Playwright to navigate to a page, interact with elements, and capture a screenshot."
+        href="/browser-rendering/playwright/#take-a-screenshot"
+    />
+    <LinkCard
+        title="Run test assertions with Playwright"
+        description="Use Playwright assertions to test web applications in a Worker."
+        href="/browser-rendering/playwright/#assertions"
+    />
+    <LinkCard
+        title="Generate a trace with Playwright"
+        description="Capture detailed execution logs for debugging with Playwright tracing."
+        href="/browser-rendering/playwright/#trace"
+    />
+    <LinkCard
+        title="Reuse browser sessions"
+        description="Improve performance by reusing browser sessions across requests."
+        href="/browser-rendering/workers-bindings/reuse-sessions/"
+    />
+    <LinkCard
+        title="Persist sessions with Durable Objects"
+        description="Use Durable Objects to maintain long-running browser sessions."
+        href="/browser-rendering/workers-bindings/browser-rendering-with-do/"
+    />
+    <LinkCard
+        title="AI-powered browser automation with Stagehand"
+        description="Use natural language instructions to automate browser tasks with AI."
+        href="/browser-rendering/stagehand/#use-stagehand-in-a-worker-with-workers-ai"
     />
 </CardGrid>

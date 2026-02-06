@@ -16,17 +16,7 @@ import { Tabs, TabItem, Steps, DashButton } from "~/components";
 
 To add an exception at the zone level:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **WAF** > **Managed rules** tab.
-3. Select **Add exception**.
-
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -35,6 +25,16 @@ To add an exception at the zone level:
    <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
 2. Select **Create** > **Managed rules**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **WAF** > **Managed rules** tab.
+3. Select **Add exception**.
 
 </Steps>
 
@@ -107,20 +107,7 @@ To add an exception at the account level (Enterprise plans only):
 
 To edit an exception at the zone level:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **WAF** > **Managed rules** tab.
-3. Find the exception you want to edit and select its name. Exceptions are rules listed with **Action** = **Skip**.
-4. Once you have finished making changes, select **Save**.
-
-</Steps>
-
-To delete an exception listed in the **Managed rules** tab, select the three dots > **Delete**.
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -134,6 +121,19 @@ To delete an exception listed in the **Managed rules** tab, select the three dot
    Alternatively, to delete the exception, select **Delete exception**.
 
 </Steps>
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **WAF** > **Managed rules** tab.
+3. Find the exception you want to edit and select its name. Exceptions are rules listed with **Action** = **Skip**.
+4. Once you have finished making changes, select **Save**.
+
+</Steps>
+
+To delete an exception listed in the **Managed rules** tab, select the three dots > **Delete**.
+
 </TabItem> </Tabs>
 
 To edit an exception at the account level (Enterprise plans only):

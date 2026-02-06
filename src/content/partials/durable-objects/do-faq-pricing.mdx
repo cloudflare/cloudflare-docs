@@ -4,11 +4,11 @@
 
 ### When does a Durable Object incur duration charges?
 
-A Durable Object incurs duration charges as long as the JavaScript object has to be in memory, either because it is actively handling a request, or because it cannot hibernate.
+A Durable Object incurs duration charges when it is actively executing JavaScript — either handling a request or running event handlers — or when it is idle but does not meet the [conditions for hibernation](/durable-objects/concepts/durable-object-lifecycle/). An idle Durable Object that qualifies for hibernation does not incur duration charges, even during the brief window before the runtime hibernates it.
 
 Once an object has been evicted from memory, the next time it is needed, it will be recreated (calling the constructor again).
 
-There are several factors that contribute in keeping the Durable Object in memory and keeping it from hibernating or being inactive.
+There are several factors that can prevent a Durable Object from hibernating and cause it to continue incurring duration charges.
 
 Find more information in [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
 

@@ -14,7 +14,7 @@ description: >-
   Learn how to implement fraud detection using Turnstile's Ephemeral IDs to identify and block bad actors who rotate IP addresses.
 ---
 
-Ephemeral IDs let you detect fraud patterns that evade traditional IP-based detection. This tutorial will show you how to log Ephemeral IDs, detect suspicious patterns, and block bad actors.
+[Ephemeral IDs](/turnstile/additional-configuration/ephemeral-id/) let you detect fraud patterns that evade traditional IP-based detection. This tutorial will show you how to log Ephemeral IDs, detect suspicious patterns, and block bad actors.
 
 Attackers often create hundreds of fake accounts to abuse promotions, rotate through proxy pools to avoid IP-based rate limiting, and use real browsers to evade basic bot detection.
 
@@ -22,13 +22,18 @@ Traditional IP-based detection fails because each request appears to come from a
 
 ## Before you begin
 
-- Ephemeral IDs require [Enterprise Bot Management](/bots/plans/bm-subscription/) with the [Enterprise Turnstile add-on](/turnstile/plans/), or [standalone Enterprise Turnstile](/turnstile/additional-configuration/ephemeral-id/). Contact your account team to enable this feature.
-- You must have basic familiarity with Turnstile integration. Refer to [Protect your forms](/turnstile/tutorials/login-pages/) for more information.
+- Ephemeral IDs require [Enterprise Bot Management](/bots/plans/bm-subscription/) with the [Enterprise Turnstile add-on](/turnstile/plans/), or [standalone Enterprise Turnstile](/turnstile/plans/). Contact your account team to enable this feature.
+- You must have basic familiarity with Turnstile integration. Refer to [Get started with Turnstile](/turnstile/get-started/) for more information.
 
 :::caution[Ephemeral IDs are not guaranteed to be unique]
-Not every unique device will produce a unique Ephemeral ID. Privacy-focused devices and browsers (such as iPhones and Safari) limit the signals available for fingerprinting, which means multiple legitimate users may share the same Ephemeral ID. Use Ephemeral IDs to detect high-volume abuse patterns, not to uniquely identify individual devices. Always set detection thresholds high enough to avoid false positives.
+Not every unique device will produce a unique Ephemeral ID. Privacy-focused devices and browsers (such as iPhones and Safari) limit the signals available for fingerprinting, which means multiple legitimate users may share the same Ephemeral ID. 
+
+Use Ephemeral IDs to detect high-volume abuse patterns, not to uniquely identify individual devices. Always set detection thresholds high enough to avoid false positives.
 :::
-## 1. Set up logging
+
+---
+
+### Set up logging
 
 Create a table to store events with Ephemeral IDs.
 
@@ -48,7 +53,8 @@ CREATE TABLE blocked_ephemeral_ids (
     created_at      TIMESTAMPTZ DEFAULT NOW()
 );
 ```
-## 2. Extract and log Ephemeral IDs
+
+### Extract and log the Ephemeral IDs
 
 When you call Siteverify, the Ephemeral ID is returned in the `metadata` field. Log it with every protected action.
 
@@ -104,7 +110,8 @@ async function verifyAndLogTurnstile(
 	return { success: true, ephemeralId, isBlocked: false };
 }
 ```
-## 3. Use it in your sign up flow
+
+### Use the Ephemeral ID in your sign up flow
 
 ```typescript
 export async function handleSignup(request: Request, env: Env) {
@@ -151,7 +158,8 @@ export async function handleSignup(request: Request, env: Env) {
 	return new Response("Account created", { status: 201 });
 }
 ```
-## 4. Detect fraud patterns
+
+### Detect fraud patterns
 
 Run the following query periodically (for example, every five minutes) to find suspicious Ephemeral IDs:
 
@@ -184,7 +192,8 @@ GROUP BY ephemeral_id
 HAVING COUNT(*) > 3
 ON CONFLICT (ephemeral_id) DO NOTHING;
 ```
-## 5. Investigate and take action
+
+### Investigate and take action
 
 When you ban accounts for abuse, find other accounts from the same device:
 
@@ -217,7 +226,7 @@ WHERE id IN (
 ## Recommendations
 
 :::note[Privacy]
-Ephemeral IDs are privacy-preserving: scoped to your account, short-lived, and cannot identify individuals across sites.
+Ephemeral IDs are privacy-preserving. They are scoped to your account, short-lived, and cannot identify individuals across sites.
 :::
 
 - **Log immediately**: Capture the Ephemeral ID right when you call Siteverify.
@@ -225,8 +234,10 @@ Ephemeral IDs are privacy-preserving: scoped to your account, short-lived, and c
 - **Tune thresholds**: Start conservative (for example, three sign ups per hour) with the query and adjust based on your traffic.
 - **Combine signals**: Use Ephemeral IDs alongside IP reputation and behavior analytics.
 
+---
+
 ## Related resources
 
-- [Ephemeral IDs reference](/turnstile/additional-configuration/ephemeral-id/)
+- [Ephemeral IDs](/turnstile/additional-configuration/ephemeral-id/)
 - [Server-side validation](/turnstile/get-started/server-side-validation/)
 - [Integrate Turnstile, WAF, and Bot Management](/turnstile/tutorials/integrating-turnstile-waf-and-bot-management/)

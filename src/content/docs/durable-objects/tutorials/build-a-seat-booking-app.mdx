@@ -259,9 +259,12 @@ The frontend of the application is a simple HTML page that allows users to selec
 
 <WranglerConfig>
 
-```toml
-[assets]
-directory = "public"
+```jsonc
+{
+	"assets": {
+		"directory": "public"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -286,16 +289,27 @@ The application already has the binding for the Durable Objects class configured
 
 <WranglerConfig>
 
-```toml {9}
-[[durable_objects.bindings]]
-name = "FLIGHT"
-class_name = "Flight"
-
-# Durable Object migrations.
-# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#migrations
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["Flight"]
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "FLIGHT",
+				"class_name": "Flight"
+			}
+		]
+	},
+	// Durable Object migrations.
+	// Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#migrations
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"Flight"
+			]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

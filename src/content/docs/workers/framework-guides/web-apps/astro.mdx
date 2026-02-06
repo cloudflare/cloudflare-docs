@@ -184,8 +184,46 @@ With bindings, your Astro application can be fully integrated with the Cloudflar
 
 The [Astro docs](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#cloudflare-runtime) provide information about how you can access them in your `locals`.
 
+## Sessions
+
+Astro's [Sessions API](https://docs.astro.build/en/guides/sessions/) allows you to store user data between requests, such as user preferences, shopping carts, or authentication credentials. When using the Cloudflare adapter, Astro automatically configures [Workers KV](/kv/) for session storage.
+
+Wrangler automatically provisions a KV namespace named `SESSION` when you deploy, so no manual setup is required.
+
+```astro
+---
+export const prerender = false;
+const cart = await Astro.session?.get("cart");
+---
+
+<a href="/checkout">{cart?.length ?? 0} items</a>
+```
+
+You can customize the KV binding name with the [`sessionKVBindingName`](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#sessionkvbindingname) adapter option if you want to use a different binding name.
+
+## Custom 404 pages
+
+To serve a custom 404 page for your Astro site, add `not_found_handling` to your Wrangler configuration:
+
+<WranglerConfig>
+```json
+{
+	"assets": {
+		"directory": "./dist",
+		"not_found_handling": "404-page"
+	}
+}
+```
+</WranglerConfig>
+
+This tells Cloudflare to serve your custom 404 page (for example, `src/pages/404.astro`) when a route is not found. Read more about [static asset routing behavior](/workers/static-assets/routing/).
+
 ## Astro's build configuration
 
 The Astro Cloudflare adapter sets the build output configuration to `output: 'server'`, which means all pages are rendered on-demand in your Cloudflare Worker. If there are certain pages that _don't_ need on demand rendering/SSR, for example static pages such as a privacy policy, you should set `export const prerender = true` for that page or route to pre-render it. You can read more about on-demand rendering [in the Astro docs](https://docs.astro.build/en/guides/on-demand-rendering/).
 
 If you want to use Astro as a static site generator, you do not need the Astro Cloudflare adapter. Astro will pre-render all pages at build time by default, and you can simply upload those static assets to be served by Cloudflare.
+
+## Node.js requirements
+
+Astro 5.x requires Node.js 18.17.1 or higher. Astro 6 (currently in beta) requires Node.js 22 or higher. If you're using [Workers Builds](/workers/ci-cd/builds/), ensure your build environment meets these requirements.
