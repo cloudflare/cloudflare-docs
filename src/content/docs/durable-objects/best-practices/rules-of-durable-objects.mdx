@@ -42,33 +42,32 @@ export interface Env {
 // ✅ Good use of Durable Objects: Seat booking requires coordination
 // All booking requests for a venue must be serialized to prevent double-booking
 export class SeatBooking extends DurableObject<Env> {
-async bookSeat(
-seatId: string,
-userId: string
-): Promise<{ success: boolean; message: string }> {
-// Check if seat is already booked
-const existing = this.ctx.storage.sql
-.exec<{ user_id: string }>(
-"SELECT user_id FROM bookings WHERE seat_id = ?",
-seatId
-)
-.toArray();
+	async bookSeat(
+		seatId: string,
+		userId: string
+	): Promise<{ success: boolean; message: string }> {
+		// Check if seat is already booked
+		const existing = this.ctx.storage.sql
+			.exec<{ user_id: string }>(
+				"SELECT user_id FROM bookings WHERE seat_id = ?",
+				seatId
+			)
+			.toArray();
 
-    	if (existing.length > 0) {
-    		return { success: false, message: "Seat already booked" };
-    	}
+		if (existing.length > 0) {
+			return { success: false, message: "Seat already booked" };
+		}
 
-    	// Book the seat - this is safe because Durable Objects are single-threaded
-    	this.ctx.storage.sql.exec(
-    		"INSERT INTO bookings (seat_id, user_id, booked_at) VALUES (?, ?, ?)",
-    		seatId,
-    		userId,
-    		Date.now()
-    	);
+		// Book the seat - this is safe because Durable Objects are single-threaded
+		this.ctx.storage.sql.exec(
+			"INSERT INTO bookings (seat_id, user_id, booked_at) VALUES (?, ?, ?)",
+			seatId,
+			userId,
+			Date.now()
+		);
 
-    	return { success: true, message: "Seat booked successfully" };
-    }
-
+		return { success: true, message: "Seat booked successfully" };
+	}
 }
 
 export default {
@@ -76,25 +75,23 @@ export default {
 		const url = new URL(request.url);
 		const eventId = url.searchParams.get("event") ?? "default";
 
-    	// Route to a Durable Object by event ID
-    	// All bookings for the same event go to the same instance
-    	const id = env.BOOKING.idFromName(eventId);
-    	const booking = env.BOOKING.get(id);
+		// Route to a Durable Object by event ID
+		// All bookings for the same event go to the same instance
+		const id = env.BOOKING.idFromName(eventId);
+		const booking = env.BOOKING.get(id);
 
-    	const { seatId, userId } = await request.json<{
-    		seatId: string;
-    		userId: string;
-    	}>();
-    	const result = await booking.bookSeat(seatId, userId);
+		const { seatId, userId } = await request.json<{
+			seatId: string;
+			userId: string;
+		}>();
+		const result = await booking.bookSeat(seatId, userId);
 
-    	return Response.json(result, {
-    		status: result.success ? 200 : 409,
-    	});
-    },
-
+		return Response.json(result, {
+			status: result.success ? 200 : 409,
+		});
+	},
 };
-
-````
+```
 </TypeScriptExample>
 
 A common pattern is to use Workers as the stateless entry point that routes requests to Durable Objects when coordination is needed. The Worker handles authentication, validation, and response formatting, while the Durable Object handles the stateful logic.
@@ -142,7 +139,7 @@ export default {
 		return new Response("Message sent");
 	},
 };
-````
+```
 
 </TypeScriptExample>
 
@@ -164,16 +161,16 @@ export interface Env {
 
 // 🔴 Bad: A single Durable Object handling ALL chat rooms
 export class ChatRoom extends DurableObject<Env> {
-async sendMessage(roomId: string, userId: string, message: string) {
-// All messages for ALL rooms go through this single instance.
-// This becomes a bottleneck as traffic grows.
-this.ctx.storage.sql.exec(
-"INSERT INTO messages (room_id, user_id, content) VALUES (?, ?, ?)",
-roomId,
-userId,
-message
-);
-}
+	async sendMessage(roomId: string, userId: string, message: string) {
+		// All messages for ALL rooms go through this single instance.
+		// This becomes a bottleneck as traffic grows.
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (room_id, user_id, content) VALUES (?, ?, ?)",
+			roomId,
+			userId,
+			message
+		);
+	}
 }
 
 export default {
@@ -182,10 +179,9 @@ export default {
 		const id = env.CHAT_ROOM.idFromName("global");
 		const stub = env.CHAT_ROOM.get(id);
 
-    	await stub.sendMessage("room-123", "user-456", "Hello!");
-    	return new Response("Sent");
-    },
-
+		await stub.sendMessage("room-123", "user-456", "Hello!");
+		return new Response("Sent");
+	},
 };
 
 ```
@@ -211,7 +207,7 @@ Calculate your sharding requirements:
 
 Required DOs = (Total requests/second) / (Requests per DO capacity)
 
-````
+```
 
 ### Use deterministic IDs for predictable routing
 
@@ -248,7 +244,7 @@ export default {
 		return new Response("Joined game");
 	},
 };
-````
+```
 
 </TypeScriptExample>
 
@@ -277,15 +273,14 @@ export default {
 		const id = env.GAME_SESSION.newUniqueId();
 		const stub = env.GAME_SESSION.get(id);
 
-    	// Store the mapping: gameCode -> id.toString()
-    	// await env.DB.prepare("INSERT INTO games (code, do_id) VALUES (?, ?)").bind(gameCode, id.toString()).run();
+		// Store the mapping: gameCode -> id.toString()
+		// await env.DB.prepare("INSERT INTO games (code, do_id) VALUES (?, ?)").bind(gameCode, id.toString()).run();
 
-    	return Response.json({ gameId: id.toString() });
-    },
-
+		return Response.json({ gameId: id.toString() });
+	},
 };
 
-````
+```
 </TypeScriptExample>
 
 ### Use parent-child relationships for related entities
@@ -363,7 +358,7 @@ export class GameMatch extends DurableObject<Env> {
 		);
 	}
 }
-````
+```
 
 </TypeScriptExample>
 
@@ -395,18 +390,15 @@ export default {
 		const gameId = url.searchParams.get("game") ?? "default";
 		const region = url.searchParams.get("region") ?? "wnam"; // Western North America
 
-    	// Provide a location hint for where this Durable Object should be created
-    	const id = env.GAME_SESSION.idFromName(gameId, {
-    		locationHint: region,
-    	});
-    	const stub = env.GAME_SESSION.get(id);
+		// Provide a location hint for where this Durable Object should be created
+		const id = env.GAME_SESSION.idFromName(gameId);
+		const stub = env.GAME_SESSION.get(id, { locationHint: region });
 
-    	return new Response("Connected to game session");
-    },
-
+		return new Response("Connected to game session");
+	},
 };
 
-````
+```
 </TypeScriptExample>
 
 Location hints are suggestions, not guarantees. Refer to [Data location](/durable-objects/reference/data-location/) for available regions and details.
@@ -426,7 +418,7 @@ Configure your Durable Object class to use SQLite storage in your Wrangler confi
     { "tag": "v1", "new_sqlite_classes": ["ChatRoom"] }
   ]
 }
-````
+```
 
 </WranglerConfig>
 
@@ -441,48 +433,47 @@ export interface Env {
 }
 
 type Message = {
-id: number;
-user_id: string;
-content: string;
-created_at: number;
+	id: number;
+	user_id: string;
+	content: string;
+	created_at: number;
 };
 
 export class ChatRoom extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
 
-    	// Create tables on first instantiation
-    	this.ctx.storage.sql.exec(`
-    		CREATE TABLE IF NOT EXISTS messages (
-    			id INTEGER PRIMARY KEY AUTOINCREMENT,
-    			user_id TEXT NOT NULL,
-    			content TEXT NOT NULL,
-    			created_at INTEGER NOT NULL
-    		)
-    	`);
-    }
+		// Create tables on first instantiation
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS messages (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				user_id TEXT NOT NULL,
+				content TEXT NOT NULL,
+				created_at INTEGER NOT NULL
+			)
+		`);
+	}
 
-    async addMessage(userId: string, content: string) {
-    	this.ctx.storage.sql.exec(
-    		"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
-    		userId,
-    		content,
-    		Date.now()
-    	);
-    }
+	async addMessage(userId: string, content: string) {
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
+			userId,
+			content,
+			Date.now()
+		);
+	}
 
-    async getRecentMessages(limit: number = 50): Promise<Message[]> {
-    	// Use type parameter for typed results
-    	const cursor = this.ctx.storage.sql.exec<Message>(
-    		"SELECT * FROM messages ORDER BY created_at DESC LIMIT ?",
-    		limit
-    	);
-    	return cursor.toArray();
-    }
-
+	async getRecentMessages(limit: number = 50): Promise<Message[]> {
+		// Use type parameter for typed results
+		const cursor = this.ctx.storage.sql.exec<Message>(
+			"SELECT * FROM messages ORDER BY created_at DESC LIMIT ?",
+			limit
+		);
+		return cursor.toArray();
+	}
 }
 
-````
+```
 </TypeScriptExample>
 
 Refer to [Access Durable Objects storage](/durable-objects/best-practices/access-durable-objects-storage/) for more details on the SQL API.
@@ -538,7 +529,7 @@ export class ChatRoom extends DurableObject<Env> {
 		}
 	}
 }
-````
+```
 
 </TypeScriptExample>
 
@@ -563,47 +554,46 @@ export interface Env {
 }
 
 type Message = {
-id: number;
-user_id: string;
-content: string;
-created_at: number;
+	id: number;
+	user_id: string;
+	content: string;
+	created_at: number;
 };
 
 export class ChatRoom extends DurableObject<Env> {
 	// In-memory cache - fast but NOT preserved across evictions or crashes
 	private messageCache: Message[] | null = null;
 
-    async getRecentMessages(): Promise<Message[]> {
-    	// Return from cache if available (only valid while DO is in memory)
-    	if (this.messageCache !== null) {
-    		return this.messageCache;
-    	}
+	async getRecentMessages(): Promise<Message[]> {
+		// Return from cache if available (only valid while DO is in memory)
+		if (this.messageCache !== null) {
+			return this.messageCache;
+		}
 
-    	// Otherwise, load from durable storage
-    	const cursor = this.ctx.storage.sql.exec<Message>(
-    		"SELECT * FROM messages ORDER BY created_at DESC LIMIT 100"
-    	);
-    	this.messageCache = cursor.toArray();
-    	return this.messageCache;
-    }
+		// Otherwise, load from durable storage
+		const cursor = this.ctx.storage.sql.exec<Message>(
+			"SELECT * FROM messages ORDER BY created_at DESC LIMIT 100"
+		);
+		this.messageCache = cursor.toArray();
+		return this.messageCache;
+	}
 
-    async addMessage(userId: string, content: string) {
-    	// ✅ Always persist to durable storage first
-    	this.ctx.storage.sql.exec(
-    		"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
-    		userId,
-    		content,
-    		Date.now()
-    	);
+	async addMessage(userId: string, content: string) {
+		// ✅ Always persist to durable storage first
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
+			userId,
+			content,
+			Date.now()
+		);
 
-    	// Then update the cache (if it exists)
-    	// If the DO crashes here, the message is still saved in SQLite
-    	this.messageCache = null; // Invalidate cache
-    }
-
+		// Then update the cache (if it exists)
+		// If the DO crashes here, the message is still saved in SQLite
+		this.messageCache = null; // Invalidate cache
+	}
 }
 
-````
+```
 </TypeScriptExample>
 
 :::caution
@@ -660,7 +650,7 @@ export class ChatRoom extends DurableObject<Env> {
 			.toArray();
 	}
 }
-````
+```
 
 </TypeScriptExample>
 
@@ -711,14 +701,13 @@ export class ChatRoom extends DurableObject<Env> {
 			Date.now()
 		);
 
-    	// This response is held by the output gate until the write completes.
-    	// The client only receives "Message sent" after data is safely persisted.
-    	return "Message sent";
-    }
-
+		// This response is held by the output gate until the write completes.
+		// The client only receives "Message sent" after data is safely persisted.
+		return "Message sent";
+	}
 }
 
-````
+```
 </TypeScriptExample>
 
 **Write coalescing:** Multiple storage writes without intervening `await` calls are automatically batched into a single atomic implicit transaction:
@@ -763,7 +752,7 @@ export class Account extends DurableObject<Env> {
 		await this.ctx.storage.put(`balance:${toId}`, toBalance + amount);
 	}
 }
-````
+```
 
 </TypeScriptExample>
 
@@ -786,18 +775,17 @@ export class Processor extends DurableObject<Env> {
 	async processItem(id: string) {
 		const item = await this.ctx.storage.get<{ status: string }>(`item:${id}`);
 
-    	if (item?.status === "pending") {
-    		// During this fetch, other requests CAN execute and modify storage
-    		const result = await fetch("https://api.example.com/process");
+		if (item?.status === "pending") {
+			// During this fetch, other requests CAN execute and modify storage
+			const result = await fetch("https://api.example.com/process");
 
-    		// Another request may have already processed this item!
-    		await this.ctx.storage.put(`item:${id}`, { status: "completed" });
-    	}
-    }
-
+			// Another request may have already processed this item!
+			await this.ctx.storage.put(`item:${id}`, { status: "completed" });
+		}
+	}
 }
 
-````
+```
 </TypeScriptExample>
 
 To handle this, use optimistic locking (check-and-set) patterns: read a version number before the external call, then verify it has not changed before writing.
@@ -856,7 +844,7 @@ export class ChatRoom extends DurableObject<Env> {
 		// Other requests can be processed concurrently
 	}
 }
-````
+```
 
 </TypeScriptExample>
 
@@ -888,10 +876,10 @@ export interface Env {
 }
 
 type Message = {
-id: number;
-userId: string;
-content: string;
-createdAt: number;
+	id: number;
+	userId: string;
+	content: string;
+	createdAt: number;
 };
 
 export class ChatRoom extends DurableObject<Env> {
@@ -908,22 +896,21 @@ export class ChatRoom extends DurableObject<Env> {
 		return { id, userId, content, createdAt };
 	}
 
-    async getMessages(limit: number = 50): Promise<Message[]> {
-    	const cursor = this.ctx.storage.sql.exec<{
-    		id: number;
-    		user_id: string;
-    		content: string;
-    		created_at: number;
-    	}>("SELECT * FROM messages ORDER BY created_at DESC LIMIT ?", limit);
+	async getMessages(limit: number = 50): Promise<Message[]> {
+		const cursor = this.ctx.storage.sql.exec<{
+			id: number;
+			user_id: string;
+			content: string;
+			created_at: number;
+		}>("SELECT * FROM messages ORDER BY created_at DESC LIMIT ?", limit);
 
-    	return cursor.toArray().map((row) => ({
-    		id: row.id,
-    		userId: row.user_id,
-    		content: row.content,
-    		createdAt: row.created_at,
-    	}));
-    }
-
+		return cursor.toArray().map((row) => ({
+			id: row.id,
+			userId: row.user_id,
+			content: row.content,
+			createdAt: row.created_at,
+		}));
+	}
 }
 
 export default {
@@ -931,28 +918,27 @@ export default {
 		const url = new URL(request.url);
 		const roomId = url.searchParams.get("room") ?? "lobby";
 
-    	const id = env.CHAT_ROOM.idFromName(roomId);
-    	// stub is typed as DurableObjectStub<ChatRoom>
-    	const stub = env.CHAT_ROOM.get(id);
+		const id = env.CHAT_ROOM.idFromName(roomId);
+		// stub is typed as DurableObjectStub<ChatRoom>
+		const stub = env.CHAT_ROOM.get(id);
 
-    	if (request.method === "POST") {
-    		const { userId, content } = await request.json<{
-    			userId: string;
-    			content: string;
-    		}>();
-    		// Direct method call with full type checking
-    		const message = await stub.sendMessage(userId, content);
-    		return Response.json(message);
-    	}
+		if (request.method === "POST") {
+			const { userId, content } = await request.json<{
+				userId: string;
+				content: string;
+			}>();
+			// Direct method call with full type checking
+			const message = await stub.sendMessage(userId, content);
+			return Response.json(message);
+		}
 
-    	// TypeScript knows getMessages() returns Promise<Message[]>
-    	const messages = await stub.getMessages(100);
-    	return Response.json(messages);
-    },
-
+		// TypeScript knows getMessages() returns Promise<Message[]>
+		const messages = await stub.getMessages(100);
+		return Response.json(messages);
+	},
 };
 
-````
+```
 </TypeScriptExample>
 
 Refer to [Invoke methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for more details on RPC and the legacy `fetch()` handler.
@@ -1018,7 +1004,7 @@ export default {
 		return new Response(`Room ${await stub.getRoomId()} ready`);
 	},
 };
-````
+```
 
 </TypeScriptExample>
 
@@ -1051,19 +1037,18 @@ export default {
 		const id = env.CHAT_ROOM.idFromName("lobby");
 		const stub = env.CHAT_ROOM.get(id);
 
-    	// 🔴 Bad: Not awaiting the call
-    	// The message ID is lost, and any errors are swallowed
-    	stub.sendMessage("user-123", "Hello");
+		// 🔴 Bad: Not awaiting the call
+		// The message ID is lost, and any errors are swallowed
+		stub.sendMessage("user-123", "Hello");
 
-    	// ✅ Good: Properly awaited
-    	const messageId = await stub.sendMessage("user-123", "Hello");
+		// ✅ Good: Properly awaited
+		const messageId = await stub.sendMessage("user-123", "Hello");
 
-    	return Response.json({ messageId });
-    },
-
+		return Response.json({ messageId });
+	},
 };
 
-````
+```
 </TypeScriptExample>
 
 ## Error handling
@@ -1116,7 +1101,7 @@ export class ChatRoom extends DurableObject<Env> {
 		// External notification logic
 	}
 }
-````
+```
 
 </TypeScriptExample>
 
@@ -1142,56 +1127,55 @@ export class ChatRoom extends DurableObject<Env> {
 	async fetch(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 
-    	if (url.pathname === "/websocket") {
-    		// Check for WebSocket upgrade
-    		if (request.headers.get("Upgrade") !== "websocket") {
-    			return new Response("Expected WebSocket", { status: 400 });
-    		}
+		if (url.pathname === "/websocket") {
+			// Check for WebSocket upgrade
+			if (request.headers.get("Upgrade") !== "websocket") {
+				return new Response("Expected WebSocket", { status: 400 });
+			}
 
-    		const pair = new WebSocketPair();
-    		const [client, server] = Object.values(pair);
+			const pair = new WebSocketPair();
+			const [client, server] = Object.values(pair);
 
-    		// Accept the WebSocket with Hibernation API
-    		this.ctx.acceptWebSocket(server);
+			// Accept the WebSocket with Hibernation API
+			this.ctx.acceptWebSocket(server);
 
-    		return new Response(null, { status: 101, webSocket: client });
-    	}
+			return new Response(null, { status: 101, webSocket: client });
+		}
 
-    	return new Response("Not found", { status: 404 });
-    }
+		return new Response("Not found", { status: 404 });
+	}
 
-    // Called when a message is received (even after hibernation)
-    async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
-    	const data = typeof message === "string" ? message : "binary data";
+	// Called when a message is received (even after hibernation)
+	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+		const data = typeof message === "string" ? message : "binary data";
 
-    	// Broadcast to all connected clients
-    	for (const client of this.ctx.getWebSockets()) {
-    		if (client !== ws && client.readyState === WebSocket.OPEN) {
-    			client.send(data);
-    		}
-    	}
-    }
+		// Broadcast to all connected clients
+		for (const client of this.ctx.getWebSockets()) {
+			if (client !== ws && client.readyState === WebSocket.OPEN) {
+				client.send(data);
+			}
+		}
+	}
 
-    // Called when a WebSocket is closed
-    async webSocketClose(
-    	ws: WebSocket,
-    	code: number,
-    	reason: string,
-    	wasClean: boolean
-    ) {
-    	// Calling close() completes the WebSocket handshake
-    	ws.close(code, reason);
-    	console.log(`WebSocket closed: ${code} ${reason}`);
-    }
+	// Called when a WebSocket is closed
+	async webSocketClose(
+		ws: WebSocket,
+		code: number,
+		reason: string,
+		wasClean: boolean
+	) {
+		// Calling close() completes the WebSocket handshake
+		ws.close(code, reason);
+		console.log(`WebSocket closed: ${code} ${reason}`);
+	}
 
-    // Called when a WebSocket error occurs
-    async webSocketError(ws: WebSocket, error: unknown) {
-    	console.error("WebSocket error:", error);
-    }
-
+	// Called when a WebSocket error occurs
+	async webSocketError(ws: WebSocket, error: unknown) {
+		console.error("WebSocket error:", error);
+	}
 }
 
-````
+```
 </TypeScriptExample>
 
 With the Hibernation API, your Durable Object can go to sleep when there is no active JavaScript execution, but WebSocket connections remain open. When a message arrives, the Durable Object wakes up automatically.
@@ -1284,7 +1268,7 @@ export class ChatRoom extends DurableObject<Env> {
 		}
 	}
 }
-````
+```
 
 </TypeScriptExample>
 
@@ -1313,47 +1297,46 @@ export class GameMatch extends DurableObject<Env> {
 		await this.ctx.storage.put("gameStarted", Date.now());
 		await this.ctx.storage.put("gameActive", true);
 
-    	// Schedule the game to end after the duration
-    	await this.ctx.storage.setAlarm(Date.now() + durationMs);
-    }
+		// Schedule the game to end after the duration
+		await this.ctx.storage.setAlarm(Date.now() + durationMs);
+	}
 
-    // Called when the alarm fires
-    async alarm(alarmInfo) {
-    	const isActive = await this.ctx.storage.get<boolean>("gameActive");
+	// Called when the alarm fires
+	async alarm(alarmInfo?: AlarmInvocationInfo) {
+		const isActive = await this.ctx.storage.get<boolean>("gameActive");
 
-    	if (!isActive) {
-    		return; // Game was already ended
-    	}
+		if (!isActive) {
+			return; // Game was already ended
+		}
 
-    	// End the game
-    	await this.ctx.storage.put("gameActive", false);
-    	await this.ctx.storage.put("gameEnded", Date.now());
+		// End the game
+		await this.ctx.storage.put("gameActive", false);
+		await this.ctx.storage.put("gameEnded", Date.now());
 
-    	// Calculate final scores, notify players, etc.
-        try {
-            await this.calculateFinalScores();
-        } catch (err) {
-            // If we're almost out of retries but still have work to do, schedule a new alarm
-            // rather than letting our retries run out to ensure we keep getting invoked.
-            if (alarmInfo.retryCount >= 5) {
-                await this.ctx.storage.setAlarm(Date.now() + 30 * 1000);
-                return;
-            }
-            throw err;
-        }
+		// Calculate final scores, notify players, etc.
+		try {
+			await this.calculateFinalScores();
+		} catch (err) {
+			// If we're almost out of retries but still have work to do, schedule a new alarm
+			// rather than letting our retries run out to ensure we keep getting invoked.
+			if (alarmInfo && alarmInfo.retryCount >= 5) {
+				await this.ctx.storage.setAlarm(Date.now() + 30 * 1000);
+				return;
+			}
+			throw err;
+		}
 
-    	// Schedule the next alarm only if there's more work to do
-    	// In this case, schedule cleanup in 24 hours
-    	await this.ctx.storage.setAlarm(Date.now() + 24 * 60 * 60 * 1000);
-    }
+		// Schedule the next alarm only if there's more work to do
+		// In this case, schedule cleanup in 24 hours
+		await this.ctx.storage.setAlarm(Date.now() + 24 * 60 * 60 * 1000);
+	}
 
-    private async calculateFinalScores() {
-    	// Game ending logic
-    }
-
+	private async calculateFinalScores() {
+		// Game ending logic
+	}
 }
 
-````
+```
 </TypeScriptExample>
 
 ### Make alarm handlers idempotent
@@ -1400,7 +1383,7 @@ export class Subscription extends DurableObject<Env> {
 		return true;
 	}
 }
-````
+```
 
 </TypeScriptExample>
 
@@ -1421,16 +1404,15 @@ export class ChatRoom extends DurableObject<Env> {
 		// If you have an alarm set, delete it first
 		await this.ctx.storage.deleteAlarm();
 
-    	// Delete all storage
-    	await this.ctx.storage.deleteAll();
+		// Delete all storage
+		await this.ctx.storage.deleteAll();
 
-    	// The Durable Object instance still exists, but with empty storage
-    	// A subsequent request will find no data
-    }
-
+		// The Durable Object instance still exists, but with empty storage
+		// A subsequent request will find no data
+	}
 }
 
-````
+```
 </TypeScriptExample>
 
 ### Design for unexpected shutdowns
@@ -1483,7 +1465,7 @@ export default {
 		return new Response("OK");
 	},
 };
-````
+```
 
 </TypeScriptExample>
 
@@ -1505,39 +1487,38 @@ import {
 import { describe, it, expect } from "vitest";
 
 describe("ChatRoom", () => {
-// Each test gets isolated storage automatically
-it("should send and retrieve messages", async () => {
-const id = env.CHAT_ROOM.idFromName("test-room");
-const stub = env.CHAT_ROOM.get(id);
+	// Each test gets isolated storage automatically
+	it("should send and retrieve messages", async () => {
+		const id = env.CHAT_ROOM.idFromName("test-room");
+		const stub = env.CHAT_ROOM.get(id);
 
-    	// Call RPC methods directly on the stub
-    	await stub.sendMessage("user-1", "Hello!");
-    	await stub.sendMessage("user-2", "Hi there!");
+		// Call RPC methods directly on the stub
+		await stub.sendMessage("user-1", "Hello!");
+		await stub.sendMessage("user-2", "Hi there!");
 
-    	const messages = await stub.getMessages(10);
-    	expect(messages).toHaveLength(2);
-    });
+		const messages = await stub.getMessages(10);
+		expect(messages).toHaveLength(2);
+	});
 
-    it("can access instance internals and trigger alarms", async () => {
-    	const id = env.CHAT_ROOM.idFromName("test-room");
-    	const stub = env.CHAT_ROOM.get(id);
+	it("can access instance internals and trigger alarms", async () => {
+		const id = env.CHAT_ROOM.idFromName("test-room");
+		const stub = env.CHAT_ROOM.get(id);
 
-    	// Access storage directly for verification
-    	await runInDurableObject(stub, async (instance, state) => {
-    		const count = state.storage.sql
-    			.exec<{ count: number }>("SELECT COUNT(*) as count FROM messages")
-    			.one();
-    		expect(count.count).toBe(0); // Fresh instance due to test isolation
-    	});
+		// Access storage directly for verification
+		await runInDurableObject(stub, async (instance, state) => {
+			const count = state.storage.sql
+				.exec<{ count: number }>("SELECT COUNT(*) as count FROM messages")
+				.one();
+			expect(count.count).toBe(0); // Fresh instance due to test isolation
+		});
 
-    	// Trigger alarms immediately without waiting
-    	const alarmRan = await runDurableObjectAlarm(stub);
-    	expect(alarmRan).toBe(false); // No alarm was scheduled
-    });
-
+		// Trigger alarms immediately without waiting
+		const alarmRan = await runDurableObjectAlarm(stub);
+		expect(alarmRan).toBe(false); // No alarm was scheduled
+	});
 });
 
-````
+```
 </TypeScriptExample>
 
 Configure Vitest in your `vitest.config.ts`:
@@ -1554,7 +1535,7 @@ export default defineWorkersConfig({
 		},
 	},
 });
-````
+```
 
 For schema changes, run migrations in the constructor using `blockConcurrencyWhile()`. For class renames or deletions, use Wrangler migrations:
 
