@@ -53,16 +53,16 @@ flowchart TD
     E --> F["onClose"]
 ```
 
-| Method                                        | When it runs                                                                                                                                                                            |
-| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Method                                        | When it runs                                                                                                                                                                           |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `onStart(props?)`                             | When the instance starts, or wakes from hibernation. Receives optional [initialization props](/agents/api-reference/routing/#props) passed via `getAgentByName` or `routeAgentRequest`. |
-| `onRequest(request)`                          | For each HTTP request to the instance                                                                                                                                                   |
-| `onConnect(connection, ctx)`                  | When a WebSocket connection is established                                                                                                                                              |
-| `onMessage(connection, message)`              | For each WebSocket message received                                                                                                                                                     |
-| `onError(connection, error)`                  | When a WebSocket error occurs                                                                                                                                                           |
-| `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                                                                                                                                                      |
-| `onEmail(email)`                              | When an email is routed to the instance                                                                                                                                                 |
-| `onStateUpdate(state, source)`                | When state changes (from server or client)                                                                                                                                              |
+| `onRequest(request)`                          | For each HTTP request to the instance                                                                                                                                                  |
+| `onConnect(connection, ctx)`                  | When a WebSocket connection is established                                                                                                                                             |
+| `onMessage(connection, message)`              | For each WebSocket message received                                                                                                                                                    |
+| `onError(connection, error)`                  | When a WebSocket error occurs                                                                                                                                                          |
+| `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                                                                                                                                                     |
+| `onEmail(email)`                              | When an email is routed to the instance                                                                                                                                                |
+| `onStateUpdate(state, source)`                | When state changes (from server or client)                                                                                                                                             |
 
 ## Core properties
 
@@ -109,12 +109,12 @@ For state that needs to sync with clients, use the [State API](/agents/api-refer
 
 ## Client-side API reference
 
-| Feature              | Methods          | Documentation                                                                 |
-| -------------------- | ---------------- | ----------------------------------------------------------------------------- |
-| **WebSocket client** | `AgentClient`    | [Client SDK](/agents/api-reference/client-sdk/)                               |
+| Feature              | Methods          | Documentation                                   |
+| -------------------- | ---------------- | ----------------------------------------------- |
+| **WebSocket client** | `AgentClient`    | [Client SDK](/agents/api-reference/client-sdk/) |
 | **HTTP client**      | `agentFetch()`   | [Client SDK](/agents/api-reference/client-sdk/#http-requests-with-agentfetch) |
-| **React hook**       | `useAgent()`     | [Client SDK](/agents/api-reference/client-sdk/#react)                         |
-| **Chat hook**        | `useAgentChat()` | [Client SDK](/agents/api-reference/client-sdk/)                               |
+| **React hook**       | `useAgent()`     | [Client SDK](/agents/api-reference/client-sdk/#react) |
+| **Chat hook**        | `useAgentChat()` | [Client SDK](/agents/api-reference/client-sdk/) |
 
 ### Quick example
 
