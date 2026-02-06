@@ -27,7 +27,7 @@ const response = await sandbox.exposePort(port: number, options: ExposePortOptio
 
 - `port` - Port number to expose (1024-65535)
 - `options`:
-  - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-sandbox-abc123.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
+  - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-abc123-token.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
   - `token` - Custom token for stable preview URLs (optional). Must be 1-16 characters containing only lowercase letters (a-z), numbers (0-9), and underscores (_). When provided, enables consistent URLs across deployments and restarts.
   - `name` - Friendly name for the port (optional)
 
@@ -45,9 +45,9 @@ console.log('Available at:', exposed.exposedAt);
 // https://8000-abc123-randomtoken123.yourdomain.com
 
 // Custom token for stable URLs across deployments
-const stable = await sandbox.exposePort(8080, { 
-  hostname, 
-  token: 'my_app_v1' 
+const stable = await sandbox.exposePort(8080, {
+  hostname,
+  token: 'my_app_v1'
 });
 console.log('Stable URL:', stable.exposedAt);
 // https://8080-abc123-my_app_v1.yourdomain.com
@@ -98,7 +98,7 @@ const response = await sandbox.getExposedPorts(): Promise<GetExposedPortsRespons
 const { ports } = await sandbox.getExposedPorts();
 
 for (const port of ports) {
-console.log(`${port.name || port.port}: ${port.exposedAt}`);
+  console.log(`${port.name || port.port}: ${port.exposedAt}`);
 }
 ```
 </TypeScriptExample>
