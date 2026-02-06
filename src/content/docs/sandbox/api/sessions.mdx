@@ -151,6 +151,43 @@ await sandbox.exec('python script.py');
 
 ---
 
+### `terminal()`
+
+Create a WebSocket connection to an interactive terminal session (PTY).
+
+```ts
+const response = await session.terminal(request: Request): Promise<Response>
+```
+
+**Parameters**:
+- `request` - WebSocket upgrade request from client
+
+**Returns**: `Promise<Response>` with WebSocket upgrade response
+
+<TypeScriptExample>
+```
+// In your Worker's fetch handler
+if (url.pathname.startsWith('/ws/terminal/')) {
+  const sessionId = url.pathname.split('/')[3];
+  const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+  const session = await sandbox.getSession(sessionId);
+  return session.terminal(request);
+}
+```
+</TypeScriptExample>
+
+The terminal connection provides:
+- **Interactive shell** - Real bash session with full TTY support
+- **Bidirectional streaming** - User input and command output via WebSocket
+- **Session isolation** - Each session has independent shell state
+- **Automatic cleanup** - Terminal processes cleaned up when session ends
+
+:::note
+Use the [XTerm addon](/sandbox/api/xterm/) to connect browser terminals to the WebSocket endpoint.
+:::
+
+---
+
 ## ExecutionSession methods
 
 The `ExecutionSession` object has all sandbox methods bound to the specific session:
@@ -160,6 +197,7 @@ The `ExecutionSession` object has all sandbox methods bound to the specific sess
 | **Commands** | [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream) |
 | **Processes** | [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs) |
 | **Files** | [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout) |
+| **Terminal** | [`terminal()`](/sandbox/api/sessions/#terminal) |
 | **Environment** | [`setEnvVars()`](/sandbox/api/sessions/#setenvvars) |
 | **Code Interpreter** | [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext) |
 
