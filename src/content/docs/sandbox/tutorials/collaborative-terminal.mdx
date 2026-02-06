@@ -1,516 +1,704 @@
 ---
-title: Build a collaborative terminal
+title: Collaborative terminal
 pcx_content_type: tutorial
 sidebar:
-  order: 8
-description: Create a multi-user terminal sharing application using PTY sessions and WebSockets.
-reviewed: 2025-02-06
+  order: 7
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, FileTree } from "~/components";
 
-Build "Google Docs for bash" - a real-time collaborative terminal where multiple users can share the same PTY session and see each other's commands and output instantly.
+Build a real-time collaborative terminal where multiple users can share a single shell session. This tutorial demonstrates terminal connections, user presence, room management, and the xterm.js addon.
 
-**Time to complete:** 30 minutes
+:::note
+This tutorial builds a complete application with React Router, Durable Objects, and real-time WebSocket connections. View the [full source code](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/collaborative-terminal) for reference.
+:::
 
-## What you'll build
+## What You'll Build
 
-A collaborative terminal application featuring:
+- **Shared terminal**: Multiple users see the same PTY output in real-time
+- **Room system**: Create rooms, share links, browse active rooms  
+- **User presence**: Colored avatars and typing indicators
+- **Session isolation**: Each room gets its own sandbox session
+- **Live room list**: Homepage updates as rooms are created or deleted
 
-- **Shared PTY sessions** - Multiple users connected to the same terminal process
-- **Real-time synchronization** - All users see commands and output instantly  
-- **User presence** - Visual indicators showing who's connected and typing
-- **Room management** - Create and join terminal sessions via shareable links
-- **Session persistence** - Terminal history preserved for new users joining
+## Architecture Overview
+
+The application uses three Durable Objects working together:
+
+```mermaid
+graph TB
+    Browser[Browser Client] --> |Terminal WebSocket| Sandbox[Sandbox DO]
+    Browser --> |Presence WebSocket| Room[Room DO]  
+    Room --> Registry[RoomRegistry DO]
+    
+    Sandbox --> Container[Container PTY]
+    Registry --> |Track active rooms| Room
+```
+
+**Terminal connection**: Direct WebSocket to sandbox container's PTY through the SDK. Raw terminal bytes flow between xterm.js and the container with no JSON protocol.
+
+**Room connection**: Separate WebSocket to Room DO for user presence, typing indicators, and room management.
 
 ## Prerequisites
 
-<Render file="prereqs" product="workers" />
+- Node.js 20+
+- Cloudflare account with container access
+- Basic knowledge of React and WebSockets
 
-You'll also need:
-- [Docker](https://www.docker.com/) running locally for development
-- Cloudflare account with [Sandbox SDK access](/sandbox/get-started/)
+## Project Setup
 
-## 1. Create your project
+### 1. Initialize Project
 
-<PackageManagers
-	type="create"
-	pkg="cloudflare@latest"
-	args={"collaborative-terminal --template=cloudflare/sandbox-sdk/examples/collaborative-terminal"}
-/>
-
-```sh
+```bash
+npm create react-router@latest collaborative-terminal
 cd collaborative-terminal
+npm install
 ```
 
-This creates a full example application. Let's explore how it works and customize it.
+### 2. Install Dependencies
 
-## 2. Understand the architecture
-
-```
-┌──────────────┐     WebSocket     ┌─────────────────┐     PTY API    ┌───────────┐
-│   Browser    │◄──────────────────►  Cloudflare     │◄──────────────►│  Sandbox  │
-│   (xterm.js) │                   │     Worker      │                │ Container │
-└──────────────┘                   └─────────────────┘                └───────────┘
-       │                                   │                                │
-       │                                   │                                │
-       ▼                                   ▼                                ▼
-  User Input                         Broadcast PTY                     /bin/bash
-  ─────────►                         output to all                          │
-                                     connected users                        │
-                                                                  ◄─────────▼
-                                                                Real OS Process
+```bash
+npm install @cloudflare/sandbox @xterm/xterm @xterm/addon-fit @xterm/addon-web-links
+npm install -D @cloudflare/vite-plugin wrangler
 ```
 
-The application uses three key components:
+### 3. Project Structure
 
-1. **Frontend React app** - Terminal UI with xterm.js and user management
-2. **Cloudflare Worker** - Routes terminal WebSocket connections to sandbox sessions
-3. **Room Durable Objects** - User presence and room state management
+<FileTree>
+```
+collaborative-terminal/
+├── workers/
+│   ├── app.ts              # Main Worker
+│   ├── room.ts             # Room DO - user presence  
+│   ├── registry.ts         # RoomRegistry DO - active rooms
+│   └── types/protocol.ts   # WebSocket message types
+├── app/
+│   ├── routes/
+│   │   ├── home.tsx        # Homepage with room creation
+│   │   └── room.tsx        # Room page with terminal
+│   ├── components/
+│   │   ├── Terminal.client.tsx  # xterm.js + SandboxAddon
+│   │   └── UserAvatars.tsx      # Presence indicators
+│   └── hooks/
+│       ├── usePresence.ts       # Room WebSocket hook
+│       └── useActiveRooms.ts    # Registry WebSocket hook
+├── Dockerfile              # Container configuration
+├── wrangler.jsonc          # Cloudflare configuration  
+└── package.json
+```
+</FileTree>
 
-**Key architecture detail**: The terminal I/O flows directly between the browser and sandbox sessions via WebSocket, while room state (user presence, typing indicators) is managed separately by Durable Objects. This ensures optimal performance for terminal data while maintaining collaborative features.
+## Implementation
 
-## 3. Examine the frontend
+### 1. Durable Object Setup
 
-The React application provides the terminal interface:
+Create the main Worker that routes requests:
 
-```ts title="app/components/Terminal.client.tsx"
+<TypeScriptExample filename="workers/app.ts">
+```
+export { Room } from './room';
+export { RoomRegistry } from './registry';
+
+interface Env {
+  Sandbox: DurableObjectNamespace;
+  Room: DurableObjectNamespace;  
+  Registry: DurableObjectNamespace;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const url = new URL(request.url);
+    
+    // Terminal WebSocket - proxy directly to sandbox
+    if (url.pathname.startsWith('/ws/terminal/')) {
+      const sessionId = url.pathname.split('/').pop()!;
+      const sandbox = getSandbox(env.Sandbox, 'shared-terminal');
+      const session = await sandbox.getSession(sessionId);
+      return session.terminal(request);
+    }
+    
+    // Room presence WebSocket  
+    if (url.pathname.startsWith('/ws/room/')) {
+      const roomId = url.pathname.split('/').pop()!;
+      const id = env.Room.idFromName(roomId);
+      const room = env.Room.get(id);
+      return room.fetch(request);
+    }
+    
+    // Active rooms WebSocket
+    if (url.pathname === '/ws/rooms') {
+      const id = env.Registry.idFromName('global');
+      const registry = env.Registry.get(id);  
+      return registry.fetch(request);
+    }
+    
+    // Room API endpoints
+    if (url.pathname === '/api/room' && request.method === 'POST') {
+      return createRoom(env);
+    }
+    
+    if (url.pathname.startsWith('/api/room/') && request.method === 'DELETE') {
+      const roomId = url.pathname.split('/').pop()!;
+      return deleteRoom(roomId, env);
+    }
+    
+    // Serve static files (React Router handles routing)
+    return env.ASSETS.fetch(request);
+  }
+};
+
+async function createRoom(env: Env) {
+  const roomId = generateRoomId();
+  
+  // Initialize room
+  const roomStub = env.Room.get(env.Room.idFromName(roomId));
+  await roomStub.fetch(new Request('http://internal/init'));
+  
+  return Response.json({ roomId });
+}
+
+function generateRoomId(): string {
+  return Math.random().toString(36).substring(2, 8);
+}
+```
+</TypeScriptExample>
+
+### 2. Room Durable Object
+
+Manages user presence and room state:
+
+<TypeScriptExample filename="workers/room.ts">
+```
+import type { RoomMessage, ServerMessage, User } from './types/protocol';
+
+interface RoomState {
+  roomId: string;
+  sessionId: string;
+  users: Map<string, User>;
+  createdAt: number;
+}
+
+export class Room implements DurableObject {
+  private state: RoomState | null = null;
+  private connections = new Set<WebSocket>();
+  
+  constructor(
+    private ctx: DurableObjectState,
+    private env: Env
+  ) {}
+  
+  async fetch(request: Request) {
+    const url = new URL(request.url);
+    
+    if (url.pathname === '/init') {
+      await this.initialize();
+      return new Response('OK');
+    }
+    
+    if (request.headers.get('upgrade') === 'websocket') {
+      return this.handleWebSocket(request);
+    }
+    
+    return new Response('Not found', { status: 404 });
+  }
+  
+  private async initialize() {
+    if (!this.state) {
+      const roomId = await this.getRoomId();
+      this.state = {
+        roomId,
+        sessionId: `room-${roomId}`,
+        users: new Map(),
+        createdAt: Date.now()
+      };
+    }
+  }
+  
+  private async handleWebSocket(request: Request) {
+    const url = new URL(request.url);
+    const userName = url.searchParams.get('name') || 'Anonymous';
+    
+    const { 0: client, 1: server } = new WebSocketPair();
+    server.accept();
+    
+    const userId = this.generateUserId();
+    const user: User = {
+      id: userId,
+      name: userName, 
+      color: this.generateUserColor()
+    };
+    
+    await this.initialize();
+    this.state!.users.set(userId, user);
+    this.connections.add(server);
+    
+    // Send initial state
+    server.send(JSON.stringify({
+      type: 'connected',
+      userId,
+      user,
+      users: Array.from(this.state!.users.values()),
+      room: {
+        roomId: this.state!.roomId,
+        sessionId: this.state!.sessionId
+      }
+    } satisfies ServerMessage));
+    
+    // Notify others of join
+    this.broadcast({
+      type: 'user_joined',
+      user,
+      users: Array.from(this.state!.users.values())
+    }, server);
+    
+    // Handle messages
+    server.addEventListener('message', (event) => {
+      try {
+        const message = JSON.parse(event.data) as RoomMessage;
+        this.handleMessage(message, userId, server);
+      } catch (err) {
+        console.error('Invalid message:', err);
+      }
+    });
+    
+    // Handle disconnect
+    server.addEventListener('close', () => {
+      this.state!.users.delete(userId);
+      this.connections.delete(server);
+      
+      this.broadcast({
+        type: 'user_left',
+        userId,
+        users: Array.from(this.state!.users.values())
+      });
+      
+      // Delete room if empty
+      if (this.state!.users.size === 0) {
+        this.deleteRoom();
+      }
+    });
+    
+    // Update registry
+    await this.updateRegistry();
+    
+    return new Response(null, { status: 101, webSocket: client });
+  }
+  
+  private handleMessage(message: RoomMessage, userId: string, sender: WebSocket) {
+    switch (message.type) {
+      case 'typing':
+        this.broadcast({
+          type: 'user_typing',
+          userId
+        }, sender);
+        break;
+    }
+  }
+  
+  private broadcast(message: ServerMessage, exclude?: WebSocket) {
+    const data = JSON.stringify(message);
+    
+    for (const connection of this.connections) {
+      if (connection !== exclude && connection.readyState === WebSocket.READY_STATE_OPEN) {
+        connection.send(data);
+      }
+    }
+  }
+  
+  private generateUserId(): string {
+    return Math.random().toString(36).substring(2);
+  }
+  
+  private generateUserColor(): string {
+    const colors = [
+      '#ef4444', '#f97316', '#eab308', '#22c55e',
+      '#06b6d4', '#3b82f6', '#a855f7', '#ec4899'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+  
+  private async getRoomId(): string {
+    // Extract room ID from Durable Object name
+    return 'room-123'; // Simplified - use actual ID extraction
+  }
+  
+  private async updateRegistry() {
+    const registryId = this.env.Registry.idFromName('global');
+    const registry = this.env.Registry.get(registryId);
+    
+    await registry.fetch(new Request('http://internal/update', {
+      method: 'POST',
+      body: JSON.stringify({
+        roomId: this.state!.roomId,
+        userCount: this.state!.users.size,
+        createdAt: this.state!.createdAt
+      })
+    }));
+  }
+  
+  private async deleteRoom() {
+    // Notify registry
+    const registryId = this.env.Registry.idFromName('global');
+    const registry = this.env.Registry.get(registryId);
+    
+    await registry.fetch(new Request(`http://internal/delete/${this.state!.roomId}`, {
+      method: 'DELETE'
+    }));
+    
+    // Notify remaining connections
+    this.broadcast({ type: 'room_deleted' });
+  }
+}
+```
+</TypeScriptExample>
+
+### 3. Client-Side Terminal
+
+Create the terminal component using SandboxAddon:
+
+<TypeScriptExample filename="app/components/Terminal.client.tsx">
+```
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
-import { Terminal as XTerm } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
+import { WebLinksAddon } from '@xterm/addon-web-links';
+import { Terminal as XTerm } from '@xterm/xterm';
+import { useEffect, useRef, useState } from 'react';
+import '@xterm/xterm/css/xterm.css';
 
-export function Terminal({ sandboxId, sessionId, onTyping }: TerminalProps) {
+interface TerminalProps {
+  sandboxId: string;
+  sessionId: string;
+  onTyping?: () => void;
+  onAddonReady?: (addon: SandboxAddon) => void;
+}
+
+export function Terminal({ 
+  sandboxId, 
+  sessionId, 
+  onTyping,
+  onAddonReady 
+}: TerminalProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
+  
   useEffect(() => {
+    if (!containerRef.current) return;
+    
     const terminal = new XTerm({
       cursorBlink: true,
-      fontFamily: '"JetBrains Mono", monospace',
-      fontSize: 14
+      fontFamily: '"JetBrains Mono", "Fira Code", monospace',
+      fontSize: 14,
+      theme: {
+        background: '#09090b',
+        foreground: '#fafafa',
+        cursor: '#f97316',
+        // ... other theme colors
+      }
     });
-
+    
     const fitAddon = new FitAddon();
+    const webLinksAddon = new WebLinksAddon();
     const sandboxAddon = new SandboxAddon({
-      getWebSocketUrl: ({ origin, sessionId: sid }) =>
-        `${origin}/ws/terminal/${sid}`,
-      onStateChange: (state) => setState(state)
+      getWebSocketUrl: ({ origin, sessionId }) => 
+        `${origin}/ws/terminal/${sessionId}`,
+      onStateChange: (newState) => setState(newState)
     });
-
+    
     terminal.loadAddon(fitAddon);
+    terminal.loadAddon(webLinksAddon);
     terminal.loadAddon(sandboxAddon);
     terminal.open(containerRef.current);
     fitAddon.fit();
-
-    // Notify when user is typing
+    
+    // Handle user input for typing notifications  
     terminal.onData(() => onTyping?.());
     
-    // Connect to the shared session
+    // Connect to session
     sandboxAddon.connect({ sandboxId, sessionId });
-
-    return () => terminal.dispose();
-  }, []);
-
-  return <div ref={containerRef} className="h-full w-full" />;
-}
-```
-
-Key features:
-- **SandboxAddon** connects xterm.js to your Worker's WebSocket endpoint
-- **onTyping callback** notifies other users when someone is typing
-- **Automatic reconnection** handles network interruptions
-
-## 4. Implement the backend
-
-The Worker has two main responsibilities:
-
-1. **Terminal routing** - Direct WebSocket connections between browsers and sandbox sessions
-2. **Room management** - User presence and collaborative features via Durable Objects
-
-```ts title="workers/app.ts"
-// Direct terminal connection - high performance PTY I/O
-if (url.pathname.startsWith('/ws/terminal/')) {
-  const sessionId = url.pathname.split('/')[3];
-  const sandbox = getSandbox(env.Sandbox, 'shared-terminal');
-  const session = await sandbox.getSession(sessionId);
-  return await session.terminal(request);
-}
-
-// Room management - user presence and state
-if (url.pathname.startsWith('/ws/room/')) {
-  const roomId = url.pathname.split('/')[3];
-  const room = env.Room.get(env.Room.idFromName(roomId));
-  return room.fetch(request);
-}
-```
-
-The Room Durable Object handles collaborative features:
-
-```ts title="workers/room.ts"
-import { getSandbox } from '@cloudflare/sandbox';
-
-export class Room extends DurableObject {
-  private users = new Map<WebSocket, User>();
-
-  async webSocketMessage(ws: WebSocket, message: string) {
-    // Handle room-level control messages
-    const msg = JSON.parse(message);
+    onAddonReady?.(sandboxAddon);
     
-    if (msg.type === 'typing') {
-      // Broadcast typing indicator to other users
-      const user = this.users.get(ws);
-      if (user) {
-        this.broadcast({ type: 'user_typing', userId: user.id }, user.id);
-      }
-    }
-  }
-
-  async webSocketClose(ws: WebSocket) {
-    const user = this.users.get(ws);
-    this.users.delete(ws);
+    // Handle window resize
+    const handleResize = () => fitAddon.fit();
+    window.addEventListener('resize', handleResize);
     
-    this.broadcast({
-      type: 'user_left',
-      userId: user?.id,
-      users: Array.from(this.users.values())
-    });
-  }
-
-  private broadcast(message: any, excludeUserId?: string) {
-    const data = JSON.stringify(message);
-    this.users.forEach((user, ws) => {
-      if (user.id !== excludeUserId && ws.readyState === WebSocket.READY_STATE_OPEN) {
-        ws.send(data);
-      }
-    });
-  }
-}
-    } else {
-      // Handle control messages (resize, etc.)
-      const msg = JSON.parse(message);
-      if (msg.type === 'resize' && this.ptySession) {
-        await this.ptySession.resize(msg.cols, msg.rows);
-      }
-    }
-  }
-
-  async webSocketClose(ws: WebSocket) {
-    const user = this.users.get(ws);
-    this.users.delete(ws);
-    
-    this.broadcast({
-      type: 'user_left',
-      userId: user?.id,
-      users: Array.from(this.users.values())
-    });
-
-    // Clean up PTY if no users remain
-    if (this.users.size === 0 && this.ptySession) {
-      this.ptySession.destroy();
-      this.ptySession = null;
-    }
-  }
-
-  private   async createPtySession() {
-    // Note: The actual collaborative terminal example handles PTY connections
-    // differently - it uses the session.terminal() method in the main worker
-    // to create WebSocket connections that connect directly to the PTY.
-    
-    // This is handled in the /ws/terminal/ route in the main worker:
-    // const sandbox = getSandbox(env.Sandbox, 'shared-terminal');
-    // const session = await sandbox.getSession(sessionId);
-    // return await session.terminal(request);
-  }
-
-  private broadcast(message: any) {
-    const data = JSON.stringify(message);
-    this.users.forEach((_user, ws) => {
-      if (ws.readyState === WebSocket.READY_STATE_OPEN) {
-        ws.send(data);
-      }
-    });
-  }
-}
-```
-
-## 5. Add user presence
-
-Track who's connected and typing:
-
-```tsx title="app/components/UserAvatars.tsx"
-interface UserAvatarsProps {
-  users: User[];
-  currentUserId: string;
-  typingUsers: Set<string>;
-}
-
-export function UserAvatars({ users, currentUserId, typingUsers }: UserAvatarsProps) {
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      terminal.dispose();
+    };
+  }, [sandboxId, sessionId]);
+  
   return (
-    <div className="flex -space-x-2">
-      {users.map((user) => (
-        <div key={user.id} className="relative">
-          <div
-            className="w-8 h-8 rounded-full border-2 flex items-center justify-center"
-            style={{ backgroundColor: user.color }}
-            title={user.name}
-          >
-            {user.name.charAt(0).toUpperCase()}
+    <div className="relative h-full">
+      <div ref={containerRef} className="h-full w-full" />
+      {state !== 'connected' && (
+        <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80">
+          <div className="flex items-center gap-3 text-zinc-400">
+            {state === 'connecting' ? (
+              <>
+                <Spinner />
+                <span>Connecting to terminal...</span>
+              </>
+            ) : (
+              <span>Disconnected</span>
+            )}
           </div>
-          {typingUsers.has(user.id) && (
-            <span className="absolute -bottom-1 -right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
-            </span>
-          )}
         </div>
-      ))}
+      )}
     </div>
   );
 }
 ```
+</TypeScriptExample>
 
-Presence tracking with typing indicators:
+### 4. Room Page
 
-```ts title="app/hooks/usePresence.ts"
-export function usePresence({ roomId, userName }: UsePresenceOptions) {
-  const [users, setUsers] = useState<User[]>([]);
-  const [typingUsers, setTypingUsers] = useState<Set<string>>(new Set());
-  const wsRef = useRef<WebSocket | null>(null);
-  const typingTimeouts = useRef<Map<string, NodeJS.Timeout>>(new Map());
+Combine terminal and presence features:
 
-  useEffect(() => {
-    const params = new URLSearchParams({ name: userName });
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const ws = new WebSocket(
-      `${protocol}//${window.location.host}/ws/room/${roomId}?${params}`
-    );
-    
-    ws.onmessage = (event) => {
-      const message = JSON.parse(event.data);
+<TypeScriptExample filename="app/routes/room.tsx">
+```
+import { lazy, Suspense, useCallback, useMemo, useRef } from 'react';
+import { useNavigate } from 'react-router';
+import { UserAvatars } from '../components/UserAvatars';
+import { usePresence } from '../hooks/usePresence';
+import { generateName } from '../utils/names';
+
+const Terminal = lazy(() => 
+  import('../components/Terminal.client').then(m => ({ default: m.Terminal }))
+);
+
+export default function RoomPage({ params }) {
+  const { roomId } = params;
+  const navigate = useNavigate();
+  const userName = useMemo(() => generateName(), []);
+  const addonRef = useRef(null);
+  
+  const { state, currentUser, users, room, typingUsers, sendTyping } = usePresence({
+    roomId,
+    userName,
+    onRoomDeleted: () => navigate('/', { replace: true })
+  });
+  
+  const copyLink = async () => {
+    const url = `${window.location.origin}/room/${roomId}`;
+    await navigator.clipboard.writeText(url);
+  };
+  
+  return (
+    <div className="h-screen flex flex-col bg-zinc-950">
+      <header className="flex items-center justify-between px-4 py-3 border-b border-zinc-800">
+        <div className="flex items-center gap-4">
+          <span className="font-semibold">Room {roomId}</span>
+          <ConnectionIndicator state={state} />
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <UserAvatars 
+            users={users}
+            currentUserId={currentUser?.id ?? null}
+            typingUsers={typingUsers}
+          />
+          <button onClick={copyLink} className="btn">
+            Share
+          </button>
+        </div>
+      </header>
       
-      switch (message.type) {
-        case 'user_joined':
-          setUsers(message.users);
-          break;
+      <main className="flex-1 p-4 min-h-0">
+        <div className="h-full rounded-lg overflow-hidden border border-zinc-800">
+          <div className="flex items-center gap-2 px-4 py-2 bg-zinc-900 border-b border-zinc-800">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-500" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500" />
+              <div className="w-3 h-3 rounded-full bg-green-500" />
+            </div>
+            <span className="text-xs text-zinc-500 ml-2">bash</span>
+          </div>
           
-        case 'user_typing': {
-          const userId = message.userId;
-          setTypingUsers(prev => new Set(prev).add(userId));
-          
-          // Clear typing indicator after 2 seconds
-          const existingTimeout = typingTimeouts.current.get(userId);
-          if (existingTimeout) clearTimeout(existingTimeout);
-          
-          const timeout = setTimeout(() => {
-            setTypingUsers(prev => {
-              const next = new Set(prev);
-              next.delete(userId);
-              return next;
-            });
-            typingTimeouts.current.delete(userId);
-          }, 2000);
-          
-          typingTimeouts.current.set(userId, timeout);
-          break;
-        }
-      }
-    };
-
-    wsRef.current = ws;
-    return () => ws.close();
-  }, [roomId, userName]);
-
-  const sendTyping = useCallback(() => {
-    if (wsRef.current?.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify({ type: 'typing' }));
-    }
-  }, []);
-
-  return { users, typingUsers, sendTyping };
+          <div className="h-[calc(100%-40px)] bg-zinc-950">
+            {room ? (
+              <Suspense fallback={<div className="loading">Loading terminal...</div>}>
+                <Terminal
+                  sandboxId="shared-terminal"
+                  sessionId={room.sessionId}
+                  onTyping={sendTyping}
+                  onAddonReady={(addon) => { addonRef.current = addon; }}
+                />
+              </Suspense>
+            ) : (
+              <div className="loading">Connecting to room...</div>
+            )}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 }
 ```
+</TypeScriptExample>
 
-## 6. Configure your Worker
+### 5. Configuration
 
-Update your wrangler configuration:
-
-<WranglerConfig>
-```toml
-name = "collaborative-terminal"
-main = "workers/app.ts"
-
-[[durable_objects.bindings]]
-name = "REGISTRY"
-class_name = "Registry"
-script_name = "collaborative-terminal"
-
-[[durable_objects.bindings]]
-name = "ROOM"
-class_name = "Room"
-script_name = "collaborative-terminal"
-
-# Sandbox binding for PTY sessions
-[[durable_objects.bindings]]
-name = "SANDBOX"
-class_name = "Sandbox"
-script_name = "cloudflare-sandbox"
-
-[build]
-command = "npm run build"
-
-[env.production.vars]
-ENVIRONMENT = "production"
+<WranglerConfig filename="wrangler.jsonc">
+```
+{
+  "name": "collaborative-terminal",
+  "main": "workers/app.ts",
+  "compatibility_date": "2024-12-01",
+  
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "Sandbox", 
+        "class_name": "Sandbox",
+        "script_name": "cloudflare-sandbox"
+      },
+      {
+        "name": "Room",
+        "class_name": "Room"
+      },
+      {
+        "name": "Registry", 
+        "class_name": "RoomRegistry"
+      }
+    ]
+  },
+  
+  "site": {
+    "bucket": "build/client"
+  }
+}
 ```
 </WranglerConfig>
 
-## 7. Test your application
+## Key Features
 
-Start the development server:
+### Real-time Collaboration
 
-```sh
-npm run dev
-```
-
-1. **Open the application** at `http://localhost:5173`
-2. **Create a new room** - Click "Create New Room"  
-3. **Start a terminal session** - Click "Start Terminal Session"
-4. **Open in another tab** - Copy the room URL and open in a new tab/window
-5. **Test collaboration** - Type commands in one tab, see output in both
-
-## 8. Deploy to production
-
-Deploy your application:
-
-```sh
-npm run deploy
-```
-
-For production use, consider:
-
-### Custom domain setup
-
-Preview URLs require a custom domain with wildcard DNS:
-
-```toml
-# wrangler.toml
-[env.production]
-routes = [
-  { pattern = "terminal.yourdomain.com", custom_domain = true }
-]
-```
-
-### Rate limiting
-
-Add protection against abuse:
+Multiple users connect to the same session ID, sharing terminal output:
 
 ```ts
-// Rate limit room creation
-const rateLimiter = new Map<string, number>();
-
-export async function createRoom(clientIP: string): Promise<string> {
-  const now = Date.now();
-  const lastCreated = rateLimiter.get(clientIP) || 0;
-  
-  if (now - lastCreated < 60000) { // 1 minute cooldown
-    throw new Error('Rate limit exceeded');
-  }
-  
-  rateLimiter.set(clientIP, now);
-  return generateRoomId();
-}
+// All users in a room connect to the same session
+const sessionId = `room-${roomId}`;
+addon.connect({ sandboxId: 'shared-terminal', sessionId });
 ```
 
-### Authentication
+### User Presence
 
-Add user authentication:
+Room Durable Object tracks connected users and broadcasts typing events:
 
 ```ts
-interface AuthenticatedUser {
-  id: string;
-  name: string;
-  email: string;
-  permissions: string[];
-}
+// Typing notifications
+terminal.onData(() => {
+  sendTyping(); // Notifies other users
+});
 
-// Verify JWT tokens
-const user = await verifyAuthToken(request.headers.get('Authorization'));
-if (!user.permissions.includes('terminal:access')) {
-  return new Response('Forbidden', { status: 403 });
-}
+// Visual indicators  
+<UserAvatars users={users} typingUsers={typingUsers} />
 ```
 
-## 9. Customize your application
+### Session Switching
 
-### Add file sharing
-
-Allow users to share files in the terminal:
+The addon can switch between sessions without recreating:
 
 ```ts
-// Add file upload to your terminal room
-async function handleFileUpload(file: File, roomId: string) {
-  const sandbox = getSandbox(env.SANDBOX, 'shared-terminal');
-  
-  await sandbox.files.write(`/tmp/${file.name}`, await file.arrayBuffer());
-  
-  // Notify all users
-  broadcast(roomId, {
-    type: 'file_shared',
-    filename: file.name,
-    message: `📁 ${user.name} shared ${file.name}`
+// Switch to different room
+function switchRoom(newRoomId: string) {
+  addon.connect({
+    sandboxId: 'shared-terminal', 
+    sessionId: `room-${newRoomId}`
   });
 }
 ```
 
-### Session recording
+## Deployment
 
-Record terminal sessions for playback:
+### 1. Build and Deploy
+
+```bash
+npm run build
+npm run deploy
+```
+
+### 2. Container Initialization
+
+After first deployment, wait 2-3 minutes for container provisioning before making requests.
+
+### 3. Domain Setup
+
+For production preview URLs, configure a custom domain with wildcard DNS (`*.yourdomain.com`). The `.workers.dev` domain does not support the subdomain patterns needed for preview URLs.
+
+## Extensions
+
+### Private Rooms
+
+Add password protection:
 
 ```ts
-class SessionRecorder {
-  private events: TerminalEvent[] = [];
-  
-  record(data: Uint8Array) {
-    this.events.push({
-      timestamp: Date.now(),
-      type: 'output',
-      data: Array.from(data)
+// Room creation with password
+const room = await createRoom({ 
+  password: 'secret123',
+  private: true 
+});
+
+// Authentication in WebSocket handler
+const password = url.searchParams.get('password');
+if (room.password && room.password !== password) {
+  return new Response('Unauthorized', { status: 401 });
+}
+```
+
+### File Sharing
+
+Enable file uploads between users:
+
+```ts
+// Upload files to shared session
+const session = await sandbox.getSession(sessionId);
+await session.files.write('/shared/document.txt', content);
+
+// Notify other users
+broadcast({
+  type: 'file_uploaded',
+  filename: 'document.txt',
+  path: '/shared/document.txt'
+});
+```
+
+### Command History
+
+Track and replay command history:
+
+```ts
+const commands: string[] = [];
+
+terminal.onData((data) => {
+  if (data === '\r') { // Enter key
+    const command = getCurrentCommand();
+    commands.push(command);
+    
+    // Sync to other users
+    broadcast({
+      type: 'command_executed', 
+      command,
+      timestamp: Date.now()
     });
   }
-  
-  async saveRecording(roomId: string) {
-    const recording = {
-      roomId,
-      startTime: this.events[0]?.timestamp || Date.now(),
-      events: this.events
-    };
-    
-    // Save to R2 or KV
-    await env.RECORDINGS.put(`session-${roomId}`, JSON.stringify(recording));
-  }
-}
+});
 ```
 
-### Command history
+## Complete Example
 
-Track and display command history:
+View the full [collaborative terminal example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/collaborative-terminal) for complete implementation including:
 
-```ts
-class CommandTracker {
-  private history: string[] = [];
-  
-  processInput(input: string) {
-    // Detect command completion (Enter key)
-    if (input.includes('\r') || input.includes('\n')) {
-      const command = this.extractCommand(input);
-      if (command) {
-        this.history.push(command);
-        this.broadcast({ type: 'command_history', commands: this.history });
-      }
-    }
-  }
-}
-```
+- React Router setup with SSR
+- WebSocket connection hooks 
+- User avatar components
+- Room management UI
+- TypeScript types for WebSocket protocol
+- Styling with Tailwind CSS
 
-## Related resources
+## Next Steps
 
-- [XTerm addon API reference](/sandbox/api/xterm/) - Complete addon documentation  
-- [Terminal integration guide](/sandbox/guides/terminal-integration/) - Building terminal interfaces
-- [WebSocket connections guide](/sandbox/guides/websocket-connections/) - WebSocket patterns
-- [Durable Objects documentation](https://developers.cloudflare.com/durable-objects/) - State management
+- [Terminal connections guide](/sandbox/guides/terminal-connections/) - Deep dive into terminal WebSocket handling
+- [WebSocket connections guide](/sandbox/guides/websocket-connections/) - General WebSocket patterns
+- [Sessions API](/sandbox/api/sessions/) - Session management and isolation
