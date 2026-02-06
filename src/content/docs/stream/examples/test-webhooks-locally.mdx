@@ -1,0 +1,203 @@
+---
+summary: Test Cloudflare Stream webhook notifications locally using a Cloudflare Worker and Cloudflare Tunnel.
+tags:
+  - Webhooks
+pcx_content_type: example
+title: Test webhooks locally
+sidebar:
+  order: 11
+description: Test Cloudflare Stream webhook notifications locally using a Cloudflare Worker and Cloudflare Tunnel.
+---
+
+Cloudflare Stream cannot send [webhook notifications](/stream/manage-video-library/using-webhooks/) to `localhost` or local IP addresses. To test webhooks during local development, you need a publicly accessible URL that forwards requests to your local machine.
+
+This example shows how to:
+
+1. Create a simple Cloudflare Worker that receives and logs Stream webhook events.
+2. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local Worker dev server to the internet.
+3. Register the tunnel URL as your webhook endpoint for testing.
+
+:::note
+
+Third-party tunneling tools such as [ngrok](https://ngrok.com) are often blocked by Cloudflare's security features. Use Cloudflare Tunnel instead.
+
+:::
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up) with Stream enabled
+- [Node.js](https://nodejs.org/) (v18 or later)
+- The [Wrangler CLI](/workers/wrangler/install-and-update/) installed (`npm install -g wrangler`)
+
+## 1. Create the webhook Worker
+
+Create a new Worker project and replace the generated `src/index.ts` with the following code. This Worker receives webhook `POST` requests, [verifies the signature](/stream/manage-video-library/using-webhooks/#verify-webhook-authenticity), and logs the payload.
+
+```ts title="src/index.ts"
+export interface Env {
+  // Set this secret with: npx wrangler secret put WEBHOOK_SECRET
+  WEBHOOK_SECRET: string;
+}
+
+async function verifyWebhookSignature(
+  request: Request,
+  secret: string,
+): Promise<{ valid: boolean; body: string }> {
+  const signatureHeader = request.headers.get("Webhook-Signature");
+  if (!signatureHeader) {
+    return { valid: false, body: "" };
+  }
+
+  const body = await request.text();
+
+  // Parse "time=<unix_ts>,sig1=<hex_signature>"
+  const parts = Object.fromEntries(
+    signatureHeader.split(",").map((part) => {
+      const [key, value] = part.split("=");
+      return [key, value];
+    }),
+  );
+
+  const time = parts["time"];
+  const receivedSig = parts["sig1"];
+
+  if (!time || !receivedSig) {
+    return { valid: false, body };
+  }
+
+  // Build the source string: "<time>.<body>"
+  const sourceString = `${time}.${body}`;
+  const encoder = new TextEncoder();
+
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    encoder.encode(sourceString),
+  );
+
+  const expectedSig = [...new Uint8Array(signature)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  // Use a timing-safe comparison
+  if (expectedSig.length !== receivedSig.length) {
+    return { valid: false, body };
+  }
+
+  const expectedBytes = encoder.encode(expectedSig);
+  const receivedBytes = encoder.encode(receivedSig);
+
+  // crypto.subtle.timingSafeEqual is available in the Workers runtime
+  const signaturesMatch = crypto.subtle.timingSafeEqual(
+    expectedBytes,
+    receivedBytes,
+  );
+
+  return { valid: signaturesMatch, body };
+}
+
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+  ): Promise<Response> {
+    if (request.method !== "POST") {
+      return new Response("Method not allowed", { status: 405 });
+    }
+
+    const { valid, body } = await verifyWebhookSignature(
+      request,
+      env.WEBHOOK_SECRET,
+    );
+
+    if (!valid) {
+      console.error("Invalid webhook signature");
+      return new Response("Invalid signature", { status: 403 });
+    }
+
+    const payload = JSON.parse(body);
+
+    console.log("Stream webhook received:", JSON.stringify(payload, null, 2));
+    console.log("Video UID:", payload.uid);
+    console.log("Status:", payload.status?.state);
+    console.log("Ready to stream:", payload.readyToStream);
+
+    // Add your own processing logic here — for example, update a database
+    // or notify a downstream service.
+
+    return new Response("OK", { status: 200 });
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+## 2. Start the local dev server
+
+Run the Worker locally with Wrangler. By default this starts on port `8787`:
+
+```sh
+npx wrangler dev
+```
+
+## 3. Expose the dev server with Cloudflare Tunnel
+
+In a **separate terminal**, start a [quick tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local server:
+
+```sh
+npx cloudflared tunnel --url http://localhost:8787
+```
+
+`cloudflared` will output a public URL similar to:
+
+```
+https://example-words-here.trycloudflare.com
+```
+
+Copy this URL. It changes every time you restart the tunnel.
+
+## 4. Register the tunnel URL as your webhook endpoint
+
+Use the Stream API to set the tunnel URL as your webhook notification URL:
+
+```bash
+curl -X PUT \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/webhook \
+  --data '{"notificationUrl":"https://example-words-here.trycloudflare.com"}'
+```
+
+Replace `<API_TOKEN>` and `<ACCOUNT_ID>` with your values. Replace the `notificationUrl` with the URL from step 3.
+
+## 5. Trigger a test event
+
+Upload a video to Stream to trigger a webhook event. Once the video finishes processing, you will see the webhook payload logged in the terminal running `wrangler dev`.
+
+## Moving to production
+
+When you are done testing locally, deploy the Worker and update the webhook URL to your production endpoint:
+
+```sh
+npx wrangler deploy
+```
+
+Then update the webhook subscription to point to your deployed Worker URL:
+
+```bash
+curl -X PUT \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/webhook \
+  --data '{"notificationUrl":"https://your-worker.your-subdomain.workers.dev"}'
+```
+
+:::caution
+
+Remember to update the webhook URL after deploying to production. Stream only supports one webhook subscription per account, and a stale `trycloudflare.com` URL will silently fail once the tunnel is stopped.
+
+:::
