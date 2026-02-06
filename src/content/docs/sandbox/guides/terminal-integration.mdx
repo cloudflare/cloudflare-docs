@@ -48,16 +48,16 @@ import { useEffect, useRef, useState } from 'react';
 import '@xterm/xterm/css/xterm.css';
 
 interface TerminalProps {
-sandboxId: string;
-sessionId?: string;
+  sandboxId: string;
+  sessionId?: string;
 }
 
 export function Terminal({ sandboxId, sessionId }: TerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
 
-useEffect(() => {
-if (!containerRef.current) return;
+  useEffect(() => {
+    if (!containerRef.current) return;
 
     const terminal = new XTerm({
       cursorBlink: true,
@@ -93,21 +93,19 @@ if (!containerRef.current) return;
       window.removeEventListener('resize', handleResize);
       terminal.dispose();
     };
+  }, [sandboxId, sessionId]);
 
-}, [sandboxId, sessionId]);
-
-return (
-
-<div className="relative h-full">
-	<div ref={containerRef} className="h-full w-full" />
-	{state === "connecting" && (
-		<div className="absolute inset-0 flex items-center justify-center bg-black/50">
-			<div className="text-white">Connecting...</div>
-		</div>
-	)}
-</div>
-); }
-
+  return (
+    <div className="relative h-full">
+      <div ref={containerRef} className="h-full w-full" />
+      {state === 'connecting' && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+          <div className="text-white">Connecting...</div>
+        </div>
+      )}
+    </div>
+  );
+}
 ```
 </TypeScriptExample>
 
@@ -117,51 +115,48 @@ Handle WebSocket connections and create PTY sessions:
 
 <TypeScriptExample>
 ```
-
 import { getSandbox } from "@cloudflare/sandbox";
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
-    
+
     // Handle WebSocket upgrade for terminal connections
     if (url.pathname.startsWith('/ws/terminal/')) {
       return handleTerminalWebSocket(request, env);
     }
-    
+
     return new Response('Not found', { status: 404 });
   }
 };
 
 async function handleTerminalWebSocket(request: Request, env: Env): Promise<Response> {
-const upgrade = request.headers.get('Upgrade');
-if (upgrade !== 'websocket') {
-return new Response('Expected WebSocket', { status: 426 });
-}
+  const upgrade = request.headers.get('Upgrade');
+  if (upgrade !== 'websocket') {
+    return new Response('Expected WebSocket', { status: 426 });
+  }
 
-const url = new URL(request.url);
-const [, , , sandboxId, sessionId] = url.pathname.split('/');
+  const url = new URL(request.url);
+  const [, , , sandboxId, sessionId] = url.pathname.split('/');
 
-if (!sandboxId) {
-return new Response('Missing sandbox ID', { status: 400 });
-}
+  if (!sandboxId) {
+    return new Response('Missing sandbox ID', { status: 400 });
+  }
 
-try {
-const sandbox = getSandbox(env.Sandbox, sandboxId);
-const session = await sandbox.getSession(sessionId || 'default');
+  try {
+    const sandbox = getSandbox(env.Sandbox, sandboxId);
+    const session = await sandbox.getSession(sessionId || 'default');
 
     // The session.terminal() method handles the WebSocket upgrade
     return await session.terminal(request);
-
-} catch (err) {
-console.error('Terminal connection error:', err);
-return new Response(
-`Terminal error: ${err instanceof Error ? err.message : 'Unknown error'}`,
-{ status: 500 }
-);
+  } catch (err) {
+    console.error('Terminal connection error:', err);
+    return new Response(
+      `Terminal error: ${err instanceof Error ? err.message : 'Unknown error'}`,
+      { status: 500 }
+    );
+  }
 }
-}
-
 ```
 </TypeScriptExample>
 
@@ -173,55 +168,53 @@ Allow users to open multiple terminal sessions within the same sandbox:
 
 <TypeScriptExample>
 ```
-
 interface MultiTerminalProps {
-sandboxId: string;
+  sandboxId: string;
 }
 
 export function MultiTerminal({ sandboxId }: MultiTerminalProps) {
   const [sessions, setSessions] = useState<string[]>(['default']);
   const [activeSession, setActiveSession] = useState('default');
 
-const addSession = () => {
-const sessionId = `session-${Date.now()}`;
-setSessions(prev => [...prev, sessionId]);
-setActiveSession(sessionId);
-};
+  const addSession = () => {
+    const sessionId = `session-${Date.now()}`;
+    setSessions(prev => [...prev, sessionId]);
+    setActiveSession(sessionId);
+  };
 
-const closeSession = (sessionId: string) => {
-setSessions(prev => prev.filter(id => id !== sessionId));
-if (activeSession === sessionId) {
-setActiveSession(sessions[0] || 'default');
-}
-};
+  const closeSession = (sessionId: string) => {
+    setSessions(prev => prev.filter(id => id !== sessionId));
+    if (activeSession === sessionId) {
+      setActiveSession(sessions[0] || 'default');
+    }
+  };
 
-return (
-
-<div className="h-full flex flex-col">
-<div className="flex border-b">
-{sessions.map(sessionId => (
-<button
-key={sessionId}
-onClick={() => setActiveSession(sessionId)}
-className={`px-3 py-2 ${activeSession === sessionId ? 'bg-blue-500' : 'bg-gray-200'}`} >
-{sessionId}
-{sessions.length > 1 && (
-<span onClick={() => closeSession(sessionId)}>×</span>
-)}
-</button>
-))}
-<button onClick={addSession} className="px-3 py-2 bg-green-500"> + New Tab
-</button>
-</div>
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex border-b">
+        {sessions.map(sessionId => (
+          <button
+            key={sessionId}
+            onClick={() => setActiveSession(sessionId)}
+            className={`px-3 py-2 ${activeSession === sessionId ? 'bg-blue-500' : 'bg-gray-200'}`}
+          >
+            {sessionId}
+            {sessions.length > 1 && (
+              <span onClick={() => closeSession(sessionId)}>×</span>
+            )}
+          </button>
+        ))}
+        <button onClick={addSession} className="px-3 py-2 bg-green-500">
+          + New Tab
+        </button>
+      </div>
 
       <div className="flex-1">
         <Terminal sandboxId={sandboxId} sessionId={activeSession} />
       </div>
     </div>
-
-);
+  );
 }
-
 ```
 </TypeScriptExample>
 
@@ -231,21 +224,19 @@ Preserve terminal state across browser refreshes:
 
 <TypeScriptExample>
 ```
-
 // Store session IDs in localStorage
 const usePersistedSessions = (sandboxId: string) => {
-const [sessions, setSessions] = useState<string[]>(() => {
-const stored = localStorage.getItem(`sandbox-sessions-${sandboxId}`);
-return stored ? JSON.parse(stored) : ['default'];
-});
+  const [sessions, setSessions] = useState<string[]>(() => {
+    const stored = localStorage.getItem(`sandbox-sessions-${sandboxId}`);
+    return stored ? JSON.parse(stored) : ['default'];
+  });
 
-useEffect(() => {
-localStorage.setItem(`sandbox-sessions-${sandboxId}`, JSON.stringify(sessions));
-}, [sandboxId, sessions]);
+  useEffect(() => {
+    localStorage.setItem(`sandbox-sessions-${sandboxId}`, JSON.stringify(sessions));
+  }, [sandboxId, sessions]);
 
-return [sessions, setSessions] as const;
+  return [sessions, setSessions] as const;
 };
-
 ```
 </TypeScriptExample>
 
@@ -255,40 +246,38 @@ Create branded terminal experiences:
 
 <TypeScriptExample>
 ```
-
 const darkTheme = {
-background: '#1e1e1e',
-foreground: '#d4d4d4',
-cursor: '#ffffff',
-cursorAccent: '#000000',
-selectionBackground: '#404040',
-black: '#000000',
-red: '#f44747',
-green: '#4fc414',
-yellow: '#ffcc02',
-blue: '#0066cc',
-magenta: '#bc05bc',
-cyan: '#0598bc',
-white: '#e5e5e5',
-brightBlack: '#666666',
-brightRed: '#f48771',
-brightGreen: '#4fc414',
-brightYellow: '#ffcc02',
-brightBlue: '#6699ff',
-brightMagenta: '#bc05bc',
-brightCyan: '#0598bc',
-brightWhite: '#ffffff'
+  background: '#1e1e1e',
+  foreground: '#d4d4d4',
+  cursor: '#ffffff',
+  cursorAccent: '#000000',
+  selectionBackground: '#404040',
+  black: '#000000',
+  red: '#f44747',
+  green: '#4fc414',
+  yellow: '#ffcc02',
+  blue: '#0066cc',
+  magenta: '#bc05bc',
+  cyan: '#0598bc',
+  white: '#e5e5e5',
+  brightBlack: '#666666',
+  brightRed: '#f48771',
+  brightGreen: '#4fc414',
+  brightYellow: '#ffcc02',
+  brightBlue: '#6699ff',
+  brightMagenta: '#bc05bc',
+  brightCyan: '#0598bc',
+  brightWhite: '#ffffff'
 };
 
 const terminal = new XTerm({
-theme: darkTheme,
-fontFamily: '"Cascadia Code", "JetBrains Mono", monospace',
-fontSize: 16,
-lineHeight: 1.2,
-cursorBlink: true,
-cursorStyle: 'block'
+  theme: darkTheme,
+  fontFamily: '"Cascadia Code", "JetBrains Mono", monospace',
+  fontSize: 16,
+  lineHeight: 1.2,
+  cursorBlink: true,
+  cursorStyle: 'block'
 });
-
 ```
 </TypeScriptExample>
 
@@ -300,16 +289,15 @@ Handle network issues and reconnection:
 
 <TypeScriptExample>
 ```
-
 const sandboxAddon = new SandboxAddon({
-getWebSocketUrl: ({ origin, sandboxId, sessionId }) =>
-`${origin}/ws/terminal/${sandboxId}/${sessionId || 'default'}`,
+  getWebSocketUrl: ({ origin, sandboxId, sessionId }) =>
+    `${origin}/ws/terminal/${sandboxId}/${sessionId || 'default'}`,
 
-onStateChange: (state, error) => {
-switch (state) {
-case 'connecting':
-setStatus('Connecting to terminal...');
-break;
+  onStateChange: (state, error) => {
+    switch (state) {
+      case 'connecting':
+        setStatus('Connecting to terminal...');
+        break;
 
       case 'connected':
         setStatus('Terminal ready');
@@ -329,12 +317,10 @@ break;
         }
         break;
     }
+  },
 
-},
-
-reconnect: true // Enable automatic reconnection
+  reconnect: true // Enable automatic reconnection
 });
-
 ```
 </TypeScriptExample>
 
@@ -344,29 +330,27 @@ Handle sandbox and PTY-related errors:
 
 <TypeScriptExample>
 ```
-
 // In your WebSocket handler
 try {
-pty = await sandbox.pty.create({
-command: ['/bin/bash'],
-cols: 80,
-rows: 24,
-sessionId
-});
+  pty = await sandbox.pty.create({
+    command: ['/bin/bash'],
+    cols: 80,
+    rows: 24,
+    sessionId
+  });
 } catch (error) {
-let message = 'Failed to create terminal session';
+  let message = 'Failed to create terminal session';
 
-if (error.message.includes('Sandbox not found')) {
-message = 'Sandbox not available. Please try again later.';
-} else if (error.message.includes('PTY not supported')) {
-message = 'Terminal not supported in this sandbox.';
+  if (error.message.includes('Sandbox not found')) {
+    message = 'Sandbox not available. Please try again later.';
+  } else if (error.message.includes('PTY not supported')) {
+    message = 'Terminal not supported in this sandbox.';
+  }
+
+  webSocket.send(JSON.stringify({ type: 'error', message }));
+  webSocket.close();
+  return;
 }
-
-webSocket.send(JSON.stringify({ type: 'error', message }));
-webSocket.close();
-return;
-}
-
 ```
 </TypeScriptExample>
 
@@ -378,15 +362,14 @@ For high-throughput applications, implement output buffering:
 
 <TypeScriptExample>
 ```
-
 class BufferedTerminalHandler {
-private buffer: Uint8Array[] = [];
-private flushTimer: ReturnType<typeof setTimeout> | null = null;
+  private buffer: Uint8Array[] = [];
+  private flushTimer: ReturnType<typeof setTimeout> | null = null;
 
-constructor(private webSocket: WebSocket) {}
+  constructor(private webSocket: WebSocket) {}
 
-write(data: Uint8Array) {
-this.buffer.push(data);
+  write(data: Uint8Array) {
+    this.buffer.push(data);
 
     // Flush every 16ms (60fps) or when buffer gets large
     if (!this.flushTimer) {
@@ -394,11 +377,10 @@ this.buffer.push(data);
     } else if (this.buffer.length > 10) {
       this.flush();
     }
+  }
 
-}
-
-private flush() {
-if (this.buffer.length === 0) return;
+  private flush() {
+    if (this.buffer.length === 0) return;
 
     // Combine all buffered data
     const totalLength = this.buffer.reduce((sum, arr) => sum + arr.length, 0);
@@ -413,10 +395,8 @@ if (this.buffer.length === 0) return;
     this.webSocket.send(combined);
     this.buffer = [];
     this.flushTimer = null;
-
+  }
 }
-}
-
 ```
 </TypeScriptExample>
 
@@ -426,23 +406,21 @@ Monitor and limit terminal history:
 
 <TypeScriptExample>
 ```
-
 const terminal = new XTerm({
-scrollback: 1000, // Limit scrollback buffer
-convertEol: true,
-screenKeys: true,
-useStyle: true,
-cursorBlink: true
+  scrollback: 1000, // Limit scrollback buffer
+  convertEol: true,
+  screenKeys: true,
+  useStyle: true,
+  cursorBlink: true
 });
 
 // Clear terminal periodically in long-running sessions
 setInterval(() => {
-if (terminal.buffer.active.length > 5000) {
-terminal.clear();
-terminal.write('\r\nTerminal history cleared to conserve memory.\r\n');
-}
+  if (terminal.buffer.active.length > 5000) {
+    terminal.clear();
+    terminal.write('\r\nTerminal history cleared to conserve memory.\r\n');
+  }
 }, 60000); // Check every minute
-
 ```
 </TypeScriptExample>
 
@@ -452,4 +430,3 @@ terminal.write('\r\nTerminal history cleared to conserve memory.\r\n');
 - [Collaborative terminal tutorial](/sandbox/tutorials/collaborative-terminal/) - Multi-user terminal example
 - [WebSocket connections guide](/sandbox/guides/websocket-connections/) - WebSocket patterns
 - [Sessions API](/sandbox/api/sessions/) - Session management
-```

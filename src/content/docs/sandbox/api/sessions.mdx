@@ -42,18 +42,17 @@ const prodSession = await sandbox.createSession({
 });
 
 const testSession = await sandbox.createSession({
-id: 'test',
-env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
-cwd: '/workspace/test'
+  id: 'test',
+  env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
+  cwd: '/workspace/test'
 });
 
 // Run in parallel
 const [prodResult, testResult] = await Promise.all([
-prodSession.exec('npm run build'),
-testSession.exec('npm run build')
+  prodSession.exec('npm run build'),
+  testSession.exec('npm run build')
 ]);
-
-````
+```
 </TypeScriptExample>
 
 ### `getSession()`
@@ -62,7 +61,7 @@ Retrieve an existing session by ID.
 
 ```ts
 const session = await sandbox.getSession(sessionId: string): Promise<ExecutionSession>
-````
+```
 
 **Parameters**:
 
@@ -80,8 +79,7 @@ await session.exec('cd repo && npm install');
 // Second request - resume session (environment and cwd preserved)
 const session = await sandbox.getSession('user-123');
 const result = await session.exec('cd repo && npm run build');
-
-````
+```
 </TypeScriptExample>
 
 ---
@@ -92,7 +90,7 @@ Delete a session and clean up its resources.
 
 ```ts
 const result = await sandbox.deleteSession(sessionId: string): Promise<SessionDeleteResult>
-````
+```
 
 **Parameters**:
 
@@ -110,13 +108,12 @@ const result = await sandbox.deleteSession(sessionId: string): Promise<SessionDe
 const tempSession = await sandbox.createSession({ id: 'temp-task' });
 
 try {
-await tempSession.exec('npm run heavy-task');
+  await tempSession.exec('npm run heavy-task');
 } finally {
-// Clean up the session when done
-await sandbox.deleteSession('temp-task');
+  // Clean up the session when done
+  await sandbox.deleteSession('temp-task');
 }
-
-````
+```
 </TypeScriptExample>
 
 :::caution
@@ -131,7 +128,7 @@ Set environment variables in the sandbox.
 
 ```ts
 await sandbox.setEnvVars(envVars: Record<string, string>): Promise<void>
-````
+```
 
 **Parameters**:
 
@@ -147,15 +144,14 @@ const sandbox = getSandbox(env.Sandbox, 'user-123');
 
 // Set environment variables first
 await sandbox.setEnvVars({
-API_KEY: env.OPENAI_API_KEY,
-DATABASE_URL: env.DATABASE_URL,
-NODE_ENV: 'production'
+  API_KEY: env.OPENAI_API_KEY,
+  DATABASE_URL: env.DATABASE_URL,
+  NODE_ENV: 'production'
 });
 
 // Now commands can access these variables
 await sandbox.exec('python script.py');
-
-````
+```
 </TypeScriptExample>
 
 ---
@@ -166,7 +162,7 @@ Create a WebSocket connection to an interactive terminal session (PTY).
 
 ```ts
 const response = await session.terminal(request: Request): Promise<Response>
-````
+```
 
 **Parameters**:
 
