@@ -7,7 +7,13 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-To manage your [security.txt](https://en.wikipedia.org/wiki/Security.txt) file via the Cloudflare dashboard:
+You can manage your [security.txt](https://en.wikipedia.org/wiki/Security.txt) file via the dashboard or the [API](/api/resources/security_txt/).
+
+:::note
+When using the API, the preferred languages field name is `preferred_languages` (snake_case). For example: `"preferred_languages": "en, de"`.
+:::
+
+To manage your security.txt file via the Cloudflare dashboard:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
