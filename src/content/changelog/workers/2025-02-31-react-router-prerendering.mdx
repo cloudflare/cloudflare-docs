@@ -8,7 +8,7 @@ date: 2025-02-31
 
 You can now [prerender](https://reactrouter.com/how-to/pre-rendering#pre-rendering) [React Router](https://reactrouter.com) routes to static HTML at build time on Cloudflare Workers. Prerendered routes have full access to environment variables and bindings and are served as [static assets](/workers/static-assets/).
 
-Add `unstable_previewServerPrerendering` and `prerender` to your React Router config:
+Enable the experimental `unstable_previewServerPrerendering` future flag and set `prerender` in your React Router config:
 
 ```ts title="react-router.config.ts"
 import type { Config } from "@react-router/dev/config";
