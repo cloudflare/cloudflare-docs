@@ -47,25 +47,22 @@ const watcher = await sandbox.watch('/workspace', {
 
 // Stop watching when done
 await watcher.stop();
-
 ```
 </TypeScriptExample>
 
 <TypeScriptExample>
 ```
-
 // Watch specific file types in a directory
 const watcher = await sandbox.watch('/workspace/src', {
-include: ['*.ts', '*.tsx'],
-exclude: ['*.test.ts', 'dist'],
-onEvent: (event) => {
-if (event.type === 'modify') {
-console.log(`TypeScript file modified: ${event.path}`);
-}
-}
+  include: ['*.ts', '*.tsx'],
+  exclude: ['*.test.ts', 'dist'],
+  onEvent: (event) => {
+    if (event.type === 'modify') {
+      console.log(`TypeScript file modified: ${event.path}`);
+    }
+  }
 });
-
-````
+```
 </TypeScriptExample>
 
 ### `watchStream()`
@@ -74,7 +71,7 @@ Get raw SSE stream for file watching (advanced usage).
 
 ```ts
 const stream = await sandbox.watchStream(path: string, options?: WatchRequest): Promise<ReadableStream<Uint8Array>>
-````
+```
 
 Most users should use `watch()` instead, which provides a higher-level API with proper lifecycle management.
 
@@ -179,148 +176,7 @@ interface WatchOptions {
 }
 ```
 
-## Use Cases
-
-### Development Server with Auto-reload
-
-<TypeScriptExample>
-```
-// Watch source files and restart server on changes
-const watcher = await sandbox.watch('/workspace/src', {
-  include: ['*.ts', '*.js'],
-  onEvent: async (event) => {
-    if (event.type === 'modify') {
-      console.log('Restarting server...');
-      await sandbox.exec('pkill node'); // Stop existing server
-      await sandbox.exec('npm start &'); // Start new server in background
-    }
-  }
-});
-```
-</TypeScriptExample>
-
-### Build System Integration
-
-<TypeScriptExample>
-```
-// Trigger builds when source files change
-const watcher = await sandbox.watch('/workspace/src', {
-  exclude: ['dist', '*.log'],
-  onEvent: async (event) => {
-    if (event.type === 'modify' && event.path.endsWith('.ts')) {
-      console.log('Running TypeScript build...');
-      const result = await sandbox.exec('npm run build');
-      if (!result.success) {
-        console.error('Build failed:', result.stderr);
-      }
-    }
-  }
-});
-```
-</TypeScriptExample>
-
-### File Sync Monitoring
-
-<TypeScriptExample>
-```
-// Monitor file changes for sync operations
-const changedFiles = new Set<string>();
-
-const watcher = await sandbox.watch('/workspace/data', {
-onEvent: (event) => {
-if (event.type !== 'delete') {
-changedFiles.add(event.path);
-}
-}
-});
-
-// Periodically sync changed files
-setInterval(async () => {
-if (changedFiles.size > 0) {
-console.log(`Syncing ${changedFiles.size} changed files...`);
-// Sync logic here
-changedFiles.clear();
-}
-}, 5000);
-
-```
-</TypeScriptExample>
-
-## Best Practices
-
-### Resource Management
-
-Always stop watchers when done to prevent resource leaks:
-
-<TypeScriptExample>
-```
-
-const watcher = await sandbox.watch('/workspace/src');
-
-try {
-// Your application logic
-} finally {
-await watcher.stop(); // Clean up resources
-}
-
-```
-</TypeScriptExample>
-
-### Using AbortSignal
-
-Use AbortSignal for graceful cancellation:
-
-<TypeScriptExample>
-```
-
-const controller = new AbortController();
-
-const watcher = await sandbox.watch('/workspace/src', {
-signal: controller.signal,
-onEvent: (event) => console.log(event)
-});
-
-// Cancel after 60 seconds
-setTimeout(() => controller.abort(), 60000);
-
-```
-</TypeScriptExample>
-
-### Filtering Events Efficiently
-
-Use `include` and `exclude` options rather than filtering in callbacks:
-
-<TypeScriptExample>
-```
-
-// Efficient - filtering at inotify level
-const watcher = await sandbox.watch('/workspace', {
-include: ['*.ts', '*.js'],
-exclude: ['node_modules', 'dist']
-});
-
-// Less efficient - filtering in JavaScript
-const watcher = await sandbox.watch('/workspace', {
-onEvent: (event) => {
-if (!event.path.endsWith('.ts') && !event.path.endsWith('.js')) {
-return; // Skip non-JS/TS files
-}
-// Handle event
-}
-});
-
-```
-</TypeScriptExample>
-
-## Technical Details
-
-The file watching system uses Linux's native `inotify` via the `inotifywait` command for efficient, real-time monitoring:
-
-- **Performance**: Native kernel events, no polling overhead
-- **Reliability**: Handles high-frequency file changes without missing events
-- **Filtering**: Server-side pattern matching reduces network traffic
-- **Default exclusions**: Common directories (`.git`, `node_modules`) excluded by default
-- **Event coalescing**: Multiple rapid changes to the same file are properly handled
+## Notes
 
 :::note[Container lifecycle]
 File watchers are automatically stopped when the sandbox container sleeps or is destroyed. You do not need to manually stop them on container shutdown.
@@ -329,4 +185,7 @@ File watchers are automatically stopped when the sandbox container sleeps or is 
 :::caution[Path requirements]
 All paths must exist when starting a watch. Watching non-existent paths returns an error. Create directories before watching them.
 :::
-```
+
+## Related resources
+
+- [Watch filesystem changes guide](/sandbox/guides/file-watching/) - Patterns, best practices, and real-world examples

@@ -359,7 +359,7 @@ const watcher = await sandbox.watch('/workspace', {
 });
 
 // Less efficient - all events sent to JavaScript
-const watcher = await sandbox.watch('/workspace', {
+const watcher2 = await sandbox.watch('/workspace', {
   onEvent: (event) => {
     if (!event.path.endsWith('.ts')) return;
     if (event.path.includes('node_modules')) return;
