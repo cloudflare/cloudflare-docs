@@ -7,99 +7,134 @@ sidebar:
 
 import { TypeScriptExample } from "~/components";
 
-Integrate browser-based terminals with sandbox sessions using xterm.js and the SandboxAddon. This enables real-time terminal interfaces where users can interact directly with the sandbox shell.
+Integrate browser-based terminals with sandbox sessions using xterm.js and the `SandboxAddon`. This enables real-time terminal interfaces where users can interact directly with the sandbox shell.
 
 :::note
-Terminal integration requires the `@xterm/xterm` package and related addons. The SandboxAddon provides WebSocket connectivity and session management for seamless terminal experiences.
+Terminal integration requires the `@xterm/xterm` package and related addons. The `SandboxAddon` provides WebSocket connectivity and session management for seamless terminal experiences.
 :::
 
-## Setup
+## Installation
 
-Install the required dependencies:
+The SandboxAddon is included in the Sandbox SDK package. You also need xterm.js and its addons:
 
-```bash
-npm install @xterm/xterm @xterm/addon-fit @xterm/addon-web-links
+```sh
+npm install @cloudflare/sandbox @xterm/xterm @xterm/addon-fit @xterm/addon-web-links
 ```
 
-Import the SandboxAddon from the SDK:
+Import the addon:
 
 ```ts
-import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+import { SandboxAddon } from "@cloudflare/sandbox/xterm";
+import type {
+	ConnectionState,
+	ConnectionTarget,
+} from "@cloudflare/sandbox/xterm";
 ```
 
-## SandboxAddon
-
-The `SandboxAddon` connects xterm.js terminals to sandbox sessions via WebSocket, handling reconnection, resize events, and session switching.
-
-### Constructor
-
-```ts
-const addon = new SandboxAddon(options: SandboxAddonOptions)
-```
-
-**Parameters**:
-- `options` - Configuration object:
-  - `getWebSocketUrl` - Function to build WebSocket URLs for connections
-  - `reconnect` - Whether to auto-reconnect on disconnection (default: `true`)
-  - `onStateChange` - Callback for connection state changes
+## Basic usage
 
 <TypeScriptExample>
 ```
-import { SandboxAddon } from '@cloudflare/sandbox/xterm';
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+import '@xterm/xterm/css/xterm.css';
 
+// Create terminal
 const terminal = new Terminal({
-  cursorBlink: true,
-  fontFamily: 'Monaco, Menlo, monospace',
-  fontSize: 14
+cursorBlink: true,
+fontFamily: '"JetBrains Mono", monospace',
+fontSize: 14
 });
 
-const sandboxAddon = new SandboxAddon({
-  getWebSocketUrl: ({ origin, sessionId }) =>
-    `${origin}/ws/terminal/${sessionId}`,
-  onStateChange: (state, error) => {
-    console.log('Connection state:', state);
-    if (error) console.error('Terminal error:', error);
-  }
-});
-
-// Load addons
+// Create addons
 const fitAddon = new FitAddon();
+const sandboxAddon = new SandboxAddon({
+getWebSocketUrl: ({ origin, sandboxId, sessionId }) =>
+`${origin}/ws/terminal/${sandboxId}/${sessionId || 'default'}`,
+onStateChange: (state, error) => {
+console.log('Connection state:', state);
+if (error) console.error('Terminal error:', error);
+}
+});
+
+// Load addons and mount
 terminal.loadAddon(fitAddon);
 terminal.loadAddon(sandboxAddon);
-
-// Mount to DOM
 terminal.open(document.getElementById('terminal'));
 fitAddon.fit();
-```
+
+// Connect to sandbox
+sandboxAddon.connect({
+sandboxId: 'my-sandbox',
+sessionId: 'my-session'
+});
+
+````
 </TypeScriptExample>
 
-### Properties
+## API reference
 
-#### `state`
-Current connection state: `'disconnected' | 'connecting' | 'connected'`
+### `SandboxAddon`
 
-#### `sandboxId`
-ID of the currently connected sandbox (if any)
-
-#### `sessionId`
-ID of the currently connected session (if any)
-
-### Methods
-
-#### `connect()`
-
-Connect to a sandbox session's terminal.
+#### Constructor
 
 ```ts
-addon.connect(target: ConnectionTarget): void
+new SandboxAddon(options: SandboxAddonOptions)
+````
+
+Creates a new `SandboxAddon` instance. Connection details are provided later via `connect()`.
+
+**Parameters:**
+
+- `options` - Configuration object (see [`SandboxAddonOptions`](#sandboxaddonoptions))
+
+#### Properties
+
+##### `state`
+
+```ts
+readonly state: ConnectionState
 ```
 
-**Parameters**:
-- `target` - Connection target:
-  - `sandboxId` - Sandbox identifier
-  - `sessionId` - Session identifier (optional, uses default if omitted)
+Current connection state: `'disconnected'`, `'connecting'`, or `'connected'`.
+
+##### `sandboxId`
+
+```ts
+readonly sandboxId: string | undefined
+```
+
+Currently connected sandbox ID, or `undefined` if not connected.
+
+##### `sessionId`
+
+```ts
+readonly sessionId: string | undefined
+```
+
+Currently connected session ID, or `undefined` if not connected.
+
+#### Methods
+
+##### `connect()`
+
+```ts
+connect(target: ConnectionTarget): void
+```
+
+Connect to a sandbox PTY session. Automatically handles switching between different targets.
+
+**Parameters:**
+
+- `target.sandboxId` - Sandbox identifier
+- `target.sessionId` - Session identifier (optional, uses default session if omitted)
+
+**Behavior:**
+
+- Prevents unnecessary reconnections to the same target
+- Clears terminal when switching to a different target
+- Automatically retries on connection failures (unless disabled)
 
 <TypeScriptExample>
 ```
@@ -110,24 +145,108 @@ sandboxAddon.connect({
 
 // Connect to specific session
 sandboxAddon.connect({
-  sandboxId: 'shared-env',
-  sessionId: 'room-123'
+sandboxId: 'shared-env',
+sessionId: 'room-123'
 });
 
 // Switch between sessions (clears terminal)
 sandboxAddon.connect({
-  sandboxId: 'shared-env',
-  sessionId: 'room-456'
+sandboxId: 'shared-env',
+sessionId: 'room-456'
 });
-```
+
+````
 </TypeScriptExample>
 
-#### `disconnect()`
-
-Disconnect from the current session.
+##### `disconnect()`
 
 ```ts
-addon.disconnect(): void
+disconnect(): void
+````
+
+Explicitly disconnect from the current target. Disables automatic reconnection.
+
+##### `dispose()`
+
+```ts
+dispose(): void
+```
+
+Clean up the addon and close all connections. Call this when removing the terminal.
+
+---
+
+### `SandboxAddonOptions`
+
+Configuration options for the `SandboxAddon`.
+
+#### `getWebSocketUrl`
+
+```ts
+getWebSocketUrl: (params: {
+	sandboxId: string;
+	sessionId?: string;
+	origin: string;
+}) => string;
+```
+
+**Required.** Function to build the WebSocket URL for PTY connections.
+
+**Parameters:**
+
+- `sandboxId` - The target sandbox ID
+- `sessionId` - The target session ID (may be undefined)
+- `origin` - WebSocket origin (e.g., `wss://example.com`) derived from `window.location`
+
+**Returns:** Complete WebSocket URL
+
+**Example:**
+
+```ts
+getWebSocketUrl: ({ origin, sandboxId, sessionId }) =>
+	`${origin}/ws/terminal/${sandboxId}/${sessionId || "default"}`;
+```
+
+#### `reconnect`
+
+```ts
+reconnect?: boolean
+```
+
+**Optional.** Enable automatic reconnection on connection loss. Uses exponential backoff with jitter.
+
+**Default:** `true`
+
+#### `onStateChange`
+
+```ts
+onStateChange?: (state: ConnectionState, error?: Error) => void
+```
+
+**Optional.** Callback when connection state changes. Use this to update your UI.
+
+**Parameters:**
+
+- `state` - New connection state
+- `error` - Error details if state change was due to an error
+
+---
+
+## Types
+
+### `ConnectionState`
+
+```ts
+type ConnectionState = "disconnected" | "connecting" | "connected";
+```
+
+### `ConnectionTarget`
+
+```ts
+interface ConnectionTarget {
+	sandboxId: string;
+	sessionId?: string;
+}
 ```
 
 ---
@@ -143,24 +262,26 @@ import { getSandbox } from '@cloudflare/sandbox';
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    
+
     // Handle terminal WebSocket connections
     if (url.pathname.startsWith('/ws/terminal/')) {
       const sessionId = url.pathname.split('/').pop();
-      
+
       if (request.headers.get('Upgrade') === 'websocket') {
         const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
         const session = await sandbox.getSession(sessionId);
-        
+
         // Proxy WebSocket directly to session's PTY
         return session.terminal(request);
       }
     }
-    
+
     // Handle other requests...
     return new Response('Not found', { status: 404 });
-  }
+
+}
 };
+
 ```
 </TypeScriptExample>
 
@@ -180,26 +301,28 @@ The addon provides connection state tracking through the `onStateChange` callbac
 
 <TypeScriptExample>
 ```
+
 const sandboxAddon = new SandboxAddon({
-  getWebSocketUrl: ({ origin, sessionId }) =>
-    `${origin}/ws/terminal/${sessionId}`,
-  onStateChange: (state, error) => {
-    switch (state) {
-      case 'connecting':
-        showSpinner();
-        break;
-      case 'connected':
-        hideSpinner();
-        terminal.focus();
-        break;
-      case 'disconnected':
-        if (error) {
-          showError(`Connection lost: ${error.message}`);
-        }
-        break;
-    }
-  }
+getWebSocketUrl: ({ origin, sandboxId, sessionId }) =>
+`${origin}/ws/terminal/${sandboxId}/${sessionId || 'default'}`,
+onStateChange: (state, error) => {
+switch (state) {
+case 'connecting':
+showSpinner();
+break;
+case 'connected':
+hideSpinner();
+terminal.focus();
+break;
+case 'disconnected':
+if (error) {
+showError(`Connection lost: ${error.message}`);
+}
+break;
+}
+}
 });
+
 ```
 </TypeScriptExample>
 
@@ -218,24 +341,126 @@ Use `connect()` with different session IDs to switch between terminal contexts:
 
 <TypeScriptExample>
 ```
+
 // Switch to development environment
 sandboxAddon.connect({
-  sandboxId: 'my-sandbox',
-  sessionId: 'dev'
+sandboxId: 'my-sandbox',
+sessionId: 'dev'
 });
 
 // Switch to production environment (clears terminal)
 sandboxAddon.connect({
-  sandboxId: 'my-sandbox', 
-  sessionId: 'prod'
+sandboxId: 'my-sandbox',
+sessionId: 'prod'
 });
-```
+
+````
 </TypeScriptExample>
 
 The terminal is cleared when switching sessions to avoid confusion between different environments.
 
+## WebSocket protocol
+
+The addon communicates with your backend via WebSocket. Your server should:
+
+1. **Accept WebSocket connections** at the URL returned by `getWebSocketUrl()`
+2. **Create PTY sessions** and forward I/O between the WebSocket and PTY
+3. **Send control messages** as JSON for session lifecycle events
+4. **Send terminal data** as binary ArrayBuffer for performance
+
+### Control messages (JSON)
+
+**Server to client:**
+```ts
+// PTY session ready
+{ type: 'ready' }
+
+// PTY session error
+{ type: 'error', message: string }
+
+// PTY session exited
+{ type: 'exit', code: number, signal?: string }
+````
+
+**Client to server:**
+
+```ts
+// Resize terminal
+{ type: 'resize', cols: number, rows: number }
+```
+
+### Terminal data (binary)
+
+- **Client to server:** User input as binary data (UTF-8 encoded)
+- **Server to client:** PTY output as ArrayBuffer
+
+## Error handling
+
+The addon handles various error scenarios automatically:
+
+- **Network failures** - Automatic reconnection with exponential backoff
+- **Session termination** - Graceful disconnection with error reporting
+- **Invalid sessions** - Clear error messages via `onStateChange`
+
+Common error scenarios reported through `onStateChange`:
+
+- `"Max reconnection attempts exceeded"` - Network connectivity issues
+- `"Session exited with code N"` - Terminal session ended
+- `"WebSocket error"` - General WebSocket failures
+
+## Migration guide
+
+If upgrading from an older version that used constructor-time connection parameters:
+
+### Before
+
+```ts
+// Old pattern - connection details in constructor
+const addon = new SandboxAddon({
+	sandboxId: "my-sandbox", // Required in constructor
+	sessionId: "my-session", // Optional in constructor
+	getWebSocketUrl: ({ sandboxId, sessionId }) => `...`,
+});
+
+addon.connect(); // No parameters
+
+// Switching required separate methods
+addon.setSandbox("other-sandbox");
+addon.setSession("other-session");
+```
+
+### After
+
+```ts
+// New pattern - connection details at connect time
+const addon = new SandboxAddon({
+	getWebSocketUrl: ({ origin, sandboxId, sessionId }) => `...`,
+	// No sandboxId/sessionId in constructor
+});
+
+// Connect with explicit target
+addon.connect({
+	sandboxId: "my-sandbox",
+	sessionId: "my-session",
+});
+
+// Switching is just another connect() call
+addon.connect({
+	sandboxId: "other-sandbox",
+	sessionId: "other-session",
+});
+```
+
+### Benefits
+
+- **More flexible:** Easy switching between sandboxes/sessions
+- **Cleaner separation:** Construction vs. connection concerns separated
+- **Better for dynamic UIs:** Perfect for room switching or multi-tenant scenarios
+- **Automatic origin:** No need to manually specify WebSocket protocol/host
+
 ## Related resources
 
+- [Terminal integration guide](/sandbox/guides/terminal-integration/) - Building terminal UIs
 - [Sessions API](/sandbox/api/sessions/) - Create and manage isolated execution contexts
 - [Commands API](/sandbox/api/commands/) - Execute commands in sessions
-- [Build a collaborative terminal tutorial](/sandbox/tutorials/collaborative-terminal/) - Multi-user terminal sharing example
+- [Collaborative terminal tutorial](/sandbox/tutorials/collaborative-terminal/) - Multi-user terminal sharing example

@@ -3,13 +3,14 @@ title: Build a collaborative terminal
 pcx_content_type: tutorial
 sidebar:
   order: 7
-updated: 2024-01-15
-difficulty: Advanced
-content_type: 📝 Tutorial
-pcx_content: tutorial
+description: Build a real-time collaborative terminal where multiple users share the same shell session using Sandbox, Durable Objects, and xterm.js.
 ---
 
-import { TypeScriptExample, PackageManagers, WranglerConfig } from "~/components";
+import {
+	TypeScriptExample,
+	PackageManagers,
+	WranglerConfig,
+} from "~/components";
 
 Build a real-time collaborative terminal where multiple users can share the same shell session. Like Google Docs, but for your terminal.
 
@@ -39,13 +40,13 @@ By the end of this tutorial, you will have:
 Create a new React Router project and install dependencies:
 
 <PackageManagers
-  type="create"
-  pkg="@cloudflare/create-react-router@latest collaborative-terminal"
+	type="create"
+	pkg="@cloudflare/create-react-router@latest collaborative-terminal"
 />
 
 <PackageManagers
-  type="install"
-  pkg="@cloudflare/sandbox @xterm/xterm @xterm/addon-fit @xterm/addon-web-links"
+	type="install"
+	pkg="@cloudflare/sandbox @xterm/xterm @xterm/addon-fit @xterm/addon-web-links"
 />
 
 Configure your project structure:
@@ -73,7 +74,7 @@ collaborative-terminal/
 Update your Wrangler configuration to include Durable Objects and sandbox bindings:
 
 <WranglerConfig>
-```
+```jsonc
 {
   "name": "collaborative-terminal",
   "main": "workers/app.ts",
@@ -193,33 +194,37 @@ export class Room extends DurableObject {
     };
   }
 
-  async fetch(request: Request): Promise<Response> {
-    if (request.headers.get('Upgrade') !== 'websocket') {
-      return new Response('Expected WebSocket', { status: 426 });
-    }
+async fetch(request: Request): Promise<Response> {
+if (request.headers.get('Upgrade') !== 'websocket') {
+return new Response('Expected WebSocket', { status: 426 });
+}
 
     const url = new URL(request.url);
     const userName = url.searchParams.get('name') || 'Anonymous';
-    
+
     const { 0: client, 1: server } = new WebSocketPair();
-    
+
     this.handleWebSocket(server, userName);
-    
+
     return new Response(null, {
       status: 101,
       webSocket: client
     });
-  }
 
-  private handleWebSocket(ws: WebSocket, userName: string): void {
-    const user: User = {
-      id: crypto.randomUUID(),
-      name: userName,
-      color: this.generateUserColor()
-    };
-    
+}
+
+private handleWebSocket(ws: WebSocket, userName: string): void {
+const user: User = {
+id: crypto.randomUUID(),
+name: userName,
+color: this.generateUserColor()
+};
+
+    // Accept the WebSocket connection first
+    ws.accept();
+
     this.users.set(ws, user);
-    
+
     // Send initial state
     ws.send(JSON.stringify({
       type: 'connected',
@@ -228,14 +233,14 @@ export class Room extends DurableObject {
       users: Array.from(this.users.values()),
       room: this.roomInfo
     } satisfies ServerMessage));
-    
+
     // Notify others of new user
     this.broadcast({
       type: 'user_joined',
       user,
       users: Array.from(this.users.values())
     }, ws);
-    
+
     ws.addEventListener('message', (event) => {
       try {
         const message: ClientMessage = JSON.parse(event.data as string);
@@ -244,33 +249,31 @@ export class Room extends DurableObject {
         // Ignore malformed messages
       }
     });
-    
+
     ws.addEventListener('close', () => {
       this.users.delete(ws);
-      
+
       this.broadcast({
         type: 'user_left',
         userId: user.id,
         users: Array.from(this.users.values())
       });
-      
+
       // Notify registry if room is empty
       if (this.users.size === 0) {
         this.notifyRegistryRoomEmpty();
       }
     });
-    
-    // Accept the WebSocket connection
-    ws.accept();
-    
+
     // Notify registry of active room
     this.notifyRegistryRoomActive();
-  }
 
-  private handleMessage(sender: WebSocket, message: ClientMessage): void {
-    const user = this.users.get(sender);
-    if (!user) return;
-    
+}
+
+private handleMessage(sender: WebSocket, message: ClientMessage): void {
+const user = this.users.get(sender);
+if (!user) return;
+
     switch (message.type) {
       case 'typing':
         this.broadcast({
@@ -279,34 +282,36 @@ export class Room extends DurableObject {
         }, sender);
         break;
     }
-  }
 
-  private broadcast(message: ServerMessage, exclude?: WebSocket): void {
-    for (const [ws] of this.users) {
-      if (ws !== exclude) {
-        ws.send(JSON.stringify(message));
-      }
-    }
-  }
-
-  private generateUserColor(): string {
-    const colors = [
-      '#ef4444', '#f97316', '#eab308', '#22c55e',
-      '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899'
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  private async notifyRegistryRoomActive(): Promise<void> {
-    // Notify the registry that this room is active
-    // Implementation depends on your registry setup
-  }
-
-  private async notifyRegistryRoomEmpty(): Promise<void> {
-    // Notify the registry that this room is empty
-    // Implementation depends on your registry setup
-  }
 }
+
+private broadcast(message: ServerMessage, exclude?: WebSocket): void {
+for (const [ws] of this.users) {
+if (ws !== exclude) {
+ws.send(JSON.stringify(message));
+}
+}
+}
+
+private generateUserColor(): string {
+const colors = [
+'#ef4444', '#f97316', '#eab308', '#22c55e',
+'#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899'
+];
+return colors[Math.floor(Math.random() * colors.length)];
+}
+
+private async notifyRegistryRoomActive(): Promise<void> {
+// Notify the registry that this room is active
+// Implementation depends on your registry setup
+}
+
+private async notifyRegistryRoomEmpty(): Promise<void> {
+// Notify the registry that this room is empty
+// Implementation depends on your registry setup
+}
+}
+
 ```
 </TypeScriptExample>
 
@@ -318,6 +323,7 @@ The Registry DO tracks all active rooms globally:
 
 <TypeScriptExample>
 ```
+
 // workers/registry.ts
 
 import type { ActiveRoom, RegistryMessage } from './types/protocol';
@@ -326,13 +332,13 @@ export class RoomRegistry extends DurableObject {
   private activeRooms = new Map<string, ActiveRoom>();
   private subscribers = new Set<WebSocket>();
 
-  async fetch(request: Request): Promise<Response> {
-    if (request.headers.get('Upgrade') === 'websocket') {
-      return this.handleWebSocket(request);
-    }
+async fetch(request: Request): Promise<Response> {
+if (request.headers.get('Upgrade') === 'websocket') {
+return this.handleWebSocket(request);
+}
 
     const url = new URL(request.url);
-    
+
     switch (request.method) {
       case 'POST':
         if (url.pathname === '/room-active') {
@@ -340,7 +346,7 @@ export class RoomRegistry extends DurableObject {
           return this.markRoomActive(roomId, userCount);
         }
         break;
-      
+
       case 'DELETE':
         if (url.pathname.startsWith('/room/')) {
           const roomId = url.pathname.split('/').pop();
@@ -350,61 +356,67 @@ export class RoomRegistry extends DurableObject {
     }
 
     return new Response('Not found', { status: 404 });
-  }
 
-  private async handleWebSocket(request: Request): Promise<Response> {
-    const { 0: client, 1: server } = new WebSocketPair();
-    
+}
+
+private async handleWebSocket(request: Request): Promise<Response> {
+const { 0: client, 1: server } = new WebSocketPair();
+
+    server.accept();
+
     this.subscribers.add(server);
-    
+
     // Send current rooms list
     server.send(JSON.stringify({
       type: 'rooms',
       rooms: Array.from(this.activeRooms.values())
     } satisfies RegistryMessage));
-    
+
     server.addEventListener('close', () => {
       this.subscribers.delete(server);
     });
-    
-    server.accept();
-    
+
     return new Response(null, {
-      status: 101, 
+      status: 101,
       webSocket: client
     });
-  }
 
-  private async markRoomActive(roomId: string, userCount: number): Promise<Response> {
-    this.activeRooms.set(roomId, {
-      roomId,
-      userCount,
-      createdAt: Date.now()
-    });
-    
+}
+
+private async markRoomActive(roomId: string, userCount: number): Promise<Response> {
+this.activeRooms.set(roomId, {
+roomId,
+userCount,
+createdAt: Date.now()
+});
+
     this.broadcastRoomsUpdate();
-    
-    return new Response('OK');
-  }
 
-  private async markRoomEmpty(roomId: string): Promise<Response> {
-    this.activeRooms.delete(roomId);
-    this.broadcastRoomsUpdate();
-    
     return new Response('OK');
-  }
 
-  private broadcastRoomsUpdate(): void {
-    const message: RegistryMessage = {
-      type: 'rooms',
-      rooms: Array.from(this.activeRooms.values())
-    };
-    
+}
+
+private async markRoomEmpty(roomId: string): Promise<Response> {
+this.activeRooms.delete(roomId);
+this.broadcastRoomsUpdate();
+
+    return new Response('OK');
+
+}
+
+private broadcastRoomsUpdate(): void {
+const message: RegistryMessage = {
+type: 'rooms',
+rooms: Array.from(this.activeRooms.values())
+};
+
     for (const ws of this.subscribers) {
       ws.send(JSON.stringify(message));
     }
-  }
+
 }
+}
+
 ```
 </TypeScriptExample>
 
@@ -416,17 +428,18 @@ The main Worker routes requests and manages sandbox connections:
 
 <TypeScriptExample>
 ```
+
 // workers/app.ts
 
-import { getSandbox } from '@cloudflare/sandbox';
+import { getSandbox } from "@cloudflare/sandbox";
 
-export { Room } from './room';
-export { RoomRegistry } from './registry';
+export { Room } from "./room";
+export { RoomRegistry } from "./registry";
 
 interface Env {
-  Room: DurableObjectNamespace;
-  RoomRegistry: DurableObjectNamespace;
-  Sandbox: DurableObjectNamespace;
+Room: DurableObjectNamespace;
+RoomRegistry: DurableObjectNamespace;
+Sandbox: DurableObjectNamespace;
 }
 
 export default {
@@ -437,12 +450,12 @@ export default {
     if (request.headers.get('Upgrade') === 'websocket') {
       if (url.pathname.startsWith('/ws/room/')) {
         const roomId = url.pathname.split('/').pop()!;
-        const roomDO = env.Room.get(env.Room.idFromString(roomId));
+        const roomDO = env.Room.get(env.Room.idFromName(roomId));
         return roomDO.fetch(request);
       }
       
       if (url.pathname === '/ws/rooms') {
-        const registryDO = env.RoomRegistry.get(env.RoomRegistry.idFromString('global'));
+        const registryDO = env.RoomRegistry.get(env.RoomRegistry.idFromName('global'));
         return registryDO.fetch(request);
       }
       
@@ -469,7 +482,7 @@ export default {
       const roomId = url.pathname.split('/').pop()!;
       
       // Notify room to close
-      const roomDO = env.Room.get(env.Room.idFromString(roomId));
+      const roomDO = env.Room.get(env.Room.idFromName(roomId));
       await roomDO.fetch(new Request('http://localhost/delete', {
         method: 'POST'
       }));
@@ -500,13 +513,13 @@ import { WebLinksAddon } from '@xterm/addon-web-links';
 import { Terminal as XTerm } from '@xterm/xterm';
 import { useEffect, useRef, useState } from 'react';
 
-import '@xterm/xterm/css/xterm.css';
+import "@xterm/xterm/css/xterm.css";
 
 interface TerminalProps {
-  sandboxId: string;
-  sessionId: string;
-  onTyping?: () => void;
-  onAddonReady?: (addon: SandboxAddon) => void;
+sandboxId: string;
+sessionId: string;
+onTyping?: () => void;
+onAddonReady?: (addon: SandboxAddon) => void;
 }
 
 export function Terminal({
@@ -518,8 +531,8 @@ export function Terminal({
   const containerRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<ConnectionState>('disconnected');
 
-  useEffect(() => {
-    if (!containerRef.current) return;
+useEffect(() => {
+if (!containerRef.current) return;
 
     const terminal = new XTerm({
       cursorBlink: true,
@@ -560,53 +573,55 @@ export function Terminal({
       window.removeEventListener('resize', handleResize);
       terminal.dispose();
     };
-  }, []);
 
-  return (
-    <div className="relative h-full">
-      <div ref={containerRef} className="h-full w-full" />
-      {state !== 'connected' && (
-        <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80">
-          <div className="flex items-center gap-3 text-zinc-400">
-            {state === 'connecting' ? (
-              <>
-                <Spinner />
-                <span>Connecting to terminal...</span>
-              </>
-            ) : (
-              <span>Disconnected</span>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+}, []);
+
+return (
+
+<div className="relative h-full">
+	<div ref={containerRef} className="h-full w-full" />
+	{state !== "connected" && (
+		<div className="absolute inset-0 flex items-center justify-center bg-zinc-950/80">
+			<div className="flex items-center gap-3 text-zinc-400">
+				{state === "connecting" ? (
+					<>
+						<Spinner />
+						<span>Connecting to terminal...</span>
+					</>
+				) : (
+					<span>Disconnected</span>
+				)}
+			</div>
+		</div>
+	)}
+</div>
+); }
 
 function Spinner() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="w-5 h-5 animate-spin"
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      />
-    </svg>
-  );
-}
+return (
+
+<svg
+	aria-hidden="true"
+	className="h-5 w-5 animate-spin"
+	viewBox="0 0 24 24"
+	fill="none"
+>
+	<circle
+		className="opacity-25"
+		cx="12"
+		cy="12"
+		r="10"
+		stroke="currentColor"
+		strokeWidth="4"
+	/>
+	<path
+		className="opacity-75"
+		fill="currentColor"
+		d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+	/>
+</svg>
+); }
+
 ```
 </TypeScriptExample>
 
@@ -618,14 +633,15 @@ Build user avatars with typing indicators:
 
 <TypeScriptExample>
 ```
+
 // app/components/UserAvatars.tsx
 
 import type { User } from '../types';
 
 interface UserAvatarsProps {
-  users: User[];
-  currentUserId: string | null;
-  typingUsers: Set<string>;
+users: User[];
+currentUserId: string | null;
+typingUsers: Set<string>;
 }
 
 export function UserAvatars({
@@ -690,7 +706,7 @@ Your collaborative terminal uses three WebSocket connections:
    - Raw bytes flow directly between xterm.js and the sandbox shell
    - No JSON protocol overhead for terminal data
 
-2. **Room presence**: Browser ↔ Room Durable Object  
+2. **Room presence**: Browser ↔ Room Durable Object
    - User join/leave events, typing indicators
    - Keeps collaboration state separate from terminal I/O
 

@@ -24,6 +24,7 @@ const session = await sandbox.createSession(options?: SessionOptions): Promise<E
 ```
 
 **Parameters**:
+
 - `options` (optional):
   - `id` - Custom session ID (auto-generated if not provided)
   - `env` - Environment variables for this session
@@ -41,17 +42,18 @@ const prodSession = await sandbox.createSession({
 });
 
 const testSession = await sandbox.createSession({
-  id: 'test',
-  env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
-  cwd: '/workspace/test'
+id: 'test',
+env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
+cwd: '/workspace/test'
 });
 
 // Run in parallel
 const [prodResult, testResult] = await Promise.all([
-  prodSession.exec('npm run build'),
-  testSession.exec('npm run build')
+prodSession.exec('npm run build'),
+testSession.exec('npm run build')
 ]);
-```
+
+````
 </TypeScriptExample>
 
 ### `getSession()`
@@ -60,9 +62,10 @@ Retrieve an existing session by ID.
 
 ```ts
 const session = await sandbox.getSession(sessionId: string): Promise<ExecutionSession>
-```
+````
 
 **Parameters**:
+
 - `sessionId` - ID of an existing session
 
 **Returns**: `Promise<ExecutionSession>` bound to the specified session
@@ -77,7 +80,8 @@ await session.exec('cd repo && npm install');
 // Second request - resume session (environment and cwd preserved)
 const session = await sandbox.getSession('user-123');
 const result = await session.exec('cd repo && npm run build');
-```
+
+````
 </TypeScriptExample>
 
 ---
@@ -88,12 +92,14 @@ Delete a session and clean up its resources.
 
 ```ts
 const result = await sandbox.deleteSession(sessionId: string): Promise<SessionDeleteResult>
-```
+````
 
 **Parameters**:
+
 - `sessionId` - ID of the session to delete (cannot be `"default"`)
 
 **Returns**: `Promise<SessionDeleteResult>` containing:
+
 - `success` - Whether deletion succeeded
 - `sessionId` - ID of the deleted session
 - `timestamp` - Deletion timestamp
@@ -104,12 +110,13 @@ const result = await sandbox.deleteSession(sessionId: string): Promise<SessionDe
 const tempSession = await sandbox.createSession({ id: 'temp-task' });
 
 try {
-  await tempSession.exec('npm run heavy-task');
+await tempSession.exec('npm run heavy-task');
 } finally {
-  // Clean up the session when done
-  await sandbox.deleteSession('temp-task');
+// Clean up the session when done
+await sandbox.deleteSession('temp-task');
 }
-```
+
+````
 </TypeScriptExample>
 
 :::caution
@@ -124,9 +131,10 @@ Set environment variables in the sandbox.
 
 ```ts
 await sandbox.setEnvVars(envVars: Record<string, string>): Promise<void>
-```
+````
 
 **Parameters**:
+
 - `envVars` - Key-value pairs of environment variables to set
 
 :::caution
@@ -139,14 +147,15 @@ const sandbox = getSandbox(env.Sandbox, 'user-123');
 
 // Set environment variables first
 await sandbox.setEnvVars({
-  API_KEY: env.OPENAI_API_KEY,
-  DATABASE_URL: env.DATABASE_URL,
-  NODE_ENV: 'production'
+API_KEY: env.OPENAI_API_KEY,
+DATABASE_URL: env.DATABASE_URL,
+NODE_ENV: 'production'
 });
 
 // Now commands can access these variables
 await sandbox.exec('python script.py');
-```
+
+````
 </TypeScriptExample>
 
 ---
@@ -157,9 +166,10 @@ Create a WebSocket connection to an interactive terminal session (PTY).
 
 ```ts
 const response = await session.terminal(request: Request): Promise<Response>
-```
+````
 
 **Parameters**:
+
 - `request` - WebSocket upgrade request from client
 
 **Returns**: `Promise<Response>` with WebSocket upgrade response
@@ -177,13 +187,14 @@ if (url.pathname.startsWith('/ws/terminal/')) {
 </TypeScriptExample>
 
 The terminal connection provides:
+
 - **Interactive shell** - Real bash session with full TTY support
 - **Bidirectional streaming** - User input and command output via WebSocket
 - **Session isolation** - Each session has independent shell state
 - **Automatic cleanup** - Terminal processes cleaned up when session ends
 
 :::note
-Use the [XTerm addon](/sandbox/api/xterm/) to connect browser terminals to the WebSocket endpoint.
+Use the [SandboxAddon](/sandbox/api/terminals/) to connect browser terminals to the WebSocket endpoint.
 :::
 
 ---
@@ -192,15 +203,14 @@ Use the [XTerm addon](/sandbox/api/xterm/) to connect browser terminals to the W
 
 The `ExecutionSession` object has all sandbox methods bound to the specific session:
 
-| Category | Methods |
-| -------- | ------- |
-| **Commands** | [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream) |
-| **Processes** | [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs) |
-| **Files** | [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout) |
-| **Terminal** | [`terminal()`](/sandbox/api/sessions/#terminal) |
-| **Environment** | [`setEnvVars()`](/sandbox/api/sessions/#setenvvars) |
-| **Code Interpreter** | [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext) |
-| **Terminals** | [`terminal()`](/sandbox/api/terminals/#worker-integration) |
+| Category             | Methods                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Commands**         | [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream)                                                                                                                                                                                                                                                                               |
+| **Processes**        | [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs) |
+| **Files**            | [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout)                                 |
+| **Terminal**         | [`terminal()`](/sandbox/api/sessions/#terminal)                                                                                                                                                                                                                                                                                                                            |
+| **Environment**      | [`setEnvVars()`](/sandbox/api/sessions/#setenvvars)                                                                                                                                                                                                                                                                                                                        |
+| **Code Interpreter** | [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext)                                                                                                           |
 
 ## Related resources
 
