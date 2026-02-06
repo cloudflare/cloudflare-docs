@@ -50,7 +50,7 @@ In addition to controls in Cloudflare One, Okta users can send risk scores to Ok
 
 For more information on configuring user risk score within Okta, refer to the [Okta documentation](https://help.okta.com/oie/en-us/content/topics/itp/overview.htm).
 
-While the Okta integration is turned on, Cloudflare One will send any user risk score updates to Okta, including score increases and resets. Score update events will appear in your [Access audit logs](/cloudflare-one/insights/logs/audit-logs/).
+While the Okta integration is turned on, Cloudflare One will send any user risk score updates to Okta, including score increases and resets. Score update events will appear in your [Access authentication logs](/cloudflare-one/insights/logs/audit-logs/).
 
 ## Predefined risk behaviors
 
@@ -58,7 +58,7 @@ By default, all predefined behaviors are disabled. When a behavior is enabled, C
 
 | Risk behaviors                         | Requirements                                                                                                | Description                                                                                                                                                                                                            |
 | -------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Impossible travel                      | [A configured Access application](/cloudflare-one/access-controls/applications/http-apps/)                                            | User has a successful login from two different locations that they could not have traveled between in that period of time. Matches will appear in your [Access audit logs](/cloudflare-one/insights/logs/audit-logs/). |
+| Impossible travel                      | [A configured Access application](/cloudflare-one/access-controls/applications/http-apps/)                                            | User has a successful login from two different locations that they could not have traveled between in that period of time. Matches will appear in your [Access authentication logs](/cloudflare-one/insights/logs/audit-logs/). |
 | High number of DLP policies triggered  | [A configured DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/)                     | User has created a high number of DLP policy matches within a narrow frame of time. Matches will appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).                                  |
 | SentinelOne threat detected on machine | [SentinelOne service provider integration](/cloudflare-one/integrations/service-providers/sentinelone/) | SentinelOne returns one or more configured [device posture attributes](/cloudflare-one/integrations/service-providers/sentinelone/#device-posture-attributes) for a user.                                          |
 

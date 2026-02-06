@@ -80,6 +80,10 @@ Because `waitForEvent` is part of the `WorkflowStep` API, you can call it multip
 
 Calling `waitForEvent` requires you to specify an `type` (up to 100 characters [^1]), which is used to match the corresponding `type` when sending an event to a Workflow instance.
 
+:::caution
+The `waitForEvent` type parameter only supports letters, digits, `-`, and `_`. Currently including `.` is not supported and will result in a `workflow.invalid_event_type` error. 
+:::
+
 For example, to wait for billing webhook:
 
 <TypeScriptExample>

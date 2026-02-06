@@ -1,0 +1,324 @@
+---
+pcx_content_type: reference
+title: Webhook payload schema
+sidebar:
+  order: 2
+---
+
+import { Details } from "~/components";
+
+When you [configure a generic webhook](/notifications/get-started/configure-webhooks/#generic-webhooks), Cloudflare sends a JSON payload to your specified URL for each notification. This page documents the structure of that payload.
+
+## Payload structure
+
+All generic webhook notifications follow this schema:
+
+```json
+{
+	"name": "string",
+	"text": "string",
+	"data": {},
+	"ts": 1136214245,
+	"account_id": "string",
+	"policy_id": "string",
+	"policy_name": "string",
+	"alert_type": "string",
+	"alert_correlation_id": "string",
+	"alert_event": "string"
+}
+```
+
+### Field descriptions
+
+| Field                  | Type    | Description                                                                    |
+| ---------------------- | ------- | ------------------------------------------------------------------------------ |
+| `name`                 | string  | The name of the notification policy.                                           |
+| `text`                 | string  | A human-readable description of the notification with interpolated values.     |
+| `data`                 | object  | The alert-specific data. The structure varies by `alert_type`.                     |
+| `ts`                   | integer | The unix timestamp (seconds since epoch, UTC) when the notification was generated. |
+| `account_id`           | string  | The account ID for which this webhook was fired.                               |
+| `policy_id`            | string  | The UUID of the notification policy that triggered this webhook.                   |
+| `policy_name`          | string  | The name of the notification policy.                                               |
+| `alert_type`           | string  | The unique identifier for the alert type (for example, `http_alert_origin_error`). |
+| `alert_correlation_id` | string  | The UUID that groups related alerts together.                                      |
+| `alert_event`          | string  | The event state, such as `ALERT_STATE_EVENT_START` or `ALERT_STATE_EVENT_END`. |
+
+:::note
+The `account_id`, `policy_id`, and `alert_type` fields may not be present in all notifications, depending on the alert type and context.
+:::
+
+## Example payloads
+
+The following examples show the payload structure for common alert types. The `data` object varies based on the specific alert.
+
+<Details header="DDoS attack (Layer 4)">
+
+```json
+{
+	"account_id": "9035f53656c247e895c5a6939ae8a0e0",
+	"alert_correlation_id": "000eaa907ed24e78946d3a93adb2ae57",
+	"alert_event": "ALERT_STATE_EVENT_START",
+	"alert_type": "advanced_ddos_attack_l4_alert",
+	"data": {
+		"account_name": "string",
+		"account_tag": "string",
+		"action": "string",
+		"attack_id": "string",
+		"attack_vector": "string",
+		"dashboard_link": "string",
+		"max_rate": "string",
+		"megabits_per_second": 0,
+		"mitigation": "string",
+		"packets_per_second": 0,
+		"protocol": "string",
+		"rule_description": "string",
+		"rule_id": "string",
+		"rule_name": "string",
+		"ruleset_id": "string",
+		"ruleset_override_id": "string",
+		"start_time": "2006-01-02T15:04:05Z",
+		"target_id": "string",
+		"target_ip": "string",
+		"target_port": 0
+	},
+	"name": "Example Cloudflare Notification",
+	"policy_id": "749b911ea5d04344a58e45edd099b328",
+	"policy_name": "Example Cloudflare Notification",
+	"text": "The description of my Cloudflare notification.",
+	"ts": 1136214245
+}
+```
+
+</Details>
+
+<Details header="DDoS attack (Layer 7)">
+
+```json
+{
+	"account_id": "9035f53656c247e895c5a6939ae8a0e0",
+	"alert_correlation_id": "000eaa907ed24e78946d3a93adb2ae57",
+	"alert_event": "ALERT_STATE_EVENT_START",
+	"alert_type": "advanced_ddos_attack_l7_alert",
+	"data": {
+		"account_name": "string",
+		"account_tag": "string",
+		"action": "string",
+		"attack_id": "string",
+		"attack_type": "string",
+		"dashboard_link": "string",
+		"max_rate": "string",
+		"mitigation": "string",
+		"requests_per_second": 0,
+		"rule_description": "string",
+		"rule_id": "string",
+		"rule_link": "string",
+		"ruleset_id": "string",
+		"ruleset_override_id": "string",
+		"start_time": "2006-01-02T15:04:05Z",
+		"target_hostname": "string",
+		"zone_name": "string",
+		"zone_tag": "string"
+	},
+	"name": "Example Cloudflare Notification",
+	"policy_id": "749b911ea5d04344a58e45edd099b328",
+	"policy_name": "Example Cloudflare Notification",
+	"text": "The description of my Cloudflare notification.",
+	"ts": 1136214245
+}
+```
+
+</Details>
+
+<Details header="SSL certificate expiration">
+
+```json
+{
+	"account_id": "9035f53656c247e895c5a6939ae8a0e0",
+	"alert_correlation_id": "000eaa907ed24e78946d3a93adb2ae57",
+	"alert_event": "ALERT_STATE_EVENT_START",
+	"alert_type": "dedicated_ssl_certificate_event_type",
+	"data": {
+		"account_name": "string",
+		"account_tag": "string",
+		"certificate_id": "string",
+		"certificate_pack_id": "string",
+		"certificate_status": "string",
+		"event_type": "string",
+		"hostnames": "string",
+		"pack_ca": "string",
+		"pack_id": "string",
+		"pack_status": "string",
+		"pack_validation": "string",
+		"zone_name": "string",
+		"zone_tag": "string"
+	},
+	"name": "Example Cloudflare Notification",
+	"policy_id": "749b911ea5d04344a58e45edd099b328",
+	"policy_name": "Example Cloudflare Notification",
+	"text": "The description of my Cloudflare notification.",
+	"ts": 1136214245
+}
+```
+
+</Details>
+
+<Details header="Origin health check">
+
+```json
+{
+	"account_id": "9035f53656c247e895c5a6939ae8a0e0",
+	"alert_correlation_id": "000eaa907ed24e78946d3a93adb2ae57",
+	"alert_event": "ALERT_STATE_EVENT_START",
+	"alert_type": "health_check_status_notification",
+	"data": {
+		"account_name": "string",
+		"account_tag": "string",
+		"failing_regions": "string",
+		"health_check_id": "string",
+		"health_check_name": "string",
+		"new_health_status": "string",
+		"new_status": "string",
+		"old_status": "string",
+		"origin_ip": "string",
+		"reason": "string",
+		"status_change_time": "2006-01-02T15:04:05Z",
+		"time_since_last_failure": "string",
+		"zone_name": "string",
+		"zone_tag": "string"
+	},
+	"name": "Example Cloudflare Notification",
+	"policy_id": "749b911ea5d04344a58e45edd099b328",
+	"policy_name": "Example Cloudflare Notification",
+	"text": "The description of my Cloudflare notification.",
+	"ts": 1136214245
+}
+```
+
+</Details>
+
+<Details header="Workers alert">
+
+```json
+{
+	"account_id": "9035f53656c247e895c5a6939ae8a0e0",
+	"alert_correlation_id": "000eaa907ed24e78946d3a93adb2ae57",
+	"alert_event": "ALERT_STATE_EVENT_START",
+	"alert_type": "workers_alert",
+	"data": {
+		"account_name": "string",
+		"account_script_count": 0,
+		"account_tag": "string",
+		"alert_type": "string",
+		"current_year": 0,
+		"end_date": "string",
+		"exceeding_script_count": 0,
+		"scripts": [
+			{
+				"constant_script_id": 0,
+				"cpu_time_previous_value": 0,
+				"cpu_time_unit": "string",
+				"cpu_time_value": 0,
+				"data_egress_unit": "string",
+				"data_egress_value": 0,
+				"duration_previous_value": 0,
+				"duration_unit": "string",
+				"duration_value": 0,
+				"last_modified": "string",
+				"request_count_previous_value": 0,
+				"request_count_unit": "string",
+				"request_count_value": 0,
+				"routes": ["string"],
+				"script_name": "string",
+				"usage_model": 0
+			}
+		],
+		"start_date": "string",
+		"total_data_egress_unit": "string",
+		"total_data_egress_value": 0,
+		"total_duration_unit": "string",
+		"total_duration_value": 0,
+		"total_request_count_unit": "string",
+		"total_request_count_value": 0
+	},
+	"name": "Example Cloudflare Notification",
+	"policy_id": "749b911ea5d04344a58e45edd099b328",
+	"policy_name": "Example Cloudflare Notification",
+	"text": "The description of my Cloudflare notification.",
+	"ts": 1136214245
+}
+```
+
+</Details>
+
+<Details header="Access certificate expiration">
+
+```json
+{
+	"account_id": "9035f53656c247e895c5a6939ae8a0e0",
+	"alert_correlation_id": "000eaa907ed24e78946d3a93adb2ae57",
+	"alert_event": "ALERT_STATE_EVENT_START",
+	"alert_type": "access_custom_certificate_expiration_type",
+	"data": {
+		"account_name": "string",
+		"account_tag": "string",
+		"certificate_id": "string",
+		"days_til_expiration": 0,
+		"hostnames": "string",
+		"zone_name": "string",
+		"zone_tag": "string"
+	},
+	"name": "Example Cloudflare Notification",
+	"policy_id": "749b911ea5d04344a58e45edd099b328",
+	"policy_name": "Example Cloudflare Notification",
+	"text": "The description of my Cloudflare notification.",
+	"ts": 1136214245
+}
+```
+
+</Details>
+
+<Details header="Workers observability alert">
+
+```json
+{
+	"account_id": "9035f53656c247e895c5a6939ae8a0e0",
+	"alert_correlation_id": "000eaa907ed24e78946d3a93adb2ae57",
+	"alert_event": "ALERT_STATE_EVENT_START",
+	"alert_type": "workers_observability_alert",
+	"data": {
+		"account": {
+			"id": "string",
+			"name": "string"
+		},
+		"config": {
+			"id": "string",
+			"name": "string"
+		},
+		"episode": {
+			"first_failed": "2006-01-02T15:04:05Z",
+			"first_fired": "2006-01-02T15:04:05Z",
+			"id": "string",
+			"last_failed": "2006-01-02T15:04:05Z",
+			"resolved_at": "2006-01-02T15:04:05Z",
+			"summary": "string"
+		},
+		"status": "PENDING"
+	},
+	"name": "Example Cloudflare Notification",
+	"policy_id": "749b911ea5d04344a58e45edd099b328",
+	"policy_name": "Example Cloudflare Notification",
+	"text": "The description of my Cloudflare notification.",
+	"ts": 1136214245
+}
+```
+
+</Details>
+
+## Validate webhook payloads
+
+You can use the `cf-webhook-auth` header to verify that incoming webhooks are from Cloudflare. When you configure a webhook with a secret, Cloudflare includes this header with your secret value in every request. Reject any requests where this header is missing or does not match your configured secret.
+
+## Related resources
+
+- [Configure webhooks](/notifications/get-started/configure-webhooks/)
+- [Available notification types](/notifications/notification-available/)

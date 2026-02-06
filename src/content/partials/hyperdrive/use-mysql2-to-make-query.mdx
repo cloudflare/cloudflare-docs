@@ -24,7 +24,8 @@ import { createConnection } from "mysql2/promise";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Create a connection using the mysql2 driver with the Hyperdrive credentials (only accessible from your Worker).
+		// Create a new connection on each request. Hyperdrive maintains the underlying
+		// database connection pool, so creating a new connection is fast.
 		const connection = await createConnection({
 			host: env.HYPERDRIVE.host,
 			user: env.HYPERDRIVE.user,
@@ -40,13 +41,19 @@ export default {
 			// Sample query
 			const [results, fields] = await connection.query("SHOW tables;");
 
-			// Clean up the client after the response is returned, before the Worker is killed
+			// Clean up the client after the response is returned.
+			// Hyperdrive keeps the underlying database connection open in its
+			// pool and reuses it for future requests.
 			ctx.waitUntil(connection.end());
 
 			// Return result rows as JSON
 			return Response.json({ results, fields });
 		} catch (e) {
 			console.error(e);
+			return Response.json(
+				{ error: e instanceof Error ? e.message : e },
+				{ status: 500 },
+			);
 		}
 	},
 } satisfies ExportedHandler<Env>;

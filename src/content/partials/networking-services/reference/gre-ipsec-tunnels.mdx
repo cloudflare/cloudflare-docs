@@ -96,18 +96,18 @@ For information on how to set up an IPsec tunnel, refer to <a href={props.tunnel
 - **Auth Exchange** (`IKE_AUTH`): Using the secure tunnel from the initial exchange, IKE peers mutually authenticate each other. After authentication, they establish the IKE security association (SA). Next, the peers negotiate and establish an IPsec tunnel, known as a Child SA.
 
 :::note
-The IKE SA and the Child SA are separate things, each with their own parameters. The Child SA is the actual IPsec tunnel where user traffic flows (that is, the dataplane). The IKE SA sets up and manages the Child SA.
+The IKE SA and the Child SA are separate entities, each with their own parameters. The Child SA is the actual IPsec tunnel where user traffic flows (that is, the dataplane). The IKE SA sets up and manages the Child SA.
 :::
 
 In summary, IKEv2 creates an IKE SA that uses certain cryptographic transforms. It then uses that IKE SA to create a Child SA which itself uses certain cryptographic transforms. The following configuration section details which of these transforms {props.productName} currently supports for IKE SAs and Child SAs.
 
 :::note
-Internet Key Exchange (IKE) is one of the protocols that makes up IPsec. Cloudflare only operates as an IKE responder.
+IKE is one of the protocols that makes up IPsec. Cloudflare only operates as an IKE responder.
 :::
 
 ### Supported configuration parameters
 
-Choose from the following configuration parameters {props.productName} supports based on what your appliance supports.
+Choose from the following configuration parameters that {props.productName} supports, based on what your appliance supports.
 
 <Details header="IKE SA (also known as Phase 1)">
 
@@ -133,7 +133,7 @@ Documentation sometimes refers to IKE SA as Phase 1 as per IKEv1 language.
 
 - **Pseudorandom function (PRF)**
 
-	Not to be confused with Perfect Forward Secrecy (PFS). You often cannot configure PRF.
+	Do not confuse this with Perfect Forward Secrecy (PFS). You often cannot configure PRF.
   - SHA2-256
   - SHA2-384
   - SHA2-512
@@ -160,7 +160,7 @@ The Child SA. Documentation sometimes refers to this as Phase 2 as per IKEv1 lan
 
 - **Perfect Forward Secrecy (PFS) group**
 
-	Documentation sometimes refers to this as Phase 2 Diffie-Hellman Group. Not to be confused with PRF. Cloudflare supports the following Diffie-Hellman (DH) groups.
+	Documentation sometimes refers to this as Phase 2 Diffie-Hellman Group. Do not confuse this with PRF. Cloudflare supports the following Diffie-Hellman (DH) groups.
 
   - DH group 20 (384-bit random ECP group)
   - DH group 14 (2048-bit MODP group)

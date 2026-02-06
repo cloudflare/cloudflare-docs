@@ -9,6 +9,7 @@ head:
     content: Cloudflare Queues - Queues & R2
 description: Example of how to use Queues to batch data and store it in an R2 bucket.
 
+reviewed: 2022-09-27
 ---
 
 import { WranglerConfig } from "~/components";
@@ -17,21 +18,32 @@ The following Worker will catch JavaScript errors and send them to a queue. The 
 
 <WranglerConfig>
 
-```toml
-name = "my-worker"
-
-[[queues.producers]]
-  queue = "my-queue"
-  binding = "ERROR_QUEUE"
-
-[[queues.consumers]]
-  queue = "my-queue"
-  max_batch_size = 100
-  max_batch_timeout = 30
-
-[[r2_buckets]]
-  bucket_name = "my-bucket"
-  binding = "ERROR_BUCKET"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-worker",
+	"queues": {
+		"producers": [
+			{
+				"queue": "my-queue",
+				"binding": "ERROR_QUEUE"
+			}
+		],
+		"consumers": [
+			{
+				"queue": "my-queue",
+				"max_batch_size": 100,
+				"max_batch_timeout": 30
+			}
+		]
+	},
+	"r2_buckets": [
+		{
+			"bucket_name": "my-bucket",
+			"binding": "ERROR_BUCKET"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

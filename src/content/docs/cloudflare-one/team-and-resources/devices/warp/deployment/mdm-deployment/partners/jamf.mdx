@@ -9,45 +9,60 @@ description: Learn how to deploy Cloudflare WARP using Jamf.
 
 import { Render } from "~/components";
 
+This guide covers how to deploy the Cloudflare WARP client using Jamf.
+
 ## macOS
 
 ### Prerequisites
 
-- [Download the `Cloudflare_WARP.pkg` file](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos)
-
-- [Create a `plist` file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#create-plist-file)
+- A [Jamf Pro account](https://www.jamf.com/products/jamf-pro/)
+- A Cloudflare account that has a [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization)
+- macOS devices enrolled in Jamf
 
 ### 1. Upload the WARP package
 
-1. Log in to your [Jamf](https://www.jamf.com/) account.
-2. Go to **Computer** > **All Settings** (gear icon).
-3. Select **Computer Management** > **Packages** > **New**.
-4. Upload the `Cloudflare_WARP_<VERSION>.pkg` file.
-   For the Display name, we recommend entering the version number of the package being uploaded.
-5. Select **Save** to complete the upload.
+1. [Download](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) the `Cloudflare_WARP.pkg` file.
+2. Log in to your [Jamf](https://www.jamf.com/) account.
+3. Go to ***Settings** (gear icon).
+4. Select **Computer Management** > **Packages** > **New**.
+5. Upload the `Cloudflare_WARP_<VERSION>.pkg` file.
+6. For **Display Name**, we recommend entering the version number of the package being uploaded.
+7. Select **Save** to complete the upload.
 
-### 2. Create the policy
+:::note[Repeat this step to update WARP when a new release is available]
+Every time WARP releases a new version, you must repeat this process and upload a new `.pkg` file for the new WARP version.
+:::
+
+### 2. Create a Jamf policy
 
 1. Go to **Computers** > **Policies** > **+ New**.
-2. Enter a Display name such as `Cloudflare WARP Client`.\
-   For **Triggers**, our recommendation is to select _Startup_, _Login_, _Enrollment Complete_ and _Recurring Check-in_, but you can select the value that works best for your organization.
-3. Select **Packages** > **Configure**.
-4. Select **Add** next to the `Cloudflare_WARP_<VERSION>.pkg` file you previously uploaded.
-5. Select **Save**.
+2. Enter a **Display Name** such as `Cloudflare WARP Client`.
+3. For **Triggers**, choose the events that will trigger a WARP deployment. We recommend selecting **Startup**, **Login**, **Enrollment Complete**, and **Recurring Check-in**.
+4. Select **Packages** > **Configure**.
+5. Select **Add** next to the `Cloudflare_WARP_<VERSION>.pkg` file you previously uploaded.
+6. Select **Save**.
 
 ### 3. Add a Configuration Profile
 
-1. Go to **Configuration Profiles** > **New**.
+1. Go to **Computers** > **Configuration Profiles** > **New**.
 2. Enter a name for your new profile, such as `Cloudflare Zero Trust`.
-3. Scroll through the options list and select **Application & Custom Settings** > **Configure**.
+3. Scroll through the **Options** list and select **Application & Custom Settings** > **Upload**.
 4. In **Preference Domain**, enter `com.cloudflare.warp`.
-5. Upload your `plist` file and select **Save**.
-6. Go to **Scope** to configure which devices in your organization will receive this profile.
-7. Select **Save**.
+5. To configure the **Property List**:
+	1. [Create a `plist` file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#plist-file) with your desired deployment parameters.
+	2. Upload your `plist` file to Jamf and select **Save**.
+6. (Recommended) Advanced security features require deploying a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) so that devices can establish trust with Cloudflare when their traffic is inspected. To deploy a user-side certificate using Jamf:
+	1. In [Cloudflare One](https://one.dash.cloudflare.com/), [generate and activate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) a Cloudflare root certificate.
+	2. [Download the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#download-a-cloudflare-root-certificate) in `.pem` format.
+	3. [Convert](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#convert-the-certificate) the certificate to `.cer` format.
+	4. In your Jamf configuration profile, scroll down the **Options** list and select **Certificate** > **Configure**.
+	5. Enter a **Display name** for the certificate such as `Cloudflare root certificate`.
+	6. In the **Select Certificate Option** dropdown, select _Upload_.
+	7. Upload your `.cer` file and select **Save**.
+7. Go to **Scope** to configure which devices in your organization will receive this profile.
+8. Select **Save**.
 
-Jamf is now configured to deploy the Cloudflare WARP client.
-
-<Render file="warp/connectivity-status-check" product="cloudflare-one" />
+Jamf will now deploy the Cloudflare WARP client to targeted macOS devices. <Render file="warp/connectivity-status-check" product="cloudflare-one" />
 
 ## iOS
 

@@ -32,7 +32,7 @@ You do not need to add individual Worker routes for each custom hostname. The wi
 
 ## Set up a Worker as your fallback origin
 
-1. In your SaaS zone, [create and set a fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin). Ensure the fallback origin only has an [originless DNS record](/dns/troubleshooting/faq/#what-ip-should-i-use-for-parked-domain--redirect-only--originless-setup):
+1. In your SaaS zone, [create and set a fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin). Ensure the fallback origin only has an [originless DNS record](/dns/manage-dns-records/how-to/create-dns-records/#originless-setups):
    - **Example**: `service.example.com AAAA 100::`
 
 2. In that same zone, navigate to **Workers Routes**.

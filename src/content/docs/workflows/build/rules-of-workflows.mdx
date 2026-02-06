@@ -557,7 +557,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Batch multiple Workflow invocations
 
-When creating multiple Workflow instances, use the [`createBatch`](/workflows/build/workers-api/#createBatch) method to batch the invocations together. This allows you to create multiple Workflow instances in a single request, which will reduce the number of requests made to the Workflows API and increase the number of instances you can create per minute.
+When creating multiple Workflow instances, use the [`createBatch`](/workflows/build/workers-api/#createBatch) method to batch the invocations together. This allows you to create multiple Workflow instances in a single request, which will reduce the number of requests made to the Workflows API. However, each individual instance in the batch will still count towards the [creation rate limit](/workflows/reference/limits/).
 
 <TypeScriptExample filename="index.ts">
 
@@ -588,6 +588,10 @@ export default {
 ```
 
 </TypeScriptExample>
+
+### Limit timeouts to 30 minutes or less
+
+When setting a [WorkflowStep timeout](/workflows/build/workers-api/#workflowstep), ensure that its duration is 30 minutes or less. If your use case requires a timeout greater than 30 minutes, consider using `step.waitForEvent()` instead.
 
 ### Keep step return values under 1 MiB
 

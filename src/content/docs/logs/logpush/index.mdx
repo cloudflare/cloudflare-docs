@@ -8,13 +8,42 @@ sidebar:
 
 import { FeatureTable, LinkButton } from "~/components"
 
-Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes. Users can configure the batch size [using the API](/logs/logpush/logpush-job/api-configuration/#max-upload-parameters) for improved control in case the log destination has specific requirements.
+Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes.
+
+The push frequency is automatic and cannot be adjusted—Cloudflare pushes logs in batches as soon as possible. However, users can configure the batch size [using the API](/logs/logpush/logpush-job/api-configuration/#max-upload-parameters) for improved control in case the log destination has specific requirements.
+
+:::caution[Important limitation]
+Logpush only pushes logs once as they become available and cannot backfill historical data. If your job is disabled or fails, logs generated during that period are permanently lost. This is why configuring [health notifications](/logs/logpush/logpush-health/) is essential for early detection of issues.
+:::
 
 Logpush does not offer storage or search functionality for logs; its primary aim is to send logs as quickly as they arrive.
 
 Cloudflare Logpush supports pushing logs to storage services, SIEMs, and log management providers via the Cloudflare dashboard or API.
 
 Cloudflare aims to support additional services in the future. Interested in a particular service? Take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
+
+## Estimating log volume
+
+Before setting up a Logpush job, you can estimate the total volume of data that will be pushed to your destination. The volume depends on your traffic, selected fields, and compression.
+
+### Quick sizing for HTTP Requests
+
+A quick sizing estimate for an [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) dataset:
+
+- ~100–250 bytes per request (compressed, depending on fields selected)
+- 1M requests/day → ~100–250 MB/day
+- 30M requests/month → ~3–7.5 GB/month
+
+### Daily storage by traffic volume
+
+- 100k req/day → ~25–50 MB/day
+- 1M req/day → ~250–500 MB/day
+- 10M req/day → ~2.5–5 GB/day
+- 100M req/day → ~25–50 GB/day
+
+These ranges reflect field selection, compression, and whether you include extra fields or [custom fields](/logs/logpush/logpush-job/custom-fields/). Other datasets (Firewall, Workers, Load Balancing) add volume separately.
+
+For precise estimates, you can [sample your logs via Logpull](/logs/logpull/additional-details/#estimating-daily-data-volume) using a 1-hour sample.
 
 ## Limits
 

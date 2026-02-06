@@ -2,6 +2,7 @@
 params:
   - magicWord
   - productName
+  - virtualNetworkName
   - mFirewallName
   - mFirewallURL
   - warpClientURL
@@ -21,12 +22,12 @@ import { AnchorHeading, Aside, Markdown, Render } from "~/components";
 
 ## Magic routing table
 
-The Magic networking routing table is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
+The {props.virtualNetworkName} is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
 
 - Magic Transit delivery for [Denial of Service (DoS)](/ddos-protection/) and <a href={props.mFirewallURL}>{props.mFirewallName}</a> filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
 - {props.productName} packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as <a href={props.warpClientURL}>WARP Client</a>, <a href={props.remoteBrowserURL}>Remote Browser Isolation</a>, <a href={props.accessURL}>Access</a>, and <a href={props.gatewayURL}>Gateway</a>.
 
-The Magic routing table supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2 (beta)](/network-interconnect/). You can add entries to the Magic routing table through static route configuration or through routes learned through BGP peering (only available over CNI with Dataplane v2 (beta)).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
+The Magic routing table supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2](/network-interconnect/). You can add entries to the Magic routing table through static route configuration or through routes learned through BGP peering (beta).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
 
 
 ### Allowed IP ranges
@@ -148,7 +149,7 @@ Cloudflare adjusts route priority when using AS prepending with communities. For
 		<AnchorHeading title="Automatic Return Routing (beta)" depth={2} />
 		<Markdown
 		text={`
-Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode](#unified-routing-mode).
+Automatic Return Routing (ARR) allows Cloudflare to track network flows from your Magic WAN connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode (beta)](#unified-routing-mode-beta).
 
 Instead of relying on static or dynamic routes for the return path, Magic WAN learns flows and remembers which connection a given flow arrived on. For any matching return traffic, Magic WAN uses this learned state to choose the next hop. This simplifies configuration, reduces the number of routes you must manage, and helps preserve symmetry for stateful traffic.
 
@@ -202,20 +203,17 @@ In this initial release, ARR does not change routing for traffic between Magic W
 		inline={false}
 		/>
 
-		<AnchorHeading title="Unified routing mode" depth={2} />
-		<Markdown
-		text={`
-The Unified routing mode is the newer Cloudflare One data plane that uses a single routing fabric for all supported connection types. Unified routing mode routes traffic across WARP, Cloudflare Tunnel, IPsec, GRE, and Cloudflare Network Interconnect (CNI) in a single system, making it easier to set up your Cloudflare One connections.
+	</>
+)}
 
-In the Magic WAN dashboard, routing mode appears where you manage Magic routes:
+## Unified Routing mode (beta)
+
+The Unified Routing mode is the newer Cloudflare One data plane that uses a single routing fabric for all supported connection types. Unified Routing mode routes traffic across WARP, Cloudflare Tunnel, IPsec, GRE, and Cloudflare Network Interconnect (CNI) in a single system, making it easier to set up your Cloudflare One connections.
+
+In the {props.productName} dashboard, routing mode appears where you manage Magic routes:
 
 - **Routing mode: Unified** — your account is on the unified data plane and supports the new routing features.
 - **Routing mode: Legacy** — your account uses the previous data plane and does not support all unified routing features.
-		`}
-		inline={false}
-		/>
-	</>
-)}
 
 ## Scoping routes to specific regions
 
@@ -409,22 +407,72 @@ For more on {props.productName} tunnel weights, contact your Cloudflare customer
 
 ## BGP information
 
-When using a [CNI with Dataplane v2 (beta)](/network-interconnect/) connection as an on-ramp, you can use BGP peering between your network and your Magic routing table.
-
-Using BGP peering with a CNI allows you to:
+Using BGP peering allows you to:
 
 - Automate the process of adding or removing networks and subnets.
 - Take advantage of failure detection and session recovery features.
 
 With this functionality, you can:
 
-- Establish an eBGP session between your devices and the {props.productName} service when connected through CNI.
+- Establish an eBGP session between your devices and the {props.productName} service when connected through CNI, GRE or IPsec tunnels.
 - Secure the session by MD5 authentication to prevent misconfigurations.
 - Exchange routes dynamically between your devices and your Magic routing table.
 
+### Release status
+
+The following table outlines the current availability and recommended use cases for BGP across different connectivity methods.
+
+| Feature | Release stage | Recommended use | Prerequisites |
+| --- | --- | --- | --- |
+| **BGP over CNI** | Open Beta | Production | Cloudflare Network Interconnect (CNI) v2 |
+| **BGP over Anycast IPsec/GRE** | Closed Beta | Lab / Testing only | Unified Routing (contact your account team) |
+
+### BGP architecture
+
+#### Global routing and anycast edge
+
+Magic Networking makes a one-pass, per-packet routing decision at the Cloudflare data center that first processes the packet (the ingress node). This ensures that even when a packet traverses multiple nodes within the Cloudflare backbone, its path is determined at the point of entry for maximum efficiency.
+
+Your BGP session over IPsec, GRE, or CNI is established with the Cloudflare data center closest to your BGP peer device. Routes learned here must propagate to Cloudflare's global edge to govern how traffic is routed across the entire network.
+
+- **Convergence time**: Global route convergence typically completes within 20 seconds.
+- **Visibility**: You can monitor learned routes and their propagation status via the Cloudflare dashboard or API.
+
+#### Centralized route propagation
+
+Magic Networking uses a centralized control plane for route propagation, functioning similarly to a BGP Route Reflector. This architecture decouples the physical BGP session from global route distribution:
+
+- **Session termination**: BGP peering sessions are terminated at the Cloudflare edge location closest to your router.
+- **SDN conversion**: Ingress BGP updates are converted into Software-Defined Networking (SDN) state and transmitted to a centralized relay function.
+- **Global dissemination**: The relay propagates these instructions to every Cloudflare data center globally, updating the local Forwarding Information Base (FIB) at each site.
+
+#### Edge Resiliency Mode (Non-Stop Forwarding)
+
+Cloudflare's data plane is designed for high availability. If the edge location loses communication with the centralized relay, the system enters Edge Resiliency Mode, mimicking Non-Stop Forwarding (NSF) behavior:
+
+- **Forwarding continuity**: Edge locations continue to route traffic using the last-known-good forwarding table (FIB). Data plane traffic remains uninterrupted.
+- **Stale path retention**: Because the FIB is frozen during this mode, forwarding decisions remain active even if the underlying BGP session with your router flaps or resets.
+- **Continuous health monitoring**: While BGP updates are frozen, tunnel health checks remain active. These are sent from all Cloudflare data centers, allowing the edge at any ingress node to detect if a physical connection to your router has failed. If a health check fails, the ingress node at the edge will deprioritize that specific path, preventing traffic from being sent into a black hole despite the frozen routing state.
+- **Update freeze**: During this state, the global control plane is frozen. New BGP updates received from your router will be held locally at the edge and will not propagate globally until connectivity to the centralized relay is restored.
+{ props.magicWord === "Magic Transit" && (<Markdown text={`- **Magic Transit edge announcement**: During this frozen state, your BYOIP prefix(es) will continue to be announced at Cloudflare's global edge. You can manually change this announcement status via the API or dashboard.`} inline={false} />)}
+
+:::caution[Traffic persistence during BGP resets]
+In Edge Resiliency Mode, Cloudflare prioritizes forwarding continuity. If your on-premises router resets or the BGP session flaps, the edge will continue to forward traffic toward your peer device based on the last known valid routing state — provided that the underlying tunnel health checks remain successful.
+
+If the BGP session resets **and** the tunnel health checks fail (for example, your router is completely offline), the edge will typically take alternate paths until connectivity is restored.
+:::
+
+#### System recovery and re-synchronization
+
+Once connectivity between the Cloudflare edge and the centralized relay is restored, the system automatically exits Edge Resiliency Mode and performs a stateful re-synchronization:
+
+1. **RIB-to-relay sync**: The edge pushes all currently held BGP updates (the current RIB state) to the relay.
+2. **Global update**: The relay reconciles these updates and propagates any changes to the rest of the Cloudflare global network.
+3. **FIB unfreeze**: The local forwarding tables at the edge are unfrozen and updated with the latest validated routing instructions.
+
 ### BGP peering with the Magic routing table
 
-{props.productName} BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect <a href={props.setupBgpPeering}>Advertised prefix list</a>.
+{props.productName} BGP peering is with the {props.virtualNetworkName} (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the on-ramp <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
 If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
 
@@ -442,12 +490,12 @@ Cloudflare uses the following timers, which are not configurable:
 
 | Setting | Description |
 | ----- | ----- |
-| **Hold timer** | 240 seconds <br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
-| **Keepalive timer** | One third of the hold time. |
-| **Graceful restart** | 120 seconds |
+| **Hold timer** | 240 seconds for CNI and 90 seconds for GRE and IPsec tunnels<br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
+| **Keepalive timer** | One third of the hold timer. |
+| **Graceful restart** | 120 seconds (currently, only supported on CNI) |
 
-- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold time and that received from the peer in the open message.
-- **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the Hold Timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
+- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold timer and that received from the peer in the open message.
+- **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the hold timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
 - **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
 
 ### BGP limitations
@@ -459,7 +507,6 @@ BGP support currently has the following limitations:
 - The Cloudflare account ASN and your device ASN must be different. Only eBGP is supported.
 - Cloudflare always injects routes with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
-- Only Internet Protocol version 4 (IPv4) routes are supported.
 
 { props.magicWord === "Magic Transit" && (
   <>

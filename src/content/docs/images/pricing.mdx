@@ -49,13 +49,11 @@ Alternatively, Images Stored and Images Delivered apply only to images that are 
 
 A unique transformation is a request to transform an original image based on a set of [supported parameters](/images/transform-images/transform-via-url/#options). This metric is used only when optimizing images that are stored outside of Images.
 
-For example, if you transform `thumbnail.jpg` as 100x100, then this counts as 1 unique transformation. If you transform the same `thumbnail.jpg` as 200x200, then this counts as a separate unique transformation.
+For example, if you transform `thumbnail.jpg` as 100x100, then this counts as one unique transformation. If you transform the same `thumbnail.jpg` as 200x200, then this counts as a separate unique transformation.
 
-You are billed for the number of unique transformations that are counted during each billing period.
+You are billed on the number of unique transformations that are requested within each calendar month. Repeat requests for the same transformation within the same month are counted only once for that month.
 
-Unique transformations are counted over a 30-day sliding window. For example, if you request `width=100/thumbnail.jpg` on June 30, then this counts once for that billing period. If you request the same transformation on July 1, then this will not count as a billable request, since the same transformation was already requested within the last 30 days.
-
-The `format` parameter counts as only 1 billable transformation, even if multiple copies of an image are served. In other words, if `width=100,format=auto/thumbnail.jpg` is served to some users as AVIF and to others as WebP, then this counts as 1 unique transformation instead of 2.
+The `format` parameter counts as only one billable transformation, even if multiple copies of an image are served. In other words, if `width=100,format=auto/thumbnail.jpg` is served to some users as AVIF and to others as WebP, then this counts as one unique transformation instead of two.
 
 #### Example #1
 
@@ -91,7 +89,7 @@ Only uploaded images count toward Images Stored; defining variants will not impa
 
 For images that are stored in Images, you will incur $1 for every 100,000 images delivered per month. This metric does not include transformed images that are stored in remote sources.
 
-Every image requested by the browser counts as 1 billable request.
+Every image requested by the browser counts as one billable request.
 
 #### Example
 

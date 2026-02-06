@@ -1,0 +1,12 @@
+releaseNotes: |-
+  This release contains minor fixes, improvements, and new features, including the ability to manage WARP client connectivity for all devices in your fleet using an [external signal](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/).
+
+  **Changes and improvements**
+  - The [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) feature has been fixed for devices running WARP client version 2025.4.929.0 and newer. Previously, these devices could experience failures with Local Domain Fallback unless a fallback server was explicitly configured. This configuration is no longer a requirement for the feature to function correctly.
+  - [Proxy mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#proxy-mode) now supports transparent HTTP proxying in addition to CONNECT-based proxying.
+  - Added a new feature to manage WARP client connectivity for all devices using an [external signal](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/external-disconnect/). This feature allows administrators to send a global signal from an on-premises HTTPS endpoint that force disconnects or reconnects all WARP clients in an account based on configuration set on the endpoint.
+version: 2025.10.186.0
+releaseDate: 2026-01-13T15:48:17.930Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.10.186.0
+packageSize: 111235956
+platformName: macOS

@@ -31,7 +31,7 @@ The blog is hosted on Pages and currently has the following directory structure:
 │   │   ├── favicon.ico
 │   │   └── logo.png
 │   └── style.css
-└── wrangler.toml
+└── wrangler.jsonc
 ```
 
 Adding more videos and images to the blog would be great, but our asset size is above the [file limit on Pages](/pages/platform/limits/#file-size). Let us fix this with R2.
@@ -72,10 +72,15 @@ Open the [Wrangler configuration file](/pages/functions/wrangler-configuration/)
 
 <WranglerConfig>
 
-```toml
-[[r2_buckets]]
-binding = "MEDIA"
-bucket_name = "cat-media"
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "cat-media"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -108,7 +113,7 @@ After creating the folders and JavaScript file, the blog directory structure sho
 │   │   ├── favicon.ico
 │   │   └── icon.png
 │   └── style.css
-└── wrangler.toml
+└── wrangler.jsonc
 
 ```
 

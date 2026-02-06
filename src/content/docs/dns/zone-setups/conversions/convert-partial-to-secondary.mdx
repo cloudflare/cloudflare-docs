@@ -10,7 +10,7 @@ description: >-
 
 import { Details, Render, TabItem, Tabs, DashButton } from "~/components";
 
-If you initially set up a [partial zone](/dns/zone-setups/partial-setup/) on Cloudflare, you can later convert it to use a [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
+If you initially set up a [partial zone (CNAME setup)](/dns/zone-setups/partial-setup/) on Cloudflare, you can later convert it to use a [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/).
 
 <Render file="conversion-subdomain-setup-callout" product="dns" />
 
@@ -26,7 +26,7 @@ Make sure you consider the following:
 
 ## 1. Prepare a zone file
 
-1. Export a zone file from the authoritative DNS provider you were using with your partial (CNAME) setup.
+1. Export a zone file from the authoritative DNS provider you were using with your CNAME setup (partial).
 2. Edit the zone file to remove any occurrences of the `cdn.cloudflare.net` suffix.
 
 - If the `CNAME` target is only appending the Cloudflare suffix to the same hostname at which it is created, replace it by the records on the Cloudflare partial zone.
@@ -65,7 +65,7 @@ Original record in authoritative DNS provider:
 | ------- | ----------------- | ----------------------------------------------- |
 | `CNAME` | `www.example.com` | `other-hostname.example.com.cdn.cloudflare.net` |
 
-Records in the Cloudflare partial zone:
+Records in the Cloudflare partial zone (CNAME setup):
 
 | Type | Name                         | Content  |
 | ---- | ---------------------------- | -------- |

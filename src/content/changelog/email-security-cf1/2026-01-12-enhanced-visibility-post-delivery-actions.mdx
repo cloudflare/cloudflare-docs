@@ -1,0 +1,19 @@
+---
+title: Enhanced visibility for post-delivery actions
+description: Additional post delivery action log details for failures
+date: 2026-01-12T11:15:33Z
+---
+
+The Action Log now provides enriched data for post-delivery actions to improve troubleshooting. In addition to success confirmations, failed actions now display the targeted Destination folder and a specific failure reason within the Activity field. 
+
+:::note
+Error messages will vary depending on whether you are using Google Workspace or Microsoft 365.
+:::
+
+![failure-log-example](~/assets/images/changelog/email-security/enhanced-visibility-post-delivery-actions.png)
+
+This update allows you to see the full lifecycle of a failed action. For instance, if an administrator tries to move an email that has already been deleted or moved manually, the log will now show the multiple retry attempts and the specific destination error.
+
+This applies to all Email Security packages: 
+-   **Enterprise** 
+-   **Enterprise + PhishGuard** 

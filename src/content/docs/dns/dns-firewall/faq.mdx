@@ -1,37 +1,34 @@
 ---
-title: FAQ
+title: DNS Firewall FAQ
 pcx_content_type: faq
 description: Find answers to common questions about Cloudflare's DNS Firewall, including cache behavior, EDNS support, and setting PTR records.
 sidebar:
   order: 4
+  label: FAQ
 head:
   - tag: title
     content: FAQs — DNS Firewall
 ---
 
-import { Details, GlossaryTooltip } from "~/components";
+import { GlossaryTooltip } from "~/components";
 
-<Details header="How does DNS Firewall choose a backend nameserver to query upstream?">
+Consider the answers for frequently asked questions about Cloudflare DNS Firewall.
 
-DNS Firewall alternates between a customer's nameservers, using an algorithm is more likely to send queries to the faster upstream nameservers than slower nameservers.
+## How does DNS Firewall choose a backend nameserver to query upstream?
 
-</Details>
+DNS Firewall alternates between a customer's nameservers, using an algorithm that is more likely to send queries to the faster upstream nameservers than slower nameservers.
 
-<Details header="How long does DNS Firewall cache a stale object?">
+## How long does DNS Firewall cache a stale object?
 
 DNS Firewall sets cache longevity according to allocated memory.
 
 As long as there is enough allocated memory, Cloudflare does not clear items from the cache forcefully, even when the TTL expires. This feature allows Cloudflare to serve stale objects from cache if your nameservers are offline.
 
-</Details>
-
-<Details header="Does the DNS Firewall cache SERVFAIL?">
+## Does the DNS Firewall cache SERVFAIL?
 
 Yes. `SERVFAIL` is treated like any other negative answer for caching purposes. The default TTL is 30 seconds. You can use the [API](/api/resources/dns_firewall/methods/edit/) to set a different `negative_cache_ttl`.
 
-</Details>
-
-<Details header="Does DNS Firewall support EDNS Client Subnet (ECS)?">
+## Does DNS Firewall support EDNS Client Subnet (ECS)?
 
 Yes. Often, DNS providers want to see a client's IP via <GlossaryTooltip term="EDNS Client Subnet (ECS)">EDNS Client Subnet (ECS)</GlossaryTooltip> ([RFC 7871](https://www.rfc-editor.org/rfc/rfc7871.html)) because they serve geographically specific DNS answers based on the client's IP. With EDNS Client Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the upstream nameserver.
 
@@ -50,19 +47,13 @@ EDNS limits the effectiveness of the DNS cache.
 
 Some resolvers might not be sending any EDNS data. When you set the `ecs_fallback` parameter to `true` via the [API](/api/resources/dns_firewall/methods/edit/), DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
 
-</Details>
-
-<Details header="Does DNS Firewall cache negative answers?">
+## Does DNS Firewall cache negative answers?
 
 Yes. The default TTL is 30 seconds. You can set `negative_cache_ttl` via the [API](/api/resources/dns_firewall/methods/edit/). This will affect the TTL of responses with status `REFUSED`, `NXDOMAIN`, or `SERVFAIL`.
 
-</Details>
-
-<Details header="How can I set PTR records for nameserver hostnames?">
+## How can I set PTR records for nameserver hostnames?
 
 To set up PTR records for the DNS Firewall cluster IPs that point to your nameserver hostnames, use the following API endpoints:
 
 - [Show DNS Firewall Cluster Reverse DNS](/api/resources/dns_firewall/subresources/reverse_dns/methods/get/)
 - [Update DNS Firewall Cluster Reverse DNS](/api/resources/dns_firewall/subresources/reverse_dns/methods/edit/)
-
-</Details>

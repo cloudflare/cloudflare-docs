@@ -10,9 +10,16 @@ import { FileTree } from "~/components"
 import { Tabs, TabItem } from "~/components"
 import { InlineBadge } from "~/components";
 
-## Deleting data in R2 Data Catalog
-
 Deleting data from R2 Data Catalog or any Apache Iceberg catalog requires that operations are done in a transaction through the catalog itself. Manually deleting metadata or data files directly can lead to data catalog corruption.
+
+## Automatic table maintenance
+R2 Data Catalog can automatically manage table maintenance operations such as snapshot expiration and compaction. These continuous operations help keep latency and storage costs down.
+ - **Snapshot expiration**: Automatically removes old snapshots. This reduces metadata overhead. Data files are not removed until orphan file removal is run.
+ - **Compaction**: Merges small data files into larger ones. This optimizes read performance and reduces the number of files read during queries.
+
+ Without enabling automatic maintenance, you need to manually handle these operations.
+
+ Learn more in the [table maintenance](/r2/data-catalog/table-maintenance/) documentation.
 
 ## Examples of enabling automatic table maintenance in R2 Data Catalog
 ```bash
@@ -25,9 +32,13 @@ npx wrangler r2 bucket catalog snapshot-expiration enable my-bucket \
 npx wrangler r2 bucket catalog compaction enable my-bucket \
 	--target-size 256
 ```
-More information can be found in the [table maintenance](/r2/data-catalog/table-maintenance/) and [manage catalogs](/r2/data-catalog/manage-catalogs/) documentation.
+Refer to additional examples in the [manage catalogs](/r2/data-catalog/manage-catalogs/) documentation.
 
-## Examples of deleting data from R2 Data Catalog using PySpark
+## Manually deleting and removing data
+You need to manually delete data for:
+ - Complying with data retention policies such as GDPR or CCPA.
+ - Selective based deletes using conditional logic.
+ - Removing stale or unreferenced files that R2 Data Catalog does not manage.
 
 The following are basic examples using PySpark but similar operations can be performed using other Iceberg-compatible engines. To configure PySpark, refer to our [example](/r2/data-catalog/config-examples/spark-python/) or the official [PySpark documentation](https://spark.apache.org/docs/latest/api/python/getting_started/index.html).
 

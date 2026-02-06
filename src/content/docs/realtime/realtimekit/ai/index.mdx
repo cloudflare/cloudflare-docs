@@ -1,0 +1,46 @@
+---
+pcx_content_type: navigation
+title: AI
+sidebar:
+  order: 10
+---
+
+import { DirectoryListing } from "~/components";
+
+RealtimeKit provides AI-powered features using Cloudflare's AI infrastructure to enhance your meetings with transcription and summarization capabilities.
+
+<DirectoryListing />
+
+## Available features
+
+| Feature | Description |
+|---------|-------------|
+| [Transcription](/realtime/realtimekit/ai/transcription/) | Real-time and post-meeting speech-to-text |
+| [Summary](/realtime/realtimekit/ai/summary/) | AI-generated meeting summaries |
+
+## Quick start
+
+Enable AI features when creating a meeting:
+
+```json
+{
+  "title": "Team Standup",
+  "ai_config": {
+    "transcription": {
+      "language": "en-US"
+    },
+    "summarization": {
+      "summary_type": "team_meeting"
+    }
+  },
+  "summarize_on_end": true
+}
+```
+
+Ensure participants have `transcription_enabled: true` in their [preset](/realtime/realtimekit/concepts/preset/).
+
+## Storage and retention
+
+- Transcripts and summaries are stored for **7 days** from meeting start
+- Files are stored in R2 with presigned URLs for secure access
+- Delivered via [webhooks](/api/resources/realtime_kit/subresources/webhooks/) or REST API
