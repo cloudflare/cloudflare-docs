@@ -179,7 +179,7 @@ const response = await sandbox.getExposedPorts(): Promise<GetExposedPortsRespons
 const { ports } = await sandbox.getExposedPorts();
 
 for (const port of ports) {
-console.log(`${port.name || port.port}: ${port.exposedAt}`);
+  console.log(`${port.name || port.port}: ${port.exposedAt}`);
 }
 ```
 </TypeScriptExample>
