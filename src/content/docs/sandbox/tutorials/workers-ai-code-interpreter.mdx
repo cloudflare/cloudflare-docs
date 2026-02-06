@@ -4,12 +4,12 @@ pcx_content_type: tutorial
 sidebar:
   order: 3
 description: Build a code interpreter using Workers AI GPT-OSS model with the official workers-ai-provider package.
-reviewed: 2025-01-28
+reviewed: 2026-01-28
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-Build a powerful code interpreter that gives the [gpt-oss model](https://developers.cloudflare.com/workers-ai/models/gpt-oss-120b/) on Workers AI the ability to execute Python code using the Cloudflare Sandbox SDK.
+Build a powerful code interpreter that gives the [gpt-oss model](/workers-ai/models/gpt-oss-120b/) on Workers AI the ability to execute Python code using the Cloudflare Sandbox SDK.
 
 **Time to complete:** 15 minutes
 
@@ -22,6 +22,7 @@ A Cloudflare Worker that accepts natural language prompts, uses GPT-OSS to decid
 <Render file="prereqs" product="workers" />
 
 You'll also need:
+
 - [Docker](https://www.docker.com/) running locally
 
 ## 1. Create your project
@@ -31,7 +32,9 @@ Create a new Sandbox SDK project:
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args={"workers-ai-interpreter --template=cloudflare/sandbox-sdk/examples/code-interpreter"}
+	args={
+		"workers-ai-interpreter --template=cloudflare/sandbox-sdk/examples/code-interpreter"
+	}
 />
 
 ```sh
@@ -44,34 +47,34 @@ The template includes a complete implementation using the latest best practices.
 
 ```typescript
 // src/index.ts
-import { getSandbox } from '@cloudflare/sandbox';
-import { generateText, stepCountIs, tool } from 'ai';
-import { createWorkersAI } from 'workers-ai-provider';
-import { z } from 'zod';
+import { getSandbox } from "@cloudflare/sandbox";
+import { generateText, stepCountIs, tool } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+import { z } from "zod";
 
-const MODEL = '@cf/openai/gpt-oss-120b' as const;
+const MODEL = "@cf/openai/gpt-oss-120b" as const;
 
 async function handleAIRequest(input: string, env: Env): Promise<string> {
-  const workersai = createWorkersAI({ binding: env.AI });
+	const workersai = createWorkersAI({ binding: env.AI });
 
-  const result = await generateText({
-    model: workersai(MODEL),
-    messages: [{ role: 'user', content: input }],
-    tools: {
-      execute_python: tool({
-        description: 'Execute Python code and return the output',
-        inputSchema: z.object({
-          code: z.string().describe('The Python code to execute')
-        }),
-        execute: async ({ code }) => {
-          return executePythonCode(env, code);
-        }
-      })
-    },
-    stopWhen: stepCountIs(5)
-  });
+	const result = await generateText({
+		model: workersai(MODEL),
+		messages: [{ role: "user", content: input }],
+		tools: {
+			execute_python: tool({
+				description: "Execute Python code and return the output",
+				inputSchema: z.object({
+					code: z.string().describe("The Python code to execute"),
+				}),
+				execute: async ({ code }) => {
+					return executePythonCode(env, code);
+				},
+			}),
+		},
+		stopWhen: stepCountIs(5),
+	});
 
-  return result.text || 'No response generated';
+	return result.text || "No response generated";
 }
 ```
 
@@ -215,4 +218,4 @@ You deployed a sophisticated code interpreter that:
 - [Workers AI](/workers-ai/) - Learn about Cloudflare's AI platform
 - [workers-ai-provider package](https://github.com/cloudflare/ai/tree/main/packages/workers-ai-provider) - Official Workers AI integration
 - [Vercel AI SDK](https://sdk.vercel.ai/) - Universal toolkit for AI applications
-- [GPT-OSS model documentation](https://developers.cloudflare.com/workers-ai/models/gpt-oss-120b/) - Model details and capabilities
+- [GPT-OSS model documentation](/workers-ai/models/gpt-oss-120b/) - Model details and capabilities
