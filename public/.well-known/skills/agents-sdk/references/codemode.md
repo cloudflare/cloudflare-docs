@@ -89,8 +89,6 @@ import { openai } from "@ai-sdk/openai";
 import { env } from "cloudflare:workers";
 import { z } from "zod";
 
-const model = openai("gpt-5.2");
-
 const tools = {
   getWeather: tool({
     description: "Get weather for a location",
@@ -120,7 +118,7 @@ export class MyAgent extends Agent<Env, State> {
     this.tools = { ...tools, ...this.mcp.getAITools() };
 
     const { prompt, tools: wrappedTools } = await codemode({
-      model,  // Required: AI SDK-compatible model
+      model: openai("gpt-4o"),  // Optional: defaults to openai("gpt-4.1")
       prompt: "You are a helpful assistant...",
       tools: this.tools,
       globalOutbound: env.globalOutbound,
@@ -136,7 +134,7 @@ export class MyAgent extends Agent<Env, State> {
 
     const result = streamText({
       system: prompt,
-      model,
+      model: openai("gpt-4o"),
       messages: await convertToModelMessages(this.state.messages),
       tools: wrappedTools  // Use wrapped tools, not original
     });
@@ -154,7 +152,7 @@ Wraps your tools to enable code generation mode for the LLM.
 
 **Parameters:**
 
-- `options.model` (required): `LanguageModel` - AI SDK-compatible model instance (e.g., `openai("gpt-5.2")`)
+- `options.model` (optional): `LanguageModel` - AI SDK-compatible model instance (defaults to `openai("gpt-4.1")`)
 - `options.tools`: `ToolSet` - Object containing tool definitions
 - `options.prompt`: `string` - System prompt for the agent
 - `options.globalOutbound`: `Fetcher` - Outbound fetch handler for security filtering
@@ -176,7 +174,7 @@ The returned `tools` should be used instead of your original tools when calling 
 
 ```typescript
 const { prompt, tools: wrappedTools } = await codemode({
-  model: openai("gpt-5.2"),
+  model: openai("gpt-4o"),  // Optional: defaults to openai("gpt-4.1")
   prompt: "You are a helpful assistant...",
   tools: myTools,
   globalOutbound: env.globalOutbound,
@@ -241,36 +239,38 @@ async function executeTask() {
 | Token budget constrained | Yes |
 | Simple Q&A chat | No |
 
-## Migration from Previous Versions
+## Model Configuration
 
-**Breaking Change in v0.0.6:** The `model` parameter is now required.
-
-**Before:**
-
-```typescript
-const { prompt, tools: wrappedTools } = await codemode({
-  prompt: "You are a helpful assistant...",
-  tools: myTools,
-  // ... other options
-});
-```
-
-**After:**
+The `model` parameter is optional and defaults to `openai("gpt-4.1")`. You can specify any AI SDK-compatible model:
 
 ```typescript
 import { openai } from "@ai-sdk/openai";
+import { anthropic } from "@ai-sdk/anthropic";
 
-const model = openai("gpt-5.2");  // Or any AI SDK-compatible model
-
+// Using a different OpenAI model
 const { prompt, tools: wrappedTools } = await codemode({
-  model,  // Now required
+  model: openai("gpt-4o"),
   prompt: "You are a helpful assistant...",
   tools: myTools,
   // ... other options
 });
-```
 
-You can now use any AI SDK-compatible model provider (OpenAI, Anthropic, Google, etc.) instead of the previously hardcoded `gpt-4.1`.
+// Or use a different provider entirely
+const { prompt, tools: wrappedTools } = await codemode({
+  model: anthropic("claude-3-5-sonnet-20241022"),
+  prompt: "You are a helpful assistant...",
+  tools: myTools,
+  // ... other options
+});
+
+// Or omit to use the default
+const { prompt, tools: wrappedTools } = await codemode({
+  prompt: "You are a helpful assistant...",
+  tools: myTools,
+  // ... other options
+  // model defaults to openai("gpt-4.1")
+});
+```
 
 ## Limitations
 
