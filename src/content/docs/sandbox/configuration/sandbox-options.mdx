@@ -24,7 +24,7 @@ const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
 
 Keep the container alive indefinitely by preventing automatic shutdown. When `true`, the container automatically sends heartbeat pings every 30 seconds to prevent eviction and will never auto-timeout.
 
-**How it works**: The sandbox automatically schedules lightweight ping requests to the container every 30 seconds. This prevents the container from being evicted due to inactivity while minimizing resource overhead. You can also enable/disable keepAlive dynamically using [`setKeepAlive()`](/sandbox/api/lifecycle/#setkeep-alive).
+**How it works**: The sandbox automatically schedules lightweight ping requests to the container every 30 seconds. This prevents the container from being evicted due to inactivity while minimizing resource overhead. You can also enable/disable keepAlive dynamically using [`setKeepAlive()`](/sandbox/api/lifecycle/#setkeepalive).
 
 <TypeScriptExample>
 ```ts
