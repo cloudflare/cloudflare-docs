@@ -1,6 +1,7 @@
 ---
 title: Prompting
 pcx_content_type: concept
+description: Build Workers apps with AI prompts and MCP servers.
 tags:
   - AI
   - LLM
@@ -15,9 +16,9 @@ You can create Workers applications from simple prompts in your favorite agent o
 
 ## Teach your agent about Workers
 
-The best way to teach your agent about Workers is to connect the [`cloudflare-docs`](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) MCP (Model Context Protocol) server: `https://docs.mcp.cloudflare.com/mcp` ([learn more](/agents/model-context-protocol/mcp-servers-for-cloudflare/)).
+Connect the [`cloudflare-docs`](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) MCP (Model Context Protocol) server to teach your agent about Workers. Add the server URL `https://docs.mcp.cloudflare.com/mcp` to your agent configuration ([learn more](/agents/model-context-protocol/mcp-servers-for-cloudflare/)).
 
-You can also connect the [`cloudflare-observability`](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-observability) MCP server (`https://observability.mcp.cloudflare.com/mcp`) to help your agent check logs, look for exceptions, and automatically fix issues.
+You can also connect the [`cloudflare-observability`](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-observability) MCP server (`https://observability.mcp.cloudflare.com/mcp`). This helps your agent check logs, look for exceptions, and automatically fix issues.
 
 ## Example prompts
 
@@ -56,7 +57,7 @@ Base prompt:
 The prompt above adopts several best practices, including:
 
 - Using `<xml>` tags to structure the prompt
-- API and usage examples for products and use-cases
+- API and usage examples for products and use cases
 - Guidance on how to generate configuration (for example, `wrangler.jsonc`) as part of the model's response
 - Recommendations on Cloudflare products to use for specific storage or state needs
 
@@ -66,7 +67,7 @@ You can use the prompt in several ways:
 
 - Within the user context window, with your own user prompt inserted between the `<user_prompt>` tags (**easiest**)
 - As the `system` prompt for models that support system prompts
-- Adding it to the prompt library and/or file context within your preferred IDE:
+- Adding it to the prompt library or file context in your preferred IDE:
   - Cursor: add the prompt to [your Project Rules](https://docs.cursor.com/context/rules-for-ai)
   - Zed: use [the `/file` command](https://zed.dev/docs/assistant/assistant-panel) to add the prompt to the Assistant context
   - Windsurf: use [the `@-mention` command](https://docs.codeium.com/chat/overview) to include a file containing the prompt to your Chat
@@ -75,9 +76,9 @@ You can use the prompt in several ways:
 
 :::note
 
-The prompt(s) here are examples and should be adapted to your specific use case.
+The prompts here are examples and should be adapted to your specific use case.
 
-Depending on the model and user prompt, it may generate invalid code, configuration or other errors. Review and test the generated code before deploying it.
+Depending on the model and user prompt, it may generate invalid code, configuration, or other errors. Review and test the generated code before deploying it.
 
 :::
 
