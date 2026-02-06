@@ -11,6 +11,7 @@
 *.js @cloudflare/content-engineering @kodster28
 *.ts @cloudflare/content-engineering @kodster28
 *.astro @cloudflare/content-engineering @kodster28
+package.json @cloudflare/content-engineering
 /src/schemas/tags.ts @cloudflare/content-engineering @kodster28
 /src/util/api.ts @cloudflare/content-engineering @pedrosousa @kodster28
 /src/content/workers-ai-models/ @craigsdennis @cloudflare/content-engineering @cloudflare/pcx-technical-writing @kodster28
@@ -19,7 +20,7 @@
 
 # AI
 
-/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/ai-agents
+/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
 /src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @cloudflare/pcx-technical-writing
@@ -68,10 +69,10 @@
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/cloud-and-saas-findings/ @maxvp @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/traffic-policies/ @maxvp @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/cloud-and-saas-findings/ @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/traffic-policies/ @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @deadlypants1973 @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/data-loss-prevention/ @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/insights/dex/ @deadlypants1973 @cloudflare/pcx-technical-writing
 /src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 
@@ -132,7 +133,7 @@
 /public/realtime/ @cloudflare/pcx-technical-writing @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
 /src/content/docs/stream/ @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/release-notes/stream.yaml @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing
-/src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @mattietk
+/src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @mattietk @cloudflare/dev-plat-leads
 /src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @mattietk
 /src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/wrangler @mattietk
 /src/content/release-notes/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/deploy-config @cloudflare/pcx-technical-writing @irvinebroque @mikenomitch @mattietk
@@ -149,7 +150,7 @@
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workflows/ @elithrar @celso @mia303 @jonesphillip @cloudflare/pcx-technical-writing
 /src/content/partials/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
-/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents
+/src/content/docs/sandbox/ @elithrar @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents @cloudflare/dev-plat-leads
 
 # DDoS Protection
 

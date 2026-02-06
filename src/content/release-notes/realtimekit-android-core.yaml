@@ -3,6 +3,12 @@ link: "/realtime/realtimekit/release-notes/android-core/"
 productName: RealtimeKit Android Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-02-06"
+    title: RealtimeKit Android Core 1.6.1
+    description: |-
+      **Fixes**
+      
+      - Fixed media issues when connection took longer to establish
   - publish_date: "2026-01-14"
     title: RealtimeKit Android Core 1.6.0
     description: |-

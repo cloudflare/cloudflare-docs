@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 const STORAGE_KEY = "realtimekit-sdk-selector";
 
-export type Platform = "web" | "mobile";
+export type Platform =
+	| "web"
+	| "mobile"
+	| "web-react"
+	| "web-web-components"
+	| "web-angular"
+	| "mobile-android"
+	| "mobile-ios"
+	| "mobile-flutter"
+	| "mobile-react-native";
 export type Framework = {
 	id: string;
 	label: string;

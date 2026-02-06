@@ -20,14 +20,14 @@ import { APIRequest } from "~/components";
    	}}
    />
 
-2. (Optional) Use a [`GET` request](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
+2. (Optional) Use a [`GET` request](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/list/) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
 
    <APIRequest
    	path="/zones/{zone_id}/origin_tls_client_auth/hostnames/certificates"
    	method="GET"
    />
 
-3. Use the [Delete hostname client certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/delete/) endpoint to remove the certificate you had uploaded.
+3. Use the [Delete hostname client certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/) endpoint to remove the certificate you had uploaded.
 
    <APIRequest
    	path="/zones/{zone_id}/origin_tls_client_auth/hostnames/certificates/{certificate_id}"

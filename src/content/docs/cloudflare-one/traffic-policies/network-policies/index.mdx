@@ -412,7 +412,7 @@ The _in_ operator allows you to specify IP addresses or networks using CIDR nota
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ one: "SNI hosts", two: "SNI" }}
+	params={{ selector: "SNI", selectordescription: "SNI host", operator: "matches regex", valueOne: ".*whispersystems.org", valueTwo: ".*signal.org" }}
 />
 
 ## Logical operators

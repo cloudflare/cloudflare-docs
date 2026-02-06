@@ -28,8 +28,9 @@ export default {
 		env: Env,
 		ctx: ExecutionContext,
 	): Promise<Response> {
-		// Create a database client that connects to your database via Hyperdrive
-		// using the Hyperdrive credentials
+		// Create a database client that connects to your database via Hyperdrive.
+		// Hyperdrive maintains the underlying database connection pool,
+		// so creating a new client on each request is fast and recommended.
 		const sql = postgres(env.HYPERDRIVE.connectionString, {
 			// Limit the connections for the Worker request to 5 due to Workers' limits on concurrent external connections
 			max: 5,
@@ -43,6 +44,11 @@ export default {
 		try {
 			// A very simple test query
 			const result = await sql`select * from pg_tables`;
+
+			// Clean up the client after the response is returned.
+			// Hyperdrive keeps the underlying database connection open in its
+			// pool and reuses it for future requests.
+			ctx.waitUntil(sql.end());
 
 			// Return result rows as JSON
 			return Response.json({ success: true, result: result });

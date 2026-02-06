@@ -12,7 +12,8 @@ You can define policies in your Magic WAN Connector to either allow traffic to f
 <pre class="mermaid">
 	{`
 		flowchart LR
-		accTitle: In this example, there are LANs where traffic flows between each other, instead of going to Cloudflare first.
+		accTitle: LAN-to-LAN traffic flow
+		accDescr: In this example, the red path shows traffic that stays in the customer's premises (allowing direct communication between LAN 3 and LAN 4), and the orange path shows traffic that goes to Cloudflare before returning to the customer's premises (processing traffic between LAN 1 and LAN 2 in Cloudflare).
 				a(Magic WAN Connector) <---> b(Internet) <---> c(Cloudflare)
 
 				subgraph Customer site
@@ -65,7 +66,7 @@ Follow these steps to create a new LAN policy to segment your network. Only the 
 		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+		<DashButton url="/?to=/:account/magic-networks/connections" />
 
 		<Markdown
 	text={`
@@ -216,7 +217,7 @@ The new policy will ensure that traffic between the specified LANs flows locally
 		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+		<DashButton url="/?to=/:account/magic-networks/connections" />
 
 		<Markdown
 	text={`
@@ -328,7 +329,7 @@ Example:
 		`}
 	inline={false}
 	/>
-		<DashButton url="/?to=/:account/magic-networks/connections/tunnels" />
+		<DashButton url="/?to=/:account/magic-networks/connections" />
 
 		<Markdown
 	text={`

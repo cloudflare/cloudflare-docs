@@ -15,19 +15,7 @@ import { Tabs, TabItem, Render, Steps, DashButton } from "~/components";
 
 To enable client-side resource monitoring:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Page Shield**.
-3. Select **Enable Page Shield**.
-
-</Steps>
-
-If you do not have access to Page Shield in the Cloudflare dashboard, check if your user has one of the [necessary roles](/page-shield/reference/roles-and-permissions/).
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -40,9 +28,19 @@ If you do not have access to Page Shield in the Cloudflare dashboard, check if y
 
 </Steps>
 
-If you do not have access to resource monitoring in the Cloudflare dashboard, check if your user has one of the [necessary roles](/page-shield/reference/roles-and-permissions/).
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Page Shield**.
+3. Select **Enable Page Shield**.
+
+</Steps>
 
 </TabItem> </Tabs>
+
+If you do not have access to Page Shield in the Cloudflare dashboard, check if your user has one of the [necessary roles](/page-shield/reference/roles-and-permissions/).
 
 ## 2. Review detected resources
 
@@ -56,18 +54,18 @@ To review the scripts detected by Cloudflare:
 
 1. Go to the client-side resources page:
 
-   <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-   2. Go to **Security** > **Page Shield**.
-
-   </TabItem> <TabItem label="New dashboard" icon="rocket">
+   <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
    1. In the Cloudflare dashboard, go to the **Web assets** page.
 
       <DashButton url="/?to=/:account/:zone/security/web-assets" />
 
    2. Select the **Client-side resources** tab.
+
+   </TabItem> <TabItem label="Old dashboard">
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+   2. Go to **Security** > **Page Shield**.
 
    </TabItem> </Tabs>
 

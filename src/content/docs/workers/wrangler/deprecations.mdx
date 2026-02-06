@@ -33,7 +33,7 @@ Use `npm create cloudflare@latest` for new Workers and Pages projects.
 
 #### `publish`
 
-The `wrangler publish` command is deprecated, but still active in v3. `wrangler publish` will be fully removed in v4.
+The `wrangler deploy` command is deprecated, but still active in v3. `wrangler deploy` will be fully removed in v4.
 
 Use [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy Workers.
 
@@ -114,7 +114,7 @@ Refer to the following list for common fields that are no longer required.
 * `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
 * `wrangler route` - Routes are defined in the [Wrangler configuration file](/workers/wrangler/configuration/).
 * `wrangler report` - If you find a bug, report it at [Wrangler issues](https://github.com/cloudflare/workers-sdk/issues/new/choose).
-* `wrangler build` - If you wish to access the output from bundling your Worker, use `wrangler publish --outdir=path/to/output`.
+* `wrangler build` - If you wish to access the output from bundling your Worker, use `wrangler deploy --outdir=path/to/output`.
 
 #### New fields
 
@@ -148,7 +148,7 @@ A few configuration fields which were previously required, are now optional in p
 
 * **`name`**: `string`
 
-  The `name` configuration field is now not required for `wrangler dev`, or any of the `wrangler kv:*` commands. Further, it can also be passed as a command line argument as `--name <name>`. It is still required for `wrangler publish`.
+  The `name` configuration field is now not required for `wrangler dev`, or any of the `wrangler kv:*` commands. Further, it can also be passed as a command line argument as `--name <name>`. It is still required for `wrangler deploy`.
 
 * **`account_id`**: `string`
 
