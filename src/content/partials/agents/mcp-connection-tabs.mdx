@@ -1,0 +1,57 @@
+<Tabs>
+<TabItem label="Cursor">
+
+Use this [direct install link](https://cursor.com/en-US/install-mcp?name=cloudflare-docs&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D) for the Documentation server.
+
+Or add to your MCP configuration:
+
+```json
+{
+	"mcpServers": {
+		"cloudflare-docs": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+		}
+	}
+}
+```
+
+</TabItem>
+<TabItem label="VS Code">
+
+Use this [direct install link](vscode:mcp/install?%7B%22name%22%3A%22cloudflare-docs%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D) for the Documentation server.
+
+</TabItem>
+<TabItem label="Claude Desktop">
+
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+
+```json
+{
+	"mcpServers": {
+		"cloudflare-docs": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+		}
+	}
+}
+```
+
+</TabItem>
+<TabItem label="OpenCode">
+
+Add to `~/.config/opencode/.mcp.json`:
+
+```json
+{
+	"mcpServers": {
+		"cloudflare-docs": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+		}
+	}
+}
+```
+
+</TabItem>
+</Tabs>

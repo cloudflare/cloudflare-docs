@@ -210,21 +210,6 @@ Your agent can verify that authentication is working by running:
 npx wrangler whoami
 ```
 
-Or to get the current token programmatically:
-
-```sh
-npx wrangler auth token --json
-```
-
-This returns:
-
-```json
-{
-	"type": "api_token",
-	"token": "..."
-}
-```
-
 ## Security best practices
 
 When giving agents access to Wrangler:

@@ -101,10 +101,14 @@ export async function generateSidebar(group: Group) {
 		const links = [
 			["llms.txt", "/llms.txt"],
 			["prompt.txt", "/workers/prompt.txt"],
+			[`${product.data.name} llms-full.txt`, `/${product.id}/llms-full.txt`],
+			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
 		];
 
-		for (const [label, href] of links) {
-			group.entries.push({
+		group.entries.push({
+			type: "group",
+			label: "LLM resources",
+			entries: links.map(([label, href]) => ({
 				type: "link",
 				label,
 				href,
@@ -113,8 +117,10 @@ export async function generateSidebar(group: Group) {
 					target: "_blank",
 				},
 				badge: undefined,
-			});
-		}
+			})),
+			collapsed: true,
+			badge: undefined,
+		});
 	}
 
 	return group;
