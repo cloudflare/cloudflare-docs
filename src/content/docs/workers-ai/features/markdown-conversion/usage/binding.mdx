@@ -59,6 +59,10 @@ Takes a document or list of documents in different formats and converts them to 
 
 #### `ConversionResult` definition
 
+- `id` <Type text="string" />
+
+  - ID associated to this object.
+
 - `name` <Type text="string" />
 
   - Name of the converted document. Matches the input name.
@@ -149,6 +153,7 @@ This is the result:
 ```json
 [
 	{
+		"id": "...",
 		"name": "somatosensory.pdf",
 		"mimeType": "application/pdf",
 		"format": "markdown",
@@ -156,6 +161,7 @@ This is the result:
 		"data": "# somatosensory.pdf\n## Metadata\n- PDFFormatVersion=1.4\n- IsLinearized=false\n- IsAcroFormPresent=false\n- IsXFAPresent=false\n- IsCollectionPresent=false\n- IsSignaturesPresent=false\n- Producer=Prince 20150210 (www.princexml.com)\n- Title=Anatomy of the Somatosensory System\n\n## Contents\n### Page 1\nThis is a sample document to showcase..."
 	},
 	{
+		"id": "...",
 		"name": "cat.jpeg",
 		"mimeType": "image/jpeg",
 		"format": "markdown",

@@ -2,16 +2,12 @@
 title: Conversion Options
 pcx_content_type: how-to
 sidebar:
-  order: 4
+  order: 5
 ---
 
 Usually, only a file's **text** content will be converted. For some formats, this might be just the text, while for others some semantic information (like headings and lists) can be retrieved and output as part of the final conversion.
 
 To further extend the capabilities of the conversion process, several options can be passed to the service to control how to convert files.
-
-## Embedded content
-
-With the addition of conversion options, you can now tell the conversion process whether you want to convert embedded content or not. This means that more of your files are converted into Markdown, making these conversions closer to the original content. This can improve results in applications that depend on Markdown content, like [AI Search](/ai-search/concepts/how-ai-search-works/#how-indexing-works/) for example.
 
 ## Available options
 
@@ -38,28 +34,14 @@ This option works on a _best-effort_ basis: it is not guaranteed that the result
 ```typescript
 {
   html?: {
-    images?: {
-      convert?: boolean;
-      descriptionLanguage?: 'en' | 'it' | 'de' | 'es' | 'fr' | 'pt';
-      maxConvertedImages?: number;
-      convertOGImage?: boolean;
-    }
+    hostname?: string;
+    cssSelector?: string;
   }
 }
 ```
-- `convert`: Whether to convert any embedded images or not. Here, _embedded_ means an image that is specified using a [`data:` URL](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data). Images specified with normal links will not be included in the final converted output.
+- `hostname`: string to use as a host when resolving relative links inside the HTML.
 
-- `descriptionLanguage`: controls the language to which _embedded_ images will get converted to.
-
-:::caution
-
-This option works on a _best-effort_ basis: it is not guaranteed that the resulting text will be in the desired language.
-
-:::
-
-- `maxConvertedImages`: controls the max number of images converted per file, up to a global limit of 10 per file.
-
-- `convertOGImage`: whether images present in an [Open Graph](https://ogp.me/) image meta tag (`<meta property="og:image" content="..." />`) should be converted. These support all types of images, including _embedded_ and "regular" images. Successfully converting this image will not count towards the embedded image conversion limit.
+- `cssSelector`: string containing a CSS selector pattern to pick specific elements from your HTML. See [how HTML is processed](/workers-ai/features/markdown-conversion/how-it-works/#html) for more details.
 
 ### PDF
 
@@ -67,56 +49,11 @@ This option works on a _best-effort_ basis: it is not guaranteed that the result
 {
   pdf?: {
     metadata?: boolean;
-    images: {
-      descriptionLanguage: 'en' | 'it' | 'de' | 'es' | 'fr' | 'pt';
-      convert?: boolean;
-      maxConvertedImages?: number;
-    }
   }
 }
 ```
 
 - `metadata`: Previously, all converted PDF files always included metadata information when converted. This options allows you to opt-out of this behavior.
-
-- `convert`: Whether to convert any embedded images or not.
-
-- `descriptionLanguage`: controls the language to which _embedded_ images will get converted to.
-
-:::caution
-
-This option works on a _best-effort_ basis: it is not guaranteed that the resulting text will be in the desired language.
-
-:::
-
-- `maxConvertedImages`: controls the max number of images converted per file, up to a global limit of 10 per file.
-
-
-### DOCX
-
-```typescript
-{
-  docx?: {
-    images?: {
-      descriptionLanguage?: 'en' | 'it' | 'de' | 'es' | 'fr' | 'pt';
-      convert?: boolean;
-      maxConvertedImages?: number;
-    }
-  }
-}
-```
-
-- `convert`: Whether to convert any embedded images or not.
-
-- `descriptionLanguage`: controls the language to which _embedded_ images will get converted to.
-
-:::caution
-
-This option works on a _best-effort_ basis: it is not guaranteed that the resulting text will be in the desired language.
-
-:::
-
-- `maxConvertedImages`: controls the max number of images converted per file, up to a global limit of 10 per file.
-
 ## Examples
 
 ### Binding

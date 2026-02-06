@@ -1,7 +1,7 @@
 ---
 title: 'Workers AI Markdown Conversion: new conversion options & embedded content conversion'
 description: You can now control parts of the markdown conversion process, allowing you to specify if embedded content should be converted as well
-date: 2025-11-14
+date: 2026-02-06
 ---
 
 Users can now control more aspects of the conversion process when using the Workers AI [Markdown Conversion](/workers-ai/features/markdown-conversion/) service.
@@ -28,22 +28,4 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
 
 to control how conversion happens.
 
-This addition also enables users to convert _embedded content_, such as *data URL* images in HTML files. Given the following HTML markup (where the image is of a cat playing with a ball, for example):
-
-```html
-...
-<img src="data:image/png;base64,..." alt="My embedded image"/>
-...
-```
-
-the converted Markdown output would look something like this:
-
-```markdown
-...
-The image depicts a cat playing with a ball
-...
-```
-
-If we fail to convert your image, we will fall back to the provided `alt` description, if there is one.
-
-Learn more about the new conversion options and embedded content conversion in the [Markdown Conversion documentation](/workers-ai/features/markdown-conversion/).
+Learn more about the new conversion options in the [Markdown Conversion documentation](/workers-ai/features/markdown-conversion/).
