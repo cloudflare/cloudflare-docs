@@ -145,9 +145,7 @@ The client includes a TLS client certificate during the TLS handshake. The proxy
 
 ### Limitations
 
-- **Certificate management**: You must provision and manage certificates for each client or service.
-- **Not suitable for end users**: mTLS is designed for server-to-server communication, not for authenticating individual users.
-- **No unlinkability**: The proxy can identify the client by its certificate, which reduces privacy compared to Privacy Pass.
+You must provision and manage certificates for each client or service. mTLS is designed for server-to-server communication, not for authenticating individual users. The proxy can identify the client by its certificate, which reduces privacy compared to Privacy Pass.
 
 Use mTLS for server-to-server integrations where both parties are trusted services.
 
