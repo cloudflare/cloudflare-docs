@@ -11,7 +11,7 @@ entries:
 
   - term: Content Signals
     general_definition: |-
-      An emerging IETF standard for expressing AI content preferences via HTTP headers or metadata. Aims to replace non-standard vendor signals. See contentsignals.org.
+      An emerging IETF standard for expressing AI content preferences via HTTP headers or metadata. Aims to replace non-standard vendor signals. Refer to contentsignals.org.
 
   - term: crawl
     general_definition: |-

@@ -60,20 +60,18 @@ Visualize crawler activity patterns over the selected time period. Use the view 
 | **Allowed requests** | Requests that received a successful response (status 200-299).                    |
 | **Data transfer**    | Bandwidth consumption for allowed requests over time, formatted as KB, MB, or GB. |
 
-You can group data by different dimensions:
+You can group the data by different dimensions:
 
-| Dimension    | Description                                                                      |
-| ------------ | -------------------------------------------------------------------------------- |
-| **Crawler**  | Track activity from individual AI crawlers (like GPTBot, ClaudeBot, Bytespider). |
-| **Category** | Analyze crawlers by their purpose or type.                                       |
-| **Operator** | Discover which companies (OpenAI, Anthropic, ByteDance) are crawling your site.  |
-| **Host**     | Break down activity across multiple subdomains.                                  |
+| Dimension    | Description                                                                              |
+| ------------ | ---------------------------------------------------------------------------------------- |
+| **Crawler**  | Track activity from individual AI crawlers (such as GPTBot, ClaudeBot, Bytespider).      |
+| **Category** | Analyze crawlers by their purpose or type.                                               |
+| **Operator** | Discover which companies (such as OpenAI, Anthropic, ByteDance) are crawling your site.  |
+| **Host**     | Break down activity across multiple subdomains.                                          |
 
-<Aside type="note">
-	The Data transfer view shows `edgeResponseBytes`. Some crawlers may show
-	higher data transfer per request than others depending on the content they
-	request.
-</Aside>
+:::note
+The Data transfer view shows `edgeResponseBytes`. Some crawlers may show higher data transfer per request than others, depending on the content they request.
+:::
 
 ### Status code distribution
 
@@ -88,9 +86,9 @@ Use this chart to identify patterns in how your site responds to AI crawlers, in
 
 ### Top referrers
 
-<Aside type="note">
-	This feature is available for customers on a paid plan.
-</Aside>
+:::note
+This feature is available for customers on a paid plan.
+:::
 
 Identify traffic sources with referrer analytics to understand discovery patterns and content popularity from AI operators.
 
