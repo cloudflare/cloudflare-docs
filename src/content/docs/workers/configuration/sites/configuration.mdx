@@ -37,19 +37,24 @@ Example of a [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
-```toml
-name = "docs-site-blah"
-
-[site]
-bucket = "./public"
-
-[env.production]
-name = "docs-site"
-route = "https://example.com/docs*"
-
-[env.staging]
-name = "docs-site-staging"
-route = "https://staging.example.com/docs*"
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "docs-site-blah",
+	"site": {
+		"bucket": "./public"
+	},
+	"env": {
+		"production": {
+			"name": "docs-site",
+			"route": "https://example.com/docs*"
+		},
+		"staging": {
+			"name": "docs-site-staging",
+			"route": "https://staging.example.com/docs*"
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -74,10 +79,15 @@ If you want to include only a certain set of files or directories in your `bucke
 
 <WranglerConfig>
 
-```toml
-[site]
-bucket = "./public"
-include = ["included_dir"] # must be an array.
+```jsonc
+{
+	"site": {
+		"bucket": "./public",
+		"include": [ // must be an array.
+			"included_dir"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -90,10 +100,15 @@ If you want to exclude files or directories in your `bucket`, you can add an `ex
 
 <WranglerConfig>
 
-```toml
-[site]
-bucket = "./public"
-exclude = ["excluded_dir"] # must be an array.
+```jsonc
+{
+	"site": {
+		"bucket": "./public",
+		"exclude": [ // must be an array.
+			"excluded_dir"
+		]
+	}
+}
 ```
 
 </WranglerConfig>

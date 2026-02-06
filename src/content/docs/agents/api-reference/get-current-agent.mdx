@@ -1,0 +1,291 @@
+---
+title: getCurrentAgent()
+pcx_content_type: concept
+sidebar:
+  order: 17
+---
+
+import { TypeScriptExample, LinkCard } from "~/components";
+
+The `getCurrentAgent()` function allows you to access the current agent context from anywhere in your code, including external utility functions and libraries. This is useful when you need agent information in functions that do not have direct access to `this`.
+
+## Automatic context for custom methods
+
+All custom methods automatically have full agent context. The framework automatically detects and wraps your custom methods during initialization, ensuring `getCurrentAgent()` works everywhere.
+
+## How it works
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { getCurrentAgent } from "agents";
+
+export class MyAgent extends AIChatAgent {
+	async customMethod() {
+		const { agent } = getCurrentAgent();
+		// agent is automatically available
+		console.log(agent.name);
+	}
+
+	async anotherMethod() {
+		// This works too - no setup needed
+		const { agent } = getCurrentAgent();
+		return agent.state;
+	}
+}
+```
+
+</TypeScriptExample>
+
+No configuration is required. The framework automatically:
+
+1. Scans your agent class for custom methods.
+2. Wraps them with agent context during initialization.
+3. Ensures `getCurrentAgent()` works in all external functions called from your methods.
+
+## Real-world example
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { getCurrentAgent } from "agents";
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+// External utility function that needs agent context
+async function processWithAI(prompt: string) {
+	const { agent } = getCurrentAgent();
+	// External functions can access the current agent
+
+	return await generateText({
+		model: openai("gpt-4"),
+		prompt: `Agent ${agent?.name}: ${prompt}`,
+	});
+}
+
+export class MyAgent extends AIChatAgent {
+	async customMethod(message: string) {
+		// Use this.* to access agent properties directly
+		console.log("Agent name:", this.name);
+		console.log("Agent state:", this.state);
+
+		// External functions automatically work
+		const result = await processWithAI(message);
+		return result.text;
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Built-in vs custom methods
+
+- **Built-in methods** (`onRequest`, `onEmail`, `onStateUpdate`): Already have context.
+- **Custom methods** (your methods): Automatically wrapped during initialization.
+- **External functions**: Access context through `getCurrentAgent()`.
+
+### The context flow
+
+<TypeScriptExample>
+
+```ts
+// When you call a custom method:
+agent.customMethod();
+// → automatically wrapped with agentContext.run()
+// → your method executes with full context
+// → external functions can use getCurrentAgent()
+```
+
+</TypeScriptExample>
+
+## Common use cases
+
+### Working with AI SDK tools
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+export class MyAgent extends AIChatAgent {
+	async generateResponse(prompt: string) {
+		// AI SDK tools automatically work
+		const response = await generateText({
+			model: openai("gpt-4"),
+			prompt,
+			tools: {
+				// Tools that use getCurrentAgent() work perfectly
+			},
+		});
+
+		return response.text;
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Calling external libraries
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { getCurrentAgent } from "agents";
+
+async function saveToDatabase(data: any) {
+	const { agent } = getCurrentAgent();
+	// Can access agent info for logging, context, etc.
+	console.log(`Saving data for agent: ${agent?.name}`);
+}
+
+export class MyAgent extends AIChatAgent {
+	async processData(data: any) {
+		// External functions automatically have context
+		await saveToDatabase(data);
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Accessing request and connection context
+
+<TypeScriptExample>
+
+```ts
+import { getCurrentAgent } from "agents";
+
+function logRequestInfo() {
+	const { agent, connection, request } = getCurrentAgent();
+
+	if (request) {
+		console.log("Request URL:", request.url);
+		console.log("Request method:", request.method);
+	}
+
+	if (connection) {
+		console.log("Connection ID:", connection.id);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## API reference
+
+### `getCurrentAgent()`
+
+Gets the current agent from any context where it is available.
+
+<TypeScriptExample>
+
+```ts
+import { getCurrentAgent } from "agents";
+
+function getCurrentAgent<T extends Agent>(): {
+	agent: T | undefined;
+	connection: Connection | undefined;
+	request: Request | undefined;
+	email: AgentEmail | undefined;
+};
+```
+
+</TypeScriptExample>
+
+#### Returns:
+
+| Property     | Type                      | Description                                                   |
+| ------------ | ------------------------- | ------------------------------------------------------------- |
+| `agent`      | `T \| undefined`          | The current agent instance                                    |
+| `connection` | `Connection \| undefined` | The WebSocket connection (if called from a WebSocket handler) |
+| `request`    | `Request \| undefined`    | The HTTP request (if called from a request handler)           |
+| `email`      | `AgentEmail \| undefined` | The email (if called from an email handler)                   |
+
+#### Usage:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "agents/ai-chat-agent";
+import { getCurrentAgent } from "agents";
+
+export class MyAgent extends AIChatAgent {
+	async customMethod() {
+		const { agent, connection, request } = getCurrentAgent<MyAgent>();
+		// agent is properly typed as MyAgent
+		// connection and request available if called from a request handler
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Context availability
+
+The context available depends on how the method was invoked:
+
+| Invocation              | `agent` | `connection` | `request` | `email` |
+| ----------------------- | ------- | ------------ | --------- | ------- |
+| `onRequest()`           | Yes     | No           | Yes       | No      |
+| `onConnect()`           | Yes     | Yes          | Yes       | No      |
+| `onMessage()`           | Yes     | Yes          | No        | No      |
+| `onEmail()`             | Yes     | No           | No        | Yes     |
+| Custom method (via RPC) | Yes     | Yes          | No        | No      |
+| Scheduled task          | Yes     | No           | No        | No      |
+| Queue callback          | Yes     | Depends      | Depends   | Depends |
+
+## Best practices
+
+1. **Use `this` when possible**: Inside agent methods, prefer `this.name`, `this.state`, etc. over `getCurrentAgent()`.
+
+2. **Use `getCurrentAgent()` in external functions**: When you need agent context in utility functions or libraries that do not have access to `this`.
+
+3. **Check for undefined**: The returned values may be `undefined` if called outside an agent context.
+
+   <TypeScriptExample>
+
+   ```ts
+   const { agent } = getCurrentAgent();
+   if (agent) {
+   	// Safe to use agent
+   	console.log(agent.name);
+   }
+   ```
+
+   </TypeScriptExample>
+
+4. **Type the agent**: Pass your agent class as a type parameter for proper typing.
+
+   <TypeScriptExample>
+
+   ```ts
+   const { agent } = getCurrentAgent<MyAgent>();
+   // agent is typed as MyAgent | undefined
+   ```
+
+   </TypeScriptExample>
+
+## Next steps
+
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="Callable methods"
+	href="/agents/api-reference/callable-methods/"
+	description="Expose methods to clients via RPC."
+/>
+
+<LinkCard
+	title="State management"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Manage and sync agent state."
+/>

@@ -77,7 +77,7 @@ To access event logs:
 
 ### DHCP leasing
 
-Refer to the DHCP leasing section to identify DHCP assigned leases and their expiration dates. To access DHCP leasing:
+The DHCP leasing section identifies DHCP assigned leases and their expiration dates. To access DHCP leasing:
 
 <Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" params={{ dashName: props.dashName }} />
 4. Select **DHCP leasing**.
@@ -92,7 +92,7 @@ Make sure that you have <a href={props.activateURL}>activated your Magic WAN Con
 
 ## I have tried to activate Magic WAN Connector, but it is still not working
 
-Check if your Magic WAN Connector is connected to the Internet via a port that can serve DHCP. This is required the first time a Magic WAN Connector boots up so that it can reach the Cloudflare global network and download the required configurations that you set up in the Site configuration step. Refer to <a href={props.activateURL}>Activate Connector</a> for more details.
+Check if your Magic WAN Connector is connected to the Internet via a port that can serve DHCP. This is required the first time a Magic WAN Connector boots up so that it can reach the Cloudflare global network and download the required configurations that you set up in the Site configuration step. For details, refer to <a href={props.activateURL}>Activate Connector</a>.
 
 If you have a firewall deployed upstream of the Magic WAN Connector, <a href={props.firewallURL}>check your firewall settings</a>. You might need to configure your firewall to allow traffic in specific ports for the Magic WAN Connector to work properly.
 

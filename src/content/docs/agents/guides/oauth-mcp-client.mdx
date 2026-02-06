@@ -4,10 +4,15 @@ pcx_content_type: how-to
 tags:
   - MCP
 sidebar:
-  order: 8
+  order: 12
 ---
 
-import { Render, TypeScriptExample, PackageManagers } from "~/components";
+import {
+	Render,
+	TypeScriptExample,
+	PackageManagers,
+	LinkCard,
+} from "~/components";
 
 When connecting to OAuth-protected MCP servers (like Slack or Notion), your users need to authenticate before your Agent can access their data. This guide covers implementing OAuth flows for seamless authorization.
 
@@ -238,7 +243,11 @@ function App() {
 		onMcpUpdate: setMcpState,
 	});
 
-	const handleRetry = async (serverId: string, serverUrl: string, name: string) => {
+	const handleRetry = async (
+		serverId: string,
+		serverUrl: string,
+		name: string,
+	) => {
 		// Remove failed connection
 		await fetch(`/agents/my-agent/session-id/disconnect`, {
 			method: "POST",
@@ -259,11 +268,12 @@ function App() {
 			{Object.entries(mcpState.servers).map(([id, server]) => (
 				<div key={id}>
 					<strong>{server.name}</strong>: {server.state}
-
 					{server.state === "failed" && (
 						<div>
 							<p>Connection failed. Please try again.</p>
-							<button onClick={() => handleRetry(id, server.server_url, server.name)}>
+							<button
+								onClick={() => handleRetry(id, server.server_url, server.name)}
+							>
 								Retry Connection
 							</button>
 						</div>
@@ -378,5 +388,14 @@ export default {
 
 ## Related
 
-- [Connect to an MCP server](/agents/guides/connect-mcp-client) — Get started (no OAuth)
-- [MCP Client API reference](/agents/model-context-protocol/mcp-client-api/)
+<LinkCard
+	title="Connect to an MCP server"
+	href="/agents/guides/connect-mcp-client/"
+	description="Get started without OAuth."
+/>
+
+<LinkCard
+	title="MCP Client API"
+	href="/agents/model-context-protocol/mcp-client-api/"
+	description="Complete API documentation for MCP clients."
+/>

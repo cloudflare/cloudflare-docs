@@ -1,11 +1,11 @@
 ---
-
 summary: Store static assets in Workers KV and serve them from a Worker application with low-latency and high-throughput
 pcx_content_type: example
 title: Store and retrieve static assets
 sidebar:
   order: 4
 description: Example of how to use Workers KV to store static assets
+reviewed: 2024-08-30
 ---
 
 import { Render, PackageManagers, TabItem, Tabs } from "~/components";
@@ -72,7 +72,7 @@ export default {
 
     	// Get the mimetype from the key path
     	const extension = key.split('.').pop();
-    	let mimeType = mime.getType(key) || "text/plain";
+    	let mimeType = mime.getType(extension) || "text/plain";
     	if (mimeType.startsWith("text") || mimeType === "application/javascript") {
     		mimeType += "; charset=utf-8";
     	}
@@ -248,7 +248,7 @@ export default {
 
     // Get the mimetype from the key path
     const extension = key.split('.').pop();
-    let mimeType = mime.getType(key) || "text/plain";
+    let mimeType = mime.getType(extension) || "text/plain";
     if (mimeType.startsWith("text") || mimeType === "application/javascript") {
       mimeType += "; charset=utf-8";
     }

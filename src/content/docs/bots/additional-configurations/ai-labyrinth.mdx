@@ -7,7 +7,7 @@ sidebar:
   order: 7
 ---
 
-import { Render, Tabs, TabItem, Steps, DashButton } from "~/components"
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
 The AI Labyrinth adds invisible links on your webpage with specific `Nofollow` tags to block AI crawlers that do not adhere to the recommended guidelines and crawl without permission. AI crawlers that scrape your website content without permission will be stuck in a maze of never-ending links, and their details are recorded and used by all Cloudflare customers who choose to block [AI bots](/bots/concepts/bot/#ai-bots).
 
@@ -15,7 +15,19 @@ These links do not impact your search engine optimization (SEO) or your website'
 
 To enable [AI Labyrinth](/bots/additional-configurations/ai-labyrinth):
 
-<Tabs syncKey="dashNewNav"> 
+{/* prettier-ignore-start */}
+
+<Tabs syncKey="dashNewNav">
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **AI Labyrinth**.
+      4. Turn **AI Labyrinth** on.
+    </Steps>
+  </TabItem>
   <TabItem label="Old dashboard">
     <Steps>
       1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
@@ -23,15 +35,7 @@ To enable [AI Labyrinth](/bots/additional-configurations/ai-labyrinth):
       3. Select **Configure Bot Fight Mode**.
       4. Enable **AI Labyrinth**.
     </Steps>
-  </TabItem> 
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Security Settings** page.
-
-          <DashButton url="/?to=/:account/:zone/security/settings" />
-      2. Filter by **Bot traffic**.
-      3. Go to **AI Labyrinth**. 
-      4. Turn **AI Labyrinth** on.
-    </Steps>
-  </TabItem> 
+  </TabItem>
 </Tabs>
+
+{/* prettier-ignore-end */}

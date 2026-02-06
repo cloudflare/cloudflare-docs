@@ -3,11 +3,11 @@ params:
   - tunnelStatePath
 ---
 
-Cloudflare combines different metrics to determine when to send you Magic Tunnel health alerts. The following sections explain the key concepts behind this process.
+Understanding how Cloudflare calculates Magic Tunnel health alerts helps you interpret alert notifications and optimize your network reliability. Cloudflare combines different metrics to determine when to send you Magic Tunnel health alerts. The following sections explain the key concepts behind this process.
 
 ### Service-level indicator (SLI)
 
-The ratio of positive events to total events. An SLI of 0% means the feature is not working at all, and an SLI of 100% means the feature is fully working as expected.
+SLI is the ratio of positive events to total events. An SLI of 0% means the feature is not working at all, and an SLI of 100% means the feature is fully working as expected.
 
 :::note
 Cloudflare counts degraded health checks as failed health checks when calculating SLIs.
@@ -37,7 +37,7 @@ The burn rate measures how fast you expend the error budget over a given time wi
 
 To determine when to send Magic Tunnel health alerts, Cloudflare relies on a multi-window, multi-burn rate approach. Every five minutes, Cloudflare analyzes the last hour and the last five minutes of data. Cloudflare calculates the SLI for the short window (five minutes) and long window (one hour) of data.
 
-Cloudflare only alerts you when both the short and long windows fall below the configured threshold. This means both windows must fail the threshold for an alert to trigger. For example, if you defined a threshold of 99%:
+Cloudflare only alerts you when both the short and long windows fall short of the configured threshold. This means both windows must fail the threshold for an alert to trigger. For example, if you defined a threshold of 99%:
 
-- Short window: 99.2%, Long window: 99%. Cloudflare would not trigger an alert because the short window is above the 99% threshold.
-- Short window: 98%, Long window: 98%. Cloudflare would trigger an alert because both windows are below the 99% threshold.
+- Short window: 99.2%, Long window: 99%. Cloudflare would not trigger an alert because the short window exceeds the 99% threshold.
+- Short window: 98%, Long window: 98%. Cloudflare would trigger an alert because both windows fall short of the 99% threshold.

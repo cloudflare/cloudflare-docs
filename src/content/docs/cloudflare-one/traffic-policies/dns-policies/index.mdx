@@ -471,7 +471,7 @@ Use this selector to apply policies to the source internal IP address of a DNS q
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ one: "hostnames", two: "Host" }}
+	params={{ selector: "Host", selectordescription: "hostname", operator: "matches regex", valueOne: ".*whispersystems.org", valueTwo: ".*signal.org" }}
 />
 
 ## Logical operators

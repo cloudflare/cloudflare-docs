@@ -95,10 +95,13 @@ This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/mod
 
 <WranglerConfig>
 
-```toml
-[ai]
-binding = "AI"
-remote = true
+```jsonc
+{
+	"ai": {
+		"binding": "AI",
+		"remote": true
+	}
+}
 ```
 
 </WranglerConfig>
@@ -149,12 +152,16 @@ Then, add the configuration details for your new Vectorize index to the [Wrangle
 
 <WranglerConfig>
 
-```toml
-# ... existing wrangler configuration
-
-[[vectorize]]
-binding = "VECTOR_INDEX"
-index_name = "vector-index"
+```jsonc
+{
+	// ... existing wrangler configuration
+	"vectorize": [
+		{
+			"binding": "VECTOR_INDEX",
+			"index_name": "vector-index"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -173,13 +180,17 @@ Then, paste the configuration details output from the previous command into the 
 
 <WranglerConfig>
 
-```toml
-# ... existing wrangler configuration
-
-[[d1_databases]]
-binding = "DB" # available in your Worker on env.DB
-database_name = "database"
-database_id = "abc-def-geh" # replace this with a real database_id (UUID)
+```jsonc
+{
+	// ... existing wrangler configuration
+	"d1_databases": [
+		{
+			"binding": "DB", // available in your Worker on env.DB
+			"database_name": "database",
+			"database_id": "abc-def-geh" // replace this with a real database_id (UUID)
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -204,13 +215,17 @@ To begin, add a new `[[workflows]]` block to your [Wrangler configuration file](
 
 <WranglerConfig>
 
-```toml
-# ... existing wrangler configuration
-
-[[workflows]]
-name = "rag"
-binding = "RAG_WORKFLOW"
-class_name = "RAGWorkflow"
+```jsonc
+{
+	// ... existing wrangler configuration
+	"workflows": [
+		{
+			"name": "rag",
+			"binding": "RAG_WORKFLOW",
+			"class_name": "RAGWorkflow"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

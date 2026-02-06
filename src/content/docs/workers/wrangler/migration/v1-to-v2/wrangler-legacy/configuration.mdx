@@ -28,21 +28,23 @@ The layout of a top-level configuration in a Wrangler file is displayed below:
 
 <WranglerConfig>
 
-```toml
-name = "your-worker"
-type = "javascript"
-account_id = "your-account-id"
-
-# This field specifies that the Worker
-# will be deployed to a *.workers.dev domain
-workers_dev = true
-
-# -- OR --
-
-# These fields specify that the Worker
-# will deploy to a custom domain
-zone_id = "your-zone-id"
-routes = ["example.com/*"]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "your-worker",
+	"type": "javascript",
+	"account_id": "your-account-id",
+	// This field specifies that the Worker
+	// will be deployed to a *.workers.dev domain
+	"workers_dev": true,
+	// -- OR --
+	// These fields specify that the Worker
+	// will deploy to a custom domain
+	"zone_id": "your-zone-id",
+	"routes": [
+		"example.com/*"
+	]
+}
 ```
 
 </WranglerConfig>
@@ -63,42 +65,50 @@ An example of an `[env.name]` configuration looks like this:
 
 <WranglerConfig>
 
-```toml
-type = "javascript"
-
-name = "your-worker"
-account_id = "your-account-id"
-
-[vars]
-FOO = "default FOO value"
-BAR = "default BAR value"
-
-[[kv_namespaces]]
-binding = "FOO"
-id = "1a..."
-preview_id = "1b..."
-
-[env.helloworld]
-# Now adding configuration keys for the "helloworld" environment.
-# These new values will override the top-level configuration.
-name = "your-worker-helloworld"
-account_id = "your-other-account-id"
-
-[env.helloworld.vars]
-FOO = "env-helloworld FOO value"
-BAR = "env-helloworld BAR value"
-
-[[env.helloworld.kv_namespaces]]
-  # Redeclare kv namespace bindings for each environment
-  # NOTE: In this case, passing new IDs because new `account_id` value.
-binding = "FOO"
-id = "888..."
-preview_id = "999..."
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"type": "javascript",
+	"name": "your-worker",
+	"account_id": "your-account-id",
+	"vars": {
+		"FOO": "default FOO value",
+		"BAR": "default BAR value"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "FOO",
+			"id": "1a...",
+			"preview_id": "1b..."
+		}
+	],
+	"env": {
+		"helloworld": {
+			// Now adding configuration keys for the "helloworld" environment.
+			// These new values will override the top-level configuration.
+			"name": "your-worker-helloworld",
+			"account_id": "your-other-account-id",
+			"vars": {
+				"FOO": "env-helloworld FOO value",
+				"BAR": "env-helloworld BAR value"
+			},
+			"kv_namespaces": [
+				{
+					// Redeclare kv namespace bindings for each environment
+					// NOTE: In this case, passing new IDs because new `account_id` value.
+					"binding": "FOO",
+					"id": "888...",
+					"preview_id": "999..."
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>
 
-To deploy this example Worker to the `helloworld` environment, you would run `wrangler publish --env helloworld`.
+To deploy this example Worker to the `helloworld` environment, you would run `wrangler deploy --env helloworld`.
 
 ---
 
@@ -171,10 +181,13 @@ Usage:
 
 <WranglerConfig>
 
-```toml
-[vars]
-FOO = "some value"
-BAR = "some other string"
+```jsonc
+{
+	"vars": {
+		"FOO": "some value",
+		"BAR": "some other string"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -194,8 +207,13 @@ Alternatively, you can define `vars` using an inline table format. This style sh
 
 <WranglerConfig>
 
-```toml
-vars = { FOO = "some value", BAR = "some other string" }
+```jsonc
+{
+	"vars": {
+		"FOO": "some value",
+		"BAR": "some other string"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -214,11 +232,21 @@ Usage:
 
 <WranglerConfig>
 
-```toml
-kv_namespaces = [
-  { binding = "FOO", id = "0f2ac74b498b48028cb68387c421e279", preview_id = "6a1ddb03f3ec250963f0a1e46820076f" },
-  { binding = "BAR", id = "068c101e168d03c65bddf4ba75150fb0", preview_id = "fb69528dbc7336525313f2e8c3b17db0" }
-]
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "FOO",
+			"id": "0f2ac74b498b48028cb68387c421e279",
+			"preview_id": "6a1ddb03f3ec250963f0a1e46820076f"
+		},
+		{
+			"binding": "BAR",
+			"id": "068c101e168d03c65bddf4ba75150fb0",
+			"preview_id": "fb69528dbc7336525313f2e8c3b17db0"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -227,16 +255,21 @@ Alternatively, you can define `kv namespaces` like so:
 
 <WranglerConfig>
 
-```toml
-[[kv_namespaces]]
-binding = "FOO"
-preview_id = "abc456"
-id = "abc123"
-
-[[kv_namespaces]]
-binding = "BAR"
-preview_id = "xyz456"
-id = "xyz123"
+```jsonc
+{
+	"kv_namespaces": [
+		{
+			"binding": "FOO",
+			"preview_id": "abc456",
+			"id": "abc123"
+		},
+		{
+			"binding": "BAR",
+			"preview_id": "xyz456",
+			"id": "xyz123"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -277,10 +310,13 @@ Usage:
 
 <WranglerConfig>
 
-```toml
-[site]
-bucket = "./public"
-entry-point = "workers-site"
+```jsonc
+{
+	"site": {
+		"bucket": "./public",
+		"entry-point": "workers-site"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -310,11 +346,16 @@ If you want to include only a certain set of files or directories in your `bucke
 
 <WranglerConfig>
 
-```toml
-[site]
-bucket = "./public"
-entry-point = "workers-site"
-include = ["included_dir"] # must be an array.
+```jsonc
+{
+	"site": {
+		"bucket": "./public",
+		"entry-point": "workers-site",
+		"include": [ // must be an array.
+			"included_dir"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -327,11 +368,16 @@ If you want to exclude files or directories in your `bucket`, add an `exclude` f
 
 <WranglerConfig>
 
-```toml
-[site]
-bucket = "./public"
-entry-point = "workers-site"
-exclude = ["excluded_dir"] # must be an array.
+```jsonc
+{
+	"site": {
+		"bucket": "./public",
+		"entry-point": "workers-site",
+		"exclude": [ // must be an array.
+			"excluded_dir"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -368,9 +414,15 @@ Usage:
 
 <WranglerConfig>
 
-```toml
-[triggers]
-crons = ["0 0 * JAN-JUN FRI", "0 0 LW JUL-DEC *"]
+```jsonc
+{
+	"triggers": {
+		"crons": [
+			"0 0 * JAN-JUN FRI",
+			"0 0 LW JUL-DEC *"
+		]
+	}
+}
 ```
 
 </WranglerConfig>
@@ -386,10 +438,13 @@ Usage:
 
 <WranglerConfig>
 
-```toml
-[dev]
-port = 9000
-local_protocol = "https"
+```jsonc
+{
+	"dev": {
+		"port": 9000,
+		"local_protocol": "https"
+	}
+}
 ```
 
 </WranglerConfig>
@@ -430,12 +485,15 @@ Usage:
 
 <WranglerConfig>
 
-```toml
-[build]
-command = "npm install && npm run build"
-
-[build.upload]
-format = "service-worker"
+```jsonc
+{
+	"build": {
+		"command": "npm install && npm run build",
+		"upload": {
+			"format": "service-worker"
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -497,13 +555,16 @@ To create a Workers project using Wrangler and Modules, add a `[build]` section:
 
 <WranglerConfig>
 
-```toml
-[build]
-command = "npm install && npm run build"
-
-[build.upload]
-format = "modules"
-main = "./worker.mjs"
+```jsonc
+{
+	"build": {
+		"command": "npm install && npm run build",
+		"upload": {
+			"format": "modules",
+			"main": "./worker.mjs"
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -545,21 +606,32 @@ Defaults:
 
 <WranglerConfig>
 
-```toml
-[build.upload]
-format = "modules"
-main = "./worker.mjs"
-
-# You do not need to include these default rules in your [Wrangler configuration file](/workers/wrangler/configuration/), they are implicit.
-# The default rules are treated as the last two rules in the list.
-
-[[build.upload.rules]]
-type = "ESModule"
-globs = ["**/*.mjs"]
-
-[[build.upload.rules]]
-type = "CommonJS"
-globs = ["**/*.js", "**/*.cjs"]
+```jsonc
+{
+	// You do not need to include these default rules in your [Wrangler configuration file](/workers/wrangler/configuration/), they are implicit.
+	// The default rules are treated as the last two rules in the list.
+	"build": {
+		"upload": {
+			"format": "modules",
+			"main": "./worker.mjs",
+			"rules": [
+				{
+					"type": "ESModule",
+					"globs": [
+						"**/*.mjs"
+					]
+				},
+				{
+					"type": "CommonJS",
+					"globs": [
+						"**/*.js",
+						"**/*.cjs"
+					]
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>
@@ -581,50 +653,76 @@ To illustrate how these levels are applied, here is a Wrangler file using multip
 
 <WranglerConfig>
 
-```toml
-# top level configuration
-type = "javascript"
-name = "my-worker-dev"
-account_id = "12345678901234567890"
-zone_id = "09876543210987654321"
-route = "dev.example.com/*"
-usage_model = "unbound"
-kv_namespaces = [
-  { binding = "FOO", id = "b941aabb520e61dcaaeaa64b4d8f8358", preview_id = "03c8c8dd3b032b0528f6547d0e1a83f3" },
-  { binding = "BAR", id = "90e6f6abd5b4f981c748c532844461ae", preview_id = "e5011a026c5032c09af62c55ecc3f438" }
-]
-
-[build]
-command = "webpack"
-[build.upload]
-format = "service-worker"
-
-[site]
-bucket = "./public"
-entry-point = "workers-site"
-
-[dev]
-ip = "0.0.0.0"
-port = 9000
-local_protocol="http"
-upstream_protocol="https"
-
-# environment configuration
-[env.staging]
-name = "my-worker-staging"
-route = "staging.example.com/*"
-kv_namespaces = [
-  { binding = "FOO", id = "0f2ac74b498b48028cb68387c421e279" },
-  { binding = "BAR", id = "068c101e168d03c65bddf4ba75150fb0" }
-]
-
-# environment configuration
-[env.production]
-workers_dev= true
-kv_namespaces = [
-  { binding = "FOO", id = "0d2ac74b498b48028cb68387c421e233" },
-  { binding = "BAR", id = "0d8c101e168d03c65bddf4ba75150f33" }
-]
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// top level configuration
+	"type": "javascript",
+	"name": "my-worker-dev",
+	"account_id": "12345678901234567890",
+	"zone_id": "09876543210987654321",
+	"route": "dev.example.com/*",
+	"usage_model": "unbound",
+	"kv_namespaces": [
+		{
+			"binding": "FOO",
+			"id": "b941aabb520e61dcaaeaa64b4d8f8358",
+			"preview_id": "03c8c8dd3b032b0528f6547d0e1a83f3"
+		},
+		{
+			"binding": "BAR",
+			"id": "90e6f6abd5b4f981c748c532844461ae",
+			"preview_id": "e5011a026c5032c09af62c55ecc3f438"
+		}
+	],
+	"build": {
+		"command": "webpack",
+		"upload": {
+			"format": "service-worker"
+		}
+	},
+	"site": {
+		"bucket": "./public",
+		"entry-point": "workers-site"
+	},
+	"dev": {
+		"ip": "0.0.0.0",
+		"port": 9000,
+		"local_protocol": "http",
+		"upstream_protocol": "https"
+	},
+	"env": {
+		// environment configuration
+		"staging": {
+			"name": "my-worker-staging",
+			"route": "staging.example.com/*",
+			"kv_namespaces": [
+				{
+					"binding": "FOO",
+					"id": "0f2ac74b498b48028cb68387c421e279"
+				},
+				{
+					"binding": "BAR",
+					"id": "068c101e168d03c65bddf4ba75150fb0"
+				}
+			]
+		},
+		// environment configuration
+		"production": {
+			"workers_dev": true,
+			"kv_namespaces": [
+				{
+					"binding": "FOO",
+					"id": "0d2ac74b498b48028cb68387c421e233"
+				},
+				{
+					"binding": "BAR",
+					"id": "0d8c101e168d03c65bddf4ba75150f33"
+				}
+			]
+		}
+	}
+}
 ```
 
 </WranglerConfig>
