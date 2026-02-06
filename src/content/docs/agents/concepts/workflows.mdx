@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 ## What are Workflows?
 
@@ -181,6 +181,20 @@ A Workflow updates Agent state at key milestones using `step.updateAgentState()`
 
 ## Related resources
 
-- [Run Workflows API reference](/agents/api-reference/run-workflows/) for implementation details
-- [Cloudflare Workflows documentation](/workflows/) for workflow fundamentals
-- [Human-in-the-loop patterns](/agents/concepts/human-in-the-loop/) for approval flows
+<LinkCard
+	title="Run Workflows API"
+	href="/agents/api-reference/run-workflows/"
+	description="Implementation details for agent workflows."
+/>
+
+<LinkCard
+	title="Cloudflare Workflows"
+	href="/workflows/"
+	description="Workflow fundamentals and documentation."
+/>
+
+<LinkCard
+	title="Human-in-the-loop"
+	href="/agents/concepts/human-in-the-loop/"
+	description="Approval flows and manual intervention."
+/>

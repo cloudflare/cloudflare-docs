@@ -37,6 +37,39 @@ In a Cloudflare Worker, database client connections within the Worker are only k
 
 :::
 
+## Cleaning up client connections
+
+When your Worker finishes processing a request, the database client is automatically garbage collected and the edge connection to Hyperdrive is cleaned up. Hyperdrive keeps the underlying connection to your origin database open in its pool for reuse.
+
+While garbage collection handles cleanup, it is best practice to explicitly close your database client by calling `.end()` via [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil). This ensures the client connection is closed cleanly after the response is sent, without blocking the response to the user:
+
+```ts
+import { Client } from "pg";
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
+		await client.connect();
+
+		const result = await client.query("SELECT * FROM pg_tables");
+
+		// Signal Hyperdrive that this client is done. The underlying
+		// pooled connection to your database remains open for reuse.
+		ctx.waitUntil(client.end());
+
+		return Response.json(result.rows);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+:::note
+
+Calling `.end()` on the client only closes the local client connection to Hyperdrive at the edge. It does **not** close the pooled connection to your origin database — Hyperdrive manages those connections and keeps them available for future requests.
+
+:::
+
 ## Connection lifecycle considerations
 
 ### Durable Objects and persistent connections

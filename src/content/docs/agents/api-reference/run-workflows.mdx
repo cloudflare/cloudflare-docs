@@ -2,10 +2,10 @@
 title: Run Workflows
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 12
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
 Integrate [Cloudflare Workflows](/workflows/) with Agents for durable, multi-step background processing while Agents handle real-time communication.
 
@@ -836,7 +836,26 @@ Workflows cannot open WebSocket connections directly. Use `broadcastToClients()`
 
 ## Related resources
 
-- [Workflows documentation](/workflows/)
-- [Store and sync state](/agents/api-reference/store-and-sync-state/)
-- [Schedule tasks](/agents/api-reference/schedule-tasks/)
-- [Human-in-the-loop patterns](/agents/concepts/human-in-the-loop/)
+<LinkCard
+	title="Workflows documentation"
+	href="/workflows/"
+	description="Learn about Cloudflare Workflows fundamentals."
+/>
+
+<LinkCard
+	title="Store and sync state"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="Persist and synchronize agent state."
+/>
+
+<LinkCard
+	title="Schedule tasks"
+	href="/agents/api-reference/schedule-tasks/"
+	description="Time-based task execution."
+/>
+
+<LinkCard
+	title="Human-in-the-loop"
+	href="/agents/concepts/human-in-the-loop/"
+	description="Approval flows and manual intervention patterns."
+/>

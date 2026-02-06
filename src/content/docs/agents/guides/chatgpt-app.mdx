@@ -6,7 +6,13 @@ sidebar:
 reviewed: 2025-11-07
 ---
 
-import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
+import {
+	Details,
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
 
 ## Deploy your first ChatGPT App
 
@@ -46,11 +52,7 @@ Once enabled, you will be able to install custom apps during development and tes
 
 1. Create a new project for your Chess App:
 
-<PackageManagers
-	type="create"
-	pkg="cloudflare@latest"
-	args={"my-chess-app"}
-/>
+<PackageManagers type="create" pkg="cloudflare@latest" args={"my-chess-app"} />
 
 2. Navigate into your project:
 
@@ -78,30 +80,31 @@ npm install -D @cloudflare/vite-plugin @vitejs/plugin-react vite vite-plugin-sin
 
 ```jsonc
 {
-  "name": "my-chess-app",
-  "main": "src/index.ts",
-  "compatibility_date": "$today",
-  "compatibility_flags": ["nodejs_compat"],
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "CHESS",
-        "class_name": "ChessGame"
-      }
-    ]
-  },
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_sqlite_classes": ["ChessGame"]
-    }
-  ],
-  "assets": {
-    "directory": "dist",
-    "binding": "ASSETS"
-  }
+	"name": "my-chess-app",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "CHESS",
+				"class_name": "ChessGame",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["ChessGame"],
+		},
+	],
+	"assets": {
+		"directory": "dist",
+		"binding": "ASSETS",
+	},
 }
 ```
+
 </WranglerConfig>
 
 2. Create a `vite.config.ts` for building your React UI:
@@ -113,10 +116,10 @@ import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
 
 export default defineConfig({
-  plugins: [react(), cloudflare(), viteSingleFile()],
-  build: {
-    minify: false
-  }
+	plugins: [react(), cloudflare(), viteSingleFile()],
+	build: {
+		minify: false,
+	},
 });
 ```
 
@@ -124,11 +127,11 @@ export default defineConfig({
 
 ```json
 {
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "deploy": "vite build && wrangler deploy"
-  }
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"deploy": "vite build && wrangler deploy"
+	}
 }
 ```
 
@@ -143,155 +146,159 @@ import { Chess } from "chess.js";
 type Color = "w" | "b";
 
 type ConnectionState = {
-  playerId: string;
+	playerId: string;
 };
 
 export type State = {
-  board: string;
-  players: { w?: string; b?: string };
-  status: "waiting" | "active" | "mate" | "draw" | "resigned";
-  winner?: Color;
-  lastSan?: string;
+	board: string;
+	players: { w?: string; b?: string };
+	status: "waiting" | "active" | "mate" | "draw" | "resigned";
+	winner?: Color;
+	lastSan?: string;
 };
 
 export class ChessGame extends Agent<Env, State> {
-  initialState: State = {
-    board: new Chess().fen(),
-    players: {},
-    status: "waiting"
-  };
+	initialState: State = {
+		board: new Chess().fen(),
+		players: {},
+		status: "waiting",
+	};
 
-  game = new Chess();
+	game = new Chess();
 
-  constructor(ctx: DurableObjectState, public env: Env) {
-    super(ctx, env);
-    this.game.load(this.state.board);
-  }
+	constructor(
+		ctx: DurableObjectState,
+		public env: Env,
+	) {
+		super(ctx, env);
+		this.game.load(this.state.board);
+	}
 
-  private colorOf(playerId: string): Color | undefined {
-    const { players } = this.state;
-    if (players.w === playerId) return "w";
-    if (players.b === playerId) return "b";
-    return undefined;
-  }
+	private colorOf(playerId: string): Color | undefined {
+		const { players } = this.state;
+		if (players.w === playerId) return "w";
+		if (players.b === playerId) return "b";
+		return undefined;
+	}
 
-  @callable()
-  join(params: { playerId: string; preferred?: Color | "any" }) {
-    const { playerId, preferred = "any" } = params;
-    const { connection } = getCurrentAgent();
-    if (!connection) throw new Error("Not connected");
+	@callable()
+	join(params: { playerId: string; preferred?: Color | "any" }) {
+		const { playerId, preferred = "any" } = params;
+		const { connection } = getCurrentAgent();
+		if (!connection) throw new Error("Not connected");
 
-    connection.setState({ playerId });
-    const s = this.state;
+		connection.setState({ playerId });
+		const s = this.state;
 
-    // Already seated? Return seat
-    const already = this.colorOf(playerId);
-    if (already) {
-      return { ok: true, role: already as Color, state: s };
-    }
+		// Already seated? Return seat
+		const already = this.colorOf(playerId);
+		if (already) {
+			return { ok: true, role: already as Color, state: s };
+		}
 
-    // Choose a seat
-    const free: Color[] = (["w", "b"] as const).filter((c) => !s.players[c]);
-    if (free.length === 0) {
-      return { ok: true, role: "spectator" as const, state: s };
-    }
+		// Choose a seat
+		const free: Color[] = (["w", "b"] as const).filter((c) => !s.players[c]);
+		if (free.length === 0) {
+			return { ok: true, role: "spectator" as const, state: s };
+		}
 
-    let seat: Color = free[0];
-    if (preferred === "w" && free.includes("w")) seat = "w";
-    if (preferred === "b" && free.includes("b")) seat = "b";
+		let seat: Color = free[0];
+		if (preferred === "w" && free.includes("w")) seat = "w";
+		if (preferred === "b" && free.includes("b")) seat = "b";
 
-    s.players[seat] = playerId;
-    s.status = s.players.w && s.players.b ? "active" : "waiting";
-    this.setState(s);
-    return { ok: true, role: seat, state: s };
-  }
+		s.players[seat] = playerId;
+		s.status = s.players.w && s.players.b ? "active" : "waiting";
+		this.setState(s);
+		return { ok: true, role: seat, state: s };
+	}
 
-  @callable()
-  move(
-    move: { from: string; to: string; promotion?: string },
-    expectedFen?: string
-  ) {
-    if (this.state.status === "waiting") {
-      return {
-        ok: false,
-        reason: "not-in-game",
-        fen: this.game.fen(),
-        status: this.state.status
-      };
-    }
+	@callable()
+	move(
+		move: { from: string; to: string; promotion?: string },
+		expectedFen?: string,
+	) {
+		if (this.state.status === "waiting") {
+			return {
+				ok: false,
+				reason: "not-in-game",
+				fen: this.game.fen(),
+				status: this.state.status,
+			};
+		}
 
-    const { connection } = getCurrentAgent();
-    if (!connection) throw new Error("Not connected");
-    const { playerId } = connection.state as ConnectionState;
+		const { connection } = getCurrentAgent();
+		if (!connection) throw new Error("Not connected");
+		const { playerId } = connection.state as ConnectionState;
 
-    const seat = this.colorOf(playerId);
-    if (!seat) {
-      return {
-        ok: false,
-        reason: "not-in-game",
-        fen: this.game.fen(),
-        status: this.state.status
-      };
-    }
+		const seat = this.colorOf(playerId);
+		if (!seat) {
+			return {
+				ok: false,
+				reason: "not-in-game",
+				fen: this.game.fen(),
+				status: this.state.status,
+			};
+		}
 
-    if (seat !== this.game.turn()) {
-      return {
-        ok: false,
-        reason: "not-your-turn",
-        fen: this.game.fen(),
-        status: this.state.status
-      };
-    }
+		if (seat !== this.game.turn()) {
+			return {
+				ok: false,
+				reason: "not-your-turn",
+				fen: this.game.fen(),
+				status: this.state.status,
+			};
+		}
 
-    // Optimistic sync guard
-    if (expectedFen && expectedFen !== this.game.fen()) {
-      return {
-        ok: false,
-        reason: "stale",
-        fen: this.game.fen(),
-        status: this.state.status
-      };
-    }
+		// Optimistic sync guard
+		if (expectedFen && expectedFen !== this.game.fen()) {
+			return {
+				ok: false,
+				reason: "stale",
+				fen: this.game.fen(),
+				status: this.state.status,
+			};
+		}
 
-    const res = this.game.move(move);
-    if (!res) {
-      return {
-        ok: false,
-        reason: "illegal",
-        fen: this.game.fen(),
-        status: this.state.status
-      };
-    }
+		const res = this.game.move(move);
+		if (!res) {
+			return {
+				ok: false,
+				reason: "illegal",
+				fen: this.game.fen(),
+				status: this.state.status,
+			};
+		}
 
-    const fen = this.game.fen();
-    let status: State["status"] = "active";
-    if (this.game.isCheckmate()) status = "mate";
-    else if (this.game.isDraw()) status = "draw";
+		const fen = this.game.fen();
+		let status: State["status"] = "active";
+		if (this.game.isCheckmate()) status = "mate";
+		else if (this.game.isDraw()) status = "draw";
 
-    this.setState({
-      ...this.state,
-      board: fen,
-      lastSan: res.san,
-      status,
-      winner: status === "mate" ? (this.game.turn() === "w" ? "b" : "w") : undefined
-    });
+		this.setState({
+			...this.state,
+			board: fen,
+			lastSan: res.san,
+			status,
+			winner:
+				status === "mate" ? (this.game.turn() === "w" ? "b" : "w") : undefined,
+		});
 
-    return { ok: true, fen, san: res.san, status };
-  }
+		return { ok: true, fen, san: res.san, status };
+	}
 
-  @callable()
-  resign() {
-    const { connection } = getCurrentAgent();
-    if (!connection) throw new Error("Not connected");
-    const { playerId } = connection.state as ConnectionState;
+	@callable()
+	resign() {
+		const { connection } = getCurrentAgent();
+		if (!connection) throw new Error("Not connected");
+		const { playerId } = connection.state as ConnectionState;
 
-    const seat = this.colorOf(playerId);
-    if (!seat) return { ok: false, reason: "not-in-game", state: this.state };
+		const seat = this.colorOf(playerId);
+		if (!seat) return { ok: false, reason: "not-in-game", state: this.state };
 
-    const winner = seat === "w" ? "b" : "w";
-    this.setState({ ...this.state, status: "resigned", winner });
-    return { ok: true, state: this.state };
-  }
+		const winner = seat === "w" ? "b" : "w";
+		this.setState({ ...this.state, status: "resigned", winner });
+		return { ok: true, state: this.state };
+	}
 }
 ```
 
@@ -306,65 +313,67 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { env } from "cloudflare:workers";
 
 const getWidgetHtml = async (host: string) => {
-  let html = await (await env.ASSETS.fetch("http://localhost/")).text();
-  html = html.replace(
-    "<!--RUNTIME_CONFIG-->",
-    `<script>window.HOST = \`${host}\`;</script>`
-  );
-  return html;
+	let html = await (await env.ASSETS.fetch("http://localhost/")).text();
+	html = html.replace(
+		"<!--RUNTIME_CONFIG-->",
+		`<script>window.HOST = \`${host}\`;</script>`,
+	);
+	return html;
 };
 
 const server = new McpServer({ name: "Chess", version: "v1.0.0" });
 
 // Register a UI resource that ChatGPT can render
 server.registerResource(
-  "chess",
-  "ui://widget/index.html",
-  {},
-  async (_uri, extra) => {
-    return {
-      contents: [
-        {
-          uri: "ui://widget/index.html",
-          mimeType: "text/html+skybridge",
-          text: await getWidgetHtml(extra.requestInfo?.headers.host as string)
-        }
-      ]
-    };
-  }
+	"chess",
+	"ui://widget/index.html",
+	{},
+	async (_uri, extra) => {
+		return {
+			contents: [
+				{
+					uri: "ui://widget/index.html",
+					mimeType: "text/html+skybridge",
+					text: await getWidgetHtml(extra.requestInfo?.headers.host as string),
+				},
+			],
+		};
+	},
 );
 
 // Register a tool that ChatGPT can call to render the UI
 server.registerTool(
-  "playChess",
-  {
-    title: "Renders a chess game menu, ready to start or join a game.",
-    annotations: { readOnlyHint: true },
-    _meta: {
-      "openai/outputTemplate": "ui://widget/index.html",
-      "openai/toolInvocation/invoking": "Opening chess widget",
-      "openai/toolInvocation/invoked": "Chess widget opened"
-    }
-  },
-  async (_, _extra) => {
-    return {
-      content: [{ type: "text", text: "Successfully rendered chess game menu" }]
-    };
-  }
+	"playChess",
+	{
+		title: "Renders a chess game menu, ready to start or join a game.",
+		annotations: { readOnlyHint: true },
+		_meta: {
+			"openai/outputTemplate": "ui://widget/index.html",
+			"openai/toolInvocation/invoking": "Opening chess widget",
+			"openai/toolInvocation/invoked": "Chess widget opened",
+		},
+	},
+	async (_, _extra) => {
+		return {
+			content: [
+				{ type: "text", text: "Successfully rendered chess game menu" },
+			],
+		};
+	},
 );
 
 const mcpHandler = createMcpHandler(server);
 
 export default {
-  async fetch(req: Request, env: Env, ctx: ExecutionContext) {
-    const url = new URL(req.url);
-    if (url.pathname.startsWith("/mcp")) return mcpHandler(req, env, ctx);
+	async fetch(req: Request, env: Env, ctx: ExecutionContext) {
+		const url = new URL(req.url);
+		if (url.pathname.startsWith("/mcp")) return mcpHandler(req, env, ctx);
 
-    return (
-      (await routeAgentRequest(req, env)) ??
-      new Response("Not found", { status: 404 })
-    );
-  }
+		return (
+			(await routeAgentRequest(req, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
 };
 
 export { ChessGame } from "./chess";
@@ -377,13 +386,13 @@ export { ChessGame } from "./chess";
 ```html
 <!doctype html>
 <html>
-  <head>
-    <!--RUNTIME_CONFIG-->
-  </head>
-  <body>
-    <div id="root" style="font-family: verdana"></div>
-    <script type="module" src="/src/app.tsx"></script>
-  </body>
+	<head>
+		<!--RUNTIME_CONFIG-->
+	</head>
+	<body>
+		<div id="root" style="font-family: verdana"></div>
+		<script type="module" src="/src/app.tsx"></script>
+	</body>
 </html>
 ```
 
@@ -398,164 +407,229 @@ import { Chessboard, type PieceDropHandlerArgs } from "react-chessboard";
 import type { State as ServerState } from "./chess";
 
 function usePlayerId() {
-  const [pid] = useState(() => {
-    const existing = localStorage.getItem("playerId");
-    if (existing) return existing;
-    const id = crypto.randomUUID();
-    localStorage.setItem("playerId", id);
-    return id;
-  });
-  return pid;
+	const [pid] = useState(() => {
+		const existing = localStorage.getItem("playerId");
+		if (existing) return existing;
+		const id = crypto.randomUUID();
+		localStorage.setItem("playerId", id);
+		return id;
+	});
+	return pid;
 }
 
 function App() {
-  const playerId = usePlayerId();
-  const [gameId, setGameId] = useState<string | null>(null);
-  const [gameIdInput, setGameIdInput] = useState("");
-  const [menuError, setMenuError] = useState<string | null>(null);
+	const playerId = usePlayerId();
+	const [gameId, setGameId] = useState<string | null>(null);
+	const [gameIdInput, setGameIdInput] = useState("");
+	const [menuError, setMenuError] = useState<string | null>(null);
 
-  const gameRef = useRef(new Chess());
-  const [fen, setFen] = useState(gameRef.current.fen());
-  const [myColor, setMyColor] = useState<"w" | "b" | "spectator">("spectator");
-  const [pending, setPending] = useState(false);
-  const [serverState, setServerState] = useState<ServerState | null>(null);
-  const [joined, setJoined] = useState(false);
+	const gameRef = useRef(new Chess());
+	const [fen, setFen] = useState(gameRef.current.fen());
+	const [myColor, setMyColor] = useState<"w" | "b" | "spectator">("spectator");
+	const [pending, setPending] = useState(false);
+	const [serverState, setServerState] = useState<ServerState | null>(null);
+	const [joined, setJoined] = useState(false);
 
-  const host = window.HOST ?? "http://localhost:5173/";
+	const host = window.HOST ?? "http://localhost:5173/";
 
-  const { stub } = useAgent<ServerState>({
-    host,
-    name: gameId ?? "__lobby__",
-    agent: "chess",
-    onStateUpdate: (s) => {
-      if (!gameId) return;
-      gameRef.current.load(s.board);
-      setFen(s.board);
-      setServerState(s);
-    }
-  });
+	const { stub } = useAgent<ServerState>({
+		host,
+		name: gameId ?? "__lobby__",
+		agent: "chess",
+		onStateUpdate: (s) => {
+			if (!gameId) return;
+			gameRef.current.load(s.board);
+			setFen(s.board);
+			setServerState(s);
+		},
+	});
 
-  useEffect(() => {
-    if (!gameId || joined) return;
+	useEffect(() => {
+		if (!gameId || joined) return;
 
-    (async () => {
-      try {
-        const res = await stub.join({ playerId, preferred: "any" });
-        if (!res?.ok) return;
+		(async () => {
+			try {
+				const res = await stub.join({ playerId, preferred: "any" });
+				if (!res?.ok) return;
 
-        setMyColor(res.role);
-        gameRef.current.load(res.state.board);
-        setFen(res.state.board);
-        setServerState(res.state);
-        setJoined(true);
-      } catch (error) {
-        console.error("Failed to join game", error);
-      }
-    })();
-  }, [playerId, gameId, stub, joined]);
+				setMyColor(res.role);
+				gameRef.current.load(res.state.board);
+				setFen(res.state.board);
+				setServerState(res.state);
+				setJoined(true);
+			} catch (error) {
+				console.error("Failed to join game", error);
+			}
+		})();
+	}, [playerId, gameId, stub, joined]);
 
-  async function handleStartNewGame() {
-    const newId = crypto.randomUUID();
-    setGameId(newId);
-    setGameIdInput(newId);
-    setMenuError(null);
-    setJoined(false);
-  }
+	async function handleStartNewGame() {
+		const newId = crypto.randomUUID();
+		setGameId(newId);
+		setGameIdInput(newId);
+		setMenuError(null);
+		setJoined(false);
+	}
 
-  async function handleJoinGame() {
-    const trimmed = gameIdInput.trim();
-    if (!trimmed) {
-      setMenuError("Enter a game ID to join.");
-      return;
-    }
-    setGameId(trimmed);
-    setMenuError(null);
-    setJoined(false);
-  }
+	async function handleJoinGame() {
+		const trimmed = gameIdInput.trim();
+		if (!trimmed) {
+			setMenuError("Enter a game ID to join.");
+			return;
+		}
+		setGameId(trimmed);
+		setMenuError(null);
+		setJoined(false);
+	}
 
-  const handleHelpClick = () => {
-    window.openai?.sendFollowUpMessage?.({
-      prompt: `Help me with my chess game. I am playing as ${myColor} and the board is: ${fen}. Please only offer written advice.`
-    });
-  };
+	const handleHelpClick = () => {
+		window.openai?.sendFollowUpMessage?.({
+			prompt: `Help me with my chess game. I am playing as ${myColor} and the board is: ${fen}. Please only offer written advice.`,
+		});
+	};
 
-  function onPieceDrop({ sourceSquare, targetSquare }: PieceDropHandlerArgs) {
-    if (!gameId || !sourceSquare || !targetSquare || pending) return false;
+	function onPieceDrop({ sourceSquare, targetSquare }: PieceDropHandlerArgs) {
+		if (!gameId || !sourceSquare || !targetSquare || pending) return false;
 
-    const game = gameRef.current;
-    if (myColor === "spectator" || game.turn() !== myColor) return false;
+		const game = gameRef.current;
+		if (myColor === "spectator" || game.turn() !== myColor) return false;
 
-    const piece = game.get(sourceSquare as Square);
-    if (!piece || piece.color !== myColor) return false;
+		const piece = game.get(sourceSquare as Square);
+		if (!piece || piece.color !== myColor) return false;
 
-    const prevFen = game.fen();
+		const prevFen = game.fen();
 
-    try {
-      const local = game.move({ from: sourceSquare, to: targetSquare, promotion: "q" });
-      if (!local) return false;
-    } catch {
-      return false;
-    }
+		try {
+			const local = game.move({
+				from: sourceSquare,
+				to: targetSquare,
+				promotion: "q",
+			});
+			if (!local) return false;
+		} catch {
+			return false;
+		}
 
-    const nextFen = game.fen();
-    setFen(nextFen);
-    setPending(true);
+		const nextFen = game.fen();
+		setFen(nextFen);
+		setPending(true);
 
-    stub
-      .move({ from: sourceSquare, to: targetSquare, promotion: "q" }, prevFen)
-      .then((r) => {
-        if (!r.ok) {
-          game.load(r.fen);
-          setFen(r.fen);
-        }
-      })
-      .finally(() => setPending(false));
+		stub
+			.move({ from: sourceSquare, to: targetSquare, promotion: "q" }, prevFen)
+			.then((r) => {
+				if (!r.ok) {
+					game.load(r.fen);
+					setFen(r.fen);
+				}
+			})
+			.finally(() => setPending(false));
 
-    return true;
-  }
+		return true;
+	}
 
-  return (
-    <div style={{ padding: "20px", background: "#f8fafc", minHeight: "100vh" }}>
-      {!gameId ? (
-        <div style={{ maxWidth: "420px", margin: "0 auto", background: "#fff", borderRadius: "16px", padding: "24px" }}>
-          <h1>Ready to play?</h1>
-          <p>Start a new match or join an existing game.</p>
-          <button onClick={handleStartNewGame} style={{ padding: "12px", background: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer", width: "100%" }}>
-            Start a new game
-          </button>
-          <div style={{ marginTop: "16px" }}>
-            <input
-              placeholder="Paste a game ID"
-              value={gameIdInput}
-              onChange={(e) => setGameIdInput(e.target.value)}
-              style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
-            />
-            <button onClick={handleJoinGame} style={{ marginTop: "8px", padding: "10px", background: "#0f172a", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer", width: "100%" }}>
-              Join
-            </button>
-            {menuError && <p style={{ color: "red", fontSize: "0.85rem" }}>{menuError}</p>}
-          </div>
-        </div>
-      ) : (
-        <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-          <div style={{ background: "#fff", padding: "16px", borderRadius: "16px", marginBottom: "16px" }}>
-            <h2>Game {gameId}</h2>
-            <p>Status: {serverState?.status}</p>
-            <button onClick={handleHelpClick} style={{ padding: "10px", background: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer" }}>
-              Ask for help
-            </button>
-          </div>
-          <div style={{ background: "#fff", padding: "16px", borderRadius: "16px" }}>
-            <Chessboard
-              position={fen}
-              onPieceDrop={onPieceDrop}
-              boardOrientation={myColor === "b" ? "black" : "white"}
-            />
-          </div>
-        </div>
-      )}
-    </div>
-  );
+	return (
+		<div style={{ padding: "20px", background: "#f8fafc", minHeight: "100vh" }}>
+			{!gameId ? (
+				<div
+					style={{
+						maxWidth: "420px",
+						margin: "0 auto",
+						background: "#fff",
+						borderRadius: "16px",
+						padding: "24px",
+					}}
+				>
+					<h1>Ready to play?</h1>
+					<p>Start a new match or join an existing game.</p>
+					<button
+						onClick={handleStartNewGame}
+						style={{
+							padding: "12px",
+							background: "#2563eb",
+							color: "#fff",
+							border: "none",
+							borderRadius: "8px",
+							cursor: "pointer",
+							width: "100%",
+						}}
+					>
+						Start a new game
+					</button>
+					<div style={{ marginTop: "16px" }}>
+						<input
+							placeholder="Paste a game ID"
+							value={gameIdInput}
+							onChange={(e) => setGameIdInput(e.target.value)}
+							style={{
+								width: "100%",
+								padding: "10px",
+								borderRadius: "8px",
+								border: "1px solid #ccc",
+							}}
+						/>
+						<button
+							onClick={handleJoinGame}
+							style={{
+								marginTop: "8px",
+								padding: "10px",
+								background: "#0f172a",
+								color: "#fff",
+								border: "none",
+								borderRadius: "8px",
+								cursor: "pointer",
+								width: "100%",
+							}}
+						>
+							Join
+						</button>
+						{menuError && (
+							<p style={{ color: "red", fontSize: "0.85rem" }}>{menuError}</p>
+						)}
+					</div>
+				</div>
+			) : (
+				<div style={{ maxWidth: "600px", margin: "0 auto" }}>
+					<div
+						style={{
+							background: "#fff",
+							padding: "16px",
+							borderRadius: "16px",
+							marginBottom: "16px",
+						}}
+					>
+						<h2>Game {gameId}</h2>
+						<p>Status: {serverState?.status}</p>
+						<button
+							onClick={handleHelpClick}
+							style={{
+								padding: "10px",
+								background: "#2563eb",
+								color: "#fff",
+								border: "none",
+								borderRadius: "8px",
+								cursor: "pointer",
+							}}
+						>
+							Ask for help
+						</button>
+					</div>
+					<div
+						style={{
+							background: "#fff",
+							padding: "16px",
+							borderRadius: "16px",
+						}}
+					>
+						<Chessboard
+							position={fen}
+							onPieceDrop={onPieceDrop}
+							boardOrientation={myColor === "b" ? "black" : "white"}
+						/>
+					</div>
+				</div>
+			)}
+		</div>
+	);
 }
 
 const root = createRoot(document.getElementById("root")!);
@@ -610,7 +684,6 @@ Try it out:
 5. Make moves by dragging pieces on the board.
 6. Select **"Ask for help"** to get strategic advice from ChatGPT
 
-
 :::note
 You might need to manually select the connector in the prompt box the first time you use it. Select **"+"** > **"More"** > **[App name]**.
 :::
@@ -626,39 +699,41 @@ const server = new McpServer({ name: "Chess", version: "v1.0.0" });
 
 // Register a UI resource that ChatGPT can render
 server.registerResource(
-  "chess",
-  "ui://widget/index.html",
-  {},
-  async (_uri, extra) => {
-    return {
-      contents: [
-        {
-          uri: "ui://widget/index.html",
-          mimeType: "text/html+skybridge",
-          text: await getWidgetHtml(extra.requestInfo?.headers.host as string)
-        }
-      ]
-    };
-  }
+	"chess",
+	"ui://widget/index.html",
+	{},
+	async (_uri, extra) => {
+		return {
+			contents: [
+				{
+					uri: "ui://widget/index.html",
+					mimeType: "text/html+skybridge",
+					text: await getWidgetHtml(extra.requestInfo?.headers.host as string),
+				},
+			],
+		};
+	},
 );
 
 // Register a tool that ChatGPT can call to render the UI
 server.registerTool(
-  "playChess",
-  {
-    title: "Renders a chess game menu, ready to start or join a game.",
-    annotations: { readOnlyHint: true },
-    _meta: {
-      "openai/outputTemplate": "ui://widget/index.html",
-      "openai/toolInvocation/invoking": "Opening chess widget",
-      "openai/toolInvocation/invoked": "Chess widget opened"
-    }
-  },
-  async (_, _extra) => {
-    return {
-      content: [{ type: "text", text: "Successfully rendered chess game menu" }]
-    };
-  }
+	"playChess",
+	{
+		title: "Renders a chess game menu, ready to start or join a game.",
+		annotations: { readOnlyHint: true },
+		_meta: {
+			"openai/outputTemplate": "ui://widget/index.html",
+			"openai/toolInvocation/invoking": "Opening chess widget",
+			"openai/toolInvocation/invoked": "Chess widget opened",
+		},
+	},
+	async (_, _extra) => {
+		return {
+			content: [
+				{ type: "text", text: "Successfully rendered chess game menu" },
+			],
+		};
+	},
 );
 ```
 
@@ -686,6 +761,7 @@ export class ChessGame extends Agent<Env, State> {
 ```
 
 Each game gets its own Agent instance, enabling:
+
 - **Isolated state** per game
 - **Real-time synchronization** across players
 - **Persistent storage** that survives worker restarts
@@ -733,14 +809,14 @@ The `useAgent` hook connects your React app to the Durable Object:
 
 ```tsx
 const { stub } = useAgent<ServerState>({
-  host,
-  name: gameId ?? "__lobby__",
-  agent: "chess",
-  onStateUpdate: (s) => {
-    gameRef.current.load(s.board);
-    setFen(s.board);
-    setServerState(s);
-  }
+	host,
+	name: gameId ?? "__lobby__",
+	agent: "chess",
+	onStateUpdate: (s) => {
+		gameRef.current.load(s.board);
+		setFen(s.board);
+		setServerState(s);
+	},
 });
 ```
 
@@ -757,9 +833,9 @@ Your app can send messages to ChatGPT:
 
 ```ts
 const handleHelpClick = () => {
-  window.openai?.sendFollowUpMessage?.({
-    prompt: `Help me with my chess game. I am playing as ${myColor} and the board is: ${fen}. Please only offer written advice as there are no tools for you to use.`
-  });
+	window.openai?.sendFollowUpMessage?.({
+		prompt: `Help me with my chess game. I am playing as ${myColor} and the board is: ${fen}. Please only offer written advice as there are no tools for you to use.`,
+	});
 };
 ```
 
@@ -774,7 +850,26 @@ Now that you have a working ChatGPT App, you can:
 
 ## Related resources
 
-- [Agents documentation](/agents/api-reference/agents-api)
-- [Durable Objects documentation](/durable-objects/)
-- [Model Context Protocol (MCP)](https://modelcontextprotocol.io/)
-- [OpenAI Apps SDK Reference](https://developers.openai.com/apps-sdk/)
+<LinkCard
+	title="Agents API"
+	href="/agents/api-reference/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>
+
+<LinkCard
+	title="Durable Objects"
+	href="/durable-objects/"
+	description="Learn about the underlying stateful infrastructure."
+/>
+
+<LinkCard
+	title="Model Context Protocol"
+	href="https://modelcontextprotocol.io/"
+	description="MCP specification and documentation."
+/>
+
+<LinkCard
+	title="OpenAI Apps SDK"
+	href="https://developers.openai.com/apps-sdk/"
+	description="Official OpenAI Apps SDK reference."
+/>
