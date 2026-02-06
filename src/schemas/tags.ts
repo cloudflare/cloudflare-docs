@@ -19,6 +19,7 @@ const frameworks: Array<Tag> = [
 	{ label: "Next.js", variants: ["nextjs"] },
 	{ label: "Node.js", variants: ["node", "nodejs"] },
 	{ label: "Nuxt" },
+	{ label: "React Router", variants: ["react-router"] },
 	{ label: "Remix" },
 	{ label: "Ruby", variants: ["rb", "ruby on rails"] },
 	{ label: "Svelte" },
