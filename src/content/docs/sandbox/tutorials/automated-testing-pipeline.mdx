@@ -235,9 +235,7 @@ For projects that require browser testing (like E2E tests with Playwright or Pup
 // Enhanced test runner with browser support
 async function runTests(sandbox: Sandbox): Promise<TestResult> {
   // Install browser dependencies for E2E testing
-  const installBrowsers = await sandbox.exec('npx playwright install chromium', {
-    shell: 'bash'
-  });
+  const installBrowsers = await sandbox.exec('npx playwright install chromium');
   
   if (installBrowsers.exitCode !== 0) {
     return {
@@ -248,13 +246,7 @@ async function runTests(sandbox: Sandbox): Promise<TestResult> {
   }
   
   // Run tests with headless browser
-  const testResult = await sandbox.exec('npm test -- --headless', {
-    shell: 'bash',
-    env: {
-      CI: 'true',
-      PLAYWRIGHT_BROWSERS_PATH: '/tmp/ms-playwright'
-    }
-  });
+  const testResult = await sandbox.exec('CI=true PLAYWRIGHT_BROWSERS_PATH=/tmp/ms-playwright npm test -- --headless');
   
   return {
     success: testResult.exitCode === 0,

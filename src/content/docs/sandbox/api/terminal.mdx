@@ -322,8 +322,42 @@ const sandboxAddon = new SandboxAddon({
 ```
 </TypeScriptExample>
 
+## Server-Side: `session.terminal()`
+
+On the backend, use `session.terminal()` to proxy an incoming WebSocket request to the sandbox PTY:
+
+<TypeScriptExample>
+```typescript
+import { getSandbox, type Sandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+    const session = await sandbox.getSession('main');
+
+    // Proxy the WebSocket upgrade request to the sandbox terminal
+    return session.terminal(request);
+  }
+};
+
+interface Env {
+  Sandbox: DurableObjectNamespace<Sandbox>;
+}
+```
+</TypeScriptExample>
+
+**Parameters:**
+- `request` (Request): The incoming WebSocket upgrade request
+
+**Returns:** `Response` — A WebSocket upgrade response connected to the sandbox PTY
+
+The `terminal()` method is available on any `ExecutionSession` object returned by [`createSession()`](/sandbox/api/sessions/#createsession) or [`getSession()`](/sandbox/api/sessions/#getsession).
+
 ## Related
 
 - [Sessions](/sandbox/api/sessions/) - Session management and isolation
 - [WebSocket Connections](/sandbox/guides/websocket-connections/) - Direct WebSocket integration guide
+- [Terminal Integration Guide](/sandbox/guides/terminal-integration/) - Step-by-step integration tutorial
 - [Collaborative Terminal Example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/collaborative-terminal) - Complete example application

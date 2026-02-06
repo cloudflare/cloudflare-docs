@@ -121,6 +121,8 @@ export function Terminal({
 }: TerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<ConnectionState>('disconnected');
+  const onConnectionChangeRef = useRef(onConnectionChange);
+  onConnectionChangeRef.current = onConnectionChange;
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -147,7 +149,7 @@ export function Terminal({
         `${origin}/ws/terminal/${sid}?sandboxId=${sandboxId}`,
       onStateChange: (newState, error) => {
         setState(newState);
-        onConnectionChange?.(newState);
+        onConnectionChangeRef.current?.(newState);
         
         if (error) {
           console.error('Terminal connection error:', error);
@@ -178,7 +180,7 @@ export function Terminal({
       window.removeEventListener('resize', handleResize);
       terminal.dispose();
     };
-  }, [sandboxId, sessionId, onConnectionChange]);
+  }, [sandboxId, sessionId]);
 
   return (
     <div className="relative h-full w-full">
