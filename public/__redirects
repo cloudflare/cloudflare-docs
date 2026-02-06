@@ -792,16 +792,16 @@
 /fundamentals/account/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/account/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
-/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider/ /changelog/terraform/2025-02-03-terraform-v5-provider/ 301
-/changelog/fundamentals/2025-03-21-resource-force-replacement-bug/ /changelog/terraform/2025-03-21-resource-force-replacement-bug/ 301
-/changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/terraform/2025-03-21-sensitive-values-redacted/ 301
-/changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider/ /changelog/terraform/2025-05-06-terraform-v5.4.0-provider/ 301
-/changelog/fundamentals/2025-05-19-terraform-v5.5.0-provider/ /changelog/terraform/2025-05-19-terraform-v5.5.0-provider/ 301
-/changelog/fundamentals/2025-06-17-terraform-v5.6.0-provider/ /changelog/terraform/2025-06-17-terraform-v5.6.0-provider/ 301
-/changelog/fundamentals/2025-07-11-terraform-v5.7.0-provider/ /changelog/terraform/2025-07-11-terraform-v5.7.0-provider/ 301
-/changelog/fundamentals/2025-08-01-terraform-v5.8.2-provider/ /changelog/terraform/2025-08-01-terraform-v5.8.2-provider/ 301
-/changelog/fundamentals/2025-08-15-terraform-v5.8.4-provider/ /changelog/terraform/2025-08-15-terraform-v5.8.4-provider/ 301
-/changelog/fundamentals/2025-08-29-terrform-v5.9-provider/ /changelog/terraform/2025-08-29-terrform-v5.9-provider/ 301
+/changelog/fundamentals/terraform/2025-02-03-terraform-v5-provider/ /changelog/2025-02-03-terraform-v5-provider/ 301
+/changelog/fundamentals/2025-03-21-resource-force-replacement-bug/ /changelog/2025-03-21-resource-force-replacement-bug/ 301
+/changelog/fundamentals/2025-03-21-sensitive-values-redacted/ /changelog/2025-03-21-sensitive-values-redacted/ 301
+/changelog/fundamentals/2025-05-06-terraform-v5.4.0-provider/ /changelog/2025-05-06-terraform-v540-provider/ 301
+/changelog/fundamentals/2025-05-19-terraform-v5.5.0-provider/ /changelog/2025-05-19-terraform-v550-provider/ 301
+/changelog/fundamentals/2025-06-17-terraform-v5.6.0-provider/ /changelog/2025-06-17-terraform-v560-provider/ 301
+/changelog/fundamentals/2025-07-11-terraform-v5.7.0-provider/ /changelog/2025-07-11-terraform-v570-provider/ 301
+/changelog/fundamentals/2025-08-01-terraform-v5.8.2-provider/ /changelog/2025-08-01-terraform-v582-provider/ 301
+/changelog/fundamentals/2025-08-15-terraform-v5.8.4-provider/ /changelog/2025-08-15-terraform-v584-provider/ 301
+/changelog/fundamentals/2025-08-29-terrform-v5.9-provider/ /changelog/2025-08-29-terrform-v59-provider/ 301
 /changelog/2025-01-20-terraform-v5160-provider/ /changelog/2026-01-20-terraform-v5160-provider/ 301
 
 # google tag
