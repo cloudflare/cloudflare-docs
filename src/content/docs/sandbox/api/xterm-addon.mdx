@@ -1,0 +1,336 @@
+---
+title: xterm.js Addon
+pcx_content_type: configuration
+sidebar:
+  order: 8
+description: xterm.js addon for connecting browser terminals to sandboxes.
+---
+
+import { TypeScriptExample, PackageManagers } from "~/components";
+
+The `@cloudflare/sandbox/xterm` module provides a `SandboxAddon` for xterm.js that handles WebSocket connections, automatic reconnection, and terminal resize forwarding.
+
+## Installation
+
+<PackageManagers 
+  type="install" 
+  pkg="@cloudflare/sandbox @xterm/xterm"
+/>
+
+The xterm.js dependency is peer-optional and only needed when using the addon in browser environments.
+
+## SandboxAddon class
+
+### Constructor
+
+Create a new addon instance:
+
+```ts
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+
+const addon = new SandboxAddon(options: SandboxAddonOptions);
+```
+
+**Options**:
+- `sandboxId` - Sandbox to connect to
+- `sessionId` (optional) - Session within the sandbox (uses default if omitted)
+- `getWebSocketUrl()` - Function to build WebSocket URL for connections
+- `reconnect` (optional) - Enable automatic reconnection (default: `true`)
+- `onStateChange()` (optional) - Callback for connection state changes
+
+<TypeScriptExample>
+```
+import { Terminal } from '@xterm/xterm';
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+
+const addon = new SandboxAddon({
+  sandboxId: 'my-sandbox',
+  sessionId: 'development', // Optional
+  getWebSocketUrl: ({ sandboxId, sessionId }) => {
+    const params = new URLSearchParams({ id: sandboxId });
+    if (sessionId) params.set('session', sessionId);
+    return `wss://my-worker.example.com/ws/terminal?${params}`;
+  },
+  reconnect: true,
+  onStateChange: (state, error) => {
+    console.log(`Connection ${state}`, error);
+    updateUIStatus(state, error);
+  }
+});
+
+const terminal = new Terminal();
+terminal.loadAddon(addon);
+```
+</TypeScriptExample>
+
+### Methods
+
+#### `connect()`
+
+Establish connection to the sandbox terminal:
+
+```ts
+addon.connect(): void
+```
+
+<TypeScriptExample>
+```
+// Connect immediately
+terminal.loadAddon(addon);
+addon.connect();
+
+// Or connect after user interaction
+document.getElementById('connect-btn').onclick = () => {
+  addon.connect();
+};
+```
+</TypeScriptExample>
+
+#### `disconnect()`
+
+Close the connection and stop reconnection attempts:
+
+```ts
+addon.disconnect(): void
+```
+
+<TypeScriptExample>
+```
+// Clean disconnect
+addon.disconnect();
+
+// Or handle page unload
+window.addEventListener('beforeunload', () => {
+  addon.disconnect();
+});
+```
+</TypeScriptExample>
+
+#### `setSandbox()`
+
+Change the target sandbox (triggers reconnection):
+
+```ts
+addon.setSandbox(sandboxId: string): void
+```
+
+#### `setSession()`
+
+Change the target session (triggers reconnection):
+
+```ts
+addon.setSession(sessionId: string | undefined): void
+```
+
+<TypeScriptExample>
+```
+// Switch between development environments
+const switchToSession = (sessionId) => {
+  addon.setSession(sessionId);
+  // Automatically reconnects to new session
+};
+
+// Session selector
+document.getElementById('session-select').onchange = (e) => {
+  switchToSession(e.target.value);
+};
+```
+</TypeScriptExample>
+
+### Properties
+
+#### `state`
+
+Current connection state:
+
+```ts
+readonly state: 'disconnected' | 'connecting' | 'connected'
+```
+
+#### `sandboxId`
+
+Current sandbox ID:
+
+```ts
+readonly sandboxId: string
+```
+
+#### `sessionId`
+
+Current session ID:
+
+```ts  
+readonly sessionId: string | undefined
+```
+
+## Connection states
+
+The addon manages three connection states:
+
+- **`disconnected`** - No active connection
+- **`connecting`** - Attempting to establish connection  
+- **`connected`** - Active WebSocket connection
+
+<TypeScriptExample>
+```
+const addon = new SandboxAddon({
+  // ... other options
+  onStateChange: (state, error) => {
+    const statusEl = document.getElementById('connection-status');
+    
+    switch (state) {
+      case 'connecting':
+        statusEl.textContent = 'Connecting...';
+        statusEl.className = 'status connecting';
+        break;
+        
+      case 'connected':
+        statusEl.textContent = 'Connected';
+        statusEl.className = 'status connected';
+        break;
+        
+      case 'disconnected':
+        statusEl.textContent = error ? `Error: ${error.message}` : 'Disconnected';
+        statusEl.className = 'status disconnected';
+        break;
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Automatic reconnection
+
+The addon automatically handles connection failures with exponential backoff:
+
+- **Initial delay**: 1 second
+- **Backoff**: Doubles each attempt (max 32 seconds)
+- **Jitter**: ±10% randomization to prevent thundering herd
+- **Max attempts**: 10 attempts before giving up
+
+### Disable reconnection
+
+<TypeScriptExample>
+```
+const addon = new SandboxAddon({
+  sandboxId: 'my-sandbox',
+  reconnect: false, // Disable automatic reconnection
+  getWebSocketUrl: ({ sandboxId }) => `wss://example.com/ws?id=${sandboxId}`,
+  onStateChange: (state, error) => {
+    if (state === 'disconnected' && error) {
+      // Handle connection failure manually
+      showReconnectButton();
+    }
+  }
+});
+```
+</TypeScriptExample>
+
+## Output buffering
+
+The addon automatically handles buffered output replay:
+
+1. Server buffers terminal output while disconnected
+2. On reconnection, missed output is replayed
+3. Terminal state is preserved across connections
+
+No client-side code needed - buffering is handled transparently.
+
+## Complete example
+
+<TypeScriptExample>
+```
+import { Terminal } from '@xterm/xterm';
+import { FitAddon } from '@xterm/addon-fit';
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+import '@xterm/xterm/css/xterm.css';
+
+class SandboxTerminal {
+  constructor(containerId, workerUrl) {
+    this.terminal = new Terminal({
+      cursorBlink: true,
+      theme: {
+        background: '#1e1e1e',
+        foreground: '#d4d4d4'
+      }
+    });
+    
+    this.fitAddon = new FitAddon();
+    this.terminal.loadAddon(this.fitAddon);
+    
+    this.sandboxAddon = new SandboxAddon({
+      sandboxId: 'user-terminal',
+      getWebSocketUrl: ({ sandboxId, sessionId }) => {
+        const params = new URLSearchParams({ id: sandboxId });
+        if (sessionId) params.set('session', sessionId);
+        return `${workerUrl}/ws/terminal?${params}`;
+      },
+      onStateChange: this.handleStateChange.bind(this)
+    });
+    
+    this.terminal.loadAddon(this.sandboxAddon);
+    this.terminal.open(document.getElementById(containerId));
+    
+    // Resize handling
+    window.addEventListener('resize', () => this.fitAddon.fit());
+    this.fitAddon.fit();
+  }
+  
+  connect() {
+    this.sandboxAddon.connect();
+  }
+  
+  disconnect() {
+    this.sandboxAddon.disconnect();
+  }
+  
+  switchSession(sessionId) {
+    this.sandboxAddon.setSession(sessionId);
+  }
+  
+  handleStateChange(state, error) {
+    const indicator = document.getElementById('connection-indicator');
+    indicator.className = `connection-${state}`;
+    
+    if (error) {
+      console.error('Terminal connection error:', error);
+    }
+  }
+}
+
+// Usage
+const terminal = new SandboxTerminal('terminal-container', 'wss://my-worker.example.com');
+terminal.connect();
+```
+</TypeScriptExample>
+
+## TypeScript support
+
+The addon is fully typed with TypeScript:
+
+```ts
+interface SandboxAddonOptions {
+  sandboxId: string;
+  sessionId?: string;
+  getWebSocketUrl: (params: { sandboxId: string; sessionId?: string }) => string;
+  reconnect?: boolean;
+  onStateChange?: (state: ConnectionState, error?: Error) => void;
+}
+
+type ConnectionState = 'disconnected' | 'connecting' | 'connected';
+```
+
+## Browser compatibility
+
+The addon works in all modern browsers that support:
+- WebSockets
+- TextEncoder/TextDecoder  
+- ES2018+ features
+
+For older browsers, use appropriate polyfills.
+
+## Related resources
+
+- [Terminal API reference](/sandbox/api/terminal/) - Server-side WebSocket handling
+- [Browser terminal integration guide](/sandbox/guides/browser-terminals/) - Complete setup guide
+- [xterm.js documentation](https://xtermjs.org/) - Terminal emulator library
