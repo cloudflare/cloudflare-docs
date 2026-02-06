@@ -47,8 +47,8 @@ console.log('Available at:', exposed.url);
 
 // With custom token for stable URLs across restarts
 const stable = await sandbox.exposePort(8080, {
-hostname,
-token: 'my*service_v1' // 1-16 chars: a-z, 0-9, *
+  hostname,
+  token: 'my_service_v1' // 1-16 chars: a-z, 0-9, _
 });
 console.log('Stable URL:', stable.url);
 // https://8080-sandbox-id-my_service_v1.yourdomain.com
@@ -56,9 +56,9 @@ console.log('Stable URL:', stable.url);
 // With custom token for stable URLs across deployments
 await sandbox.startProcess('node api.js');
 const api = await sandbox.exposePort(3000, {
-hostname,
-name: 'api',
-token: 'prod-api-v1' // URL stays same across restarts
+  hostname,
+  name: 'api',
+  token: 'prod-api-v1'  // URL stays same across restarts
 });
 
 console.log('Stable API URL:', api.url);
@@ -67,11 +67,10 @@ console.log('Stable API URL:', api.url);
 // Multiple services with custom tokens
 await sandbox.startProcess('npm run dev');
 const frontend = await sandbox.exposePort(5173, {
-hostname,
-name: 'frontend',
-token: 'dev-ui'
+  hostname,
+  name: 'frontend',
+  token: 'dev-ui'
 });
-
 ```
 </TypeScriptExample>
 
@@ -108,7 +107,6 @@ await sandbox.exposePort(8081, { hostname, token: 'v1-stable' });
 await sandbox.exposePort(8080, { hostname, token: 'v1-stable' });
 // Works - same port, same token
 ```
-
 </TypeScriptExample>
 
 ### `validatePortToken()`
@@ -169,7 +167,9 @@ await sandbox.unexposePort(port: number): Promise<void>
 - `port` - Port number to unexpose
 
 <TypeScriptExample>
-	```ts await sandbox.unexposePort(8000); ```
+```ts
+await sandbox.unexposePort(8000);
+```
 </TypeScriptExample>
 
 ### `getExposedPorts()`
@@ -187,9 +187,8 @@ const response = await sandbox.getExposedPorts(): Promise<GetExposedPortsRespons
 const { ports } = await sandbox.getExposedPorts();
 
 for (const port of ports) {
-console.log(`${port.name || port.port}: ${port.exposedAt}`);
+  console.log(`${port.name || port.port}: ${port.exposedAt}`);
 }
-
 ```
 </TypeScriptExample>
 
@@ -228,10 +227,8 @@ export default {
     }
 
     return new Response('WebSocket endpoint', { status: 200 });
-
-}
+  }
 };
-
 ```
 </TypeScriptExample>
 
@@ -239,4 +236,3 @@ export default {
 
 - [Preview URLs concept](/sandbox/concepts/preview-urls/) - How preview URLs work
 - [Commands API](/sandbox/api/commands/) - Start background processes
-```
