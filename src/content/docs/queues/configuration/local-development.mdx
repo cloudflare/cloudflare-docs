@@ -65,7 +65,7 @@ When the producer Worker sends messages to the queue, the consumer Worker will a
 
 ## Known Issues
 - Queues does not support Wrangler remote mode (`wrangler dev --remote`).
-- For simulated queues to work in local dev environment, both the producer and consumer workers must be run in a single dev instance. If you have separate workers for your queue producer and consumer, you need to use the `-c` flag to run them via a single `wrangler dev` command. 
-  - For example `wrangler dev -c producer-worker.toml -c consumer-worker.toml`
-  - [See this workers-sdk issue for more details](https://github.com/cloudflare/workers-sdk/issues/9795). 
-  - You might also find the [multi-workers documentation](https://developers.cloudflare.com/workers/development-testing/multi-workers/#single-dev-command) helpful. 
+- For simulated Queues to work in the local development environment, both the producer and consumer Workers must be run in a single dev instance. If you have separate Workers for your Queue producer and consumer, you need to use the `-c` flag to run them via a single `npx wrangler@latest dev` command.
+  - For example `npx wrangler@latest dev -c wrangler.jsonc -c consumer-worker/wrangler.jsonc --persist-to .wrangler/state`
+  - [See this workers-sdk issue for more details](https://github.com/cloudflare/workers-sdk/issues/9795).
+  - You might also find the [multi-workers documentation](https://developers.cloudflare.com/workers/development-testing/multi-workers/#single-dev-command) helpful.
