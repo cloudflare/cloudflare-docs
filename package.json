@@ -61,6 +61,7 @@
 		"astro-breadcrumbs": "3.3.1",
 		"astro-icon": "1.1.5",
 		"astro-live-code": "0.0.6",
+		"astro-skills": "0.0.5",
 		"cidr-tools": "11.0.3",
 		"codeowners-utils": "1.0.2",
 		"date-fns": "4.1.0",
@@ -130,7 +131,7 @@
 		"tippy.js": "6.3.7",
 		"ts-blank-space": "0.6.2",
 		"tsx": "4.20.5",
-		"typescript": "5.9.2",
+		"typescript": "5.9.3",
 		"typescript-eslint": "8.44.1",
 		"unified": "11.0.5",
 		"unist-util-visit": "5.0.0",
@@ -143,5 +144,10 @@
 	},
 	"volta": {
 		"node": "22.9.0"
-	}
+	},
+	"engines": {
+		"npm": "10.9.4",
+		"node": "22.x"
+	},
+	"packageManager": "npm@10.9.4+sha512.3a7506f37e85c1ba1021baad79f0cd9724748131f321fc117c4dc3ba235ec01be7327584a41d15117c01945560aa9373220628fcc1e1dddd877a5fe9b336a900"
 }

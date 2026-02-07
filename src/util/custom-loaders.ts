@@ -14,15 +14,9 @@ import { dirname, join } from "path";
  * @param options - Additional options { url: override middlecache base url, parser: custom parser }
  */
 
-type MiddlecacheOptions = {
-	url?: string;
-	parser?: (
-		text: string,
-	) =>
-		| Record<string, Record<string, unknown>>
-		| Array<Record<string, unknown>>
-		| Record<string, string | null>;
-};
+type FileOptions = Parameters<typeof file>[1];
+// extend the file loader options with an optional url to override the default middlecache base url
+type MiddlecacheOptions = FileOptions & { url?: string };
 
 export function middlecacheLoader(
 	path: string,

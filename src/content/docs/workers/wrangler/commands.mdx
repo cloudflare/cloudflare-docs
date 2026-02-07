@@ -50,6 +50,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler's authorization for accessing your account.
+- [`auth token`](#auth-token) - Retrieve your current authentication token or credentials.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`versions`](#versions) - Retrieve details for recent versions.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
@@ -720,6 +721,43 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
 2. Select the three-dot menu on your Wrangler token.
 3. Select **Delete**.
+
+---
+
+## `auth`
+
+### `auth token`
+
+Retrieve your current authentication token or credentials for use with other tools and scripts.
+
+```txt
+wrangler auth token [OPTIONS]
+```
+
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON with token type information. This also enables retrieving API key/email credentials.
+
+The command returns whichever authentication method is currently configured, in the following order of precedence:
+- API token from `CLOUDFLARE_API_TOKEN` environment variable
+- API key/email from `CLOUDFLARE_API_KEY` and `CLOUDFLARE_EMAIL` environment variables (requires `--json` flag, since this method uses two values instead of a single token)
+- OAuth token from `wrangler login` (automatically refreshed if expired)
+
+When using `--json`, the output includes the token type:
+
+```jsonc
+// API token
+{ "type": "api_token", "token": "..." }
+
+// OAuth token
+{ "type": "oauth", "token": "..." }
+
+// API key/email (only available with --json)
+{ "type": "api_key", "key": "...", "email": "..." }
+```
+
+An error is returned if no authentication method is available, or if API key/email is configured without `--json`.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
 

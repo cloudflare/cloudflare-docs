@@ -4,10 +4,10 @@ title: Build a Remote MCP server
 tags:
   - MCP
 sidebar:
-  order: 4
+  order: 7
 ---
 
-import { Details, Render, PackageManagers } from "~/components";
+import { Details, Render, PackageManagers, LinkCard } from "~/components";
 
 ## Deploy your first MCP server
 
@@ -213,11 +213,11 @@ Navigate to [github.com/settings/developers](https://github.com/settings/develop
 For the OAuth app you just created, add the client ID and client secret, using Wrangler CLI:
 
 ```sh
-wrangler secret put GITHUB_CLIENT_ID
+npx wrangler secret put GITHUB_CLIENT_ID
 ```
 
 ```sh
-wrangler secret put GITHUB_CLIENT_SECRET
+npx wrangler secret put GITHUB_CLIENT_SECRET
 ```
 
 ```
@@ -263,5 +263,14 @@ Now that you've added the ID and secret of your production OAuth app, you should
 
 ## Next steps
 
-- Add [tools](/agents/model-context-protocol/tools/) to your MCP server.
-- Customize your MCP Server's [authentication and authorization](/agents/model-context-protocol/authorization/).
+<LinkCard
+	title="MCP Tools"
+	href="/agents/model-context-protocol/tools/"
+	description="Add tools to your MCP server."
+/>
+
+<LinkCard
+	title="Authorization"
+	href="/agents/model-context-protocol/authorization/"
+	description="Customize authentication and authorization."
+/>

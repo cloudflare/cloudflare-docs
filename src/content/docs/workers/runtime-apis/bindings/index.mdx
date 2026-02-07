@@ -8,7 +8,7 @@ description: Worker Bindings that allow for interaction with other Cloudflare Re
 next: false
 ---
 
-import { DirectoryListing, WranglerConfig } from "~/components";
+import { DirectoryListing, TabItem, Tabs, WranglerConfig } from "~/components";
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform. Bindings provide better performance and less restrictions when accessing resources from Workers than the [REST APIs](/api/) which are intended for non-Workers applications.
 
@@ -36,15 +36,34 @@ When you declare a binding on your Worker, you grant it a specific capability, s
 
 </WranglerConfig>
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 export default {
 	async fetch(request, env) {
+		const url = new URL(request.url);
 		const key = url.pathname.slice(1);
 		await env.MY_BUCKET.put(key, request.body);
 		return new Response(`Put ${key} successfully!`);
 	},
 };
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+from urllib.parse import urlparse
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		url = urlparse(request.url)
+		key = url.path.slice(1)
+		await self.env.MY_BUCKET.put(key, request.body)
+		return Response(f"Put {key} successfully!")
+```
+
+</TabItem></Tabs>
 
 You can think of a binding as a permission and an API in one piece. With bindings, you never have to add secret keys or tokens to your Worker in order to access resources on your Cloudflare account — the permission is embedded within the API itself. The underlying secret is never exposed to your Worker's code, and therefore can't be accidentally leaked.
 
@@ -99,6 +118,7 @@ Bindings are located on the `env` object, which can be accessed in several ways:
 * It is as class property on [WorkerEntrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#bindings-env),
   [DurableObject](/durable-objects/), and [Workflow](/workflows/):
 
+  <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
   ```js
   export class MyDurableObject extends DurableObject {
   	async sayHello() {
@@ -106,13 +126,31 @@ Bindings are located on the `env` object, which can be accessed in several ways:
   	}
   }
   ```
+  </TabItem> <TabItem label="Python" icon="seti:python">
+  ```python
+  from workers import WorkerEntrypoint, Response
+
+  class Default(WorkerEntrypoint):
+  	async def fetch(self, request):
+  		return Response(f"Hi {self.env.NAME}")
+  ```
+  </TabItem></Tabs>
+
 
 * It can be imported from `cloudflare:workers`:
 
+  <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
   ```js
   import { env } from "cloudflare:workers";
   console.log(`Hi, ${env.Name}`);
   ```
+  </TabItem> <TabItem label="Python" icon="seti:python">
+  ```python
+  from workers import import_from_javascript
+  env = import_from_javascript("cloudflare:workers").env
+  print(f"Hi, {env.NAME}")
+  ```
+  </TabItem></Tabs>
 
 ### Importing `env` as a global
 
@@ -120,6 +158,7 @@ Importing `env` from `cloudflare:workers` is useful when you need to access a bi
 such as [secrets](/workers/configuration/secrets/) or [environment variables](/workers/configuration/environment-variables/)
 in top-level global scope. For example, to initialize an API client:
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 import { env } from "cloudflare:workers";
 import ApiClient from "example-api-client";
@@ -134,6 +173,19 @@ export default {
 	},
 };
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```python
+from workers import WorkerEntrypoint, env
+from example_api_client import ApiClient
+
+api_client = ApiClient(api_key=env.API_KEY)
+LOG_LEVEL = getattr(env, "LOG_LEVEL", "info")
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		# ...
+```
+</TabItem></Tabs>
 
 Workers do not allow I/O from outside a request context. This means that even
 though `env` is accessible from the top-level scope, you will not be able to access
@@ -144,6 +196,7 @@ call `env.NAMESPACE.get` to get a [Durable Object stub](/durable-objects/api/stu
 top-level context. However, calling methods on the Durable Object stub, making [calls to a KV store](/kv/api/),
 and [calling to other Workers](/workers/runtime-apis/bindings/service-bindings) will not work.
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 import { env } from "cloudflare:workers";
 
@@ -158,11 +211,26 @@ export default {
 	},
 };
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```python
+from workers import Response, WorkerEntrypoint, env
+
+# This would fail!
+# env.KV.get('my-key')
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		# This works
+		mv_val = await env.KV.get("my-key")
+		return Response(my_val)
+```
+</TabItem></Tabs>
 
 Additionally, importing `env` from `cloudflare:workers` lets you avoid passing `env`
 as an argument through many function calls if you need to access a binding from a deeply-nested
 function. This can be helpful in a complex codebase.
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 import { env } from "cloudflare:workers";
 
@@ -183,6 +251,24 @@ function getName() {
 	return env.MY_NAME;
 }
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```python
+from workers import Response, WorkerEntrypoint, env
+
+class Default(WorkerEntrypoint):
+	def fetch(req):
+		return Response(say_hello())
+
+# env is not an argument to say_hello...
+def say_hello():
+	my_name = get_name()
+	return f"Hello, {myName}"
+
+# ...nor is it an argument to getName
+def get_name():
+	return env.MY_NAME
+```
+</TabItem></Tabs>
 
 :::note
 While using `env` from `cloudflare:workers` may be simpler to write than passing it
@@ -199,6 +285,7 @@ Imagine a user has defined the [environment variable](/workers/configuration/env
 `env.NAME` would print "Alice". Using the `withEnv` function, you can override the value of
 "NAME".
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 import { env, withEnv } from "cloudflare:workers";
 
@@ -220,5 +307,24 @@ export default {
 	},
 };
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```python
+from workers import Response, WorkerEntrypoint, env, patch_env
+
+def log_name():
+	print(env.NAME)
+
+class Default(WorkerEntrypoint):
+	async def fetch(req):
+		# this will log "Alice"
+		log_name()
+
+		with patch_env(NAME="Bob"):
+			# this will log "Bob"
+			log_name()
+
+		# ...etc...
+```
+</TabItem></Tabs>
 
 This can be useful when testing code that relies on an imported `env` object.

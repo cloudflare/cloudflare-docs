@@ -10,7 +10,6 @@ This component can be used to automatically generate a `jsonc` version of the `t
 
 ```mdx
 import { WranglerConfig } from "~/components";
-
 ```
 
 ## Usage
@@ -28,7 +27,9 @@ database_id = "<unique-ID-for-your-database>"
 </WranglerConfig>
 ````
 
-A `$today` value can be used in this component to automatically insert the today's date. This is useful for suggesting that users set the latest compatibility date.
+## Compatibility date
+
+You should generally use `$today` for the `compatibility_date` value for new projects. This magic string is automatically replaced with the current date at build time, ensuring documentation always suggests the latest date. If you need to specify a fixed date, you can do so as well, but you may miss out on the latest features and performance improvements. You can disable specific features by using [compatibility flags](/workers/configuration/compatibility-flags/).
 
 ````mdx live
 import { WranglerConfig } from "~/components";
@@ -42,6 +43,20 @@ import { WranglerConfig } from "~/components";
 ```
 </WranglerConfig>
 ````
+
+### Minimum compatibility dates
+
+Some features require a minimum compatibility date. When documenting these features, use a `:::note` component to communicate the requirement clearly on the docs page:
+
+```mdx
+:::note
+This feature requires a `compatibility_date` of `2024-09-23` or later.
+:::
+```
+
+:::note
+This feature requires a `compatibility_date` of `2024-09-23` or later.
+:::
 
 The `removeSchema` prop can be used to remove the `$schema` reference from the generated JSON file. This can be useful if you want to add snippets of configuration files that are easier to copy paste, and are providing toml as the source config format.
 

@@ -4,8 +4,10 @@ import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
 import { glob, file } from "astro/loaders";
+import { skillsLoader } from "astro-skills";
 
 import { productAvailabilityCollectionConfig } from "./content/collections/product-availability";
+import { granularControlApplicationsCollectionConfig } from "./content/collections/granular-control-applications";
 
 import {
 	appsSchema,
@@ -119,4 +121,10 @@ export const collections = {
 		schema: streamSchema,
 	}),
 	"product-availability": defineCollection(productAvailabilityCollectionConfig),
+	"granular-control-applications": defineCollection(
+		granularControlApplicationsCollectionConfig,
+	),
+	skills: defineCollection({
+		loader: skillsLoader({ base: "./skills" }),
+	}),
 };

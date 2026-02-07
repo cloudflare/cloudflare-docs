@@ -25,6 +25,7 @@ const result = await sandbox.exec(command: string, options?: ExecOptions): Promi
   - `stream` - Enable streaming callbacks (default: `false`)
   - `onOutput` - Callback for real-time output: `(stream: 'stdout' | 'stderr', data: string) => void`
   - `timeout` - Maximum execution time in milliseconds
+  - `stdin` - Data to pass to the command's standard input (enables arbitrary input without shell injection risks)
 
 **Returns**: `Promise<ExecuteResponse>` with `success`, `stdout`, `stderr`, `exitCode`
 
@@ -43,6 +44,18 @@ await sandbox.exec('npm install', {
   stream: true,
   onOutput: (stream, data) => console.log(`[${stream}] ${data}`)
 });
+
+// Pass input via stdin (no shell injection risks)
+const result = await sandbox.exec('cat', {
+  stdin: 'Hello, world!'
+});
+console.log(result.stdout); // "Hello, world!"
+
+// Process user input safely
+const userInput = 'user@example.com\nsecret123';
+await sandbox.exec('python process_login.py', {
+  stdin: userInput
+});
 ```
 </TypeScriptExample>
 
@@ -56,7 +69,7 @@ const stream = await sandbox.execStream(command: string, options?: ExecOptions):
 
 **Parameters**:
 - `command` - The command to execute
-- `options` - Same as `exec()`
+- `options` - Same as `exec()` (including `stdin` support)
 
 **Returns**: `Promise<ReadableStream>` emitting `ExecEvent` objects (`start`, `stdout`, `stderr`, `complete`, `error`)
 
@@ -79,6 +92,17 @@ for await (const event of parseSSEStream<ExecEvent>(stream)) {
       break;
   }
 }
+
+// Stream with stdin input
+const inputStream = await sandbox.execStream('python -c "import sys; print(sys.stdin.read())"', {
+  stdin: 'Data from Workers!'
+});
+
+for await (const event of parseSSEStream<ExecEvent>(inputStream)) {
+  if (event.type === 'stdout') {
+    console.log('Python received:', event.data);
+  }
+}
 ```
 </TypeScriptExample>
 
@@ -95,6 +119,7 @@ const process = await sandbox.startProcess(command: string, options?: ProcessOpt
 - `options` (optional):
   - `cwd` - Working directory
   - `env` - Environment variables
+  - `stdin` - Data to pass to the command's standard input
 
 **Returns**: `Promise<Process>` object with:
 - `id` - Unique process identifier
@@ -117,6 +142,11 @@ console.log('Started with PID:', server.pid);
 const app = await sandbox.startProcess('node app.js', {
   cwd: '/workspace/my-app',
   env: { NODE_ENV: 'production', PORT: '3000' }
+});
+
+// Start process with stdin input (useful for interactive applications)
+const interactive = await sandbox.startProcess('python interactive_app.py', {
+  stdin: 'initial_config\nstart_mode\n'
 });
 ```
 </TypeScriptExample>
@@ -141,7 +171,7 @@ for (const proc of processes) {
 
 ### `killProcess()`
 
-Terminate a specific process.
+Terminate a specific process and all of its child processes.
 
 ```ts
 await sandbox.killProcess(processId: string, signal?: string): Promise<void>
@@ -151,10 +181,17 @@ await sandbox.killProcess(processId: string, signal?: string): Promise<void>
 - `processId` - The process ID (from `startProcess()` or `listProcesses()`)
 - `signal` - Signal to send (default: `"SIGTERM"`)
 
+Sends the signal to the entire process group, ensuring that both the main process and any child processes it spawned are terminated. This prevents orphaned processes from continuing to run after the parent is killed.
+
 <TypeScriptExample>
 ```
 const server = await sandbox.startProcess('python -m http.server 8000');
 await sandbox.killProcess(server.id);
+
+// Example with a process that spawns children
+const script = await sandbox.startProcess('bash -c "sleep 10 & sleep 10 & wait"');
+// killProcess terminates both sleep commands and the bash process
+await sandbox.killProcess(script.id);
 ```
 </TypeScriptExample>
 
@@ -220,6 +257,74 @@ await new Promise(resolve => setTimeout(resolve, 5000));
 
 const logs = await sandbox.getProcessLogs(server.id);
 console.log('Server logs:', logs);
+```
+</TypeScriptExample>
+
+## Standard input (stdin)
+
+All command execution methods support passing data to a command's standard input via the `stdin` option. This enables secure processing of user input without shell injection risks.
+
+### How stdin works
+
+When you provide the `stdin` option:
+1. The input data is written to a temporary file inside the container
+2. The command receives this data through its standard input stream
+3. The temporary file is automatically cleaned up after execution
+
+This approach prevents shell injection attacks that could occur when embedding user data directly in commands.
+
+<TypeScriptExample>
+```
+// Safe: User input goes through stdin, not shell parsing
+const userInput = 'user@domain.com; rm -rf /';
+const result = await sandbox.exec('python validate_email.py', {
+  stdin: userInput
+});
+
+// Instead of unsafe: `python validate_email.py "${userInput}"`
+// which could execute the embedded `rm -rf /` command
+```
+</TypeScriptExample>
+
+### Common patterns
+
+**Processing form data:**
+
+<TypeScriptExample>
+```
+const formData = JSON.stringify({
+  username: 'john_doe',
+  email: 'john@example.com'
+});
+
+const result = await sandbox.exec('python process_form.py', {
+  stdin: formData
+});
+```
+</TypeScriptExample>
+
+**Interactive command-line tools:**
+
+<TypeScriptExample>
+```
+// Simulate user responses to prompts
+const responses = 'yes\nmy-app\n1.0.0\n';
+const result = await sandbox.exec('npm init', {
+  stdin: responses
+});
+```
+</TypeScriptExample>
+
+**Data transformation:**
+
+<TypeScriptExample>
+```
+const csvData = 'name,age,city\nJohn,30,NYC\nJane,25,LA';
+const result = await sandbox.exec('python csv_processor.py', {
+  stdin: csvData
+});
+
+console.log('Processed data:', result.stdout);
 ```
 </TypeScriptExample>
 

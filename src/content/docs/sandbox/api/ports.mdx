@@ -17,7 +17,7 @@ Expose services running in your sandbox via public preview URLs. See [Preview UR
 
 ### `exposePort()`
 
-Expose a port and get a preview URL.
+Expose a port and get a preview URL for accessing services running in the sandbox.
 
 ```ts
 const response = await sandbox.exposePort(port: number, options: ExposePortOptions): Promise<ExposePortResponse>
@@ -27,22 +27,23 @@ const response = await sandbox.exposePort(port: number, options: ExposePortOptio
 
 - `port` - Port number to expose (1024-65535)
 - `options`:
-  - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-sandbox-abc123.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
+  - `hostname` - Your Worker's domain name (e.g., `'example.com'`). Required to construct preview URLs with wildcard subdomains like `https://8080-sandbox-abc123token.example.com`. Cannot be a `.workers.dev` domain as it doesn't support wildcard DNS patterns.
   - `name` - Friendly name for the port (optional)
-  - `token` - Custom token for stable preview URLs (optional, 1-16 characters: lowercase letters, numbers, underscores). When provided, the preview URL remains consistent across container restarts and deployments.
+  - `token` - Custom token for the preview URL (optional). Must be 1-16 characters containing only lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_). If not provided, a random 16-character token is generated automatically.
 
 **Returns**: `Promise<ExposePortResponse>` with `port`, `url` (preview URL), `name`
 
 <TypeScriptExample>
-```
+```ts
 // Extract hostname from request
 const { hostname } = new URL(request.url);
 
+// Basic usage with auto-generated token
 await sandbox.startProcess('python -m http.server 8000');
 const exposed = await sandbox.exposePort(8000, { hostname });
 
 console.log('Available at:', exposed.url);
-// https://8000-sandbox-id-abc123random.example.com
+// https://8000-sandbox-id-abc123random.yourdomain.com
 
 // With custom token for stable URLs across restarts
 const stable = await sandbox.exposePort(8080, {
@@ -50,20 +51,108 @@ const stable = await sandbox.exposePort(8080, {
   token: 'my_service_v1' // 1-16 chars: a-z, 0-9, _
 });
 console.log('Stable URL:', stable.url);
-// https://8080-sandbox-id-my_service_v1.example.com
+// https://8080-sandbox-id-my_service_v1.yourdomain.com
 
-// Multiple services with names
+// With custom token for stable URLs across deployments
 await sandbox.startProcess('node api.js');
-const api = await sandbox.exposePort(3000, { hostname, name: 'api' });
+const api = await sandbox.exposePort(3000, { 
+  hostname, 
+  name: 'api',
+  token: 'prod-api-v1'  // URL stays same across restarts
+});
 
+console.log('Stable API URL:', api.url);
+// https://3000-sandbox-id-prod-api-v1.yourdomain.com
+
+// Multiple services with custom tokens
 await sandbox.startProcess('npm run dev');
-const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
+const frontend = await sandbox.exposePort(5173, { 
+  hostname, 
+  name: 'frontend',
+  token: 'dev-ui'
+});
 ```
 </TypeScriptExample>
 
 :::note[Local development]
 When using `wrangler dev`, you must add `EXPOSE` directives to your Dockerfile for each port. See [Expose Services guide](/sandbox/guides/expose-services/#local-development) for details.
 :::
+
+## Custom Tokens for Stable URLs
+
+Custom tokens enable consistent preview URLs across container restarts and deployments. This is useful for:
+
+- **Production environments** - Share stable URLs with users or teams
+- **Development workflows** - Maintain bookmarks and integrations
+- **CI/CD pipelines** - Reference consistent URLs in tests or deployment scripts
+
+**Token Requirements:**
+- 1-16 characters in length
+- Only lowercase letters (a-z), numbers (0-9), hyphens (-), and underscores (_)
+- Must be unique per sandbox (cannot reuse tokens across different ports)
+
+<TypeScriptExample>
+```ts
+// Production API with stable URL
+const { url } = await sandbox.exposePort(8080, {
+  hostname: 'api.example.com',
+  token: 'v1-stable'  // Always the same URL
+});
+
+// Error: Token collision prevention
+await sandbox.exposePort(8081, { hostname, token: 'v1-stable' });
+// Throws: Token 'v1-stable' is already in use by port 8080
+
+// Success: Re-exposing same port with same token (idempotent)
+await sandbox.exposePort(8080, { hostname, token: 'v1-stable' });
+// Works - same port, same token
+```
+</TypeScriptExample>
+
+### `validatePortToken()`
+
+Validate if a token is authorized to access a specific exposed port. Useful for custom authentication or routing logic.
+
+```ts
+const isValid = await sandbox.validatePortToken(port: number, token: string): Promise<boolean>
+```
+
+**Parameters**:
+
+- `port` - Port number to check
+- `token` - Token to validate
+
+**Returns**: `Promise<boolean>` - `true` if token is valid for the port, `false` otherwise
+
+<TypeScriptExample>
+```ts
+// Custom validation in your Worker
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+    
+    // Extract token from custom header or query param
+    const customToken = request.headers.get('x-access-token');
+    
+    if (customToken) {
+      const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+      const isValid = await sandbox.validatePortToken(8080, customToken);
+      
+      if (!isValid) {
+        return new Response('Invalid token', { status: 403 });
+      }
+    }
+    
+    // Handle preview URL routing
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+    
+    // Your application routes
+    return new Response('Not found', { status: 404 });
+  }
+};
+```
+</TypeScriptExample>
 
 ### `unexposePort()`
 

@@ -12,7 +12,8 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 <pre class="mermaid">
 	{`
 		flowchart LR
-		accTitle: An example of Connector in DHCP Relay mode
+		accTitle: DHCP Relay diagram
+		accDescr: The graph shows Magic WAN Connector sending DHCP discover messages to a DHCP server offsite.
 				a(Magic WAN Connector) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
 
 				subgraph Site A
