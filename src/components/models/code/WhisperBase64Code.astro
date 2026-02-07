@@ -27,7 +27,11 @@ export default {
         const base64 = Buffer.from(mp3Buffer, 'binary').toString("base64");
         try {
             const res = await env.AI.run("${name}", {
-                "audio": base64
+                audio: base64,
+                // Specify the language using an ISO 639-1 code.
+                // Examples: "en" (English), "es" (Spanish), "fr" (French)
+                // If omitted, the model will auto-detect the language.
+                language: "en",
             });
             return Response.json(res);
         }
@@ -38,9 +42,54 @@ export default {
     },
 } satisfies ExportedHandler<Env>
  `;
+
+const python = `
+import requests
+import base64
+
+API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/"
+headers = {"Authorization": "Bearer {API_KEY}"}
+
+def run(model, input):
+    response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
+    return response.json()
+
+with open("audio.mp3", "rb") as audio_file:
+    audio_base64 = base64.b64encode(audio_file.read()).decode("utf-8")
+
+# Specify the language using an ISO 639-1 code.
+# Examples: "en" (English), "es" (Spanish), "fr" (French)
+# If omitted, the model will auto-detect the language.
+output = run("${name}", {
+    "audio": audio_base64,
+    "language": "en"
+})
+print(output)
+`;
+
+const curl = `
+# Encode the audio file as base64
+AUDIO_BASE64=$(base64 -i audio.mp3)
+
+# Specify the language using an ISO 639-1 code.
+# Examples: "en" (English), "es" (Spanish), "fr" (French)
+# If omitted, the model will auto-detect the language.
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \\
+  -d "{\\"audio\\": \\"$AUDIO_BASE64\\", \\"language\\": \\"en\\"}"
+`;
 ---
 
 <Details header="Workers - TypeScript">
 	<Code code={worker} lang="ts" />
 	<Render file="nodejs-compat-howto" product="workers" />
+</Details>
+
+<Details header="Python">
+	<Code code={python} lang="py" />
+</Details>
+
+<Details header="curl">
+	<Code code={curl} lang="sh" />
 </Details>
