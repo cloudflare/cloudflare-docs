@@ -153,24 +153,24 @@ You must disable iptables when starting the Docker daemon because Containers do 
 FROM docker:dind-rootless
 
 # Start dockerd with iptables disabled, then run your app
-ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false & exec /your/app"]
+ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false & exec /path/to/your-app"]
 ```
 
-Wait for dockerd to become ready before your application starts using Docker:
+If your application needs to wait for dockerd to become ready before using Docker, use an entrypoint script instead of the inline command above:
 
 ```sh title="entrypoint.sh"
 #!/bin/sh
-set -euo pipefail
+set -eu
 
 # Wait for dockerd to be ready
 until docker version >/dev/null 2>&1; do
   sleep 0.2
 done
 
-exec /your/app
+exec /path/to/your-app
 ```
 
-For a complete working example, see the [containers-dind repository](https://github.com/th0m/containers-dind).
+For a complete working example, see the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind).
 
 ## How do I allow or disallow egress from my container?
 
