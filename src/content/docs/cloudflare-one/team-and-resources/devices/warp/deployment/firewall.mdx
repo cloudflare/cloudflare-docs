@@ -30,10 +30,10 @@ To deploy WARP in FedRAMP High environments, you will need to allow a different 
 ## DoH IP
 
 :::note
-Only required for [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode.
+Only required for [DNS only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#dns-only-mode) mode.
 :::
 
-In [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection. For DNS to work correctly, you must allow the following IPs and domains:
+In [DNS only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#dns-only-mode) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection. For DNS to work correctly, you must allow the following IPs and domains:
 
 - IPv4 DoH addresses: `162.159.36.1` and `162.159.46.1`
 - IPv6 DoH addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`

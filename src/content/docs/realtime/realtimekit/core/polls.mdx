@@ -6,14 +6,16 @@ sidebar:
   order: 13
 ---
 
-import { Tabs, TabItem } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 This guide explains how to create, vote on, and interact with polls in a meeting using Cloudflare RealtimeKit.
 
+<RTKSDKSelector />
+
 ## Introduction
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
 
@@ -27,34 +29,9 @@ The `meeting.polls.items` property returns an array of all polls created in a me
 console.log("All polls:", meeting.polls.items);
 ```
 
-### Poll Type
+</RTKCodeSnippet>
 
-The `Poll` type is defined as follows:
-
-```typescript
-interface Poll {
-	id: string;
-	question: string;
-	options: PollOption[];
-	anonymous: boolean;
-	hideVotes: boolean;
-	createdBy: string;
-	createdByUserId: string;
-	voted: string[]; // stores participant ID
-}
-
-interface PollOption {
-	text: string;
-	votes: {
-		id: string; // stores participant ID
-		name: string;
-	}[];
-	count: number;
-}
-```
-
-</TabItem>
-<TabItem label="React">
+<RTKCodeSnippet id="web-react">
 
 The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
 
@@ -68,40 +45,99 @@ The `meeting.polls.items` property returns an array of all polls created in a me
 console.log("All polls:", meeting.polls.items);
 ```
 
-### Poll Type
+</RTKCodeSnippet>
 
-The `Poll` type is defined as follows:
-
-```typescript
-interface Poll {
-	id: string;
-	question: string;
-	options: PollOption[];
-	anonymous: boolean;
-	hideVotes: boolean;
-	createdBy: string;
-	createdByUserId: string;
-	voted: string[]; // stores participant ID
-}
-
-interface PollOption {
-	text: string;
-	votes: {
-		id: string; // stores participant ID
-		name: string;
-	}[];
-	count: number;
-}
-```
-
-</TabItem>
-<TabItem label="Android">
+<RTKCodeSnippet id="mobile-android">
 
 You can access the polls functionality in a meeting using the `meeting.polls` object. This object provides methods to create polls, vote, and perform other poll-related actions.
 
 To retrieve all polls created during a meeting, use `meeting.polls.items`. This returns an array where each element is an object of type `com.cloudflare.realtimekit.polls.Poll`.
 
-### Poll type
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
+
+`meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
+
+`meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
+
+`meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
+
+</RTKCodeSnippet>
+
+### Poll Type
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+The `Poll` type is defined as follows:
+
+```typescript
+interface Poll {
+	id: string;
+	question: string;
+	options: PollOption[];
+	anonymous: boolean;
+	hideVotes: boolean;
+	createdBy: string;
+	createdByUserId: string;
+	voted: string[]; // stores participant ID
+}
+
+interface PollOption {
+	text: string;
+	votes: {
+		id: string; // stores participant ID
+		name: string;
+	}[];
+	count: number;
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+The `Poll` type is defined as follows:
+
+```typescript
+interface Poll {
+	id: string;
+	question: string;
+	options: PollOption[];
+	anonymous: boolean;
+	hideVotes: boolean;
+	createdBy: string;
+	createdByUserId: string;
+	voted: string[]; // stores participant ID
+}
+
+interface PollOption {
+	text: string;
+	votes: {
+		id: string; // stores participant ID
+		name: string;
+	}[];
+	count: number;
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
 
 The `Poll` type represents a poll within a meeting:
 
@@ -136,36 +172,9 @@ class PollVote(
 )
 ```
 
-### Listening to new polls in a meeting
+</RTKCodeSnippet>
 
-To receive updates about new polls or poll changes during a meeting, implement the `RtkPollsEventListener` interface. Register your listener using `meeting.addPollsEventListener(rtkPollsEventListener)`.
-
-The `onNewPoll()` method is called whenever a new poll is created in the meeting.
-
-The `onPollUpdate()` method is invoked when a specific poll is updated, such as when participants vote or poll details change. The `onPollUpdates()` method is called when there are updates to the list of polls, including new polls being created or multiple polls being updated at once. Use these callbacks to keep your poll UI in sync with the latest poll data.
-
-```kotlin
-meeting.addPollsEventListener(object : RtkPollsEventListener {
-    override fun onNewPoll(poll: Poll) {
-    }
-
-    override fun onPollUpdate(poll: Poll) {
-    }
-
-    override fun onPollUpdates(pollItems: List<Poll>) {
-    }
-  }
-)
-```
-
-</TabItem>
-<TabItem label="iOS">
-
-The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
-
-`meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
-
-### Poll type
+<RTKCodeSnippet id="mobile-ios">
 
 The `Poll` type is defined as follows:
 
@@ -196,32 +205,9 @@ class PollVote {
 }
 ```
 
-### Listening to new polls in a meeting
+</RTKCodeSnippet>
 
-To be able to receive new poll messages you need to implement a method `onPollUpdates()` method from callback `RtkPollsEventListener`. You can subscribe to this events by calling `meeting.addPollsEventListener(meetingViewModel)`
-
-```swift
-extension MeetingViewModel: RtkPollsEventListener {
-  func onNewPoll(poll: Poll) {
-    // code to handle new poll
-  }
-
-  func onPollUpdates(pollItems: [Poll]) {
-    // code to handle polls and their vote updates.
-  }
-
-  func onPollUpdate(poll: Poll) {}
-}
-```
-
-</TabItem>
-<TabItem label="Flutter">
-
-The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
-
-`meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
-
-### Poll type
+<RTKCodeSnippet id="mobile-flutter">
 
 The `Poll` type is defined as follows:
 
@@ -262,40 +248,9 @@ class PollVote {
 }
 ```
 
-### Listening to new polls in a meeting
+</RTKCodeSnippet>
 
-To be able to receive new poll messages you need to implement a method `onPollUpdates()` method from callback `RtkPollsEventListener`:
-
-To get poll updates, listen to `onPollUpdates()` callback:
-
-```dart
-class PollEventsListener extends RtkPollsEventListener {
-  @override
-  void onPollUpdates(List<Poll> pollItems) {
-    /// code to handle polls
-  }
-
-  @override
-  void onNewPoll(Poll poll) {
-    /// code to handle new poll
-  }
-}
-```
-
-You can subscribe to these events as follows:
-
-```dart
-meeting.addPollsEventListener(PollEventsListener());
-```
-
-</TabItem>
-<TabItem label="React Native">
-
-The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
-
-`meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
-
-### Poll type
+<RTKCodeSnippet id="mobile-react-native">
 
 The `Poll` type is defined as follows:
 
@@ -321,13 +276,11 @@ interface PollOption {
 }
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Creating a Poll
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create()` method accepts the following parameters:
 
@@ -346,8 +299,9 @@ await meeting.polls.create(
 );
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create()` method accepts the following parameters:
 
@@ -366,8 +320,9 @@ await meeting.polls.create(
 );
 ```
 
-</TabItem>
-<TabItem label="Android">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
 
 To create a new poll, use the `create` method available on the `meeting.polls` object. The `meeting.polls.create()` function requires the following parameters:
 
@@ -389,8 +344,9 @@ val pollsCreateError: PollsError? = meeting.polls.create(
 )
 ```
 
-</TabItem>
-<TabItem label="iOS">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
 
 A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.createPoll()` method accepts the following parameters:
 
@@ -412,8 +368,9 @@ let pollsCreateError: PollsError? = meeting.polls.createPoll(
 )
 ```
 
-</TabItem>
-<TabItem label="Flutter">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
 
 A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create(...)` method accepts the following parameters:
 
@@ -435,8 +392,9 @@ meeting.polls.create(
 );
 ```
 
-</TabItem>
-<TabItem label="React Native">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
 
 A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create()` method accepts the following parameters:
 
@@ -457,13 +415,11 @@ await meeting.poll.create(
 );
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Voting on a Poll
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
 
@@ -477,8 +433,9 @@ const poll = meeting.polls.items[0];
 await meeting.polls.vote(poll.id, 0);
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
 
 The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
 
@@ -492,8 +449,9 @@ const poll = meeting.polls.items[0];
 await meeting.polls.vote(poll.id, 0);
 ```
 
-</TabItem>
-<TabItem label="Android">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
 
 To register a vote on a poll, use the `meeting.polls.vote()` method. This method requires the following parameters:
 
@@ -511,8 +469,9 @@ val selectedPollOption: PollOption = poll.options.first()
 val pollsError: PollsError? = meeting.polls.vote(poll.id, selectedPollOption)
 ```
 
-</TabItem>
-<TabItem label="iOS">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
 
 The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
 
@@ -530,8 +489,9 @@ let selectedPollOption: PollOption = poll.options[0]
 meeting.poll.vote(poll, selectedPollOption)
 ```
 
-</TabItem>
-<TabItem label="Flutter">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
 
 The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
 
@@ -549,8 +509,9 @@ final selectedPollOption = poll.options[0];
 meeting.polls.vote(poll: poll, pollOption: selectedPollOption);
 ```
 
-</TabItem>
-<TabItem label="React Native">
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
 
 The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
 
@@ -566,15 +527,13 @@ const poll = meeting.polls.items[0];
 await meeting.poll.vote(poll.id, 0);
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
 
 ## Other Poll Functions
 
-<Tabs syncKey="realtimeKitFrameworkTabs">
-<TabItem label="Web Components">
-
 ### View Poll Results
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 The total votes on a poll can be accessed in the following manner:
 
@@ -594,7 +553,121 @@ const options = poll.options;
 
 `options` returns an array of objects, where each object is of type `PollOption`.
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+The total votes on a poll can be accessed in the following manner:
+
+```jsx
+const poll = meeting.polls.items[0];
+const votes = poll.voted;
+```
+
+`votes` is an array of participant IDs (`meeting.participant.id`).
+
+The total votes on a poll option can be accessed in the following manner:
+
+```jsx
+const poll = meeting.polls.items[0];
+const options = poll.options;
+```
+
+`options` returns an array of objects, where each object is of type `PollOption`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+The total votes on a poll can be accessed in the following manner:
+
+```kotlin
+val poll = meeting.polls.items[0]
+val votes = poll.voted
+```
+
+`votes` is an array of participant IDs (`meeting.participant.id`).
+
+The total votes on a poll option can be accessed in the following manner:
+
+```kotlin
+val poll = meeting.polls.items[0]
+val options = poll.options
+```
+
+`options` returns an array of objects, where each object is of type `PollOption`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+The total votes on a poll can be accessed in the following manner:
+
+```swift
+let poll = meeting.polls.items[0]
+let votes = poll.voted
+```
+
+`votes` is an array of participant IDs (`meeting.participant.id`).
+
+The total votes on a poll option can be accessed in the following manner:
+
+```swift
+let poll = meeting.polls.items[0]
+let options = poll.options
+```
+
+`options` returns an array of objects, where each object is of type `PollOption`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+The total votes on a poll can be accessed in the following manner:
+
+```dart
+final poll = meeting.polls.items.first;
+final votes = poll.voted;
+```
+
+`votes` is an array of participant IDs (`meeting.participant.id`).
+
+The total votes on a poll option can be accessed in the following manner:
+
+```dart
+final poll = meeting.polls.items.first;
+final options = poll.options;
+```
+
+`options` returns an array of objects, where each object is of type `PollOption`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+The total votes on a poll can be accessed in the following manner:
+
+```ts
+const poll = meeting.polls.items[0];
+const votes = poll.voted;
+```
+
+`votes` is an array of participant IDs (`meeting.participant.id`).
+
+The total votes on a poll option can be accessed in the following manner:
+
+```ts
+const poll = meeting.polls.items[0];
+const options = poll.options;
+```
+
+`options` returns an array of objects, where each object is of type `PollOption`.
+
+</RTKCodeSnippet>
+
 ### Get Notified When a Poll is Created or Updated
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 An event is fired each time `meeting.polls.items` is updated or created. You can listen for this to get the updated list of polls. The response object contains the following properties:
 
@@ -608,30 +681,9 @@ meeting.polls.on("pollsUpdate", ({ polls, newPoll }) => {
 });
 ```
 
-</TabItem>
-<TabItem label="React">
+</RTKCodeSnippet>
 
-### View Poll Results
-
-The total votes on a poll can be accessed in the following manner:
-
-```jsx
-const poll = meeting.polls.items[0];
-const votes = poll.voted;
-```
-
-`votes` is an array of participant IDs (`meeting.participant.id`).
-
-The total votes on a poll option can be accessed in the following manner:
-
-```jsx
-const poll = meeting.polls.items[0];
-const options = poll.options;
-```
-
-`options` returns an array of objects, where each object is of type `PollOption`.
-
-### Get Notified When a Poll is Created or Updated
+<RTKCodeSnippet id="web-react">
 
 An event is fired each time `meeting.polls.items` is updated or created. You can listen for this to get the updated list of polls. The response object contains the following properties:
 
@@ -654,99 +706,9 @@ import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
 const polls = useRealtimeKitSelector((m) => m.polls.items);
 ```
 
-</TabItem>
-<TabItem label="Android">
+</RTKCodeSnippet>
 
-### View poll results
-
-The total votes on a poll can be accessed in the following manner:
-
-```kotlin
-val poll = meeting.polls.items[0]
-val votes = poll.voted
-```
-
-`votes` is an array of participant IDs (`meeting.participant.id`).
-
-The total votes on a poll option can be accessed in the following manner:
-
-```kotlin
-val poll = meeting.polls.items[0]
-val options = poll.options
-```
-
-`options` returns an array of objects, where each object is of type `PollOption`.
-
-</TabItem>
-<TabItem label="iOS">
-
-### View poll results
-
-The total votes on a poll can be accessed in the following manner:
-
-```swift
-let poll = meeting.polls.items[0]
-let votes = poll.voted
-```
-
-`votes` is an array of participant IDs (`meeting.participant.id`).
-
-The total votes on a poll option can be accessed in the following manner:
-
-```swift
-let poll = meeting.polls.items[0]
-let options = poll.options
-```
-
-`options` returns an array of objects, where each object is of type `PollOption`.
-
-</TabItem>
-<TabItem label="Flutter">
-
-### View poll results
-
-The total votes on a poll can be accessed in the following manner:
-
-```dart
-final poll = meeting.polls.items.first;
-final votes = poll.voted;
-```
-
-`votes` is an array of participant IDs (`meeting.participant.id`).
-
-The total votes on a poll option can be accessed in the following manner:
-
-```dart
-final poll = meeting.polls.items.first;
-final options = poll.options;
-```
-
-`options` returns an array of objects, where each object is of type `PollOption`.
-
-</TabItem>
-<TabItem label="React Native">
-
-### View poll results
-
-The total votes on a poll can be accessed in the following manner:
-
-```ts
-const poll = meeting.polls.items[0];
-const votes = poll.voted;
-```
-
-`votes` is an array of participant IDs (`meeting.participant.id`).
-
-The total votes on a poll option can be accessed in the following manner:
-
-```ts
-const poll = meeting.polls.items[0];
-const options = poll.options;
-```
-
-`options` returns an array of objects, where each object is of type `PollOption`.
-
-### Get notified when a poll is created or updated
+<RTKCodeSnippet id="mobile-react-native">
 
 An event is fired each time `meeting.polls.items` is updated or created. You can listen for this to get the updated list of polls. The response object contains the following properties:
 
@@ -759,5 +721,76 @@ meeting.polls.on("pollsUpdate", ({ polls, newPoll }) => {
 });
 ```
 
-</TabItem>
-</Tabs>
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+To receive updates about new polls or poll changes during a meeting, implement the `RtkPollsEventListener` interface. Register your listener using `meeting.addPollsEventListener(rtkPollsEventListener)`.
+
+The `onNewPoll()` method is called whenever a new poll is created in the meeting.
+
+The `onPollUpdate()` method is invoked when a specific poll is updated, such as when participants vote or poll details change. The `onPollUpdates()` method is called when there are updates to the list of polls, including new polls being created or multiple polls being updated at once. Use these callbacks to keep your poll UI in sync with the latest poll data.
+
+```kotlin
+meeting.addPollsEventListener(object : RtkPollsEventListener {
+    override fun onNewPoll(poll: Poll) {
+    }
+
+    override fun onPollUpdate(poll: Poll) {
+    }
+
+    override fun onPollUpdates(pollItems: List<Poll>) {
+    }
+  }
+)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+To be able to receive new poll messages you need to implement a method `onPollUpdates()` method from callback `RtkPollsEventListener`. You can subscribe to this events by calling `meeting.addPollsEventListener(meetingViewModel)`
+
+```swift
+extension MeetingViewModel: RtkPollsEventListener {
+  func onNewPoll(poll: Poll) {
+    // code to handle new poll
+  }
+
+  func onPollUpdates(pollItems: [Poll]) {
+    // code to handle polls and their vote updates.
+  }
+
+  func onPollUpdate(poll: Poll) {}
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+To be able to receive new poll messages you need to implement a method `onPollUpdates()` method from callback `RtkPollsEventListener`:
+
+To get poll updates, listen to `onPollUpdates()` callback:
+
+```dart
+class PollEventsListener extends RtkPollsEventListener {
+  @override
+  void onPollUpdates(List<Poll> pollItems) {
+    /// code to handle polls
+  }
+
+  @override
+  void onNewPoll(Poll poll) {
+    /// code to handle new poll
+  }
+}
+```
+
+You can subscribe to these events as follows:
+
+```dart
+meeting.addPollsEventListener(PollEventsListener());
+```
+
+</RTKCodeSnippet>

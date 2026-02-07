@@ -103,7 +103,7 @@ Below is a non-exhaustive list of third-party software that are known to cause `
 
 </Details>
 
-2. Alternatively, switch WARP to [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode.
+2. Alternatively, switch WARP to [Traffic only mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-only-mode) mode.
 
 ## CF_FAILED_READ_SYSTEM_DNS_CONFIG
 
@@ -324,4 +324,6 @@ The account administrator has disconnected WARP for all devices registered to th
 
 ### Resolution
 
-The account administrator must turn the [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices) feature off.
+The account administrator must turn off both of the following features:
+	- [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#disconnect-warp-on-all-devices)
+	- [Manage device connection using an external signal](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#manage-device-connection-using-an-external-signal)

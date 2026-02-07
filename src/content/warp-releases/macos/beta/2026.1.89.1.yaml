@@ -1,0 +1,11 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements**
+  - Fixed an issue causing failure of the [local network exclusion](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-users-to-enable-local-network-exclusion) feature when configured with a timeout of `0`.
+  - Improvement for more accurate reporting of device colocation information in the Cloudflare One dashboard.
+version: 2026.1.89.1
+releaseDate: 2026-01-27T18:46:59.676Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.1.89.1
+packageSize: 114778080
+platformName: macOS

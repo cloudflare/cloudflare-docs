@@ -10,82 +10,37 @@ sidebar:
   label: Mirage
   badge:
     text: Deprecated
-
 ---
 
-import { FeatureTable, GlossaryTooltip, Render, DashButton} from "~/components"
-
 :::caution[Deprecation notice]
-Mirage was deprecated on September 15, 2025.
+Mirage was deprecated on September 15, 2025 and is no longer available.
+
 As an alternative, Cloudflare recommends using [lazy loading](/images/tutorials/optimize-mobile-viewing/) and [responsive images](/images/transform-images/make-responsive-images/) to optimize image performance for all devices.
 :::
 
-Cloudflare Mirage reduces bandwidth used by images in mobile browsers. It can accelerate loading of image-heavy websites on very slow mobile connections and HTTP/1.
+## What was Mirage?
 
-It does this by:
+Cloudflare Mirage was a mobile image optimization feature that reduced bandwidth usage and accelerated image loading on slow mobile connections and HTTP/1.
 
-* Replacing images with low-resolution thumbnails, which are bundled together into one file.
-* Acting as a lazy loader, deferring loading of higher-resolution images until they become visible.
+Mirage worked by:
 
-JavaScript must be enabled for Mirage to work.
+- Replacing images with low-resolution thumbnails bundled together into one file.
+- Acting as a lazy loader, deferring loading of higher-resolution images until they become visible.
 
-***
+## Why was it deprecated?
 
-## Comparison
+Modern web standards and browser capabilities have evolved to provide native support for many of Mirage's features:
 
-* [Polish](/images/polish/) seamlessly optimizes images for all browsers, not only mobile, and keeps images at full resolution.
-* [Image Resizing](/images/transform-images/) together with `loading="lazy"` and `srcset` HTML attributes can achieve similar results as Mirage, but requires markup changes to implement.
+- Native lazy loading with the `loading="lazy"` HTML attribute.
+- Responsive images using `srcset` and `<picture>` elements.
+- HTTP/2 and HTTP/3 providing better performance.
+- Improved mobile networks reducing the need for aggressive optimization.
 
-## Availability
+## Migration path
 
-<FeatureTable id="speed.mirage" />
+Instead of Mirage, use:
 
-***
-
-## Image formats compatible with Mirage
-
-Mirage will work with the following image formats:
-
-* `.jpg`
-* `.jpeg`
-* `.png`
-* `.gif`
-* `.img`
-
-***
-
-## Enable Mirage
-
-:::note
-
-If you send a <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> header that restricts where scripts can be loaded, you will need to ensure `ajax.cloudflare.com` is enabled. For example, to allow scripts from your own domain and `ajax.cloudflare.com` enter the following:
-`script-src 'self' ajax.cloudflare.com;`
-:::
-
-To enable Mirage image optimization for your entire domain:
-
-1. In the Cloudflare dashboard, go to the **Speed** > **Settings** page.
-
-   <DashButton url="/?to=/:account/:zone/speed/optimization" />
-
-3. Go to **Image Optimization**.
-4. For **Mirage**, switch the toggle to **On**.
-
-<Render file="configuration-rule-promotion" product="rules" />
-
-***
-
-## Test Mirage
-
-Mirage's features for Mobile Browser optimization are triggered based on high latency and poor network connections. You can test Mirage by making a request to your domain using a mobile [user-agent string](http://en.wikipedia.org/wiki/User_agent) and one of the following flags with your domain in your mobile browser:
-
-`EXAMPLE.COM/?forcepreload`
-
-To run the pre-loader only and serve degraded images on the page enter:
-
-`EXAMPLE.COM/?forcepreloadonly`
-
-Here is an example where Mirage 2 is triggered by a `?forcepreloadonly` flag. The notable image degradation is a sign that Mirage is working:
-
-![Blog post regarding the launch of Mirage.
-](~/assets/images/support/hc-import-219178057_forcepreloadonly.png)
+- **[Polish](/images/polish/)** - Seamlessly optimizes images for all browsers, not only mobile, and keeps images at full resolution.
+- **[Image Resizing](/images/transform-images/)** - Combined with `loading="lazy"` and `srcset` HTML attributes, provides modern responsive image delivery.
+- **[Lazy loading guide](/images/tutorials/optimize-mobile-viewing/)** - Learn how to implement native lazy loading.
+- **[Responsive images guide](/images/transform-images/make-responsive-images/)** - Create images that adapt to different devices.

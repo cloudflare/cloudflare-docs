@@ -23,38 +23,47 @@ Furthermore, we have an escape hatch in the form of [Custom Builds](/workers/wra
 
 ## Including non-JavaScript modules
 
+{/* Changes to this section should also be applied to /workers/vite-plugin/reference/non-javascript-modules */}
+
 Bundling your Worker code takes multiple modules and bundles them into one file.
 Sometimes, you might have modules that cannot be inlined directly into the bundle.
 For example, instead of bundling a Wasm file into your JavaScript Worker, you would want to upload the Wasm file as a separate module that can be imported at runtime.
-Wrangler supports this for the following file types:
+Wrangler supports this by default for the following file types:
 
-- `.txt`
-- `.html`
-- `.bin`
-- `.wasm` and `.wasm?module`
+| Module extension        | Imported type        |
+| ----------------------- | -------------------- |
+| `.txt`                  | `string`             |
+| `.html`                 | `string`             |
+| `.sql`                  | `string`             |
+| `.bin`                  | `ArrayBuffer`        |
+| `.wasm`, `.wasm?module` | `WebAssembly.Module` |
 
 Refer to [Bundling configuration](/workers/wrangler/configuration/#bundling) to customize these file types.
 
-For example, with the following import, the variable `data` will be a string containing the contents of `example.html`:
+For example, with the following import, `text` will be a string containing the contents of `example.txt`:
 
 ```js
-import data from "./example.html"; // Where `example.html` is a file in your local directory
+import text from "./example.txt";
 ```
 
-This is also the basis of Wasm support with Wrangler. To use a Wasm module in a Worker developed with Wrangler, add the following to your Worker:
+This is also the basis for importing Wasm, as in the following example:
 
-```js
-import wasm from "./example.wasm"; // Where `example.wasm` is a file in your local directory
-const instance = await WebAssembly.instantiate(wasm); // Instantiate Wasm modules in global scope, not within the fetch() handler
+```ts
+import wasm from "./example.wasm";
+
+// Instantiate Wasm modules in the module scope
+const instance = await WebAssembly.instantiate(wasm);
 
 export default {
-	fetch(request) {
+	fetch() {
 		const result = instance.exports.exported_func();
+
+		return new Response(result);
 	},
 };
 ```
 
-:::caution
+:::note
 
 Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`.
 :::

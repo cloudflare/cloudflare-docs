@@ -1,0 +1,39 @@
+---
+{}
+
+---
+
+import { Details, Example } from "~/components";
+
+When creating NS records, there are limits on the number of nameservers that can be associated with a single delegation name.
+
+According to DNS standards defined in [RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html), a delegation should not include more than seven nameserver names for the same delegation name.
+
+To align with these standards and maintain platform stability:
+
+- Cloudflare supports up to 10 NS records per delegation name, but the best practice is to keep the set at seven or fewer.
+- Creating more than 10 NS records for the same name is not supported. Requests that exceed this limit may be rejected or fail validation.
+
+<Details header="Example">
+
+<Example>
+DNS management for **example.com**:
+
+| Type | Name     | Content                 |
+| ---- | -------- | ----------------------- |
+| NS   | blog     | `ns1.externalhost.com`  |
+| NS   | blog     | `ns2.externalhost.com`  |
+| NS   | blog     | `ns3.externalhost.com`  |
+| NS   | blog     | `ns4.externalhost.com`  |
+| NS   | blog     | `ns5.externalhost.com`  |
+| NS   | blog     | `ns6.externalhost.com`  |
+| NS   | blog     | `ns7.externalhost.com`  |
+| NS   | blog     | `ns8.externalhost.com`  |
+| NS   | blog     | `ns9.externalhost.com`  |
+| NS   | blog     | `ns10.externalhost.com` |
+
+In this example, Cloudflare would prevent you from adding another NS record for the delegation name `blog`.
+
+</Example>
+
+</Details>

@@ -6,8 +6,6 @@ description: Track and log Workers on invocation by assigning a Tail Worker to
   your projects.
 sidebar:
   order: 4
-  badge:
-    text: Beta
 ---
 
 import { WranglerConfig } from "~/components";
@@ -96,8 +94,14 @@ The following Worker code is an example of what the `events` object may look lik
 
 <WranglerConfig>
 
-```toml
-tail_consumers = [{service = "<TAIL_WORKER_NAME>"}]
+```jsonc
+{
+	"tail_consumers": [
+		{
+			"service": "<TAIL_WORKER_NAME>"
+		}
+	]
+}
 ```
 
 </WranglerConfig>

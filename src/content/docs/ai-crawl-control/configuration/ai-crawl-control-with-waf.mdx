@@ -73,16 +73,7 @@ You may have both of the following features enabled:
 
 In this scenario, you have two custom rules, each directing a different logic for handling AI crawlers. To resolve this issue:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
-
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **WAF** > **Custom rules** tab.
-3. Identify your WAF custom rule and the AI Crawl Control rule.
-4. Drag the rule you wish to prioritize to the top, or modify your WAF custom rule to ensure it does not conflict with your AI Crawl Control configurations.
-</Steps>
-
-</TabItem> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 1. In the Cloudflare dashboard, go to the **Security rules** page.
@@ -92,6 +83,15 @@ In this scenario, you have two custom rules, each directing a different logic fo
 2. Filter by _Custom rules_.
 3. Identify your custom rule and the AI Crawl Control rule.
 4. Drag the rule you wish to prioritize to the top, or modify your custom rule to ensure it does not conflict with your AI Crawl Control configurations.
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **WAF** > **Custom rules** tab.
+3. Identify your WAF custom rule and the AI Crawl Control rule.
+4. Drag the rule you wish to prioritize to the top, or modify your WAF custom rule to ensure it does not conflict with your AI Crawl Control configurations.
 </Steps>
 
 </TabItem> </Tabs>

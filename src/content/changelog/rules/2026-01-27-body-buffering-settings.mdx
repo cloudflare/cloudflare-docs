@@ -1,0 +1,48 @@
+---
+title: Control request and response body buffering in Configuration Rules
+description: New settings in Configuration Rules let you control how Cloudflare buffers HTTP request and response bodies before forwarding to origin or client.
+date: 2026-01-27
+---
+
+You can now control how Cloudflare buffers HTTP request and response bodies using two new settings in [Configuration Rules](/rules/configuration-rules/).
+
+### Request body buffering
+
+Controls how Cloudflare buffers HTTP request bodies before forwarding them to your origin server:
+
+| Mode | Behavior |
+| --- | --- |
+| **Standard** (default) | Cloudflare can inspect a prefix of the request body for enabled functionality such as WAF and Bot Management. |
+| **Full** | Buffers the entire request body before sending to origin. |
+| **None** | No buffering — the request body streams directly to origin without inspection. |
+
+### Response body buffering
+
+Controls how Cloudflare buffers HTTP response bodies before forwarding them to the client:
+
+| Mode | Behavior |
+| --- | --- |
+| **Standard** (default) | Cloudflare can inspect a prefix of the response body for enabled functionality. |
+| **None** | No buffering — the response body streams directly to the client without inspection. |
+
+:::caution
+Setting body buffering to **None** may break security functionality that requires body inspection, including the Web Application Firewall (WAF) and Bot Management. Ensure that any paths where you disable buffering do not require security inspection.
+:::
+
+:::note[Availability]
+These settings only take effect on zones running Cloudflare's [latest CDN proxy](https://blog.cloudflare.com/20-percent-internet-upgrade/). Enterprise customers can contact their account team to enable the latest proxy on their zones.
+:::
+
+### API example
+
+```json
+{
+  "action": "set_config",
+  "action_parameters": {
+    "request_body_buffering": "standard",
+    "response_body_buffering": "none"
+  }
+}
+```
+
+For more information, refer to [Configuration Rules](/rules/configuration-rules/).

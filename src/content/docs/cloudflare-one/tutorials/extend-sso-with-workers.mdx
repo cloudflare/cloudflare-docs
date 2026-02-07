@@ -1,6 +1,6 @@
 ---
 reviewed: 2024-09-30
-category: 🔐 Zero Trust
+category: Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
 title: Send SSO attributes to Access-protected origins with Workers
@@ -198,8 +198,13 @@ In the [Wrangler configuration file](/workers/wrangler/configuration/), [set up 
 
 <WranglerConfig>
 
-```toml
-route = { pattern= "app.example.com/*", zone_name="example.com"}
+```jsonc
+{
+	"route": {
+		"pattern": "app.example.com/*",
+		"zone_name": "example.com"
+	}
+}
 ```
 
 </WranglerConfig>

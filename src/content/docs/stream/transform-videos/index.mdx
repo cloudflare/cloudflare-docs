@@ -142,13 +142,9 @@ Specifies the filename to use in the returned Content-Disposition header. If not
 
 ## Limitations
 
-Media Transformations are currently in beta. During this period:
-
-- Transformations are available for all enabled zones free-of-charge.
-- Outputs from Media Transformations will be cached, but if they must be regenerated, the origin fetch is not cached and may result in subsequent requests to the origin asset.
 - Maximum input file size is 100 MB. Maximum duration of input video is 10 minutes.
 - Media Transformations are not compatible with [Bring Your Own IP (BYOIP)](/byoip/).
-- Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
+- Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio, or animated GIF. Other formats may work but are untested.
 
 ## Pricing
 

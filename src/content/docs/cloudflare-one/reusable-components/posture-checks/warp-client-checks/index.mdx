@@ -10,14 +10,15 @@ These device posture checks are performed by the [Cloudflare WARP client](/cloud
 
 ## Supported WARP modes
 
-* Gateway with WARP
-* Secure Web Gateway without DNS filtering
-* Device Information Only
+* Traffic and DNS mode
+* Traffic only mode
+* Posture only mode
 
 ## Supported operating systems
 
 | Device posture check                                                                          | macOS | Windows | Linux       | iOS | Android/ChromeOS |
 | --------------------------------------------------------------------------------------------- | ----- | ------- | ----------- | --- | ---------------- |
+| [Antivirus](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/antivirus/)           | ❌     | ✅       | ❌           | ❌   | ❌                |
 | [Application check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/application-check/)   | ✅     | ✅       | ✅           | ❌   | ❌                |
 | [Carbon Black](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/carbon-black/)             | ✅     | ✅       | ✅           | ❌   | ❌                |
 | [Client certificate](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/) | ✅     | ✅       | ✅           | ❌   | ❌                |
