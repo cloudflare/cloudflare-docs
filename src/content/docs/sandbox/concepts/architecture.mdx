@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { WranglerConfig } from "~/components";
+
 Sandbox SDK lets you execute untrusted code safely from your Workers. It combines three Cloudflare technologies to provide secure, stateful, and isolated execution:
 
 - **Workers** - Your application logic that calls the Sandbox SDK
@@ -99,23 +101,21 @@ await sandbox.exec("python script.py");
 
 ### WebSocket transport
 
-Multiplexes all SDK calls over a single persistent WebSocket connection. Avoids sub-request limits when making many concurrent operations.
+Multiplexes all SDK calls over a single persistent WebSocket connection. Avoids [subrequest limits](/workers/platform/limits/#subrequests) when making many concurrent operations.
 
-Enable WebSocket transport by setting the `SANDBOX_TRANSPORT` environment variable:
+Enable WebSocket transport by setting the `SANDBOX_TRANSPORT` variable in your Worker's configuration:
 
-```toml
-# wrangler.jsonc
-[vars]
-SANDBOX_TRANSPORT = "websocket"
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"SANDBOX_TRANSPORT": "websocket"
+	},
+}
 ```
+</WranglerConfig>
 
-**When to use WebSocket transport**:
-
-- High-frequency SDK calls from a single Worker or Durable Object
-- Complex workflows with numerous file operations and command executions
-- Applications approaching Workers' sub-request limits
-
-The transport layer is transparent to your application code - all SDK methods work identically regardless of transport. See [Environment variables configuration](/sandbox/configuration/environment-variables/) for details.
+The transport layer is transparent to your application code - all SDK methods work identically regardless of transport. See [Transport modes](/sandbox/configuration/transport/) for details on when to use each transport and configuration examples.
 
 ## Request flow
 

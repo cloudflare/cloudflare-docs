@@ -2,7 +2,7 @@
 title: Transport modes
 pcx_content_type: configuration
 sidebar:
-  order: 4
+  order: 5
 ---
 
 import { WranglerConfig } from "~/components";
@@ -11,87 +11,58 @@ Configure how the Sandbox SDK communicates with containers using transport modes
 
 ## Overview
 
-The Sandbox SDK supports two transport modes for SDK-container communication:
+The Sandbox SDK supports two transport modes for communication between the Durable Object and the container:
 
-- **HTTP transport** (default) - Standard HTTP requests for each operation
-- **WebSocket transport** - Persistent connection that multiplexes all operations over a single WebSocket
+- **HTTP transport** (default) - Each SDK operation makes a separate HTTP request to the container.
+- **WebSocket transport** - All SDK operations are multiplexed over a single persistent WebSocket connection.
 
 ## When to use WebSocket transport
 
-Use WebSocket transport when running sandboxes inside Workers or Durable Objects to avoid sub-request limits.
+Use WebSocket transport when your Worker or Durable Object makes many SDK operations per request. This avoids hitting [subrequest limits](/workers/platform/limits/#subrequests).
 
-### Sub-request limits
+### Subrequest limits
 
-Cloudflare Workers and Durable Objects have [sub-request limits](/workers/platform/limits/#subrequests):
+Cloudflare Workers have subrequest limits that apply when making requests to external services, including container API calls:
 
-- **Workers**: 50 sub-requests per invocation (1000 with higher limits)
-- **Durable Objects**: 50 sub-requests per WebSocket message
+- **Workers Free**: 50 subrequests per request
+- **Workers Paid**: 1,000 subrequests per request
 
-With HTTP transport (default), each SDK operation (like `exec()`, `readFile()`, `writeFile()`) consumes one sub-request. Applications that make many sandbox operations can quickly hit these limits.
+With HTTP transport (default), each SDK operation (`exec()`, `readFile()`, `writeFile()`, etc.) consumes one subrequest. Applications that perform many sandbox operations in a single request can hit these limits.
 
 ### How WebSocket transport helps
 
-WebSocket transport establishes a single persistent connection to the container and multiplexes all SDK operations over it. This counts as only **one sub-request** regardless of how many sandbox operations you perform.
+WebSocket transport establishes a single persistent connection to the container and multiplexes all SDK operations over it. The WebSocket upgrade counts as **one subrequest** regardless of how many operations you perform afterwards.
 
-**Example without WebSocket transport:**
+**Example with HTTP transport (4 subrequests):**
 
 ```typescript
-// Each operation = 1 sub-request (4 total)
 await sandbox.exec("python setup.py");
 await sandbox.writeFile("/app/config.json", config);
 await sandbox.exec("python process.py");
 const result = await sandbox.readFile("/app/output.txt");
 ```
 
-With HTTP transport, this uses **4 sub-requests**.
-
-**Example with WebSocket transport:**
+**Same code with WebSocket transport (1 subrequest):**
 
 ```typescript
-// All operations multiplexed over single WebSocket (1 sub-request total)
+// Identical code - transport is configured via environment variable
 await sandbox.exec("python setup.py");
 await sandbox.writeFile("/app/config.json", config);
 await sandbox.exec("python process.py");
 const result = await sandbox.readFile("/app/output.txt");
 ```
-
-With WebSocket transport, this uses **1 sub-request** total.
 
 ## Configuration
 
-Set the `SANDBOX_TRANSPORT` environment variable to configure transport mode.
+Set the `SANDBOX_TRANSPORT` environment variable in your Worker's configuration. The SDK reads this from the Worker environment bindings (not from inside the container).
 
 ### HTTP transport (default)
 
-HTTP transport is the default and requires no configuration:
-
-<WranglerConfig>
-```jsonc
-{
-	"name": "my-sandbox-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "2025-10-13",
-	"containers": [
-		{
-			"class_name": "Sandbox",
-			"image": "./Dockerfile",
-		},
-	],
-	"durable_objects": {
-		"bindings": [
-			{
-				"class_name": "Sandbox",
-				"name": "Sandbox",
-			},
-		],
-	},
-}
-```
-</WranglerConfig>
+HTTP transport is the default and requires no additional configuration.
 
 ### WebSocket transport
 
-Enable WebSocket transport by setting the `SANDBOX_TRANSPORT` environment variable:
+Enable WebSocket transport by adding `SANDBOX_TRANSPORT` to your Worker's `vars`:
 
 <WranglerConfig>
 ```jsonc
@@ -99,13 +70,13 @@ Enable WebSocket transport by setting the `SANDBOX_TRANSPORT` environment variab
 	"name": "my-sandbox-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-10-13",
+	"vars": {
+		"SANDBOX_TRANSPORT": "websocket"
+	},
 	"containers": [
 		{
 			"class_name": "Sandbox",
 			"image": "./Dockerfile",
-			"environment": {
-				"SANDBOX_TRANSPORT": "websocket"
-			}
 		},
 	],
 	"durable_objects": {
@@ -119,21 +90,23 @@ Enable WebSocket transport by setting the `SANDBOX_TRANSPORT` environment variab
 }
 ```
 </WranglerConfig>
+
+No application code changes are needed. The SDK automatically uses the configured transport for all operations.
 
 ## Transport behavior
 
 ### Connection lifecycle
 
 **HTTP transport:**
-- Creates a new HTTP request for each operation
+- Creates a new HTTP request for each SDK operation
 - No persistent connection
-- Stateless - each request is independent
+- Each request is independent and stateless
 
 **WebSocket transport:**
-- Establishes connection on first sandbox operation
-- Maintains persistent connection for all subsequent operations
-- Connection closed when sandbox sleeps or is evicted
-- Automatically reconnects if needed
+- Establishes a WebSocket connection on the first SDK operation
+- Maintains the persistent connection for all subsequent operations
+- Connection is closed when the sandbox sleeps or is evicted
+- Automatically reconnects if the connection drops
 
 ### Streaming support
 
@@ -142,104 +115,65 @@ Both transports support streaming operations (like `exec()` with real-time outpu
 - **HTTP transport** - Uses Server-Sent Events (SSE)
 - **WebSocket transport** - Uses WebSocket streaming messages
 
-The SDK handles streaming differences automatically - your code remains identical regardless of transport mode.
+Your code remains identical regardless of transport mode.
 
 ### Error handling
 
-Both transports provide identical error handling. Network errors are automatically retried with exponential backoff.
+Both transports provide identical error handling behavior. The SDK automatically retries on transient errors (like 503 responses) with exponential backoff.
 
-**WebSocket-specific errors:**
-
-- Connection failures automatically fall back to reconnection
+WebSocket-specific behavior:
+- Connection failures trigger automatic reconnection
 - The SDK transparently handles WebSocket disconnections
-- Operations are never lost due to connection issues
-
-## Performance considerations
-
-### Latency
-
-**HTTP transport:**
-- Higher latency for many small operations (connection overhead per request)
-- Better for single large operations
-- Suitable for low-frequency sandbox usage
-
-**WebSocket transport:**
-- Lower latency for many operations (connection reuse)
-- Small overhead for initial connection establishment
-- Better for high-frequency sandbox usage
-
-### Memory usage
-
-**HTTP transport:**
-- Minimal memory usage
-- No persistent connection state
-
-**WebSocket transport:**
-- Small memory overhead for persistent connection
-- Negligible impact on Worker/Durable Object memory limits
+- In-flight operations are not lost during reconnection
 
 ## Choosing a transport
 
-Use this decision guide:
-
-| Scenario | Recommended Transport |
+| Scenario | Recommended transport |
 |----------|----------------------|
-| Making many sandbox operations per request | WebSocket |
-| Running inside Workers/Durable Objects | WebSocket |
-| Approaching sub-request limits | WebSocket |
+| Many SDK operations per request | WebSocket |
+| Running inside Workers or Durable Objects | WebSocket |
+| Approaching subrequest limits | WebSocket |
 | Simple, infrequent sandbox usage | HTTP (default) |
-| Running outside Cloudflare (self-hosted) | HTTP (default) |
+| Debugging or inspecting individual requests | HTTP (default) |
 
-:::note[Default is fine for most cases]
-HTTP transport works well for most applications. Only switch to WebSocket transport if you are hitting sub-request limits or making many rapid sandbox operations.
+:::note[Default is sufficient for most use cases]
+HTTP transport works well for most applications. Only switch to WebSocket transport if you are hitting subrequest limits or performing many rapid sandbox operations per request.
 :::
 
 ## Migration guide
 
-Switching between transports requires no code changes - only configuration.
+Switching between transports requires no code changes.
 
 ### Switch from HTTP to WebSocket
 
-1. Update your `wrangler.jsonc` to add `SANDBOX_TRANSPORT` environment variable:
+Add `SANDBOX_TRANSPORT` to your `wrangler.jsonc`:
 
 <WranglerConfig>
 ```jsonc
 {
-	"containers": [
-		{
-			"class_name": "Sandbox",
-			"image": "./Dockerfile",
-			"environment": {
-				"SANDBOX_TRANSPORT": "websocket"
-			}
-		},
-	],
+	"vars": {
+		"SANDBOX_TRANSPORT": "websocket"
+	},
 }
 ```
 </WranglerConfig>
 
-2. Deploy your Worker:
+Then deploy:
 
 ```bash
-wrangler deploy
+npx wrangler deploy
 ```
-
-No application code changes needed.
 
 ### Switch from WebSocket to HTTP
 
-Remove the `SANDBOX_TRANSPORT` environment variable from your container configuration:
+Remove the `SANDBOX_TRANSPORT` variable (or set it to `"http"`):
 
 <WranglerConfig>
 ```jsonc
 {
-	"containers": [
-		{
-			"class_name": "Sandbox",
-			"image": "./Dockerfile",
-			// Remove environment.SANDBOX_TRANSPORT
-		},
-	],
+	"vars": {
+		// Remove SANDBOX_TRANSPORT or set to "http"
+	},
 }
 ```
 </WranglerConfig>
@@ -248,5 +182,5 @@ Remove the `SANDBOX_TRANSPORT` environment variable from your container configur
 
 - [Wrangler configuration](/sandbox/configuration/wrangler/) - Complete Worker configuration
 - [Environment variables](/sandbox/configuration/environment-variables/) - Passing configuration to sandboxes
-- [Workers limits](/workers/platform/limits/) - Understanding sub-request limits
+- [Workers subrequest limits](/workers/platform/limits/#subrequests) - Understanding subrequest limits
 - [Architecture](/sandbox/concepts/architecture/) - How Sandbox SDK components communicate

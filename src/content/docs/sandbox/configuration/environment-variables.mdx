@@ -9,53 +9,30 @@ import { WranglerConfig } from "~/components";
 
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
 
-## SDK Configuration Variables
+## SDK configuration variables
 
-These environment variables configure how the Sandbox SDK communicates with containers. Set these in your Worker's `wrangler.jsonc` file.
+These environment variables configure how the Sandbox SDK behaves. Set these as Worker `vars` in your `wrangler.jsonc` file. The SDK reads them from the Worker's environment bindings.
 
 ### SANDBOX_TRANSPORT
 
-**Type**: `string`
-**Values**: `http` (default) | `websocket`
-**Default**: `http`
+| | |
+|---|---|
+| **Type** | `"http"` \| `"websocket"` |
+| **Default** | `"http"` |
 
-Choose the transport protocol for SDK-container communication:
-
-- **`http`** - Each SDK method makes a separate HTTP request to the container. Simple and reliable.
-- **`websocket`** - Multiplexes all SDK calls over a single persistent WebSocket connection. Avoids sub-request limits in Workers and Durable Objects.
+Controls the transport protocol for SDK-to-container communication. WebSocket transport multiplexes all operations over a single persistent connection, avoiding [subrequest limits](/workers/platform/limits/#subrequests) when performing many SDK operations per request.
 
 <WranglerConfig>
 ```jsonc
 {
-	"containers": [
-		{
-			"class_name": "Sandbox",
-			"image": "./Dockerfile",
-			"environment": {
-				"SANDBOX_TRANSPORT": "websocket"
-			}
-		},
-	],
+	"vars": {
+		"SANDBOX_TRANSPORT": "websocket"
+	},
 }
 ```
 </WranglerConfig>
 
-**When to use WebSocket transport**:
-
-Use WebSocket transport when you need to avoid sub-request limits:
-
-- **High-frequency SDK calls** - Applications making many concurrent sandbox operations
-- **Complex workflows** - Multi-step pipelines with numerous file operations and command executions
-- **Durable Objects with heavy SDK usage** - Sandboxes making many SDK calls from within a single Durable Object
-
-**Performance characteristics**:
-
-- **HTTP transport** - Each call is independent. No connection overhead after the first request.
-- **WebSocket transport** - Initial connection setup, then minimal overhead per call. More efficient for many consecutive operations.
-
-For most use cases, the default HTTP transport is sufficient. Use WebSocket transport when you encounter sub-request limits or need to optimize for high-frequency operations.
-
-See [Transport modes](/sandbox/configuration/transport/) for complete documentation including configuration examples, performance considerations, and migration guide.
+See [Transport modes](/sandbox/configuration/transport/) for a complete guide including when to use each transport, performance considerations, and migration instructions.
 
 ## Three ways to set environment variables
 
@@ -135,6 +112,8 @@ wrangler secret put DATABASE_URL
 Then pass them to your sandbox:
 
 ```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+
 interface Env {
 	Sandbox: DurableObjectNamespace;
 	OPENAI_API_KEY: string;
@@ -196,55 +175,9 @@ await Promise.all([
 ]);
 ```
 
-### Transport configuration
+### Configure transport mode
 
-The SDK communicates with containers using either HTTP or WebSocket transport. WebSocket transport multiplexes all operations over a single persistent connection, avoiding sub-request limits when running inside Workers or Durable Objects.
-
-Set the `SANDBOX_TRANSPORT` environment variable in your Worker:
-
-```typescript
-interface Env {
-	Sandbox: DurableObjectNamespace;
-	SANDBOX_TRANSPORT: 'websocket' | 'http';
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const sandbox = getSandbox(env.Sandbox, 'user-sandbox');
-		// All sandbox operations use the configured transport
-		await sandbox.exec('python analyze.py');
-		return Response.json({ success: true });
-	},
-};
-```
-
-Configure in wrangler configuration:
-
-<WranglerConfig>
-```toml
-[vars]
-SANDBOX_TRANSPORT = "websocket"
-```
-</WranglerConfig>
-
-**Transport comparison:**
-
-- **HTTP** (default): Each SDK call makes a separate HTTP request to the container. Simple and reliable, but each request counts toward Worker sub-request limits.
-- **WebSocket**: All SDK calls multiplex over a single persistent connection. Reduces sub-request count to one connection per sandbox, avoiding limit issues in Workers and Durable Objects.
-
-**When to use WebSocket transport:**
-- Your Worker makes many sandbox operations per request
-- Running inside Durable Objects with sub-request constraints
-- Need to optimize request count and connection overhead
-
-**When to use HTTP transport (default):**
-- Simple use cases with few operations per request
-- Debugging or development (easier to inspect individual requests)
-- No sub-request limit concerns
-
-:::note[Automatic fallback]
-If the WebSocket connection fails to establish, the SDK will log an error. Ensure your container image supports WebSocket connections (all official images do).
-:::
+Set `SANDBOX_TRANSPORT` in your Worker's `vars` to switch between HTTP and WebSocket transport. See [Transport modes](/sandbox/configuration/transport/) for details on when and how to configure each transport.
 
 ### Bucket mounting credentials
 
@@ -273,6 +206,8 @@ Bucket mounting requires production deployment. It does not work with `wrangler 
 **Mount buckets with automatic credential detection:**
 
 ```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+
 interface Env {
 	Sandbox: DurableObjectNamespace;
 	AWS_ACCESS_KEY_ID: string;

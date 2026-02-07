@@ -5,11 +5,14 @@ sidebar:
   order: 1
 ---
 
+import { WranglerConfig } from "~/components";
+
 ## Minimal configuration
 
 The minimum required configuration for using Sandbox SDK:
 
-```jsonc title="wrangler.jsonc"
+<WranglerConfig>
+```jsonc
 {
 	"name": "my-sandbox-worker",
 	"main": "src/index.ts",
@@ -37,6 +40,7 @@ The minimum required configuration for using Sandbox SDK:
 	],
 }
 ```
+</WranglerConfig>
 
 ## Required settings
 
@@ -56,6 +60,7 @@ The minimal configuration shown above includes all required settings. For detail
 
 **Solution**: Ensure your `wrangler.jsonc` includes the Durable Objects binding:
 
+<WranglerConfig>
 ```jsonc
 {
 	"durable_objects": {
@@ -68,6 +73,7 @@ The minimal configuration shown above includes all required settings. For detail
 	},
 }
 ```
+</WranglerConfig>
 
 ### Missing migrations
 
@@ -75,6 +81,7 @@ The minimal configuration shown above includes all required settings. For detail
 
 **Solution**: Add migrations for the Sandbox class:
 
+<WranglerConfig>
 ```jsonc
 {
 	"migrations": [
@@ -85,6 +92,7 @@ The minimal configuration shown above includes all required settings. For detail
 	],
 }
 ```
+</WranglerConfig>
 
 ## Related resources
 
