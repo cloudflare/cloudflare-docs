@@ -9,13 +9,7 @@ sidebar:
     hideIndex: false
 ---
 
-import {
-	MetaInfo,
-	Render,
-	Type,
-	TypeScriptExample,
-	WranglerConfig,
-} from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
 ## What is Markdown for Agents
 
@@ -78,17 +72,17 @@ x-markdown-tokens: 1234
 
 ## Availability and Pricing
 
-Markdown for Agents is available to Pro and Business plans and SSL for SaaS customers at no cost.
+Markdown for Agents is available at no cost to Pro plans, Business plans, and SSL for SaaS customers.
 
 ## Other Markdown conversion APIs
 
 Cloudflare provides other ways to convert documents to Markdown:
 
-- Workers AI [AI.toMarkdown()](https://developers.cloudflare.com/workers-ai/features/markdown-conversion/) supports multiple document types, object detection in embedded images and summarization.
-- Browser Rendering [/markdown](https://developers.cloudflare.com/browser-rendering/rest-api/markdown-endpoint/) REST API supports markdown conversion if you need to render a dynamic page or application first.
+- Workers AI [AI.toMarkdown()](/workers-ai/features/markdown-conversion/) supports multiple document types, object detection in embedded images and summarization.
+- Browser Rendering [/markdown](/browser-rendering/rest-api/markdown-endpoint/) REST API supports markdown conversion if you need to render a dynamic page or application first.
 
 ## Limitations
 
 - We only convert from HTML, other types of documents may be included in the future.
 - We don't support compressed responses from the origin.
-- Markdown for Agents is a zone level setting. If you need different settings for different sub-domains of a zone, you need to decouple them to separate zones.
+- Markdown for Agents is a zone-level setting. If you need different settings for different sub-domains of a zone, you need to decouple them to separate zones.
