@@ -14,7 +14,7 @@ await env.MY_QUEUE.send(message, { delaySeconds: 0 }); // Override queue default
 await env.MY_QUEUE.sendBatch([
   { body: 'msg1' },
   { body: 'msg2' },
-  { body: 'msg3', delaySeconds: 300 }
+  { body: 'msg3', options: { delaySeconds: 300 } }
 ]);
 
 // Non-blocking with ctx.waitUntil - send continues after response
@@ -185,7 +185,7 @@ await fetch(
 ```typescript
 interface MessageBatch<Body = unknown> {
   readonly queue: string;
-  readonly messages: readonly Message<Body>[];
+  readonly messages: Message<Body>[];
   ackAll(): void;
   retryAll(options?: QueueRetryOptions): void;
 }
