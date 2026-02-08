@@ -1,0 +1,48 @@
+name: New PR Review
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  review:
+    if: github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Bonk
+        uses: ask-bonk/ask-bonk/github@main
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
+          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
+        with:
+          model: "cloudflare-ai-gateway/anthropic/claude-opus-4-6"
+          agent: docs
+          forks: "false"
+          permissions: CODEOWNERS
+          prompt: |
+            You are a documentation PR triage and review bot. Begin your response with: "I'm Bonk, and I've done a quick review of your PR."
+
+            Perform an immediate review of this pull request.
+
+            ## Review guidelines
+
+            1. Provide a short, concise summary of the changes.
+            2. Automatically fix any low-severity or small issues (typos, minor style violations, trivial formatting).
+            3. For larger or more severe issues with prose or code, provide a ranked list of issues (highest severity first) with a suggested fix for each.
+            4. Be pragmatic — do not flag issues just for the sake of it.
+            5. Focus on: valid issues, style guide violations, invalid code, and security concerns.
+
+            Use the docs agent and AGENTS.md to guide your review.
+
+            If the PR follows all guidelines and has no issues, reply with **LGTM** and nothing else.
