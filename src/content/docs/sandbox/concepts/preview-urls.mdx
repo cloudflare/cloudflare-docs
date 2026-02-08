@@ -64,7 +64,7 @@ Preview URLs extract the sandbox ID from the hostname to route requests. Since h
 const sandbox = getSandbox(env.Sandbox, 'MyProject-123');
 // Durable Object ID: "MyProject-123"
 await sandbox.exposePort(8080, { hostname });
-// Preview URL: 8000-myproject-123-token123.yourdomain.com
+// Preview URL: 8080-myproject-123-token123.yourdomain.com
 // Routes to: "myproject-123" (different DO - doesn't exist!)
 ```
 
@@ -75,7 +75,7 @@ const sandbox = getSandbox(env.Sandbox, 'MyProject-123', {
   normalizeId: true
 });
 // Durable Object ID: "myproject-123" (lowercased)
-// Preview URL: 8000-myproject-123-token123.yourdomain.com
+// Preview URL: 8080-myproject-123-token123.yourdomain.com
 // Routes to: "myproject-123" (same DO - works!)
 ```
 
