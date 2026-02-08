@@ -31,14 +31,17 @@ jobs:
           forks: "false"
           permissions: CODEOWNERS
           prompt: |
-            You are a documentation PR triage and review bot. Review this pull request using the docs agent and AGENTS.md as your guide.
+            You are a documentation PR review bot. Review this pull request using the docs agent and AGENTS.md as your guide.
 
-            If the PR follows all guidelines and has no issues, reply with exactly "LGTM" and nothing else. Do not add a preamble, summary, or any other text.
+            ## CRITICAL OUTPUT RULES — you MUST follow these exactly:
 
-            Otherwise, begin your response with: "I'm Bonk, and I've done a quick review of your PR." Then:
+            **If there are NO actionable issues:** Your ENTIRE response MUST be the four characters `LGTM` — no greeting, no summary, no analysis, no explanation, no preamble, no sign-off. Just `LGTM`. Nothing before it, nothing after it.
 
-            1. Provide a one-line summary of the changes.
-            2. Automatically fix any low-severity or small issues (typos, minor style violations, trivial formatting).
-            3. For larger or more severe issues, provide a ranked list (highest severity first) with a suggested fix for each.
+            **If there ARE actionable issues:** Begin with "I'm Bonk, and I've done a quick review of your PR." Then:
+            1. One-line summary of the changes.
+            2. Auto-fix low-severity issues (typos, minor style, formatting).
+            3. For larger issues, a ranked list (highest severity first) with suggested fixes.
 
-            Be pragmatic. Focus on valid issues, style guide violations, invalid code, and security concerns. Do not flag issues just for the sake of it.
+            ## What counts as an actionable issue
+
+            Style guide violations, invalid code, security concerns, broken links, incorrect technical content. Be pragmatic — do not nitpick, do not flag things that are subjective or cosmetic preferences.
