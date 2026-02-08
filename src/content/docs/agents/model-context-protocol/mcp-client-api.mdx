@@ -180,7 +180,7 @@ class MyAgent extends Agent {
 
 ### OAuth callback
 
-The callback URL is automatically constructed:
+The callback URL is automatically constructed as:
 
 ```txt
 https://{host}/{agentsPrefix}/{agent-name}/{instance-name}/callback
@@ -188,11 +188,25 @@ https://{host}/{agentsPrefix}/{agent-name}/{instance-name}/callback
 
 For example: `https://my-worker.workers.dev/agents/my-agent/default/callback`
 
-OAuth tokens are securely stored in SQLite, and persist across agent restarts.
+When using a custom `callbackPath`, the URL becomes:
+
+```txt
+https://{host}/{callbackPath}
+```
+
+For example: `https://my-worker.workers.dev/mcp-oauth-callback`
+
+OAuth tokens are securely stored in SQLite and persist across agent restarts.
 
 ### Protecting instance names in OAuth callbacks
 
-When using `sendIdentityOnConnect: false` to hide sensitive instance names (like session IDs or user IDs), the default OAuth callback URL would expose the instance name in the URL path. To prevent this security issue, you **must** provide a custom `callbackPath`. Without it, `addMcpServer()` will throw an error.
+When using `sendIdentityOnConnect: false` to hide sensitive instance names (like session IDs or user IDs), the default OAuth callback URL would expose the instance name in the path. This creates a security vulnerability where the sensitive instance name is:
+
+- Sent to remote OAuth providers as the redirect URI
+- Displayed in the browser address bar
+- Saved in browser history
+
+To prevent this, you **must** provide a custom `callbackPath` when `sendIdentityOnConnect` is `false`. If you attempt to call `addMcpServer()` without `callbackPath` in this configuration, it will throw an error.
 
 <TypeScriptExample>
 
@@ -203,8 +217,8 @@ export class SecureAgent extends Agent {
 	static options = { sendIdentityOnConnect: false };
 
 	async onRequest(request: Request) {
-		// callbackPath is required when sendIdentityOnConnect is false
-		// Without it, addMcpServer() will throw an error
+		// callbackPath is REQUIRED when sendIdentityOnConnect is false
+		// Without it, this call will throw an error
 		const result = await this.addMcpServer(
 			"github",
 			"https://mcp.github.com/mcp",
@@ -221,7 +235,7 @@ export class SecureAgent extends Agent {
 	}
 }
 
-// Route the custom callback path to the agent
+// Route the custom callback path to the agent instance
 export default {
 	async fetch(request: Request, env: Env) {
 		const url = new URL(request.url);
@@ -248,7 +262,12 @@ export default {
 
 :::note[How callback matching works]
 
-OAuth callbacks are matched by the `state` query parameter (format: `{serverId}:{stateValue}`), not by URL path. The agent also verifies that the request's origin and pathname match the registered callback URL for defense-in-depth. This means your custom `callbackPath` can be any path you choose, as long as requests to that path are routed to the correct agent instance.
+OAuth callbacks are matched by the `state` query parameter (format: `{serverId}:{stateValue}`), not by URL path substring matching. The agent verifies both:
+
+1. The `state` parameter contains a valid server ID
+2. The request origin and pathname match the registered callback URL
+
+This means your custom `callbackPath` can be any path you choose (it does not need to contain `/callback`), as long as requests to that path are routed to the correct agent instance.
 
 :::
 
