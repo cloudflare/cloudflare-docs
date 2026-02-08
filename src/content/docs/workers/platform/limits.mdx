@@ -70,7 +70,7 @@ Most Workers consume very little CPU time. The average Worker uses approximately
 
 <Render file="isolate-cpu-flexibility" product="workers" />
 
-### Error: exceeded CPU time limit {/#exceeded-cpu}
+### Error: exceeded CPU time limit {#exceeded-cpu}
 
 When a Worker exceeds its CPU time limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded CPU Time Limits` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededCpu`.
 
@@ -118,7 +118,7 @@ Each [isolate](/workers/reference/how-workers-works/#isolates) can consume up to
 
 When an isolate exceeds 128 MB, the Workers runtime lets in-flight requests complete and creates a new isolate for subsequent requests. During extremely high load, the runtime may cancel some incoming requests to maintain stability.
 
-### Error: exceeded memory limit {/#exceeded-memory}
+### Error: exceeded memory limit {#exceeded-memory}
 
 When a Worker exceeds its memory limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded Memory` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededMemory`.
 
@@ -309,7 +309,7 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 | [Custom domains](/workers/configuration/routing/custom-domains/) per zone | 100 |
 | Routed zones per Worker                                  | 1,000 |
 
-### Routes with `wrangler dev --remote` {/#routes-remote-dev}
+### Routes with `wrangler dev --remote` {#routes-remote-dev}
 
 When you run a [remote development](/workers/development-testing/#remote-bindings) session using the `--remote` flag, Cloudflare enforces a limit of 50 routes per zone. The Quick Editor in the Cloudflare dashboard also uses `wrangler dev --remote`, so the same limit applies.
 
