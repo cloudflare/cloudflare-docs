@@ -229,11 +229,13 @@ For the full component list and their props, see `src/components/index.ts` (barr
 
 ## Validation — what to run after making changes
 
+> **CI note:** `npm run build` will time out in CI environments (GitHub Actions, etc. where `CI=true`). When running in CI, use `npm run check` and linters only — do **not** run a full build. The full build is only practical in local development environments.
+
 ### Minimum validation for content changes (MDX edits)
 
 ```bash
 npm run check          # Type-check (validates frontmatter schemas + Astro types)
-npm run build          # Full build (validates MDX parsing, image paths, internal links)
+npm run build          # Full build (validates MDX parsing, image paths, internal links) — LOCAL ONLY, skip in CI
 ```
 
 ### Minimum validation for code changes (.ts/.tsx/.astro/.js)
@@ -245,7 +247,17 @@ npm run format:core:check  # Prettier formatting check
 npm run test           # Vitest (Workers, Node, and Astro suites)
 ```
 
-### Full validation (matches CI)
+### CI-only validation (when `CI=true`)
+
+Use this reduced set when running as a GitHub Action or in any CI environment:
+
+```bash
+npm run check              # Type-check (validates frontmatter schemas + Astro types)
+npm run lint               # ESLint
+npm run format:core:check  # Prettier formatting check
+```
+
+### Full validation (matches CI pipeline, local only)
 
 ```bash
 npm run check              # Astro + Worker type checking
