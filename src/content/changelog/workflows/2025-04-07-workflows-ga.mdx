@@ -29,7 +29,7 @@ For example, if you wanted to implement a human-in-the-loop approval process, yo
 <TypeScriptExample>
 
 ```ts
-import { Workflow, WorkflowEvent } from "cloudflare:workflows";
+import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from "cloudflare:workers";
 
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
