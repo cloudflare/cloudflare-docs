@@ -190,6 +190,67 @@ For example: `https://my-worker.workers.dev/agents/my-agent/default/callback`
 
 OAuth tokens are securely stored in SQLite, and persist across agent restarts.
 
+### Protecting instance names in OAuth callbacks
+
+When using `sendIdentityOnConnect: false` to hide sensitive instance names (like session IDs or user IDs), the default OAuth callback URL would expose the instance name. To prevent this security issue, you must provide a custom `callbackPath`.
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentRequest, getAgentByName } from "agents";
+
+class SecureAgent extends Agent {
+	static options = { sendIdentityOnConnect: false };
+
+	async onRequest(request: Request) {
+		// callbackPath is required when sendIdentityOnConnect is false
+		const result = await this.addMcpServer(
+			"github",
+			"https://mcp.github.com/mcp",
+			{
+				callbackPath: "mcp-oauth-callback", // Custom path without instance name
+			},
+		);
+
+		if (result.state === "authenticating") {
+			return Response.redirect(result.authUrl);
+		}
+
+		return new Response("Connected!");
+	}
+}
+
+// Route the custom callback path to the agent
+export default {
+	async fetch(request: Request, env: Env) {
+		const url = new URL(request.url);
+
+		// Route custom MCP OAuth callback to agent instance
+		if (url.pathname.startsWith("/mcp-oauth-callback")) {
+			// Extract instance name from your session/auth mechanism
+			const instanceName = await getInstanceNameFromSession(request);
+
+			const agent = getAgentByName(env, "SecureAgent", instanceName);
+			return agent.fetch(request);
+		}
+
+		// Standard agent routing
+		return (
+			routeAgentRequest(request, env) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+};
+```
+
+</TypeScriptExample>
+
+:::note[How callback matching works]
+
+OAuth callbacks are matched by the `state` query parameter (format: `{serverId}:{stateValue}`), not by URL path. This means your custom `callbackPath` can be any path you choose, as long as requests to that path are routed to the correct agent instance.
+
+:::
+
 ### Custom OAuth callback handling
 
 Configure how OAuth completion is handled. By default, successful authentication redirects to your application origin, while failed authentication displays an HTML error page.
@@ -419,6 +480,7 @@ async addMcpServer(
   url: string,
   options?: {
     callbackHost?: string;
+    callbackPath?: string;
     agentsPrefix?: string;
     client?: ClientOptions;
     transport?: {
@@ -438,7 +500,8 @@ async addMcpServer(
 - `url` (string, required) — URL of the MCP server endpoint
 - `options` (object, optional) — Connection configuration:
   - `callbackHost` — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
-  - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`
+  - `callbackPath` — Custom callback URL path that bypasses the default `/agents/{class}/{name}/callback` construction. **Required when `sendIdentityOnConnect` is `false`** to prevent leaking the instance name. When set, the callback URL becomes `{callbackHost}/{callbackPath}`. You must route this path to the agent instance via `getAgentByName`
+  - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`. Ignored when `callbackPath` is provided
   - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
