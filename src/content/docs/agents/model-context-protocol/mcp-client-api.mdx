@@ -197,9 +197,9 @@ When using `sendIdentityOnConnect: false` to hide sensitive instance names (like
 <TypeScriptExample>
 
 ```ts
-import { routeAgentRequest, getAgentByName } from "agents";
+import { Agent, routeAgentRequest, getAgentByName } from "agents";
 
-class SecureAgent extends Agent {
+export class SecureAgent extends Agent {
 	static options = { sendIdentityOnConnect: false };
 
 	async onRequest(request: Request) {
@@ -227,16 +227,16 @@ export default {
 
 		// Route custom MCP OAuth callback to agent instance
 		if (url.pathname.startsWith("/mcp-oauth-callback")) {
-			// Extract instance name from your session/auth mechanism
+			// Implement this to extract the instance name from your session/auth mechanism
 			const instanceName = await getInstanceNameFromSession(request);
 
-			const agent = getAgentByName(env, "SecureAgent", instanceName);
+			const agent = await getAgentByName(env.SecureAgent, instanceName);
 			return agent.fetch(request);
 		}
 
 		// Standard agent routing
 		return (
-			routeAgentRequest(request, env) ||
+			(await routeAgentRequest(request, env)) ??
 			new Response("Not found", { status: 404 })
 		);
 	},
