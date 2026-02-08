@@ -71,7 +71,7 @@ Most Workers consume very little CPU time. The average Worker uses approximately
 
 <Render file="isolate-cpu-flexibility" product="workers" />
 
-### Error: exceeded CPU time limit {/* exceeded-cpu */}
+#### Error: exceeded CPU time limit {/* exceeded-cpu */}
 
 When a Worker exceeds its CPU time limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded CPU Time Limits` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededCpu`.
 
@@ -81,7 +81,7 @@ To resolve a CPU time limit error:
 2. **Optimize your code** — Use [CPU profiling with DevTools](/workers/observability/dev-tools/cpu-usage/) to identify CPU-intensive sections of your code.
 3. **Offload work** — Move expensive computation to [Durable Objects](/durable-objects/) or process data in smaller chunks across multiple requests.
 
-### Increasing the CPU time limit
+#### Increasing the CPU time limit
 
 On the Workers Paid plan, you can increase the maximum CPU time from the default 30 seconds to 5 minutes (300,000 ms).
 
@@ -101,7 +101,7 @@ On the Workers Paid plan, you can increase the maximum CPU time from the default
 
 You can also change this in the dashboard: go to **Workers & Pages** > select your Worker > **Settings** > adjust the CPU time limit.
 
-### Monitoring CPU usage
+#### Monitoring CPU usage
 
 - **Workers Logs** — CPU time and wall time appear in the [invocation log](/workers/observability/logs/workers-logs/#invocation-logs).
 - **Tail Workers / Logpush** — CPU time and wall time appear at the top level of the [Workers Trace Events object](/logs/logpush/logpush-job/datasets/account/workers_trace_events/).
@@ -119,7 +119,7 @@ Each [isolate](/workers/reference/how-workers-works/#isolates) can consume up to
 
 When an isolate exceeds 128 MB, the Workers runtime lets in-flight requests complete and creates a new isolate for subsequent requests. During extremely high load, the runtime may cancel some incoming requests to maintain stability.
 
-### Error: exceeded memory limit {/* exceeded-memory */}
+#### Error: exceeded memory limit {/* exceeded-memory */}
 
 When a Worker exceeds its memory limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded Memory` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededMemory`.
 
