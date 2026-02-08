@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Steps, Tabs, TabItem, Render, DashButton, LinkCard } from "~/components"
+import { Steps, Tabs, TabItem, Render, DashButton, LinkCard, TypeScriptExample } from "~/components"
 
 There are several ways to upload objects to R2. Which approach you choose depends on the size of your objects and your performance requirements.
 
@@ -47,6 +47,8 @@ Use R2 [bindings](/workers/runtime-apis/bindings/) in Workers to upload objects 
 
 Use `put()` to upload an object in a single request. This is the simplest approach for small to medium objects.
 
+<TypeScriptExample>
+
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
@@ -73,9 +75,13 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TypeScriptExample>
+
 ### Multipart upload
 
 Use `createMultipartUpload()` and `resumeMultipartUpload()` for large files or when you need to upload parts in parallel. Each part must be at least 5 MiB (except the last part).
+
+<TypeScriptExample>
 
 ```ts
 export default {
@@ -110,7 +116,11 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TypeScriptExample>
+
 In most cases, the multipart state (the `uploadId` and uploaded part ETags) is tracked by the client sending requests to your Worker. The following example exposes an HTTP API that a client application can call to create, upload parts for, and complete a multipart upload:
+
+<TypeScriptExample>
 
 ```ts
 export default {
@@ -186,11 +196,15 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TypeScriptExample>
+
 For the complete Workers API reference, refer to [Workers API reference](/r2/api/workers/workers-api-reference/).
 
 ### Presigned URLs (Workers)
 
 When you need clients (browsers, mobile apps) to upload directly to R2 without proxying through your Worker, generate a presigned URL server-side and hand it to the client:
+
+<TypeScriptExample>
 
 ```ts
 import { AwsClient } from "aws4fetch";
@@ -223,6 +237,8 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 For full presigned URL documentation including GET, PUT, and security best practices, refer to [Presigned URLs](/r2/api/s3/presigned-urls/).
 
