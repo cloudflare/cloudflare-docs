@@ -15,8 +15,8 @@ await step.sleep('description', 5000); // ms
 await step.sleepUntil('description', Date.parse('2024-12-31'));
 
 // step.waitForEvent()
-const data = await step.waitForEvent<PayloadType>('wait', {type: 'webhook-type', timeout: '24h'}); // Default 24h, max 365d
-try { const event = await step.waitForEvent('wait', { type: 'approval', timeout: '1h' }); } catch (e) { /* Timeout */ }
+const data = await step.waitForEvent<PayloadType>('wait', {event: 'webhook-type', timeout: '24h'}); // Default 24h, max 365d
+try { const event = await step.waitForEvent('wait', { event: 'approval', timeout: '1h' }); } catch (e) { /* Timeout */ }
 ```
 
 ## Instance Management
@@ -24,6 +24,13 @@ try { const event = await step.waitForEvent('wait', { type: 'approval', timeout:
 ```typescript
 // Create single
 const instance = await env.MY_WORKFLOW.create({id: crypto.randomUUID(), params: { userId: 'user123' }}); // id optional, auto-generated if omitted
+
+// Create with custom retention (default: 3 days free, 30 days paid)
+const instance = await env.MY_WORKFLOW.create({
+  id: crypto.randomUUID(),
+  params: { userId: 'user123' },
+  retention: '30 days'  // Override default retention period
+});
 
 // Batch (max 100, idempotent: skips existing IDs)
 const instances = await env.MY_WORKFLOW.createBatch([{id: 'user1', params: {name: 'John'}}, {id: 'user2', params: {name: 'Jane'}}]);
@@ -62,11 +69,11 @@ export class ParentWorkflow extends WorkflowEntrypoint<Env, Params> {
 ## Error Handling
 
 ```typescript
-import { NonRetryableError } from 'cloudflare:workflows';
+import { NonRetryableError } from 'cloudflare:workers';
 
 // NonRetryableError
 await step.do('validate', async () => {
-  if (!event.payload.paymentMethod) throw new NonRetryableError('Payment method required');
+  if (!event.params.paymentMethod) throw new NonRetryableError('Payment method required');
   const res = await fetch('https://api.example.com/charge', { method: 'POST' });
   if (res.status === 401) throw new NonRetryableError('Invalid credentials'); // Don't retry
   if (!res.ok) throw new Error('Retryable failure'); // Will retry
@@ -139,7 +146,7 @@ const instance = await env.MY_WORKFLOW.create({
 **Access in Workflow:**
 ```typescript
 async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-  const userId = event.payload.userId;
+  const userId = event.params.userId;
   const instanceId = event.instanceId;
   const createdAt = event.timestamp;
 }
