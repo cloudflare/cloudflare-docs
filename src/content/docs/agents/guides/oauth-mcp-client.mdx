@@ -130,6 +130,7 @@ Use the `useAgent` hook for real-time updates via WebSocket:
 
 ```tsx title="src/App.tsx"
 import { useAgent } from "agents/react";
+import { useState } from "react";
 import type { MCPServersState } from "agents";
 
 function App() {
@@ -221,6 +222,7 @@ When OAuth fails, the connection state becomes `"failed"` and the error message 
 
 ```tsx title="src/App.tsx"
 import { useAgent } from "agents/react";
+import { useState } from "react";
 import type { MCPServersState } from "agents";
 
 function App() {

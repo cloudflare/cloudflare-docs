@@ -207,14 +207,11 @@ export class MyAgent extends Agent {
 			errorRedirect: "https://myapp.com/error",
 
 			// Or use a custom handler
-			customHandler: (result) => {
-				if (result.authSuccess) {
-					// Close popup window after auth
-					return new Response("<script>window.close();</script>", {
-						headers: { "content-type": "text/html" },
-					});
-				}
-				return new Response("Auth failed", { status: 400 });
+			customHandler: () => {
+				// Close popup window after auth completes
+				return new Response("<script>window.close();</script>", {
+					headers: { "content-type": "text/html" },
+				});
 			},
 		});
 	}
@@ -373,7 +370,7 @@ function Dashboard() {
 			<h2>Connected Servers</h2>
 			{Object.entries(servers).map(([id, server]) => (
 				<div key={id}>
-					{server.name}: {server.connectionState}
+					{server.name}: {server.state}
 				</div>
 			))}
 
