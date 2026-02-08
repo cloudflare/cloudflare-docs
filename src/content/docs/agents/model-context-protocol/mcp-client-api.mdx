@@ -192,7 +192,7 @@ OAuth tokens are securely stored in SQLite, and persist across agent restarts.
 
 ### Protecting instance names in OAuth callbacks
 
-When using `sendIdentityOnConnect: false` to hide sensitive instance names (like session IDs or user IDs), the default OAuth callback URL would expose the instance name. To prevent this security issue, you must provide a custom `callbackPath`.
+When using `sendIdentityOnConnect: false` to hide sensitive instance names (like session IDs or user IDs), the default OAuth callback URL would expose the instance name in the URL path. To prevent this security issue, you **must** provide a custom `callbackPath`. Without it, `addMcpServer()` will throw an error.
 
 <TypeScriptExample>
 
@@ -204,6 +204,7 @@ export class SecureAgent extends Agent {
 
 	async onRequest(request: Request) {
 		// callbackPath is required when sendIdentityOnConnect is false
+		// Without it, addMcpServer() will throw an error
 		const result = await this.addMcpServer(
 			"github",
 			"https://mcp.github.com/mcp",
@@ -227,7 +228,7 @@ export default {
 
 		// Route custom MCP OAuth callback to agent instance
 		if (url.pathname.startsWith("/mcp-oauth-callback")) {
-			// Implement this to extract the instance name from your session/auth mechanism
+			// Extract the instance name from your session/auth mechanism
 			const instanceName = await getInstanceNameFromSession(request);
 
 			const agent = await getAgentByName(env.SecureAgent, instanceName);
@@ -247,7 +248,7 @@ export default {
 
 :::note[How callback matching works]
 
-OAuth callbacks are matched by the `state` query parameter (format: `{serverId}:{stateValue}`), not by URL path. This means your custom `callbackPath` can be any path you choose, as long as requests to that path are routed to the correct agent instance.
+OAuth callbacks are matched by the `state` query parameter (format: `{serverId}:{stateValue}`), not by URL path. The agent also verifies that the request's origin and pathname match the registered callback URL for defense-in-depth. This means your custom `callbackPath` can be any path you choose, as long as requests to that path are routed to the correct agent instance.
 
 :::
 
@@ -500,7 +501,7 @@ async addMcpServer(
 - `url` (string, required) — URL of the MCP server endpoint
 - `options` (object, optional) — Connection configuration:
   - `callbackHost` — Host for OAuth callback URL. If omitted, automatically derived from the incoming request
-  - `callbackPath` — Custom callback URL path that bypasses the default `/agents/{class}/{name}/callback` construction. **Required when `sendIdentityOnConnect` is `false`** to prevent leaking the instance name. When set, the callback URL becomes `{callbackHost}/{callbackPath}`. You must route this path to the agent instance via `getAgentByName`
+  - `callbackPath` — Custom callback URL path that bypasses the default `/agents/{class}/{name}/callback` construction. **Required when `sendIdentityOnConnect` is `false`** to prevent leaking the instance name in the OAuth callback URL. When set, the callback URL becomes `{callbackHost}/{callbackPath}`. Should be a plain path (for example, `/mcp-callback`) without query strings or fragments. You must route this path to the agent instance via `getAgentByName`. Optional when `sendIdentityOnConnect` is `true` (the default)
   - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`. Ignored when `callbackPath` is provided
   - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
   - `transport` — Transport layer configuration:
