@@ -49,19 +49,26 @@ Use `put()` to upload an object in a single request. This is the simplest approa
 
 ```ts
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		// Upload the request body as an object
-		const object = await env.MY_BUCKET.put("image.png", request.body, {
-			httpMetadata: {
-				contentType: "image/png",
-			},
-		});
+	async fetch(request: Request, env: Env): Promise<Response> {
+		try {
+			const object = await env.MY_BUCKET.put("image.png", request.body, {
+				httpMetadata: {
+					contentType: "image/png",
+				},
+			});
 
-		return Response.json({
-			key: object?.key,
-			size: object?.size,
-			etag: object?.etag,
-		});
+			if (object === null) {
+				return new Response("Precondition failed or upload returned null", { status: 412 });
+			}
+
+			return Response.json({
+				key: object.key,
+				size: object.size,
+				etag: object.etag,
+			});
+		} catch (err) {
+			return new Response(`Upload failed: ${err}`, { status: 500 });
+		}
 	},
 } satisfies ExportedHandler<Env>;
 ```
@@ -72,15 +79,18 @@ Use `createMultipartUpload()` and `resumeMultipartUpload()` for large files or w
 
 ```ts
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		const key = "large-file.bin";
 
 		// Create a new multipart upload
 		const multipartUpload = await env.MY_BUCKET.createMultipartUpload(key);
 
 		try {
-			// Upload parts — in a real application, you would split the
-			// file and potentially upload parts concurrently from the client
+			// In a real application, these would be actual data chunks.
+			// Each part except the last must be at least 5 MiB.
+			const firstChunk = new Uint8Array(5 * 1024 * 1024); // placeholder
+			const secondChunk = new Uint8Array(1024); // placeholder
+
 			const part1 = await multipartUpload.uploadPart(1, firstChunk);
 			const part2 = await multipartUpload.uploadPart(2, secondChunk);
 
@@ -94,7 +104,7 @@ export default {
 		} catch (err) {
 			// Abort on failure so incomplete uploads do not count against storage
 			await multipartUpload.abort();
-			return new Response(String(err), { status: 500 });
+			return new Response(`Multipart upload failed: ${err}`, { status: 500 });
 		}
 	},
 } satisfies ExportedHandler<Env>;
@@ -104,7 +114,7 @@ In most cases, the multipart state (the `uploadId` and uploaded part ETags) is t
 
 ```ts
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
 		const key = url.pathname.slice(1);
 		const action = url.searchParams.get("action");
@@ -185,21 +195,33 @@ When you need clients (browsers, mobile apps) to upload directly to R2 without p
 ```ts
 import { AwsClient } from "aws4fetch";
 
-const r2 = new AwsClient({
-	accessKeyId: "<ACCESS_KEY_ID>",
-	secretAccessKey: "<SECRET_ACCESS_KEY>",
-});
+interface Env {
+	R2_ACCESS_KEY_ID: string;
+	R2_SECRET_ACCESS_KEY: string;
+}
 
-// Generate a presigned PUT URL valid for 1 hour
-const url = new URL("https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/image.png");
-url.searchParams.set("X-Amz-Expires", "3600");
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const r2 = new AwsClient({
+			accessKeyId: env.R2_ACCESS_KEY_ID,
+			secretAccessKey: env.R2_SECRET_ACCESS_KEY,
+		});
 
-const signed = await r2.sign(
-	new Request(url, { method: "PUT" }),
-	{ aws: { signQuery: true } },
-);
+		// Generate a presigned PUT URL valid for 1 hour
+		const url = new URL(
+			"https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/image.png",
+		);
+		url.searchParams.set("X-Amz-Expires", "3600");
 
-// Return signed.url to the client — they can PUT directly to R2
+		const signed = await r2.sign(
+			new Request(url, { method: "PUT" }),
+			{ aws: { signQuery: true } },
+		);
+
+		// Return the signed URL to the client — they can PUT directly to R2
+		return Response.json({ url: signed.url });
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 For full presigned URL documentation including GET, PUT, and security best practices, refer to [Presigned URLs](/r2/api/s3/presigned-urls/).
@@ -226,9 +248,9 @@ const S3 = new S3Client({
 	},
 });
 
-const fileContent: Buffer = await readFile("./image.png");
+const fileContent = await readFile("./image.png");
 
-await S3.send(
+const response = await S3.send(
 	new PutObjectCommand({
 		Bucket: "my-bucket",
 		Key: "image.png",
@@ -236,6 +258,7 @@ await S3.send(
 		ContentType: "image/png",
 	}),
 );
+console.log(`Uploaded successfully. ETag: ${response.ETag}`);
 ```
 
 </TabItem>
@@ -256,7 +279,7 @@ const S3 = new S3Client({
 
 const fileContent = await readFile("./image.png");
 
-await S3.send(
+const response = await S3.send(
 	new PutObjectCommand({
 		Bucket: "my-bucket",
 		Key: "image.png",
@@ -264,6 +287,7 @@ await S3.send(
 		ContentType: "image/png",
 	}),
 );
+console.log(`Uploaded successfully. ETag: ${response.ETag}`);
 ```
 
 </TabItem>
@@ -281,12 +305,13 @@ s3 = boto3.client(
 )
 
 with open("./image.png", "rb") as f:
-    s3.put_object(
+    response = s3.put_object(
         Bucket="my-bucket",
         Key="image.png",
         Body=f,
         ContentType="image/png",
     )
+    print(f"Uploaded successfully. ETag: {response['ETag']}")
 ```
 
 </TabItem>
@@ -329,10 +354,11 @@ const upload = new Upload({
 });
 
 upload.on("httpUploadProgress", (progress) => {
-	console.log(`Uploaded ${progress.loaded} / ${progress.total} bytes`);
+	console.log(`Uploaded ${progress.loaded ?? 0} bytes`);
 });
 
-await upload.done();
+const result = await upload.done();
+console.log(`Upload complete. ETag: ${result.ETag}`);
 ```
 
 </TabItem>
@@ -363,10 +389,11 @@ const upload = new Upload({
 });
 
 upload.on("httpUploadProgress", (progress) => {
-	console.log(`Uploaded ${progress.loaded} / ${progress.total} bytes`);
+	console.log(`Uploaded ${progress.loaded ?? 0} bytes`);
 });
 
-await upload.done();
+const result = await upload.done();
+console.log(`Upload complete. ETag: ${result.ETag}`);
 ```
 
 </TabItem>
@@ -461,11 +488,16 @@ try {
 			MultipartUpload: { Parts: parts },
 		}),
 	);
+	console.log("Multipart upload complete.");
 } catch (err) {
 	// Abort on failure to clean up incomplete parts
-	await S3.send(
-		new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId }),
-	);
+	try {
+		await S3.send(
+			new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId }),
+		);
+	} catch (_abortErr) {
+		// Best-effort cleanup — the original error is more important
+	}
 	throw err;
 }
 ```
@@ -532,11 +564,16 @@ try {
 			MultipartUpload: { Parts: parts },
 		}),
 	);
+	console.log("Multipart upload complete.");
 } catch (err) {
 	// Abort on failure to clean up incomplete parts
-	await S3.send(
-		new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId }),
-	);
+	try {
+		await S3.send(
+			new AbortMultipartUploadCommand({ Bucket: bucket, Key: key, UploadId }),
+		);
+	} catch (_abortErr) {
+		// Best-effort cleanup — the original error is more important
+	}
 	throw err;
 }
 ```
@@ -591,9 +628,13 @@ try:
         UploadId=upload_id,
         MultipartUpload={"Parts": parts},
     )
+    print("Multipart upload complete.")
 except Exception:
     # Abort on failure to clean up incomplete parts
-    s3.abort_multipart_upload(Bucket=bucket, Key=key, UploadId=upload_id)
+    try:
+        s3.abort_multipart_upload(Bucket=bucket, Key=key, UploadId=upload_id)
+    except Exception:
+        pass  # Best-effort cleanup — the original error is more important
     raise
 ```
 
@@ -630,6 +671,7 @@ const presignedUrl = await getSignedUrl(
 	{ expiresIn: 3600 }, // Valid for 1 hour
 );
 
+console.log(presignedUrl);
 // Return presignedUrl to the client
 ```
 
@@ -659,6 +701,7 @@ const presignedUrl = await getSignedUrl(
 	{ expiresIn: 3600 }, // Valid for 1 hour
 );
 
+console.log(presignedUrl);
 // Return presignedUrl to the client
 ```
 
@@ -686,6 +729,7 @@ presigned_url = s3.generate_presigned_url(
     ExpiresIn=3600,  # Valid for 1 hour
 )
 
+print(presigned_url)
 # Return presigned_url to the client
 ```
 
